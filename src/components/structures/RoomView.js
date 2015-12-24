@@ -71,6 +71,7 @@ module.exports = React.createClass({
             draggingFile: false,
             searching: false,
             searchResults: null,
+            searchContext: null,
             syncState: MatrixClientPeg.get().getSyncState(),
             hasUnsentMessages: this._hasUnsentMessages(room),
             callState: null,
@@ -375,6 +376,21 @@ module.exports = React.createClass({
         }
     },
 
+    onSearchContextFillRequest: function(backwards) {
+        if (!this.state.searchContext.getPaginateToken(backwards)) {
+            debuglog("no more context results");
+            return;
+        }
+
+        debuglog("requesting more search context; backwards:"+backwards);
+
+        return MatrixClientPeg.get().paginateEventContext(
+                this.state.searchContext, {backwards: backwards}
+        ).then(() => {
+            this.forceUpdate();
+        })
+    },
+
     // set off a pagination request.
     onMessageListFillRequest: function(backwards) {
         if (!backwards)
@@ -572,6 +588,15 @@ module.exports = React.createClass({
         });
     },
 
+    _onSearchResultSelected: function(searchResult) {
+        this.setState({searchContext: searchResult.context});
+    },
+
+    getSearchContextTiles: function() {
+        return this._timelineToTiles(
+            this.state.searchContext.getTimeline(),
+            !!this.state.searchContext.startToken);
+    },
 
     getSearchResultTiles: function() {
         var EventTile = sdk.getComponent('rooms.EventTile');
@@ -605,7 +630,7 @@ module.exports = React.createClass({
         var lastRoomId;
 
         for (var i = this.state.searchResults.results.length - 1; i >= 0; i--) {
-            var result = this.state.searchResults.results[i];
+            let result = this.state.searchResults.results[i];
 
             var mxEv = result.context.getEvent();
 
@@ -635,12 +660,18 @@ module.exports = React.createClass({
 
             ret.push(<SearchResultTile key={mxEv.getId()}
                      searchResult={result}
-                     searchHighlights={this.state.searchHighlights}/>);
+                     searchHighlights={this.state.searchHighlights}
+                     onSelect={() => {this._onSearchResultSelected(result)}}/>);
         }
         return ret;
     },
 
     getEventTiles: function() {
+        return this._timelineToTiles(this.state.room.timeline,
+                                     this._canPaginate(), this.state.messageCap);
+    },
+
+    _timelineToTiles: function(timeline, canBackPaginate, messageCap) {
         var DateSeparator = sdk.getComponent('messages.DateSeparator');
 
         var ret = [];
@@ -650,9 +681,13 @@ module.exports = React.createClass({
 
 
         var prevEvent = null; // the last event we showed
-        var startIdx = Math.max(0, this.state.room.timeline.length - this.state.messageCap);
-        for (var i = startIdx; i < this.state.room.timeline.length; i++) {
-            var mxEv = this.state.room.timeline[i];
+        var startIdx = 0;
+        if (messageCap !== undefined) {
+            startIdx = Math.max(0, timeline.length - messageCap);
+        }
+
+        for (var i = startIdx; i < timeline.length; i++) {
+            var mxEv = timeline[i];
 
             if (!EventTile.haveTileForEvent(mxEv)) {
                 continue;
@@ -679,7 +714,7 @@ module.exports = React.createClass({
 
             // do we need a date separator since the last event?
             var ts1 = mxEv.getTs();
-            if ((prevEvent == null && !this._canPaginate()) ||
+            if ((prevEvent == null && !canBackPaginate) ||
                 (prevEvent != null &&
                  new Date(prevEvent.getTs()).toDateString() !== new Date(ts1).toDateString())) {
                 var dateSeparator = <li key={ts1}><DateSeparator key={ts1} ts={ts1}/></li>;
@@ -688,7 +723,7 @@ module.exports = React.createClass({
             }
 
             var last = false;
-            if (i == this.state.room.timeline.length - 1) {
+            if (i == timeline.length - 1) {
                 // XXX: we might not show a tile for the last event.
                 last = true;
             }
@@ -922,6 +957,7 @@ module.exports = React.createClass({
         this.setState({
             searching: false,
             searchResults: null,
+            searchContext: null,
         });
     },
 
@@ -1314,13 +1350,30 @@ module.exports = React.createClass({
 
             // if we have search results, we keep the messagepanel (so that it preserves its
             // scroll state), but hide it.
-            var searchResultsPanel;
+            //
+            // Likewise, if we've zoomed in to search results context, we hide the search results.
+            var searchContextPanel;
+            var hideSearchPanel = false;
             var hideMessagePanel = false;
 
+            if (this.state.searchContext) {
+                searchContextPanel = (
+                    <ScrollPanel ref="searchContextPanel" className="mx_RoomView_messagePanel"
+                            onFillRequest={ this.onSearchContextFillRequest }
+                            stickyBottom={ false }>
+                        {this.getSearchContextTiles()}
+                    </ScrollPanel>
+                );
+                hideSearchPanel = true;
+                hideMessagePanel = true;
+            }
+
+            var searchResultsPanel;
             if (this.state.searchResults) {
                 searchResultsPanel = (
                     <ScrollPanel ref="searchResultsPanel" className="mx_RoomView_messagePanel"
-                            onFillRequest={ this.onSearchResultsFillRequest }>
+                            onFillRequest={ this.onSearchResultsFillRequest }
+                            style={ hideSearchPanel ? { display: 'none' } : {} } >
                         <li className={scrollheader_classes}></li>
                         {this.getSearchResultTiles()}
                     </ScrollPanel>
@@ -1360,6 +1413,7 @@ module.exports = React.createClass({
                     </div>
                     { messagePanel }
                     { searchResultsPanel }
+                    { searchContextPanel }
                     <div className="mx_RoomView_statusArea">
                         <div className="mx_RoomView_statusAreaBox">
                             <div className="mx_RoomView_statusAreaBox_line"></div>
