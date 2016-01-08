@@ -377,7 +377,8 @@ module.exports = React.createClass({
     },
 
     onSearchContextFillRequest: function(backwards) {
-        if (!this.state.searchContext.getPaginateToken(backwards)) {
+        if (!this.state.searchContext ||
+            !this.state.searchContext.getPaginateToken(backwards)) {
             debuglog("no more context results");
             return;
         }
@@ -387,6 +388,8 @@ module.exports = React.createClass({
         return MatrixClientPeg.get().paginateEventContext(
                 this.state.searchContext, {backwards: backwards}
         ).then(() => {
+            // paginateEventContext updates the existing searchContext; we need
+            // to make sure that react re-renders once that's done.
             this.forceUpdate();
         })
     },
@@ -593,9 +596,11 @@ module.exports = React.createClass({
     },
 
     getSearchContextTiles: function() {
+        var pagToken = this.state.searchContext.getPaginateToken(true);
+
         return this._timelineToTiles(
             this.state.searchContext.getTimeline(),
-            !!this.state.searchContext.startToken);
+            pagToken != null);
     },
 
     getSearchResultTiles: function() {
