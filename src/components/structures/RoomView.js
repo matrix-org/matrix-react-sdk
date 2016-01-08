@@ -572,7 +572,8 @@ module.exports = React.createClass({
 
             // For overlapping highlights,
             // favour longer (more specific) terms first
-            highlights = highlights.sort(function(a, b) { b.length - a.length });
+            highlights = highlights.sort(function(a, b) {
+                return b.length - a.length });
 
             self.setState({
                 searchHighlights: highlights,
