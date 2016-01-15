@@ -304,7 +304,7 @@ module.exports = React.createClass({
                 });
                 break;
             case 'view_room':
-                this._viewRoom(payload.room_id);
+                this._viewRoom(payload.room_id, payload.event_id);
                 break;
             case 'view_prev_room':
                 roomIndexDelta = -1;
@@ -339,7 +339,8 @@ module.exports = React.createClass({
                 if (foundRoom) {
                     dis.dispatch({
                         action: 'view_room',
-                        room_id: foundRoom.roomId
+                        room_id: foundRoom.roomId,
+                        event_id: payload.event_id,
                     });
                     return;
                 }
@@ -348,7 +349,8 @@ module.exports = React.createClass({
                 function(result) {
                     dis.dispatch({
                         action: 'view_room',
-                        room_id: result.room_id
+                        room_id: result.room_id,
+                        event_id: payload.event_id,
                     });
                 });
                 break;
@@ -399,13 +401,18 @@ module.exports = React.createClass({
         });
     },
 
-    _viewRoom: function(roomId) {
+    // switch view to the given room
+    //
+    // eventId is optional and will cause a switch to the context of that
+    // particular event.
+    _viewRoom: function(roomId, eventId) {
         // before we switch room, record the scroll state of the current room
         this._updateScrollMap();
 
         this.focusComposer = true;
         var newState = {
             currentRoom: roomId,
+            initialEventId: eventId,
             page_type: this.PageTypes.RoomView,
         };
         if (this.sdkReady) {
@@ -429,14 +436,18 @@ module.exports = React.createClass({
                 Tinter.tint(color_scheme.primary_color, color_scheme.secondary_color);
             }
 
+            if (eventId) {
+                presentedId += "/"+eventId;
+            }
             this.notifyNewScreen('room/'+presentedId);
             newState.ready = true;
         }
         this.setState(newState);
+        /*
         if (this.scrollStateMap[roomId]) {
             var scrollState = this.scrollStateMap[roomId];
             this.refs.roomView.restoreScrollState(scrollState);
-        }
+        }*/
     },
 
     // update scrollStateMap according to the current scroll state of the
@@ -480,9 +491,11 @@ module.exports = React.createClass({
             if (self.starting_room_alias) {
                 dis.dispatch({
                     action: 'view_room_alias',
-                    room_alias: self.starting_room_alias
+                    room_alias: self.starting_room_alias,
+                    event_id: self.starting_event_id,
                 });
                 delete self.starting_room_alias;
+                delete self.starting_event_id;
             } else if (!self.state.page_type) {
                 if (!self.state.currentRoom) {
                     var firstRoom = null;
@@ -598,23 +611,35 @@ module.exports = React.createClass({
                 action: 'start_post_registration',
             });
         } else if (screen.indexOf('room/') == 0) {
-            var roomString = screen.split('/')[1];
+            var roomString = screen.substring(5);
+            var eventId;
+
+            // extract event id, if one is given
+            var idx = roomString.indexOf('/');
+            if (idx >= 0) {
+                eventId = roomString.substring(idx+1);
+                roomString = roomString.substring(0, idx);
+            }
+
             if (roomString[0] == '#') {
                 if (this.state.logged_in) {
                     dis.dispatch({
                         action: 'view_room_alias',
-                        room_alias: roomString
+                        room_alias: roomString,
+                        event_id: eventId,
                     });
                 } else {
                     // Okay, we'll take you here soon...
                     this.starting_room_alias = roomString;
+                    this.starting_event_id = eventId;
                     // ...but you're still going to have to log in.
                     this.notifyNewScreen('login');
                 }
             } else {
                 dis.dispatch({
                     action: 'view_room',
-                    room_id: roomString
+                    room_id: roomString,
+                    event_id: eventId,
                 });
             }
         }
@@ -751,7 +776,8 @@ module.exports = React.createClass({
                         <RoomView
                             ref="roomView"
                             roomId={this.state.currentRoom}
-                            key={this.state.currentRoom}
+                            initialEventId={this.state.initialEventId}
+                            key={this.state.currentRoom+"+"+this.state.initialEventId}
                             ConferenceHandler={this.props.ConferenceHandler} />
                     );
                     right_panel = <RightPanel roomId={this.state.currentRoom} collapsed={this.state.collapse_rhs} />

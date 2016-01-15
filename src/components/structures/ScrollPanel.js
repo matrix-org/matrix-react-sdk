@@ -145,8 +145,11 @@ module.exports = React.createClass({
             this.recentEventScroll = undefined;
         }
 
-        this.scrollState = this._calculateScrollState();
-        debuglog("Saved scroll state", this.scrollState);
+        if (sn.scrollTop != this._lastSetScroll) {
+            this._saveScrollState();
+        } else {
+            debuglog("Ignoring scroll echo");
+        }
 
         this.props.onScroll(ev);
 
@@ -161,7 +164,7 @@ module.exports = React.createClass({
     isAtBottom: function() {
         var sn = this._getScrollNode();
         // + 1 here to avoid fractional pixel rounding errors
-        return sn.scrollHeight - sn.scrollTop <= sn.clientHeight + 1;
+        return sn.scrollHeight - Math.ceil(sn.scrollTop) <= sn.clientHeight + 1;
     },
 
     // check the scroll state and send out backfill requests if necessary.
@@ -230,9 +233,9 @@ module.exports = React.createClass({
         }
 
         q.finally(fillPromise, () => {
-            debuglog("ScrollPanel: "+dir+" fill complete");
             this._pendingFillRequests[dir] = false;
         }).then((hasMoreResults) => {
+            debuglog("ScrollPanel: "+dir+" fill complete; hasMoreResults:"+hasMoreResults);
             if (hasMoreResults) {
                 // further pagination requests have been disabled until now, so
                 // it's time to check the fill state again in case the pagination
@@ -260,24 +263,41 @@ module.exports = React.createClass({
     resetScrollState: function() {
         this.scrollState = null;
     },
-
-    scrollToTop: function() {
-        this._getScrollNode().scrollTop = 0;
-        debuglog("Scrolled to top");
-    },
-
+    
     scrollToBottom: function() {
-        var scrollNode = this._getScrollNode();
-        scrollNode.scrollTop = scrollNode.scrollHeight;
-        debuglog("Scrolled to bottom; offset now", scrollNode.scrollTop);
+        this.scrollState = {
+            atBottom: true,
+        };
+
+        this._restoreSavedScrollState();
     },
 
     // scroll the message list to the node with the given scrollToken. See
-    // notes in _calculateScrollState on how this works.
+    // notes in _saveScrollState on how this works.
     //
-    // pixel_offset gives the number of pixels between the bottom of the node
-    // and the bottom of the container.
+    // pixelOffset gives the number of pixels between the bottom of the node
+    // and the bottom of the container. If undefined, it will put the node
+    // in the middle of the container.
     scrollToToken: function(scrollToken, pixelOffset) {
+        var scrollNode = this._getScrollNode();
+
+        // default to the middle
+        if (pixelOffset === undefined) {
+            pixelOffset = scrollNode.scrollHeight / 2;
+        }
+
+        // save the desired scroll state ...
+        this.scrollState = {
+            atBottom: false,
+            lastDisplayedScrollToken: scrollToken,
+            pixelOffset: pixelOffset
+        };
+
+        // ... then make it so.
+        this._restoreSavedScrollState();
+    },
+
+    _scrollToToken: function(scrollToken, pixelOffset) {
         /* find the dom node with the right scrolltoken */
         var node;
         var messages = this.refs.itemlist.children;
@@ -312,7 +332,7 @@ module.exports = React.createClass({
         debuglog("recentEventScroll now "+this.recentEventScroll);
     },
 
-    _calculateScrollState: function() {
+    _saveScrollState: function() {
         // Our scroll implementation is agnostic of the precise contents of the
         // message list (since it needs to work with both search results and
         // timelines). 'refs.messageList' is expected to be a DOM node with a
@@ -326,33 +346,42 @@ module.exports = React.createClass({
         var wrapperRect = ReactDOM.findDOMNode(this).getBoundingClientRect();
         var messages = itemlist.children;
 
+        var scrollState = { atBottom: true }
+
         for (var i = messages.length-1; i >= 0; --i) {
             var node = messages[i];
             if (!node.dataset.scrollToken) continue;
 
             var boundingRect = node.getBoundingClientRect();
             if (boundingRect.bottom < wrapperRect.bottom) {
-                return {
+                scrollState = {
                     atBottom: atBottom,
                     lastDisplayedScrollToken: node.dataset.scrollToken,
                     pixelOffset: wrapperRect.bottom - boundingRect.bottom,
                 }
+                break;
             }
         }
 
-        // apparently the entire timeline is below the viewport. Give up.
-        return { atBottom: true };
+        this.scrollState = scrollState;
+        debuglog("Saved scroll state", this.scrollState);
     },
 
     _restoreSavedScrollState: function() {
         var scrollState = this.scrollState;
+        var scrollNode = this._getScrollNode();
+
         if (!scrollState || (this.props.stickyBottom && scrollState.atBottom)) {
-            this.scrollToBottom();
+            scrollNode.scrollTop = scrollNode.scrollHeight;
+            debuglog("Scrolled to bottom; offset now", scrollNode.scrollTop);
         } else if (scrollState.lastDisplayedScrollToken) {
-            this.scrollToToken(scrollState.lastDisplayedScrollToken,
+            this._scrollToToken(scrollState.lastDisplayedScrollToken,
                                scrollState.pixelOffset);
+            debuglog("Scrolled to token; offset now", scrollNode.scrollTop);
         }
+        this._lastSetScroll = scrollNode.scrollTop;
     },
+
 
     /* get the DOM node which has the scrollTop property we care about for our
      * message panel.
