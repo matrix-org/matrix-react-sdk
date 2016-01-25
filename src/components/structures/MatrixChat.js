@@ -16,6 +16,7 @@ limitations under the License.
 var React = require('react');
 var Matrix = require("matrix-js-sdk");
 var url = require('url');
+var Favico = require('favico.js');
 
 var MatrixClientPeg = require("../../MatrixClientPeg");
 var Notifier = require("../../Notifier");
@@ -64,7 +65,8 @@ module.exports = React.createClass({
             collapse_lhs: false,
             collapse_rhs: false,
             ready: false,
-            width: 10000
+            width: 10000,
+            autoPeek: true, // by default, we peek into rooms when we try to join them
         };
         if (s.logged_in) {
             if (MatrixClientPeg.get().getRooms().length) {
@@ -82,6 +84,10 @@ module.exports = React.createClass({
         return {
             startingQueryParams: {}
         };
+    },
+
+    componentWillMount: function() {
+        this.favicon = new Favico({animation: 'none'});
     },
 
     componentDidMount: function() {
@@ -304,7 +310,10 @@ module.exports = React.createClass({
                 });
                 break;
             case 'view_room':
-                this._viewRoom(payload.room_id, payload.event_id);
+                // by default we autoPeek rooms, unless we were called explicitly with
+                // autoPeek=false by something like RoomDirectory who has already peeked
+                this.setState({ autoPeek : payload.auto_peek === false ? false : true });
+                this._viewRoom(payload.room_id, payload.show_settings, payload.event_id);
                 break;
             case 'view_prev_room':
                 roomIndexDelta = -1;
@@ -359,8 +368,29 @@ module.exports = React.createClass({
                 this.notifyNewScreen('settings');
                 break;
             case 'view_create_room':
-                this._setPage(this.PageTypes.CreateRoom);
-                this.notifyNewScreen('new');
+                //this._setPage(this.PageTypes.CreateRoom);
+                //this.notifyNewScreen('new');
+
+                var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+                var Loader = sdk.getComponent("elements.Spinner");
+                var modal = Modal.createDialog(Loader);
+
+                MatrixClientPeg.get().createRoom({
+                    preset: "private_chat"
+                }).done(function(res) {
+                    modal.close();
+                    dis.dispatch({
+                        action: 'view_room',
+                        room_id: res.room_id,
+                        // show_settings: true,
+                    });
+                }, function(err) {
+                    modal.close();
+                    Modal.createDialog(ErrorDialog, {
+                        title: "Failed to create room",
+                        description: err.toString()
+                    });
+                });
                 break;
             case 'view_room_directory':
                 this._setPage(this.PageTypes.RoomDirectory);
@@ -405,7 +435,7 @@ module.exports = React.createClass({
     //
     // eventId is optional and will cause a switch to the context of that
     // particular event.
-    _viewRoom: function(roomId, eventId) {
+    _viewRoom: function(roomId, showSettings, eventId) {
         // before we switch room, record the scroll state of the current room
         this._updateScrollMap();
 
@@ -448,6 +478,9 @@ module.exports = React.createClass({
             var scrollState = this.scrollStateMap[roomId];
             this.refs.roomView.restoreScrollState(scrollState);
         }*/
+        if (this.refs.roomView && showSettings) {
+            this.refs.roomView.showSettings(true);
+        }
     },
 
     // update scrollStateMap according to the current scroll state of the
@@ -481,6 +514,7 @@ module.exports = React.createClass({
         var cli = MatrixClientPeg.get();
         var self = this;
         cli.on('sync', function(state, prevState) {
+            self.updateFavicon();
             if (state === "SYNCING" && prevState === "SYNCING") {
                 return;
             }
@@ -535,7 +569,9 @@ module.exports = React.createClass({
         UserActivity.start();
         Presence.start();
         cli.startClient({
-            pendingEventOrdering: "end"
+            pendingEventOrdering: "end",
+            // deliberately huge limit for now to avoid hitting gappy /sync's until gappy /sync performance improves
+            initialSyncLimit: 250,
         });
     },
 
@@ -644,7 +680,7 @@ module.exports = React.createClass({
             }
         }
         else {
-            console.error("Unknown screen : %s", screen);
+            if (screen) console.error("Unknown screen : %s", screen);
         }
     },
 
@@ -661,6 +697,8 @@ module.exports = React.createClass({
 
     onUserClick: function(event, userId) {
         event.preventDefault();
+
+        /*
         var MemberInfo = sdk.getComponent('rooms.MemberInfo');
         var member = new Matrix.RoomMember(null, userId);
         ContextualMenu.createMenu(MemberInfo, {
@@ -668,6 +706,14 @@ module.exports = React.createClass({
             right: window.innerWidth - event.pageX,
             top: event.pageY
         });
+        */
+
+        var member = new Matrix.RoomMember(null, userId);
+        if (!member) { return; }
+        dis.dispatch({
+            action: 'view_user',
+            member: member,
+        });        
     },
 
     onLogoutClick: function(event) {
@@ -722,7 +768,15 @@ module.exports = React.createClass({
     onRegistered: function(credentials) {
         this.onLoggedIn(credentials);
         // do post-registration stuff
-        this.showScreen("post_registration");
+        // This now goes straight to user settings
+        // We use _setPage since if we wait for
+        // showScreen to do the dispatch loop,
+        // the showScreen dispatch will race with the
+        // sdk sync finishing and we'll probably see
+        // the page type still unset when the MatrixClient
+        // is started and show the Room Directory instead.
+        //this.showScreen("view_user_settings");
+        this._setPage(this.PageTypes.UserSettings);
     },
 
     onFinishPostRegistration: function() {
@@ -731,6 +785,21 @@ module.exports = React.createClass({
             screen: undefined
         });
         this.showScreen("settings");
+    },
+
+    updateFavicon: function() {
+        var notifCount = 0;
+
+        var rooms = MatrixClientPeg.get().getRooms();
+        for (var i = 0; i < rooms.length; ++i) {
+            if (rooms[i].hasMembershipState(MatrixClientPeg.get().credentials.userId, 'invite')) {
+                ++notifCount;
+            } else if (rooms[i].getUnreadNotificationCount()) {
+                notifCount += rooms[i].getUnreadNotificationCount();
+            }
+        }
+        this.favicon.badge(notifCount);
+        document.title = (notifCount > 0 ? "["+notifCount+"] " : "")+"Vector";
     },
 
     onUserSettingsClose: function() {
@@ -777,6 +846,7 @@ module.exports = React.createClass({
                             ref="roomView"
                             roomId={this.state.currentRoom}
                             initialEventId={this.state.initialEventId}
+                            autoPeek={this.state.autoPeek}
                             key={this.state.currentRoom+"+"+this.state.initialEventId}
                             ConferenceHandler={this.props.ConferenceHandler} />
                     );

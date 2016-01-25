@@ -21,7 +21,7 @@ var GeminiScrollbar = require('react-gemini-scrollbar');
 var MatrixClientPeg = require("../../../MatrixClientPeg");
 var CallHandler = require('../../../CallHandler');
 var RoomListSorter = require("../../../RoomListSorter");
-var UnreadStatus = require('../../../UnreadStatus');
+var Unread = require('../../../Unread');
 var dis = require("../../../dispatcher");
 var sdk = require('../../../index');
 
@@ -38,7 +38,6 @@ module.exports = React.createClass({
 
     getInitialState: function() {
         return {
-            activityMap: null,
             isLoadingLeftRooms: false,
             lists: {},
             incomingCall: null,
@@ -52,11 +51,11 @@ module.exports = React.createClass({
         cli.on("Room.timeline", this.onRoomTimeline);
         cli.on("Room.name", this.onRoomName);
         cli.on("Room.tags", this.onRoomTags);
+        cli.on("Room.receipt", this.onRoomReceipt);
         cli.on("RoomState.events", this.onRoomStateEvents);
         cli.on("RoomMember.name", this.onRoomMemberName);
 
         var s = this.getRoomLists();
-        s.activityMap = {};
         this.setState(s);
     },
 
@@ -93,16 +92,10 @@ module.exports = React.createClass({
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener("Room", this.onRoom);
             MatrixClientPeg.get().removeListener("Room.timeline", this.onRoomTimeline);
+            MatrixClientPeg.get().removeListener("Room.receipt", this.onRoomReceipt);
             MatrixClientPeg.get().removeListener("Room.name", this.onRoomName);
             MatrixClientPeg.get().removeListener("RoomState.events", this.onRoomStateEvents);
         }
-    },
-
-    componentWillReceiveProps: function(newProps) {
-        this.state.activityMap[newProps.selectedRoom] = undefined;
-        this.setState({
-            activityMap: this.state.activityMap
-        });
     },
 
     onRoom: function(room) {
@@ -130,37 +123,20 @@ module.exports = React.createClass({
 
     onRoomTimeline: function(ev, room, toStartOfTimeline) {
         if (toStartOfTimeline) return;
+        this.refreshRoomList();
+    },
 
-        var hl = 0;
-        if (
-            room.roomId != this.props.selectedRoom &&
-            ev.getSender() != MatrixClientPeg.get().credentials.userId)
-        {
-            if (UnreadStatus.eventTriggersUnreadCount(ev)) {
-                hl = 1;
-            }
-
-            var me = room.getMember(MatrixClientPeg.get().credentials.userId);
-            var actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
-            if ((actions && actions.tweaks && actions.tweaks.highlight) ||
-                (me && me.membership == "invite"))
-            {
-                hl = 2;
+    onRoomReceipt: function(receiptEvent, room) {
+        // because if we read a notification, it will affect notification count
+        // only bother updating if there's a receipt from us
+        var receiptKeys = Object.keys(receiptEvent.getContent());
+        for (var i = 0; i < receiptKeys.length; ++i) {
+            var rcpt = receiptEvent.getContent()[receiptKeys[i]];
+            if (rcpt['m.read'] && rcpt['m.read'][MatrixClientPeg.get().credentials.userId]) {
+                this.refreshRoomList();
+                break;
             }
         }
-
-        var newState = this.getRoomLists();
-        if (hl > 0) {
-            // obviously this won't deep copy but this shouldn't be necessary
-            var amap = this.state.activityMap;
-            amap[room.roomId] = Math.max(amap[room.roomId] || 0, hl);
-
-            newState.activityMap = amap;
-
-        }
-        // still want to update the list even if the highlight status
-        // hasn't changed because the ordering may have
-        this.setState(newState);
     },
 
     onRoomName: function(room) {
@@ -349,6 +325,12 @@ module.exports = React.createClass({
         });
     },
 
+    onShowMoreRooms: function() {
+        // kick gemini in the balls to get it to wake up
+        // XXX: uuuuuuugh.
+        this.refs.gemscroll.forceUpdate();
+    },
+
     render: function() {
         var expandButton = this.props.collapsed ? 
                            <img className="mx_RoomList_expandButton" onClick={ this.onShowClick } src="img/menu.png" width="20" alt=">"/> :
@@ -358,7 +340,7 @@ module.exports = React.createClass({
         var self = this;
 
         return (
-            <GeminiScrollbar className="mx_RoomList_scrollbar" autoshow={true} onScroll={ self._repositionTooltips }>
+            <GeminiScrollbar className="mx_RoomList_scrollbar" autoshow={true} onScroll={ self._repositionTooltips } ref="gemscroll">
             <div className="mx_RoomList">
                 { expandButton }
 
@@ -366,10 +348,10 @@ module.exports = React.createClass({
                              label="Invites"
                              editable={ false }
                              order="recent"
-                             activityMap={ self.state.activityMap }
                              selectedRoom={ self.props.selectedRoom }
                              incomingCall={ self.state.incomingCall }
-                             collapsed={ self.props.collapsed } />
+                             collapsed={ self.props.collapsed }
+                             onShowMoreRooms={ this.onShowMoreRooms } />
 
                 <RoomSubList list={ self.state.lists['m.favourite'] }
                              label="Favourites"
@@ -377,20 +359,20 @@ module.exports = React.createClass({
                              verb="favourite"
                              editable={ true }
                              order="manual"
-                             activityMap={ self.state.activityMap }
                              selectedRoom={ self.props.selectedRoom }
                              incomingCall={ self.state.incomingCall }
-                             collapsed={ self.props.collapsed } />
+                             collapsed={ self.props.collapsed }
+                             onShowMoreRooms={ this.onShowMoreRooms } />
 
                 <RoomSubList list={ self.state.lists['im.vector.fake.recent'] }
                              label="Rooms"
                              editable={ true }
                              verb="restore"
                              order="recent"
-                             activityMap={ self.state.activityMap }
                              selectedRoom={ self.props.selectedRoom }
                              incomingCall={ self.state.incomingCall }
-                             collapsed={ self.props.collapsed } />
+                             collapsed={ self.props.collapsed }
+                             onShowMoreRooms={ this.onShowMoreRooms } />
 
                 { Object.keys(self.state.lists).map(function(tagName) {
                     if (!tagName.match(/^(m\.(favourite|lowpriority)|im\.vector\.fake\.(invite|recent|archived))$/)) {
@@ -401,10 +383,10 @@ module.exports = React.createClass({
                              verb={ "tag as " + tagName }
                              editable={ true }
                              order="manual"
-                             activityMap={ self.state.activityMap }
                              selectedRoom={ self.props.selectedRoom }
                              incomingCall={ self.state.incomingCall }
-                             collapsed={ self.props.collapsed } />
+                             collapsed={ self.props.collapsed }
+                             onShowMoreRooms={ this.onShowMoreRooms } />
 
                     }
                 }) }
@@ -415,23 +397,23 @@ module.exports = React.createClass({
                              verb="demote"
                              editable={ true }
                              order="recent"
-                             activityMap={ self.state.activityMap }
                              selectedRoom={ self.props.selectedRoom }
                              incomingCall={ self.state.incomingCall }
-                             collapsed={ self.props.collapsed } />
+                             collapsed={ self.props.collapsed }
+                             onShowMoreRooms={ this.onShowMoreRooms } />
 
                 <RoomSubList list={ self.state.lists['im.vector.fake.archived'] }
                              label="Historical"
                              editable={ false }
                              order="recent"
-                             activityMap={ self.state.activityMap }
                              selectedRoom={ self.props.selectedRoom }
                              collapsed={ self.props.collapsed }
                              alwaysShowHeader={ true }
                              startAsHidden={ true }
                              showSpinner={ self.state.isLoadingLeftRooms }
                              onHeaderClick= { self.onArchivedHeaderClick }
-                             incomingCall={ self.state.incomingCall } />
+                             incomingCall={ self.state.incomingCall }
+                             onShowMoreRooms={ this.onShowMoreRooms } />
             </div>
             </GeminiScrollbar>
         );

@@ -63,6 +63,7 @@ var cssAttrs = [
     "backgroundColor",
     "borderColor",
     "borderTopColor",
+    "borderBottomColor",
 ];
 
 var svgAttrs = [
@@ -75,6 +76,16 @@ var cached = false;
 function calcCssFixups() {
     for (var i = 0; i < document.styleSheets.length; i++) {
         var ss = document.styleSheets[i];
+        // Chromium apparently sometimes returns null here; unsure why.
+        // see $14534907369972FRXBx:matrix.org in HQ
+        // ...ah, it's because there's a third party extension like
+        // privacybadger inserting its own stylesheet in there with a
+        // resource:// URI or something which results in a XSS error.
+        // See also #vector:matrix.org/$145357669685386ebCfr:matrix.org
+        // ...except some browsers apparently return stylesheets without
+        // hrefs, which we have no choice but ignore right now
+        if (ss.href && !ss.href.endsWith("/bundle.css")) continue;
+        if (!ss.cssRules) continue;
         for (var j = 0; j < ss.cssRules.length; j++) {
             var rule = ss.cssRules[j];
             if (!rule.style) continue;
@@ -178,7 +189,20 @@ module.exports = {
 
         var fixups = [];
         for (var i = 0; i < svgs.length; i++) {
-            var svgDoc = svgs[i].contentDocument;
+            var svgDoc;
+            try {
+                svgDoc = svgs[i].contentDocument;   
+            }
+            catch(e) {
+                var msg = 'Failed to get svg.contentDocument of ' + svgs[i].toString();
+                if (e.message) {
+                    msg += e.message;
+                }
+                if (e.stack) {
+                    msg += ' | stack: ' + e.stack;
+                }
+                console.error(e);
+            }
             if (!svgDoc) continue;
             var tags = svgDoc.getElementsByTagName("*");
             for (var j = 0; j < tags.length; j++) {
