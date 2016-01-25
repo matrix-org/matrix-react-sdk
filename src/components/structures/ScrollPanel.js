@@ -37,10 +37,31 @@ if (DEBUG_SCROLL) {
  * It also provides a hook which allows parents to provide more list elements
  * when we get close to the start or end of the list.
  *
- * We don't save the absolute scroll offset, because that would be affected by
- * window width, zoom level, amount of scrollback, etc. Instead we save an
- * identifier for the last fully-visible message, and the number of pixels the
- * window was scrolled below it - which is hopefully be near enough.
+ * Some notes about the implementation:
+ *
+ * The saved 'scrollState' can exist in one of three states:
+ *
+ *   - null: (the default, and restored by resetScrollState) - no explicit
+ *     state has been set yet. Updates to the children will be ignored as far
+ *     as scrolling the viewport goes.
+ *
+ *   - atBottom: the viewport is scrolled down as far as it can be. When the
+ *     children are updated, the scroll position will be updated to ensure it
+ *     is still at the bottom.
+ *
+ *   - normal, in which the viewport is conceptually tied at a specific scroll
+ *     offset.  We don't save the absolute scroll offset, because that would be
+ *     affected by window width, zoom level, amount of scrollback, etc. Instead
+ *     we save an identifier for the last fully-visible message, and the number
+ *     of pixels the window was scrolled below it - which is hopefully be near
+ *     enough.
+ *
+ * The 'stickyBottom' property controls the behaviour when we reach the bottom
+ * of the window (either through a user-initiated scroll, or by calling
+ * scrollToBottom). If stickyBottom is enabled, the scrollState will enter
+ * 'atBottom' state - ensuring that new additions cause the window to scroll
+ * down further. If stickyBottom is disabled, we just save the scroll offset as
+ * normal.
  *
  * Each child element should have a 'data-scroll-token'. This token is used to
  * serialise the scroll state, and returned as the 'lastDisplayedScrollToken'
@@ -269,11 +290,17 @@ module.exports = React.createClass({
     },
     
     scrollToBottom: function() {
-        this.scrollState = {
-            atBottom: true,
-        };
+        // the easiest way to make sure that the scroll state is correctly
+        // saved is to do the scroll, then save the updated state. (Calculating
+        // it ourselves is hard, and we can't rely on an onScroll callback
+        // happening, since there may be no user-visible change here).
+        var scrollNode = this._getScrollNode();
 
-        this._restoreSavedScrollState();
+        scrollNode.scrollTop = scrollNode.scrollHeight;
+        debuglog("Scrolled to bottom; offset now", scrollNode.scrollTop);
+        this._lastSetScroll = scrollNode.scrollTop;
+
+        this._saveScrollState();
     },
 
     // scroll the message list to the node with the given scrollToken. See
@@ -344,13 +371,15 @@ module.exports = React.createClass({
         // attribute. It is this token which is stored as the
         // 'lastDisplayedScrollToken'.
 
-        var atBottom = this.isAtBottom();
+        if (this.props.stickyBottom && this.isAtBottom()) {
+            this.scrollState = { atBottom: true };
+            debuglog("Saved scroll state", this.scrollState);
+            return;
+        }
 
         var itemlist = this.refs.itemlist;
         var wrapperRect = ReactDOM.findDOMNode(this).getBoundingClientRect();
         var messages = itemlist.children;
-
-        var scrollState = { atBottom: true }
 
         for (var i = messages.length-1; i >= 0; --i) {
             var node = messages[i];
@@ -358,24 +387,29 @@ module.exports = React.createClass({
 
             var boundingRect = node.getBoundingClientRect();
             if (boundingRect.bottom < wrapperRect.bottom) {
-                scrollState = {
-                    atBottom: atBottom,
+                this.scrollState = {
+                    atBottom: false,
                     lastDisplayedScrollToken: node.dataset.scrollToken,
                     pixelOffset: wrapperRect.bottom - boundingRect.bottom,
                 }
-                break;
+                debuglog("Saved scroll state", this.scrollState);
+                return;
             }
         }
 
-        this.scrollState = scrollState;
-        debuglog("Saved scroll state", this.scrollState);
+        debuglog("Unable to save scroll state: found no children in the viewport");
     },
 
     _restoreSavedScrollState: function() {
         var scrollState = this.scrollState;
         var scrollNode = this._getScrollNode();
 
-        if (!scrollState || (this.props.stickyBottom && scrollState.atBottom)) {
+        if (!scrollState) {
+            debuglog("No scroll state saved yet");
+            return;
+        }
+
+        if (scrollState.atBottom) {
             scrollNode.scrollTop = scrollNode.scrollHeight;
             debuglog("Scrolled to bottom; offset now", scrollNode.scrollTop);
         } else if (scrollState.lastDisplayedScrollToken) {
