@@ -440,11 +440,24 @@ module.exports = React.createClass({
         this._updateScrollMap();
 
         this.focusComposer = true;
+
         var newState = {
             currentRoom: roomId,
             initialEventId: eventId,
+            initialEventPixelOffset: undefined,
             page_type: this.PageTypes.RoomView,
         };
+
+        // if we aren't given an explicit event id, look for one in the
+        // scrollStateMap.
+        if (!eventId) {
+            var scrollState = this.scrollStateMap[roomId];
+            if (scrollState) {
+                newState.initialEventId = scrollState.focussedEvent;
+                newState.initialEventPixelOffset = scrollState.pixelOffset;
+            }
+        }
+
         if (this.sdkReady) {
             // if the SDK is not ready yet, remember what room
             // we're supposed to be on but don't notify about
@@ -473,11 +486,7 @@ module.exports = React.createClass({
             newState.ready = true;
         }
         this.setState(newState);
-        /*
-        if (this.scrollStateMap[roomId]) {
-            var scrollState = this.scrollStateMap[roomId];
-            this.refs.roomView.restoreScrollState(scrollState);
-        }*/
+
         if (this.refs.roomView && showSettings) {
             this.refs.roomView.showSettings(true);
         }
@@ -846,6 +855,7 @@ module.exports = React.createClass({
                             ref="roomView"
                             roomId={this.state.currentRoom}
                             initialEventId={this.state.initialEventId}
+                            initialEventPixelOffset={this.state.initialEventPixelOffset}
                             autoPeek={this.state.autoPeek}
                             key={this.state.currentRoom+"+"+this.state.initialEventId}
                             ConferenceHandler={this.props.ConferenceHandler} />

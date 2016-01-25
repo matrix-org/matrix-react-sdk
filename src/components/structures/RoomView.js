@@ -61,6 +61,7 @@ module.exports = React.createClass({
         ConferenceHandler: React.PropTypes.any,
         roomId: React.PropTypes.string.isRequired,
         initialEventId: React.PropTypes.string,
+        initialEventPixelOffset: React.PropTypes.number,
         autoPeek: React.PropTypes.bool, // should we try to peek the room on mount, or has whoever invoked us already initiated a peek?
     },
 
@@ -138,7 +139,14 @@ module.exports = React.createClass({
         else {
             this._calculatePeekRules(this.state.room);
         }
+
         if (this.state.room) {
+            var initialEvent = this.props.initialEventId;
+            if (!initialEvent) {
+                // scroll to the 'read-up-to' mark
+                initialEvent = this.state.readMarkerEventId;
+            }
+
             this._timelineWindow = new Matrix.TimelineWindow(
                 MatrixClientPeg.get(), this.state.room,
                 {windowLimit: TIMELINE_CAP});
@@ -216,10 +224,6 @@ module.exports = React.createClass({
                 var callState;
 
                 if (call) {
-                    // Call state has changed so we may be loading video elements
-                    // which will obscure the message log.
-                    // scroll to bottom
-                    this.scrollToBottom();
                     callState = call.call_state;
                 }
                 else {
@@ -380,6 +384,12 @@ module.exports = React.createClass({
                 readMarkerEventId: readMarkerEventId,
                 readMarkerGhostEventId: readMarkerGhostEventId,
             });
+
+            // if the scrollpanel is following the timeline, scroll it to bring
+            // the read message up to the middle of the panel.
+            if (this.refs.messagePanel && this.refs.messagePanel.isAtBottom()) {
+                this.refs.messagePanel.scrollToToken(readMarkerEventId);
+            }
         }
     },
 
@@ -499,7 +509,6 @@ module.exports = React.createClass({
         var messagePanel = ReactDOM.findDOMNode(this.refs.messagePanel);
         this.refs.messagePanel.initialised = true;
 
-        this.scrollToBottom();
         this.sendReadReceipt();
 
         this.updateTint();
@@ -525,9 +534,10 @@ module.exports = React.createClass({
 
         // initialise the scroll state of the message panel
         if (this.props.initialEventId && this.refs.messagePanel) {
-            this.refs.messagePanel.scrollToToken(this.props.initialEventId);
+            this.refs.messagePanel.scrollToToken(this.props.initialEventId,
+                    this.props.initialEventPixelOffset);
         } else {
-            this.refs.messagePanel.scrollToBottom();
+            this.scrollToReadMarker();
         }
     },
 
@@ -1345,6 +1355,12 @@ module.exports = React.createClass({
         return this.state.numUnreadMessages + " new message" + (this.state.numUnreadMessages > 1 ? "s" : "");
     },
 
+    scrollToReadMarker: function() {
+        var messagePanel = this.refs.messagePanel;
+        if (!messagePanel) return;
+        messagePanel.scrollToToken(this.state.readMarkerEventId);
+    },
+
     scrollToBottom: function() {
         var messagePanel = this.refs.messagePanel;
         if (!messagePanel) return;
@@ -1352,31 +1368,37 @@ module.exports = React.createClass({
     },
 
     // get the current scroll position of the room, so that it can be
-    // restored when we switch back to it
+    // restored when we switch back to it.
+    //
+    // This returns an object with the following properties:
+    //
+    //    focussedEvent: the ID of the 'focussed' event. Typically this is the
+    //        last event fully visible in the viewport, though if we have done
+    //        an explicit scroll to an explicit event, it will be that event.
+    //
+    //    pixelOffset: the number of pixels the window is scrolled down from
+    //        the focussedEvent.
+    //
+    // If there are no visible events, returns null.
+    //
     getScrollState: function() {
         var messagePanel = this.refs.messagePanel;
         if (!messagePanel) return null;
 
-        return messagePanel.getScrollState();
-    },
+        var scrollState = messagePanel.getScrollState();
 
-    restoreScrollState: function(scrollState) {
-        var messagePanel = this.refs.messagePanel;
-        if (!messagePanel) return null;
-
-        if(scrollState.atBottom) {
-            // we were at the bottom before. Ideally we'd scroll to the
-            // 'read-up-to' mark here.
-            messagePanel.scrollToBottom();
-
-        } else if (scrollState.lastDisplayedScrollToken) {
-            // we might need to backfill, so we call scrollToEvent rather than
-            // scrollToToken here. The scrollTokens on our DOM nodes are the
-            // event IDs, so lastDisplayedScrollToken will be the event ID we need,
-            // and we can pass it directly into scrollToEvent.
-            messagePanel.scrollToToken(scrollState.lastDisplayedScrollToken,
-                                       scrollState.pixelOffset);
+        if (scrollState.atBottom) {
+            // we don't really expect to be in this state, but it will
+            // occasionally happen when we are in a transition. Treat it the
+            // same as having no saved state (which will cause us to scroll to
+            // last unread on reload).
+            return null;
         }
+
+        return {
+            focussedEvent: scrollState.lastDisplayedScrollToken,
+            pixelOffset: scrollState.pixelOffset,
+        };
     },
 
     onResize: function(e) {
