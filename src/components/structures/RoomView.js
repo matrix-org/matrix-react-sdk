@@ -363,14 +363,14 @@ module.exports = React.createClass({
             // if the event after the one referenced in the read receipt if sent by us, do nothing since
             // this is a temporary period before the synthesized receipt for our own message arrives
             var readMarkerGhostEventIndex;
-            for (var i = 0; i < room.timeline.length; ++i) {
-                if (room.timeline[i].getId() == readMarkerGhostEventId) {
+            for (var i = 0; i < this.state.events.length; ++i) {
+                if (this.state.events[i].getId() == readMarkerGhostEventId) {
                     readMarkerGhostEventIndex = i;
                     break;
                 }
             }
-            if (readMarkerGhostEventIndex + 1 < room.timeline.length) {
-                var nextEvent = room.timeline[readMarkerGhostEventIndex + 1];
+            if (readMarkerGhostEventIndex + 1 < this.state.events.length) {
+                var nextEvent = this.state.events[readMarkerGhostEventIndex + 1];
                 if (nextEvent.sender && nextEvent.sender.userId == MatrixClientPeg.get().credentials.userId) {
                     readMarkerGhostEventId = undefined;
                 }

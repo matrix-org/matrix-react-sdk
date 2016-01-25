@@ -145,6 +145,10 @@ module.exports = React.createClass({
             this.recentEventScroll = undefined;
         }
 
+        // If there weren't enough children to fill the viewport, the scroll we
+        // got might be different to the scroll we wanted; we don't want to
+        // forget what we wanted, so don't overwrite the saved state unless
+        // this appears to be a user-initiated scroll.
         if (sn.scrollTop != this._lastSetScroll) {
             this._saveScrollState();
         } else {
@@ -283,7 +287,7 @@ module.exports = React.createClass({
 
         // default to the middle
         if (pixelOffset === undefined) {
-            pixelOffset = scrollNode.scrollHeight / 2;
+            pixelOffset = scrollNode.clientHeight / 2;
         }
 
         // save the desired scroll state ...
