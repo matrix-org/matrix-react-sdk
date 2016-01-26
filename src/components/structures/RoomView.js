@@ -85,7 +85,7 @@ module.exports = React.createClass({
             syncState: MatrixClientPeg.get().getSyncState(),
             hasUnsentMessages: this._hasUnsentMessages(room),
             callState: null,
-            autoPeekDone: false, // track whether our autoPeek (if any) has completed)
+            timelineLoaded: false, // track whether our room timeline has loaded
             guestsCanJoin: false,
             canPeek: false,
             readMarkerEventId: room ? room.getEventReadUpTo(MatrixClientPeg.get().credentials.userId) : null,
@@ -97,7 +97,6 @@ module.exports = React.createClass({
     componentWillMount: function() {
         this.last_rr_sent_event_id = undefined;
         this.dispatcherRef = dis.register(this.onAction);
-        MatrixClientPeg.get().on("Room", this.onNewRoom);
         MatrixClientPeg.get().on("Room.timeline", this.onRoomTimeline);
         MatrixClientPeg.get().on("Room.name", this.onRoomName);
         MatrixClientPeg.get().on("Room.accountData", this.onRoomAccountData);
@@ -115,6 +114,15 @@ module.exports = React.createClass({
                 this.forceUpdate();
             }
         });
+
+
+        // to make the timeline load work correctly, build up a chain of promises which
+        // take us through the necessary steps.
+
+        // First of all, we may need to load the room. Construct a promise
+        // which resolves to the Room object.
+        var roomProm;
+
         // if this is an unknown room then we're in one of three states:
         // - This is a room we can peek into (search engine) (we can /peek)
         // - This is a room we can publicly join or were invited to. (we can /join)
@@ -123,40 +131,48 @@ module.exports = React.createClass({
         // We can /peek though. If it fails then we present the join UI. If it
         // succeeds then great, show the preview (but we still may be able to /join!).
         if (!this.state.room) {
-            if (this.props.autoPeek) {
-                console.log("Attempting to peek into room %s", this.props.roomId);
-                MatrixClientPeg.get().peekInRoom(this.props.roomId).catch((err) => {
-                    console.error("Failed to peek into room: %s", err);
-                }).finally(() => {
-                    // we don't need to do anything - JS SDK will emit Room events
-                    // which will update the UI.
-                    this.setState({
-                        autoPeekDone: true
-                    });
-                });
+            if (!this.props.autoPeek) {
+                console.log("No room loaded, and autopeek disabled");
+                return;
             }
-        }
-        else {
-            this._calculatePeekRules(this.state.room);
+
+            console.log("Attempting to peek into room %s", this.props.roomId);
+
+            roomProm = MatrixClientPeg.get().peekInRoom(this.props.roomId).catch((err) => {
+                console.error("Failed to peek into room: %s", err);
+                throw err;
+            }).then((room) => {
+                this.setState({
+                    room: room
+                });
+                return room;
+            });
+        } else {
+            roomProm = q(this.state.room);
         }
 
-        if (this.state.room) {
+        // Next, load the timeline.
+        roomProm.then((room) => {
+            this._calculatePeekRules(room);
+            this._timelineWindow = new Matrix.TimelineWindow(
+                MatrixClientPeg.get(), room,
+                {windowLimit: TIMELINE_CAP});
+
             var initialEvent = this.props.initialEventId;
             if (!initialEvent) {
-                // scroll to the 'read-up-to' mark
+                // go to the 'read-up-to' mark if no explicit event given
                 initialEvent = this.state.readMarkerEventId;
             }
 
-            this._timelineWindow = new Matrix.TimelineWindow(
-                MatrixClientPeg.get(), this.state.room,
-                {windowLimit: TIMELINE_CAP});
-
-            var prom = this._timelineWindow.load(this.props.initialEventId,
-                                                 INITIAL_SIZE).
-                then(this._onTimelineLoaded);
-            this._timelineLoadPromise = prom;
-            prom.done();
-        }
+            return this._timelineWindow.load(initialEvent, INITIAL_SIZE);
+        }).then(() => {
+            debuglog("RoomView: timeline loaded");
+            this._onTimelineUpdated(true);
+        }).finally(() => {
+            this.setState({
+                timelineLoaded: true
+            });
+        }).done();
     },
 
     componentWillUnmount: function() {
@@ -179,7 +195,6 @@ module.exports = React.createClass({
         }
         dis.unregister(this.dispatcherRef);
         if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener("Room", this.onNewRoom);
             MatrixClientPeg.get().removeListener("Room.timeline", this.onRoomTimeline);
             MatrixClientPeg.get().removeListener("Room.name", this.onRoomName);
             MatrixClientPeg.get().removeListener("Room.accountData", this.onRoomAccountData);
@@ -296,16 +311,6 @@ module.exports = React.createClass({
         if (this.refs.messagePanel) {
             this.refs.messagePanel.checkFillState();
         }
-    },
-
-    onNewRoom: function(room) {
-        if (room.roomId == this.props.roomId) {
-            this.setState({
-                room: room
-            });
-        }
-
-        this._calculatePeekRules(room);
     },
 
     _calculatePeekRules: function(room) {
@@ -509,6 +514,20 @@ module.exports = React.createClass({
         var messagePanel = ReactDOM.findDOMNode(this.refs.messagePanel);
         this.refs.messagePanel.initialised = true;
 
+        // initialise the scroll state of the message panel
+        var initialEvent = this.props.initialEventId;
+        var pixelOffset = this.props.initialEventPixelOffset;
+        if (!initialEvent) {
+            // scroll to the 'read-up-to' mark
+            initialEvent = this.state.readMarkerEventId;
+            pixelOffset = undefined;
+        }
+        if (initialEvent) {
+            this.refs.messagePanel.scrollToToken(initialEvent, pixelOffset);
+        } else {
+            this.refs.messagePanel.scrollToBottom();
+        }
+
         this.sendReadReceipt();
 
         this.updateTint();
@@ -522,22 +541,6 @@ module.exports = React.createClass({
 
         if (!this.refs.messagePanel.initialised) {
             this._initialiseMessagePanel();
-        }
-    },
-
-    _onTimelineLoaded: function() {
-        debuglog("RoomView: timeline loaded");
-
-        this._timelineLoadPromise = null;
-
-        this._onTimelineUpdated(true);
-
-        // initialise the scroll state of the message panel
-        if (this.props.initialEventId && this.refs.messagePanel) {
-            this.refs.messagePanel.scrollToToken(this.props.initialEventId,
-                    this.props.initialEventPixelOffset);
-        } else {
-            this.scrollToReadMarker();
         }
     },
 
@@ -575,12 +578,6 @@ module.exports = React.createClass({
 
     // set off a pagination request.
     onMessageListFillRequest: function(backwards) {
-        if(this._timelineLoadPromise) {
-            debuglog("RoomView: timeline is still loading");
-            var prom = this._timelineLoadPromise.then(() => {return true});
-            return prom;
-        }
-
         if(!this._timelineWindow.canPaginate(backwards)) {
             debuglog("RoomView: can't paginate at this time; backwards:"+backwards);
             return q(false);
@@ -1493,9 +1490,9 @@ module.exports = React.createClass({
         var TintableSvg = sdk.getComponent("elements.TintableSvg");
         var RoomPreviewBar = sdk.getComponent("rooms.RoomPreviewBar");
 
-        if (!this.state.room) {
+        if (!this._timelineWindow) {
             if (this.props.roomId) {
-                if (this.props.autoPeek && !this.state.autoPeekDone) {
+                if (!this.state.timelineLoaded) {
                     var Loader = sdk.getComponent("elements.Spinner");
                     return (
                         <div className="mx_RoomView">
