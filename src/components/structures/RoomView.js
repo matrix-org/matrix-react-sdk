@@ -26,6 +26,7 @@ var ReactDOM = require("react-dom");
 var q = require("q");
 var classNames = require("classnames");
 var Matrix = require("matrix-js-sdk");
+var EventTimeline = Matrix.EventTimeline;
 
 var MatrixClientPeg = require("../../MatrixClientPeg");
 var ContentMessages = require("../../ContentMessages");
@@ -541,7 +542,7 @@ module.exports = React.createClass({
         if (gotResults) {
             this.setState({
                 events: this._timelineWindow.getEvents(),
-                canBackPaginate: this._timelineWindow.canPaginate(true),
+                canBackPaginate: this._timelineWindow.canPaginate(EventTimeline.BACKWARDS),
             });
         }
     },
@@ -563,14 +564,15 @@ module.exports = React.createClass({
 
     // set off a pagination request.
     onMessageListFillRequest: function(backwards) {
-        if(!this._timelineWindow.canPaginate(backwards)) {
+        var dir = backwards ? EventTimeline.BACKWARDS : EventTimeline.FORWARDS;
+        if(!this._timelineWindow.canPaginate(dir)) {
             debuglog("RoomView: can't paginate at this time; backwards:"+backwards);
             return q(false);
         }
         this.setState({paginating: true});
 
         debuglog("RoomView: Initiating paginate; backwards:"+backwards);
-        return this._timelineWindow.paginate(backwards, PAGINATE_SIZE).then((r) => {
+        return this._timelineWindow.paginate(dir, PAGINATE_SIZE).then((r) => {
             debuglog("RoomView: paginate complete backwards:"+backwards+"; success:"+r);
             this._onTimelineUpdated(r);
             return r;
