@@ -342,7 +342,7 @@ module.exports = React.createClass({
         }
 
         if (!node) {
-            console.error("No node with scrollToken '"+scrollToken+"'");
+            debuglog("ScrollPanel: No node with scrollToken '"+scrollToken+"'");
             return;
         }
 
