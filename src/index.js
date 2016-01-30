@@ -1,5 +1,5 @@
 /*
-Copyright 2015 OpenMarket Ltd
+Copyright 2015, 2016 OpenMarket Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,14 +15,9 @@ limitations under the License.
 */
 
 var Skinner = require('./Skinner');
-var Modulator = require('./Modulator');
 
 module.exports.loadSkin = function(skinObject) {
     Skinner.load(skinObject);
-};
-
-module.exports.loadModule = function(moduleObject) {
-    Modulator.loadModule(moduleObject);
 };
 
 module.exports.resetSkin = function() {

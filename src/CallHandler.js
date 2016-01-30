@@ -1,5 +1,5 @@
 /*
-Copyright 2015 OpenMarket Ltd
+Copyright 2015, 2016 OpenMarket Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -56,12 +56,12 @@ var Modal = require('./Modal');
 var sdk = require('./index');
 var Matrix = require("matrix-js-sdk");
 var dis = require("./dispatcher");
-var Modulator = require("./Modulator");
 
 global.mxCalls = {
     //room_id: MatrixCall
 };
 var calls = global.mxCalls;
+var ConferenceHandler = null;
 
 function play(audioId) {
     // TODO: Attach an invisible element for this instead
@@ -115,7 +115,7 @@ function _setCallListeners(call) {
             _setCallState(call, call.roomId, "busy");
             pause("ringbackAudio");
             play("busyAudio");
-            var ErrorDialog = sdk.getComponent("organisms.ErrorDialog");
+            var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createDialog(ErrorDialog, {
                 title: "Call Timeout",
                 description: "The remote side failed to pick up."
@@ -138,9 +138,17 @@ function _setCallListeners(call) {
 
 function _setCallState(call, roomId, status) {
     console.log(
-        "Call state in %s changed to %s (%s)", roomId, status, (call ? call.state : "-")
+        "Call state in %s changed to %s (%s)", roomId, status, (call ? call.call_state : "-")
     );
     calls[roomId] = call;
+
+    if (status === "ringing") {
+        play("ringAudio")
+    }
+    else if (call && call.call_state === "ringing") {
+        pause("ringAudio")
+    }
+
     if (call) {
         call.call_state = status;
     }
@@ -173,17 +181,27 @@ function _onAction(payload) {
             console.error("Unknown conf call type: %s", payload.type);
         }
     }
+    var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
 
     switch (payload.action) {
         case 'place_call':
             if (module.exports.getAnyActiveCall()) {
-                var ErrorDialog = sdk.getComponent("organisms.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
                     title: "Existing Call",
                     description: "You are already in a call."
                 });
                 return; // don't allow >1 call to be placed.
             }
+
+            // if the runtime env doesn't do VoIP, whine.
+            if (!MatrixClientPeg.get().supportsVoip()) {
+                Modal.createDialog(ErrorDialog, {
+                    title: "VoIP is unsupported",
+                    description: "You cannot place VoIP calls in this browser."
+                });
+                return;
+            }
+
             var room = MatrixClientPeg.get().getRoom(payload.room_id);
             if (!room) {
                 console.error("Room %s does not exist.", payload.room_id);
@@ -192,7 +210,7 @@ function _onAction(payload) {
 
             var members = room.getJoinedMembers();
             if (members.length <= 1) {
-                var ErrorDialog = sdk.getComponent("organisms.ErrorDialog");
+                var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
                     description: "You cannot place a call with yourself."
                 });
@@ -217,13 +235,18 @@ function _onAction(payload) {
             break;
         case 'place_conference_call':
             console.log("Place conference call in %s", payload.room_id);
-            if (!Modulator.hasConferenceHandler()) {
-                var ErrorDialog = sdk.getComponent("organisms.ErrorDialog");
+            if (!ConferenceHandler) {
                 Modal.createDialog(ErrorDialog, {
                     description: "Conference calls are not supported in this client"
                 });
-            } else {
-                var ConferenceHandler = Modulator.getConferenceHandler();
+            }
+            else if (!MatrixClientPeg.get().supportsVoip()) {
+                Modal.createDialog(ErrorDialog, {
+                    title: "VoIP is unsupported",
+                    description: "You cannot place VoIP calls in this browser."
+                });
+            }
+            else {
                 ConferenceHandler.createNewMatrixCall(
                     MatrixClientPeg.get(), payload.room_id
                 ).done(function(call) {
@@ -238,6 +261,12 @@ function _onAction(payload) {
                 payload.call.hangup("busy");
                 return; // don't allow >1 call to be received, hangup newer one.
             }
+
+            // if the runtime env doesn't do VoIP, stop here.
+            if (!MatrixClientPeg.get().supportsVoip()) {
+                return;
+            }
+
             var call = payload.call;
             _setCallListeners(call);
             _setCallState(call, call.roomId, "ringing");
@@ -273,8 +302,7 @@ var callHandler = {
         var call = module.exports.getCall(roomId);
         if (call) return call;
 
-        if (Modulator.hasConferenceHandler()) {
-            var ConferenceHandler = Modulator.getConferenceHandler();
+        if (ConferenceHandler) {
             call = ConferenceHandler.getConferenceCallForRoom(roomId);
         }
         if (call) return call;
@@ -295,6 +323,10 @@ var callHandler = {
             }
         }
         return null;
+    },
+
+    setConferenceHandler: function(confHandler) {
+        ConferenceHandler = confHandler;
     }
 };
 // Only things in here which actually need to be global are the
