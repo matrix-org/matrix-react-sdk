@@ -64,7 +64,11 @@ module.exports = React.createClass({
     },
 
     componentWillUnmount: function() {
-        MatrixClientPeg.get().removeListener("sync", this.onSyncStateChange);
+        var client = MatrixClientPeg.get();
+        // client may be null on logout.
+        if (client) {
+            client.removeListener("sync", this.onSyncStateChange);
+        }
     },
 
     onSyncStateChange: function(state, prevState) {
