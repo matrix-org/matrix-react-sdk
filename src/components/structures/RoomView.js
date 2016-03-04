@@ -559,15 +559,20 @@ module.exports = React.createClass({
 
     onMessageListScroll: function(ev) {
         if (this.refs.messagePanel.isAtEndOfLiveTimeline()) {
-            this.setState({
-                numUnreadMessages: 0,
-                atEndOfLiveTimeline: true,
-            });
+            if (this.state.numUnreadMessages > 0 ||
+                    !this.state.atEndOfLiveTimeLine) {
+                this.setState({
+                    numUnreadMessages: 0,
+                    atEndOfLiveTimeline: true,
+                });
+            }
         }
         else {
-            this.setState({
-                atEndOfLiveTimeline: false,
-            });
+            if (this.state.atEndOfLiveTimeLine) {
+                this.setState({
+                    atEndOfLiveTimeline: false,
+                });
+            }
         }
         this._updateTopUnreadMessagesBar();
     },
@@ -914,7 +919,8 @@ module.exports = React.createClass({
         // screen.
         var showBar = (pos < 0);
 
-        this.setState({showTopUnreadMessagesBar: showBar});
+        if (this.state.showTopUnreadMessagesBar)
+            this.setState({showTopUnreadMessagesBar: showBar});
     },
 
     // get the current scroll position of the room, so that it can be
