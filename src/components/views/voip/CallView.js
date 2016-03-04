@@ -19,38 +19,33 @@ var CallHandler = require("../../../CallHandler");
 var sdk = require('../../../index');
 var MatrixClientPeg = require("../../../MatrixClientPeg");
 
-/*
- * State vars:
- * this.state.call = MatrixCall|null
- *
- * Props:
- * this.props.room = Room (JS SDK)
- * this.props.ConferenceHandler = A Conference Handler implementation
- *                                Must have a function signature:
- *                                getConferenceCallForRoom(roomId: string): MatrixCall
- */
-
 module.exports = React.createClass({
     displayName: 'CallView',
 
     propTypes: {
-        // a callback which is called when the video within the callview
-        // due to a change in video metadata
+        // js-sdk room object. If set, we will only show calls for the given
+        // room; if not, we will show any active call.
+        room: React.PropTypes.object,
+
+        // A Conference Handler implementation
+        // Must have a function signature:
+        //  getConferenceCallForRoom(roomId: string): MatrixCall
+        ConferenceHandler: React.PropTypes.object,
+
+        // maxHeight style attribute for the video panel
+        maxVideoHeight: React.PropTypes.number,
+
+        // a callback which is called when the user clicks on the video div
+        onClick: React.PropTypes.func,
+
+        // a callback which is called when the video within the callview is
+        // resized due to a change in video metadata
         onResize: React.PropTypes.func,
     },
 
     componentDidMount: function() {
         this.dispatcherRef = dis.register(this.onAction);
-        if (this.props.room) {
-            this.showCall(this.props.room.roomId);
-        }
-        else {
-            // XXX: why would we ever not have a this.props.room?
-            var call = CallHandler.getAnyActiveCall();
-            if (call) {
-                this.showCall(call.roomId);
-            }
-        }
+        this.showCall();
     },
 
     componentWillUnmount: function() {
@@ -60,20 +55,27 @@ module.exports = React.createClass({
     onAction: function(payload) {
         // don't filter out payloads for room IDs other than props.room because
         // we may be interested in the conf 1:1 room
-        if (payload.action !== 'call_state' || !payload.room_id) {
+        if (payload.action !== 'call_state') {
             return;
         }
-        this.showCall(payload.room_id);
+        this.showCall();
     },
 
-    showCall: function(roomId) {
-        var call = (
-            CallHandler.getCallForRoom(roomId) ||
-            (this.props.ConferenceHandler ?
-                this.props.ConferenceHandler.getConferenceCallForRoom(roomId) :
-                null
-            )
-        );
+    showCall: function() {
+        var call;
+
+        if (this.props.room) {
+            var roomId = this.props.room.roomId;
+            call = CallHandler.getCallForRoom(roomId) ||
+                (this.props.ConferenceHandler ?
+                 this.props.ConferenceHandler.getConferenceCallForRoom(roomId) :
+                 null
+                );
+        }
+        else {
+            call = CallHandler.getAnyActiveCall();
+        }
+
         if (call) {
             call.setLocalVideoElement(this.getVideoView().getLocalVideoElement());
             call.setRemoteVideoElement(this.getVideoView().getRemoteVideoElement());
@@ -103,7 +105,10 @@ module.exports = React.createClass({
     render: function(){
         var VideoView = sdk.getComponent('voip.VideoView');
         return (
-            <VideoView ref="video" onClick={ this.props.onClick } onResize={ this.props.onResize }/>
+            <VideoView ref="video" onClick={ this.props.onClick }
+                onResize={ this.props.onResize }
+                maxHeight={ this.props.maxVideoHeight }
+            />
         );
     }
 });
