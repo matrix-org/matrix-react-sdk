@@ -1,6 +1,6 @@
 var MatrixClientPeg = require("./MatrixClientPeg");
 
-function textForMemberEvent(ev) {
+function textForMemberEvent(ev, ConferenceHandler) {
     // XXX: SYJS-16 "sender is sometimes null for join messages"
     var senderName = ev.sender ? ev.sender.name : ev.getSender();
     var targetName = ev.target ? ev.target.name : ev.getStateKey();
@@ -18,7 +18,12 @@ function textForMemberEvent(ev) {
                     ".";
             }
             else {
-                return senderName + " invited " + targetName + ".";
+                if (ConferenceHandler.isConferenceUser(ev.getStateKey())) {
+                    return senderName + " requested a VoIP conference";
+                }
+                else {
+                    return senderName + " invited " + targetName + ".";
+                }
             }
         case 'ban':
             return senderName + " banned " + targetName + "." + reason;
@@ -41,12 +46,22 @@ function textForMemberEvent(ev) {
                 }
             } else {
                 if (!ev.target) console.warn("Join message has no target! -- " + ev.getContent().state_key);
-                return targetName + " joined the room.";
+                if (ConferenceHandler.isConferenceUser(ev.getStateKey())) {
+                    return "VoIP conference started";
+                }
+                else {
+                    return targetName + " joined the room.";
+                }
             }
             return '';
         case 'leave':
             if (ev.getSender() === ev.getStateKey()) {
-                return targetName + " left the room.";
+                if (ConferenceHandler.isConferenceUser(ev.getStateKey())) {
+                    return "VoIP conference finished";
+                }
+                else {
+                    return targetName + " left the room.";
+                }
             }
             else if (ev.getPrevContent().membership === "ban") {
                 return senderName + " unbanned " + targetName + ".";
@@ -129,9 +144,9 @@ var handlers = {
 };
 
 module.exports = {
-    textForEvent: function(ev) {
+    textForEvent: function(ev, ConferenceHandler) {
         var hdlr = handlers[ev.getType()];
         if (!hdlr) return "";
-        return hdlr(ev);
+        return hdlr(ev, ConferenceHandler);
     }
 }

@@ -29,13 +29,17 @@ module.exports = React.createClass({
         }
     },
 
+    contextTypes: {
+        ConferenceHandler: React.PropTypes.object,
+    },    
+
     render: function() {
         var text = TextForEvent.textForEvent(this.props.mxEvent);
         if (text == null || text.length == 0) return null;
 
         return (
             <div className="mx_TextualEvent">
-                {TextForEvent.textForEvent(this.props.mxEvent)}
+                {TextForEvent.textForEvent(this.props.mxEvent, ConferenceHandler)}
             </div>
         );
     },

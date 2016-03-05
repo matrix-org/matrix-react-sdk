@@ -26,9 +26,6 @@ module.exports = React.createClass({
         // js-sdk room object
         room: React.PropTypes.object.isRequired,
 
-        // Conference Handler implementation
-        conferenceHandler: React.PropTypes.object,
-
         // set to true to show the file drop target
         draggingFile: React.PropTypes.bool,
 
@@ -86,7 +83,6 @@ module.exports = React.createClass({
 
         var callView = (
             <CallView ref="callView" room={this.props.room}
-                ConferenceHandler={this.props.conferenceHandler}
                 onResize={this.props.onCallViewVideoResize}
                 maxVideoHeight={this.props.maxHeight}
             />

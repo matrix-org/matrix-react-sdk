@@ -51,8 +51,6 @@ if (DEBUG) {
 module.exports = React.createClass({
     displayName: 'RoomView',
     propTypes: {
-        ConferenceHandler: React.PropTypes.any,
-
         roomId: React.PropTypes.string.isRequired,
 
         // The URL used to join this room from an email invite
@@ -82,6 +80,10 @@ module.exports = React.createClass({
         // ID of an event to highlight. If undefined, no event will be highlighted.
         // Typically this will either be the same as 'eventId', or undefined.
         highlightedEventId: React.PropTypes.string,
+    },
+
+    contextTypes: {
+        ConferenceHandler: React.PropTypes.object,
     },
 
     getInitialState: function() {
@@ -371,11 +373,11 @@ module.exports = React.createClass({
             }
         }
 
-        if (!this.props.ConferenceHandler) {
+        if (!this.context.ConferenceHandler) {
             return;
         }
         if (member.roomId !== this.props.roomId ||
-                member.userId !== this.props.ConferenceHandler.getConferenceUserIdForRoom(member.roomId)) {
+                member.userId !== this.context.ConferenceHandler.getConferenceUserIdForRoom(member.roomId)) {
             return;
         }
         this._updateConfCallNotification();
@@ -396,17 +398,17 @@ module.exports = React.createClass({
 
     _updateConfCallNotification: function() {
         var room = MatrixClientPeg.get().getRoom(this.props.roomId);
-        if (!room || !this.props.ConferenceHandler) {
+        if (!room || !this.context.ConferenceHandler) {
             return;
         }
         var confMember = room.getMember(
-            this.props.ConferenceHandler.getConferenceUserIdForRoom(this.props.roomId)
+            this.context.ConferenceHandler.getConferenceUserIdForRoom(this.props.roomId)
         );
 
         if (!confMember) {
             return;
         }
-        var confCall = this.props.ConferenceHandler.getConferenceCallForRoom(confMember.roomId);
+        var confCall = this.context.ConferenceHandler.getConferenceCallForRoom(confMember.roomId);
 
         // A conf call notification should be displayed if there is an ongoing
         // conf call but this cilent isn't a part of it.
@@ -1196,7 +1198,6 @@ module.exports = React.createClass({
 
         var auxPanel = (
             <AuxPanel ref="auxPanel" room={this.state.room}
-              conferenceHandler={this.props.ConferenceHandler}
               draggingFile={this.state.draggingFile}
               displayConfCallNotification={this.state.displayConfCallNotification}
               maxHeight={this.state.auxPanelMaxHeight}

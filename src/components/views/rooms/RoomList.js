@@ -32,9 +32,12 @@ module.exports = React.createClass({
     displayName: 'RoomList',
 
     propTypes: {
-        ConferenceHandler: React.PropTypes.any,
         collapsed: React.PropTypes.bool,
         currentRoom: React.PropTypes.string
+    },
+
+    contextTypes: {
+        ConferenceHandler: React.PropTypes.object,
     },
 
     getInitialState: function() {
@@ -210,7 +213,7 @@ module.exports = React.createClass({
                         var otherMember = joinedMembers.filter(function(m) {
                             return m.userId !== me.userId
                         })[0];
-                        var ConfHandler = self.props.ConferenceHandler;
+                        var ConfHandler = self.context.ConferenceHandler;
                         if (ConfHandler && ConfHandler.isConferenceUser(otherMember.userId)) {
                             // console.log("Hiding conference 1:1 room %s", room.roomId);
                             shouldShowRoom = false;

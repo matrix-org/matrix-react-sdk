@@ -68,6 +68,7 @@ module.exports = React.createClass({
             if (e.isRedacted()) return false;
             if (eventTileTypes[e.getType()] == undefined) return false;
             if (eventTileTypes[e.getType()] == 'messages.TextualEvent') {
+                // FIXME: we sohuld be passing in ConferenceHandler here...
                 return TextForEvent.textForEvent(e) !== '';
             } else {
                 return true;
@@ -106,6 +107,10 @@ module.exports = React.createClass({
         /* callback called when images in events are loaded */
         onImageLoad: React.PropTypes.func,
     },
+
+    contextTypes: {
+        ConferenceHandler: React.PropTypes.object,
+    },    
 
     getInitialState: function() {
         return {menu: false, allReadAvatars: false};

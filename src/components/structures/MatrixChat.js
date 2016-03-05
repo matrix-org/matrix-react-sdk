@@ -41,11 +41,21 @@ module.exports = React.createClass({
 
     propTypes: {
         config: React.PropTypes.object.isRequired,
-        ConferenceHandler: React.PropTypes.any,
+        ConferenceHandler: React.PropTypes.object,
         onNewScreen: React.PropTypes.func,
         registrationUrl: React.PropTypes.string,
         enableGuest: React.PropTypes.bool,
         startingQueryParams: React.PropTypes.object
+    },
+
+    childContextTypes: {
+        ConferenceHandler: React.PropTypes.object,
+    },
+
+    getChildContext: function() {
+        return {
+            ConferenceHandler: this.props.ConferenceHandler
+        };
     },
 
     PageTypes: {
@@ -911,8 +921,7 @@ module.exports = React.createClass({
                             oobData={this.state.roomOobData}
                             highlightedEventId={this.state.highlightedEventId}
                             eventPixelOffset={this.state.initialEventPixelOffset}
-                            key={this.state.currentRoom}
-                            ConferenceHandler={this.props.ConferenceHandler} />
+                            key={this.state.currentRoom} />
                     );
                     right_panel = <RightPanel roomId={this.state.currentRoom} collapsed={this.state.collapse_rhs} />
                     break;

@@ -27,11 +27,6 @@ module.exports = React.createClass({
         // room; if not, we will show any active call.
         room: React.PropTypes.object,
 
-        // A Conference Handler implementation
-        // Must have a function signature:
-        //  getConferenceCallForRoom(roomId: string): MatrixCall
-        ConferenceHandler: React.PropTypes.object,
-
         // maxHeight style attribute for the video panel
         maxVideoHeight: React.PropTypes.number,
 
@@ -41,6 +36,13 @@ module.exports = React.createClass({
         // a callback which is called when the video within the callview is
         // resized due to a change in video metadata
         onResize: React.PropTypes.func,
+    },
+
+    contextTypes: {
+        // A Conference Handler implementation
+        // Must have a function signature:
+        //  getConferenceCallForRoom(roomId: string): MatrixCall
+        ConferenceHandler: React.PropTypes.object,
     },
 
     componentDidMount: function() {
@@ -67,8 +69,8 @@ module.exports = React.createClass({
         if (this.props.room) {
             var roomId = this.props.room.roomId;
             call = CallHandler.getCallForRoom(roomId) ||
-                (this.props.ConferenceHandler ?
-                 this.props.ConferenceHandler.getConferenceCallForRoom(roomId) :
+                (this.context.ConferenceHandler ?
+                 this.context.ConferenceHandler.getConferenceCallForRoom(roomId) :
                  null
                 );
         }
