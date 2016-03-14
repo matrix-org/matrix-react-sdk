@@ -564,6 +564,11 @@ module.exports = React.createClass({
     },
 
     startMatrixClient: function() {
+        this.setState({ 
+            screen: 'threading'
+        });
+        return;
+
         var cli = MatrixClientPeg.get();
         var self = this;
         cli.on('sync', function(state, prevState) {
@@ -894,12 +899,18 @@ module.exports = React.createClass({
         var GuestWarningBar = sdk.getComponent('globals.GuestWarningBar');
         var NewVersionBar = sdk.getComponent('globals.NewVersionBar');
         var ForgotPassword = sdk.getComponent('structures.login.ForgotPassword');
+        var Threading = sdk.getComponent('structures.Threading');
 
         // needs to be before normal PageTypes as you are logged in technically
         if (this.state.screen == 'post_registration') {
             return (
                 <PostRegistration
                     onComplete={this.onFinishPostRegistration} />
+            );
+        }
+        else if (this.state.screen == 'threading') {
+            return (
+                <Threading/>
             );
         }
         else if (this.state.logged_in && this.state.ready) {
