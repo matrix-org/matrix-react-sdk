@@ -38,10 +38,10 @@ module.exports = {
     createDialogWithElement: function(element, props, className) {
         var self = this;
 
-        var closeDialog = function() {
+        var closeDialog = function(accepted) {
             ReactDOM.unmountComponentAtNode(self.getOrCreateContainer());
 
-            if (props && props.onFinished) props.onFinished.apply(null, arguments);
+            if (props && props.onFinished) props.onFinished.call(null, (accepted === true) || false);
         };
 
         var dialog = (
@@ -61,10 +61,10 @@ module.exports = {
     createDialog: function (Element, props, className) {
         var self = this;
 
-        var closeDialog = function() {
+        var closeDialog = function(accepted) {
             ReactDOM.unmountComponentAtNode(self.getOrCreateContainer());
 
-            if (props && props.onFinished) props.onFinished.apply(null, arguments);
+            if (props && props.onFinished) props.onFinished.call(null, (accepted === true)  || false);
         };
 
         // FIXME: If a dialog uses getDefaultProps it clobbers the onFinished
@@ -81,5 +81,5 @@ module.exports = {
         ReactDOM.render(dialog, this.getOrCreateContainer());
 
         return {close: closeDialog};
-    },
+    }
 };
