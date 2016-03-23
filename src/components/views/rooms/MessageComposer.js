@@ -515,6 +515,8 @@ module.exports = React.createClass({
         var canSendMessages = this.props.room.currentState.maySendMessage(MatrixClientPeg.get().credentials.userId);
         var compose_controls;
         if (canSendMessages) {
+            // This also currently includes the call buttons. Really we should check separately for
+            // whether we can call, but this is slightly complex because of conference calls.
             compose_controls = <div className="mx_MessageComposer_composecontrols">
                 <div className="mx_MessageComposer_input" onClick={ this.onInputClick }>
                     <textarea autoFocus ref="textarea" rows="1" onKeyDown={this.onKeyDown} onKeyUp={this.onKeyUp} placeholder="Type a message..." />
