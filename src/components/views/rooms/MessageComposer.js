@@ -157,6 +157,7 @@ module.exports = React.createClass({
             },
 
             saveLastTextEntry: function() {
+                if (!this.element) return;
                 // save the currently entered text in order to restore it later.
                 // NB: This isn't 'originalText' because we want to restore
                 // sent history items too!
@@ -514,7 +515,7 @@ module.exports = React.createClass({
         var canSendMessages = this.props.room.currentState.maySendMessage(MatrixClientPeg.get().credentials.userId);
         var compose_controls;
         if (canSendMessages) {
-            compose_controls = <div>
+            compose_controls = <div className="mx_MessageComposer_composecontrols">
                 <div className="mx_MessageComposer_input" onClick={ this.onInputClick }>
                     <textarea autoFocus ref="textarea" rows="1" onKeyDown={this.onKeyDown} onKeyUp={this.onKeyUp} placeholder="Type a message..." />
                 </div>
