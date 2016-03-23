@@ -157,6 +157,7 @@ module.exports = React.createClass({
             },
 
             saveLastTextEntry: function() {
+                if (!this.element) return;
                 // save the currently entered text in order to restore it later.
                 // NB: This isn't 'originalText' because we want to restore
                 // sent history items too!
@@ -195,9 +196,10 @@ module.exports = React.createClass({
         var textarea = this.refs.textarea;
         switch (payload.action) {
             case 'focus_composer':
-                textarea.focus();
+                if (textarea) textarea.focus();
                 break;
             case 'insert_displayname':
+                if (!textarea) return;
                 if (textarea.value.length) {
                     var left = textarea.value.substring(0, textarea.selectionStart);
                     var right = textarea.value.substring(textarea.selectionEnd);
@@ -258,6 +260,7 @@ module.exports = React.createClass({
     },
 
     resizeInput: function() {
+        if (!this.refs.textarea) return;
         // scrollHeight is at least equal to clientHeight, so we have to
         // temporarily crimp clientHeight to 0 to get an accurate scrollHeight value
         this.refs.textarea.style.height = "20px"; // 20 hardcoded from CSS
@@ -509,6 +512,29 @@ module.exports = React.createClass({
                 </div>
         }
 
+        var canSendMessages = this.props.room.currentState.maySendMessage(MatrixClientPeg.get().credentials.userId);
+        var compose_controls;
+        if (canSendMessages) {
+            // This also currently includes the call buttons. Really we should check separately for
+            // whether we can call, but this is slightly complex because of conference calls.
+            compose_controls = <div className="mx_MessageComposer_composecontrols">
+                <div className="mx_MessageComposer_input" onClick={ this.onInputClick }>
+                    <textarea autoFocus ref="textarea" rows="1" onKeyDown={this.onKeyDown} onKeyUp={this.onKeyUp} placeholder="Type a message..." />
+                </div>
+                <div className="mx_MessageComposer_upload" onClick={this.onUploadClick} title="Upload file">
+                    <TintableSvg src="img/upload.svg" width="19" height="24"/>
+                    <input type="file" style={uploadInputStyle} ref="uploadInput" onChange={this.onUploadFileSelected} />
+                </div>
+                { hangupButton }
+                { callButton }
+                { videoCallButton }
+            </div>
+        } else {
+            compose_controls = <div className="mx_MessageComposer_noperm_error">
+                You do not have permission to post to this room
+            </div>
+        }
+
         return (
         <div className="mx_MessageComposer">
             <div className="mx_MessageComposer_wrapper">
@@ -516,16 +542,7 @@ module.exports = React.createClass({
                     <div className="mx_MessageComposer_avatar">
                         <MemberAvatar member={me} width={24} height={24} />
                     </div>
-                    <div className="mx_MessageComposer_input" onClick={ this.onInputClick }>
-                        <textarea autoFocus ref="textarea" rows="1" onKeyDown={this.onKeyDown} onKeyUp={this.onKeyUp} placeholder="Type a message..." />
-                    </div>
-                    <div className="mx_MessageComposer_upload" onClick={this.onUploadClick} title="Upload file">
-                        <TintableSvg src="img/upload.svg" width="19" height="24"/>
-                        <input type="file" style={uploadInputStyle} ref="uploadInput" onChange={this.onUploadFileSelected} />
-                    </div>
-                    { hangupButton }
-                    { callButton }
-                    { videoCallButton }
+                    { compose_controls }
                 </div>
             </div>
         </div>
