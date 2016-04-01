@@ -15,6 +15,7 @@ limitations under the License.
 */
 var React = require("react");
 var sdk = require("./index");
+var emojione = require('emojione');
 
 class Entry {
     constructor(text) {
@@ -91,6 +92,32 @@ CommandEntry.fromCommands = function(commandArray) {
     });
 }
 
+class EmojiEntry extends Entry {
+    constructor(shortname) {
+        super(shortname);
+        this.shortname = shortname;
+    }
+
+    getFillText() {
+        return emojione.shortnameToUnicode(this.shortname);
+    }
+
+    getKey() {
+        return this.shortname;
+    }
+
+    getImageJsx() {
+        var image = emojione.shortnameToImage(this.shortname);
+        return <span dangerouslySetInnerHTML={{ __html: image }} />;
+    }
+
+    getSuffix(isFirstWord) {
+        return " "; // force a space after the command.
+    }
+}
+
+EmojiEntry.entries = Object.keys(emojione.emojioneList).map((shortname) => new EmojiEntry(shortname));
+
 class MemberEntry extends Entry {
     constructor(member) {
         super(member.name || member.userId);
@@ -139,3 +166,4 @@ MemberEntry.fromMemberList = function(members) {
 module.exports.Entry = Entry;
 module.exports.MemberEntry = MemberEntry;
 module.exports.CommandEntry = CommandEntry;
+module.exports.EmojiEntry = EmojiEntry;

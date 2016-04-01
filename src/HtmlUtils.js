@@ -20,6 +20,8 @@ var React = require('react');
 var sanitizeHtml = require('sanitize-html');
 var highlight = require('highlight.js');
 var linkifyMatrix = require('./linkify-matrix');
+var emojione = require('emojione');
+var _ = require('lodash');
 
 var sanitizeHtmlParams = {
     allowedTags: [
@@ -208,17 +210,25 @@ module.exports = {
             finally {
                 delete sanitizeHtmlParams.textFilter;
             }
-            return <span className="markdown-body" dangerouslySetInnerHTML={{ __html: safeBody }} />;
         } else {
-            safeBody = content.body;
+            safeBody = _.escape(content.body);
+
             if (highlights && highlights.length > 0) {
                 var highlighter = new TextHighlighter("mx_EventTile_searchHighlight", opts.highlightLink);
-                return highlighter.applyHighlights(safeBody, highlights);
-            }
-            else {
-                return safeBody;
+                safeBody =  highlighter.applyHighlights(safeBody, highlights);
             }
         }
+
+        // We do this here to avoid having to whitelist <img>
+
+        try {
+            safeBody = emojione.toImage(safeBody);
+        } catch (e) {
+            console.log(e);
+        }
+
+        safeBody = <span className="markdown-body" dangerouslySetInnerHTML={{ __html: safeBody }} />;
+        return safeBody;
     },
 
     highlightDom: function(element) {

@@ -33,6 +33,7 @@ var CallHandler = require('../../CallHandler');
 var TabComplete = require("../../TabComplete");
 var MemberEntry = require("../../TabCompleteEntries").MemberEntry;
 var CommandEntry = require("../../TabCompleteEntries").CommandEntry;
+var EmojiEntry = require("../../TabCompleteEntries").EmojiEntry;
 var Resend = require("../../Resend");
 var SlashCommands = require("../../SlashCommands");
 var dis = require("../../dispatcher");
@@ -469,7 +470,7 @@ module.exports = React.createClass({
         this.tabComplete.setCompletionList(
             MemberEntry.fromMemberList(members).concat(
                 CommandEntry.fromCommands(SlashCommands.getCommandList())
-            )
+            ).concat(EmojiEntry.entries)
         );
     }, 500),
 
