@@ -82,6 +82,11 @@ module.exports = React.createClass({
         return (content && content.info && content.info.mimetype === "image/gif");
     },
 
+    _isSvg: function() {
+        var content = this.props.mxEvent.getContent();
+        return (content && content.info && content.info.mimetype === "image/svg+xml");
+    },
+
     onImageEnter: function(e) {
         if (!this._isGif()) {
             return;
@@ -102,6 +107,9 @@ module.exports = React.createClass({
 
     _getThumbUrl: function() {
         var content = this.props.mxEvent.getContent();
+        if(this._isSvg()) {
+            return MatrixClientPeg.get().mxcUrlToHttp(content.url);
+        }
         return MatrixClientPeg.get().mxcUrlToHttp(content.url, 800, 600);
     },
 
