@@ -1,6 +1,7 @@
 // karma.conf.js - the config file for karma, which runs our tests.
 
 var path = require('path');
+var fs = require('fs');
 
 /*
  * We use webpack to build our tests. It's a pain to have to wait for webpack
@@ -10,12 +11,35 @@ var path = require('path');
  * If you run karma in multi-run mode (with `npm run test-multi`), it will watch
  * the tests for changes, and webpack will rebuild using a cache. This is much quicker
  * than a clean rebuild.
- *
- * TODO:
- * - can we run one test at a time?
  */
 
+// the name of the test file. By default, a special file which runs all tests.
+//
+// TODO: this could be a pattern, and karma would run each file, with a
+// separate webpack bundle for each file. But then we get a separate instance
+// of the sdk, and each of the dependencies, for each test file, and everything
+// gets very confused. Can we persuade webpack to put all of the dependencies
+// in a 'common' bundle?
+//
+var testFile = process.env.KARMA_TEST_FILE || 'test/all-tests.js';
+
 process.env.PHANTOMJS_BIN = 'node_modules/.bin/phantomjs';
+
+function fileExists(name) {
+    try {
+        fs.statSync(gsCss);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+// try find the gemini-scrollbar css in an npm-version-agnostic way
+var gsCss = 'node_modules/gemini-scrollbar/gemini-scrollbar.css';
+if (!fileExists(gsCss)) {
+    gsCss = 'node_modules/react-gemini-scrollbar/'+gsCss;
+}
+
 
 module.exports = function (config) {
     config.set({
@@ -25,14 +49,15 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'test/tests.js',
+            testFile,
+            gsCss,
         ],
 
         // list of files to exclude
         //
         // This doesn't work. It turns out that it's webpack which does the
-        // watching of the /test directory (possibly karma only watches
-        // tests.js itself). Webpack watches the directory so that it can spot
+        // watching of the /test directory (karma only watches `testFile`
+        // itself). Webpack watches the directory so that it can spot
         // new tests, which is fair enough; unfortunately it triggers a rebuild
         // every time a lockfile is created in that directory, and there
         // doesn't seem to be any way to tell webpack to ignore particular
@@ -46,7 +71,7 @@ module.exports = function (config) {
         // available preprocessors:
         // https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'test/tests.js': ['webpack', 'sourcemap']
+            'test/**/*.js': ['webpack', 'sourcemap']
         },
 
         // test results reporter to use
@@ -122,7 +147,7 @@ module.exports = function (config) {
             },
             resolve: {
                 alias: {
-                    'matrix-react-sdk': path.resolve('src/index.js'),
+                    'matrix-react-sdk': path.resolve('test/skinned-sdk.js'),
                     'sinon': 'sinon/pkg/sinon.js',
                 },
                 root: [

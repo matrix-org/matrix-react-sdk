@@ -1,20 +1,58 @@
 "use strict";
 
+var sinon = require('sinon');
+var q = require('q');
+
 var peg = require('../src/MatrixClientPeg.js');
 var jssdk = require('matrix-js-sdk');
 var MatrixEvent = jssdk.MatrixEvent;
-var sinon = require('sinon');
+
+/**
+ * Perform common actions before each test case, e.g. printing the test case
+ * name to stdout.
+ * @param {Mocha.Context} context  The test context
+ */
+module.exports.beforeEach = function(context) {
+    var desc = context.currentTest.fullTitle();
+    console.log();
+    console.log(desc);
+    console.log(new Array(1 + desc.length).join("="));
+};
 
 
 /**
  * Stub out the MatrixClient, and configure the MatrixClientPeg object to
  * return it when get() is called.
+ *
+ * @returns {sinon.Sandbox}; remember to call sandbox.restore afterwards.
  */
 module.exports.stubClient = function() {
-    var pegstub = sinon.stub(peg);
+    var sandbox = sinon.sandbox.create();
 
-    var matrixClientStub = sinon.createStubInstance(jssdk.MatrixClient);
-    pegstub.get.returns(matrixClientStub);
+    var client = {
+        getHomeserverUrl: sinon.stub(),
+        getIdentityServerUrl: sinon.stub(),
+
+        getPushActionsForEvent: sinon.stub(),
+        getRoom: sinon.stub(),
+        loginFlows: sinon.stub(),
+        on: sinon.stub(),
+
+        paginateEventTimeline: sinon.stub().returns(q()),
+        sendReadReceipt: sinon.stub().returns(q()),
+    };
+
+    // create the peg
+
+    // 'sandbox.restore()' doesn't work correctly on inherited methods,
+    // so we do this for each method
+    var methods = ['get', 'unset', 'replaceUsingUrls',
+                   'replaceUsingAccessToken'];
+    for (var i = 0; i < methods.length; i++) {
+        sandbox.stub(peg, methods[i]);
+    }
+    peg.get.returns(client);
+    return sandbox;
 }
 
 
@@ -127,23 +165,4 @@ module.exports.mkMessage = function(opts) {
         body: opts.msg
     };
     return module.exports.mkEvent(opts);
-};
-
-/**
- * make the test fail, with the given exception
- *
- * <p>This is useful for use with integration tests which use asyncronous
- * methods: it can be added as a 'catch' handler in a promise chain.
- *
- * @param {Error} error   exception to be reported
- *
- * @example
- * it("should not throw", function(done) {
- *    asynchronousMethod().then(function() {
- *       // some tests
- *    }).catch(utils.failTest).done(done);
- * });
- */
-module.exports.failTest = function(error) {
-    expect(error.stack).toBe(null);
 };
