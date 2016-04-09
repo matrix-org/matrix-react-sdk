@@ -173,6 +173,15 @@ class TextHighlighter extends BaseHighlighter {
     }
 }
 
+function emojiToImage(body: String) {
+    try {
+        return emojione.toImage(body);
+    } catch (e) {
+        console.log(e);
+    }
+
+    return body;
+}
 
 module.exports = {
     /* turn a matrix event body into html
@@ -188,43 +197,29 @@ module.exports = {
 
         var isHtml = (content.format === "org.matrix.custom.html");
 
-        var safeBody;
-        if (isHtml) {
-            // XXX: We sanitize the HTML whilst also highlighting its text nodes, to avoid accidentally trying
-            // to highlight HTML tags themselves.  However, this does mean that we don't highlight textnodes which
-            // are interrupted by HTML tags (not that we did before) - e.g. foo<span/>bar won't get highlighted
-            // by an attempt to search for 'foobar'.  Then again, the search query probably wouldn't work either
-            try {
-                if (highlights && highlights.length > 0) {
-                    var highlighter = new HtmlHighlighter("mx_EventTile_searchHighlight", opts.highlightLink);
-                    var safeHighlights = highlights.map(function(highlight) {
-                        return sanitizeHtml(highlight, sanitizeHtmlParams);
-                    });
-                    // XXX: hacky bodge to temporarily apply a textFilter to the sanitizeHtmlParams structure.
-                    sanitizeHtmlParams.textFilter = function(safeText) {
-                        return highlighter.applyHighlights(safeText, safeHighlights).join('');
-                    };
-                }
-                safeBody = sanitizeHtml(content.formatted_body, sanitizeHtmlParams);
-            }
-            finally {
-                delete sanitizeHtmlParams.textFilter;
-            }
-        } else {
-            safeBody = _.escape(content.body);
+        let safeBody;
+        const body = isHtml ? content.formatted_body : _.escape(content.body);
 
-            if (highlights && highlights.length > 0) {
-                var highlighter = new TextHighlighter("mx_EventTile_searchHighlight", opts.highlightLink);
-                safeBody =  highlighter.applyHighlights(safeBody, highlights);
-            }
-        }
-
-        // We do this here to avoid having to whitelist <img>
-
+        // XXX: We sanitize the HTML whilst also highlighting its text nodes, to avoid accidentally trying
+        // to highlight HTML tags themselves.  However, this does mean that we don't highlight textnodes which
+        // are interrupted by HTML tags (not that we did before) - e.g. foo<span/>bar won't get highlighted
+        // by an attempt to search for 'foobar'.  Then again, the search query probably wouldn't work either
         try {
-            safeBody = emojione.toImage(safeBody);
-        } catch (e) {
-            console.log(e);
+            if (highlights && highlights.length > 0) {
+                var highlighter = new HtmlHighlighter("mx_EventTile_searchHighlight", opts.highlightLink);
+                var safeHighlights = highlights.map(function(highlight) {
+                    return sanitizeHtml(highlight, sanitizeHtmlParams);
+                });
+                // XXX: hacky bodge to temporarily apply a textFilter to the sanitizeHtmlParams structure.
+                sanitizeHtmlParams.textFilter = function(safeText) {
+                    return highlighter.applyHighlights(safeText, safeHighlights).join('');
+                };
+            }
+            safeBody = sanitizeHtml(body, sanitizeHtmlParams);
+            safeBody = emojiToImage(safeBody);
+        }
+        finally {
+            delete sanitizeHtmlParams.textFilter;
         }
 
         safeBody = <span className="markdown-body" dangerouslySetInnerHTML={{ __html: safeBody }} />;
