@@ -52,6 +52,7 @@ module.exports = React.createClass({
             'm.emote': sdk.getComponent('messages.TextualBody'),
             'm.image': sdk.getComponent('messages.MImageBody'),
             'm.file': sdk.getComponent('messages.MFileBody'),
+            'm.audio': sdk.getComponent('messages.MAudioBody'),
             'm.video': sdk.getComponent('messages.MVideoBody')
         };
 
@@ -60,6 +61,9 @@ module.exports = React.createClass({
         var TileType = UnknownMessageTile;
         if (msgtype && tileTypes[msgtype]) {
             TileType = tileTypes[msgtype];
+        } else if (content.url) {
+            // Fallback to MFileBody if there's a content URL
+            TileType = tileTypes['m.file'];
         }
 
         return <TileType mxEvent={this.props.mxEvent} highlights={this.props.highlights} 
