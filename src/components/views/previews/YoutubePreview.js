@@ -32,7 +32,7 @@ module.exports = React.createClass({
         var embedLink = 'https://www.youtube.com/embed/'+this.props.match[1];
 
         return (
-            <iframe width="420" height="315" src={embedLink} frameborder="0" allowfullscreen>
+            <iframe width="420" height="315" src={embedLink} frameBorder="0" allowFullScreen>
             </iframe>
         );
     }
