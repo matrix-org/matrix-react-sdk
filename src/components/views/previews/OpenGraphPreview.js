@@ -29,12 +29,11 @@ var linkifyMatrix = require('../../../linkify-matrix');
 linkifyMatrix(linkify);
 
 module.exports = React.createClass({
-    displayName: 'LinkPreviewWidget',
+    displayName: 'OpenGraphPreview',
 
     propTypes: {
         link: React.PropTypes.string.isRequired, // the URL being previewed
         mxEvent: React.PropTypes.object.isRequired, // the Event associated with the preview
-        onCancelClick: React.PropTypes.func, // called when the preview's cancel ('hide') button is clicked
         onWidgetLoad: React.PropTypes.func, // called when the preview's contents has loaded
     },
 
@@ -106,23 +105,21 @@ module.exports = React.createClass({
 
         var img;
         if (image) {
-            img = <div className="mx_LinkPreviewWidget_image" style={{ height: thumbHeight }}>
+            img = <div className="mx_OpenGraphPreview_image" style={{ height: thumbHeight }}>
                     <img style={{ maxWidth: imageMaxWidth, maxHeight: imageMaxHeight }} src={ image } onClick={ this.onImageClick }/>
                   </div>
         }
 
         return (
-            <div className="mx_LinkPreviewWidget" >
+            <div className="mx_OpenGraphPreview">
                 { img }
-                <div className="mx_LinkPreviewWidget_caption">
-                    <div className="mx_LinkPreviewWidget_title"><a href={ this.props.link } target="_blank">{ p["og:title"] }</a></div>
-                    <div className="mx_LinkPreviewWidget_siteName">{ p["og:site_name"] ? (" - " + p["og:site_name"]) : null }</div>
-                    <div className="mx_LinkPreviewWidget_description" ref="description">
+                <div className="mx_OpenGraphPreview_caption">
+                    <div className="mx_OpenGraphPreview_title"><a href={ this.props.link } target="_blank">{ p["og:title"] }</a></div>
+                    <div className="mx_OpenGraphPreview_siteName">{ p["og:site_name"] ? (" - " + p["og:site_name"]) : null }</div>
+                    <div className="mx_OpenGraphPreview_description" ref="description">
                         { p["og:description"] }
                     </div>
                 </div>
-                <img className="mx_LinkPreviewWidget_cancel" src="img/cancel.svg" width="18" height="18"
-                     onClick={ this.props.onCancelClick }/>
             </div>
         );
     }
