@@ -48,6 +48,8 @@ module.exports = React.createClass({
         return (
             <div className="mx_LinkPreviewWidget" >
                 <Previewer match={match} {...this.props} />
+                <img className="mx_LinkPreviewWidget_cancel" src="img/cancel.svg" width="18" height="18"
+                     onClick={ this.props.onCancelClick }/>
             </div>
         );
     }
