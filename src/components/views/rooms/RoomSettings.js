@@ -434,7 +434,7 @@ module.exports = React.createClass({
                         {Object.keys(user_levels).map(function(user, i) {
                             return (
                                 <li className="mx_RoomSettings_userLevel" key={user}>
-                                    { user } is a <PowerSelector value={ user_levels[user] } disabled={true}/>
+                                    { user }: <PowerSelector value={ user_levels[user] } disabled={true}/>
                                 </li>
                             );
                         })}
@@ -637,34 +637,34 @@ module.exports = React.createClass({
                         <PowerSelector ref="users_default" value={default_user_level} controlled={false} disabled={!can_change_levels || current_user_level < default_user_level} onChange={this.onPowerLevelsChanged}/>
                     </div>
                     <div className="mx_RoomSettings_powerLevel">
-                        <span className="mx_RoomSettings_powerLevelKey">To send messages, you must be a </span>
+                        <span className="mx_RoomSettings_powerLevelKey">To send messages, you must have the role </span>
                         <PowerSelector ref="events_default" value={send_level} controlled={false} disabled={!can_change_levels || current_user_level < send_level} onChange={this.onPowerLevelsChanged}/>
                     </div>
                     <div className="mx_RoomSettings_powerLevel">
-                        <span className="mx_RoomSettings_powerLevelKey">To invite users into the room, you must be a </span>
+                        <span className="mx_RoomSettings_powerLevelKey">To invite users into the room, you must have the role </span>
                         <PowerSelector ref="invite" value={invite_level} controlled={false} disabled={!can_change_levels || current_user_level < invite_level} onChange={this.onPowerLevelsChanged}/>
                     </div>
                     <div className="mx_RoomSettings_powerLevel">
-                        <span className="mx_RoomSettings_powerLevelKey">To configure the room, you must be a </span>
+                        <span className="mx_RoomSettings_powerLevelKey">To configure the room, you must have the role </span>
                         <PowerSelector ref="state_default" value={state_level} controlled={false} disabled={!can_change_levels || current_user_level < state_level} onChange={this.onPowerLevelsChanged}/>
                     </div>
                     <div className="mx_RoomSettings_powerLevel">
-                        <span className="mx_RoomSettings_powerLevelKey">To kick users, you must be a </span>
+                        <span className="mx_RoomSettings_powerLevelKey">To kick users, you must have the role </span>
                         <PowerSelector ref="kick" value={kick_level} controlled={false} disabled={!can_change_levels || current_user_level < kick_level} onChange={this.onPowerLevelsChanged}/>
                     </div>
                     <div className="mx_RoomSettings_powerLevel">
-                        <span className="mx_RoomSettings_powerLevelKey">To ban users, you must be a </span>
+                        <span className="mx_RoomSettings_powerLevelKey">To ban users, you must have the role </span>
                         <PowerSelector ref="ban" value={ban_level} controlled={false} disabled={!can_change_levels || current_user_level < ban_level} onChange={this.onPowerLevelsChanged}/>
                     </div>
                     <div className="mx_RoomSettings_powerLevel">
-                        <span className="mx_RoomSettings_powerLevelKey">To redact messages, you must be a </span>
+                        <span className="mx_RoomSettings_powerLevelKey">To redact messages, you must have the role </span>
                         <PowerSelector ref="redact" value={redact_level} controlled={false} disabled={!can_change_levels || current_user_level < redact_level} onChange={this.onPowerLevelsChanged}/>
                     </div>
 
                     {Object.keys(events_levels).map(function(event_type, i) {
                         return (
                             <div className="mx_RoomSettings_powerLevel" key={event_type}>
-                                <span className="mx_RoomSettings_powerLevelKey">To send events of type <code>{ event_type }</code>, you must be a </span>
+                                <span className="mx_RoomSettings_powerLevelKey">To send events of type <code>{ event_type }</code>, you must have the role </span>
                                 <PowerSelector value={ events_levels[event_type] } controlled={false} disabled={true} onChange={self.onPowerLevelsChanged}/>
                             </div>
                         );
