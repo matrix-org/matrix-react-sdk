@@ -203,6 +203,9 @@ module.exports = React.createClass({
 
         // color scheme
         promises.push(this.saveColor());
+        
+        // dev settings
+        promises.push(this.saveDevSettings());
 
         return q.allSettled(promises);
     },
@@ -215,6 +218,11 @@ module.exports = React.createClass({
     saveColor: function() {
         if (!this.refs.color_settings) { return q(); }
         return this.refs.color_settings.saveSettings();
+    },
+
+    saveDevSettings: function() {
+        if (!this.refs.dev_settings) { return q(); }
+        return this.refs.dev_settings.saveSettings();
     },
 
     _hasDiff: function(strA, strB) {
@@ -365,6 +373,7 @@ module.exports = React.createClass({
 
         var AliasSettings = sdk.getComponent("room_settings.AliasSettings");
         var ColorSettings = sdk.getComponent("room_settings.ColorSettings");
+        var DevSettings = sdk.getComponent("room_settings.DevSettings");
         var EditableText = sdk.getComponent('elements.EditableText');
         var PowerSelector = sdk.getComponent('elements.PowerSelector');
 
@@ -615,7 +624,11 @@ module.exports = React.createClass({
                     </label>
                 </div>
 
-
+                <div>
+                	<h3>Useful for devs</h3>
+                	<DevSettings ref="dev_settings" room={this.props.room} />
+                </div>
+                
                 <div>
                     <h3>Room Colour</h3>
                     <ColorSettings ref="color_settings" room={this.props.room} />

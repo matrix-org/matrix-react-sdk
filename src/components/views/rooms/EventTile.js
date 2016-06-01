@@ -48,6 +48,9 @@ var eventTileTypes = {
     'm.room.history_visibility' : 'messages.TextualEvent',
 };
 
+// Use this in case there's no supported tile type for the current event, but you allowed it to show anyways
+var eventTileFallbackType = 'messages.GenericEvent'
+
 var MAX_READ_AVATARS = 5;
 
 // Our component structure for EventTiles on the timeline is:
@@ -66,6 +69,8 @@ module.exports = React.createClass({
 
     statics: {
         haveTileForEvent: function(e) {
+            var event = MatrixClientPeg.get().getRoom(e.getRoomId()).getAccountData("org.matrix.room.dev_options");
+            if (event && event.getContent() && event.getContent().showAllEvents) return true;
             if (e.isRedacted()) return false;
             if (eventTileTypes[e.getType()] == undefined) return false;
             if (eventTileTypes[e.getType()] == 'messages.TextualEvent') {
@@ -327,9 +332,9 @@ module.exports = React.createClass({
         var content = this.props.mxEvent.getContent();
         var msgtype = content.msgtype;
 
-        var EventTileType = sdk.getComponent(eventTileTypes[this.props.mxEvent.getType()]);
-        // This shouldn't happen: the caller should check we support this type
-        // before trying to instantiate us
+        var eventTileName = eventTileTypes[this.props.mxEvent.getType()] || eventTileFallbackType;
+        var EventTileType = sdk.getComponent(eventTileName);
+        
         if (!EventTileType) {
             throw new Error("Event type not supported");
         }
