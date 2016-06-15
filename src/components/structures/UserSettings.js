@@ -26,12 +26,25 @@ var GeminiScrollbar = require('react-gemini-scrollbar');
 var Email = require('../../email');
 var AddThreepid = require('../../AddThreepid');
 
+const LABS_FEATURES = [
+    {
+        name: 'Rich Text Editor',
+        id: 'rich_text_editor'
+    },
+    {
+        name: 'End-to-End Encryption',
+        id: 'e2e_encryption'
+    }
+];
+
 module.exports = React.createClass({
     displayName: 'UserSettings',
 
     propTypes: {
         version: React.PropTypes.string,
-        onClose: React.PropTypes.func
+        onClose: React.PropTypes.func,
+        // The brand string given when creating email pushers
+        brand: React.PropTypes.string,
     },
 
     getDefaultProps: function() {
@@ -244,6 +257,27 @@ module.exports = React.createClass({
         });
     },
 
+    _renderDeviceInfo: function() {
+        if (!UserSettingsStore.isFeatureEnabled("e2e_encryption")) {
+            return null;
+        }
+
+        var client = MatrixClientPeg.get();
+        var deviceId = client.deviceId;
+        var olmKey = client.getDeviceEd25519Key() || "<not supported>";
+        return (
+            <div>
+                <h3>Cryptography</h3>
+                <div className="mx_UserSettings_section">
+                    <ul>
+                        <li>Device ID: {deviceId}</li>
+                        <li>Device key: {olmKey}</li>
+                    </ul>
+                </div>
+            </div>
+        );
+    },
+
     render: function() {
         var self = this;
         var Loader = sdk.getComponent("elements.Spinner");
@@ -333,10 +367,34 @@ module.exports = React.createClass({
                 <h3>Notifications</h3>
 
                 <div className="mx_UserSettings_section">
-                    <Notifications threepids={this.state.threepids} />
+                    <Notifications threepids={this.state.threepids} brand={this.props.brand} />
                 </div>
             </div>);
         }
+
+        this._renderLabs = function () {
+            let features = LABS_FEATURES.map(feature => (
+                <div key={feature.id}>
+                    <input
+                           type="checkbox"
+                           id={feature.id}
+                           name={feature.id}
+                           defaultChecked={UserSettingsStore.isFeatureEnabled(feature.id)}
+                           onChange={e => UserSettingsStore.setFeatureEnabled(feature.id, e.target.checked)} />
+                    <label htmlFor={feature.id}>{feature.name}</label>
+                </div>
+            ));
+            return (
+                <div>
+                    <h3>Labs</h3>
+
+                    <div className="mx_UserSettings_section">
+                        <p>These are experimental features that may break in unexpected ways. Use with caution.</p>
+                        {features}
+                    </div>
+                </div>
+            )
+        };
 
         return (
             <div className="mx_UserSettings">
@@ -389,6 +447,10 @@ module.exports = React.createClass({
                 </div>
 
                 {notification_area}
+
+                {this._renderDeviceInfo()}
+
+                {this._renderLabs()}
 
                 <h3>Advanced</h3>
 
