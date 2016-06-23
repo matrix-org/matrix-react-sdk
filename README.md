@@ -145,3 +145,5 @@ Now you have the basis of a skin, you need to generate a skindex.json file. The
 you add an npm script to run this, as in matrix-react-skin.
 
 For more specific detail on any of these steps, look at matrix-react-skin.
+
+test
