@@ -39,6 +39,9 @@ var dis = require("../../dispatcher");
 var Tinter = require("../../Tinter");
 var rate_limited_func = require('../../ratelimitedfunc');
 var ObjectUtils = require('../../ObjectUtils');
+var MatrixTools = require('../../MatrixTools');
+
+import UserProvider from '../../autocomplete/UserProvider';
 
 var DEBUG = false;
 
@@ -54,15 +57,16 @@ module.exports = React.createClass({
     propTypes: {
         ConferenceHandler: React.PropTypes.any,
 
-        // the ID for this room (or, if we don't know it, an alias for it)
-        //
-        // XXX: if this is an alias, we will display a 'join' dialogue,
-        // regardless of whether we are already a member, or if the room is
-        // peekable. Currently there is a big mess, where at least four
-        // different components (RoomView, MatrixChat, RoomDirectory,
-        // SlashCommands) have logic for turning aliases into rooms, and each
-        // of them do it differently and have different edge cases.
+        // Either a room ID or room alias for the room to display.
+        // If the room is being displayed as a result of the user clicking
+        // on a room alias, the alias should be supplied. Otherwise, a room
+        // ID should be supplied.
         roomAddress: React.PropTypes.string.isRequired,
+
+        // If a room alias is passed to roomAddress, a function can be
+        // provided here that will be called with the ID of the room
+        // once it has been resolved.
+        onRoomIdResolved: React.PropTypes.func,
 
         // An object representing a third party invite to join this room
         // Fields:
@@ -100,20 +104,25 @@ module.exports = React.createClass({
     },
 
     getInitialState: function() {
-        var room = MatrixClientPeg.get().getRoom(this.props.roomAddress);
         return {
-            room: room,
-            roomLoading: !room,
+            room: null,
+            roomId: null,
+            roomLoading: true,
             editingRoomSettings: false,
             uploadingRoomSettings: false,
             numUnreadMessages: 0,
             draggingFile: false,
             searching: false,
             searchResults: null,
-            hasUnsentMessages: this._hasUnsentMessages(room),
+            hasUnsentMessages: false,
             callState: null,
             guestsCanJoin: false,
             canPeek: false,
+
+            // error object, as from the matrix client/server API
+            // If we failed to load information about the room,
+            // store the error here.
+            roomLoadError: null,
 
             // this is true if we are fully scrolled-down, and are looking at
             // the end of the live timeline. It has the effect of hiding the
@@ -142,6 +151,40 @@ module.exports = React.createClass({
             }
         });
 
+        if (this.props.roomAddress[0] == '#') {
+            // we always look up the alias from the directory server:
+            // we want the room that the given alias is pointing to
+            // right now. We may have joined that alias before but there's
+            // no guarantee the alias hasn't subsequently been remapped.
+            MatrixClientPeg.get().getRoomIdForAlias(this.props.roomAddress).done((result) => {
+                if (this.props.onRoomIdResolved) {
+                    this.props.onRoomIdResolved(result.room_id);
+                }
+                var room = MatrixClientPeg.get().getRoom(result.room_id);
+                this.setState({
+                    room: room,
+                    roomId: result.room_id,
+                    roomLoading: !room,
+                    hasUnsentMessages: this._hasUnsentMessages(room),
+                }, this._onHaveRoom);
+            }, (err) => {
+                this.setState({
+                    roomLoading: false,
+                    roomLoadError: err,
+                });
+            });
+        } else {
+            var room = MatrixClientPeg.get().getRoom(this.props.roomAddress);
+            this.setState({
+                roomId: this.props.roomAddress,
+                room: room,
+                roomLoading: !room,
+                hasUnsentMessages: this._hasUnsentMessages(room),
+            }, this._onHaveRoom);
+        }
+    },
+
+    _onHaveRoom: function() {
         // if this is an unknown room then we're in one of three states:
         // - This is a room we can peek into (search engine) (we can /peek)
         // - This is a room we can publicly join or were invited to. (we can /join)
@@ -149,29 +192,50 @@ module.exports = React.createClass({
         // We can't try to /join because this may implicitly accept invites (!)
         // We can /peek though. If it fails then we present the join UI. If it
         // succeeds then great, show the preview (but we still may be able to /join!).
-        if (!this.state.room) {
-            console.log("Attempting to peek into room %s", this.props.roomAddress);
+        // Note that peeking works by room ID and room ID only, as opposed to joining
+        // which must be by alias or invite wherever possible (peeking currently does
+        // not work over federation).
 
-            MatrixClientPeg.get().peekInRoom(this.props.roomAddress).then((room) => {
-                this.setState({
-                    room: room,
-                    roomLoading: false,
-                });
-                this._onRoomLoaded(room);
-            }, (err) => {
-                // This won't necessarily be a MatrixError, but we duck-type
-                // here and say if it's got an 'errcode' key with the right value,
-                // it means we can't peek.
-                if (err.errcode == "M_GUEST_ACCESS_FORBIDDEN") {
-                    // This is fine: the room just isn't peekable (we assume).
+        // NB. We peek if we are not in the room, although if we try to peek into
+        // a room in which we have a member event (ie. we've left) synapse will just
+        // send us the same data as we get in the sync (ie. the last events we saw).
+        var user_is_in_room = null;
+        if (this.state.room) {
+            user_is_in_room = this.state.room.hasMembershipState(
+                MatrixClientPeg.get().credentials.userId, 'join'
+            );
+
+            // update the tab complete list now we have a room
+            this._updateTabCompleteList();
+        }
+
+        if (!user_is_in_room && this.state.roomId) {
+            if (this.props.autoJoin) {
+                this.onJoinButtonClicked();
+            } else if (this.state.roomId) {
+                console.log("Attempting to peek into room %s", this.state.roomId);
+
+                MatrixClientPeg.get().peekInRoom(this.state.roomId).then((room) => {
                     this.setState({
+                        room: room,
                         roomLoading: false,
                     });
-                } else {
-                    throw err;
-                }
-            }).done();
-        } else {
+                    this._onRoomLoaded(room);
+                }, (err) => {
+                    // This won't necessarily be a MatrixError, but we duck-type
+                    // here and say if it's got an 'errcode' key with the right value,
+                    // it means we can't peek.
+                    if (err.errcode == "M_GUEST_ACCESS_FORBIDDEN") {
+                        // This is fine: the room just isn't peekable (we assume).
+                        this.setState({
+                            roomLoading: false,
+                        });
+                    } else {
+                        throw err;
+                    }
+                }).done();
+            }
+        } else if (user_is_in_room) {
             MatrixClientPeg.get().stopPeeking();
             this._onRoomLoaded(this.state.room);
         }
@@ -457,21 +521,23 @@ module.exports = React.createClass({
         }
     },
 
-    _updateTabCompleteList: new rate_limited_func(function() {
+    _updateTabCompleteList: function() {
         var cli = MatrixClientPeg.get();
 
-        if (!this.state.room || !this.tabComplete) {
+        if (!this.state.room) {
             return;
         }
         var members = this.state.room.getJoinedMembers().filter(function(member) {
             if (member.userId !== cli.credentials.userId) return true;
         });
+
+        UserProvider.getInstance().setUserList(members);
         this.tabComplete.setCompletionList(
             MemberEntry.fromMemberList(members).concat(
                 CommandEntry.fromCommands(SlashCommands.getCommandList())
             )
         );
-    }, 500),
+    },
 
     componentDidUpdate: function() {
         if (this.refs.roomView) {
@@ -954,7 +1020,7 @@ module.exports = React.createClass({
         this.setState({
             rejecting: true
         });
-        MatrixClientPeg.get().leave(this.props.roomAddress).done(function() {
+        MatrixClientPeg.get().leave(this.state.roomId).done(function() {
             dis.dispatch({ action: 'view_next_room' });
             self.setState({
                 rejecting: false
@@ -1229,6 +1295,7 @@ module.exports = React.createClass({
 
                     // We have no room object for this room, only the ID.
                     // We've got to this room by following a link, possibly a third party invite.
+                    var room_alias = this.props.roomAddress[0] == '#' ? this.props.roomAddress : null;
                     return (
                         <div className="mx_RoomView">
                             <RoomHeader ref="header"
@@ -1239,7 +1306,8 @@ module.exports = React.createClass({
                             <div className="mx_RoomView_auxPanel">
                                 <RoomPreviewBar onJoinClick={ this.onJoinButtonClicked }
                                                 onRejectClick={ this.onRejectThreepidInviteButtonClicked }
-                                                canJoin={ true } canPreview={ false }
+                                                canPreview={ false } error={ this.state.roomLoadError }
+                                                roomAlias={room_alias}
                                                 spinner={this.state.joining}
                                                 inviterName={inviterName}
                                                 invitedEmail={invitedEmail}
@@ -1277,7 +1345,7 @@ module.exports = React.createClass({
                             <RoomPreviewBar onJoinClick={ this.onJoinButtonClicked }
                                             onRejectClick={ this.onRejectButtonClicked }
                                             inviterName={ inviterName }
-                                            canJoin={ true } canPreview={ false }
+                                            canPreview={ false }
                                             spinner={this.state.joining}
                                             room={this.state.room}
                             />
@@ -1347,7 +1415,7 @@ module.exports = React.createClass({
                 invitedEmail = this.props.thirdPartyInvite.invitedEmail;
             }
             aux = (
-                <RoomPreviewBar onJoinClick={this.onJoinButtonClicked} canJoin={true}
+                <RoomPreviewBar onJoinClick={this.onJoinButtonClicked}
                                 onRejectClick={this.onRejectThreepidInviteButtonClicked}
                                 spinner={this.state.joining}
                                 inviterName={inviterName}
