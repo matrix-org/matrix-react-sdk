@@ -138,6 +138,19 @@ module.exports = React.createClass({
         return this.props.config.default_is_url || "https://vector.im";
     },
 
+    _getCurrentCreds() {
+        const client = MatrixClientPeg.get();
+
+        return {
+            userId: client.credentials.userId,
+            accessToken: client.getAccessToken(),
+            homeserverUrl: client.getHomeserverUrl(),
+            identityServerUrl: client.getIdentityServerUrl(),
+            guest: client.isGuest(),
+            deviceId: client.getDeviceId(),
+        }
+    },
+
     componentWillMount: function() {
         this.favicon = new Favico({animation: 'none'});
     },
@@ -262,13 +275,8 @@ module.exports = React.createClass({
             case 'logout':
                 var guestCreds;
                 if (MatrixClientPeg.get().isGuest()) {
-                    guestCreds = { // stash our guest creds so we can backout if needed
-                        userId: MatrixClientPeg.get().credentials.userId,
-                        accessToken: MatrixClientPeg.get().getAccessToken(),
-                        homeserverUrl: MatrixClientPeg.get().getHomeserverUrl(),
-                        identityServerUrl: MatrixClientPeg.get().getIdentityServerUrl(),
-                        guest: true
-                    }
+                    // stash our guest creds so we can backout if needed
+                    guestCreds = this._getCurrentCreds();
                 }
 
                 if (window.localStorage) {
@@ -327,13 +335,8 @@ module.exports = React.createClass({
                     screen: "register",
                     upgradeUsername: MatrixClientPeg.get().getUserIdLocalpart(),
                     guestAccessToken: MatrixClientPeg.get().getAccessToken(),
-                    guestCreds: { // stash our guest creds so we can backout if needed
-                        userId: MatrixClientPeg.get().credentials.userId,
-                        accessToken: MatrixClientPeg.get().getAccessToken(),
-                        homeserverUrl: MatrixClientPeg.get().getHomeserverUrl(),
-                        identityServerUrl: MatrixClientPeg.get().getIdentityServerUrl(),
-                        guest: true
-                    }
+                    // stash our guest creds so we can backout if needed
+                    guestCreds: this._getCurrentCreds(),
                 });
                 this.notifyNewScreen('register');
                 break;
@@ -357,7 +360,8 @@ module.exports = React.createClass({
                 client.loginWithToken(payload.params.loginToken).done(function(data) {
                     MatrixClientPeg.replaceUsingAccessToken(
                         client.getHomeserverUrl(), client.getIdentityServerUrl(),
-                        data.user_id, data.access_token
+                        data.user_id, data.access_token,
+                        client.getDeviceId()
                     );
                     self.setState({
                         screen: undefined,
@@ -595,9 +599,11 @@ module.exports = React.createClass({
     onLoggedIn: function(credentials) {
         credentials.guest = Boolean(credentials.guest);
         console.log("onLoggedIn => %s (guest=%s)", credentials.userId, credentials.guest);
+
         MatrixClientPeg.replaceUsingAccessToken(
             credentials.homeserverUrl, credentials.identityServerUrl,
-            credentials.userId, credentials.accessToken, credentials.guest
+            credentials.userId, credentials.accessToken, credentials.guest,
+            credentials.deviceId
         );
         this.setState({
             screen: undefined,

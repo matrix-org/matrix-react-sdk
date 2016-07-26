@@ -129,10 +129,15 @@ class Register extends Signup {
             bindEmail = true;
         }
 
-        return MatrixClientPeg.get().register(
+        var matrixClient = MatrixClientPeg.get();
+
+        return matrixClient.register(
             this.username, this.password, this.params.sessionId, authDict, bindEmail,
             this.guestAccessToken
         ).then(function(result) {
+            // server will probably have returned our device_id, but in case we are using
+            // an old server or a weird flow, make sure of it.
+            result.device_id = result.device_id || matrixClient.getDeviceId();
             self.credentials = result;
             self.setStep("COMPLETE");
             return result; // contains the credentials
@@ -346,12 +351,16 @@ class Login extends Signup {
             loginParams.user = username;
         }
 
-        return MatrixClientPeg.get().login('m.login.password', loginParams).then(function(data) {
+        var client = MatrixClientPeg.get();
+        return client.login('m.login.password', loginParams).then(function(data) {
             return q({
                 homeserverUrl: self._hsUrl,
                 identityServerUrl: self._isUrl,
                 userId: data.user_id,
-                accessToken: data.access_token
+                accessToken: data.access_token,
+
+                // make sure we continue to use the device_id we used to log in.
+                deviceId: client.getDeviceId(),
             });
         }, function(error) {
             if (error.httpStatus == 400 && loginParams.medium) {

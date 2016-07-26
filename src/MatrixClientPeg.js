@@ -24,10 +24,6 @@ function deviceId() {
     // XXX: is Math.random()'s deterministicity a problem here?
     var id = Math.floor(Math.random()*16777215).toString(16);
     id = "W" + "000000".substring(id.length) + id;
-    if (localStorage) {
-        id = localStorage.getItem("mx_device_id") || id;
-        localStorage.setItem("mx_device_id", id);
-    }
     return id;
 }
 
@@ -58,6 +54,7 @@ class MatrixClientPeg {
         this._replaceClient({
             hs_url: hs_url,
             is_url: is_url,
+            device_id: deviceId(),
         });
     }
 
@@ -65,9 +62,12 @@ class MatrixClientPeg {
      * Replace this MatrixClientPeg's client with a client instance that has
      * Home Server / Identity Server URLs and active credentials
      */
-    replaceUsingAccessToken(hs_url, is_url, user_id, access_token, isGuest) {
+    replaceUsingAccessToken(hs_url, is_url, user_id, access_token, isGuest,
+                            device_id) {
         if (hs_url == null || is_url == null || user_id == null
-                || access_token == null || isGuest == null) {
+            || access_token == null || isGuest == null
+            || device_id == null
+        ) {
             throw new Error("invalid parameters for replaceUsingAccessToken");
         }
 
