@@ -24,7 +24,7 @@ module.exports = React.createClass({
     render: function() {
         var content = this.props.mxEvent.getContent();
         return (
-            <span className="mx_UnknownBody">
+            <span className="mx_MTextBody mx_UnknownBody">
                 {content.body}
             </span>
         );
