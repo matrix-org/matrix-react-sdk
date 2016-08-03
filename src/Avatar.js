@@ -49,7 +49,37 @@ module.exports = {
     },
 
     defaultAvatarUrlForString: function(s) {
-        var images = [ '76cfa6', '50e2c2', 'f4c371' ];
+        var images = [ '76cfa6'
+                     , '50e2c2'
+                     , 'f4c371'
+                     , 'b22222'
+                     , 'd2691e'
+                     , 'ff9166'
+                     , 'fa8072'
+                     , 'ff8c00'
+                     , '228b22'
+                     , '808000'
+                     , 'b7b05d'
+                     , '8ebd2e'
+                     , '2ebd2e'
+                     , '82b482'
+                     , '37a467'
+                     , '57c8a1'
+                     , '1da199'
+                     , '579193'
+                     , '008b8b'
+                     , '00bfff'
+                     , '4682b4'
+                     , '1e90ff'
+                     , '4169e1'
+                     , '6a5acd'
+                     , '7b68ee'
+                     , '9400d3'
+                     , '8b008b'
+                     , 'ba55d3'
+                     , 'ff00ff'
+                     , 'ff1493'
+                     ];
         var total = 0;
         for (var i = 0; i < s.length; ++i) {
             total += s.charCodeAt(i);
