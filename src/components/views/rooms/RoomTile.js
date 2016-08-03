@@ -205,9 +205,9 @@ module.exports = React.createClass({
             if (this.props.selected) {
                 let nameSelected = <span dangerouslySetInnerHTML={nameHTML}></span>;
 
-                label = <div title={ name } onClick={this.onClick} className={ nameClasses }>{ nameSelected }</div>;
+                label = <div title={ name } className={ nameClasses }>{ nameSelected }</div>;
             } else {
-                label = <div title={ name } onClick={this.onClick} className={ nameClasses } dangerouslySetInnerHTML={nameHTML}></div>;
+                label = <div title={ name } className={ nameClasses } dangerouslySetInnerHTML={nameHTML}></div>;
             }
         }
         else if (this.state.hover) {
@@ -230,9 +230,9 @@ module.exports = React.createClass({
         var connectDropTarget = this.props.connectDropTarget;
 
         return connectDragSource(connectDropTarget(
-            <div className={classes} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+            <div className={classes} onClick={this.onClick} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                 <div className={avatarClasses}>
-                    <RoomAvatar onClick={this.onClick} room={this.props.room} width={24} height={24} />
+                    <RoomAvatar room={this.props.room} width={24} height={24} />
                 </div>
                 <div className="mx_RoomTile_nameContainer">
                     { label }
