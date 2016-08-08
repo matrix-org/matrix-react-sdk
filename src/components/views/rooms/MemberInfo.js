@@ -613,7 +613,9 @@ module.exports = React.createClass({
                     <MemberAvatar onClick={this.onMemberAvatarClick} member={this.props.member} width={48} height={48} />
                 </div>
 
-                <h2 dangerouslySetInnerHTML={memberNameHTML}></h2>
+                <header className="header">
+                    <h1 dangerouslySetInnerHTML={memberNameHTML}></h1>
+                </header>
 
                 <div className="mx_MemberInfo_profile">
                     <div className="mx_MemberInfo_profileField">

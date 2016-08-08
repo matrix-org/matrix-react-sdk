@@ -491,7 +491,9 @@ module.exports = React.createClass({
         if (invitedMemberTiles.length > 0) {
             invitedSection = (
                 <div className="mx_MemberList_invited">
-                    <h2>Invited</h2>
+                    <header className="header">
+                        <h1>Invited</h1>
+                    </header>
                     <div autoshow={true} className="mx_MemberList_wrapper">
                         {invitedMemberTiles}
                     </div>

@@ -41,10 +41,10 @@ export default class MAudioBody extends React.Component {
         var cli = MatrixClientPeg.get();
 
         return (
-            <span className="mx_MAudioBody">
+            <div className="mx_MAudioBody">
                 <audio src={cli.mxcUrlToHttp(content.url)} controls />
                 <MFileBody {...this.props} />
-            </span>
+            </div>
         );
     }
 }

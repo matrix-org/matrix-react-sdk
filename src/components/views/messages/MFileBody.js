@@ -58,20 +58,22 @@ module.exports = React.createClass({
 
         if (httpUrl) {
             return (
-                <span className="mx_MFileBody">
+                <div className="mx_MFileBody">
                     <div className="mx_MImageBody_download">
                         <a href={cli.mxcUrlToHttp(content.url)} target="_blank">
                             <TintableSvg src="img/download.svg" width="12" height="14"/>
                             Download {text}
                         </a>
                     </div>
-                </span>
+                </div>
             );
         } else {
             var extra = text ? ': '+text : '';
-            return <span className="mx_MFileBody">
-                Invalid file{extra}
-            </span>
+            return (
+                <div className="mx_MFileBody">
+                    Invalid file{extra}
+                </div>
+            );
         }
     },
 });

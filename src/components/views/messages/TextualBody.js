@@ -163,20 +163,23 @@ module.exports = React.createClass({
     render: function() {
         var mxEvent = this.props.mxEvent;
         var content = mxEvent.getContent();
-        var body = HtmlUtils.bodyToHtml(content, this.props.highlights,
-                                       {highlightLink: this.props.highlightLink});
+        var body = HtmlUtils.bodyToHtml(content, this.props.highlights, {highlightLink: this.props.highlightLink});
 
+        // TODO: separate this component from the textual event
+        var TextualEvent = sdk.getComponent('messages.TextualEvent');
 
         var widgets;
         if (this.state.links.length && !this.state.widgetHidden) {
             var LinkPreviewWidget = sdk.getComponent('rooms.LinkPreviewWidget');
             widgets = this.state.links.map((link)=>{
-                return <LinkPreviewWidget
-                            key={ link }
-                            link={ link }
-                            mxEvent={ this.props.mxEvent }
-                            onCancelClick={ this.onCancelClick }
-                            onWidgetLoad={ this.props.onWidgetLoad }/>;
+                return (
+                    <LinkPreviewWidget
+                        key={ link }
+                        link={ link }
+                        mxEvent={ this.props.mxEvent }
+                        onCancelClick={ this.onCancelClick }
+                        onWidgetLoad={ this.props.onWidgetLoad } />
+                );
             });
         }
 
@@ -184,24 +187,24 @@ module.exports = React.createClass({
             case "m.emote":
                 var name = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
                 return (
-                    <span ref="content" className="mx_MEmoteBody mx_EventTile_content">
+                    <div ref="content" className="mx_MEmoteBody">
                         * { name } { body }
                         { widgets }
-                    </span>
+                    </div>
                 );
             case "m.notice":
                 return (
-                    <span ref="content" className="mx_MNoticeBody mx_EventTile_content">
+                    <div ref="content" className="mx_MNoticeBody">
                         { body }
                         { widgets }
-                    </span>
+                    </div>
                 );
             default: // including "m.text"
                 return (
-                    <span ref="content" className="mx_MTextBody mx_EventTile_content">
+                    <div ref="content" className="mx_MTextBody">
                         { body }
                         { widgets }
-                    </span>
+                    </div>
                 );
         }
     },

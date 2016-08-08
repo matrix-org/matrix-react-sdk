@@ -50,17 +50,6 @@ var eventTileTypes = {
 
 var MAX_READ_AVATARS = 5;
 
-// Our component structure for EventTiles on the timeline is:
-//
-// .-EventTile------------------------------------------------.
-// | MemberAvatar (SenderProfile)                   TimeStamp |
-// |    .-{Message,Textual}Event---------------. Read Avatars |
-// |    |   .-MFooBody-------------------.     |              |
-// |    |   |  (only if MessageEvent)    |     |              |
-// |    |   '----------------------------'     |              |
-// |    '--------------------------------------'              |
-// '----------------------------------------------------------'
-
 module.exports = React.createClass({
     displayName: 'Event',
 
@@ -139,8 +128,7 @@ module.exports = React.createClass({
 
     componentDidMount: function() {
         this._suppressReadReceiptAnimation = false;
-        MatrixClientPeg.get().on("deviceVerificationChanged",
-                                 this.onDeviceVerificationChanged);
+        MatrixClientPeg.get().on("deviceVerificationChanged", this.onDeviceVerificationChanged);
     },
 
     componentWillReceiveProps: function (nextProps) {
@@ -164,8 +152,7 @@ module.exports = React.createClass({
     componentWillUnmount: function() {
         var client = MatrixClientPeg.get();
         if (client) {
-            client.removeListener("deviceVerificationChanged",
-                                  this.onDeviceVerificationChanged);
+            client.removeListener("deviceVerificationChanged", this.onDeviceVerificationChanged);
         }
     },
 
@@ -295,8 +282,6 @@ module.exports = React.createClass({
                 }
             }
 
-            //console.log("i = " + i + ", MAX_READ_AVATARS = " + MAX_READ_AVATARS + ", allReadAvatars = " + this.state.allReadAvatars + " visibility = " + style.visibility);
-
             // add to the start so the most recent is on the end (ie. ends up rightmost)
             avatars.unshift(
                 <ReadReceiptMarker key={userId} member={member}
@@ -314,29 +299,26 @@ module.exports = React.createClass({
                 left -= 15;
             }
         }
-        var editButton;
         var remText;
         if (!this.state.allReadAvatars) {
             var remainder = receipts.length - MAX_READ_AVATARS;
             if (remainder > 0) {
-                remText = <span className="mx_EventTile_readAvatarRemainder"
-                    onClick={this.toggleAllReadAvatars}
-                    style={{ left: left }}>{ remainder }+
-                </span>;
+                remText = (
+                    <div className="mx_EventTile_readAvatarRemainder"
+                        onClick={this.toggleAllReadAvatars}
+                        style={{left: left}}>{remainder}+
+                    </div>
+                );
                 left -= 15;
             }
-            editButton = (
-                <input style={{ left: left }}
-                    type="image" src="img/edit.png" alt="Options" title="Options" width="14" height="14"
-                    className="mx_EventTile_editButton" onClick={this.onEditClicked} />
-            );
         }
 
-        return <span className="mx_EventTile_readAvatars">
-            { editButton }
-            { remText }
-            { avatars }
-        </span>;
+        return (
+            <div className="mx_EventTile_readAvatars">
+                {remText}
+                {avatars}
+            </div>
+        );
     },
 
     onMemberAvatarClick: function(event) {
@@ -360,9 +342,11 @@ module.exports = React.createClass({
         var MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
 
         var content = this.props.mxEvent.getContent();
-        var msgtype = content.msgtype;
+        var msgType = content.msgtype;
 
-        var EventTileType = sdk.getComponent(eventTileTypes[this.props.mxEvent.getType()]);
+        var eventTileTypeName = eventTileTypes[this.props.mxEvent.getType()];
+        var EventTileType = sdk.getComponent(eventTileTypeName);
+
         // This shouldn't happen: the caller should check we support this type
         // before trying to instantiate us
         if (!EventTileType) {
@@ -381,48 +365,62 @@ module.exports = React.createClass({
             mx_EventTile_last: this.props.last,
             mx_EventTile_contextual: this.props.contextual,
             menu: this.state.menu,
-            mx_EventTile_verified: this.state.verified == true,
-            mx_EventTile_unverified: this.state.verified == false,
+            mx_EventTile_verified: this.state.verified === true,
+            mx_EventTile_unverified: this.state.verified === false,
         });
-        var timestamp = <a href={ "#/room/" + this.props.mxEvent.getRoomId() +"/"+ this.props.mxEvent.getId() }>
-                            <MessageTimestamp ts={this.props.mxEvent.getTs()} />
-                        </a>
 
-        var aux = null;
-        if (msgtype === 'm.image') aux = "sent an image";
-        else if (msgtype === 'm.video') aux = "sent a video";
-        else if (msgtype === 'm.file') aux = "uploaded a file";
+        // Removed for now, pending discussion on it's value and complexity
+        //var readAvatars = this.getReadAvatars();
 
-        var readAvatars = this.getReadAvatars();
+        var header;
 
-        var avatar, sender;
-        if (!this.props.continuation) {
-            if (this.props.mxEvent.sender) {
-                avatar = (
+        // Only render a header if it's a leading message (without an m.emote body type)
+        if (!this.props.continuation && EventTileType.needsSenderProfile() && msgType !== 'm.emote') {
+            header = (
+                <div className="mx_EventTile_header">
                     <div className="mx_EventTile_avatar">
-                        <MemberAvatar member={this.props.mxEvent.sender} width={24} height={24}
-                         onClick={ this.onMemberAvatarClick } />
+                        <MemberAvatar
+                            member={ this.props.mxEvent.sender }
+                            width={ 27 }
+                            height={ 27 }
+                            onClick={ this.onMemberAvatarClick } />
                     </div>
-                );
-            }
-            if (EventTileType.needsSenderProfile()) {
-                sender = <SenderProfile onClick={ this.onSenderProfileClick } mxEvent={this.props.mxEvent} aux={aux} />;
-            }
+                    <div className="mx_EventTile_sender">
+                        <SenderProfile
+                            onClick={this.onSenderProfileClick}
+                            mxEvent={this.props.mxEvent} />
+                    </div>
+                </div>
+            );
         }
+
         return (
-            <div className={classes}>
-                <div className="mx_EventTile_msgOption">
-                    { timestamp }
-                    { readAvatars }
+            <div className={classes} eventType={ this.props.mxEvent.getType() }>
+                {header}
+                <div className="mx_EventTile_content">
+                    <div className="mx_EventTile_time">
+                        <MessageTimestamp
+                            ts={this.props.mxEvent.getTs()}
+                            href={"#/room/" + this.props.mxEvent.getRoomId() + "/" + this.props.mxEvent.getId()} />
+                    </div>
+                    <div className="mx_EventTile_body">
+                        <EventTileType
+                            ref="tile"
+                            mxEvent={this.props.mxEvent}
+                            highlights={this.props.highlights}
+                            highlightLink={this.props.highlightLink}
+                            onWidgetLoad={this.props.onWidgetLoad} />
+                    </div>
+                    <img className="mx_EventTile_contextButton"
+                            src="img/icon-context.svg"
+                            alt="Options"
+                            title="Options"
+                            width="21"
+                            height="21"
+                            onClick={this.onEditClicked} />
                 </div>
-                { avatar }
-                { sender }
-                <div className="mx_EventTile_line">
-                    <EventTileType ref="tile" mxEvent={this.props.mxEvent} highlights={this.props.highlights}
-                          highlightLink={this.props.highlightLink}
-                          onWidgetLoad={this.props.onWidgetLoad} />
-                </div>
+                <div className="mx_EventTile_aside"></div>
             </div>
         );
-    },
+    }
 });

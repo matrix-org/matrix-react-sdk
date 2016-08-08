@@ -358,17 +358,19 @@ module.exports = React.createClass({
         var readReceipts = this._getReadReceiptsForEvent(mxEv);
 
         ret.push(
-                <li key={eventId}
-                        ref={this._collectEventNode.bind(this, eventId)}
-                        data-scroll-token={scrollToken}>
-                    <EventTile mxEvent={mxEv} continuation={continuation}
-                        onWidgetLoad={this._onWidgetLoad}
-                        readReceipts={readReceipts}
-                        readReceiptMap={this._readReceiptMap}
-                        checkUnmounting={this._isUnmounting}
-                        eventSendStatus={mxEv.status}
-                        last={last} isSelectedEvent={highlight}/>
-                </li>
+            <li key={eventId}
+                ref={this._collectEventNode.bind(this, eventId)}
+                data-scroll-token={scrollToken}>
+                <EventTile
+                    mxEvent={mxEv}
+                    continuation={continuation}
+                    onWidgetLoad={this._onWidgetLoad}
+                    readReceipts={readReceipts}
+                    readReceiptMap={this._readReceiptMap}
+                    checkUnmounting={this._isUnmounting}
+                    eventSendStatus={mxEv.status}
+                    last={last} isSelectedEvent={highlight} />
+            </li>
         );
 
         return ret;
@@ -410,18 +412,13 @@ module.exports = React.createClass({
     },
 
     _getReadMarkerTile: function(visible) {
-        var hr;
+        var marker;
         if (visible) {
-            hr = <hr className="mx_RoomView_myReadMarker"
-                    style={{opacity: 1, width: '99%'}}
-                />;
+            marker = <div className="mx_RoomView_myReadMarker" />;
         }
 
         return (
-            <li key="_readupto" ref="readMarkerNode"
-                  className="mx_RoomView_myReadMarker_container">
-                {hr}
-            </li>
+            <li key="_readupto" ref="readMarkerNode">{ marker }</li>
         );
     },
 
@@ -432,25 +429,21 @@ module.exports = React.createClass({
         this._readMarkerGhostNode = ghostNode;
 
         if (ghostNode) {
-            Velocity(ghostNode, {opacity: '0', width: '10%'},
-                     {duration: 400, easing: 'easeInSine',
-                      delay: 1000});
+            Velocity(ghostNode, {opacity: 0}, {duration: 400, delay: 2000});
         }
     },
 
     _getReadMarkerGhostTile: function() {
-        var hr = <hr className="mx_RoomView_myReadMarker"
-                  style={{opacity: 1, width: '99%'}}
-                  ref={this._startAnimation}
-            />;
+        var marker = (
+            <div className="mx_RoomView_myReadMarker" ref={this._startAnimation} />
+        );
 
         // give it a key which depends on the event id. That will ensure that
         // we get a new DOM node (restarting the animation) when the ghost
         // moves to a different event.
         return (
-            <li key={"_readuptoghost_"+this.currentGhostEventId}
-                  className="mx_RoomView_myReadMarker_container">
-                {hr}
+            <li key={"_readuptoghost_"+this.currentGhostEventId}>
+                {marker}
             </li>
         );
     },

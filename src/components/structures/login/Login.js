@@ -100,7 +100,7 @@ module.exports = React.createClass({displayName: 'Login',
         this.setState({
             enteredIdentityServerUrl: newIsUrl
         }, function() {
-            self._initLoginLogic(null, newIsUrl);            
+            self._initLoginLogic(null, newIsUrl);
         });
     },
 
@@ -157,7 +157,7 @@ module.exports = React.createClass({displayName: 'Login',
 
         if (err.cors === 'rejected') {
             if (window.location.protocol === 'https:' &&
-                (this.state.enteredHomeserverUrl.startsWith("http:") || 
+                (this.state.enteredHomeserverUrl.startsWith("http:") ||
                  !this.state.enteredHomeserverUrl.startsWith("http")))
             {
                 errorText = <span>
@@ -221,7 +221,7 @@ module.exports = React.createClass({displayName: 'Login',
 
         var returnToAppJsx;
         if (this.props.onCancelClick) {
-            returnToAppJsx = 
+            returnToAppJsx =
                 <a className="mx_Login_create" onClick={this.props.onCancelClick} href="#">
                     Return to app
                 </a>
@@ -232,9 +232,9 @@ module.exports = React.createClass({displayName: 'Login',
                 <div className="mx_Login_box">
                     <LoginHeader />
                     <div>
-                        <h2>Sign in
-                            { loader }
-                        </h2>
+                        <header className="header">
+                            <h1>Sign in { loader }</h1>
+                        </header>
                         { this.componentForStep(this._getCurrentFlowStep()) }
                         <ServerConfig ref="serverConfig"
                             withToggleButton={true}

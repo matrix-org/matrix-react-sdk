@@ -140,25 +140,43 @@ module.exports = React.createClass({
         if (imageUrl === this.state.defaultImageUrl) {
             var initialLetter = emojifyText(this._getInitialLetter(this.props.name));
             return (
-                <span className="mx_BaseAvatar" {...this.props}>
-                    <span className="mx_BaseAvatar_initial" aria-hidden="true"
-                            style={{ fontSize: (this.props.width * 0.65) + "px",
-                                    width: this.props.width + "px",
-                                    lineHeight: this.props.height + "px" }}
-                            dangerouslySetInnerHTML={initialLetter}>
-                    </span>
-                    <img className="mx_BaseAvatar_image" src={imageUrl}
-                        alt="" title={this.props.title} onError={this.onError}
-                        width={this.props.width} height={this.props.height} />
-                </span>
+                <div className="mx_BaseAvatar"
+                    {...this.props}
+                    style={{
+                        width: this.props.width + 'px',
+                        height: this.props.height + 'px'
+                    }} >
+                    <div className="mx_BaseAvatar_initial"
+                        aria-hidden="true"
+                        style={{
+                            fontSize: (this.props.width * 0.65) + "px",
+                            lineHeight: this.props.height + "px"
+                        }}
+                        dangerouslySetInnerHTML={initialLetter} >
+                    </div>
+                    <img className="mx_BaseAvatar_image"
+                        src={imageUrl}
+                        title={this.props.title}
+                        onError={this.onError}
+                        width={this.props.width}
+                        height={this.props.height} />
+                </div>
             );
         }
         return (
-            <img className="mx_BaseAvatar mx_BaseAvatar_image" src={imageUrl}
-                onError={this.onError}
-                width={this.props.width} height={this.props.height}
-                title={this.props.title} alt=""
-                {...this.props} />
+            <div className="mx_BaseAvatar"
+                {...this.props}
+                style={{
+                    width: this.props.width + 'px',
+                    height: this.props.height + 'px'
+                }} >
+                <img className="mx_BaseAvatar_image"
+                    src={imageUrl}
+                    title={this.props.title}
+                    onError={this.onError}
+                    width={this.props.width}
+                    height={this.props.height} />
+            </div>
         );
     }
 });
