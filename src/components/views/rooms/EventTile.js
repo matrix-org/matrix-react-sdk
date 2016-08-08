@@ -403,7 +403,7 @@ module.exports = React.createClass({
         }
 
         return (
-            <div className={classes} eventType={ this.props.mxEvent.getType() }>
+            <div className={classes}>
                 {header}
                 <div className="mx_EventTile_content">
                     <div className="mx_EventTile_time">

@@ -141,10 +141,11 @@ module.exports = React.createClass({
             ...otherProps
         } = this.props;
 
+        let initialEl;
         if (imageUrl === this.state.defaultImageUrl) {
             var initialLetter = emojifyText(this._getInitialLetter(name));
 
-            const initialEl = (
+            initialEl = (
                 <div className="mx_BaseAvatar_initial"
                     aria-hidden="true"
                     style={{
