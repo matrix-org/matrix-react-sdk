@@ -34,7 +34,11 @@ const LABS_FEATURES = [
     {
         name: 'End-to-End Encryption',
         id: 'e2e_encryption'
-    }
+    },
+    {
+        name: 'Integration Management',
+        id: 'integration_management'
+    },
 ];
 
 // if this looks like a release, use the 'version' from package.json; else use
@@ -50,11 +54,15 @@ module.exports = React.createClass({
         onClose: React.PropTypes.func,
         // The brand string given when creating email pushers
         brand: React.PropTypes.string,
+
+        // True to show the 'labs' section of experimental features
+        enableLabs: React.PropTypes.bool,
     },
 
     getDefaultProps: function() {
         return {
-            onClose: function() {}
+            onClose: function() {},
+            enableLabs: true,
         };
     },
 
@@ -214,9 +222,10 @@ module.exports = React.createClass({
                 onFinished: this.onEmailDialogFinished,
             });
         }, (err) => {
+            this.setState({email_add_pending: false});
             Modal.createDialog(ErrorDialog, {
                 title: "Unable to add email address",
-                description: err.toString()
+                description: err.message
             });
         });
         ReactDOM.findDOMNode(this.refs.add_threepid_input).blur();
@@ -261,7 +270,69 @@ module.exports = React.createClass({
         });
     },
 
-    _renderDeviceInfo: function() {
+    _onDeactivateAccountClicked: function() {
+        const DeactivateAccountDialog = sdk.getComponent("dialogs.DeactivateAccountDialog");
+        Modal.createDialog(DeactivateAccountDialog, {});
+    },
+
+    _renderUserInterfaceSettings: function() {
+        var client = MatrixClientPeg.get();
+
+        var settingsLabels = [
+        /*
+            {
+                id: 'alwaysShowTimestamps',
+                label: 'Always show message timestamps',
+            },
+            {
+                id: 'showTwelveHourTimestamps',
+                label: 'Show timestamps in 12 hour format (e.g. 2:30pm)',
+            },
+            {
+                id: 'useCompactLayout',
+                label: 'Use compact timeline layout',
+            },
+            {
+                id: 'useFixedWidthFont',
+                label: 'Use fixed width font',
+            },
+        */
+        ];
+
+        var syncedSettings = UserSettingsStore.getSyncedSettings();
+
+        return (
+            <div>
+                <h3>User Interface</h3>
+                <div className="mx_UserSettings_section">
+                    <div className="mx_UserSettings_toggle">
+                        <input id="urlPreviewsDisabled"
+                               type="checkbox"
+                               defaultChecked={ UserSettingsStore.getUrlPreviewsDisabled() }
+                               onChange={ e => UserSettingsStore.setUrlPreviewsDisabled(e.target.checked) }
+                        />
+                        <label htmlFor="urlPreviewsDisabled">
+                            Disable inline URL previews by default
+                        </label>
+                    </div>
+                </div>
+                { settingsLabels.forEach( setting => {
+                    <div className="mx_UserSettings_toggle">
+                        <input id={ setting.id }
+                               type="checkbox"
+                               defaultChecked={ syncedSettings[setting.id] }
+                               onChange={ e => UserSettingsStore.setSyncedSetting(setting.id, e.target.checked) }
+                        />
+                        <label htmlFor={ setting.id }>
+                            { settings.label }
+                        </label>
+                    </div>
+                })}
+            </div>
+        );
+    },
+
+    _renderCryptoInfo: function() {
         if (!UserSettingsStore.isFeatureEnabled("e2e_encryption")) {
             return null;
         }
@@ -280,6 +351,62 @@ module.exports = React.createClass({
                 </div>
             </div>
         );
+    },
+
+    _renderDevicesPanel: function() {
+        if (!UserSettingsStore.isFeatureEnabled("e2e_encryption")) {
+            return null;
+        }
+        var DevicesPanel = sdk.getComponent('settings.DevicesPanel');
+        return (
+            <div>
+                <h3>Devices</h3>
+                <DevicesPanel className="mx_UserSettings_section" />
+            </div>
+        );
+    },
+
+    _renderLabs: function () {
+        // default to enabled if undefined
+        if (this.props.enableLabs === false) return null;
+
+        let features = LABS_FEATURES.map(feature => (
+            <div key={feature.id} className="mx_UserSettings_toggle">
+                <input
+                    type="checkbox"
+                    id={feature.id}
+                    name={feature.id}
+                    defaultChecked={UserSettingsStore.isFeatureEnabled(feature.id)}
+                    onChange={e => {
+                        UserSettingsStore.setFeatureEnabled(feature.id, e.target.checked);
+                        this.forceUpdate();
+                    }}/>
+                <label htmlFor={feature.id}>{feature.name}</label>
+            </div>
+        ));
+        return (
+            <div>
+                <h3>Labs</h3>
+                <div className="mx_UserSettings_section">
+                    <p>These are experimental features that may break in unexpected ways. Use with caution.</p>
+                    {features}
+                </div>
+            </div>
+        )
+    },
+
+    _renderDeactivateAccount: function() {
+        // We can't deactivate a guest account.
+        if (MatrixClientPeg.get().isGuest()) return null;
+
+        return <div>
+            <h3>Deactivate Account</h3>
+                <div className="mx_UserSettings_section">
+                    <button className="mx_UserSettings_button danger"
+                        onClick={this._onDeactivateAccountClicked}>Deactivate my account
+                    </button>
+                </div>
+        </div>;
     },
 
     render: function() {
@@ -302,6 +429,7 @@ module.exports = React.createClass({
         var ChangeAvatar = sdk.getComponent('settings.ChangeAvatar');
         var Notifications = sdk.getComponent("settings.Notifications");
         var EditableText = sdk.getComponent('elements.EditableText');
+
         var avatarUrl = (
             this.state.avatarUrl ? MatrixClientPeg.get().mxcUrlToHttp(this.state.avatarUrl) : null
         );
@@ -376,36 +504,11 @@ module.exports = React.createClass({
             </div>);
         }
 
-        this._renderLabs = function () {
-            let features = LABS_FEATURES.map(feature => (
-                <div key={feature.id}>
-                    <input
-                           type="checkbox"
-                           id={feature.id}
-                           name={feature.id}
-                           defaultChecked={UserSettingsStore.isFeatureEnabled(feature.id)}
-                           onChange={e => UserSettingsStore.setFeatureEnabled(feature.id, e.target.checked)} />
-                    <label htmlFor={feature.id}>{feature.name}</label>
-                </div>
-            ));
-            return (
-                <div>
-                    <h3>Labs</h3>
-
-                    <div className="mx_UserSettings_section">
-                        <p>These are experimental features that may break in unexpected ways. Use with caution.</p>
-                        {features}
-                    </div>
-                </div>
-            )
-        };
-
         return (
             <div className="mx_UserSettings">
                 <SimpleRoomHeader title="Settings" onCancelClick={ this.props.onClose }/>
 
                 <GeminiScrollbar className="mx_UserSettings_body"
-                                 relayoutOnUpdate={false}
                                  autoshow={true}>
 
                 <h3>Profile</h3>
@@ -452,9 +555,10 @@ module.exports = React.createClass({
 
                 {notification_area}
 
-                {this._renderDeviceInfo()}
-
+                {this._renderUserInterfaceSettings()}
                 {this._renderLabs()}
+                {this._renderDevicesPanel()}
+                {this._renderCryptoInfo()}
 
                 <h3>Advanced</h3>
 
@@ -473,6 +577,8 @@ module.exports = React.createClass({
                         vector-web version: {this.props.version}<br/>
                     </div>
                 </div>
+
+                {this._renderDeactivateAccount()}
 
                 </GeminiScrollbar>
             </div>

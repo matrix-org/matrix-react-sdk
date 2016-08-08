@@ -133,43 +133,37 @@ module.exports = React.createClass({
     },
 
     render: function() {
-        var name = this.props.name;
-
         var imageUrl = this.state.imageUrls[this.state.urlsIndex];
 
+        const {
+            name, idName, title, url, urls, width, height, resizeMethod,
+            defaultToInitialLetter,
+            ...otherProps
+        } = this.props;
+
         if (imageUrl === this.state.defaultImageUrl) {
-            var initialLetter = emojifyText(this._getInitialLetter(this.props.name));
-            return (
-                <div className="mx_BaseAvatar"
-                    {...this.props}
+            var initialLetter = emojifyText(this._getInitialLetter(name));
+
+            const initialEl = (
+                <div className="mx_BaseAvatar_initial"
+                    aria-hidden="true"
                     style={{
-                        width: this.props.width + 'px',
-                        height: this.props.height + 'px'
-                    }} >
-                    <div className="mx_BaseAvatar_initial"
-                        aria-hidden="true"
-                        style={{
-                            fontSize: (this.props.width * 0.65) + "px",
-                            lineHeight: this.props.height + "px"
-                        }}
-                        dangerouslySetInnerHTML={initialLetter} >
-                    </div>
-                    <img className="mx_BaseAvatar_image"
-                        src={imageUrl}
-                        title={this.props.title}
-                        onError={this.onError}
-                        width={this.props.width}
-                        height={this.props.height} />
+                        fontSize: (this.props.width * 0.65) + "px",
+                        lineHeight: this.props.height + "px"
+                    }}
+                    dangerouslySetInnerHTML={initialLetter} >
                 </div>
             );
         }
+
         return (
             <div className="mx_BaseAvatar"
-                {...this.props}
+                {...otherProps}
                 style={{
                     width: this.props.width + 'px',
                     height: this.props.height + 'px'
                 }} >
+                {initialEl}
                 <img className="mx_BaseAvatar_image"
                     src={imageUrl}
                     title={this.props.title}

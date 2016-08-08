@@ -36,7 +36,8 @@ export default class MessageComposer extends React.Component {
         this.onInputContentChanged = this.onInputContentChanged.bind(this);
         this.onUpArrow = this.onUpArrow.bind(this);
         this.onDownArrow = this.onDownArrow.bind(this);
-        this.onTab = this.onTab.bind(this);
+        this._tryComplete = this._tryComplete.bind(this);
+        this._onAutocompleteConfirm = this._onAutocompleteConfirm.bind(this);
 
         this.state = {
             autocompleteQuery: '',
@@ -141,8 +142,17 @@ export default class MessageComposer extends React.Component {
         return this.refs.autocomplete.onDownArrow();
     }
 
-    onTab() {
-        return this.refs.autocomplete.onTab();
+    _tryComplete(): boolean {
+        if (this.refs.autocomplete) {
+            return this.refs.autocomplete.onConfirm();
+        }
+        return false;
+    }
+
+    _onAutocompleteConfirm(range, completion) {
+        if (this.messageComposerInput) {
+            this.messageComposerInput.onConfirmAutocompletion(range, completion);
+        }
     }
 
     render() {
@@ -171,11 +181,11 @@ export default class MessageComposer extends React.Component {
         else {
             callButton =
                 <div key="controls_call" className="mx_MessageComposer_voicecall" onClick={this.onVoiceCallClick} title="Voice call">
-                    <TintableSvg src="img/voice.svg" width="16" height="26"/>
+                    <TintableSvg src="img/icon-call.svg" width="35" height="35"/>
                 </div>;
             videoCallButton =
                 <div key="controls_videocall" className="mx_MessageComposer_videocall" onClick={this.onCallClick} title="Video call">
-                    <TintableSvg src="img/call.svg" width="30" height="22"/>
+                    <TintableSvg src="img/icons-video.svg" width="35" height="35"/>
                 </div>;
         }
 
@@ -189,7 +199,7 @@ export default class MessageComposer extends React.Component {
             var uploadButton = (
                 <div key="controls_upload" className="mx_MessageComposer_upload"
                         onClick={this.onUploadClick} title="Upload file">
-                    <TintableSvg src="img/upload.svg" width="19" height="24"/>
+                    <TintableSvg src="img/icons-upload.svg" width="35" height="35"/>
                     <input ref="uploadInput" type="file"
                         style={uploadInputStyle}
                         multiple
@@ -203,10 +213,9 @@ export default class MessageComposer extends React.Component {
                     key="controls_input"
                     onResize={this.props.onResize}
                     room={this.props.room}
-                    tryComplete={this.refs.autocomplete && this.refs.autocomplete.onConfirm}
+                    tryComplete={this._tryComplete}
                     onUpArrow={this.onUpArrow}
                     onDownArrow={this.onDownArrow}
-                    onTab={this.onTab}
                     tabComplete={this.props.tabComplete} // used for old messagecomposerinput/tabcomplete
                     onContentChanged={this.onInputContentChanged} />,
                 uploadButton,
@@ -227,7 +236,7 @@ export default class MessageComposer extends React.Component {
                 <div className="mx_MessageComposer_autocomplete_wrapper">
                     <Autocomplete
                         ref="autocomplete"
-                        onConfirm={this.messageComposerInput && this.messageComposerInput.onConfirmAutocompletion}
+                        onConfirm={this._onAutocompleteConfirm}
                         query={this.state.autocompleteQuery}
                         selection={this.state.selection} />
                 </div>

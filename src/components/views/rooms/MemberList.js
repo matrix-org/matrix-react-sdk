@@ -494,7 +494,7 @@ module.exports = React.createClass({
                     <header className="header">
                         <h1>Invited</h1>
                     </header>
-                    <div autoshow={true} className="mx_MemberList_wrapper">
+                    <div className="mx_MemberList_wrapper">
                         {invitedMemberTiles}
                     </div>
                 </div>
@@ -523,7 +523,6 @@ module.exports = React.createClass({
             <div className="mx_MemberList">
                     {inviteMemberListSection}
                     <GeminiScrollbar autoshow={true}
-                                     relayoutOnUpdate={false}
                                      className="mx_MemberList_joined mx_MemberList_outerWrapper">
                         <TruncatedList className="mx_MemberList_wrapper" truncateAt={this.state.truncateAt}
                                 createOverflowElement={this._createOverflowTile}>

@@ -53,6 +53,7 @@ module.exports = React.createClass({displayName: 'Login',
         return {
             busy: false,
             errorText: null,
+            loginIncorrect: false,
             enteredHomeserverUrl: this.props.customHsUrl || this.props.defaultHsUrl,
             enteredIdentityServerUrl: this.props.customIsUrl || this.props.defaultIsUrl,
 
@@ -68,13 +69,15 @@ module.exports = React.createClass({displayName: 'Login',
     onPasswordLogin: function(username, password) {
         var self = this;
         self.setState({
-            busy: true
+            busy: true,
+            errorText: null,
+            loginIncorrect: false,
         });
 
         this._loginLogic.loginViaPassword(username, password).then(function(data) {
             self.props.onLoggedIn(data);
         }, function(error) {
-            self._setErrorTextFromError(error);
+            self._setStateFromError(error, true);
         }).finally(function() {
             self.setState({
                 busy: false
@@ -120,7 +123,7 @@ module.exports = React.createClass({displayName: 'Login',
             // logins so let's skip that for now).
             loginLogic.chooseFlow(0);
         }, function(err) {
-            self._setErrorTextFromError(err);
+            self._setStateFromError(err, false);
         }).finally(function() {
             self.setState({
                 busy: false
@@ -131,7 +134,8 @@ module.exports = React.createClass({displayName: 'Login',
             enteredHomeserverUrl: hsUrl,
             enteredIdentityServerUrl: isUrl,
             busy: true,
-            errorText: null // reset err messages
+            errorText: null, // reset err messages
+            loginIncorrect: false,
         });
     },
 
@@ -139,20 +143,25 @@ module.exports = React.createClass({displayName: 'Login',
         return this._loginLogic ? this._loginLogic.getCurrentFlowStep() : null
     },
 
-    _setErrorTextFromError: function(err) {
+    _setStateFromError: function(err, isLoginAttempt) {
+        this.setState({
+            errorText: this._errorTextFromError(err),
+            // https://matrix.org/jira/browse/SYN-744
+            loginIncorrect: isLoginAttempt && (err.httpStatus == 401 || err.httpStatus == 403)
+        });
+    },
+
+    _errorTextFromError(err) {
         if (err.friendlyText) {
-            this.setState({
-                errorText: err.friendlyText
-            });
-            return;
+            return err.friendlyText;
         }
 
-        var errCode = err.errcode;
+        let errCode = err.errcode;
         if (!errCode && err.httpStatus) {
             errCode = "HTTP " + err.httpStatus;
         }
 
-        var errorText = "Error: Problem communicating with the given homeserver " +
+        let errorText = "Error: Problem communicating with the given homeserver " +
                 (errCode ? "(" + errCode + ")" : "")
 
         if (err.cors === 'rejected') {
@@ -173,9 +182,7 @@ module.exports = React.createClass({displayName: 'Login',
             }
         }
 
-        this.setState({
-            errorText: errorText
-        });
+        return errorText;
     },
 
     componentForStep: function(step) {
@@ -186,7 +193,9 @@ module.exports = React.createClass({displayName: 'Login',
                         onSubmit={this.onPasswordLogin}
                         initialUsername={this.state.username}
                         onUsernameChanged={this.onUsernameChanged}
-                        onForgotPasswordClick={this.props.onForgotPasswordClick} />
+                        onForgotPasswordClick={this.props.onForgotPasswordClick}
+                        loginIncorrect={this.state.loginIncorrect}
+                    />
                 );
             case 'm.login.cas':
                 return (

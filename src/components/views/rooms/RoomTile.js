@@ -21,6 +21,7 @@ var classNames = require('classnames');
 var dis = require("../../../dispatcher");
 var MatrixClientPeg = require('../../../MatrixClientPeg');
 var sdk = require('../../../index');
+var ContextualMenu = require('../../structures/ContextualMenu');
 import {emojifyText} from '../../../HtmlUtils';
 
 module.exports = React.createClass({
@@ -43,13 +44,48 @@ module.exports = React.createClass({
     },
 
     getInitialState: function() {
-        return( { hover : false });
+        var areNotifsMuted = false;
+        var cli = MatrixClientPeg.get();
+        if (!cli.isGuest()) {
+            var roomPushRule = cli.getRoomPushRule("global", this.props.room.roomId);
+            if (roomPushRule) {
+                if (0 <= roomPushRule.actions.indexOf("dont_notify")) {
+                    areNotifsMuted = true;
+                }
+            }
+        }
+
+        return({
+            hover : false,
+            badgeHover : false,
+            menu: false,
+            areNotifsMuted: areNotifsMuted,
+        });
+    },
+
+    onAction: function(payload) {
+        switch (payload.action) {
+            case 'notification_change':
+                // Is the notification about this room?
+                if (payload.roomId === this.props.room.roomId) {
+                    this.setState( { areNotifsMuted : payload.areNotifsMuted });
+                }
+                break;
+        }
+    },
+
+    componentDidMount: function() {
+        this.dispatcherRef = dis.register(this.onAction);
+    },
+
+    componentWillUnmount: function() {
+        dis.unregister(this.dispatcherRef);
     },
 
     onClick: function() {
         dis.dispatch({
             action: 'view_room',
-            room_id: this.props.room.roomId
+            room_id: this.props.room.roomId,
         });
     },
 
@@ -59,6 +95,50 @@ module.exports = React.createClass({
 
     onMouseLeave: function() {
         this.setState( { hover : false });
+    },
+
+    badgeOnMouseEnter: function() {
+        // Only allow none guests to access the context menu
+        // and only change it if it needs to change
+        if (!MatrixClientPeg.get().isGuest() && !this.state.badgeHover) {
+            this.setState( { badgeHover : true } );
+        }
+    },
+
+    badgeOnMouseLeave: function() {
+        this.setState( { badgeHover : false } );
+    },
+
+    onBadgeClicked: function(e) {
+        // Only allow none guests to access the context menu
+        if (!MatrixClientPeg.get().isGuest()) {
+
+            // If the badge is clicked, then no longer show tooltip
+            if (this.props.collapsed) {
+                this.setState({ hover: false });
+            }
+
+            var Menu = sdk.getComponent('context_menus.NotificationStateContextMenu');
+            var elementRect = e.target.getBoundingClientRect();
+            // The window X and Y offsets are to adjust position when zoomed in to page
+            var x = elementRect.right + window.pageXOffset + 3;
+            var y = (elementRect.top + (elementRect.height / 2) + window.pageYOffset) - 53;
+            var self = this;
+            ContextualMenu.createMenu(Menu, {
+                menuWidth: 188,
+                menuHeight: 126,
+                chevronOffset: 45,
+                left: x,
+                top: y,
+                room: this.props.room,
+                onFinished: function() {
+                    self.setState({ menu: false });
+                }
+            });
+            this.setState({ menu: true });
+        }
+        // Prevent the RoomTile onClick event firing as well
+        e.stopPropagation();
     },
 
     render: function() {
@@ -72,45 +152,57 @@ module.exports = React.createClass({
             'mx_RoomTile': true,
             'mx_RoomTile_selected': this.props.selected,
             'mx_RoomTile_unread': this.props.unread,
-            'mx_RoomTile_unreadNotify': notificationCount > 0,
+            'mx_RoomTile_unreadNotify': notificationCount > 0 && !this.state.areNotifsMuted,
             'mx_RoomTile_highlight': this.props.highlight,
             'mx_RoomTile_invited': (me && me.membership == 'invite'),
+            'mx_RoomTile_menu': this.state.menu,
+            'mx_RoomTile_noBadges': !(this.props.highlight || (notificationCount > 0 && !this.state.areNotifsMuted))
+        });
+
+        var avatarClasses = classNames({
+            'mx_RoomTile_avatar': true,
+        });
+
+        var badgeClasses = classNames({
+            'mx_RoomTile_badge': true,
+            'mx_RoomTile_badgeButton': this.state.badgeHover || this.state.menu,
         });
 
         // XXX: We should never display raw room IDs, but sometimes the
         // room name js sdk gives is undefined (cannot repro this -- k)
         var name = this.props.room.name || this.props.room.roomId;
-
         name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
+
         var badge;
-        if (this.props.highlight || notificationCount > 0) {
-            badge = <div className="mx_RoomTile_badge">{ notificationCount ? notificationCount : '!' }</div>;
+        var badgeContent;
+
+        if (this.state.badgeHover || this.state.menu) {
+            badgeContent = "\u00B7\u00B7\u00B7";
+        } else if (this.props.highlight || (notificationCount > 0 && !this.state.areNotifsMuted)) {
+            var limitedCount = (notificationCount > 99) ? '99+' : notificationCount;
+            badgeContent = notificationCount ? limitedCount : '!';
+        } else {
+            badgeContent = '\u200B';
         }
-        /*
-        if (this.props.highlight) {
-            badge = <div className="mx_RoomTile_badge">!</div>;
-        }
-        else if (this.props.unread) {
-            badge = <div className="mx_RoomTile_badge">1</div>;
-        }
-        var nameCell;
-        if (badge) {
-            nameCell = <div className="mx_RoomTile_nameBadge"><div className="mx_RoomTile_name">{name}</div><div className="mx_RoomTile_badgeCell">{badge}</div></div>;
-        }
-        else {
-            nameCell = <div className="mx_RoomTile_name">{name}</div>;
-        }
-        */
+
+        badge = <div className={ badgeClasses } onClick={this.onBadgeClicked} onMouseEnter={this.badgeOnMouseEnter} onMouseLeave={this.badgeOnMouseLeave}>{ badgeContent }</div>;
 
         var label;
+        var tooltip;
         if (!this.props.collapsed) {
-            var className = 'mx_RoomTile_name' + (this.props.isInvite ? ' mx_RoomTile_invite' : '');
+            var nameClasses = classNames({
+                'mx_RoomTile_name': true,
+                'mx_RoomTile_invite': this.props.isInvite,
+                'mx_RoomTile_badgeShown': this.props.highlight || (notificationCount > 0 && !this.state.areNotifsMuted) || this.state.badgeHover || this.state.menu,
+            });
+
             let nameHTML = emojifyText(name);
             if (this.props.selected) {
-                name = <span dangerouslySetInnerHTML={nameHTML}></span>;
-                label = <div className={ className }>{ name }</div>;
+                let nameSelected = <span dangerouslySetInnerHTML={nameHTML}></span>;
+
+                label = <div title={ name } className={ nameClasses }>{ nameSelected }</div>;
             } else {
-                label = <div className={ className } dangerouslySetInnerHTML={nameHTML}></div>;
+                label = <div title={ name } className={ nameClasses } dangerouslySetInnerHTML={nameHTML}></div>;
             }
         }
         else if (this.state.hover) {
@@ -134,12 +226,15 @@ module.exports = React.createClass({
 
         return connectDragSource(connectDropTarget(
             <div className={classes} onClick={this.onClick} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-                <div className="mx_RoomTile_avatar">
+                <div className={avatarClasses}>
                     <RoomAvatar room={this.props.room} width={24} height={24} />
                 </div>
-                { label }
-                { badge }
+                <div className="mx_RoomTile_nameContainer">
+                    { label }
+                    { badge }
+                </div>
                 { incomingCallBox }
+                { tooltip }
             </div>
         ));
     }
