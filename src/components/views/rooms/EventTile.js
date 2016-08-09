@@ -50,6 +50,16 @@ var eventTileTypes = {
 
 var MAX_READ_AVATARS = 5;
 
+ // Our component structure for EventTiles on the timeline is:
+ // .-EventTile-----------------------------------------------------.
+ // | MemberAvatar (SenderProfile)                                  |
+ // | TimeStamp   .-{Message,Textual}Event-----------. Read Avatars |
+ // |             |   .-MFooBody---------------.     |              |
+ // |         |   |  (only if MessageEvent)    |     |              |
+ // |         |   '----------------------------'     |              |
+ // |         '--------------------------------------'              |
+ // '---------------------------------------------------------------'
+
 module.exports = React.createClass({
     displayName: 'Event',
 

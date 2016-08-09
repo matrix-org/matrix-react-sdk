@@ -63,10 +63,10 @@ module.exports = React.createClass({
         };
 
         var content = this.props.mxEvent.getContent();
-        var msgType = content.msgtype;
+        var msgtype = content.msgtype;
         var BodyType = UnknownBody;
-        if (msgType && bodyTypes[msgType]) {
-            BodyType = bodyTypes[msgType];
+        if (msgtype && bodyTypes[msgtype]) {
+            BodyType = bodyTypes[msgtype];
         } else if (content.url) {
             // Fallback to MFileBody if there's a content URL
             BodyType = bodyTypes['m.file'];
@@ -75,7 +75,7 @@ module.exports = React.createClass({
         return (
             <BodyType
                 ref="body"
-                msgType={msgType}
+                msgtype={msgtype}
                 mxEvent={this.props.mxEvent}
                 highlights={this.props.highlights}
                 highlightLink={this.props.highlightLink}
