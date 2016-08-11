@@ -279,7 +279,7 @@ module.exports = React.createClass({
 
         var returnToAppJsx;
         if (this.props.onCancelClick) {
-            returnToAppJsx = 
+            returnToAppJsx =
                 <a className="mx_Login_create" onClick={this.props.onCancelClick} href="#">
                     Return to app
                 </a>
@@ -287,7 +287,9 @@ module.exports = React.createClass({
 
         return (
             <div>
-                <h2>Create an account</h2>
+                <header className="header">
+                    <h1>Create an account</h1>
+                </header>
                 {registerStep}
                 <div className="mx_Login_error">{this.state.errorText}</div>
                 {busySpinner}

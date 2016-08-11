@@ -919,22 +919,30 @@ module.exports = React.createClass({
         var ret = [];
 
         if (this.state.searchInProgress) {
-            ret.push(<li key="search-spinner">
-                         <Spinner />
-                     </li>);
+            ret.push(
+                <li key="search-spinner">
+                    <Spinner />
+                </li>
+            );
         }
 
         if (!this.state.searchResults.next_batch) {
             if (this.state.searchResults.results.length == 0) {
-                ret.push(<li key="search-top-marker">
-                         <h2 className="mx_RoomView_topMarker">No results</h2>
-                         </li>
-                        );
+                ret.push(
+                    <li key="search-top-marker">
+                        <header className="header">
+                            <h1>No results</h1>
+                        </header>
+                    </li>
+                );
             } else {
-                ret.push(<li key="search-top-marker">
-                         <h2 className="mx_RoomView_topMarker">No more results</h2>
-                         </li>
-                        );
+                ret.push(
+                    <li key="search-top-marker">
+                        <header className="header">
+                            <h1>No more results</h1>
+                        </header>
+                    </li>
+                );
             }
         }
 

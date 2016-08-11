@@ -30,9 +30,8 @@ var sanitizeHtmlParams = {
     allowedTags: [
         'font', // custom to matrix for IRC-style font coloring
         'del', // for markdown
-        // deliberately no h1/h2 to stop people shouting.
-        'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
-        'nl', 'li', 'b', 'i', 'u', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
+        'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
+        'li', 'b', 'i', 'u', 'strong', 'em', 'strike', 'code', 'br',
         'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'img',
     ],
     allowedAttributes: {
@@ -50,7 +49,7 @@ var sanitizeHtmlParams = {
     allowedSchemesByTag: {
         img: [ 'data' ],
     },
-    
+
     transformTags: { // custom to matrix
         // add blank targets to all hyperlinks except vector URLs
         'a': function(tagName, attribs) {
@@ -224,10 +223,12 @@ module.exports = {
         let emojiBody = match && match[0] && match[0].length === contentBodyTrimmed.length;
 
         const className = classNames({
-            'mx_EventTile_body': true,
             'mx_EventTile_bigEmoji': emojiBody,
             'markdown-body': isHtml,
         });
+
+        // handle big emoji differently as inline element
+
         return <span className={className} dangerouslySetInnerHTML={{ __html: safeBody }} />;
     },
 

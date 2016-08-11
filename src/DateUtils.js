@@ -19,13 +19,15 @@ limitations under the License.
 var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
+function pad(n) {
+    return (n < 10 ? '0' : '') + n;
+}
+
 module.exports = {
+
     formatDate: function(date) {
         // date.toLocaleTimeString is completely system dependent.
         // just go 24h for now
-        function pad(n) {
-            return (n < 10 ? '0' : '') + n;
-        }
 
         var now = new Date();
         if (date.toDateString() === now.toDateString()) {
@@ -34,14 +36,14 @@ module.exports = {
         else if (now.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
             return days[date.getDay()] + " " + pad(date.getHours()) + ':' + pad(date.getMinutes());
         }
-        else /* if (now.getFullYear() === date.getFullYear()) */ {
+        else {
             return days[date.getDay()] + ", " + months[date.getMonth()] + " " + date.getDate() + " " + pad(date.getHours()) + ':' + pad(date.getMinutes());
         }
-        /*
-        else {
-            return days[date.getDay()] + ", " + months[date.getMonth()] + " " + date.getDate() + " " + date.getFullYear() + " " + pad(date.getHours()) + ':' + pad(date.getMinutes());
-        }
-        */
+    },
+
+    formatTime: function(date) {
+        return pad(date.getHours()) + ':' + pad(date.getMinutes());
     }
+
 }
 

@@ -141,28 +141,37 @@ module.exports = React.createClass({
             ...otherProps
         } = this.props;
 
+        let initialEl;
         if (imageUrl === this.state.defaultImageUrl) {
             var initialLetter = emojifyText(this._getInitialLetter(name));
-            return (
-                <span className="mx_BaseAvatar" {...otherProps}>
-                    <span className="mx_BaseAvatar_initial" aria-hidden="true"
-                            style={{ fontSize: (width * 0.65) + "px",
-                                    width: width + "px",
-                                    lineHeight: height + "px" }}
-                            dangerouslySetInnerHTML={initialLetter}>
-                    </span>
-                    <img className="mx_BaseAvatar_image" src={imageUrl}
-                        alt="" title={title} onError={this.onError}
-                        width={width} height={height} />
-                </span>
+
+            initialEl = (
+                <div className="mx_BaseAvatar_initial"
+                    aria-hidden="true"
+                    style={{
+                        fontSize: (this.props.width * 0.65) + "px",
+                        lineHeight: this.props.height + "px"
+                    }}
+                    dangerouslySetInnerHTML={initialLetter} >
+                </div>
             );
         }
+
         return (
-            <img className="mx_BaseAvatar mx_BaseAvatar_image" src={imageUrl}
-                onError={this.onError}
-                width={width} height={height}
-                title={title} alt=""
-                {...otherProps} />
+            <div className="mx_BaseAvatar"
+                {...otherProps}
+                style={{
+                    width: this.props.width + 'px',
+                    height: this.props.height + 'px'
+                }} >
+                {initialEl}
+                <img className="mx_BaseAvatar_image"
+                    src={imageUrl}
+                    title={this.props.title}
+                    onError={this.onError}
+                    width={this.props.width}
+                    height={this.props.height} />
+            </div>
         );
     }
 });

@@ -241,9 +241,9 @@ module.exports = React.createClass({displayName: 'Login',
                 <div className="mx_Login_box">
                     <LoginHeader />
                     <div>
-                        <h2>Sign in
-                            { loader }
-                        </h2>
+                        <header className="header">
+                            <h1>Sign in { loader }</h1>
+                        </header>
                         { this.componentForStep(this._getCurrentFlowStep()) }
                         <ServerConfig ref="serverConfig"
                             withToggleButton={true}

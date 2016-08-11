@@ -168,10 +168,11 @@ module.exports = React.createClass({
                     enterTransitionOpts={this.state.enterTransitionOpts} >
                 <MemberAvatar
                     member={this.props.member}
-                    width={14} height={14} resizeMethod="crop"
+                    width={12}
+                    height={12}
+                    resizeMethod="crop"
                     style={style}
-                    onClick={this.props.onClick}
-                />
+                    onClick={this.props.onClick} />
             </Velociraptor>
         );
     },

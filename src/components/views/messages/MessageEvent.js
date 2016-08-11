@@ -72,9 +72,15 @@ module.exports = React.createClass({
             BodyType = bodyTypes['m.file'];
         }
 
-        return <BodyType ref="body" mxEvent={this.props.mxEvent} highlights={this.props.highlights}
-                    highlightLink={this.props.highlightLink}
-                    showUrlPreview={this.props.showUrlPreview}
-                    onWidgetLoad={this.props.onWidgetLoad} />;
+        return (
+            <BodyType
+                ref="body"
+                msgtype={msgtype}
+                mxEvent={this.props.mxEvent}
+                highlights={this.props.highlights}
+                highlightLink={this.props.highlightLink}
+                showUrlPreview={this.props.showUrlPreview}
+                onWidgetLoad={this.props.onWidgetLoad} />
+        );
     },
 });
