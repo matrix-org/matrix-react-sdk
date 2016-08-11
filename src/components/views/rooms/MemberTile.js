@@ -90,6 +90,7 @@ module.exports = React.createClass({
                 presenceLastActiveAgo={ member.user ? member.user.lastActiveAgo : 0 }
                 presenceLastTs={ member.user ? member.user.lastPresenceTs : 0 }
                 presenceCurrentlyActive={ member.user ? member.user.currentlyActive : false }
+                presenceStatus={ member.user? member.user.presenceStatusMsg : null }
                 avatarJsx={av} title={this.getPowerLabel()} onClick={this.onClick}
                 name={name} powerLevel={this.props.member.powerLevel} />
         );

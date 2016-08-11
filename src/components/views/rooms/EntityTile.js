@@ -60,7 +60,8 @@ module.exports = React.createClass({
         showInviteButton: React.PropTypes.bool,
         shouldComponentUpdate: React.PropTypes.func,
         onClick: React.PropTypes.func,
-        suppressOnHover: React.PropTypes.bool
+        suppressOnHover: React.PropTypes.bool,
+        presenceStatus: React.PropTypes.string,
     },
 
     getDefaultProps: function() {
@@ -68,6 +69,7 @@ module.exports = React.createClass({
             shouldComponentUpdate: function(nextProps, nextState) { return true; },
             onClick: function() {},
             presenceState: "offline",
+            presenceStatus: "",
             presenceLastActiveAgo: 0,
             presenceLastTs: 0,
             showInviteButton: false,
@@ -117,7 +119,9 @@ module.exports = React.createClass({
                     <EmojiText element="div" className="mx_EntityTile_name_hover">{name}</EmojiText>
                     <PresenceLabel activeAgo={ activeAgo }
                         currentlyActive={this.props.presenceCurrentlyActive}
-                        presenceState={this.props.presenceState} />
+                        presenceState={this.props.presenceState}
+                        presenceStatus={this.props.presenceStatus}
+                        />
                 </div>
             );
         }

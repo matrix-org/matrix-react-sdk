@@ -34,7 +34,10 @@ module.exports = React.createClass({
         currentlyActive: React.PropTypes.bool,
 
         // offline, online, etc
-        presenceState: React.PropTypes.string
+        presenceState: React.PropTypes.string,
+
+        // status_msg
+        presenceStatus: React.PropTypes.string
     },
 
     getDefaultProps: function() {
@@ -66,11 +69,18 @@ module.exports = React.createClass({
         return d + "d ";
     },
 
-    getPrettyPresence: function(presence) {
-        if (presence === "online") return "Online";
-        if (presence === "unavailable") return "Idle"; // XXX: is this actually right?
-        if (presence === "offline") return "Offline";
-        return "Unknown";
+    getPrettyPresence: function(presence, presenceStatus) {
+        let presenceStr = "Unknown";
+
+        if (presence === "online") presenceStr = "Online";
+        if (presence === "unavailable") presenceStr = "Idle"; // XXX: is this actually right?
+        if (presence === "offline") presenceStr = "Offline";
+
+        if (presenceStatus) {
+          presenceStr = presenceStatus + " (" + presenceStr + ")";
+        }
+
+        return presenceStr;
     },
 
     render: function() {
@@ -80,14 +90,14 @@ module.exports = React.createClass({
             // if (this.props.currentlyActive) ago += " (now?)";
             return (
                 <div className="mx_PresenceLabel">
-                    { this.getPrettyPresence(this.props.presenceState) } { ago }
+                    { this.getPrettyPresence(this.props.presenceState, this.props.presenceStatus) } { ago }
                 </div>
             );
         }
         else {
             return (
                 <div className="mx_PresenceLabel">
-                    { this.getPrettyPresence(this.props.presenceState) }
+                    { this.getPrettyPresence(this.props.presenceState, this.props.presenceStatus) }
                 </div>
             );
         }
