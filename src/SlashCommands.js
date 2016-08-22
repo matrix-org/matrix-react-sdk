@@ -276,12 +276,12 @@ var commands = {
     // Set presence status and message for the current user.
     status: new Command("status", "<online|offline|unavailable> [<status message>]", function(roomId, args) {
       if (args) {
-          let matches = args.match(/^(online|offline|unavailable)( +(.*))?$/);
+          let matches = args.match(/^(online|offline|unavailable)( +([^ ].*))?$/);
           if (matches) {
               let opt = { presence: matches[1] };
 
               if (matches[2]) {
-                opt.status_msg = matches[2];
+                opt.status_msg = matches[3];
               }
 
               return success(MatrixClientPeg.get().setPresence(opt));
