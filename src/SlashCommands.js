@@ -272,6 +272,8 @@ var commands = {
         }
         return reject(this.getUsage());
     }),
+
+    // Set presence status and message for the current user.
     status: new Command("status", "<online|offline|unavailable> [<status message>]", function(roomId, args) {
       if (args) {
           let matches = args.match(/^(online|offline|unavailable)( +(.*))?$/);
