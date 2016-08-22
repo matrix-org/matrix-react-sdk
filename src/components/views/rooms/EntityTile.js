@@ -54,6 +54,7 @@ module.exports = React.createClass({
         avatarJsx: React.PropTypes.any, // <BaseAvatar />
         className: React.PropTypes.string,
         presenceState: React.PropTypes.string,
+        presenceStatus: React.PropTypes.string,
         presenceLastActiveAgo: React.PropTypes.number,
         presenceLastTs: React.PropTypes.number,
         presenceCurrentlyActive: React.PropTypes.bool,
@@ -61,7 +62,6 @@ module.exports = React.createClass({
         shouldComponentUpdate: React.PropTypes.func,
         onClick: React.PropTypes.func,
         suppressOnHover: React.PropTypes.bool,
-        presenceStatus: React.PropTypes.string,
     },
 
     getDefaultProps: function() {
