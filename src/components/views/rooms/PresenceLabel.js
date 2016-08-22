@@ -37,7 +37,7 @@ module.exports = React.createClass({
         presenceState: React.PropTypes.string,
 
         // status_msg
-        presenceStatus: React.PropTypes.string
+        presenceStatus: React.PropTypes.string,
     },
 
     getDefaultProps: function() {
