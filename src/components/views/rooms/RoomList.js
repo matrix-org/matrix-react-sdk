@@ -25,9 +25,7 @@ var Unread = require('../../../Unread');
 var dis = require("../../../dispatcher");
 var sdk = require('../../../index');
 var rate_limited_func = require('../../../ratelimitedfunc');
-var MatrixTools = require('../../../MatrixTools');
-
-var HIDE_CONFERENCE_CHANS = true;
+var Rooms = require('../../../Rooms');
 
 module.exports = React.createClass({
     displayName: 'RoomList',
@@ -58,7 +56,11 @@ module.exports = React.createClass({
         cli.on("RoomState.events", this.onRoomStateEvents);
         cli.on("RoomMember.name", this.onRoomMemberName);
 
-        var s = this.getRoomLists();
+        var s = Rooms.getRoomLists(
+            MatrixClientPeg.get().getRooms(),
+            MatrixClientPeg.get().credentials.userId,
+            this.props.ConferenceHandler,
+        );
         this.setState(s);
     },
 
@@ -194,67 +196,12 @@ module.exports = React.createClass({
         // based on the room which has actually changed.  This would stop
         // us re-rendering all the sublists every time anything changes anywhere
         // in the state of the client.
-        this.setState(this.getRoomLists());
+        this.setState(Rooms.getRoomLists(
+            MatrixClientPeg.get().getRooms(),
+            MatrixClientPeg.get().credentials.userId,
+            this.props.ConferenceHandler,
+        ));
         this._lastRefreshRoomListTs = Date.now();
-    },
-
-    getRoomLists: function() {
-        var self = this;
-        var s = { lists: {} };
-
-        s.lists["im.vector.fake.invite"] = [];
-        s.lists["m.favourite"] = [];
-        s.lists["im.vector.fake.recent"] = [];
-        s.lists["im.vector.fake.direct"] = [];
-        s.lists["m.lowpriority"] = [];
-        s.lists["im.vector.fake.archived"] = [];
-
-        MatrixClientPeg.get().getRooms().forEach(function(room) {
-            var me = room.getMember(MatrixClientPeg.get().credentials.userId);
-            if (!me) return;
-
-            // console.log("room = " + room.name + ", me.membership = " + me.membership +
-            //             ", sender = " + me.events.member.getSender() +
-            //             ", target = " + me.events.member.getStateKey() +
-            //             ", prevMembership = " + me.events.member.getPrevContent().membership);
-
-            if (me.membership == "invite") {
-                s.lists["im.vector.fake.invite"].push(room);
-            }
-            else if (MatrixTools.isDirectMessageRoom(room, me, self.props.ConferenceHandler, HIDE_CONFERENCE_CHANS)) {
-                // "Direct Message" rooms
-                s.lists["im.vector.fake.direct"].push(room);
-            }
-            else if (me.membership == "join" || me.membership === "ban" ||
-                     (me.membership === "leave" && me.events.member.getSender() !== me.events.member.getStateKey()))
-            {
-                // Used to split rooms via tags
-                var tagNames = Object.keys(room.tags);
-
-                if (tagNames.length) {
-                    for (var i = 0; i < tagNames.length; i++) {
-                        var tagName = tagNames[i];
-                        s.lists[tagName] = s.lists[tagName] || [];
-                        s.lists[tagNames[i]].push(room);
-                    }
-                }
-                else {
-                    s.lists["im.vector.fake.recent"].push(room);
-                }
-            }
-            else if (me.membership === "leave") {
-                s.lists["im.vector.fake.archived"].push(room);
-            }
-            else {
-                console.error("unrecognised membership: " + me.membership + " - this should never happen");
-            }
-        });
-
-        //console.log("calculated new roomLists; im.vector.fake.recent = " + s.lists["im.vector.fake.recent"]);
-
-        // we actually apply the sorting to this when receiving the prop in RoomSubLists.
-
-        return s;
     },
 
     _getScrollNode: function() {
