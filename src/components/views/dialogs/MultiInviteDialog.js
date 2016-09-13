@@ -16,38 +16,33 @@ limitations under the License.
 
 import React from 'react';
 
-import {getAddressType, inviteToRoom} from '../../../Invite';
+//import {getAddressType, inviteToRoom} from '../../../Invite';
+import MultiInviter from '../../../utils/MultiInviter';
 import sdk from '../../../index';
 
 export default class MultiInviteDialog extends React.Component {
     constructor(props, context) {
         super(props, context);
 
+        this.inviter = new MultiInviter(this.props.roomId);
+
         this._onCancel = this._onCancel.bind(this);
         this._startInviting = this._startInviting.bind(this);
-        this._canceled = false;
+        this._onProgress = this._onProgress.bind(this);
 
         this.state = {
             busy: false,
-            completionStates: {}, // State of each address (invited or error)
-            errorTexts: {}, // Textual error per address
             done: false,
+            completionStates: {},
         };
-        for (let i = 0; i < this.props.inputs.length; ++i) {
-            const input = this.props.inputs[i];
-            if (getAddressType(input) === null) {
-                this.state.completionStates[i] = 'error';
-                this.state.errorTexts[i] = 'Unrecognised address';
-            }
-        }
     }
 
     componentWillUnmount() {
-        this._canceled = true;
+        this.inviter.cancel();
     }
 
     _onCancel() {
-        this._canceled = true;
+        this.inviter.cancel();
         this.props.onFinished(false);
     }
 
@@ -56,81 +51,24 @@ export default class MultiInviteDialog extends React.Component {
             busy: true,
             done: false,
         });
-        this._inviteMore(0);
-    }
-
-    _inviteMore(nextIndex) {
-        if (this._canceled) {
-            return;
-        }
-
-        if (nextIndex == this.props.inputs.length) {
+        this.inviter.invite(this.props.inputs).progress(this._onProgress).done(() => {
             this.setState({
                 busy: false,
                 done: true,
             });
-            return;
-        }
+        });
+    }
 
-        const input = this.props.inputs[nextIndex];
-
-        // don't try to invite it if it's an invalid address
-        // (it will already be marked as an error though,
-        // so no need to do so again)
-        if (getAddressType(input) === null) {
-            this._inviteMore(nextIndex + 1);
-            return;
-        }
-
-        // don't re-invite (there's no way in the UI to do this, but
-        // for sanity's sake)
-        if (this.state.completionStates[nextIndex] == 'invited') {
-            this._inviteMore(nextIndex + 1);
-            return;
-        }
-
-        inviteToRoom(this.props.roomId, input).then(() => {
-            if (this._canceled) { return; }
-
-            this.setState((s) => {
-                s.completionStates[nextIndex] = 'invited'
-                return s;
-            });
-            this._inviteMore(nextIndex + 1);
-        }, (err) => {
-            if (this._canceled) { return; }
-
-            let errorText;
-            let fatal = false;
-            if (err.errcode == 'M_FORBIDDEN') {
-                fatal = true;
-                errorText = 'You do not have permission to invite people to this room.';
-            } else if (err.errcode == 'M_LIMIT_EXCEEDED') {
-                // we're being throttled so wait a bit & try again
-                setTimeout(() => {
-                    this._inviteMore(nextIndex);
-                }, 5000);
-                return;
-            } else {
-                errorText = 'Unknown server error';
-            }
-            this.setState((s) => {
-                s.completionStates[nextIndex] = 'error';
-                s.errorTexts[nextIndex] = errorText;
-                s.busy = !fatal;
-                s.done = fatal;
-                return s;
-            });
-            if (!fatal) {
-                this._inviteMore(nextIndex + 1);
-            }
+    _onProgress(completionStates) {
+        this.setState({
+            completionStates
         });
     }
 
     _getProgressIndicator() {
         let numErrors = 0;
-        for (const k of Object.keys(this.state.completionStates)) {
-            if (this.state.completionStates[k] == 'error') {
+        for (const addr of this.props.inputs) {
+            if (this.inviter.getCompletionState(addr) == 'error') {
                 ++numErrors;
             }
         }
@@ -152,10 +90,12 @@ export default class MultiInviteDialog extends React.Component {
             const input = this.props.inputs[i];
             let statusClass = '';
             let statusElement;
-            if (this.state.completionStates[i] == 'error') {
+            if (this.state.completionStates[input] == 'error') {
                 statusClass = 'error';
-                statusElement = <p className="mx_MultiInviteDialog_statusText">{this.state.errorTexts[i]}</p>;
-            } else if (this.state.completionStates[i] == 'invited') {
+                statusElement = <p className="mx_MultiInviteDialog_statusText">
+                {this.inviter.getErrorText(input)}
+                </p>;
+            } else if (this.state.completionStates[input] == 'invited') {
                 statusClass = 'invited';
             }
             inviteTiles.push(
