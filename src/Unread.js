@@ -27,8 +27,6 @@ module.exports = {
             return false;
         } else if (ev.getType() == "m.room.member") {
             return false;
-        } else if (ev.getType == 'm.room.message' && ev.getContent().msgtype == 'm.notify') {
-            return false;
         }
         var EventTile = sdk.getComponent('rooms.EventTile');
         return EventTile.haveTileForEvent(ev);
