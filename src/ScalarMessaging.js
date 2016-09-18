@@ -302,6 +302,11 @@ const onMessage = function(event) {
         return;
     }
 
+    if (event.data.action === "close_scalar") {
+        dis.dispatch({ action: 'close_scalar' });
+        return;
+    }
+
     const roomId = event.data.room_id;
     const userId = event.data.user_id;
     if (!roomId) {
@@ -323,6 +328,9 @@ const onMessage = function(event) {
 
     promise.then((viewingRoomId) => {
         if (roomId !== viewingRoomId) {
+            // XXX: Why does it matter that the room Scalar is operating on is not visible?
+            // I don't understand why we jump through all these hoops to get the current roomId...
+            // --matthew
             sendError(event, "Room " + roomId + " not visible");
             return;
         }
