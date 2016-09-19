@@ -237,7 +237,9 @@ module.exports = React.createClass({
                 }
             }
             if (topic) {
-                topic_el = <div className="mx_RoomHeader_topic" ref="topic" title={ topic }>{ topic }</div>;
+                //topic_el = <div className="mx_RoomHeader_topic" ref="topic" title={ topic }>{ topic }</div>;
+                // Removing the topic title, as it is now shown fully by hovering over it
+                topic_el = <div className="mx_RoomHeader_topic" ref="topic">{ topic }</div>;
             }
         }
 
