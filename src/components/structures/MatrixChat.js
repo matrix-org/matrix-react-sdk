@@ -65,8 +65,8 @@ module.exports = React.createClass({
         // in/registering.
         defaultDeviceDisplayName: React.PropTypes.string,
 
-        // handles "system integrations" that are specific to the platform we're running on (eg. electron, web)
-        integrationManager: React.PropTypes.object,
+        // Class that interfaces with the platform we're running on (eg. electron, web)
+        platform: React.PropTypes.object,
     },
 
     PageTypes: {
@@ -986,9 +986,9 @@ module.exports = React.createClass({
             }
         }
 
-        if (this.props.integrationManager) {
-            this.props.integrationManager.setErrorStatus(state === 'ERROR');
-            this.props.integrationManager.setNotificationCount(notifCount);
+        if (this.props.platform) {
+            this.props.platform.setErrorStatus(state === 'ERROR');
+            this.props.platform.setNotificationCount(notifCount);
         }
 
         document.title = `Riot ${state === "ERROR" ? " [offline]" : ""}${notifCount > 0 ? ` [${notifCount}]` : ""}`;
