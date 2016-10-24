@@ -20,6 +20,7 @@ var React = require('react');
 var Matrix = require("matrix-js-sdk");
 
 var MatrixClientPeg = require("../../MatrixClientPeg");
+var PlatformPeg = require("../../PlatformPeg");
 var SdkConfig = require("../../SdkConfig");
 var Notifier = require("../../Notifier");
 var ContextualMenu = require("./ContextualMenu");
@@ -64,9 +65,6 @@ module.exports = React.createClass({
         // displayname, if any, to set on the device when logging
         // in/registering.
         defaultDeviceDisplayName: React.PropTypes.string,
-
-        // Class that interfaces with the platform we're running on (eg. electron, web)
-        platform: React.PropTypes.object,
     },
 
     PageTypes: {
@@ -986,9 +984,9 @@ module.exports = React.createClass({
             }
         }
 
-        if (this.props.platform) {
-            this.props.platform.setErrorStatus(state === 'ERROR');
-            this.props.platform.setNotificationCount(notifCount);
+        if (PlatformPeg.get()) {
+            PlatformPeg.get().setErrorStatus(state === 'ERROR');
+            PlatformPeg.get().setNotificationCount(notifCount);
         }
 
         document.title = `Riot ${state === "ERROR" ? " [offline]" : ""}${notifCount > 0 ? ` [${notifCount}]` : ""}`;
