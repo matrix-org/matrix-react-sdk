@@ -104,6 +104,7 @@ var Notifier = {
     stop: function() {
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener('Room.timeline', this.boundOnRoomTimeline);
+            MatrixClientPeg.get().removeListener("Room.receipt", this.boundOnRoomReceipt);
             MatrixClientPeg.get().removeListener('sync', this.boundOnSyncStateChange);
         }
         this.isPrepared = false;
