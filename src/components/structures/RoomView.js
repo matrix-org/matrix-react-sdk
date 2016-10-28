@@ -104,8 +104,6 @@ module.exports = React.createClass({
 
     getInitialState: function() {
         return {
-            room: null,
-            roomId: null,
             roomLoading: true,
             editingRoomSettings: false,
             uploadingRoomSettings: false,
@@ -135,12 +133,27 @@ module.exports = React.createClass({
     },
 
     componentWillMount: function() {
+        // Our room and roomId are member variables, not state, because
+        // they do not change once the component is loaded. However,
+        // a significant amount of state is computer from the room, so
+        // having the room in state itself means we need to set the room
+        // to state and then wait for the state to be set asynchronously
+        // before we can dervie the rest of the state, meaning we render
+        // unnecessarily.
+        this.room = null;
+        this.roomId = null;
+
         this.dispatcherRef = dis.register(this.onAction);
         MatrixClientPeg.get().on("Room", this.onRoom);
         MatrixClientPeg.get().on("Room.timeline", this.onRoomTimeline);
         MatrixClientPeg.get().on("Room.accountData", this.onRoomAccountData);
         MatrixClientPeg.get().on("RoomState.members", this.onRoomStateMember);
         MatrixClientPeg.get().on("accountData", this.onAccountData);
+
+        window.addEventListener('resize', this.onResize);
+        this.onResize();
+
+        document.addEventListener("keydown", this.onKeyDown);
 
         this.tabComplete = new TabComplete({
             allowLooping: false,
@@ -160,13 +173,13 @@ module.exports = React.createClass({
                 if (this.props.onRoomIdResolved) {
                     this.props.onRoomIdResolved(result.room_id);
                 }
-                var room = MatrixClientPeg.get().getRoom(result.room_id);
+                this.room = MatrixClientPeg.get().getRoom(result.room_id);
+                this.roomId = result.room_id;
                 this.setState({
-                    room: room,
-                    roomId: result.room_id,
-                    roomLoading: !room,
-                    hasUnsentMessages: this._hasUnsentMessages(room),
-                }, this._onHaveRoom);
+                    roomLoading: !this.room,
+                    hasUnsentMessages: this._hasUnsentMessages(this.room),
+                });
+                this._onHaveRoom();
             }, (err) => {
                 this.setState({
                     roomLoading: false,
@@ -174,13 +187,13 @@ module.exports = React.createClass({
                 });
             });
         } else {
-            var room = MatrixClientPeg.get().getRoom(this.props.roomAddress);
+            this.room = MatrixClientPeg.get().getRoom(this.props.roomAddress);
+            this.roomId = this.props.roomAddress;
             this.setState({
-                roomId: this.props.roomAddress,
-                room: room,
-                roomLoading: !room,
-                hasUnsentMessages: this._hasUnsentMessages(room),
-            }, this._onHaveRoom);
+                roomLoading: !this.room,
+                hasUnsentMessages: this._hasUnsentMessages(this.room),
+            });
+            this._onHaveRoom();
         }
     },
 
@@ -200,24 +213,24 @@ module.exports = React.createClass({
         // a room in which we have a member event (ie. we've left) synapse will just
         // send us the same data as we get in the sync (ie. the last events we saw).
         var user_is_in_room = null;
-        if (this.state.room) {
-            user_is_in_room = this.state.room.hasMembershipState(
+        if (this.room) {
+            user_is_in_room = this.room.hasMembershipState(
                 MatrixClientPeg.get().credentials.userId, 'join'
             );
 
             this._updateAutoComplete();
-            this.tabComplete.loadEntries(this.state.room);
+            this.tabComplete.loadEntries(this.room);
         }
 
-        if (!user_is_in_room && this.state.roomId) {
+        if (!user_is_in_room && this.roomId) {
             if (this.props.autoJoin) {
                 this.onJoinButtonClicked();
-            } else if (this.state.roomId) {
-                console.log("Attempting to peek into room %s", this.state.roomId);
+            } else if (this.roomId) {
+                console.log("Attempting to peek into room %s", this.roomId);
 
-                MatrixClientPeg.get().peekInRoom(this.state.roomId).then((room) => {
+                MatrixClientPeg.get().peekInRoom(this.roomId).then((room) => {
+                    this.room = room;
                     this.setState({
-                        room: room,
                         roomLoading: false,
                     });
                     this._onRoomLoaded(room);
@@ -237,31 +250,27 @@ module.exports = React.createClass({
             }
         } else if (user_is_in_room) {
             MatrixClientPeg.get().stopPeeking();
-            this._onRoomLoaded(this.state.room);
+            this._onRoomLoaded(this.room);
         }
-    },
 
-    componentDidMount: function() {
-        var call = this._getCallForRoom();
-        var callState = call ? call.call_state : "ended";
+        const call = this._getCallForRoom();
+        const callState = call ? call.call_state : "ended";
         this.setState({
             callState: callState
         });
 
         this._updateConfCallNotification();
 
-        window.addEventListener('resize', this.onResize);
-        this.onResize();
+    },
 
-        document.addEventListener("keydown", this.onKeyDown);
-
+    componentDidMount: function() {
         // XXX: EVIL HACK to autofocus inviting on empty rooms.
         // We use the setTimeout to avoid racing with focus_composer.
-        if (this.state.room &&
-            this.state.room.getJoinedMembers().length == 1 &&
-            this.state.room.getLiveTimeline() &&
-            this.state.room.getLiveTimeline().getEvents() &&
-            this.state.room.getLiveTimeline().getEvents().length <= 6)
+        if (this.room &&
+            this.room.getJoinedMembers().length == 1 &&
+            this.room.getLiveTimeline() &&
+            this.room.getLiveTimeline().getEvents() &&
+            this.room.getLiveTimeline().getEvents().length <= 6)
         {
             var inviteBox = document.getElementById("mx_SearchableEntityList_query");
             setTimeout(function() {
@@ -370,7 +379,7 @@ module.exports = React.createClass({
             case 'message_sent':
             case 'message_send_cancelled':
                 this.setState({
-                    hasUnsentMessages: this._hasUnsentMessages(this.state.room)
+                    hasUnsentMessages: this._hasUnsentMessages(this.room)
                 });
                 break;
             case 'notifier_enabled':
@@ -414,7 +423,7 @@ module.exports = React.createClass({
 
         // ignore events for other rooms
         if (!room) return;
-        if (!this.state.room || room.roomId != this.state.room.roomId) return;
+        if (!this.room || room.roomId != this.room.roomId) return;
 
         // ignore events from filtered timelines
         if (data.timeline.getTimelineSet() !== room.getUnfilteredTimelineSet()) return;
@@ -452,7 +461,7 @@ module.exports = React.createClass({
         }
     },
 
-    // called when state.room is first initialised (either at initial load,
+    // called when this.room is first initialised (either at initial load,
     // after a successful peek, or after we join the room).
     _onRoomLoaded: function(room) {
         this._calculatePeekRules(room);
@@ -517,10 +526,10 @@ module.exports = React.createClass({
         // set it in our state and start using it (ie. init the timeline)
         // This will happen if we start off viewing a room we're not joined,
         // then join it whilst RoomView is looking at that room.
-        if (!this.state.room && room.roomId == this._joiningRoomId) {
+        if (!this.room && room.roomId == this._joiningRoomId) {
             this._joiningRoomId = undefined;
+            this.room = room;
             this.setState({
-                room: room,
                 joining: false,
             });
 
@@ -529,7 +538,7 @@ module.exports = React.createClass({
     },
 
     updateTint: function() {
-        var room = this.state.room;
+        var room = this.room;
         if (!room) return;
 
         var color_scheme_event = room.getAccountData("org.matrix.room.color_scheme");
@@ -543,13 +552,13 @@ module.exports = React.createClass({
     },
 
     onAccountData: function(event) {
-        if (event.getType() === "org.matrix.preview_urls" && this.state.room) {
-            this._updatePreviewUrlVisibility(this.state.room);
+        if (event.getType() === "org.matrix.preview_urls" && this.room) {
+            this._updatePreviewUrlVisibility(this.room);
         }
     },
 
     onRoomAccountData: function(event, room) {
-        if (room.roomId == this.state.roomId) {
+        if (room.roomId == this.roomId) {
             if (event.getType() === "org.matrix.room.color_scheme") {
                 var color_scheme = event.getContent();
                 // XXX: we should validate the event
@@ -564,12 +573,12 @@ module.exports = React.createClass({
 
     onRoomStateMember: function(ev, state, member) {
         // ignore if we don't have a room yet
-        if (!this.state.room) {
+        if (!this.room) {
             return;
         }
 
         // ignore members in other rooms
-        if (member.roomId !== this.state.room.roomId) {
+        if (member.roomId !== this.room.roomId) {
             return;
         }
 
@@ -584,23 +593,23 @@ module.exports = React.createClass({
         this._updateConfCallNotification();
 
         // refresh the tab complete list
-        this.tabComplete.loadEntries(this.state.room);
+        this.tabComplete.loadEntries(this.room);
         this._updateAutoComplete();
 
         // if we are now a member of the room, where we were not before, that
         // means we have finished joining a room we were previously peeking
         // into.
         var me = MatrixClientPeg.get().credentials.userId;
-        if (this.state.joining && this.state.room.hasMembershipState(me, "join")) {
+        if (this.state.joining && this.room.hasMembershipState(me, "join")) {
             // Having just joined a room, check to see if it looks like a DM room, and if so,
             // mark it as one. This is to work around the fact that some clients don't support
             // is_direct. We should remove this once they do.
-            const me = this.state.room.getMember(MatrixClientPeg.get().credentials.userId);
-            if (Rooms.looksLikeDirectMessageRoom(this.state.room, me)) {
+            const me = this.room.getMember(MatrixClientPeg.get().credentials.userId);
+            if (Rooms.looksLikeDirectMessageRoom(this.room, me)) {
                 // XXX: There's not a whole lot we can really do if this fails: at best
                 // perhaps we could try a couple more times, but since it's a temporary
                 // compatability workaround, let's not bother.
-                Rooms.setDMRoom(this.state.room.roomId, me.events.member.getSender()).done();
+                Rooms.setDMRoom(this.room.roomId, me.events.member.getSender()).done();
             }
 
             this.setState({
@@ -621,7 +630,7 @@ module.exports = React.createClass({
     },
 
     _updateConfCallNotification: function() {
-        var room = this.state.room;
+        var room = this.room;
         if (!room || !this.props.ConferenceHandler) {
             return;
         }
@@ -664,14 +673,14 @@ module.exports = React.createClass({
     },
 
     onResendAllClick: function() {
-        var eventsToResend = this._getUnsentMessages(this.state.room);
+        var eventsToResend = this._getUnsentMessages(this.room);
         eventsToResend.forEach(function(event) {
             Resend.resend(event);
         });
     },
 
     onCancelAllClick: function() {
-        var eventsToResend = this._getUnsentMessages(this.state.room);
+        var eventsToResend = this._getUnsentMessages(this.room);
         eventsToResend.forEach(function(event) {
             Resend.removeFromQueue(event);
         });
@@ -718,13 +727,13 @@ module.exports = React.createClass({
 
         display_name_promise.then(() => {
             // if this is an invite and has the 'direct' hint set, mark it as a DM room now.
-            if (this.state.room) {
-                const me = this.state.room.getMember(MatrixClientPeg.get().credentials.userId);
+            if (this.room) {
+                const me = this.room.getMember(MatrixClientPeg.get().credentials.userId);
                 if (me && me.membership == 'invite') {
                     if (me.events.member.getContent().is_direct) {
                         // The 'direct' hint is there, so declare that this is a DM room for
                         // whoever invited us.
-                        return Rooms.setDMRoom(this.state.room.roomId, me.events.member.getSender());
+                        return Rooms.setDMRoom(this.room.roomId, me.events.member.getSender());
                     }
                 }
             }
@@ -861,7 +870,7 @@ module.exports = React.createClass({
         }
 
         ContentMessages.sendContentToRoom(
-            file, this.state.room.roomId, MatrixClientPeg.get()
+            file, this.room.roomId, MatrixClientPeg.get()
         ).done(undefined, function(error) {
             var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createDialog(ErrorDialog, {
@@ -896,7 +905,7 @@ module.exports = React.createClass({
             filter = {
                 // XXX: it's unintuitive that the filter for searching doesn't have the same shape as the v2 filter API :(
                 rooms: [
-                    this.state.room.roomId
+                    this.room.roomId
                 ]
             };
         }
@@ -1105,12 +1114,12 @@ module.exports = React.createClass({
     onLeaveClick: function() {
         dis.dispatch({
             action: 'leave_room',
-            room_id: this.state.room.roomId,
+            room_id: this.room.roomId,
         });
     },
 
     onForgetClick: function() {
-        MatrixClientPeg.get().forget(this.state.room.roomId).done(function() {
+        MatrixClientPeg.get().forget(this.room.roomId).done(function() {
             dis.dispatch({ action: 'view_next_room' });
         }, function(err) {
             var errCode = err.errcode || "unknown error code";
@@ -1127,7 +1136,7 @@ module.exports = React.createClass({
         this.setState({
             rejecting: true
         });
-        MatrixClientPeg.get().leave(this.state.roomId).done(function() {
+        MatrixClientPeg.get().leave(this.roomId).done(function() {
             dis.dispatch({ action: 'view_next_room' });
             self.setState({
                 rejecting: false
@@ -1340,20 +1349,20 @@ module.exports = React.createClass({
      * we haven't yet joined the room.
      */
     getRoomId: function() {
-        if (!this.state.room) {
+        if (!this.room) {
             return null;
         }
-        return this.state.room.roomId;
+        return this.room.roomId;
     },
 
     /**
      * get any current call for this room
      */
     _getCallForRoom: function() {
-        if (!this.state.room) {
+        if (!this.room) {
             return null;
         }
-        return CallHandler.getCallForRoom(this.state.room.roomId);
+        return CallHandler.getCallForRoom(this.room.roomId);
     },
 
     // this has to be a proper method rather than an unnamed function,
@@ -1368,7 +1377,7 @@ module.exports = React.createClass({
 
     _updateAutoComplete: function() {
         const myUserId = MatrixClientPeg.get().credentials.userId;
-        const members = this.state.room.getJoinedMembers().filter(function(member) {
+        const members = this.room.getJoinedMembers().filter(function(member) {
             if (member.userId !== myUserId) return true;
         });
         UserProvider.getInstance().setUserList(members);
@@ -1386,7 +1395,7 @@ module.exports = React.createClass({
         var Loader = sdk.getComponent("elements.Spinner");
         var TimelinePanel = sdk.getComponent("structures.TimelinePanel");
 
-        if (!this.state.room) {
+        if (!this.room) {
                 if (this.state.roomLoading) {
                     return (
                         <div className="mx_RoomView">
@@ -1410,7 +1419,7 @@ module.exports = React.createClass({
                     return (
                         <div className="mx_RoomView">
                             <RoomHeader ref="header"
-                                room={this.state.room}
+                                room={this.room}
                                 oobData={this.props.oobData}
                                 collapsedRhs={ this.props.collapsedRhs }
                             />
@@ -1422,7 +1431,7 @@ module.exports = React.createClass({
                                                 spinner={this.state.joining}
                                                 inviterName={inviterName}
                                                 invitedEmail={invitedEmail}
-                                                room={this.state.room}
+                                                room={this.room}
                                 />
                             </div>
                             <div className="mx_RoomView_messagePanel"></div>
@@ -1432,7 +1441,7 @@ module.exports = React.createClass({
         }
 
         var myUserId = MatrixClientPeg.get().credentials.userId;
-        var myMember = this.state.room.getMember(myUserId);
+        var myMember = this.room.getMember(myUserId);
         if (myMember && myMember.membership == 'invite') {
             if (this.state.joining || this.state.rejecting) {
                 return (
@@ -1453,7 +1462,7 @@ module.exports = React.createClass({
                     <div className="mx_RoomView">
                         <RoomHeader
                             ref="header"
-                            room={this.state.room}
+                            room={this.room}
                             collapsedRhs={ this.props.collapsedRhs }
                         />
                         <div className="mx_RoomView_auxPanel">
@@ -1462,7 +1471,7 @@ module.exports = React.createClass({
                                             inviterName={ inviterName }
                                             canPreview={ false }
                                             spinner={this.state.joining}
-                                            room={this.state.room}
+                                            room={this.room}
                             />
                         </div>
                         <div className="mx_RoomView_messagePanel"></div>
@@ -1488,12 +1497,12 @@ module.exports = React.createClass({
 
         if (ContentMessages.getCurrentUploads().length > 0) {
             var UploadBar = sdk.getComponent('structures.UploadBar');
-            statusBar = <UploadBar room={this.state.room} />
+            statusBar = <UploadBar room={this.room} />
         } else if (!this.state.searchResults) {
             var RoomStatusBar = sdk.getComponent('structures.RoomStatusBar');
 
             statusBar = <RoomStatusBar
-                room={this.state.room}
+                room={this.room}
                 tabComplete={this.tabComplete}
                 numUnreadMessages={this.state.numUnreadMessages}
                 hasUnsentMessages={this.state.hasUnsentMessages}
@@ -1508,7 +1517,7 @@ module.exports = React.createClass({
 
         var aux = null;
         if (this.state.editingRoomSettings) {
-            aux = <RoomSettings ref="room_settings" onSaveClick={this.onSettingsSaveClick} onCancelClick={this.onCancelClick} room={this.state.room} />;
+            aux = <RoomSettings ref="room_settings" onSaveClick={this.onSettingsSaveClick} onCancelClick={this.onCancelClick} room={this.room} />;
         }
         else if (this.state.uploadingRoomSettings) {
             aux = <Loader/>;
@@ -1534,13 +1543,13 @@ module.exports = React.createClass({
                                 inviterName={inviterName}
                                 invitedEmail={invitedEmail}
                                 canPreview={this.state.canPeek}
-                                room={this.state.room}
+                                room={this.room}
                 />
             );
         }
 
         var auxPanel = (
-            <AuxPanel ref="auxPanel" room={this.state.room}
+            <AuxPanel ref="auxPanel" room={this.room}
               conferenceHandler={this.props.ConferenceHandler}
               draggingFile={this.state.draggingFile}
               displayConfCallNotification={this.state.displayConfCallNotification}
@@ -1558,7 +1567,7 @@ module.exports = React.createClass({
         if (canSpeak) {
             messageComposer =
                 <MessageComposer
-                    room={this.state.room} onResize={this.onChildResize} uploadFile={this.uploadFile}
+                    room={this.room} onResize={this.onChildResize} uploadFile={this.uploadFile}
                     callState={this.state.callState} tabComplete={this.tabComplete} opacity={ this.props.opacity }/>
         }
 
@@ -1627,11 +1636,11 @@ module.exports = React.createClass({
             hideMessagePanel = true;
         }
 
-        // console.log("ShowUrlPreview for %s is %s", this.state.room.roomId, this.state.showUrlPreview);
+        // console.log("ShowUrlPreview for %s is %s", this.room.roomId, this.state.showUrlPreview);
 
         var messagePanel = (
             <TimelinePanel ref={this._gatherTimelinePanelRef}
-                timelineSet={this.state.room.getUnfilteredTimelineSet()}
+                timelineSet={this.room.getUnfilteredTimelineSet()}
                 manageReadReceipts={true}
                 manageReadMarkers={true}
                 hidden={hideMessagePanel}
@@ -1660,7 +1669,7 @@ module.exports = React.createClass({
 
         return (
             <div className={ "mx_RoomView" + (inCall ? " mx_RoomView_inCall" : "") } ref="roomView">
-                <RoomHeader ref="header" room={this.state.room} searchInfo={searchInfo}
+                <RoomHeader ref="header" room={this.room} searchInfo={searchInfo}
                     oobData={this.props.oobData}
                     editing={this.state.editingRoomSettings}
                     saving={this.state.uploadingRoomSettings}
