@@ -1,6 +1,6 @@
 {
   "name": "matrix-react-sdk",
-  "version": "0.7.4",
+  "version": "0.7.5-rc.1",
   "description": "SDK for matrix.org using React",
   "author": "matrix.org",
   "repository": {
@@ -9,6 +9,23 @@
   },
   "license": "Apache-2.0",
   "main": "lib/index.js",
+  "files": [
+    "CHANGELOG.md",
+    "CONTRIBUTING.rst",
+    "LICENSE",
+    "README.md",
+    "code_style.md",
+    "git-revision.txt",
+    "header",
+    "jenkins.sh",
+    "karma.conf.js",
+    "lib",
+    "package.json",
+    "release.sh",
+    "scripts",
+    "src",
+    "test"
+  ],
   "bin": {
     "reskindex": "scripts/reskindex.js"
   },
