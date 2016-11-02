@@ -17,6 +17,7 @@ limitations under the License.
 'use strict';
 
 var MatrixClientPeg = require("./MatrixClientPeg");
+var PlatformPeg = require("./PlatformPeg");
 var TextForEvent = require('./TextForEvent');
 var Avatar = require('./Avatar');
 var dis = require("./dispatcher");
@@ -30,6 +31,7 @@ var dis = require("./dispatcher");
  */
 
 var Notifier = {
+    notifsByRoom: {},
 
     notificationMessageForEvent: function(ev) {
         return TextForEvent.textForEvent(ev);
@@ -67,26 +69,17 @@ var Notifier = {
             ev.sender, 40, 40, 'crop'
         ) : null;
 
-        var notification = new global.Notification(
-            title,
-            {
-                "body": msg,
-                "icon": avatarUrl,
-                "tag": "matrixreactsdk"
+        const plaf = PlatformPeg.get();
+        if (plaf) {
+            const notif = plaf.displayNotification(title, msg, avatarUrl);
+
+            // if displayNotification returns non-null,  the platform supports
+            // clearing notifications later, so keep track of this.
+            if (notif) {
+                if (this.notifsByRoom[ev.getRoomId()] === undefined) this.notifsByRoom[ev.getRoomId()] = [];
+                this.notifsByRoom[ev.getRoomId()].push(notif);
             }
-        );
-
-        notification.onclick = function() {
-            dis.dispatch({
-                action: 'view_room',
-                room_id: room.roomId
-            });
-            global.focus();
-        };
-
-        global.setTimeout(function() {
-            notification.close();
-        }, 5 * 1000);
+        }
     },
 
     _playAudioNotification: function(ev, room) {
@@ -100,7 +93,9 @@ var Notifier = {
     start: function() {
         this.boundOnRoomTimeline = this.onRoomTimeline.bind(this);
         this.boundOnSyncStateChange = this.onSyncStateChange.bind(this);
+        this.boundOnRoomReceipt = this.onRoomReceipt.bind(this);
         MatrixClientPeg.get().on('Room.timeline', this.boundOnRoomTimeline);
+        MatrixClientPeg.get().on("Room.receipt", this.boundOnRoomReceipt);
         MatrixClientPeg.get().on("sync", this.boundOnSyncStateChange);
         this.toolbarHidden = false;
         this.isPrepared = false;
@@ -109,6 +104,7 @@ var Notifier = {
     stop: function() {
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener('Room.timeline', this.boundOnRoomTimeline);
+            MatrixClientPeg.get().removeListener("Room.receipt", this.boundOnRoomReceipt);
             MatrixClientPeg.get().removeListener('sync', this.boundOnSyncStateChange);
         }
         this.isPrepared = false;
@@ -119,6 +115,8 @@ var Notifier = {
     },
 
     havePermission: function() {
+        // TODO: Strictly this should move into the Platform handlers
+        // since we don't need to do these checks on Electron.
         if (!this.supportsDesktopNotifications()) return false;
         return global.Notification.permission == 'granted';
     },
@@ -239,6 +237,24 @@ var Notifier = {
             if (actions.tweaks.sound && this.isAudioEnabled()) {
                 this._playAudioNotification(ev, room);
             }
+        }
+    },
+
+    onRoomReceipt: function(ev, room) {
+        if (room.getUnreadNotificationCount() == 0) {
+            // ideally we would clear each notification when it was read,
+            // but we have no way, given a read receipt, to know whether
+            // the receipt comes before or after an event, so we can't
+            // do this. Instead, clear all notifications for a room once
+            // there are no notifs left in that room., which is not quite
+            // as good but it's something.
+            const plaf = PlatformPeg.get();
+            if (!plaf) return;
+            if (this.notifsByRoom[room.roomId] === undefined) return;
+            for (const notif of this.notifsByRoom[room.roomId]) {
+                plaf.clearNotification(notif);
+            }
+            delete this.notifsByRoom[room.roomId];
         }
     }
 };

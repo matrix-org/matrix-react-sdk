@@ -18,9 +18,9 @@ import q from 'q';
 
 var React = require('react');
 var Matrix = require("matrix-js-sdk");
-var Favico = require('favico.js');
 
 var MatrixClientPeg = require("../../MatrixClientPeg");
+var PlatformPeg = require("../../PlatformPeg");
 var SdkConfig = require("../../SdkConfig");
 var Notifier = require("../../Notifier");
 var ContextualMenu = require("./ContextualMenu");
@@ -105,6 +105,8 @@ module.exports = React.createClass({
 
             version: null,
             newVersion: null,
+            hasNewVersion: false,
+            newVersionReleaseNotes: null,
 
             // The username to default to when upgrading an account from a guest
             upgradeUsername: null,
@@ -172,7 +174,6 @@ module.exports = React.createClass({
 
     componentWillMount: function() {
         SdkConfig.put(this.props.config);
-        this.favicon = new Favico({animation: 'none'});
 
         // Stashed guest credentials if the user logs out
         // whilst logged in as a guest user (so they can change
@@ -470,6 +471,12 @@ module.exports = React.createClass({
             case 'load_completed':
                 this._onLoadCompleted();
                 break;
+            case 'new_version':
+                this.onVersion(
+                    payload.currentVersion, payload.newVersion,
+                    payload.releaseNotes
+                );
+                break;
         }
     },
 
@@ -639,7 +646,7 @@ module.exports = React.createClass({
 
         var self = this;
         cli.on('sync', function(state, prevState) {
-            self.updateFavicon(state, prevState);
+            self.updateStatusIndicator(state, prevState);
             if (state === "SYNCING" && prevState === "SYNCING") {
                 return;
             }
@@ -962,15 +969,16 @@ module.exports = React.createClass({
         this.showScreen("settings");
     },
 
-    onVersion: function(current, latest) {
+    onVersion: function(current, latest, releaseNotes) {
         this.setState({
             version: current,
             newVersion: latest,
-            hasNewVersion: current !== latest
+            hasNewVersion: current !== latest,
+            newVersionReleaseNotes: releaseNotes,
         });
     },
 
-    updateFavicon: function(state, prevState) {
+    updateStatusIndicator(state, prevState) {
         var notifCount = 0;
 
         var rooms = MatrixClientPeg.get().getRooms();
@@ -984,24 +992,12 @@ module.exports = React.createClass({
                 notifCount++;
             }
         }
-        try {
-            // This needs to be in in a try block as it will throw
-            // if there are more than 100 badge count changes in
-            // its internal queue
-            var bgColor = "#d00",
-                notif = notifCount;
 
-            if(state === "ERROR") {
-                notif = notif || "×";
-                bgColor = "#f00";
-            }
-
-            this.favicon.badge(notif, {
-                bgColor: bgColor
-            });
-        } catch (e) {
-            console.warn("Failed to set badge count: "+e.message);
+        if (PlatformPeg.get()) {
+            PlatformPeg.get().setErrorStatus(state === 'ERROR');
+            PlatformPeg.get().setNotificationCount(notifCount);
         }
+
         document.title = `Riot ${state === "ERROR" ? " [offline]" : ""}${notifCount > 0 ? ` [${notifCount}]` : ""}`;
     },
 
@@ -1113,7 +1109,9 @@ module.exports = React.createClass({
 
             var topBar;
             if (this.state.hasNewVersion) {
-                topBar = <NewVersionBar version={this.state.version} newVersion={this.state.newVersion} />;
+                topBar = <NewVersionBar version={this.state.version} newVersion={this.state.newVersion}
+                    releaseNotes={this.state.newVersionReleaseNotes}
+                />;
             }
             else if (MatrixClientPeg.get().isGuest()) {
                 topBar = <GuestWarningBar />;
