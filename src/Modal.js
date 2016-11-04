@@ -22,6 +22,7 @@ var ReactDOM = require('react-dom');
 
 module.exports = {
     DialogContainerId: "mx_Dialog_Container",
+    _modals: [],
 
     getOrCreateContainer: function() {
         var container = document.getElementById(this.DialogContainerId);
@@ -38,25 +39,59 @@ module.exports = {
     createDialog: function (Element, props, className) {
         var self = this;
 
-        // never call this via modal.close() from onFinished() otherwise it will loop
+        var modal = {};
+
+        // never call this from onFinished() otherwise it will loop
+        //
+        // nb explicit function() rather than arrow function, to get `arguments`
         var closeDialog = function() {
             if (props && props.onFinished) props.onFinished.apply(null, arguments);
-            ReactDOM.unmountComponentAtNode(self.getOrCreateContainer());
+            var i = self._modals.indexOf(modal);
+            if (i >= 0) {
+                self._modals.splice(i, 1);
+            }
+            self._reRender();
         };
 
         // FIXME: If a dialog uses getDefaultProps it clobbers the onFinished
         // property set here so you can't close the dialog from a button click!
+        modal.elem = <Element {...props} onFinished={closeDialog}/>;
+        modal.onFinished = props ? props.onFinished : null;
+        modal.className = className;
+
+        this._modals.unshift(modal);
+
+        this._reRender();
+        return {close: closeDialog};
+    },
+
+    _closeAll: function() {
+        for (let i = 0; i < this._modals.length; i++) {
+            const m = this._modals[i];
+            if (m.onFinished) {
+                m.onFinished(false);
+            }
+        }
+        this._modals = [];
+        this._reRender();
+    },
+
+    _reRender: function() {
+        if (this._modals.length == 0) {
+            ReactDOM.unmountComponentAtNode(this.getOrCreateContainer());
+            return;
+        }
+
+        var modal = this._modals[0];
         var dialog = (
-            <div className={"mx_Dialog_wrapper " + className}>
+            <div className={"mx_Dialog_wrapper " + modal.className}>
                 <div className="mx_Dialog">
-                    <Element {...props} onFinished={closeDialog}/>
+                    {modal.elem}
                 </div>
-                <div className="mx_Dialog_background" onClick={ closeDialog.bind(this, false) }></div>
+                <div className="mx_Dialog_background" onClick={ this._closeAll.bind(this) }></div>
             </div>
         );
 
         ReactDOM.render(dialog, this.getOrCreateContainer());
-
-        return {close: closeDialog};
     },
 };
