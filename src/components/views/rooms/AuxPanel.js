@@ -70,6 +70,7 @@ module.exports = React.createClass({
     render: function() {
         var CallView = sdk.getComponent("voip.CallView");
         var TintableSvg = sdk.getComponent("elements.TintableSvg");
+        var KeyRequestPanel = sdk.getComponent("views.rooms.KeyRequestPanel");
 
         var fileDropTarget = null;
         if (this.props.draggingFile) {
@@ -93,7 +94,7 @@ module.exports = React.createClass({
             }
             else {
                 joinText = (<span>
-                    Join as <a onClick={(event)=>{ this.onConferenceNotificationClick(event, 'voice')}} 
+                    Join as <a onClick={(event)=>{ this.onConferenceNotificationClick(event, 'voice')}}
                                href="#">voice</a> or <a onClick={(event)=>{ this.onConferenceNotificationClick(event, 'video') }}
                                href="#">video</a>.
                 </span>);
@@ -119,6 +120,7 @@ module.exports = React.createClass({
                 { fileDropTarget }
                 { callView }
                 { conferenceCallNotification }
+                <KeyRequestPanel room={this.props.room} />
                 { this.props.children }
             </div>
         );

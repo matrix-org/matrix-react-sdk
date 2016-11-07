@@ -93,6 +93,8 @@ import views$dialogs$SetDisplayNameDialog from './components/views/dialogs/SetDi
 views$dialogs$SetDisplayNameDialog && (module.exports.components['views.dialogs.SetDisplayNameDialog'] = views$dialogs$SetDisplayNameDialog);
 import views$dialogs$TextInputDialog from './components/views/dialogs/TextInputDialog';
 views$dialogs$TextInputDialog && (module.exports.components['views.dialogs.TextInputDialog'] = views$dialogs$TextInputDialog);
+import views$dialogs$VerifyOwnNewDevicesDialog from './components/views/dialogs/VerifyOwnNewDevicesDialog';
+views$dialogs$VerifyOwnNewDevicesDialog && (module.exports.components['views.dialogs.VerifyOwnNewDevicesDialog'] = views$dialogs$VerifyOwnNewDevicesDialog);
 import views$elements$AddressSelector from './components/views/elements/AddressSelector';
 views$elements$AddressSelector && (module.exports.components['views.elements.AddressSelector'] = views$elements$AddressSelector);
 import views$elements$AddressTile from './components/views/elements/AddressTile';
@@ -167,6 +169,8 @@ import views$rooms$EntityTile from './components/views/rooms/EntityTile';
 views$rooms$EntityTile && (module.exports.components['views.rooms.EntityTile'] = views$rooms$EntityTile);
 import views$rooms$EventTile from './components/views/rooms/EventTile';
 views$rooms$EventTile && (module.exports.components['views.rooms.EventTile'] = views$rooms$EventTile);
+import views$rooms$KeyRequestPanel from './components/views/rooms/KeyRequestPanel';
+views$rooms$KeyRequestPanel && (module.exports.components['views.rooms.KeyRequestPanel'] = views$rooms$KeyRequestPanel);
 import views$rooms$LinkPreviewWidget from './components/views/rooms/LinkPreviewWidget';
 views$rooms$LinkPreviewWidget && (module.exports.components['views.rooms.LinkPreviewWidget'] = views$rooms$LinkPreviewWidget);
 import views$rooms$MemberDeviceInfo from './components/views/rooms/MemberDeviceInfo';
