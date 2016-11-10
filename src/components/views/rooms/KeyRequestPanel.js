@@ -60,37 +60,29 @@ const VerifyOwnNewDevicesPanel = WithMatrixClient(React.createClass({
     },
 }));
 
-const KeyRequestTile = WithMatrixClient(React.createClass({
+const OwnDeviceKeyRequestTile = WithMatrixClient(React.createClass({
     displayName: 'KeyRequestTile',
 
     propTypes: {
-        userId: React.PropTypes.string.isRequired,
-        deviceId: React.PropTypes.string.isRequired,
+        device: React.PropTypes.object.isRequired,
         requests: React.PropTypes.array.isRequired,
         matrixClient: React.PropTypes.instanceOf(Matrix.MatrixClient).isRequired,
     },
 
-    getInitialState: function () {
-        var result = {
-            deviceVerified: false,
-            deviceBlocked: false,
-        };
-
-        const props = this.props;
-
-        const dev = this.props.matrixClient.getStoredDevice(props.userId, props.deviceId);
-        if (!dev) { return result; }
-
-        result['deviceVerified'] = dev.isVerified();
-        result['deviceBlocked'] = dev.isBlocked();
-        return result;
+    _onShareClick: function() {
+        this.props.matrixClient.shareAllKeysWithDevice(
+            this.props.device.deviceId
+        ).done(); // TODO: feedback to user
     },
 
     render: function() {
+        const button = (
+            <button onClick={this._onShareClick}>Share keys</button>
+        );
         return (
             <div>
-                {this.props.userId} {this.props.deviceId}
-                requests: {JSON.stringify(this.props.requests)}
+                Your device '{this.props.device.getDisplayName()}'
+                ({this.props.device.deviceId}) requested e2e keys. {button}
             </div>
         );
     },
@@ -128,10 +120,18 @@ export default WithMatrixClient(React.createClass({
     },
 
     _updateDeviceList: function() {
-        const client = this.props.matrixClient;
-        const requests = this.props.room.getKeyRequests();
+        this.forceUpdate();
+    },
+
+    render: function() {
+
+        let verifyPanel = null;
+        const keyRequestPanels = [];
 
         const unverifiedOwnDevices = [];
+
+        const client = this.props.matrixClient;
+        const requests = this.props.room.getKeyRequests();
 
         for (const userId of Object.keys(requests)) {
             // only do our own devices for now.
@@ -151,21 +151,24 @@ export default WithMatrixClient(React.createClass({
                     unverifiedOwnDevices.push(deviceId);
                     continue;
                 }
+
+                keyRequestPanels.push(
+                    <OwnDeviceKeyRequestTile key={userId + ':' + deviceId}
+                        userId={userId} device={dev}
+                        requests={requests[userId][deviceId]}
+                     />
+                );
             }
         }
 
-        this.setState({unverifiedOwnDevices: unverifiedOwnDevices});
-    },
-
-    render: function() {
-        let verifyPanel = null;
-        if (this.state.unverifiedOwnDevices.length > 0) {
-            verifyPanel = <VerifyOwnNewDevicesPanel deviceIds={this.state.unverifiedOwnDevices}/>;
+        if (unverifiedOwnDevices.length > 0) {
+            verifyPanel = <VerifyOwnNewDevicesPanel deviceIds={unverifiedOwnDevices}/>;
         }
 
         return (
             <div className='mx_KeyRequestPanel'>
                 {verifyPanel}
+                {keyRequestPanels}
             </div>
         );
     },
