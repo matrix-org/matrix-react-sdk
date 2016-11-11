@@ -276,57 +276,57 @@ module.exports = React.createClass({
             this.currentGhostEventId = null;
         }
 
-        var isMembershipChange = (e) =>
-            e.getType() === 'm.room.member'
-            && ['join', 'leave'].indexOf(e.event.content.membership) !== -1
-            && (!e.event.prev_content || e.event.content.membership  !== e.event.prev_content.membership);
+        // var isMembershipChange = (e) =>
+        //     e.getType() === 'm.room.member'
+        //     && ['join', 'leave'].indexOf(e.event.content.membership) !== -1
+        //     && (!e.event.prev_content || e.event.content.membership  !== e.event.prev_content.membership);
 
-        for (i = 0; i < this.props.events.length; i++) {
-            var mxEv = this.props.events[i];
-            var wantTile = true;
-            var eventId = mxEv.getId();
+        // for (i = 0; i < this.props.events.length; i++) {
+        //     var mxEv = this.props.events[i];
+        //     var wantTile = true;
+        //     var eventId = mxEv.getId();
 
-            if (!EventTile.haveTileForEvent(mxEv)) {
-                wantTile = false;
-            }
+        //     if (!EventTile.haveTileForEvent(mxEv)) {
+        //         wantTile = false;
+        //     }
 
-            var last = (i == lastShownEventIndex);
+        //     var last = (i == lastShownEventIndex);
 
-            // Wrap consecutive member events in a ListSummary
-            if (isMembershipChange(mxEv)) {
-                let summarisedEvents = [mxEv];
-                i++;
-                for (;i < this.props.events.length; i++) {
-                    let collapsedMxEv = this.props.events[i];
+        //     // Wrap consecutive member events in a ListSummary
+        //     if (isMembershipChange(mxEv)) {
+        //         let summarisedEvents = [mxEv];
+        //         i++;
+        //         for (;i < this.props.events.length; i++) {
+        //             let collapsedMxEv = this.props.events[i];
 
-                    if (!isMembershipChange(collapsedMxEv)) {
-                        i--;
-                        break;
-                    }
-                    summarisedEvents.push(collapsedMxEv);
-                }
-                // At this point, i = this.props.events.length OR i = the index of the last
-                // MembershipChange in a sequence of MembershipChanges
+        //             if (!isMembershipChange(collapsedMxEv)) {
+        //                 i--;
+        //                 break;
+        //             }
+        //             summarisedEvents.push(collapsedMxEv);
+        //         }
+        //         // At this point, i = this.props.events.length OR i = the index of the last
+        //         // MembershipChange in a sequence of MembershipChanges
 
-                let eventTiles = summarisedEvents.map(
-                    (e) => {
-                        let ret = this._getTilesForEvent(prevEvent, e);
-                        prevEvent = e;
-                        return ret;
-                    }
-                ).reduce((a,b) => a.concat(b));
+        //         let eventTiles = summarisedEvents.map(
+        //             (e) => {
+        //                 let ret = this._getTilesForEvent(prevEvent, e);
+        //                 prevEvent = e;
+        //                 return ret;
+        //             }
+        //         ).reduce((a,b) => a.concat(b));
 
-                if (eventTiles.length === 0) {
-                    eventTiles = null;
-                }
+        //         if (eventTiles.length === 0) {
+        //             eventTiles = null;
+        //         }
 
-                ret.push(
-                    <MemberEventListSummary key={mxEv.getId()} events={summarisedEvents}>
-                        {eventTiles}
-                    </MemberEventListSummary>
-                );
-                continue;
-            }
+        //         ret.push(
+        //             <MemberEventListSummary key={mxEv.getId()} events={summarisedEvents}>
+        //                 {eventTiles}
+        //             </MemberEventListSummary>
+        //         );
+        //         continue;
+        //     }
 
             if (wantTile) {
                 // make sure we unpack the array returned by _getTilesForEvent,
