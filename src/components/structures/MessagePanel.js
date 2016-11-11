@@ -281,16 +281,16 @@ module.exports = React.createClass({
         //     && ['join', 'leave'].indexOf(e.event.content.membership) !== -1
         //     && (!e.event.prev_content || e.event.content.membership  !== e.event.prev_content.membership);
 
-        // for (i = 0; i < this.props.events.length; i++) {
-        //     var mxEv = this.props.events[i];
-        //     var wantTile = true;
-        //     var eventId = mxEv.getId();
+        for (i = 0; i < this.props.events.length; i++) {
+            var mxEv = this.props.events[i];
+            var wantTile = true;
+            var eventId = mxEv.getId();
 
-        //     if (!EventTile.haveTileForEvent(mxEv)) {
-        //         wantTile = false;
-        //     }
+            if (!EventTile.haveTileForEvent(mxEv)) {
+                wantTile = false;
+            }
 
-        //     var last = (i == lastShownEventIndex);
+            var last = (i == lastShownEventIndex);
 
         //     // Wrap consecutive member events in a ListSummary
         //     if (isMembershipChange(mxEv)) {
