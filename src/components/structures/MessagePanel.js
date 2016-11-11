@@ -292,7 +292,7 @@ module.exports = React.createClass({
 
             var last = (i == lastShownEventIndex);
 
-            // Wrap consecutive member events in a ListSummary
+            // Wrap consecutive member events in a MemberEventListSummary
             if (isMembershipChange(mxEv)) {
                 let summarisedEvents = [mxEv];
                 i++;
