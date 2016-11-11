@@ -20,8 +20,8 @@ var GeminiScrollbar = require('react-gemini-scrollbar');
 var q = require("q");
 var KeyCode = require('../../KeyCode');
 
+// var DEBUG_SCROLL = false;
 var DEBUG_SCROLL = false;
-// var DEBUG_SCROLL = true;
 
 if (DEBUG_SCROLL) {
     // using bind means that we get to keep useful line numbers in the console
@@ -258,13 +258,20 @@ module.exports = React.createClass({
         //   `---------'                            -
         //
 
+        console.log({
+            scrollTop: sn.scrollTop,
+            clientHeight: sn.clientHeight,
+            scrollHeight: sn.scrollHeight
+        });
         if (sn.scrollTop < sn.clientHeight) {
+            console.log('backfill');
             // need to back-fill
             this._maybeFill(true);
         }
-        if (sn.scrollTop > sn.scrollHeight - sn.clientHeight * 2) {
+        if (sn.scrollTop > sn.scrollHeight - sn.clientHeight) {
+            console.log('forfill');
             // need to forward-fill
-            this._maybeFill(false);
+            // this._maybeFill(false);
         }
     },
 
