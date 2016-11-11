@@ -140,15 +140,31 @@ module.exports = React.createClass({
         // Reorder events so that joins come before leaves
         let eventsToRender = this.props.events;
 
-        // Filter out those who joined, then left
-        let filteredEvents = eventsToRender.filter(
-            (e) => {
-                return eventsToRender.filter(
-                    (e2) => {
-                        return e.getSender() === e2.getSender()
-                            && e.event.content.membership !== e2.event.content.membership;
-                    }
-                ).length === 0;
+        // Create an array of events that are not "cancelled-out" by another
+        // A join of sender S is cancelled out by a leave of sender S etc.
+        let filteredEvents = [];
+                        // return e.getSender() === e2.getSender()
+                        //     && e.event.content.membership !== e2.event.content.membership;
+        let senders = new Set(eventsToRender.map((e) => e.getSender()));
+        senders.forEach(
+            (userId) => {
+                // Only push the last event if it isn't cancelled out
+
+                let userEvents = eventsToRender.filter((e) => {
+                    return e.getSender() === userId;
+                }).sort((a, b) => {
+                    return a.getTs() - b.getTs()
+                });
+
+                let countJoins = userEvents.filter((e) => e.event.content.membership === 'join').length;
+                let countLeaves = userEvents.filter((e) => e.event.content.membership === 'leave').length;
+
+                // The point is that it doesn't matter which leaves get paired with which parts
+                // But we do want the most recent one, because they override each other
+
+                if (countJoins !== countLeaves) {
+                    filteredEvents.push(userEvents[userEvents.length - 1]);
+                }
             }
         );
 
