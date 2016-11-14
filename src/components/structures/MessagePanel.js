@@ -299,7 +299,8 @@ module.exports = React.createClass({
                 for (;i < this.props.events.length; i++) {
                     let collapsedMxEv = this.props.events[i];
 
-                    if (!isMembershipChange(collapsedMxEv)) {
+                    if (!isMembershipChange(collapsedMxEv) ||
+                        this._wantsDateSeparator(this.props.events[i-1], collapsedMxEv.getTs())) {
                         i--;
                         break;
                     }
