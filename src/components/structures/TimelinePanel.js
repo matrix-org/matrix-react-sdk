@@ -328,7 +328,9 @@ var TimelinePanel = React.createClass({
             debuglog("TimelinePanel: paginate complete backwards:"+backwards+"; success:"+r);
 
             // Unpaginate events gratuitously after every paginate
-            this._unpaginateEvents(!backwards);
+            if (this.state.events.length > 250) {
+                this._unpaginateEvents(!backwards);
+            }
 
             var newState = {
                 [paginatingKey]: false,
