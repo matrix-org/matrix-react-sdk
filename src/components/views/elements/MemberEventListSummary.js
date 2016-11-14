@@ -219,7 +219,7 @@ module.exports = React.createClass({
         }
 
         return (
-            <div className="mx_MemberEventListSummary">
+            <div className="mx_MemberEventListSummary" data-number-events={this.props.children.length}>
                 {summaryContainer}
                 {expandedEvents}
             </div>
