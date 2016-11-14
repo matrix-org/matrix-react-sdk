@@ -30,7 +30,20 @@ const MAX_HEIGHT = 600;
 
 
 /**
- * Create a thumbnail for a image or video element.
+ * Create a thumbnail for a image DOM element.
+ * The image will be smaller than MAX_WIDTH and MAX_HEIGHT.
+ * The thumbnail will have the same aspect ratio as the original.
+ * Draws the element into a canvas using CanvasRenderingContext2D.drawImage
+ * Then calls Canvas.toBlob to get a blob object for the image data.
+ *
+ * Since it needs to calculate the dimensions of the source image and the
+ * thumbnailed image it returns an info object filled out with information
+ * about the original image and the thumbnail.
+ *
+ * @param {HTMLElement} element The element to thumbnail.
+ * @param {String} mimeType The mimeType to save the blob as.
+ * @return {Promise} A promise that resolves with an object with an info key
+ *  and a thumbnail key.
  */
 function createThumbnail(element, mimeType) {
     const deferred = q.defer();
@@ -41,11 +54,11 @@ function createThumbnail(element, mimeType) {
     var targetWidth = inputWidth;
     var targetHeight = inputHeight;
     if (targetHeight > MAX_HEIGHT) {
-        targetWidth *= MAX_HEIGHT / targetHeight;
+        targetWidth *= Math.floor(MAX_HEIGHT / targetHeight);
         targetHeight = MAX_HEIGHT;
     }
     if (targetWidth > MAX_WIDTH) {
-        targetHeight *= MAX_WIDTH / targetWidth;
+        targetHeight *= Math.floor(MAX_WIDTH / targetWidth);
         targetWidth = MAX_WIDTH;
     }
 
@@ -74,7 +87,10 @@ function createThumbnail(element, mimeType) {
 
 
 /**
- * Load a file into an image element.
+ * Load a file into a newly created image element.
+ *
+ * @param {file} file The file to store in an image element.
+ * @return {Promise} A promise that resolves with the html image element.
  */
 function loadImageElement(imageFile) {
     var deferred = q.defer();
@@ -102,6 +118,14 @@ function loadImageElement(imageFile) {
     return deferred.promise;
 }
 
+/**
+ * Read the metadata for an imageFile and create and upload a thumbnail of the image.
+ *
+ * @param {MatrixClient} matrixClient A matrixClient to upload the image with.
+ * @param {String} roomId The ID of the room the image the image will be uploaded in.
+ * @param {File} The image to read and thumbnail.
+ * @return {Promise} A promise that resolves with the attachment info.
+ */
 function infoForImageFile(matrixClient, roomId, imageFile) {
     var thumbnailType = "image/png";
     if (imageFile.type == "image/jpeg") {
@@ -167,9 +191,19 @@ function readFileAsArrayBuffer(file) {
     return deferred.promise;
 }
 
-
+/**
+ * Upload the file to the content repository.
+ * If the room is encrypted then encrypt the file before uploading.
+ *
+ * @param {MatrixClient} matrixClient The matrix client to upload the file with.
+ * @param {String} roomId The ID of the room being uploaded to.
+ * @param {File} file The file to upload.
+ * @return {Promise} A promise that resolves with an object.
+ *  If the file is unencrypted then the object will have a "url" key.
+ *  If the file is encrypted then the object will have a "file" key.
+ */
 function uploadFile(matrixClient, roomId, file) {
-    if (matrixClient.isRoomEncrypted(roomId) || true) {
+    if (matrixClient.isRoomEncrypted(roomId)) {
         // If the room is encrypted then encrypt the file before uploading it.
         // First read the file into memory.
         return readFileAsArrayBuffer(file).then(function(data) {
