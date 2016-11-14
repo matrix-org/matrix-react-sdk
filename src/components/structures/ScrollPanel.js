@@ -20,8 +20,8 @@ var GeminiScrollbar = require('react-gemini-scrollbar');
 var q = require("q");
 var KeyCode = require('../../KeyCode');
 
-// var DEBUG_SCROLL = false;
 var DEBUG_SCROLL = false;
+// var DEBUG_SCROLL = true;
 
 if (DEBUG_SCROLL) {
     // using bind means that we get to keep useful line numbers in the console
