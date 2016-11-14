@@ -107,6 +107,11 @@ module.exports = React.createClass({
                 </span>
             );
         }
+
+        if (!joinSummary && !leaveSummary) {
+            return null;
+        }
+
         return (
             <span>
                 {joinSummary}{joinSummary && leaveSummary?'; ':''}
@@ -210,7 +215,7 @@ module.exports = React.createClass({
                             {avatars}
                         </span>
                         <span className="mx_TextualEvent mx_MemberEventListSummary_summary">
-                            {summary}{joinAndLeft? '. ' + joinAndLeft + ' ' + noun + ' joined and left' : ''}
+                            {summary}{summary ? '. ': ''}{joinAndLeft ? joinAndLeft + ' ' + noun + ' joined and left' : ''}
                         </span>&nbsp;
                         {toggleButton}
                     </div>
