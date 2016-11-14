@@ -300,6 +300,10 @@ var TimelinePanel = React.createClass({
         }
 
         if (count > 0) {
+            // Minimum number of events following unpagination should = this.props.timelineCap
+            if (count > this.state.events.length - this.props.timelineCap) {
+                count = this.state.events.length - this.props.timelineCap;
+            }
             this._timelineWindow._unpaginate(count, backwards);
         }
     },
