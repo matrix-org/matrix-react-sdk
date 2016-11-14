@@ -229,6 +229,7 @@ module.exports = React.createClass({
 
     _getEventTiles: function() {
         var EventTile = sdk.getComponent('rooms.EventTile');
+        var DateSeparator = sdk.getComponent('messages.DateSeparator');
         const MemberEventListSummary = sdk.getComponent('views.elements.MemberEventListSummary');
 
         this.eventNodes = {};
@@ -278,8 +279,8 @@ module.exports = React.createClass({
 
         var isMembershipChange = (e) =>
             e.getType() === 'm.room.member'
-            && ['join', 'leave'].indexOf(e.event.content.membership) !== -1
-            && (!e.event.prev_content || e.event.content.membership  !== e.event.prev_content.membership);
+            && ['join', 'leave'].indexOf(e.getContent().membership) !== -1
+            && (!e.getPrevContent() || e.getContent().membership  !== e.getPrevContent().membership);
 
         for (i = 0; i < this.props.events.length; i++) {
             var mxEv = this.props.events[i];
@@ -294,12 +295,20 @@ module.exports = React.createClass({
 
             // Wrap consecutive member events in a ListSummary
             if (isMembershipChange(mxEv)) {
+                let ts1 = mxEv.getTs();
+
+                if (this._wantsDateSeparator(prevEvent, ts1)) {
+                    let dateSeparator = <li key={ts1+'~'}><DateSeparator key={ts1+'~'} ts={ts1}/></li>;
+                    ret.push(dateSeparator);
+                }
+
                 let summarisedEvents = [mxEv];
                 i++;
                 for (;i < this.props.events.length; i++) {
                     let collapsedMxEv = this.props.events[i];
 
-                    if (!isMembershipChange(collapsedMxEv)) {
+                    if (!isMembershipChange(collapsedMxEv) ||
+                        this._wantsDateSeparator(this.props.events[i-1], collapsedMxEv.getTs())) {
                         i--;
                         break;
                     }
@@ -310,7 +319,7 @@ module.exports = React.createClass({
 
                 let eventTiles = summarisedEvents.map(
                     (e) => {
-                        let ret = this._getTilesForEvent(prevEvent, e);
+                        let ret = this._getTilesForEvent(e, e);
                         prevEvent = e;
                         return ret;
                     }
