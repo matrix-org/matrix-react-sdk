@@ -84,20 +84,19 @@ function createThumbnail(element, inputWidth, inputHeight, mimeType) {
     return deferred.promise;
 }
 
-
 /**
  * Load a file into a newly created image element.
  *
- * @param {File} file The file to store in an image element.
+ * @param {File} file The file to load in an image element.
  * @return {Promise} A promise that resolves with the html image element.
  */
 function loadImageElement(imageFile) {
-    var deferred = q.defer();
+    const deferred = q.defer();
 
     // Load the file into an html element
-    var img = document.createElement("img");
+    const img = document.createElement("img");
 
-    var reader = new FileReader();
+    const reader = new FileReader();
     reader.onload = function(e) {
         img.src = e.target.result;
 
@@ -118,10 +117,10 @@ function loadImageElement(imageFile) {
 }
 
 /**
- * Read the metadata for an imageFile and create and upload a thumbnail of the image.
+ * Read the metadata for an image file and create and upload a thumbnail of the image.
  *
- * @param {MatrixClient} matrixClient A matrixClient to upload the image with.
- * @param {String} roomId The ID of the room the image the image will be uploaded in.
+ * @param {MatrixClient} matrixClient A matrixClient to upload the thumbnail with.
+ * @param {String} roomId The ID of the room the image will be uploaded in.
  * @param {File} The image to read and thumbnail.
  * @return {Promise} A promise that resolves with the attachment info.
  */
@@ -130,6 +129,7 @@ function infoForImageFile(matrixClient, roomId, imageFile) {
     if (imageFile.type == "image/jpeg") {
         thumbnailType = "image/jpeg";
     }
+
     var imageInfo;
     return loadImageElement(imageFile).then(function(img) {
         return createThumbnail(img, img.width, img.height, thumbnailType);
@@ -143,17 +143,24 @@ function infoForImageFile(matrixClient, roomId, imageFile) {
     });
 }
 
+/**
+ * Load a file into a newly created video element.
+ *
+ * @param {File} file The file to load in an video element.
+ * @return {Promise} A promise that resolves with the video image element.
+ */
 function loadVideoElement(videoFile) {
-    var deferred = q.defer();
+    const deferred = q.defer();
 
     // Load the file into an html element
-    var video = document.createElement("video");
+    const video = document.createElement("video");
 
-    var reader = new FileReader();
+    const reader = new FileReader();
     reader.onload = function(e) {
         video.src = e.target.result;
 
         // Once ready, returns its size
+        // Wait until we have enough data to thumbnail the first frame.
         video.onloadeddata = function() {
             deferred.resolve(video);
         };
@@ -169,8 +176,17 @@ function loadVideoElement(videoFile) {
     return deferred.promise;
 }
 
+/**
+ * Read the metadata for a video file and create and upload a thumbnail of the video.
+ *
+ * @param {MatrixClient} matrixClient A matrixClient to upload the thumbnail with.
+ * @param {String} roomId The ID of the room the video will be uploaded to.
+ * @param {File} The video to read and thumbnail.
+ * @return {Promise} A promise that resolves with the attachment info.
+ */
 function infoForVideoFile(matrixClient, roomId, videoFile) {
     const thumbnailType = "image/jpeg";
+
     var videoInfo;
     return loadVideoElement(videoFile).then(function(video) {
         return createThumbnail(video, video.videoWidth, video.videoHeight, thumbnailType);
@@ -252,7 +268,7 @@ class ContentMessages {
     }
 
     sendContentToRoom(file, roomId, matrixClient) {
-        var content = {
+        const content = {
             body: file.name,
             info: {
                 size: file.size,
@@ -264,8 +280,7 @@ class ContentMessages {
             content.info.mimetype = file.type;
         }
 
-        var def = q.defer();
-        var thumbnailBlob;
+        const def = q.defer();
         if (file.type.indexOf('image/') == 0) {
             content.msgtype = 'm.image';
             infoForImageFile(matrixClient, roomId, file).then(imageInfo=>{
@@ -293,7 +308,7 @@ class ContentMessages {
             def.resolve();
         }
 
-        var upload = {
+        const upload = {
             fileName: file.name,
             roomId: roomId,
             total: 0,
@@ -303,10 +318,7 @@ class ContentMessages {
         this.inprogress.push(upload);
         dis.dispatch({action: 'upload_started'});
 
-        var encryptInfo = null;
         var error;
-        var self = this;
-
         return def.promise.then(function() {
             upload.promise = uploadFile(
                 matrixClient, roomId, file
@@ -336,12 +348,12 @@ class ContentMessages {
                     description: desc
                 });
             }
-        }).finally(function() {
-            var inprogressKeys = Object.keys(self.inprogress);
-            for (var i = 0; i < self.inprogress.length; ++i) {
+        }).finally(() => {
+            const inprogressKeys = Object.keys(this.inprogress);
+            for (var i = 0; i < this.inprogress.length; ++i) {
                 var k = inprogressKeys[i];
-                if (self.inprogress[k].promise === upload.promise) {
-                    self.inprogress.splice(k, 1);
+                if (this.inprogress[k].promise === upload.promise) {
+                    this.inprogress.splice(k, 1);
                     break;
                 }
             }
@@ -359,7 +371,7 @@ class ContentMessages {
     }
 
     cancelUpload(promise) {
-        var inprogressKeys = Object.keys(this.inprogress);
+        const inprogressKeys = Object.keys(this.inprogress);
         var upload;
         for (var i = 0; i < this.inprogress.length; ++i) {
             var k = inprogressKeys[i];
