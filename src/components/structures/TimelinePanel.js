@@ -896,7 +896,6 @@ var TimelinePanel = React.createClass({
     _getEvents: function() {
         var events = this._timelineWindow.getEvents();
 
-        console.log('EVENTS', events.length);
         // if we're at the end of the live timeline, append the pending events
         if (!this._timelineWindow.canPaginate(EventTimeline.FORWARDS)) {
             events.push(... this.props.timelineSet.getPendingEvents());
