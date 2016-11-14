@@ -246,6 +246,11 @@ var TimelinePanel = React.createClass({
     },
 
     _unpaginateEvents: function(backwards) {
+        // Do not unpaginate below timelineCap
+        if (this.state.events.length < this.props.timelineCap) {
+            return;
+        }
+
         let dir = backwards ? EventTimeline.BACKWARDS : EventTimeline.FORWARDS;
         debuglog("TimelinePanel: unpaginating events in direction", dir);
         // The number of events to unpaginate
@@ -296,9 +301,6 @@ var TimelinePanel = React.createClass({
 
         if (count > 0) {
             this._timelineWindow._unpaginate(count, backwards);
-            this.setState({
-                events: this._getEvents(),
-            });
         }
     },
 
@@ -328,9 +330,7 @@ var TimelinePanel = React.createClass({
             debuglog("TimelinePanel: paginate complete backwards:"+backwards+"; success:"+r);
 
             // Unpaginate events gratuitously after every paginate
-            if (this.state.events.length > 250) {
-                this._unpaginateEvents(!backwards);
-            }
+            this._unpaginateEvents(!backwards);
 
             var newState = {
                 [paginatingKey]: false,
