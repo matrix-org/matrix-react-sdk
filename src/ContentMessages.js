@@ -227,7 +227,7 @@ function uploadFile(matrixClient, roomId, file) {
         });
     } else {
         return matrixClient.uploadContent(file).then(function(url) {
-        // If the attachment isn't encrypted then include the URL directly.
+            // If the attachment isn't encrypted then include the URL directly.
             return {"url": url};
         });
     }
