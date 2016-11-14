@@ -541,6 +541,14 @@ module.exports = React.createClass({
         }
     },
 
+    getExcessHeight: function(backwards) {
+        return this.refs.scrollPanel.getExcessHeight(backwards);
+    },
+
+    getEventTileContainer: function() {
+        return this.refs.scrollPanel.getItemList();
+    },
+
     onResize: function() {
         dis.dispatch({ action: 'timeline_resize' }, true);
     },
