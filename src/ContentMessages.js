@@ -313,7 +313,6 @@ class ContentMessages {
             roomId: roomId,
             total: 0,
             loaded: 0,
-            promise: def.promise,
         };
         this.inprogress.push(upload);
         dis.dispatch({action: 'upload_started'});
