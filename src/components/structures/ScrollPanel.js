@@ -226,6 +226,19 @@ module.exports = React.createClass({
         return sn.scrollHeight - Math.ceil(sn.scrollTop) <= sn.clientHeight + 3;
     },
 
+    getExcessHeight: function(backwards) {
+        var sn = this._getScrollNode();
+        if (backwards) {
+            return sn.scrollTop - sn.clientHeight;
+        } else {
+            return sn.scrollHeight - (sn.scrollTop + 2*sn.clientHeight);
+        }
+    },
+
+    getItemList: function() {
+        return this.refs.itemlist;
+    },
+
     // check the scroll state and send out backfill requests if necessary.
     checkFillState: function() {
         if (this.unmounted) {
@@ -258,20 +271,13 @@ module.exports = React.createClass({
         //   `---------'                            -
         //
 
-        console.log({
-            scrollTop: sn.scrollTop,
-            clientHeight: sn.clientHeight,
-            scrollHeight: sn.scrollHeight
-        });
         if (sn.scrollTop < sn.clientHeight) {
-            console.log('backfill');
             // need to back-fill
             this._maybeFill(true);
         }
-        if (sn.scrollTop > sn.scrollHeight - sn.clientHeight) {
-            console.log('forfill');
+        if (sn.scrollTop > sn.scrollHeight - sn.clientHeight * 2) {
             // need to forward-fill
-            // this._maybeFill(false);
+            this._maybeFill(false);
         }
     },
 
