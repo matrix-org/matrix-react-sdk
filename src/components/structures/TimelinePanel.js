@@ -108,7 +108,7 @@ var TimelinePanel = React.createClass({
 
     getDefaultProps: function() {
         return {
-            timelineCap: 250,
+            timelineCap: 1000,
             className: 'mx_RoomView_messagePanel',
         };
     },
@@ -301,8 +301,8 @@ var TimelinePanel = React.createClass({
 
         if (count > 0) {
             // Minimum number of events following unpagination should = this.props.timelineCap
-            if (count > this.state.events.length - this.props.timelineCap) {
-                count = this.state.events.length - this.props.timelineCap;
+            if (count > this.props.timelineCap - this.state.events.length) {
+                count = this.props.timelineCap - this.state.events.length;
             }
             this._timelineWindow._unpaginate(count, backwards);
         }
@@ -789,7 +789,7 @@ var TimelinePanel = React.createClass({
     _loadTimeline: function(eventId, pixelOffset, offsetBase) {
         this._timelineWindow = new Matrix.TimelineWindow(
             MatrixClientPeg.get(), this.props.timelineSet,
-            {windowLimit: 10000});
+            {windowLimit: this.props.timelineCap});
 
         var onLoaded = () => {
             this._reloadEvents();
