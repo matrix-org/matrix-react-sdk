@@ -41,24 +41,23 @@ const MAX_HEIGHT = 600;
  * about the original image and the thumbnail.
  *
  * @param {HTMLElement} element The element to thumbnail.
+ * @param {Integer} inputWidth The width of the image in the input element.
+ * @param {Integer} inputHeight the width of the image in the input element.
  * @param {String} mimeType The mimeType to save the blob as.
  * @return {Promise} A promise that resolves with an object with an info key
  *  and a thumbnail key.
  */
-function createThumbnail(element, mimeType) {
+function createThumbnail(element, inputWidth, inputHeight, mimeType) {
     const deferred = q.defer();
-
-    const inputWidth = element.width;
-    const inputHeight = element.height;
 
     var targetWidth = inputWidth;
     var targetHeight = inputHeight;
     if (targetHeight > MAX_HEIGHT) {
-        targetWidth *= Math.floor(MAX_HEIGHT / targetHeight);
+        targetWidth = Math.floor(targetWidth * (MAX_HEIGHT / targetHeight));
         targetHeight = MAX_HEIGHT;
     }
     if (targetWidth > MAX_WIDTH) {
-        targetHeight *= Math.floor(MAX_WIDTH / targetWidth);
+        targetHeight = Math.floor(targetHeight * (MAX_WIDTH / targetWidth));
         targetWidth = MAX_WIDTH;
     }
 
@@ -89,7 +88,7 @@ function createThumbnail(element, mimeType) {
 /**
  * Load a file into a newly created image element.
  *
- * @param {file} file The file to store in an image element.
+ * @param {File} file The file to store in an image element.
  * @return {Promise} A promise that resolves with the html image element.
  */
 function loadImageElement(imageFile) {
@@ -133,7 +132,7 @@ function infoForImageFile(matrixClient, roomId, imageFile) {
     }
     var imageInfo;
     return loadImageElement(imageFile).then(function(img) {
-        return createThumbnail(img, thumbnailType);
+        return createThumbnail(img, img.width, img.height, thumbnailType);
     }).then(function(result) {
         imageInfo = result.info;
         return uploadFile(matrixClient, roomId, result.thumbnail);
@@ -144,7 +143,7 @@ function infoForImageFile(matrixClient, roomId, imageFile) {
     });
 }
 
-function infoForVideoFile(videoFile) {
+function loadVideoElement(videoFile) {
     var deferred = q.defer();
 
     // Load the file into an html element
@@ -155,11 +154,8 @@ function infoForVideoFile(videoFile) {
         video.src = e.target.result;
 
         // Once ready, returns its size
-        video.onloadedmetadata = function() {
-            deferred.resolve({
-                w: video.videoWidth,
-                h: video.videoHeight
-            });
+        video.onloadeddata = function() {
+            deferred.resolve(video);
         };
         video.onerror = function(e) {
             deferred.reject(e);
@@ -171,6 +167,21 @@ function infoForVideoFile(videoFile) {
     reader.readAsDataURL(videoFile);
 
     return deferred.promise;
+}
+
+function infoForVideoFile(matrixClient, roomId, videoFile) {
+    const thumbnailType = "image/jpeg";
+    var videoInfo;
+    return loadVideoElement(videoFile).then(function(video) {
+        return createThumbnail(video, video.videoWidth, video.videoHeight, thumbnailType);
+    }).then(function(result) {
+        videoInfo = result.info;
+        return uploadFile(matrixClient, roomId, result.thumbnail);
+    }).then(function(result) {
+        videoInfo.thumbnail_url = result.url;
+        videoInfo.thumbnail_file = result.file;
+        return videoInfo;
+    });
 }
 
 /**
@@ -270,7 +281,7 @@ class ContentMessages {
             def.resolve();
         } else if (file.type.indexOf('video/') == 0) {
             content.msgtype = 'm.video';
-            infoForVideoFile(file).then(videoInfo=>{
+            infoForVideoFile(matrixClient, roomId, file).then(videoInfo=>{
                 extend(content.info, videoInfo);
                 def.resolve();
             }, error=>{
