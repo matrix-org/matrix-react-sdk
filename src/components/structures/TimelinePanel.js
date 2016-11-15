@@ -108,7 +108,9 @@ var TimelinePanel = React.createClass({
 
     getDefaultProps: function() {
         return {
-            timelineCap: 1000,
+            // By default, disable the timelineCap in favour of unpaginating based on
+            // event tile heights. (See _unpaginateEvents)
+            timelineCap: Number.MAX_VALUE,
             className: 'mx_RoomView_messagePanel',
         };
     },
