@@ -25,6 +25,9 @@ var Modal = require('./Modal');
 
 var encrypt = require("browser-encrypt-attachment");
 
+// Polyfill for Canvas.toBlob API using Canvas.toDataURL
+require("blueimp-canvas-to-blob");
+
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 600;
 
