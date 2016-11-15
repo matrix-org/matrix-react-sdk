@@ -44,8 +44,8 @@ const MAX_HEIGHT = 600;
  * about the original image and the thumbnail.
  *
  * @param {HTMLElement} element The element to thumbnail.
- * @param {Integer} inputWidth The width of the image in the input element.
- * @param {Integer} inputHeight the width of the image in the input element.
+ * @param {integer} inputWidth The width of the image in the input element.
+ * @param {integer} inputHeight the width of the image in the input element.
  * @param {String} mimeType The mimeType to save the blob as.
  * @return {Promise} A promise that resolves with an object with an info key
  *  and a thumbnail key.
