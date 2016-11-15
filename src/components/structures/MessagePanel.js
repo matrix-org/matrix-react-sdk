@@ -541,10 +541,14 @@ module.exports = React.createClass({
         }
     },
 
+    // returns the vertical height in the given direction that can be removed from
+    // the ScrollPanel without it invoking fill requests.
     getExcessHeight: function(backwards) {
         return this.refs.scrollPanel.getExcessHeight(backwards);
     },
 
+    // return a reference to the container of the ScrollPanel that contains the
+    // event tiles.
     getEventTileContainer: function() {
         return this.refs.scrollPanel.getItemList();
     },

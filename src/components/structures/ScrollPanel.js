@@ -226,6 +226,9 @@ module.exports = React.createClass({
         return sn.scrollHeight - Math.ceil(sn.scrollTop) <= sn.clientHeight + 3;
     },
 
+    // returns the vertical height in the given direction that can be removed from
+    // the content box (which has a height of scrollHeight, see checkFillState) without
+    // pagination occuring.
     getExcessHeight: function(backwards) {
         var sn = this._getScrollNode();
         if (backwards) {
@@ -235,6 +238,7 @@ module.exports = React.createClass({
         }
     },
 
+    // returns the reference to the DOM element containing this.props.children.
     getItemList: function() {
         return this.refs.itemlist;
     },
