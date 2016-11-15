@@ -101,6 +101,17 @@ module.exports = React.createClass({
          */
         onFillRequest: React.PropTypes.func,
 
+        /* onUnfillRequest(backwards): a callback which is called on scroll when
+         * there are children elements that are far out of view and could be removed
+         * without causing pagination to occur.
+         *
+         * This function should accept a boolean, which is true to indicate the back/top
+         * of the panel and false otherwise, and a scroll token, which refers to the
+         * first element to remove if removing from the front/bottom, and last element
+         * to remove if removing from the back/top.
+         */
+        onUnfillRequest: React.PropTypes.func,
+
         /* onScroll: a callback which is called whenever any scroll happens.
          */
         onScroll: React.PropTypes.func,
@@ -124,6 +135,7 @@ module.exports = React.createClass({
             stickyBottom: true,
             startAtBottom: true,
             onFillRequest: function(backwards) { return q(false); },
+            onUnfillRequest: function(backwards, scrollToken) {},
             onScroll: function() {},
         };
     },
@@ -285,6 +297,42 @@ module.exports = React.createClass({
         }
     },
 
+    // check if unfilling is possible and send an unfill request if necessary
+    _checkUnfillState: function(backwards) {
+        let excessHeight = this.getExcessHeight(backwards);
+        if (excessHeight > 0) {
+            var itemlist = this.refs.itemlist;
+            var tiles = itemlist.children;
+
+            // The scroll token of the first/last tile to be unpaginated
+            let markerScrollToken = null;
+
+            // Subtract clientHeights to simulate the events being unpaginated whilst counting
+            // the events to be unpaginated.
+            if (backwards) {
+                // Iterate forwards from start of tiles, subtracting event tile height
+                let i = 0;
+                while (i < tiles.length && excessHeight > tiles[i].clientHeight) {
+                    excessHeight -= tiles[i].clientHeight;
+                    markerScrollToken = tiles[i].dataset.scrollToken;
+                    i++;
+                }
+            } else {
+                // Iterate backwards from end of tiles, subtracting event tile height
+                let i = tiles.length - 1;
+                while (i > 0 && excessHeight > tiles[i].clientHeight) {
+                    excessHeight -= tiles[i].clientHeight;
+                    markerScrollToken = tiles[i].dataset.scrollToken;
+                    i--;
+                }
+            }
+
+            if (markerScrollToken) {
+                this.props.onUnfillRequest(backwards, markerScrollToken);
+            }
+        }
+    },
+
     // check if there is already a pending fill request. If not, set one off.
     _maybeFill: function(backwards) {
         var dir = backwards ? 'b' : 'f';
@@ -302,7 +350,7 @@ module.exports = React.createClass({
         this._pendingFillRequests[dir] = true;
         var fillPromise;
         try {
-             fillPromise = this.props.onFillRequest(backwards);
+            fillPromise = this.props.onFillRequest(backwards);
         } catch (e) {
             this._pendingFillRequests[dir] = false;
             throw e;
@@ -311,6 +359,9 @@ module.exports = React.createClass({
         q.finally(fillPromise, () => {
             this._pendingFillRequests[dir] = false;
         }).then((hasMoreResults) => {
+            // Unpaginate once filling is complete
+            this._checkUnfillState(!backwards);
+
             debuglog("ScrollPanel: "+dir+" fill complete; hasMoreResults:"+hasMoreResults);
             if (hasMoreResults) {
                 // further pagination requests have been disabled until now, so

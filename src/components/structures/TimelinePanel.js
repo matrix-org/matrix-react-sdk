@@ -247,66 +247,26 @@ var TimelinePanel = React.createClass({
         }
     },
 
-    _unpaginateEvents: function(backwards) {
-        // Do not unpaginate below timelineCap
-        if (this.state.events.length < this.props.timelineCap) {
-            return;
-        }
-
+    onMessageListUnfillRequest: function(backwards, scrollToken) {
         let dir = backwards ? EventTimeline.BACKWARDS : EventTimeline.FORWARDS;
         debuglog("TimelinePanel: unpaginating events in direction", dir);
-        // The number of events to unpaginate
-        let count = 0;
-        // The parent (ScrollPanel) of event tiles including MemberEventListSummary elements
-        let eventTileContainer = this.refs.messagePanel.getEventTileContainer();
-        let tiles = ReactDOM.findDOMNode(eventTileContainer).children || [];
 
-        // No tiles rendered; no unpagination required
-        if (tiles.length === 0) {
-            return;
-        }
+        // All tiles are inserted by MessagePanel to have a scrollToken === eventId
+        let eventId = scrollToken;
 
-        // Count the events for each tile, with a default of one per element, but for any
-        // element that specifies 'data-number-events' in its attributes, use that instead.
-        // This is to handle MemberEventListSummary elements, which can represent more than one
-        // event in a fixed height.
-        let eventCounts = Array.from(tiles).map((element) => {
-            return parseInt(element.getAttribute('data-number-events')) || 1;
-        });
-
-        // The amount of height that can be removed from the ScrollPanel without causing
-        // further pagination
-        let excessHeight = this.refs.messagePanel.getExcessHeight(backwards);
-        if (excessHeight < 0) {
-            return;
-        }
-
-        // Subtract clientHeights to simulate the events being unpaginated whilst counting
-        // the events to be unpaginated.
-        if (backwards) {
-            // Iterate forwards from start of tiles, subtracting event tile height
-            let i = 0;
-            while (i < tiles.length && excessHeight > tiles[i].clientHeight) {
-                excessHeight -= tiles[i].clientHeight;
-                count += eventCounts[i];
-                i++;
+        let marker = this.state.events.findIndex(
+            (ev) => {
+                return ev.getId() === eventId;
             }
-        } else {
-            // Iterate backwards from end of tiles, subtracting event tile height
-            let i = tiles.length - 1;
-            while (i >= 0 && excessHeight > tiles[i].clientHeight) {
-                excessHeight -= tiles[i].clientHeight;
-                count += eventCounts[i];
-                i--;
-            }
-        }
+        );
+
+        let count = backwards ? marker + 1 : this.state.events.length - marker;
 
         if (count > 0) {
-            // Minimum number of events following unpagination should = this.props.timelineCap
-            if (count > this.props.timelineCap - this.state.events.length) {
-                count = this.props.timelineCap - this.state.events.length;
-            }
             this._timelineWindow._unpaginate(count, backwards);
+            this.setState({
+                events: this._getEvents(),
+            });
         }
     },
 
@@ -334,9 +294,6 @@ var TimelinePanel = React.createClass({
             if (this.unmounted) { return; }
 
             debuglog("TimelinePanel: paginate complete backwards:"+backwards+"; success:"+r);
-
-            // Unpaginate events gratuitously after every paginate
-            this._unpaginateEvents(!backwards);
 
             var newState = {
                 [paginatingKey]: false,
@@ -1052,6 +1009,7 @@ var TimelinePanel = React.createClass({
                     stickyBottom={ stickyBottom }
                     onScroll={ this.onMessageListScroll }
                     onFillRequest={ this.onMessageListFillRequest }
+                    onUnfillRequest={ this.onMessageListUnfillRequest }
                     opacity={ this.props.opacity }
                     className={ this.props.className }
                     tileShape={ this.props.tileShape }
