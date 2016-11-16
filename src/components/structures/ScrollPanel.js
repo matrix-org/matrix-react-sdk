@@ -327,36 +327,37 @@ module.exports = React.createClass({
     // check if unfilling is possible and send an unfill request if necessary
     _checkUnfillState: function(backwards) {
         let excessHeight = this._getExcessHeight(backwards);
-        if (excessHeight > 0) {
-            var itemlist = this.refs.itemlist;
-            var tiles = itemlist.children;
+        if (excessHeight <= 0) {
+            return;
+        }
+        var itemlist = this.refs.itemlist;
+        var tiles = itemlist.children;
 
-            // The scroll token of the first/last tile to be unpaginated
-            let markerScrollToken = null;
+        // The scroll token of the first/last tile to be unpaginated
+        let markerScrollToken = null;
 
-            // Subtract clientHeights to simulate the events being unpaginated whilst counting
-            // the events to be unpaginated.
-            if (backwards) {
-                // Iterate forwards from start of tiles, subtracting event tile height
-                let i = 0;
-                while (i < tiles.length && excessHeight > tiles[i].clientHeight) {
-                    excessHeight -= tiles[i].clientHeight;
-                    markerScrollToken = tiles[i].dataset.scrollToken;
-                    i++;
-                }
-            } else {
-                // Iterate backwards from end of tiles, subtracting event tile height
-                let i = tiles.length - 1;
-                while (i > 0 && excessHeight > tiles[i].clientHeight) {
-                    excessHeight -= tiles[i].clientHeight;
-                    markerScrollToken = tiles[i].dataset.scrollToken;
-                    i--;
-                }
+        // Subtract clientHeights to simulate the events being unpaginated whilst counting
+        // the events to be unpaginated.
+        if (backwards) {
+            // Iterate forwards from start of tiles, subtracting event tile height
+            let i = 0;
+            while (i < tiles.length && excessHeight > tiles[i].clientHeight) {
+                excessHeight -= tiles[i].clientHeight;
+                markerScrollToken = tiles[i].dataset.scrollToken;
+                i++;
             }
-
-            if (markerScrollToken) {
-                this.props.onUnfillRequest(backwards, markerScrollToken);
+        } else {
+            // Iterate backwards from end of tiles, subtracting event tile height
+            let i = tiles.length - 1;
+            while (i > 0 && excessHeight > tiles[i].clientHeight) {
+                excessHeight -= tiles[i].clientHeight;
+                markerScrollToken = tiles[i].dataset.scrollToken;
+                i--;
             }
+        }
+
+        if (markerScrollToken) {
+            this.props.onUnfillRequest(backwards, markerScrollToken);
         }
     },
 
