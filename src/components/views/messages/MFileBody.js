@@ -21,7 +21,42 @@ import filesize from 'filesize';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import sdk from '../../../index';
 import {decryptFile} from '../../../utils/DecryptFile';
+import Tinter from '../../../Tinter';
+import 'isomorphic-fetch';
+import q from 'q';
 
+// A cached tinted copy of "img/download.svg"
+var tintedDownloadImageURL;
+// Track a list of mounted MFileBody instances so that we can update
+// the "img/download.svg" when the tint changes.
+var nextMountId = 0;
+const mounts = {};
+
+/**
+ * Updates the tinted copy of "img/download.svg" when the tint changes.
+ */
+function updateTintedDownloadImage() {
+    // Download the svg as an XML document.
+    // We could cache the XML response here, but since the tint rarely changes
+    // it's probably not worth it.
+    q(fetch("img/download.svg")).then(function(response) {
+        return response.text();
+    }).then(function(svgText) {
+        const svg = new DOMParser().parseFromString(svgText, "image/svg+xml");
+        // Apply the fixups to the XML.
+        const fixups = Tinter.calcSvgFixups([{contentDocument: svg}]);
+        Tinter.applySvgFixups(fixups);
+        // Encoded the fixed up SVG as a data URL.
+        const svgString = new XMLSerializer().serializeToString(svg);
+        tintedDownloadImageURL = "data:image/svg+xml;base64," + window.btoa(svgString);
+        // Notify each mounted MFileBody that the URL has changed.
+        Object.keys(mounts).forEach(function(id) {
+            mounts[id].tint();
+        });
+    }).done();
+}
+
+Tinter.registerTintable(updateTintedDownloadImage);
 
 // User supplied content can contain scripts, we have to be careful that
 // we don't accidentally run those script within the same origin as the
@@ -83,17 +118,32 @@ window.onmessage=function(e){eval("("+e.data.code+")")(e)}
  * Render the attachment inside the iframe.
  * We can't use imported libraries here so this has to be vanilla JS.
  */
-function renderAttachment(event) {
-    var a = document.createElement("a");
-    a.rel = event.data.rel;
-    a.target = event.data.target;
-    a.download = event.data.download;
-    a.href = event.data.url;
-    a.textContent = event.data.textContent;
-    if (event.data.blob) {
-        a.href = window.URL.createObjectURL(event.data.blob);
+function remoteRender(event) {
+    const a = document.createElement("a");
+    const img = document.createElement("img");
+    const data = event.data;
+    img.id = "img";
+    img.src = data.downloadImage;
+    a.id = "a";
+    a.rel = data.rel;
+    a.target = data.target;
+    a.download = data.download;
+    a.href = data.url;
+    a.style = data.style;
+    if (data.blob) {
+        a.href = window.URL.createObjectURL(data.blob);
     }
+    a.appendChild(img);
+    a.appendChild(document.createTextNode(data.textContent));
     document.body.appendChild(a);
+}
+
+function remoteSetTint(event) {
+    const img = document.getElementById("img");
+    const a = document.getElementById("a");
+    const data = event.data;
+    img.src = data.downloadImage;
+    a.style = data.style;
 }
 
 
@@ -144,6 +194,12 @@ module.exports = React.createClass({
     },
 
     componentDidMount: function() {
+        // Add this to the list of mounted components to receive notifications
+        // when the tint changes.
+        this.id = nextMountId++;
+        mounts[this.id] = this;
+        this.tint();
+        // Check whether we need to decrypt the file content.
         const content = this.props.mxEvent.getContent();
         if (content.file !== undefined && this.state.decryptedBlob === null) {
             decryptFile(content.file).done((blob) => {
@@ -158,14 +214,34 @@ module.exports = React.createClass({
         }
     },
 
+    componentWillUnmount: function() {
+        // Remove this from the list of mounted components
+        delete mounts[this.id];
+    },
+
+    tint: function() {
+        // Update our tinted copy of "img/download.svg"
+        if (this.refs.iframe) {
+            this.refs.iframe.contentWindow.postMessage({
+                code: remoteSetTint.toString(),
+                downloadImage: tintedDownloadImageURL,
+                style: this.linkStyle(),
+            }, "*");
+        }
+    },
+
+    linkStyle: function() {
+        if (this.refs.dummyLink) {
+            return window.getComputedStyle(this.refs.dummyLink).cssText;
+        }
+    },
+
     render: function() {
         const content = this.props.mxEvent.getContent();
 
         const text = this.presentableTextForFile(content);
 
-        var TintableSvg = sdk.getComponent("elements.TintableSvg");
         if (content.file !== undefined && this.state.decryptedBlob === null) {
-
             // Need to decrypt the attachment
             // The attachment is decrypted in componentDidMount.
             // For now add an img tag with a spinner.
@@ -191,17 +267,18 @@ module.exports = React.createClass({
             blobAttr = this.state.decryptedBlob;
         }
 
-        function onIframeLoad(ev) {
+        const onIframeLoad = (ev) => {
             ev.target.contentWindow.postMessage({
-                code: renderAttachment.toString(),
+                code: remoteRender.toString(),
                 url: contentUrl,
+                downloadImage: tintedDownloadImageURL,
+                style: this.linkStyle(),
                 blob: blobAttr,
                 download: downloadAttr,
                 target: "_blank",
                 textContent: "Download " + text,
             }, "*");
-        }
-
+        };
 
         if (contentUrl || blobAttr) {
             if (this.props.tileShape === "file_grid") {
@@ -222,7 +299,8 @@ module.exports = React.createClass({
                 return (
                     <span className="mx_MFileBody">
                         <div className="mx_MImageBody_download">
-                            <iframe src={DEFAULT_CROSS_ORIGIN_RENDERER} onLoad={onIframeLoad}/>
+                            <a ref="dummyLink"/>
+                            <iframe src={DEFAULT_CROSS_ORIGIN_RENDERER} onLoad={onIframeLoad} ref="iframe"/>
                         </div>
                     </span>
                 );
