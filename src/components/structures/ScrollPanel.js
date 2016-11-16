@@ -23,6 +23,10 @@ var KeyCode = require('../../KeyCode');
 var DEBUG_SCROLL = false;
 // var DEBUG_SCROLL = true;
 
+// The amount of extra scroll distance to allow prior to unfilling.
+// See getExcessHeight.
+const UNPAGINATION_PADDING = 500;
+
 if (DEBUG_SCROLL) {
     // using bind means that we get to keep useful line numbers in the console
     var debuglog = console.log.bind(console);
@@ -241,12 +245,40 @@ module.exports = React.createClass({
     // returns the vertical height in the given direction that can be removed from
     // the content box (which has a height of scrollHeight, see checkFillState) without
     // pagination occuring.
+    //
+    // padding* = UNPAGINATION_PADDING
+    //
+    // ### Region determined as excess.
+    //
+    //   .---------.                        -              -
+    //   |#########|                        |              |
+    //   |#########|   -                    |  scrollTop   |
+    //   |         |   | padding*           |              |
+    //   |         |   |                    |              |
+    // .-+---------+-. -  -                 |              |
+    // : |         | :    |                 |              |
+    // : |         | :    |  clientHeight   |              |
+    // : |         | :    |                 |              |
+    // .-+---------+-.    -                 -              |
+    // | |         | |    |                                |
+    // | |         | |    |  clientHeight                  | scrollHeight
+    // | |         | |    |                                |
+    // `-+---------+-'    -                                |
+    // : |         | :    |                                |
+    // : |         | :    |  clientHeight                  |
+    // : |         | :    |                                |
+    // `-+---------+-' -  -                                |
+    //   |         |   | padding*                          |
+    //   |         |   |                                   |
+    //   |#########|   -                                   |
+    //   |#########|                                       |
+    //   `---------'                                       -
     getExcessHeight: function(backwards) {
         var sn = this._getScrollNode();
         if (backwards) {
-            return sn.scrollTop - sn.clientHeight;
+            return sn.scrollTop - sn.clientHeight - UNPAGINATION_PADDING;
         } else {
-            return sn.scrollHeight - (sn.scrollTop + 2*sn.clientHeight);
+            return sn.scrollHeight - (sn.scrollTop + 2*sn.clientHeight) - UNPAGINATION_PADDING;
         }
     },
 
