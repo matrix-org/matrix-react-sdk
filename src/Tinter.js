@@ -153,7 +153,13 @@ function rgbToHex(rgb) {
     return '#' + (0x1000000 + val).toString(16).slice(1)
 }
 
+const tintables = [];
+
 module.exports = {
+    registerTintable : function(tintable) {
+        tintables.push(tintable);
+    },
+
     tint: function(primaryColor, secondaryColor, tertiaryColor) {
 
         if (!cached) {
@@ -201,12 +207,7 @@ module.exports = {
 
         // tell all the SVGs to go fix themselves up
         // we don't do this as a dispatch otherwise it will visually lag
-        var TintableSvg = sdk.getComponent("elements.TintableSvg");
-        if (TintableSvg.mounts) {
-            Object.keys(TintableSvg.mounts).forEach((id) => {
-                TintableSvg.mounts[id].tint();
-            });
-        }
+        tintables.forEach(function(tintable) { tintable(); });
     },
 
     // XXX: we could just move this all into TintableSvg, but as it's so similar
@@ -265,5 +266,5 @@ module.exports = {
             svgFixup.node.setAttribute(svgFixup.attr, colors[svgFixup.index]);
         }
         if (DEBUG) console.log("applySvgFixups end");
-    },
+    }
 };
