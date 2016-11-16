@@ -112,7 +112,9 @@ module.exports = React.createClass({
     },
 
     tint: function() {
-        this.refs.downloadImage.src = tintedDownloadImageURL;
+        if (this.refs.downloadImage) {
+            this.refs.downloadImage.src = tintedDownloadImageURL;
+        }
     },
 
     render: function() {
