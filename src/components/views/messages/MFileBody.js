@@ -22,6 +22,8 @@ import MatrixClientPeg from '../../../MatrixClientPeg';
 import sdk from '../../../index';
 import {decryptFile} from '../../../utils/DecryptFile';
 import Tinter from '../../../Tinter';
+import 'isomorphic-fetch';
+import q from 'q';
 
 // A cached tinted copy of "img/download.svg"
 var tintedDownloadImageURL;
@@ -38,10 +40,10 @@ function updateTintedDownloadImage() {
     // Since we want an XML document maybe XMLHttpRequest actually makes sense?
     // We could cache the XML response here, but since the tint rarely changes
     // it's probably not worth it.
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", "img/download.svg");
-    xhr.onload = function() {
-        const svg = xhr.responseXML;
+    q(fetch("img/download.svg")).then(function(response) {
+        return response.text();
+    }).then(function(svgText) {
+        const svg = new DOMParser().parseFromString(svgText, "image/svg+xml");
         // Apply the fixups to the XML.
         const fixups = Tinter.calcSvgFixups([{contentDocument: svg}]);
         Tinter.applySvgFixups(fixups);
@@ -52,8 +54,7 @@ function updateTintedDownloadImage() {
         Object.keys(mounts).forEach(function(id) {
             mounts[id].tint();
         });
-    };
-    xhr.send();
+    }).done();
 }
 
 Tinter.registerTintable(updateTintedDownloadImage);
