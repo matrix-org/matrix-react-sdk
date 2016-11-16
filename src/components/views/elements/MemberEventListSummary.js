@@ -153,7 +153,7 @@ module.exports = React.createClass({
         let senders = new Set(eventsToRender.map((e) => e.getSender()));
         senders.forEach(
             (userId) => {
-                // Only push the last event if it isn't cancelled out
+                // Only push the last event if it isn't the same membership as the first
 
                 let userEvents = eventsToRender.filter((e) => {
                     return e.getSender() === userId;
@@ -161,14 +161,11 @@ module.exports = React.createClass({
                     return a.getTs() - b.getTs()
                 });
 
-                let countJoins = userEvents.filter((e) => e.event.content.membership === 'join').length;
-                let countLeaves = userEvents.filter((e) => e.event.content.membership === 'leave').length;
+                let firstEvent = userEvents[0];
+                let lastEvent = userEvents[userEvents.length - 1];
 
-                // The point is that it doesn't matter which leaves get paired with which parts
-                // But we do want the most recent one, because they override each other
-
-                if (countJoins !== countLeaves) {
-                    filteredEvents.push(userEvents[userEvents.length - 1]);
+                if (firstEvent.getContent().membership !== lastEvent.getContent().membership) {
+                    filteredEvents.push(lastEvent);
                 }
             }
         );
