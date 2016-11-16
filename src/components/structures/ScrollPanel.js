@@ -24,7 +24,7 @@ var DEBUG_SCROLL = false;
 // var DEBUG_SCROLL = true;
 
 // The amount of extra scroll distance to allow prior to unfilling.
-// See getExcessHeight.
+// See _getExcessHeight.
 const UNPAGINATION_PADDING = 500;
 
 if (DEBUG_SCROLL) {
@@ -273,7 +273,7 @@ module.exports = React.createClass({
     //   |#########|   -                                   |
     //   |#########|                                       |
     //   `---------'                                       -
-    getExcessHeight: function(backwards) {
+    _getExcessHeight: function(backwards) {
         var sn = this._getScrollNode();
         if (backwards) {
             return sn.scrollTop - sn.clientHeight - UNPAGINATION_PADDING;
@@ -331,7 +331,7 @@ module.exports = React.createClass({
 
     // check if unfilling is possible and send an unfill request if necessary
     _checkUnfillState: function(backwards) {
-        let excessHeight = this.getExcessHeight(backwards);
+        let excessHeight = this._getExcessHeight(backwards);
         if (excessHeight > 0) {
             var itemlist = this.refs.itemlist;
             var tiles = itemlist.children;
