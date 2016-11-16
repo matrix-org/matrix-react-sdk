@@ -318,6 +318,10 @@ module.exports = React.createClass({
 
                 let eventTiles = summarisedEvents.map(
                     (e) => {
+                        // In order to prevent DateSeparators from appearing in the expanded form
+                        // of MemberEventListSummary, render each member event as if the previous
+                        // one was itself. This way, the timestamp of the previous event === the
+                        // timestamp of the current event, and no DateSeperator is inserted.
                         let ret = this._getTilesForEvent(e, e);
                         prevEvent = e;
                         return ret;
