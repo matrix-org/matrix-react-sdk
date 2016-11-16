@@ -303,12 +303,11 @@ module.exports = React.createClass({
                 }
 
                 let summarisedEvents = [mxEv];
-                i++;
-                for (;i < this.props.events.length; i++) {
-                    let collapsedMxEv = this.props.events[i];
+                for (;i + 1 < this.props.events.length; i++) {
+                    let collapsedMxEv = this.props.events[i + 1];
 
                     if (!isMembershipChange(collapsedMxEv) ||
-                        this._wantsDateSeparator(this.props.events[i-1], collapsedMxEv.getTs())) {
+                        this._wantsDateSeparator(this.props.events[i], collapsedMxEv.getTs())) {
                         i--;
                         break;
                     }
