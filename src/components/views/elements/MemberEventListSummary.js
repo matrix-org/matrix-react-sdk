@@ -108,6 +108,8 @@ module.exports = React.createClass({
             );
         }
 
+        // Return null instead of an empty <span> if there is no joinSummary
+        // and no leaveSummary.
         if (!joinSummary && !leaveSummary) {
             return null;
         }
