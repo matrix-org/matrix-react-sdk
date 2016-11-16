@@ -157,8 +157,6 @@ module.exports = React.createClass({
 
                 let userEvents = eventsToRender.filter((e) => {
                     return e.getSender() === userId;
-                }).sort((a, b) => {
-                    return a.getTs() - b.getTs()
                 });
 
                 let firstEvent = userEvents[0];
