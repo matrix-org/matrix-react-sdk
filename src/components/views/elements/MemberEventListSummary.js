@@ -108,8 +108,11 @@ module.exports = React.createClass({
             );
         }
 
-        // Return null instead of an empty <span> if there is no joinSummary
-        // and no leaveSummary.
+        // The joinEvents and leaveEvents are representative of the net movement
+        // per-user, and so it is possible that the total net movement is nil,
+        // whilst there are some events in the expanded list. If the total net
+        // movement is nil, then neither joinSummary nor leaveSummary will be
+        // truthy, so return null.
         if (!joinSummary && !leaveSummary) {
             return null;
         }
