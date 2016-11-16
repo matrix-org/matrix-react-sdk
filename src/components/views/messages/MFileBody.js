@@ -37,7 +37,6 @@ const mounts = {};
  */
 function updateTintedDownloadImage() {
     // Download the svg as an XML document.
-    // Since we want an XML document maybe XMLHttpRequest actually makes sense?
     // We could cache the XML response here, but since the tint rarely changes
     // it's probably not worth it.
     q(fetch("img/download.svg")).then(function(response) {
