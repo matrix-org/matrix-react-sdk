@@ -308,13 +308,13 @@ module.exports = React.createClass({
 
                     if (!isMembershipChange(collapsedMxEv) ||
                         this._wantsDateSeparator(this.props.events[i], collapsedMxEv.getTs())) {
-                        i--;
                         break;
                     }
                     summarisedEvents.push(collapsedMxEv);
                 }
-                // At this point, i = this.props.events.length OR i = the index of the last
-                // MembershipChange in a sequence of MembershipChanges
+                // At this point, i = this.props.events.length - 1 OR i = the index of the last
+                // membership change in a sequence of membership changes OR the index of an event
+                // that occurs the following day to the previous membership change.
 
                 let eventTiles = summarisedEvents.map(
                     (e) => {
