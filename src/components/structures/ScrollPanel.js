@@ -282,11 +282,6 @@ module.exports = React.createClass({
         }
     },
 
-    // returns the reference to the DOM element containing this.props.children.
-    getItemList: function() {
-        return this.refs.itemlist;
-    },
-
     // check the scroll state and send out backfill requests if necessary.
     checkFillState: function() {
         if (this.unmounted) {
