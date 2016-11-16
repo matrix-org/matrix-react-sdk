@@ -150,8 +150,6 @@ module.exports = React.createClass({
         // Create an array of events that are not "cancelled-out" by another
         // A join of sender S is cancelled out by a leave of sender S etc.
         let filteredEvents = [];
-                        // return e.getSender() === e2.getSender()
-                        //     && e.event.content.membership !== e2.event.content.membership;
         let senders = new Set(eventsToRender.map((e) => e.getSender()));
         senders.forEach(
             (userId) => {
