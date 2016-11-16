@@ -23,20 +23,35 @@ import sdk from '../../../index';
 import {decryptFile} from '../../../utils/DecryptFile';
 import Tinter from '../../../Tinter';
 
+// A cached tinted copy of "img/download.svg"
 var tintedDownloadImageURL;
-var nextId = 0;
+// Track a list of mounted MFileBody instances so that we can update
+// the "img/download.svg" when the tint changes.
+var nextMountId = 0;
 const mounts = {};
 
+/**
+ * Updates the tinted copy of "img/download.svg" when the tint changes.
+ */
 function updateTintedDownloadImage() {
+    // Download the svg as an XML document.
+    // Since we want an XML document maybe XMLHttpRequest actually makes sense?
+    // We could cache the XML response here, but since the tint rarely changes
+    // it's probably not worth it.
     const xhr = new XMLHttpRequest();
     xhr.open("GET", "img/download.svg");
     xhr.onload = function() {
         const svg = xhr.responseXML;
+        // Apply the fixups to the XML.
         const fixups = Tinter.calcSvgFixups([{contentDocument: svg}]);
         Tinter.applySvgFixups(fixups);
+        // Encoded the fixed up SVG as a data URL.
         const svgString = new XMLSerializer().serializeToString(svg);
         tintedDownloadImageURL = "data:image/svg+xml;base64," + window.btoa(svgString);
-        Object.keys(mounts).forEach(function(id) { mounts[id].tint(); });
+        // Notify each mounted MFileBody that the URL has changed.
+        Object.keys(mounts).forEach(function(id) {
+            mounts[id].tint();
+        });
     };
     xhr.send();
 }
@@ -90,10 +105,13 @@ module.exports = React.createClass({
     },
 
     componentDidMount: function() {
-        const content = this.props.mxEvent.getContent();
-        this.id = nextId++;
+        // Add this to the list of mounted components to receive notifications
+        // when the tint changes.
+        this.id = nextMountId++;
         mounts[this.id] = this;
         this.tint();
+        // Check whether we need to decrypt the file content.
+        const content = this.props.mxEvent.getContent();
         if (content.file !== undefined && this.state.decryptedUrl === null) {
             decryptFile(content.file).done((url) => {
                 this.setState({
@@ -108,10 +126,12 @@ module.exports = React.createClass({
     },
 
     componentWillUnmount: function() {
+        // Remove this from the list of mounted components
         delete mounts[this.id];
     },
 
     tint: function() {
+        // Update our tinted copy of "img/download.svg"
         if (this.refs.downloadImage) {
             this.refs.downloadImage.src = tintedDownloadImageURL;
         }

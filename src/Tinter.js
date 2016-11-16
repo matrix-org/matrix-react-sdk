@@ -153,9 +153,21 @@ function rgbToHex(rgb) {
     return '#' + (0x1000000 + val).toString(16).slice(1)
 }
 
+// List of functions to call when the tint changes.
 const tintables = [];
 
 module.exports = {
+    /**
+     * Register a callback to fire when the tint changes.
+     * This is used to rewrite the tintable SVGs with the new tint.
+     *
+     * It's not possible to unregister a tintable callback. So this can only be
+     * used to register a static callback. If a set of tintables will change
+     * over time then the best bet is to register a single callback for the
+     * entire set.
+     *
+     * @param {Function} tintable Function to call when the tint changes.
+     */
     registerTintable : function(tintable) {
         tintables.push(tintable);
     },
@@ -207,7 +219,9 @@ module.exports = {
 
         // tell all the SVGs to go fix themselves up
         // we don't do this as a dispatch otherwise it will visually lag
-        tintables.forEach(function(tintable) { tintable(); });
+        tintables.forEach(function(tintable) {
+            tintable();
+        });
     },
 
     // XXX: we could just move this all into TintableSvg, but as it's so similar
