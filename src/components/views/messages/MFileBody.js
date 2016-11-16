@@ -21,7 +21,27 @@ import filesize from 'filesize';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import sdk from '../../../index';
 import {decryptFile} from '../../../utils/DecryptFile';
+import Tinter from '../../../Tinter';
 
+var tintedDownloadImageURL;
+var nextId = 0;
+const mounts = {};
+
+function updateTintedDownloadImage() {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "img/download.svg");
+    xhr.onload = function() {
+        const svg = xhr.responseXML;
+        const fixups = Tinter.calcSvgFixups([{contentDocument: svg}]);
+        Tinter.applySvgFixups(fixups);
+        const svgString = new XMLSerializer().serializeToString(svg);
+        tintedDownloadImageURL = "data:image/svg+xml;base64," + window.btoa(svgString);
+        Object.keys(mounts).forEach(function(id) { mounts[id].tint(); });
+    };
+    xhr.send();
+}
+
+Tinter.registerTintable(updateTintedDownloadImage);
 
 module.exports = React.createClass({
     displayName: 'MFileBody',
@@ -71,6 +91,9 @@ module.exports = React.createClass({
 
     componentDidMount: function() {
         const content = this.props.mxEvent.getContent();
+        this.id = nextId++;
+        mounts[this.id] = this;
+        this.tint();
         if (content.file !== undefined && this.state.decryptedUrl === null) {
             decryptFile(content.file).done((url) => {
                 this.setState({
@@ -84,12 +107,19 @@ module.exports = React.createClass({
         }
     },
 
+    componentWillUnmount: function() {
+        delete mounts[this.id];
+    },
+
+    tint: function() {
+        this.refs.downloadImage.src = tintedDownloadImageURL;
+    },
+
     render: function() {
         const content = this.props.mxEvent.getContent();
 
         const text = this.presentableTextForFile(content);
 
-        var TintableSvg = sdk.getComponent("elements.TintableSvg");
         if (content.file !== undefined && this.state.decryptedUrl === null) {
 
             // Need to decrypt the attachment
@@ -155,7 +185,7 @@ module.exports = React.createClass({
                     <span className="mx_MFileBody">
                         <div className="mx_MImageBody_download">
                             <a href={contentUrl} target="_blank" rel="noopener" download={downloadAttr}>
-                                <TintableSvg src="img/download.svg" width="12" height="14"/>
+                                <img src={tintedDownloadImageURL} width="12" height="14" ref="downloadImage"/>
                                 Download {text}
                             </a>
                         </div>
