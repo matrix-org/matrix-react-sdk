@@ -312,9 +312,7 @@ module.exports = React.createClass({
                     }
                     summarisedEvents.push(collapsedMxEv);
                 }
-                // At this point, i = this.props.events.length - 1 OR i = the index of the last
-                // membership change in a sequence of membership changes OR the index of an event
-                // that occurs the following day to the previous membership change.
+                // At this point, i = the index of the last event in the summary sequence
 
                 let eventTiles = summarisedEvents.map(
                     (e) => {
