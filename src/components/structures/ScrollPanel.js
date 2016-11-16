@@ -343,7 +343,9 @@ module.exports = React.createClass({
             let i = 0;
             while (i < tiles.length && excessHeight > tiles[i].clientHeight) {
                 excessHeight -= tiles[i].clientHeight;
-                markerScrollToken = tiles[i].dataset.scrollToken;
+                if (tiles[i].dataset.scrollToken) {
+                    markerScrollToken = tiles[i].dataset.scrollToken;
+                }
                 i++;
             }
         } else {
@@ -351,7 +353,9 @@ module.exports = React.createClass({
             let i = tiles.length - 1;
             while (i > 0 && excessHeight > tiles[i].clientHeight) {
                 excessHeight -= tiles[i].clientHeight;
-                markerScrollToken = tiles[i].dataset.scrollToken;
+                if (tiles[i].dataset.scrollToken) {
+                    markerScrollToken = tiles[i].dataset.scrollToken;
+                }
                 i--;
             }
         }
