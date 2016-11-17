@@ -335,15 +335,13 @@ describe('TimelinePanel', function() {
         }).then(() => {
             expect(messagePanel.props.backPaginating).toBe(false);
             expect(messagePanel.props.forwardPaginating).toBe(false);
-            expect(messagePanel.props.suppressFirstDateSeparator).toBe(true);
 
             var events = scryEventTiles(panel);
 
-            // we don't really know what the first event tile will be, since that
-            // depends on how much the timelinepanel decides to paginate.
-            //
-            // just check that the first tile isn't event 0.
-            expect(events[0].props.mxEvent).toNotBe(timeline.getEvents()[0]);
+            // Expect to be able to see the most recent event
+            var lastEventInPanel = events[events.length - 1].props.mxEvent;
+            var lastEventInTimeline = timeline.getEvents()[timeline.getEvents().length - 1];
+            expect(lastEventInPanel.getContent()).toBe(lastEventInTimeline.getContent());
 
             console.log("done");
         }).done(done, done);
