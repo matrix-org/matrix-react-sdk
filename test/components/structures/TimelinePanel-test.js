@@ -323,6 +323,9 @@ describe('TimelinePanel', function() {
             expect(events[0].props.mxEvent).toBe(timeline.getEvents()[0]);
             expect(events.length).toBeLessThanOrEqualTo(TIMELINE_CAP);
 
+            // Expect to be able to paginate forwards, having unpaginated a few events
+            expect(panel.state.canForwardPaginate).toBe(true);
+
             // we should now be able to scroll down, and paginate in the other
             // direction.
             setScrollTop(scrollingDiv.scrollHeight);
