@@ -229,19 +229,6 @@ module.exports = React.createClass({
         this.id = nextMountId++;
         mounts[this.id] = this;
         this.tint();
-        // Check whether we need to decrypt the file content.
-        const content = this.props.mxEvent.getContent();
-        if (content.file !== undefined && this.state.decryptedBlob === null) {
-            decryptFile(content.file).done((blob) => {
-                this.setState({
-                    decryptedBlob: blob,
-                });
-            }, (err) => {
-                console.warn("Unable to decrypt attachment: ", err)
-                // Set a placeholder image when we can't decrypt the image.
-                this.refs.image.src = "img/warning.svg";
-            });
-        }
     },
 
     componentWillUnmount: function() {
@@ -270,38 +257,55 @@ module.exports = React.createClass({
         const content = this.props.mxEvent.getContent();
         const text = this.presentableTextForFile(content);
         const isEncrypted = content.file !== undefined;
-
-        if (isEncrypted && this.state.decryptedBlob === null) {
-            // Need to decrypt the attachment
-            // The attachment is decrypted in componentDidMount.
-            // For now add an img tag with a spinner.
-            return (
-                <span className="mx_MFileBody" ref="body">
-                <img src="img/spinner.gif" ref="image"
-                    alt={content.body} />
-                </span>
-            );
-        }
-
-        const contentUrl = this._getContentUrl();
         const fileName = content.body && content.body.length > 0 ? content.body : "Attachment";
-
-        const onIframeLoad = (ev) => {
-            ev.target.contentWindow.postMessage({
-                code: remoteRender.toString(),
-                imgSrc: tintedDownloadImageURL,
-                style: computedStyle(this.refs.dummyLink),
-                blob: this.state.decryptedBlob,
-                // Set a download attribute for encrypted files so that the file
-                // will have the correct name when the user tries to download it.
-                // We can't provide a Content-Disposition header like we would for HTTP.
-                download: fileName,
-                target: "_blank",
-                textContent: "Download " + text,
-            }, "*");
-        };
+        const contentUrl = this._getContentUrl();
+        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
 
         if (isEncrypted) {
+            if (this.state.decryptedBlob === null) {
+                // Need to decrypt the attachment
+                // Wait for the user to click on the link before downloading
+                // and decrypting the attachment.
+                const decrypt = () => {
+                    decryptFile(content.file).then((blob) => {
+                        this.setState({
+                            decryptedBlob: blob,
+                        });
+                    }).catch((err) => {
+                        console.warn("Unable to decrypt attachment: ", err)
+                        Modal.createDialog(ErrorDialog, {
+                            description: "Error decrypting attachment"
+                        });
+                    });
+                };
+
+                return (
+                    <span className="mx_MFileBody" ref="body">
+                        <div className="mx_MImageBody_download">
+                            <a onClick={decrypt}>
+                                Decrypt {text}
+                            </a>
+                        </div>
+                    </span>
+                );
+            }
+
+            // When the iframe loads we tell it to render a download link
+            const onIframeLoad = (ev) => {
+                ev.target.contentWindow.postMessage({
+                    code: remoteRender.toString(),
+                    imgSrc: tintedDownloadImageURL,
+                    style: computedStyle(this.refs.dummyLink),
+                    blob: this.state.decryptedBlob,
+                    // Set a download attribute for encrypted files so that the file
+                    // will have the correct name when the user tries to download it.
+                    // We can't provide a Content-Disposition header like we would for HTTP.
+                    download: fileName,
+                    target: "_blank",
+                    textContent: "Download " + text,
+                }, "*");
+            };
+
             // If the attachment is encryped then put the link inside an iframe.
             return (
                 <span className="mx_MFileBody">

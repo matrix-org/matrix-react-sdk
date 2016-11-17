@@ -128,6 +128,7 @@ module.exports = React.createClass({
                     this.setState({
                         decryptedUrl: contentUrl,
                         decryptedThumbnailUrl: thumbnailUrl,
+                        decryptedBlob: decryptedBlob,
                     });
                 });
             }).catch((err) => {
