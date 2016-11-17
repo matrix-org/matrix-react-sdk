@@ -326,7 +326,7 @@ module.exports = React.createClass({
                 return (
                     <span className="mx_MFileBody">
                         <div className="mx_MImageBody_download">
-                            <a className="mx_ImageBody_downloadLink" href={contentUrl} target="_blank" rel="noopener" download={downloadAttr}>
+                            <a className="mx_ImageBody_downloadLink" href={contentUrl} target="_blank">
                                 { fileName }
                             </a>
                             <div className="mx_MImageBody_size">
@@ -339,11 +339,11 @@ module.exports = React.createClass({
             else {
                 return (
                     <span className="mx_MFileBody">
-                       <div className="mx_MImageBody_download">
+                        <div className="mx_MImageBody_download">
                             <a href={contentUrl} target="_blank" rel="noopener">
                                 <img src={tintedDownloadImageURL} width="12" height="14" ref="downloadImage"/>
                                 Download {text}
-                           </a>
+                            </a>
                         </div>
                     </span>
                 );
