@@ -114,6 +114,7 @@ window.onmessage=function(e){eval("("+e.data.code+")")(e)}
 \u003c/script></head><body></body></html>
 `);
 
+
 /**
  * Render the attachment inside the iframe.
  * We can't use imported libraries here so this has to be vanilla JS.
@@ -135,7 +136,10 @@ function remoteRender(event) {
     }
     a.appendChild(img);
     a.appendChild(document.createTextNode(data.textContent));
-    document.body.appendChild(a);
+
+    const body = document.body;
+    body.style = "margin: 0px; overflow: hidden";
+    body.appendChild(a);
 }
 
 function remoteSetTint(event) {
@@ -145,7 +149,6 @@ function remoteSetTint(event) {
     img.src = data.downloadImage;
     a.style = data.style;
 }
-
 
 module.exports = React.createClass({
     displayName: 'MFileBody',
@@ -193,10 +196,13 @@ module.exports = React.createClass({
         }
     },
 
+    componentWillMount: function() {
+        this.id = nextMountId++;
+    },
+
     componentDidMount: function() {
         // Add this to the list of mounted components to receive notifications
         // when the tint changes.
-        this.id = nextMountId++;
         mounts[this.id] = this;
         this.tint();
         // Check whether we need to decrypt the file content.
@@ -232,7 +238,17 @@ module.exports = React.createClass({
 
     linkStyle: function() {
         if (this.refs.dummyLink) {
-            return window.getComputedStyle(this.refs.dummyLink).cssText;
+            const style = window.getComputedStyle(this.refs.dummyLink, null);
+            var cssText = style.cssText;
+            if (cssText == "") {
+                // Firefox doesn't implement ".cssText" for computed styles.
+                // https://bugzilla.mozilla.org/show_bug.cgi?id=137687
+                for (var i = 0; i < style.length; i++) {
+                    cssText += style[i] + ":";
+                    cssText += style.getPropertyValue(style[i]) + ";";
+                }
+            }
+            return cssText;
         }
     },
 
@@ -269,6 +285,7 @@ module.exports = React.createClass({
 
         const onIframeLoad = (ev) => {
             ev.target.contentWindow.postMessage({
+                mFileBodyId: this.id,
                 code: remoteRender.toString(),
                 url: contentUrl,
                 downloadImage: tintedDownloadImageURL,
