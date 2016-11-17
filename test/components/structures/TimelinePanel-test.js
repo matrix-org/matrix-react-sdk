@@ -238,7 +238,7 @@ describe('TimelinePanel', function() {
         }, 0);
     });
 
-    it("should let you scroll down again after you've scrolled up", function(done) {
+    it("should let you scroll down to the bottom after you've scrolled up", function(done) {
         var N_EVENTS = 120;     // needs to be more than TIMELINE_CAP
 
         // sadly, loading all those events takes a while
@@ -270,6 +270,7 @@ describe('TimelinePanel', function() {
         // the TimelinePanel fires a scroll event
         var awaitScroll = function() {
             scrollDefer = q.defer();
+
             return scrollDefer.promise.then(() => {
                 console.log("got scroll event; scrollTop now " +
                             scrollingDiv.scrollTop);
@@ -325,13 +326,23 @@ describe('TimelinePanel', function() {
             // we should now be able to scroll down, and paginate in the other
             // direction.
             setScrollTop(scrollingDiv.scrollHeight);
-            scrollingDiv.scrollTop = scrollingDiv.scrollHeight;
 
             // the delay() below is a heinous hack to deal with the fact that,
             // without it, we may or may not get control back before the
             // forward pagination completes. The delay means that it should
             // have completed.
-            return awaitScroll().delay(0);
+
+            // Scroll a few more times to ensure that we reach the bottom
+            return awaitScroll().delay(0).then(() => {
+                setScrollTop(scrollingDiv.scrollHeight);
+                return awaitScroll().delay(0);
+            }).then(() => {
+                setScrollTop(scrollingDiv.scrollHeight);
+                return awaitScroll().delay(0);
+            }).then(() => {
+                setScrollTop(scrollingDiv.scrollHeight);
+                return awaitScroll().delay(0);
+            })
         }).then(() => {
             expect(messagePanel.props.backPaginating).toBe(false);
             expect(messagePanel.props.forwardPaginating).toBe(false);
