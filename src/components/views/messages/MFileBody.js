@@ -120,34 +120,65 @@ window.onmessage=function(e){eval("("+e.data.code+")")(e)}
  * We can't use imported libraries here so this has to be vanilla JS.
  */
 function remoteRender(event) {
-    const a = document.createElement("a");
-    const img = document.createElement("img");
     const data = event.data;
+
+    const img = document.createElement("img");
     img.id = "img";
-    img.src = data.downloadImage;
+    img.src = data.imgSrc;
+
+    const a = document.createElement("a");
     a.id = "a";
     a.rel = data.rel;
     a.target = data.target;
     a.download = data.download;
-    a.href = data.url;
     a.style = data.style;
-    if (data.blob) {
-        a.href = window.URL.createObjectURL(data.blob);
-    }
+    a.href = window.URL.createObjectURL(data.blob);
     a.appendChild(img);
     a.appendChild(document.createTextNode(data.textContent));
 
     const body = document.body;
+    // Don't display scrollbars if the link takes more than one line
+    // to display.
     body.style = "margin: 0px; overflow: hidden";
     body.appendChild(a);
 }
 
+/**
+ * Update the tint inside the iframe.
+ * We can't use imported libraries here so this has to be vanilla JS.
+ */
 function remoteSetTint(event) {
-    const img = document.getElementById("img");
-    const a = document.getElementById("a");
     const data = event.data;
-    img.src = data.downloadImage;
+
+    const img = document.getElementById("img");
+    img.src = data.imgSrc;
+    img.style = data.imgStyle;
+
+    const a = document.getElementById("a");
     a.style = data.style;
+}
+
+
+/**
+ * Get the current CSS style for a DOMElement.
+ * @param {HTMLElement} element The element to get the current style of.
+ * @return {string} The CSS style encoded as a string.
+ */
+function computedStyle(element) {
+    if (!element) {
+        return "";
+    }
+    const style = window.getComputedStyle(element, null);
+    var cssText = style.cssText;
+    if (cssText == "") {
+        // Firefox doesn't implement ".cssText" for computed styles.
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=137687
+        for (var i = 0; i < style.length; i++) {
+            cssText += style[i] + ":";
+            cssText += style.getPropertyValue(style[i]) + ";";
+        }
+    }
+    return cssText;
 }
 
 module.exports = React.createClass({
@@ -189,20 +220,13 @@ module.exports = React.createClass({
 
     _getContentUrl: function() {
         const content = this.props.mxEvent.getContent();
-        if (content.file !== undefined) {
-            return null;
-        } else {
-            return MatrixClientPeg.get().mxcUrlToHttp(content.url);
-        }
-    },
-
-    componentWillMount: function() {
-        this.id = nextMountId++;
+        return MatrixClientPeg.get().mxcUrlToHttp(content.url);
     },
 
     componentDidMount: function() {
         // Add this to the list of mounted components to receive notifications
         // when the tint changes.
+        this.id = nextMountId++;
         mounts[this.id] = this;
         this.tint();
         // Check whether we need to decrypt the file content.
@@ -227,37 +251,27 @@ module.exports = React.createClass({
 
     tint: function() {
         // Update our tinted copy of "img/download.svg"
+        if (this.refs.downloadImage) {
+            this.refs.downloadImage.src = tintedDownloadImageURL;
+        }
         if (this.refs.iframe) {
+            // If the attachment is encrypted then the download image
+            // will be inside the iframe so we wont be able to update
+            // it directly.
             this.refs.iframe.contentWindow.postMessage({
                 code: remoteSetTint.toString(),
-                downloadImage: tintedDownloadImageURL,
-                style: this.linkStyle(),
+                imgSrc: tintedDownloadImageURL,
+                style: computedStyle(this.refs.dummyLink),
             }, "*");
-        }
-    },
-
-    linkStyle: function() {
-        if (this.refs.dummyLink) {
-            const style = window.getComputedStyle(this.refs.dummyLink, null);
-            var cssText = style.cssText;
-            if (cssText == "") {
-                // Firefox doesn't implement ".cssText" for computed styles.
-                // https://bugzilla.mozilla.org/show_bug.cgi?id=137687
-                for (var i = 0; i < style.length; i++) {
-                    cssText += style[i] + ":";
-                    cssText += style.getPropertyValue(style[i]) + ";";
-                }
-            }
-            return cssText;
         }
     },
 
     render: function() {
         const content = this.props.mxEvent.getContent();
-
         const text = this.presentableTextForFile(content);
+        const isEncrypted = content.file !== undefined;
 
-        if (content.file !== undefined && this.state.decryptedBlob === null) {
+        if (isEncrypted && this.state.decryptedBlob === null) {
             // Need to decrypt the attachment
             // The attachment is decrypted in componentDidMount.
             // For now add an img tag with a spinner.
@@ -270,34 +284,44 @@ module.exports = React.createClass({
         }
 
         const contentUrl = this._getContentUrl();
-
         const fileName = content.body && content.body.length > 0 ? content.body : "Attachment";
-
-        var downloadAttr = undefined;
-        var blobAttr = undefined;
-        if (this.state.decryptedBlob) {
-            // Set a download attribute for encrypted files so that the file
-            // will have the correct name when the user tries to download it.
-            // We can't provide a Content-Disposition header like we would for HTTP.
-            downloadAttr = fileName;
-            blobAttr = this.state.decryptedBlob;
-        }
 
         const onIframeLoad = (ev) => {
             ev.target.contentWindow.postMessage({
-                mFileBodyId: this.id,
                 code: remoteRender.toString(),
-                url: contentUrl,
-                downloadImage: tintedDownloadImageURL,
-                style: this.linkStyle(),
-                blob: blobAttr,
-                download: downloadAttr,
+                imgSrc: tintedDownloadImageURL,
+                style: computedStyle(this.refs.dummyLink),
+                blob: this.state.decryptedBlob,
+                // Set a download attribute for encrypted files so that the file
+                // will have the correct name when the user tries to download it.
+                // We can't provide a Content-Disposition header like we would for HTTP.
+                download: fileName,
                 target: "_blank",
                 textContent: "Download " + text,
             }, "*");
         };
 
-        if (contentUrl || blobAttr) {
+        if (isEncrypted) {
+            // If the attachment is encryped then put the link inside an iframe.
+            return (
+                <span className="mx_MFileBody">
+                    <div className="mx_MImageBody_download">
+                        <div style={{display: "none"}}>
+                            {/*
+                              * Add dummy copy of the "a" tag
+                              * We'll use it to learn how the download link
+                              * would have been styled if it was rendered inline.
+                              */}
+                            <a ref="dummyLink"/>
+                        </div>
+                        <iframe src={DEFAULT_CROSS_ORIGIN_RENDERER} onLoad={onIframeLoad} ref="iframe"/>
+                    </div>
+                </span>
+            );
+        } else if (contentUrl) {
+            // If the attachment is not encrypted then we check whether we
+            // are being displayed in the room timeline or in a list of
+            // files in the right hand side of the screen.
             if (this.props.tileShape === "file_grid") {
                 return (
                     <span className="mx_MFileBody">
@@ -315,9 +339,11 @@ module.exports = React.createClass({
             else {
                 return (
                     <span className="mx_MFileBody">
-                        <div className="mx_MImageBody_download">
-                            <a ref="dummyLink"/>
-                            <iframe src={DEFAULT_CROSS_ORIGIN_RENDERER} onLoad={onIframeLoad} ref="iframe"/>
+                       <div className="mx_MImageBody_download">
+                            <a href={contentUrl} target="_blank" rel="noopener">
+                                <img src={tintedDownloadImageURL} width="12" height="14" ref="downloadImage"/>
+                                Download {text}
+                           </a>
                         </div>
                     </span>
                 );
