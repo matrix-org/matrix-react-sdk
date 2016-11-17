@@ -239,7 +239,6 @@ describe('TimelinePanel', function() {
     });
 
     it("should let you scroll down again after you've scrolled up", function(done) {
-        var TIMELINE_CAP = 100; // needs to be more than we can fit in the div
         var N_EVENTS = 120;     // needs to be more than TIMELINE_CAP
 
         // sadly, loading all those events takes a while
@@ -257,9 +256,7 @@ describe('TimelinePanel', function() {
 
         var scrollDefer;
         var rendered = ReactDOM.render(
-            <WrappedTimelinePanel timelineSet={timelineSet} onScroll={() => {scrollDefer.resolve()}}
-                timelineCap={TIMELINE_CAP}
-            />,
+            <WrappedTimelinePanel timelineSet={timelineSet} onScroll={() => {scrollDefer.resolve()}}/>,
             parentDiv
         );
         console.log("TimelinePanel rendered");
@@ -321,7 +318,6 @@ describe('TimelinePanel', function() {
             expect(messagePanel.props.suppressFirstDateSeparator).toBe(false);
             var events = scryEventTiles(panel);
             expect(events[0].props.mxEvent).toBe(timeline.getEvents()[0]);
-            expect(events.length).toBeLessThanOrEqualTo(TIMELINE_CAP);
 
             // Expect to be able to paginate forwards, having unpaginated a few events
             expect(panel.state.canForwardPaginate).toBe(true);
@@ -342,7 +338,6 @@ describe('TimelinePanel', function() {
             expect(messagePanel.props.suppressFirstDateSeparator).toBe(true);
 
             var events = scryEventTiles(panel);
-            expect(events.length).toBeLessThanOrEqualTo(TIMELINE_CAP);
 
             // we don't really know what the first event tile will be, since that
             // depends on how much the timelinepanel decides to paginate.
