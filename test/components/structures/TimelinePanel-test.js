@@ -311,7 +311,7 @@ describe('TimelinePanel', function() {
                 if(count > 0) {
                     // need to go further
                     count--;
-                    return scrollDown(count).delay(100);
+                    return scrollDown(count);
                 }
                 console.log("paginated to end.");
             });
