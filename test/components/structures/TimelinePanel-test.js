@@ -304,14 +304,22 @@ describe('TimelinePanel', function() {
             });
         }
 
-        function scrollDown(count) {
+        function scrollDown() {
+            // Scroll the bottom of the viewport to the bottom of the panel
             setScrollTop(scrollingDiv.scrollHeight - scrollingDiv.clientHeight);
             console.log("scrolling down... " + scrollingDiv.scrollTop);
             return awaitScroll().delay(0).then(() => {
-                if(count > 0) {
+
+                let eventTiles = scryEventTiles(panel);
+                let events = timeline.getEvents();
+
+                let lastEventInPanel = eventTiles[eventTiles.length - 1].props.mxEvent;
+                let lastEventInTimeline = events[events.length - 1];
+
+                // Scroll until the last event in the panel = the last event in the timeline
+                if(lastEventInPanel.getId() !== lastEventInTimeline.getId()) {
                     // need to go further
-                    count--;
-                    return scrollDown(count);
+                    return scrollDown();
                 }
                 console.log("paginated to end.");
             });
@@ -337,7 +345,7 @@ describe('TimelinePanel', function() {
             expect(panel.state.canForwardPaginate).toBe(true);
 
             // scroll all the way to the bottom
-            return scrollDown(3);
+            return scrollDown();
         }).then(() => {
             expect(messagePanel.props.backPaginating).toBe(false);
             expect(messagePanel.props.forwardPaginating).toBe(false);
