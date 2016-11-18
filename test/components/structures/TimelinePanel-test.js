@@ -304,6 +304,19 @@ describe('TimelinePanel', function() {
             });
         }
 
+        function scrollDown(count) {
+            setScrollTop(scrollingDiv.scrollHeight - scrollingDiv.clientHeight);
+            console.log("scrolling down... " + scrollingDiv.scrollTop);
+            return awaitScroll().delay(0).then(() => {
+                if(count > 0) {
+                    // need to go further
+                    count--;
+                    return scrollDown(count).delay(100);
+                }
+                console.log("paginated to end.");
+            });
+        }
+
         // let the first round of pagination finish off
         awaitScroll().then(() => {
             // we should now have loaded the first few events
@@ -323,26 +336,8 @@ describe('TimelinePanel', function() {
             // Expect to be able to paginate forwards, having unpaginated a few events
             expect(panel.state.canForwardPaginate).toBe(true);
 
-            // we should now be able to scroll down, and paginate in the other
-            // direction.
-            setScrollTop(scrollingDiv.scrollHeight);
-
-            // the delay() below is a heinous hack to deal with the fact that,
-            // without it, we may or may not get control back before the
-            // forward pagination completes. The delay means that it should
-            // have completed.
-
-            // Scroll a few more times to ensure that we reach the bottom
-            return awaitScroll().delay(0).then(() => {
-                setScrollTop(scrollingDiv.scrollHeight);
-                return awaitScroll().delay(0);
-            }).then(() => {
-                setScrollTop(scrollingDiv.scrollHeight);
-                return awaitScroll().delay(0);
-            }).then(() => {
-                setScrollTop(scrollingDiv.scrollHeight);
-                return awaitScroll().delay(0);
-            })
+            // scroll all the way to the bottom
+            return scrollDown(3);
         }).then(() => {
             expect(messagePanel.props.backPaginating).toBe(false);
             expect(messagePanel.props.forwardPaginating).toBe(false);
