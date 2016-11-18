@@ -317,9 +317,6 @@ describe('TimelinePanel', function() {
             });
         }
 
-        //// TESTING THAT TRAVIS IS STILL FAILING BUILDS
-        expect(true).toBe(false);
-
         // let the first round of pagination finish off
         awaitScroll().then(() => {
             // we should now have loaded the first few events
