@@ -239,7 +239,7 @@ describe('TimelinePanel', function() {
     });
 
     it("should let you scroll down to the bottom after you've scrolled up", function(done) {
-        var N_EVENTS = 120;     // needs to be more than TIMELINE_CAP
+        var N_EVENTS = 120; // the number of events to simulate being added to the timeline
 
         // sadly, loading all those events takes a while
         this.timeout(N_EVENTS * 50);
