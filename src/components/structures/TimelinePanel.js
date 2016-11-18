@@ -267,7 +267,7 @@ var TimelinePanel = React.createClass({
             this._timelineWindow.unpaginate(count, backwards);
 
             // We can now paginate in the unpaginated direction
-            let canPaginateKey = (backwards) ? 'canBackPaginate' : 'canForwardPaginate';
+            const canPaginateKey = (backwards) ? 'canBackPaginate' : 'canForwardPaginate';
             this.setState({
                 [canPaginateKey]: true,
                 events: this._getEvents(),
