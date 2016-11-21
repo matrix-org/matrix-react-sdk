@@ -24,7 +24,6 @@ var ObjectUtils = require("../../../ObjectUtils");
 var dis = require("../../../dispatcher");
 var ScalarAuthClient = require("../../../ScalarAuthClient");
 var ScalarMessaging = require('../../../ScalarMessaging');
-var UserSettingsStore = require('../../../UserSettingsStore');
 
 // parse a string as an integer; if the input is undefined, or cannot be parsed
 // as an integer, return a default.
@@ -81,16 +80,14 @@ module.exports = React.createClass({
             console.error("Failed to get room visibility: " + err);
         });
 
-        if (UserSettingsStore.isFeatureEnabled("integration_management")) {
-            this.scalarClient = new ScalarAuthClient();
-            this.scalarClient.connect().done(() => {
-                this.forceUpdate();
-            }, (err) => {
-                this.setState({
-                    scalar_error: err
-                });
-            })
-        }
+        this.scalarClient = new ScalarAuthClient();
+        this.scalarClient.connect().done(() => {
+            this.forceUpdate();
+        }, (err) => {
+            this.setState({
+                scalar_error: err
+            });
+        });
 
         dis.dispatch({
             action: 'ui_opacity',
@@ -462,11 +459,10 @@ module.exports = React.createClass({
             description: (
                 <div>
                     <p>End-to-end encryption is in beta and may not be reliable.</p>
-                    <p>You should <b>not</b> yet trust it to secure data.  File transfers and calls are not yet encrypted.</p>
+                    <p>You should <b>not</b> yet trust it to secure data.</p>
                     <p>Devices will <b>not</b> yet be able to decrypt history from before they joined the room.</p>
                     <p>Once encryption is enabled for a room it <b>cannot</b> be turned off again (for now).</p>
-                    <p>Encrypted messages will not be visible on clients that do not yet implement encryption<br/>
-                       (e.g. Riot/iOS and Riot/Android).</p>
+                    <p>Encrypted messages will not be visible on clients that do not yet implement encryption.</p>
                 </div>
             ),
             onFinished: confirm=>{
@@ -478,10 +474,6 @@ module.exports = React.createClass({
     },
 
     _renderEncryptionSection: function() {
-        if (!UserSettingsStore.isFeatureEnabled("e2e_encryption")) {
-            return null;
-        }
-
         var cli = MatrixClientPeg.get();
         var roomState = this.props.room.currentState;
         var isEncrypted = cli.isRoomEncrypted(this.props.room.roomId);
@@ -685,27 +677,26 @@ module.exports = React.createClass({
                 </span>
             );
         }
-        if (UserSettingsStore.isFeatureEnabled("integration_management")) {
-            if (this.scalarClient.hasCredentials()) {
-                integrationsButton = (
+
+        if (this.scalarClient.hasCredentials()) {
+            integrationsButton = (
                     <div className="mx_RoomSettings_integrationsButton" onClick={ this.onManageIntegrations }>
-                        Manage Integrations
-                    </div>
-                );
-            } else if (this.state.scalar_error) {
-                integrationsButton = (
+                    Manage Integrations
+                </div>
+            );
+        } else if (this.state.scalar_error) {
+            integrationsButton = (
                     <div className="mx_RoomSettings_integrationsButton_error" onClick={ this.onShowIntegrationsError }>
-                        Integrations Error <img src="img/warning.svg" width="17"/>
-                        { integrationsError }
-                    </div>
-                );
-            } else {
-                integrationsButton = (
+                    Integrations Error <img src="img/warning.svg" width="17"/>
+                    { integrationsError }
+                </div>
+            );
+        } else {
+            integrationsButton = (
                     <div className="mx_RoomSettings_integrationsButton" style={{ opacity: 0.5 }}>
-                        Manage Integrations
-                    </div>
-                );
-            }
+                    Manage Integrations
+                </div>
+            );
         }
 
         return (
@@ -796,7 +787,7 @@ module.exports = React.createClass({
                     roomId={this.props.room.roomId}
                     canSetCanonicalAlias={ roomState.mayClientSendStateEvent("m.room.canonical_alias", cli) }
                     canSetAliases={
-                        true 
+                        true
                         /* Originally, we arbitrarily restricted creating aliases to room admins: roomState.mayClientSendStateEvent("m.room.aliases", cli) */
                     }
                     canonicalAliasEvent={this.props.room.currentState.getStateEvents('m.room.canonical_alias', '')}

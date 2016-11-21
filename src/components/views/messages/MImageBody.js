@@ -39,6 +39,7 @@ module.exports = React.createClass({
             decryptedUrl: null,
             decryptedThumbnailUrl: null,
             decryptedBlob: null,
+            error: null
         };
     },
 
@@ -132,9 +133,11 @@ module.exports = React.createClass({
                     });
                 });
             }).catch((err) => {
-                console.warn("Unable to decrypt attachment: ", err)
+                console.warn("Unable to decrypt attachment: ", err);
                 // Set a placeholder image when we can't decrypt the image.
-                this.refs.image.src = "img/warning.svg";
+                this.setState({
+                    error: err,
+                });
             }).done();
         }
     },
@@ -173,6 +176,15 @@ module.exports = React.createClass({
         const TintableSvg = sdk.getComponent("elements.TintableSvg");
         const content = this.props.mxEvent.getContent();
 
+        if (this.state.error !== null) {
+            return (
+                <span className="mx_MImageBody" ref="body">
+                    <img src="img/warning.svg" width="16" height="16"/>
+                    Error decrypting image
+                </span>
+            );
+        }
+
         if (content.file !== undefined && this.state.decryptedUrl === null) {
 
             // Need to decrypt the attachment
@@ -180,8 +192,14 @@ module.exports = React.createClass({
             // For now add an img tag with a spinner.
             return (
                 <span className="mx_MImageBody" ref="body">
-                <img className="mx_MImageBody_thumbnail" src="img/spinner.gif" ref="image"
-                    alt={content.body} />
+                    <div className="mx_MImageBody_thumbnail" ref="image" style={{
+                        "display": "flex",
+                        "align-items": "center",
+                        "justify-items": "center",
+                        "width": "100%",
+                    }}>
+                        <img src="img/spinner.gif" alt={content.body} width="16" height="16"/>
+                    </div>
                 </span>
             );
         }

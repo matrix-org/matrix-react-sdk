@@ -24,6 +24,8 @@ import {decryptFile} from '../../../utils/DecryptFile';
 import Tinter from '../../../Tinter';
 import 'isomorphic-fetch';
 import q from 'q';
+import Modal from '../../../Modal';
+
 
 // A cached tinted copy of "img/download.svg"
 var tintedDownloadImageURL;
@@ -266,7 +268,12 @@ module.exports = React.createClass({
                 // Need to decrypt the attachment
                 // Wait for the user to click on the link before downloading
                 // and decrypting the attachment.
+                var decrypting = false;
                 const decrypt = () => {
+                    if (decrypting) {
+                        return false;
+                    }
+                    decrypting = true;
                     decryptFile(content.file).then((blob) => {
                         this.setState({
                             decryptedBlob: blob,
@@ -276,13 +283,16 @@ module.exports = React.createClass({
                         Modal.createDialog(ErrorDialog, {
                             description: "Error decrypting attachment"
                         });
+                    }).finally(() => {
+                        decrypting = false;
+                        return;
                     });
                 };
 
                 return (
                     <span className="mx_MFileBody" ref="body">
                         <div className="mx_MImageBody_download">
-                            <a onClick={decrypt}>
+                            <a href="javascript:void(0)" onClick={decrypt}>
                                 Decrypt {text}
                             </a>
                         </div>
