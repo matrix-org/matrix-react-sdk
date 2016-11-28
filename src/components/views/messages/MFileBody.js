@@ -90,10 +90,10 @@ Tinter.registerTintable(updateTintedDownloadImage);
 // the downside of using a sandboxed iframe is that the browers are overly
 // restrictive in what you are allowed to do with the generated URL.
 //
-// So as a compomise we'll do both, that is use a second domain if one is
-// configured, otherwise fall back to using a sandbox.
-// To simplify deploying the client we'll try to keep as much of the rendering
-// logic within the client domain as possible.
+// For now given how unusable the blobs generated in sandboxed iframes we'll
+// default to using a renderer hosted on "usercontent.riot.im". This should
+// be overridable so that people running their own version of the client can
+// choose a different renderer.
 //
 // To that end the first version of the blob generation will be the following
 // html:
@@ -110,12 +110,7 @@ Tinter.registerTintable(updateTintedDownloadImage);
 // ordinary javascript function which then is turned into a string using
 // toString().
 //
-const DEFAULT_CROSS_ORIGIN_RENDERER = "data:text/html;base64," + window.btoa(`
-<html><head><script>
-window.onmessage=function(e){eval("("+e.data.code+")")(e)}
-\u003c/script></head><body></body></html>
-`);
-
+const DEFAULT_CROSS_ORIGIN_RENDERER = "https://usercontent.riot.im/v1.html";
 
 /**
  * Render the attachment inside the iframe.
