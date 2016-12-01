@@ -68,7 +68,7 @@ Tinter.registerTintable(updateTintedDownloadImage);
 // For attachments downloaded directly from the homeserver we can use
 // Content-Security-Policy headers to disable script execution.
 //
-// But attachments with end-to-end ecryption are more difficult to handle.
+// But attachments with end-to-end encryption are more difficult to handle.
 // We need to decrypt the attachment on the client and then display it.
 // To display the attachment we need to turn the decrypted bytes into a URL.
 //
@@ -90,7 +90,7 @@ Tinter.registerTintable(updateTintedDownloadImage);
 // the downside of using a sandboxed iframe is that the browers are overly
 // restrictive in what you are allowed to do with the generated URL.
 //
-// For now given how unusable the blobs generated in sandboxed iframes we'll
+// For now given how unusable the blobs generated in sandboxed iframes are we
 // default to using a renderer hosted on "usercontent.riot.im". This should
 // be overridable so that people running their own version of the client can
 // choose a different renderer.
