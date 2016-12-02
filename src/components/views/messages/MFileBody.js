@@ -91,8 +91,8 @@ Tinter.registerTintable(updateTintedDownloadImage);
 // restrictive in what you are allowed to do with the generated URL.
 //
 // For now given how unusable the blobs generated in sandboxed iframes are we
-// default to using a renderer hosted on "usercontent.riot.im". This should
-// be overridable so that people running their own version of the client can
+// default to using a renderer hosted on "usercontent.riot.im". This is
+// overridable so that people running their own version of the client can
 // choose a different renderer.
 //
 // To that end the first version of the blob generation will be the following
@@ -185,6 +185,10 @@ module.exports = React.createClass({
         return {
             decryptedBlob: (this.props.decryptedBlob ? this.props.decryptedBlob : null),
         };
+    },
+
+    contextTypes: {
+        config: React.PropTypes.object,
     },
 
     /**
@@ -312,6 +316,10 @@ module.exports = React.createClass({
             };
 
             // If the attachment is encryped then put the link inside an iframe.
+            let renderer_url = DEFAULT_CROSS_ORIGIN_RENDERER;
+            if (this.context.config && this.context.config.cross_origin_renderer_url) {
+                renderer_url = this.context.config.cross_origin_renderer_url;
+            }
             return (
                 <span className="mx_MFileBody">
                     <div className="mx_MImageBody_download">
@@ -323,7 +331,7 @@ module.exports = React.createClass({
                               */}
                             <a ref="dummyLink"/>
                         </div>
-                        <iframe src={DEFAULT_CROSS_ORIGIN_RENDERER} onLoad={onIframeLoad} ref="iframe"/>
+                        <iframe src={renderer_url} onLoad={onIframeLoad} ref="iframe"/>
                     </div>
                 </span>
             );
