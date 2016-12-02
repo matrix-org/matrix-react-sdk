@@ -188,7 +188,7 @@ module.exports = React.createClass({
     },
 
     contextTypes: {
-        config: React.PropTypes.object,
+        appConfig: React.PropTypes.object,
     },
 
     /**
@@ -317,8 +317,8 @@ module.exports = React.createClass({
 
             // If the attachment is encryped then put the link inside an iframe.
             let renderer_url = DEFAULT_CROSS_ORIGIN_RENDERER;
-            if (this.context.config && this.context.config.cross_origin_renderer_url) {
-                renderer_url = this.context.config.cross_origin_renderer_url;
+            if (this.context.appConfig && this.context.appConfig.cross_origin_renderer_url) {
+                renderer_url = this.context.appConfig.cross_origin_renderer_url;
             }
             return (
                 <span className="mx_MFileBody">

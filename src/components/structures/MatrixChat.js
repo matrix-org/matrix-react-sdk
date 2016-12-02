@@ -67,7 +67,7 @@ module.exports = React.createClass({
     },
 
     childContextTypes: {
-        config: React.PropTypes.object,
+        appConfig: React.PropTypes.object,
     },
 
     AuxPanel: {
@@ -76,7 +76,7 @@ module.exports = React.createClass({
 
     getChildContext: function() {
         return {
-            config: this.props.config,
+            appConfig: this.props.config,
         }
     },
 
