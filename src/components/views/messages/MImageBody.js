@@ -122,7 +122,7 @@ module.exports = React.createClass({
             }
             var decryptedBlob;
             thumbnailPromise.then((thumbnailUrl) => {
-                decryptFile(content.file).then(function(blob) {
+                return decryptFile(content.file).then(function(blob) {
                     decryptedBlob = blob;
                     return readBlobAsDataUri(blob);
                 }).then((contentUrl) => {
