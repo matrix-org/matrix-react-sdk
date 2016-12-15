@@ -225,7 +225,7 @@ module.exports = React.createClass({
 
             name =
                 <div className="mx_RoomHeader_name" onClick={this.props.onSettingsClick}>
-                    <EmojiText element="div" className={ "mx_RoomHeader_nametext " + (settingsHint ? "mx_RoomHeader_settingsHint" : "") } title={ roomName }>{roomName} dir="auto"</EmojiText>
+                    <EmojiText element="div" className={ "mx_RoomHeader_nametext " + (settingsHint ? "mx_RoomHeader_settingsHint" : "") } title={ roomName }>{roomName}</EmojiText>
                     { searchStatus }
                 </div>;
         }
@@ -242,7 +242,7 @@ module.exports = React.createClass({
                 }
             }
             if (topic) {
-                topic_el = <div className="mx_RoomHeader_topic" ref="topic" title={ topic } dir="auto">{ topic }</div>;
+                topic_el = <div className="mx_Ro  omHeader_topic" ref="topic" title={ topic } dir="auto">{ topic }</div>;
             }
         }
 
