@@ -22,6 +22,9 @@ var sdk = require('../../index');
 var MatrixClientPeg = require('../../MatrixClientPeg')
 
 const MILLIS_IN_DAY = 86400000;
+// The timezone offset is the number of minutes difference between UTC and local time.
+// Subtracting this from a UTC millisecond time stamp will correct for timezone.
+const MILLIS_TZ_OFFSET = new Date().getTimezoneOffset() * 60 * 1000;
 
 /* (almost) stateless UI component which builds the event tiles in the room timeline.
  */
@@ -477,7 +480,8 @@ module.exports = React.createClass({
             // here.
             return !this.props.suppressFirstDateSeparator;
         }
-        return Math.floor(prevEvent.getTs() / MILLIS_IN_DAY) !== Math.floor(nextEventTs / MILLIS_IN_DAY);
+        return Math.floor((prevEvent.getTs() - MILLIS_TZ_OFFSET) / MILLIS_IN_DAY) !==
+                Math.floor((nextEventTs - MILLIS_TZ_OFFSET) / MILLIS_IN_DAY);
     },
 
     // get a list of read receipts that should be shown next to this event
