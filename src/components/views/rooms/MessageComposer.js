@@ -22,7 +22,6 @@ var sdk = require('../../../index');
 var dis = require('../../../dispatcher');
 import Autocomplete from './Autocomplete';
 import classNames from 'classnames';
-
 import UserSettingsStore from '../../../UserSettingsStore';
 
 
@@ -32,6 +31,7 @@ export default class MessageComposer extends React.Component {
         this.onCallClick = this.onCallClick.bind(this);
         this.onHangupClick = this.onHangupClick.bind(this);
         this.onUploadClick = this.onUploadClick.bind(this);
+        this.onLocationClick = this.onLocationClick.bind(this);
         this.onUploadFileSelected = this.onUploadFileSelected.bind(this);
         this.onVoiceCallClick = this.onVoiceCallClick.bind(this);
         this.onInputContentChanged = this.onInputContentChanged.bind(this);
@@ -87,8 +87,50 @@ export default class MessageComposer extends React.Component {
             });
             return;
         }
-
         this.refs.uploadInput.click();
+    }
+
+    onLocationClick(ev) {
+      const matrixClient = MatrixClientPeg.get();
+      const LocationInputDialog = sdk.getComponent("dialogs.LocationInputDialog");
+      const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+      const LocationEnabled = UserSettingsStore.getSyncedSetting('displayLocationMaps') === true;
+      if (!navigator.geolocation) {
+        Modal.createDialog(
+          ErrorDialog, {
+          title: "Post Location",
+          description: "You either have disabled location in the browser, or it isnt supported.",
+        });
+        return;
+      } else if (!LocationEnabled) {
+        Modal.createDialog(
+          ErrorDialog, {
+          title: "Post Location",
+          description: 'You have the location picker disabled in settings. Please enable "Display maps from Open Street Maps"',
+        });
+        return;
+      }
+      new Promise((resolve) => {
+        navigator.geolocation.getCurrentPosition((position) => {
+          resolve(position);
+        }, () => {resolve(null);});
+      }).then((position) => {
+        Modal.createDialog(
+          LocationInputDialog,
+          {
+          position: position,
+          onFinished: (shouldSend, body, geo_uri) => {
+            if (!shouldSend) {
+              return;
+            }
+            matrixClient.sendMessage(this.props.room.roomId, {
+              msgtype: "m.location",
+              geo_uri,
+              body,
+            });
+          },
+        });
+      });
     }
 
     onUploadFileSelected(ev) {
@@ -265,7 +307,7 @@ export default class MessageComposer extends React.Component {
             // This also currently includes the call buttons. Really we should
             // check separately for whether we can call, but this is slightly
             // complex because of conference calls.
-            var uploadButton = (
+            const uploadButton = (
                 <div key="controls_upload" className="mx_MessageComposer_upload"
                         onClick={this.onUploadClick} title="Upload file">
                     <TintableSvg src="img/icons-upload.svg" width="35" height="35"/>
@@ -273,6 +315,15 @@ export default class MessageComposer extends React.Component {
                         style={uploadInputStyle}
                         multiple
                         onChange={this.onUploadFileSelected} />
+                </div>
+            );
+
+            const locationButton = (
+                // Add option for either current or specifed location.
+                // TODO: Add icon
+                <div key="controls_location" className="mx_MessageComposer_upload"
+                        onClick={this.onLocationClick} title="Post current location">
+                    <TintableSvg src="img/icons-upload.svg" width="35" height="35"/>
                 </div>
             );
 
@@ -300,6 +351,7 @@ export default class MessageComposer extends React.Component {
                     onInputStateChanged={this.onInputStateChanged} />,
                 formattingButton,
                 uploadButton,
+                locationButton,
                 hangupButton,
                 callButton,
                 videoCallButton
