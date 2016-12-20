@@ -143,6 +143,8 @@ import views$messages$MFileBody from './components/views/messages/MFileBody';
 views$messages$MFileBody && (module.exports.components['views.messages.MFileBody'] = views$messages$MFileBody);
 import views$messages$MImageBody from './components/views/messages/MImageBody';
 views$messages$MImageBody && (module.exports.components['views.messages.MImageBody'] = views$messages$MImageBody);
+import views$messages$MLocationBody from './components/views/messages/MLocationBody';
+views$messages$MLocationBody && (module.exports.components['views.messages.MLocationBody'] = views$messages$MLocationBody);
 import views$messages$MVideoBody from './components/views/messages/MVideoBody';
 views$messages$MVideoBody && (module.exports.components['views.messages.MVideoBody'] = views$messages$MVideoBody);
 import views$messages$MessageEvent from './components/views/messages/MessageEvent';
