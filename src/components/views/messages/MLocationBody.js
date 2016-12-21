@@ -96,7 +96,7 @@ module.exports = React.createClass({
     render: function() {
         let map = null;
         if (this.state.mapEnabled) {
-          map = (<div ref="map" className="mx_LocationMap"></div>);
+          map = (<div ref="map" className="mx_LocationBody_map"></div>);
         }
 
         if (!this.state.error) {

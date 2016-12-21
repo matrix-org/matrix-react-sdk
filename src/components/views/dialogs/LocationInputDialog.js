@@ -104,7 +104,7 @@ module.exports = React.createClass({
                     Post Location
                 </div>
                 <div className="mx_Dialog_content">
-                    <div ref="map" className="mx_LocationMap">
+                    <div ref="map" className="mx_LocationInputDialog_map">
                     </div>
                     <div>
                         <input required id="textinput" ref="textinput" className="mx_TextInputDialog_input" placeholder="Location Description" autoFocus={this.props.focus} size="64" onKeyDown={this.onKeyDown}/>
