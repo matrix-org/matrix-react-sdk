@@ -71,7 +71,7 @@ module.exports = React.createClass({
     },
 
     componentDidMount: function() {
-        this.setState({mapEnabled: UserSettingsStore.getSyncedSetting('displayLocationMaps')});
+        this.setState({mapEnabled: UserSettingsStore.isFeatureEnabled('inline_maps')});
         const content = this.props.mxEvent.getContent();
         if (content.geo_uri && content.body) {
           // Build URL

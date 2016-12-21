@@ -94,7 +94,7 @@ export default class MessageComposer extends React.Component {
       const matrixClient = MatrixClientPeg.get();
       const LocationInputDialog = sdk.getComponent("dialogs.LocationInputDialog");
       const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-      const LocationEnabled = UserSettingsStore.getSyncedSetting('displayLocationMaps') === true;
+      const LocationEnabled = UserSettingsStore.isFeatureEnabled('inline_maps');
       if (!navigator.geolocation) {
         Modal.createDialog(
           ErrorDialog, {
@@ -106,7 +106,7 @@ export default class MessageComposer extends React.Component {
         Modal.createDialog(
           ErrorDialog, {
           title: "Post Location",
-          description: 'You have the location picker disabled in settings. Please enable "Display maps from Open Street Maps"',
+          description: 'You have the location picker disabled in settings. Please enable "Inline Maps"',
         });
         return;
       }

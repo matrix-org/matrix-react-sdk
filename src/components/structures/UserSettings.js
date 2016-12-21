@@ -449,7 +449,6 @@ module.exports = React.createClass({
         );
     },
 
-<<<<<<< ours
     _onImportE2eKeysClicked: function() {
         Modal.createDialogAsync(
             (cb) => {

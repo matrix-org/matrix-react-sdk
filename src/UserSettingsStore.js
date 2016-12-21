@@ -30,6 +30,11 @@ module.exports = {
             id: 'rich_text_editor',
             default: false,
         },
+        {
+            name: 'Inline Maps',
+            id: 'inline_maps',
+            default: false,
+        },
     ],
 
     loadProfileInfo: function() {
