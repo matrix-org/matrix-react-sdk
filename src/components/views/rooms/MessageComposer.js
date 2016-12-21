@@ -91,46 +91,49 @@ export default class MessageComposer extends React.Component {
     }
 
     onLocationClick(ev) {
-      const matrixClient = MatrixClientPeg.get();
-      const LocationInputDialog = sdk.getComponent("dialogs.LocationInputDialog");
-      const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-      const LocationEnabled = UserSettingsStore.isFeatureEnabled('inline_maps');
-      if (!navigator.geolocation) {
-        Modal.createDialog(
-          ErrorDialog, {
-          title: "Post Location",
-          description: "You either have disabled location in the browser, or it isnt supported.",
-        });
-        return;
-      } else if (!LocationEnabled) {
-        Modal.createDialog(
-          ErrorDialog, {
-          title: "Post Location",
-          description: 'You have the location picker disabled in settings. Please enable "Inline Maps"',
-        });
-        return;
-      }
-      new Promise((resolve) => {
-        navigator.geolocation.getCurrentPosition((position) => {
-          resolve(position);
-        }, () => {resolve(null);});
-      }).then((position) => {
-        Modal.createDialog(
-          LocationInputDialog,
-          {
-          position: position,
-          onFinished: (shouldSend, body, geo_uri) => {
-            if (!shouldSend) {
-              return;
-            }
-            matrixClient.sendMessage(this.props.room.roomId, {
-              msgtype: "m.location",
-              geo_uri,
-              body,
+        const matrixClient = MatrixClientPeg.get();
+        const LocationInputDialog = sdk.getComponent("dialogs.LocationInputDialog");
+        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+        const LocationEnabled = UserSettingsStore.isFeatureEnabled('inline_maps');
+        if (!navigator.geolocation) {
+            Modal.createDialog(
+                ErrorDialog, {
+                title: "Post Location",
+                description: "You either have disabled location in the browser, or it isn't supported.",
             });
-          },
+            return;
+        } else if (!LocationEnabled) {
+            Modal.createDialog(
+                ErrorDialog, {
+                title: "Post Location",
+                description: 'You have the location picker disabled in settings. Please enable "Inline Maps"',
+            });
+            return;
+        }
+        new Promise((resolve) => {
+            navigator.geolocation.getCurrentPosition((position) => {
+                resolve(position);
+            }, () => {
+                resolve(null);
+            });
+        }).then((position) => {
+            Modal.createDialog(
+                LocationInputDialog,
+                {
+                    position: position,
+                    onFinished: (shouldSend, body, geo_uri) => {
+                        if (!shouldSend) {
+                            return;
+                        }
+                        matrixClient.sendMessage(this.props.room.roomId, {
+                            msgtype: "m.location",
+                            geo_uri,
+                            body,
+                        });
+                    },
+                }
+            );
         });
-      });
     }
 
     onUploadFileSelected(ev) {

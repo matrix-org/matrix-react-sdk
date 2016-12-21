@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -38,83 +38,83 @@ module.exports = React.createClass({
 
     getInitialState: function() {
         return {
-          leafletMap: null,
-          url: null,
-          body: null,
-          mapEnabled: false,
-         };
+            leafletMap: null,
+            url: null,
+            body: null,
+            mapEnabled: false,
+        };
     },
 
-    renderMap: function () {
-      const zoom = ZOOM_STREET;
-      if (this.state.leafletMap !== null) {
-        return;
-      }
-      const leafletMap = new Leaflet.Map(this.refs.map);
-      leafletMap.addLayer(
-        new Leaflet.TileLayer(
-          'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          {
-            minZoom: ZOOM_WORLD,
-            maxZoom: ZOOM_STREET,
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-          }
-        )
-      );
-      leafletMap.setView(this.state.coords, zoom);
-      Leaflet.Icon.Default.prototype.options.imagePath = "/img/";
-      leafletMap.addControl(new Leaflet.Marker(this.state.coords, {
-        title: this.state.body,
-        icon: new Leaflet.Icon.Default(),
-      }));
-      this.setState({leafletMap});
+    renderMap: function() {
+        const zoom = ZOOM_STREET;
+        if (this.state.leafletMap !== null) {
+            return;
+        }
+        const leafletMap = new Leaflet.Map(this.refs.map);
+        leafletMap.addLayer(
+            new Leaflet.TileLayer(
+                'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                {
+                    minZoom: ZOOM_WORLD,
+                    maxZoom: ZOOM_STREET,
+                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+                }
+            )
+        );
+        leafletMap.setView(this.state.coords, zoom);
+        Leaflet.Icon.Default.prototype.options.imagePath = "/img/";
+        leafletMap.addControl(new Leaflet.Marker(this.state.coords, {
+            title: this.state.body,
+            icon: new Leaflet.Icon.Default(),
+        }));
+        this.setState({leafletMap});
     },
 
     componentDidMount: function() {
         this.setState({mapEnabled: UserSettingsStore.isFeatureEnabled('inline_maps')});
         const content = this.props.mxEvent.getContent();
         if (content.geo_uri && content.body) {
-          // Build URL
-          const parts = content.geo_uri.substr("geo:".length).split(',');
-          const coords = new Leaflet.LatLng(
-            parseFloat(parts[0]),
-            parseFloat(parts[1])
-          );
-          const uri = `https://www.openstreetmap.org/#map=${ZOOM_STREET}/${parts[0]}/${parts[1]}`;
-          this.setState({uri, coords, body: content.body});
+            // Build URL
+            const parts = content.geo_uri.substr("geo:".length).split(',');
+            const coords = new Leaflet.LatLng(
+                parseFloat(parts[0]),
+                parseFloat(parts[1])
+            );
+            const uri = `https://www.openstreetmap.org/#map=${ZOOM_STREET}/${parts[0]}/${parts[1]}`;
+            this.setState({uri, coords, body: content.body});
         } else {
-          this.setState({error: "Mising required fields."});
+            this.setState({error: "Missing required fields."});
         }
     },
 
     componentDidUpdate: function(prevProps, prevState) {
-      if (this.state.mapEnabled || prevState.mapEnabled === false) {
-        this.renderMap();
-      }
+        if (this.state.mapEnabled || prevState.mapEnabled === false) {
+            this.renderMap();
+        }
     },
 
     render: function() {
         let map = null;
         if (this.state.mapEnabled) {
-          map = (<div ref="map" className="mx_LocationBody_map"></div>);
+            map = (<div ref="map" className="mx_LocationBody_map"></div>);
         }
 
         if (!this.state.error) {
-          return (
-            <span className="mx_MLocationBody">
-              <span>{this.state.body}</span>
-              {map}
-              <a target="_blank" href={this.state.uri} className="mx_MLocationBody">
+            return (
+                <span className="mx_MLocationBody">
+                <span>{this.state.body}</span>
+                {map}
+                <a target="_blank" href={this.state.uri} className="mx_MLocationBody">
                 Click to view location on OpenStreetMap.org
-              </a>
-            </span>
-          );
+                </a>
+                </span>
+            );
         } else {
-          return (
-            <span className="mx_MLocationBody">
-              Could not display location: {this.state.error}
-            </span>
-          );
+            return (
+                <span className="mx_MLocationBody">
+                Could not display location: {this.state.error}
+                </span>
+            );
         }
     },
 });

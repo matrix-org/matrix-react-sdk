@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,9 +30,9 @@ module.exports = React.createClass({
 
     getInitialState: function() {
         return {
-          leafletMap: null,
-          mapMarker: null,
-          position: null,
+            leafletMap: null,
+            mapMarker: null,
+            position: null,
         };
     },
 
@@ -44,50 +44,50 @@ module.exports = React.createClass({
     },
 
     componentDidMount: function() {
-      const leafletMap = new Leaflet.Map(this.refs.map);
-      leafletMap.addLayer(
-        new Leaflet.TileLayer(
-          'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          {
-            minZoom: ZOOM_WORLD,
-            maxZoom: ZOOM_STREET,
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-          }
-        )
-      );
-
-      let coords;
-      let zoom;
-      if (this.props.position) {
-        coords = new Leaflet.LatLng(
-          this.props.position.coords.latitude,
-          this.props.position.coords.longitude,
+        const leafletMap = new Leaflet.Map(this.refs.map);
+        leafletMap.addLayer(
+            new Leaflet.TileLayer(
+                'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                {
+                    minZoom: ZOOM_WORLD,
+                    maxZoom: ZOOM_STREET,
+                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+                }
+            )
         );
-        zoom = ZOOM_STREET;
-      } else {
-        coords = new Leaflet.LatLng(0, 0);
-        zoom = ZOOM_WORLD;
-      }
-      leafletMap.on('click', this.mapClick);
-      leafletMap.setView(coords, zoom);
-      Leaflet.Icon.Default.prototype.options.imagePath = "/img/";
-      const mapMarker = new Leaflet.Marker(coords, {
-        icon: new Leaflet.Icon.Default(),
-      });
-      leafletMap.addControl(mapMarker);
-      this.setState({mapMarker, leafletMap, position: coords});
+
+        let coords;
+        let zoom;
+        if (this.props.position) {
+            coords = new Leaflet.LatLng(
+                this.props.position.coords.latitude,
+                this.props.position.coords.longitude,
+            );
+            zoom = ZOOM_STREET;
+        } else {
+            coords = new Leaflet.LatLng(0, 0);
+            zoom = ZOOM_WORLD;
+        }
+        leafletMap.on('click', this.mapClick);
+        leafletMap.setView(coords, zoom);
+        Leaflet.Icon.Default.prototype.options.imagePath = "/img/";
+        const mapMarker = new Leaflet.Marker(coords, {
+            icon: new Leaflet.Icon.Default(),
+        });
+        leafletMap.addControl(mapMarker);
+        this.setState({mapMarker, leafletMap, position: coords});
     },
 
     mapClick: function(ev) {
-      this.state.leafletMap.panTo(ev.latlng);
-      this.state.mapMarker.setLatLng(ev.latlng);
-      this.setState({position: ev.latlng});
+        this.state.leafletMap.panTo(ev.latlng);
+        this.state.mapMarker.setLatLng(ev.latlng);
+        this.setState({position: ev.latlng});
     },
 
     onOk: function() {
         const position = this.state.position;
         if (position === null || this.refs.textinput.value === "") {
-          return;
+            return;
         }
         const geo_uri = `geo:${position.lat},${position.lng}`;
         this.props.onFinished(true, this.refs.textinput.value, geo_uri);
@@ -115,7 +115,7 @@ module.exports = React.createClass({
                         Cancel
                     </button>
                     <button className="mx_Dialog_primary" onClick={this.onOk}>
-                      Post Location
+                        Post Location
                     </button>
                 </div>
             </div>
