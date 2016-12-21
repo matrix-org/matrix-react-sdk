@@ -22,9 +22,6 @@ var sdk = require('../../index');
 var MatrixClientPeg = require('../../MatrixClientPeg')
 
 const MILLIS_IN_DAY = 86400000;
-// The timezone offset is the number of minutes difference between UTC and local time.
-// Subtracting this from a UTC millisecond time stamp will correct for timezone.
-const MILLIS_TZ_OFFSET = new Date().getTimezoneOffset() * 60 * 1000;
 
 /* (almost) stateless UI component which builds the event tiles in the room timeline.
  */
@@ -311,7 +308,7 @@ module.exports = React.createClass({
                 // membership event, which will not change during forward pagination.
                 const key = "membereventlistsummary-" + (prevEvent ? mxEv.getId() : "initial");
 
-                if (this._wantsDateSeparator(prevEvent, ts1)) {
+                if (this._wantsDateSeparator(prevEvent, mxEv)) {
                     let dateSeparator = <li key={ts1+'~'}><DateSeparator key={ts1+'~'} ts={ts1}/></li>;
                     ret.push(dateSeparator);
                 }
@@ -321,7 +318,7 @@ module.exports = React.createClass({
                     let collapsedMxEv = this.props.events[i + 1];
 
                     if (!isMembershipChange(collapsedMxEv) ||
-                        this._wantsDateSeparator(this.props.events[i], collapsedMxEv.getTs())) {
+                        this._wantsDateSeparator(this.props.events[i], collapsedMxEv)) {
                         break;
                     }
                     summarisedEvents.push(collapsedMxEv);
@@ -433,11 +430,11 @@ module.exports = React.createClass({
         // as 'today' for the date separators.
         var ts1 = mxEv.getTs();
         if (mxEv.status) {
-            ts1 = new Date();
+            ts1 = new Date().getTime();
         }
 
         // do we need a date separator since the last event?
-        if (this._wantsDateSeparator(prevEvent, ts1)) {
+        if (this._wantsDateSeparator(prevEvent, mxEv)) {
             var dateSeparator = <li key={ts1}><DateSeparator key={ts1} ts={ts1}/></li>;
             ret.push(dateSeparator);
             continuation = false;
@@ -474,14 +471,19 @@ module.exports = React.createClass({
         return ret;
     },
 
-    _wantsDateSeparator: function(prevEvent, nextEventTs) {
+    _wantsDateSeparator: function(prevEvent, nextEvent) {
         if (prevEvent == null) {
             // first event in the panel: depends if we could back-paginate from
             // here.
             return !this.props.suppressFirstDateSeparator;
         }
-        return Math.floor((prevEvent.getTs() - MILLIS_TZ_OFFSET) / MILLIS_IN_DAY) !==
-                Math.floor((nextEventTs - MILLIS_TZ_OFFSET) / MILLIS_IN_DAY);
+        // Return early for events that are > 24h apart
+        if (Math.abs(prevEvent.getTs() - nextEvent.getTs()) > MILLIS_IN_DAY) {
+            return true;
+        }
+
+        // Compare weekdays
+        return prevEvent.getDate().getDay() !== nextEvent.getDate().getDay();
     },
 
     // get a list of read receipts that should be shown next to this event
