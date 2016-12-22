@@ -21,8 +21,6 @@ var sdk = require('../../index');
 
 var MatrixClientPeg = require('../../MatrixClientPeg')
 
-const MILLIS_IN_DAY = 86400000;
-
 /* (almost) stateless UI component which builds the event tiles in the room timeline.
  */
 module.exports = React.createClass({
