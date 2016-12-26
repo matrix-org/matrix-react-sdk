@@ -116,6 +116,14 @@ module.exports = React.createClass({
         //        from the focussedEvent.
         scrollStateMap: React.PropTypes.object,
     },
+    // Can't get contexts to work for some reason
+    // childContextTypes: {
+    //     text: React.PropTypes.object
+    // },
+
+    // getChildContext: function() {
+    //     return { room: this.state.room }
+    // },
 
     getInitialState: function() {
         return {

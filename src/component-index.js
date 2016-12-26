@@ -183,6 +183,8 @@ import views$rooms$MessageComposerInput from './components/views/rooms/MessageCo
 views$rooms$MessageComposerInput && (module.exports.components['views.rooms.MessageComposerInput'] = views$rooms$MessageComposerInput);
 import views$rooms$MessageComposerInputOld from './components/views/rooms/MessageComposerInputOld';
 views$rooms$MessageComposerInputOld && (module.exports.components['views.rooms.MessageComposerInputOld'] = views$rooms$MessageComposerInputOld);
+import views$rooms$MessageEditorInput from './components/views/rooms/MessageEditorInput';
+views$rooms$MessageEditorInput && (module.exports.components['views.rooms.MessageEditorInput'] = views$rooms$MessageEditorInput);
 import views$rooms$PresenceLabel from './components/views/rooms/PresenceLabel';
 views$rooms$PresenceLabel && (module.exports.components['views.rooms.PresenceLabel'] = views$rooms$PresenceLabel);
 import views$rooms$ReadReceiptMarker from './components/views/rooms/ReadReceiptMarker';

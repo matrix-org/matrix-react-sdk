@@ -27,10 +27,16 @@ var sdk = require('../../../index');
 var ScalarAuthClient = require("../../../ScalarAuthClient");
 var Modal = require("../../../Modal");
 var SdkConfig = require('../../../SdkConfig');
+var UserSettingsStore = require('../../../UserSettingsStore');
+var Editor = require('draft-js').Editor;
+var EditorState = require('draft-js').EditorState;
+var ContentState = require('draft-js').ContentState;
+var dis = require('../../../dispatcher');
 
 linkifyMatrix(linkify);
 
 module.exports = React.createClass({
+
     displayName: 'TextualBody',
 
     propTypes: {
@@ -58,10 +64,23 @@ module.exports = React.createClass({
 
             // track whether the preview widget is hidden
             widgetHidden: false,
+
+            editMode: false,
         };
     },
 
+    onAction(payload) {
+        // This isn't very nice -- but make sure it is the textualBody for the same
+        // mxEvent as the MessageContextMenu was generated for
+        // localize subscribe/dispatch?
+        if (payload.action === 'edit' && payload.mxEvent === this.props.mxEvent) {
+            this.state.editMode = !this.state.editMode
+            this.forceUpdate()
+        }
+    },
+
     componentDidMount: function() {
+        this._dispatcherRef = dis.register(this.onAction);
         this._unmounted = false;
 
         linkifyElement(this.refs.content, linkifyMatrix.options);
@@ -87,6 +106,7 @@ module.exports = React.createClass({
     },
 
     componentWillUnmount: function() {
+        dis.unregister(this._dispatcherRef)
         this._unmounted = true;
     },
 
@@ -212,6 +232,16 @@ module.exports = React.createClass({
         // which requires the user to click through and THEN we can open the link in a new tab because
         // the window.open command occurs in the same stack frame as the onClick callback.
 
+        let integrationsEnabled = UserSettingsStore.isFeatureEnabled("integration_management");
+        if (!integrationsEnabled) {
+            var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+            Modal.createDialog(ErrorDialog, {
+                title: "Integrations disabled",
+                description: "You need to enable the Labs option 'Integrations Management' in your Riot user settings first.",
+            });
+            return;
+        }
+
         // Go fetch a scalar token
         let scalarClient = new ScalarAuthClient();
         scalarClient.connect().then(() => {
@@ -239,19 +269,42 @@ module.exports = React.createClass({
             });
         });
     },
+    onEscape: function() {
+        this.state.editMode = false
+        this.forceUpdate()
+    },
+
+    onMessageEditSent: function(sendMessageEditPromise, contentText) {
+        this.state.editMode = false;
+        sendMessageEditPromise.then(function(_ev) {
+            this.forceUpdate()
+        }.bind(this))
+    },
 
     render: function() {
         const EmojiText = sdk.getComponent('elements.EmojiText');
         var mxEvent = this.props.mxEvent;
         var content = mxEvent.getContent();
-
         var body = HtmlUtils.bodyToHtml(content, this.props.highlights, {});
+        var MessageEditorInput = sdk.getComponent("rooms.MessageEditorInput");
+        var bodyOrEditBody;
 
         if (this.props.highlightLink) {
             body = <a href={ this.props.highlightLink }>{ body }</a>;
         }
         else if (content.data && typeof content.data["org.matrix.neb.starter_link"] === "string") {
             body = <a href="#" onClick={ this.onStarterLinkClick.bind(this, content.data["org.matrix.neb.starter_link"]) }>{ body }</a>;
+        }
+
+        if (this.state.editMode) {
+            bodyOrEditBody = <MessageEditorInput
+                contentText={content.body}
+                onEscape={this.onEscape}
+                onMessageEditSent={this.onMessageEditSent}
+                mxEvent={this.props.mxEvent}
+            />
+        } else {
+            bodyOrEditBody = body
         }
 
         var widgets;
@@ -266,7 +319,6 @@ module.exports = React.createClass({
                             onWidgetLoad={ this.props.onWidgetLoad }/>;
             });
         }
-
         switch (content.msgtype) {
             case "m.emote":
                 const name = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
@@ -286,10 +338,11 @@ module.exports = React.createClass({
             default: // including "m.text"
                 return (
                     <span ref="content" className="mx_MTextBody mx_EventTile_content">
-                        { body }
+                        { bodyOrEditBody }
                         { widgets }
                     </span>
                 );
         }
     },
 });
+

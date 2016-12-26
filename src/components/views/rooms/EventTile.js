@@ -258,6 +258,7 @@ module.exports = WithMatrixClient(React.createClass({
     },
 
     onEditClicked: function(e) {
+        console.log('onEditClicked')
         var MessageContextMenu = sdk.getComponent('context_menus.MessageContextMenu');
         var buttonRect = e.target.getBoundingClientRect()
 
@@ -271,11 +272,26 @@ module.exports = WithMatrixClient(React.createClass({
             left: x,
             top: y,
             eventTileOps: this.refs.tile && this.refs.tile.getEventTileOps ? this.refs.tile.getEventTileOps() : undefined,
+            editEnabled: this.isEditEnabled(),
             onFinished: function() {
                 self.setState({menu: false});
             }
         });
         this.setState({menu: true});
+    },
+
+    isEditEnabled: function() {
+        if (this.props.mxEvent.event.type !== "m.room.message") {
+            return false;
+        }
+
+        var room = this.props.matrixClient.getRoom(this.props.mxEvent.getRoomId());
+        if (room.isEditEnabled && room.isEditEnabled()) {
+            var myUserId = this.props.matrixClient.credentials.userId;
+            return myUserId == this.props.mxEvent.getSender();
+        } else {
+            return false;
+        }
     },
 
     toggleAllReadAvatars: function() {
@@ -397,7 +413,7 @@ module.exports = WithMatrixClient(React.createClass({
         }
 
         var e2eEnabled = this.props.matrixClient.isRoomEncrypted(this.props.mxEvent.getRoomId());
-        var isSending = (['sending', 'queued', 'encrypting'].indexOf(this.props.eventSendStatus) !== -1);
+        var isSending = (['sending', 'queued', 'encrypting', 'hasPendingEdit'].indexOf(this.props.eventSendStatus) !== -1);
 
         var classes = classNames({
             mx_EventTile: true,
