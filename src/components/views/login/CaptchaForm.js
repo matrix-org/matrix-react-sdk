@@ -16,8 +16,10 @@ limitations under the License.
 
 'use strict';
 
-var React = require('react');
-var DIV_ID = 'mx_recaptcha';
+import React from 'react';
+import MatrixClientPeg from '../../../MatrixClientPeg';
+
+const DIV_ID = 'mx_recaptcha';
 
 /**
  * A pure UI component which displays a captcha form.
@@ -30,6 +32,9 @@ module.exports = React.createClass({
 
         // called with the captcha response
         onCaptchaResponse: React.PropTypes.func,
+
+        // The register object used by this session
+        registerLogic: React.PropTypes.object,
     },
 
     getDefaultProps: function() {
@@ -55,12 +60,17 @@ module.exports = React.createClass({
             window.mx_on_recaptcha_loaded = () => {this._onCaptchaLoaded()};
             var protocol = global.location.protocol;
             if (protocol === "file:") {
-                var warning = document.createElement('div');
+                const fallback_url = (
+                    this.props.registerLogic.getHomeserverUrl() +
+                    '/_matrix/client/v2_alpha/auth/m.login.recaptcha/fallback/web?session=' +
+                    encodeURIComponent(this.props.registerLogic.getServerData().session)
+                );
+                const warning = document.createElement('div');
                 // XXX: fix hardcoded app URL.  Better solutions include:
                 // * jumping straight to a hosted captcha page (but we don't support that yet)
                 // * embedding the captcha in an iframe (if that works)
                 // * using a better captcha lib
-                warning.innerHTML = "Robot check is currently unavailable on desktop - please use a <a href='https://riot.im/app'>web browser</a>.";
+                warning.innerHTML = "Robot check is currently unavailable on desktop - please use a <a href='" + fallback_url + "'>web browser</a>.";
                 this.refs.recaptchaContainer.appendChild(warning);
             }
             else {

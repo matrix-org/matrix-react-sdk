@@ -277,6 +277,7 @@ module.exports = React.createClass({
                 registerStep = (
                     <CaptchaForm sitePublicKey={publicKey}
                         onCaptchaResponse={this.onCaptchaResponse}
+                        registerLogic={this.registerLogic}
                     />
                 );
                 break;
