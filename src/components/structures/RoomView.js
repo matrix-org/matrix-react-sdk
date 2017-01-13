@@ -146,6 +146,8 @@ module.exports = React.createClass({
             showTopUnreadMessagesBar: false,
 
             auxPanelMaxHeight: undefined,
+
+            statusBarVisible: true,
         }
     },
 
@@ -1331,6 +1333,18 @@ module.exports = React.createClass({
         // no longer anything to do here
     },
 
+    onStatusBarVisible: function() {
+        this.setState({
+            statusBarVisible: true,
+        });
+    },
+
+    onStatusBarHidden: function() {
+        this.setState({
+            statusBarVisible: false,
+        });
+    },
+
     showSettings: function(show) {
         // XXX: this is a bit naughty; we should be doing this via props
         if (show) {
@@ -1513,7 +1527,9 @@ module.exports = React.createClass({
                 onCancelAllClick={this.onCancelAllClick}
                 onScrollToBottomClick={this.jumpToLiveTimeline}
                 onResize={this.onChildResize}
-                />
+                onVisible={this.onStatusBarVisible}
+                onHidden={this.onStatusBarHidden}
+            />
         }
 
         var aux = null;
@@ -1689,7 +1705,7 @@ module.exports = React.createClass({
                 { topUnreadMessagesBar }
                 { messagePanel }
                 { searchResultsPanel }
-                <div className="mx_RoomView_statusArea mx_fadable" style={{ opacity: this.props.opacity }}>
+                <div className="mx_RoomView_statusArea mx_fadable" style={{ opacity: this.props.opacity, display: this.state.statusBarVisible ? undefined : "none" }}>
                     <div className="mx_RoomView_statusAreaBox">
                         <div className="mx_RoomView_statusAreaBox_line"></div>
                         { statusBar }

@@ -60,6 +60,13 @@ module.exports = React.createClass({
         // status bar. This is used to trigger a re-layout in the parent
         // component.
         onResize: React.PropTypes.func,
+
+        // callback for when the status bar can be hidden from view, as it is
+        // not displaying anything
+        onHidden: React.PropTypes.func,
+        // callback for when the status bar is displaying something and should
+        // be visible
+        onVisible: React.PropTypes.func,
     },
 
     getInitialState: function() {
@@ -77,6 +84,13 @@ module.exports = React.createClass({
     componentDidUpdate: function(prevProps, prevState) {
         if(this.props.onResize && this._checkForResize(prevProps, prevState)) {
             this.props.onResize();
+        }
+
+        const size = this._getSize(this.state, this.props);
+        if (size > 0) {
+            this.props.onVisible();
+        } else {
+            this.props.onHidden();
         }
     },
 
@@ -104,35 +118,24 @@ module.exports = React.createClass({
         });
     },
 
+    // We don't need the actual height - just whether it is likely to have
+    // changed - so we use '0' to indicate normal size, and other values to
+    // indicate other sizes.
+    _getSize: function(state, props) {
+        if (state.syncState === "ERROR") {
+            return 1;
+        } else if (props.tabCompleteEntries) {
+            return 0;
+        } else if (props.hasUnsentMessages) {
+            return 2;
+        }
+        return 0;
+    },
+
     // determine if we need to call onResize
     _checkForResize: function(prevProps, prevState) {
-        // figure out the old height and the new height of the status bar. We
-        // don't need the actual height - just whether it is likely to have
-        // changed - so we use '0' to indicate normal size, and other values to
-        // indicate other sizes.
-        var oldSize, newSize;
-
-        if (prevState.syncState === "ERROR") {
-            oldSize = 1;
-        } else if (prevProps.tabCompleteEntries) {
-            oldSize = 0;
-        } else if (prevProps.hasUnsentMessages) {
-            oldSize = 2;
-        } else {
-            oldSize = 0;
-        }
-
-        if (this.state.syncState === "ERROR") {
-            newSize = 1;
-        } else if (this.props.tabCompleteEntries) {
-            newSize = 0;
-        } else if (this.props.hasUnsentMessages) {
-            newSize = 2;
-        } else {
-            newSize = 0;
-        }
-
-        return newSize != oldSize;
+        // figure out the old height and the new height of the status bar.
+        return this._getSize(prevProps, prevState) !== this._getSize(this.props, this.state);
     },
 
     // return suitable content for the image on the left of the status bar.
