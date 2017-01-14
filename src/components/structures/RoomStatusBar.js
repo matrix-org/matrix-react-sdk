@@ -122,7 +122,7 @@ module.exports = React.createClass({
     // changed - so we use '0' to indicate normal size, and other values to
     // indicate other sizes.
     _getSize: function(state, props) {
-        if (state.syncState === "ERROR") {
+        if (state.syncState === "ERROR" || state.whoisTypingString) {
             return 1;
         } else if (props.tabCompleteEntries) {
             return 0;
