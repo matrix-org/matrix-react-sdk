@@ -38,12 +38,16 @@ module.exports = React.createClass({
         defaultEmail: React.PropTypes.string,
         defaultUsername: React.PropTypes.string,
         defaultPassword: React.PropTypes.string,
-        teams: React.PropTypes.arrayOf(React.PropTypes.shape({
-            // The displayed name of the team
-            "name": React.PropTypes.string,
-            // The suffix with which every team email address ends
-            "emailSuffix": React.PropTypes.string,
-        })),
+        teamsConfig: React.PropTypes.shape({
+            // Email address to request new teams
+            supportEmail: React.PropTypes.string,
+            teams: React.PropTypes.arrayOf(React.PropTypes.shape({
+                // The displayed name of the team
+                "name": React.PropTypes.string,
+                // The suffix with which every team email address ends
+                "emailSuffix": React.PropTypes.string,
+            })).required,
+        }),
 
         // A username that will be used if no username is entered.
         // Specifying this param will also warn the user that entering
@@ -139,20 +143,31 @@ module.exports = React.createClass({
         return true;
     },
 
+    _validateEmailByTeam: function(email, teamIndex) {
+        if (this.props.teamsConfig && teamIndex !== "-1") {
+            let teamConfig = this.props.teamsConfig.teams[teamIndex];
+            if (!teamConfig) {
+                return false;
+            }
+            return email.endsWith(
+                "@" + teamConfig.emailSuffix
+            );
+        }
+        return true;
+    },
+
     validateField: function(field_id) {
         var pwd1 = this.refs.password.value.trim();
         var pwd2 = this.refs.passwordConfirm.value.trim()
 
         switch (field_id) {
             case FIELD_EMAIL:
-                let emailIsValid = this.refs.email.value == '' || Email.looksValid(this.refs.email.value);
-                if (this.props.teams && this.refs.selectedTeam.value !== "-1") {
-                    emailIsValid = emailIsValid
-                        && this.refs.email.value.endsWith(
-                            "@" + this.props.teams[this.refs.selectedTeam.value].emailSuffix
-                        );
+                let email = this.refs.email.value;
+                let valid = email === '' || Email.looksValid(email);
+                if (this.props.teamsConfig) {
+                    valid = valid && this._validateEmailByTeam(email, this.refs.selectedTeam.value);
                 }
-                this.markFieldValid(field_id, emailIsValid, "RegistrationForm.ERR_EMAIL_INVALID");
+                this.markFieldValid(field_id, valid, "RegistrationForm.ERR_EMAIL_INVALID");
                 break;
             case FIELD_USERNAME:
                 // XXX: SPEC-1
@@ -233,7 +248,7 @@ module.exports = React.createClass({
 
     render: function() {
         var self = this;
-        var emailSection, teamSection, registerButton;
+        var emailSection, teamSection, teamAdditionSupport, registerButton;
         if (this.props.showEmail) {
             emailSection = (
                 <input type="text" ref="email"
@@ -242,7 +257,7 @@ module.exports = React.createClass({
                     className={this._classForField(FIELD_EMAIL, 'mx_Login_field')}
                     onBlur={function() {self.validateField(FIELD_EMAIL)}} />
             );
-            if (this.props.teams) {
+            if (this.props.teamsConfig) {
                 teamSection = (
                     <select
                         ref="selectedTeam"
@@ -251,15 +266,23 @@ module.exports = React.createClass({
                         onBlur={function() {self.validateField(FIELD_EMAIL)}}
                     >
                         <option key="-1" value="-1">No team</option>
-                        {this.props.teams.map((t, index) => {
+                        {this.props.teamsConfig.teams.map((t, index) => {
                             return (
                                 <option key={index} value={index}>
                                     @{t.emailSuffix} - {t.name}
                                 </option>
                             );
                         })}
+                        <option key="-2" value="-2">Other</option>
                     </select>
                 );
+                if (this.props.teamsConfig.supportEmail && this.refs.selectedTeam && this.refs.selectedTeam.value === "-2") {
+                    teamAdditionSupport = (
+                        <span>
+                            If your team is not listed, email <a href="mailto:{this.props.teamsConfig.supportEmail}">{this.props.teamsConfig.supportEmail}</a>
+                        </span>
+                    );
+                }
             }
         }
         if (this.props.onRegisterClick) {
@@ -277,6 +300,7 @@ module.exports = React.createClass({
             <div>
                 <form onSubmit={this.onSubmit}>
                     {teamSection}
+                    {teamAdditionSupport}
                     <br />
                     {emailSection}
                     <br />
