@@ -465,7 +465,7 @@ module.exports = WithMatrixClient(React.createClass({
         }
 
         var editButton = (
-            <img className="mx_EventTile_editButton" src="img/icon_context_message.svg" width="19" height="19" alt="Options" title="Options" onClick={this.onEditClicked} />
+            <img className="mx_EventTile_editButton" src="img/icon_context_message.svg" width="19" height="19" alt="" title="Options" onClick={this.onEditClicked} />
         );
 
         var e2e;
