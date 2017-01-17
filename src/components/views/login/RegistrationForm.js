@@ -38,6 +38,12 @@ module.exports = React.createClass({
         defaultEmail: React.PropTypes.string,
         defaultUsername: React.PropTypes.string,
         defaultPassword: React.PropTypes.string,
+        teams: React.PropTypes.arrayOf(React.PropTypes.shape({
+            // The displayed name of the team
+            "name": React.PropTypes.string,
+            // The suffix with which every team email address ends
+            "emailSuffix": React.PropTypes.string,
+        })),
 
         // A username that will be used if no username is entered.
         // Specifying this param will also warn the user that entering
@@ -139,11 +145,14 @@ module.exports = React.createClass({
 
         switch (field_id) {
             case FIELD_EMAIL:
-                this.markFieldValid(
-                    field_id,
-                    this.refs.email.value == '' || Email.looksValid(this.refs.email.value),
-                    "RegistrationForm.ERR_EMAIL_INVALID"
-                );
+                let emailIsValid = this.refs.email.value == '' || Email.looksValid(this.refs.email.value);
+                if (this.props.teams && this.refs.selectedTeam.value !== "-1") {
+                    emailIsValid = emailIsValid
+                        && this.refs.email.value.endsWith(
+                            "@" + this.props.teams[this.refs.selectedTeam.value].emailSuffix
+                        );
+                }
+                this.markFieldValid(field_id, emailIsValid, "RegistrationForm.ERR_EMAIL_INVALID");
                 break;
             case FIELD_USERNAME:
                 // XXX: SPEC-1
@@ -224,7 +233,7 @@ module.exports = React.createClass({
 
     render: function() {
         var self = this;
-        var emailSection, registerButton;
+        var emailSection, teamSection, registerButton;
         if (this.props.showEmail) {
             emailSection = (
                 <input type="text" ref="email"
@@ -233,6 +242,25 @@ module.exports = React.createClass({
                     className={this._classForField(FIELD_EMAIL, 'mx_Login_field')}
                     onBlur={function() {self.validateField(FIELD_EMAIL)}} />
             );
+            if (this.props.teams) {
+                teamSection = (
+                    <select
+                        ref="selectedTeam"
+                        defaultValue="-1"
+                        className="mx_Login_field"
+                        onBlur={function() {self.validateField(FIELD_EMAIL)}}
+                    >
+                        <option key="-1" value="-1">No team</option>
+                        {this.props.teams.map((t, index) => {
+                            return (
+                                <option key={index} value={index}>
+                                    @{t.emailSuffix} - {t.name}
+                                </option>
+                            );
+                        })}
+                    </select>
+                );
+            }
         }
         if (this.props.onRegisterClick) {
             registerButton = (
@@ -248,6 +276,8 @@ module.exports = React.createClass({
         return (
             <div>
                 <form onSubmit={this.onSubmit}>
+                    {teamSection}
+                    <br />
                     {emailSection}
                     <br />
                     <input type="text" ref="username"
