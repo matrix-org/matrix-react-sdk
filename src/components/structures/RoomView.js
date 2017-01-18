@@ -1683,6 +1683,13 @@ module.exports = React.createClass({
                 </div>
             );
         }
+        let statusBarAreaClass = "mx_RoomView_statusArea mx_fadable mx_max_height_animated mx_margin_top_animated";
+        if (this.state.statusBarVisible) {
+            statusBarAreaClass += " mx_RoomView_statusArea_expanded";
+        }
+        if (!this.state.atEndOfLiveTimeline) {
+            statusBarAreaClass += " mx_RoomView_statusArea_mid_timeline";
+        }
 
         return (
             <div className={ "mx_RoomView" + (inCall ? " mx_RoomView_inCall" : "") } ref="roomView">
@@ -1705,7 +1712,7 @@ module.exports = React.createClass({
                 { topUnreadMessagesBar }
                 { messagePanel }
                 { searchResultsPanel }
-                <div className="mx_RoomView_statusArea mx_fadable" style={{ opacity: this.props.opacity, display: this.state.statusBarVisible ? undefined : "none" }}>
+                <div className={statusBarAreaClass} style={{opacity: this.props.opacity}}>
                     <div className="mx_RoomView_statusAreaBox">
                         <div className="mx_RoomView_statusAreaBox_line"></div>
                         { statusBar }

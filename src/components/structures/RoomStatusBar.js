@@ -20,6 +20,8 @@ var dis = require("../../dispatcher");
 var WhoIsTyping = require("../../WhoIsTyping");
 var MatrixClientPeg = require("../../MatrixClientPeg");
 
+const HIDE_DEBOUNCE_MS = 2000;
+
 module.exports = React.createClass({
     displayName: 'RoomStatusBar',
 
@@ -90,7 +92,12 @@ module.exports = React.createClass({
         if (size > 0) {
             this.props.onVisible();
         } else {
-            this.props.onHidden();
+            if (this.hideDebouncer) {
+                clearTimeout(this.hideDebouncer);
+            }
+            this.hideDebouncer = setTimeout(() => {
+                this.props.onHidden();
+            }, HIDE_DEBOUNCE_MS);
         }
     },
 
