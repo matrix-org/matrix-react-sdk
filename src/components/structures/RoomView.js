@@ -147,7 +147,7 @@ module.exports = React.createClass({
 
             auxPanelMaxHeight: undefined,
 
-            statusBarVisible: true,
+            statusBarVisible: false,
         }
     },
 
