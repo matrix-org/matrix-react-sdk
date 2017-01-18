@@ -260,6 +260,8 @@ module.exports = React.createClass({
     },
 
     onAction: function(payload) {
+        console.log("onAction: "+payload.action);
+
         var roomIndexDelta = 1;
 
         var self = this;
@@ -995,8 +997,8 @@ module.exports = React.createClass({
         var ForgotPassword = sdk.getComponent('structures.login.ForgotPassword');
         var LoggedInView = sdk.getComponent('structures.LoggedInView');
 
-        // console.log("rendering; loading="+this.state.loading+"; screen="+this.state.screen +
-        //             "; logged_in="+this.state.logged_in+"; ready="+this.state.ready);
+        console.log("rendering; loading="+this.state.loading+"; screen="+this.state.screen +
+                    "; logged_in="+this.state.logged_in+"; ready="+this.state.ready);
 
         if (this.state.loading) {
             var Spinner = sdk.getComponent('elements.Spinner');
