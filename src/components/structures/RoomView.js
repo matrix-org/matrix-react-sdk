@@ -1683,7 +1683,7 @@ module.exports = React.createClass({
                 </div>
             );
         }
-        let statusBarAreaClass = "mx_RoomView_statusArea mx_fadable mx_max_height_animated mx_margin_top_animated";
+        let statusBarAreaClass = "mx_RoomView_statusArea mx_fadable";
         if (this.state.statusBarVisible) {
             statusBarAreaClass += " mx_RoomView_statusArea_expanded";
         }
