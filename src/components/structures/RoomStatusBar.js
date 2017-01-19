@@ -21,6 +21,9 @@ var WhoIsTyping = require("../../WhoIsTyping");
 var MatrixClientPeg = require("../../MatrixClientPeg");
 
 const HIDE_DEBOUNCE_MS = 2000;
+const STATUS_BAR_HIDDEN = 0;
+const STATUS_BAR_EXPANDED = 1;
+const STATUS_BAR_EXPANDED_LARGE = 2;
 
 module.exports = React.createClass({
     displayName: 'RoomStatusBar',
@@ -130,13 +133,13 @@ module.exports = React.createClass({
     // indicate other sizes.
     _getSize: function(state, props) {
         if (state.syncState === "ERROR" || state.whoisTypingString) {
-            return 1;
+            return STATUS_BAR_EXPANDED;
         } else if (props.tabCompleteEntries) {
-            return 0;
+            return STATUS_BAR_HIDDEN;
         } else if (props.hasUnsentMessages) {
-            return 2;
+            return STATUS_BAR_EXPANDED_LARGE;
         }
-        return 0;
+        return STATUS_BAR_HIDDEN;
     },
 
     // determine if we need to call onResize
