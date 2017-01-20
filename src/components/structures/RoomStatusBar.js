@@ -191,7 +191,8 @@ module.exports = React.createClass({
         let othersCount = Math.max(users.length - limit, 0);
         users = users.slice(0, limit);
 
-        let avatars = users.map((u) => {
+        let avatars = users.map((u, index) => {
+            let showInitial = othersCount === 0 && index === users.length - 1;
             return (
                 <MemberAvatar
                     key={u.userId}
@@ -199,7 +200,7 @@ module.exports = React.createClass({
                     width={24}
                     height={24}
                     resizeMethod="crop"
-                    defaultToInitialLetter={false}
+                    defaultToInitialLetter={showInitial}
                 />
             );
         });
