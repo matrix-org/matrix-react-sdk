@@ -1689,9 +1689,6 @@ module.exports = React.createClass({
         if (this.state.statusBarVisible) {
             statusBarAreaClass += " mx_RoomView_statusArea_expanded";
         }
-        if (!this.state.atEndOfLiveTimeline) {
-            statusBarAreaClass += " mx_RoomView_statusArea_mid_timeline";
-        }
 
         return (
             <div className={ "mx_RoomView" + (inCall ? " mx_RoomView_inCall" : "") } ref="roomView">
