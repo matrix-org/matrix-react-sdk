@@ -1507,13 +1507,14 @@ module.exports = React.createClass({
         });
 
         var statusBar;
+        let isStatusAreaExpanded = true;
 
         if (ContentMessages.getCurrentUploads().length > 0) {
             var UploadBar = sdk.getComponent('structures.UploadBar');
             statusBar = <UploadBar room={this.state.room} />;
         } else if (!this.state.searchResults) {
             var RoomStatusBar = sdk.getComponent('structures.RoomStatusBar');
-
+            isStatusAreaExpanded = this.state.statusBarVisible;
             statusBar = <RoomStatusBar
                 room={this.state.room}
                 tabComplete={this.tabComplete}
@@ -1683,7 +1684,7 @@ module.exports = React.createClass({
             );
         }
         let statusBarAreaClass = "mx_RoomView_statusArea mx_fadable";
-        if (this.state.statusBarVisible) {
+        if (isStatusAreaExpanded) {
             statusBarAreaClass += " mx_RoomView_statusArea_expanded";
         }
 
