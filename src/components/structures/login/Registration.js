@@ -304,7 +304,8 @@ module.exports = React.createClass({
                         minPasswordLength={MIN_PASSWORD_LENGTH}
                         onError={this.onFormValidationFailed}
                         onRegisterClick={this.onFormSubmit}
-                        onTeamSelected={this.onTeamSelected}/>
+                        onTeamSelected={this.onTeamSelected}
+                    />
                 );
                 break;
             case "Register.STEP_m.login.email.identity":
