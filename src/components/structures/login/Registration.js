@@ -90,7 +90,7 @@ module.exports = React.createClass({
     },
 
     componentWillMount: function() {
-        this.unmounted = false;
+        this._unmounted = false;
         this.dispatcherRef = dis.register(this.onAction);
         // attach this to the instance rather than this.state since it isn't UI
         this.registerLogic = new Signup.Register(
@@ -108,7 +108,7 @@ module.exports = React.createClass({
 
     componentWillUnmount: function() {
         dis.unregister(this.dispatcherRef);
-        this.unmounted = true;
+        this._unmounted = true;
     },
 
     componentDidMount: function() {
@@ -276,7 +276,7 @@ module.exports = React.createClass({
     },
 
     onTeamSelected: function(team) {
-        if (!this.unmounted) {
+        if (!this._unmounted) {
             this.setState({
                 teamIcon: team ? team.icon : null,
             });
