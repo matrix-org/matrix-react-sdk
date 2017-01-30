@@ -766,6 +766,8 @@ module.exports = React.createClass({
             olmVersionString = olmVersion[0] + "." + olmVersion[1] + "." + olmVersion[2];
         }
 
+        let referralURL = window.location.origin + "/#/register?utm_medium=referral&utm_source=" + this._me;
+
         return (
             <div className="mx_UserSettings">
                 <SimpleRoomHeader
@@ -817,6 +819,11 @@ module.exports = React.createClass({
                     </AccessibleButton>
 
                     {accountJsx}
+                </div>
+
+                <h3>Referral</h3>
+                <div className="mx_UserSettings_section">
+                    Your referral URL: <a href={referralURL}>{referralURL}</a>
                 </div>
 
                 {notification_area}
