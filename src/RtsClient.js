@@ -12,4 +12,21 @@ export default class RtsClient {
             json: true,
         });
     }
+
+    trackReferral(referrer, user_id, user_email) {
+        return request({
+            url: this._url + '/register',
+            json: true,
+            body: {referrer, user_id, user_email},
+            method: 'POST',
+        });
+    }
+
+    getTeam(team_token) {
+        return request({
+            url: this._url + '/teamConfiguration',
+            json: true,
+            qs: {team_token},
+        });
+    }
 }

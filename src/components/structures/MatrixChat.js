@@ -1061,6 +1061,7 @@ module.exports = React.createClass({
                     defaultIsUrl={this.getDefaultIsUrl()}
                     brand={this.props.config.brand}
                     teamServerConfig={this.props.config.teamServerConfig}
+                    queryParams={this.props.startingFragmentQueryParams}
                     customHsUrl={this.getCurrentHsUrl()}
                     customIsUrl={this.getCurrentIsUrl()}
                     registrationUrl={this.props.registrationUrl}
