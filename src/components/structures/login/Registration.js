@@ -48,6 +48,7 @@ module.exports = React.createClass({
         defaultIsUrl: React.PropTypes.string,
         brand: React.PropTypes.string,
         email: React.PropTypes.string,
+        referrer: React.PropTypes.string,
         username: React.PropTypes.string,
         guestAccessToken: React.PropTypes.string,
         teamServerConfig: React.PropTypes.shape({
@@ -212,13 +213,12 @@ module.exports = React.createClass({
 
             if (
                 self._rtsClient &&
-                self.props.queryParams &&
-                self.props.queryParams.referrer &&
+                self.props.referrer &&
                 self.state.teamSelected
             ) {
                 // Track referral, get team_token in order to retrieve team config
                 self._rtsClient.trackReferral(
-                    self.props.queryParams.referrer,
+                    self.props.referrer,
                     response.user_id,
                     self.state.formVals.email
                 ).then((args) => {
