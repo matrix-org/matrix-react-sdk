@@ -9,6 +9,9 @@ from __future__ import print_function
 
 import argparse
 import json
+import os
+import os.path
+
 
 class Differ:
     _lastFilePath = None
@@ -18,10 +21,10 @@ class Differ:
 
     def reportDiff(self, isnew, filePath, message):
         if self._lastFilePath != filePath:
-            print ("\n", filePath)
+            print("\n", filePath)
             self._lastFilePath = filePath
 
-        print ("%s %4i:%-3i %-9s %-50s %s" % (
+        print("%s %4i:%-3i %-9s %-50s %s" % (
             "+" if isnew else "-",
             message['line'], message['column'],
             'warning' if message['severity'] <= 1 else 'error',
@@ -58,7 +61,8 @@ class Differ:
             newmessage = newmessages[newidx]
 
             # decide if these are the same message
-            if oldmessage['ruleId'] == newmessage['ruleId']:
+            if (oldmessage['ruleId'] == newmessage['ruleId'] and
+                    oldmessage['column'] == newmessage['column']):
                 # looks like.
                 lineoffset = newmessage['line'] - oldmessage['line']
                 oldidx += 1
@@ -98,16 +102,20 @@ newerrors = json.load(args.newfile)
 oldfileidx = 0
 newfileidx = 0
 
+basepath = os.getcwd()
 while oldfileidx < len(olderrors) and newfileidx < len(newerrors):
     oldfile = olderrors[oldfileidx]
     newfile = newerrors[newfileidx]
 
-    if oldfile['filePath'] == newfile['filePath']:
+    oldfilepath = os.path.relpath(oldfile['filePath'], basepath)
+    newfilepath = os.path.relpath(newfile['filePath'], basepath)
+
+    if oldfilepath == newfilepath:
         differ.compareFiles(oldfile, newfile)
         oldfileidx += 1
         newfileidx += 1
 
-    elif oldfile['filePath'] < newfile['filePath']:
+    elif oldfilepath < newfilepath:
         differ.removedFile(oldfile)
         oldfileidx += 1
 
@@ -123,7 +131,7 @@ while newfileidx < len(newerrors):
     differ.addedFile(newerrors[newfileidx])
     newfileidx += 1
 
-print ("%i fixed messages; %i new messages; %i total messages" % (
+print("%i fixed messages; %i new messages; %i total messages" % (
     differ._fixedMessages, differ._newMessages, differ._totalMessages
 ))
 

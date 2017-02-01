@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+#
+# take an eslint json file and clean up the paths to be relative to the cwd
+
+from __future__ import print_function
+
+import json
+import os
+import os.path
+import sys
+
+# todo: improve on this?
+basepath = os.getcwd()
+
+errors = json.load(sys.stdin)
+for f in errors:
+    f['filePath'] = os.path.relpath(f['filePath'], basepath)
+
+    # remove the 'source' attribute too, because it's noisy on diff and
+    # we don't use it.
+    if 'source' in f:
+        del f['source']
+
+json.dump(errors, sys.stdout, indent=4)
