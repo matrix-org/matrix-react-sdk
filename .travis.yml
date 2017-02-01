@@ -6,4 +6,5 @@ install:
     - (cd node_modules/matrix-js-sdk && npm install)
 script:
     - npm run test
+    - npm run lintdiff
     - ./.travis-test-riot.sh

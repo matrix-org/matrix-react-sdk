@@ -1,0 +1,131 @@
+#!/usr/bin/env python
+#
+# diff-eslint <old-json-file> <new-json-file>
+#
+# Compares an old eslint output with a new one. Note that it expects the json
+# format (-f json) of eslint output.
+
+from __future__ import print_function
+
+import argparse
+import json
+
+class Differ:
+    _lastFilePath = None
+    _newMessages = 0
+    _fixedMessages = 0
+    _totalMessages = 0
+
+    def reportDiff(self, isnew, filePath, message):
+        if self._lastFilePath != filePath:
+            print ("\n", filePath)
+            self._lastFilePath = filePath
+
+        print ("%s %4i:%-3i %-9s %-50s %s" % (
+            "+" if isnew else "-",
+            message['line'], message['column'],
+            'warning' if message['severity'] <= 1 else 'error',
+            message['message'],
+            message['ruleId'],
+        ))
+
+        if isnew:
+            self._newMessages += 1
+        else:
+            self._fixedMessages += 1
+
+    def addedFile(self, newfile):
+        """A file has errors which had none before"""
+        for message in newfile['messages']:
+            self.reportDiff(True, newfile['filePath'], message)
+            self._totalMessages += 1
+
+    def removedFile(self, oldfile):
+        """A file has no errors which had some before"""
+        for message in oldfile['messages']:
+            self.reportDiff(False, oldfile['filePath'], message)
+
+    def compareFiles(self, oldfile, newfile):
+        oldmessages = oldfile['messages']
+        newmessages = newfile['messages']
+        oldidx = 0
+        newidx = 0
+
+        lineoffset = 0
+
+        while oldidx < len(oldmessages) and newidx < len(newmessages):
+            oldmessage = oldmessages[oldidx]
+            newmessage = newmessages[newidx]
+
+            # decide if these are the same message
+            if oldmessage['ruleId'] == newmessage['ruleId']:
+                # looks like.
+                lineoffset = newmessage['line'] - oldmessage['line']
+                oldidx += 1
+                newidx += 1
+                self._totalMessages += 1
+
+            elif oldmessage['line'] + lineoffset > newmessage['line']:
+                # looks like a new message
+                self.reportDiff(True, newfile['filePath'], newmessage)
+                newidx += 1
+                self._totalMessages += 1
+
+            else:
+                # looks like a fixed message
+                self.reportDiff(False, oldfile['filePath'], oldmessage)
+                oldidx += 1
+
+        while oldidx < len(oldmessages):
+            self.reportDiff(False, oldfile['filePath'], oldmessages[oldidx])
+            oldidx += 1
+
+        while newidx < len(newmessages):
+            self.reportDiff(True, newfile['filePath'], newmessages[newidx])
+            newidx += 1
+            self._totalMessages += 1
+
+parser = argparse.ArgumentParser()
+parser.add_argument('oldfile', type=argparse.FileType('r'))
+parser.add_argument('newfile', type=argparse.FileType('r'))
+args = parser.parse_args()
+
+differ = Differ()
+
+olderrors = json.load(args.oldfile)
+newerrors = json.load(args.newfile)
+
+oldfileidx = 0
+newfileidx = 0
+
+while oldfileidx < len(olderrors) and newfileidx < len(newerrors):
+    oldfile = olderrors[oldfileidx]
+    newfile = newerrors[newfileidx]
+
+    if oldfile['filePath'] == newfile['filePath']:
+        differ.compareFiles(oldfile, newfile)
+        oldfileidx += 1
+        newfileidx += 1
+
+    elif oldfile['filePath'] < newfile['filePath']:
+        differ.removedFile(oldfile)
+        oldfileidx += 1
+
+    else:
+        differ.addedFile(newfile)
+        newfileidx += 1
+
+while oldfileidx < len(olderrors):
+    differ.removedFile(olderrors[oldfileidx])
+    oldfileidx += 1
+
+while newfileidx < len(newerrors):
+    differ.addedFile(newerrors[newfileidx])
+    newfileidx += 1
+
+print ("%i fixed messages; %i new messages; %i total messages" % (
+    differ._fixedMessages, differ._newMessages, differ._totalMessages
+))
+
+if differ._newMessages > 0:
+    exit(1)
