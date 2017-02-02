@@ -93,6 +93,10 @@ export function loadSession(opts) {
         }
     }
 
+    if (fragmentQueryParams.team_token) {
+        window.localStorage.setItem('mx_team_token', fragmentQueryParams.team_token);
+    }
+
     if (enableGuest &&
         fragmentQueryParams.guest_user_id &&
         fragmentQueryParams.guest_access_token
