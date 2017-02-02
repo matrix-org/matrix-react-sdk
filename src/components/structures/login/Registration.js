@@ -253,6 +253,9 @@ module.exports = React.createClass({
             case "RegistrationForm.ERR_EMAIL_INVALID":
                 errMsg = "This doesn't look like a valid email address";
                 break;
+            case "RegistrationForm.ERR_PHONE_NUMBER_INVALID":
+                errMsg = "This doesn't look like a valid phone number";
+                break;
             case "RegistrationForm.ERR_USERNAME_INVALID":
                 errMsg = "User names may only contain letters, numbers, dots, hyphens and underscores.";
                 break;
@@ -295,7 +298,6 @@ module.exports = React.createClass({
                 // a guest account
                 registerStep = (
                     <RegistrationForm
-                        showEmail={true}
                         defaultUsername={this.state.formVals.username}
                         defaultEmail={this.state.formVals.email}
                         defaultPassword={this.state.formVals.password}
