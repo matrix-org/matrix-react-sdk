@@ -21,10 +21,28 @@ import sdk from '../../../index';
 import { COUNTRIES } from '../../../phonenumber';
 import { charactersToImageNode } from '../../../HtmlUtils';
 
+function countryMatchesSearchQuery(query, country) {
+    if (country.name.toUpperCase().indexOf(query.toUpperCase()) == 0) return true;
+    if (country.iso2 == query.toUpperCase()) return true;
+    if (country.prefix == query) return true;
+    return false;
+}
+
 export default class CountryDropdown extends React.Component {
     constructor() {
         super();
         this.onOptionChange = this.onOptionChange.bind(this);
+        this._onSearchChange = this._onSearchChange.bind(this);
+
+        this.state = {
+            searchQuery: '',
+        }
+    }
+
+    _onSearchChange(search) {
+        this.setState({
+            searchQuery: search,
+        });
     }
 
     onOptionChange() {
@@ -42,14 +60,25 @@ export default class CountryDropdown extends React.Component {
 
     render() {
         const Dropdown = sdk.getComponent('elements.Dropdown');
-        const options = COUNTRIES.map((country) => {
+
+        let displayedCountries;
+        if (this.state.searchQuery) {
+            displayedCountries = COUNTRIES.filter(
+                countryMatchesSearchQuery.bind(this, this.state.searchQuery),
+            );
+        } else {
+            displayedCountries = COUNTRIES;
+        }
+
+        const options = displayedCountries.map((country) => {
             return <div key={country.iso2}>
                 {this._flagImgForIso2(country.iso2)}
                 {country.name}
             </div>;
         });
 
-        return <Dropdown className={this.props.className} onOptionChange={this.onOptionChange}
+        return <Dropdown className={this.props.className}
+            onOptionChange={this.onOptionChange} onSearchChange={this._onSearchChange}
             menuWidth={298} getShortOption={this._flagImgForIso2}
         >
             {options}

@@ -18,16 +18,42 @@ import React from 'react';
 import classnames from 'classnames';
 import AccessibleButton from './AccessibleButton';
 
-const MenuOption = (props) => {
-    const onKeyUp = (ev) => {
-        console.log(ev);
-    };
+class MenuOption extends React.Component {
+    constructor(props) {
+        super(props)
+        this._onMouseEnter = this._onMouseEnter.bind(this);
+        this._onClick = this._onClick.bind(this);
+    }
 
-    return <div key={props.dropdown_key} className="mx_Dropdown_option"
-        onClick={props.onClick} onKeyUp={onKeyUp}
-    >
-        {props.children}
-    </div>
+    _onMouseEnter() {
+        this.props.setHighlighted(this.props.dropdownKey);
+    }
+
+    _onClick(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.props.onClick(this.props.dropdownKey);
+    }
+
+    render() {
+        const optClasses = classnames({
+            mx_Dropdown_option: true,
+            mx_Dropdown_option_highlight: this.props.highlighted,
+        });
+
+        return <div className={optClasses}
+            onClick={this._onClick} onKeyPress={this._onKeyPress}
+            onMouseEnter={this._onMouseEnter}
+        >
+            {this.props.children}
+        </div>
+    }
+};
+
+MenuOption.propTypes = {
+    dropdownKey: React.PropTypes.string,
+    onClick: React.PropTypes.func.isRequired,
+    setHighlighted: React.PropTypes.func.isRequired,
 };
 
 /*
@@ -48,19 +74,27 @@ export default class Dropdown extends React.Component {
         this._onRootClick = this._onRootClick.bind(this);
         this._onDocumentClick = this._onDocumentClick.bind(this);
         this._onMenuOptionClick = this._onMenuOptionClick.bind(this);
+        this._onInputKeyPress = this._onInputKeyPress.bind(this);
         this._onInputKeyUp = this._onInputKeyUp.bind(this);
+        this._onInputChange = this._onInputChange.bind(this);
         this._collectRoot = this._collectRoot.bind(this);
         this._collectInputTextBox = this._collectInputTextBox.bind(this);
+        this._setHighlightedOption = this._setHighlightedOption.bind(this);
 
         this.inputTextBox = null;
 
-        this._reindexChildren();
+        this._reindexChildren(this.props.children);
 
         this.state = {
             // True if the menu is dropped-down
             expanded: false,
             // The key of the selected option
             selectedOption: props.children[0].key,
+            // The key of the highlighted option
+            // (the option that would become selected if you pressed enter)
+            highlightedOption: props.children[0].key,
+            // the current search query
+            searchQuery: '',
         };
     }
 
@@ -77,13 +111,16 @@ export default class Dropdown extends React.Component {
         document.removeEventListener('click', this._onDocumentClick, false);
     }
 
-    componentWillReceiveProps() {
-        this._reindexChildren();
+    componentWillReceiveProps(nextProps) {
+        this._reindexChildren(nextProps.children);
+        this.setState({
+            highlightedOption: Object.keys(this.childrenByKey)[0],
+        });
     }
 
-    _reindexChildren() {
+    _reindexChildren(children) {
         this.childrenByKey = {};
-        for (const child of this.props.children) {
+        for (const child of children) {
             this.childrenByKey[child.key] = child;
         }
     }
@@ -115,21 +152,51 @@ export default class Dropdown extends React.Component {
         ev.preventDefault();
     }
 
-    _onMenuOptionClick(server, instance) {
+    _onMenuOptionClick(dropdownKey) {
         this.setState({
             expanded: false,
-            selectedOptionIndex: server,
+            selectedOption: dropdownKey,
         });
-        this.props.onOptionChange(server, );
+        this.props.onOptionChange(dropdownKey);
     }
 
-    _onInputKeyUp(e) {
+    _onInputKeyPress(e) {
+        // This needs to be on the keypress event because otherwise
+        // it can't cancel the form submission
         if (e.key == 'Enter') {
             this.setState({
                 expanded: false,
-                selectedServer: e.target.value,
+                selectedOption: this.state.highlightedOption,
             });
-            this.props.onOptionChange(e.target.value, null);
+            this.props.onOptionChange(this.state.highlightedOption);
+            e.preventDefault();
+        }
+    }
+
+    _onInputKeyUp(e) {
+        // These keys don't generate keypress events and so needs to
+        // be on keyup
+        if (e.key == 'Escape') {
+            this.setState({
+                expanded: false,
+            });
+        } else if (e.key == 'ArrowDown') {
+            this.setState({
+                highlightedOption: this._nextOption(this.state.highlightedOption),
+            });
+        } else if (e.key == 'ArrowUp') {
+            this.setState({
+                highlightedOption: this._prevOption(this.state.highlightedOption),
+            });
+        }
+    }
+
+    _onInputChange(e) {
+        this.setState({
+            searchQuery: e.target.value,
+        });
+        if (this.props.onSearchChange) {
+            this.props.onSearchChange(e.target.value);
         }
     }
 
@@ -150,11 +217,35 @@ export default class Dropdown extends React.Component {
         if (e) e.focus();
     }
 
+    _setHighlightedOption(optionKey) {
+        this.setState({
+            highlightedOption: optionKey,
+        });
+    }
+
+    _nextOption(optionKey) {
+        const keys = Object.keys(this.childrenByKey);
+        const index = keys.indexOf(optionKey);
+        return keys[(index + 1) % keys.length];
+    }
+
+    _prevOption(optionKey) {
+        const keys = Object.keys(this.childrenByKey);
+        const index = keys.indexOf(optionKey);
+        return keys[(index - 1) % keys.length];
+    }
+
     _getMenuOptions() {
         return this.props.children.map((child) => {
-            return <MenuOption key={child.key}>
-                {child}
-            </MenuOption>
+            return (
+                <MenuOption key={child.key} dropdownKey={child.key}
+                    highlighted={this.state.highlightedOption == child.key}
+                    setHighlighted={this._setHighlightedOption}
+                    onClick={this._onMenuOptionClick}
+                >
+                    {child}
+                </MenuOption>
+            );
         });
     }
 
@@ -167,7 +258,10 @@ export default class Dropdown extends React.Component {
         let menu;
         if (this.state.expanded) {
             currentValue = <input type="text" className="mx_Dropdown_option"
-                ref={this._collectInputTextBox} onKeyUp={this._onInputKeyUp}
+                ref={this._collectInputTextBox} onKeyPress={this._onInputKeyPress}
+                onKeyUp={this._onInputKeyUp}
+                onChange={this._onInputChange}
+                value={this.state.searchQuery}
             />;
         } else {
             // we render the menu in any case and hide it when invisible
@@ -212,6 +306,8 @@ Dropdown.propTypes = {
     menuWidth: React.PropTypes.number,
     // Called when the selected option changes
     onOptionChange: React.PropTypes.func.isRequired,
+    // Called when the value of the search field changes
+    onSearchChange: React.PropTypes.func,
     // Function that, given the key of an option, returns
     // a node representing that option to be displayed in the
     // box itself as the currently-selected option (ie. as
