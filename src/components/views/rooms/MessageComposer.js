@@ -90,8 +90,30 @@ export default class MessageComposer extends React.Component {
         this.refs.uploadInput.click();
     }
 
+    _onLocationFinished(shouldSend, content) {
+      const matrixClient = MatrixClientPeg.get();
+      if (!shouldSend) {
+          return;
+      }
+      matrixClient.uploadContent(content._thumb.blob).then((url) => {
+        return matrixClient.sendMessage(this.props.room.roomId, {
+            msgtype: "m.location",
+            geo_uri: content.geo_uri,
+            body: content.body,
+            thumbnail_info: {
+              w: content._thumb.width,
+              h: content._thumb.height,
+              size: content._thumb.blob.size,
+              mimetype: "image/png",
+            },
+            thumbnail_url: url,
+        });
+      }).catch((err) => {
+        console.error("Failed to send location.", err);
+      });
+    }
+
     onLocationClick(ev) {
-        const matrixClient = MatrixClientPeg.get();
         const LocationInputDialog = sdk.getComponent("dialogs.LocationInputDialog");
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         const LocationEnabled = UserSettingsStore.isFeatureEnabled('inline_maps');
@@ -120,17 +142,8 @@ export default class MessageComposer extends React.Component {
             Modal.createDialog(
                 LocationInputDialog,
                 {
-                    position: position,
-                    onFinished: (shouldSend, body, geo_uri) => {
-                        if (!shouldSend) {
-                            return;
-                        }
-                        matrixClient.sendMessage(this.props.room.roomId, {
-                            msgtype: "m.location",
-                            geo_uri,
-                            body,
-                        });
-                    },
+                  position: position,
+                  onFinished: this._onLocationFinished.bind(this),
                 }
             );
         });

@@ -60,6 +60,7 @@
     "highlight.js": "^8.9.1",
     "isomorphic-fetch": "^2.2.1",
     "leaflet": "^1.0.2",
+    "leaflet-image": "^0.4.0",
     "linkifyjs": "^2.1.3",
     "lodash": "^4.13.1",
     "matrix-js-sdk": "matrix-org/matrix-js-sdk#develop",

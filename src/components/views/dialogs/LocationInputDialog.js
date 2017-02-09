@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const React = require("react");
-const Leaflet = require('leaflet');
-
+import React from 'react';
+import Leaflet from 'leaflet';
+import leafletImage from 'leaflet-image';
 const ZOOM_WORLD = 5; /** Zoom level for the selector */
 const ZOOM_STREET = 15; /** Zoom level for a given location */
 
@@ -90,13 +90,38 @@ module.exports = React.createClass({
         this.setState({position: ev.latlng});
     },
 
+    getStaticMap: function() {
+      return new Promise((resolve, reject) => {
+        leafletImage(this.state.leafletMap, (err, canvas) => {
+          const size = this.state.leafletMap.getSize();
+          if (err) {
+            reject(err);
+          }
+          canvas.toBlob((blob) => {
+            resolve(({
+              width: size.x,
+              height: size.y,
+              blob: blob,
+            }));
+          }, 'image/png');
+        });
+      });
+    },
+
     onOk: function() {
         const position = this.state.position;
         if (position === null || this.refs.textinput.value === "") {
             return;
         }
-        const geo_uri = `geo:${position.lat},${position.lng}`;
-        this.props.onFinished(true, this.refs.textinput.value, geo_uri);
+        this.getStaticMap().then((image) => {
+          this.props.onFinished(true, {
+            body: this.refs.textinput.value,
+            geo_uri: `geo:${position.lat},${position.lng}`,
+            _thumb: image,
+          });
+        }).catch((err) => {
+          console.error("Failed to make static image for map.", err);
+        });
     },
 
     onCancel: function() {
