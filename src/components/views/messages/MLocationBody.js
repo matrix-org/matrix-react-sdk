@@ -21,7 +21,6 @@ import Leaflet from 'leaflet';
 import sdk from '../../../index';
 import UserSettingsStore from '../../../UserSettingsStore';
 
-
 const ZOOM_WORLD = 5; /** Zoom level for the selector */
 const ZOOM_STREET = 15; /** Zoom level for a given location */
 
@@ -50,7 +49,15 @@ module.exports = React.createClass({
         if (this.state.leafletMap !== null) {
             return;
         }
-        const leafletMap = new Leaflet.Map(this.refs.map);
+
+        const leafletMap = Leaflet.map(
+          this.refs.map,
+          {
+            center: this.state.coords,
+            zoom: zoom,
+            preferCanvas: true,
+          }
+        );
         leafletMap.addLayer(
             new Leaflet.TileLayer(
                 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -61,7 +68,6 @@ module.exports = React.createClass({
                 }
             )
         );
-        leafletMap.setView(this.state.coords, zoom);
         Leaflet.Icon.Default.prototype.options.imagePath = "/img/";
         leafletMap.addControl(new Leaflet.Marker(this.state.coords, {
             title: this.state.body,

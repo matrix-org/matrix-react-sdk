@@ -44,7 +44,12 @@ module.exports = React.createClass({
     },
 
     componentDidMount: function() {
-        const leafletMap = new Leaflet.Map(this.refs.map);
+        const leafletMap = Leaflet.map(
+          this.refs.map,
+          {
+            renderer: Leaflet.canvas(),
+          }
+        );
         leafletMap.addLayer(
             new Leaflet.TileLayer(
                 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -76,6 +81,7 @@ module.exports = React.createClass({
         });
         leafletMap.addControl(mapMarker);
         this.setState({mapMarker, leafletMap, position: coords});
+        console.log("Added map", leafletMap);
     },
 
     mapClick: function(ev) {
