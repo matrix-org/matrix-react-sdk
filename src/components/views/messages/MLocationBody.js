@@ -20,6 +20,7 @@ import React from 'react';
 import Leaflet from 'leaflet';
 import sdk from '../../../index';
 import UserSettingsStore from '../../../UserSettingsStore';
+import MatrixClientPeg from '../../../MatrixClientPeg';
 
 const ZOOM_WORLD = 5; /** Zoom level for the selector */
 const ZOOM_STREET = 15; /** Zoom level for a given location */
@@ -77,19 +78,23 @@ module.exports = React.createClass({
     },
 
     componentDidMount: function() {
-        this.setState({mapEnabled: UserSettingsStore.isFeatureEnabled('inline_maps')});
+        const mapEnabled = UserSettingsStore.isFeatureEnabled('inline_maps');
+        this.setState({mapEnabled});
         const content = this.props.mxEvent.getContent();
-        if (content.geo_uri && content.body) {
-            // Build URL
-            const parts = content.geo_uri.substr("geo:".length).split(',');
-            const coords = new Leaflet.LatLng(
-                parseFloat(parts[0]),
-                parseFloat(parts[1])
-            );
-            const uri = `https://www.openstreetmap.org/#map=${ZOOM_STREET}/${parts[0]}/${parts[1]}`;
-            this.setState({uri, coords, body: content.body});
-        } else {
-            this.setState({error: "Missing required fields."});
+        if (!content.geo_uri || !content.body || !content.thumbnail_url) {
+          this.setState({error: "Missing required fields."});
+        }
+        const parts = content.geo_uri.substr("geo:".length).split(',');
+        const coords = new Leaflet.LatLng(
+            parseFloat(parts[0]),
+            parseFloat(parts[1])
+        );
+        const uri = `https://www.openstreetmap.org/#map=${ZOOM_STREET}/${parts[0]}/${parts[1]}`;
+        if (mapEnabled) {
+          this.setState({uri, coords, body: content.body, mapEnabled});
+        }   else {
+          const thumb = MatrixClientPeg.get().mxcUrlToHttp(content.thumbnail_url);
+          this.setState({uri, body: content.body, thumb, mapEnabled});
         }
     },
 
@@ -103,6 +108,12 @@ module.exports = React.createClass({
         let map = null;
         if (this.state.mapEnabled) {
             map = (<div ref="map" className="mx_LocationBody_map"></div>);
+        } else {
+          map = (
+            <div className="mx_LocationBody_map">
+              <img alt={this.state.body} src={this.state.thumb}/>
+            </div>
+          );
         }
 
         if (!this.state.error) {

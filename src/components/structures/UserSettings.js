@@ -509,7 +509,7 @@ module.exports = React.createClass({
               Display maps from Open Street Maps
           </label>
       </div>
-    }
+    },
 
     _renderUrlPreviewSelector: function() {
         return <div className="mx_UserSettings_toggle">
