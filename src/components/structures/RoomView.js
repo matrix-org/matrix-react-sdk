@@ -222,7 +222,7 @@ module.exports = React.createClass({
                 MatrixClientPeg.get().credentials.userId, 'join'
             );
 
-            this._updateAutoComplete();
+            UserProvider.getInstance().setUserListFromRoom(this.state.room);
             this.tabComplete.loadEntries(this.state.room);
         }
 
@@ -474,8 +474,7 @@ module.exports = React.createClass({
         // and that has probably just changed
         if (ev.sender) {
             this.tabComplete.onMemberSpoke(ev.sender);
-            // nb. we don't need to update the new autocomplete here since
-            // its results are currently ordered purely by search score.
+            UserProvider.getInstance().onUserSpoke(ev.sender);
         }
     },
 
@@ -612,7 +611,7 @@ module.exports = React.createClass({
 
         // refresh the tab complete list
         this.tabComplete.loadEntries(this.state.room);
-        this._updateAutoComplete();
+        UserProvider.getInstance().setUserListFromRoom(this.state.room);
 
         // if we are now a member of the room, where we were not before, that
         // means we have finished joining a room we were previously peeking
@@ -1395,14 +1394,6 @@ module.exports = React.createClass({
             console.log("updateTint from RoomView._gatherTimelinePanelRef");
             this.updateTint();
         }
-    },
-
-    _updateAutoComplete: function() {
-        const myUserId = MatrixClientPeg.get().credentials.userId;
-        const members = this.state.room.getJoinedMembers().filter(function(member) {
-            if (member.userId !== myUserId) return true;
-        });
-        UserProvider.getInstance().setUserList(members);
     },
 
     render: function() {
