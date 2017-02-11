@@ -874,7 +874,7 @@ module.exports = React.createClass({
         this.setState({ draggingFile : false });
     },
 
-    uploadFile: function(file) {
+    uploadFile: function(file, infoFunction: (Object) => Object = (o) => o) {
         var self = this;
 
         if (MatrixClientPeg.get().isGuest()) {
@@ -887,7 +887,7 @@ module.exports = React.createClass({
         }
 
         ContentMessages.sendContentToRoom(
-            file, this.state.room.roomId, MatrixClientPeg.get()
+            file, this.state.room.roomId, MatrixClientPeg.get(), infoFunction,
         ).done(undefined, function(error) {
             var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createDialog(ErrorDialog, {

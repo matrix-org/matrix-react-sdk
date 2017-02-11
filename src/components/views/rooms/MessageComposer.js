@@ -22,6 +22,7 @@ var sdk = require('../../../index');
 var dis = require('../../../dispatcher');
 import Autocomplete from './Autocomplete';
 import classNames from 'classnames';
+import AudioRecorder from './AudioRecorder';
 
 import UserSettingsStore from '../../../UserSettingsStore';
 
@@ -262,6 +263,17 @@ export default class MessageComposer extends React.Component {
             MatrixClientPeg.get().credentials.userId);
 
         if (canSendMessages) {
+            const sendAudioBlob = (blob) => {
+                const file = new File([blob], `${+new Date()}.wav`, {
+                    type: blob.type,
+                });
+                this.props.uploadFile(file, (content) => {
+                    content.autoplay = true;
+                    return content;
+                });
+            };
+            const pttButton = <AudioRecorder sendAudioBlob={sendAudioBlob} />;
+
             // This also currently includes the call buttons. Really we should
             // check separately for whether we can call, but this is slightly
             // complex because of conference calls.
@@ -299,6 +311,7 @@ export default class MessageComposer extends React.Component {
                     onContentChanged={this.onInputContentChanged}
                     onInputStateChanged={this.onInputStateChanged} />,
                 formattingButton,
+                pttButton,
                 uploadButton,
                 hangupButton,
                 callButton,

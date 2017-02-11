@@ -274,8 +274,8 @@ class ContentMessages {
         this.nextId = 0;
     }
 
-    sendContentToRoom(file, roomId, matrixClient) {
-        const content = {
+    sendContentToRoom(file, roomId, matrixClient, infoFunction: (Object) => Object = (o) => o) {
+        let content = {
             body: file.name,
             info: {
                 size: file.size,
@@ -343,6 +343,7 @@ class ContentMessages {
                 dis.dispatch({action: 'upload_progress', upload: upload});
             }
         }).then(function(url) {
+            content = infoFunction(content);
             return matrixClient.sendMessage(roomId, content);
         }, function(err) {
             error = err;

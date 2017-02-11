@@ -96,9 +96,13 @@ export default class MAudioBody extends React.Component {
 
         const contentUrl = this._getContentUrl();
 
+        const shouldAutoPlay = MatrixClientPeg.get().credentials.userId !==
+          this.props.mxEvent.sender.userId &&
+          content.autoplay;
+
         return (
             <span className="mx_MAudioBody">
-                <audio src={contentUrl} controls />
+                <audio src={contentUrl} controls autoPlay={shouldAutoPlay} />
                 <MFileBody {...this.props} decryptedBlob={this.state.decryptedBlob} />
             </span>
         );
