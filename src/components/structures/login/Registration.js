@@ -25,6 +25,7 @@ var ServerConfig = require("../../views/login/ServerConfig");
 var MatrixClientPeg = require("../../../MatrixClientPeg");
 var RegistrationForm = require("../../views/login/RegistrationForm");
 var CaptchaForm = require("../../views/login/CaptchaForm");
+var RtsClient = require("../../../RtsClient");
 
 var MIN_PASSWORD_LENGTH = 6;
 
@@ -47,23 +48,17 @@ module.exports = React.createClass({
         defaultIsUrl: React.PropTypes.string,
         brand: React.PropTypes.string,
         email: React.PropTypes.string,
+        referrer: React.PropTypes.string,
         username: React.PropTypes.string,
         guestAccessToken: React.PropTypes.string,
-        teamsConfig: React.PropTypes.shape({
+        teamServerConfig: React.PropTypes.shape({
             // Email address to request new teams
-            supportEmail: React.PropTypes.string,
-            teams: React.PropTypes.arrayOf(React.PropTypes.shape({
-                // The displayed name of the team
-                "name": React.PropTypes.string,
-                // The suffix with which every team email address ends
-                "emailSuffix": React.PropTypes.string,
-                // The rooms to use during auto-join
-                "rooms": React.PropTypes.arrayOf(React.PropTypes.shape({
-                    "id": React.PropTypes.string,
-                    "autoJoin": React.PropTypes.bool,
-                })),
-            })).required,
+            supportEmail: React.PropTypes.string.isRequired,
+            // URL of the riot-team-server to get team configurations and track referrals
+            teamServerURL: React.PropTypes.string.isRequired,
         }),
+        teamSelected: React.PropTypes.object,
+        onTeamMemberRegistered: React.PropTypes.func.isRequired,
 
         defaultDeviceDisplayName: React.PropTypes.string,
 
@@ -75,6 +70,7 @@ module.exports = React.createClass({
     getInitialState: function() {
         return {
             busy: false,
+            teamServerBusy: false,
             errorText: null,
             // We remember the values entered by the user because
             // the registration form will be unmounted during the
@@ -103,7 +99,39 @@ module.exports = React.createClass({
         this.registerLogic.setRegistrationUrl(this.props.registrationUrl);
         this.registerLogic.setIdSid(this.props.idSid);
         this.registerLogic.setGuestAccessToken(this.props.guestAccessToken);
+        if (this.props.referrer) {
+            this.registerLogic.setReferrer(this.props.referrer);
+        }
         this.registerLogic.recheckState();
+
+        if (
+            this.props.teamServerConfig &&
+            this.props.teamServerConfig.teamServerURL &&
+            !this._rtsClient
+        ) {
+            this._rtsClient = new RtsClient(this.props.teamServerConfig.teamServerURL);
+
+            this.setState({
+                teamServerBusy: true,
+            });
+            // GET team configurations including domains, names and icons
+            this._rtsClient.getTeamsConfig().then((data) => {
+                const teamsConfig = {
+                    teams: data,
+                    supportEmail: this.props.teamServerConfig.supportEmail,
+                };
+                console.log('Setting teams config to ', teamsConfig);
+                this.setState({
+                    teamsConfig: teamsConfig,
+                    teamServerBusy: false,
+                });
+            }, (err) => {
+                console.error('Error retrieving config for teams', err);
+                this.setState({
+                    teamServerBusy: false,
+                });
+            });
+        }
     },
 
     componentWillUnmount: function() {
@@ -186,24 +214,45 @@ module.exports = React.createClass({
                 accessToken: response.access_token
             });
 
-            // Auto-join rooms
-            if (self.props.teamsConfig && self.props.teamsConfig.teams) {
-                for (let i = 0; i < self.props.teamsConfig.teams.length; i++) {
-                    let team = self.props.teamsConfig.teams[i];
-                    if (self.state.formVals.email.endsWith(team.emailSuffix)) {
-                        console.log("User successfully registered with team " + team.name);
+            // Done regardless of `teamSelected`. People registering with non-team emails
+            // will just nop. The point of this being we might not have the email address
+            // that the user registered with at this stage (depending on whether this
+            // is the client they initiated registration).
+            if (
+                self._rtsClient &&
+                self.props.referrer
+            ) {
+                // Track referral, get team_token in order to retrieve team config
+                self._rtsClient.trackReferral(
+                    self.props.referrer,
+                    self.registerLogic.params.idSid,
+                    self.registerLogic.params.clientSecret
+                ).then((data) => {
+                    const teamToken = data.team_token;
+                    // Store for use /w welcome pages
+                    window.localStorage.setItem('mx_team_token', teamToken);
+                    self.props.onTeamMemberRegistered(teamToken);
+
+                    self._rtsClient.getTeam(teamToken).then((team) => {
+                        console.log(
+                            `User successfully registered with team ${team.name}`
+                        );
                         if (!team.rooms) {
-                            break;
+                            return;
                         }
+                        // Auto-join rooms
                         team.rooms.forEach((room) => {
-                            if (room.autoJoin) {
-                                console.log("Auto-joining " + room.id);
-                                MatrixClientPeg.get().joinRoom(room.id);
+                            if (room.auto_join && room.room_id) {
+                                console.log(`Auto-joining ${room.room_id}`);
+                                MatrixClientPeg.get().joinRoom(room.room_id);
                             }
                         });
-                        break;
-                    }
-                }
+                    }, (err) => {
+                        console.error('Error getting team config', err);
+                    });
+                }, (err) => {
+                    console.error('Error tracking referral', err);
+                });
             }
 
             if (self.props.brand) {
@@ -278,15 +327,15 @@ module.exports = React.createClass({
         });
     },
 
-    onTeamSelected: function(team) {
+    onTeamSelected: function(teamSelected) {
         if (!this._unmounted) {
-            this.setState({
-                teamIcon: team ? team.icon : null,
-            });
+            this.setState({ teamSelected });
         }
     },
 
     _getRegisterContentJsx: function() {
+        const Spinner = sdk.getComponent("elements.Spinner");
+
         var currStep = this.registerLogic.getStep();
         var registerStep;
         switch (currStep) {
@@ -296,12 +345,16 @@ module.exports = React.createClass({
             case "Register.STEP_m.login.dummy":
                 // NB. Our 'username' prop is specifically for upgrading
                 // a guest account
+                if (this.state.teamServerBusy) {
+                    registerStep = <Spinner />;
+                    break;
+                }
                 registerStep = (
                     <RegistrationForm
                         defaultUsername={this.state.formVals.username}
                         defaultEmail={this.state.formVals.email}
                         defaultPassword={this.state.formVals.password}
-                        teamsConfig={this.props.teamsConfig}
+                        teamsConfig={this.state.teamsConfig}
                         guestUsername={this.props.username}
                         minPasswordLength={MIN_PASSWORD_LENGTH}
                         onError={this.onFormValidationFailed}
@@ -336,7 +389,6 @@ module.exports = React.createClass({
         }
         var busySpinner;
         if (this.state.busy) {
-            var Spinner = sdk.getComponent("elements.Spinner");
             busySpinner = (
                 <Spinner />
             );
@@ -381,7 +433,12 @@ module.exports = React.createClass({
         return (
             <div className="mx_Login">
                 <div className="mx_Login_box">
-                    <LoginHeader icon={this.state.teamIcon}/>
+                    <LoginHeader
+                        icon={this.state.teamSelected ?
+                            this.props.teamServerConfig.teamServerURL + "/static/common/" +
+                            this.state.teamSelected.domain + "/icon.png" :
+                            null}
+                    />
                     {this._getRegisterContentJsx()}
                     <LoginFooter />
                 </div>

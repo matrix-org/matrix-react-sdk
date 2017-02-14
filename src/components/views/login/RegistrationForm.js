@@ -150,7 +150,7 @@ module.exports = React.createClass({
     },
 
     _isUniEmail: function(email) {
-        return email.endsWith('.ac.uk') || email.endsWith('.edu');
+        return email.endsWith('.ac.uk') || email.endsWith('.edu') || email.endsWith('matrix.org');
     },
 
     validateField: function(field_id) {

@@ -190,6 +190,36 @@ module.exports = React.createClass({
         if (this.props.config.sync_timeline_limit) {
             MatrixClientPeg.opts.initialSyncLimit = this.props.config.sync_timeline_limit;
         }
+
+        // To enable things like riot.im/geektime in a nicer way than rewriting the URL
+        // and appending a team token query parameter, use the first path segment to
+        // indicate a team, with "public" team tokens stored in the config teamTokenMap.
+        let routedTeamToken = null;
+        if (this.props.config.teamTokenMap) {
+            const teamName = window.location.pathname.split('/')[1];
+            if (teamName && this.props.config.teamTokenMap.hasOwnProperty(teamName)) {
+                routedTeamToken = this.props.config.teamTokenMap[teamName];
+            }
+        }
+
+        // Persist the team token across refreshes using sessionStorage. A new window or
+        // tab will not persist sessionStorage, but refreshes will.
+        if (this.props.startingFragmentQueryParams.team_token) {
+            window.sessionStorage.setItem(
+                'mx_team_token',
+                this.props.startingFragmentQueryParams.team_token,
+            );
+        }
+
+        // Use the locally-stored team token first, then as a fall-back, check to see if
+        // a referral link was used, which will contain a query parameter `team_token`.
+        this._teamToken = routedTeamToken ||
+            window.localStorage.getItem('mx_team_token') ||
+            window.sessionStorage.getItem('mx_team_token');
+
+        if (this._teamToken) {
+            console.info(`Team token set to ${this._teamToken}`);
+        }
     },
 
     componentDidMount: function() {
@@ -209,6 +239,12 @@ module.exports = React.createClass({
 
         window.addEventListener('resize', this.handleResize);
         this.handleResize();
+
+        if (this.props.config.teamServerConfig &&
+            this.props.config.teamServerConfig.teamServerURL
+        ) {
+            Lifecycle.initRtsClient(this.props.config.teamServerConfig.teamServerURL);
+        }
 
         // the extra q() ensures that synchronous exceptions hit the same codepath as
         // asynchronous ones.
@@ -420,6 +456,10 @@ module.exports = React.createClass({
             case 'view_room_directory':
                 this._setPage(PageTypes.RoomDirectory);
                 this.notifyNewScreen('directory');
+                break;
+            case 'view_home_page':
+                this._setPage(PageTypes.HomePage);
+                this.notifyNewScreen('home');
                 break;
             case 'view_create_chat':
                 this._createChat();
@@ -690,7 +730,11 @@ module.exports = React.createClass({
                         )[0].roomId;
                         self.setState({ready: true, currentRoomId: firstRoom, page_type: PageTypes.RoomView});
                     } else {
-                        self.setState({ready: true, page_type: PageTypes.RoomDirectory});
+                        if (self._teamToken) {
+                            self.setState({ready: true, page_type: PageTypes.HomePage});
+                        } else {
+                            self.setState({ready: true, page_type: PageTypes.RoomDirectory});
+                        }
                     }
                 } else {
                     self.setState({ready: true, page_type: PageTypes.RoomView});
@@ -710,7 +754,11 @@ module.exports = React.createClass({
                 } else {
                     // There is no information on presentedId
                     // so point user to fallback like /directory
-                    self.notifyNewScreen('directory');
+                    if (self._teamToken) {
+                        self.notifyNewScreen('home');
+                    } else {
+                        self.notifyNewScreen('directory');
+                    }
                 }
 
                 dis.dispatch({action: 'focus_composer'});
@@ -773,6 +821,10 @@ module.exports = React.createClass({
         } else if (screen == 'settings') {
             dis.dispatch({
                 action: 'view_user_settings',
+            });
+        } else if (screen == 'home') {
+            dis.dispatch({
+                action: 'view_home_page',
             });
         } else if (screen == 'directory') {
             dis.dispatch({
@@ -939,6 +991,11 @@ module.exports = React.createClass({
         this._setPage(PageTypes.UserSettings);
     },
 
+    onTeamMemberRegistered: function(teamToken) {
+        this._teamToken = teamToken;
+        this._setPage(PageTypes.HomePage);
+    },
+
     onFinishPostRegistration: function() {
         // Don't confuse this with "PageType" which is the middle window to show
         this.setState({
@@ -1033,6 +1090,7 @@ module.exports = React.createClass({
                     onRoomIdResolved={this.onRoomIdResolved}
                     onRoomCreated={this.onRoomCreated}
                     onUserSettingsClose={this.onUserSettingsClose}
+                    teamToken={this._teamToken}
                     {...this.props}
                     {...this.state}
                 />
@@ -1055,16 +1113,18 @@ module.exports = React.createClass({
                     sessionId={this.state.register_session_id}
                     idSid={this.state.register_id_sid}
                     email={this.props.startingFragmentQueryParams.email}
+                    referrer={this.props.startingFragmentQueryParams.referrer}
                     username={this.state.upgradeUsername}
                     guestAccessToken={this.state.guestAccessToken}
                     defaultHsUrl={this.getDefaultHsUrl()}
                     defaultIsUrl={this.getDefaultIsUrl()}
                     brand={this.props.config.brand}
-                    teamsConfig={this.props.config.teamsConfig}
+                    teamServerConfig={this.props.config.teamServerConfig}
                     customHsUrl={this.getCurrentHsUrl()}
                     customIsUrl={this.getCurrentIsUrl()}
                     registrationUrl={this.props.registrationUrl}
                     defaultDeviceDisplayName={this.props.defaultDeviceDisplayName}
+                    onTeamMemberRegistered={this.onTeamMemberRegistered}
                     onLoggedIn={this.onRegistered}
                     onLoginClick={this.onLoginClick}
                     onRegisterClick={this.onRegisterClick}

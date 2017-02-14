@@ -31,6 +31,8 @@ import structures$CreateRoom from './components/structures/CreateRoom';
 structures$CreateRoom && (module.exports.components['structures.CreateRoom'] = structures$CreateRoom);
 import structures$FilePanel from './components/structures/FilePanel';
 structures$FilePanel && (module.exports.components['structures.FilePanel'] = structures$FilePanel);
+import structures$InteractiveAuth from './components/structures/InteractiveAuth';
+structures$InteractiveAuth && (module.exports.components['structures.InteractiveAuth'] = structures$InteractiveAuth);
 import structures$LoggedInView from './components/structures/LoggedInView';
 structures$LoggedInView && (module.exports.components['structures.LoggedInView'] = structures$LoggedInView);
 import structures$MatrixChat from './components/structures/MatrixChat';
@@ -89,6 +91,8 @@ import views$dialogs$SetDisplayNameDialog from './components/views/dialogs/SetDi
 views$dialogs$SetDisplayNameDialog && (module.exports.components['views.dialogs.SetDisplayNameDialog'] = views$dialogs$SetDisplayNameDialog);
 import views$dialogs$TextInputDialog from './components/views/dialogs/TextInputDialog';
 views$dialogs$TextInputDialog && (module.exports.components['views.dialogs.TextInputDialog'] = views$dialogs$TextInputDialog);
+import views$dialogs$UnknownDeviceDialog from './components/views/dialogs/UnknownDeviceDialog';
+views$dialogs$UnknownDeviceDialog && (module.exports.components['views.dialogs.UnknownDeviceDialog'] = views$dialogs$UnknownDeviceDialog);
 import views$elements$AccessibleButton from './components/views/elements/AccessibleButton';
 views$elements$AccessibleButton && (module.exports.components['views.elements.AccessibleButton'] = views$elements$AccessibleButton);
 import views$elements$AddressSelector from './components/views/elements/AddressSelector';
