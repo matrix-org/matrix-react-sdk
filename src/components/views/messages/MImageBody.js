@@ -106,12 +106,16 @@ module.exports = React.createClass({
             }
             return this.state.decryptedUrl;
         } else {
-            const cappedWidth = Math.min(800, content.info.w);
-            return MatrixClientPeg.get().mxcUrlToHttp(
-                content.url,
-                cappedWidth,
-                Math.floor(content.info.h * (cappedWidth / content.info.w)),
-            );
+            if (content.info) {
+                const cappedWidth = Math.min(800, content.info.w);
+                return MatrixClientPeg.get().mxcUrlToHttp(
+                    content.url,
+                    cappedWidth,
+                    Math.floor(content.info.h * (cappedWidth / content.info.w)),
+                );
+            } else {
+                return MatrixClientPeg.get().mxcUrlToHttp(content.url, 800, 600);
+            }
         }
     },
 
