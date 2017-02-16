@@ -23,6 +23,8 @@ module.exports = {
         }
     },
     rules: {
+        "indent": ["error", 4],
+
         /** react **/
         // This just uses the react plugin to help eslint known when
         // variables have been used in JSX
