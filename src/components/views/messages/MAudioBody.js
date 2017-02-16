@@ -96,9 +96,11 @@ export default class MAudioBody extends React.Component {
 
         const contentUrl = this._getContentUrl();
 
-        const shouldAutoPlay = MatrixClientPeg.get().credentials.userId !==
-          this.props.mxEvent.sender.userId &&
-          content.autoplay;
+        const shouldAutoPlay = false;
+        // TODO reconsider autoplay once we've figured out how it should work
+        // const shouldAutoPlay = MatrixClientPeg.get().credentials.userId !==
+        //   this.props.mxEvent.sender.userId &&
+        //   content.autoplay;
 
         return (
             <span className="mx_MAudioBody">

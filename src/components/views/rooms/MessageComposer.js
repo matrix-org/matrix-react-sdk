@@ -264,7 +264,7 @@ export default class MessageComposer extends React.Component {
 
         if (canSendMessages) {
             const sendAudioBlob = (blob) => {
-                const file = new File([blob], `${+new Date()}.wav`, {
+                const file = new File([blob], `${+new Date()}`, {
                     type: blob.type,
                 });
                 this.props.uploadFile(file, (content) => {
