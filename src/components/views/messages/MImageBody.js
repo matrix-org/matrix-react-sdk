@@ -106,7 +106,8 @@ module.exports = React.createClass({
             }
             return this.state.decryptedUrl;
         } else {
-            return MatrixClientPeg.get().mxcUrlToHttp(content.url, 800, 600);
+            const scaledWidth = Math.min(800, content.info.w);
+            return MatrixClientPeg.get().mxcUrlToHttp(content.url, scaledWidth, Math.floor(content.info.h * (scaledWidth / content.info.w)));
         }
     },
 
