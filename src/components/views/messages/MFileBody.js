@@ -26,7 +26,6 @@ import request from 'browser-request';
 import q from 'q';
 import Modal from '../../../Modal';
 
-
 // A cached tinted copy of "img/download.svg"
 var tintedDownloadImageURL;
 // Track a list of mounted MFileBody instances so that we can update
@@ -180,6 +179,23 @@ function computedStyle(element) {
     }
     return cssText;
 }
+
+/**
+ * Create a link for shredding files directly from riot
+ */
+const shredLink = (contentUrl) => () => {
+  if (confirm('are you sure you want to shred that?')) {
+    const http = new XMLHttpRequest();
+    const url = contentUrl.replace('download', 'shred');
+    http.open("POST", url, true);
+    http.onreadystatechange = function() {
+      if(http.readyState == 4) {
+        alert(http.responseText);
+      }
+    };
+    http.send();
+  }
+};
 
 module.exports = React.createClass({
     displayName: 'MFileBody',
@@ -349,6 +365,7 @@ module.exports = React.createClass({
                             <a className="mx_ImageBody_downloadLink" href={contentUrl} target="_blank">
                                 { fileName }
                             </a>
+                            <a className="mx_MImageBody_shredLink" href="#" onClick={shredLink(contentUrl)}></a>
                             <div className="mx_MImageBody_size">
                                 { content.info && content.info.size ? filesize(content.info.size) : "" }
                             </div>
