@@ -284,6 +284,9 @@ export function setLoggedIn(credentials) {
         console.warn("No local storage available: can't persist session!");
     }
 
+    // stop any running clients before we create a new one with these new credentials
+    stopMatrixClient();
+
     MatrixClientPeg.replaceUsingCreds(credentials);
 
     dis.dispatch({action: 'on_logged_in'});
