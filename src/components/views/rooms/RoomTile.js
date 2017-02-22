@@ -301,7 +301,7 @@ module.exports = React.createClass({
                         </div>
                     </div>
                 </div>
-                <div className="mx_RoomTile_nameContainer">
+                <div className="mx_RoomTile_nameContainer" dir="auto">
                     { label }
                     { badge }
                 </div>

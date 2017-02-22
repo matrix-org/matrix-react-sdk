@@ -722,6 +722,7 @@ export default class MessageComposerInput extends React.Component {
                          src={`img/button-md-${!this.state.isRichtextEnabled}.png`} />
                     <Editor ref="editor"
                             placeholder="Type a message…"
+                            dir="auto"
                             editorState={this.state.editorState}
                             onChange={this.onEditorContentChanged}
                             blockStyleFn={MessageComposerInput.getBlockStyle}

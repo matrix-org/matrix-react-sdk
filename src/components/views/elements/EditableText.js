@@ -209,11 +209,11 @@ module.exports = React.createClass({
 
         if (!this.props.editable || (this.state.phase == this.Phases.Display && (this.props.label || this.props.labelClassName) && !this.value)) {
             // show the label
-            editable_el = <div className={this.props.className + " " + this.props.labelClassName} onClick={this.onClickDiv}>{ this.props.label || this.props.initialValue }</div>;
+            editable_el = <div className={this.props.className + " " + this.props.labelClassName} onClick={this.onClickDiv} dir="auto">{ this.props.label || this.props.initialValue }</div>;
         } else {
             // show the content editable div, but manually manage its contents as react and contentEditable don't play nice together
             editable_el = <div ref="editable_div" contentEditable="true" className={this.props.className}
-                               onKeyDown={this.onKeyDown} onKeyUp={this.onKeyUp} onFocus={this.onFocus} onBlur={this.onBlur}></div>;
+                               onKeyDown={this.onKeyDown} onKeyUp={this.onKeyUp} onFocus={this.onFocus} onBlur={this.onBlur} dir="auto"></div>;
         }
 
         return editable_el;
