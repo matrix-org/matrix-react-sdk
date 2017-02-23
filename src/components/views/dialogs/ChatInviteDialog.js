@@ -26,7 +26,7 @@ import dis from '../../../dispatcher';
 import Modal from '../../../Modal';
 import AccessibleButton from '../elements/AccessibleButton';
 import q from 'q';
-import Fuse from 'fuse.js';
+import FuzzySearch from '../../../FuzzySearch.js';
 
 const TRUNCATE_QUERY_LIST = 40;
 
@@ -88,17 +88,10 @@ module.exports = React.createClass({
         }
         // Create a Fuse instance for fuzzy searching this._userList
         if (!this._fuse) {
-            this._fuse = new Fuse(
+            this._fuse = new FuzzySearch(
                 // Use an empty list at first that will later be populated
                 // (see this._updateUserList)
-                [],
-                {
-                    shouldSort: true,
-                    location: 0, // The index of the query in the test string
-                    distance: 5, // The distance away from location the query can be
-                    // 0.0 = exact match, 1.0 = match anything
-                    threshold: 0.3,
-                }
+                [], {keys: ["displayName", "userId"], distance: 4, resultCount: 5}
             );
         }
         this._updateUserList();
@@ -187,20 +180,20 @@ module.exports = React.createClass({
             return;
         }
 
-        if (this.queryChangedDebouncer) {
-            clearTimeout(this.queryChangedDebouncer);
-        }
-        this.queryChangedDebouncer = setTimeout(() => {
+        // if (this.queryChangedDebouncer) {
+        //     clearTimeout(this.queryChangedDebouncer);
+        // }
+        // this.queryChangedDebouncer = setTimeout(() => {
             // Only do search if there is something to search
             if (query.length > 0 && query != '@') {
                 // Weighted keys prefer to match userIds when first char is @
-                this._fuse.options.keys = [{
-                    name: 'displayName',
-                    weight: query[0] === '@' ? 0.1 : 0.9,
-                },{
-                    name: 'userId',
-                    weight: query[0] === '@' ? 0.9 : 0.1,
-                }];
+                // this._fuse.options.keys = [{
+                //     name: 'displayName',
+                //     weight: query[0] === '@' ? 0.1 : 0.9,
+                // },{
+                //     name: 'userId',
+                //     weight: query[0] === '@' ? 0.9 : 0.1,
+                // }];
                 queryList = this._fuse.search(query).map((user) => {
                     // Return objects, structure of which is defined
                     // by InviteAddressType
@@ -236,7 +229,7 @@ module.exports = React.createClass({
             }, () => {
                 this.addressSelector.moveSelectionTop();
             });
-        }, 200);
+        // }, 200);
     },
 
     onDismissed: function(index) {
@@ -368,7 +361,8 @@ module.exports = React.createClass({
         });
         this._userList.splice(meIx, 1);
 
-        this._fuse.set(this._userList);
+        // this._fuse.set(this._userList);
+        this._fuse.setObjects(this._userList);
     }, 500),
 
     _isOnInviteList: function(uid) {
