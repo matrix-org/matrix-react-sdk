@@ -20,15 +20,13 @@ import Matrix from "matrix-js-sdk";
 import q from 'q';
 import url from 'url';
 
-/**
- * A base class for common functionality between Login and, previously
- * registration.
- */
-class Signup {
-    constructor(hsUrl, isUrl, opts) {
+export default class Login {
+    constructor(hsUrl, isUrl, fallbackHsUrl, opts) {
         this._hsUrl = hsUrl;
         this._isUrl = isUrl;
-        this._defaultDeviceDisplayName = opts.defaultDeviceDisplayName;
+        this._fallbackHsUrl = fallbackHsUrl;
+        this._currentFlowIndex = 0;
+        this._flows = [];
     }
 
     getHomeserverUrl() {
@@ -56,15 +54,6 @@ class Signup {
             baseUrl: this._hsUrl,
             idBaseUrl: this._isUrl,
         });
-    }
-}
-
-export class Login extends Signup {
-    constructor(hsUrl, isUrl, fallbackHsUrl, opts) {
-        super(hsUrl, isUrl, opts);
-        this._fallbackHsUrl = fallbackHsUrl;
-        this._currentFlowIndex = 0;
-        this._flows = [];
     }
 
     getFlows() {
