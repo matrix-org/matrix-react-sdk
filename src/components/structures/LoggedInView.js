@@ -49,11 +49,16 @@ export default React.createClass({
 
     childContextTypes: {
         matrixClient: React.PropTypes.instanceOf(Matrix.MatrixClient),
+        authCache: React.PropTypes.object,
     },
 
     getChildContext: function() {
         return {
             matrixClient: this._matrixClient,
+            authCache: {
+                auth: {},
+                lastUpdate: 0,
+            },
         };
     },
 
@@ -175,6 +180,7 @@ export default React.createClass({
                     collapsedRhs={this.props.collapse_rhs}
                     enableLabs={this.props.config.enableLabs}
                     referralBaseUrl={this.props.config.referralBaseUrl}
+                    teamToken={this.props.teamToken}
                 />;
                 if (!this.props.collapse_rhs) right_panel = <RightPanel opacity={this.props.sideOpacity}/>;
                 break;

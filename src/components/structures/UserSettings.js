@@ -109,6 +109,10 @@ module.exports = React.createClass({
 
         // true if RightPanel is collapsed
         collapsedRhs: React.PropTypes.bool,
+
+        // Team token for the referral link. If falsy, the referral section will
+        // not appear
+        teamToken: React.PropTypes.string,
     },
 
     getDefaultProps: function() {
@@ -414,6 +418,14 @@ module.exports = React.createClass({
         Modal.createDialog(BugReportDialog, {});
     },
 
+    _onClearCacheClicked: function() {
+        MatrixClientPeg.get().store.deleteAllData().done(() => {
+            // forceReload=false since we don't really need new HTML/JS files
+            // we just need to restart the JS runtime.
+            window.location.reload(false);
+        });
+    },
+
     _onInviteStateChange: function(event, member, oldMembership) {
         if (member.userId === this._me && oldMembership === "invite") {
             this.forceUpdate();
@@ -462,7 +474,7 @@ module.exports = React.createClass({
     },
 
     _renderReferral: function() {
-        const teamToken = window.localStorage.getItem('mx_team_token');
+        const teamToken = this.props.teamToken;
         if (!teamToken) {
             return null;
         }
@@ -681,6 +693,18 @@ module.exports = React.createClass({
                 <div className="mx_UserSettings_section">
                     <AccessibleButton className="mx_UserSettings_button danger"
                         onClick={this._onDeactivateAccountClicked}>Deactivate my account
+                    </AccessibleButton>
+                </div>
+        </div>;
+    },
+
+    _renderClearCache: function() {
+        return <div>
+            <h3>Clear Cache</h3>
+                <div className="mx_UserSettings_section">
+                    <AccessibleButton className="mx_UserSettings_button danger"
+                        onClick={this._onClearCacheClicked}>
+                        Clear Cache and Reload
                     </AccessibleButton>
                 </div>
         </div>;
@@ -908,6 +932,8 @@ module.exports = React.createClass({
                         olm version: {olmVersionString}<br/>
                     </div>
                 </div>
+
+                {this._renderClearCache()}
 
                 {this._renderDeactivateAccount()}
 

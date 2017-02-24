@@ -218,8 +218,23 @@ module.exports = React.createClass({
             window.localStorage.getItem('mx_team_token') ||
             window.sessionStorage.getItem('mx_team_token');
 
+        // Some users have ended up with "undefined" as their local storage team token,
+        // treat that as undefined.
+        if (this._teamToken === "undefined") {
+            this._teamToken = undefined;
+        }
+
         if (this._teamToken) {
             console.info(`Team token set to ${this._teamToken}`);
+        }
+
+        // Set a default HS with query param `hs_url`
+        const paramHs = this.props.startingFragmentQueryParams.hs_url;
+        if (paramHs) {
+            console.log('Setting register_hs_url ', paramHs);
+            this.setState({
+                register_hs_url: paramHs,
+            });
         }
     },
 
@@ -455,6 +470,10 @@ module.exports = React.createClass({
                 this.notifyNewScreen('directory');
                 break;
             case 'view_home_page':
+                if (!this._teamToken) {
+                    dis.dispatch({action: 'view_room_directory'});
+                    return;
+                }
                 this._setPage(PageTypes.HomePage);
                 this.notifyNewScreen('home');
                 break;
@@ -900,14 +919,6 @@ module.exports = React.createClass({
 
     onUserClick: function(event, userId) {
         event.preventDefault();
-
-        // var MemberInfo = sdk.getComponent('rooms.MemberInfo');
-        // var member = new Matrix.RoomMember(null, userId);
-        // ContextualMenu.createMenu(MemberInfo, {
-        //     member: member,
-        //     right: window.innerWidth - event.pageX,
-        //     top: event.pageY
-        // });
 
         var member = new Matrix.RoomMember(null, userId);
         if (!member) { return; }

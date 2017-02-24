@@ -150,7 +150,9 @@ module.exports = React.createClass({
             (state.usersTyping.length > 0) ||
             props.numUnreadMessages ||
             !props.atEndOfLiveTimeline ||
-            props.hasActiveCall) {
+            props.hasActiveCall ||
+            props.tabComplete.isTabCompleting()
+        ) {
             return STATUS_BAR_EXPANDED;
         } else if (props.tabCompleteEntries) {
             return STATUS_BAR_HIDDEN;
@@ -194,8 +196,9 @@ module.exports = React.createClass({
         }
 
         if (this.props.hasActiveCall) {
+            var TintableSvg = sdk.getComponent("elements.TintableSvg");
             return (
-                <img src="img/sound-indicator.svg" width="23" height="20"/>
+                <TintableSvg src="img/sound-indicator.svg" width="23" height="20"/>
             );
         }
 
@@ -223,8 +226,7 @@ module.exports = React.createClass({
             users = users.slice(0, limit - 1);
         }
 
-        let avatars = users.map((u, index) => {
-            let showInitial = othersCount === 0 && index === users.length - 1;
+        const avatars = users.map((u) => {
             return (
                 <MemberAvatar
                     key={u.userId}
@@ -232,7 +234,6 @@ module.exports = React.createClass({
                     width={24}
                     height={24}
                     resizeMethod="crop"
-                    defaultToInitialLetter={showInitial}
                 />
             );
         });

@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2017 Vector Creations Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -155,8 +156,10 @@ module.exports = React.createClass({
         this.dispatcherRef = dis.register(this.onAction);
         MatrixClientPeg.get().on("Room", this.onRoom);
         MatrixClientPeg.get().on("Room.timeline", this.onRoomTimeline);
+        MatrixClientPeg.get().on("Room.name", this.onRoomName);
         MatrixClientPeg.get().on("Room.accountData", this.onRoomAccountData);
         MatrixClientPeg.get().on("RoomState.members", this.onRoomStateMember);
+        MatrixClientPeg.get().on("RoomMember.membership", this.onRoomMemberMembership);
         MatrixClientPeg.get().on("accountData", this.onAccountData);
 
         this.tabComplete = new TabComplete({
@@ -342,8 +345,10 @@ module.exports = React.createClass({
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener("Room", this.onRoom);
             MatrixClientPeg.get().removeListener("Room.timeline", this.onRoomTimeline);
+            MatrixClientPeg.get().removeListener("Room.name", this.onRoomName);
             MatrixClientPeg.get().removeListener("Room.accountData", this.onRoomAccountData);
             MatrixClientPeg.get().removeListener("RoomState.members", this.onRoomStateMember);
+            MatrixClientPeg.get().removeListener("RoomMember.membership", this.onRoomMemberMembership);
             MatrixClientPeg.get().removeListener("accountData", this.onAccountData);
         }
 
@@ -479,6 +484,12 @@ module.exports = React.createClass({
         }
     },
 
+    onRoomName: function(room) {
+        if (this.state.room && room.roomId == this.state.room.roomId) {
+            this.forceUpdate();
+        }
+    },
+
     // called when state.room is first initialised (either at initial load,
     // after a successful peek, or after we join the room).
     _onRoomLoaded: function(room) {
@@ -601,6 +612,12 @@ module.exports = React.createClass({
         }
 
         this._updateRoomMembers();
+    },
+
+    onRoomMemberMembership: function(ev, member, oldMembership) {
+        if (member.userId == MatrixClientPeg.get().credentials.userId) {
+            this.forceUpdate();
+        }
     },
 
     // rate limited because a power level change will emit an event for every
@@ -1447,6 +1464,7 @@ module.exports = React.createClass({
                             />
                             <div className="mx_RoomView_auxPanel">
                                 <RoomPreviewBar onJoinClick={ this.onJoinButtonClicked }
+                                                onForgetClick={ this.onForgetClick }
                                                 onRejectClick={ this.onRejectThreepidInviteButtonClicked }
                                                 canPreview={ false } error={ this.state.roomLoadError }
                                                 roomAlias={room_alias}
@@ -1489,6 +1507,7 @@ module.exports = React.createClass({
                         />
                         <div className="mx_RoomView_auxPanel">
                             <RoomPreviewBar onJoinClick={ this.onJoinButtonClicked }
+                                            onForgetClick={ this.onForgetClick }
                                             onRejectClick={ this.onRejectButtonClicked }
                                             inviterName={ inviterName }
                                             canPreview={ false }
@@ -1564,6 +1583,7 @@ module.exports = React.createClass({
             }
             aux = (
                 <RoomPreviewBar onJoinClick={this.onJoinButtonClicked}
+                                onForgetClick={ this.onForgetClick }
                                 onRejectClick={this.onRejectThreepidInviteButtonClicked}
                                 spinner={this.state.joining}
                                 inviterName={inviterName}
@@ -1619,14 +1639,14 @@ module.exports = React.createClass({
 
                 videoMuteButton =
                     <div className="mx_RoomView_voipButton" onClick={this.onMuteVideoClick}>
-                        <img src={call.isLocalVideoMuted() ? "img/video-unmute.svg" : "img/video-mute.svg"}
+                        <TintableSvg src={call.isLocalVideoMuted() ? "img/video-unmute.svg" : "img/video-mute.svg"}
                              alt={call.isLocalVideoMuted() ? "Click to unmute video" : "Click to mute video"}
                              width="31" height="27"/>
                     </div>;
             }
             voiceMuteButton =
                 <div className="mx_RoomView_voipButton" onClick={this.onMuteAudioClick}>
-                    <img src={call.isMicrophoneMuted() ? "img/voice-unmute.svg" : "img/voice-mute.svg"}
+                    <TintableSvg src={call.isMicrophoneMuted() ? "img/voice-unmute.svg" : "img/voice-mute.svg"}
                          alt={call.isMicrophoneMuted() ? "Click to unmute audio" : "Click to mute audio"}
                          width="21" height="26"/>
                 </div>;
