@@ -86,9 +86,9 @@ module.exports = React.createClass({
             // Set the cursor at the end of the text input
             this.refs.textinput.value = this.props.value;
         }
-        // Create a Fuse instance for fuzzy searching this._userList
-        if (!this._fuse) {
-            this._fuse = new FuzzySearch(
+        // Create a FuzzySearch instance for fuzzy searching this._userList
+        if (!this._fuzzySearch) {
+            this._fuzzySearch = new FuzzySearch(
                 // Use an empty list at first that will later be populated
                 // (see this._updateUserList)
                 [], {keys: ["displayName", "userId"], distance: 4, resultCount: 20}
@@ -186,15 +186,7 @@ module.exports = React.createClass({
         // this.queryChangedDebouncer = setTimeout(() => {
             // Only do search if there is something to search
             if (query.length > 0 && query != '@') {
-                // Weighted keys prefer to match userIds when first char is @
-                // this._fuse.options.keys = [{
-                //     name: 'displayName',
-                //     weight: query[0] === '@' ? 0.1 : 0.9,
-                // },{
-                //     name: 'userId',
-                //     weight: query[0] === '@' ? 0.9 : 0.1,
-                // }];
-                queryList = this._fuse.search(query).map((user) => {
+                queryList = this._fuzzySearch.search(query).map((user) => {
                     // Return objects, structure of which is defined
                     // by InviteAddressType
                     return {
@@ -360,9 +352,7 @@ module.exports = React.createClass({
             return u.userId === MatrixClientPeg.get().credentials.userId;
         });
         this._userList.splice(meIx, 1);
-
-        // this._fuse.set(this._userList);
-        this._fuse.setObjects(this._userList);
+        this._fuzzySearch.setObjects(this._userList);
     }, 500),
 
     _isOnInviteList: function(uid) {
