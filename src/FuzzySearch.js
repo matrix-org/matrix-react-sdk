@@ -2,7 +2,6 @@ import Levenshtein from 'liblevenshtein';
 import _at from 'lodash/at';
 import _flatMap from 'lodash/flatMap';
 import _sortBy from 'lodash/sortBy';
-import _sortedUniq from 'lodash/sortedUniq';
 import _keys from 'lodash/keys';
 
 class KeyMap {
