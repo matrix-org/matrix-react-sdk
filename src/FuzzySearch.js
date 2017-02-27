@@ -16,23 +16,25 @@ export default class FuzzySearch {
 
     static valuesToKeyMap(objects: Array<Object>, keys: Array<String>): KeyMap {
         const keyMap = new KeyMap();
-        const map = {};
-        const priorities = {};
+        // A back-reference to refer to objects with the same keyValues
+        const map = {
+            // $keyValue: [object1, object2,...]
+            // e.g.
+            // "Alice": [{displayName: "Alice"}, {displayName: "Alice"}, ...]
+        };
 
         objects.forEach((object, i) => {
             const keyValues = _at(object, keys);
-            // console.log(object, keyValues, keys);
             for (const keyValue of keyValues) {
                 if (!map.hasOwnProperty(keyValue)) {
                    map[keyValue] = [];
                 }
                 map[keyValue].push(object);
             }
-            priorities[object] = i;
         });
 
         keyMap.objectMap = map;
-        keyMap.keys = _sortBy(Object.keys(map), [value => priorities[value]]);
+        keyMap.keys = Object.keys(map);
         return keyMap;
     }
 
