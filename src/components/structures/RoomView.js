@@ -1556,7 +1556,6 @@ module.exports = React.createClass({
                 onResize={this.onChildResize}
                 onVisible={this.onStatusBarVisible}
                 onHidden={this.onStatusBarHidden}
-                whoIsTypingLimit={3}
             />;
         }
 
@@ -1698,6 +1697,7 @@ module.exports = React.createClass({
                 showUrlPreview = { this.state.showUrlPreview }
                 opacity={ this.props.opacity }
                 className="mx_RoomView_messagePanel"
+                room={this.state.room}
             />);
 
         var topUnreadMessagesBar = null;

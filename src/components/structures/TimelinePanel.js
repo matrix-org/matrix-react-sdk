@@ -1031,6 +1031,7 @@ var TimelinePanel = React.createClass({
                     opacity={ this.props.opacity }
                     className={ this.props.className }
                     tileShape={ this.props.tileShape }
+                    room={this.props.room}
             />
         );
     },

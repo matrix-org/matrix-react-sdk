@@ -64,10 +64,10 @@ module.exports = {
         if (othersCount) {
             const other = ' other' + (othersCount > 1 ? 's' : '');
             return names.slice(0, limit - 1).join(', ') + ' and ' +
-                othersCount + other + ' are typing';
+                othersCount + other;
         } else {
             const lastPerson = names.pop();
-            return names.join(', ') + ' and ' + lastPerson + ' are typing';
+            return names.join(', ') + ' and ' + lastPerson;
         }
     }
 };

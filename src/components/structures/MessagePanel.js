@@ -397,6 +397,11 @@ module.exports = React.createClass({
             }
         }
 
+        const TypingEventTile = sdk.getComponent('rooms.TypingEventTile');
+        ret.push(
+            <TypingEventTile key="bla" room={this.props.room} limit={3} onSizeChanged={this._onWidgetLoad}/>
+        );
+
         this.currentReadMarkerEventId = readMarkerVisible ? this.props.readMarkerEventId : null;
         return ret;
     },
