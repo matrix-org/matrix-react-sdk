@@ -91,7 +91,7 @@ module.exports = React.createClass({
             this._fuse = new FuzzySearch(
                 // Use an empty list at first that will later be populated
                 // (see this._updateUserList)
-                [], {keys: ["displayName", "userId"], distance: 4, resultCount: 5}
+                [], {keys: ["displayName", "userId"], distance: 4, resultCount: 20}
             );
         }
         this._updateUserList();
