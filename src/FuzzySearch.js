@@ -7,7 +7,6 @@ import _keys from 'lodash/keys';
 class KeyMap {
     keys: Array<String>;
     objectMap: {[String]: Array<Object>};
-    priorityMap: {[String]: number}
 }
 
 const DEFAULT_RESULT_COUNT = 10;
@@ -33,8 +32,7 @@ export default class FuzzySearch {
         });
 
         keyMap.objectMap = map;
-        keyMap.priorityMap = priorities;
-        keyMap.keys = _sortBy(_keys(map), [value => priorities[value]]);
+        keyMap.keys = _sortBy(Object.keys(map), [value => priorities[value]]);
         return keyMap;
     }
 
@@ -57,8 +55,8 @@ export default class FuzzySearch {
     }
 
     search(query: String): Array<Object> {
-        let d = this.options.distance || DEFAULT_DISTANCE;
-        let candidates = this.matcher.transduce(query.toLowerCase(), d);
+        const d = this.options.distance || DEFAULT_DISTANCE;
+        const candidates = this.matcher.transduce(query.toLowerCase(), d);
         return _flatMap(candidates, candidate => this.keyMap.objectMap[candidate]);
     }
 }
