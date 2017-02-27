@@ -34,7 +34,7 @@ export default class FuzzySearch {
         });
 
         keyMap.objectMap = map;
-        keyMap.keys = Object.keys(map);
+        keyMap.keys = Object.keys(map); // All unique keyValues
         return keyMap;
     }
 
@@ -52,13 +52,15 @@ export default class FuzzySearch {
             .algorithm('transposition')
             .sort_candidates(true)
             .include_distance(false)
-            .maximum_candidates(this.options.resultCount || DEFAULT_RESULT_COUNT) // result count 0 doesn't make much sense
+            .maximum_candidates(this.options.resultCount || DEFAULT_RESULT_COUNT)
             .build();
     }
 
     search(query: String): Array<Object> {
         const d = this.options.distance || DEFAULT_DISTANCE;
+        // Retrieve a list of candidate values that match the query string
         const candidates = this.matcher.transduce(query.toLowerCase(), d);
+        // Flatten all objects with a candidate keyValue into a single array, and return it
         return _flatMap(candidates, candidate => this.keyMap.objectMap[candidate]);
     }
 }
