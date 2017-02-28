@@ -85,6 +85,8 @@ module.exports = React.createClass({
             // If we've been given a session ID, we're resuming
             // straight back into UI auth
             doingUIAuth: Boolean(this.props.sessionId),
+            hsUrl: this.props.customHsUrl,
+            isUrl: this.props.customIsUrl,
         };
     },
 
