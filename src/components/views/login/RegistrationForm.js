@@ -338,7 +338,6 @@ module.exports = React.createClass({
                     {emailSection}
                     {belowEmailSection}
                     {phoneSection}
-                    <br />
                     <input type="text" ref="username"
                         placeholder={ placeholderUserName } defaultValue={this.props.defaultUsername}
                         className={this._classForField(FIELD_USERNAME, 'mx_Login_field')}
