@@ -19,7 +19,7 @@ var MatrixClientPeg = require("./MatrixClientPeg");
 module.exports = {
     usersTypingApartFromMe: function(room) {
         return this.usersTyping(
-            room, []
+            room, [MatrixClientPeg.get().credentials.userId]
         );
     },
 
