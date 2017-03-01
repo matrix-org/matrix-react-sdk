@@ -31,7 +31,6 @@ function countryMatchesSearchQuery(query, country) {
 export default class CountryDropdown extends React.Component {
     constructor() {
         super();
-        this.onOptionChange = this.onOptionChange.bind(this);
         this._onSearchChange = this._onSearchChange.bind(this);
 
         this.state = {
@@ -43,9 +42,6 @@ export default class CountryDropdown extends React.Component {
         this.setState({
             searchQuery: search,
         });
-    }
-
-    onOptionChange() {
     }
 
     _flagImgForIso2(iso2) {
@@ -78,7 +74,7 @@ export default class CountryDropdown extends React.Component {
         });
 
         return <Dropdown className={this.props.className}
-            onOptionChange={this.onOptionChange} onSearchChange={this._onSearchChange}
+            onOptionChange={this.props.onOptionChange} onSearchChange={this._onSearchChange}
             menuWidth={298} getShortOption={this._flagImgForIso2}
         >
             {options}

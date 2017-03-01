@@ -124,6 +124,8 @@ module.exports = React.createClass({
             username: this.refs.username.value.trim() || this.props.guestUsername,
             password: this.refs.password.value.trim(),
             email: email,
+            phoneCountry: this.state.phoneCountry,
+            phoneNumber: this.refs.phoneNumber.value.trim(),
         });
 
         if (promise) {
@@ -308,7 +310,7 @@ module.exports = React.createClass({
         const CountryDropdown = sdk.getComponent('views.login.CountryDropdown');
         const phoneSection = (
             <div className="mx_Login_phoneSection">
-                <CountryDropdown ref="phone_country" onOptionChange={()=>{}}
+                <CountryDropdown ref="phone_country" onOptionChange={this._onPhoneCountryChange}
                     className="mx_Login_phoneCountry"
                 />
                 <input type="text" ref="phoneNumber"

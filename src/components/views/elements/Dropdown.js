@@ -104,7 +104,7 @@ export default class Dropdown extends React.Component {
         document.addEventListener('click', this._onDocumentClick, false);
 
         // fire this now so the defaults can be set up
-        this.props.onOptionChange();
+        this.props.onOptionChange(this.state.selectedOption);
     }
 
     componentWillUnmount() {
