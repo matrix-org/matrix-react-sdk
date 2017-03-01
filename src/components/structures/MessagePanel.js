@@ -282,7 +282,7 @@ module.exports = React.createClass({
         var isMembershipChange = (e) =>
             e.getType() === 'm.room.member'
             && (!e.getPrevContent() || e.getContent().membership !== e.getPrevContent().membership);
-
+        let prevTiles = [];
         for (i = 0; i < this.props.events.length; i++) {
             var mxEv = this.props.events[i];
             var wantTile = true;
@@ -362,7 +362,8 @@ module.exports = React.createClass({
                 // make sure we unpack the array returned by _getTilesForEvent,
                 // otherwise react will auto-generate keys and we will end up
                 // replacing all of the DOM elements every time we paginate.
-                ret.push(...this._getTilesForEvent(prevEvent, mxEv, last));
+                prevTiles = this._getTilesForEvent(prevEvent, mxEv, last);
+                ret.push(...prevTiles);
                 prevEvent = mxEv;
             }
 
@@ -398,9 +399,17 @@ module.exports = React.createClass({
         }
 
         const TypingEventTile = sdk.getComponent('rooms.TypingEventTile');
-        ret.push(
-            <TypingEventTile key="bla" room={this.props.room} limit={3} onSizeChanged={this._onWidgetLoad}/>
-        );
+        const typingTile = <TypingEventTile
+            key="typing-event-tile"
+            room={this.props.room}
+            limit={3}
+            onSizeChanged={this._onWidgetLoad}
+        >
+            {prevTiles}
+        </TypingEventTile>;
+        // remove prevTiles
+        ret = ret.filter(t => prevTiles.indexOf(t) === -1);
+        ret.push(typingTile);
 
         this.currentReadMarkerEventId = readMarkerVisible ? this.props.readMarkerEventId : null;
         return ret;
@@ -602,6 +611,8 @@ module.exports = React.createClass({
         var style = this.props.hidden ? { display: 'none' } : {};
         style.opacity = this.props.opacity;
 
+        const tiles = this._getEventTiles();
+
         return (
             <ScrollPanel ref="scrollPanel" className={ this.props.className + " mx_fadable" }
                     onScroll={ this.props.onScroll }
@@ -611,7 +622,7 @@ module.exports = React.createClass({
                     style={ style }
                     stickyBottom={ this.props.stickyBottom }>
                 {topSpinner}
-                {this._getEventTiles()}
+                {tiles}
                 {bottomSpinner}
             </ScrollPanel>
         );

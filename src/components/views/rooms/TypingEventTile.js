@@ -35,11 +35,15 @@ module.exports = React.createClass({
     getInitialState: function() {
         return {
             members: [],
+            recentOffMembers: [],
         }
     },
 
     componentWillMount: function() {
         MatrixClientPeg.get().on("RoomMember.typing", this.onRoomMemberTyping);
+        setInterval(() => {
+            this.props.onSizeChanged();
+        }, 10);
     },
 
     componentWillUnmount: function() {
@@ -50,6 +54,16 @@ module.exports = React.createClass({
     },
 
     onRoomMemberTyping: function(ev, member) {
+        if (!member.typing && this.state.members.indexOf(member) !== -1) {
+            this.setState({
+                recentOffMembers: this.state.recentOffMembers.concat(member),
+            });
+            setTimeout(() => {
+                this.setState({
+                    recentOffMembers: this.state.recentOffMembers.filter( m => m.userId !== member.userId),
+                });
+            }, 3000);
+        }
         this.setState({
             members: WhoIsTyping.usersTypingApartFromMe(this.props.room),
         }, () => {
@@ -103,26 +117,35 @@ module.exports = React.createClass({
     },
 
     render: function() {
-        console.info("Rendering ", this.state.members);
-
-        if (this.state.members.length === 0) {
-            return null;
+        const members = Array.from(new Set(this.state.members.concat(this.state.recentOffMembers)));
+        console.info('Rendering',members)
+        if (members.length === 0) {
+            return (
+                <div>
+                    {this.props.children}
+                </div>
+            );
         }
 
         return (
-            <div className="mx_EventTile mx_EventTile_sending">
-                <span className="mx_RoomStatusBar_typingIndicatorAvatars" style={{position:"absolute", left:"0px"}}>
-                    {this._renderAvatars(this.state.members, this.props.limit)}
-                </span>
-                <span className="mx_SenderProfile">
-                    {this._renderTypingDescription(this.state.members, this.props.limit)}
-                </span>
-                <div className="mx_EventTile_line">
-                    <span className="mx_MTextBody mx_EventTile_content">
-                        <span className="mx_EventTile_body">
-                            ...
-                        </span>
+            <div>
+                <div className="mx_animated_event_tile_adding">
+                    {this.props.children}
+                </div>
+                <div className="mx_EventTile mx_EventTile_sending">
+                    <span className="mx_RoomStatusBar_typingIndicatorAvatars" style={{position:"absolute", left:"0px"}}>
+                        {this._renderAvatars(members, this.props.limit)}
                     </span>
+                    <span className="mx_SenderProfile">
+                        {this._renderTypingDescription(members, this.props.limit)}
+                    </span>
+                    <div className="mx_EventTile_line">
+                        <span className="mx_MTextBody mx_EventTile_content">
+                            <span className="mx_EventTile_body">
+                                ...
+                            </span>
+                        </span>
+                    </div>
                 </div>
             </div>
         );
