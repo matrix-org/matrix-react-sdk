@@ -28,7 +28,14 @@ export default React.createClass({
         value: React.PropTypes.string,
         button: React.PropTypes.string,
         focus: React.PropTypes.bool,
+        validateInput: React.PropTypes.func,
         onFinished: React.PropTypes.func.isRequired,
+    },
+
+    getInitialState: function() {
+      return {
+        validationMessage: null,
+      };
     },
 
     getDefaultProps: function() {
@@ -37,6 +44,7 @@ export default React.createClass({
             value: "",
             description: "",
             button: "OK",
+            validateInput: function() { return true; },
             focus: true,
         };
     },
@@ -49,7 +57,13 @@ export default React.createClass({
     },
 
     onOk: function() {
-        this.props.onFinished(true, this.refs.textinput.value);
+        const validationResult = this.props.validateInput(this.refs.textinput.value);
+        console.log(validationResult);
+        if (validationResult === true) {
+          this.props.onFinished(true, this.refs.textinput.value);
+        } else {
+          this.setState({validationMessage: validationResult});
+        }
     },
 
     onCancel: function() {
@@ -58,6 +72,12 @@ export default React.createClass({
 
     render: function() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
+        let validation = null;
+        if (this.state.validationMessage !== null) {
+          validation = (
+            <p className="mx_TextInputDialog_validateMsg"> {this.state.validationMessage} </p>
+          );
+        }
         return (
             <BaseDialog className="mx_TextInputDialog" onFinished={this.props.onFinished}
                 onEnterPressed={this.onOk}
@@ -66,6 +86,7 @@ export default React.createClass({
                 <div className="mx_Dialog_content">
                     <div className="mx_TextInputDialog_label">
                         <label htmlFor="textinput"> {this.props.description} </label>
+                        {validation}
                     </div>
                     <div>
                         <input id="textinput" ref="textinput" className="mx_TextInputDialog_input" defaultValue={this.props.value} autoFocus={this.props.focus} size="64" onKeyDown={this.onKeyDown}/>
