@@ -41,9 +41,6 @@ module.exports = React.createClass({
 
     componentWillMount: function() {
         MatrixClientPeg.get().on("RoomMember.typing", this.onRoomMemberTyping);
-        setInterval(() => {
-            this.props.onSizeChanged();
-        }, 10);
     },
 
     componentWillUnmount: function() {
@@ -58,11 +55,11 @@ module.exports = React.createClass({
             this.setState({
                 recentOffMembers: this.state.recentOffMembers.concat(member),
             });
-            setTimeout(() => {
+            MatrixClientPeg.get().on('Room.timeline', (e) => {
                 this.setState({
-                    recentOffMembers: this.state.recentOffMembers.filter( m => m.userId !== member.userId),
+                    recentOffMembers: this.state.recentOffMembers.filter( m => m.userId !== e.getSender()),
                 });
-            }, 3000);
+            });
         }
         this.setState({
             members: WhoIsTyping.usersTypingApartFromMe(this.props.room),
