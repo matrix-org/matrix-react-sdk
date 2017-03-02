@@ -65,6 +65,9 @@ module.exports = React.createClass({
         // displayname, if any, to set on the device when logging
         // in/registering.
         defaultDeviceDisplayName: React.PropTypes.string,
+
+        // A function that makes a registration URL
+        makeRegistrationUrl: React.PropTypes.func.isRequired,
     },
 
     childContextTypes: {
@@ -363,6 +366,7 @@ module.exports = React.createClass({
                 // stop the client: if we are syncing whilst the registration
                 // is completed in another browser, we'll be 401ed for using
                 // a guest access token for a non-guest account.
+                // It will be restarted in onReturnToGuestClick
                 Lifecycle.stopMatrixClient();
 
                 this.notifyNewScreen('register');
@@ -1132,6 +1136,7 @@ module.exports = React.createClass({
                     sessionId={this.state.register_session_id}
                     idSid={this.state.register_id_sid}
                     email={this.props.startingFragmentQueryParams.email}
+                    referrer={this.props.startingFragmentQueryParams.referrer}
                     username={this.state.upgradeUsername}
                     guestAccessToken={this.state.guestAccessToken}
                     defaultHsUrl={this.getDefaultHsUrl()}
@@ -1140,7 +1145,7 @@ module.exports = React.createClass({
                     teamServerConfig={this.props.config.teamServerConfig}
                     customHsUrl={this.getCurrentHsUrl()}
                     customIsUrl={this.getCurrentIsUrl()}
-                    makeRegistrationUrl={this.props.makeRegistrationUrl}
+                    makeRegistrationUrl={this._makeRegistrationUrl}
                     defaultDeviceDisplayName={this.props.defaultDeviceDisplayName}
                     onLoggedIn={this.onRegistered}
                     onLoginClick={this.onLoginClick}
