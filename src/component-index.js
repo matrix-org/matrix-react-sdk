@@ -233,6 +233,8 @@ import views$settings$DevicesPanelEntry from './components/views/settings/Device
 views$settings$DevicesPanelEntry && (module.exports.components['views.settings.DevicesPanelEntry'] = views$settings$DevicesPanelEntry);
 import views$settings$EnableNotificationsButton from './components/views/settings/EnableNotificationsButton';
 views$settings$EnableNotificationsButton && (module.exports.components['views.settings.EnableNotificationsButton'] = views$settings$EnableNotificationsButton);
+import views$settings$RoomTags from './components/views/settings/RoomTags';
+views$settings$RoomTags && (module.exports.components['views.settings.RoomTags'] = views$settings$RoomTags);
 import views$voip$CallView from './components/views/voip/CallView';
 views$voip$CallView && (module.exports.components['views.voip.CallView'] = views$voip$CallView);
 import views$voip$IncomingCallBox from './components/views/voip/IncomingCallBox';

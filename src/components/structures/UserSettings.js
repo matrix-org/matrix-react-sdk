@@ -498,9 +498,19 @@ module.exports = React.createClass({
         );
     },
 
-    _renderUserInterfaceSettings: function() {
-        var client = MatrixClientPeg.get();
+    _renderRoomTags: function() {
+      const client = MatrixClientPeg.get();
+      const RoomTags = sdk.getComponent("settings.RoomTags");
+      if (client.isGuest()) {
+        return;
+      }
+      return (<div className="mx_Usersettings_section">
+        <h3>Room Tags</h3>
+        <RoomTags></RoomTags>
+      </div>);
+    },
 
+    _renderUserInterfaceSettings: function() {
         return (
             <div>
                 <h3>User Interface</h3>
@@ -762,12 +772,12 @@ module.exports = React.createClass({
                 throw new Error("Unknown state.phase => " + this.state.phase);
         }
         // can only get here if phase is UserSettings.DISPLAY
-        var SimpleRoomHeader = sdk.getComponent('rooms.SimpleRoomHeader');
-        var ChangeDisplayName = sdk.getComponent("views.settings.ChangeDisplayName");
-        var ChangePassword = sdk.getComponent("views.settings.ChangePassword");
-        var ChangeAvatar = sdk.getComponent('settings.ChangeAvatar');
-        var Notifications = sdk.getComponent("settings.Notifications");
-        var EditableText = sdk.getComponent('elements.EditableText');
+        const SimpleRoomHeader = sdk.getComponent('rooms.SimpleRoomHeader');
+        const ChangeDisplayName = sdk.getComponent("views.settings.ChangeDisplayName");
+        const ChangePassword = sdk.getComponent("views.settings.ChangePassword");
+        const ChangeAvatar = sdk.getComponent('settings.ChangeAvatar');
+        const Notifications = sdk.getComponent("settings.Notifications");
+        const EditableText = sdk.getComponent('elements.EditableText');
 
         var avatarUrl = (
             this.state.avatarUrl ? MatrixClientPeg.get().mxcUrlToHttp(this.state.avatarUrl) : null
@@ -910,6 +920,8 @@ module.exports = React.createClass({
                 {this._renderReferral()}
 
                 {notification_area}
+
+                {this._renderRoomTags()}
 
                 {this._renderUserInterfaceSettings()}
                 {this._renderLabs()}
