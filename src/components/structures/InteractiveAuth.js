@@ -59,6 +59,12 @@ export default React.createClass({
         clientSecret: React.PropTypes.string,
         emailSid: React.PropTypes.string,
 
+        // Callback to be run with the auth object, when it
+        // has been created. This allows the component to
+        // access more specific functions only available on
+        // the auth object itself.
+        onAuthObject: React.PropTypes.func,
+
         // If true, poll to see if the auth flow has been completed
         // out-of-band
         poll: React.PropTypes.bool,
@@ -86,6 +92,7 @@ export default React.createClass({
             clientSecret: this.props.clientSecret,
             emailSid: this.props.emailSid,
         });
+        if (this.props.onAuthObject) this.props.onAuthObject(this._authLogic);
 
         this._authLogic.attemptAuth().then((result) => {
             this.props.onAuthFinished(true, result);
