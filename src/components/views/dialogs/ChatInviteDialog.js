@@ -26,6 +26,7 @@ import dis from '../../../dispatcher';
 import Modal from '../../../Modal';
 import AccessibleButton from '../elements/AccessibleButton';
 import q from 'q';
+import FuzzySearch from '../../../FuzzySearch.js';
 
 const TRUNCATE_QUERY_LIST = 40;
 
@@ -84,6 +85,14 @@ module.exports = React.createClass({
         if (this.props.focus) {
             // Set the cursor at the end of the text input
             this.refs.textinput.value = this.props.value;
+        }
+        // Create a FuzzySearch instance for fuzzy searching this._userList
+        if (!this._fuzzySearch) {
+            this._fuzzySearch = new FuzzySearch(
+                // Use an empty list at first that will later be populated
+                // (see this._updateUserList)
+                [], {keys: ["displayName", "userId"], distance: 4, resultCount: 20}
+            );
         }
         this._updateUserList();
     },
@@ -167,45 +176,52 @@ module.exports = React.createClass({
         const query = ev.target.value;
         let queryList = [];
 
-        // Only do search if there is something to search
-        if (query.length > 0 && query != '@') {
-            // filter the known users list
-            queryList = this._userList.filter((user) => {
-                return this._matches(query, user);
-            }).map((user) => {
-                // Return objects, structure of which is defined
-                // by InviteAddressType
-                return {
-                    addressType: 'mx',
-                    address: user.userId,
-                    displayName: user.displayName,
-                    avatarMxc: user.avatarUrl,
-                    isKnown: true,
-                }
-            });
+        if (query.length < 2) {
+            return;
+        }
 
-            // If the query isn't a user we know about, but is a
-            // valid address, add an entry for that
-            if (queryList.length == 0) {
-                const addrType = getAddressType(query);
-                if (addrType !== null) {
-                    queryList[0] = {
-                        addressType: addrType,
-                        address: query,
-                        isKnown: false,
-                    };
-                    if (this._cancelThreepidLookup) this._cancelThreepidLookup();
-                    if (addrType == 'email') {
-                        this._lookupThreepid(addrType, query).done();
+        // if (this.queryChangedDebouncer) {
+        //     clearTimeout(this.queryChangedDebouncer);
+        // }
+        // this.queryChangedDebouncer = setTimeout(() => {
+            // Only do search if there is something to search
+            if (query.length > 0 && query != '@') {
+                queryList = this._fuzzySearch.search(query).map((user) => {
+                    // Return objects, structure of which is defined
+                    // by InviteAddressType
+                    return {
+                        addressType: 'mx',
+                        address: user.userId,
+                        displayName: user.displayName,
+                        avatarMxc: user.avatarUrl,
+                        isKnown: true,
+                    }
+                });
+
+                // If the query isn't a user we know about, but is a
+                // valid address, add an entry for that
+                if (queryList.length == 0) {
+                    const addrType = getAddressType(query);
+                    if (addrType !== null) {
+                        queryList[0] = {
+                            addressType: addrType,
+                            address: query,
+                            isKnown: false,
+                        };
+                        if (this._cancelThreepidLookup) this._cancelThreepidLookup();
+                        if (addrType == 'email') {
+                            this._lookupThreepid(addrType, query).done();
+                        }
                     }
                 }
             }
-        }
-
-        this.setState({
-            queryList: queryList,
-            error: false,
-        });
+            this.setState({
+                queryList: queryList,
+                error: false,
+            }, () => {
+                this.addressSelector.moveSelectionTop();
+            });
+        // }, 200);
     },
 
     onDismissed: function(index) {
@@ -331,48 +347,13 @@ module.exports = React.createClass({
     _updateUserList: new rate_limited_func(function() {
         // Get all the users
         this._userList = MatrixClientPeg.get().getUsers();
+        // Remove current user
+        const meIx = this._userList.findIndex((u) => {
+            return u.userId === MatrixClientPeg.get().credentials.userId;
+        });
+        this._userList.splice(meIx, 1);
+        this._fuzzySearch.setObjects(this._userList);
     }, 500),
-
-    // This is the search algorithm for matching users
-    _matches: function(query, user) {
-        var name = user.displayName.toLowerCase();
-        var uid = user.userId.toLowerCase();
-        query = query.toLowerCase();
-
-        // don't match any that are already on the invite list
-        if (this._isOnInviteList(uid)) {
-            return false;
-        }
-
-        // ignore current user
-        if (uid === MatrixClientPeg.get().credentials.userId) {
-            return false;
-        }
-
-        // direct prefix matches
-        if (name.indexOf(query) === 0 || uid.indexOf(query) === 0) {
-            return true;
-        }
-
-        // strip @ on uid and try matching again
-        if (uid.length > 1 && uid[0] === "@" && uid.substring(1).indexOf(query) === 0) {
-            return true;
-        }
-
-        // Try to find the query following a "word boundary", except that
-        // this does avoids using \b because it only considers letters from
-        // the roman alphabet to be word characters.
-        // Instead, we look for the query following either:
-        //  * The start of the string
-        //  * Whitespace, or
-        //  * A fixed number of punctuation characters
-        const expr = new RegExp("(?:^|[\\s\\(\)'\",\.-_@\?;:{}\\[\\]\\#~`\\*\\&\\$])" + escapeRegExp(query));
-        if (expr.test(name)) {
-            return true;
-        }
-
-        return false;
-    },
 
     _isOnInviteList: function(uid) {
         for (let i = 0; i < this.state.inviteList.length; i++) {
