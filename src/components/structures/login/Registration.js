@@ -306,15 +306,20 @@ module.exports = React.createClass({
             guestAccessToken = null;
         }
 
+        // Only send the bind params if we're sending username / pw params
+        // (Since we need to send no params at all to use the ones saved in the
+        // session).
+        const bindThreepids = this.state.formVals.password ? {
+            email: true,
+            msisdn: true,
+        } : {};
+
         return this._matrixClient.register(
             this.state.formVals.username,
             this.state.formVals.password,
             undefined, // session id: included in the auth dict already
             auth,
-            // Only send the bind_email param if we're sending username / pw params
-            // (Since we need to send no params at all to use the ones saved in the
-            // session).
-            Boolean(this.state.formVals.username) || undefined,
+            bindThreepids,
             guestAccessToken,
         );
     },
