@@ -42,6 +42,7 @@ var Lifecycle = require('../../Lifecycle');
 var PageTypes = require('../../PageTypes');
 
 var createRoom = require("../../createRoom");
+import * as UDEHandler from '../../UnknownDeviceErrorHandler';
 
 module.exports = React.createClass({
     displayName: 'MatrixChat',
@@ -243,6 +244,7 @@ module.exports = React.createClass({
 
     componentDidMount: function() {
         this.dispatcherRef = dis.register(this.onAction);
+        UDEHandler.startListening();
 
         this.focusComposer = false;
         window.addEventListener("focus", this.onFocus);
@@ -289,6 +291,7 @@ module.exports = React.createClass({
     componentWillUnmount: function() {
         Lifecycle.stopMatrixClient();
         dis.unregister(this.dispatcherRef);
+        UDEHandler.stopListening();
         window.removeEventListener("focus", this.onFocus);
         window.removeEventListener('resize', this.handleResize);
     },
