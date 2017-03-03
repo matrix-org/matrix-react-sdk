@@ -223,8 +223,8 @@ module.exports = React.createClass({
             this.props.onLoggedIn({
                 userId: response.user_id,
                 deviceId: response.device_id,
-                homeserverUrl: this.registerLogic.getHomeserverUrl(),
-                identityServerUrl: this.registerLogic.getIdentityServerUrl(),
+                homeserverUrl: this._matrixClient.getHomeserverUrl(),
+                identityServerUrl: this._matrixClient.getIdentityServerUrl(),
                 accessToken: response.access_token
             }, teamToken);
         }).then(() => {
