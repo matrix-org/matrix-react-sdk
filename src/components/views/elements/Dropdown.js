@@ -236,7 +236,7 @@ export default class Dropdown extends React.Component {
     }
 
     _getMenuOptions() {
-        return this.props.children.map((child) => {
+        const options = this.props.children.map((child) => {
             return (
                 <MenuOption key={child.key} dropdownKey={child.key}
                     highlighted={this.state.highlightedOption == child.key}
@@ -247,6 +247,15 @@ export default class Dropdown extends React.Component {
                 </MenuOption>
             );
         });
+
+        if (!this.state.searchQuery) {
+            options.push(
+                <div key="_searchprompt" className="mx_Dropdown_searchPrompt">
+                    Type to search...
+                </div>
+            );
+        }
+        return options;
     }
 
     render() {
@@ -263,12 +272,10 @@ export default class Dropdown extends React.Component {
                 onChange={this._onInputChange}
                 value={this.state.searchQuery}
             />;
+            menu = <div className="mx_Dropdown_menu" style={menuStyle}>
+                {this._getMenuOptions()}
+            </div>;
         } else {
-            // we render the menu in any case and hide it when invisible
-            // as otherwise it takes quite a long time to open, so we
-            // take the rendering hit when we load the register screen.
-            menuStyle.display = 'none';
-
             const selectedChild = this.props.getShortOption ?
                 this.props.getShortOption(this.state.selectedOption) :
                 this.childrenByKey[this.state.selectedOption];
@@ -278,9 +285,6 @@ export default class Dropdown extends React.Component {
         }
 
         const menuOptions = this._getMenuOptions();
-        menu = <div className="mx_Dropdown_menu" style={menuStyle}>
-            {this._getMenuOptions()}
-        </div>;
 
         const dropdownClasses = {
             mx_Dropdown: true,

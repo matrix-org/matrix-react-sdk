@@ -21,12 +21,19 @@ import sdk from '../../../index';
 import { COUNTRIES } from '../../../phonenumber';
 import { charactersToImageNode } from '../../../HtmlUtils';
 
+const COUNTRIES_BY_ISO2 = new Object(null);
+for (const c of COUNTRIES) {
+    COUNTRIES_BY_ISO2[c.iso2] = c;
+}
+
 function countryMatchesSearchQuery(query, country) {
     if (country.name.toUpperCase().indexOf(query.toUpperCase()) == 0) return true;
     if (country.iso2 == query.toUpperCase()) return true;
     if (country.prefix == query) return true;
     return false;
 }
+
+const MAX_DISPLAYED_ROWS = 2;
 
 export default class CountryDropdown extends React.Component {
     constructor() {
@@ -62,8 +69,23 @@ export default class CountryDropdown extends React.Component {
             displayedCountries = COUNTRIES.filter(
                 countryMatchesSearchQuery.bind(this, this.state.searchQuery),
             );
+            if (
+                this.state.searchQuery.length == 2 &&
+                COUNTRIES_BY_ISO2[this.state.searchQuery.toUpperCase()]
+            ) {
+                // exact ISO2 country name match: make the first result the matches ISO2
+                const matched = COUNTRIES_BY_ISO2[this.state.searchQuery.toUpperCase()];
+                displayedCountries = displayedCountries.filter((c) => {
+                    return c.iso2 != matched.iso2;
+                });
+                displayedCountries.unshift(matched);
+            }
         } else {
             displayedCountries = COUNTRIES;
+        }
+
+        if (displayedCountries.length > MAX_DISPLAYED_ROWS) {
+            displayedCountries = displayedCountries.slice(0, MAX_DISPLAYED_ROWS);
         }
 
         const options = displayedCountries.map((country) => {
