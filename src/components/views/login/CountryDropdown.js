@@ -98,8 +98,15 @@ export default class CountryDropdown extends React.Component {
         return <Dropdown className={this.props.className}
             onOptionChange={this.props.onOptionChange} onSearchChange={this._onSearchChange}
             menuWidth={298} getShortOption={this._flagImgForIso2}
+            initialSelectedOption={this.props.initialSelectedCountry}
         >
             {options}
         </Dropdown>
     }
 }
+
+CountryDropdown.propTypes = {
+    className: React.PropTypes.string,
+    onOptionChange: React.PropTypes.func,
+    initialSelectedCountry: React.PropTypes.string,
+};

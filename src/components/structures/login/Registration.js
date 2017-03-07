@@ -363,6 +363,8 @@ module.exports = React.createClass({
                     <RegistrationForm
                         defaultUsername={this.state.formVals.username}
                         defaultEmail={this.state.formVals.email}
+                        defaultPhoneCountry={this.state.formVals.phoneCountry}
+                        defaultPhoneNumber={this.state.formVals.phoneNumber}
                         defaultPassword={this.state.formVals.password}
                         teamsConfig={this.state.teamsConfig}
                         guestUsername={guestUsername}

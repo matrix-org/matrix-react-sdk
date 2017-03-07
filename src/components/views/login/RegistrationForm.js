@@ -38,6 +38,8 @@ module.exports = React.createClass({
     propTypes: {
         // Values pre-filled in the input boxes when the component loads
         defaultEmail: React.PropTypes.string,
+        defaultPhoneCountry: React.PropTypes.string,
+        defaultPhoneNumber: React.PropTypes.string,
         defaultUsername: React.PropTypes.string,
         defaultPassword: React.PropTypes.string,
         teamsConfig: React.PropTypes.shape({
@@ -312,10 +314,11 @@ module.exports = React.createClass({
             <div className="mx_Login_phoneSection">
                 <CountryDropdown ref="phone_country" onOptionChange={this._onPhoneCountryChange}
                     className="mx_Login_phoneCountry"
+                    initialSelectedCountry={this.props.defaultPhoneCountry}
                 />
                 <input type="text" ref="phoneNumber"
                     placeholder="Mobile phone number (optional)"
-                    defaultValue={this.props.defaultMsisdn}
+                    defaultValue={this.props.defaultPhoneNumber}
                     className={this._classForField(
                         FIELD_PHONE_NUMBER, 'mx_Login_phoneNumberField', 'mx_Login_field'
                     )}

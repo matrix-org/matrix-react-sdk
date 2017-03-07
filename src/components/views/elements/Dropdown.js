@@ -89,7 +89,7 @@ export default class Dropdown extends React.Component {
             // True if the menu is dropped-down
             expanded: false,
             // The key of the selected option
-            selectedOption: props.children[0].key,
+            selectedOption: this.props.initialSelectedOption || props.children[0].key,
             // The key of the highlighted option
             // (the option that would become selected if you pressed enter)
             highlightedOption: props.children[0].key,
@@ -319,4 +319,5 @@ Dropdown.propTypes = {
     // unspecified, the appropriate child element is used as
     // in the dropped-down menu.
     getShortOption: React.PropTypes.func,
+    initialSelectedOption: React.PropTypes.string,
 }
