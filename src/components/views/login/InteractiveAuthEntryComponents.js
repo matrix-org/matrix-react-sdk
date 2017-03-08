@@ -329,6 +329,7 @@ export const MsisdnAuthEntry = React.createClass({
             this._sid, this.props.clientSecret, this.state.token
         ).catch((e) => {
             this.props.fail(e);
+            throw e;
         }).then((result) => {
             if (result.success) {
                 const idServerParsedUrl = url.parse(
@@ -347,6 +348,8 @@ export const MsisdnAuthEntry = React.createClass({
                     errorText: "Token incorrect",
                 });
             }
+        }).catch((e) => {
+            console.log("Failed to submit msisdn token");
         }).done();
     },
 
