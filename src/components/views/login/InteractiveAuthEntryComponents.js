@@ -265,7 +265,15 @@ export const MsisdnAuthEntry = React.createClass({
     },
 
     propTypes: {
+        inputs: React.PropTypes.shape({
+            phoneCountry: React.PropTypes.string,
+            phoneNumber: React.PropTypes.string,
+        }),
+        fail: React.PropTypes.func,
+        clientSecret: React.PropTypes.func,
         submitAuthDict: React.PropTypes.func.isRequired,
+        matrixClient: React.PropTypes.object,
+        submitAuthDict: React.PropTypes.func,
     },
 
     getInitialState: function() {
