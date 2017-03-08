@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2017 Vector Creations Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -41,6 +42,7 @@ var Lifecycle = require('../../Lifecycle');
 var PageTypes = require('../../PageTypes');
 
 var createRoom = require("../../createRoom");
+import * as UDEHandler from '../../UnknownDeviceErrorHandler';
 
 module.exports = React.createClass({
     displayName: 'MatrixChat',
@@ -64,6 +66,9 @@ module.exports = React.createClass({
         // displayname, if any, to set on the device when logging
         // in/registering.
         defaultDeviceDisplayName: React.PropTypes.string,
+
+        // A function that makes a registration URL
+        makeRegistrationUrl: React.PropTypes.func.isRequired,
     },
 
     childContextTypes: {
@@ -239,6 +244,7 @@ module.exports = React.createClass({
 
     componentDidMount: function() {
         this.dispatcherRef = dis.register(this.onAction);
+        UDEHandler.startListening();
 
         this.focusComposer = false;
         window.addEventListener("focus", this.onFocus);
@@ -285,6 +291,7 @@ module.exports = React.createClass({
     componentWillUnmount: function() {
         Lifecycle.stopMatrixClient();
         dis.unregister(this.dispatcherRef);
+        UDEHandler.stopListening();
         window.removeEventListener("focus", this.onFocus);
         window.removeEventListener('resize', this.handleResize);
     },
@@ -321,23 +328,19 @@ module.exports = React.createClass({
                 Lifecycle.logout();
                 break;
             case 'start_registration':
-                var newState = payload.params || {};
-                newState.screen = 'register';
-                if (
-                    payload.params &&
-                    payload.params.client_secret &&
-                    payload.params.session_id &&
-                    payload.params.hs_url &&
-                    payload.params.is_url &&
-                    payload.params.sid
-                ) {
-                    newState.register_client_secret = payload.params.client_secret;
-                    newState.register_session_id = payload.params.session_id;
-                    newState.register_hs_url = payload.params.hs_url;
-                    newState.register_is_url = payload.params.is_url;
-                    newState.register_id_sid = payload.params.sid;
-                }
-                this.setStateForNewScreen(newState);
+                const params = payload.params || {};
+                this.setStateForNewScreen({
+                    screen: 'register',
+                    // these params may be undefined, but if they are,
+                    // unset them from our state: we don't want to
+                    // resume a previous registration session if the
+                    // user just clicked 'register'
+                    register_client_secret: params.client_secret,
+                    register_session_id: params.session_id,
+                    register_hs_url: params.hs_url,
+                    register_is_url: params.is_url,
+                    register_id_sid: params.sid,
+                });
                 this.notifyNewScreen('register');
                 break;
             case 'start_login':
@@ -353,13 +356,22 @@ module.exports = React.createClass({
                 });
                 break;
             case 'start_upgrade_registration':
-                // stash our guest creds so we can backout if needed
+                // also stash our credentials, then if we restore the session,
+                // we can just do it the same way whether we started upgrade
+                // registration or explicitly logged out
                 this.guestCreds = MatrixClientPeg.getCredentials();
                 this.setStateForNewScreen({
                     screen: "register",
                     upgradeUsername: MatrixClientPeg.get().getUserIdLocalpart(),
                     guestAccessToken: MatrixClientPeg.get().getAccessToken(),
                 });
+
+                // stop the client: if we are syncing whilst the registration
+                // is completed in another browser, we'll be 401ed for using
+                // a guest access token for a non-guest account.
+                // It will be restarted in onReturnToGuestClick
+                Lifecycle.stopMatrixClient();
+
                 this.notifyNewScreen('register');
                 break;
             case 'start_password_recovery':
@@ -519,7 +531,7 @@ module.exports = React.createClass({
                 this._onSetTheme(payload.value);
                 break;
             case 'on_logged_in':
-                this._onLoggedIn();
+                this._onLoggedIn(payload.teamToken);
                 break;
             case 'on_logged_out':
                 this._onLoggedOut();
@@ -695,13 +707,20 @@ module.exports = React.createClass({
     /**
      * Called when a new logged in session has started
      */
-    _onLoggedIn: function(credentials) {
+    _onLoggedIn: function(teamToken) {
         this.guestCreds = null;
         this.notifyNewScreen('');
         this.setState({
             screen: undefined,
             logged_in: true,
         });
+
+        if (teamToken) {
+            this._teamToken = teamToken;
+            this._setPage(PageTypes.HomePage);
+        } else if (this._is_registered) {
+            this._setPage(PageTypes.UserSettings);
+        }
     },
 
     /**
@@ -718,6 +737,7 @@ module.exports = React.createClass({
             currentRoomId: null,
             page_type: PageTypes.RoomDirectory,
         });
+        this._teamToken = null;
     },
 
     /**
@@ -988,23 +1008,11 @@ module.exports = React.createClass({
         }
     },
 
-    onRegistered: function(credentials) {
-        Lifecycle.setLoggedIn(credentials);
-        // do post-registration stuff
-        // This now goes straight to user settings
-        // We use _setPage since if we wait for
-        // showScreen to do the dispatch loop,
-        // the showScreen dispatch will race with the
-        // sdk sync finishing and we'll probably see
-        // the page type still unset when the MatrixClient
-        // is started and show the Room Directory instead.
-        //this.showScreen("view_user_settings");
-        this._setPage(PageTypes.UserSettings);
-    },
-
-    onTeamMemberRegistered: function(teamToken) {
+    onRegistered: function(credentials, teamToken) {
+        // teamToken may not be truthy
         this._teamToken = teamToken;
-        this._setPage(PageTypes.HomePage);
+        this._is_registered = true;
+        Lifecycle.setLoggedIn(credentials);
     },
 
     onFinishPostRegistration: function() {
@@ -1070,6 +1078,13 @@ module.exports = React.createClass({
         this.setState({currentRoomId: room_id});
     },
 
+    _makeRegistrationUrl: function(params) {
+        if (this.props.startingFragmentQueryParams.referrer) {
+            params.referrer = this.props.startingFragmentQueryParams.referrer;
+        }
+        return this.props.makeRegistrationUrl(params);
+    },
+
     render: function() {
         var ForgotPassword = sdk.getComponent('structures.login.ForgotPassword');
         var LoggedInView = sdk.getComponent('structures.LoggedInView');
@@ -1133,9 +1148,8 @@ module.exports = React.createClass({
                     teamServerConfig={this.props.config.teamServerConfig}
                     customHsUrl={this.getCurrentHsUrl()}
                     customIsUrl={this.getCurrentIsUrl()}
-                    registrationUrl={this.props.registrationUrl}
+                    makeRegistrationUrl={this._makeRegistrationUrl}
                     defaultDeviceDisplayName={this.props.defaultDeviceDisplayName}
-                    onTeamMemberRegistered={this.onTeamMemberRegistered}
                     onLoggedIn={this.onRegistered}
                     onLoginClick={this.onLoginClick}
                     onRegisterClick={this.onRegisterClick}

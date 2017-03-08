@@ -553,6 +553,13 @@ module.exports = WithMatrixClient(React.createClass({
         Modal.createDialog(ImageView, params, "mx_Dialog_lightbox");
     },
 
+    onRoomTileClick(roomId) {
+        dis.dispatch({
+            action: 'view_room',
+            room_id: roomId,
+        });
+    },
+
     _renderDevices: function() {
         if (!this._enableDevices) {
             return null;
@@ -569,7 +576,7 @@ module.exports = WithMatrixClient(React.createClass({
         } else if (devices === null) {
             devComponents = "Unable to load device list";
         } else if (devices.length === 0) {
-            devComponents = "No registered devices";
+            devComponents = "No devices with registered encryption keys";
         } else {
             devComponents = [];
             for (var i = 0; i < devices.length; i++) {
@@ -613,6 +620,7 @@ module.exports = WithMatrixClient(React.createClass({
                             unread={Unread.doesRoomHaveUnreadMessages(room)}
                             highlight={highlight}
                             isInvite={me.membership == "invite"}
+                            onClick={this.onRoomTileClick}
                         />
                     );
                 }
