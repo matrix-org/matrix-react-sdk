@@ -289,6 +289,8 @@ export default class Dropdown extends React.Component {
             dropdownClasses[this.props.className] = true;
         }
 
+        // Note the menu sits inside the AccessibleButton div so it's anchored
+        // to the input, but overflows below it. The root contains both.
         return <div className={classnames(dropdownClasses)} ref={this._collectRoot}>
             <AccessibleButton className="mx_Dropdown_input" onClick={this._onInputClick}>
                 {currentValue}
