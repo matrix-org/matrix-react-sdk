@@ -90,12 +90,14 @@ export default class Dropdown extends React.Component {
 
         this._reindexChildren(this.props.children);
 
+        const firstChild = React.Children.toArray(props.children)[0];
+
         this.state = {
             // True if the menu is dropped-down
             expanded: false,
             // The key of the highlighted option
             // (the option that would become selected if you pressed enter)
-            highlightedOption: React.Children.toArray(props.children)[0].key,
+            highlightedOption: firstChild ? firstChild.key : null,
             // the current search query
             searchQuery: '',
         };
@@ -113,8 +115,9 @@ export default class Dropdown extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         this._reindexChildren(nextProps.children);
+        const firstChild = React.Children.toArray(nextProps.children)[0];
         this.setState({
-            highlightedOption: nextProps.children[0].key,
+            highlightedOption: firstChild ? firstChild.key : null,
         });
     }
 
