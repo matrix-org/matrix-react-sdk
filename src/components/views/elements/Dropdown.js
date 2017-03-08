@@ -119,7 +119,7 @@ export default class Dropdown extends React.Component {
     componentWillReceiveProps(nextProps) {
         this._reindexChildren(nextProps.children);
         this.setState({
-            highlightedOption: Object.keys(this.childrenByKey)[0],
+            highlightedOption: nextProps.children[0].key,
         });
     }
 
