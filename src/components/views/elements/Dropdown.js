@@ -20,7 +20,7 @@ import AccessibleButton from './AccessibleButton';
 
 class MenuOption extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this._onMouseEnter = this._onMouseEnter.bind(this);
         this._onClick = this._onClick.bind(this);
     }
