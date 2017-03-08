@@ -118,6 +118,6 @@ export default class CountryDropdown extends React.Component {
 
 CountryDropdown.propTypes = {
     className: React.PropTypes.string,
-    onOptionChange: React.PropTypes.func,
+    onOptionChange: React.PropTypes.func.isRequired,
     value: React.PropTypes.string,
 };
