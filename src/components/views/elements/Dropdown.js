@@ -95,7 +95,7 @@ export default class Dropdown extends React.Component {
             expanded: false,
             // The key of the highlighted option
             // (the option that would become selected if you pressed enter)
-            highlightedOption: props.children[0].key,
+            highlightedOption: React.Children.toArray(props.children)[0].key,
             // the current search query
             searchQuery: '',
         };
@@ -120,9 +120,9 @@ export default class Dropdown extends React.Component {
 
     _reindexChildren(children) {
         this.childrenByKey = {};
-        for (const child of children) {
+        React.Children.forEach(children, (child) => {
             this.childrenByKey[child.key] = child;
-        }
+        });
     }
 
     _onDocumentClick(ev) {
@@ -234,7 +234,7 @@ export default class Dropdown extends React.Component {
     }
 
     _getMenuOptions() {
-        const options = this.props.children.map((child) => {
+        const options = React.Children.map(this.props.children, (child) => {
             return (
                 <MenuOption key={child.key} dropdownKey={child.key}
                     highlighted={this.state.highlightedOption == child.key}
