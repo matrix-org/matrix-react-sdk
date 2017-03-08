@@ -59,6 +59,11 @@ export function unicodeToImage(str) {
 }
 
 /**
+ * Given one or more unicode characters (represented by unicode
+ * character number), return an image node with the corresponding
+ * emoji.
+ *
+ * @param alt {string} String to use for the image alt text
  * @param unicode {integer} One or more integers representing unicode characters
  * @returns A img node with the corresponding emoji
  */
