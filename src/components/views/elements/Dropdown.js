@@ -282,8 +282,6 @@ export default class Dropdown extends React.Component {
             </div>
         }
 
-        const menuOptions = this._getMenuOptions();
-
         const dropdownClasses = {
             mx_Dropdown: true,
         };
