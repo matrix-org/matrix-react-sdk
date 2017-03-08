@@ -36,12 +36,19 @@ function countryMatchesSearchQuery(query, country) {
 const MAX_DISPLAYED_ROWS = 2;
 
 export default class CountryDropdown extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this._onSearchChange = this._onSearchChange.bind(this);
 
         this.state = {
             searchQuery: '',
+        }
+
+        if (!props.value) {
+            // If no value is given, we start with the first
+            // country selected, but our parent component
+            // doesn't know this, therefore we do this.
+            this.props.onOptionChange(COUNTRIES[0].iso2);
         }
     }
 
@@ -95,10 +102,14 @@ export default class CountryDropdown extends React.Component {
             </div>;
         });
 
+        // default value here too, otherwise we need to handle null / undefined
+        // values between mounting and the initial value propgating
+        const value = this.props.value || COUNTRIES[0].iso2;
+
         return <Dropdown className={this.props.className}
             onOptionChange={this.props.onOptionChange} onSearchChange={this._onSearchChange}
             menuWidth={298} getShortOption={this._flagImgForIso2}
-            initialSelectedOption={this.props.initialSelectedCountry}
+            value={value}
         >
             {options}
         </Dropdown>
@@ -108,5 +119,5 @@ export default class CountryDropdown extends React.Component {
 CountryDropdown.propTypes = {
     className: React.PropTypes.string,
     onOptionChange: React.PropTypes.func,
-    initialSelectedCountry: React.PropTypes.string,
+    value: React.PropTypes.string,
 };

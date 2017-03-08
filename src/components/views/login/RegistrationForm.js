@@ -77,7 +77,7 @@ module.exports = React.createClass({
             fieldValid: {},
             selectedTeam: null,
             // The ISO2 country code selected in the phone number entry
-            phoneCountry: null,
+            phoneCountry: this.props.defaultPhoneCountry,
         };
     },
 
@@ -314,7 +314,7 @@ module.exports = React.createClass({
             <div className="mx_Login_phoneSection">
                 <CountryDropdown ref="phone_country" onOptionChange={this._onPhoneCountryChange}
                     className="mx_Login_phoneCountry"
-                    initialSelectedCountry={this.props.defaultPhoneCountry}
+                    value={this.state.phoneCountry}
                 />
                 <input type="text" ref="phoneNumber"
                     placeholder="Mobile phone number (optional)"

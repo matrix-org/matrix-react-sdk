@@ -93,8 +93,6 @@ export default class Dropdown extends React.Component {
         this.state = {
             // True if the menu is dropped-down
             expanded: false,
-            // The key of the selected option
-            selectedOption: this.props.initialSelectedOption || props.children[0].key,
             // The key of the highlighted option
             // (the option that would become selected if you pressed enter)
             highlightedOption: props.children[0].key,
@@ -107,9 +105,6 @@ export default class Dropdown extends React.Component {
         // Listen for all clicks on the document so we can close the
         // menu when the user clicks somewhere else
         document.addEventListener('click', this._onDocumentClick, false);
-
-        // fire this now so the defaults can be set up
-        this.props.onOptionChange(this.state.selectedOption);
     }
 
     componentWillUnmount() {
@@ -160,7 +155,6 @@ export default class Dropdown extends React.Component {
     _onMenuOptionClick(dropdownKey) {
         this.setState({
             expanded: false,
-            selectedOption: dropdownKey,
         });
         this.props.onOptionChange(dropdownKey);
     }
@@ -171,7 +165,6 @@ export default class Dropdown extends React.Component {
         if (e.key == 'Enter') {
             this.setState({
                 expanded: false,
-                selectedOption: this.state.highlightedOption,
             });
             this.props.onOptionChange(this.state.highlightedOption);
             e.preventDefault();
@@ -282,8 +275,8 @@ export default class Dropdown extends React.Component {
             </div>;
         } else {
             const selectedChild = this.props.getShortOption ?
-                this.props.getShortOption(this.state.selectedOption) :
-                this.childrenByKey[this.state.selectedOption];
+                this.props.getShortOption(this.props.value) :
+                this.childrenByKey[this.props.value];
             currentValue = <div className="mx_Dropdown_option">
                 {selectedChild}
             </div>
@@ -324,5 +317,5 @@ Dropdown.propTypes = {
     // unspecified, the appropriate child element is used as
     // in the dropped-down menu.
     getShortOption: React.PropTypes.func,
-    initialSelectedOption: React.PropTypes.string,
+    value: React.PropTypes.string,
 }

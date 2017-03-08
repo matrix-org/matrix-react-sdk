@@ -131,7 +131,7 @@ module.exports = React.createClass({displayName: 'PasswordLogin',
                 <div className="mx_Login_phoneSection">
                     <CountryDropdown ref="phone_country" onOptionChange={this.onPhoneCountryChanged}
                         className="mx_Login_phoneCountry"
-                        initialSelectedCountry={this.state.phoneCountry}
+                        value={this.state.phoneCountry}
                     />
                     <input type="text" ref="phoneNumber"
                         onChange={this.onPhoneNumberChanged}
