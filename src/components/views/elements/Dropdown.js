@@ -26,7 +26,7 @@ class MenuOption extends React.Component {
     }
 
     _onMouseEnter() {
-        this.props.setHighlighted(this.props.dropdownKey);
+        this.props.onMouseEnter(this.props.dropdownKey);
     }
 
     _onClick(e) {
@@ -51,9 +51,14 @@ class MenuOption extends React.Component {
 };
 
 MenuOption.propTypes = {
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.node),
+      React.PropTypes.node
+    ]),
+    highlighted: React.PropTypes.bool,
     dropdownKey: React.PropTypes.string,
     onClick: React.PropTypes.func.isRequired,
-    setHighlighted: React.PropTypes.func.isRequired,
+    onMouseEnter: React.PropTypes.func.isRequired,
 };
 
 /*
@@ -240,7 +245,7 @@ export default class Dropdown extends React.Component {
             return (
                 <MenuOption key={child.key} dropdownKey={child.key}
                     highlighted={this.state.highlightedOption == child.key}
-                    setHighlighted={this._setHighlightedOption}
+                    onMouseEnter={this._setHighlightedOption}
                     onClick={this._onMenuOptionClick}
                 >
                     {child}
