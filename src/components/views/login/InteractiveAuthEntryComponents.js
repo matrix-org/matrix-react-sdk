@@ -327,10 +327,7 @@ export const MsisdnAuthEntry = React.createClass({
 
         this.props.matrixClient.submitMsisdnToken(
             this._sid, this.props.clientSecret, this.state.token
-        ).catch((e) => {
-            this.props.fail(e);
-            throw e;
-        }).then((result) => {
+        ).then((result) => {
             if (result.success) {
                 const idServerParsedUrl = url.parse(
                     this.props.matrixClient.getIdentityServerUrl(),
@@ -349,6 +346,7 @@ export const MsisdnAuthEntry = React.createClass({
                 });
             }
         }).catch((e) => {
+            this.props.fail(e);
             console.log("Failed to submit msisdn token");
         }).done();
     },
