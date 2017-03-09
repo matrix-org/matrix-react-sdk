@@ -177,6 +177,8 @@ import views$rooms$EntityTile from './components/views/rooms/EntityTile';
 views$rooms$EntityTile && (module.exports.components['views.rooms.EntityTile'] = views$rooms$EntityTile);
 import views$rooms$EventTile from './components/views/rooms/EventTile';
 views$rooms$EventTile && (module.exports.components['views.rooms.EventTile'] = views$rooms$EventTile);
+import views$rooms$TypingEventTile from './components/views/rooms/TypingEventTile';
+views$rooms$TypingEventTile && (module.exports.components['views.rooms.TypingEventTile'] = views$rooms$TypingEventTile);
 import views$rooms$LinkPreviewWidget from './components/views/rooms/LinkPreviewWidget';
 views$rooms$LinkPreviewWidget && (module.exports.components['views.rooms.LinkPreviewWidget'] = views$rooms$LinkPreviewWidget);
 import views$rooms$MemberDeviceInfo from './components/views/rooms/MemberDeviceInfo';
