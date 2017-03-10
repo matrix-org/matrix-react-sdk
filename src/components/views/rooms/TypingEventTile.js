@@ -22,6 +22,8 @@ import sdk from '../../../index';
 import Matrix from 'matrix-js-sdk';
 import WhoIsTyping from '../../../WhoIsTyping';
 import MatrixClientPeg from '../../../MatrixClientPeg';
+import Velocity from 'velocity-vector';
+import classNames from 'classnames';
 
 module.exports = React.createClass({
     displayName: 'TypingEventTile',
@@ -29,18 +31,47 @@ module.exports = React.createClass({
     props: {
         limit: React.PropTypes.number.isRequired,
         room: React.PropTypes.object.isRequired,
+        recentSender: React.PropTypes.string,
         onSizeChanged: React.PropTypes.func.isRequired,
     },
 
     getInitialState: function() {
         return {
             members: [],
-            recentOffMembers: [],
+            messageReceivedRecently: false,
         }
     },
 
     componentWillMount: function() {
         MatrixClientPeg.get().on("RoomMember.typing", this.onRoomMemberTyping);
+        MatrixClientPeg.get().on('Room.timeline', (e) => {
+            if (e.getRoomId() !== this.props.room.roomId) {
+                return;
+            }
+            // Hide the ellipsis now that a message has been received, wait a bit before
+            // allowing the "new" typing notification to appear by velocity animation
+            this.setState({
+                messageReceivedRecently: true,
+            }, () => {
+                setTimeout(() => {
+                    // XXX: Set the state after the first frame of animation?
+                    this.setState({
+                        messageReceivedRecently: false,
+                    }, () => {
+                        Velocity(this.refs.tile, { maxHeight: 50 },
+                            {
+                                duration: 200,
+                                progress: () => {
+                                    // Required to notify the scroll panel to update its
+                                    // scroll position
+                                    this.props.onSizeChanged();
+                                }
+                            }
+                        );
+                    });
+                }, 2000);
+            })
+        });
     },
 
     componentWillUnmount: function() {
@@ -51,21 +82,16 @@ module.exports = React.createClass({
     },
 
     onRoomMemberTyping: function(ev, member) {
-        if (!member.typing && this.state.members.indexOf(member) !== -1) {
+        const typers = WhoIsTyping.usersTypingApartFromMe(this.props.room);
+        setTimeout(()=> {
             this.setState({
-                recentOffMembers: this.state.recentOffMembers.concat(member),
+                members: typers,
+            }, () => {
+                this.props.onSizeChanged();
             });
-            MatrixClientPeg.get().on('Room.timeline', (e) => {
-                this.setState({
-                    recentOffMembers: this.state.recentOffMembers.filter( m => m.userId !== e.getSender()),
-                });
-            });
-        }
-        this.setState({
-            members: WhoIsTyping.usersTypingApartFromMe(this.props.room),
-        }, () => {
-            this.props.onSizeChanged();
-        });
+            // If no one is typing now, wait a bit before reflecting that to allow a
+            // potentially sent message to arrive and take the position of the ellipsis
+        }, typers.length === 0 ? 1000 : 0);
     },
 
     _renderAvatars: function (members, limit) {
@@ -105,17 +131,15 @@ module.exports = React.createClass({
         const typingString = WhoIsTyping.whoIsTypingString(members, limit);
         if (typingString) {
             return (
-                <div>
-                    <EmojiText>{typingString}</EmojiText>
-                </div>
+                <EmojiText>{typingString}</EmojiText>
             );
         }
         return null;
     },
 
     render: function() {
-        const members = Array.from(new Set(this.state.members.concat(this.state.recentOffMembers)));
-        console.info('Rendering',members)
+        const members = this.state.messageReceivedRecently ? [] : this.state.members;
+        console.info('Just sent: ', this.state.messageReceivedRecently, ' number of members', this.state.members);
         if (members.length === 0) {
             return (
                 <div>
@@ -124,19 +148,31 @@ module.exports = React.createClass({
             );
         }
 
+        const isContinuation = this.props.recentSender &&
+            members[0] && this.props.recentSender === members[0].userId;
+
+        const eventTileClasses = classNames({
+            "mx_EventTile": true,
+            "mx_EventTile_sending": true,
+            "mx_EventTile_continuation": isContinuation,
+        });
+
         return (
             <div>
-                <div className="mx_animated_event_tile_adding">
+                <div>
                     {this.props.children}
                 </div>
-                <div className="mx_EventTile mx_EventTile_sending">
-                    <span className="mx_RoomStatusBar_typingIndicatorAvatars" style={{position:"absolute", left:"0px"}}>
-                        {this._renderAvatars(members, this.props.limit)}
-                    </span>
-                    <span className="mx_SenderProfile">
-                        {this._renderTypingDescription(members, this.props.limit)}
-                    </span>
+                <div className={ eventTileClasses } ref="tile" style={{'overflow':'hidden'}}>
                     <div className="mx_EventTile_line">
+                        {isContinuation ? null : (
+                            <span className="mx_RoomStatusBar_typingIndicatorAvatars" style={{position:"absolute", left:"0px"}}>
+                                {this._renderAvatars(members, this.props.limit)}
+                            </span>)}
+                        {isContinuation ? null : (
+                            <span className="mx_SenderProfile">
+                                {this._renderTypingDescription(members, this.props.limit)}
+                            </span>
+                        )}
                         <span className="mx_MTextBody mx_EventTile_content">
                             <span className="mx_EventTile_body">
                                 ...

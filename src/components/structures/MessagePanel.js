@@ -20,7 +20,6 @@ var dis = require("../../dispatcher");
 var sdk = require('../../index');
 
 var MatrixClientPeg = require('../../MatrixClientPeg');
-import CSSAnimation from 'react-css-animations'
 
 const MILLIS_IN_DAY = 86400000;
 
@@ -402,24 +401,15 @@ module.exports = React.createClass({
         const TypingEventTile = sdk.getComponent('rooms.TypingEventTile');
         // remove prevTiles
         ret = ret.filter(t => prevTiles.indexOf(t) === -1);
-        prevTiles = prevTiles.map((t, index) => {
-            let timer = null;
-            return (<CSSAnimation
-              name='slidein'
-              key={t.key}
-              duration={500}
-              onStart={() => {
-                timer = setInterval(() => {this._onWidgetLoad()}, 10);
-              }}
-              onEnd={() => clearInterval(timer)}
-            >
-              {t}
-            </CSSAnimation>)
-        })
+        let recentSender = null;
+        if (prevEvent) {
+            recentSender = prevEvent.getSender();
+        }
         const typingTile = <TypingEventTile
             key="typing-event-tile"
             room={this.props.room}
             limit={3}
+            recentSender={recentSender}
             onSizeChanged={this._onWidgetLoad}
         >
             {prevTiles}
