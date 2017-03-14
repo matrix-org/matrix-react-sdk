@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2017 Vector Creations Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -41,6 +42,7 @@ var Lifecycle = require('../../Lifecycle');
 var PageTypes = require('../../PageTypes');
 
 var createRoom = require("../../createRoom");
+import * as UDEHandler from '../../UnknownDeviceErrorHandler';
 
 module.exports = React.createClass({
     displayName: 'MatrixChat',
@@ -64,6 +66,9 @@ module.exports = React.createClass({
         // displayname, if any, to set on the device when logging
         // in/registering.
         defaultDeviceDisplayName: React.PropTypes.string,
+
+        // A function that makes a registration URL
+        makeRegistrationUrl: React.PropTypes.func.isRequired,
     },
 
     childContextTypes: {
@@ -190,10 +195,56 @@ module.exports = React.createClass({
         if (this.props.config.sync_timeline_limit) {
             MatrixClientPeg.opts.initialSyncLimit = this.props.config.sync_timeline_limit;
         }
+
+        // To enable things like riot.im/geektime in a nicer way than rewriting the URL
+        // and appending a team token query parameter, use the first path segment to
+        // indicate a team, with "public" team tokens stored in the config teamTokenMap.
+        let routedTeamToken = null;
+        if (this.props.config.teamTokenMap) {
+            const teamName = window.location.pathname.split('/')[1];
+            if (teamName && this.props.config.teamTokenMap.hasOwnProperty(teamName)) {
+                routedTeamToken = this.props.config.teamTokenMap[teamName];
+            }
+        }
+
+        // Persist the team token across refreshes using sessionStorage. A new window or
+        // tab will not persist sessionStorage, but refreshes will.
+        if (this.props.startingFragmentQueryParams.team_token) {
+            window.sessionStorage.setItem(
+                'mx_team_token',
+                this.props.startingFragmentQueryParams.team_token,
+            );
+        }
+
+        // Use the locally-stored team token first, then as a fall-back, check to see if
+        // a referral link was used, which will contain a query parameter `team_token`.
+        this._teamToken = routedTeamToken ||
+            window.localStorage.getItem('mx_team_token') ||
+            window.sessionStorage.getItem('mx_team_token');
+
+        // Some users have ended up with "undefined" as their local storage team token,
+        // treat that as undefined.
+        if (this._teamToken === "undefined") {
+            this._teamToken = undefined;
+        }
+
+        if (this._teamToken) {
+            console.info(`Team token set to ${this._teamToken}`);
+        }
+
+        // Set a default HS with query param `hs_url`
+        const paramHs = this.props.startingFragmentQueryParams.hs_url;
+        if (paramHs) {
+            console.log('Setting register_hs_url ', paramHs);
+            this.setState({
+                register_hs_url: paramHs,
+            });
+        }
     },
 
     componentDidMount: function() {
         this.dispatcherRef = dis.register(this.onAction);
+        UDEHandler.startListening();
 
         this.focusComposer = false;
         window.addEventListener("focus", this.onFocus);
@@ -209,6 +260,12 @@ module.exports = React.createClass({
 
         window.addEventListener('resize', this.handleResize);
         this.handleResize();
+
+        if (this.props.config.teamServerConfig &&
+            this.props.config.teamServerConfig.teamServerURL
+        ) {
+            Lifecycle.initRtsClient(this.props.config.teamServerConfig.teamServerURL);
+        }
 
         // the extra q() ensures that synchronous exceptions hit the same codepath as
         // asynchronous ones.
@@ -234,6 +291,7 @@ module.exports = React.createClass({
     componentWillUnmount: function() {
         Lifecycle.stopMatrixClient();
         dis.unregister(this.dispatcherRef);
+        UDEHandler.stopListening();
         window.removeEventListener("focus", this.onFocus);
         window.removeEventListener('resize', this.handleResize);
     },
@@ -270,23 +328,19 @@ module.exports = React.createClass({
                 Lifecycle.logout();
                 break;
             case 'start_registration':
-                var newState = payload.params || {};
-                newState.screen = 'register';
-                if (
-                    payload.params &&
-                    payload.params.client_secret &&
-                    payload.params.session_id &&
-                    payload.params.hs_url &&
-                    payload.params.is_url &&
-                    payload.params.sid
-                ) {
-                    newState.register_client_secret = payload.params.client_secret;
-                    newState.register_session_id = payload.params.session_id;
-                    newState.register_hs_url = payload.params.hs_url;
-                    newState.register_is_url = payload.params.is_url;
-                    newState.register_id_sid = payload.params.sid;
-                }
-                this.setStateForNewScreen(newState);
+                const params = payload.params || {};
+                this.setStateForNewScreen({
+                    screen: 'register',
+                    // these params may be undefined, but if they are,
+                    // unset them from our state: we don't want to
+                    // resume a previous registration session if the
+                    // user just clicked 'register'
+                    register_client_secret: params.client_secret,
+                    register_session_id: params.session_id,
+                    register_hs_url: params.hs_url,
+                    register_is_url: params.is_url,
+                    register_id_sid: params.sid,
+                });
                 this.notifyNewScreen('register');
                 break;
             case 'start_login':
@@ -302,13 +356,22 @@ module.exports = React.createClass({
                 });
                 break;
             case 'start_upgrade_registration':
-                // stash our guest creds so we can backout if needed
+                // also stash our credentials, then if we restore the session,
+                // we can just do it the same way whether we started upgrade
+                // registration or explicitly logged out
                 this.guestCreds = MatrixClientPeg.getCredentials();
                 this.setStateForNewScreen({
                     screen: "register",
                     upgradeUsername: MatrixClientPeg.get().getUserIdLocalpart(),
                     guestAccessToken: MatrixClientPeg.get().getAccessToken(),
                 });
+
+                // stop the client: if we are syncing whilst the registration
+                // is completed in another browser, we'll be 401ed for using
+                // a guest access token for a non-guest account.
+                // It will be restarted in onReturnToGuestClick
+                Lifecycle.stopMatrixClient();
+
                 this.notifyNewScreen('register');
                 break;
             case 'start_password_recovery':
@@ -339,9 +402,10 @@ module.exports = React.createClass({
                                 dis.dispatch({action: 'view_next_room'});
                             }, function(err) {
                                 modal.close();
+                                console.error("Failed to leave room " + payload.room_id + " " + err);
                                 Modal.createDialog(ErrorDialog, {
                                     title: "Failed to leave room",
-                                    description: err.toString()
+                                    description: "Server may be unavailable, overloaded, or you hit a bug."
                                 });
                             });
                         }
@@ -421,6 +485,14 @@ module.exports = React.createClass({
                 this._setPage(PageTypes.RoomDirectory);
                 this.notifyNewScreen('directory');
                 break;
+            case 'view_home_page':
+                if (!this._teamToken) {
+                    dis.dispatch({action: 'view_room_directory'});
+                    return;
+                }
+                this._setPage(PageTypes.HomePage);
+                this.notifyNewScreen('home');
+                break;
             case 'view_create_chat':
                 this._createChat();
                 break;
@@ -460,7 +532,7 @@ module.exports = React.createClass({
                 this._onSetTheme(payload.value);
                 break;
             case 'on_logged_in':
-                this._onLoggedIn();
+                this._onLoggedIn(payload.teamToken);
                 break;
             case 'on_logged_out':
                 this._onLoggedOut();
@@ -636,13 +708,20 @@ module.exports = React.createClass({
     /**
      * Called when a new logged in session has started
      */
-    _onLoggedIn: function(credentials) {
+    _onLoggedIn: function(teamToken) {
         this.guestCreds = null;
         this.notifyNewScreen('');
         this.setState({
             screen: undefined,
             logged_in: true,
         });
+
+        if (teamToken) {
+            this._teamToken = teamToken;
+            this._setPage(PageTypes.HomePage);
+        } else if (this._is_registered) {
+            this._setPage(PageTypes.UserSettings);
+        }
     },
 
     /**
@@ -659,6 +738,7 @@ module.exports = React.createClass({
             currentRoomId: null,
             page_type: PageTypes.RoomDirectory,
         });
+        this._teamToken = null;
     },
 
     /**
@@ -690,7 +770,11 @@ module.exports = React.createClass({
                         )[0].roomId;
                         self.setState({ready: true, currentRoomId: firstRoom, page_type: PageTypes.RoomView});
                     } else {
-                        self.setState({ready: true, page_type: PageTypes.RoomDirectory});
+                        if (self._teamToken) {
+                            self.setState({ready: true, page_type: PageTypes.HomePage});
+                        } else {
+                            self.setState({ready: true, page_type: PageTypes.RoomDirectory});
+                        }
                     }
                 } else {
                     self.setState({ready: true, page_type: PageTypes.RoomView});
@@ -710,7 +794,11 @@ module.exports = React.createClass({
                 } else {
                     // There is no information on presentedId
                     // so point user to fallback like /directory
-                    self.notifyNewScreen('directory');
+                    if (self._teamToken) {
+                        self.notifyNewScreen('home');
+                    } else {
+                        self.notifyNewScreen('directory');
+                    }
                 }
 
                 dis.dispatch({action: 'focus_composer'});
@@ -773,6 +861,10 @@ module.exports = React.createClass({
         } else if (screen == 'settings') {
             dis.dispatch({
                 action: 'view_user_settings',
+            });
+        } else if (screen == 'home') {
+            dis.dispatch({
+                action: 'view_home_page',
             });
         } else if (screen == 'directory') {
             dis.dispatch({
@@ -852,14 +944,6 @@ module.exports = React.createClass({
     onUserClick: function(event, userId) {
         event.preventDefault();
 
-        // var MemberInfo = sdk.getComponent('rooms.MemberInfo');
-        // var member = new Matrix.RoomMember(null, userId);
-        // ContextualMenu.createMenu(MemberInfo, {
-        //     member: member,
-        //     right: window.innerWidth - event.pageX,
-        //     top: event.pageY
-        // });
-
         var member = new Matrix.RoomMember(null, userId);
         if (!member) { return; }
         dis.dispatch({
@@ -925,18 +1009,11 @@ module.exports = React.createClass({
         }
     },
 
-    onRegistered: function(credentials) {
+    onRegistered: function(credentials, teamToken) {
+        // teamToken may not be truthy
+        this._teamToken = teamToken;
+        this._is_registered = true;
         Lifecycle.setLoggedIn(credentials);
-        // do post-registration stuff
-        // This now goes straight to user settings
-        // We use _setPage since if we wait for
-        // showScreen to do the dispatch loop,
-        // the showScreen dispatch will race with the
-        // sdk sync finishing and we'll probably see
-        // the page type still unset when the MatrixClient
-        // is started and show the Room Directory instead.
-        //this.showScreen("view_user_settings");
-        this._setPage(PageTypes.UserSettings);
     },
 
     onFinishPostRegistration: function() {
@@ -1002,6 +1079,13 @@ module.exports = React.createClass({
         this.setState({currentRoomId: room_id});
     },
 
+    _makeRegistrationUrl: function(params) {
+        if (this.props.startingFragmentQueryParams.referrer) {
+            params.referrer = this.props.startingFragmentQueryParams.referrer;
+        }
+        return this.props.makeRegistrationUrl(params);
+    },
+
     render: function() {
         var ForgotPassword = sdk.getComponent('structures.login.ForgotPassword');
         var LoggedInView = sdk.getComponent('structures.LoggedInView');
@@ -1033,6 +1117,7 @@ module.exports = React.createClass({
                     onRoomIdResolved={this.onRoomIdResolved}
                     onRoomCreated={this.onRoomCreated}
                     onUserSettingsClose={this.onUserSettingsClose}
+                    teamToken={this._teamToken}
                     {...this.props}
                     {...this.state}
                 />
@@ -1064,7 +1149,7 @@ module.exports = React.createClass({
                     teamServerConfig={this.props.config.teamServerConfig}
                     customHsUrl={this.getCurrentHsUrl()}
                     customIsUrl={this.getCurrentIsUrl()}
-                    registrationUrl={this.props.registrationUrl}
+                    makeRegistrationUrl={this._makeRegistrationUrl}
                     defaultDeviceDisplayName={this.props.defaultDeviceDisplayName}
                     onLoggedIn={this.onRegistered}
                     onLoginClick={this.onLoginClick}

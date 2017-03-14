@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2017 Vector Creations Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -23,6 +24,9 @@ import UserActivity from './UserActivity';
 import Presence from './Presence';
 import dis from './dispatcher';
 import DMRoomMap from './utils/DMRoomMap';
+import RtsClient from './RtsClient';
+import Modal from './Modal';
+import sdk from './index';
 
 /**
  * Called at startup, to attempt to build a logged-in Matrix session. It tries
@@ -108,16 +112,17 @@ export function loadSession(opts) {
         return q();
     }
 
-    if (_restoreFromLocalStorage()) {
-        return q();
-    }
+    return _restoreFromLocalStorage().then((success) => {
+        if (success) {
+            return;
+        }
 
-    if (enableGuest) {
-        return _registerAsGuest(guestHsUrl, guestIsUrl, defaultDeviceDisplayName);
-    }
+        if (enableGuest) {
+            return _registerAsGuest(guestHsUrl, guestIsUrl, defaultDeviceDisplayName);
+        }
 
-    // fall back to login screen
-    return q();
+        // fall back to login screen
+    });
 }
 
 function _loginWithToken(queryParams, defaultDeviceDisplayName) {
@@ -150,7 +155,7 @@ function _loginWithToken(queryParams, defaultDeviceDisplayName) {
 function _registerAsGuest(hsUrl, isUrl, defaultDeviceDisplayName) {
     console.log("Doing guest login on %s", hsUrl);
 
-    // TODO: we should probably de-duplicate this and Signup.Login.loginAsGuest.
+    // TODO: we should probably de-duplicate this and Login.loginAsGuest.
     // Not really sure where the right home for it is.
 
     // create a temporary MatrixClient to do the login
@@ -177,10 +182,11 @@ function _registerAsGuest(hsUrl, isUrl, defaultDeviceDisplayName) {
     });
 }
 
-// returns true if a session is found in localstorage
+// returns a promise which resolves to true if a session is found in
+// localstorage
 function _restoreFromLocalStorage() {
     if (!localStorage) {
-        return false;
+        return q(false);
     }
     const hs_url = localStorage.getItem("mx_hs_url");
     const is_url = localStorage.getItem("mx_is_url") || 'https://matrix.org';
@@ -207,26 +213,58 @@ function _restoreFromLocalStorage() {
                 identityServerUrl: is_url,
                 guest: is_guest,
             });
-            return true;
+            return q(true);
         } catch (e) {
-            console.log("Unable to restore session", e);
-
-            var msg = e.message;
-            if (msg == "OLM.BAD_LEGACY_ACCOUNT_PICKLE") {
-                msg = "You need to log back in to generate end-to-end encryption keys "
-                    + "for this device and submit the public key to your homeserver. "
-                    + "This is a once off; sorry for the inconvenience.";
-            }
-
-            // don't leak things into the new session
-            _clearLocalStorage();
-
-            throw new Error("Unable to restore previous session: " + msg);
+            return _handleRestoreFailure(e);
         }
     } else {
         console.log("No previous session found.");
-        return false;
+        return q(false);
     }
+}
+
+function _handleRestoreFailure(e) {
+    console.log("Unable to restore session", e);
+
+    let msg = e.message;
+    if (msg == "OLM.BAD_LEGACY_ACCOUNT_PICKLE") {
+        msg = "You need to log back in to generate end-to-end encryption keys "
+            + "for this device and submit the public key to your homeserver. "
+            + "This is a once off; sorry for the inconvenience.";
+
+        _clearLocalStorage();
+
+        return q.reject(new Error(
+            "Unable to restore previous session: " + msg,
+        ));
+    }
+
+    const def = q.defer();
+    const SessionRestoreErrorDialog =
+          sdk.getComponent('views.dialogs.SessionRestoreErrorDialog');
+
+    Modal.createDialog(SessionRestoreErrorDialog, {
+        error: msg,
+        onFinished: (success) => {
+            def.resolve(success);
+        },
+    });
+
+    return def.promise.then((success) => {
+        if (success) {
+            // user clicked continue.
+            _clearLocalStorage();
+            return false;
+        }
+
+        // try, try again
+        return _restoreFromLocalStorage();
+    });
+}
+
+let rtsClient = null;
+export function initRtsClient(url) {
+    rtsClient = new RtsClient(url);
 }
 
 /**
@@ -238,6 +276,9 @@ export function setLoggedIn(credentials) {
     console.log("setLoggedIn => %s (guest=%s) hs=%s",
                 credentials.userId, credentials.guest,
                 credentials.homeserverUrl);
+
+    // Resolves by default
+    let teamPromise = Promise.resolve(null);
 
     // persist the session
     if (localStorage) {
@@ -261,13 +302,30 @@ export function setLoggedIn(credentials) {
         } catch (e) {
             console.warn("Error using local storage: can't persist session!", e);
         }
+
+        if (rtsClient && !credentials.guest) {
+            teamPromise = rtsClient.login(credentials.userId).then((body) => {
+                if (body.team_token) {
+                    localStorage.setItem("mx_team_token", body.team_token);
+                }
+                return body.team_token;
+            });
+        }
     } else {
         console.warn("No local storage available: can't persist session!");
     }
 
+    // stop any running clients before we create a new one with these new credentials
+    stopMatrixClient();
+
     MatrixClientPeg.replaceUsingCreds(credentials);
 
-    dis.dispatch({action: 'on_logged_in'});
+    teamPromise.then((teamToken) => {
+        dis.dispatch({action: 'on_logged_in', teamToken: teamToken});
+    }, (err) => {
+        console.warn("Failed to get team token on login", err);
+        dis.dispatch({action: 'on_logged_in', teamToken: null});
+    });
 
     startMatrixClient();
 }
@@ -361,6 +419,7 @@ export function stopMatrixClient() {
     if (cli) {
         cli.stopClient();
         cli.removeAllListeners();
+        cli.store.deleteAllData();
         MatrixClientPeg.unset();
     }
 }

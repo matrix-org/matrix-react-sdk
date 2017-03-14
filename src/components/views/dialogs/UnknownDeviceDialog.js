@@ -16,8 +16,10 @@ limitations under the License.
 
 import React from 'react';
 import sdk from '../../../index';
+import dis from '../../../dispatcher';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import GeminiScrollbar from 'react-gemini-scrollbar';
+import Resend from '../../../Resend';
 
 function DeviceListEntry(props) {
     const {userId, device} = props;
@@ -85,7 +87,7 @@ UnknownDeviceList.propTypes = {
 
 
 export default React.createClass({
-    displayName: 'UnknownEventDialog',
+    displayName: 'UnknownDeviceDialog',
 
     propTypes: {
         room: React.PropTypes.object.isRequired,
@@ -103,6 +105,10 @@ export default React.createClass({
                 MatrixClientPeg.get().setDeviceKnown(userId, deviceId, true);
             });
         });
+
+        // XXX: temporary logging to try to diagnose
+        // https://github.com/vector-im/riot-web/issues/3148
+        console.log('Opening UnknownDeviceDialog');
     },
 
     render: function() {
@@ -122,13 +128,9 @@ export default React.createClass({
             warning = (
                 <div>
                     <p>
-                        This means there is no guarantee that the devices
-                        belong to the users they claim to.
-                    </p>
-                    <p>
                         We recommend you go through the verification process
-                        for each device before continuing, but you can resend
-                        the message without verifying if you prefer.
+                        for each device to confirm they belong to their legitimate owner,
+                        but you can resend the message without verifying if you prefer.
                     </p>
                 </div>
             );
@@ -137,13 +139,17 @@ export default React.createClass({
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         return (
             <BaseDialog className='mx_UnknownDeviceDialog'
-                onFinished={this.props.onFinished}
+                onFinished={() => {
+                            // XXX: temporary logging to try to diagnose
+                            // https://github.com/vector-im/riot-web/issues/3148
+                            console.log("UnknownDeviceDialog closed by escape");
+                            this.props.onFinished();
+                }}
                 title='Room contains unknown devices'
             >
                 <GeminiScrollbar autoshow={false} className="mx_Dialog_content">
                     <h4>
-                        This room contains unknown devices which have not been
-                        verified.
+                        This room contains devices that you haven't seen before.
                     </h4>
                     { warning }
                     Unknown devices:
@@ -152,7 +158,19 @@ export default React.createClass({
                 </GeminiScrollbar>
                 <div className="mx_Dialog_buttons">
                     <button className="mx_Dialog_primary" autoFocus={ true }
-                            onClick={ this.props.onFinished } >
+                            onClick={() => {
+                                this.props.onFinished();
+                                Resend.resendUnsentEvents(this.props.room);
+                            }}>
+                        Send anyway
+                    </button>
+                    <button className="mx_Dialog_primary" autoFocus={ true }
+                            onClick={() => {
+                                // XXX: temporary logging to try to diagnose
+                                // https://github.com/vector-im/riot-web/issues/3148
+                                console.log("UnknownDeviceDialog closed by OK");
+                                this.props.onFinished();
+                            }}>
                         OK
                     </button>
                 </div>
