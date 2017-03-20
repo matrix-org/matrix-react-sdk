@@ -367,7 +367,6 @@ module.exports = React.createClass({
                 </div>
             );
         }
-        console.log(counterpart.getLocale())
 
         var inputBox = (
             <form autoComplete="off">
