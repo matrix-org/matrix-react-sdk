@@ -370,15 +370,9 @@ module.exports = React.createClass({
 
         var inputBox = (
             <form autoComplete="off">
-                <Translate
-                    component="input"
-                    type="text"
-                    className="mx_MemberList_query"
-                    id="mx_MemberList_query"
-                    value={ this.state.searchQuery }
-                    onChange={ this.onSearchQueryChanged }
-                    attributes={{ placeholder: 'MemberList.filterMembers' }}
-                />
+                <input className="mx_MemberList_query" id="mx_MemberList_query" type="text"
+                        onChange={this.onSearchQueryChanged} value={this.state.searchQuery}
+                        placeholder={ counterpart.translate('MemberList.filterMembers') }
             </form>
         );
 
