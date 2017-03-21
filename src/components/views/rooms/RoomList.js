@@ -17,6 +17,9 @@ limitations under the License.
 'use strict';
 var React = require("react");
 var ReactDOM = require("react-dom");
+var counterpart = require('counterpart');
+var Translate   = require('react-translate-component');
+var _t = Translate.translate;
 var GeminiScrollbar = require('react-gemini-scrollbar');
 var MatrixClientPeg = require("../../../MatrixClientPeg");
 var CallHandler = require('../../../CallHandler');
@@ -30,6 +33,10 @@ import DMRoomMap from '../../../utils/DMRoomMap';
 var Receipt = require('../../../utils/Receipt');
 
 var HIDE_CONFERENCE_CHANS = true;
+
+// load our own translations
+counterpart.registerTranslations('en', require('../../../i18n/en-en'));
+counterpart.registerTranslations('de', require('../../../i18n/de-de'));
 
 module.exports = React.createClass({
     displayName: 'RoomList',
@@ -460,7 +467,7 @@ module.exports = React.createClass({
                  autoshow={true} onScroll={ self._whenScrolling } ref="gemscroll">
             <div className="mx_RoomList">
                 <RoomSubList list={ self.state.lists['im.vector.fake.invite'] }
-                             label="Invites"
+                             label={ counterpart.translate('Invites') }
                              editable={ false }
                              order="recent"
                              selectedRoom={ self.props.selectedRoom }
@@ -471,7 +478,7 @@ module.exports = React.createClass({
                              onShowMoreRooms={ self.onShowMoreRooms } />
 
                 <RoomSubList list={ self.state.lists['m.favourite'] }
-                             label="Favourites"
+                             label={ counterpart.translate('Favourites') }
                              tagName="m.favourite"
                              verb="favourite"
                              editable={ true }
@@ -484,7 +491,7 @@ module.exports = React.createClass({
                              onShowMoreRooms={ self.onShowMoreRooms } />
 
                 <RoomSubList list={ self.state.lists['im.vector.fake.direct'] }
-                             label="People"
+                             label={ counterpart.translate('People') }
                              editable={ false }
                              order="recent"
                              selectedRoom={ self.props.selectedRoom }
@@ -495,7 +502,7 @@ module.exports = React.createClass({
                              onShowMoreRooms={ self.onShowMoreRooms } />
 
                 <RoomSubList list={ self.state.lists['im.vector.fake.recent'] }
-                             label="Rooms"
+                             label={ counterpart.translate('Rooms') }
                              editable={ true }
                              verb="restore"
                              order="recent"
@@ -526,7 +533,7 @@ module.exports = React.createClass({
                 }) }
 
                 <RoomSubList list={ self.state.lists['m.lowpriority'] }
-                             label="Low priority"
+                             label={ counterpart.translate('Low priority') }
                              tagName="m.lowpriority"
                              verb="demote"
                              editable={ true }
@@ -539,7 +546,7 @@ module.exports = React.createClass({
                              onShowMoreRooms={ self.onShowMoreRooms } />
 
                 <RoomSubList list={ self.state.lists['im.vector.fake.archived'] }
-                             label="Historical"
+                             label={ counterpart.translate('Historical') }
                              editable={ false }
                              order="recent"
                              selectedRoom={ self.props.selectedRoom }
