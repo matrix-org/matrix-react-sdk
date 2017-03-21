@@ -28,6 +28,7 @@ var rate_limited_func = require('../../../ratelimitedfunc');
 var Rooms = require('../../../Rooms');
 import DMRoomMap from '../../../utils/DMRoomMap';
 var Receipt = require('../../../utils/Receipt');
+const UserSettingsStore = require('../../../UserSettingsStore');
 
 var HIDE_CONFERENCE_CHANS = true;
 
@@ -208,12 +209,16 @@ module.exports = React.createClass({
         var self = this;
         var s = { lists: {} };
 
+        // Get the room tags the user has defined.
+        const customTags = UserSettingsStore.getSyncedSetting("org.matrix.room_tags");
+
         s.lists["im.vector.fake.invite"] = [];
-        s.lists["m.favourite"] = [];
         s.lists["im.vector.fake.recent"] = [];
         s.lists["im.vector.fake.direct"] = [];
-        s.lists["m.lowpriority"] = [];
         s.lists["im.vector.fake.archived"] = [];
+        customTags.forEach((tag) => {
+          s.lists[tag.alias || tag.tag] = [];
+        })
 
         const dmRoomMap = new DMRoomMap(MatrixClientPeg.get());
 

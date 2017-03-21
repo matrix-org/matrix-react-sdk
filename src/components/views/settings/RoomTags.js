@@ -19,9 +19,7 @@ import * as React from 'react';
 import * as sdk from '../../../index';
 const MatrixClientPeg = require('../../../MatrixClientPeg');
 const Modal = require('../../../Modal');
-const UserSettingsStore = require('../../../UserSettingsStore');
-
-const SETTING_NAME = "org.matrix.room_tags";
+const RoomTagUtil = require('../../../RoomTagUtil');
 
 module.exports = React.createClass({
   getDefaultProps: function() {
@@ -30,16 +28,9 @@ module.exports = React.createClass({
   },
 
   getInitialState: function() {
-    console.log(UserSettingsStore.getSyncedSettings());
-    const tags = UserSettingsStore.getSyncedSetting(SETTING_NAME, [
-        { tag: "Favourites", alias: "m.favourite", protected: true },
-        { tag: "Low Priority", alias: "m.lowpriority", protected: true },
-      ],
-    );
-    console.log(tags);
     return {
       selectedTag: null,
-      tags,
+      tags: RoomTagUtil.getTags(),
     };
   },
 
@@ -54,11 +45,8 @@ module.exports = React.createClass({
       ) {
       return;
     }
-    const otherTag = this.state.tags[this.state.selectedTag-1];
-    this.state.tags[this.state.selectedTag-1] = this.state.tags[this.state.selectedTag];
-    this.state.tags[this.state.selectedTag] = otherTag;
-    this.setState({selectedTag: this.state.selectedTag-1});
-    UserSettingsStore.setSyncedSetting(SETTING_NAME, this.state.tags);
+    const tags = RoomTagUtil.moveTag(this.state.selectedTag,-1);
+    this.setState({tags, selectedTag: this.state.selectedTag-1});
   },
 
   moveTagDown: function() {
@@ -67,11 +55,8 @@ module.exports = React.createClass({
       ) {
       return;
     }
-    const otherTag = this.state.tags[this.state.selectedTag+1];
-    this.state.tags[this.state.selectedTag+1] = this.state.tags[this.state.selectedTag];
-    this.state.tags[this.state.selectedTag] = otherTag;
-    this.setState({selectedTag: this.state.selectedTag+1});
-    UserSettingsStore.setSyncedSetting(SETTING_NAME, this.state.tags);
+    const tags = RoomTagUtil.moveTag(this.state.selectedTag,1);
+    this.setState({tags, selectedTag: this.state.selectedTag+1});
   },
 
   addTag: function() {
@@ -84,25 +69,13 @@ module.exports = React.createClass({
             </div>,
         button: "Continue",
         validateInput: (text) => {
-          console.log(text);
-          if (
-            this.state.tags.find(
-              (tag) => {
-                text = text.toLowerCase();
-                return tag.tag.toLowerCase() === text || tag.alias === text;
-              })
-            ) {
-            return "This tag already exists!";
-          } else {
-            return true;
-          }
+          const valid = RoomTagUtil.isTagValid(text);
+          return valid.valid || valid.error;
         },
         onFinished: (confirmed, text) => {
             if (confirmed) {
-              const tags = this.state.tags;
-              tags.push({tag: text});
+              const tags = RoomTagUtil.addTag(text);
               this.setState({tags, selectedTag: tags.length-1});
-              UserSettingsStore.setSyncedSetting(SETTING_NAME, this.state.tags);
             }
         },
     });
@@ -126,15 +99,14 @@ module.exports = React.createClass({
         button: "Continue",
         onFinished: (confirmed) => {
             if (confirmed) {
+              const tags = RoomTagUtil.deleteTag(this.state.selectedTag);
               const client = MatrixClientPeg.get();
               client.getRooms().filter((room) => {
-                return Object.keys(room.tags).includes(tag.alias || tag.name);
+                return Object.keys(room.tags).includes(tag.label || tag.name);
               }).forEach((room) => {
-                client.deleteRoomTag(room.roomId, tag.alias || tag.name);
+                client.deleteRoomTag(room.roomId, tag.label || tag.name);
               });
-              this.state.tags.splice(this.state.selectedTag, 1);
-              this.setState({tags: this.state.tags});
-              UserSettingsStore.setSyncedSetting(SETTING_NAME, this.state.tags);
+              this.setState({tags});
             }
         },
     });

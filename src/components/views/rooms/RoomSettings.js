@@ -18,21 +18,20 @@ limitations under the License.
 import q from 'q';
 import React from 'react';
 import MatrixClientPeg from '../../../MatrixClientPeg';
-import SdkConfig from '../../../SdkConfig';
 import sdk from '../../../index';
 import Modal from '../../../Modal';
 import ObjectUtils from '../../../ObjectUtils';
 import dis from '../../../dispatcher';
 import ScalarAuthClient from '../../../ScalarAuthClient';
 import ScalarMessaging from '../../../ScalarMessaging';
-import UserSettingsStore from '../../../UserSettingsStore';
+import RoomTagUtil from '../../../RoomTagUtil';
 import AccessibleButton from '../elements/AccessibleButton';
 
 
 // parse a string as an integer; if the input is undefined, or cannot be parsed
 // as an integer, return a default.
 function parseIntWithDefault(val, def) {
-    var res = parseInt(val);
+    const res = parseInt(val);
     return isNaN(res) ? def : res;
 }
 
@@ -74,7 +73,7 @@ const BannedUser = React.createClass({
                 {this.props.member.userId}
             </li>
         );
-    }
+    },
 });
 
 module.exports = React.createClass({
@@ -87,7 +86,7 @@ module.exports = React.createClass({
     },
 
     getInitialState: function() {
-        var tags = {};
+        const tags = {};
         Object.keys(this.props.room.tags).forEach(function(tagName) {
             tags[tagName] = ['yep'];
         });
@@ -120,7 +119,7 @@ module.exports = React.createClass({
         MatrixClientPeg.get().on("RoomMember.membership", this._onRoomMemberMembership);
 
         MatrixClientPeg.get().getRoomDirectoryVisibility(
-            this.props.room.roomId
+            this.props.room.roomId,
         ).done((result) => {
             this.setState({ isRoomPublished: result.visibility === "public" });
             this._originalIsRoomPublished = result.visibility === "public";
@@ -133,7 +132,7 @@ module.exports = React.createClass({
             this.forceUpdate();
         }, (err) => {
             this.setState({
-                scalar_error: err
+                scalar_error: err,
             });
         });
 
@@ -161,18 +160,18 @@ module.exports = React.createClass({
 
     setName: function(name) {
         this.setState({
-            name: name
+            name: name,
         });
     },
 
     setTopic: function(topic) {
         this.setState({
-            topic: topic
+            topic: topic,
         });
     },
 
     save: function() {
-        var stateWasSetDefer = q.defer();
+        const stateWasSetDefer = q.defer();
         // the caller may have JUST called setState on stuff, so we need to re-render before saving
         // else we won't use the latest values of things.
         // We can be a bit cheeky here and set a loading flag, and listen for the callback on that
@@ -189,8 +188,8 @@ module.exports = React.createClass({
 
     _calcSavePromises: function() {
         const roomId = this.props.room.roomId;
-        var promises = this.saveAliases(); // returns Promise[]
-        var originalState = this.getInitialState();
+        const promises = this.saveAliases(); // returns Promise[]
+        const originalState = this.getInitialState();
 
         // diff between original state and this.state to work out what has been changed
         console.log("Original: %s", JSON.stringify(originalState));
@@ -208,14 +207,14 @@ module.exports = React.createClass({
             promises.push(MatrixClientPeg.get().sendStateEvent(
                 roomId, "m.room.history_visibility",
                 { history_visibility: this.state.history_visibility },
-                ""
+                "",
             ));
         }
 
         if (this.state.isRoomPublished !== originalState.isRoomPublished) {
             promises.push(MatrixClientPeg.get().setRoomDirectoryVisibility(
                 roomId,
-                this.state.isRoomPublished ? "public" : "private"
+                this.state.isRoomPublished ? "public" : "private",
             ));
         }
 
@@ -223,7 +222,7 @@ module.exports = React.createClass({
             promises.push(MatrixClientPeg.get().sendStateEvent(
                 roomId, "m.room.join_rules",
                 { join_rule: this.state.join_rule },
-                ""
+                "",
             ));
         }
 
@@ -231,33 +230,33 @@ module.exports = React.createClass({
             promises.push(MatrixClientPeg.get().sendStateEvent(
                 roomId, "m.room.guest_access",
                 { guest_access: this.state.guest_access },
-                ""
+                "",
             ));
         }
 
 
         // power levels
-        var powerLevels = this._getPowerLevels();
+        const powerLevels = this._getPowerLevels();
         if (powerLevels) {
             promises.push(MatrixClientPeg.get().sendStateEvent(
-                roomId, "m.room.power_levels", powerLevels, ""
+                roomId, "m.room.power_levels", powerLevels, "",
             ));
         }
 
         // tags
         if (this.state.tags_changed) {
-            var tagDiffs = ObjectUtils.getKeyValueArrayDiffs(originalState.tags, this.state.tags);
+            const tagDiffs = ObjectUtils.getKeyValueArrayDiffs(originalState.tags, this.state.tags);
             // [ {place: add, key: "m.favourite", val: ["yep"]} ]
             tagDiffs.forEach(function(diff) {
                 switch (diff.place) {
                     case "add":
                         promises.push(
-                            MatrixClientPeg.get().setRoomTag(roomId, diff.key, {})
+                            MatrixClientPeg.get().setRoomTag(roomId, diff.key, {}),
                         );
                         break;
                     case "del":
                         promises.push(
-                            MatrixClientPeg.get().deleteRoomTag(roomId, diff.key)
+                            MatrixClientPeg.get().deleteRoomTag(roomId, diff.key),
                         );
                         break;
                     default:
@@ -268,14 +267,14 @@ module.exports = React.createClass({
         }
 
         // color scheme
-        var p;
+        let p;
         p = this.saveColor();
         if (!q.isFulfilled(p)) {
             promises.push(p);
         }
 
         // url preview settings
-        var ps = this.saveUrlPreviewSettings();
+        const ps = this.saveUrlPreviewSettings();
         if (ps.length > 0) {
             promises.push(ps);
         }
@@ -310,13 +309,13 @@ module.exports = React.createClass({
     saveEnableEncryption: function() {
         if (!this.refs.encrypt) { return q(); }
 
-        var encrypt = this.refs.encrypt.checked;
+        const encrypt = this.refs.encrypt.checked;
         if (!encrypt) { return q(); }
 
-        var roomId = this.props.room.roomId;
+        const roomId = this.props.room.roomId;
         return MatrixClientPeg.get().sendStateEvent(
             roomId, "m.room.encryption",
-            { algorithm: "m.megolm.v1.aes-sha2" }
+            { algorithm: "m.megolm.v1.aes-sha2" },
         );
     },
 
@@ -328,7 +327,7 @@ module.exports = React.createClass({
     },
 
     _isRoomBlacklistUnverified: function() {
-        var blacklistUnverifiedDevicesPerRoom = UserSettingsStore.getLocalSettings().blacklistUnverifiedDevicesPerRoom;
+        const blacklistUnverifiedDevicesPerRoom = UserSettingsStore.getLocalSettings().blacklistUnverifiedDevicesPerRoom;
         if (blacklistUnverifiedDevicesPerRoom) {
             return blacklistUnverifiedDevicesPerRoom[this.props.room.roomId];
         }
@@ -336,7 +335,7 @@ module.exports = React.createClass({
     },
 
     _setRoomBlacklistUnverified: function(value) {
-        var blacklistUnverifiedDevicesPerRoom = UserSettingsStore.getLocalSettings().blacklistUnverifiedDevicesPerRoom || {};
+        const blacklistUnverifiedDevicesPerRoom = UserSettingsStore.getLocalSettings().blacklistUnverifiedDevicesPerRoom || {};
         blacklistUnverifiedDevicesPerRoom[this.props.room.roomId] = value;
         UserSettingsStore.setLocalSetting('blacklistUnverifiedDevicesPerRoom', blacklistUnverifiedDevicesPerRoom);
 
@@ -354,10 +353,10 @@ module.exports = React.createClass({
     _getPowerLevels: function() {
         if (!this.state.power_levels_changed) return undefined;
 
-        var powerLevels = this.props.room.currentState.getStateEvents('m.room.power_levels', '');
+        let powerLevels = this.props.room.currentState.getStateEvents('m.room.power_levels', '');
         powerLevels = powerLevels ? powerLevels.getContent() : {};
 
-        var newPowerLevels = {
+        const newPowerLevels = {
             ban: parseInt(this.refs.ban.getValue()),
             kick: parseInt(this.refs.kick.getValue()),
             redact: parseInt(this.refs.redact.getValue()),
@@ -374,13 +373,13 @@ module.exports = React.createClass({
 
     onPowerLevelsChanged: function() {
         this.setState({
-            power_levels_changed: true
+            power_levels_changed: true,
         });
     },
 
     _yankValueFromEvent: function(stateEventType, keyName, defaultValue) {
         // E.g.("m.room.name","name") would yank the "name" content key from "m.room.name"
-        var event = this.props.room.currentState.getStateEvents(stateEventType, '');
+        const event = this.props.room.currentState.getStateEvents(stateEventType, '');
         if (!event) {
             return defaultValue;
         }
@@ -388,12 +387,12 @@ module.exports = React.createClass({
     },
 
     _onHistoryRadioToggle: function(ev) {
-        var self = this;
-        var QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+        const self = this;
+        const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
 
         // cancel the click unless the user confirms it
         ev.preventDefault();
-        var value = ev.target.value;
+        const value = ev.target.value;
 
         Modal.createDialog(QuestionDialog, {
             title: "Privacy warning",
@@ -406,7 +405,7 @@ module.exports = React.createClass({
             onFinished: function(confirmed) {
                 if (confirmed) {
                     self.setState({
-                        history_visibility: value
+                        history_visibility: value,
                     });
                 }
             },
@@ -414,7 +413,6 @@ module.exports = React.createClass({
     },
 
     _onRoomAccessRadioToggle: function(ev) {
-
         //                         join_rule
         //                      INVITE  |  PUBLIC
         //        ----------------------+----------------
@@ -452,42 +450,36 @@ module.exports = React.createClass({
 
     _onToggle: function(keyName, checkedValue, uncheckedValue, ev) {
         console.log("Checkbox toggle: %s %s", keyName, ev.target.checked);
-        var state = {};
+        const state = {};
         state[keyName] = ev.target.checked ? checkedValue : uncheckedValue;
         this.setState(state);
     },
 
     _onTagChange: function(tagName, event) {
+        // Only allow one tag for the time being.
         if (event.target.checked) {
-            if (tagName === 'm.favourite') {
-                delete this.state.tags['m.lowpriority'];
-            }
-            else if (tagName === 'm.lowpriority') {
-                delete this.state.tags['m.favourite'];
-            }
-
-            this.state.tags[tagName] = this.state.tags[tagName] || ["yep"];
-        }
-        else {
-            delete this.state.tags[tagName];
+          this.state.tags = { };
+          this.state.tags[tagName] = ["yep"];
+        } else {
+            this.state.tags = [];
         }
 
         this.setState({
             tags: this.state.tags,
-            tags_changed: true
+            tags_changed: true,
         });
     },
 
     mayChangeRoomAccess: function() {
-        var cli = MatrixClientPeg.get();
-        var roomState = this.props.room.currentState;
+        const cli = MatrixClientPeg.get();
+        const roomState = this.props.room.currentState;
         return (roomState.mayClientSendStateEvent("m.room.join_rules", cli) &&
                 roomState.mayClientSendStateEvent("m.room.guest_access", cli));
     },
 
     onManageIntegrations(ev) {
         ev.preventDefault();
-        var IntegrationsManager = sdk.getComponent("views.settings.IntegrationsManager");
+        const IntegrationsManager = sdk.getComponent("views.settings.IntegrationsManager");
         Modal.createDialog(IntegrationsManager, {
             src: this.scalarClient.hasCredentials() ?
                     this.scalarClient.getScalarInterfaceUrlForRoom(this.props.room.roomId) :
@@ -519,11 +511,11 @@ module.exports = React.createClass({
         MatrixClientPeg.get().forget(this.props.room.roomId).done(function() {
             dis.dispatch({ action: 'view_next_room' });
         }, function(err) {
-            var errCode = err.errcode || "unknown error code";
-            var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+            const errCode = err.errcode || "unknown error code";
+            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createDialog(ErrorDialog, {
                 title: "Error",
-                description: `Failed to forget room (${errCode})`
+                description: `Failed to forget room (${errCode})`,
             });
         });
     },
@@ -531,7 +523,7 @@ module.exports = React.createClass({
     onEnableEncryptionClick() {
         if (!this.refs.encrypt.checked) return;
 
-        var QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+        const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
         Modal.createDialog(QuestionDialog, {
             title: "Warning!",
             description: (
@@ -543,7 +535,7 @@ module.exports = React.createClass({
                     <p>Encrypted messages will not be visible on clients that do not yet implement encryption.</p>
                 </div>
             ),
-            onFinished: confirm=>{
+            onFinished: (confirm)=>{
                 if (!confirm) {
                     this.refs.encrypt.checked = false;
                 }
@@ -557,13 +549,13 @@ module.exports = React.createClass({
     },
 
     _renderEncryptionSection: function() {
-        var cli = MatrixClientPeg.get();
-        var roomState = this.props.room.currentState;
-        var isEncrypted = cli.isRoomEncrypted(this.props.room.roomId);
-        var isGlobalBlacklistUnverified = UserSettingsStore.getLocalSettings().blacklistUnverifiedDevices;
-        var isRoomBlacklistUnverified = this._isRoomBlacklistUnverified();
+        const cli = MatrixClientPeg.get();
+        const roomState = this.props.room.currentState;
+        const isEncrypted = cli.isRoomEncrypted(this.props.room.roomId);
+        const isGlobalBlacklistUnverified = UserSettingsStore.getLocalSettings().blacklistUnverifiedDevices;
+        const isRoomBlacklistUnverified = this._isRoomBlacklistUnverified();
 
-        var settings =
+        const settings =
             <label>
                 <input type="checkbox" ref="blacklistUnverified"
                        defaultChecked={ isGlobalBlacklistUnverified || isRoomBlacklistUnverified }
@@ -583,8 +575,7 @@ module.exports = React.createClass({
                     { settings }
                 </div>
             );
-        }
-        else {
+        } else {
             return (
                 <div>
                     <label>
@@ -604,63 +595,62 @@ module.exports = React.createClass({
         // TODO: go through greying out things you don't have permission to change
         // (or turning them into informative stuff)
 
-        var AliasSettings = sdk.getComponent("room_settings.AliasSettings");
-        var ColorSettings = sdk.getComponent("room_settings.ColorSettings");
-        var UrlPreviewSettings = sdk.getComponent("room_settings.UrlPreviewSettings");
-        var EditableText = sdk.getComponent('elements.EditableText');
-        var PowerSelector = sdk.getComponent('elements.PowerSelector');
-        var Loader = sdk.getComponent("elements.Spinner");
+        const AliasSettings = sdk.getComponent("room_settings.AliasSettings");
+        const ColorSettings = sdk.getComponent("room_settings.ColorSettings");
+        const UrlPreviewSettings = sdk.getComponent("room_settings.UrlPreviewSettings");
+        const PowerSelector = sdk.getComponent('elements.PowerSelector');
 
-        var cli = MatrixClientPeg.get();
-        var roomState = this.props.room.currentState;
-        var user_id = cli.credentials.userId;
+        const cli = MatrixClientPeg.get();
+        const roomState = this.props.room.currentState;
+        const userId = cli.credentials.userId;
 
-        var power_level_event = roomState.getStateEvents('m.room.power_levels', '');
-        var power_levels = power_level_event ? power_level_event.getContent() : {};
-        var events_levels = power_levels.events || {};
-        var user_levels = power_levels.users || {};
+        const avaliableTags = RoomTagUtil.getTags();
 
-        var ban_level = parseIntWithDefault(power_levels.ban, 50);
-        var kick_level = parseIntWithDefault(power_levels.kick, 50);
-        var redact_level = parseIntWithDefault(power_levels.redact, 50);
-        var invite_level = parseIntWithDefault(power_levels.invite, 50);
-        var send_level = parseIntWithDefault(power_levels.events_default, 0);
-        var state_level = power_level_event ? parseIntWithDefault(power_levels.state_default, 50) : 0;
-        var default_user_level = parseIntWithDefault(power_levels.users_default, 0);
+        const powerLevelEvent = roomState.getStateEvents('m.room.power_levels', '');
+        const powerLevels = powerLevelEvent ? powerLevelEvent.getContent() : {};
+        const eventsLevels = powerLevels.events || {};
+        const userLevels = powerLevels.users || {};
 
-        var current_user_level = user_levels[user_id];
+        const ban_level = parseIntWithDefault(powerLevels.ban, 50);
+        const kick_level = parseIntWithDefault(powerLevels.kick, 50);
+        const redact_level = parseIntWithDefault(powerLevels.redact, 50);
+        const invite_level = parseIntWithDefault(powerLevels.invite, 50);
+        const send_level = parseIntWithDefault(powerLevels.events_default, 0);
+        const state_level = powerLevelEvent ? parseIntWithDefault(powerLevels.state_default, 50) : 0;
+        const default_user_level = parseIntWithDefault(powerLevels.users_default, 0);
+
+        let current_user_level = eventsLevels[userId];
         if (current_user_level === undefined) {
-            current_user_level = default_user_level;
+            current_user_level = userLevels;
         }
 
-        var can_change_levels = roomState.mayClientSendStateEvent("m.room.power_levels", cli);
+        const can_change_levels = roomState.mayClientSendStateEvent("m.room.power_levels", cli);
 
-        var canSetTag = !cli.isGuest();
+        const canSetTag = !cli.isGuest();
 
-        var self = this;
+        const self = this;
 
-        var userLevelsSection;
-        if (Object.keys(user_levels).length) {
+        let userLevelsSection;
+        if (Object.keys(userLevels).length) {
             userLevelsSection =
                 <div>
                     <h3>Privileged Users</h3>
                     <ul className="mx_RoomSettings_userLevels">
-                        {Object.keys(user_levels).map(function(user, i) {
+                        {Object.keys(userLevels).map(function(user, i) {
                             return (
                                 <li className="mx_RoomSettings_userLevel" key={user}>
-                                    { user } is a <PowerSelector value={ user_levels[user] } disabled={true}/>
+                                    { user } is a <PowerSelector value={ userLevels[user] } disabled={true}/>
                                 </li>
                             );
                         })}
                     </ul>
                 </div>;
-        }
-        else {
+        } else {
             userLevelsSection = <div>No users have specific privileges in this room.</div>;
         }
 
-        var banned = this.props.room.getMembersWithMembership("ban");
-        var bannedUsersSection;
+        const banned = this.props.room.getMembersWithMembership("ban");
+        let bannedUsersSection;
         if (banned.length) {
             bannedUsersSection =
                 <div>
@@ -675,7 +665,7 @@ module.exports = React.createClass({
                 </div>;
         }
 
-        var unfederatableSection;
+        let unfederatableSection;
         if (this._yankValueFromEvent("m.room.create", "m.federate") === false) {
              unfederatableSection = (
                 <div className="mx_RoomSettings_powerLevel">
@@ -684,8 +674,8 @@ module.exports = React.createClass({
             );
         }
 
-        var leaveButton = null;
-        var myMember = this.props.room.getMember(user_id);
+        let leaveButton = null;
+        const myMember = this.props.room.getMember(userId);
         if (myMember) {
             if (myMember.membership === "join") {
                 leaveButton = (
@@ -693,8 +683,7 @@ module.exports = React.createClass({
                         Leave room
                     </AccessibleButton>
                 );
-            }
-            else if (myMember.membership === "leave") {
+            } else if (myMember.membership === "leave") {
                 leaveButton = (
                     <AccessibleButton className="mx_RoomSettings_leaveButton" onClick={ this.onForgetClick }>
                         Forget room
@@ -706,28 +695,21 @@ module.exports = React.createClass({
         // TODO: support editing custom events_levels
         // TODO: support editing custom user_levels
 
-        var tags = [
-            { name: "m.favourite", label: "Favourite", ref: "tag_favourite" },
-            { name: "m.lowpriority", label: "Low priority", ref: "tag_lowpriority" },
-        ];
-
-        Object.keys(this.state.tags).sort().forEach(function(tagName) {
-            if (tagName !== 'm.favourite' && tagName !== 'm.lowpriority') {
-                tags.push({ name: tagName, label: tagName });
-            }
+        Object.keys(avaliableTags).sort().forEach(function(tag) {
+            tags.push({ name: tag.tag, label: tag.label || tag.tag, ref: "tag_" + tag.tag });
         });
 
-        var tagsSection = null;
+        let tagsSection = null;
         if (canSetTag || self.state.tags) {
-            var tagsSection =
+            tagsSection =
                 <div className="mx_RoomSettings_tags">
                     Tagged as: { canSetTag ?
                         (tags.map(function(tag, i) {
                             return (<label key={ i }>
                                         <input type="checkbox"
                                                ref={ tag.ref }
-                                               checked={ tag.name in self.state.tags }
-                                               onChange={ self._onTagChange.bind(self, tag.name) }/>
+                                               checked={ tag.tag in self.state.tags }
+                                               onChange={ self._onTagChange.bind(self, tag.tag) }/>
                                         { tag.label }
                                     </label>);
                         })) : (self.state.tags && self.state.tags.join) ? self.state.tags.join(", ") : ""
@@ -737,11 +719,11 @@ module.exports = React.createClass({
 
         // If there is no history_visibility, it is assumed to be 'shared'.
         // http://matrix.org/docs/spec/r0.0.0/client_server.html#id31
-        var historyVisibility = this.state.history_visibility || "shared";
+        const historyVisibility = this.state.history_visibility || "shared";
 
-        var addressWarning;
-        var aliasEvents = this.props.room.currentState.getStateEvents('m.room.aliases') || [];
-        var aliasCount = 0;
+        let addressWarning;
+        const aliasEvents = this.props.room.currentState.getStateEvents('m.room.aliases') || [];
+        let aliasCount = 0;
         aliasEvents.forEach((event) => {
             aliasCount += event.getContent().aliases.length;
         });
@@ -753,7 +735,7 @@ module.exports = React.createClass({
                 </div>;
         }
 
-        var inviteGuestWarning;
+        let inviteGuestWarning;
         if (this.state.join_rule !== "public" && this.state.guest_access === "forbidden") {
             inviteGuestWarning =
                 <div className="mx_RoomSettings_warning">
@@ -764,8 +746,8 @@ module.exports = React.createClass({
                 </div>;
         }
 
-        var integrationsButton;
-        var integrationsError;
+        let integrationsButton;
+        let integrationsError;
         if (this.state.showIntegrationsError && this.state.scalar_error) {
             console.error(this.state.scalar_error);
             integrationsError = (
@@ -923,11 +905,11 @@ module.exports = React.createClass({
                         <PowerSelector ref="redact" value={redact_level} controlled={false} disabled={!can_change_levels || current_user_level < redact_level} onChange={this.onPowerLevelsChanged}/>
                     </div>
 
-                    {Object.keys(events_levels).map(function(event_type, i) {
+                    {Object.keys(eventsLevels).map(function(event_type, i) {
                         return (
                             <div className="mx_RoomSettings_powerLevel" key={event_type}>
                                 <span className="mx_RoomSettings_powerLevelKey">To send events of type <code>{ event_type }</code>, you must be a </span>
-                                <PowerSelector value={ events_levels[event_type] } controlled={false} disabled={true} onChange={self.onPowerLevelsChanged}/>
+                                <PowerSelector value={ eventsLevels[event_type] } controlled={false} disabled={true} onChange={self.onPowerLevelsChanged}/>
                             </div>
                         );
                     })}
@@ -945,5 +927,5 @@ module.exports = React.createClass({
                 </div>
             </div>
         );
-    }
+    },
 });
