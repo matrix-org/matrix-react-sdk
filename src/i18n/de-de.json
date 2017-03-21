@@ -1,8 +1,4 @@
 {
-  "MemberList": {
-    "filterMembers": "Raum User filtern"
-  },
-  "NotificationPanel": {
-    "empty": "Du hast keine sichtbaren Benachrichtigungen"
-  }
+    "MemberList.filterMembers": "Raum Benutzer filtern",
+    "NotificationPanel.empty": "Du hast keine sichtbaren Benachrichtigungen"
 }
