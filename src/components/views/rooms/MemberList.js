@@ -372,7 +372,7 @@ module.exports = React.createClass({
             <form autoComplete="off">
                 <input className="mx_MemberList_query" id="mx_MemberList_query" type="text"
                         onChange={this.onSearchQueryChanged} value={this.state.searchQuery}
-                        placeholder={ counterpart.translate('MemberList.filterMembers') }
+                        placeholder={ counterpart.translate('Filter room members') }
             </form>
         );
 

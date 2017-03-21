@@ -1,8 +1,4 @@
 {
-  "MemberList": {
-    "filterMembers": "Filter room members"
-  },
-  "NotificationPanel": {
-    "empty": "You have no visible notifications"
-  }
+  "Filter room members": "Filter room members",
+  "You have no visible notifications": "You have no visible notifications"
 }
