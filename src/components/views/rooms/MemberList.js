@@ -53,7 +53,8 @@ module.exports = React.createClass({
             searchQuery: "",
         };
         if (!this.props.roomId) return state;
-        if (this.props.lang) counterpart.setLocale(this.props.lang);
+        var userLang = navigator.language || navigator.userLanguage;
+        counterpart.setLocale(userLang);
         var cli = MatrixClientPeg.get();
         var room = cli.getRoom(this.props.roomId);
         if (!room) return state;
@@ -372,7 +373,7 @@ module.exports = React.createClass({
             <form autoComplete="off">
                 <input className="mx_MemberList_query" id="mx_MemberList_query" type="text"
                         onChange={this.onSearchQueryChanged} value={this.state.searchQuery}
-                        placeholder={ counterpart.translate('Filter room members') }
+                        placeholder={ counterpart.translate('Filter room members') } />
             </form>
         );
 

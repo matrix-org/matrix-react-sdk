@@ -49,6 +49,8 @@ module.exports = React.createClass({
     },
 
     getInitialState: function() {
+        var userLang = navigator.language || navigator.userLanguage;
+        counterpart.setLocale(userLang);
         return {
             isLoadingLeftRooms: false,
             lists: {},

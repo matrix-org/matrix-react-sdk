@@ -38,6 +38,11 @@ var NotificationPanel = React.createClass({
 
     propTypes: {
     },
+    getInitialState: function() {
+      var userLang = navigator.language || navigator.userLanguage;
+      counterpart.setLocale(userLang);
+      return {};
+    },
 
     render: function() {
         // wrap a TimelinePanel with the jump-to-event bits turned off.
@@ -45,7 +50,6 @@ var NotificationPanel = React.createClass({
         var Loader = sdk.getComponent("elements.Spinner");
 
         var timelineSet = MatrixClientPeg.get().getNotifTimelineSet();
-        if (this.props.lang) counterpart.setLocale(this.props.lang);
         if (timelineSet) {
             return (
                 <TimelinePanel key={"NotificationPanel_" + this.props.roomId}
