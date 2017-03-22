@@ -17,10 +17,18 @@ limitations under the License.
 var React = require('react');
 var ReactDOM = require("react-dom");
 
+var counterpart = require('counterpart');
+var Translate   = require('react-translate-component');
+var _t = Translate.translate;
+
 var Matrix = require("matrix-js-sdk");
 var sdk = require('../../index');
 var MatrixClientPeg = require("../../MatrixClientPeg");
 var dis = require("../../dispatcher");
+
+// load our own translations
+counterpart.registerTranslations('en', require('../../i18n/en-en'));
+counterpart.registerTranslations('de', require('../../i18n/de-de'));
 
 /*
  * Component which shows the global notification list using a TimelinePanel
@@ -30,6 +38,11 @@ var NotificationPanel = React.createClass({
 
     propTypes: {
     },
+    getInitialState: function() {
+      var userLang = navigator.language || navigator.userLanguage;
+      counterpart.setLocale(userLang);
+      return {};
+    },
 
     render: function() {
         // wrap a TimelinePanel with the jump-to-event bits turned off.
@@ -37,7 +50,6 @@ var NotificationPanel = React.createClass({
         var Loader = sdk.getComponent("elements.Spinner");
 
         var timelineSet = MatrixClientPeg.get().getNotifTimelineSet();
-
         if (timelineSet) {
             return (
                 <TimelinePanel key={"NotificationPanel_" + this.props.roomId}
@@ -48,7 +60,7 @@ var NotificationPanel = React.createClass({
                     showUrlPreview = { false }
                     opacity={ this.props.opacity }
                     tileShape="notif"
-                    empty="You have no visible notifications"
+                    empty={ counterpart.translate('You have no visible notifications') }
                 />
             );
         }

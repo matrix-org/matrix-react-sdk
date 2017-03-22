@@ -14,6 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 var React = require('react');
+var counterpart = require('counterpart');
+var Translate   = require('react-translate-component');
+var _t = Translate.translate;
 var classNames = require('classnames');
 var Matrix = require("matrix-js-sdk");
 var q = require('q');
@@ -25,6 +28,10 @@ var GeminiScrollbar = require('react-gemini-scrollbar');
 var rate_limited_func = require('../../../ratelimitedfunc');
 var CallHandler = require("../../../CallHandler");
 var Invite = require("../../../Invite");
+
+// load our own translations
+counterpart.registerTranslations('en', require('../../../i18n/en-en'));
+counterpart.registerTranslations('de', require('../../../i18n/de-de'));
 
 var INITIAL_LOAD_NUM_MEMBERS = 30;
 var SHARE_HISTORY_WARNING =
@@ -46,6 +53,8 @@ module.exports = React.createClass({
             searchQuery: "",
         };
         if (!this.props.roomId) return state;
+        var userLang = navigator.language || navigator.userLanguage;
+        counterpart.setLocale(userLang);
         var cli = MatrixClientPeg.get();
         var room = cli.getRoom(this.props.roomId);
         if (!room) return state;
@@ -363,8 +372,8 @@ module.exports = React.createClass({
         var inputBox = (
             <form autoComplete="off">
                 <input className="mx_MemberList_query" id="mx_MemberList_query" type="text"
-                    onChange={this.onSearchQueryChanged} value={this.state.searchQuery}
-                    placeholder="Filter room members" />
+                        onChange={this.onSearchQueryChanged} value={this.state.searchQuery}
+                        placeholder={ counterpart.translate('Filter room members') } />
             </form>
         );
 
