@@ -30,6 +30,8 @@ module.exports = React.createClass({
         avatarsMaxLength: React.PropTypes.number,
         // The minimum number of events needed to trigger summarisation
         threshold: React.PropTypes.number,
+        // Called when the MELS expansion is toggled
+        onToggle: React.PropTypes.func,
     },
 
     getInitialState: function() {
@@ -63,6 +65,7 @@ module.exports = React.createClass({
         this.setState({
             expanded: !this.state.expanded,
         });
+        this.props.onToggle();
     },
 
     /**
@@ -108,7 +111,7 @@ module.exports = React.createClass({
         }
 
         return (
-            <span>
+            <span className="mx_TextualEvent mx_MemberEventListSummary_summary">
                 {summaries.join(", ")}
             </span>
         );
@@ -264,7 +267,7 @@ module.exports = React.createClass({
             );
         });
         return (
-            <span>
+            <span className="mx_MemberEventListSummary_avatars">
                 {avatars}
             </span>
         );
@@ -381,11 +384,11 @@ module.exports = React.createClass({
             // Initialise a user's events
             if (!userEvents[userId]) {
                 userEvents[userId] = [];
-                avatarMembers.push(e.target);
+                if (e.target) avatarMembers.push(e.target);
             }
             userEvents[userId].push({
                 mxEvent: e,
-                displayName: e.target.name || userId,
+                displayName: (e.target ? e.target.name : null) || userId,
                 index: index,
             });
         });
@@ -397,31 +400,28 @@ module.exports = React.createClass({
             (seq1, seq2) => aggregate.indices[seq1] > aggregate.indices[seq2]
         );
 
-        const avatars = this._renderAvatars(avatarMembers);
-        const summary = this._renderSummary(aggregate.names, orderedTransitionSequences);
-        const toggleButton = (
-            <a className="mx_MemberEventListSummary_toggle" onClick={this._toggleSummary}>
-                {expanded ? 'collapse' : 'expand'}
-            </a>
-        );
-
-        const summaryContainer = (
-            <div className="mx_EventTile_line">
-                <div className="mx_EventTile_info">
-                    <span className="mx_MemberEventListSummary_avatars">
-                        {avatars}
-                    </span>
-                    <span className="mx_TextualEvent mx_MemberEventListSummary_summary">
-                        {summary}
-                    </span>&nbsp;
-                    {toggleButton}
+        let summaryContainer = null;
+        if (!expanded) {
+            summaryContainer = (
+                <div className="mx_EventTile_line">
+                    <div className="mx_EventTile_info">
+                        {this._renderAvatars(avatarMembers)}
+                        {this._renderSummary(aggregate.names, orderedTransitionSequences)}
+                    </div>
                 </div>
+            );
+        }
+        const toggleButton = (
+            <div className={"mx_MemberEventListSummary_toggle"} onClick={this._toggleSummary}>
+                {expanded ? 'collapse' : 'expand'}
             </div>
         );
 
         return (
             <div className="mx_MemberEventListSummary">
+                {toggleButton}
                 {summaryContainer}
+                {expanded ? <div className="mx_MemberEventListSummary_line">&nbsp;</div> : null}
                 {expandedEvents}
             </div>
         );

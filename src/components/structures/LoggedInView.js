@@ -42,16 +42,23 @@ export default React.createClass({
         onRoomCreated: React.PropTypes.func,
         onUserSettingsClose: React.PropTypes.func,
 
+        teamToken: React.PropTypes.string,
+
         // and lots and lots of other stuff.
     },
 
     childContextTypes: {
         matrixClient: React.PropTypes.instanceOf(Matrix.MatrixClient),
+        authCache: React.PropTypes.object,
     },
 
     getChildContext: function() {
         return {
             matrixClient: this._matrixClient,
+            authCache: {
+                auth: {},
+                lastUpdate: 0,
+            },
         };
     },
 
@@ -72,6 +79,13 @@ export default React.createClass({
 
     getScrollStateForRoom: function(roomId) {
         return this._scrollStateMap[roomId];
+    },
+
+    canResetTimelineInRoom: function(roomId) {
+        if (!this.refs.roomView) {
+            return true;
+        }
+        return this.refs.roomView.canResetTimeline();
     },
 
     _onKeyDown: function(ev) {
@@ -137,6 +151,7 @@ export default React.createClass({
         var UserSettings = sdk.getComponent('structures.UserSettings');
         var CreateRoom = sdk.getComponent('structures.CreateRoom');
         var RoomDirectory = sdk.getComponent('structures.RoomDirectory');
+        var HomePage = sdk.getComponent('structures.HomePage');
         var MatrixToolbar = sdk.getComponent('globals.MatrixToolbar');
         var GuestWarningBar = sdk.getComponent('globals.GuestWarningBar');
         var NewVersionBar = sdk.getComponent('globals.NewVersionBar');
@@ -172,6 +187,7 @@ export default React.createClass({
                     collapsedRhs={this.props.collapse_rhs}
                     enableLabs={this.props.config.enableLabs}
                     referralBaseUrl={this.props.config.referralBaseUrl}
+                    teamToken={this.props.teamToken}
                 />;
                 if (!this.props.collapse_rhs) right_panel = <RightPanel opacity={this.props.sideOpacity}/>;
                 break;
@@ -191,6 +207,16 @@ export default React.createClass({
                 />;
                 if (!this.props.collapse_rhs) right_panel = <RightPanel opacity={this.props.sideOpacity}/>;
                 break;
+
+            case PageTypes.HomePage:
+                page_element = <HomePage
+                    collapsedRhs={this.props.collapse_rhs}
+                    teamServerUrl={this.props.config.teamServerConfig.teamServerURL}
+                    teamToken={this.props.teamToken}
+                />
+                if (!this.props.collapse_rhs) right_panel = <RightPanel opacity={this.props.sideOpacity}/>
+                break;
+
             case PageTypes.UserView:
                 page_element = null; // deliberately null for now
                 right_panel = <RightPanel userId={this.props.viewUserId} opacity={this.props.sideOpacity} />;
@@ -219,7 +245,12 @@ export default React.createClass({
             <div className='mx_MatrixChat_wrapper'>
                 {topBar}
                 <div className={bodyClasses}>
-                    <LeftPanel selectedRoom={this.props.currentRoomId} collapsed={this.props.collapse_lhs || false} opacity={this.props.sideOpacity}/>
+                    <LeftPanel
+                        selectedRoom={this.props.currentRoomId}
+                        collapsed={this.props.collapse_lhs || false}
+                        opacity={this.props.sideOpacity}
+                        teamToken={this.props.teamToken}
+                    />
                     <main className='mx_MatrixChat_middlePanel'>
                         {page_element}
                     </main>

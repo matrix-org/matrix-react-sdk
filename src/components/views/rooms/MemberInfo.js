@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2017 Vector Creations Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,16 +26,16 @@ limitations under the License.
  * 'muted': boolean,
  * 'isTargetMod': boolean
  */
-var React = require('react');
-var classNames = require('classnames');
-var dis = require("../../../dispatcher");
-var Modal = require("../../../Modal");
-var sdk = require('../../../index');
-var createRoom = require('../../../createRoom');
-var DMRoomMap = require('../../../utils/DMRoomMap');
-var Unread = require('../../../Unread');
-var Receipt = require('../../../utils/Receipt');
-var WithMatrixClient = require('../../../wrappers/WithMatrixClient');
+import React from 'react';
+import classNames from 'classnames';
+import dis from '../../../dispatcher';
+import Modal from '../../../Modal';
+import sdk from '../../../index';
+import createRoom from '../../../createRoom';
+import DMRoomMap from '../../../utils/DMRoomMap';
+import Unread from '../../../Unread';
+import { findReadReceiptFromUserId } from '../../../utils/Receipt';
+import WithMatrixClient from '../../../wrappers/WithMatrixClient';
 import AccessibleButton from '../elements/AccessibleButton';
 
 module.exports = WithMatrixClient(React.createClass({
@@ -43,13 +44,6 @@ module.exports = WithMatrixClient(React.createClass({
     propTypes: {
         matrixClient: React.PropTypes.object.isRequired,
         member: React.PropTypes.object.isRequired,
-        onFinished: React.PropTypes.func,
-    },
-
-    getDefaultProps: function() {
-        return {
-            onFinished: function() {}
-        };
     },
 
     getInitialState: function() {
@@ -164,7 +158,7 @@ module.exports = WithMatrixClient(React.createClass({
     onRoomReceipt: function(receiptEvent, room) {
         // because if we read a notification, it will affect notification count
         // only bother updating if there's a receipt from us
-        if (Receipt.findReadReceiptFromUserId(receiptEvent, this.props.matrixClient.credentials.userId)) {
+        if (findReadReceiptFromUserId(receiptEvent, this.props.matrixClient.credentials.userId)) {
             this.forceUpdate();
         }
     },
@@ -224,46 +218,78 @@ module.exports = WithMatrixClient(React.createClass({
     },
 
     onKick: function() {
-        var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-        var roomId = this.props.member.roomId;
-        var target = this.props.member.userId;
-        this.setState({ updating: this.state.updating + 1 });
-        this.props.matrixClient.kick(roomId, target).then(function() {
-                // NO-OP; rely on the m.room.member event coming down else we could
-                // get out of sync if we force setState here!
-                console.log("Kick success");
-            }, function(err) {
-                Modal.createDialog(ErrorDialog, {
-                    title: "Kick error",
-                    description: err.message
+        const ConfirmUserActionDialog = sdk.getComponent("dialogs.ConfirmUserActionDialog");
+        Modal.createDialog(ConfirmUserActionDialog, {
+            member: this.props.member,
+            action: 'Kick',
+            askReason: true,
+            danger: true,
+            onFinished: (proceed, reason) => {
+                if (!proceed) return;
+
+                this.setState({ updating: this.state.updating + 1 });
+                this.props.matrixClient.kick(
+                    this.props.member.roomId, this.props.member.userId,
+                    reason || undefined
+                ).then(function() {
+                        // NO-OP; rely on the m.room.member event coming down else we could
+                        // get out of sync if we force setState here!
+                        console.log("Kick success");
+                    }, function(err) {
+                        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+                        console.error("Kick error: " + err);
+                        Modal.createDialog(ErrorDialog, {
+                            title: "Error", 
+                            description: "Failed to kick user",
+                        });
+                    }
+                ).finally(()=>{
+                    this.setState({ updating: this.state.updating - 1 });
                 });
             }
-        ).finally(()=>{
-            this.setState({ updating: this.state.updating - 1 });
         });
-        this.props.onFinished();
     },
 
-    onBan: function() {
-        var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-        var roomId = this.props.member.roomId;
-        var target = this.props.member.userId;
-        this.setState({ updating: this.state.updating + 1 });
-        this.props.matrixClient.ban(roomId, target).then(
-            function() {
-                // NO-OP; rely on the m.room.member event coming down else we could
-                // get out of sync if we force setState here!
-                console.log("Ban success");
-            }, function(err) {
-                Modal.createDialog(ErrorDialog, {
-                    title: "Ban error",
-                    description: err.message
+    onBanOrUnban: function() {
+        const ConfirmUserActionDialog = sdk.getComponent("dialogs.ConfirmUserActionDialog");
+        Modal.createDialog(ConfirmUserActionDialog, {
+            member: this.props.member,
+            action: this.props.member.membership == 'ban' ? 'Unban' : 'Ban',
+            askReason: this.props.member.membership != 'ban',
+            danger: this.props.member.membership != 'ban',
+            onFinished: (proceed, reason) => {
+                if (!proceed) return;
+
+                this.setState({ updating: this.state.updating + 1 });
+                let promise;
+                if (this.props.member.membership == 'ban') {
+                    promise = this.props.matrixClient.unban(
+                        this.props.member.roomId, this.props.member.userId,
+                    );
+                } else {
+                    promise = this.props.matrixClient.ban(
+                        this.props.member.roomId, this.props.member.userId,
+                        reason || undefined
+                    );
+                }
+                promise.then(
+                    function() {
+                        // NO-OP; rely on the m.room.member event coming down else we could
+                        // get out of sync if we force setState here!
+                        console.log("Ban success");
+                    }, function(err) {
+                        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+                        console.error("Ban error: " + err);
+                        Modal.createDialog(ErrorDialog, {
+                            title: "Error",
+                            description: "Failed to ban user",
+                        });
+                    }
+                ).finally(()=>{
+                    this.setState({ updating: this.state.updating - 1 });
                 });
-            }
-        ).finally(()=>{
-            this.setState({ updating: this.state.updating - 1 });
+            },
         });
-        this.props.onFinished();
     },
 
     onMuteToggle: function() {
@@ -272,14 +298,12 @@ module.exports = WithMatrixClient(React.createClass({
         var target = this.props.member.userId;
         var room = this.props.matrixClient.getRoom(roomId);
         if (!room) {
-            this.props.onFinished();
             return;
         }
         var powerLevelEvent = room.currentState.getStateEvents(
             "m.room.power_levels", ""
         );
         if (!powerLevelEvent) {
-            this.props.onFinished();
             return;
         }
         var isMuted = this.state.muted;
@@ -305,16 +329,16 @@ module.exports = WithMatrixClient(React.createClass({
                     // get out of sync if we force setState here!
                     console.log("Mute toggle success");
                 }, function(err) {
+                    console.error("Mute error: " + err);
                     Modal.createDialog(ErrorDialog, {
-                        title: "Mute error",
-                        description: err.message
+                        title: "Error",
+                        description: "Failed to mute user",
                     });
                 }
             ).finally(()=>{
                 this.setState({ updating: this.state.updating - 1 });
             });
         }
-        this.props.onFinished();
     },
 
     onModToggle: function() {
@@ -323,19 +347,16 @@ module.exports = WithMatrixClient(React.createClass({
         var target = this.props.member.userId;
         var room = this.props.matrixClient.getRoom(roomId);
         if (!room) {
-            this.props.onFinished();
             return;
         }
         var powerLevelEvent = room.currentState.getStateEvents(
             "m.room.power_levels", ""
         );
         if (!powerLevelEvent) {
-            this.props.onFinished();
             return;
         }
         var me = room.getMember(this.props.matrixClient.credentials.userId);
         if (!me) {
-            this.props.onFinished();
             return;
         }
         var defaultLevel = powerLevelEvent.getContent().users_default;
@@ -357,16 +378,16 @@ module.exports = WithMatrixClient(React.createClass({
                         description: "This action cannot be performed by a guest user. Please register to be able to do this."
                     });
                 } else {
+                    console.error("Toggle moderator error:" + err);
                     Modal.createDialog(ErrorDialog, {
-                        title: "Moderator toggle error",
-                        description: err.message
+                        title: "Error",
+                        description: "Failed to toggle moderator status",
                     });
                 }
             }
         ).finally(()=>{
             this.setState({ updating: this.state.updating - 1 });
         });
-        this.props.onFinished();
     },
 
     _applyPowerChange: function(roomId, target, powerLevel, powerLevelEvent) {
@@ -378,15 +399,15 @@ module.exports = WithMatrixClient(React.createClass({
                 console.log("Power change success");
             }, function(err) {
                 const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+                console.error("Failed to change power level " + err);
                 Modal.createDialog(ErrorDialog, {
-                    title: "Failure to change power level",
-                    description: err.message
+                    title: "Error",
+                    description: "Failed to change power level",
                 });
             }
         ).finally(()=>{
             this.setState({ updating: this.state.updating - 1 });
         }).done();
-        this.props.onFinished();
     },
 
     onPowerChange: function(powerLevel) {
@@ -396,14 +417,12 @@ module.exports = WithMatrixClient(React.createClass({
         var room = this.props.matrixClient.getRoom(roomId);
         var self = this;
         if (!room) {
-            this.props.onFinished();
             return;
         }
         var powerLevelEvent = room.currentState.getStateEvents(
             "m.room.power_levels", ""
         );
         if (!powerLevelEvent) {
-            this.props.onFinished();
             return;
         }
         if (powerLevelEvent.getContent().users) {
@@ -422,9 +441,6 @@ module.exports = WithMatrixClient(React.createClass({
                         if (confirmed) {
                             self._applyPowerChange(roomId, target, powerLevel, powerLevelEvent);
                         }
-                        else {
-                            self.props.onFinished();
-                        }
                     },
                 });
             }
@@ -440,7 +456,6 @@ module.exports = WithMatrixClient(React.createClass({
     onNewDMClick: function() {
         this.setState({ updating: this.state.updating + 1 });
         createRoom({dmUserId: this.props.member.userId}).finally(() => {
-            this.props.onFinished();
             this.setState({ updating: this.state.updating - 1 });
         }).done();
     },
@@ -450,30 +465,29 @@ module.exports = WithMatrixClient(React.createClass({
             action: 'leave_room',
             room_id: this.props.member.roomId,
         });
-        this.props.onFinished();
     },
 
     _calculateOpsPermissions: function(member) {
-        var defaultPerms = {
+        const defaultPerms = {
             can: {},
             muted: false,
             modifyLevel: false
         };
-        var room = this.props.matrixClient.getRoom(member.roomId);
+        const room = this.props.matrixClient.getRoom(member.roomId);
         if (!room) {
             return defaultPerms;
         }
-        var powerLevels = room.currentState.getStateEvents(
+        const powerLevels = room.currentState.getStateEvents(
             "m.room.power_levels", ""
         );
         if (!powerLevels) {
             return defaultPerms;
         }
-        var me = room.getMember(this.props.matrixClient.credentials.userId);
+        const me = room.getMember(this.props.matrixClient.credentials.userId);
         if (!me) {
             return defaultPerms;
         }
-        var them = member;
+        const them = member;
         return {
             can: this._calculateCanPermissions(
                 me, them, powerLevels.getContent()
@@ -484,22 +498,22 @@ module.exports = WithMatrixClient(React.createClass({
     },
 
     _calculateCanPermissions: function(me, them, powerLevels) {
-        var can = {
+        const can = {
             kick: false,
             ban: false,
             mute: false,
             modifyLevel: false
         };
-        var canAffectUser = them.powerLevel < me.powerLevel;
+        const canAffectUser = them.powerLevel < me.powerLevel;
         if (!canAffectUser) {
             //console.log("Cannot affect user: %s >= %s", them.powerLevel, me.powerLevel);
             return can;
         }
-        var editPowerLevel = (
+        const editPowerLevel = (
             (powerLevels.events ? powerLevels.events["m.room.power_levels"] : null) ||
             powerLevels.state_default
         );
-        var levelToSend = (
+        const levelToSend = (
             (powerLevels.events ? powerLevels.events["m.room.message"] : null) ||
             powerLevels.events_default
         );
@@ -544,6 +558,13 @@ module.exports = WithMatrixClient(React.createClass({
         Modal.createDialog(ImageView, params, "mx_Dialog_lightbox");
     },
 
+    onRoomTileClick(roomId) {
+        dis.dispatch({
+            action: 'view_room',
+            room_id: roomId,
+        });
+    },
+
     _renderDevices: function() {
         if (!this._enableDevices) {
             return null;
@@ -560,7 +581,7 @@ module.exports = WithMatrixClient(React.createClass({
         } else if (devices === null) {
             devComponents = "Unable to load device list";
         } else if (devices.length === 0) {
-            devComponents = "No registered devices";
+            devComponents = "No devices with registered encryption keys";
         } else {
             devComponents = [];
             for (var i = 0; i < devices.length; i++) {
@@ -604,6 +625,7 @@ module.exports = WithMatrixClient(React.createClass({
                             unread={Unread.doesRoomHaveUnreadMessages(room)}
                             highlight={highlight}
                             isInvite={me.membership == "invite"}
+                            onClick={this.onRoomTileClick}
                         />
                     );
                 }
@@ -646,10 +668,14 @@ module.exports = WithMatrixClient(React.createClass({
             );
         }
         if (this.state.can.ban) {
+            let label = 'Ban';
+            if (this.props.member.membership == 'ban') {
+                label = 'Unban';
+            }
             banButton = (
                 <AccessibleButton className="mx_MemberInfo_field"
-                        onClick={this.onBan}>
-                    Ban
+                        onClick={this.onBanOrUnban}>
+                    {label}
                 </AccessibleButton>
             );
         }
