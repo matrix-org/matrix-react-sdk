@@ -45,8 +45,8 @@ module.exports = React.createClass({
       ) {
       return;
     }
-    const tags = RoomTagUtil.moveTag(this.state.selectedTag,-1);
-    this.setState({tags, selectedTag: this.state.selectedTag-1});
+    const tags = RoomTagUtil.moveTag(this.state.selectedTag, -1);
+    this.setState({tags, selectedTag: this.state.selectedTag - 1});
   },
 
   moveTagDown: function() {
@@ -55,27 +55,17 @@ module.exports = React.createClass({
       ) {
       return;
     }
-    const tags = RoomTagUtil.moveTag(this.state.selectedTag,1);
+    const tags = RoomTagUtil.moveTag(this.state.selectedTag, 1);
     this.setState({tags, selectedTag: this.state.selectedTag+1});
   },
 
   addTag: function() {
-    const TextInputDialog = sdk.getComponent("dialogs.TextInputDialog");
-    Modal.createDialog(TextInputDialog, {
-        title: "New Tag...",
-        description:
-            <div>
-                Enter a new, unique room tag below.
-            </div>,
-        button: "Continue",
-        validateInput: (text) => {
-          const valid = RoomTagUtil.isTagValid(text);
-          return valid.valid || valid.error;
-        },
-        onFinished: (confirmed, text) => {
-            if (confirmed) {
-              const tags = RoomTagUtil.addTag(text);
-              this.setState({tags, selectedTag: tags.length-1});
+    const ModifyTagDialog = sdk.getComponent("dialogs.ModifyTagDialog");
+    Modal.createDialog(ModifyTagDialog, {
+        onFinished: (modified, newTag) => {
+            if (modified) {
+              const tags = RoomTagUtil.addTag(newTag.name, newTag.order);
+              this.setState({tags, selectedTag: tags.length - 1});
             }
         },
     });
@@ -86,10 +76,8 @@ module.exports = React.createClass({
       return;
     }
     const tag = this.state.tags[this.state.selectedTag];
-    if(tag.protected) {
-      return; // We cannot remove favourites/low priority.
-    }
     const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+    const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
     Modal.createDialog(QuestionDialog, {
         title: "Warning",
         description:
@@ -99,21 +87,55 @@ module.exports = React.createClass({
         button: "Continue",
         onFinished: (confirmed) => {
             if (confirmed) {
-              const tags = RoomTagUtil.deleteTag(this.state.selectedTag);
+              let tags;
+              try {
+                tags = RoomTagUtil.deleteTag(this.state.selectedTag);
+                this.state.selectedTag -= 1;
+              }
+              catch (ex) {
+                Modal.createDialog(ErrorDialog, {
+                    description: "Cannot delete tag: " + ex.message,
+                });
+                return;
+              }
               const client = MatrixClientPeg.get();
               client.getRooms().filter((room) => {
-                return Object.keys(room.tags).includes(tag.label || tag.name);
+                return Object.keys(room.tags).includes(tag.alias || tag.name);
               }).forEach((room) => {
-                client.deleteRoomTag(room.roomId, tag.label || tag.name);
+                client.deleteRoomTag(room.roomId, tag.alias || tag.name);
               });
-              this.setState({tags});
+              this.setState({tags, selectedTag: this.state.selectedTag});
             }
         },
     });
   },
 
+  changeTagRoomOrder: function() {
+    if (this.state.selectedTag === null) {
+      this.setState({currentOrder: "recent"});
+      return;
+    }
+  },
+
   render: function() {
+    let tagProtected = false;
+    if (this.state.selectedTag !== null) {
+      tagProtected = this.state.tags[this.state.selectedTag].protected;
+    }
     return (<div className="mx_UserSettings_section">
+      <div className="mx_UserSettings_RoomTags_Buttons">
+        <div onClick={this.addTag} className="mx_textButton">Add</div>
+        {
+          !tagProtected ? (
+            <span>
+              <div onClick={this.modifyTag} className="mx_textButton">Modify</div>
+              <div onClick={this.deleteTag} className="mx_textButton">Delete</div>
+            </span>
+        ): null
+        }
+        <div onClick={this.moveTagUp} className="mx_textButton">Move Up</div>
+        <div onClick={this.moveTagDown} className="mx_textButton">Move Down</div>
+      </div>
       <div className="mx_UserSettings_RoomTags_List">
         {
           this.state.tags.map((tag, i) => {
@@ -122,17 +144,13 @@ module.exports = React.createClass({
               className += " selected";
             }
             return (
-              <span key={i} onClick={this.onTagClicked} data-index={i} data-tag={tag.tag} className={className}>
-                {tag.tag}
+              <span key={i} onClick={this.onTagClicked} data-index={i} data-tag={tag.alias || tag.name} className={className}>
+                {tag.name}
               </span>
             );
           })
         }
       </div>
-      <div onClick={this.addTag} className="mx_textButton">Add</div>
-      <div onClick={this.deleteTag} className="mx_textButton">Delete</div>
-      <div onClick={this.moveTagUp} className="mx_textButton">Move Up</div>
-      <div onClick={this.moveTagDown} className="mx_textButton">Move Down</div>
     </div>);
   },
 });
