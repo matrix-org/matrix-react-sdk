@@ -15,22 +15,23 @@ limitations under the License.
 */
 
 'use strict';
-var React = require("react");
-var ReactDOM = require("react-dom");
-var GeminiScrollbar = require('react-gemini-scrollbar');
-var MatrixClientPeg = require("../../../MatrixClientPeg");
-var CallHandler = require('../../../CallHandler');
-var RoomListSorter = require("../../../RoomListSorter");
-var Unread = require('../../../Unread');
-var dis = require("../../../dispatcher");
-var sdk = require('../../../index');
-var rate_limited_func = require('../../../ratelimitedfunc');
-var Rooms = require('../../../Rooms');
+const React = require("react");
+const ReactDOM = require("react-dom");
+const GeminiScrollbar = require('react-gemini-scrollbar');
+const MatrixClientPeg = require("../../../MatrixClientPeg");
+const CallHandler = require('../../../CallHandler');
+// const RoomListSorter = require("../../../RoomListSorter");
+// const Unread = require('../../../Unread');
+const dis = require("../../../dispatcher");
+const sdk = require('../../../index');
+const rate_limited_func = require('../../../ratelimitedfunc');
+const Rooms = require('../../../Rooms');
 import DMRoomMap from '../../../utils/DMRoomMap';
-var Receipt = require('../../../utils/Receipt');
+const Receipt = require('../../../utils/Receipt');
 const UserSettingsStore = require('../../../UserSettingsStore');
+const RoomTagUtil = require('../../../RoomTagUtil');
 
-var HIDE_CONFERENCE_CHANS = true;
+const HIDE_CONFERENCE_CHANS = true;
 
 module.exports = React.createClass({
     displayName: 'RoomList',
@@ -206,19 +207,15 @@ module.exports = React.createClass({
     },
 
     getRoomLists: function() {
-        var self = this;
-        var s = { lists: {} };
+        const self = this;
 
         // Get the room tags the user has defined.
-        const customTags = UserSettingsStore.getSyncedSetting("org.matrix.room_tags");
+        const tags = RoomTagUtil.getTags();
+        const s = { lists: {}, tags };
 
-        s.lists["im.vector.fake.invite"] = [];
-        s.lists["im.vector.fake.recent"] = [];
-        s.lists["im.vector.fake.direct"] = [];
-        s.lists["im.vector.fake.archived"] = [];
-        customTags.forEach((tag) => {
-          s.lists[tag.alias || tag.tag] = [];
-        })
+        tags.forEach((tag) => {
+          s.lists[tag.alias || tag.name] = [];
+        });
 
         const dmRoomMap = new DMRoomMap(MatrixClientPeg.get());
 
@@ -457,107 +454,33 @@ module.exports = React.createClass({
     },
 
     render: function() {
-        var RoomSubList = sdk.getComponent('structures.RoomSubList');
-        var self = this;
+        const RoomSubList = sdk.getComponent('structures.RoomSubList');
+        const self = this;
 
         return (
             <GeminiScrollbar className="mx_RoomList_scrollbar"
                  autoshow={true} onScroll={ self._whenScrolling } ref="gemscroll">
-            <div className="mx_RoomList">
-                <RoomSubList list={ self.state.lists['im.vector.fake.invite'] }
-                             label="Invites"
-                             editable={ false }
-                             order="recent"
-                             selectedRoom={ self.props.selectedRoom }
-                             incomingCall={ self.state.incomingCall }
-                             collapsed={ self.props.collapsed }
-                             searchFilter={ self.props.searchFilter }
-                             onHeaderClick={ self.onSubListHeaderClick }
-                             onShowMoreRooms={ self.onShowMoreRooms } />
-
-                <RoomSubList list={ self.state.lists['m.favourite'] }
-                             label="Favourites"
-                             tagName="m.favourite"
-                             verb="favourite"
-                             editable={ true }
-                             order="manual"
-                             selectedRoom={ self.props.selectedRoom }
-                             incomingCall={ self.state.incomingCall }
-                             collapsed={ self.props.collapsed }
-                             searchFilter={ self.props.searchFilter }
-                             onHeaderClick={ self.onSubListHeaderClick }
-                             onShowMoreRooms={ self.onShowMoreRooms } />
-
-                <RoomSubList list={ self.state.lists['im.vector.fake.direct'] }
-                             label="People"
-                             editable={ false }
-                             order="recent"
-                             selectedRoom={ self.props.selectedRoom }
-                             incomingCall={ self.state.incomingCall }
-                             collapsed={ self.props.collapsed }
-                             searchFilter={ self.props.searchFilter }
-                             onHeaderClick={ self.onSubListHeaderClick }
-                             onShowMoreRooms={ self.onShowMoreRooms } />
-
-                <RoomSubList list={ self.state.lists['im.vector.fake.recent'] }
-                             label="Rooms"
-                             editable={ true }
-                             verb="restore"
-                             order="recent"
-                             selectedRoom={ self.props.selectedRoom }
-                             incomingCall={ self.state.incomingCall }
-                             collapsed={ self.props.collapsed }
-                             searchFilter={ self.props.searchFilter }
-                             onHeaderClick={ self.onSubListHeaderClick }
-                             onShowMoreRooms={ self.onShowMoreRooms } />
-
-                { Object.keys(self.state.lists).map(function(tagName) {
-                    if (!tagName.match(/^(m\.(favourite|lowpriority)|im\.vector\.fake\.(invite|recent|direct|archived))$/)) {
-                        return <RoomSubList list={ self.state.lists[tagName] }
-                             key={ tagName }
-                             label={ tagName }
-                             tagName={ tagName }
-                             verb={ "tag as " + tagName }
-                             editable={ true }
-                             order="manual"
-                             selectedRoom={ self.props.selectedRoom }
-                             incomingCall={ self.state.incomingCall }
-                             collapsed={ self.props.collapsed }
-                             searchFilter={ self.props.searchFilter }
-                             onHeaderClick={ self.onSubListHeaderClick }
-                             onShowMoreRooms={ self.onShowMoreRooms } />;
-
-                    }
-                }) }
-
-                <RoomSubList list={ self.state.lists['m.lowpriority'] }
-                             label="Low priority"
-                             tagName="m.lowpriority"
-                             verb="demote"
-                             editable={ true }
-                             order="recent"
-                             selectedRoom={ self.props.selectedRoom }
-                             incomingCall={ self.state.incomingCall }
-                             collapsed={ self.props.collapsed }
-                             searchFilter={ self.props.searchFilter }
-                             onHeaderClick={ self.onSubListHeaderClick }
-                             onShowMoreRooms={ self.onShowMoreRooms } />
-
-                <RoomSubList list={ self.state.lists['im.vector.fake.archived'] }
-                             label="Historical"
-                             editable={ false }
-                             order="recent"
-                             selectedRoom={ self.props.selectedRoom }
-                             collapsed={ self.props.collapsed }
-                             alwaysShowHeader={ true }
-                             startAsHidden={ true }
-                             showSpinner={ self.state.isLoadingLeftRooms }
-                             onHeaderClick= { self.onArchivedHeaderClick }
-                             incomingCall={ self.state.incomingCall }
-                             searchFilter={ self.props.searchFilter }
-                             onShowMoreRooms={ self.onShowMoreRooms } />
+              <div className="mx_RoomList">
+              { this.state.tags.map((tag) => {
+                console.log(tag);
+                  return (
+                    <RoomSubList list={ self.state.lists[tag.alias||tag.name] }
+                       key={tag.alias||tag.name}
+                       label={ tag.name }
+                       editable={ tag.list_modifiable }
+                       order={ tag.order }
+                       verb={ tag.verb }
+                       startAsHidden= { tag.start_hidden }
+                       selectedRoom={ self.props.selectedRoom }
+                       incomingCall={ self.state.incomingCall }
+                       collapsed={ self.props.collapsed }
+                       searchFilter={ self.props.searchFilter }
+                       onHeaderClick={ self.onSubListHeaderClick }
+                       onShowMoreRooms={ self.onShowMoreRooms } />);
+              })
+            }
             </div>
             </GeminiScrollbar>
         );
-    }
+    },
 });
