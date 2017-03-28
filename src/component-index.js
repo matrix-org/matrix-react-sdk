@@ -85,6 +85,8 @@ import views$dialogs$ErrorDialog from './components/views/dialogs/ErrorDialog';
 views$dialogs$ErrorDialog && (module.exports.components['views.dialogs.ErrorDialog'] = views$dialogs$ErrorDialog);
 import views$dialogs$InteractiveAuthDialog from './components/views/dialogs/InteractiveAuthDialog';
 views$dialogs$InteractiveAuthDialog && (module.exports.components['views.dialogs.InteractiveAuthDialog'] = views$dialogs$InteractiveAuthDialog);
+import views$dialogs$ModifyTagDialog from './components/views/dialogs/ModifyTagDialog';
+views$dialogs$ModifyTagDialog && (module.exports.components['views.dialogs.ModifyTagDialog'] = views$dialogs$ModifyTagDialog);
 import views$dialogs$NeedToRegisterDialog from './components/views/dialogs/NeedToRegisterDialog';
 views$dialogs$NeedToRegisterDialog && (module.exports.components['views.dialogs.NeedToRegisterDialog'] = views$dialogs$NeedToRegisterDialog);
 import views$dialogs$QuestionDialog from './components/views/dialogs/QuestionDialog';
