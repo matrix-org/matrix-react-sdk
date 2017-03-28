@@ -16,7 +16,60 @@ limitations under the License.
 const UserSettingsStore = require('./UserSettingsStore');
 
 const SETTING_NAME = "org.matrix.room_tags";
-const NAMESPACES = ["org.matrix", "im.vector"];
+const NAMESPACES = ["org.matrix", "im.vector", "m"];
+const STATIC_TAGS = [
+  {
+     name: "Invites",
+     alias: "im.vector.fake.invite",
+     protected: true,
+     order: "manual",
+     start_hidden: true,
+     list_modifiable: true,
+  },
+  {
+     name: "Favourites",
+     alias: "m.favourite",
+     verb: "favourite",
+     protected: true,
+     order: "manual",
+     start_hidden: false,
+     list_modifiable: true,
+  },
+  {
+     name: "Rooms",
+     verb: "restore",
+     alias: "im.vector.fake.recent",
+     protected: true,
+     order: "recent",
+     start_hidden: false,
+     list_modifiable: false,
+  },
+  {
+     name: "People",
+     alias: "im.vector.fake.direct",
+     protected: true,
+     order: "recent",
+     start_hidden: true,
+     list_modifiable: false,
+  },
+  {
+     name: "Historical",
+     alias: "im.vector.fake.archived",
+     protected: true,
+     order: "recent",
+     start_hidden: false,
+     list_modifiable: false,
+  },
+  {
+     name: "Low Priority",
+     alias: "m.lowpriority",
+     verb: "demote",
+     order: "recent",
+     protected: true,
+     start_hidden: false,
+  },
+];
+const ROOM_ORDERING = ["recent", "manual"];
 
 class RoomTagUtil {
   /**
@@ -24,24 +77,28 @@ class RoomTagUtil {
    *  or has been hardcoded.
    * In the format:
    * {
-   *  label: "Tag Name" // The tag label to display,
-   *  tag: "m.atagname"  // The tag itself,
-   *  protected: false //Can this tag be deleted.
+   *  alias: "m.tagname",  The tag itself (if left empty, assume name)
+   *  name: "Tag Name", The tag label to display.
+   *  protected: false, Can this tag be deleted or modified.
+   *  show_unused: true, Show the tag in the list if unused.
+   *  list_modifiable: true Can rooms be added to the list. Used for fake tags.
    * }
    * @return {object[]} A list of tags.
    */
   getTags() {
     const tags = UserSettingsStore.getSyncedSetting(SETTING_NAME, []);
-    // Check for missing m.favourite
-    if (tags.find((tag) => {return tag.tag == "m.favourite";} ) === null) {
-      tags.push({ label: "Favourites", tag: "m.favourite", protected: true });
-    }
+    // Remove static tags.
+    STATIC_TAGS.forEach( (staticTag) => {
+      const index = tags.findIndex((tag) => {return tag.alias === staticTag.alias;});
+      if (index !== -1) {
+        tags.splice(index, 1, staticTag);
+        console.warn(
+          `Replacing tag '${staticTag.alias}' because it clashes with an internal static tag.`,
+        );
+      }
+    });
 
-    // Check for missing m.lowpriority
-    if (tags.find((tag) => {return tag.tag == "m.lowpriority";} ) === null) {
-      tags.push({ label: "Low Priority", tag: "m.lowpriority", protected: true });
-    }
-    return tags;
+    return STATIC_TAGS.concat(tags);
   }
 
   /**
@@ -58,7 +115,7 @@ class RoomTagUtil {
       throw new Error("Cannot move tag this far.");
     }
     const otherTag = tags[tagIndex+direction];
-    tags[tagIndex+direction] = this.state.tags[this.state.selectedTag];
+    tags[tagIndex+direction] = tags[tagIndex];
     tags[tagIndex] = otherTag;
     UserSettingsStore.setSyncedSetting(SETTING_NAME, tags);
     return tags;
@@ -80,8 +137,12 @@ class RoomTagUtil {
     if (
       tags.find(
         (tag) => {
-          text = text.toLowerCase();
-          return tag.tag.toLowerCase() === text || tag.label.toLowerCase() === text;
+          if (typeof tag.alias === "string") {
+            if (tag.alias.toLowerCase() === text) {
+              return true;
+            }
+          }
+          return tag.name.toLowerCase() === text;
         })
       ) {
       return {valid: false, error: "This tag already exists!"};
@@ -90,14 +151,30 @@ class RoomTagUtil {
     }
   }
 
-  addTag(text) {
-    if (this.isTagValid(text).valid === false) {
-      throw new Error("Tag is not valid.");
+  addTag(text, order = "recent") {
+    const result = this.isTagValid(text);
+    if (result.valid === false) {
+      throw new Error(result.error);
     }
     const tags = this.getTags();
-    tags.push({tag: text});
+    tags.push({name: text, order});
     UserSettingsStore.setSyncedSetting(SETTING_NAME, tags);
     return tags;
+  }
+
+  modifyTagRoomOrder(tagIndex, order) {
+    if (!ROOM_ORDERING.has(order)) {
+      throw new Error("Invalid room ordering type.");
+    }
+    const tags = this.getTags();
+    if (tagIndex < 0 || tagIndex >= tags.length) {
+      throw new Error("Tag index out of range.");
+    }
+    if (tags[tagIndex].protected) {
+      throw new Error("Can't modify protected tags.");
+    }
+    tags[tagIndex].order = order;
+    UserSettingsStore.setSyncedSetting(SETTING_NAME, tags);
   }
 
   deleteTag(tagIndex) {
@@ -105,11 +182,12 @@ class RoomTagUtil {
     if (tagIndex < 0 || tagIndex >= tags.length) {
       throw new Error("Tag index out of range.");
     }
-    const tag = tags[tagIndex];
-    if (tag.protected) {
+    if (tags[tagIndex].protected) {
       throw new Error("Can't delete protected tags.");
     }
     tags.splice(tagIndex, 1);
+    UserSettingsStore.setSyncedSetting(SETTING_NAME, tags);
+    return tags;
   }
 }
 
