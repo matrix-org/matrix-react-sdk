@@ -39,6 +39,10 @@ const REACT_SDK_VERSION =
 // 'id' gives the key name in the im.vector.web.settings account data event
 // 'label' is how we describe it in the UI.
 const SETTINGS_LABELS = [
+    {
+        id: 'autoplayGifsAndVideos',
+        label: 'Autoplay GIFs and videos',
+    },
 /*
     {
         id: 'alwaysShowTimestamps',
@@ -89,6 +93,11 @@ const THEMES = [
         id: 'theme',
         label: 'Dark theme',
         value: 'dark',
+    },
+    {
+        id: 'theme',
+        label: 'Light high contrast theme',
+        value: 'contrastlight',
     }
 ];
 
@@ -109,6 +118,10 @@ module.exports = React.createClass({
 
         // true if RightPanel is collapsed
         collapsedRhs: React.PropTypes.bool,
+
+        // Team token for the referral link. If falsy, the referral section will
+        // not appear
+        teamToken: React.PropTypes.string,
     },
 
     getDefaultProps: function() {
@@ -198,9 +211,10 @@ module.exports = React.createClass({
             });
         }, function(error) {
             var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+            console.error("Failed to load user settings: " + error);
             Modal.createDialog(ErrorDialog, {
                 title: "Can't load user settings",
-                description: error.toString()
+                description: "Server may be unavailable or overloaded",
             });
         });
     },
@@ -238,10 +252,11 @@ module.exports = React.createClass({
             self._refreshFromServer();
         }, function(err) {
             var errMsg = (typeof err === "string") ? err : (err.error || "");
+            console.error("Failed to set avatar: " + err);
             var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createDialog(ErrorDialog, {
                 title: "Error",
-                description: "Failed to set avatar. " + errMsg
+                description: "Failed to set avatar."
             });
         });
     },
@@ -278,6 +293,7 @@ module.exports = React.createClass({
             errMsg += ` (HTTP status ${err.httpStatus})`;
         }
         var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+        console.error("Failed to change password: " + errMsg);
         Modal.createDialog(ErrorDialog, {
             title: "Error",
             description: errMsg
@@ -329,9 +345,10 @@ module.exports = React.createClass({
             });
         }, (err) => {
             this.setState({email_add_pending: false});
+            console.error("Unable to add email address " + email_address + " " + err);
             Modal.createDialog(ErrorDialog, {
-                title: "Unable to add email address",
-                description: err.message
+                title: "Error",
+                description: "Unable to add email address"
             });
         });
         ReactDOM.findDOMNode(this.refs.add_threepid_input).blur();
@@ -353,9 +370,10 @@ module.exports = React.createClass({
                         return this._refreshFromServer();
                     }).catch((err) => {
                         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+                        console.error("Unable to remove contact information: " + err);
                         Modal.createDialog(ErrorDialog, {
-                            title: "Unable to remove contact information",
-                            description: err.toString(),
+                            title: "Error",
+                            description: "Unable to remove contact information",
                         });
                     }).done();
                 }
@@ -393,9 +411,10 @@ module.exports = React.createClass({
                 });
             } else {
                 var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+                console.error("Unable to verify email address: " + err);
                 Modal.createDialog(ErrorDialog, {
-                    title: "Unable to verify email address",
-                    description: err.toString(),
+                    title: "Error",
+                    description: "Unable to verify email address",
                 });
             }
         });
@@ -412,6 +431,14 @@ module.exports = React.createClass({
             return;
         }
         Modal.createDialog(BugReportDialog, {});
+    },
+
+    _onClearCacheClicked: function() {
+        MatrixClientPeg.get().store.deleteAllData().done(() => {
+            // forceReload=false since we don't really need new HTML/JS files
+            // we just need to restart the JS runtime.
+            window.location.reload(false);
+        });
     },
 
     _onInviteStateChange: function(event, member, oldMembership) {
@@ -462,7 +489,7 @@ module.exports = React.createClass({
     },
 
     _renderReferral: function() {
-        const teamToken = window.localStorage.getItem('mx_team_token');
+        const teamToken = this.props.teamToken;
         if (!teamToken) {
             return null;
         }
@@ -552,21 +579,20 @@ module.exports = React.createClass({
         const deviceId = client.deviceId;
         const identityKey = client.getDeviceEd25519Key() || "<not supported>";
 
-        let exportButton = null,
-            importButton = null;
+        let importExportButtons = null;
 
         if (client.isCryptoEnabled) {
-            exportButton = (
-                <AccessibleButton className="mx_UserSettings_button"
-                        onClick={this._onExportE2eKeysClicked}>
-                    Export E2E room keys
-                </AccessibleButton>
-            );
-            importButton = (
-                <AccessibleButton className="mx_UserSettings_button"
-                        onClick={this._onImportE2eKeysClicked}>
-                    Import E2E room keys
-                </AccessibleButton>
+            importExportButtons = (
+                <div className="mx_UserSettings_importExportButtons">
+                    <AccessibleButton className="mx_UserSettings_button"
+                            onClick={this._onExportE2eKeysClicked}>
+                        Export E2E room keys
+                    </AccessibleButton>
+                    <AccessibleButton className="mx_UserSettings_button"
+                            onClick={this._onImportE2eKeysClicked}>
+                        Import E2E room keys
+                    </AccessibleButton>
+                </div>
             );
         }
         return (
@@ -577,8 +603,7 @@ module.exports = React.createClass({
                         <li><label>Device ID:</label>             <span><code>{deviceId}</code></span></li>
                         <li><label>Device key:</label>            <span><code><b>{identityKey}</b></code></span></li>
                     </ul>
-                    {exportButton}
-                    {importButton}
+                    { importExportButtons }
                 </div>
                 <div className="mx_UserSettings_section">
                     { CRYPTO_SETTINGS_LABELS.map( this._renderLocalSetting ) }
@@ -683,6 +708,18 @@ module.exports = React.createClass({
                 <div className="mx_UserSettings_section">
                     <AccessibleButton className="mx_UserSettings_button danger"
                         onClick={this._onDeactivateAccountClicked}>Deactivate my account
+                    </AccessibleButton>
+                </div>
+        </div>;
+    },
+
+    _renderClearCache: function() {
+        return <div>
+            <h3>Clear Cache</h3>
+                <div className="mx_UserSettings_section">
+                    <AccessibleButton className="mx_UserSettings_button danger"
+                        onClick={this._onClearCacheClicked}>
+                        Clear Cache and Reload
                     </AccessibleButton>
                 </div>
         </div>;
@@ -906,10 +943,12 @@ module.exports = React.createClass({
                     </div>
                     <div className="mx_UserSettings_advanced">
                         matrix-react-sdk version: {REACT_SDK_VERSION}<br/>
-                        vector-web version: {this.state.vectorVersion !== null ? this.state.vectorVersion : 'unknown'}<br/>
+                        riot-web version: {this.state.vectorVersion !== null ? this.state.vectorVersion : 'unknown'}<br/>
                         olm version: {olmVersionString}<br/>
                     </div>
                 </div>
+
+                {this._renderClearCache()}
 
                 {this._renderDeactivateAccount()}
 
