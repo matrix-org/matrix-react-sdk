@@ -29,6 +29,7 @@ var dis = require("../../dispatcher");
 // load our own translations
 counterpart.registerTranslations('en', require('../../i18n/en-en'));
 counterpart.registerTranslations('de', require('../../i18n/de-de'));
+counterpart.setFallbackLocale('en');
 
 /*
  * Component which shows the global notification list using a TimelinePanel
