@@ -766,6 +766,8 @@ module.exports = React.createClass({
       counterpart.registerTranslations('de', require('../../i18n/global/de-de'));
       counterpart.setFallbackLocale('en');
 
+      console.log("got event");
+
       if (!language){
         var language = navigator.language || navigator.userLanguage;
         counterpart.setLocale(language);

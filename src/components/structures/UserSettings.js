@@ -29,8 +29,6 @@ var AddThreepid = require('../../AddThreepid');
 var SdkConfig = require('../../SdkConfig');
 import AccessibleButton from '../views/elements/AccessibleButton';
 
-var counterpart = require('counterpart');
-
 // if this looks like a release, use the 'version' from package.json; else use
 // the git sha.
 const REACT_SDK_VERSION =
