@@ -29,6 +29,8 @@ var AddThreepid = require('../../AddThreepid');
 var SdkConfig = require('../../SdkConfig');
 import AccessibleButton from '../views/elements/AccessibleButton';
 
+var counterpart = require('counterpart');
+
 // if this looks like a release, use the 'version' from package.json; else use
 // the git sha.
 const REACT_SDK_VERSION =
@@ -93,6 +95,19 @@ const THEMES = [
         id: 'theme',
         label: 'Dark theme',
         value: 'dark',
+    }
+];
+
+const LANGUAGES = [
+    {
+        id: 'language',
+        label: 'German',
+        value: 'de',
+    },
+    {
+        id: 'language',
+        label: 'English',
+        value: 'en',
     }
 ];
 
@@ -520,6 +535,7 @@ module.exports = React.createClass({
                     { this._renderUrlPreviewSelector() }
                     { SETTINGS_LABELS.map( this._renderSyncedSetting ) }
                     { THEMES.map( this._renderThemeSelector ) }
+                    { this._renderLanguageSelector(LANGUAGES) }
                 </div>
             </div>
         );
@@ -572,6 +588,34 @@ module.exports = React.createClass({
             <label htmlFor={ setting.id + "_" + setting.value }>
                 { setting.label }
             </label>
+        </div>;
+    },
+
+    createLanguageItems: function(setting) {
+        let items = [];
+        for (let i = 0; i < setting.length; i++) {
+          items.push(<option value={ setting[i].value } key={ 'language' + "_" + setting[i].value }>{ setting[i].label }</option>);
+        }
+        return items;
+    },
+
+
+    _renderLanguageSelector: function(setting) {
+        return <div className="mx_UserSettings_toggle" key={ 'language' + "_" + setting.value }>
+            <select id='language'
+                    value={ this._localSettings.language }
+                    name='language'
+                    onChange={ e => {
+                            UserSettingsStore.setLocalSetting('language', e.target.value);
+                            dis.dispatch({
+                                action: 'set_language',
+                                value: e.target.value,
+                            });
+                        }
+                   }
+            >
+            {this.createLanguageItems(setting)}
+            </select>
         </div>;
     },
 

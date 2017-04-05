@@ -48,6 +48,9 @@ var deleteFolderRecursive = function(path) {
 deleteFolderRecursive("lib/i18n");
 
 fs.mkdirSync("lib/i18n/");
+fs.mkdirSync("lib/i18n/global");
+fs.mkdirSync("lib/i18n/strings");
 
 //copy dir
-copy("src/i18n", "lib/i18n");
+copy("src/i18n/global", "lib/i18n/global");
+copy("src/i18n/strings", "lib/i18n/strings");

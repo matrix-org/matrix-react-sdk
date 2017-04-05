@@ -44,6 +44,8 @@ var PageTypes = require('../../PageTypes');
 var createRoom = require("../../createRoom");
 import * as UDEHandler from '../../UnknownDeviceErrorHandler';
 
+var counterpart = require('counterpart');
+
 module.exports = React.createClass({
     displayName: 'MatrixChat',
 
@@ -568,6 +570,9 @@ module.exports = React.createClass({
             case 'set_theme':
                 this._onSetTheme(payload.value);
                 break;
+            case 'set_language':
+                this._onSetLanguage(payload.value);
+                break;
             case 'on_logged_in':
                 this._onLoggedIn(payload.teamToken);
                 break;
@@ -748,6 +753,25 @@ module.exports = React.createClass({
         else {
             Tinter.tintSvgWhite('#ffffff');
         }
+    },
+
+    /**
+     * Called whenever someone changes the Language
+     */
+    _onSetLanguage: function(language) {
+      // load our own translations
+      counterpart.registerTranslations('en', require('../../i18n/strings/en-en'));
+      counterpart.registerTranslations('en', require('../../i18n/global/en-en'));
+      counterpart.registerTranslations('de', require('../../i18n/strings/de-de'));
+      counterpart.registerTranslations('de', require('../../i18n/global/de-de'));
+      counterpart.setFallbackLocale('en');
+
+      if (!language){
+        var language = navigator.language || navigator.userLanguage;
+        counterpart.setLocale(language);
+      }else{
+        counterpart.setLocale(language);
+      }
     },
 
     /**

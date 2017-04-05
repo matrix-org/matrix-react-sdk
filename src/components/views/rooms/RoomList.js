@@ -34,10 +34,6 @@ var Receipt = require('../../../utils/Receipt');
 
 var HIDE_CONFERENCE_CHANS = true;
 
-// load our own translations
-counterpart.registerTranslations('en', require('../../../i18n/en-en'));
-counterpart.registerTranslations('de', require('../../../i18n/de-de'));
-
 module.exports = React.createClass({
     displayName: 'RoomList',
 
@@ -49,8 +45,6 @@ module.exports = React.createClass({
     },
 
     getInitialState: function() {
-        var userLang = navigator.language || navigator.userLanguage;
-        counterpart.setLocale(userLang);
         return {
             isLoadingLeftRooms: false,
             lists: {},

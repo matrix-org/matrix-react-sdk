@@ -29,10 +29,6 @@ var rate_limited_func = require('../../../ratelimitedfunc');
 var CallHandler = require("../../../CallHandler");
 var Invite = require("../../../Invite");
 
-// load our own translations
-counterpart.registerTranslations('en', require('../../../i18n/en-en'));
-counterpart.registerTranslations('de', require('../../../i18n/de-de'));
-
 var INITIAL_LOAD_NUM_MEMBERS = 30;
 var SHARE_HISTORY_WARNING =
     <span>
@@ -53,8 +49,6 @@ module.exports = React.createClass({
             searchQuery: "",
         };
         if (!this.props.roomId) return state;
-        var userLang = navigator.language || navigator.userLanguage;
-        counterpart.setLocale(userLang);
         var cli = MatrixClientPeg.get();
         var room = cli.getRoom(this.props.roomId);
         if (!room) return state;

@@ -26,24 +26,11 @@ var sdk = require('../../index');
 var MatrixClientPeg = require("../../MatrixClientPeg");
 var dis = require("../../dispatcher");
 
-// load our own translations
-counterpart.registerTranslations('en', require('../../i18n/en-en'));
-counterpart.registerTranslations('de', require('../../i18n/de-de'));
-counterpart.setFallbackLocale('en');
-
 /*
  * Component which shows the global notification list using a TimelinePanel
  */
 var NotificationPanel = React.createClass({
     displayName: 'NotificationPanel',
-
-    propTypes: {
-    },
-    getInitialState: function() {
-      var userLang = navigator.language || navigator.userLanguage;
-      counterpart.setLocale(userLang);
-      return {};
-    },
 
     render: function() {
         // wrap a TimelinePanel with the jump-to-event bits turned off.

@@ -18,6 +18,8 @@ var React = require("react");
 var sdk = require('../../../index');
 var MatrixClientPeg = require("../../../MatrixClientPeg");
 
+var counterpart = require('counterpart');
+
 module.exports = React.createClass({
     displayName: 'EncryptedEventDialog',
 
@@ -78,33 +80,33 @@ module.exports = React.createClass({
     _renderDeviceInfo: function() {
         var device = this.state.device;
         if (!device) {
-            return (<i>unknown device</i>);
+            return (<i>{ counterpart.translate('unknown device') }</i>);
         }
 
-        var verificationStatus = (<b>NOT verified</b>);
+        var verificationStatus = (<b>{ counterpart.translate('NOT verified') }</b>);
         if (device.isBlocked()) {
-            verificationStatus = (<b>Blacklisted</b>);
+            verificationStatus = (<b>{ counterpart.translate('Blacklisted') }</b>);
         } else if (device.isVerified()) {
-            verificationStatus = "verified";
+            verificationStatus = counterpart.translate('verified');
         }
 
         return (
             <table>
                 <tbody>
                     <tr>
-                        <td>Name</td>
+                        <td>{ counterpart.translate('Name') }</td>
                         <td>{ device.getDisplayName() }</td>
                     </tr>
                     <tr>
-                        <td>Device ID</td>
+                        <td>{ counterpart.translate('Device ID') }</td>
                         <td><code>{ device.deviceId }</code></td>
                     </tr>
                     <tr>
-                        <td>Verification</td>
+                        <td>{ counterpart.translate('Verification') }</td>
                         <td>{ verificationStatus }</td>
                     </tr>
                     <tr>
-                        <td>Ed25519 fingerprint</td>
+                        <td>{ counterpart.translate('Ed25519 fingerprint') }</td>
                         <td><code>{device.getFingerprint()}</code></td>
                     </tr>
                 </tbody>
@@ -119,32 +121,32 @@ module.exports = React.createClass({
             <table>
                 <tbody>
                     <tr>
-                        <td>User ID</td>
+                        <td>{ counterpart.translate('User ID') }</td>
                         <td>{ event.getSender() }</td>
                     </tr>
                     <tr>
-                        <td>Curve25519 identity key</td>
+                        <td>{ counterpart.translate('Curve25519 identity key') }</td>
                         <td><code>{ event.getSenderKey() || <i>none</i> }</code></td>
                     </tr>
                     <tr>
-                        <td>Claimed Ed25519 fingerprint key</td>
-                        <td><code>{ event.getKeysClaimed().ed25519 || <i>none</i> }</code></td>
+                        <td>{ counterpart.translate('Claimed Ed25519 fingerprint key') }</td>
+                        <td><code>{ event.getKeysClaimed().ed25519 || <i>{ counterpart.translate('none') }</i> }</code></td>
                     </tr>
                     <tr>
-                        <td>Algorithm</td>
-                        <td>{ event.getWireContent().algorithm || <i>unencrypted</i> }</td>
+                        <td>{ counterpart.translate('Algorithm') }</td>
+                        <td>{ event.getWireContent().algorithm || <i>{ counterpart.translate('unencrypted') }</i> }</td>
                     </tr>
                 {
                     event.getContent().msgtype === 'm.bad.encrypted' ? (
                     <tr>
-                        <td>Decryption error</td>
+                        <td>{ counterpart.translate('Decryption error') }</td>
                         <td>{ event.getContent().body }</td>
                     </tr>
                     ) : null
                 }
                     <tr>
-                        <td>Session ID</td>
-                        <td><code>{ event.getWireContent().session_id || <i>none</i> }</code></td>
+                        <td>{ counterpart.translate('Session ID') }</td>
+                        <td><code>{ event.getWireContent().session_id || <i>{ counterpart.translate('none') }</i> }</code></td>
                     </tr>
                 </tbody>
             </table>
@@ -166,13 +168,13 @@ module.exports = React.createClass({
         return (
             <div className="mx_EncryptedEventDialog" onKeyDown={ this.onKeyDown }>
                 <div className="mx_Dialog_title">
-                    End-to-end encryption information
+                    { counterpart.translate('End-to-end encryption information') }
                 </div>
                 <div className="mx_Dialog_content">
-                    <h4>Event information</h4>
+                    <h4>{ counterpart.translate('Event information') }</h4>
                     {this._renderEventInfo()}
 
-                    <h4>Sender device information</h4>
+                    <h4>{ counterpart.translate('Sender device information') }</h4>
                     {this._renderDeviceInfo()}
                 </div>
                 <div className="mx_Dialog_buttons">
