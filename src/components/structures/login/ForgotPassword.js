@@ -24,7 +24,6 @@ var MatrixClientPeg = require('../../../MatrixClientPeg');
 var PasswordReset = require("../../../PasswordReset");
 
 var counterpart = require('counterpart');
-var Translate   = require('react-translate-component');
 
 module.exports = React.createClass({
     displayName: 'ForgotPassword',

@@ -18,8 +18,6 @@ limitations under the License.
 var React = require("react");
 var ReactDOM = require("react-dom");
 var counterpart = require('counterpart');
-var Translate   = require('react-translate-component');
-var _t = Translate.translate;
 var GeminiScrollbar = require('react-gemini-scrollbar');
 var MatrixClientPeg = require("../../../MatrixClientPeg");
 var CallHandler = require('../../../CallHandler');
