@@ -100,12 +100,12 @@ const LANGUAGES = [
     {
         id: 'language',
         label: 'German',
-        value: 'de',
+        value: 'de_DE',
     },
     {
         id: 'language',
         label: 'English',
-        value: 'en',
+        value: 'en_EN',
     }
 ];
 
@@ -186,6 +186,9 @@ module.exports = React.createClass({
         this._syncedSettings = syncedSettings;
 
         this._localSettings = UserSettingsStore.getLocalSettings();
+        this.setState({
+            LanguageSelectValue: this._localSettings.language
+        });
     },
 
     componentDidMount: function() {
@@ -597,20 +600,23 @@ module.exports = React.createClass({
         return items;
     },
 
+    LanguageChange: function(e: React.FormEvent<HTMLSelectElement>) {
+      UserSettingsStore.setLocalSetting('language', e.currentTarget.value);
+      dis.dispatch({
+          action: 'set_language',
+          value: e.currentTarget.value,
+      });
+      this.setState({
+          LanguageSelectValue: e.currentTarget.value
+      });
+    },
 
     _renderLanguageSelector: function(setting) {
         return <div className="mx_UserSettings_toggle" key={ 'language' + "_" + setting.value }>
             <select id='language'
-                    value={ this._localSettings.language }
+                    value={ this.state.LanguageSelectValue }
                     name='language'
-                    onChange={ e => {
-                            UserSettingsStore.setLocalSetting('language', e.target.value);
-                            dis.dispatch({
-                                action: 'set_language',
-                                value: e.target.value,
-                            });
-                        }
-                   }
+                    onChange={ this.LanguageChange }
             >
             {this.createLanguageItems(setting)}
             </select>

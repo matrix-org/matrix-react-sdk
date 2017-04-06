@@ -760,13 +760,11 @@ module.exports = React.createClass({
      */
     _onSetLanguage: function(language) {
       // load our own translations
-      counterpart.registerTranslations('en', require('../../i18n/strings/en-en'));
-      counterpart.registerTranslations('en', require('../../i18n/global/en-en'));
-      counterpart.registerTranslations('de', require('../../i18n/strings/de-de'));
-      counterpart.registerTranslations('de', require('../../i18n/global/de-de'));
-      counterpart.setFallbackLocale('en');
-
-      console.log("got event");
+      counterpart.registerTranslations('en_EN', require('../../i18n/strings/en_EN'));
+      counterpart.registerTranslations('en_EN', require('../../i18n/global/en_EN'));
+      counterpart.registerTranslations('de_DE', require('../../i18n/strings/de_DE'));
+      counterpart.registerTranslations('de_DE', require('../../i18n/global/de_DE'));
+      counterpart.setFallbackLocale('en_EN');
 
       if (!language){
         var language = navigator.language || navigator.userLanguage;
