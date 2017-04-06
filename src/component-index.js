@@ -137,6 +137,8 @@ import views$login$CasLogin from './components/views/login/CasLogin';
 views$login$CasLogin && (module.exports.components['views.login.CasLogin'] = views$login$CasLogin);
 import views$login$CountryDropdown from './components/views/login/CountryDropdown';
 views$login$CountryDropdown && (module.exports.components['views.login.CountryDropdown'] = views$login$CountryDropdown);
+import views$login$LanguageDropdown from './components/views/elements/LanguageDropdown';
+views$login$LanguageDropdown && (module.exports.components['views.elements.LanguageDropdown'] = views$login$LanguageDropdown);
 import views$login$CustomServerDialog from './components/views/login/CustomServerDialog';
 views$login$CustomServerDialog && (module.exports.components['views.login.CustomServerDialog'] = views$login$CustomServerDialog);
 import views$login$InteractiveAuthEntryComponents from './components/views/login/InteractiveAuthEntryComponents';

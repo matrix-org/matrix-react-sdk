@@ -96,20 +96,6 @@ const THEMES = [
     }
 ];
 
-const LANGUAGES = [
-    {
-        id: 'language',
-        label: 'German',
-        value: 'de_DE',
-    },
-    {
-        id: 'language',
-        label: 'English',
-        value: 'en_EN',
-    }
-];
-
-
 module.exports = React.createClass({
     displayName: 'UserSettings',
 
@@ -187,7 +173,7 @@ module.exports = React.createClass({
 
         this._localSettings = UserSettingsStore.getLocalSettings();
         this.setState({
-            LanguageSelectValue: this._localSettings.language
+          Language: this._localSettings.language
         });
     },
 
@@ -526,8 +512,20 @@ module.exports = React.createClass({
         );
     },
 
+    onLanguageChange: function(l) {
+      UserSettingsStore.setLocalSetting('language', l);
+      dis.dispatch({
+          action: 'set_language',
+          value: l,
+      });
+      this.setState({
+          Language: l,
+      });
+    },
+
     _renderUserInterfaceSettings: function() {
         var client = MatrixClientPeg.get();
+        const LanguageDropdown = sdk.getComponent('views.elements.LanguageDropdown');
 
         return (
             <div>
@@ -536,7 +534,10 @@ module.exports = React.createClass({
                     { this._renderUrlPreviewSelector() }
                     { SETTINGS_LABELS.map( this._renderSyncedSetting ) }
                     { THEMES.map( this._renderThemeSelector ) }
-                    { this._renderLanguageSelector(LANGUAGES) }
+                    <LanguageDropdown ref="language" onOptionChange={this.onLanguageChange}
+                                      className="mx_UserSettings_Language"
+                                      value={this.state.Language}
+                   />
                 </div>
             </div>
         );
@@ -589,37 +590,6 @@ module.exports = React.createClass({
             <label htmlFor={ setting.id + "_" + setting.value }>
                 { setting.label }
             </label>
-        </div>;
-    },
-
-    createLanguageItems: function(setting) {
-        let items = [];
-        for (let i = 0; i < setting.length; i++) {
-          items.push(<option value={ setting[i].value } key={ 'language' + "_" + setting[i].value }>{ setting[i].label }</option>);
-        }
-        return items;
-    },
-
-    LanguageChange: function(e: React.FormEvent<HTMLSelectElement>) {
-      UserSettingsStore.setLocalSetting('language', e.currentTarget.value);
-      dis.dispatch({
-          action: 'set_language',
-          value: e.currentTarget.value,
-      });
-      this.setState({
-          LanguageSelectValue: e.currentTarget.value
-      });
-    },
-
-    _renderLanguageSelector: function(setting) {
-        return <div className="mx_UserSettings_toggle" key={ 'language' + "_" + setting.value }>
-            <select id='language'
-                    value={ this.state.LanguageSelectValue }
-                    name='language'
-                    onChange={ this.LanguageChange }
-            >
-            {this.createLanguageItems(setting)}
-            </select>
         </div>;
     },
 

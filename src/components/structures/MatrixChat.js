@@ -767,7 +767,7 @@ module.exports = React.createClass({
       counterpart.setFallbackLocale('en_EN');
 
       if (!language){
-        var language = navigator.language || navigator.userLanguage;
+        const language = navigator.language || navigator.userLanguage;
         counterpart.setLocale(language);
       }else{
         counterpart.setLocale(language);
