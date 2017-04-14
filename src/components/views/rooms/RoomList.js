@@ -29,6 +29,8 @@ var Rooms = require('../../../Rooms');
 import DMRoomMap from '../../../utils/DMRoomMap';
 var Receipt = require('../../../utils/Receipt');
 
+var t = require('counterpart');
+
 var HIDE_CONFERENCE_CHANS = true;
 
 module.exports = React.createClass({
@@ -490,7 +492,7 @@ module.exports = React.createClass({
                              onShowMoreRooms={ self.onShowMoreRooms } />
 
                 <RoomSubList list={ self.state.lists['im.vector.fake.direct'] }
-                             label="People"
+                             label={ t('matrix_react_sdk.room_list.people') } 
                              tagName="im.vector.fake.direct"
                              verb="tag direct chat"
                              editable={ true }

@@ -16,6 +16,16 @@ limitations under the License.
 
 var Skinner = require('./Skinner');
 
+var t = require('counterpart');
+
+t.registerTranslations('en', require('../languages/en'));
+t.registerTranslations('pt-BR', require('../languages/pt-BR'));
+
+t.setFallbackLocale('en');
+t.setLocale(window.navigator.languages[0]);
+
+
+
 module.exports.loadSkin = function(skinObject) {
     Skinner.load(skinObject);
 };
