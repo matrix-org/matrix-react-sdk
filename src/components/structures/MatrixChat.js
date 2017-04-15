@@ -786,9 +786,11 @@ module.exports = React.createClass({
         });
 
         if (teamToken) {
+            // A team member has logged in, not a guest
             this._teamToken = teamToken;
             dis.dispatch({action: 'view_home_page'});
         } else if (this._is_registered) {
+            // The user has just logged in after registering
             dis.dispatch({action: 'view_user_settings'});
         } else {
             this._showScreenAfterLogin();
@@ -811,6 +813,13 @@ module.exports = React.createClass({
                 action: 'view_room',
                 room_id: localStorage.getItem('mx_last_room_id'),
             });
+<<<<<<< HEAD
+=======
+        } else if (this._teamToken) {
+            // Team token might be set if we're a guest.
+            // Guests do not call _onLoggedIn with a teamToken
+            dis.dispatch({action: 'view_home_page'});
+>>>>>>> 1189368aab8cfb22c1895f8ce6c0d8a8fbe7ca0b
         } else {
             dis.dispatch({action: 'view_room_directory'});
         }

@@ -491,7 +491,11 @@ module.exports = React.createClass({
                              onShowMoreRooms={ self.onShowMoreRooms } />
 
                 <RoomSubList list={ self.state.lists['im.vector.fake.direct'] }
+<<<<<<< HEAD
                              label={ counterpart.translate('People') }
+=======
+                             label="People"
+>>>>>>> 1189368aab8cfb22c1895f8ce6c0d8a8fbe7ca0b
                              tagName="im.vector.fake.direct"
                              verb="tag direct chat"
                              editable={ true }
