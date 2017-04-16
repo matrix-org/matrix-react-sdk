@@ -53,8 +53,10 @@ export default class LanguageDropdown extends React.Component {
         this.state = {
             searchQuery: '',
         }
+    }
 
-        if (!props.value) {
+    componentWillMount() {
+        if (!this.props.value) {
             // If no value is given, we start with the first
             // country selected, but our parent component
             // doesn't know this, therefore we do this.
