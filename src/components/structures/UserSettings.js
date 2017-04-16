@@ -530,9 +530,16 @@ module.exports = React.createClass({
       });
     },
 
+    _renderLanguageSetting: function () {
+      const LanguageDropdown = sdk.getComponent('views.elements.LanguageDropdown');
+      <LanguageDropdown ref="language" onOptionChange={this.onLanguageChange}
+                        className="mx_UserSettings_Language"
+                        value={this.state.Language}
+       />
+    },
+
     _renderUserInterfaceSettings: function() {
         var client = MatrixClientPeg.get();
-        const LanguageDropdown = sdk.getComponent('views.elements.LanguageDropdown');
 
         return (
             <div>
@@ -541,10 +548,8 @@ module.exports = React.createClass({
                     { this._renderUrlPreviewSelector() }
                     { SETTINGS_LABELS.map( this._renderSyncedSetting ) }
                     { THEMES.map( this._renderThemeSelector ) }
-                    <LanguageDropdown ref="language" onOptionChange={this.onLanguageChange}
-                                      className="mx_UserSettings_Language"
-                                      value={this.state.Language}
-                   />
+                    { this._renderLanguageSetting() }
+
                 </div>
             </div>
         );
