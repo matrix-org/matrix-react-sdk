@@ -22,12 +22,12 @@ const LANGUAGES = [
     {
         id: 'language',
         label: 'German',
-        value: 'de_DE',
+        value: 'de',
     },
     {
         id: 'language',
         label: 'English',
-        value: 'en_EN',
+        value: 'en',
     }
 ];
 
