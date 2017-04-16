@@ -761,10 +761,12 @@ module.exports = React.createClass({
      */
     _onSetLanguage: function(language) {
       // load our own translations
-      counterpart.registerTranslations('en', require('../../i18n/strings/en_EN'));
-      counterpart.registerTranslations('en', require('../../i18n/global/en_EN'));
-      counterpart.registerTranslations('de', require('../../i18n/strings/de_DE'));
-      counterpart.registerTranslations('de', require('../../i18n/global/de_DE'));
+      counterpart.registerTranslations('en-en', require('../../i18n/strings/en_EN'));
+      counterpart.registerTranslations('en-en', require('../../i18n/global/en_EN'));
+      counterpart.registerTranslations('de-de', require('../../i18n/strings/de_DE'));
+      counterpart.registerTranslations('de-de', require('../../i18n/global/de_DE'));
+      counterpart.registerTranslations('pt-br', require('../../i18n/strings/pt_BR'));
+      counterpart.registerTranslations('pt-br', require('../../i18n/global/pt_BR'));
       counterpart.setFallbackLocale('en');
 
       if (!language){

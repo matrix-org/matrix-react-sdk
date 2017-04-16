@@ -25,6 +25,8 @@ var PasswordLogin = require("../../views/login/PasswordLogin");
 var CasLogin = require("../../views/login/CasLogin");
 var ServerConfig = require("../../views/login/ServerConfig");
 
+var counterpart = require('counterpart');
+
 /**
  * A wire component which glues together login UI components and Login logic
  */
@@ -213,14 +215,14 @@ module.exports = React.createClass({
                  !this.state.enteredHomeserverUrl.startsWith("http")))
             {
                 errorText = <span>
-                    Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar.
-                    Either use HTTPS or <a href='https://www.google.com/search?&q=enable%20unsafe%20scripts'>enable unsafe scripts</a>
+                    { counterpart.translate('Can\'t connect to homeserver via HTTP when an HTTPS URL is in your browser bar.')}
+                    { counterpart.translate('Either use HTTPS or ')}<a href='https://www.google.com/search?&q=enable%20unsafe%20scripts'>{ counterpart.translate('enable unsafe scripts')}</a>
                 </span>;
             }
             else {
                 errorText = <span>
-                    Can't connect to homeserver - please check your connectivity and ensure
-                    your <a href={ this.state.enteredHomeserverUrl }>homeserver's SSL certificate</a> is trusted.
+                    { counterpart.translate('Can\'t connect to homeserver - please check your connectivity and ensure your ')}
+                    <a href={ this.state.enteredHomeserverUrl }>{ counterpart.translate('homeserver\'s SSL certificate')}</a>{ counterpart.translate(' is trusted.')}
                 </span>;
             }
         }
@@ -254,8 +256,7 @@ module.exports = React.createClass({
                 }
                 return (
                     <div>
-                    Sorry, this homeserver is using a login which is not
-                    recognised ({step})
+                    { counterpart.translate('Sorry, this homeserver is using a login which is not recognised ')}({step})
                     </div>
                 );
         }
@@ -271,7 +272,7 @@ module.exports = React.createClass({
         if (this.props.enableGuest) {
             loginAsGuestJsx =
                 <a className="mx_Login_create" onClick={this._onLoginAsGuestClick} href="#">
-                    Login as guest
+                    { counterpart.translate('Login as guest')}
                 </a>;
         }
 
@@ -279,7 +280,7 @@ module.exports = React.createClass({
         if (this.props.onCancelClick) {
             returnToAppJsx =
                 <a className="mx_Login_create" onClick={this.props.onCancelClick} href="#">
-                    Return to app
+                    { counterpart.translate('Return to app')}
                 </a>;
         }
 
@@ -288,7 +289,7 @@ module.exports = React.createClass({
                 <div className="mx_Login_box">
                     <LoginHeader />
                     <div>
-                        <h2>Sign in
+                        <h2>{ counterpart.translate('Sign in')}
                             { loader }
                         </h2>
                         { this.componentForStep(this._getCurrentFlowStep()) }
@@ -305,7 +306,7 @@ module.exports = React.createClass({
                                 { this.state.errorText }
                         </div>
                         <a className="mx_Login_create" onClick={this.props.onRegisterClick} href="#">
-                            Create a new account
+                            { counterpart.translate('Create a new account')}
                         </a>
                         { loginAsGuestJsx }
                         { returnToAppJsx }

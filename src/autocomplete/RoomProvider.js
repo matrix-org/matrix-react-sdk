@@ -6,6 +6,8 @@ import {PillCompletion} from './Components';
 import {getDisplayAliasForRoom} from '../Rooms';
 import sdk from '../index';
 
+var counterpart = require('counterpart');
+
 const ROOM_REGEX = /(?=#)(\S*)/g;
 
 let instance = null;
@@ -50,7 +52,7 @@ export default class RoomProvider extends AutocompleteProvider {
     }
 
     getName() {
-        return '💬 Rooms';
+        return counterpart.translate('💬 Rooms');
     }
 
     static getInstance() {

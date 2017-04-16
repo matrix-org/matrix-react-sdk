@@ -5,6 +5,8 @@ import Fuse from 'fuse.js';
 import {PillCompletion} from './Components';
 import sdk from '../index';
 
+var counterpart = require('counterpart');
+
 const USER_REGEX = /@\S*/g;
 
 let instance = null;
@@ -51,7 +53,7 @@ export default class UserProvider extends AutocompleteProvider {
     }
 
     getName() {
-        return '👥 Users';
+        return counterpart.translate('👥 Users');
     }
 
     setUserList(users) {

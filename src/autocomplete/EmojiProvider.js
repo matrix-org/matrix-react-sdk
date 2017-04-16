@@ -6,6 +6,8 @@ import sdk from '../index';
 import {PillCompletion} from './Components';
 import type {SelectionRange, Completion} from './Autocompleter';
 
+var counterpart = require('counterpart');
+
 const EMOJI_REGEX = /:\w*:?/g;
 const EMOJI_SHORTNAMES = Object.keys(emojioneList);
 
@@ -39,7 +41,7 @@ export default class EmojiProvider extends AutocompleteProvider {
     }
 
     getName() {
-        return '😃 Emoji';
+        return counterpart.translate('😃 Emoji');
     }
 
     static getInstance() {
