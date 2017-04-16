@@ -83,7 +83,6 @@ export default class LanguageDropdown extends React.Component {
                 this.state.searchQuery.length == 2 &&
                 LANGUAGES_BY_ID[this.state.searchQuery.toUpperCase()]
             ) {
-                // exact ISO2 country name match: make the first result the matches ISO2
                 const matched = LANGUAGES_BY_ID[this.state.searchQuery.toUpperCase()];
                 displayedLanguages = displayedLanguages.filter((l) => {
                     return l.id != matched.id;
