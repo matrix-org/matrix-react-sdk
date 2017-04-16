@@ -30,6 +30,9 @@ var dis = require("../../dispatcher");
 var NotificationPanel = React.createClass({
     displayName: 'NotificationPanel',
 
+    propTypes: {
+     },
+
     render: function() {
         // wrap a TimelinePanel with the jump-to-event bits turned off.
         var TimelinePanel = sdk.getComponent("structures.TimelinePanel");
