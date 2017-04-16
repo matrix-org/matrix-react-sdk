@@ -18,8 +18,6 @@ var React = require('react');
 var ReactDOM = require("react-dom");
 
 var counterpart = require('counterpart');
-var Translate   = require('react-translate-component');
-var _t = Translate.translate;
 
 var Matrix = require("matrix-js-sdk");
 var sdk = require('../../index');

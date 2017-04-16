@@ -15,8 +15,6 @@ limitations under the License.
 */
 var React = require('react');
 var counterpart = require('counterpart');
-var Translate   = require('react-translate-component');
-var _t = Translate.translate;
 var classNames = require('classnames');
 var Matrix = require("matrix-js-sdk");
 var q = require('q');

@@ -45,7 +45,7 @@ var deleteFolderRecursive = function(path) {
 };
 
 //cleanup dir
-deleteFolderRecursive("lib/i18n");
+deleteFolderRecursive("lib");
 
 fs.mkdirSync("lib/");
 fs.mkdirSync("lib/i18n/");
