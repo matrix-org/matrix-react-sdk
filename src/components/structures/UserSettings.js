@@ -94,6 +94,11 @@ const THEMES = [
         id: 'theme',
         label: 'Dark theme',
         value: 'dark',
+    },
+    {
+        id: 'theme',
+        label: 'Light high contrast theme',
+        value: 'contrastlight',
     }
 ];
 
