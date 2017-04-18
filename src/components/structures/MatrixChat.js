@@ -18,6 +18,7 @@ limitations under the License.
 import q from 'q';
 
 var React = require('react');
+var counterpart = require('counterpart');
 var Matrix = require("matrix-js-sdk");
 
 var MatrixClientPeg = require("../../MatrixClientPeg");
@@ -395,8 +396,8 @@ module.exports = React.createClass({
                 break;
             case 'leave_room':
                 Modal.createDialog(QuestionDialog, {
-                    title: "Leave room",
-                    description: "Are you sure you want to leave the room?",
+                    title: counterpart.translate("Leave room"),
+                    description: counterpart.translate("Are you sure you want to leave the room?"),
                     onFinished: (should_leave) => {
                         if (should_leave) {
                             const d = MatrixClientPeg.get().leave(payload.room_id);
@@ -414,8 +415,8 @@ module.exports = React.createClass({
                                 modal.close();
                                 console.error("Failed to leave room " + payload.room_id + " " + err);
                                 Modal.createDialog(ErrorDialog, {
-                                    title: "Failed to leave room",
-                                    description: "Server may be unavailable, overloaded, or you hit a bug."
+                                    title: counterpart.translate("Failed to leave room"),
+                                    description: counterpart.translate("Server may be unavailable, overloaded, or you hit a bug.")
                                 });
                             });
                         }
@@ -424,8 +425,8 @@ module.exports = React.createClass({
                 break;
             case 'reject_invite':
                 Modal.createDialog(QuestionDialog, {
-                    title: "Reject invitation",
-                    description: "Are you sure you want to reject the invitation?",
+                    title: counterpart.translate("Reject invitation"),
+                    description: counterpart.translate("Are you sure you want to reject the invitation?"),
                     onFinished: (confirm) => {
                         if (confirm) {
                             // FIXME: controller shouldn't be loading a view :(
@@ -440,7 +441,7 @@ module.exports = React.createClass({
                             }, (err) => {
                                 modal.close();
                                 Modal.createDialog(ErrorDialog, {
-                                    title: "Failed to reject invitation",
+                                    title:  counterpart.translate("Failed to reject invitation"),
                                     description: err.toString()
                                 });
                             });
