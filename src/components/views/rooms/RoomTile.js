@@ -102,16 +102,25 @@ module.exports = React.createClass({
         if (this.props.onClick) {
             this.props.onClick(this.props.room.roomId);
         }
+        // Don't let the context menu appear when a click has occurred
+        clearTimeout(this._contextMenuTimeout);
     },
 
     onMouseEnter: function() {
         this.setState( { hover : true });
         this.badgeOnMouseEnter();
+
+        this._contextMenuTimeout = setTimeout(() => {
+            this.showContextMenu();
+        }, 500);
     },
 
     onMouseLeave: function() {
         this.setState( { hover : false });
         this.badgeOnMouseLeave();
+
+        clearTimeout(this._contextMenuTimeout);
+        this._contextMenuTimeout = null;
     },
 
     badgeOnMouseEnter: function() {
@@ -126,36 +135,39 @@ module.exports = React.createClass({
         this.setState( { badgeHover : false } );
     },
 
-    onBadgeClicked: function(e) {
-        // Only allow none guests to access the context menu
-        if (!MatrixClientPeg.get().isGuest()) {
+    showContextMenu: function() {
+        // Hide the tooltip
+        if (this.props.collapsed) {
+            this.setState({ hover: false });
+        }
 
-            // If the badge is clicked, then no longer show tooltip
-            if (this.props.collapsed) {
-                this.setState({ hover: false });
+        const RoomTileContextMenu = sdk.getComponent('context_menus.RoomTileContextMenu');
+        const elementRect = this.refs.badge.getBoundingClientRect();
+
+        // The window X and Y offsets are to adjust position when zoomed in to page
+        const x = elementRect.right + window.pageXOffset + 3;
+        const chevronOffset = 12;
+        let y = (elementRect.top + (elementRect.height / 2) + window.pageYOffset);
+        y = y - (chevronOffset + 8); // where 8 is half the height of the chevron
+
+        ContextualMenu.createMenu(RoomTileContextMenu, {
+            chevronOffset: chevronOffset,
+            left: x,
+            top: y,
+            closeOnMouseLeave: true,
+            room: this.props.room,
+            onFinished: () => {
+                this.setState({ menuDisplayed: false });
+                this.props.refreshSubList();
             }
+        });
+        this.setState({ menuDisplayed: true });
+    },
 
-            var RoomTileContextMenu = sdk.getComponent('context_menus.RoomTileContextMenu');
-            var elementRect = e.target.getBoundingClientRect();
-
-            // The window X and Y offsets are to adjust position when zoomed in to page
-            const x = elementRect.right + window.pageXOffset + 3;
-            const chevronOffset = 12;
-            let y = (elementRect.top + (elementRect.height / 2) + window.pageYOffset);
-            y = y - (chevronOffset + 8); // where 8 is half the height of the chevron
-
-            var self = this;
-            ContextualMenu.createMenu(RoomTileContextMenu, {
-                chevronOffset: chevronOffset,
-                left: x,
-                top: y,
-                room: this.props.room,
-                onFinished: function() {
-                    self.setState({ menuDisplayed: false });
-                    self.props.refreshSubList();
-                }
-            });
-            this.setState({ menuDisplayed: true });
+    onBadgeClicked: function(e) {
+        // Only allow non-guests to access the context menu
+        if (!MatrixClientPeg.get().isGuest()) {
+            this.showContextMenu();
         }
         // Prevent the RoomTile onClick event firing as well
         e.stopPropagation();
@@ -209,7 +221,13 @@ module.exports = React.createClass({
             badgeContent = '\u200B';
         }
 
-        badge = <div className={ badgeClasses } onClick={this.onBadgeClicked}>{ badgeContent }</div>;
+        badge = <div
+            className={ badgeClasses }
+            onClick={this.onBadgeClicked}
+            ref="badge"
+        >
+            { badgeContent }
+        </div>;
 
         const EmojiText = sdk.getComponent('elements.EmojiText');
         var label;
