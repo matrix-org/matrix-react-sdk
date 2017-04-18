@@ -109,7 +109,7 @@ export default class MessageComposer extends React.Component {
             title: counterpart.translate("Upload Files"),
             description: (
                 <div>
-                    <p>{ counterpart.translate(Are you sure you want upload the following files?) }</p>
+                    <p>{ counterpart.translate("Are you sure you want upload the following files?") }</p>
                     <ul style={{listStyle: 'none', textAlign: 'left'}}>
                         {fileList}
                     </ul>
