@@ -33,6 +33,7 @@ module.exports = {
         menuHeight: React.PropTypes.number,
         chevronOffset: React.PropTypes.number,
         menuColour: React.PropTypes.string,
+        closeOnMouseLeave: React.PropTypes.boolean,
     },
 
     getOrCreateContainer: function() {
@@ -55,6 +56,12 @@ module.exports = {
 
             if (props && props.onFinished) {
                 props.onFinished.apply(null, arguments);
+            }
+        };
+
+        const onMouseLeave = function() {
+            if (props.closeOnMouseLeave) {
+                closeMenu();
             }
         };
 
@@ -115,7 +122,11 @@ module.exports = {
         // property set here so you can't close the menu from a button click!
         var menu = (
             <div className={className} style={position}>
-                <div className={menuClasses} style={menuStyle}>
+                <div
+                    className={menuClasses}
+                    style={menuStyle}
+                    onMouseLeave={onMouseLeave}
+                >
                     {chevron}
                     <Element {...props} onFinished={closeMenu}/>
                 </div>
