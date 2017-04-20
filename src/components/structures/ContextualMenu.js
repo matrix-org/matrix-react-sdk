@@ -51,6 +51,12 @@ module.exports = {
     createMenu: function(Element, props) {
         var self = this;
 
+        // Default props
+
+        // hasBackground = true by default
+        props.hasBackground = props.hasBackground === undefined ?
+            true : props.hasBackground;
+
         var closeMenu = function() {
             ReactDOM.unmountComponentAtNode(self.getOrCreateContainer());
 
@@ -118,6 +124,14 @@ module.exports = {
             menuStyle["backgroundColor"] = props.menuColour;
         }
 
+        let background = null;
+        if (props.hasBackground) {
+            background = <div
+                className="mx_ContextualMenu_background"
+                onClick={closeMenu}
+            ></div>;
+        }
+
         // FIXME: If a menu uses getDefaultProps it clobbers the onFinished
         // property set here so you can't close the menu from a button click!
         var menu = (
@@ -130,7 +144,7 @@ module.exports = {
                     {chevron}
                     <Element {...props} onFinished={closeMenu}/>
                 </div>
-                <div className="mx_ContextualMenu_background" onClick={closeMenu}></div>
+                {background}
                 <style>{chevronCSS}</style>
             </div>
         );

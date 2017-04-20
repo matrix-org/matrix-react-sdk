@@ -89,6 +89,7 @@ module.exports = React.createClass({
 
     componentWillMount: function() {
         MatrixClientPeg.get().on("accountData", this.onAccountData);
+        this._closeContextMenu = undefined;
     },
 
     componentWillUnmount: function() {
@@ -115,12 +116,17 @@ module.exports = React.createClass({
         }, 500);
     },
 
-    onMouseLeave: function() {
+    onMouseLeave: function(e) {
         this.setState( { hover : false });
         this.badgeOnMouseLeave();
 
         clearTimeout(this._contextMenuTimeout);
         this._contextMenuTimeout = null;
+
+        // The mouse left the RoomTile itself, not a child
+        if (e.target === e.currentTarget && this._closeContextMenu) {
+            this._closeContextMenu();
+        }
     },
 
     badgeOnMouseEnter: function() {
@@ -150,17 +156,18 @@ module.exports = React.createClass({
         let y = (elementRect.top + (elementRect.height / 2) + window.pageYOffset);
         y = y - (chevronOffset + 8); // where 8 is half the height of the chevron
 
-        ContextualMenu.createMenu(RoomTileContextMenu, {
+        this._closeContextMenu = ContextualMenu.createMenu(RoomTileContextMenu, {
             chevronOffset: chevronOffset,
             left: x,
             top: y,
             closeOnMouseLeave: true,
+            hasBackground: false,
             room: this.props.room,
             onFinished: () => {
                 this.setState({ menuDisplayed: false });
                 this.props.refreshSubList();
             }
-        });
+        }).close;
         this.setState({ menuDisplayed: true });
     },
 
