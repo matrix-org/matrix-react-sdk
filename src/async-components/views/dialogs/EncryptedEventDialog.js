@@ -93,7 +93,7 @@ module.exports = React.createClass({
             <table>
                 <tbody>
                     <tr>
-                        td>{ counterpart.translate('Name') }</td>
+                        <td>{ counterpart.translate('Name') }</td>
                         <td>{ device.getDisplayName() }</td>
                     </tr>
                     <tr>
