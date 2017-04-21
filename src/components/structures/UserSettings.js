@@ -517,6 +517,15 @@ module.exports = React.createClass({
         );
     },
 
+    onLanguageChange: function(l) {
+      UserSettingsStore.setLocalSetting('language', l);
+      dis.dispatch({
+          action: 'set_language',
+          value: l,
+      });
+    },
+
+
     _renderUserInterfaceSettings: function() {
         var client = MatrixClientPeg.get();
 
@@ -527,6 +536,7 @@ module.exports = React.createClass({
                     { this._renderUrlPreviewSelector() }
                     { SETTINGS_LABELS.map( this._renderSyncedSetting ) }
                     { THEMES.map( this._renderThemeSelector ) }
+                    { this.onLanguageChange() }
                 </div>
             </div>
         );

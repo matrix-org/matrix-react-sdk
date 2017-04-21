@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 var Skinner = require('./Skinner');
+var counterpart = require('counterpart');
+var dis = require("./dispatcher");
 
 module.exports.loadSkin = function(skinObject) {
     Skinner.load(skinObject);
@@ -27,3 +29,27 @@ module.exports.resetSkin = function() {
 module.exports.getComponent = function(componentName) {
     return Skinner.getComponent(componentName);
 };
+
+
+module.exports.setLanguage = function(language) {
+    if (language) {
+        dis.dispatch({
+            action: 'set_language',
+            value: language,
+        });
+    } else {
+        var language = null;
+
+        if (navigator.languages) {
+            language =  navigator.languages[0];
+        }
+
+        if (language == null) {
+            language = navigator.language || navigator.userLanguage;
+        }
+
+        counterpart.setLocale(language);
+    }
+};
+
+

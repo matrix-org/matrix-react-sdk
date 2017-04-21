@@ -41,6 +41,8 @@ var PageTypes = require('../../PageTypes');
 var createRoom = require("../../createRoom");
 import * as UDEHandler from '../../UnknownDeviceErrorHandler';
 
+var counterpart = require('counterpart');
+
 module.exports = React.createClass({
     displayName: 'MatrixChat',
 
@@ -414,7 +416,7 @@ module.exports = React.createClass({
                                 console.error("Failed to leave room " + payload.room_id + " " + err);
                                 Modal.createDialog(ErrorDialog, {
                                     title: counterpart.translate("Failed to leave room"),
-                                    description: counterpart.translate("Server may be unavailable, overloaded, or you hit a bug."
+                                    description: counterpart.translate("Server may be unavailable, overloaded, or you hit a bug.")
                                 });
                             });
                         }
@@ -566,6 +568,8 @@ module.exports = React.createClass({
             case 'set_theme':
                 this._onSetTheme(payload.value);
                 break;
+            case 'set_language':
+                this._onSetLanguage(payload.value);
             case 'on_logging_in':
                 this.setState({loggingIn: true});
                 break;
@@ -751,6 +755,27 @@ module.exports = React.createClass({
         else {
             Tinter.tintSvgWhite('#ffffff');
         }
+    },
+
+    /**
+     * Called whenever someone changes the Language
+     */
+    _onSetLanguage: function(language) {
+      // load our own translations
+      counterpart.registerTranslations('en', require('../../i18n/strings/en_EN'));
+      counterpart.registerTranslations('en', require('../../i18n/global/en_EN'));
+      counterpart.registerTranslations('de', require('../../i18n/strings/de_DE'));
+      counterpart.registerTranslations('de', require('../../i18n/global/de_DE'));
+      counterpart.registerTranslations('pt-BR', require('../../i18n/strings/pt_BR'));
+      counterpart.registerTranslations('pt-BR', require('../../i18n/global/pt_BR'));
+      counterpart.setFallbackLocale('en');
+
+      if (!language){
+        const language = navigator.languages[0] || navigator.language || navigator.userLanguage;
+        counterpart.setLocale(language);
+      }else{
+        counterpart.setLocale(language);
+      }
     },
 
     /**

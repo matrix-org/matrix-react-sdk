@@ -364,7 +364,7 @@ module.exports = React.createClass({
         var inputBox = (
             <form autoComplete="off">
                 <input className="mx_MemberList_query" id="mx_MemberList_query" type="text"
-                    onChange={this.onSearchQueryChanged} value={this.state.searchQuery}
+                        onChange={this.onSearchQueryChanged} value={this.state.searchQuery}
                         placeholder={ counterpart.translate('Filter room members') } />
             </form>
         );

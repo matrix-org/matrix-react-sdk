@@ -15,9 +15,10 @@ limitations under the License.
 */
 
 var React = require("react");
-var counterpart = require('counterpart');
 var sdk = require('../../../index');
 var MatrixClientPeg = require("../../../MatrixClientPeg");
+
+var counterpart = require('counterpart');
 
 module.exports = React.createClass({
     displayName: 'EncryptedEventDialog',
@@ -86,7 +87,7 @@ module.exports = React.createClass({
         if (device.isBlocked()) {
             verificationStatus = (<b>{ counterpart.translate('Blacklisted') }</b>);
         } else if (device.isVerified()) {
-            verificationStatus = counterpart.translate('verified')
+            verificationStatus = counterpart.translate('verified');
         }
 
         return (
@@ -125,15 +126,15 @@ module.exports = React.createClass({
                     </tr>
                     <tr>
                         <td>{ counterpart.translate('Curve25519 identity key') }</td>
-                        <td><code>{ event.getSenderKey() || <i>none</i> }</code></td>
+                        <td><code>{ event.getSenderKey() || <i>{ counterpart.translate('none') }</i> }</code></td>
                     </tr>
                     <tr>
                         <td>{ counterpart.translate('Claimed Ed25519 fingerprint key') }</td>
-                        <td><code>{ event.getKeysClaimed().ed25519 || <i>none</i> }</code></td>
+                        <td><code>{ event.getKeysClaimed().ed25519 || <i>{ counterpart.translate('none') }</i> }</code></td>
                     </tr>
                     <tr>
                         <td>{ counterpart.translate('Algorithm') }</td>
-                        <td>{ event.getWireContent().algorithm || <i>unencrypted</i> }</td>
+                        <td>{ event.getWireContent().algorithm || <i>{ counterpart.translate('unencrypted') }</i> }</td>
                     </tr>
                 {
                     event.getContent().msgtype === 'm.bad.encrypted' ? (
@@ -178,7 +179,7 @@ module.exports = React.createClass({
                 </div>
                 <div className="mx_Dialog_buttons">
                     <button className="mx_Dialog_primary" onClick={ this.props.onFinished } autoFocus={ true }>
-                        <h4>{ counterpart.translate('OK') }</h4>
+                        { counterpart.translate('OK') }
                     </button>
                     {buttons}
                 </div>
