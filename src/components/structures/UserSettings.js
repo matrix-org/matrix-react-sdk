@@ -64,6 +64,10 @@ const SETTINGS_LABELS = [
         label: 'Autoplay GIFs and videos',
     },
     {
+        id: 'dontSendReadReceipts',
+        label: "Don't send read receipts"
+    },
+    {
         id: 'hideReadReceipts',
         label: 'Hide read receipts',
     },
