@@ -126,6 +126,7 @@ export default class MessageComposer extends React.Component {
                 }
 
                 this.refs.uploadInput.value = null;
+                dis.dispatch({action: 'focus_composer'});
             },
         });
     }
