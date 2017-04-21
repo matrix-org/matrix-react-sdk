@@ -51,7 +51,7 @@ export default class UserProvider extends AutocompleteProvider {
     }
 
     getName() {
-        return '👥 Users';
+        return counterpart.translate('👥 Users');
     }
 
     setUserList(users) {

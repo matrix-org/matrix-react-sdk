@@ -23,6 +23,8 @@ var MatrixClientPeg = require('../../../MatrixClientPeg');
 
 var PasswordReset = require("../../../PasswordReset");
 
+var counterpart = require('counterpart');
+
 module.exports = React.createClass({
     displayName: 'ForgotPassword',
 
@@ -54,7 +56,7 @@ module.exports = React.createClass({
                 progress: "sent_email"
             });
         }, (err) => {
-            this.showErrorDialog("Failed to send email: " + err.message);
+            this.showErrorDialog(counterpart.translate('Failed to send email: ') + err.message);
             this.setState({
                 progress: null
             });
@@ -78,18 +80,18 @@ module.exports = React.createClass({
         ev.preventDefault();
 
         if (!this.state.email) {
-            this.showErrorDialog("The email address linked to your account must be entered.");
+            this.showErrorDialog(counterpart.translate('The email address linked to your account must be entered.'));
         }
         else if (!this.state.password || !this.state.password2) {
-            this.showErrorDialog("A new password must be entered.");
+            this.showErrorDialog(counterpart.translate('A new password must be entered.'));
         }
         else if (this.state.password !== this.state.password2) {
-            this.showErrorDialog("New passwords must match each other.");
+            this.showErrorDialog(counterpart.translate('New passwords must match each other.'));
         }
         else {
             var QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
             Modal.createDialog(QuestionDialog, {
-                title: "Warning",
+                title: counterpart.translate('Warning'),
                 description:
                     <div>
                         Resetting password will currently reset any end-to-end encryption keys on all devices,

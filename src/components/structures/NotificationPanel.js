@@ -17,6 +17,8 @@ limitations under the License.
 var React = require('react');
 var ReactDOM = require("react-dom");
 
+var counterpart = require('counterpart');
+
 var Matrix = require("matrix-js-sdk");
 var sdk = require('../../index');
 var MatrixClientPeg = require("../../MatrixClientPeg");
@@ -48,7 +50,7 @@ var NotificationPanel = React.createClass({
                     showUrlPreview = { false }
                     opacity={ this.props.opacity }
                     tileShape="notif"
-                    empty="You have no visible notifications"
+                    empty={ counterpart.translate('You have no visible notifications') }
                 />
             );
         }

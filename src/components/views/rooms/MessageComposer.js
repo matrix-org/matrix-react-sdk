@@ -82,8 +82,8 @@ export default class MessageComposer extends React.Component {
         if (MatrixClientPeg.get().isGuest()) {
             let NeedToRegisterDialog = sdk.getComponent("dialogs.NeedToRegisterDialog");
             Modal.createDialog(NeedToRegisterDialog, {
-                title: "Please Register",
-                description: "Guest users can't upload files. Please register to upload.",
+                title: counterpart.translate("Please Register"),
+                description: counterpart.translate("Guest users can't upload files. Please register to upload."),
             });
             return;
         }
@@ -106,10 +106,10 @@ export default class MessageComposer extends React.Component {
         }
 
         Modal.createDialog(QuestionDialog, {
-            title: "Upload Files",
+            title: counterpart.translate("Upload Files"),
             description: (
                 <div>
-                    <p>Are you sure you want upload the following files?</p>
+                    <p>{ counterpart.translate("Are you sure you want upload the following files?") }</p>
                     <ul style={{listStyle: 'none', textAlign: 'left'}}>
                         {fileList}
                     </ul>
@@ -228,11 +228,11 @@ export default class MessageComposer extends React.Component {
         if (roomIsEncrypted) {
             // FIXME: show a /!\ if there are untrusted devices in the room...
             e2eImg = 'img/e2e-verified.svg';
-            e2eTitle = 'Encrypted room';
+            e2eTitle = counterpart.translate('Encrypted room');
             e2eClass = 'mx_MessageComposer_e2eIcon';
         } else {
             e2eImg = 'img/e2e-unencrypted.svg';
-            e2eTitle = 'Unencrypted room';
+            e2eTitle = counterpart.translate('Unencrypted room');
             e2eClass = 'mx_MessageComposer_e2eIcon mx_filterFlipColor';
         }
 
@@ -245,16 +245,16 @@ export default class MessageComposer extends React.Component {
         if (this.props.callState && this.props.callState !== 'ended') {
             hangupButton =
                 <div key="controls_hangup" className="mx_MessageComposer_hangup" onClick={this.onHangupClick}>
-                    <img src="img/hangup.svg" alt="Hangup" title="Hangup" width="25" height="26"/>
+                    <img src="img/hangup.svg" alt={ counterpart.translate("Hangup") } title={ counterpart.translate("Hangup") } width="25" height="26"/>
                 </div>;
         }
         else {
             callButton =
-                <div key="controls_call" className="mx_MessageComposer_voicecall" onClick={this.onVoiceCallClick} title="Voice call">
+                <div key="controls_call" className="mx_MessageComposer_voicecall" onClick={this.onVoiceCallClick} title={ counterpart.translate("Voice call") }>
                     <TintableSvg src="img/icon-call.svg" width="35" height="35"/>
                 </div>;
             videoCallButton =
-                <div key="controls_videocall" className="mx_MessageComposer_videocall" onClick={this.onCallClick} title="Video call">
+                +                <div key="controls_videocall" className="mx_MessageComposer_videocall" onClick={this.onCallClick} title={ counterpart.translate("Video call") }>
                     <TintableSvg src="img/icons-video.svg" width="35" height="35"/>
                 </div>;
         }
@@ -268,7 +268,7 @@ export default class MessageComposer extends React.Component {
             // complex because of conference calls.
             var uploadButton = (
                 <div key="controls_upload" className="mx_MessageComposer_upload"
-                        onClick={this.onUploadClick} title="Upload file">
+                        onClick={this.onUploadClick} title={ counterpart.translate("Upload file") }>
                     <TintableSvg src="img/icons-upload.svg" width="35" height="35"/>
                     <input ref="uploadInput" type="file"
                         style={uploadInputStyle}
@@ -288,7 +288,7 @@ export default class MessageComposer extends React.Component {
             );
 
             const placeholderText = roomIsEncrypted ?
-                "Send an encrypted message…" : "Send a message (unencrypted)…";
+                counterpart.translate("Send an encrypted message…") : counterpart.translate("Send a message (unencrypted)…");
 
             controls.push(
                 <MessageComposerInput
@@ -313,7 +313,7 @@ export default class MessageComposer extends React.Component {
         } else {
             controls.push(
                 <div key="controls_error" className="mx_MessageComposer_noperm_error">
-                    You do not have permission to post to this room
+                    { counterpart.translate("You do not have permission to post to this room") }
                 </div>
             );
         }
