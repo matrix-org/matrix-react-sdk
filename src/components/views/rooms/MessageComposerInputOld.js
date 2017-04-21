@@ -312,6 +312,7 @@ export default React.createClass({
                     Modal.createDialog(ErrorDialog, {
                         title: "Server error",
                         description: "Server unavailable, overloaded, or something else went wrong.",
+                        focusComposer: true,
                     });
                 });
             }
@@ -320,7 +321,8 @@ export default React.createClass({
                 var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
                     title: "Command error",
-                    description: cmd.error
+                    description: cmd.error,
+                    focusComposer: true,
                 });
             }
             return;

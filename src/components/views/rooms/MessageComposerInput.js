@@ -510,6 +510,7 @@ export default class MessageComposerInput extends React.Component {
                     Modal.createDialog(ErrorDialog, {
                         title: "Server error",
                         description: "Server unavailable, overloaded, or something else went wrong.",
+                        focusComposer: true,
                     });
                 });
             }
@@ -518,7 +519,8 @@ export default class MessageComposerInput extends React.Component {
                 var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
                     title: "Command error",
-                    description: cmd.error
+                    description: cmd.error,
+                    focusComposer: true,
                 });
             }
             return true;
