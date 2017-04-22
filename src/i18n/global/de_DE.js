@@ -1,3 +1,3 @@
-{
+module.exports= {
   "Warning": "Warnung"
-}
+};

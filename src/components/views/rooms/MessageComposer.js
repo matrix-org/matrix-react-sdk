@@ -255,7 +255,7 @@ export default class MessageComposer extends React.Component {
                     <TintableSvg src="img/icon-call.svg" width="35" height="35"/>
                 </div>;
             videoCallButton =
-                +                <div key="controls_videocall" className="mx_MessageComposer_videocall" onClick={this.onCallClick} title={ counterpart.translate("Video call") }>
+                <div key="controls_videocall" className="mx_MessageComposer_videocall" onClick={this.onCallClick} title={ counterpart.translate("Video call") }>
                     <TintableSvg src="img/icons-video.svg" width="35" height="35"/>
                 </div>;
         }

@@ -1,4 +1,4 @@
-{
+module.exports={
   "Filter room members": "Filter room members",
   "You have no visible notifications": "You have no visible notifications",
   "Invites": "Invites",
@@ -52,4 +52,4 @@
   "Return to app": "Return to app",
   "Sign in": "Sign in",
   "Create a new account": "Create a new account"
-}
+};

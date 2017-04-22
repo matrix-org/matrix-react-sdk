@@ -568,8 +568,6 @@ module.exports = React.createClass({
             case 'set_theme':
                 this._onSetTheme(payload.value);
                 break;
-            case 'set_language':
-                this._onSetLanguage(payload.value);
             case 'on_logging_in':
                 this.setState({loggingIn: true});
                 break;
@@ -755,27 +753,6 @@ module.exports = React.createClass({
         else {
             Tinter.tintSvgWhite('#ffffff');
         }
-    },
-
-    /**
-     * Called whenever someone changes the Language
-     */
-    _onSetLanguage: function(language) {
-      // load our own translations
-      counterpart.registerTranslations('en', require('../../i18n/strings/en_EN'));
-      counterpart.registerTranslations('en', require('../../i18n/global/en_EN'));
-      counterpart.registerTranslations('de', require('../../i18n/strings/de_DE'));
-      counterpart.registerTranslations('de', require('../../i18n/global/de_DE'));
-      counterpart.registerTranslations('pt-BR', require('../../i18n/strings/pt_BR'));
-      counterpart.registerTranslations('pt-BR', require('../../i18n/global/pt_BR'));
-      counterpart.setFallbackLocale('en');
-
-      if (!language){
-        const language = navigator.languages[0] || navigator.language || navigator.userLanguage;
-        counterpart.setLocale(language);
-      }else{
-        counterpart.setLocale(language);
-      }
     },
 
     /**
