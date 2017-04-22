@@ -27,6 +27,7 @@ limitations under the License.
 
 import React from 'react';
 import sdk from '../../../index';
+import dis from '../../../dispatcher';
 
 export default React.createClass({
     displayName: 'ErrorDialog',
@@ -39,6 +40,7 @@ export default React.createClass({
         button: React.PropTypes.string,
         focus: React.PropTypes.bool,
         onFinished: React.PropTypes.func.isRequired,
+        focusComposer: React.PropTypes.boolean,
     },
 
     getDefaultProps: function() {
@@ -50,6 +52,13 @@ export default React.createClass({
         };
     },
 
+    onFinished: function() {
+        this.props.onFinished();
+        if (this.props.focusComposer) {
+            dis.dispatch({action: 'focus_composer'});
+        }
+    },
+
     render: function() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         return (
@@ -59,7 +68,7 @@ export default React.createClass({
                     {this.props.description}
                 </div>
                 <div className="mx_Dialog_buttons">
-                    <button className="mx_Dialog_primary" onClick={this.props.onFinished} autoFocus={this.props.focus}>
+                    <button className="mx_Dialog_primary" onClick={this.onFinished} autoFocus={this.props.focus}>
                         {this.props.button}
                     </button>
                 </div>
