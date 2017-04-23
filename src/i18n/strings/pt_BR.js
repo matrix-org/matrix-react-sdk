@@ -84,6 +84,9 @@ module.exports={
     "Please check your email and click on the link it contains. Once this is done, click continue." : "Por favor verifique seu email e clique no link enviado. Quando finalizar este processo, clique para continuar.",
     "Please Register" : "Por favor se cadastre",
     "Profile" : "Perfil",
+    "Display name" : "Nome",
+    "Add email address" : "Adicionar endereço de email",
+    "Add phone number" : "Adicionar número de telefone",
     "Refer a friend to Riot: " : "Indicar um amigo para participar",
     "Reject invitation" : "Rejeitar convite",
     "Remove Contact Information?" : "Remover informação de contato?",
@@ -133,5 +136,6 @@ module.exports={
     "Who would you like to add to this room?" : "Quem Você gostaria que fosse adicionado a esta sala?",
     "You do not have permission to post to this room" : "Você não tem permissão de postar nesta sala",
     'You have no visible notifications' : 'Voce não possui notificações visíveis',
-    "`Your password was successfully changed. You will not receive push notifications on other devices until you log back in to them.`" : "Sua senha foi alterada com sucesso. Você não receberá notificações em outros dispositivos até que você logue novamente por eles.",
+    "Your password was successfully changed. You will not receive push notifications on other devices until you log back in to them." : "Sua senha foi alterada com sucesso. Você não receberá notificações em outros dispositivos até que você logue novamente por eles.",
+    "These are experimental features that may break in unexpected ways. Use with caution": "Estes são recursos experimentais que podem não funcionar corretamente. Use com cuidado.",
 };
