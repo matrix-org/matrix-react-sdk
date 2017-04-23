@@ -506,9 +506,9 @@ module.exports = React.createClass({
 
                 var TextInputDialog = sdk.getComponent("dialogs.TextInputDialog");
                 Modal.createDialog(TextInputDialog, {
-                    title: "Create Room",
-                    description: "Room name (optional)",
-                    button: "Create Room",
+                    title: counterpart.translate ("Create Room"),
+                    description: counterpart.translate ("Room name (optional)"),
+                    button: counterpart.translate ("Create Room"),
                     onFinished: (should_create, name) => {
                         if (should_create) {
                             const createOpts = {};
@@ -681,16 +681,16 @@ module.exports = React.createClass({
     _createChat: function() {
         var ChatInviteDialog = sdk.getComponent("dialogs.ChatInviteDialog");
         Modal.createDialog(ChatInviteDialog, {
-            title: "Start a new chat",
+            title: counterpart.translate ("Start a new chat"),
         });
     },
 
     _invite: function(roomId) {
         var ChatInviteDialog = sdk.getComponent("dialogs.ChatInviteDialog");
         Modal.createDialog(ChatInviteDialog, {
-            title: "Invite new room members",
-            button: "Send Invites",
-            description: "Who would you like to add to this room?",
+            title: counterpart.translate ("Invite new room members"),
+            button: counterpart.translate ("Send Invites"),
+            description: counterpart.translate ("Who would you like to add to this room?"),
             roomId: roomId,
         });
     },

@@ -28,6 +28,8 @@ import AccessibleButton from '../elements/AccessibleButton';
 import q from 'q';
 import Fuse from 'fuse.js';
 
+var counterpart = require('counterpart');
+
 const TRUNCATE_QUERY_LIST = 40;
 
 module.exports = React.createClass({
@@ -48,11 +50,11 @@ module.exports = React.createClass({
 
     getDefaultProps: function() {
         return {
-            title: "Start a chat",
-            description: "Who would you like to communicate with?",
+            title: counterpart.translate ("Start a chat"),
+            description: counterpart.translate ("Who would you like to communicate with?"),
             value: "",
-            placeholder: "Email, name or matrix ID",
-            button: "Start Chat",
+            placeholder: counterpart.translate ("Email, name or matrix ID"),
+            button: counterpart.translate ("Start Chat"),
             focus: true
         };
     },
