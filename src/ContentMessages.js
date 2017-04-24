@@ -271,6 +271,7 @@ function uploadFile(matrixClient, roomId, file) {
 class ContentMessages {
     constructor() {
         this.inprogress = [];
+        this.queuedPromises = []; // used to keep uploads in sequence
         this.nextId = 0;
     }
 
@@ -315,6 +316,9 @@ class ContentMessages {
             def.resolve();
         }
 
+        const ownPromise = q.defer();
+        this.queuedPromises.push(ownPromise);
+
         const upload = {
             fileName: file.name || 'Attachment',
             roomId: roomId,
@@ -342,7 +346,12 @@ class ContentMessages {
                 upload.loaded = ev.loaded;
                 dis.dispatch({action: 'upload_progress', upload: upload});
             }
-        }).then(function(url) {
+        }).then(url => {
+            // Keep uploads in order by waiting for messages in front of us to finish
+            let idx = this.queuedPromises.indexOf(ownPromise);
+            if (idx > 0) return this.queuedPromises[idx - 1].promise;
+            else return Promise.resolve();
+        }).then(function() {
             return matrixClient.sendMessage(roomId, content);
         }, function(err) {
             error = err;
@@ -358,6 +367,10 @@ class ContentMessages {
                 });
             }
         }).finally(() => {
+            ownPromise.resolve(); // mark our upload as complete - we've sent the message
+            if (this.queuedPromises.indexOf(ownPromise) == this.queuedPromises.length - 1)
+                this.queuedPromises = []; // clear array when we're done
+
             const inprogressKeys = Object.keys(this.inprogress);
             for (var i = 0; i < this.inprogress.length; ++i) {
                 var k = inprogressKeys[i];
