@@ -74,7 +74,7 @@ function textForMemberEvent(ev) {
                     return counterpart.translate("VoIP conference started");
                 }
                 else {
-                    return targetName + " " + counterpart.translate("joined the room.");
+                    return targetName + " " + counterpart.translate("joined the room") + ".";
                 }
             }
         case 'leave':
@@ -86,7 +86,7 @@ function textForMemberEvent(ev) {
                     return targetName + " " + counterpart.translate("rejected the invitation.");
                 }
                 else {
-                    return targetName + " " + counterpart.translate("left the room.");
+                    return targetName + " " + counterpart.translate("left the room");
                 }
             }
             else if (ev.getPrevContent().membership === "ban") {
@@ -107,13 +107,13 @@ function textForMemberEvent(ev) {
 function textForTopicEvent(ev) {
     var senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
 
-    return senderDisplayName + " " + counterpart.translate('changed the topic to') + " " + ev.getContent().topic + '"';
+    return senderDisplayName + " " + counterpart.translate('changed the topic to') + " " + ev.getContent().topic;
 }
 
 function textForRoomNameEvent(ev) {
     var senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
 
-    return senderDisplayName + " " + counterpart.translate('changed the room name to"') + " " + ev.getContent().name + '"';
+    return senderDisplayName + " " + counterpart.translate("changed the room name to") + " " + ev.getContent().name;
 }
 
 function textForMessageEvent(ev) {
@@ -154,7 +154,7 @@ function textForCallInviteEvent(event) {
 function textForThreePidInviteEvent(event) {
     var senderName = event.sender ? event.sender.name : event.getSender();
     return senderName + " " + counterpart.translate("sent an invitation to") + " " + event.getContent().display_name +
-     counterpart.translate(" to join the room.");
+     counterpart.translate(" to join the room") + ".";
 }
 
 function textForHistoryVisibilityEvent(event) {
@@ -162,16 +162,16 @@ function textForHistoryVisibilityEvent(event) {
     var vis = event.getContent().history_visibility;
     var text = senderName + " " + counterpart.translate("made future room history visible to") + " ";
     if (vis === "invited") {
-        text += counterpart.translate("all room members, from the point they are invited.");
+        text += counterpart.translate("all room members, from the point they are invited") + ".";
     }
     else if (vis === "joined") {
-        text += counterpart.translate("all room members, from the point they joined.");
+        text += counterpart.translate("all room members, from the point they joined") + ".";
     }
     else if (vis === "shared") {
-        text += counterpart.translate("all room members.");
+        text += counterpart.translate("all room members") + ".";
     }
     else if (vis === "world_readable") {
-        text += counterpart.translate("anyone.");
+        text += counterpart.translate("anyone") + ".";
     }
     else {
         text += " " + counterpart.translate("unknown") + " (" + vis + ")";

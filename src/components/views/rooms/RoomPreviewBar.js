@@ -20,6 +20,7 @@ limitations under the License.
 var React = require('react');
 var sdk = require('../../../index');
 var MatrixClientPeg = require('../../../MatrixClientPeg');
+var counterpart = require('counterpart');
 
 module.exports = React.createClass({
     displayName: 'RoomPreviewBar',
@@ -131,10 +132,10 @@ module.exports = React.createClass({
             joinBlock = (
                 <div>
                     <div className="mx_RoomPreviewBar_invite_text">
-                        You have been invited to join this room by <b>{ this.props.inviterName }</b>
+                        { counterpart.translate("You have been invited to join this room by") } <b>{ this.props.inviterName }</b>
                     </div>
                     <div className="mx_RoomPreviewBar_join_text">
-                        Would you like to <a onClick={ this.props.onJoinClick }>accept</a> or <a onClick={ this.props.onRejectClick }>decline</a> this invitation?
+                        { counterpart.translate("Would you like to") } <a onClick={ this.props.onJoinClick }>{ counterpart.translate("accept") }</a> or <a onClick={ this.props.onRejectClick }>{ counterpart.translate("decline") }</a> { counterpart.translate("this invitation?") }
                     </div>
                     {emailMatchBlock}
                 </div>
