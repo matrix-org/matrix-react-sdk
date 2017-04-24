@@ -22,13 +22,13 @@ var GeminiScrollbar = require('react-gemini-scrollbar');
 var MatrixClientPeg = require("../../../MatrixClientPeg");
 var CallHandler = require('../../../CallHandler');
 var RoomListSorter = require("../../../RoomListSorter");
-var Unread = require('../../../Unread');
 var dis = require("../../../dispatcher");
 var sdk = require('../../../index');
 var rate_limited_func = require('../../../ratelimitedfunc');
 var Rooms = require('../../../Rooms');
 import DMRoomMap from '../../../utils/DMRoomMap';
 var Receipt = require('../../../utils/Receipt');
+var constantTimeDispatcher = require('../../../ConstantTimeDispatcher');
 
 var HIDE_CONFERENCE_CHANS = true;
 
@@ -38,8 +38,17 @@ module.exports = React.createClass({
     propTypes: {
         ConferenceHandler: React.PropTypes.any,
         collapsed: React.PropTypes.bool.isRequired,
-        currentRoom: React.PropTypes.string,
+        selectedRoom: React.PropTypes.string,
         searchFilter: React.PropTypes.string,
+    },
+
+    shouldComponentUpdate: function(nextProps, nextState) {
+        if (nextProps.collapsed !== this.props.collapsed) return true;
+        if (nextProps.searchFilter !== this.props.searchFilter) return true;
+        if (nextState.lists !== this.state.lists ||
+            nextState.isLoadingLeftRooms !== this.state.isLoadingLeftRooms ||
+            nextState.incomingCall !== this.state.incomingCall) return true;
+        return false;
     },
 
     getInitialState: function() {
@@ -58,12 +67,22 @@ module.exports = React.createClass({
         cli.on("Room.name", this.onRoomName);
         cli.on("Room.tags", this.onRoomTags);
         cli.on("Room.receipt", this.onRoomReceipt);
-        cli.on("RoomState.events", this.onRoomStateEvents);
+        cli.on("RoomState.members", this.onRoomStateMember);
         cli.on("RoomMember.name", this.onRoomMemberName);
         cli.on("accountData", this.onAccountData);
 
+        // lookup for which lists a given roomId is currently in.
+        this.listsForRoomId = {};
+
         var s = this.getRoomLists();
         this.setState(s);
+
+        // order of the sublists
+        //this.listOrder = [];
+
+        // loop count to stop a stack overflow if the user keeps waggling the
+        // mouse for >30s in a row, or if running under mocha
+        this._delayedRefreshRoomListLoopCount = 0
     },
 
     componentDidMount: function() {
@@ -72,7 +91,22 @@ module.exports = React.createClass({
         this._updateStickyHeaders(true);
     },
 
-    componentDidUpdate: function() {
+    componentWillReceiveProps: function(nextProps) {
+        // short-circuit react when the room changes
+        // to avoid rerendering all the sublists everywhere
+        if (nextProps.selectedRoom !== this.props.selectedRoom) {
+            if (this.props.selectedRoom) {
+                constantTimeDispatcher.dispatch(
+                    "RoomTile.select", this.props.selectedRoom, {}
+                );
+            }
+            constantTimeDispatcher.dispatch(
+                "RoomTile.select", nextProps.selectedRoom, { selected: true }
+            );
+        }
+    },
+
+    componentDidUpdate: function(prevProps, prevState) {
         // Reinitialise the stickyHeaders when the component is updated
         this._updateStickyHeaders(true);
         this._repositionIncomingCallBox(undefined, false);
@@ -98,10 +132,24 @@ module.exports = React.createClass({
                 }
                 break;
             case 'on_room_read':
-                // Force an update because the notif count state is too deep to cause
-                // an update. This forces the local echo of reading notifs to be
-                // reflected by the RoomTiles.
-                this.forceUpdate();
+                // poke the right RoomTile to refresh, using the constantTimeDispatcher
+                // to avoid each and every RoomTile registering to the 'on_room_read' event
+                // XXX: if we like the constantTimeDispatcher we might want to dispatch
+                // directly from TimelinePanel rather than needlessly bouncing via here.
+                constantTimeDispatcher.dispatch(
+                    "RoomTile.refresh", payload.room.roomId, {}
+                );
+
+                // also have to poke the right list(s)
+                var lists = this.listsForRoomId[payload.room.roomId];
+                if (lists) {
+                    lists.forEach(list=>{
+                        constantTimeDispatcher.dispatch(
+                            "RoomSubList.refreshHeader", list, { room: payload.room }
+                        );
+                    });
+                }
+
                 break;
         }
     },
@@ -115,7 +163,7 @@ module.exports = React.createClass({
             MatrixClientPeg.get().removeListener("Room.name", this.onRoomName);
             MatrixClientPeg.get().removeListener("Room.tags", this.onRoomTags);
             MatrixClientPeg.get().removeListener("Room.receipt", this.onRoomReceipt);
-            MatrixClientPeg.get().removeListener("RoomState.events", this.onRoomStateEvents);
+            MatrixClientPeg.get().removeListener("RoomState.members", this.onRoomStateMember);
             MatrixClientPeg.get().removeListener("RoomMember.name", this.onRoomMemberName);
             MatrixClientPeg.get().removeListener("accountData", this.onAccountData);
         }
@@ -124,10 +172,14 @@ module.exports = React.createClass({
     },
 
     onRoom: function(room) {
+        // XXX: this happens rarely; ideally we should only update the correct
+        // sublists when it does (e.g. via a constantTimeDispatch to the right sublist)
         this._delayedRefreshRoomList();
     },
 
     onDeleteRoom: function(roomId) {
+        // XXX: this happens rarely; ideally we should only update the correct
+        // sublists when it does (e.g. via a constantTimeDispatch to the right sublist)
         this._delayedRefreshRoomList();
     },
 
@@ -150,6 +202,10 @@ module.exports = React.createClass({
         }
     },
 
+    _onMouseOver: function(ev) {
+        this._lastMouseOverTs = Date.now();
+    },
+
     onSubListHeaderClick: function(isHidden, scrollToPosition) {
         // The scroll area has expanded or contracted, so re-calculate sticky headers positions
         this._updateStickyHeaders(true, scrollToPosition);
@@ -159,41 +215,98 @@ module.exports = React.createClass({
         if (toStartOfTimeline) return;
         if (!room) return;
         if (data.timeline.getTimelineSet() !== room.getUnfilteredTimelineSet()) return;
-        this._delayedRefreshRoomList();
+
+        // rather than regenerate our full roomlists, which is very heavy, we poke the
+        // correct sublists to just re-sort themselves.  This isn't enormously reacty,
+        // but is much faster than the default react reconciler, or having to do voodoo
+        // with shouldComponentUpdate and a pleaseRefresh property or similar.
+        var lists = this.listsForRoomId[room.roomId];
+        if (lists) {
+            lists.forEach(list=>{
+                constantTimeDispatcher.dispatch("RoomSubList.sort", list, { room: room });
+            });
+        }
+
+        // we have to explicitly hit the roomtile which just changed
+        constantTimeDispatcher.dispatch(
+            "RoomTile.refresh", room.roomId, {}
+        );
     },
 
     onRoomReceipt: function(receiptEvent, room) {
         // because if we read a notification, it will affect notification count
         // only bother updating if there's a receipt from us
         if (Receipt.findReadReceiptFromUserId(receiptEvent, MatrixClientPeg.get().credentials.userId)) {
-            this._delayedRefreshRoomList();
+            var lists = this.listsForRoomId[room.roomId];
+            if (lists) {
+                lists.forEach(list=>{
+                    constantTimeDispatcher.dispatch(
+                        "RoomSubList.refreshHeader", list, { room: room }
+                    );
+                });
+            }
+
+            // we have to explicitly hit the roomtile which just changed
+            constantTimeDispatcher.dispatch(
+                "RoomTile.refresh", room.roomId, {}
+            );
         }
     },
 
     onRoomName: function(room) {
-        this._delayedRefreshRoomList();
+        constantTimeDispatcher.dispatch(
+            "RoomTile.refresh", room.roomId, {}
+        );
     },
 
     onRoomTags: function(event, room) {
+        // XXX: this happens rarely; ideally we should only update the correct
+        // sublists when it does (e.g. via a constantTimeDispatch to the right sublist)
         this._delayedRefreshRoomList();
     },
 
-    onRoomStateEvents: function(ev, state) {
-        this._delayedRefreshRoomList();
+    onRoomStateMember: function(ev, state, member) {
+        if (ev.getStateKey() === MatrixClientPeg.get().credentials.userId &&
+            ev.getPrevContent() && ev.getPrevContent().membership === "invite")
+        {
+            this._delayedRefreshRoomList();
+        }
+        else {
+            constantTimeDispatcher.dispatch(
+                "RoomTile.refresh", member.roomId, {}
+            );
+        }
     },
 
     onRoomMemberName: function(ev, member) {
-        this._delayedRefreshRoomList();
+        constantTimeDispatcher.dispatch(
+            "RoomTile.refresh", member.roomId, {}
+        );
     },
 
     onAccountData: function(ev) {
         if (ev.getType() == 'm.direct') {
+            // XXX: this happens rarely; ideally we should only update the correct
+            // sublists when it does (e.g. via a constantTimeDispatch to the right sublist)
+            this._delayedRefreshRoomList();
+        }
+        else if (ev.getType() == 'm.push_rules') {
             this._delayedRefreshRoomList();
         }
     },
 
     _delayedRefreshRoomList: new rate_limited_func(function() {
-        this.refreshRoomList();
+        // if the mouse has been moving over the RoomList in the last 500ms
+        // then delay the refresh further to avoid bouncing around under the
+        // cursor
+        if (Date.now() - this._lastMouseOverTs > 500 || this._delayedRefreshRoomListLoopCount > 60) {
+            this.refreshRoomList();
+            this._delayedRefreshRoomListLoopCount = 0;
+        }
+        else {
+            this._delayedRefreshRoomListLoopCount++;
+            this._delayedRefreshRoomList();
+        }
     }, 500),
 
     refreshRoomList: function() {
@@ -201,14 +314,13 @@ module.exports = React.createClass({
         //     (!this._lastRefreshRoomListTs ? "-" : (Date.now() - this._lastRefreshRoomListTs))
         // );
 
-        // TODO: rather than bluntly regenerating and re-sorting everything
-        // every time we see any kind of room change from the JS SDK
-        // we could do incremental updates on our copy of the state
-        // based on the room which has actually changed.  This would stop
-        // us re-rendering all the sublists every time anything changes anywhere
-        // in the state of the client.
+        // TODO: ideally we'd calculate this once at start, and then maintain
+        // any changes to it incrementally, updating the appropriate sublists
+        // as needed.
+        // Alternatively we'd do something magical with Immutable.js or similar.
         this.setState(this.getRoomLists());
-        this._lastRefreshRoomListTs = Date.now();
+
+        // this._lastRefreshRoomListTs = Date.now();
     },
 
     getRoomLists: function() {
@@ -222,6 +334,9 @@ module.exports = React.createClass({
         s.lists["m.lowpriority"] = [];
         s.lists["im.vector.fake.archived"] = [];
 
+        this.listsForRoomId = {};
+        var otherTagNames = {};
+
         const dmRoomMap = new DMRoomMap(MatrixClientPeg.get());
 
         MatrixClientPeg.get().getRooms().forEach(function(room) {
@@ -233,7 +348,12 @@ module.exports = React.createClass({
             //             ", target = " + me.events.member.getStateKey() +
             //             ", prevMembership = " + me.events.member.getPrevContent().membership);
 
+            if (!self.listsForRoomId[room.roomId]) {
+                self.listsForRoomId[room.roomId] = [];
+            }
+
             if (me.membership == "invite") {
+                self.listsForRoomId[room.roomId].push("im.vector.fake.invite");
                 s.lists["im.vector.fake.invite"].push(room);
             }
             else if (HIDE_CONFERENCE_CHANS && Rooms.isConfCallRoom(room, me, self.props.ConferenceHandler)) {
@@ -244,23 +364,27 @@ module.exports = React.createClass({
             {
                 // Used to split rooms via tags
                 var tagNames = Object.keys(room.tags);
-
                 if (tagNames.length) {
                     for (var i = 0; i < tagNames.length; i++) {
                         var tagName = tagNames[i];
                         s.lists[tagName] = s.lists[tagName] || [];
-                        s.lists[tagNames[i]].push(room);
+                        s.lists[tagName].push(room);
+                        self.listsForRoomId[room.roomId].push(tagName);
+                        otherTagNames[tagName] = 1;
                     }
                 }
                 else if (dmRoomMap.getUserIdForRoomId(room.roomId)) {
                     // "Direct Message" rooms (that we're still in and that aren't otherwise tagged)
+                    self.listsForRoomId[room.roomId].push("im.vector.fake.direct");
                     s.lists["im.vector.fake.direct"].push(room);
                 }
                 else {
+                    self.listsForRoomId[room.roomId].push("im.vector.fake.recent");
                     s.lists["im.vector.fake.recent"].push(room);
                 }
             }
             else if (me.membership === "leave") {
+                self.listsForRoomId[room.roomId].push("im.vector.fake.archived");
                 s.lists["im.vector.fake.archived"].push(room);
             }
             else {
@@ -281,8 +405,10 @@ module.exports = React.createClass({
                 const me = room.getMember(MatrixClientPeg.get().credentials.userId);
 
                 if (me && Rooms.looksLikeDirectMessageRoom(room, me)) {
+                    self.listsForRoomId[room.roomId].push("im.vector.fake.direct");
                     s.lists["im.vector.fake.direct"].push(room);
                 } else {
+                    self.listsForRoomId[room.roomId].push("im.vector.fake.recent");
                     s.lists["im.vector.fake.recent"].push(room);
                 }
             }
@@ -299,6 +425,8 @@ module.exports = React.createClass({
                 newMDirectEvent[otherPerson.userId] = roomList;
             }
 
+            console.warn("Resetting room DM state to be " + JSON.stringify(newMDirectEvent));
+
             // if this fails, fine, we'll just do the same thing next time we get the room lists
             MatrixClientPeg.get().setAccountData('m.direct', newMDirectEvent).done();
         }
@@ -307,6 +435,21 @@ module.exports = React.createClass({
 
         // we actually apply the sorting to this when receiving the prop in RoomSubLists.
 
+        // we'll need this when we get to iterating through lists programatically - e.g. ctrl-shift-up/down
+/*
+        this.listOrder = [
+            "im.vector.fake.invite",
+            "m.favourite",
+            "im.vector.fake.recent",
+            "im.vector.fake.direct",
+            Object.keys(otherTagNames).filter(tagName=>{
+                return (!tagName.match(/^m\.(favourite|lowpriority)$/));
+            }).sort(),
+            "m.lowpriority",
+            "im.vector.fake.archived"
+        ];
+*/
+
         return s;
     },
 
@@ -314,11 +457,10 @@ module.exports = React.createClass({
         var panel = ReactDOM.findDOMNode(this);
         if (!panel) return null;
 
-        if (panel.classList.contains('gm-prevented')) {
-            return panel;
-        } else {
-            return panel.children[2]; // XXX: Fragile!
-        }
+        // empirically, if we have gm-prevented for some reason, the scroll node
+        // is still the 3rd child (i.e. the view child).  This looks to be due
+        // to vdh's improved resize updater logic...?
+        return panel.children[2]; // XXX: Fragile!
     },
 
     _whenScrolling: function(e) {
@@ -341,7 +483,7 @@ module.exports = React.createClass({
             // Use the offset of the top of the scroll area from the window
             // as this is used to calculate the CSS fixed top position for the stickies
             var scrollAreaOffset = scrollArea.getBoundingClientRect().top + window.pageYOffset;
-            // Use the offset of the top of the componet from the window
+            // Use the offset of the top of the component from the window
             // as this is used to calculate the CSS fixed top position for the stickies
             var scrollAreaHeight = ReactDOM.findDOMNode(this).getBoundingClientRect().height;
 
@@ -364,7 +506,7 @@ module.exports = React.createClass({
         // Use the offset of the top of the scroll area from the window
         // as this is used to calculate the CSS fixed top position for the stickies
         var scrollAreaOffset = scrollArea.getBoundingClientRect().top + window.pageYOffset;
-        // Use the offset of the top of the componet from the window
+        // Use the offset of the top of the component from the window
         // as this is used to calculate the CSS fixed top position for the stickies
         var scrollAreaHeight = ReactDOM.findDOMNode(this).getBoundingClientRect().height;
 
@@ -464,15 +606,16 @@ module.exports = React.createClass({
 
         return (
             <GeminiScrollbar className="mx_RoomList_scrollbar"
-                 autoshow={true} onScroll={ self._whenScrolling } ref="gemscroll">
-            <div className="mx_RoomList">
+                 autoshow={true} onScroll={ self._whenScrolling } onResize={ self._whenScrolling } ref="gemscroll">
+            <div className="mx_RoomList" onMouseOver={ this._onMouseOver }>
                 <RoomSubList list={ self.state.lists['im.vector.fake.invite'] }
                              label={ counterpart.translate('Invites') }
+                             tagName="im.vector.fake.invite"
                              editable={ false }
                              order="recent"
-                             selectedRoom={ self.props.selectedRoom }
                              incomingCall={ self.state.incomingCall }
                              collapsed={ self.props.collapsed }
+                             selectedRoom={ self.props.selectedRoom }
                              searchFilter={ self.props.searchFilter }
                              onHeaderClick={ self.onSubListHeaderClick }
                              onShowMoreRooms={ self.onShowMoreRooms } />
@@ -483,9 +626,9 @@ module.exports = React.createClass({
                              verb="favourite"
                              editable={ true }
                              order="manual"
-                             selectedRoom={ self.props.selectedRoom }
                              incomingCall={ self.state.incomingCall }
                              collapsed={ self.props.collapsed }
+                             selectedRoom={ self.props.selectedRoom }
                              searchFilter={ self.props.searchFilter }
                              onHeaderClick={ self.onSubListHeaderClick }
                              onShowMoreRooms={ self.onShowMoreRooms } />
@@ -496,9 +639,9 @@ module.exports = React.createClass({
                              verb="tag direct chat"
                              editable={ true }
                              order="recent"
-                             selectedRoom={ self.props.selectedRoom }
                              incomingCall={ self.state.incomingCall }
                              collapsed={ self.props.collapsed }
+                             selectedRoom={ self.props.selectedRoom }
                              alwaysShowHeader={ true }
                              searchFilter={ self.props.searchFilter }
                              onHeaderClick={ self.onSubListHeaderClick }
@@ -506,17 +649,18 @@ module.exports = React.createClass({
 
                 <RoomSubList list={ self.state.lists['im.vector.fake.recent'] }
                              label={ counterpart.translate('Rooms') }
+                             tagName="im.vector.fake.recent"
                              editable={ true }
                              verb="restore"
                              order="recent"
-                             selectedRoom={ self.props.selectedRoom }
                              incomingCall={ self.state.incomingCall }
                              collapsed={ self.props.collapsed }
+                             selectedRoom={ self.props.selectedRoom }
                              searchFilter={ self.props.searchFilter }
                              onHeaderClick={ self.onSubListHeaderClick }
                              onShowMoreRooms={ self.onShowMoreRooms } />
 
-                { Object.keys(self.state.lists).map(function(tagName) {
+                { Object.keys(self.state.lists).sort().map(function(tagName) {
                     if (!tagName.match(/^(m\.(favourite|lowpriority)|im\.vector\.fake\.(invite|recent|direct|archived))$/)) {
                         return <RoomSubList list={ self.state.lists[tagName] }
                              key={ tagName }
@@ -525,9 +669,9 @@ module.exports = React.createClass({
                              verb={ "tag as " + tagName }
                              editable={ true }
                              order="manual"
-                             selectedRoom={ self.props.selectedRoom }
                              incomingCall={ self.state.incomingCall }
                              collapsed={ self.props.collapsed }
+                             selectedRoom={ self.props.selectedRoom }
                              searchFilter={ self.props.searchFilter }
                              onHeaderClick={ self.onSubListHeaderClick }
                              onShowMoreRooms={ self.onShowMoreRooms } />;
@@ -541,19 +685,20 @@ module.exports = React.createClass({
                              verb="demote"
                              editable={ true }
                              order="recent"
-                             selectedRoom={ self.props.selectedRoom }
                              incomingCall={ self.state.incomingCall }
                              collapsed={ self.props.collapsed }
+                             selectedRoom={ self.props.selectedRoom }
                              searchFilter={ self.props.searchFilter }
                              onHeaderClick={ self.onSubListHeaderClick }
                              onShowMoreRooms={ self.onShowMoreRooms } />
 
                 <RoomSubList list={ self.state.lists['im.vector.fake.archived'] }
                              label={ counterpart.translate('Historical') }
+                             tagName="im.vector.fake.archived"
                              editable={ false }
                              order="recent"
-                             selectedRoom={ self.props.selectedRoom }
                              collapsed={ self.props.collapsed }
+                             selectedRoom={ self.props.selectedRoom }
                              alwaysShowHeader={ true }
                              startAsHidden={ true }
                              showSpinner={ self.state.isLoadingLeftRooms }

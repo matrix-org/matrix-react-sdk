@@ -26,6 +26,7 @@ var q = require("q");
 var classNames = require("classnames");
 var Matrix = require("matrix-js-sdk");
 
+var UserSettingsStore = require('../../UserSettingsStore');
 var MatrixClientPeg = require("../../MatrixClientPeg");
 var ContentMessages = require("../../ContentMessages");
 var Modal = require("../../Modal");
@@ -946,7 +947,7 @@ module.exports = React.createClass({
             console.error("Failed to upload file " + file + " " + error);
             Modal.createDialog(ErrorDialog, {
                 title: "Failed to upload file",
-                description: "Server may be unavailable, overloaded, or the file too big",
+                description: ((error && error.message) ? error.message : "Server may be unavailable, overloaded, or the file too big"),
             });
         });
     },
@@ -1033,7 +1034,7 @@ module.exports = React.createClass({
             console.error("Search failed: " + error);
             Modal.createDialog(ErrorDialog, {
                 title: "Search failed",
-                description: "Server may be unavailable, overloaded, or search timed out :("
+                description: ((error && error.message) ? error.message : "Server may be unavailable, overloaded, or search timed out :("),
             });
         }).finally(function() {
             self.setState({
@@ -1181,6 +1182,7 @@ module.exports = React.createClass({
         console.log("updateTint from onCancelClick");
         this.updateTint();
         this.setState({editingRoomSettings: false});
+        dis.dispatch({action: 'focus_composer'});
     },
 
     onLeaveClick: function() {
@@ -1254,6 +1256,7 @@ module.exports = React.createClass({
     // jump down to the bottom of this room, where new events are arriving
     jumpToLiveTimeline: function() {
         this.refs.messagePanel.jumpToLiveTimeline();
+        dis.dispatch({action: 'focus_composer'});
     },
 
     // jump up to wherever our read marker is
@@ -1725,7 +1728,7 @@ module.exports = React.createClass({
         var messagePanel = (
             <TimelinePanel ref={this._gatherTimelinePanelRef}
                 timelineSet={this.state.room.getUnfilteredTimelineSet()}
-                manageReadReceipts={true}
+                manageReadReceipts={!UserSettingsStore.getSyncedSetting('hideReadReceipts', false)}
                 manageReadMarkers={true}
                 hidden={hideMessagePanel}
                 highlightedEventId={this.props.highlightedEventId}
