@@ -35,10 +35,14 @@ var counterpart = require('counterpart');
 import AccessibleButton from '../views/elements/AccessibleButton';
 
 // if this looks like a release, use the 'version' from package.json; else use
-// the git sha.
-const REACT_SDK_VERSION =
-      'dist' in package_json ? package_json.version : package_json.gitHead || "<local>";
+// the git sha. Prepend version with v, to look like riot-web version
+const REACT_SDK_VERSION = 'dist' in package_json ? `v${package_json.version}` : package_json.gitHead || '<local>';
 
+// Simple method to help prettify GH Release Tags and Commit Hashes.
+const GHVersionUrl = function(repo, token) {
+    const uriTail = (token.startsWith('v') && token.includes('.')) ? `releases/tag/${token}` : `commit/${token}`;
+    return `https://github.com/${repo}/${uriTail}`;
+}
 
 // Enumerate some simple 'flip a bit' UI settings (if any).
 // 'id' gives the key name in the im.vector.web.settings account data event
@@ -47,6 +51,14 @@ const SETTINGS_LABELS = [
     {
         id: 'autoplayGifsAndVideos',
         label: 'Autoplay GIFs and videos',
+    },
+    {
+        id: 'hideReadReceipts',
+        label: 'Hide read receipts'
+    },
+    {
+        id: 'dontSendTypingNotifications',
+        label: "Don't send typing notifications",
     },
 /*
     {
@@ -215,7 +227,7 @@ module.exports = React.createClass({
             console.error("Failed to load user settings: " + error);
             Modal.createDialog(ErrorDialog, {
                 title: counterpart.translate("Can't load user settings"),
-                description: counterpart.translate("Server may be unavailable or overloaded"),
+                description: ((error && error.message) ? error.message : counterpart.translate("Server may be unavailable or overloaded")),
             });
         });
     },
@@ -256,8 +268,8 @@ module.exports = React.createClass({
             console.error("Failed to set avatar: " + err);
             var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createDialog(ErrorDialog, {
-                title: counterpart.translate("Error"),
-                description: counterpart.translate("Failed to set avatar.")
+                title: counterpart.translate("Failed to set avatar"),
+                description: ((err && err.message) ? err.message : counterpart.translate("Operation failed")),
             });
         });
     },
@@ -272,7 +284,7 @@ module.exports = React.createClass({
                 </div>,
             button: counterpart.translate("Sign out"),
             extraButtons: [
-                <button className="mx_Dialog_primary"
+                <button key="export" className="mx_Dialog_primary"
                         onClick={this._onExportE2eKeysClicked}>
                    { counterpart.translate("Export E2E room keys") }
                 </button>
@@ -353,8 +365,8 @@ module.exports = React.createClass({
             this.setState({email_add_pending: false});
             console.error("Unable to add email address " + email_address + " " + err);
             Modal.createDialog(ErrorDialog, {
-                title: counterpart.translate("Error"),
-                description: counterpart.translate("Unable to add email address")
+                title: counterpart.translate("Unable to add email address"),
+                description: ((err && err.message) ? err.message : counterpart.translate("Operation failed")),
             });
         });
         ReactDOM.findDOMNode(this.refs.add_email_input).blur();
@@ -378,8 +390,8 @@ module.exports = React.createClass({
                         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                         console.error("Unable to remove contact information: " + err);
                         Modal.createDialog(ErrorDialog, {
-                            title: counterpart.translate("Error"),
-                            description: counterpart.translate("Unable to remove contact information"),
+                            title: counterpart.translate("Unable to remove contact information"),
+                            description: ((err && err.message) ? err.message : counterpart.translate("Operation failed")),
                         });
                     }).done();
                 }
@@ -419,8 +431,8 @@ module.exports = React.createClass({
                 var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 console.error("Unable to verify email address: " + err);
                 Modal.createDialog(ErrorDialog, {
-                    title: counterpart.translate("Error"),
-                    description: counterpart.translate("Unable to verify email address"),
+                    title: counterpart.translate("Unable to verify email address"),
+                    description: ((err && err.message) ? err.message : counterpart.translate("Operation failed")),
                 });
             }
         });
@@ -762,6 +774,20 @@ module.exports = React.createClass({
         </div>;
     },
 
+    _showSpoiler: function(event) {
+        const target = event.target;
+        const hidden = target.getAttribute('data-spoiler');
+
+        target.innerHTML = hidden;
+
+        const range = document.createRange();
+        range.selectNodeContents(target);
+
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+    },
+
     nameForMedium: function(medium) {
         if (medium == 'msisdn') return 'Phone';
         return medium[0].toUpperCase() + medium.slice(1);
@@ -879,12 +905,12 @@ module.exports = React.createClass({
             </div>);
         }
 
-        var olmVersion = MatrixClientPeg.get().olmVersion;
+        const olmVersion = MatrixClientPeg.get().olmVersion;
         // If the olmVersion is not defined then either crypto is disabled, or
         // we are using a version old version of olm. We assume the former.
-        var olmVersionString = "<not-enabled>";
+        let olmVersionString = "<not-enabled>";
         if (olmVersion !== undefined) {
-            olmVersionString = olmVersion[0] + "." + olmVersion[1] + "." + olmVersion[2];
+            olmVersionString = `v${olmVersion[0]}.${olmVersion[1]}.${olmVersion[2]}`;
         }
 
         return (
@@ -958,14 +984,23 @@ module.exports = React.createClass({
                         { counterpart.translate("Logged in as") } {this._me}
                     </div>
                     <div className="mx_UserSettings_advanced">
+                        Access Token: <span className="mx_UserSettings_advanced_spoiler" onClick={this._showSpoiler} data-spoiler={ MatrixClientPeg.get().getAccessToken() }>&lt;{ counterpart.translate("click to reveal") }&gt;</span>
+                    </div>
+                    <div className="mx_UserSettings_advanced">
                         { counterpart.translate("Homeserver is") } { MatrixClientPeg.get().getHomeserverUrl() }
                     </div>
                     <div className="mx_UserSettings_advanced">
                         { counterpart.translate("Identity Server is") } { MatrixClientPeg.get().getIdentityServerUrl() }
                     </div>
                     <div className="mx_UserSettings_advanced">
-                        matrix-react-sdk version: {REACT_SDK_VERSION}<br/>
-                        riot-web version: {this.state.vectorVersion !== null ? this.state.vectorVersion : 'unknown'}<br/>
+                        matrix-react-sdk version: {(REACT_SDK_VERSION !== '<local>')
+                            ? <a href={ GHVersionUrl('matrix-org/matrix-react-sdk', REACT_SDK_VERSION) }>{REACT_SDK_VERSION}</a>
+                            : REACT_SDK_VERSION
+                        }<br/>
+                        riot-web version: {(this.state.vectorVersion !== null)
+                            ? <a href={ GHVersionUrl('vector-im/riot-web', this.state.vectorVersion.split('-')[0]) }>{this.state.vectorVersion}</a>
+                            : 'unknown'
+                        }<br/>
                         { counterpart.translate("olm version: ") } {olmVersionString}<br/>
                     </div>
                 </div>
