@@ -50,7 +50,14 @@ module.exports = React.createClass({
         var state = {
             domainToAliases: {}, // { domain.com => [#alias1:domain.com, #alias2:domain.com] }
             remoteDomains: [], // [ domain.com, foobar.com ]
-            canonicalAlias: null // #canonical:domain.com
+            canonicalAlias: null, // #canonical:domain.com
+            displaywarning: {
+                warningonadd: false,
+                warningonchange: {
+                    alias: null,
+                    warning: false
+                }
+            }   
         };
         var localDomain = MatrixClientPeg.get().getDomain();
 
@@ -139,17 +146,22 @@ module.exports = React.createClass({
         if (!alias || alias.length === 0) return; // ignore attempts to create blank aliases
 
         if (this.isAliasValid(alias)) {
-            // add this alias to the domain to aliases dict
-            var domain = alias.replace(/^.*?:/, '');
-            // XXX: do we need to deep copy aliases before editing it?
-            this.state.domainToAliases[domain] = this.state.domainToAliases[domain] || [];
-            this.state.domainToAliases[domain].push(alias);
-            this.setState({
-                domainToAliases: this.state.domainToAliases
-            });
-
-            // reset the add field
-            this.refs.add_alias.setValue(''); // FIXME
+            var tempPromise = MatrixClientPeg.get().getRoomIdForAlias(alias);
+            tempPromise.then((res)=>{
+                var displaywarning = this.state.displaywarning;
+                displaywarning.warningonadd = true;
+                this.setState({
+                    displaywarning: displaywarning,
+                })
+            }).catch(()=>{
+                this.addAlias(alias);
+                var displaywarning = this.state.displaywarning;
+                displaywarning.warningonadd = false;
+                this.setState({
+                   displaywarning: displaywarning,    
+                })
+            }).done();
+           
         }
         else {
             var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
@@ -160,12 +172,42 @@ module.exports = React.createClass({
         }
     },
 
+    addAlias: function(alias) {
+         // add this alias to the domain to aliases dict
+        var domain = alias.replace(/^.*?:/, '');
+        // XXX: do we need to deep copy aliases before editing it?
+        this.state.domainToAliases[domain] = this.state.domainToAliases[domain] || [];
+        this.state.domainToAliases[domain].push(alias);
+        this.setState({
+            domainToAliases: this.state.domainToAliases
+        });
+
+        // reset the add field
+        this.refs.add_alias.setValue(''); // FIXME
+    },
+
     onAliasChanged: function(domain, index, alias) {
         if (alias === "") return; // hit the delete button to delete please
         var oldAlias;
         if (this.isAliasValid(alias)) {
-            oldAlias = this.state.domainToAliases[domain][index];
-            this.state.domainToAliases[domain][index] = alias;
+            var tempPromise = MatrixClientPeg.get().getRoomIdForAlias(alias);
+            tempPromise.then((res)=>{
+                var displaywarning = this.state.displaywarning;
+                displaywarning.warningonchange.alias = index;
+                displaywarning.warningonchange.warning = true;
+                this.setState({
+                    displaywarning: displaywarning,
+                })
+            }).catch(()=>{
+                oldAlias = this.state.domainToAliases[domain][index];
+                this.state.domainToAliases[domain][index] = alias;                
+                var displaywarning = this.state.displaywarning;
+                displaywarning.warningonchange.alias = null;
+                displaywarning.warningonchange.warning = false;
+                this.setState({
+                   displaywarning: displaywarning,    
+                })
+            }).done();
         }
         else {
             var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
@@ -183,8 +225,12 @@ module.exports = React.createClass({
         // would be to arbitrarily deepcopy to a temp variable and then setState
         // that, but why bother when we can cut this corner.
         var alias = this.state.domainToAliases[domain].splice(index, 1);
+        var displaywarning = this.state.displaywarning;
+        displaywarning.warningonchange.alias = null;
+        displaywarning.warningonchange.warning = false;
         this.setState({
-            domainToAliases: this.state.domainToAliases
+            domainToAliases: this.state.domainToAliases,
+            displaywarning: displaywarning
         });
     },
 
@@ -192,6 +238,24 @@ module.exports = React.createClass({
         this.setState({
             canonicalAlias: event.target.value
         });
+    },
+
+    warningOnAdd: function(){
+        if(this.state.displaywarning.warningonadd){
+            return <label className="mx_RoomSettings_warning"><img src="img/warning2.png" width="14" height="12" alt="./"/>  added alias name already exist</label>;
+        }
+
+        else
+            return null;
+    },
+
+    warningOnChange: function(){
+        if(this.state.displaywarning.warningonchange.warning) {
+            return <label className="mx_RoomSettings_warning"><img src="img/warning2.png" width="14" height="12" alt="./"/>  changed alias name already exist</label>;
+        }
+
+        else 
+            return null;
     },
 
     render: function() {
@@ -223,6 +287,10 @@ module.exports = React.createClass({
                 <b>{ this.state.canonicalAlias || "not set" }</b>
             );
         }
+
+
+        var warningonadd = this.warningOnAdd();
+        var warningonchange = this.warningOnChange(); 
 
         var remote_aliases_section;
         if (this.state.remoteDomains.length) {
@@ -266,10 +334,23 @@ module.exports = React.createClass({
                     { (this.state.domainToAliases[localDomain] || []).map((alias, i) => {
                         var deleteButton;
                         if (this.props.canSetAliases) {
-                            deleteButton = (
-                                <img src="img/cancel-small.svg" width="14" height="14"
-                                    alt="Delete" onClick={ self.onAliasDeleted.bind(self, localDomain, i) } />
-                            );
+
+                            if (i == this.state.displaywarning.warningonchange.alias) {
+                                deleteButton = (
+                                    <div>
+                                        <img src="img/cancel-small.svg" width="14" height="14"
+                                            alt="Delete" onClick={ self.onAliasDeleted.bind(self, localDomain, i) } />
+                                        {warningonchange}
+                                    </div>
+                                );
+                            }
+
+                            else {
+                                deleteButton = (
+                                    <img src="img/cancel-small.svg" width="14" height="14"
+                                        alt="Delete" onClick={ self.onAliasDeleted.bind(self, localDomain, i) } />
+                                )
+                            }
                         }
                         return (
                             <div className="mx_RoomSettings_aliasesTableRow" key={ i }>
@@ -280,7 +361,7 @@ module.exports = React.createClass({
                                     blurToCancel={ false }
                                     onValueChanged={ self.onAliasChanged.bind(self, localDomain, i) }
                                     editable={ self.props.canSetAliases }
-                                    initialValue={ alias } />
+                                    initialValue={ alias } />  
                                 <div className="mx_RoomSettings_deleteAlias mx_filterFlipColor">
                                      { deleteButton }
                                 </div>
@@ -296,17 +377,17 @@ module.exports = React.createClass({
                                 placeholderClassName="mx_RoomSettings_aliasPlaceholder"
                                 placeholder={ "New address (e.g. #foo:" + localDomain + ")" }
                                 blurToCancel={ false }
-                                onValueChanged={ self.onAliasAdded } />
+                                onValueChanged={ self.onAliasAdded } />  
                             <div className="mx_RoomSettings_addAlias mx_filterFlipColor">
                                  <img src="img/plus.svg" width="14" height="14" alt="Add"
                                       onClick={ self.onAliasAdded.bind(self, undefined) }/>
                             </div>
+                            {warningonadd}
                         </div> : ""
                     }
                 </div>
 
                 { remote_aliases_section }
-
             </div>
         );
     }
