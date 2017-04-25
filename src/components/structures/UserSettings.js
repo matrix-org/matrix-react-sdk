@@ -280,7 +280,7 @@ module.exports = React.createClass({
             title: counterpart.translate("Sign out?"),
             description:
                 <div>
-             { counterpart.translate("For security, logging out will delete any end-to-end encryption keys from this browser. If you want to be able to decrypt your conversation history from future Riot sessions, please export your room keys for safe-keeping.") }
+             { counterpart.translate("For security, logging out will delete any end-to-end encryption keys from this browser. If you want to be able to decrypt your conversation history from future Riot sessions, please export your room keys for safe-keeping") }.
                 </div>,
             button: counterpart.translate("Sign out"),
             extraButtons: [

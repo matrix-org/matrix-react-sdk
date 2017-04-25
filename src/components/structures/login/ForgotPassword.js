@@ -83,7 +83,7 @@ module.exports = React.createClass({
             this.showErrorDialog(counterpart.translate('The email address linked to your account must be entered.'));
         }
         else if (!this.state.password || !this.state.password2) {
-            this.showErrorDialog(counterpart.translate('A new password must be entered.'));
+            this.showErrorDialog(counterpart.translate('A new password must be entered') + " ");
         }
         else if (this.state.password !== this.state.password2) {
             this.showErrorDialog(counterpart.translate('New passwords must match each other.'));
