@@ -28,6 +28,8 @@ import ScalarMessaging from '../../../ScalarMessaging';
 import UserSettingsStore from '../../../UserSettingsStore';
 import AccessibleButton from '../elements/AccessibleButton';
 
+var counterpart = require('counterpart');
+
 
 // parse a string as an integer; if the input is undefined, or cannot be parsed
 // as an integer, return a default.
@@ -694,14 +696,14 @@ module.exports = React.createClass({
             if (myMember.membership === "join") {
                 leaveButton = (
                     <AccessibleButton className="mx_RoomSettings_leaveButton" onClick={ this.onLeaveClick }>
-                        Leave room
+                        { counterpart.translate("Leave room") }
                     </AccessibleButton>
                 );
             }
             else if (myMember.membership === "leave") {
                 leaveButton = (
                     <AccessibleButton className="mx_RoomSettings_leaveButton" onClick={ this.onForgetClick }>
-                        Forget room
+                        { counterpart.translate("Forget room") }
                     </AccessibleButton>
                 );
             }
@@ -711,8 +713,8 @@ module.exports = React.createClass({
         // TODO: support editing custom user_levels
 
         var tags = [
-            { name: "m.favourite", label: "Favourite", ref: "tag_favourite" },
-            { name: "m.lowpriority", label: "Low priority", ref: "tag_lowpriority" },
+            { name: "m.favourite", label: { counterpart.translate("Favourite") }, ref: "tag_favourite" },
+            { name: "m.lowpriority", label: { counterpart.translate("Low priority") }, ref: "tag_lowpriority" },
         ];
 
         Object.keys(this.state.tags).sort().forEach(function(tagName) {
@@ -753,7 +755,7 @@ module.exports = React.createClass({
         if (this.state.join_rule === "public" && aliasCount == 0) {
             addressWarning =
                 <div className="mx_RoomSettings_warning">
-                    To link to a room it must have <a href="#addresses">an address</a>.
+                		{ counterpart.translate("To link to a room it must have") } <a href="#addresses">counterpart.translate("an address") }</a>.
                 </div>;
         }
 

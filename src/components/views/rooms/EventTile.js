@@ -21,6 +21,7 @@ var classNames = require("classnames");
 var Modal = require('../../../Modal');
 
 var sdk = require('../../../index');
+var counterpart = require('counterpart');
 var TextForEvent = require('../../../TextForEvent');
 import WithMatrixClient from '../../../wrappers/WithMatrixClient';
 
@@ -475,9 +476,9 @@ module.exports = WithMatrixClient(React.createClass({
         if (needsSenderProfile) {
             let aux = null;
             if (!this.props.tileShape) {
-                if (msgtype === 'm.image') aux = "sent an image";
-                else if (msgtype === 'm.video') aux = "sent a video";
-                else if (msgtype === 'm.file') aux = "uploaded a file";
+                if (msgtype === 'm.image') aux = counterpart.translate ("sent an image");
+                else if (msgtype === 'm.video') aux = counterpart.translate ("sent a video");
+                else if (msgtype === 'm.file') aux = counterpart.translate ("uploaded a file");
                 sender = <SenderProfile onClick={ this.onSenderProfileClick } mxEvent={this.props.mxEvent} aux={aux} />;
             }
             else {
