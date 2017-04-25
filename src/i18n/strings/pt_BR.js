@@ -96,7 +96,7 @@ module.exports={
     "💬 Rooms" : " 💬  Salas ",
     "Rooms" : "Salas",
     "Searches DuckDuckGo for results" : "Buscar por resultados no buscador DuckDuckGo",
-    "Send a message (unencrypted)…" : "Enviar uma mensagem (sem criptografia)",
+    "Send a message (unencrypted)…" : "Enviar uma mensagem",
     "Send an encrypted message…" : "Enviar uma mensagem criptografada",
     "Sender device information" : "Informação do dispositivo emissor",
     "Send Invites" : "Enviar convites",
