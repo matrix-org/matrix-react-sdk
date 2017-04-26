@@ -139,13 +139,18 @@ module.exports = React.createClass({
 
     // returns one of:
     //
-    //  null: there is no read marker
+    //  null: there is no read marker (possibly because the event is not paginated)
     //  -1: read marker is above the window
-    //   0: read marker is within the window
+    //   0: read marker is within the window or read marker event ID not set
     //  +1: read marker is below the window
     getReadMarkerPosition: function() {
         var readMarker = this.refs.readMarkerNode;
         var messageWrapper = this.refs.scrollPanel;
+
+        // Pretend that the RM is on screen, despite there not being one
+        if (!this.props.readMarkerEventId) {
+            return 0;
+        }
 
         if (!readMarker || !messageWrapper) {
             return null;
