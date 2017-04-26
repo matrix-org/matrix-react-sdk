@@ -385,7 +385,7 @@ module.exports = React.createClass({
 
             var isVisibleReadMarker = false;
 
-            if (eventId == this.props.readMarkerEventId || readMarkerInMels) {
+            if (eventId == this.props.readMarkerEventId) {
                 var visible = this.props.readMarkerVisible;
 
                 // if the read marker comes at the end of the timeline (except
