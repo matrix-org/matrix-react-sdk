@@ -626,7 +626,7 @@ module.exports = React.createClass({
                     greyed = true;
                     break;
                 case 'im.vector.fake.direct':
-                    return <div className="mx_RoomList_emptySubListTip">
+                    return <div className="mx_RoomList_emptySubListTip" onMouseEnter={this._onDMTipMouseEnter}>
                         <div className="mx_RoomList_butonPreview">
                             <TintableSvg src="img/icons-people.svg" width="25" height="25" />
                         </div>
@@ -634,15 +634,19 @@ module.exports = React.createClass({
                     </div>;
                 case 'im.vector.fake.recent':
                     return <div className="mx_RoomList_emptySubListTip">
-                        <div className="mx_RoomList_butonPreview">
-                            <TintableSvg src="img/icons-directory.svg" width="25" height="25" />
+                        <div onMouseEnter={this._onRoomDirectoryTipMouseEnter}>
+                            <div className="mx_RoomList_butonPreview">
+                                <TintableSvg src="img/icons-directory.svg" width="25" height="25" />
+                            </div>
+                            Use the button below to browse the room directory
+                            </div>
+                        <br />
+                        <div onMouseEnter={this._onCreateRoomTipMouseEnter}>
+                            <div className="mx_RoomList_butonPreview">
+                                <TintableSvg src="img/icons-create-room.svg" width="25" height="25" />
+                            </div>
+                            or this button to start a new one!
                         </div>
-                        Use the button below to browse the room directory
-                        <br /><br />
-                        <div className="mx_RoomList_butonPreview">
-                            <TintableSvg src="img/icons-create-room.svg" width="25" height="25" />
-                        </div>
-                        or this button to start a new one!
                     </div>;
             }
         }
@@ -657,6 +661,18 @@ module.exports = React.createClass({
             label = labelText;
         }
         return <RoomDropTarget label={label} />;
+    },
+
+    _onDMTipMouseEnter: function() {
+        dis.dispatch({action: 'callout_start_chat'});
+    },
+
+    _onRoomDirectoryTipMouseEnter: function() {
+        dis.dispatch({action: 'callout_room_directory'});
+    },
+
+    _onCreateRoomTipMouseEnter: function() {
+        dis.dispatch({action: 'callout_create_room'});
     },
 
     render: function() {
