@@ -213,14 +213,14 @@ module.exports = React.createClass({
                  !this.state.enteredHomeserverUrl.startsWith("http")))
             {
                 errorText = <span>
-                    { counterpart.translate('Can\'t connect to homeserver via HTTP when an HTTPS URL is in your browser bar.')}
+                    { counterpart.translate("Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar")}.
                     { counterpart.translate('Either use HTTPS or ')}<a href='https://www.google.com/search?&q=enable%20unsafe%20scripts'>{ counterpart.translate('enable unsafe scripts')}</a>
                 </span>;
             }
             else {
                 errorText = <span>
-                    { counterpart.translate('Can\'t connect to homeserver - please check your connectivity and ensure your ')}
-                    <a href={ this.state.enteredHomeserverUrl }>{ counterpart.translate('homeserver\'s SSL certificate')}</a>{ counterpart.translate(' is trusted.')}
+                    { counterpart.translate("Can't connect to homeserver - please check your connectivity and ensure your")} 
+                    <a href={ this.state.enteredHomeserverUrl }>{ counterpart.translate("homeserver's SSL certificate")}</a> { counterpart.translate('is trusted') }.
                 </span>;
             }
         }
@@ -313,7 +313,7 @@ module.exports = React.createClass({
                                 { this.state.errorText }
                         </div>
                         <a className="mx_Login_create" onClick={this.props.onRegisterClick} href="#">
-                            { counterpart.translate('Create a new account')}
+                            { counterpart.translate('Create an account')}
                         </a>
                         { loginAsGuestJsx }
                         { returnToAppJsx }

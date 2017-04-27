@@ -19,7 +19,9 @@ limitations under the License.
 
 var React = require('react');
 var sdk = require('../../../index');
+var counterpart = require('counterpart');
 var MatrixClientPeg = require('../../../MatrixClientPeg');
+var counterpart = require('counterpart');
 
 module.exports = React.createClass({
     displayName: 'RoomPreviewBar',
@@ -131,10 +133,10 @@ module.exports = React.createClass({
             joinBlock = (
                 <div>
                     <div className="mx_RoomPreviewBar_invite_text">
-                        You have been invited to join this room by <b>{ this.props.inviterName }</b>
+                        { counterpart.translate("You have been invited to join this room by") } <b>{ this.props.inviterName }</b>
                     </div>
                     <div className="mx_RoomPreviewBar_join_text">
-                        Would you like to <a onClick={ this.props.onJoinClick }>accept</a> or <a onClick={ this.props.onRejectClick }>decline</a> this invitation?
+                        { counterpart.translate("Would you like to") } <a onClick={ this.props.onJoinClick }>{ counterpart.translate("accept") }</a> or <a onClick={ this.props.onRejectClick }>{ counterpart.translate("decline") }</a> { counterpart.translate("this invitation?") }
                     </div>
                     {emailMatchBlock}
                 </div>
@@ -186,8 +188,8 @@ module.exports = React.createClass({
             joinBlock = (
                 <div>
                     <div className="mx_RoomPreviewBar_join_text">
-                        You are trying to access { name }.<br/>
-                        <a onClick={ this.props.onJoinClick }><b>Click here</b></a> to join the discussion!
+                        { counterpart.translate("You are trying to access") } { name }.<br/>
+                        <a onClick={ this.props.onJoinClick }><b>{ counterpart.translate("Click here") }</b></a> { counterpart.translate("to join the discussion") }!
                     </div>
                 </div>
             );
@@ -196,7 +198,7 @@ module.exports = React.createClass({
         if (this.props.canPreview) {
             previewBlock = (
                 <div className="mx_RoomPreviewBar_preview_text">
-                    This is a preview of this room. Room interactions have been disabled.
+                    { counterpart.translate("This is a preview of this room. Room interactions have been disabled") }.
                 </div>
             );
         }

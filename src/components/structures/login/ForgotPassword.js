@@ -56,7 +56,7 @@ module.exports = React.createClass({
                 progress: "sent_email"
             });
         }, (err) => {
-            this.showErrorDialog(counterpart.translate('Failed to send email: ') + err.message);
+            this.showErrorDialog(counterpart.translate('Failed to send email') + ": " + err.message);
             this.setState({
                 progress: null
             });
@@ -83,7 +83,7 @@ module.exports = React.createClass({
             this.showErrorDialog(counterpart.translate('The email address linked to your account must be entered.'));
         }
         else if (!this.state.password || !this.state.password2) {
-            this.showErrorDialog(counterpart.translate('A new password must be entered.'));
+            this.showErrorDialog(counterpart.translate('A new password must be entered') + ".");
         }
         else if (this.state.password !== this.state.password2) {
             this.showErrorDialog(counterpart.translate('New passwords must match each other.'));
@@ -94,16 +94,13 @@ module.exports = React.createClass({
                 title: counterpart.translate('Warning'),
                 description:
                     <div>
-                        Resetting password will currently reset any end-to-end encryption keys on all devices,
-                        making encrypted chat history unreadable, unless you first export your room keys
-                        and re-import them afterwards.
-                        In future this <a href="https://github.com/vector-im/riot-web/issues/2671">will be improved</a>.
+                        { counterpart.translate("Resetting password will currently reset any end-to-end encryption keys on all devices, making encrypted chat history unreadable, unless you first export your room keys and re-import them afterwards. In future this <a href='https://github.com/vector-im/riot-web/issues/2671'>will be improved</a>") }.
                     </div>,
-                button: "Continue",
+                button: counterpart.translate("Continue"),
                 extraButtons: [
                     <button className="mx_Dialog_primary"
                             onClick={this._onExportE2eKeysClicked}>
-                        Export E2E room keys
+                        { counterpart.translate("Export E2E room keys") }
                     </button>
                 ],
                 onFinished: (confirmed) => {
@@ -170,22 +167,20 @@ module.exports = React.createClass({
         else if (this.state.progress === "sent_email") {
             resetPasswordJsx = (
                 <div>
-                    An email has been sent to {this.state.email}. Once you&#39;ve followed
-                    the link it contains, click below.
+                    { counterpart.translate("An email has been sent to") } {this.state.email}. { counterpart.translate("Once you&#39;ve followed the link it contains, click below") }.
                     <br />
                     <input className="mx_Login_submit" type="button" onClick={this.onVerify}
-                        value="I have verified my email address" />
+                        value={ counterpart.translate("I have verified my email address") } />
                 </div>
             );
         }
         else if (this.state.progress === "complete") {
             resetPasswordJsx = (
                 <div>
-                    <p>Your password has been reset.</p>
-                    <p>You have been logged out of all devices and will no longer receive push notifications.
-                    To re-enable notifications, sign in again on each device.</p>
+                    <p>{ counterpart.translate("Your password has been reset") }.</p>
+                    <p>{ counterpart.translate("You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device") }.</p>
                     <input className="mx_Login_submit" type="button" onClick={this.props.onComplete}
-                        value="Return to login screen" />
+                        value={ counterpart.translate("Return to login screen") } />
                 </div>
             );
         }
@@ -193,7 +188,7 @@ module.exports = React.createClass({
             resetPasswordJsx = (
             <div>
                 <div className="mx_Login_prompt">
-                    To reset your password, enter the email address linked to your account:
+                    { counterpart.translate("To reset your password, enter the email address linked to your account") }:
                 </div>
                 <div>
                     <form onSubmit={this.onSubmitForm}>
@@ -201,21 +196,21 @@ module.exports = React.createClass({
                             name="reset_email" // define a name so browser's password autofill gets less confused
                             value={this.state.email}
                             onChange={this.onInputChanged.bind(this, "email")}
-                            placeholder="Email address" autoFocus />
+                            placeholder={ counterpart.translate("Email address") } autoFocus />
                         <br />
                         <input className="mx_Login_field" ref="pass" type="password"
                             name="reset_password"
                             value={this.state.password}
                             onChange={this.onInputChanged.bind(this, "password")}
-                            placeholder="New password" />
+                            placeholder={ counterpart.translate("New password") } />
                         <br />
                         <input className="mx_Login_field" ref="pass" type="password"
                             name="reset_password_confirm"
                             value={this.state.password2}
                             onChange={this.onInputChanged.bind(this, "password2")}
-                            placeholder="Confirm your new password" />
+                            placeholder={ counterpart.translate("Confirm your new password") } />
                         <br />
-                        <input className="mx_Login_submit" type="submit" value="Send Reset Email" />
+                        <input className="mx_Login_submit" type="submit" value={ counterpart.translate("Send Reset Email") } />
                     </form>
                     <ServerConfig ref="serverConfig"
                         withToggleButton={true}
@@ -232,7 +227,7 @@ module.exports = React.createClass({
                         Return to login
                     </a>
                     <a className="mx_Login_create" onClick={this.props.onRegisterClick} href="#">
-                        Create a new account
+                        { counterpart.translate("Create an account") }
                     </a>
                     <LoginFooter />
                 </div>

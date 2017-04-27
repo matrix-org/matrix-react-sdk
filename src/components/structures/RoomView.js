@@ -681,7 +681,7 @@ module.exports = React.createClass({
                 // XXX: There's not a whole lot we can really do if this fails: at best
                 // perhaps we could try a couple more times, but since it's a temporary
                 // compatability workaround, let's not bother.
-                Rooms.setDMRoom(this.state.room.roomId, me.events.member.getSender()).done();
+                // Rooms.setDMRoom(this.state.room.roomId, me.events.member.getSender()).done();
             }
 
             this.setState({
@@ -800,7 +800,7 @@ module.exports = React.createClass({
             if (this.state.room) {
                 const me = this.state.room.getMember(MatrixClientPeg.get().credentials.userId);
                 if (me && me.membership == 'invite') {
-                    if (me.events.member.getContent().is_direct) {
+                    if (me.events.member.getContent().is_direct && 0) { // eliminate direct chat sabotage
                         // The 'direct' hint is there, so declare that this is a DM room for
                         // whoever invited us.
                         return Rooms.setDMRoom(this.state.room.roomId, me.events.member.getSender());
@@ -946,7 +946,7 @@ module.exports = React.createClass({
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             console.error("Failed to upload file " + file + " " + error);
             Modal.createDialog(ErrorDialog, {
-                title: "Failed to upload file",
+                title: counterpart.translate("Failed to upload file"),
                 description: ((error && error.message) ? error.message : "Server may be unavailable, overloaded, or the file too big"),
             });
         });

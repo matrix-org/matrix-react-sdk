@@ -313,7 +313,7 @@ export default class MessageComposer extends React.Component {
         } else {
             controls.push(
                 <div key="controls_error" className="mx_MessageComposer_noperm_error">
-                   { counterpart.translate("You do not have permission to post to this room") }
+                    { counterpart.translate("You do not have permission to post to this room") }
                 </div>
             );
         }
