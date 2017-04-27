@@ -103,6 +103,11 @@ const CRYPTO_SETTINGS_LABELS = [
 const THEMES = [
     {
         id: 'theme',
+        label: 'Tema do Caderno de Campo',
+        value: 'cadcampo',
+    },
+    {
+        id: 'theme',
         label: 'Light theme',
         value: 'light',
     },
@@ -110,7 +115,7 @@ const THEMES = [
         id: 'theme',
         label: 'Dark theme',
         value: 'dark',
-    }
+    },
 ];
 
 
@@ -186,7 +191,7 @@ module.exports = React.createClass({
 
         var syncedSettings = UserSettingsStore.getSyncedSettings();
         if (!syncedSettings.theme) {
-            syncedSettings.theme = 'light';
+            syncedSettings.theme = 'cadcampo';
         }
         this._syncedSettings = syncedSettings;
 
@@ -957,7 +962,7 @@ module.exports = React.createClass({
 
                 <h3>{ counterpart.translate("Account") }</h3>
 
-                <div className="mx_UserSettings_section">
+                <div className="mx_UserSettings_section cadcampoHide">
 
                     <AccessibleButton className="mx_UserSettings_logout mx_UserSettings_button" onClick={this.onLogoutClicked}>
                         { counterpart.translate("Sign out") }

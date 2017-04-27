@@ -257,6 +257,9 @@ module.exports = React.createClass({
 
         this.focusComposer = false;
         window.addEventListener("focus", this.onFocus);
+        
+        // Listen to login credentials sent through postMessage from another site
+        window.addEventListener("message", this.onMessage);
 
         // this can technically be done anywhere but doing this here keeps all
         // the routing url path logic together.
@@ -302,6 +305,7 @@ module.exports = React.createClass({
         UDEHandler.stopListening();
         window.removeEventListener("focus", this.onFocus);
         window.removeEventListener('resize', this.handleResize);
+        window.removeEventListener("message", this.onMessage);
     },
 
     componentDidUpdate: function() {
@@ -716,7 +720,7 @@ module.exports = React.createClass({
      */
     _onSetTheme: function(theme) {
         if (!theme) {
-            theme = 'light';
+            theme = 'cadcampo';
         }
 
         // look for the stylesheet elements.
@@ -893,6 +897,26 @@ module.exports = React.createClass({
 
     onFocus: function(ev) {
         dis.dispatch({action: 'focus_composer'});
+    },
+    
+    onMessage: function(ev) {
+    		if (!this.state.logged_in) {
+						try {
+								var credentials = JSON.parse(ev.data);
+								console.log('postMessage: logging in from credentials sent by origin requestor');
+								if (
+			              credentials &&
+			              credentials.accessToken &&
+			              credentials.homeserverUrl &&
+			              credentials.identityServerUrl &&
+			              credentials.userId
+			          ) {
+			 						credentials.guest = false;
+			      			Lifecycle.setLoggedIn(credentials);
+			      		}
+						} catch(e) {
+						}
+				}
     },
 
     showScreen: function(screen, params) {
@@ -1180,7 +1204,7 @@ module.exports = React.createClass({
             return (
                 <div className="mx_MatrixChat_splash">
                     <Spinner />
-                    <a href="#" className="mx_MatrixChat_splashButtons" onClick={ this.onLogoutClick }>
+                    <a href="#" className="mx_MatrixChat_splashButtons cadcampoHide" onClick={ this.onLogoutClick }>
                     {counterpart.translate("Logout")}
                     </a>
                 </div>

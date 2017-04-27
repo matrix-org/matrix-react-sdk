@@ -220,7 +220,7 @@ module.exports = React.createClass({
             else {
                 errorText = <span>
                     { counterpart.translate('Can\'t connect to homeserver - please check your connectivity and ensure your ')}
-                    <a href={ this.state.enteredHomeserverUrl }>{ counterpart.translate('homeserver\'s SSL certificate')}</a>{ counterpart.translate(' is trusted')}.
+                    <a href={ this.state.enteredHomeserverUrl }>{ counterpart.translate('homeserver\'s SSL certificate')}</a> { counterpart.translate('is trusted') }.
                 </span>;
             }
         }
@@ -313,7 +313,7 @@ module.exports = React.createClass({
                                 { this.state.errorText }
                         </div>
                         <a className="mx_Login_create" onClick={this.props.onRegisterClick} href="#">
-                            { counterpart.translate('Create a new account')}
+                            { counterpart.translate('Create an account')}
                         </a>
                         { loginAsGuestJsx }
                         { returnToAppJsx }
