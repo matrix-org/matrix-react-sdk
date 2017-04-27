@@ -15,8 +15,9 @@ limitations under the License.
 */
 
 var Skinner = require('./Skinner');
-var counterpart = require('counterpart');
+import counterpart from 'counterpart';
 var dis = require("./dispatcher");
+import UserSettingsStore from './UserSettingsStore';
 
 module.exports.loadSkin = function(skinObject) {
     Skinner.load(skinObject);
@@ -38,6 +39,15 @@ module.exports.setLanguage = function(language) {
       });
     }else{
       var language = navigator.language || navigator.userLanguage;
-      counterpart.setLocale(language);
+      if (language.indexOf("-") > -1) {
+        counterpart.setLocale(language.split('-')[0]);
+        UserSettingsStore.setLocalSetting('language', language.split('-')[0]);
+      } else if (language == 'pt-br') {
+        counterpart.setLocale('pt-br');
+        UserSettingsStore.setLocalSetting('language', 'pt_br');
+      } else {
+        counterpart.setLocale(language);
+        UserSettingsStore.setLocalSetting('language', language);
+      }
     }
 };

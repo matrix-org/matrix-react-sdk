@@ -1,12 +1,11 @@
 import React from 'react';
+import counterpart from 'counterpart';
 import AutocompleteProvider from './AutocompleteProvider';
 import {emojioneList, shortnameToImage, shortnameToUnicode} from 'emojione';
 import Fuse from 'fuse.js';
 import sdk from '../index';
 import {PillCompletion} from './Components';
 import type {SelectionRange, Completion} from './Autocompleter';
-
-var counterpart = require('counterpart');
 
 const EMOJI_REGEX = /:\w*:?/g;
 const EMOJI_SHORTNAMES = Object.keys(emojioneList);

@@ -1,12 +1,11 @@
 import React from 'react';
+import counterpart from 'counterpart';
 import AutocompleteProvider from './AutocompleteProvider';
 import MatrixClientPeg from '../MatrixClientPeg';
 import Fuse from 'fuse.js';
 import {PillCompletion} from './Components';
 import {getDisplayAliasForRoom} from '../Rooms';
 import sdk from '../index';
-
-var counterpart = require('counterpart');
 
 const ROOM_REGEX = /(?=#)(\S*)/g;
 

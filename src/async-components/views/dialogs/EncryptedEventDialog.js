@@ -15,10 +15,9 @@ limitations under the License.
 */
 
 var React = require("react");
+import counterpart from 'counterpart';
 var sdk = require('../../../index');
 var MatrixClientPeg = require("../../../MatrixClientPeg");
-
-var counterpart = require('counterpart');
 
 module.exports = React.createClass({
     displayName: 'EncryptedEventDialog',

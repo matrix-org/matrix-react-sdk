@@ -18,7 +18,7 @@ limitations under the License.
 import q from 'q';
 
 var React = require('react');
-var counterpart = require('counterpart');
+import counterpart from 'counterpart';
 var Matrix = require("matrix-js-sdk");
 
 var MatrixClientPeg = require("../../MatrixClientPeg");
@@ -29,6 +29,7 @@ var RoomListSorter = require("../../RoomListSorter");
 var UserActivity = require("../../UserActivity");
 var Presence = require("../../Presence");
 var dis = require("../../dispatcher");
+import UserSettingsStore from '../../UserSettingsStore';
 
 var Modal = require("../../Modal");
 var Tinter = require("../../Tinter");
@@ -40,8 +41,6 @@ var PageTypes = require('../../PageTypes');
 
 var createRoom = require("../../createRoom");
 import * as UDEHandler from '../../UnknownDeviceErrorHandler';
-
-var counterpart = require('counterpart');
 
 module.exports = React.createClass({
     displayName: 'MatrixChat',
@@ -762,19 +761,37 @@ module.exports = React.createClass({
      */
     _onSetLanguage: function(language) {
       // load our own translations
-      counterpart.registerTranslations('en-en', require('../../i18n/strings/en_EN'));
-      counterpart.registerTranslations('en-en', require('../../i18n/global/en_EN'));
-      counterpart.registerTranslations('de-de', require('../../i18n/strings/de_DE'));
-      counterpart.registerTranslations('de-de', require('../../i18n/global/de_DE'));
-      counterpart.registerTranslations('pt-br', require('../../i18n/strings/pt_BR'));
-      counterpart.registerTranslations('pt-br', require('../../i18n/global/pt_BR'));
+      counterpart.registerTranslations('en', require('../../i18n/strings/en_EN'));
+      counterpart.registerTranslations('en', require('../../i18n/global/en_EN'));
+      counterpart.registerTranslations('de', require('../../i18n/strings/de_DE'));
+      counterpart.registerTranslations('de', require('../../i18n/global/de_DE'));
+      counterpart.registerTranslations('pt_br', require('../../i18n/strings/pt_BR'));
+      counterpart.registerTranslations('pt_br', require('../../i18n/global/pt_BR'));
       counterpart.setFallbackLocale('en');
 
       if (!language){
         const language = navigator.languages[0] || navigator.language || navigator.userLanguage;
-        counterpart.setLocale(language);
+        if (language.indexOf("-") > -1) {
+          counterpart.setLocale(language.split('-')[0]);
+          UserSettingsStore.setLocalSetting('language', language.split('-')[0]);
+        } else if (language == 'pt-br') {
+          counterpart.setLocale('pt-br');
+          UserSettingsStore.setLocalSetting('language', 'pt_br');
+        } else {
+          counterpart.setLocale(language);
+          UserSettingsStore.setLocalSetting('language', language);
+        }
       }else{
-        counterpart.setLocale(language);
+        if (language.indexOf("-") > -1) {
+          counterpart.setLocale(language.split('-')[0]);
+          UserSettingsStore.setLocalSetting('language', language.split('-')[0]);
+        } else if (language == 'pt-br') {
+          counterpart.setLocale('pt-br');
+          UserSettingsStore.setLocalSetting('language', 'pt_br');
+        } else {
+          counterpart.setLocale(language);
+          UserSettingsStore.setLocalSetting('language', language);
+        }
       }
     },
 

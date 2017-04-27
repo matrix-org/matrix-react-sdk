@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 var React = require('react');
-var counterpart = require('counterpart');
+import counterpart from 'counterpart';
 var CallHandler = require('../../../CallHandler');
 var MatrixClientPeg = require('../../../MatrixClientPeg');
 var Modal = require('../../../Modal');

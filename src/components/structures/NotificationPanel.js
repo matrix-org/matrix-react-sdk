@@ -16,9 +16,7 @@ limitations under the License.
 
 var React = require('react');
 var ReactDOM = require("react-dom");
-
-var counterpart = require('counterpart');
-
+import counterpart from 'counterpart';
 var Matrix = require("matrix-js-sdk");
 var sdk = require('../../index');
 var MatrixClientPeg = require("../../MatrixClientPeg");

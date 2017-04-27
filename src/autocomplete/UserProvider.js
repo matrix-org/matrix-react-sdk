@@ -1,11 +1,10 @@
 import React from 'react';
+import counterpart from 'counterpart';
 import AutocompleteProvider from './AutocompleteProvider';
 import Q from 'q';
 import Fuse from 'fuse.js';
 import {PillCompletion} from './Components';
 import sdk from '../index';
-
-var counterpart = require('counterpart');
 
 const USER_REGEX = /@\S*/g;
 

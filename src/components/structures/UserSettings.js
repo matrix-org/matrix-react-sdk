@@ -186,6 +186,9 @@ module.exports = React.createClass({
         this._syncedSettings = syncedSettings;
 
         this._localSettings = UserSettingsStore.getLocalSettings();
+        this.setState({
+          Language: this._localSettings.language
+        });
     },
 
     componentDidMount: function() {
@@ -534,13 +537,17 @@ module.exports = React.createClass({
           action: 'set_language',
           value: l,
       });
+      // this.setState({
+      //   Language: l,
+      // });
+      // console.log(this.state.Language);
     },
 
     _renderLanguageSetting: function () {
       const LanguageDropdown = sdk.getComponent('views.elements.LanguageDropdown');
       return <LanguageDropdown ref="language" onOptionChange={this.onLanguageChange}
                         className="mx_UserSettings_Language"
-                        value={this._localSettings.language} />;
+                        value={this.state.Language} />;
     },
 
     _renderUserInterfaceSettings: function() {
