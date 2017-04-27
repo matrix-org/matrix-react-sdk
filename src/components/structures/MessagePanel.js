@@ -279,20 +279,19 @@ module.exports = React.createClass({
             this.currentGhostEventId = null;
         }
 
-        var isMembershipChange = (e) =>
-            e.getType() === 'm.room.member'
-            && (!e.getPrevContent() || e.getContent().membership !== e.getPrevContent().membership);
+        var isMembershipChange = (e) => e.getType() === 'm.room.member';
 
         for (i = 0; i < this.props.events.length; i++) {
-            var mxEv = this.props.events[i];
-            var wantTile = true;
-            var eventId = mxEv.getId();
+            let mxEv = this.props.events[i];
+            let wantTile = true;
+            let eventId = mxEv.getId();
+            let readMarkerInMels = false;
 
             if (!EventTile.haveTileForEvent(mxEv)) {
                 wantTile = false;
             }
 
-            var last = (i == lastShownEventIndex);
+            let last = (i == lastShownEventIndex);
 
             // Wrap consecutive member events in a ListSummary, ignore if redacted
             if (isMembershipChange(mxEv) &&
@@ -334,6 +333,9 @@ module.exports = React.createClass({
 
                 let eventTiles = summarisedEvents.map(
                     (e) => {
+                        if (e.getId() === this.props.readMarkerEventId) {
+                            readMarkerInMels = true;
+                        }
                         // In order to prevent DateSeparators from appearing in the expanded form
                         // of MemberEventListSummary, render each member event as if the previous
                         // one was itself. This way, the timestamp of the previous event === the
@@ -358,6 +360,11 @@ module.exports = React.createClass({
                             {eventTiles}
                     </MemberEventListSummary>
                 );
+
+                if (readMarkerInMels) {
+                    ret.push(this._getReadMarkerTile(visible));
+                }
+
                 continue;
             }
 
