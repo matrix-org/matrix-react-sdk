@@ -139,7 +139,7 @@ module.exports = React.createClass({
 
     // returns one of:
     //
-    //  null: there is no read marker
+    //  null: there is no read marker (possibly because the event is not paginated)
     //  -1: read marker is above the window
     //   0: read marker is within the window
     //  +1: read marker is below the window
@@ -279,18 +279,19 @@ module.exports = React.createClass({
             this.currentGhostEventId = null;
         }
 
-        var isMembershipChange = (e) => e.getType() === 'm.room.member';
+        const isMembershipChange = (e) => e.getType() === 'm.room.member';
 
         for (i = 0; i < this.props.events.length; i++) {
-            var mxEv = this.props.events[i];
-            var wantTile = true;
-            var eventId = mxEv.getId();
+            let mxEv = this.props.events[i];
+            let wantTile = true;
+            let eventId = mxEv.getId();
+            let readMarkerInMels = false;
 
             if (!EventTile.haveTileForEvent(mxEv)) {
                 wantTile = false;
             }
 
-            var last = (i == lastShownEventIndex);
+            let last = (i == lastShownEventIndex);
 
             // Wrap consecutive member events in a ListSummary, ignore if redacted
             if (isMembershipChange(mxEv) &&
@@ -314,6 +315,11 @@ module.exports = React.createClass({
                 }
 
                 let summarisedEvents = [mxEv];
+
+                if (mxEv.getId() === this.props.readMarkerEventId) {
+                    readMarkerInMels = true;
+                }
+
                 for (;i + 1 < this.props.events.length; i++) {
                     let collapsedMxEv = this.props.events[i + 1];
 
@@ -326,6 +332,11 @@ module.exports = React.createClass({
                         this._wantsDateSeparator(this.props.events[i], collapsedMxEv.getDate())) {
                         break;
                     }
+
+                    if (collapsedMxEv.getId() === this.props.readMarkerEventId) {
+                        readMarkerInMels = true;
+                    }
+
                     summarisedEvents.push(collapsedMxEv);
                 }
                 // At this point, i = the index of the last event in the summary sequence
@@ -356,6 +367,11 @@ module.exports = React.createClass({
                             {eventTiles}
                     </MemberEventListSummary>
                 );
+
+                if (readMarkerInMels) {
+                    ret.push(this._getReadMarkerTile(visible));
+                }
+
                 continue;
             }
 

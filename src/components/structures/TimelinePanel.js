@@ -506,10 +506,15 @@ var TimelinePanel = React.createClass({
         if (!MatrixClientPeg.get()) return;
 
         var currentReadUpToEventId = this._getCurrentReadReceipt(true);
-        var currentReadUpToEventIndex = this._indexForEventId(currentReadUpToEventId);
+        // Take the minimum of both in case they somehow get out of sync where the RM is
+        // far behind the RR.
+        var currentReadUpToEventIndex = Math.min(
+            this._indexForEventId(currentReadUpToEventId),
+            this._indexForEventId(this.state.readMarkerEventId)
+        );
 
         // We want to avoid sending out read receipts when we are looking at
-        // events in the past which are before the latest RR.
+        // events in the past which are before the latest RR and RM.
         //
         // For now, let's apply a heuristic: if (a) the event corresponding to
         // the latest RR (either from the server, or sent by ourselves) doesn't
@@ -762,8 +767,11 @@ var TimelinePanel = React.createClass({
                 return 1;
             }
         }
-
         return null;
+    },
+
+    isReadMarkerSet: function() {
+        return Boolean(this.state.readMarkerEventId);
     },
 
     /**

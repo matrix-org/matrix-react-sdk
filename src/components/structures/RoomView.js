@@ -1278,10 +1278,13 @@ module.exports = React.createClass({
 
         var pos = this.refs.messagePanel.getReadMarkerPosition();
 
-        // we want to show the bar if the read-marker is off the top of the
-        // screen.
+        // We want to show the bar if the read-marker is off the top of the
+        // screen. We use `pos < 0` as opposed to `pos !== 0` because in practice scrolling
+        // down will cause the RM to be in the view-port for a short duration before being
+        // pushed off the screen. This happens frequently causing `pos` to flicker between
+        // 0 (on screen) and 1 (off the bottom of the screen).
         // If pos is null, the event might not be paginated, so show the unread bar!
-        var showBar = pos < 0 || pos === null;
+        var showBar = (pos < 0 || pos === null) && this.refs.messagePanel.isReadMarkerSet();
 
         if (this.state.showTopUnreadMessagesBar != showBar) {
             this.setState({showTopUnreadMessagesBar: showBar},
