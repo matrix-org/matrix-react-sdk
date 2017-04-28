@@ -537,10 +537,9 @@ module.exports = React.createClass({
           action: 'set_language',
           value: l,
       });
-      // this.setState({
-      //   Language: l,
-      // });
-      // console.log(this.state.Language);
+      this.setState({
+        Language: l,
+      });
     },
 
     _renderLanguageSetting: function () {
