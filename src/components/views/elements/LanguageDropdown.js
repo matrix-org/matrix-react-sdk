@@ -24,17 +24,17 @@ const LANGUAGES = [
     {
         id: 'language',
         label: 'German',
-        value: 'de-de',
+        value: 'de',
     },
     {
         id: 'language',
         label: 'English',
-        value: 'en-en',
+        value: 'en',
     },
     {
       id: 'language',
       label: 'Brazilian Portuguese',
-      value: 'pt-br',
+      value: 'pt_br',
     }
 ];
 

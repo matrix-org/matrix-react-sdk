@@ -186,9 +186,16 @@ module.exports = React.createClass({
         this._syncedSettings = syncedSettings;
 
         this._localSettings = UserSettingsStore.getLocalSettings();
-        this.setState({
-          Language: this._localSettings.language
-        });
+        if (!this._localSettings.hasOwnProperty('language')) {
+          const language = navigator.languages[0] || navigator.language || navigator.userLanguage;
+          this.setState({
+            Language: language
+          });
+        }else {
+          this.setState({
+            Language: this._localSettings.language
+          });
+        }
     },
 
     componentDidMount: function() {

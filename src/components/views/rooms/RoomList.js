@@ -42,12 +42,19 @@ module.exports = React.createClass({
         searchFilter: React.PropTypes.string,
     },
 
+    didLocalGetChanged: function(newLocale, oldLocale) {
+      this.setState({
+        didLocalChange: true,
+      });
+    },
+
     shouldComponentUpdate: function(nextProps, nextState) {
         if (nextProps.collapsed !== this.props.collapsed) return true;
         if (nextProps.searchFilter !== this.props.searchFilter) return true;
         if (nextState.lists !== this.state.lists ||
             nextState.isLoadingLeftRooms !== this.state.isLoadingLeftRooms ||
             nextState.incomingCall !== this.state.incomingCall) return true;
+        if (nextState.didLocalChange) return true;
         return false;
     },
 
@@ -56,6 +63,7 @@ module.exports = React.createClass({
             isLoadingLeftRooms: false,
             lists: {},
             incomingCall: null,
+            didLocalChange: false,
         };
     },
 
@@ -83,6 +91,7 @@ module.exports = React.createClass({
         // loop count to stop a stack overflow if the user keeps waggling the
         // mouse for >30s in a row, or if running under mocha
         this._delayedRefreshRoomListLoopCount = 0
+        counterpart.onLocaleChange(this.didLocalGetChanged);
     },
 
     componentDidMount: function() {
@@ -169,6 +178,7 @@ module.exports = React.createClass({
         }
         // cancel any pending calls to the rate_limited_funcs
         this._delayedRefreshRoomList.cancelPendingCall();
+        translate.offLocaleChange(this.didLocalGetChanged);
     },
 
     onRoom: function(room) {
@@ -603,7 +613,6 @@ module.exports = React.createClass({
     render: function() {
         var RoomSubList = sdk.getComponent('structures.RoomSubList');
         var self = this;
-
         return (
             <GeminiScrollbar className="mx_RoomList_scrollbar"
                  autoshow={true} onScroll={ self._whenScrolling } onResize={ self._whenScrolling } ref="gemscroll">
