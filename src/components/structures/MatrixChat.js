@@ -569,6 +569,7 @@ module.exports = React.createClass({
                 break;
             case 'set_language':
                 this._onSetLanguage(payload.value);
+                break;
             case 'on_logging_in':
                 this.setState({loggingIn: true});
                 break;
