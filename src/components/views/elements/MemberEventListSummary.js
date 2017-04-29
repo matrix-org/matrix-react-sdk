@@ -222,6 +222,8 @@ module.exports = React.createClass({
             "banned": beConjugated + " " + counterpart.translate("was banned"),
             "unbanned": beConjugated + " " + counterpart.translate("was unbanned"),
             "kicked": beConjugated + " " + counterpart.translate("was kicked"),
+            "changed_name": counterpart.translate("changed name"),
+            "changed_avatar": counterpart.translate("changed avatar"),
         };
 
         if (Object.keys(map).includes(t)) {
@@ -290,7 +292,24 @@ module.exports = React.createClass({
         switch (e.mxEvent.getContent().membership) {
             case 'invite': return 'invited';
             case 'ban': return 'banned';
-            case 'join': return 'joined';
+            case 'join':
+                if (e.mxEvent.getPrevContent().membership === 'join') {
+                    if (e.mxEvent.getContent().displayname !==
+                        e.mxEvent.getPrevContent().displayname)
+                    {
+                        return 'changed_name';
+                    }
+                    else if (e.mxEvent.getContent().avatar_url !==
+                        e.mxEvent.getPrevContent().avatar_url)
+                    {
+                        return 'changed_avatar';
+                    }
+                    // console.log("MELS ignoring duplicate membership join event");
+                    return null;
+                }
+                else {
+                    return 'joined';
+                }
             case 'leave':
                 if (e.mxEvent.getSender() === e.mxEvent.getStateKey()) {
                     switch (e.mxEvent.getPrevContent().membership) {

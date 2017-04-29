@@ -31,6 +31,8 @@
   "Can't connect to homeserver - please check your connectivity and ensure your": "Can't connect to homeserver - please check your connectivity and ensure your ",
   "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar": "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar",
   "Can\'t load user settings": "Can\'t load user settings",
+  "changed avatar": "changed avatar",
+  "changed name": "changed name",
   "changed their display name from": "changed their display name from",
   "changed their profile picture": "changed their profile picture",
   "changed the power level of": "changed the power level of",

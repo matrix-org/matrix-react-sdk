@@ -1276,12 +1276,7 @@ module.exports = React.createClass({
             return;
         }
 
-        var pos = this.refs.messagePanel.getReadMarkerPosition();
-
-        // we want to show the bar if the read-marker is off the top of the
-        // screen.
-        var showBar = (pos < 0);
-
+        const showBar = this.refs.messagePanel.canJumpToReadMarker();
         if (this.state.showTopUnreadMessagesBar != showBar) {
             this.setState({showTopUnreadMessagesBar: showBar},
                           this.onChildResize);

@@ -1,9 +1,8 @@
 import React from 'react';
+import counterpart from 'counterpart';
 import AutocompleteProvider from './AutocompleteProvider';
 import Fuse from 'fuse.js';
 import {TextualCompletion} from './Components';
-
-var counterpart = require('counterpart');
 
 const COMMANDS = [
     {

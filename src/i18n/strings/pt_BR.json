@@ -31,6 +31,8 @@
   "Can't connect to homeserver - please check your connectivity and ensure your": "Não foi possível contectar ao servidor padrão - por gentileza verifique sua conectividade e garanta que sua",
   "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar": "Não é possível contectar ao servidor padrão via protocolo HTTP quando um endereço (URL) HTTPS está presente na barra do navegador",
   "Can\'t load user settings": "Não é possível carregar configurações de usuário",
+  "changed avatar": "mudou sua imagem de perfil (avatar)",
+  "changed name": "mudou seu nome",
   "changed their display name from": "mudou seu nome para",
   "changed their profile picture": "alterou sua foto de perfil",
   "changed the power level of": "mudou o nível de permissões de",

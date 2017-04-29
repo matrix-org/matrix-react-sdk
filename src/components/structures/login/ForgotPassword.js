@@ -17,13 +17,12 @@ limitations under the License.
 'use strict';
 
 var React = require('react');
+import counterpart from 'counterpart';
 var sdk = require('../../../index');
 var Modal = require("../../../Modal");
 var MatrixClientPeg = require('../../../MatrixClientPeg');
 
 var PasswordReset = require("../../../PasswordReset");
-
-var counterpart = require('counterpart');
 
 module.exports = React.createClass({
     displayName: 'ForgotPassword',

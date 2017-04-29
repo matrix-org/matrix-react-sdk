@@ -18,12 +18,11 @@ limitations under the License.
 'use strict';
 
 import React from 'react';
+import counterpart from 'counterpart';
 import ReactDOM from 'react-dom';
 import url from 'url';
 import sdk from '../../../index';
 import Login from '../../../Login';
-
-var counterpart = require('counterpart');
 
 /**
  * A wire component which glues together login UI components and Login logic
