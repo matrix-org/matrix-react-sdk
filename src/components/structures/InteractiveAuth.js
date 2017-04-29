@@ -14,14 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Matrix from 'matrix-js-sdk';
+import Matrix from "matrix-js-sdk";
+import React from "react";
+
+import {getEntryComponentForLoginType} from "../views/login/InteractiveAuthEntryComponents";
 const InteractiveAuth = Matrix.InteractiveAuth;
-
-import React from 'react';
-
-import sdk from '../../index';
-
-import {getEntryComponentForLoginType} from '../views/login/InteractiveAuthEntryComponents';
 
 export default React.createClass({
     displayName: 'InteractiveAuth',
@@ -102,14 +99,12 @@ export default React.createClass({
             this.props.onAuthFinished(true, result, extra);
         }).catch((error) => {
             this.props.onAuthFinished(false, error);
-            console.error("Error during user-interactive auth:", error);
-            if (this._unmounted) {
-                return;
-            }
+            console.error('Error during user-interactive auth:', error);
+            if (this._unmounted) return;
 
             const msg = error.message || error.toString();
             this.setState({
-                errorText: msg
+                errorText: msg,
             });
         }).done();
 
@@ -136,7 +131,7 @@ export default React.createClass({
             stageState: stageState,
             errorText: stageState.error,
         }, () => {
-            if (oldStage != stageType) this._setFocus();
+            if (oldStage !== stageType) this._setFocus();
         });
     },
 

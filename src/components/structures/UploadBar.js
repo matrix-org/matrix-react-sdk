@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-var React = require('react');
-var ContentMessages = require('../../ContentMessages');
-var dis = require('../../dispatcher');
-var filesize = require('filesize');
+const React = require('react');
+const ContentMessages = require('../../ContentMessages');
+const dis = require('../../dispatcher');
+const filesize = require('filesize');
 
 module.exports = React.createClass({displayName: 'UploadBar',
     propTypes: {
@@ -45,7 +45,7 @@ module.exports = React.createClass({displayName: 'UploadBar',
     },
 
     render: function() {
-        var uploads = ContentMessages.getCurrentUploads();
+        const uploads = ContentMessages.getCurrentUploads();
 
         // for testing UI... - also fix up the ContentMessages.getCurrentUploads().length
         // check in RoomView
@@ -57,31 +57,27 @@ module.exports = React.createClass({displayName: 'UploadBar',
         //     fileName: "testing_fooble.jpg",
         // }];
 
-        if (uploads.length == 0) {
-            return <div />;
-        }
+        if (uploads.length === 0) return <div />;
 
-        var upload;
-        for (var i = 0; i < uploads.length; ++i) {
-            if (uploads[i].roomId == this.props.room.roomId) {
+        let upload;
+        for (let i = 0; i < uploads.length; ++i) {
+            if (uploads[i].roomId === this.props.room.roomId) {
                 upload = uploads[i];
                 break;
             }
         }
-        if (!upload) {
-            return <div />;
-        }
+        if (!upload) return <div />;
 
-        var innerProgressStyle = {
-            width: ((upload.loaded / (upload.total || 1)) * 100) + '%'
+        const innerProgressStyle = {
+            width: ((upload.loaded / (upload.total || 1)) * 100) + '%',
         };
-        var uploadedSize = filesize(upload.loaded);
-        var totalSize = filesize(upload.total);
+        let uploadedSize = filesize(upload.loaded);
+        const totalSize = filesize(upload.total);
         if (uploadedSize.replace(/^.* /, '') === totalSize.replace(/^.* /, '')) {
             uploadedSize = uploadedSize.replace(/ .*/, '');
         }
 
-        var others;
+        let others;
         if (uploads.length > 1) {
             others = ' and ' + (uploads.length - 1) + ' other' + (uploads.length > 2 ? 's' : '');
         }

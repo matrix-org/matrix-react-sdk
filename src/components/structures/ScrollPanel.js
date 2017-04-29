@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-var React = require("react");
-var ReactDOM = require("react-dom");
-var GeminiScrollbar = require('react-gemini-scrollbar');
-var q = require("q");
-var KeyCode = require('../../KeyCode');
+const React = require('react');
+const ReactDOM = require('react-dom');
+const GeminiScrollbar = require('react-gemini-scrollbar');
+const q = require('q');
+const KeyCode = require('../../KeyCode');
 
-var DEBUG_SCROLL = false;
-// var DEBUG_SCROLL = true;
+const DEBUG_SCROLL = false;
+// const DEBUG_SCROLL = true;
 
 // The amount of extra scroll distance to allow prior to unfilling.
 // See _getExcessHeight.
@@ -30,12 +30,7 @@ const UNPAGINATION_PADDING = 6000;
 // many scroll events causing many unfilling requests.
 const UNFILL_REQUEST_DEBOUNCE_MS = 200;
 
-if (DEBUG_SCROLL) {
-    // using bind means that we get to keep useful line numbers in the console
-    var debuglog = console.log.bind(console);
-} else {
-    var debuglog = function() {};
-}
+const debuglog = DEBUG_SCROLL ? console.log.bind(console) : function() {};
 
 /* This component implements an intelligent scrolling list.
  *
@@ -174,9 +169,9 @@ module.exports = React.createClass({
     },
 
     onScroll: function(ev) {
-        var sn = this._getScrollNode();
-        debuglog("Scroll event: offset now:", sn.scrollTop,
-                 "_lastSetScroll:", this._lastSetScroll);
+        const sn = this._getScrollNode();
+        debuglog('Scroll event: offset now:', sn.scrollTop,
+                 '_lastSetScroll:', this._lastSetScroll);
 
         // Sometimes we see attempts to write to scrollTop essentially being
         // ignored. (Or rather, it is successfully written, but on the next
@@ -191,7 +186,7 @@ module.exports = React.createClass({
         // resetting scrollTop until we see the scroll node have the right
         // value.
         if (this._lastSetScroll !== undefined && sn.scrollTop < this._lastSetScroll-200) {
-            console.log("Working around vector-im/vector-web#528");
+            console.log('Working around vector-im/vector-web#528');
             this._restoreSavedScrollState();
             return;
         }
@@ -200,10 +195,10 @@ module.exports = React.createClass({
         // got might be different to the scroll we wanted; we don't want to
         // forget what we wanted, so don't overwrite the saved state unless
         // this appears to be a user-initiated scroll.
-        if (sn.scrollTop != this._lastSetScroll) {
+        if (sn.scrollTop !== this._lastSetScroll) {
             this._saveScrollState();
         } else {
-            debuglog("Ignoring scroll echo");
+            debuglog('Ignoring scroll echo');
 
             // only ignore the echo once, otherwise we'll get confused when the
             // user scrolls away from, and back to, the autoscroll point.
@@ -234,7 +229,7 @@ module.exports = React.createClass({
     // about whether the the content is scrolled down right now, irrespective of
     // whether it will stay that way when the children update.
     isAtBottom: function() {
-        var sn = this._getScrollNode();
+        const sn = this._getScrollNode();
 
         // there seems to be some bug with flexbox/gemini/chrome/richvdh's
         // understanding of the box model, wherein the scrollNode ends up 2
@@ -277,7 +272,7 @@ module.exports = React.createClass({
     //   |#########|                                       |
     //   `---------'                                       -
     _getExcessHeight: function(backwards) {
-        var sn = this._getScrollNode();
+        const sn = this._getScrollNode();
         if (backwards) {
             return sn.scrollTop - sn.clientHeight - UNPAGINATION_PADDING;
         } else {
@@ -287,11 +282,9 @@ module.exports = React.createClass({
 
     // check the scroll state and send out backfill requests if necessary.
     checkFillState: function() {
-        if (this.unmounted) {
-            return;
-        }
+        if (this.unmounted) return;
 
-        var sn = this._getScrollNode();
+        const sn = this._getScrollNode();
 
         // if there is less than a screenful of messages above or below the
         // viewport, try to get some more messages.
@@ -330,9 +323,7 @@ module.exports = React.createClass({
     // check if unfilling is possible and send an unfill request if necessary
     _checkUnfillState: function(backwards) {
         let excessHeight = this._getExcessHeight(backwards);
-        if (excessHeight <= 0) {
-            return;
-        }
+        if (excessHeight <= 0) return;
         const tiles = this.refs.itemlist.children;
 
         // The scroll token of the first/last tile to be unpaginated
@@ -372,20 +363,20 @@ module.exports = React.createClass({
 
     // check if there is already a pending fill request. If not, set one off.
     _maybeFill: function(backwards) {
-        var dir = backwards ? 'b' : 'f';
+        const dir = backwards ? 'b' : 'f';
         if (this._pendingFillRequests[dir]) {
-            debuglog("ScrollPanel: Already a "+dir+" fill in progress - not starting another");
+            debuglog(`ScrollPanel: Already a ${dir} fill in progress - not starting another`);
             return;
         }
 
-        debuglog("ScrollPanel: starting "+dir+" fill");
+        debuglog(`ScrollPanel: starting ${dir} fill`);
 
         // onFillRequest can end up calling us recursively (via onScroll
         // events) so make sure we set this before firing off the call. That
         // does present the risk that we might not ever actually fire off the
         // fill request, so wrap it in a try/catch.
         this._pendingFillRequests[dir] = true;
-        var fillPromise;
+        let fillPromise;
         try {
             fillPromise = this.props.onFillRequest(backwards);
         } catch (e) {
@@ -468,11 +459,11 @@ module.exports = React.createClass({
     /**
      * Page up/down.
      *
-     * mult: -1 to page up, +1 to page down
+     * @param {number} mult -1 to page up, +1 to page down
      */
     scrollRelative: function(mult) {
-        var scrollNode = this._getScrollNode();
-        var delta = mult * scrollNode.clientHeight * 0.5;
+        const scrollNode = this._getScrollNode();
+        const delta = mult * scrollNode.clientHeight * 0.5;
         this._setScrollTop(scrollNode.scrollTop + delta);
         this._saveScrollState();
     },
@@ -536,7 +527,7 @@ module.exports = React.createClass({
         this.scrollState = {
             stuckAtBottom: false,
             trackedScrollToken: scrollToken,
-            pixelOffset: pixelOffset
+            pixelOffset: pixelOffset,
         };
 
         // ... then make it so.
@@ -547,53 +538,51 @@ module.exports = React.createClass({
     // given offset in the window. A helper for _restoreSavedScrollState.
     _scrollToToken: function(scrollToken, pixelOffset) {
         /* find the dom node with the right scrolltoken */
-        var node;
-        var messages = this.refs.itemlist.children;
-        for (var i = messages.length-1; i >= 0; --i) {
-            var m = messages[i];
+        let node;
+        const messages = this.refs.itemlist.children;
+        for (let i = messages.length-1; i >= 0; --i) {
+            const m = messages[i];
             if (!m.dataset.scrollToken) continue;
-            if (m.dataset.scrollToken == scrollToken) {
+            if (m.dataset.scrollToken === scrollToken) {
                 node = m;
                 break;
             }
         }
 
         if (!node) {
-            debuglog("ScrollPanel: No node with scrollToken '"+scrollToken+"'");
+            debuglog(`ScrollPanel: No node with scrollToken '${scrollToken}'`);
             return;
         }
 
-        var scrollNode = this._getScrollNode();
-        var wrapperRect = ReactDOM.findDOMNode(this).getBoundingClientRect();
-        var boundingRect = node.getBoundingClientRect();
-        var scrollDelta = boundingRect.bottom + pixelOffset - wrapperRect.bottom;
+        const scrollNode = this._getScrollNode();
+        const wrapperRect = ReactDOM.findDOMNode(this).getBoundingClientRect();
+        const boundingRect = node.getBoundingClientRect();
+        const scrollDelta = boundingRect.bottom + pixelOffset - wrapperRect.bottom;
 
-        debuglog("ScrollPanel: scrolling to token '" + node.dataset.scrollToken + "'+" +
-                 pixelOffset + " (delta: "+scrollDelta+")");
+        debuglog(`ScrollPanel: scrolling to token '${node.dataset.scrollToken}' ${pixelOffset} (delta:${scrollDelta})`);
 
-        if(scrollDelta != 0) {
+        if(scrollDelta !== 0) {
             this._setScrollTop(scrollNode.scrollTop + scrollDelta);
         }
-
     },
 
     _saveScrollState: function() {
         if (this.props.stickyBottom && this.isAtBottom()) {
             this.scrollState = { stuckAtBottom: true };
-            debuglog("ScrollPanel: Saved scroll state", this.scrollState);
+            debuglog('ScrollPanel: Saved scroll state', this.scrollState);
             return;
         }
 
-        var itemlist = this.refs.itemlist;
-        var wrapperRect = ReactDOM.findDOMNode(this).getBoundingClientRect();
-        var messages = itemlist.children;
+        const itemlist = this.refs.itemlist;
+        const wrapperRect = ReactDOM.findDOMNode(this).getBoundingClientRect();
+        const messages = itemlist.children;
         let newScrollState = null;
 
-        for (var i = messages.length-1; i >= 0; --i) {
-            var node = messages[i];
+        for (let i = messages.length-1; i >= 0; --i) {
+            const node = messages[i];
             if (!node.dataset.scrollToken) continue;
 
-            var boundingRect = node.getBoundingClientRect();
+            const boundingRect = node.getBoundingClientRect();
             newScrollState = {
                 stuckAtBottom: false,
                 trackedScrollToken: node.dataset.scrollToken,
@@ -611,28 +600,27 @@ module.exports = React.createClass({
         // This is only false if there were no nodes with `node.dataset.scrollToken` set.
         if (newScrollState) {
             this.scrollState = newScrollState;
-            debuglog("ScrollPanel: saved scroll state", this.scrollState);
+            debuglog('ScrollPanel: saved scroll state', this.scrollState);
         } else {
-            debuglog("ScrollPanel: unable to save scroll state: found no children in the viewport");
+            debuglog('ScrollPanel: unable to save scroll state: found no children in the viewport');
         }
     },
 
     _restoreSavedScrollState: function() {
-        var scrollState = this.scrollState;
-        var scrollNode = this._getScrollNode();
+        const scrollState = this.scrollState;
+        // const scrollNode = this._getScrollNode();
 
         if (scrollState.stuckAtBottom) {
             this._setScrollTop(Number.MAX_VALUE);
         } else if (scrollState.trackedScrollToken) {
-            this._scrollToToken(scrollState.trackedScrollToken,
-                               scrollState.pixelOffset);
+            this._scrollToToken(scrollState.trackedScrollToken, scrollState.pixelOffset);
         }
     },
 
     _setScrollTop: function(scrollTop) {
-        var scrollNode = this._getScrollNode();
+        const scrollNode = this._getScrollNode();
 
-        var prevScroll = scrollNode.scrollTop;
+        const prevScroll = scrollNode.scrollTop;
 
         // FF ignores attempts to set scrollTop to very large numbers
         scrollNode.scrollTop = Math.min(scrollTop, scrollNode.scrollHeight);
@@ -644,13 +632,12 @@ module.exports = React.createClass({
         // alone, otherwise we'll end up ignoring a future scroll event which is
         // nothing to do with this change.
 
-        if (scrollNode.scrollTop != prevScroll) {
+        if (scrollNode.scrollTop !== prevScroll) {
             this._lastSetScroll = scrollNode.scrollTop;
         }
 
-        debuglog("ScrollPanel: set scrollTop:", scrollNode.scrollTop,
-                 "requested:", scrollTop,
-                 "_lastSetScroll:", this._lastSetScroll);
+        debuglog('ScrollPanel: set scrollTop:', scrollNode.scrollTop,
+                 'requested:', scrollTop, '_lastSetScroll:', this._lastSetScroll);
     },
 
     /* get the DOM node which has the scrollTop property we care about for our
@@ -660,7 +647,7 @@ module.exports = React.createClass({
         if (this.unmounted) {
             // this shouldn't happen, but when it does, turn the NPE into
             // something more meaningful.
-            throw new Error("ScrollPanel._getScrollNode called when unmounted");
+            throw new Error('ScrollPanel._getScrollNode called when unmounted');
         }
 
         return this.refs.geminiPanel.scrollbar.getViewElement();

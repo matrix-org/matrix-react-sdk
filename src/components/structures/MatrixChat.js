@@ -16,29 +16,26 @@ limitations under the License.
 */
 
 import q from 'q';
-
-var React = require('react');
-var Matrix = require("matrix-js-sdk");
-
-var MatrixClientPeg = require("../../MatrixClientPeg");
-var PlatformPeg = require("../../PlatformPeg");
-var SdkConfig = require("../../SdkConfig");
-var ContextualMenu = require("./ContextualMenu");
-var RoomListSorter = require("../../RoomListSorter");
-var UserActivity = require("../../UserActivity");
-var Presence = require("../../Presence");
-var dis = require("../../dispatcher");
-
-var Modal = require("../../Modal");
-var Tinter = require("../../Tinter");
-var sdk = require('../../index');
-var Rooms = require('../../Rooms');
-var linkifyMatrix = require("../../linkify-matrix");
-var Lifecycle = require('../../Lifecycle');
-var PageTypes = require('../../PageTypes');
-
-var createRoom = require("../../createRoom");
 import * as UDEHandler from '../../UnknownDeviceErrorHandler';
+
+const React = require('react');
+const Matrix = require('matrix-js-sdk');
+
+const MatrixClientPeg = require('../../MatrixClientPeg');
+const PlatformPeg = require('../../PlatformPeg');
+const SdkConfig = require('../../SdkConfig');
+const RoomListSorter = require('../../RoomListSorter');
+const dis = require('../../dispatcher');
+
+const Modal = require('../../Modal');
+const Tinter = require('../../Tinter');
+const sdk = require('../../index');
+const Rooms = require('../../Rooms');
+const linkifyMatrix = require('../../linkify-matrix');
+const Lifecycle = require('../../Lifecycle');
+const PageTypes = require('../../PageTypes');
+
+const createRoom = require('../../createRoom');
 
 module.exports = React.createClass({
     displayName: 'MatrixChat',
@@ -79,7 +76,7 @@ module.exports = React.createClass({
     },
 
     AuxPanel: {
-        RoomSettings: "room_settings",
+        RoomSettings: 'room_settings',
     },
 
     getChildContext: function() {
@@ -89,7 +86,7 @@ module.exports = React.createClass({
     },
 
     getInitialState: function() {
-        var s = {
+        return {
             loading: true,
             screen: undefined,
             screenAfterLogin: this.props.initialScreenAfterLogin,
@@ -139,7 +136,6 @@ module.exports = React.createClass({
             register_is_url: null,
             register_id_sid: null,
         };
-        return s;
     },
 
     getDefaultProps: function() {
@@ -156,17 +152,15 @@ module.exports = React.createClass({
             return this.state.register_hs_url;
         } else if (MatrixClientPeg.get()) {
             return MatrixClientPeg.get().getHomeserverUrl();
-        }
-        else if (window.localStorage && window.localStorage.getItem("mx_hs_url")) {
-            return window.localStorage.getItem("mx_hs_url");
-        }
-        else {
+        } else if (window.localStorage && window.localStorage.getItem('mx_hs_url')) {
+            return window.localStorage.getItem('mx_hs_url');
+        } else {
             return this.getDefaultHsUrl();
         }
     },
 
     getDefaultHsUrl() {
-        return this.props.config.default_hs_url || "https://matrix.org";
+        return this.props.config.default_hs_url || 'https://matrix.org';
     },
 
     getFallbackHsUrl: function() {
@@ -178,17 +172,15 @@ module.exports = React.createClass({
             return this.state.register_is_url;
         } else if (MatrixClientPeg.get()) {
             return MatrixClientPeg.get().getIdentityServerUrl();
-        }
-        else if (window.localStorage && window.localStorage.getItem("mx_is_url")) {
-            return window.localStorage.getItem("mx_is_url");
-        }
-        else {
+        } else if (window.localStorage && window.localStorage.getItem('mx_is_url')) {
+            return window.localStorage.getItem('mx_is_url');
+        } else {
             return this.getDefaultIsUrl();
         }
     },
 
     getDefaultIsUrl() {
-        return this.props.config.default_is_url || "https://vector.im";
+        return this.props.config.default_is_url || 'https://vector.im';
     },
 
     componentWillMount: function() {
@@ -230,7 +222,7 @@ module.exports = React.createClass({
 
         // Some users have ended up with "undefined" as their local storage team token,
         // treat that as undefined.
-        if (this._teamToken === "undefined") {
+        if (this._teamToken === 'undefined') {
             this._teamToken = undefined;
         }
 
@@ -253,7 +245,7 @@ module.exports = React.createClass({
         UDEHandler.startListening();
 
         this.focusComposer = false;
-        window.addEventListener("focus", this.onFocus);
+        window.addEventListener('focus', this.onFocus);
 
         // this can technically be done anywhere but doing this here keeps all
         // the routing url path logic together.
@@ -285,7 +277,7 @@ module.exports = React.createClass({
                 defaultDeviceDisplayName: this.props.defaultDeviceDisplayName,
             });
         }).catch((e) => {
-            console.error("Unable to load session", e);
+            console.error('Unable to load session', e);
         }).done(()=>{
             // stuff this through the dispatcher so that it happens
             // after the on_logged_in action.
@@ -297,7 +289,7 @@ module.exports = React.createClass({
         Lifecycle.stopMatrixClient();
         dis.unregister(this.dispatcherRef);
         UDEHandler.stopListening();
-        window.removeEventListener("focus", this.onFocus);
+        window.removeEventListener('focus', this.onFocus);
         window.removeEventListener('resize', this.handleResize);
     },
 
@@ -324,14 +316,13 @@ module.exports = React.createClass({
     onAction: function(payload) {
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-        var roomIndexDelta = 1;
+        let roomIndexDelta = 1;
 
-        var self = this;
         switch (payload.action) {
             case 'logout':
                 Lifecycle.logout();
                 break;
-            case 'start_registration':
+            case 'start_registration': {
                 const params = payload.params || {};
                 this.setStateForNewScreen({
                     screen: 'register',
@@ -347,10 +338,9 @@ module.exports = React.createClass({
                 });
                 this.notifyNewScreen('register');
                 break;
+            }
             case 'start_login':
-                if (MatrixClientPeg.get() &&
-                    MatrixClientPeg.get().isGuest()
-                ) {
+                if (MatrixClientPeg.get() && MatrixClientPeg.get().isGuest()) {
                     this.setState({
                         guestCreds: MatrixClientPeg.getCredentials(),
                     });
@@ -362,7 +352,7 @@ module.exports = React.createClass({
                 break;
             case 'start_post_registration':
                 this.setState({ // don't clobber loggedIn status
-                    screen: 'post_registration'
+                    screen: 'post_registration',
                 });
                 break;
             case 'start_upgrade_registration':
@@ -371,7 +361,7 @@ module.exports = React.createClass({
                 // registration or explicitly logged out
                 this.setStateForNewScreen({
                     guestCreds: MatrixClientPeg.getCredentials(),
-                    screen: "register",
+                    screen: 'register',
                     upgradeUsername: MatrixClientPeg.get().getUserIdLocalpart(),
                     guestAccessToken: MatrixClientPeg.get().getAccessToken(),
                 });
@@ -395,12 +385,12 @@ module.exports = React.createClass({
                 Modal.createDialog(QuestionDialog, {
                     title: "Leave room",
                     description: "Are you sure you want to leave the room?",
-                    onFinished: (should_leave) => {
-                        if (should_leave) {
+                    onFinished: (shouldLeave) => {
+                        if (shouldLeave) {
                             const d = MatrixClientPeg.get().leave(payload.room_id);
 
                             // FIXME: controller shouldn't be loading a view :(
-                            const Loader = sdk.getComponent("elements.Spinner");
+                            const Loader = sdk.getComponent('elements.Spinner');
                             const modal = Modal.createDialog(Loader, null, 'mx_Dialog_spinner');
 
                             d.then(() => {
@@ -410,14 +400,15 @@ module.exports = React.createClass({
                                 }
                             }, (err) => {
                                 modal.close();
-                                console.error("Failed to leave room " + payload.room_id + " " + err);
+                                console.error(`Failed to leave room ${payload.room_id} ${err}`);
                                 Modal.createDialog(ErrorDialog, {
                                     title: "Failed to leave room",
-                                    description: (err && err.message ? err.message : "Server may be unavailable, overloaded, or you hit a bug."),
+                                    description: (err && err.message ? err.message
+                                        : 'Server may be unavailable, overloaded, or you hit a bug.'),
                                 });
                             });
                         }
-                    }
+                    },
                 });
                 break;
             case 'reject_invite':
@@ -427,7 +418,7 @@ module.exports = React.createClass({
                     onFinished: (confirm) => {
                         if (confirm) {
                             // FIXME: controller shouldn't be loading a view :(
-                            const Loader = sdk.getComponent("elements.Spinner");
+                            const Loader = sdk.getComponent('elements.Spinner');
                             const modal = Modal.createDialog(Loader, null, 'mx_Dialog_spinner');
 
                             MatrixClientPeg.get().leave(payload.room_id).done(() => {
@@ -439,17 +430,17 @@ module.exports = React.createClass({
                                 modal.close();
                                 Modal.createDialog(ErrorDialog, {
                                     title: "Failed to reject invitation",
-                                    description: err.toString()
+                                    description: err.toString(),
                                 });
                             });
                         }
-                    }
+                    },
                 });
                 break;
             case 'view_user':
                 // FIXME: ugly hack to expand the RightPanel and then re-dispatch.
                 if (this.state.collapse_rhs) {
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         dis.dispatch({
                             action: 'show_right_panel',
                         });
@@ -469,13 +460,12 @@ module.exports = React.createClass({
                 break;
             case 'view_prev_room':
                 roomIndexDelta = -1;
-            case 'view_next_room':
-                var allRooms = RoomListSorter.mostRecentActivityFirst(
-                    MatrixClientPeg.get().getRooms()
-                );
-                var roomIndex = -1;
-                for (var i = 0; i < allRooms.length; ++i) {
-                    if (allRooms[i].roomId == this.state.currentRoomId) {
+            case 'view_next_room': { // maybe we should disable no-fallthrough
+                const allRooms = RoomListSorter.mostRecentActivityFirst(
+                    MatrixClientPeg.get().getRooms());
+                let roomIndex = -1;
+                for (let i = 0; i < allRooms.length; ++i) {
+                    if (allRooms[i].roomId === this.state.currentRoomId) {
                         roomIndex = i;
                         break;
                     }
@@ -484,37 +474,39 @@ module.exports = React.createClass({
                 if (roomIndex < 0) roomIndex = allRooms.length - 1;
                 this._viewRoom({ room_id: allRooms[roomIndex].roomId });
                 break;
-            case 'view_indexed_room':
-                var allRooms = RoomListSorter.mostRecentActivityFirst(
-                    MatrixClientPeg.get().getRooms()
-                );
-                var roomIndex = payload.roomIndex;
+            }
+            case 'view_indexed_room': {
+                const allRooms = RoomListSorter.mostRecentActivityFirst(
+                    MatrixClientPeg.get().getRooms());
+                const roomIndex = payload.roomIndex;
                 if (allRooms[roomIndex]) {
                     this._viewRoom({ room_id: allRooms[roomIndex].roomId });
                 }
                 break;
+            }
             case 'view_user_settings':
                 this._setPage(PageTypes.UserSettings);
                 this.notifyNewScreen('settings');
                 break;
-            case 'view_create_room':
+            case 'view_create_room': {
                 //this._setPage(PageTypes.CreateRoom);
                 //this.notifyNewScreen('new');
 
-                var TextInputDialog = sdk.getComponent("dialogs.TextInputDialog");
+                const TextInputDialog = sdk.getComponent('dialogs.TextInputDialog');
                 Modal.createDialog(TextInputDialog, {
                     title: "Create Room",
                     description: "Room name (optional)",
                     button: "Create Room",
-                    onFinished: (should_create, name) => {
-                        if (should_create) {
+                    onFinished: (shouldCreate, name) => {
+                        if (shouldCreate) {
                             const createOpts = {};
                             if (name) createOpts.name = name;
                             createRoom({createOpts}).done();
                         }
-                    }
+                    },
                 });
                 break;
+            }
             case 'view_room_directory':
                 this._setPage(PageTypes.RoomDirectory);
                 this.notifyNewScreen('directory');
@@ -583,8 +575,7 @@ module.exports = React.createClass({
             case 'new_version':
                 this.onVersion(
                     payload.currentVersion, payload.newVersion,
-                    payload.releaseNotes
-                );
+                    payload.releaseNotes);
                 break;
         }
     },
@@ -611,30 +602,30 @@ module.exports = React.createClass({
     // @param {Object=} room_info.oob_data Object of additional data about the room
     //                               that has been passed out-of-band (eg.
     //                               room name and avatar from an invite email)
-    _viewRoom: function(room_info) {
+    _viewRoom: function(roomInfo) {
         this.focusComposer = true;
 
-        var newState = {
-            initialEventId: room_info.event_id,
-            highlightedEventId: room_info.event_id,
+        const newState = {
+            initialEventId: roomInfo.event_id,
+            highlightedEventId: roomInfo.event_id,
             initialEventPixelOffset: undefined,
             page_type: PageTypes.RoomView,
-            thirdPartyInvite: room_info.third_party_invite,
-            roomOobData: room_info.oob_data,
-            currentRoomAlias: room_info.room_alias,
-            autoJoin: room_info.auto_join,
+            thirdPartyInvite: roomInfo.third_party_invite,
+            roomOobData: roomInfo.oob_data,
+            currentRoomAlias: roomInfo.room_alias,
+            autoJoin: roomInfo.auto_join,
         };
 
-        if (!room_info.room_alias) {
-            newState.currentRoomId = room_info.room_id;
+        if (!roomInfo.room_alias) {
+            newState.currentRoomId = roomInfo.room_id;
         }
 
         // if we aren't given an explicit event id, look for one in the
         // scrollStateMap.
         //
         // TODO: do this in RoomView rather than here
-        if (!room_info.event_id && this.refs.loggedInView) {
-            var scrollState = this.refs.loggedInView.getScrollStateForRoom(room_info.room_id);
+        if (!roomInfo.event_id && this.refs.loggedInView) {
+            const scrollState = this.refs.loggedInView.getScrollStateForRoom(roomInfo.room_id);
             if (scrollState) {
                 newState.initialEventId = scrollState.focussedEvent;
                 newState.initialEventPixelOffset = scrollState.pixelOffset;
@@ -646,15 +637,15 @@ module.exports = React.createClass({
         let waitFor = q(null);
         if (!this.firstSyncComplete) {
             if (!this.firstSyncPromise) {
-                console.warn('Cannot view a room before first sync. room_id:', room_info.room_id);
+                console.warn('Cannot view a room before first sync. room_id:', roomInfo.room_id);
                 return;
             }
             waitFor = this.firstSyncPromise.promise;
         }
 
         waitFor.done(() => {
-            let presentedId = room_info.room_alias || room_info.room_id;
-            const room = MatrixClientPeg.get().getRoom(room_info.room_id);
+            let presentedId = roomInfo.room_alias || roomInfo.room_id;
+            const room = MatrixClientPeg.get().getRoom(roomInfo.room_id);
             if (room) {
                 const theAlias = Rooms.getDisplayAliasForRoom(room);
                 if (theAlias) presentedId = theAlias;
@@ -666,8 +657,8 @@ module.exports = React.createClass({
                 }
             }
 
-            if (room_info.event_id) {
-                presentedId += "/" + room_info.event_id;
+            if (roomInfo.event_id) {
+                presentedId += '/' + roomInfo.event_id;
             }
             this.notifyNewScreen('room/' + presentedId);
             newState.ready = true;
@@ -676,14 +667,14 @@ module.exports = React.createClass({
     },
 
     _createChat: function() {
-        var ChatInviteDialog = sdk.getComponent("dialogs.ChatInviteDialog");
+        const ChatInviteDialog = sdk.getComponent('dialogs.ChatInviteDialog');
         Modal.createDialog(ChatInviteDialog, {
             title: "Start a new chat",
         });
     },
 
     _invite: function(roomId) {
-        var ChatInviteDialog = sdk.getComponent("dialogs.ChatInviteDialog");
+        const ChatInviteDialog = sdk.getComponent('dialogs.ChatInviteDialog');
         Modal.createDialog(ChatInviteDialog, {
             title: "Invite new room members",
             button: "Send Invites",
@@ -710,6 +701,7 @@ module.exports = React.createClass({
 
     /**
      * Called whenever someone changes the theme
+     * @param {string=} theme selected theme name, falsy=default
      */
     _onSetTheme: function(theme) {
         if (!theme) {
@@ -718,15 +710,13 @@ module.exports = React.createClass({
 
         // look for the stylesheet elements.
         // styleElements is a map from style name to HTMLLinkElement.
-        var styleElements = Object.create(null);
-        var i, a;
-        for (i = 0; (a = document.getElementsByTagName("link")[i]); i++) {
-            var href = a.getAttribute("href");
+        const styleElements = Object.create(null);
+        let a;
+        for (let i = 0; (a = document.getElementsByTagName("link")[i]); i++) {
+            const href = a.getAttribute("href");
             // shouldn't we be using the 'title' tag rather than the href?
-            var match = href.match(/^bundles\/.*\/theme-(.*)\.css$/);
-            if (match) {
-                styleElements[match[1]] = a;
-            }
+            const match = href.match(/^bundles\/.*\/theme-(.*)\.css$/);
+            if (match) styleElements[match[1]] = a;
         }
 
         if (!(theme in styleElements)) {
@@ -746,8 +736,7 @@ module.exports = React.createClass({
             // abuse the tinter to change all the SVG's #fff to #2d2d2d
             // XXX: obviously this shouldn't be hardcoded here.
             Tinter.tintSvgWhite('#2d2d2d');
-        }
-        else {
+        } else {
             Tinter.tintSvgWhite('#ffffff');
         }
     },
@@ -780,8 +769,7 @@ module.exports = React.createClass({
         if (this.state.screenAfterLogin && this.state.screenAfterLogin.screen) {
             this.showScreen(
                 this.state.screenAfterLogin.screen,
-                this.state.screenAfterLogin.params
-            );
+                this.state.screenAfterLogin.params);
             this.notifyNewScreen(this.state.screenAfterLogin.screen);
             this.setState({screenAfterLogin: null});
         } else if (localStorage && localStorage.getItem('mx_last_room_id')) {
@@ -821,8 +809,8 @@ module.exports = React.createClass({
      * (useful for setting listeners)
      */
     _onWillStartClient() {
-        var self = this;
-        var cli = MatrixClientPeg.get();
+        const self = this;
+        const cli = MatrixClientPeg.get();
 
         // Allow the JS SDK to reap timeline events. This reduces the amount of
         // memory consumed as the JS SDK stores multiple distinct copies of room
@@ -848,11 +836,11 @@ module.exports = React.createClass({
 
         cli.on('sync', function(state, prevState) {
             self.updateStatusIndicator(state, prevState);
-            if (state === "SYNCING" && prevState === "SYNCING") {
+            if (state === 'SYNCING' && prevState === 'SYNCING') {
                 return;
             }
-            console.log("MatrixClient sync state => %s", state);
-            if (state !== "PREPARED") { return; }
+            console.log('MatrixClient sync state => %s', state);
+            if (state !== 'PREPARED') return;
 
             self.firstSyncComplete = true;
             self.firstSyncPromise.resolve();
@@ -863,20 +851,18 @@ module.exports = React.createClass({
         cli.on('Call.incoming', function(call) {
             dis.dispatch({
                 action: 'incoming_call',
-                call: call
+                call: call,
             });
         });
         cli.on('Session.logged_out', function(call) {
-            var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+            const ErrorDialog = sdk.getComponent('dialogs.ErrorDialog');
             Modal.createDialog(ErrorDialog, {
                 title: "Signed Out",
-                description: "For security, this session has been signed out. Please sign in again."
+                description: "For security, this session has been signed out. Please sign in again.",
             });
-            dis.dispatch({
-                action: 'logout'
-            });
+            dis.dispatch({action: 'logout'});
         });
-        cli.on("accountData", function(ev) {
+        cli.on('accountData', function(ev) {
             if (ev.getType() === 'im.vector.web.settings') {
                 if (ev.getContent() && ev.getContent().theme) {
                     dis.dispatch({
@@ -893,64 +879,64 @@ module.exports = React.createClass({
     },
 
     showScreen: function(screen, params) {
-        if (screen == 'register') {
+        if (screen === 'register') {
             dis.dispatch({
                 action: 'start_registration',
-                params: params
+                params: params,
             });
-        } else if (screen == 'login') {
+        } else if (screen === 'login') {
             dis.dispatch({
                 action: 'start_login',
-                params: params
+                params: params,
             });
-        } else if (screen == 'forgot_password') {
+        } else if (screen === 'forgot_password') {
             dis.dispatch({
                 action: 'start_password_recovery',
-                params: params
+                params: params,
             });
-        } else if (screen == 'new') {
+        } else if (screen === 'new') {
             dis.dispatch({
                 action: 'view_create_room',
             });
-        } else if (screen == 'settings') {
+        } else if (screen === 'settings') {
             dis.dispatch({
                 action: 'view_user_settings',
             });
-        } else if (screen == 'home') {
+        } else if (screen === 'home') {
             dis.dispatch({
                 action: 'view_home_page',
             });
-        } else if (screen == 'directory') {
+        } else if (screen === 'directory') {
             dis.dispatch({
                 action: 'view_room_directory',
             });
-        } else if (screen == 'post_registration') {
+        } else if (screen === 'post_registration') {
             dis.dispatch({
                 action: 'start_post_registration',
             });
-        } else if (screen.indexOf('room/') == 0) {
-            var segments = screen.substring(5).split('/');
-            var roomString = segments[0];
-            var eventId = segments[1]; // undefined if no event id given
+        } else if (screen.indexOf('room/') === 0) {
+            const segments = screen.substring(5).split('/');
+            const roomString = segments[0];
+            const eventId = segments[1]; // undefined if no event id given
 
             // FIXME: sort_out caseConsistency
-            var third_party_invite = {
+            const thirdPartyInvite = {
                 inviteSignUrl: params.signurl,
                 invitedEmail: params.email,
             };
-            var oob_data = {
+            const oobData = {
                 name: params.room_name,
                 avatarUrl: params.room_avatar_url,
                 inviterName: params.inviter_name,
             };
 
-            var payload = {
+            const payload = {
                 action: 'view_room',
                 event_id: eventId,
-                third_party_invite: third_party_invite,
-                oob_data: oob_data,
+                third_party_invite: thirdPartyInvite,
+                oob_data: oobData,
             };
-            if (roomString[0] == '#') {
+            if (roomString[0] === '#') {
                 payload.room_alias = roomString;
             } else {
                 payload.room_id = roomString;
@@ -961,20 +947,19 @@ module.exports = React.createClass({
             if (this.state.loggedIn) {
                 dis.dispatch(payload);
             }
-        } else if (screen.indexOf('user/') == 0) {
-            var userId = screen.substring(5);
+        } else if (screen.indexOf('user/') === 0) {
+            const userId = screen.substring(5);
             this.setState({ viewUserId: userId });
             this._setPage(PageTypes.UserView);
             this.notifyNewScreen('user/' + userId);
-            var member = new Matrix.RoomMember(null, userId);
+            const member = new Matrix.RoomMember(null, userId);
             if (member) {
                 dis.dispatch({
                     action: 'view_user',
                     member: member,
                 });
             }
-        }
-        else {
+        } else {
             console.info("Ignoring showScreen for '%s'", screen);
         }
     },
@@ -993,7 +978,7 @@ module.exports = React.createClass({
     onUserClick: function(event, userId) {
         event.preventDefault();
 
-        var member = new Matrix.RoomMember(null, userId);
+        const member = new Matrix.RoomMember(null, userId);
         if (!member) { return; }
         dis.dispatch({
             action: 'view_user',
@@ -1002,18 +987,16 @@ module.exports = React.createClass({
     },
 
     onLogoutClick: function(event) {
-        dis.dispatch({
-            action: 'logout'
-        });
+        dis.dispatch({action: 'logout'});
         event.stopPropagation();
         event.preventDefault();
     },
 
     handleResize: function(e) {
-        var hideLhsThreshold = 1000;
-        var showLhsThreshold = 1000;
-        var hideRhsThreshold = 820;
-        var showRhsThreshold = 820;
+        const hideLhsThreshold = 1000;
+        const showLhsThreshold = 1000;
+        const hideRhsThreshold = 820;
+        const showRhsThreshold = 820;
 
         if (this.state.width > hideLhsThreshold && window.innerWidth <= hideLhsThreshold) {
             dis.dispatch({ action: 'hide_left_panel' });
@@ -1031,23 +1014,23 @@ module.exports = React.createClass({
         this.setState({width: window.innerWidth});
     },
 
-    onRoomCreated: function(room_id) {
+    onRoomCreated: function(roomId) {
         dis.dispatch({
             action: "view_room",
-            room_id: room_id,
+            room_id: roomId,
         });
     },
 
     onRegisterClick: function() {
-        this.showScreen("register");
+        this.showScreen('register');
     },
 
     onLoginClick: function() {
-        this.showScreen("login");
+        this.showScreen('login');
     },
 
     onForgotPasswordClick: function() {
-        this.showScreen("forgot_password");
+        this.showScreen('forgot_password');
     },
 
     onReturnToGuestClick: function() {
@@ -1067,10 +1050,8 @@ module.exports = React.createClass({
 
     onFinishPostRegistration: function() {
         // Don't confuse this with "PageType" which is the middle window to show
-        this.setState({
-            screen: undefined
-        });
-        this.showScreen("settings");
+        this.setState({screen: undefined});
+        this.showScreen('settings');
     },
 
     onVersion: function(current, latest, releaseNotes) {
@@ -1083,10 +1064,10 @@ module.exports = React.createClass({
     },
 
     updateStatusIndicator: function(state, prevState) {
-        var notifCount = 0;
+        let notifCount = 0;
 
-        var rooms = MatrixClientPeg.get().getRooms();
-        for (var i = 0; i < rooms.length; ++i) {
+        const rooms = MatrixClientPeg.get().getRooms();
+        for (let i = 0; i < rooms.length; ++i) {
             if (rooms[i].hasMembershipState(MatrixClientPeg.get().credentials.userId, 'invite')) {
                 notifCount++;
             } else if (rooms[i].getUnreadNotificationCount()) {
@@ -1102,7 +1083,7 @@ module.exports = React.createClass({
             PlatformPeg.get().setNotificationCount(notifCount);
         }
 
-        document.title = `Riot ${state === "ERROR" ? " [offline]" : ""}${notifCount > 0 ? ` [${notifCount}]` : ""}`;
+        document.title = `Riot ${state === 'ERROR' ? ' [offline]' : ''}${notifCount > 0 ? ` [${notifCount}]` : ''}`;
     },
 
     onUserSettingsClose: function() {
@@ -1113,19 +1094,18 @@ module.exports = React.createClass({
                 action: 'view_room',
                 room_id: this.state.currentRoomId,
             });
-        }
-        else {
+        } else {
             dis.dispatch({
                 action: 'view_room_directory',
             });
         }
     },
 
-    onRoomIdResolved: function(room_id) {
+    onRoomIdResolved: function(roomId) {
         // It's the RoomView's resposibility to look up room aliases, but we need the
         // ID to pass into things like the Member List, so the Room View tells us when
         // its done that resolution so we can display things that take a room ID.
-        this.setState({currentRoomId: room_id});
+        this.setState({currentRoomId: roomId});
     },
 
     _makeRegistrationUrl: function(params) {
@@ -1147,9 +1127,8 @@ module.exports = React.createClass({
                     <Spinner />
                 </div>
             );
-        }
-        // needs to be before normal PageTypes as you are logged in technically
-        else if (this.state.screen == 'post_registration') {
+        } else if (this.state.screen === 'post_registration') {
+            // needs to be before normal PageTypes as you are logged in technically
             const PostRegistration = sdk.getComponent('structures.login.PostRegistration');
             return (
                 <PostRegistration
@@ -1182,7 +1161,7 @@ module.exports = React.createClass({
                     </a>
                 </div>
             );
-        } else if (this.state.screen == 'register') {
+        } else if (this.state.screen === 'register') {
             const Registration = sdk.getComponent('structures.login.Registration');
             return (
                 <Registration
@@ -1207,7 +1186,7 @@ module.exports = React.createClass({
                     onCancelClick={this.state.guestCreds ? this.onReturnToGuestClick : null}
                     />
             );
-        } else if (this.state.screen == 'forgot_password') {
+        } else if (this.state.screen === 'forgot_password') {
             const ForgotPassword = sdk.getComponent('structures.login.ForgotPassword');
             return (
                 <ForgotPassword
@@ -1237,5 +1216,5 @@ module.exports = React.createClass({
                 />
             );
         }
-    }
+    },
 });

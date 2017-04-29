@@ -14,18 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-var React = require('react');
-var ReactDOM = require("react-dom");
+const React = require('react');
 
-var Matrix = require("matrix-js-sdk");
-var sdk = require('../../index');
-var MatrixClientPeg = require("../../MatrixClientPeg");
-var dis = require("../../dispatcher");
+const sdk = require('../../index');
+const MatrixClientPeg = require('../../MatrixClientPeg');
 
 /*
  * Component which shows the global notification list using a TimelinePanel
  */
-var NotificationPanel = React.createClass({
+const NotificationPanel = React.createClass({
     displayName: 'NotificationPanel',
 
     propTypes: {
@@ -33,14 +30,14 @@ var NotificationPanel = React.createClass({
 
     render: function() {
         // wrap a TimelinePanel with the jump-to-event bits turned off.
-        var TimelinePanel = sdk.getComponent("structures.TimelinePanel");
-        var Loader = sdk.getComponent("elements.Spinner");
+        const TimelinePanel = sdk.getComponent('structures.TimelinePanel');
+        const Loader = sdk.getComponent('elements.Spinner');
 
-        var timelineSet = MatrixClientPeg.get().getNotifTimelineSet();
+        const timelineSet = MatrixClientPeg.get().getNotifTimelineSet();
 
         if (timelineSet) {
             return (
-                <TimelinePanel key={"NotificationPanel_" + this.props.roomId}
+                <TimelinePanel key={'NotificationPanel_' + this.props.roomId}
                     className="mx_NotificationPanel"
                     manageReadReceipts={false}
                     manageReadMarkers={false}
@@ -51,9 +48,8 @@ var NotificationPanel = React.createClass({
                     empty="You have no visible notifications"
                 />
             );
-        }
-        else {
-            console.error("No notifTimelineSet available!");
+        } else {
+            console.error('No notifTimelineSet available!');
             return (
                 <div className="mx_NotificationPanel">
                     <Loader/>
