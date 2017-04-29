@@ -51,5 +51,7 @@
   "Login as guest": "Login as guest",
   "Return to app": "Return to app",
   "Sign in": "Sign in",
-  "Create a new account": "Create a new account"
+  "Create a new account": "Create a new account",
+  "Send an encrypted message…": "Send an encrypted message…",
+  "Send a message (unencrypted)…": "Send a message (unencrypted)…"
 }
