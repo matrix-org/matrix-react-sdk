@@ -19,9 +19,9 @@ limitations under the License.
 
 var React = require('react');
 var sdk = require('../../../index');
-var counterpart = require('counterpart');
 var MatrixClientPeg = require('../../../MatrixClientPeg');
-var counterpart = require('counterpart');
+
+import counterpart from 'counterpart';
 
 module.exports = React.createClass({
     displayName: 'RoomPreviewBar',
