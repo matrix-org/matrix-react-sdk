@@ -17,9 +17,9 @@ limitations under the License.
 
 'use strict';
 
-const classNames = require('classnames');
-const React = require('react');
-const ReactDOM = require('react-dom');
+import classNames from 'classnames';
+import {PropTypes} from 'react';
+import ReactDOM from 'react-dom';
 
 // Shamelessly ripped off Modal.js.  There's probably a better way
 // of doing reusable widgets like dialog boxes & menus where we go and
@@ -29,10 +29,10 @@ module.exports = {
     ContextualMenuContainerId: 'mx_ContextualMenu_Container',
 
     propTypes: {
-        menuWidth: React.PropTypes.number,
-        menuHeight: React.PropTypes.number,
-        chevronOffset: React.PropTypes.number,
-        menuColour: React.PropTypes.string,
+        menuWidth: PropTypes.number,
+        menuHeight: PropTypes.number,
+        chevronOffset: PropTypes.number,
+        menuColour: PropTypes.string,
     },
 
     getOrCreateContainer: function() {
