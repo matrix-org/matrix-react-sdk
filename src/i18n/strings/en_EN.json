@@ -50,6 +50,7 @@
   "Continue": "Continue",
   "Could not connect to the integration server": "Could not connect to the integration server",
   "Create an account": "Create an account",
+  "Create a new account": "Create a new account",
   "Create Room": "Create Room",
   "Cryptography": "Cryptography",
   "Curve25519 identity key": "Curve25519 identity key",
@@ -204,6 +205,7 @@
   "Show panel": "Show panel",
   "Signed Out": "Signed Out",
   "Sign in": "Sign in",
+<<<<<<< HEAD
   "Sign out": "Sign out",
   "since the point in time of selecting this option": "since the point in time of selecting this option",
   "since they joined": "since they joined",
