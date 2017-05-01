@@ -681,7 +681,7 @@ module.exports = React.createClass({
                 // XXX: There's not a whole lot we can really do if this fails: at best
                 // perhaps we could try a couple more times, but since it's a temporary
                 // compatability workaround, let's not bother.
-                // Rooms.setDMRoom(this.state.room.roomId, me.events.member.getSender()).done();
+                Rooms.setDMRoom(this.state.room.roomId, me.events.member.getSender()).done();
             }
 
             this.setState({
