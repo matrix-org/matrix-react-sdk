@@ -718,7 +718,7 @@ module.exports = React.createClass({
      */
     _onSetTheme: function(theme) {
         if (!theme) {
-            theme = 'cadcampo';
+            theme = 'light';
         }
 
         // look for the stylesheet elements.

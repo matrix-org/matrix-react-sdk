@@ -103,11 +103,6 @@ const CRYPTO_SETTINGS_LABELS = [
 const THEMES = [
     {
         id: 'theme',
-        label: 'Tema do Caderno de Campo',
-        value: 'cadcampo',
-    },
-    {
-        id: 'theme',
         label: 'Light theme',
         value: 'light',
     },
