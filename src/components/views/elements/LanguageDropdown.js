@@ -35,6 +35,11 @@ const LANGUAGES = [
       id: 'language',
       label: 'Brazilian Portuguese',
       value: 'pt_br',
+    },
+    {
+      id: 'language',
+      label: 'Dansk',
+      value: 'da',
     }
 ];
 
