@@ -15,6 +15,7 @@ limitations under the License.
 */
 import React from 'react';
 const MemberAvatar = require('../avatars/MemberAvatar.js');
+var counterpart = require('counterpart');
 
 module.exports = React.createClass({
     displayName: 'MemberEventListSummary',
@@ -206,27 +207,27 @@ module.exports = React.createClass({
      * @returns {string} the written English equivalent of the transition.
      */
     _getDescriptionForTransition(t, plural, repeats) {
-        const beConjugated = plural ? "were" : "was";
-        const invitation = "their invitation" + (plural || (repeats > 1) ? "s" : "");
+        const beConjugated = plural ? counterpart.translate("were") : counterpart.translate("was");
+        const invitation = (plural || (repeats > 1) ? counterpart.translate("their invitations") : counterpart.translate("their invitation"));
 
         let res = null;
         const map = {
-            "joined": "joined",
-            "left": "left",
-            "joined_and_left": "joined and left",
-            "left_and_joined": "left and rejoined",
-            "invite_reject": "rejected " + invitation,
-            "invite_withdrawal": "had " + invitation + " withdrawn",
-            "invited": beConjugated + " invited",
-            "banned": beConjugated + " banned",
-            "unbanned": beConjugated + " unbanned",
-            "kicked": beConjugated + " kicked",
-            "changed_name": "changed name",
-            "changed_avatar": "changed avatar",
+            "joined": counterpart.translate("joined"),
+            "left": counterpart.translate("left"),
+            "joined_and_left": counterpart.translate("joined and left"),
+            "left_and_joined": counterpart.translate("left and rejoined"),
+            "invite_reject": counterpart.translate("rejected") + " " + invitation,
+            "invite_withdrawal": counterpart.translate("had") + " " + invitation + " " + counterpart.translate("withdrawn"),
+            "invited": beConjugated + " " + counterpart.translate("was invited"),
+            "banned": beConjugated + " " + counterpart.translate("was banned"),
+            "unbanned": beConjugated + " " + counterpart.translate("was unbanned"),
+            "kicked": beConjugated + " " + counterpart.translate("was kicked"),
+            "changed_name": counterpart.translate("changed name"),
+            "changed_avatar": counterpart.translate("changed avatar"),
         };
 
         if (Object.keys(map).includes(t)) {
-            res = map[t] + (repeats > 1 ? " " + repeats + " times" : "" );
+            res = map[t] + (repeats > 1 ? " " + repeats + " " + counterpart.translate("times") : "" );
         }
 
         return res;
@@ -254,11 +255,11 @@ module.exports = React.createClass({
             return items[0];
         } else if (remaining) {
             items = items.slice(0, itemLimit);
-            const other = " other" + (remaining > 1 ? "s" : "");
-            return items.join(', ') + ' and ' + remaining + other;
+            const other = " " + (remaining > 1 ? counterpart.translate("others") : counterpart.translate("other"));
+            return items.join(', ') + " " + counterpart.translate("and") + " " + remaining + other;
         } else {
             const lastItem = items.pop();
-            return items.join(', ') + ' and ' + lastItem;
+            return items.join(', ') + " " + counterpart.translate("and") + " " + lastItem;
         }
     },
 

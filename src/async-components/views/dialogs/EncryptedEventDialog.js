@@ -125,7 +125,7 @@ module.exports = React.createClass({
                     </tr>
                     <tr>
                         <td>{ counterpart.translate('Curve25519 identity key') }</td>
-                        <td><code>{ event.getSenderKey() || <i>none</i> }</code></td>
+                        <td><code>{ event.getSenderKey() || <i>{ counterpart.translate('none') }</i> }</code></td>
                     </tr>
                     <tr>
                         <td>{ counterpart.translate('Claimed Ed25519 fingerprint key') }</td>
@@ -178,7 +178,7 @@ module.exports = React.createClass({
                 </div>
                 <div className="mx_Dialog_buttons">
                     <button className="mx_Dialog_primary" onClick={ this.props.onFinished } autoFocus={ true }>
-                        OK
+                        { counterpart.translate('OK') }
                     </button>
                     {buttons}
                 </div>

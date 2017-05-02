@@ -21,6 +21,7 @@ import AddThreepid from '../../../AddThreepid';
 import WithMatrixClient from '../../../wrappers/WithMatrixClient';
 import Modal from '../../../Modal';
 
+var counterpart = require('counterpart');
 
 export default WithMatrixClient(React.createClass({
     displayName: 'AddPhoneNumber',
@@ -158,7 +159,7 @@ export default WithMatrixClient(React.createClass({
                         <input type="text"
                             ref={this._collectAddMsisdnInput}
                             className="mx_UserSettings_phoneNumberField"
-                            placeholder="Add phone number"
+                            placeholder={ counterpart.translate("Add phone number") }
                             value={this.state.phoneNumber}
                             onChange={this._onPhoneNumberChange}
                         />
