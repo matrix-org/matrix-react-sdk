@@ -38,7 +38,7 @@
   "changed the power level of": "changed the power level of",
   "changed the room name to": "changed the room name to",
   "changed the topic to": "changed the topic to",
-  "Changes to who can read history will only apply to future messages in this room": "Changes to who can read history will only apply to future messages in this room", 
+  "Changes to who can read history will only apply to future messages in this room": "Changes to who can read history will only apply to future messages in this room",
   "Changes your display nickname": "Changes your display nickname",
   "Claimed Ed25519 fingerprint key": "Claimed Ed25519 fingerprint key",
   "Clear Cache and Reload": "Clear Cache and Reload",
@@ -62,7 +62,7 @@
   "demote": "demote",
   "Deops user with given id": "Deops user with given id",
   "Device ID": "Device ID",
-  "Devices will <b>not</b> yet be able to decrypt history from before they joined the room": "Devices will <b>not</b> yet be able to decrypt history from before they joined the room", 
+  "Devices will <b>not</b> yet be able to decrypt history from before they joined the room": "Devices will <b>not</b> yet be able to decrypt history from before they joined the room",
   "Direct Chat": "Direct Chat",
   "Disable inline URL previews by default": "Disable inline URL previews by default",
   "Display name": "Display name",
@@ -137,7 +137,7 @@
   "made future room history visible to": "made future room history visible to",
   "Manage Integrations": "Manage Integrations",
   "Members only": "Members only",
-  "Mobile phone number": "Mobile phone number", 
+  "Mobile phone number": "Mobile phone number",
   "Moderator": "Moderator",
   "my Matrix ID": "my Matrix ID",
   "Name": "Name",
@@ -286,5 +286,5 @@
   "you must be a": "you must be a",
   "Your password has been reset": "Your password has been reset",
   "Your password was successfully changed. You will not receive push notifications on other devices until you log back in to them": "Your password was successfully changed. You will not receive push notifications on other devices until you log back in to them",
-  "You should <b>not</b> yet trust it to secure data": "You should <b>not</b> yet trust it to secure data",
+  "You should <b>not</b> yet trust it to secure data": "You should <b>not</b> yet trust it to secure data"
 }
