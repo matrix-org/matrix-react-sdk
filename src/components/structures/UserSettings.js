@@ -252,7 +252,7 @@ module.exports = React.createClass({
             var NeedToRegisterDialog = sdk.getComponent("dialogs.NeedToRegisterDialog");
             Modal.createDialog(NeedToRegisterDialog, {
                 title: counterpart.translate("Please Register"),
-                description: counterpart.translate("Guests can't set avatars. Please register."),
+                description: counterpart.translate("Guests can't set avatars. Please register") + ".",
             });
             return;
         }
@@ -725,7 +725,7 @@ module.exports = React.createClass({
                             var NeedToRegisterDialog = sdk.getComponent("dialogs.NeedToRegisterDialog");
                             Modal.createDialog(NeedToRegisterDialog, {
                                 title: counterpart.translate("Please Register"),
-                                description: counterpart.translate("Guests can't use labs features. Please register."),
+                                description: counterpart.translate("Guests can't use labs features. Please register") + ".",
                             });
                             return;
                         }

@@ -83,7 +83,7 @@ export default class MessageComposer extends React.Component {
             let NeedToRegisterDialog = sdk.getComponent("dialogs.NeedToRegisterDialog");
             Modal.createDialog(NeedToRegisterDialog, {
                 title: counterpart.translate("Please Register"),
-                description: counterpart.translate("Guest users can't upload files. Please register to upload."),
+                description: counterpart.translate("Guest users can't upload files. Please register to upload") + ".",
             });
             return;
         }
