@@ -256,7 +256,7 @@ module.exports = React.createClass({
 
         this.focusComposer = false;
         window.addEventListener("focus", this.onFocus);
-
+        
         // this can technically be done anywhere but doing this here keeps all
         // the routing url path logic together.
         if (this.onAliasClick) {
@@ -505,9 +505,9 @@ module.exports = React.createClass({
 
                 var TextInputDialog = sdk.getComponent("dialogs.TextInputDialog");
                 Modal.createDialog(TextInputDialog, {
-                    title: "Create Room",
-                    description: "Room name (optional)",
-                    button: "Create Room",
+                    title: counterpart.translate ("Create Room"),
+                    description: counterpart.translate ("Room name (optional)"),
+                    button: counterpart.translate ("Create Room"),
                     onFinished: (should_create, name) => {
                         if (should_create) {
                             const createOpts = {};
@@ -683,16 +683,16 @@ module.exports = React.createClass({
     _createChat: function() {
         var ChatInviteDialog = sdk.getComponent("dialogs.ChatInviteDialog");
         Modal.createDialog(ChatInviteDialog, {
-            title: "Start a new chat",
+            title: counterpart.translate ("Start a chat"),
         });
     },
 
     _invite: function(roomId) {
         var ChatInviteDialog = sdk.getComponent("dialogs.ChatInviteDialog");
         Modal.createDialog(ChatInviteDialog, {
-            title: "Invite new room members",
-            button: "Send Invites",
-            description: "Who would you like to add to this room?",
+            title: counterpart.translate ("Invite new room members"),
+            button: counterpart.translate ("Send Invites"),
+            description: counterpart.translate ("Who would you like to add to this room?"),
             roomId: roomId,
         });
     },
@@ -1222,7 +1222,7 @@ module.exports = React.createClass({
                 <div className="mx_MatrixChat_splash">
                     <Spinner />
                     <a href="#" className="mx_MatrixChat_splashButtons" onClick={ this.onLogoutClick }>
-                    Logout
+                    {counterpart.translate("Logout")}
                     </a>
                 </div>
             );
