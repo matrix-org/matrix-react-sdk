@@ -257,7 +257,7 @@ module.exports = React.createClass({
 
         this.focusComposer = false;
         window.addEventListener("focus", this.onFocus);
-        
+
         // this can technically be done anywhere but doing this here keeps all
         // the routing url path logic together.
         if (this.onAliasClick) {
@@ -833,7 +833,7 @@ module.exports = React.createClass({
               UserSettingsStore.setLocalSetting('language', language.split('-')[0]);
             } else if (language == 'pt-br') {
               counterpart.setLocale('pt-br');
-              UserSettingsStore.setLocalSetting('language', 'pt_br');
+              UserSettingsStore.setLocalSetting('language', 'pt-br');
             } else {
               counterpart.setLocale(language);
               UserSettingsStore.setLocalSetting('language', language);
@@ -850,7 +850,7 @@ module.exports = React.createClass({
               UserSettingsStore.setLocalSetting('language', language.split('-')[0]);
             } else if (language == 'pt-br') {
               counterpart.setLocale('pt-br');
-              UserSettingsStore.setLocalSetting('language', 'pt_br');
+              UserSettingsStore.setLocalSetting('language', 'pt-br');
             } else {
               counterpart.setLocale(language);
               UserSettingsStore.setLocalSetting('language', language);
