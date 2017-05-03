@@ -927,7 +927,7 @@ module.exports = React.createClass({
             var NeedToRegisterDialog = sdk.getComponent("dialogs.NeedToRegisterDialog");
             Modal.createDialog(NeedToRegisterDialog, {
                 title: "Please Register",
-                description: "Guest users can't upload files. Please register to upload."
+                description: "Guest users can't upload files. Please register to upload" + "."
             });
             return;
         }
