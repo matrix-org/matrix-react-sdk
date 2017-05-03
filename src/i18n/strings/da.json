@@ -62,7 +62,10 @@
     "Add email address": "Tilføj e-mail-adresse",
     "Add phone number": "Tilføj telefonnummer",
     "Admin": "Administrator",
-    "Advanced": "Fremskreden",
+    "Advanced": "Avanceret",
     "all room members": "Alle rum medlemmer",
-    "all room members, from the point they are invited": "Alle rum medlemmer, siden invitations-tidspunkt"
+    "all room members, from the point they are invited": "Alle rum medlemmer, siden invitations-tidspunkt",
+    "all room members, from the point they joined": "Alle rum medlemmer, siden de deltog",
+    "an address": "en adresse",
+    "and": " og"
 }
