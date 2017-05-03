@@ -9,7 +9,7 @@
     "Historical": "Historisch",
     "New passwords must match each other.": "Die neuen Passwörter müssen identisch sein.",
     "A new password must be entered.": "Es muss ein neues Passwort eingegeben werden.",
-    "The email address linked to your account must be entered.": "Es muss die Email-Adresse eingeben werden, welche beim Benutzer hinterlegt ist.",
+    "The email address linked to your account must be entered.": "Es muss die Email-Adresse eingeben werden, welche zum Account gehört.",
     "Failed to send email: ": "Email konnte nicht versendet werden: ",
     "unknown device": "Unbekanntes Gerät",
     "NOT verified": "NICHT verifiziert",
@@ -30,11 +30,11 @@
     "End-to-end encryption information": "Ende-zu-Ende Verschlüsselungs Informationen",
     "Event information": "Ereignis Informationen",
     "Sender device information": "Absender Geräte Informationen",
-    "Displays action": "Displays action",
+    "Displays action": "Zeigt Aktionen an",
     "Bans user with given id": "Sperrt Benutzer mit der angegebenen ID",
     "Deops user with given id": "Entfernt OP beim Benutzer mit der angegebenen ID",
     "Invites user with given id to current room": "Lädt Benutzer mit der angegebenen ID in den aktuellen Raum ein",
-    "Joins room with given alias": "Joins room with given alias",
+    "Joins room with given alias": "Betrete Raum mit angegebenen Alias",
     "Kicks user with given id": "Kickt Benutzer mit angegebener ID",
     "Changes your display nickname": "Ändert deinen angezeigten Nicknamen",
     "Searches DuckDuckGo for results": "Suche in DuckDuckGo nach Ergebnissen",
@@ -53,5 +53,6 @@
     "Sign in": "Anmelden",
     "Create a new account": "Erstelle einen neuen Benutzer",
     "Send an encrypted message…": "Sende eine verschlüsselte Nachricht…",
-    "Send a message (unencrypted)…": "Sende eine Nachricht (unverschlüsselt)…"
+    "Send a message (unencrypted)…": "Sende eine Nachricht (unverschlüsselt)…",
+    "Warning": "Warnung"
 }
