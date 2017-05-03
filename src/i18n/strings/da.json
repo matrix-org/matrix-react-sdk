@@ -53,5 +53,16 @@
     "Sign in": "Log ind",
     "Create a new account": "Oprette en ny bruger",
     "Send an encrypted message…": "Send en krypteret meddelelse …",
-    "Send a message (unencrypted)…": "Send en meddelelse (ukrypteret) …"
+    "Send a message (unencrypted)…": "Send en meddelelse (ukrypteret) …",
+    "Warning": "Advarsel",
+    "accept": "acceptere",
+    "accepted an invitation": "Godkendt en invitation",
+    "accepted the invitation for": "Accepteret invitationen til",
+    "Account": "Konto",
+    "Add email address": "Tilføj e-mail-adresse",
+    "Add phone number": "Tilføj telefonnummer",
+    "Admin": "Administrator",
+    "Advanced": "Fremskreden",
+    "all room members": "Alle rum medlemmer",
+    "all room members, from the point they are invited": "Alle rum medlemmer, siden invitations-tidspunkt"
 }
