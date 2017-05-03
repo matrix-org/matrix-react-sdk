@@ -14,14 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-var React = require('react');
-var sdk = require('../../index');
-var dis = require("../../dispatcher");
-var WhoIsTyping = require("../../WhoIsTyping");
-var MatrixClientPeg = require("../../MatrixClientPeg");
-const MemberAvatar = require("../views/avatars/MemberAvatar");
+const React = require('react');
+const sdk = require('../../index');
+const WhoIsTyping = require('../../WhoIsTyping');
+const MatrixClientPeg = require('../../MatrixClientPeg');
+const MemberAvatar = require('../views/avatars/MemberAvatar');
 
-const HIDE_DEBOUNCE_MS = 10000;
+// const HIDE_DEBOUNCE_MS = 10000;
 const STATUS_BAR_HIDDEN = 0;
 const STATUS_BAR_EXPANDED = 1;
 const STATUS_BAR_EXPANDED_LARGE = 2;
@@ -94,8 +93,8 @@ module.exports = React.createClass({
     },
 
     componentWillMount: function() {
-        MatrixClientPeg.get().on("sync", this.onSyncStateChange);
-        MatrixClientPeg.get().on("RoomMember.typing", this.onRoomMemberTyping);
+        MatrixClientPeg.get().on('sync', this.onSyncStateChange);
+        MatrixClientPeg.get().on('RoomMember.typing', this.onRoomMemberTyping);
 
         this._checkSize();
     },
@@ -106,20 +105,16 @@ module.exports = React.createClass({
 
     componentWillUnmount: function() {
         // we may have entirely lost our client as we're logging out before clicking login on the guest bar...
-        var client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.get();
         if (client) {
-            client.removeListener("sync", this.onSyncStateChange);
-            client.removeListener("RoomMember.typing", this.onRoomMemberTyping);
+            client.removeListener('sync', this.onSyncStateChange);
+            client.removeListener('RoomMember.typing', this.onRoomMemberTyping);
         }
     },
 
     onSyncStateChange: function(state, prevState) {
-        if (state === "SYNCING" && prevState === "SYNCING") {
-            return;
-        }
-        this.setState({
-            syncState: state
-        });
+        if (state === 'SYNCING' && prevState === 'SYNCING') return;
+        this.setState({syncState: state});
     },
 
     onRoomMemberTyping: function(ev, member) {
@@ -129,7 +124,7 @@ module.exports = React.createClass({
     },
 
     // Check whether current size is greater than 0, if yes call props.onVisible
-    _checkSize: function () {
+    _checkSize: function() {
         if (this.props.onVisible && this._getSize()) {
             this.props.onVisible();
         }
@@ -139,7 +134,7 @@ module.exports = React.createClass({
     // changed - so we use '0' to indicate normal size, and other values to
     // indicate other sizes.
     _getSize: function() {
-        if (this.state.syncState === "ERROR" ||
+        if (this.state.syncState === 'ERROR' ||
             (this.state.usersTyping.length > 0) ||
             this.props.numUnreadMessages ||
             !this.props.atEndOfLiveTimeline ||
@@ -162,18 +157,15 @@ module.exports = React.createClass({
     _getIndicator: function(wantPlaceholder) {
         if (this.props.numUnreadMessages) {
             return (
-                <div className="mx_RoomStatusBar_scrollDownIndicator"
-                        onClick={ this.props.onScrollToBottomClick }>
-                    <img src="img/newmessages.svg" width="24" height="24"
-                        alt=""/>
+                <div className="mx_RoomStatusBar_scrollDownIndicator" onClick={ this.props.onScrollToBottomClick }>
+                    <img src="img/newmessages.svg" width="24" height="24" alt=""/>
                 </div>
             );
         }
 
         if (!this.props.atEndOfLiveTimeline) {
             return (
-                <div className="mx_RoomStatusBar_scrollDownIndicator"
-                        onClick={ this.props.onScrollToBottomClick }>
+                <div className="mx_RoomStatusBar_scrollDownIndicator" onClick={ this.props.onScrollToBottomClick }>
                     <img src="img/scrolldown.svg" width="24" height="24"
                         alt="Scroll to bottom of page"
                         title="Scroll to bottom of page"/>
@@ -182,13 +174,11 @@ module.exports = React.createClass({
         }
 
         if (this.props.hasActiveCall) {
-            var TintableSvg = sdk.getComponent("elements.TintableSvg");
-            return (
-                <TintableSvg src="img/sound-indicator.svg" width="23" height="20"/>
-            );
+            const TintableSvg = sdk.getComponent('elements.TintableSvg');
+            return <TintableSvg src="img/sound-indicator.svg" width="23" height="20"/>;
         }
 
-        if (this.state.syncState === "ERROR") {
+        if (this.state.syncState === 'ERROR') {
             return null;
         }
 
@@ -228,7 +218,7 @@ module.exports = React.createClass({
             avatars.push(
                 <span className="mx_RoomStatusBar_typingIndicatorRemaining" key="others">
                     +{othersCount}
-                </span>
+                </span>,
             );
         }
 
@@ -237,15 +227,15 @@ module.exports = React.createClass({
 
     // return suitable content for the main (text) part of the status bar.
     _getContent: function() {
-        var TabCompleteBar = sdk.getComponent('rooms.TabCompleteBar');
-        var TintableSvg = sdk.getComponent("elements.TintableSvg");
+        const TabCompleteBar = sdk.getComponent('rooms.TabCompleteBar');
+        const TintableSvg = sdk.getComponent('elements.TintableSvg');
         const EmojiText = sdk.getComponent('elements.EmojiText');
 
         // no conn bar trumps unread count since you can't get unread messages
         // without a connection! (technically may already have some but meh)
         // It also trumps the "some not sent" msg since you can't resend without
         // a connection!
-        if (this.state.syncState === "ERROR") {
+        if (this.state.syncState === 'ERROR') {
             return (
                 <div className="mx_RoomStatusBar_connectionLostBar">
                     <img src="img/warning.svg" width="24" height="23" title="/!\ " alt="/!\ "/>
@@ -298,8 +288,8 @@ module.exports = React.createClass({
         // unread count trumps who is typing since the unread count is only
         // set when you've scrolled up
         if (this.props.numUnreadMessages) {
-            var unreadMsgs = this.props.numUnreadMessages + " new message" +
-                (this.props.numUnreadMessages > 1 ? "s" : "");
+            const unreadMsgs = this.props.numUnreadMessages + ' new message' +
+                (this.props.numUnreadMessages > 1 ? 's' : '');
 
             return (
                 <div className="mx_RoomStatusBar_unreadMessagesBar"
@@ -311,7 +301,7 @@ module.exports = React.createClass({
 
         const typingString = WhoIsTyping.whoIsTypingString(
             this.state.usersTyping,
-            this.props.whoIsTypingLimit
+            this.props.whoIsTypingLimit,
         );
         if (typingString) {
             return (
@@ -334,8 +324,8 @@ module.exports = React.createClass({
 
 
     render: function() {
-        var content = this._getContent();
-        var indicator = this._getIndicator(this.state.usersTyping.length > 0);
+        const content = this._getContent();
+        const indicator = this._getIndicator(this.state.usersTyping.length > 0);
 
         return (
             <div className="mx_RoomStatusBar">

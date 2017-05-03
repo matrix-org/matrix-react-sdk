@@ -17,29 +17,29 @@ limitations under the License.
 
 'use strict';
 
-var classNames = require('classnames');
-var React = require('react');
-var ReactDOM = require('react-dom');
+import classNames from 'classnames';
+import {PropTypes} from 'react';
+import ReactDOM from 'react-dom';
 
 // Shamelessly ripped off Modal.js.  There's probably a better way
 // of doing reusable widgets like dialog boxes & menus where we go and
 // pass in a custom control as the actual body.
 
 module.exports = {
-    ContextualMenuContainerId: "mx_ContextualMenu_Container",
+    ContextualMenuContainerId: 'mx_ContextualMenu_Container',
 
     propTypes: {
-        menuWidth: React.PropTypes.number,
-        menuHeight: React.PropTypes.number,
-        chevronOffset: React.PropTypes.number,
-        menuColour: React.PropTypes.string,
+        menuWidth: PropTypes.number,
+        menuHeight: PropTypes.number,
+        chevronOffset: PropTypes.number,
+        menuColour: PropTypes.string,
     },
 
     getOrCreateContainer: function() {
-        var container = document.getElementById(this.ContextualMenuContainerId);
+        let container = document.getElementById(this.ContextualMenuContainerId);
 
         if (!container) {
-            container = document.createElement("div");
+            container = document.createElement('div');
             container.id = this.ContextualMenuContainerId;
             document.body.appendChild(container);
         }
@@ -48,9 +48,9 @@ module.exports = {
     },
 
     createMenu: function(Element, props) {
-        var self = this;
+        const self = this;
 
-        var closeMenu = function() {
+        const closeMenu = function() {
             ReactDOM.unmountComponentAtNode(self.getOrCreateContainer());
 
             if (props && props.onFinished) {
@@ -58,17 +58,17 @@ module.exports = {
             }
         };
 
-        var position = {
+        const position = {
             top: props.top,
         };
 
-        var chevronOffset = {};
+        const chevronOffset = {};
         if (props.chevronOffset) {
             chevronOffset.top = props.chevronOffset;
         }
 
         // To override the default chevron colour, if it's been set
-        var chevronCSS = "";
+        let chevronCSS = '';
         if (props.menuColour) {
             chevronCSS = `
                 .mx_ContextualMenu_chevron_left:after {
@@ -81,7 +81,7 @@ module.exports = {
             `;
         }
 
-        var chevron = null;
+        let chevron = null;
         if (props.left) {
             chevron = <div style={chevronOffset} className="mx_ContextualMenu_chevron_left"></div>;
             position.left = props.left;
@@ -90,15 +90,15 @@ module.exports = {
             position.right = props.right;
         }
 
-        var className = 'mx_ContextualMenu_wrapper';
+        const className = 'mx_ContextualMenu_wrapper';
 
-        var menuClasses = classNames({
+        const menuClasses = classNames({
             'mx_ContextualMenu': true,
             'mx_ContextualMenu_left': props.left,
             'mx_ContextualMenu_right': !props.left,
         });
 
-        var menuStyle = {};
+        const menuStyle = {};
         if (props.menuWidth) {
             menuStyle.width = props.menuWidth;
         }
@@ -108,12 +108,12 @@ module.exports = {
         }
 
         if (props.menuColour) {
-            menuStyle["backgroundColor"] = props.menuColour;
+            menuStyle['backgroundColor'] = props.menuColour;
         }
 
         // FIXME: If a menu uses getDefaultProps it clobbers the onFinished
         // property set here so you can't close the menu from a button click!
-        var menu = (
+        const menu = (
             <div className={className} style={position}>
                 <div className={menuClasses} style={menuStyle}>
                     {chevron}

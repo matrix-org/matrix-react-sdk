@@ -14,18 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-var React = require('react');
-var ReactDOM = require("react-dom");
+const React = require('react');
 
-var Matrix = require("matrix-js-sdk");
-var sdk = require('../../index');
-var MatrixClientPeg = require("../../MatrixClientPeg");
-var dis = require("../../dispatcher");
+const Matrix = require('matrix-js-sdk');
+const sdk = require('../../index');
+const MatrixClientPeg = require('../../MatrixClientPeg');
 
 /*
  * Component which shows the filtered file using a TimelinePanel
  */
-var FilePanel = React.createClass({
+const FilePanel = React.createClass({
     displayName: 'FilePanel',
 
     propTypes: {
@@ -56,48 +54,47 @@ var FilePanel = React.createClass({
     },
 
     updateTimelineSet: function(roomId) {
-        var client = MatrixClientPeg.get();
-        var room = client.getRoom(roomId);
+        const client = MatrixClientPeg.get();
+        const room = client.getRoom(roomId);
 
         if (room) {
-            var filter = new Matrix.Filter(client.credentials.userId);
+            const filter = new Matrix.Filter(client.credentials.userId);
             filter.setDefinition(
                 {
-                    "room": {
-                        "timeline": {
-                            "contains_url": true
+                    'room': {
+                        'timeline': {
+                            'contains_url': true,
                         },
-                    }
-                }
+                    },
+                },
             );
 
             // FIXME: we shouldn't be doing this every time we change room - see comment above.
-            client.getOrCreateFilter("FILTER_FILES_" + client.credentials.userId, filter).then(
+            client.getOrCreateFilter('FILTER_FILES_' + client.credentials.userId, filter).then(
                 (filterId)=>{
                     filter.filterId = filterId;
-                    var timelineSet = room.getOrCreateFilteredTimelineSet(filter);
+                    const timelineSet = room.getOrCreateFilteredTimelineSet(filter);
                     this.setState({ timelineSet: timelineSet });
                 },
                 (error)=>{
-                    console.error("Failed to get or create file panel filter", error);
-                }
+                    console.error('Failed to get or create file panel filter', error);
+                },
             );
-        }
-        else {
-            console.error("Failed to add filtered timelineSet for FilePanel as no room!");
+        } else {
+            console.error('Failed to add filtered timelineSet for FilePanel as no room!');
         }
     },
 
     render: function() {
         // wrap a TimelinePanel with the jump-to-event bits turned off.
-        var TimelinePanel = sdk.getComponent("structures.TimelinePanel");
-        var Loader = sdk.getComponent("elements.Spinner");
+        const TimelinePanel = sdk.getComponent('structures.TimelinePanel');
+        const Loader = sdk.getComponent('elements.Spinner');
 
         if (this.state.timelineSet) {
             // console.log("rendering TimelinePanel for timelineSet " + this.state.timelineSet.room.roomId + " " +
             //             "(" + this.state.timelineSet._timelines.join(", ") + ")" + " with key " + this.props.roomId);
             return (
-                <TimelinePanel key={"filepanel_" + this.props.roomId}
+                <TimelinePanel key={'filepanel_' + this.props.roomId}
                     className="mx_FilePanel"
                     manageReadReceipts={false}
                     manageReadMarkers={false}
@@ -108,8 +105,7 @@ var FilePanel = React.createClass({
                     empty="There are no visible files in this room"
                 />
             );
-        }
-        else {
+        } else {
             return (
                 <div className="mx_FilePanel">
                     <Loader/>

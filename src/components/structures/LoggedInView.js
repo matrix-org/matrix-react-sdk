@@ -15,14 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as Matrix from 'matrix-js-sdk';
-import React from 'react';
+import * as Matrix from "matrix-js-sdk";
+import React from "react";
 
-import KeyCode from '../../KeyCode';
-import Notifier from '../../Notifier';
-import PageTypes from '../../PageTypes';
-import sdk from '../../index';
-import dis from '../../dispatcher';
+import KeyCode from "../../KeyCode";
+import Notifier from "../../Notifier";
+import PageTypes from "../../PageTypes";
+import sdk from "../../index";
+import dis from "../../dispatcher";
 
 /**
  * This is what our MatrixChat shows when we are logged in. The precise view is
@@ -104,7 +104,7 @@ export default React.createClass({
             }
             */
 
-        var handled = false;
+        let handled = false;
 
         switch (ev.keyCode) {
             case KeyCode.ESCAPE:
@@ -122,7 +122,7 @@ export default React.createClass({
             case KeyCode.UP:
             case KeyCode.DOWN:
                 if (ev.altKey && !ev.shiftKey && !ev.ctrlKey && !ev.metaKey) {
-                    var action = ev.keyCode == KeyCode.UP ?
+                    const action = ev.keyCode === KeyCode.UP ?
                         'view_prev_room' : 'view_next_room';
                     dis.dispatch({action: action});
                     handled = true;
@@ -152,12 +152,11 @@ export default React.createClass({
         }
     },
 
-    /** dispatch a page-up/page-down/etc to the appropriate component */
+    /* dispatch a page-up/page-down/etc to the appropriate component */
     _onScrollKeyPressed: function(ev) {
         if (this.refs.roomView) {
             this.refs.roomView.handleScrollKey(ev);
-        }
-        else if (this.refs.roomDirectory) {
+        } else if (this.refs.roomDirectory) {
             this.refs.roomDirectory.handleScrollKey(ev);
         }
     },
@@ -174,13 +173,13 @@ export default React.createClass({
         const GuestWarningBar = sdk.getComponent('globals.GuestWarningBar');
         const NewVersionBar = sdk.getComponent('globals.NewVersionBar');
 
-        let page_element;
-        let right_panel = '';
+        let pageElement;
+        let rightPanel = '';
 
         switch (this.props.page_type) {
             case PageTypes.RoomView:
-                page_element = <RoomView
-                        ref='roomView'
+                pageElement = <RoomView
+                        ref="roomView"
                         roomAddress={this.props.currentRoomAlias || this.props.currentRoomId}
                         autoJoin={this.props.autoJoin}
                         onRoomIdResolved={this.props.onRoomIdResolved}
@@ -195,11 +194,13 @@ export default React.createClass({
                         ConferenceHandler={this.props.ConferenceHandler}
                         scrollStateMap={this._scrollStateMap}
                     />;
-                if (!this.props.collapse_rhs) right_panel = <RightPanel roomId={this.props.currentRoomId} opacity={this.props.sideOpacity} />;
+                if (!this.props.collapse_rhs) {
+                    rightPanel = <RightPanel roomId={this.props.currentRoomId} opacity={this.props.sideOpacity} />;
+                }
                 break;
 
             case PageTypes.UserSettings:
-                page_element = <UserSettings
+                pageElement = <UserSettings
                     onClose={this.props.onUserSettingsClose}
                     brand={this.props.config.brand}
                     collapsedRhs={this.props.collapse_rhs}
@@ -207,59 +208,55 @@ export default React.createClass({
                     referralBaseUrl={this.props.config.referralBaseUrl}
                     teamToken={this.props.teamToken}
                 />;
-                if (!this.props.collapse_rhs) right_panel = <RightPanel opacity={this.props.sideOpacity}/>;
+                if (!this.props.collapse_rhs) rightPanel = <RightPanel opacity={this.props.sideOpacity}/>;
                 break;
 
             case PageTypes.CreateRoom:
-                page_element = <CreateRoom
+                pageElement = <CreateRoom
                     onRoomCreated={this.props.onRoomCreated}
                     collapsedRhs={this.props.collapse_rhs}
                 />;
-                if (!this.props.collapse_rhs) right_panel = <RightPanel opacity={this.props.sideOpacity}/>;
+                if (!this.props.collapse_rhs) rightPanel = <RightPanel opacity={this.props.sideOpacity}/>;
                 break;
 
             case PageTypes.RoomDirectory:
-                page_element = <RoomDirectory
+                pageElement = <RoomDirectory
                     ref="roomDirectory"
                     config={this.props.config.roomDirectory}
                 />;
                 break;
 
             case PageTypes.HomePage:
-                page_element = <HomePage
+                pageElement = <HomePage
                     collapsedRhs={this.props.collapse_rhs}
                     teamServerUrl={this.props.config.teamServerConfig.teamServerURL}
                     teamToken={this.props.teamToken}
-                />
-                if (!this.props.collapse_rhs) right_panel = <RightPanel opacity={this.props.sideOpacity}/>
+                />;
+                if (!this.props.collapse_rhs) rightPanel = <RightPanel opacity={this.props.sideOpacity}/>;
                 break;
 
             case PageTypes.UserView:
-                page_element = null; // deliberately null for now
-                right_panel = <RightPanel userId={this.props.viewUserId} opacity={this.props.sideOpacity} />;
+                pageElement = null; // deliberately null for now
+                rightPanel = <RightPanel userId={this.props.viewUserId} opacity={this.props.sideOpacity} />;
                 break;
         }
 
-        var topBar;
+        let topBar;
         if (this.props.hasNewVersion) {
             topBar = <NewVersionBar version={this.props.version} newVersion={this.props.newVersion}
                 releaseNotes={this.props.newVersionReleaseNotes}
             />;
-        }
-        else if (this.props.matrixClient.isGuest()) {
+        } else if (this.props.matrixClient.isGuest()) {
             topBar = <GuestWarningBar />;
-        }
-        else if (Notifier.supportsDesktopNotifications() && !Notifier.isEnabled() && !Notifier.isToolbarHidden()) {
+        } else if (Notifier.supportsDesktopNotifications() && !Notifier.isEnabled() && !Notifier.isToolbarHidden()) {
             topBar = <MatrixToolbar />;
         }
 
-        var bodyClasses = 'mx_MatrixChat';
-        if (topBar) {
-            bodyClasses += ' mx_MatrixChat_toolbarShowing';
-        }
+        let bodyClasses = 'mx_MatrixChat';
+        if (topBar) bodyClasses += ' mx_MatrixChat_toolbarShowing';
 
         return (
-            <div className='mx_MatrixChat_wrapper'>
+            <div className="mx_MatrixChat_wrapper">
                 {topBar}
                 <div className={bodyClasses}>
                     <LeftPanel
@@ -268,10 +265,10 @@ export default React.createClass({
                         opacity={this.props.sideOpacity}
                         teamToken={this.props.teamToken}
                     />
-                    <main className='mx_MatrixChat_middlePanel'>
-                        {page_element}
+                    <main className="mx_MatrixChat_middlePanel">
+                        {pageElement}
                     </main>
-                    {right_panel}
+                    {rightPanel}
                 </div>
             </div>
         );
