@@ -171,5 +171,11 @@
     "olm version": "OLM-Version",
     "Once encryption is enabled for a room it <b>cannot</b> be turned off again (for now)": "Wenn Verschlüsselung for einen Raum aktiviert wurde, kann es <b>nicht</b> wieder deaktiviert werden (aktuell)",
     "Only people who have been invited": "Nur Personen die eingeladen wurden",
-    "or": "oder"
+    "or": "oder",
+    "other": "weiteres",
+    "others": "andere",
+    "Password": "Passwort",
+    "Permissions": "Berechtigungen",
+    "Phone": "Telefon",
+    "placed a": "plazierte einen"
 }
