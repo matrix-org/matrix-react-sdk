@@ -320,8 +320,7 @@ module.exports = React.createClass({
         let errMsg = err.error || "";
         if (err.httpStatus === 403) {
             errMsg = counterpart.translate("Failed to change password. Is your password correct?");
-        } lse if (err.httpStatus) {
-
+        } else if (err.httpStatus) {
             errMsg += ` (HTTP status ${err.httpStatus})`;
         }
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
