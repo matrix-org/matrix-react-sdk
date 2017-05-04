@@ -40,7 +40,12 @@ const LANGUAGES = [
       id: 'language',
       label: 'Dansk',
       value: 'da',
-    }
+    },
+    {
+      id: 'language',
+      label: 'Russian',
+      value: 'ru',
+    },
 ];
 
 const LANGUAGES_BY_VALUE = new Object(null);
