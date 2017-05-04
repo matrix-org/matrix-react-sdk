@@ -546,6 +546,7 @@ module.exports = React.createClass({
       this.setState({
         Language: l,
       });
+      PlatformPeg.get().reload();
     },
 
     _renderLanguageSetting: function () {
@@ -959,7 +960,7 @@ module.exports = React.createClass({
                     <div className="mx_UserSettings_profileTable">
                         <div className="mx_UserSettings_profileTableRow">
                             <div className="mx_UserSettings_profileLabelCell">
-                                <label htmlFor="displayName">{ counterpart.translate('Display name') }</label>                                
+                                <label htmlFor="displayName">{ counterpart.translate('Display name') }</label>
                             </div>
                             <div className="mx_UserSettings_profileInputCell">
                                 <ChangeDisplayName />
