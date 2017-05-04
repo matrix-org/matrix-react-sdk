@@ -24,6 +24,9 @@ import url from 'url';
 import sdk from '../../../index';
 import Login from '../../../Login';
 
+// For validating phone numbers without country codes
+const PHONE_NUMBER_REGEX = /^[0-9\(\)\-\s]*$/;
+
 /**
  * A wire component which glues together login UI components and Login logic
  */
@@ -126,7 +129,16 @@ module.exports = React.createClass({
     },
 
     onPhoneNumberChanged: function(phoneNumber) {
-        this.setState({ phoneNumber: phoneNumber });
+        // Validate the phone number entered
+        if (!PHONE_NUMBER_REGEX.test(phoneNumber)) {
+            this.setState({ errorText: 'The phone number entered looks invalid' });
+            return;
+        }
+
+        this.setState({
+            phoneNumber: phoneNumber,
+            errorText: null,
+        });
     },
 
     onServerConfigChange: function(config) {

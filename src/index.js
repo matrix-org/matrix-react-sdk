@@ -30,24 +30,3 @@ module.exports.resetSkin = function() {
 module.exports.getComponent = function(componentName) {
     return Skinner.getComponent(componentName);
 };
-
-module.exports.setLanguage = function(language) {
-    if (language) {
-      dis.dispatch({
-          action: 'set_language',
-          value: language,
-      });
-    }else{
-      var language = navigator.language || navigator.userLanguage;
-      if (language.indexOf("-") > -1) {
-        counterpart.setLocale(language.split('-')[0]);
-        UserSettingsStore.setLocalSetting('language', language.split('-')[0]);
-      } else if (language == 'pt-br') {
-        counterpart.setLocale('pt-br');
-        UserSettingsStore.setLocalSetting('language', 'pt_br');
-      } else {
-        counterpart.setLocale(language);
-        UserSettingsStore.setLocalSetting('language', language);
-      }
-    }
-};
