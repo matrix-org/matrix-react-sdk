@@ -1,17 +1,17 @@
-var fs = require('fs');
-var path = require('path');
-var glob = require('glob');
+const fs = require('fs');
+const path = require('path');
+const glob = require('glob');
 
 function ReskindexPlugin(header) {
     console.log('Resk index plugin creteated');
     this._header = header;
 };
 
-var prevFiles = null;
+let prevFiles = null;
 
 ReskindexPlugin.prototype._reskin = function() {
-    var componentsDir = path.join('src', 'components');
-    var files = glob.sync('**/*.js', {cwd: componentsDir}).sort();
+    const componentsDir = path.join('src', 'components');
+    const files = glob.sync('**/*.js', {cwd: componentsDir}).sort();
 
     // Do not index again if the files being indexed have not changed
     if (prevFiles && files.join('') === prevFiles) {
@@ -20,11 +20,9 @@ ReskindexPlugin.prototype._reskin = function() {
     }
     prevFiles = files.join('');
 
-    var componentIndex = path.join('src', 'component-index.js');
+    const packageJson = JSON.parse(fs.readFileSync('./package.json'));
 
-    var packageJson = JSON.parse(fs.readFileSync('./package.json'));
-
-    var strm = fs.createWriteStream(componentIndex);
+    const strm = fs.createWriteStream(path.join('src', 'component-index.js'));
 
     const header = this._header;
 
@@ -46,11 +44,11 @@ ReskindexPlugin.prototype._reskin = function() {
         strm.write("module.exports.components = {};\n");
     }
 
-    for (var i = 0; i < files.length; ++i) {
-        var file = files[i].replace('.js', '');
+    for (let i = 0; i < files.length; ++i) {
+        const file = files[i].replace('.js', '');
 
-        var moduleName = (file.replace(/\//g, '.'));
-        var importName = moduleName.replace(/\./g, "$");
+        const moduleName = (file.replace(/\//g, '.'));
+        const importName = moduleName.replace(/\./g, "$");
 
         strm.write("import " + importName + " from './components/" + file + "';\n");
         strm.write(importName + " && (module.exports.components['"+moduleName+"'] = " + importName + ");");
@@ -64,9 +62,8 @@ ReskindexPlugin.prototype._reskin = function() {
 }
 
 ReskindexPlugin.prototype.apply = function(compiler) {
-    var self = this;
-    compiler.plugin("watch-run", function(compilation, callback) {
-        self._reskin();
+    compiler.plugin("watch-run", (compilation, callback) => {
+        this._reskin();
         callback();
     });
 }
