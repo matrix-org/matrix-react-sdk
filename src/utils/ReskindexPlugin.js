@@ -13,6 +13,7 @@ ReskindexPlugin.prototype._reskin = function() {
     var componentsDir = path.join('src', 'components');
     var files = glob.sync('**/*.js', {cwd: componentsDir}).sort();
 
+    // Do not index again if the files being indexed have not changed
     if (prevFiles && files.join('') === prevFiles) {
         console.log("Not indexing");
         return;
