@@ -15,7 +15,7 @@ ReskindexPlugin.prototype._reskin = function() {
 
     // Do not index again if the files being indexed have not changed
     if (prevFiles && files.join('') === prevFiles) {
-        console.log("Not indexing");
+        console.log("Reskindex: Not indexing because file names have not changed");
         return;
     }
     prevFiles = files.join('');
@@ -58,7 +58,7 @@ ReskindexPlugin.prototype._reskin = function() {
 
     strm.end();
 
-    console.log('Reskindex Complete');
+    console.log('Reskindex: Completed index');
 }
 
 ReskindexPlugin.prototype.apply = function(compiler) {
