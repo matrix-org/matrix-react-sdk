@@ -114,5 +114,18 @@
     "Email Address": "Email adresse",
     "Email, name or matrix ID": "E-mail, navn eller matrix-id",
     "Encrypted messages will not be visible on clients that do not yet implement encryption": "Krypterede meddelelser vil ikke være synlige på klienter, der endnu ikke implementerer kryptering",
-    "Encrypted room": "Krypteret rummet"
+    "Encrypted room": "Krypteret rummet",
+    "Encryption is enabled in this room": "Kryptering er aktiveret i dette rum",
+    "Encryption is not enabled in this room": "Kryptering er ikke aktiveret i dette rum",
+    "ended the call.": "Afsluttede opkaldet.",
+    "End-to-end encryption is in beta and may not be reliable": "End-to-end kryptering er i beta og kan ikke være pålidelig",
+    "Error": "Fejl",
+    "Export E2E room keys": "Eksporter E2E rum nøgler",
+    "Failed to change password. Is your password correct?": "Kunne ikke ændre adgangskode. Er din adgangskode korrekt?",
+    "Failed to forget room": "Kunne ikke glemme rummet",
+    "Failed to leave room": "Kunne ikke forlade rum",
+    "Failed to reject invitation": "Kunne ikke afvise invitationen",
+    "Failed to send email": "Kunne ikke sende e-mail",
+    "Failed to set avatar.": "Kunne ikke angive avatar.",
+    "Failed to unban": "Var ikke i stand til at ophæve forbuddet"
 }
