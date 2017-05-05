@@ -234,7 +234,7 @@
     "to join the discussion": "um mitzudiskutieren",
     "To kick users": "um Nutzer zu kicken",
     "Admin": "Admin",
-    "Server may be unavailable, overloaded, or you hit a bug.": "Server könnte nicht verfügbar oder überlastet sein oder du bist auf einen Fehler gestoßen.",
+    "Server may be unavailable, overloaded, or you hit a bug": "Server könnte nicht verfügbar oder überlastet sein oder du bist auf einen Fehler gestoßen",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar": "Verbindung zum Homeserver ist über HTTP nicht möglich, wenn HTTPS in deiner Browserleiste steht",
     "Could not connect to the integration server": "Konnte keine Verbindung zum Integrations-Server herstellen",
     "Disable inline URL previews by default": "Deaktiviere URL-Vorschau im Chat standardmäßig",
