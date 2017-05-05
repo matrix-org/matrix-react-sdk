@@ -545,10 +545,6 @@ module.exports = React.createClass({
 
     onLanguageChange: function(l) {
       UserSettingsStore.setLocalSetting('language', l);
-      dis.dispatch({
-          action: 'set_language',
-          value: l,
-      });
       this.setState({
         Language: l,
       });
