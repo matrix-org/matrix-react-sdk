@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import classNames from 'classnames';
+import counterpart from 'counterpart';
 import sdk from '../../../index';
 import { getAddressType, inviteMultipleToRoom } from '../../../Invite';
 import createRoom from '../../../createRoom';
@@ -27,8 +28,6 @@ import Modal from '../../../Modal';
 import AccessibleButton from '../elements/AccessibleButton';
 import q from 'q';
 import Fuse from 'fuse.js';
-
-var counterpart = require('counterpart');
 
 const TRUNCATE_QUERY_LIST = 40;
 

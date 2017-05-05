@@ -18,10 +18,10 @@ limitations under the License.
 
 var React = require('react');
 var classNames = require("classnames");
+import counterpart from 'counterpart';
 var Modal = require('../../../Modal');
 
 var sdk = require('../../../index');
-var counterpart = require('counterpart');
 var TextForEvent = require('../../../TextForEvent');
 import WithMatrixClient from '../../../wrappers/WithMatrixClient';
 

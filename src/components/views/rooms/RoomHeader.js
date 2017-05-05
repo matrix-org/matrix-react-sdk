@@ -18,7 +18,7 @@ limitations under the License.
 
 var React = require('react');
 var sdk = require('../../../index');
-var counterpart = require('counterpart');
+import counterpart from 'counterpart';
 var MatrixClientPeg = require('../../../MatrixClientPeg');
 var Modal = require("../../../Modal");
 var dis = require("../../../dispatcher");

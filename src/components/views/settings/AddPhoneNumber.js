@@ -15,13 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
+import counterpart from 'counterpart';
 
 import sdk from '../../../index';
 import AddThreepid from '../../../AddThreepid';
 import WithMatrixClient from '../../../wrappers/WithMatrixClient';
 import Modal from '../../../Modal';
-
-var counterpart = require('counterpart');
 
 export default WithMatrixClient(React.createClass({
     displayName: 'AddPhoneNumber',

@@ -18,8 +18,8 @@ limitations under the License.
 'use strict';
 
 var React = require('react');
+import counterpart from 'counterpart';
 var sdk = require('../../../index');
-var counterpart = require('counterpart');
 
 module.exports = React.createClass({
     displayName: 'TopUnreadMessagesBar',
@@ -47,4 +47,3 @@ module.exports = React.createClass({
         );
     },
 });
-

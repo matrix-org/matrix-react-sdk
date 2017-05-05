@@ -19,7 +19,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import sdk from '../../../index';
-var counterpart = require('counterpart');
+import counterpart from 'counterpart';
 import {field_input_incorrect} from '../../../UiEffects';
 
 

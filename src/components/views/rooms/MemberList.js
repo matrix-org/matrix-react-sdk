@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 var React = require('react');
-var counterpart = require('counterpart');
+import counterpart from 'counterpart';
 var classNames = require('classnames');
 var Matrix = require("matrix-js-sdk");
 var q = require('q');

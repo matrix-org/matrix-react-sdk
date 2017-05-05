@@ -15,7 +15,7 @@ limitations under the License.
 */
 import React from 'react';
 const MemberAvatar = require('../avatars/MemberAvatar.js');
-var counterpart = require('counterpart');
+import counterpart from 'counterpart';
 
 module.exports = React.createClass({
     displayName: 'MemberEventListSummary',

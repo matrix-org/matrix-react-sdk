@@ -17,6 +17,7 @@ limitations under the License.
 
 import q from 'q';
 import React from 'react';
+import counterpart from 'counterpart';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import SdkConfig from '../../../SdkConfig';
 import sdk from '../../../index';
@@ -27,8 +28,6 @@ import ScalarAuthClient from '../../../ScalarAuthClient';
 import ScalarMessaging from '../../../ScalarMessaging';
 import UserSettingsStore from '../../../UserSettingsStore';
 import AccessibleButton from '../elements/AccessibleButton';
-
-var counterpart = require('counterpart');
 
 
 // parse a string as an integer; if the input is undefined, or cannot be parsed

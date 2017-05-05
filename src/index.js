@@ -15,9 +15,6 @@ limitations under the License.
 */
 
 var Skinner = require('./Skinner');
-import counterpart from 'counterpart';
-var dis = require("./dispatcher");
-import UserSettingsStore from './UserSettingsStore';
 
 module.exports.loadSkin = function(skinObject) {
     Skinner.load(skinObject);
