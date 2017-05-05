@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-var counterpart = require('counterpart');
+import counterpart from 'counterpart';
 export const LEVEL_ROLE_MAP = {
     undefined: counterpart.translate('Default'),
     0: counterpart.translate('User'),
