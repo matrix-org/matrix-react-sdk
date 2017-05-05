@@ -21,6 +21,7 @@ var extend = require('./extend');
 var dis = require('./dispatcher');
 var MatrixClientPeg = require('./MatrixClientPeg');
 var sdk = require('./index');
+import counterpart from 'counterpart';
 var Modal = require('./Modal');
 
 var encrypt = require("browser-encrypt-attachment");
@@ -347,13 +348,13 @@ class ContentMessages {
         }, function(err) {
             error = err;
             if (!upload.canceled) {
-                var desc = "The file '"+upload.fileName+"' failed to upload.";
+                var desc = counterpart.translate("The file '%(fileName)s' failed to upload", {fileName: upload.fileName}) + ".";
                 if (err.http_status == 413) {
-                    desc = "The file '"+upload.fileName+"' exceeds this home server's size limit for uploads";
+                    desc = counterpart.translate("The file '%(fileName)s' exceeds this home server's size limit for uploads", {fileName: upload.fileName});
                 }
                 var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
-                    title: "Upload Failed",
+                    title: counterpart.translate("Upload Failed"),
                     description: desc
                 });
             }
