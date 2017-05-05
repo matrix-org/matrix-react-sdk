@@ -30,16 +30,18 @@ module.exports = {
             return (n < 10 ? '0' : '') + n;
         }
 
+		// TODO: use standard date localize function provided in counterpart
 		var hoursAndMinutes = pad(date.getHours()) + ':' + pad(date.getMinutes());
         var now = new Date();
         if (date.toDateString() === now.toDateString()) {
             return hoursAndMinutes;
         }
         else if (now.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
-        	console.log(counterpart.translate("formattedDayTime", {weekDayName: days[date.getDay()], time: hoursAndMinutes}));
+        	// TODO: use standard date localize function provided in counterpart
             return counterpart.translate("%(weekDayName)s %(time)s", {weekDayName: counterpart.translate(days[date.getDay()]), time: hoursAndMinutes});
         }
         else /* if (now.getFullYear() === date.getFullYear()) */ {
+        	// TODO: use standard date localize function provided in counterpart
             return counterpart.translate("%(weekDayName)s, %(monthName)s %(day)s %(time)s", {weekDayName: days[date.getDay()], monthName: months[date.getMonth()], day: date.getDate(), time: hoursAndMinutes});
         }
         /*
