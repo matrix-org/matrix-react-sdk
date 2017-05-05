@@ -55,6 +55,7 @@ var MatrixClientPeg = require('./MatrixClientPeg');
 var PlatformPeg = require("./PlatformPeg");
 var Modal = require('./Modal');
 var sdk = require('./index');
+import counterpart from 'counterpart';
 var Matrix = require("matrix-js-sdk");
 var dis = require("./dispatcher");
 
@@ -142,8 +143,8 @@ function _setCallListeners(call) {
             play("busyAudio");
             var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createDialog(ErrorDialog, {
-                title: "Call Timeout",
-                description: "The remote side failed to pick up."
+                title: counterpart.translate("Call Timeout"),
+                description: counterpart.translate("The remote side failed to pick up") + "."
             });
         }
         else if (oldState === "invite_sent") {
@@ -203,7 +204,7 @@ function _onAction(payload) {
                 console.log("Can't capture screen: " + screenCapErrorString);
                 const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
-                    title: "Unable to capture screen",
+                    title: counterpart.translate("Unable to capture screen"),
                     description: screenCapErrorString
                 });
                 return;
@@ -223,8 +224,8 @@ function _onAction(payload) {
             if (module.exports.getAnyActiveCall()) {
                 const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
-                    title: "Existing Call",
-                    description: "You are already in a call."
+                    title: counterpart.translate("Existing Call"),
+                    description: counterpart.translate("You are already in a call") + "."
                 });
                 return; // don't allow >1 call to be placed.
             }
@@ -233,8 +234,8 @@ function _onAction(payload) {
             if (!MatrixClientPeg.get().supportsVoip()) {
                 const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
-                    title: "VoIP is unsupported",
-                    description: "You cannot place VoIP calls in this browser."
+                    title: counterpart.translate("VoIP is unsupported"),
+                    description: counterpart.translate("You cannot place VoIP calls in this browser") + "."
                 });
                 return;
             }
@@ -249,7 +250,7 @@ function _onAction(payload) {
             if (members.length <= 1) {
                 const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
-                    description: "You cannot place a call with yourself."
+                    description: counterpart.translate("You cannot place a call with yourself") + "."
                 });
                 return;
             }
@@ -275,14 +276,14 @@ function _onAction(payload) {
             if (!ConferenceHandler) {
                 const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
-                    description: "Conference calls are not supported in this client"
+                    description: counterpart.translate("Conference calls are not supported in this client")
                 });
             }
             else if (!MatrixClientPeg.get().supportsVoip()) {
                 const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
-                    title: "VoIP is unsupported",
-                    description: "You cannot place VoIP calls in this browser."
+                    title: counterpart.translate("VoIP is unsupported"),
+                    description: counterpart.translate("You cannot place VoIP calls in this browser") + "."
                 });
             }
             else if (MatrixClientPeg.get().isRoomEncrypted(payload.room_id)) {
@@ -294,14 +295,14 @@ function _onAction(payload) {
                 // Therefore we disable conference calling in E2E rooms.
                 const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
-                    description: "Conference calls are not supported in encrypted rooms",
+                    description: counterpart.translate("Conference calls are not supported in encrypted rooms"),
                 });
             }
             else {
                 var QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
                 Modal.createDialog(QuestionDialog, {
-                    title: "Warning!",
-                    description: "Conference calling is in development and may not be reliable.",
+                    title: counterpart.translate("Warning") + "!",
+                    description: counterpart.translate("Conference calling is in development and may not be reliable") + ".",
                     onFinished: confirm=>{
                         if (confirm) {
                             ConferenceHandler.createNewMatrixCall(
@@ -312,8 +313,8 @@ function _onAction(payload) {
                                 const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                                 console.error("Conference call failed: " + err);
                                 Modal.createDialog(ErrorDialog, {
-                                    title: "Failed to set up conference call",
-                                    description: "Conference call failed. " + ((err && err.message) ? err.message : ""),
+                                    title: counterpart.translate("Failed to set up conference call"),
+                                    description: counterpart.translate("Conference call failed") + ". " + ((err && err.message) ? err.message : ""),
                                 });
                             });
                         }
