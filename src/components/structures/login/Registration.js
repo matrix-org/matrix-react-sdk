@@ -27,6 +27,7 @@ import MatrixClientPeg from '../../../MatrixClientPeg';
 import RegistrationForm from '../../views/login/RegistrationForm';
 import CaptchaForm from '../../views/login/CaptchaForm';
 import RtsClient from '../../../RtsClient';
+import counterpart from 'counterpart';
 
 const MIN_PASSWORD_LENGTH = 6;
 
@@ -162,7 +163,7 @@ module.exports = React.createClass({
                     msisdn_available |= flow.stages.indexOf('m.login.msisdn') > -1;
                 }
                 if (!msisdn_available) {
-                    msg = "This server does not support authentication with a phone number";
+                    msg = counterpart.translate('This server does not support authentication with a phone number.');
                 }
             }
             this.setState({
@@ -260,29 +261,29 @@ module.exports = React.createClass({
         var errMsg;
         switch (errCode) {
             case "RegistrationForm.ERR_PASSWORD_MISSING":
-                errMsg = "Missing password.";
+                errMsg = counterpart.translate('Missing password.');
                 break;
             case "RegistrationForm.ERR_PASSWORD_MISMATCH":
-                errMsg = "Passwords don't match.";
+                errMsg = counterpart.translate('Passwords don\'t match.');
                 break;
             case "RegistrationForm.ERR_PASSWORD_LENGTH":
-                errMsg = `Password too short (min ${MIN_PASSWORD_LENGTH}).`;
+                errMsg = counterpart.translate('Password too short (min %(MIN_PASSWORD_LENGTH)s).', {MIN_PASSWORD_LENGTH: $MIN_PASSWORD_LENGTH})
                 break;
             case "RegistrationForm.ERR_EMAIL_INVALID":
-                errMsg = "This doesn't look like a valid email address";
+                errMsg = counterpart.translate('This doesn\'t look like a valid email address.');
                 break;
             case "RegistrationForm.ERR_PHONE_NUMBER_INVALID":
-                errMsg = "This doesn't look like a valid phone number";
+                errMsg = counterpart.translate('This doesn\'t look like a valid phone number.');
                 break;
             case "RegistrationForm.ERR_USERNAME_INVALID":
-                errMsg = "User names may only contain letters, numbers, dots, hyphens and underscores.";
+                errMsg = counterpart.translate('User names may only contain letters, numbers, dots, hyphens and underscores.');
                 break;
             case "RegistrationForm.ERR_USERNAME_BLANK":
-                errMsg = "You need to enter a user name";
+                errMsg = counterpart.translate('You need to enter a user name.');
                 break;
             default:
                 console.error("Unknown error code: %s", errCode);
-                errMsg = "An unknown error occurred.";
+                errMsg = counterpart.translate('An unknown error occurred.');
                 break;
         }
         this.setState({
@@ -400,7 +401,7 @@ module.exports = React.createClass({
         if (this.props.onCancelClick) {
             returnToAppJsx = (
                 <a className="mx_Login_create" onClick={this.props.onCancelClick} href="#">
-                    Return to app
+                    {counterpart.translate('Return to app')}
                 </a>
             );
         }
@@ -413,10 +414,10 @@ module.exports = React.createClass({
                             this.state.teamSelected.domain + "/icon.png" :
                             null}
                     />
-                    <h2>Create an account</h2>
+                    <h2>{counterpart.translate('Create an account')}</h2>
                     {registerBody}
                     <a className="mx_Login_create" onClick={this.props.onLoginClick} href="#">
-                        I already have an account
+                        {counterpart.translate('I already have an account')}
                     </a>
                     {returnToAppJsx}
                     <LoginFooter />

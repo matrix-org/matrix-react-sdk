@@ -838,27 +838,22 @@ module.exports = React.createClass({
               counterpart.setLocale(language);
               UserSettingsStore.setLocalSetting('language', language);
             }
-          } else {
-            getLanguage(i18nFolder + languages['en'], 'en', callbackLanguage);
-            counterpart.setFallbackLocale('en');
           }
+          getLanguage(i18nFolder + languages['en'], 'en', callbackLanguage);
+          counterpart.setFallbackLocale('en');
         } else {
           if (languages.hasOwnProperty(language)) {
             getLanguage(i18nFolder + languages[language], language, callbackLanguage);
             if (language.indexOf("-") > -1) {
               counterpart.setLocale(language.split('-')[0]);
               UserSettingsStore.setLocalSetting('language', language.split('-')[0]);
-            } else if (language == 'pt-br') {
-              counterpart.setLocale('pt-br');
-              UserSettingsStore.setLocalSetting('language', 'pt-br');
             } else {
               counterpart.setLocale(language);
               UserSettingsStore.setLocalSetting('language', language);
             }
-          } else {
-            getLanguage(i18nFolder + languages['en'], 'en', callbackLanguage);
-            counterpart.setFallbackLocale('en');
           }
+          getLanguage(i18nFolder + languages['en'], 'en', callbackLanguage);
+          counterpart.setFallbackLocale('en');
         }
       })
     },
