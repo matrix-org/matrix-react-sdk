@@ -352,5 +352,6 @@
     "Make this room private": "Mache diesen Raum privat",
     "Share message history with new users": "Teile Nachrichtenhistorie mit neuen Nutzern",
     "Encrypt room": "Entschlüssele Raum",
-    "To send events of type": "Zum Senden von Ereignissen mit Typ"
+    "To send events of type": "Zum Senden von Ereignissen mit Typ",
+    "%(names)s and %(lastPerson)s are typing": "%(names)s und %(lastPerson)s schreiben"
 }
