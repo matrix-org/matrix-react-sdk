@@ -18,15 +18,20 @@ limitations under the License.
 import q from 'q';
 import MatrixClientPeg from './MatrixClientPeg';
 import Notifier from './Notifier';
+import counterpart from 'counterpart';
 
 /*
  * TODO: Make things use this. This is all WIP - see UserSettings.js for usage.
  */
 
+var labsFeaturesNames = [];
+
+labsFeaturesNames.push(counterpart.translate("New Composer & Autocomplete"));
+
 module.exports = {
     LABS_FEATURES: [
         {
-            name: 'New Composer & Autocomplete',
+            name: labsFeaturesNames[0],
             id: 'rich_text_editor',
             default: false,
         },
