@@ -506,9 +506,9 @@ module.exports = React.createClass({
 
                 var TextInputDialog = sdk.getComponent("dialogs.TextInputDialog");
                 Modal.createDialog(TextInputDialog, {
-                    title: counterpart.translate ("Create Room"),
-                    description: counterpart.translate ("Room name (optional)"),
-                    button: counterpart.translate ("Create Room"),
+                    title: counterpart.translate('Create Room'),
+                    description: counterpart.translate('Room name (optional)'),
+                    button: counterpart.translate('Create Room'),
                     onFinished: (should_create, name) => {
                         if (should_create) {
                             const createOpts = {};
@@ -684,16 +684,16 @@ module.exports = React.createClass({
     _createChat: function() {
         var ChatInviteDialog = sdk.getComponent("dialogs.ChatInviteDialog");
         Modal.createDialog(ChatInviteDialog, {
-            title: counterpart.translate ("Start a chat"),
+            title: counterpart.translate('Start a chat'),
         });
     },
 
     _invite: function(roomId) {
         var ChatInviteDialog = sdk.getComponent("dialogs.ChatInviteDialog");
         Modal.createDialog(ChatInviteDialog, {
-            title: counterpart.translate ("Invite new room members"),
-            button: counterpart.translate ("Send Invites"),
-            description: counterpart.translate ("Who would you like to add to this room?"),
+            title: counterpart.translate('Invite new room members'),
+            button: counterpart.translate('Send Invites'),
+            description: counterpart.translate('Who would you like to add to this room?'),
             roomId: roomId,
         });
     },
@@ -808,8 +808,8 @@ module.exports = React.createClass({
           if (err !== null) {
             var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createDialog(ErrorDialog, {
-                title: "Error changing language",
-                description: "Riot was unable to find the correct Data for the selected Language.",
+                title: counterpart.translate('Error changing language'),
+                description: counterpart.translate('Riot was unable to find the correct Data for the selected Language.'),
             });
             return;
           } else {
@@ -831,9 +831,6 @@ module.exports = React.createClass({
             if (language.indexOf("-") > -1) {
               counterpart.setLocale(language.split('-')[0]);
               UserSettingsStore.setLocalSetting('language', language.split('-')[0]);
-            } else if (language == 'pt-br') {
-              counterpart.setLocale('pt-br');
-              UserSettingsStore.setLocalSetting('language', 'pt-br');
             } else {
               counterpart.setLocale(language);
               UserSettingsStore.setLocalSetting('language', language);
@@ -975,8 +972,8 @@ module.exports = React.createClass({
         cli.on('Session.logged_out', function(call) {
             var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createDialog(ErrorDialog, {
-                title: "Signed Out",
-                description: "For security, this session has been signed out. Please sign in again."
+                title: counterpart.translate('Signed Out'),
+                description: counterpart.translate('For security, this session has been signed out. Please sign in again.')
             });
             dis.dispatch({
                 action: 'logout'

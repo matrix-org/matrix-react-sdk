@@ -368,5 +368,19 @@
   "Topic": "Topic",
   "Make this room private": "Make this room private",
   "Share message history with new users": "Share message history with new users",
-  "Encrypt room": "Encrypt room"
+  "Encrypt room": "Encrypt room",
+  "There are no visible files in this room": "There are no visible files in this room",
+  "Error changing language": "Error changing language",
+  "Room name (optional)": "Room name (optional)",
+  "Who would you like to add to this room?": "Who would you like to add to this room?",
+  "Riot was unable to find the correct Data for the selected Language.": "Riot was unable to find the correct Data for the selected Language.",
+  "For security, this session has been signed out. Please sign in again.": "For security, this session has been signed out. Please sign in again.",
+  "Connectivity to the server has been lost.": "Connectivity to the server has been lost.",
+  "Sent messages will be stored until your connection has returned.": "Sent messages will be stored until your connection has returned.",
+  "Auto-complete": "Auto-complete",
+  "Resend all": "Resend all",
+  "cancel all": "cancel all",
+  "or": "or",
+  "now. You can also select individual messages to resend or cancel.": "now. You can also select individual messages to resend or cancel.",
+  "Active call": "Active call"
 }
