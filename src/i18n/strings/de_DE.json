@@ -353,5 +353,6 @@
     "Share message history with new users": "Teile Nachrichtenhistorie mit neuen Nutzern",
     "Encrypt room": "Entschlüssele Raum",
     "To send events of type": "Zum Senden von Ereignissen mit Typ",
-    "%(names)s and %(lastPerson)s are typing": "%(names)s und %(lastPerson)s schreiben"
+    "%(names)s and %(lastPerson)s are typing": "%(names)s und %(lastPerson)s schreiben",
+    "%(names)s and %(count)s x_other are typing.one": "%(names)s und %(count)s andere schreiben"
 }
