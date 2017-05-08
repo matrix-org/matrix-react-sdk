@@ -62,8 +62,10 @@ module.exports = {
         const names = whoIsTyping.map(function(m) {
             return m.name;
         });
-        if (othersCount) {
-            return counterpart.translate("%(names)s and %(count)s x_other are typing", {names: names.slice(0, limit - 1).join(', '), count: othersCount});
+        if (othersCount==1) {
+            return counterpart.translate("%(names)s and one other are typing", {names: names.slice(0, limit - 1).join(', ')});
+        } else if (othersCount>1) {
+        	return counterpart.translate("%(names)s and %(count)s others are typing", {names: names.slice(0, limit - 1).join(', '), count: othersCount});
         } else {
             const lastPerson = names.pop();
             return counterpart.translate("%(names)s and %(lastPerson)s are typing", {names: names.join(', '), lastPerson: lastPerson});
