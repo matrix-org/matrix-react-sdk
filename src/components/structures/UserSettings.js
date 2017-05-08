@@ -741,7 +741,7 @@ module.exports = React.createClass({
             <div>
                 <h3>{ counterpart.translate("Labs") }</h3>
                 <div className="mx_UserSettings_section">
-                    <p>{ counterpart.translate("These are experimental features that may break in unexpected ways. Use with caution") }.</p>
+                    <p>{ counterpart.translate("These are experimental features that may break in unexpected ways") }. { counterpart.translate("Use with caution") }.</p>
                     {features}
                 </div>
             </div>
