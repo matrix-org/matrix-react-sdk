@@ -26,6 +26,7 @@ var q = require("q");
 var classNames = require("classnames");
 var Matrix = require("matrix-js-sdk");
 
+var UserSettingsStore = require('../../UserSettingsStore');
 var MatrixClientPeg = require("../../MatrixClientPeg");
 var ContentMessages = require("../../ContentMessages");
 var Modal = require("../../Modal");
@@ -270,6 +271,7 @@ module.exports = React.createClass({
 
         this._updateConfCallNotification();
 
+        window.addEventListener('beforeunload', this.onPageUnload);
         window.addEventListener('resize', this.onResize);
         this.onResize();
 
@@ -352,6 +354,7 @@ module.exports = React.createClass({
             MatrixClientPeg.get().removeListener("accountData", this.onAccountData);
         }
 
+        window.removeEventListener('beforeunload', this.onPageUnload);
         window.removeEventListener('resize', this.onResize);
 
         document.removeEventListener("keydown", this.onKeyDown);
@@ -363,6 +366,17 @@ module.exports = React.createClass({
         // console.log("Tinter.tint from RoomView.unmount");
         // Tinter.tint(); // reset colourscheme
     },
+
+    onPageUnload(event) {
+        if (ContentMessages.getCurrentUploads().length > 0) {
+            return event.returnValue =
+                'You seem to be uploading files, are you sure you want to quit?';
+        } else if (this._getCallForRoom() && this.state.callState !== 'ended') {
+            return event.returnValue =
+                'You seem to be in a call, are you sure you want to quit?';
+        }
+    },
+
 
     onKeyDown: function(ev) {
         let handled = false;
@@ -946,7 +960,7 @@ module.exports = React.createClass({
             console.error("Failed to upload file " + file + " " + error);
             Modal.createDialog(ErrorDialog, {
                 title: "Failed to upload file",
-                description: "Server may be unavailable, overloaded, or the file too big",
+                description: ((error && error.message) ? error.message : "Server may be unavailable, overloaded, or the file too big"),
             });
         });
     },
@@ -1033,7 +1047,7 @@ module.exports = React.createClass({
             console.error("Search failed: " + error);
             Modal.createDialog(ErrorDialog, {
                 title: "Search failed",
-                description: "Server may be unavailable, overloaded, or search timed out :("
+                description: ((error && error.message) ? error.message : "Server may be unavailable, overloaded, or search timed out :("),
             });
         }).finally(function() {
             self.setState({
@@ -1181,6 +1195,7 @@ module.exports = React.createClass({
         console.log("updateTint from onCancelClick");
         this.updateTint();
         this.setState({editingRoomSettings: false});
+        dis.dispatch({action: 'focus_composer'});
     },
 
     onLeaveClick: function() {
@@ -1274,12 +1289,7 @@ module.exports = React.createClass({
             return;
         }
 
-        var pos = this.refs.messagePanel.getReadMarkerPosition();
-
-        // we want to show the bar if the read-marker is off the top of the
-        // screen.
-        var showBar = (pos < 0);
-
+        const showBar = this.refs.messagePanel.canJumpToReadMarker();
         if (this.state.showTopUnreadMessagesBar != showBar) {
             this.setState({showTopUnreadMessagesBar: showBar},
                           this.onChildResize);
@@ -1726,7 +1736,7 @@ module.exports = React.createClass({
         var messagePanel = (
             <TimelinePanel ref={this._gatherTimelinePanelRef}
                 timelineSet={this.state.room.getUnfilteredTimelineSet()}
-                manageReadReceipts={true}
+                manageReadReceipts={!UserSettingsStore.getSyncedSetting('hideReadReceipts', false)}
                 manageReadMarkers={true}
                 hidden={hideMessagePanel}
                 highlightedEventId={this.props.highlightedEventId}

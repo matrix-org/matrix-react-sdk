@@ -47,7 +47,19 @@ export default React.createClass({
         children: React.PropTypes.node,
     },
 
-    _onKeyDown: function(e) {
+    componentWillMount: function() {
+        this.priorActiveElement = document.activeElement;
+    },
+
+    componentWillUnmount: function() {
+        if (this.priorActiveElement !== null) {
+            this.priorActiveElement.focus();
+        }
+    },
+
+    // Must be when the key is released (and not pressed) otherwise componentWillUnmount
+    // will focus another element which will receive future key events
+    _onKeyUp: function(e) {
         if (e.keyCode === KeyCode.ESCAPE) {
             e.stopPropagation();
             e.preventDefault();
@@ -67,9 +79,9 @@ export default React.createClass({
 
     render: function() {
         const TintableSvg = sdk.getComponent("elements.TintableSvg");
-                
+
         return (
-            <div onKeyDown={this._onKeyDown} className={this.props.className}>
+            <div onKeyUp={this._onKeyUp} className={this.props.className}>
                 <AccessibleButton onClick={this._onCancelClick}
                     className="mx_Dialog_cancelButton"
                 >
