@@ -109,7 +109,7 @@
     "all room members, from the point they are invited": "Alle Raum-Mitglieder - seitdem sie eingeladen wurden",
     "answered the call.": "beantwortete den Anruf.",
     "Can't load user settings": "Kann Nutzereinstellungen nicht laden",
-    "changed name": "Name geändert",
+    "changed name": "änderte Namen",
     "changed the power level of": "änderte Berechtigungslevel von",
     "Clear Cache": "Leere Cache",
     "Click here to fix": "Klicke hier zum Reparieren",
@@ -414,5 +414,6 @@
     "now. You can also select individual messages to resend or cancel.": "jetzt. Du kannst auch einzelne Nachrichten zum erneut senden oder abbrechen auswählen.",
     "Active call": "Aktiver Anruf",
     "withdrawn": "zurückgezogen",
-    "To link to a room it must have": "Um zu einem Raum zu linken, er muss haben"
+    "To link to a room it must have": "Um zu einem Raum zu linken, er muss haben",
+    "were": "wurden"
 }
