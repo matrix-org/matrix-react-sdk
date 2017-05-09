@@ -34,7 +34,7 @@ const LANGUAGES = [
     {
       id: 'language',
       label: 'Brazilian Portuguese',
-      value: 'pt_br',
+      value: 'pt-br',
     },
     {
       id: 'language',

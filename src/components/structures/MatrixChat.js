@@ -762,6 +762,7 @@ module.exports = React.createClass({
      * Called whenever someone changes the Language
      */
     _onSetLanguage: function(language) {
+      console.log(language);
       // load our own translations
       const i18nFolder = 'i18n/';
       request(i18nFolder + 'languages.json', function(err, response, body) {
