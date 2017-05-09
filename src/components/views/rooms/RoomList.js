@@ -35,10 +35,10 @@ import AccessibleButton from '../elements/AccessibleButton';
 const HIDE_CONFERENCE_CHANS = true;
 
 const VERBS = {
-    'm.favourite': counterpart.translate("to favourite"),
-    'im.vector.fake.direct': counterpart.translate("to tag direct chat"),
-    'im.vector.fake.recent': counterpart.translate("to restore"),
-    'm.lowpriority': counterpart.translate("to demote"),
+    'm.favourite': "to favourite",
+    'im.vector.fake.direct': "to tag direct chat",
+    'im.vector.fake.recent': "to restore",
+    'm.lowpriority': "to demote"
 };
 
 module.exports = React.createClass({
@@ -608,7 +608,7 @@ module.exports = React.createClass({
             }
         }
 
-        const labelText = (VERBS[section]) ? counterpart.translate("Drop here %(toAction)s", {toAction: VERBS[section]}) : counterpart.translate("Drop here to tag %(section)s", {section: section});
+        const labelText = (VERBS[section]) ? counterpart.translate("Drop here %(toAction)s", {toAction: counterpart.translate(VERBS[section])}) : counterpart.translate("Drop here to tag %(section)s", {section: section});
 
         return <RoomDropTarget label={labelText} />;
     },
