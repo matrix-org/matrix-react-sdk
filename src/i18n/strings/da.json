@@ -127,5 +127,11 @@
     "Failed to reject invitation": "Kunne ikke afvise invitationen",
     "Failed to send email": "Kunne ikke sende e-mail",
     "Failed to set avatar.": "Kunne ikke angive avatar.",
-    "Failed to unban": "Var ikke i stand til at ophæve forbuddet"
+    "Failed to unban": "Var ikke i stand til at ophæve forbuddet",
+    "Favourite": "Favorit",
+    "Notifications": "Meddelser",
+    "Please Register": "Vær venlig at registrere",
+    "Remove": "Fjerne",
+    "Settings": "Indstillinger",
+    "unknown error code": "Ukendt fejlkode"
 }
