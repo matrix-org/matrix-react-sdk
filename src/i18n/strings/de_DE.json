@@ -413,5 +413,6 @@
     "cancel all": "alles abbrechen",
     "now. You can also select individual messages to resend or cancel.": "jetzt. Du kannst auch einzelne Nachrichten zum erneut senden oder abbrechen auswählen.",
     "Active call": "Aktiver Anruf",
-    "withdrawn": "zurückgezogen"
+    "withdrawn": "zurückgezogen",
+    "To link to a room it must have": "Um zu einem Raum zu linken, er muss haben"
 }
