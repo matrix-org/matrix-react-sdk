@@ -19,17 +19,20 @@ import React from 'react';
 import sdk from '../../../index';
 import UserSettingsStore from '../../../UserSettingsStore';
 const _localSettings = UserSettingsStore.getLocalSettings();
+import counterpart from 'counterpart';
+const languageHandler = require('../../../languageHandler');
+var SdkConfig = require("../../../SdkConfig");
 
-const LANGUAGES = [
-    {
+const LANGUAGES = [];
+/*    {
         id: 'language',
         label: 'German',
-        value: 'de',
+        value: 'de-de',
     },
     {
         id: 'language',
         label: 'English',
-        value: 'en',
+        value: 'en-en',
     },
     {
       id: 'language',
@@ -47,11 +50,9 @@ const LANGUAGES = [
       value: 'ru',
     },
 ];
+*/
 
 const LANGUAGES_BY_VALUE = new Object(null);
-for (const l of LANGUAGES) {
-    LANGUAGES_BY_VALUE[l.value] = l;
-}
 
 function languageMatchesSearchQuery(query, language) {
     if (language.label.toUpperCase().indexOf(query.toUpperCase()) == 0) return true;
@@ -70,6 +71,22 @@ export default class LanguageDropdown extends React.Component {
     }
 
     componentWillMount() {
+    	console.log("SdkConfig");
+    	var languageKeys = SdkConfig.get().languages;
+    	languageKeys.forEach(function(languageKey) {
+    		var l = {};
+    		l.id = "language";
+    		l.label = counterpart.translate(languageKey);
+    		l.value = languageKey;
+    		LANGUAGES.push(l);
+    	});
+    	console.log("languages LANGUAGES = "+JSON.stringify(LANGUAGES));
+    	
+    	for (const l of LANGUAGES) {
+    		LANGUAGES_BY_VALUE[l.value] = l;
+		}
+    	
+    	
         if (!this.props.value) {
             // If no value is given, we start with the first
             // country selected, but our parent component
@@ -77,7 +94,7 @@ export default class LanguageDropdown extends React.Component {
             if (_localSettings.hasOwnProperty('language')) {
               this.props.onOptionChange(_localSettings.language);
             }else {
-              const language = navigator.language || navigator.userLanguage;
+              const language = languageHandler.normalizeLanguageKey(languageHandler.getLanguageFromBrowser());
               this.props.onOptionChange(language);
             }
         }

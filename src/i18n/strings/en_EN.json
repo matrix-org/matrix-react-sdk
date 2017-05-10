@@ -1,4 +1,9 @@
 {
+  "en": "English",
+  "pt-br": "Brazilian Portuguese",
+  "de": "German",
+  "da": "Danish",
+  "ru": "Russian",
   "accept": "accept",
   "%(targetName)s accepted an invitation": "%(targetName)s accepted an invitation",
   "%(targetName)s accepted the invitation for %(displayName)s": "%(targetName)s accepted the invitation for %(displayName)s",
