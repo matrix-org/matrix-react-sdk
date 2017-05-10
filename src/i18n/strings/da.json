@@ -133,5 +133,15 @@
     "Please Register": "Vær venlig at registrere",
     "Remove": "Fjerne",
     "Settings": "Indstillinger",
-    "unknown error code": "Ukendt fejlkode"
+    "unknown error code": "Ukendt fejlkode",
+    "en": "Engelsk",
+    "pt-br": "Brasiliansk Portugisisk",
+    "de": "Tysk",
+    "da": "Dansk",
+    "ru": "Russisk",
+    "%(targetName)s accepted an invitation": "%(targetName)s accepterede en invitation",
+    "%(targetName)s accepted the invitation for %(displayName)s": "%(targetName)s accepteret invitationen til %(displayName)s",
+    "%(names)s and %(lastPerson)s are typing": "%(names)s og %(lastPerson)s er ved at skrive",
+    "%(names)s and one other are typing": "%(names)s og den anden skriver",
+    "%(names)s and %(count)s others are typing": "%(names)s og %(count)s andre skriver"
 }
