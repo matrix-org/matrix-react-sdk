@@ -17,6 +17,7 @@ limitations under the License.
 import request from 'browser-request';
 import counterpart from 'counterpart';
 import UserSettingsStore from './UserSettingsStore';
+var q = require('q');
 
 const i18nFolder = 'i18n/';
 
@@ -35,13 +36,6 @@ module.exports.setLanguage = function(languages, extCounterpart=null) {
 	            { method: "GET", url: langPath },
 	            (err, response, body) => {
 	                if (err || response.status < 200 || response.status >= 300) {
-	                    // Lack of a config isn't an error, we should
-	                    // just use the defaults.
-	                    // Also treat a blank config as no config, assuming
-	                    // the status code is 0, because we don't get 404s
-	                    // from file: URIs so this is the only way we can
-	                    // not fail if the file doesn't exist when loading
-	                    // from a file:// URI.
 	                    if (response) {
 	                        if (response.status == 404 || (response.status == 0 && body == '')) {
 	                            resp_raw = {};
@@ -53,11 +47,6 @@ module.exports.setLanguage = function(languages, extCounterpart=null) {
 	                    callback(err, response_cb, langCode);
 	                    return;
 	                }
-
-	                // We parse the JSON ourselves rather than use the JSON
-	                // parameter, since this throws a parse error on empty
-	                // which breaks if there's no config.json and we're
-	                // loading from the filesystem (see above).
 
 	                response_return = JSON.parse(body);
 	                callback(null, response_return, langCode);
@@ -118,6 +107,33 @@ module.exports.setLanguage = function(languages, extCounterpart=null) {
    		counterpart.setFallbackLocale('en');
   	});
 };
+
+module.exports.getAllLanguageKeysFromJson = function() {
+	let deferred = q.defer();
+
+    request(
+        { method: "GET", url: i18nFolder + 'languages.json' },
+        (err, response, body) => {
+            if (err || response.status < 200 || response.status >= 300) {
+                if (response) {
+                    if (response.status == 404 || (response.status == 0 && body == '')) {
+                        deferred.resolve({});
+                    }
+                }
+                deferred.reject({err: err, response: response});
+                return;
+            }
+            var languages = JSON.parse(body);
+            // If no language is found, fallback to 'en':
+            if (!languages) {
+            	languages = [{"en": "en_EN.json"}];
+            }
+            const languageKeys = Object.keys(languages);
+            deferred.resolve(languageKeys);
+        }
+    );
+    return deferred.promise;
+}
 
 module.exports.getLanguageFromBrowser = function() {
 	return navigator.languages[0] || navigator.language || navigator.userLanguage;
