@@ -35,10 +35,10 @@ import AccessibleButton from '../elements/AccessibleButton';
 const HIDE_CONFERENCE_CHANS = true;
 
 const VERBS = {
-    'm.favourite': 'favourite',
-    'im.vector.fake.direct': 'tag direct chat',
-    'im.vector.fake.recent': 'restore',
-    'm.lowpriority': 'demote',
+    'm.favourite': "to favourite",
+    'im.vector.fake.direct': "to tag direct chat",
+    'im.vector.fake.recent': "to restore",
+    'm.lowpriority': "to demote"
 };
 
 module.exports = React.createClass({
@@ -593,22 +593,22 @@ module.exports = React.createClass({
             switch (section) {
                 case 'im.vector.fake.direct':
                     return <div className="mx_RoomList_emptySubListTip">
-                        Press
+                        { counterpart.translate("Press") }
                         <StartChatButton size="16" />
-                        to start a chat with someone
+                        { counterpart.translate("to start a chat with someone") }
                     </div>;
                 case 'im.vector.fake.recent':
                     return <div className="mx_RoomList_emptySubListTip">
-                        You're not in any rooms yet! Press
+                        { counterpart.translate("You're not in any rooms yet! Press") }
                         <CreateRoomButton size="16" />
-                        to make a room or
+                        { counterpart.translate("to make a room or") }
                         <RoomDirectoryButton size="16" />
-                        to browse the directory
+                        { counterpart.translate("to browse the directory") }
                     </div>;
             }
         }
 
-        const labelText = 'Drop here to ' + (VERBS[section] || 'tag ' + section);
+        const labelText = (VERBS[section]) ? counterpart.translate("Drop here %(toAction)s", {toAction: counterpart.translate(VERBS[section])}) : counterpart.translate("Drop here to tag %(section)s", {section: section});
 
         return <RoomDropTarget label={labelText} />;
     },
@@ -700,7 +700,7 @@ module.exports = React.createClass({
                              key={ tagName }
                              label={ tagName }
                              tagName={ tagName }
-                             verb={ counterpart.translate('tag as') + " " + tagName }
+                             verb={ counterpart.translate("tag as %(tagName)s", {tagName: tagName}) }
                              emptyContent={self._getEmptyContent(tagName)}
                              editable={ true }
                              order="manual"

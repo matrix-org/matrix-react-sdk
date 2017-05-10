@@ -30,6 +30,7 @@ const AddThreepid = require('../../AddThreepid');
 const SdkConfig = require('../../SdkConfig');
 import AccessibleButton from '../views/elements/AccessibleButton';
 import counterpart from 'counterpart';
+const languageHandler = require('../../languageHandler');
 
 
 // if this looks like a release, use the 'version' from package.json; else use
@@ -198,7 +199,7 @@ module.exports = React.createClass({
 
         this._localSettings = UserSettingsStore.getLocalSettings();
         if (!this._localSettings.hasOwnProperty('language')) {
-          const language = navigator.languages[0] || navigator.language || navigator.userLanguage;
+          const language = languageHandler.normalizeLanguageKey(languageHandler.getLanguageFromBrowser());
           this.setState({
             Language: language
           });
