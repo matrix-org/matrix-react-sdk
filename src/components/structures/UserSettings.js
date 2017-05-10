@@ -119,9 +119,13 @@ const THEMES = [
         {
         id: 'theme',
         label: 'Light high contrast theme',
-        value: 'contrastlight',
+        value: 'contrastlight'
     },
-];
+    {
+        id: 'theme',
+        label: 'Light high contrast condensed text theme',
+        value: 'contrastlightcondensed'
+    }];
 
 
 module.exports = React.createClass({
