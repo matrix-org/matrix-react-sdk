@@ -74,7 +74,7 @@
     "banned": "gebannt",
     "Banned users": "Gebannte Nutzer",
     "Bug Report": "Fehlerbericht",
-    "changed avatar": "Avatar geändert",
+    "changed avatar": "änderte Avatar",
     "changed their display name from": "änderte seinen Anzeigenamen von",
     "changed their profile picture": "änderte sein Profilbild",
     "changed the room name to": "änderte den Raumnamen zu",
@@ -161,8 +161,8 @@
     "Mobile phone number": "Mobile Telefonnummer",
     "Moderator": "Moderator",
     "my Matrix ID": "Meine Matrix-ID",
-    "Never send encrypted messages to unverified devices from this device": "Niemals verschlüsselte Nachrichten an nicht verifizierte Geräte von diesem Gerät aus versenden",
-    "Never send encrypted messages to unverified devices in this room from this device": "Niemals verschlüsselten Nachrichten an unverifizierte Geräte in diesem Raum von diesem Gerät aus senden",
+    "Never send encrypted messages to unverified devices from this device": "Niemals verschlüsselte Nachrichten an unverifizierte Geräte von diesem Gerät aus versenden",
+    "Never send encrypted messages to unverified devices in this room from this device": "Niemals verschlüsselte Nachrichten an unverifizierte Geräte in diesem Raum von diesem Gerät aus senden",
     "New password": "Neues Passwort",
     "Notifications": "Benachrichtigungen",
     " (not supported by this browser)": " (von diesem Browser nicht unterstützt)",
@@ -431,6 +431,6 @@
     "to make a room or": "um einen Raum zu erstellen, oder",
     "to restore": "zum wiederherstellen",
     "to start a chat with someone": "um einen Chat mit jemandem zu starten",
-    "to tag direct chat": "zum Direct Chat taggen",
+    "to tag direct chat": "als direkten Chat markieren",
     "You're not in any rooms yet! Press": "Du bist noch keinem Raum beigetreten! Drücke"
 }
