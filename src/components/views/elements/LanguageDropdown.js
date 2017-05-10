@@ -24,33 +24,6 @@ const languageHandler = require('../../../languageHandler');
 var SdkConfig = require("../../../SdkConfig");
 
 const LANGUAGES = [];
-/*    {
-        id: 'language',
-        label: 'German',
-        value: 'de-de',
-    },
-    {
-        id: 'language',
-        label: 'English',
-        value: 'en-en',
-    },
-    {
-      id: 'language',
-      label: 'Brazilian Portuguese',
-      value: 'pt-br',
-    },
-    {
-      id: 'language',
-      label: 'Dansk',
-      value: 'da',
-    },
-    {
-      id: 'language',
-      label: 'Russian',
-      value: 'ru',
-    },
-];
-*/
 
 const LANGUAGES_BY_VALUE = new Object(null);
 
@@ -71,7 +44,10 @@ export default class LanguageDropdown extends React.Component {
     }
 
     componentWillMount() {
-    	var languageKeys = SdkConfig.get().languages || ['en'];
+    	
+    	const languageKeys = SdkConfig.get().languages;
+		
+		// Build const LANGUAGES in a way that counterpart allows translation inside object:
     	languageKeys.forEach(function(languageKey) {
     		var l = {};
     		l.id = "language";
