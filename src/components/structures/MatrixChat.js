@@ -254,7 +254,7 @@ module.exports = React.createClass({
 
         this.focusComposer = false;
         window.addEventListener("focus", this.onFocus);
-        
+
         // this can technically be done anywhere but doing this here keeps all
         // the routing url path logic together.
         if (this.onAliasClick) {
@@ -892,7 +892,7 @@ module.exports = React.createClass({
     onFocus: function(ev) {
         dis.dispatch({action: 'focus_composer'});
     },
-    
+
     showScreen: function(screen, params) {
         if (screen == 'register') {
             dis.dispatch({
