@@ -329,7 +329,7 @@
   "Would you like to": "Would you like to",
   "You are already in a call": "You are already in a call",
   "You're not in any rooms yet! Press": "You're not in any rooms yet! Press",
-  "You are trying to access": "You are trying to access",
+  "You are trying to access %(roomName)s": "You are trying to access %(roomName)s",
   "You cannot place a call with yourself": "You cannot place a call with yourself",
   "You cannot place VoIP calls in this browser": "You cannot place VoIP calls in this browser",
   "You do not have permission to post to this room": "You do not have permission to post to this room",
