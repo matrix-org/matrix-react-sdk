@@ -718,7 +718,7 @@ module.exports = React.createClass({
      */
     _onSetTheme: function(theme) {
         if (!theme) {
-            theme = 'light';
+            theme = SdkConfig.get().themes[0].value || 'light'; //fallback to 'light' if none is defined in config
         }
 
         // look for the stylesheet elements.

@@ -97,27 +97,10 @@ const CRYPTO_SETTINGS_LABELS = [
     // }
 ];
 
-// Enumerate the available themes, with a nice human text label.
-// 'id' gives the key name in the im.vector.web.settings account data event
-// 'value' is the value for that key in the event
-// 'label' is how we describe it in the UI.
-//
-// XXX: Ideally we would have a theme manifest or something and they'd be nicely
-// packaged up in a single directory, and/or located at the application layer.
-// But for now for expedience we just hardcode them here.
-const THEMES = [
-    {
-        id: 'theme',
-        label: 'Light theme',
-        value: 'light',
-    },
-    {
-        id: 'theme',
-        label: 'Dark theme',
-        value: 'dark',
-    },
-];
+// Themes must be declared in config.json of riot-web. If they are not declared there, the FALLBACK_THEME will be used. Please **do not** include themes here, but directly in config.json! The default theme will always be the **first** theme in config.json.
 
+const FALLBACK_THEME = [{"label":"Light theme", "value": "light"}];
+const THEMES = [];
 
 module.exports = React.createClass({
     displayName: 'UserSettings',
@@ -162,6 +145,16 @@ module.exports = React.createClass({
     componentWillMount: function() {
         this._unmounted = false;
         this._addThreepid = null;
+        
+        var validThemes = SdkConfig.get().themes || FALLBACK_THEME;
+        
+        validThemes.forEach(function(theme) {
+        	var t = {};
+        	t.id = "theme";
+        	t.label = theme.label; // TODO: translate when translation is merged
+        	t.value = theme.value;
+        	THEMES.push(t);
+        });
 
         if (PlatformPeg.get()) {
             q().then(() => {
@@ -191,7 +184,7 @@ module.exports = React.createClass({
 
         const syncedSettings = UserSettingsStore.getSyncedSettings();
         if (!syncedSettings.theme) {
-            syncedSettings.theme = 'light';
+            syncedSettings.theme = THEMES[0].value;
         }
         this._syncedSettings = syncedSettings;
 
