@@ -72,7 +72,7 @@ export default class LanguageDropdown extends React.Component {
 
     componentWillMount() {
     	console.log("SdkConfig");
-    	var languageKeys = SdkConfig.get().languages;
+    	var languageKeys = SdkConfig.get().languages || ['en'];
     	languageKeys.forEach(function(languageKey) {
     		var l = {};
     		l.id = "language";
