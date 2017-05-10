@@ -322,5 +322,6 @@
     "Failed to verify email address: make sure you clicked the link in the email": "Не удалось подтвердить email-адрес: убедитесь что вы щелкнули по ссылке электронной почты",
     "Failure to create room": "Не удалось создать комнату",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s из %(fromPowerLevel)s до %(toPowerLevel)s",
-    "Guest users can't create new rooms. Please register to create room and start a chat": "Гостевые пользователи не могут создавать новые комнаты. Зарегистрируйтесь для создания комнаты и чата"
+    "Guest users can't create new rooms. Please register to create room and start a chat": "Гостевые пользователи не могут создавать новые комнаты. Зарегистрируйтесь для создания комнаты и чата",
+    "click to reveal": "нажать для открытия"
 }
