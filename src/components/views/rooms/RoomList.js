@@ -18,7 +18,7 @@ limitations under the License.
 'use strict';
 var React = require("react");
 var ReactDOM = require("react-dom");
-import counterpart from 'counterpart';
+import _t from 'counterpart';
 var GeminiScrollbar = require('react-gemini-scrollbar');
 var MatrixClientPeg = require("../../../MatrixClientPeg");
 var CallHandler = require('../../../CallHandler');
@@ -336,7 +336,7 @@ module.exports = React.createClass({
             lists: this.getRoomLists(),
             totalRoomCount: totalRooms,
         });
-        
+
         // this._lastRefreshRoomListTs = Date.now();
     },
 
@@ -593,22 +593,22 @@ module.exports = React.createClass({
             switch (section) {
                 case 'im.vector.fake.direct':
                     return <div className="mx_RoomList_emptySubListTip">
-                        { counterpart.translate("Press") }
+                        { _t("Press") }
                         <StartChatButton size="16" />
-                        { counterpart.translate("to start a chat with someone") }
+                        { _t("to start a chat with someone") }
                     </div>;
                 case 'im.vector.fake.recent':
                     return <div className="mx_RoomList_emptySubListTip">
-                        { counterpart.translate("You're not in any rooms yet! Press") }
+                        { _t("You're not in any rooms yet! Press") }
                         <CreateRoomButton size="16" />
-                        { counterpart.translate("to make a room or") }
+                        { _t("to make a room or") }
                         <RoomDirectoryButton size="16" />
-                        { counterpart.translate("to browse the directory") }
+                        { _t("to browse the directory") }
                     </div>;
             }
         }
 
-        const labelText = (VERBS[section]) ? counterpart.translate("Drop here %(toAction)s", {toAction: counterpart.translate(VERBS[section])}) : counterpart.translate("Drop here to tag %(section)s", {section: section});
+        const labelText = (VERBS[section]) ? _t("Drop here %(toAction)s", {toAction: _t(VERBS[section])}) : _t("Drop here to tag %(section)s", {section: section});
 
         return <RoomDropTarget label={labelText} />;
     },
@@ -638,7 +638,7 @@ module.exports = React.createClass({
                  autoshow={true} onScroll={ self._whenScrolling } onResize={ self._whenScrolling } ref="gemscroll">
             <div className="mx_RoomList" onMouseOver={ this._onMouseOver }>
                 <RoomSubList list={ self.state.lists['im.vector.fake.invite'] }
-                             label={ counterpart.translate('Invites') }
+                             label={ _t('Invites') }
                              tagName="im.vector.fake.invite"
                              editable={ false }
                              order="recent"
@@ -650,9 +650,9 @@ module.exports = React.createClass({
                              onShowMoreRooms={ self.onShowMoreRooms } />
 
                 <RoomSubList list={ self.state.lists['m.favourite'] }
-                             label={ counterpart.translate('Favourites') }
+                             label={ _t('Favourites') }
                              tagName="m.favourite"
-                             verb={ counterpart.translate('favourite') }
+                             verb={ _t('favourite') }
                              emptyContent={self._getEmptyContent('m.favourite')}
                              editable={ true }
                              order="manual"
@@ -664,9 +664,9 @@ module.exports = React.createClass({
                              onShowMoreRooms={ self.onShowMoreRooms } />
 
                 <RoomSubList list={ self.state.lists['im.vector.fake.direct'] }
-                             label={ counterpart.translate('People') }
+                             label={ _t('People') }
                              tagName="im.vector.fake.direct"
-                             verb={ counterpart.translate('tag direct chat') }
+                             verb={ _t('tag direct chat') }
                              emptyContent={self._getEmptyContent('im.vector.fake.direct')}
                              headerItems={self._getHeaderItems('im.vector.fake.direct')}
                              editable={ true }
@@ -680,10 +680,10 @@ module.exports = React.createClass({
                              onShowMoreRooms={ self.onShowMoreRooms } />
 
                 <RoomSubList list={ self.state.lists['im.vector.fake.recent'] }
-                             label={ counterpart.translate('Rooms') }
+                             label={ _t('Rooms') }
                              tagName="im.vector.fake.recent"
                              editable={ true }
-                             verb={ counterpart.translate('restore') }
+                             verb={ _t('restore') }
                              emptyContent={self._getEmptyContent('im.vector.fake.recent')}
                              headerItems={self._getHeaderItems('im.vector.fake.recent')}
                              order="recent"
@@ -700,7 +700,7 @@ module.exports = React.createClass({
                              key={ tagName }
                              label={ tagName }
                              tagName={ tagName }
-                             verb={ counterpart.translate("tag as %(tagName)s", {tagName: tagName}) }
+                             verb={ _t("tag as %(tagName)s", {tagName: tagName}) }
                              emptyContent={self._getEmptyContent(tagName)}
                              editable={ true }
                              order="manual"
@@ -715,9 +715,9 @@ module.exports = React.createClass({
                 }) }
 
                 <RoomSubList list={ self.state.lists['m.lowpriority'] }
-                             label={ counterpart.translate('Low priority') }
+                             label={ _t('Low priority') }
                              tagName="m.lowpriority"
-                             verb={ counterpart.translate('demote') }
+                             verb={ _t('demote') }
                              emptyContent={self._getEmptyContent('m.lowpriority')}
                              editable={ true }
                              order="recent"
@@ -729,7 +729,7 @@ module.exports = React.createClass({
                              onShowMoreRooms={ self.onShowMoreRooms } />
 
                 <RoomSubList list={ self.state.lists['im.vector.fake.archived'] }
-                             label={ counterpart.translate('Historical') }
+                             label={ _t('Historical') }
                              tagName="im.vector.fake.archived"
                              editable={ false }
                              order="recent"

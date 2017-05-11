@@ -31,8 +31,8 @@
     "reskindex": "scripts/reskindex.js"
   },
   "scripts": {
-    "reskindex": "scripts/reskindex.js -h header",
-    "reskindex:watch": "scripts/reskindex.js -h header -w",
+    "reskindex": "node scripts/reskindex.js -h header",
+    "reskindex:watch": "node scripts/reskindex.js -h header -w",
     "build": "npm run reskindex && babel src -d lib --source-maps",
     "build:watch": "babel src -w -d lib --source-maps",
     "start": "parallelshell \"npm run build:watch\" \"npm run reskindex:watch\"",
@@ -50,7 +50,7 @@
     "browser-request": "^0.3.3",
     "classnames": "^2.1.2",
     "commonmark": "^0.27.0",
-    "counterpart": "^0.17.8",
+    "counterpart": "Nordgedanken/counterpart#develop",
     "draft-js": "^0.8.1",
     "draft-js-export-html": "^0.5.0",
     "draft-js-export-markdown": "^0.2.0",

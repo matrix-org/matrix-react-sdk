@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 var Matrix = require("matrix-js-sdk");
-import counterpart from 'counterpart';
+import _t from 'counterpart';
 
 /**
  * Allows a user to reset their password on a homeserver.
@@ -54,7 +54,7 @@ class PasswordReset {
             return res;
         }, function(err) {
             if (err.errcode == 'M_THREEPID_NOT_FOUND') {
-                 err.message = counterpart.translate("This email address was not found");
+                 err.message = _t("This email address was not found");
             } else if (err.httpStatus) {
                 err.message = err.message + ` (Status ${err.httpStatus})`;
             }
@@ -79,10 +79,10 @@ class PasswordReset {
             }
         }, this.password).catch(function(err) {
             if (err.httpStatus === 401) {
-                err.message = counterpart.translate("Failed to verify email address: make sure you clicked the link in the email");
+                err.message = _t("Failed to verify email address: make sure you clicked the link in the email");
             }
             else if (err.httpStatus === 404) {
-                err.message = counterpart.translate("Your email address does not appear to be associated with a Matrix ID on this Homeserver") + ".";
+                err.message = _t("Your email address does not appear to be associated with a Matrix ID on this Homeserver") + ".";
             }
             else if (err.httpStatus) {
                 err.message += ` (Status ${err.httpStatus})`;

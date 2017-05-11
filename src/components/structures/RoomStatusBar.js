@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import counterpart from 'counterpart';
+import _t from 'counterpart';
 import sdk from '../../index';
 import dis from '../../dispatcher';
 import WhoIsTyping from '../../WhoIsTyping';
@@ -251,10 +251,10 @@ module.exports = React.createClass({
                 <div className="mx_RoomStatusBar_connectionLostBar">
                     <img src="img/warning.svg" width="24" height="23" title="/!\ " alt="/!\ "/>
                     <div className="mx_RoomStatusBar_connectionLostBar_title">
-                        {counterpart.translate('Connectivity to the server has been lost.')}
+                        {_t('Connectivity to the server has been lost.')}
                     </div>
                     <div className="mx_RoomStatusBar_connectionLostBar_desc">
-                        {counterpart.translate('Sent messages will be stored until your connection has returned.')}
+                        {_t('Sent messages will be stored until your connection has returned.')}
                     </div>
                 </div>
             );
@@ -267,7 +267,7 @@ module.exports = React.createClass({
                         <TabCompleteBar tabComplete={this.props.tabComplete} />
                         <div className="mx_RoomStatusBar_tabCompleteEol" title="->|">
                             <TintableSvg src="img/eol.svg" width="22" height="16"/>
-                            {counterpart.translate('Auto-complete')}
+                            {_t('Auto-complete')}
                         </div>
                     </div>
                 </div>
@@ -284,12 +284,12 @@ module.exports = React.createClass({
                     <div className="mx_RoomStatusBar_connectionLostBar_desc">
                         <a className="mx_RoomStatusBar_resend_link"
                           onClick={ this.props.onResendAllClick }>
-                            {counterpart.translate('Resend all')}
-                        </a> {counterpart.translate('or')} <a
+                            {_t('Resend all')}
+                        </a> {_t('or')} <a
                           className="mx_RoomStatusBar_resend_link"
                           onClick={ this.props.onCancelAllClick }>
-                            {counterpart.translate('cancel all')}
-                        </a> {counterpart.translate('now. You can also select individual messages to resend or cancel.')}
+                            {_t('cancel all')}
+                        </a> {_t('now. You can also select individual messages to resend or cancel.')}
                     </div>
                 </div>
             );
@@ -324,7 +324,7 @@ module.exports = React.createClass({
         if (this.props.hasActiveCall) {
             return (
                 <div className="mx_RoomStatusBar_callBar">
-                    <b>{counterpart.translate('Active call')}</b>
+                    <b>{_t('Active call')}</b>
                 </div>
             );
         }

@@ -18,7 +18,7 @@ limitations under the License.
 'use strict';
 
 import React from 'react';
-import counterpart from 'counterpart';
+import _t from 'counterpart';
 import ReactDOM from 'react-dom';
 import url from 'url';
 import sdk from '../../../index';
@@ -224,14 +224,14 @@ module.exports = React.createClass({
                  !this.state.enteredHomeserverUrl.startsWith("http")))
             {
                 errorText = <span>
-                    { counterpart.translate("Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar")}.
-                    { counterpart.translate('Either use HTTPS or ')}<a href='https://www.google.com/search?&q=enable%20unsafe%20scripts'>{ counterpart.translate('enable unsafe scripts')}</a>
+                    { _t("Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar")}.
+                    { _t('Either use HTTPS or ')}<a href='https://www.google.com/search?&q=enable%20unsafe%20scripts'>{ _t('enable unsafe scripts')}</a>
                 </span>;
             }
             else {
                 errorText = <span>
-                    { counterpart.translate("Can't connect to homeserver - please check your connectivity and ensure your")} 
-                    <a href={ this.state.enteredHomeserverUrl }>{ counterpart.translate("homeserver's SSL certificate")}</a> { counterpart.translate('is trusted') }.
+                    { _t("Can't connect to homeserver - please check your connectivity and ensure your")}
+                    <a href={ this.state.enteredHomeserverUrl }>{ _t("homeserver's SSL certificate")}</a> { _t('is trusted') }.
                 </span>;
             }
         }
@@ -274,7 +274,7 @@ module.exports = React.createClass({
                 }
                 return (
                     <div>
-                    { counterpart.translate('Sorry, this homeserver is using a login which is not recognised ')}({step})
+                    { _t('Sorry, this homeserver is using a login which is not recognised ')}({step})
                     </div>
                 );
         }
@@ -291,7 +291,7 @@ module.exports = React.createClass({
         if (this.props.enableGuest) {
             loginAsGuestJsx =
                 <a className="mx_Login_create" onClick={this._onLoginAsGuestClick} href="#">
-                    { counterpart.translate('Login as guest')}
+                    { _t('Login as guest')}
                 </a>;
         }
 
@@ -299,7 +299,7 @@ module.exports = React.createClass({
         if (this.props.onCancelClick) {
             returnToAppJsx =
                 <a className="mx_Login_create" onClick={this.props.onCancelClick} href="#">
-                    { counterpart.translate('Return to app')}
+                    { _t('Return to app')}
                 </a>;
         }
 
@@ -308,7 +308,7 @@ module.exports = React.createClass({
                 <div className="mx_Login_box">
                     <LoginHeader />
                     <div>
-                        <h2>{ counterpart.translate('Sign in')}
+                        <h2>{ _t('Sign in')}
                             { loader }
                         </h2>
                         { this.componentForStep(this.state.currentFlow) }
@@ -324,7 +324,7 @@ module.exports = React.createClass({
                                 { this.state.errorText }
                         </div>
                         <a className="mx_Login_create" onClick={this.props.onRegisterClick} href="#">
-                            { counterpart.translate('Create an account')}
+                            { _t('Create an account')}
                         </a>
                         { loginAsGuestJsx }
                         { returnToAppJsx }

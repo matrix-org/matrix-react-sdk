@@ -19,7 +19,7 @@ limitations under the License.
 import React from 'react';
 import sdk from '../../../index';
 import MatrixClientPeg from '../../../MatrixClientPeg';
-import counterpart from 'counterpart';
+import _t from 'counterpart';
 
 module.exports = React.createClass({
     displayName: 'PostRegistration',
@@ -65,12 +65,12 @@ module.exports = React.createClass({
                 <div className="mx_Login_box">
                     <LoginHeader />
                     <div className="mx_Login_profile">
-                        { counterpart.translate('Set a display name:') }
+                        { _t('Set a display name:') }
                         <ChangeDisplayName />
-                        { counterpart.translate('Upload an avatar:') }
+                        { _t('Upload an avatar:') }
                         <ChangeAvatar
                             initialAvatarUrl={this.state.avatarUrl} />
-                        <button onClick={this.props.onComplete}>{ counterpart.translate('Continue') }</button>
+                        <button onClick={this.props.onComplete}>{ _t('Continue') }</button>
                         {this.state.errorString}
                     </div>
                 </div>
