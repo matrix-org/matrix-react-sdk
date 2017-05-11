@@ -593,22 +593,22 @@ module.exports = React.createClass({
             switch (section) {
                 case 'im.vector.fake.direct':
                     return <div className="mx_RoomList_emptySubListTip">
-                        { _t("Press") }
+                        { _t('Press') }
                         <StartChatButton size="16" />
-                        { _t("to start a chat with someone") }
+                        { _t('to start a chat with someone') }
                     </div>;
                 case 'im.vector.fake.recent':
                     return <div className="mx_RoomList_emptySubListTip">
-                        { _t("You're not in any rooms yet! Press") }
+                        { _t('You\'re not in any rooms yet! Press') }
                         <CreateRoomButton size="16" />
-                        { _t("to make a room or") }
+                        { _t('to make a room or') }
                         <RoomDirectoryButton size="16" />
-                        { _t("to browse the directory") }
+                        { _t('to browse the directory') }
                     </div>;
             }
         }
 
-        const labelText = (VERBS[section]) ? _t("Drop here %(toAction)s", {toAction: _t(VERBS[section])}) : _t("Drop here to tag %(section)s", {section: section});
+        const labelText = (VERBS[section]) ? _t('Drop here %(toAction)s', {toAction: _t(VERBS[section])}) : _t('Drop here to tag %(section)s', {section: section});
 
         return <RoomDropTarget label={labelText} />;
     },
@@ -700,7 +700,7 @@ module.exports = React.createClass({
                              key={ tagName }
                              label={ tagName }
                              tagName={ tagName }
-                             verb={ _t("tag as %(tagName)s", {tagName: tagName}) }
+                             verb={ _t('tag as %(tagName)s', {tagName: tagName}) }
                              emptyContent={self._getEmptyContent(tagName)}
                              editable={ true }
                              order="manual"

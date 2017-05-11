@@ -44,8 +44,8 @@ function createRoom(opts) {
     if (client.isGuest()) {
         setTimeout(()=>{
             Modal.createDialog(NeedToRegisterDialog, {
-                title: _t("Please Register"),
-                description: _t("Guest users can't create new rooms. Please register to create room and start a chat") + "."
+                title: _t('Please Register'),
+                description: _t('Guest users can\'t create new rooms. Please register to create room and start a chat') + '.'
             });
         }, 0);
         return q(null);

@@ -207,27 +207,27 @@ module.exports = React.createClass({
      * @returns {string} the written English equivalent of the transition.
      */
     _getDescriptionForTransition(t, plural, repeats) {
-        const beConjugated = plural ? _t("were") : _t("was");
-        const invitation = (plural || (repeats > 1) ? _t("their invitations") : _t("their invitation"));
+        const beConjugated = plural ? _t('were') : _t('was');
+        const invitation = (plural || (repeats > 1) ? _t('their invitations') : _t('their invitation'));
 
         let res = null;
         const map = {
-            "joined": _t("joined"),
-            "left": _t("left"),
-            "joined_and_left": _t("joined and left"),
-            "left_and_joined": _t("left and rejoined"),
-            "invite_reject": _t("rejected") + " " + invitation,
-            "invite_withdrawal": _t("had") + " " + invitation + " " + _t("withdrawn"),
-            "invited": beConjugated + " " + _t("was invited"),
-            "banned": beConjugated + " " + _t("was banned"),
-            "unbanned": beConjugated + " " + _t("was unbanned"),
-            "kicked": beConjugated + " " + _t("was kicked"),
-            "changed_name": _t("changed name"),
-            "changed_avatar": _t("changed avatar"),
+            "joined": _t('joined'),
+            "left": _t('left'),
+            "joined_and_left": _t('joined and left'),
+            "left_and_joined": _t('left and rejoined'),
+            "invite_reject": _t('rejected') + ' ' + invitation,
+            "invite_withdrawal": _t('had') + ' ' + invitation + ' ' + _t('withdrawn'),
+            "invited": beConjugated + ' ' + _t('was invited'),
+            "banned": beConjugated + ' ' + _t('was banned'),
+            "unbanned": beConjugated + ' ' + _t('was unbanned'),
+            "kicked": beConjugated + ' ' + _t('was kicked'),
+            "changed_name": _t('changed name'),
+            "changed_avatar": _t('changed avatar'),
         };
 
         if (Object.keys(map).includes(t)) {
-            res = map[t] + (repeats > 1 ? " " + repeats + " " + _t("times") : "" );
+            res = map[t] + (repeats > 1 ? ' ' + repeats + ' ' + _t('times') : '' );
         }
 
         return res;
@@ -255,11 +255,11 @@ module.exports = React.createClass({
             return items[0];
         } else if (remaining) {
             items = items.slice(0, itemLimit);
-            const other = " " + (remaining > 1 ? _t("others") : _t("other"));
-            return items.join(', ') + " " + _t("and") + " " + remaining + other;
+            const other = ' ' + (remaining > 1 ? _t('others') : _t('other'));
+            return items.join(', ') + ' ' + _t('and') + ' ' + remaining + other;
         } else {
             const lastItem = items.pop();
-            return items.join(', ') + " " + _t("and") + " " + lastItem;
+            return items.join(', ') + ' ' + _t('and') + ' ' + lastItem;
         }
     },
 

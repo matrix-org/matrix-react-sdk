@@ -397,8 +397,8 @@ module.exports = React.createClass({
             case 'leave_room':
                 const roomToLeave = MatrixClientPeg.get().getRoom(payload.room_id);
                 Modal.createDialog(QuestionDialog, {
-                    title: _t("Leave room"),
-                    description: _t("Are you sure you want to leave the room %(RoomName)s?", {RoomName: roomToLeave.name}),
+                    title: _t('Leave room'),
+                    description: _t('Are you sure you want to leave the room %(RoomName)s?', {RoomName: roomToLeave.name}),
                     onFinished: (should_leave) => {
                         if (should_leave) {
                             const d = MatrixClientPeg.get().leave(payload.room_id);
@@ -416,8 +416,8 @@ module.exports = React.createClass({
                                 modal.close();
                                 console.error("Failed to leave room " + payload.room_id + " " + err);
                                 Modal.createDialog(ErrorDialog, {
-                                    title: _t("Failed to leave room"),
-                                    description: (err && err.message ? err.message : _t("Server may be unavailable, overloaded, or you hit a bug") + "."),
+                                    title: _t('Failed to leave room'),
+                                    description: (err && err.message ? err.message : _t('Server may be unavailable, overloaded, or you hit a bug') + '.'),
                                 });
                             });
                         }
@@ -426,8 +426,8 @@ module.exports = React.createClass({
                 break;
             case 'reject_invite':
                 Modal.createDialog(QuestionDialog, {
-                    title: _t("Reject invitation"),
-                    description: _t("Are you sure you want to reject the invitation?"),
+                    title: _t('Reject invitation'),
+                    description: _t('Are you sure you want to reject the invitation?'),
                     onFinished: (confirm) => {
                         if (confirm) {
                             // FIXME: controller shouldn't be loading a view :(
@@ -442,7 +442,7 @@ module.exports = React.createClass({
                             }, (err) => {
                                 modal.close();
                                 Modal.createDialog(ErrorDialog, {
-                                    title:  _t("Failed to reject invitation"),
+                                    title:  _t('Failed to reject invitation'),
                                     description: err.toString()
                                 });
                             });
@@ -1182,7 +1182,7 @@ module.exports = React.createClass({
                 <div className="mx_MatrixChat_splash">
                     <Spinner />
                     <a href="#" className="mx_MatrixChat_splashButtons" onClick={ this.onLogoutClick }>
-                    {_t("Logout")}
+                    {_t('Logout')}
                     </a>
                 </div>
             );

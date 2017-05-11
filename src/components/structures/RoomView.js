@@ -960,7 +960,7 @@ module.exports = React.createClass({
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             console.error("Failed to upload file " + file + " " + error);
             Modal.createDialog(ErrorDialog, {
-                title: _t("Failed to upload file"),
+                title: _t('Failed to upload file'),
                 description: ((error && error.message) ? error.message : "Server may be unavailable, overloaded, or the file too big"),
             });
         });
