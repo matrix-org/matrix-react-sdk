@@ -15,19 +15,22 @@ limitations under the License.
 */
 
 import request from 'browser-request';
-import counterpart from 'counterpart';
+// Workaround for broken export
+import * as counterpart from 'counterpart';
 import UserSettingsStore from './UserSettingsStore';
 var q = require('q');
 
 const i18nFolder = 'i18n/';
 
 module.exports.setLanguage = function(languages, extCounterpart=null) {
-  	
+
+    console.log(extCounterpart);
+
   	if (!languages || !Array.isArray(languages)) {
 	    const languages = this.getNormalizedLanguageKeys(this.getLanguageFromBrowser());
 	    console.log("no language found. Got from browser: " + JSON.stringify(languages));
 	}
-  	
+
   	request(i18nFolder + 'languages.json', function(err, response, body) {
 	    function getLanguage(langPath, langCode, callback) {
 	        let response_return = {};
@@ -69,7 +72,7 @@ module.exports.setLanguage = function(languages, extCounterpart=null) {
 					extCounterpart.registerTranslations(langCode, langJson);
 				}
 				counterpart.registerTranslations(langCode, langJson);
-				
+
 			}
 	    }
 
@@ -80,8 +83,8 @@ module.exports.setLanguage = function(languages, extCounterpart=null) {
 	    } else {
 	    	languageFiles = JSON.parse(body);
 	    }
-	    
-	    
+
+
 	    const isValidFirstLanguage = (languageFiles.hasOwnProperty(languages[0]));
 	    var validLanguageKey = "";
 	    if ((isValidFirstLanguage) || (languages.length==2 && languageFiles.hasOwnProperty(languages[1]))) {
@@ -96,7 +99,7 @@ module.exports.setLanguage = function(languages, extCounterpart=null) {
 	    } else {
 	    	console.log("didnt find any language file");
 	    }
-	    
+
 	    //Set 'en' as fallback language:
 	    if (validLanguageKey!="en") {
 	    	getLanguage(i18nFolder + languageFiles['en'], 'en', registerTranslations);

@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import classNames from 'classnames';
-import counterpart from 'counterpart';
+import _t from 'counterpart';
 import sdk from '../../../index';
 import { getAddressType, inviteMultipleToRoom } from '../../../Invite';
 import createRoom from '../../../createRoom';
@@ -49,11 +49,11 @@ module.exports = React.createClass({
 
     getDefaultProps: function() {
         return {
-            title: counterpart.translate ("Start a chat"),
-            description: counterpart.translate ("Who would you like to communicate with?"),
+            title: _t ("Start a chat"),
+            description: _t ("Who would you like to communicate with?"),
             value: "",
-            placeholder: counterpart.translate ("Email, name or matrix ID"),
-            button: counterpart.translate ("Start Chat"),
+            placeholder: _t ("Email, name or matrix ID"),
+            button: _t ("Start Chat"),
             focus: true
         };
     },

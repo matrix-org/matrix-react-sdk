@@ -13,12 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import counterpart from 'counterpart';
+import _t from 'counterpart';
 export const LEVEL_ROLE_MAP = {
-    undefined: counterpart.translate('Default'),
-    0: counterpart.translate('User'),
-    50: counterpart.translate('Moderator'),
-    100: counterpart.translate('Admin'),
+    undefined: _t('Default'),
+    0: _t('User'),
+    50: _t('Moderator'),
+    100: _t('Admin'),
 };
 
 export function textualPowerLevel(level, userDefault) {

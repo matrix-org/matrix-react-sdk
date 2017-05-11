@@ -1,4 +1,4 @@
-/*
+_t/*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
 
@@ -25,6 +25,7 @@ var ReactDOM = require("react-dom");
 var q = require("q");
 var classNames = require("classnames");
 var Matrix = require("matrix-js-sdk");
+import _t from 'counterpart';
 
 var UserSettingsStore = require('../../UserSettingsStore');
 var MatrixClientPeg = require("../../MatrixClientPeg");
@@ -959,7 +960,7 @@ module.exports = React.createClass({
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             console.error("Failed to upload file " + file + " " + error);
             Modal.createDialog(ErrorDialog, {
-                title: counterpart.translate("Failed to upload file"),
+                title: _t("Failed to upload file"),
                 description: ((error && error.message) ? error.message : "Server may be unavailable, overloaded, or the file too big"),
             });
         });

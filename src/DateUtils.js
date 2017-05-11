@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 'use strict';
-import counterpart from 'counterpart';
+import _t from 'counterpart';
 
-//var days = [counterpart.translate("Sun"), counterpart.translate("Mon"), counterpart.translate("Tue"), counterpart.translate("Wed"), counterpart.translate("Thu"), counterpart.translate("Fri"), counterpart.translate("Sat")];
-//var months = [counterpart.translate("Jan"), counterpart.translate("Feb"), counterpart.translate("Mar"), counterpart.translate("Apr"), counterpart.translate("May"), counterpart.translate("Jun"), counterpart.translate("Jul"), counterpart.translate("Aug"), counterpart.translate("Sep"), counterpart.translate("Oct"), counterpart.translate("Nov"), counterpart.translate("Dec")];
+//var days = [_t("Sun"), _t("Mon"), _t("Tue"), _t("Wed"), _t("Thu"), _t("Fri"), _t("Sat")];
+//var months = [_t("Jan"), _t("Feb"), _t("Mar"), _t("Apr"), _t("May"), _t("Jun"), _t("Jul"), _t("Aug"), _t("Sep"), _t("Oct"), _t("Nov"), _t("Dec")];
 var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -38,11 +38,11 @@ module.exports = {
         }
         else if (now.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
         	// TODO: use standard date localize function provided in counterpart
-            return counterpart.translate("%(weekDayName)s %(time)s", {weekDayName: counterpart.translate(days[date.getDay()]), time: hoursAndMinutes});
+            return _t("%(weekDayName)s %(time)s", {weekDayName: _t(days[date.getDay()]), time: hoursAndMinutes});
         }
         else /* if (now.getFullYear() === date.getFullYear()) */ {
         	// TODO: use standard date localize function provided in counterpart
-            return counterpart.translate("%(weekDayName)s, %(monthName)s %(day)s %(time)s", {weekDayName: days[date.getDay()], monthName: months[date.getMonth()], day: date.getDate(), time: hoursAndMinutes});
+            return _t("%(weekDayName)s, %(monthName)s %(day)s %(time)s", {weekDayName: days[date.getDay()], monthName: months[date.getMonth()], day: date.getDate(), time: hoursAndMinutes});
         }
         /*
         else {
@@ -56,4 +56,3 @@ module.exports = {
         return ('00' + date.getHours()).slice(-2) + ':' + ('00' + date.getMinutes()).slice(-2);
     }
 };
-

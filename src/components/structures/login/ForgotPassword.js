@@ -17,7 +17,7 @@ limitations under the License.
 'use strict';
 
 var React = require('react');
-import counterpart from 'counterpart';
+import _t from 'counterpart';
 var sdk = require('../../../index');
 var Modal = require("../../../Modal");
 var MatrixClientPeg = require('../../../MatrixClientPeg');
@@ -55,7 +55,7 @@ module.exports = React.createClass({
                 progress: "sent_email"
             });
         }, (err) => {
-            this.showErrorDialog(counterpart.translate('Failed to send email') + ": " + err.message);
+            this.showErrorDialog(_t('Failed to send email') + ": " + err.message);
             this.setState({
                 progress: null
             });
@@ -79,27 +79,27 @@ module.exports = React.createClass({
         ev.preventDefault();
 
         if (!this.state.email) {
-            this.showErrorDialog(counterpart.translate('The email address linked to your account must be entered.'));
+            this.showErrorDialog(_t('The email address linked to your account must be entered.'));
         }
         else if (!this.state.password || !this.state.password2) {
-            this.showErrorDialog(counterpart.translate('A new password must be entered') + ".");
+            this.showErrorDialog(_t('A new password must be entered') + ".");
         }
         else if (this.state.password !== this.state.password2) {
-            this.showErrorDialog(counterpart.translate('New passwords must match each other.'));
+            this.showErrorDialog(_t('New passwords must match each other.'));
         }
         else {
             var QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
             Modal.createDialog(QuestionDialog, {
-                title: counterpart.translate('Warning'),
+                title: _t('Warning'),
                 description:
                     <div>
-                        { counterpart.translate("Resetting password will currently reset any end-to-end encryption keys on all devices, making encrypted chat history unreadable, unless you first export your room keys and re-import them afterwards. In future this <a href='https://github.com/vector-im/riot-web/issues/2671'>will be improved</a>") }.
+                        { _t("Resetting password will currently reset any end-to-end encryption keys on all devices, making encrypted chat history unreadable, unless you first export your room keys and re-import them afterwards. In future this <a href='https://github.com/vector-im/riot-web/issues/2671'>will be improved</a>") }.
                     </div>,
-                button: counterpart.translate("Continue"),
+                button: _t("Continue"),
                 extraButtons: [
                     <button className="mx_Dialog_primary"
                             onClick={this._onExportE2eKeysClicked}>
-                        { counterpart.translate("Export E2E room keys") }
+                        { _t("Export E2E room keys") }
                     </button>
                 ],
                 onFinished: (confirmed) => {
@@ -166,20 +166,20 @@ module.exports = React.createClass({
         else if (this.state.progress === "sent_email") {
             resetPasswordJsx = (
                 <div>
-                    { counterpart.translate("An email has been sent to") } {this.state.email}. { counterpart.translate("Once you&#39;ve followed the link it contains, click below") }.
+                    { _t("An email has been sent to") } {this.state.email}. { _t("Once you&#39;ve followed the link it contains, click below") }.
                     <br />
                     <input className="mx_Login_submit" type="button" onClick={this.onVerify}
-                        value={ counterpart.translate("I have verified my email address") } />
+                        value={ _t("I have verified my email address") } />
                 </div>
             );
         }
         else if (this.state.progress === "complete") {
             resetPasswordJsx = (
                 <div>
-                    <p>{ counterpart.translate("Your password has been reset") }.</p>
-                    <p>{ counterpart.translate("You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device") }.</p>
+                    <p>{ _t("Your password has been reset") }.</p>
+                    <p>{ _t("You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device") }.</p>
                     <input className="mx_Login_submit" type="button" onClick={this.props.onComplete}
-                        value={ counterpart.translate("Return to login screen") } />
+                        value={ _t("Return to login screen") } />
                 </div>
             );
         }
@@ -187,7 +187,7 @@ module.exports = React.createClass({
             resetPasswordJsx = (
             <div>
                 <div className="mx_Login_prompt">
-                    { counterpart.translate("To reset your password, enter the email address linked to your account") }:
+                    { _t("To reset your password, enter the email address linked to your account") }:
                 </div>
                 <div>
                     <form onSubmit={this.onSubmitForm}>
@@ -195,21 +195,21 @@ module.exports = React.createClass({
                             name="reset_email" // define a name so browser's password autofill gets less confused
                             value={this.state.email}
                             onChange={this.onInputChanged.bind(this, "email")}
-                            placeholder={ counterpart.translate("Email address") } autoFocus />
+                            placeholder={ _t("Email address") } autoFocus />
                         <br />
                         <input className="mx_Login_field" ref="pass" type="password"
                             name="reset_password"
                             value={this.state.password}
                             onChange={this.onInputChanged.bind(this, "password")}
-                            placeholder={ counterpart.translate("New password") } />
+                            placeholder={ _t("New password") } />
                         <br />
                         <input className="mx_Login_field" ref="pass" type="password"
                             name="reset_password_confirm"
                             value={this.state.password2}
                             onChange={this.onInputChanged.bind(this, "password2")}
-                            placeholder={ counterpart.translate("Confirm your new password") } />
+                            placeholder={ _t("Confirm your new password") } />
                         <br />
-                        <input className="mx_Login_submit" type="submit" value={ counterpart.translate("Send Reset Email") } />
+                        <input className="mx_Login_submit" type="submit" value={ _t("Send Reset Email") } />
                     </form>
                     <ServerConfig ref="serverConfig"
                         withToggleButton={true}
@@ -226,7 +226,7 @@ module.exports = React.createClass({
                         Return to login
                     </a>
                     <a className="mx_Login_create" onClick={this.props.onRegisterClick} href="#">
-                        { counterpart.translate("Create an account") }
+                        { _t("Create an account") }
                     </a>
                     <LoginFooter />
                 </div>

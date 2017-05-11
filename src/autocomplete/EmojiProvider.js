@@ -1,5 +1,5 @@
 import React from 'react';
-import counterpart from 'counterpart';
+import _t from 'counterpart';
 import AutocompleteProvider from './AutocompleteProvider';
 import {emojioneList, shortnameToImage, shortnameToUnicode} from 'emojione';
 import Fuse from 'fuse.js';
@@ -40,7 +40,7 @@ export default class EmojiProvider extends AutocompleteProvider {
     }
 
     getName() {
-        return counterpart.translate('😃 Emoji');
+        return _t('😃 Emoji');
     }
 
     static getInstance() {

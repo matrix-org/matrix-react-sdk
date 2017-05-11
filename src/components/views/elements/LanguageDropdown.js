@@ -19,7 +19,7 @@ import React from 'react';
 import sdk from '../../../index';
 import UserSettingsStore from '../../../UserSettingsStore';
 const _localSettings = UserSettingsStore.getLocalSettings();
-import counterpart from 'counterpart';
+import _t from 'counterpart';
 const languageHandler = require('../../../languageHandler');
 var SdkConfig = require("../../../SdkConfig");
 
@@ -44,23 +44,23 @@ export default class LanguageDropdown extends React.Component {
     }
 
     componentWillMount() {
-    	
+
     	const languageKeys = SdkConfig.get().languages;
-		
+
 		// Build const LANGUAGES in a way that counterpart allows translation inside object:
     	languageKeys.forEach(function(languageKey) {
     		var l = {};
     		l.id = "language";
-    		l.label = counterpart.translate(languageKey);
+    		l.label = _t(languageKey);
     		l.value = languageKey;
     		LANGUAGES.push(l);
     	});
-    	
+
     	for (const l of LANGUAGES) {
     		LANGUAGES_BY_VALUE[l.value] = l;
 		}
-    	
-    	
+
+
         if (!this.props.value) {
             // If no value is given, we start with the first
             // country selected, but our parent component

@@ -16,7 +16,7 @@ limitations under the License.
 
 var MatrixClientPeg = require("./MatrixClientPeg");
 var CallHandler = require("./CallHandler");
-import counterpart from 'counterpart';
+import _t from 'counterpart';
 import * as Roles from './Roles';
 
 function textForMemberEvent(ev) {
@@ -25,42 +25,42 @@ function textForMemberEvent(ev) {
     var targetName = ev.target ? ev.target.name : ev.getStateKey();
     var ConferenceHandler = CallHandler.getConferenceHandler();
     var reason = ev.getContent().reason ? (
-        counterpart.translate("Reason") + ": " + ev.getContent().reason
+        _t("Reason") + ": " + ev.getContent().reason
     ) : "";
     switch (ev.getContent().membership) {
         case 'invite':
             var threePidContent = ev.getContent().third_party_invite;
             if (threePidContent) {
                 if (threePidContent.display_name) {
-                    return counterpart.translate("%(targetName)s accepted the invitation for %(displayName)s", {targetName: targetName, displayName: threePidContent.display_name}) + ".";
+                    return _t("%(targetName)s accepted the invitation for %(displayName)s", {targetName: targetName, displayName: threePidContent.display_name}) + ".";
                 } else {
-                    return counterpart.translate("%(targetName)s accepted an invitation", {targetName: targetName}) + ".";
+                    return _t("%(targetName)s accepted an invitation", {targetName: targetName}) + ".";
                 }
             }
             else {
                 if (ConferenceHandler && ConferenceHandler.isConferenceUser(ev.getStateKey())) {
-                    return counterpart.translate("%(senderName)s requested a VoIP conference", {senderName: senderName});
+                    return _t("%(senderName)s requested a VoIP conference", {senderName: senderName});
                 }
                 else {
-                    return counterpart.translate("%(senderName)s invited %(targetName)s", {senderName: senderName, targetName: targetName}) + ".";
+                    return _t("%(senderName)s invited %(targetName)s", {senderName: senderName, targetName: targetName}) + ".";
                 }
             }
         case 'ban':
-            return counterpart.translate("%(senderName)s banned %(targetName)s", {senderName: senderName, targetName: targetName}) + ". " + reason;
+            return _t("%(senderName)s banned %(targetName)s", {senderName: senderName, targetName: targetName}) + ". " + reason;
         case 'join':
             if (ev.getPrevContent() && ev.getPrevContent().membership == 'join') {
                 if (ev.getPrevContent().displayname && ev.getContent().displayname && ev.getPrevContent().displayname != ev.getContent().displayname) {
-                    return counterpart.translate("%(senderName)s changed their display name from %(oldDisplayName)s to %(displayName)s", {senderName: ev.getSender(), oldDisplayName: ev.getPrevContent().displayname, displayName: ev.getContent().displayname});
+                    return _t("%(senderName)s changed their display name from %(oldDisplayName)s to %(displayName)s", {senderName: ev.getSender(), oldDisplayName: ev.getPrevContent().displayname, displayName: ev.getContent().displayname});
                 } else if (!ev.getPrevContent().displayname && ev.getContent().displayname) {
-                    return counterpart.translate("%(senderName)s set their display name to %(displayName)s", {senderName: ev.getSender(), displayName: ev.getContent().displayname});
+                    return _t("%(senderName)s set their display name to %(displayName)s", {senderName: ev.getSender(), displayName: ev.getContent().displayname});
                 } else if (ev.getPrevContent().displayname && !ev.getContent().displayname) {
-                    return counterpart.translate("%(senderName)s removed their display name (%(oldDisplayName)s)", {senderName: ev.getSender(), oldDisplayName: ev.getPrevContent().displayname});
+                    return _t("%(senderName)s removed their display name (%(oldDisplayName)s)", {senderName: ev.getSender(), oldDisplayName: ev.getPrevContent().displayname});
                 } else if (ev.getPrevContent().avatar_url && !ev.getContent().avatar_url) {
-                    return counterpart.translate("%(senderName)s removed their profile picture", {senderName: senderName});
+                    return _t("%(senderName)s removed their profile picture", {senderName: senderName});
                 } else if (ev.getPrevContent().avatar_url && ev.getContent().avatar_url && ev.getPrevContent().avatar_url != ev.getContent().avatar_url) {
-                    return counterpart.translate("%(senderName)s changed their profile picture", {senderName: senderName});
+                    return _t("%(senderName)s changed their profile picture", {senderName: senderName});
                 } else if (!ev.getPrevContent().avatar_url && ev.getContent().avatar_url) {
-                    return counterpart.translate("%(senderName)s set a profile picture", {senderName: senderName});
+                    return _t("%(senderName)s set a profile picture", {senderName: senderName});
                 } else {
                     // suppress null rejoins
                     return '';
@@ -68,48 +68,48 @@ function textForMemberEvent(ev) {
             } else {
                 if (!ev.target) console.warn("Join message has no target! -- " + ev.getContent().state_key);
                 if (ConferenceHandler && ConferenceHandler.isConferenceUser(ev.getStateKey())) {
-                    return counterpart.translate("VoIP conference started");
+                    return _t("VoIP conference started");
                 }
                 else {
-                    return counterpart.translate("%(targetName)s joined the room", {targetName: targetName}) + ".";
+                    return _t("%(targetName)s joined the room", {targetName: targetName}) + ".";
                 }
             }
         case 'leave':
             if (ev.getSender() === ev.getStateKey()) {
                 if (ConferenceHandler && ConferenceHandler.isConferenceUser(ev.getStateKey())) {
-                    return counterpart.translate("VoIP conference finished");
+                    return _t("VoIP conference finished");
                 }
                 else if (ev.getPrevContent().membership === "invite") {
-                    return counterpart.translate("%(targetName)s rejected the invitation", {targetName: targetName}) + ".";
+                    return _t("%(targetName)s rejected the invitation", {targetName: targetName}) + ".";
                 }
                 else {
-                    return counterpart.translate("%(targetName)s left the room", {targetName: targetName}) + ".";
+                    return _t("%(targetName)s left the room", {targetName: targetName}) + ".";
                 }
             }
             else if (ev.getPrevContent().membership === "ban") {
-                return counterpart.translate("%(senderName)s unbanned %(targetName)s", {senderName: senderName, targetName: targetName}) + ".";
+                return _t("%(senderName)s unbanned %(targetName)s", {senderName: senderName, targetName: targetName}) + ".";
             }
             else if (ev.getPrevContent().membership === "join") {
-                return counterpart.translate("%(senderName)s kicked %(targetName)s", {senderName: senderName, targetName: targetName}) + ". " + reason;
+                return _t("%(senderName)s kicked %(targetName)s", {senderName: senderName, targetName: targetName}) + ". " + reason;
             }
             else if (ev.getPrevContent().membership === "invite") {
-                return counterpart.translate("%(senderName)s withdrew %(targetName)s's inivitation", {senderName: senderName, targetName: targetName}) + ". " + reason;
+                return _t("%(senderName)s withdrew %(targetName)s's inivitation", {senderName: senderName, targetName: targetName}) + ". " + reason;
             }
             else {
-                return counterpart.translate("%(targetName)s left the room", {targetName: targetName}) + ".";
+                return _t("%(targetName)s left the room", {targetName: targetName}) + ".";
             }
     }
 }
 
 function textForTopicEvent(ev) {
     var senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
-    return counterpart.translate("%(senderDisplayName)s changed the topic to %(topic)s", {senderDisplayName: senderDisplayName, topic: ev.getContent().topic});
+    return _t("%(senderDisplayName)s changed the topic to %(topic)s", {senderDisplayName: senderDisplayName, topic: ev.getContent().topic});
 }
 
 function textForRoomNameEvent(ev) {
     var senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
 
-    return counterpart.translate("%(senderDisplayName)s changed the room name to %(roomName)s", {senderDisplayName: senderDisplayName, roomName: ev.getContent().name});
+    return _t("%(senderDisplayName)s changed the room name to %(roomName)s", {senderDisplayName: senderDisplayName, roomName: ev.getContent().name});
 }
 
 function textForMessageEvent(ev) {
@@ -118,65 +118,65 @@ function textForMessageEvent(ev) {
     if (ev.getContent().msgtype === "m.emote") {
         message = "* " + senderDisplayName + " " + message;
     } else if (ev.getContent().msgtype === "m.image") {
-        message = counterpart.translate("%(senderDisplayName)s sent an image", {senderDisplayName: senderDisplayName}) + ".";
+        message = _t("%(senderDisplayName)s sent an image", {senderDisplayName: senderDisplayName}) + ".";
     }
     return message;
 }
 
 function textForCallAnswerEvent(event) {
-    var senderName = event.sender ? event.sender.name : counterpart.translate("Someone");
-    var supported = MatrixClientPeg.get().supportsVoip() ? "" : counterpart.translate("(not supported by this browser)");
-    return counterpart.translate("%(senderName)s answered the call", {senderName: senderName}) + ". " + supported;
+    var senderName = event.sender ? event.sender.name : _t("Someone");
+    var supported = MatrixClientPeg.get().supportsVoip() ? "" : _t("(not supported by this browser)");
+    return _t("%(senderName)s answered the call", {senderName: senderName}) + ". " + supported;
 }
 
 function textForCallHangupEvent(event) {
-    var senderName = event.sender ? event.sender.name : counterpart.translate("Someone");
-    var supported = MatrixClientPeg.get().supportsVoip() ? "" : counterpart.translate("(not supported by this browser)");
-    return counterpart.translate("%(senderName)s ended the call", {senderName: senderName}) + ". " + supported;
+    var senderName = event.sender ? event.sender.name : _t("Someone");
+    var supported = MatrixClientPeg.get().supportsVoip() ? "" : _t("(not supported by this browser)");
+    return _t("%(senderName)s ended the call", {senderName: senderName}) + ". " + supported;
 }
 
 function textForCallInviteEvent(event) {
-    var senderName = event.sender ? event.sender.name : counterpart.translate("Someone");
+    var senderName = event.sender ? event.sender.name : _t("Someone");
     // FIXME: Find a better way to determine this from the event?
     var type = "voice";
     if (event.getContent().offer && event.getContent().offer.sdp &&
             event.getContent().offer.sdp.indexOf('m=video') !== -1) {
         type = "video";
     }
-    var supported = MatrixClientPeg.get().supportsVoip() ? "" : counterpart.translate("(not supported by this browser)");
-    return counterpart.translate("%(senderName)s placed a %(callType) call", {senderName: senderName, callType: type}) + ". " + supported;
+    var supported = MatrixClientPeg.get().supportsVoip() ? "" : _t("(not supported by this browser)");
+    return _t("%(senderName)s placed a %(callType) call", {senderName: senderName, callType: type}) + ". " + supported;
 }
 
 function textForThreePidInviteEvent(event) {
     var senderName = event.sender ? event.sender.name : event.getSender();
-    return counterpart.translate("%(senderName)s sent an invitation to %(targetDisplayName)s to join the room", {senderName: senderName, targetDisplayName: event.getContent().display_name}) + ".";
+    return _t("%(senderName)s sent an invitation to %(targetDisplayName)s to join the room", {senderName: senderName, targetDisplayName: event.getContent().display_name}) + ".";
 }
 
 function textForHistoryVisibilityEvent(event) {
     var senderName = event.sender ? event.sender.name : event.getSender();
     var vis = event.getContent().history_visibility;
-    var text = counterpart.translate("%(senderName)s made future room history visible to", {senderName: senderName}) + " ";
+    var text = _t("%(senderName)s made future room history visible to", {senderName: senderName}) + " ";
     if (vis === "invited") {
-        text += counterpart.translate("all room members, from the point they are invited") + ".";
+        text += _t("all room members, from the point they are invited") + ".";
     }
     else if (vis === "joined") {
-        text += counterpart.translate("all room members, from the point they joined") + ".";
+        text += _t("all room members, from the point they joined") + ".";
     }
     else if (vis === "shared") {
-        text += counterpart.translate("all room members") + ".";
+        text += _t("all room members") + ".";
     }
     else if (vis === "world_readable") {
-        text += counterpart.translate("anyone") + ".";
+        text += _t("anyone") + ".";
     }
     else {
-        text += " " + counterpart.translate("unknown") + " (" + vis + ")";
+        text += " " + _t("unknown") + " (" + vis + ")";
     }
     return text;
 }
 
 function textForEncryptionEvent(event) {
     var senderName = event.sender ? event.sender.name : event.getSender();
-    return counterpart.translate("%(senderName)s turned on end-to-end encryption (algorithm %(algorithm)s)", {senderName: senderName, algorithm: algorithm});
+    return _t("%(senderName)s turned on end-to-end encryption (algorithm %(algorithm)s)", {senderName: senderName, algorithm: algorithm});
 }
 
 // Currently will only display a change if a user's power level is changed
@@ -206,14 +206,14 @@ function textForPowerEvent(event) {
         const to = event.getContent().users[userId];
         if (to !== from) {
             diff.push(
-            	counterpart.translate("%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s", {userId: userId, fromPowerLevel: Roles.textualPowerLevel(from, userDefault), toPowerLevel: Roles.textualPowerLevel(to, userDefault)})
+            	_t("%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s", {userId: userId, fromPowerLevel: Roles.textualPowerLevel(from, userDefault), toPowerLevel: Roles.textualPowerLevel(to, userDefault)})
             );
         }
     });
     if (!diff.length) {
         return '';
     }
-    return counterpart.translate("%(senderName)s changed the power level of %(powerLevelDiffText)s", {senderName: senderName, powerLevelDiffText: diff.join(", ")});
+    return _t("%(senderName)s changed the power level of %(powerLevelDiffText)s", {senderName: senderName, powerLevelDiffText: diff.join(", ")});
 }
 
 var handlers = {

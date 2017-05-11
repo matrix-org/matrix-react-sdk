@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 var React = require("react");
-import counterpart from 'counterpart';
+import _t from 'counterpart';
 var sdk = require('../../../index');
 var MatrixClientPeg = require("../../../MatrixClientPeg");
 
@@ -79,33 +79,33 @@ module.exports = React.createClass({
     _renderDeviceInfo: function() {
         var device = this.state.device;
         if (!device) {
-            return (<i>{ counterpart.translate('unknown device') }</i>);
+            return (<i>{ _t('unknown device') }</i>);
         }
 
-        var verificationStatus = (<b>{ counterpart.translate('NOT verified') }</b>);
+        var verificationStatus = (<b>{ _t('NOT verified') }</b>);
         if (device.isBlocked()) {
-            verificationStatus = (<b>{ counterpart.translate('Blacklisted') }</b>);
+            verificationStatus = (<b>{ _t('Blacklisted') }</b>);
         } else if (device.isVerified()) {
-            verificationStatus = counterpart.translate('verified');
+            verificationStatus = _t('verified');
         }
 
         return (
             <table>
                 <tbody>
                     <tr>
-                        <td>{ counterpart.translate('Name') }</td>
+                        <td>{ _t('Name') }</td>
                         <td>{ device.getDisplayName() }</td>
                     </tr>
                     <tr>
-                        <td>{ counterpart.translate('Device ID') }</td>
+                        <td>{ _t('Device ID') }</td>
                         <td><code>{ device.deviceId }</code></td>
                     </tr>
                     <tr>
-                        <td>{ counterpart.translate('Verification') }</td>
+                        <td>{ _t('Verification') }</td>
                         <td>{ verificationStatus }</td>
                     </tr>
                     <tr>
-                        <td>{ counterpart.translate('Ed25519 fingerprint') }</td>
+                        <td>{ _t('Ed25519 fingerprint') }</td>
                         <td><code>{device.getFingerprint()}</code></td>
                     </tr>
                 </tbody>
@@ -120,32 +120,32 @@ module.exports = React.createClass({
             <table>
                 <tbody>
                     <tr>
-                        <td>{ counterpart.translate('User ID') }</td>
+                        <td>{ _t('User ID') }</td>
                         <td>{ event.getSender() }</td>
                     </tr>
                     <tr>
-                        <td>{ counterpart.translate('Curve25519 identity key') }</td>
-                        <td><code>{ event.getSenderKey() || <i>{ counterpart.translate('none') }</i> }</code></td>
+                        <td>{ _t('Curve25519 identity key') }</td>
+                        <td><code>{ event.getSenderKey() || <i>{ _t('none') }</i> }</code></td>
                     </tr>
                     <tr>
-                        <td>{ counterpart.translate('Claimed Ed25519 fingerprint key') }</td>
-                        <td><code>{ event.getKeysClaimed().ed25519 || <i>{ counterpart.translate('none') }</i> }</code></td>
+                        <td>{ _t('Claimed Ed25519 fingerprint key') }</td>
+                        <td><code>{ event.getKeysClaimed().ed25519 || <i>{ _t('none') }</i> }</code></td>
                     </tr>
                     <tr>
-                        <td>{ counterpart.translate('Algorithm') }</td>
-                        <td>{ event.getWireContent().algorithm || <i>{ counterpart.translate('unencrypted') }</i> }</td>
+                        <td>{ _t('Algorithm') }</td>
+                        <td>{ event.getWireContent().algorithm || <i>{ _t('unencrypted') }</i> }</td>
                     </tr>
                 {
                     event.getContent().msgtype === 'm.bad.encrypted' ? (
                     <tr>
-                        <td>{ counterpart.translate('Decryption error') }</td>
+                        <td>{ _t('Decryption error') }</td>
                         <td>{ event.getContent().body }</td>
                     </tr>
                     ) : null
                 }
                     <tr>
-                        <td>{ counterpart.translate('Session ID') }</td>
-                        <td><code>{ event.getWireContent().session_id || <i>{ counterpart.translate('none') }</i> }</code></td>
+                        <td>{ _t('Session ID') }</td>
+                        <td><code>{ event.getWireContent().session_id || <i>{ _t('none') }</i> }</code></td>
                     </tr>
                 </tbody>
             </table>
@@ -167,18 +167,18 @@ module.exports = React.createClass({
         return (
             <div className="mx_EncryptedEventDialog" onKeyDown={ this.onKeyDown }>
                 <div className="mx_Dialog_title">
-                    { counterpart.translate('End-to-end encryption information') }
+                    { _t('End-to-end encryption information') }
                 </div>
                 <div className="mx_Dialog_content">
-                    <h4>{ counterpart.translate('Event information') }</h4>
+                    <h4>{ _t('Event information') }</h4>
                     {this._renderEventInfo()}
 
-                    <h4>{ counterpart.translate('Sender device information') }</h4>
+                    <h4>{ _t('Sender device information') }</h4>
                     {this._renderDeviceInfo()}
                 </div>
                 <div className="mx_Dialog_buttons">
                     <button className="mx_Dialog_primary" onClick={ this.props.onFinished } autoFocus={ true }>
-                        { counterpart.translate('OK') }
+                        { _t('OK') }
                     </button>
                     {buttons}
                 </div>
