@@ -213,7 +213,7 @@ function textForPowerEvent(event) {
     if (!diff.length) {
         return '';
     }
-    return _t(''%(senderName)s changed the power level of %(powerLevelDiffText)s', {senderName: senderName, powerLevelDiffText: diff.join(", ")});
+    return _t('%(senderName)s changed the power level of %(powerLevelDiffText)s', {senderName: senderName, powerLevelDiffText: diff.join(", ")});
 }
 
 var handlers = {
