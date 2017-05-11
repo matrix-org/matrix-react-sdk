@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import counterpart from 'counterpart';
+import _t from 'counterpart';
 
 import sdk from '../../../index';
 import AddThreepid from '../../../AddThreepid';
@@ -158,7 +158,7 @@ export default WithMatrixClient(React.createClass({
                         <input type="text"
                             ref={this._collectAddMsisdnInput}
                             className="mx_UserSettings_phoneNumberField"
-                            placeholder={ counterpart.translate("Add phone number") }
+                            placeholder={ _t("Add phone number") }
                             value={this.state.phoneNumber}
                             onChange={this._onPhoneNumberChange}
                         />
