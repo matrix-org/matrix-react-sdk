@@ -68,7 +68,7 @@ export function beforeEach(context) {
     console.log(desc);
     console.log(new Array(1 + desc.length).join("="));
 
-    languages = languageHandler.getNormalizedLanguageKeys('en');
+    const languages = languageHandler.getNormalizedLanguageKeys('en');
     languageHandler.setLanguage(languages, counterpart);
 
 };
