@@ -1182,7 +1182,7 @@ module.exports = React.createClass({
                 <div className="mx_MatrixChat_splash">
                     <Spinner />
                     <a href="#" className="mx_MatrixChat_splashButtons" onClick={ this.onLogoutClick }>
-                    {_t("Logout")}
+                    { _t("Logout") }
                     </a>
                 </div>
             );
