@@ -271,7 +271,7 @@ module.exports = React.createClass({
                         if (this.props.canSetAliases) {
                             deleteButton = (
                                 <img src="img/cancel-small.svg" width="14" height="14"
-                                    alt=_t("Delete") onClick={ self.onAliasDeleted.bind(self, localDomain, i) } />
+                                    alt={ _t("Delete") } onClick={ self.onAliasDeleted.bind(self, localDomain, i) } />
                             );
                         }
                         return (

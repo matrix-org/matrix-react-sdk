@@ -83,7 +83,7 @@ export default React.createClass({
                     <form onSubmit={this.onOk}>
                         <input className="mx_ConfirmUserActionDialog_reasonField"
                             ref={this._collectReasonField}
-                            placeholder=_t("Reason")
+                            placeholder={ _t("Reason") }
                             autoFocus={true}
                         />
                     </form>
