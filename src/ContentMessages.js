@@ -348,13 +348,13 @@ class ContentMessages {
         }, function(err) {
             error = err;
             if (!upload.canceled) {
-                var desc = _t("The file '%(fileName)s' failed to upload", {fileName: upload.fileName}) + ".";
+                var desc = _t('The file \'%(fileName)s\' failed to upload', {fileName: upload.fileName}) + '.';
                 if (err.http_status == 413) {
-                    desc = _t("The file '%(fileName)s' exceeds this home server's size limit for uploads", {fileName: upload.fileName});
+                    desc = _t('The file \'%(fileName)s\' exceeds this home server\'s size limit for uploads', {fileName: upload.fileName});
                 }
                 var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Upload Failed"),
+                    title: _t('Upload Failed'),
                     description: desc
                 });
             }

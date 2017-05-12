@@ -158,7 +158,7 @@ export default WithMatrixClient(React.createClass({
                         <input type="text"
                             ref={this._collectAddMsisdnInput}
                             className="mx_UserSettings_phoneNumberField"
-                            placeholder={ _t("Add phone number") }
+                            placeholder={ _t('Add phone number') }
                             value={this.state.phoneNumber}
                             onChange={this._onPhoneNumberChange}
                         />

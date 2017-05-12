@@ -436,5 +436,9 @@
     "Resend all": "Reenviar todas as mensagens",
     "cancel all": "cancelar todas",
     "now. You can also select individual messages to resend or cancel.": "agora. Você também pode escolher mensagens individuais e definir se vai reenviar ou cancelar o envio.",
-    "Active call": "Chamada ativa"
+    "Active call": "Chamada ativa",
+    "af": "Afrikaans",
+    "ar-ae": "Árabe (U.A.E.)",
+    "ar-bh": "Árabe (Bahrain)",
+    "ar-dz": "Árabe (Algéria)"
 }

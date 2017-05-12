@@ -224,14 +224,14 @@ module.exports = React.createClass({
                  !this.state.enteredHomeserverUrl.startsWith("http")))
             {
                 errorText = <span>
-                    { _t("Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar")}.
+                    { _t('Can\'t connect to homeserver via HTTP when an HTTPS URL is in your browser bar')}.
                     { _t('Either use HTTPS or ')}<a href='https://www.google.com/search?&q=enable%20unsafe%20scripts'>{ _t('enable unsafe scripts')}</a>
                 </span>;
             }
             else {
                 errorText = <span>
-                    { _t("Can't connect to homeserver - please check your connectivity and ensure your")}
-                    <a href={ this.state.enteredHomeserverUrl }>{ _t("homeserver's SSL certificate")}</a> { _t('is trusted') }.
+                    { _t('Can\'t connect to homeserver - please check your connectivity and ensure your')}
+                    <a href={ this.state.enteredHomeserverUrl }>{ _t('homeserver\'s SSL certificate')}</a> { _t('is trusted') }.
                 </span>;
             }
         }

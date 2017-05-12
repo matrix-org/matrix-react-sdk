@@ -133,10 +133,10 @@ module.exports = React.createClass({
             joinBlock = (
                 <div>
                     <div className="mx_RoomPreviewBar_invite_text">
-                        { _t("You have been invited to join this room by") } <b>{ this.props.inviterName }</b>
+                        { _t('You have been invited to join this room by') } <b>{ this.props.inviterName }</b>
                     </div>
                     <div className="mx_RoomPreviewBar_join_text">
-                        { _t("Would you like to") } <a onClick={ this.props.onJoinClick }>{ _t("accept") }</a> { _t("or") } <a onClick={ this.props.onRejectClick }>{ _t("decline") }</a> { _t("this invitation?") }
+                        { _t('Would you like to') } <a onClick={ this.props.onJoinClick }>{ _t('accept') }</a> { _t('or') } <a onClick={ this.props.onRejectClick }>{ _t('decline') }</a> { _t('this invitation?') }
                     </div>
                     {emailMatchBlock}
                 </div>
@@ -188,8 +188,8 @@ module.exports = React.createClass({
             joinBlock = (
                 <div>
                     <div className="mx_RoomPreviewBar_join_text">
-                        { _t("You are trying to access %(roomName)", {roomName: name}) }.<br/>
-                        <a onClick={ this.props.onJoinClick }><b>{ _t("Click here") }</b></a> { _t("to join the discussion") }!
+                        { _t('You are trying to access %(roomName)', {roomName: name}) }.<br/>
+                        <a onClick={ this.props.onJoinClick }><b>{ _t('Click here') }</b></a> { _t('to join the discussion') }!
                     </div>
                 </div>
             );
@@ -198,7 +198,7 @@ module.exports = React.createClass({
         if (this.props.canPreview) {
             previewBlock = (
                 <div className="mx_RoomPreviewBar_preview_text">
-                    { _t("This is a preview of this room. Room interactions have been disabled") }.
+                    { _t('This is a preview of this room. Room interactions have been disabled') }.
                 </div>
             );
         }

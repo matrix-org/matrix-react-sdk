@@ -295,7 +295,7 @@ module.exports = React.createClass({
         var forget_button;
         if (this.props.onForgetClick) {
             forget_button =
-                <AccessibleButton className="mx_RoomHeader_button" onClick={this.props.onForgetClick} title={ _t("Forget room") }>
+                <AccessibleButton className="mx_RoomHeader_button" onClick={this.props.onForgetClick} title={ _t('Forget room') }>
                     <TintableSvg src="img/leave.svg" width="26" height="20"/>
                 </AccessibleButton>;
         }
@@ -303,7 +303,7 @@ module.exports = React.createClass({
         var rightPanel_buttons;
         if (this.props.collapsedRhs) {
             rightPanel_buttons =
-                <AccessibleButton className="mx_RoomHeader_button" onClick={this.onShowRhsClick} title={ _t("Show panel") }>
+                <AccessibleButton className="mx_RoomHeader_button" onClick={this.onShowRhsClick} title={ _t('Show panel') }>
                     <TintableSvg src="img/maximise.svg" width="10" height="16"/>
                 </AccessibleButton>;
         }
