@@ -98,7 +98,7 @@
     "Forget room": "Забыть комнату",
     "Forgot your password?": "Вы забыли пароль?",
     "For security, logging out will delete any end-to-end encryption keys from this browser. If you want to be able to decrypt your conversation history from future Riot sessions, please export your room keys for safe-keeping.": "",
-    "For security, this session has been signed out. Please sign in again.": "Для обеспечения безопасности, эта сессия была подписана. Войдите в систему еще раз.",
+    "For security, this session has been signed out. Please sign in again": "Для обеспечения безопасности, эта сессия была подписана. Войдите в систему еще раз.",
     "Found a bug?": "Обнаружили ошибку?",
     "Guests cannot join this room even if explicitly invited": "",
     "Guests can't set avatars. Please register.": "",
