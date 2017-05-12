@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import counterpart from 'counterpart';
 
 import Matrix from 'matrix-js-sdk';
 import sdk from '../../index';
@@ -106,7 +105,7 @@ var FilePanel = React.createClass({
                     showUrlPreview = { false }
                     tileShape="file_grid"
                     opacity={ this.props.opacity }
-                    empty={counterpart.translate('There are no visible files in this room')}
+                    empty={_t('There are no visible files in this room')}
                 />
             );
         }

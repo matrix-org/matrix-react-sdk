@@ -18,7 +18,7 @@ limitations under the License.
 'use strict';
 
 var React = require('react');
-import counterpart from 'counterpart';
+import _t from 'counterpart';
 var sdk = require('../../../index');
 
 module.exports = React.createClass({
@@ -35,8 +35,8 @@ module.exports = React.createClass({
                 <div className="mx_TopUnreadMessagesBar_scrollUp"
                         onClick={this.props.onScrollUpClick}>
                     <img src="img/scrollto.svg" width="24" height="24"
-                        alt="{ counterpart.translate('Scroll to unread messages') }"
-                        title="{ counterpart.translate('Scroll to unread messages') }"/>
+                        alt={ _t('Scroll to unread messages') }
+                        title={ _t('Scroll to unread messages') }/>
                     Jump to first unread message.
                 </div>
                 <img className="mx_TopUnreadMessagesBar_close"

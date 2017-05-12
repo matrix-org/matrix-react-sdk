@@ -29,7 +29,7 @@ const Email = require('../../email');
 const AddThreepid = require('../../AddThreepid');
 const SdkConfig = require('../../SdkConfig');
 import AccessibleButton from '../views/elements/AccessibleButton';
-import counterpart from 'counterpart';
+import _t from 'counterpart';
 const languageHandler = require('../../languageHandler');
 
 
@@ -91,7 +91,7 @@ const SETTINGS_LABELS = [
 const CRYPTO_SETTINGS_LABELS = [
     {
         id: 'blacklistUnverifiedDevices',
-        label: counterpart.translate('Never send encrypted messages to unverified devices from this device'),
+        label: _t('Never send encrypted messages to unverified devices from this device'),
     },
     // XXX: this is here for documentation; the actual setting is managed via RoomSettings
     // {
@@ -243,8 +243,8 @@ module.exports = React.createClass({
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             console.error("Failed to load user settings: " + error);
             Modal.createDialog(ErrorDialog, {
-                title: counterpart.translate("Can't load user settings"),
-                description: ((error && error.message) ? error.message : counterpart.translate("Server may be unavailable or overloaded")),
+                title: _t("Can't load user settings"),
+                description: ((error && error.message) ? error.message : _t("Server may be unavailable or overloaded")),
             });
         });
     },
@@ -259,8 +259,8 @@ module.exports = React.createClass({
         if (MatrixClientPeg.get().isGuest()) {
             const NeedToRegisterDialog = sdk.getComponent("dialogs.NeedToRegisterDialog");
             Modal.createDialog(NeedToRegisterDialog, {
-                title: counterpart.translate("Please Register"),
-                description: counterpart.translate("Guests can't set avatars. Please register") + ".",
+                title: _t("Please Register"),
+                description: _t("Guests can't set avatars. Please register") + ".",
             });
             return;
         }
@@ -285,8 +285,8 @@ module.exports = React.createClass({
             console.error("Failed to set avatar: " + err);
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createDialog(ErrorDialog, {
-                title: counterpart.translate("Failed to set avatar"),
-                description: ((err && err.message) ? err.message : counterpart.translate("Operation failed")),
+                title: _t("Failed to set avatar"),
+                description: ((err && err.message) ? err.message : _t("Operation failed")),
             });
         });
     },
@@ -294,16 +294,16 @@ module.exports = React.createClass({
     onLogoutClicked: function(ev) {
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
         Modal.createDialog(QuestionDialog, {
-            title: counterpart.translate("Sign out") + "?",
+            title: _t("Sign out") + "?",
             description:
                 <div>
-             { counterpart.translate("For security, logging out will delete any end-to-end encryption keys from this browser. If you want to be able to decrypt your conversation history from future Riot sessions, please export your room keys for safe-keeping") }.
+             { _t("For security, logging out will delete any end-to-end encryption keys from this browser. If you want to be able to decrypt your conversation history from future Riot sessions, please export your room keys for safe-keeping") }.
                 </div>,
-            button: counterpart.translate("Sign out"),
+            button: _t("Sign out"),
             extraButtons: [
                 <button key="export" className="mx_Dialog_primary"
                         onClick={this._onExportE2eKeysClicked}>
-                   { counterpart.translate("Export E2E room keys") }
+                   { _t("Export E2E room keys") }
                 </button>,
             ],
             onFinished: (confirmed) => {
@@ -320,14 +320,14 @@ module.exports = React.createClass({
     onPasswordChangeError: function(err) {
         let errMsg = err.error || "";
         if (err.httpStatus === 403) {
-            errMsg = counterpart.translate("Failed to change password. Is your password correct?");
+            errMsg = _t("Failed to change password. Is your password correct?");
         } else if (err.httpStatus) {
             errMsg += ` (HTTP status ${err.httpStatus})`;
         }
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         console.error("Failed to change password: " + errMsg);
         Modal.createDialog(ErrorDialog, {
-            title: counterpart.translate("Error"),
+            title: _t("Error"),
             description: errMsg,
         });
     },
@@ -335,8 +335,8 @@ module.exports = React.createClass({
     onPasswordChanged: function() {
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         Modal.createDialog(ErrorDialog, {
-            title: counterpart.translate("Success"),
-            description: counterpart.translate("Your password was successfully changed. You will not receive push notifications on other devices until you log back in to them") + ".",
+            title: _t("Success"),
+            description: _t("Your password was successfully changed. You will not receive push notifications on other devices until you log back in to them") + ".",
         });
     },
 
@@ -362,8 +362,8 @@ module.exports = React.createClass({
         const emailAddress = this.refs.add_email_input.value;
         if (!Email.looksValid(emailAddress)) {
             Modal.createDialog(ErrorDialog, {
-                title: counterpart.translate("Invalid Email Address"),
-                description: counterpart.translate("This doesn't appear to be a valid email address"),
+                title: _t("Invalid Email Address"),
+                description: _t("This doesn't appear to be a valid email address"),
             });
             return;
         }
@@ -372,17 +372,17 @@ module.exports = React.createClass({
         // same here.
         this._addThreepid.addEmailAddress(emailAddress, true).done(() => {
             Modal.createDialog(QuestionDialog, {
-                title: counterpart.translate("Verification Pending"),
-                description: counterpart.translate("Please check your email and click on the link it contains. Once this is done, click continue."),
-                button: counterpart.translate('Continue'),
+                title: _t("Verification Pending"),
+                description: _t("Please check your email and click on the link it contains. Once this is done, click continue."),
+                button: _t('Continue'),
                 onFinished: this.onEmailDialogFinished,
             });
         }, (err) => {
             this.setState({email_add_pending: false});
             console.error("Unable to add email address " + emailAddress + " " + err);
             Modal.createDialog(ErrorDialog, {
-                title: counterpart.translate("Unable to add email address"),
-                description: ((err && err.message) ? err.message : counterpart.translate("Operation failed")),
+                title: _t("Unable to add email address"),
+                description: ((err && err.message) ? err.message : _t("Operation failed")),
             });
         });
         ReactDOM.findDOMNode(this.refs.add_email_input).blur();
@@ -392,9 +392,9 @@ module.exports = React.createClass({
     onRemoveThreepidClicked: function(threepid) {
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
         Modal.createDialog(QuestionDialog, {
-            title: counterpart.translate("Remove Contact Information?"),
-            description: counterpart.translate("Remove ") + threepid.address + "?",
-            button: counterpart.translate('Remove'),
+            title: _t("Remove Contact Information?"),
+            description: _t("Remove ") + threepid.address + "?",
+            button: _t('Remove'),
             onFinished: (submit) => {
                 if (submit) {
                     this.setState({
@@ -406,8 +406,8 @@ module.exports = React.createClass({
                         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                         console.error("Unable to remove contact information: " + err);
                         Modal.createDialog(ErrorDialog, {
-                            title: counterpart.translate("Unable to remove contact information"),
-                            description: ((err && err.message) ? err.message : counterpart.translate("Operation failed")),
+                            title: _t("Unable to remove contact information"),
+                            description: ((err && err.message) ? err.message : _t("Operation failed")),
                         });
                     }).done();
                 }
@@ -435,20 +435,20 @@ module.exports = React.createClass({
             this.setState({email_add_pending: false});
             if (err.errcode == 'M_THREEPID_AUTH_FAILED') {
                 const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-                let message = counterpart.translate("Unable to verify email address. ");
-                message += counterpart.translate("Please check your email and click on the link it contains. Once this is done, click continue.");
+                let message = _t("Unable to verify email address. ");
+                message += _t("Please check your email and click on the link it contains. Once this is done, click continue.");
                 Modal.createDialog(QuestionDialog, {
-                    title: counterpart.translate("Verification Pending"),
+                    title: _t("Verification Pending"),
                     description: message,
-                    button: counterpart.translate('Continue'),
+                    button: _t('Continue'),
                     onFinished: this.onEmailDialogFinished,
                 });
             } else {
                 const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 console.error("Unable to verify email address: " + err);
                 Modal.createDialog(ErrorDialog, {
-                    title: counterpart.translate("Unable to verify email address"),
-                    description: ((err && err.message) ? err.message : counterpart.translate("Operation failed")),
+                    title: _t("Unable to verify email address"),
+                    description: ((err && err.message) ? err.message : _t("Operation failed")),
                 });
             }
         });
@@ -538,7 +538,7 @@ module.exports = React.createClass({
             <div>
                 <h3>Referral</h3>
                 <div className="mx_UserSettings_section">
-                    {counterpart.translate("Refer a friend to Riot: ")} <a href={href}>{href}</a>
+                    {_t("Refer a friend to Riot: ")} <a href={href}>{href}</a>
                 </div>
             </div>
         );
@@ -562,7 +562,7 @@ module.exports = React.createClass({
     _renderUserInterfaceSettings: function() {
         return (
             <div>
-                <h3>{ counterpart.translate("User Interface") }</h3>
+                <h3>{ _t("User Interface") }</h3>
                 <div className="mx_UserSettings_section">
                     { this._renderUrlPreviewSelector() }
                     { SETTINGS_LABELS.map( this._renderSyncedSetting ) }
@@ -582,7 +582,7 @@ module.exports = React.createClass({
                    onChange={ (e) => UserSettingsStore.setUrlPreviewsDisabled(e.target.checked) }
             />
             <label htmlFor="urlPreviewsDisabled">
-                { counterpart.translate("Disable inline URL previews by default") }
+                { _t("Disable inline URL previews by default") }
             </label>
         </div>;
     },
@@ -627,7 +627,7 @@ module.exports = React.createClass({
     _renderCryptoInfo: function() {
         const client = MatrixClientPeg.get();
         const deviceId = client.deviceId;
-        const identityKey = client.getDeviceEd25519Key() || counterpart.translate("<not supported>");
+        const identityKey = client.getDeviceEd25519Key() || _t("<not supported>");
 
         let importExportButtons = null;
 
@@ -636,18 +636,18 @@ module.exports = React.createClass({
                 <div className="mx_UserSettings_importExportButtons">
                     <AccessibleButton className="mx_UserSettings_button"
                             onClick={this._onExportE2eKeysClicked}>
-                        { counterpart.translate("Export E2E room keys") }
+                        { _t("Export E2E room keys") }
                     </AccessibleButton>
                     <AccessibleButton className="mx_UserSettings_button"
                             onClick={this._onImportE2eKeysClicked}>
-                        { counterpart.translate("Import E2E room keys") }
+                        { _t("Import E2E room keys") }
                     </AccessibleButton>
                 </div>
             );
         }
         return (
             <div>
-                <h3>{ counterpart.translate("Cryptography") }</h3>
+                <h3>{ _t("Cryptography") }</h3>
                 <div className="mx_UserSettings_section mx_UserSettings_cryptoSection">
                     <ul>
                         <li><label>Device ID:</label>             <span><code>{deviceId}</code></span></li>
@@ -699,9 +699,9 @@ module.exports = React.createClass({
         }
         return (
             <div>
-                <h3>{ counterpart.translate("Bug Report") }</h3>
+                <h3>{ _t("Bug Report") }</h3>
                 <div className="mx_UserSettings_section">
-                    <p>{ counterpart.translate("Found a bug?") }</p>
+                    <p>{ _t("Found a bug?") }</p>
                     <button className="mx_UserSettings_button danger"
                         onClick={this._onBugReportClicked}>Report it
                     </button>
@@ -726,8 +726,8 @@ module.exports = React.createClass({
                             e.target.checked = false;
                             const NeedToRegisterDialog = sdk.getComponent("dialogs.NeedToRegisterDialog");
                             Modal.createDialog(NeedToRegisterDialog, {
-                                title: counterpart.translate("Please Register"),
-                                description: counterpart.translate("Guests can't use labs features. Please register") + ".",
+                                title: _t("Please Register"),
+                                description: _t("Guests can't use labs features. Please register") + ".",
                             });
                             return;
                         }
@@ -740,9 +740,9 @@ module.exports = React.createClass({
         ));
         return (
             <div>
-                <h3>{ counterpart.translate("Labs") }</h3>
+                <h3>{ _t("Labs") }</h3>
                 <div className="mx_UserSettings_section">
-                    <p>{ counterpart.translate("These are experimental features that may break in unexpected ways") }. { counterpart.translate("Use with caution") }.</p>
+                    <p>{ _t("These are experimental features that may break in unexpected ways") }. { _t("Use with caution") }.</p>
                     {features}
                 </div>
             </div>
@@ -754,10 +754,10 @@ module.exports = React.createClass({
         if (MatrixClientPeg.get().isGuest()) return null;
 
         return <div>
-            <h3>{ counterpart.translate("Deactivate Account") }</h3>
+            <h3>{ _t("Deactivate Account") }</h3>
                 <div className="mx_UserSettings_section">
                     <AccessibleButton className="mx_UserSettings_button danger"
-                        onClick={this._onDeactivateAccountClicked}> { counterpart.translate("Deactivate my account") }
+                        onClick={this._onDeactivateAccountClicked}> { _t("Deactivate my account") }
                     </AccessibleButton>
                 </div>
         </div>;
@@ -765,11 +765,11 @@ module.exports = React.createClass({
 
     _renderClearCache: function() {
         return <div>
-            <h3>{ counterpart.translate("Clear Cache") }</h3>
+            <h3>{ _t("Clear Cache") }</h3>
                 <div className="mx_UserSettings_section">
                     <AccessibleButton className="mx_UserSettings_button danger"
                         onClick={this._onClearCacheClicked}>
-                        { counterpart.translate("Clear Cache and Reload") }
+                        { _t("Clear Cache and Reload") }
                     </AccessibleButton>
                 </div>
         </div>;
@@ -798,7 +798,7 @@ module.exports = React.createClass({
         }
 
         return <div>
-            <h3>{ counterpart.translate("Bulk Options") }</h3>
+            <h3>{ _t("Bulk Options") }</h3>
                 <div className="mx_UserSettings_section">
                     {reject}
                 </div>
@@ -867,7 +867,7 @@ module.exports = React.createClass({
                         />
                     </div>
                     <div className="mx_UserSettings_threepidButton mx_filterFlipColor">
-                        <img src="img/cancel-small.svg" width="14" height="14" alt={ counterpart.translate("Remove") } onClick={this.onRemoveThreepidClicked.bind(this, val)} />
+                        <img src="img/cancel-small.svg" width="14" height="14" alt={ _t("Remove") } onClick={this.onRemoveThreepidClicked.bind(this, val)} />
                     </div>
                 </div>
             );
@@ -885,7 +885,7 @@ module.exports = React.createClass({
                             ref="add_email_input"
                             className="mx_UserSettings_editable"
                             placeholderClassName="mx_UserSettings_threepidPlaceholder"
-                            placeholder={ counterpart.translate("Add email address") }
+                            placeholder={ _t("Add email address") }
                             blurToCancel={ false }
                             onValueChanged={ this._onAddEmailEditFinished } />
                     </div>
@@ -907,7 +907,7 @@ module.exports = React.createClass({
         if (MatrixClientPeg.get().isGuest()) {
             accountJsx = (
                 <div className="mx_UserSettings_button" onClick={this.onUpgradeClicked}>
-                    { counterpart.translate("Create an account") }
+                    { _t("Create an account") }
                 </div>
             );
         } else {
@@ -925,7 +925,7 @@ module.exports = React.createClass({
         let notificationArea;
         if (!MatrixClientPeg.get().isGuest() && this.state.threepids !== undefined) {
             notificationArea = (<div>
-                <h3>{ counterpart.translate("Notifications") }</h3>
+                <h3>{ _t("Notifications") }</h3>
 
                 <div className="mx_UserSettings_section">
                     <Notifications threepids={this.state.threepids} brand={this.props.brand} />
@@ -944,7 +944,7 @@ module.exports = React.createClass({
         return (
             <div className="mx_UserSettings">
                 <SimpleRoomHeader
-                    title={ counterpart.translate("Settings") }
+                    title={ _t("Settings") }
                     collapsedRhs={ this.props.collapsedRhs }
                     onCancelClick={ this.props.onClose }
                 />
@@ -952,13 +952,13 @@ module.exports = React.createClass({
                 <GeminiScrollbar className="mx_UserSettings_body"
                                  autoshow={true}>
 
-                <h3>{ counterpart.translate("Profile") }</h3>
+                <h3>{ _t("Profile") }</h3>
 
                 <div className="mx_UserSettings_section">
                     <div className="mx_UserSettings_profileTable">
                         <div className="mx_UserSettings_profileTableRow">
                             <div className="mx_UserSettings_profileLabelCell">
-                                <label htmlFor="displayName">{ counterpart.translate('Display name') }</label>
+                                <label htmlFor="displayName">{ _t('Display name') }</label>
                             </div>
                             <div className="mx_UserSettings_profileInputCell">
                                 <ChangeDisplayName />
@@ -975,7 +975,7 @@ module.exports = React.createClass({
                         <div className="mx_UserSettings_avatarPicker_edit">
                             <label htmlFor="avatarInput" ref="file_label">
                                 <img src="img/camera.svg" className="mx_filterFlipColor"
-                                    alt={ counterpart.translate("Upload avatar") } title={ counterpart.translate("Upload avatar") }
+                                    alt={ _t("Upload avatar") } title={ _t("Upload avatar") }
                                     width="17" height="15" />
                             </label>
                             <input id="avatarInput" type="file" onChange={this.onAvatarSelected}/>
@@ -983,12 +983,12 @@ module.exports = React.createClass({
                     </div>
                 </div>
 
-                <h3>{ counterpart.translate("Account") }</h3>
+                <h3>{ _t("Account") }</h3>
 
                 <div className="mx_UserSettings_section cadcampoHide">
 
                     <AccessibleButton className="mx_UserSettings_logout mx_UserSettings_button" onClick={this.onLogoutClicked}>
-                        { counterpart.translate("Sign out") }
+                        { _t("Sign out") }
                     </AccessibleButton>
 
                     {accountJsx}
@@ -1005,20 +1005,20 @@ module.exports = React.createClass({
                 {this._renderBulkOptions()}
                 {this._renderBugReport()}
 
-                <h3>{ counterpart.translate("Advanced") }</h3>
+                <h3>{ _t("Advanced") }</h3>
 
                 <div className="mx_UserSettings_section">
                     <div className="mx_UserSettings_advanced">
-                        { counterpart.translate("Logged in as") } {this._me}
+                        { _t("Logged in as") } {this._me}
                     </div>
                     <div className="mx_UserSettings_advanced">
-                        Access Token: <span className="mx_UserSettings_advanced_spoiler" onClick={this._showSpoiler} data-spoiler={ MatrixClientPeg.get().getAccessToken() }>&lt;{ counterpart.translate("click to reveal") }&gt;</span>
+                        Access Token: <span className="mx_UserSettings_advanced_spoiler" onClick={this._showSpoiler} data-spoiler={ MatrixClientPeg.get().getAccessToken() }>&lt;{ _t("click to reveal") }&gt;</span>
                     </div>
                     <div className="mx_UserSettings_advanced">
-                        { counterpart.translate("Homeserver is") } { MatrixClientPeg.get().getHomeserverUrl() }
+                        { _t("Homeserver is") } { MatrixClientPeg.get().getHomeserverUrl() }
                     </div>
                     <div className="mx_UserSettings_advanced">
-                        { counterpart.translate("Identity Server is") } { MatrixClientPeg.get().getIdentityServerUrl() }
+                        { _t("Identity Server is") } { MatrixClientPeg.get().getIdentityServerUrl() }
                     </div>
                     <div className="mx_UserSettings_advanced">
                         matrix-react-sdk version: {(REACT_SDK_VERSION !== '<local>')
@@ -1029,7 +1029,7 @@ module.exports = React.createClass({
                             ? gHVersionLabel('vector-im/riot-web', this.state.vectorVersion)
                             : 'unknown'
                         }<br/>
-                        { counterpart.translate("olm version: ") } {olmVersionString}<br/>
+                        { _t("olm version: ") } {olmVersionString}<br/>
                     </div>
                 </div>
 

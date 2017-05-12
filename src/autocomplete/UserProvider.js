@@ -1,5 +1,5 @@
 import React from 'react';
-import counterpart from 'counterpart';
+import _t from 'counterpart';
 import AutocompleteProvider from './AutocompleteProvider';
 import Q from 'q';
 import Fuse from 'fuse.js';
@@ -52,7 +52,7 @@ export default class UserProvider extends AutocompleteProvider {
     }
 
     getName() {
-        return counterpart.translate('👥 Users');
+        return _t('👥 Users');
     }
 
     setUserList(users) {
