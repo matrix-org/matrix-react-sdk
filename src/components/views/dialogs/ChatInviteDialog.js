@@ -49,11 +49,7 @@ module.exports = React.createClass({
 
     getDefaultProps: function() {
         return {
-            title: _t('Start a chat'),
-            description: _t('Who would you like to communicate with?'),
             value: "",
-            placeholder: _t('Email, name or matrix ID'),
-            button: _t('Start Chat'),
             focus: true
         };
     },
