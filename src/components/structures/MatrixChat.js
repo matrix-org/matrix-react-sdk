@@ -399,6 +399,7 @@ module.exports = React.createClass({
                 Modal.createDialog(QuestionDialog, {
                     title: _t('Leave room'),
                     description: _t('Are you sure you want to leave the room %(RoomName)s?', {RoomName: roomToLeave.name}),
+                    button: "OK",
                     onFinished: (should_leave) => {
                         if (should_leave) {
                             const d = MatrixClientPeg.get().leave(payload.room_id);
@@ -429,6 +430,7 @@ module.exports = React.createClass({
                 Modal.createDialog(QuestionDialog, {
                     title: _t('Reject invitation'),
                     description: _t('Are you sure you want to reject the invitation?'),
+                    button: "OK",
                     onFinished: (confirm) => {
                         if (confirm) {
                             // FIXME: controller shouldn't be loading a view :(

@@ -541,6 +541,7 @@ module.exports = React.createClass({
                         <p>{ _t("Encrypted messages will not be visible on clients that do not yet implement encryption") }.</p>
                     </div>
                 ),
+                button: "OK",
             });
         }
         if (localStorage) {

@@ -125,6 +125,7 @@ export default class MessageComposer extends React.Component {
                     </ul>
                 </div>
             ),
+            button: "OK",
             onFinished: (shouldUpload) => {
                 if(shouldUpload) {
                     // MessageComposer shouldn't have to rely on its parent passing in a callback to upload a file
