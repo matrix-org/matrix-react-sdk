@@ -683,6 +683,9 @@ module.exports = React.createClass({
         var ChatInviteDialog = sdk.getComponent("dialogs.ChatInviteDialog");
         Modal.createDialog(ChatInviteDialog, {
             title: _t('Start a chat'),
+            description: _t("Who would you like to communicate with?"),
+            placeholder: _t("Email, name or matrix ID"),
+            button: _t("Start Chat")
         });
     },
 
@@ -690,8 +693,8 @@ module.exports = React.createClass({
         var ChatInviteDialog = sdk.getComponent("dialogs.ChatInviteDialog");
         Modal.createDialog(ChatInviteDialog, {
             title: _t('Invite new room members'),
-            button: _t('Send Invites'),
             description: _t('Who would you like to add to this room?'),
+            button: _t('Send Invites'),
             roomId: roomId,
         });
     },
