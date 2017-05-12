@@ -550,5 +550,12 @@
     "fo": "Färöisch",
     "ga": "Irisch",
     "hi": "Hindi",
-    "xh": "Xhosa"
+    "xh": "Xhosa",
+    "Monday": "Montag",
+    "Tuesday": "Dienstag",
+    "Wednesday": "Mittwoch",
+    "Thursday": "Donnerstag",
+    "Friday": "Freitag",
+    "Saturday": "Samstag",
+    "Sunday": "Sonntag"
 }
