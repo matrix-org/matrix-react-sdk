@@ -148,7 +148,8 @@ module.exports = React.createClass({
         var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         Modal.createDialog(ErrorDialog, {
             title: title,
-            description: body
+            description: body,
+            button: _t("OK"),
         });
     },
 

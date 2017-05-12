@@ -107,6 +107,7 @@ function createRoom(opts) {
         Modal.createDialog(ErrorDialog, {
             title: _t("Failure to create room"),
             description: _t("Server may be unavailable, overloaded, or you hit a bug") + ".",
+            button: _t("OK"),
         });
         return null;
     });
