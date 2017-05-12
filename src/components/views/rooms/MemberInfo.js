@@ -382,7 +382,6 @@ module.exports = WithMatrixClient(React.createClass({
                     Modal.createDialog(NeedToRegisterDialog, {
                         title: _t("Please Register"),
                         description: _t("This action cannot be performed by a guest user. Please register to be able to do this") + ".",
-                        button: _t("OK"),
                     });
                 } else {
                     console.error("Toggle moderator error:" + err);
