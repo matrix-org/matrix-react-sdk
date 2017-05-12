@@ -678,7 +678,7 @@ module.exports = WithMatrixClient(React.createClass({
         if (this.state.can.ban) {
             let label = _t("Ban");
             if (this.props.member.membership == 'ban') {
-                label = "Unban";
+                label = _t("Unban");
             }
             banButton = (
                 <AccessibleButton className="mx_MemberInfo_field"
