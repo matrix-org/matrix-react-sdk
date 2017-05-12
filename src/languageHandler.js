@@ -23,7 +23,10 @@ var q = require('q');
 const i18nFolder = 'i18n/';
 
 module.exports.setLanguage = function(languages, extCounterpart=null) {
-    
+
+    console.log("languages");
+    console.log(languages);
+
   	if (!languages || !Array.isArray(languages)) {
 	    const languages = this.getNormalizedLanguageKeys(this.getLanguageFromBrowser());
 	    console.log("no language found. Got from browser: " + JSON.stringify(languages));
@@ -144,6 +147,8 @@ module.exports.getNormalizedLanguageKeys = function(language) {
 	if (!language) {
 		return;
 	}
+  console.log("language");
+  console.log(language);
 	const languageKeys = [];
 	const normalizedLanguage = this.normalizeLanguageKey(language);
 	const languageParts = normalizedLanguage.split('-');
@@ -155,6 +160,8 @@ module.exports.getNormalizedLanguageKeys = function(language) {
 			languageKeys.push(languageParts[0]);
 		}
 	}
+  console.log("languageKeys");
+  console.log(languageKeys);
 	return languageKeys;
 };
 
