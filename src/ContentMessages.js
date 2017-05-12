@@ -355,7 +355,8 @@ class ContentMessages {
                 var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
                     title: _t('Upload Failed'),
-                    description: desc
+                    description: desc,
+                    button: _t("OK"),
                 });
             }
         }).finally(() => {

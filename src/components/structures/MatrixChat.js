@@ -418,6 +418,7 @@ module.exports = React.createClass({
                                 Modal.createDialog(ErrorDialog, {
                                     title: _t('Failed to leave room'),
                                     description: (err && err.message ? err.message : _t('Server may be unavailable, overloaded, or you hit a bug') + '.'),
+                                    button: _t("OK"),
                                 });
                             });
                         }
@@ -443,7 +444,8 @@ module.exports = React.createClass({
                                 modal.close();
                                 Modal.createDialog(ErrorDialog, {
                                     title:  _t('Failed to reject invitation'),
-                                    description: err.toString()
+                                    description: err.toString(),
+                                    button: _t("OK"),
                                 });
                             });
                         }
@@ -877,7 +879,8 @@ module.exports = React.createClass({
             var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createDialog(ErrorDialog, {
                 title: _t('Signed Out'),
-                description: _t('For security, this session has been signed out. Please sign in again.')
+                description: _t('For security, this session has been signed out. Please sign in again.'),
+                button: _t("OK"),
             });
             dis.dispatch({
                 action: 'logout'

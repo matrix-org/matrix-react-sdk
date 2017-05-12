@@ -62,6 +62,7 @@ module.exports.setLanguage = function(languages, extCounterpart=null) {
 			Modal.createDialog(ErrorDialog, {
 				title: counterpart.translate('Error changing language'),
 				description: counterpart.translate('Riot was unable to find the correct Data for the selected Language.'),
+				button: counterpart.translate("OK"),
 			});
 			return;
 		} else {

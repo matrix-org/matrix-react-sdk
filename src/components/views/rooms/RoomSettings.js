@@ -59,6 +59,7 @@ const BannedUser = React.createClass({
                     Modal.createDialog(ErrorDialog, {
                         title: _t('Error'),
                         description: _t('Failed to unban'),
+                        button: _t("OK"),
                     });
                 }).done();
             },
@@ -528,7 +529,8 @@ module.exports = React.createClass({
             var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createDialog(ErrorDialog, {
                 title: _t('Error'),
-                description: `${_t('Failed to forget room')} (${errCode})`
+                description: _t("Failed to forget room %(errCode)s", { errCode: errCode }),
+                button: _t("OK"),
             });
         });
     },

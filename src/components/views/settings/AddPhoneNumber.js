@@ -85,6 +85,7 @@ export default WithMatrixClient(React.createClass({
             Modal.createDialog(ErrorDialog, {
                 title: "Error",
                 description: msg,
+                button: _t("OK"),
             });
         }).finally(() => {
             if (this._unmounted) return;

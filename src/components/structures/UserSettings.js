@@ -245,6 +245,7 @@ module.exports = React.createClass({
             Modal.createDialog(ErrorDialog, {
                 title: _t("Can't load user settings"),
                 description: ((error && error.message) ? error.message : _t("Server may be unavailable or overloaded")),
+                button: _t("OK"),
             });
         });
     },
@@ -287,6 +288,7 @@ module.exports = React.createClass({
             Modal.createDialog(ErrorDialog, {
                 title: _t("Failed to set avatar"),
                 description: ((err && err.message) ? err.message : _t("Operation failed")),
+                button: _t("OK")
             });
         });
     },
@@ -329,6 +331,7 @@ module.exports = React.createClass({
         Modal.createDialog(ErrorDialog, {
             title: _t("Error"),
             description: errMsg,
+            button: _t("OK"),
         });
     },
 
@@ -337,6 +340,7 @@ module.exports = React.createClass({
         Modal.createDialog(ErrorDialog, {
             title: _t("Success"),
             description: _t("Your password was successfully changed. You will not receive push notifications on other devices until you log back in to them") + ".",
+            button: _t("OK"),
         });
     },
 
@@ -364,6 +368,7 @@ module.exports = React.createClass({
             Modal.createDialog(ErrorDialog, {
                 title: _t("Invalid Email Address"),
                 description: _t("This doesn't appear to be a valid email address"),
+                button: _t("OK"),
             });
             return;
         }
@@ -383,6 +388,7 @@ module.exports = React.createClass({
             Modal.createDialog(ErrorDialog, {
                 title: _t("Unable to add email address"),
                 description: ((err && err.message) ? err.message : _t("Operation failed")),
+                button: _t("OK"),
             });
         });
         ReactDOM.findDOMNode(this.refs.add_email_input).blur();
@@ -408,6 +414,7 @@ module.exports = React.createClass({
                         Modal.createDialog(ErrorDialog, {
                             title: _t("Unable to remove contact information"),
                             description: ((err && err.message) ? err.message : _t("Operation failed")),
+                            button: _t("OK"),
                         });
                     }).done();
                 }
@@ -449,6 +456,7 @@ module.exports = React.createClass({
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Unable to verify email address"),
                     description: ((err && err.message) ? err.message : _t("Operation failed")),
+                    button: _t("OK"),
                 });
             }
         });
