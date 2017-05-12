@@ -17,6 +17,7 @@ var React = require('react');
 var MatrixClientPeg = require("../../../MatrixClientPeg");
 var Modal = require("../../../Modal");
 var sdk = require("../../../index");
+import _t from 'counterpart';
 var GeminiScrollbar = require('react-gemini-scrollbar');
 
 // A list capable of displaying entities which conform to the SearchableEntity
@@ -25,7 +26,6 @@ var SearchableEntityList = React.createClass({
     displayName: 'SearchableEntityList',
 
     propTypes: {
-        searchPlaceholderText: React.PropTypes.string,
         emptyQueryShowsAll: React.PropTypes.bool,
         showInputBox: React.PropTypes.bool,
         onQueryChanged: React.PropTypes.func, // fn(inputText)
@@ -37,7 +37,6 @@ var SearchableEntityList = React.createClass({
     getDefaultProps: function() {
         return {
             showInputBox: true,
-            searchPlaceholderText: "Search",
             entities: [],
             emptyQueryShowsAll: false,
             onSubmit: function() {},
@@ -137,7 +136,7 @@ var SearchableEntityList = React.createClass({
                         onChange={this.onQueryChanged} value={this.state.query}
                         onFocus= {() => { this.setState({ focused: true }); }}
                         onBlur= {() => { this.setState({ focused: false }); }}
-                        placeholder={this.props.searchPlaceholderText} />
+                        placeholder={ _t("Search") } />
                 </form>
             );
         }
