@@ -686,7 +686,7 @@ module.exports = React.createClass({
                     }
             />
             <label htmlFor={ setting.id }>
-                { setting.label }
+                { (setting.label.includes('missing translation')) ? _t('Never send encrypted messages to unverified devices from this device') : setting.label }
             </label>
         </div>;
     },
