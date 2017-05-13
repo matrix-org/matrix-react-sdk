@@ -133,7 +133,7 @@ module.exports = React.createClass({
             joinBlock = (
                 <div>
                     <div className="mx_RoomPreviewBar_invite_text">
-                        { _t('You have been invited to join this room by') } <b>{ this.props.inviterName }</b>
+                        { _t('You have been invited to join this room by %(inviterName)s', {inviterName: <b>this.props.inviterName</b>}) } 
                     </div>
                     <div className="mx_RoomPreviewBar_join_text">
                         { _t('Would you like to') } <a onClick={ this.props.onJoinClick }>{ _t('accept') }</a> { _t('or') } <a onClick={ this.props.onRejectClick }>{ _t('decline') }</a> { _t('this invitation?') }

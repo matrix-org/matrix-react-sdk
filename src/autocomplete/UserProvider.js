@@ -52,7 +52,7 @@ export default class UserProvider extends AutocompleteProvider {
     }
 
     getName() {
-        return _t('👥 Users');
+        return '👥 ' + _t('Users');
     }
 
     setUserList(users) {

@@ -79,7 +79,7 @@ export default class CommandProvider extends AutocompleteProvider {
     }
 
     getName() {
-        return _t('*️⃣ Commands');
+        return '*️⃣ ' + _t('Commands');
     }
 
     static getInstance(): CommandProvider {
