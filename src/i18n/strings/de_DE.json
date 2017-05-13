@@ -557,5 +557,6 @@
     "Thursday": "Donnerstag",
     "Friday": "Freitag",
     "Saturday": "Samstag",
-    "Sunday": "Sonntag"
+    "Sunday": "Sonntag",
+    "Failed to forget room %(errCode)s": "Das Entfernen des Raums %(errCode)s aus deiner Liste ist fehlgeschlagen"
 }
