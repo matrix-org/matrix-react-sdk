@@ -125,6 +125,7 @@ export default class MessageComposer extends React.Component {
                     </ul>
                 </div>
             ),
+            button: "OK",
             onFinished: (shouldUpload) => {
                 if(shouldUpload) {
                     // MessageComposer shouldn't have to rely on its parent passing in a callback to upload a file
@@ -352,7 +353,7 @@ export default class MessageComposer extends React.Component {
                     mx_filterFlipColor: true,
                 });
                 return <img className={className}
-                            title={name}
+                            title={ _t(name) }
                             onMouseDown={disabled ? null : onFormatButtonClicked}
                             key={name}
                             src={`img/button-text-${name}${suffix}.svg`}
@@ -372,11 +373,11 @@ export default class MessageComposer extends React.Component {
                         <div className="mx_MessageComposer_formatbar" style={this.state.showFormatting ? {} : {display: 'none'}}>
                             {formatButtons}
                             <div style={{flex: 1}}></div>
-                            <img title={`Turn Markdown ${this.state.inputState.isRichtextEnabled ? 'on' : 'off'}`}
+                            <img title={ this.state.inputState.isRichtextEnabled ? _t("Turn Markdown on") : _t("Turn Markdown off") }
                                  onMouseDown={this.onToggleMarkdownClicked}
                                 className="mx_MessageComposer_formatbar_markdown mx_filterFlipColor"
                                 src={`img/button-md-${!this.state.inputState.isRichtextEnabled}.png`} />
-                            <img title="Hide Text Formatting Toolbar"
+                            <img title={ _t("Hide Text Formatting Toolbar") }
                                  onClick={this.onToggleFormattingClicked}
                                  className="mx_MessageComposer_formatbar_cancel mx_filterFlipColor"
                                  src="img/icon-text-cancel.svg" />

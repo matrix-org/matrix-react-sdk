@@ -65,6 +65,7 @@ var commands = {
         Modal.createDialog(ErrorDialog, {
             title: _t('/ddg is not a command'),
             description: _t('To use it, just wait for autocomplete results to load and tab through them') + '.',
+			button: _t("OK"),
         });
         return success();
     }),
