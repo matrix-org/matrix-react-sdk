@@ -23,7 +23,7 @@ import _t from 'counterpart';
 const languageHandler = require('../../../languageHandler');
 var SdkConfig = require("../../../SdkConfig");
 
-const LANGUAGES = [];
+let LANGUAGES = [];
 
 const LANGUAGES_BY_VALUE = new Object(null);
 
@@ -56,9 +56,15 @@ export default class LanguageDropdown extends React.Component {
     		LANGUAGES.push(l);
     	});
 
+      LANGUAGES = LANGUAGES.sort(function(a, b){
+                          if(a.label < b.label) return -1;
+                          if(a.label > b.label) return 1;
+                          return 0;
+                      })
+
     	for (const l of LANGUAGES) {
     		LANGUAGES_BY_VALUE[l.value] = l;
-		}
+	    }
 
 
         if (!this.props.value) {
