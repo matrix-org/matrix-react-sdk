@@ -558,5 +558,6 @@
     "Friday": "Freitag",
     "Saturday": "Samstag",
     "Sunday": "Sonntag",
-    "Failed to forget room %(errCode)s": "Das Entfernen des Raums %(errCode)s aus deiner Liste ist fehlgeschlagen"
+    "Failed to forget room %(errCode)s": "Das Entfernen des Raums %(errCode)s aus deiner Liste ist fehlgeschlagen",
+    "Failed to join the room": "Fehler beim Betreten des Raumes"
 }
