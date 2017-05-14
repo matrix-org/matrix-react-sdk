@@ -324,6 +324,7 @@
   "my Matrix ID": "my Matrix ID",
   "Name": "Name",
   "Never send encrypted messages to unverified devices from this device": "Never send encrypted messages to unverified devices from this device",
+  "Never send encrypted messages to unverified devices in this room": "Never send encrypted messages to unverified devices in this room",
   "Never send encrypted messages to unverified devices in this room from this device": "Never send encrypted messages to unverified devices in this room from this device",
   "New address (e.g. #foo:%(localDomain)s)": "New address (e.g. #foo:%(localDomain)s)",
   "New Composer & Autocomplete": "New Composer & Autocomplete",

@@ -4,46 +4,47 @@ import AutocompleteProvider from './AutocompleteProvider';
 import Fuse from 'fuse.js';
 import {TextualCompletion} from './Components';
 
+// Warning: Since the description string will be translated in _t(result.description), all these strings below must be in i18n/strings/en_EN.json file
 const COMMANDS = [
     {
         command: '/me',
         args: '<message>',
-        description: _t('Displays action'),
+        description: 'Displays action',
     },
     {
         command: '/ban',
         args: '<user-id> [reason]',
-        description: _t('Bans user with given id'),
+        description: 'Bans user with given id',
     },
     {
         command: '/deop',
         args: '<user-id>',
-        description: _t('Deops user with given id'),
+        description: 'Deops user with given id',
     },
     {
         command: '/invite',
         args: '<user-id>',
-        description: _t('Invites user with given id to current room'),
+        description: 'Invites user with given id to current room',
     },
     {
         command: '/join',
         args: '<room-alias>',
-        description: _t('Joins room with given alias'),
+        description: 'Joins room with given alias',
     },
     {
         command: '/kick',
         args: '<user-id> [reason]',
-        description: _t('Kicks user with given id'),
+        description: 'Kicks user with given id',
     },
     {
         command: '/nick',
         args: '<display-name>',
-        description: _t('Changes your display nickname'),
+        description: 'Changes your display nickname',
     },
     {
         command: '/ddg',
         args: '<query>',
-        description: _t('Searches DuckDuckGo for results'),
+        description: 'Searches DuckDuckGo for results',
     }
 ];
 
@@ -69,7 +70,7 @@ export default class CommandProvider extends AutocompleteProvider {
                     component: (<TextualCompletion
                         title={result.command}
                         subtitle={result.args}
-                        description={result.description}
+                        description={ t_(result.description) }
                         />),
                     range,
                 };

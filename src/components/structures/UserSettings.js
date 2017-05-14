@@ -55,6 +55,8 @@ const gHVersionLabel = function(repo, token) {
 // Enumerate some simple 'flip a bit' UI settings (if any).
 // 'id' gives the key name in the im.vector.web.settings account data event
 // 'label' is how we describe it in the UI.
+// Warning: Each "label" string below must be added to i18n/strings/en_EN.json, 
+// since they will be translated when rendered.
 const SETTINGS_LABELS = [
     {
         id: 'autoplayGifsAndVideos',
@@ -88,10 +90,12 @@ const SETTINGS_LABELS = [
 */
 ];
 
+// Warning: Each "label" string below must be added to i18n/strings/en_EN.json, 
+// since they will be translated when rendered.
 const CRYPTO_SETTINGS_LABELS = [
     {
         id: 'blacklistUnverifiedDevices',
-        label: _t('Never send encrypted messages to unverified devices from this device'),
+        label: 'Never send encrypted messages to unverified devices from this device',
     },
     // XXX: this is here for documentation; the actual setting is managed via RoomSettings
     // {
@@ -603,7 +607,7 @@ module.exports = React.createClass({
                    onChange={ (e) => UserSettingsStore.setSyncedSetting(setting.id, e.target.checked) }
             />
             <label htmlFor={ setting.id }>
-                { setting.label }
+                { _t(setting.label) }
             </label>
         </div>;
     },
@@ -686,7 +690,7 @@ module.exports = React.createClass({
                     }
             />
             <label htmlFor={ setting.id }>
-                { setting.label }
+                { _t(setting.label) }
             </label>
         </div>;
     },
