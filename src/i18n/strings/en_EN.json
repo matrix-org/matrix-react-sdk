@@ -416,7 +416,7 @@
   "tag as %(tagName)s": "tag as %(tagName)s",
   "tag direct chat": "tag direct chat",
   "The default role for new room members is": "The default role for new room members is",
-  "The main address for this room is: %(canonical_alias_section)s": "The main address for this room is: %(canonical_alias_section)s",
+  "The main address for this room is": "The main address for this room is",
   "This action cannot be performed by a guest user. Please register to be able to do this": "This action cannot be performed by a guest user. Please register to be able to do this",
   "This email address is already in use": "This email address is already in use",
   "This email address was not found": "This email address was not found",
