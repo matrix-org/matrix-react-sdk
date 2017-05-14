@@ -92,11 +92,15 @@ module.exports.setLanguage = function(languages, extCounterpart=null) {
     	validLanguageKey = (isValidFirstLanguage) ? languages[0] : languages[1];
    		getLanguage(i18nFolder + languageFiles[validLanguageKey], validLanguageKey, registerTranslations);
    		if (extCounterpart) {
+				// Workaround for bug
+				extCounterpart.setSeparator('°°°°°°°');
    			extCounterpart.setLocale(validLanguageKey);
    		}
+			// Workaround for bug
+			counterpart.setSeparator('°°°°°°°');
    		counterpart.setLocale(validLanguageKey);
-        UserSettingsStore.setLocalSetting('language', validLanguageKey);
-        console.log("set language to "+validLanguageKey);
+      UserSettingsStore.setLocalSetting('language', validLanguageKey);
+      console.log("set language to "+validLanguageKey);
     } else {
     	console.log("didnt find any language file");
     }
