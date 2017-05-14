@@ -282,7 +282,67 @@ var commands = {
             }
         }
         return reject(this.getUsage());
-    })
+    }),
+
+    // Verify a user, device, and pubkey tuple
+    verify: new Command("verify", "<userId> <deviceId> <deviceSigningKey>", function(room_id, args) {
+        if (args) {
+            var matches = args.match(/^(\S+) +(\S+) +(\S+)$/);
+            if (matches) {
+                var userId = matches[1];
+                var deviceId = matches[2];
+                var device = MatrixClientPeg.get().getStoredDevice(userId, deviceId);
+                if (!device) {
+                    return reject(`Unknown (user, device) pair: (${userId}, ${deviceId})`);
+                }
+
+                var fingerprint = matches[3];
+
+                if (device.getFingerprint() === fingerprint) {
+
+                    var QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+                    Modal.createDialog(QuestionDialog, {
+                        title: "Approve validated device",
+                        description: (
+                            <div>
+                                <p>
+                                    The signing key in your slash command matches the signing key you
+                                    received for this user and device!
+                                </p>
+                                <div className="mx_UserSettings_cryptoSection">
+                                    <ul>
+                                        <li><label>User ID:</label> <span>{ userId }</span></li>
+                                        <li><label>Device name:</label> <span>{ device.getDisplayName() }</span></li>
+                                        <li><label>Device ID:</label>   <span><code>{ device.deviceId}</code></span></li>
+                                        <li><label>Device fingerprint:</label>  <span><code><b>{ device.getFingerprint() }</b></code></span></li>
+                                        <li><label>Device key:</label>  <span><code><b>{ device.getIdentityKey() }</b></code></span></li>
+                                    </ul>
+                                </div>
+                                <p>
+                                    If you would like to accept this device as validated, press accept!
+                                </p>
+                            </div>
+                        ),
+                        button: "Accept this validated key",
+                        onFinished: confirm => {
+                            if (confirm) {
+                                MatrixClientPeg.get().setDeviceVerified(
+                                    userId, deviceId, true
+                                );
+                            }
+                        },
+                    });
+
+                    return success();
+                } else {
+                    return reject(`WARNING: KEY VALIDATION FAILED! The signing key for ${userId} and device
+                            ${deviceId} is \"${device.getFingerprint()}\" which does not match the provided key
+                            \"${fingerprint}\" This could mean your communications are being intercepted!`);
+                }
+            }
+        }
+        return reject(this.getUsage());
+    }),
 };
 
 // helpful aliases
