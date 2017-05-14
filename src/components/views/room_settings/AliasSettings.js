@@ -257,7 +257,7 @@ module.exports = React.createClass({
             <div>
                 <h3>Addresses</h3>
                 <div className="mx_RoomSettings_aliasLabel">
-                    { _t('The main address for this room is: %(canonical_alias_section)s', {canonical_alias_section: canonical_alias_section}) }
+                    { _t('The main address for this room is') }: { canonical_alias_section }
                 </div>
                 <div className="mx_RoomSettings_aliasLabel">
                     { (this.state.domainToAliases[localDomain] &&
