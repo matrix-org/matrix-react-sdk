@@ -64,7 +64,7 @@ module.exports = {
         }
         else if (now.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
         	// TODO: use standard date localize function provided in counterpart
-            return _t('%(weekDayName)s %(time)s', {weekDayName: _t(days[date.getDay()]), time: hoursAndMinutes});
+            return _t('%(weekDayName)s %(time)s', {weekDayName: days[date.getDay()], time: hoursAndMinutes});
         }
         else /* if (now.getFullYear() === date.getFullYear()) */ {
         	// TODO: use standard date localize function provided in counterpart
