@@ -92,11 +92,11 @@ module.exports.setLanguage = function(languages, extCounterpart=null) {
     	validLanguageKey = (isValidFirstLanguage) ? languages[0] : languages[1];
    		getLanguage(i18nFolder + languageFiles[validLanguageKey], validLanguageKey, registerTranslations);
    		if (extCounterpart) {
-				// Workaround for bug
+				// TODO: Escape "." inside keys in counterpart, to avoid using this ugly hack
 				extCounterpart.setSeparator('°°°°°°°');
    			extCounterpart.setLocale(validLanguageKey);
    		}
-			// Workaround for bug
+			// TODO: Escape "." inside keys in counterpart, to avoid using this ugly hack
 			counterpart.setSeparator('°°°°°°°');
    		counterpart.setLocale(validLanguageKey);
       UserSettingsStore.setLocalSetting('language', validLanguageKey);
