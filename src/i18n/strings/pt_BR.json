@@ -492,5 +492,7 @@
     "ur": "Urdu",
     "vi": "Vietnamita",
     "xh": "Xhosa",
-    "zu": "Zulu"
+    "zu": "Zulu",
+    "Failed to forget room %(errCode)s": "Falha ao esquecer a sala %(errCode)s",
+    "Failed to join the room": "Falhou ao entrar na sala"
 }
