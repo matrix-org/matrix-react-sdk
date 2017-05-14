@@ -220,6 +220,7 @@
   "Email Address": "Email Address",
   "Email, name or matrix ID": "Email, name or matrix ID",
   "Emoji": "Emoji",
+  "Enable encryption": "Enable encryption",
   "Encrypted messages will not be visible on clients that do not yet implement encryption": "Encrypted messages will not be visible on clients that do not yet implement encryption",
   "Encrypted room": "Encrypted room",
   "%(senderName)s ended the call": "%(senderName)s ended the call",
