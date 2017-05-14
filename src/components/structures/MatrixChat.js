@@ -699,6 +699,7 @@ module.exports = React.createClass({
             title: _t('Invite new room members'),
             description: _t('Who would you like to add to this room?'),
             button: _t('Send Invites'),
+            placeholder: _t("Email, name or matrix ID"),
             roomId: roomId,
         });
     },

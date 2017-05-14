@@ -51,7 +51,7 @@ export default class RoomProvider extends AutocompleteProvider {
     }
 
     getName() {
-        return _t('💬 Rooms');
+        return '💬 ' + _t('Rooms');
     }
 
     static getInstance() {

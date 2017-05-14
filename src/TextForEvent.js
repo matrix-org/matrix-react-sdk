@@ -103,7 +103,7 @@ function textForMemberEvent(ev) {
 
 function textForTopicEvent(ev) {
     var senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
-    return _t('%(senderDisplayName)s changed the topic to %(topic)s', {senderDisplayName: senderDisplayName, topic: ev.getContent().topic});
+    return _t('%(senderDisplayName)s changed the topic to %(topic)s"', {senderDisplayName: senderDisplayName, topic: '"' + ev.getContent().topic + '"'});
 }
 
 function textForRoomNameEvent(ev) {

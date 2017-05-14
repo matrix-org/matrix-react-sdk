@@ -40,7 +40,7 @@ export default class EmojiProvider extends AutocompleteProvider {
     }
 
     getName() {
-        return _t('😃 Emoji');
+        return '😃 ' + _t('Emoji');
     }
 
     static getInstance() {

@@ -31,17 +31,17 @@ function getDaysArray() {
 
 function getMonthsArray() {
 	var months = [];
-	months.push(_t('Jan')); 
+	months.push(_t('Jan'));
 	months.push(_t('Feb'));
-	months.push(_t('Mar')); 
-	months.push(_t('Apr')); 
-	months.push(_t('May')); 
-	months.push(_t('Jun')); 
-	months.push(_t('Jul')); 
-	months.push(_t('Aug')); 
-	months.push(_t('Sep')); 
-	months.push(_t('Oct')); 
-	months.push(_t('Nov')); 
+	months.push(_t('Mar'));
+	months.push(_t('Apr'));
+	months.push(_t('May'));
+	months.push(_t('Jun'));
+	months.push(_t('Jul'));
+	months.push(_t('Aug'));
+	months.push(_t('Sep'));
+	months.push(_t('Oct'));
+	months.push(_t('Nov'));
 	months.push(_t('Dec'));
 	return months;
 }
