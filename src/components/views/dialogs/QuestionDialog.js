@@ -33,7 +33,6 @@ export default React.createClass({
             title: "",
             description: "",
             extraButtons: null,
-            button: "OK",
             focus: true,
             hasCancelButton: true,
         };
@@ -45,6 +44,12 @@ export default React.createClass({
 
     onCancel: function() {
         this.props.onFinished(false);
+    },
+
+    componentDidMount: function() {
+        if (this.props.focus) {
+            this.refs.button.focus();
+        }
     },
 
     render: function() {
@@ -63,7 +68,7 @@ export default React.createClass({
                     {this.props.description}
                 </div>
                 <div className="mx_Dialog_buttons">
-                    <button className="mx_Dialog_primary" onClick={this.onOk} autoFocus={this.props.focus}>
+                    <button ref="button" className="mx_Dialog_primary" onClick={this.onOk}>
                         {this.props.button}
                     </button>
                     {this.props.extraButtons}

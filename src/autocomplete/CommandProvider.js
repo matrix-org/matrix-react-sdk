@@ -1,4 +1,5 @@
 import React from 'react';
+import _t from 'counterpart';
 import AutocompleteProvider from './AutocompleteProvider';
 import Fuse from 'fuse.js';
 import {TextualCompletion} from './Components';
@@ -7,42 +8,42 @@ const COMMANDS = [
     {
         command: '/me',
         args: '<message>',
-        description: 'Displays action',
+        description: _t('Displays action'),
     },
     {
         command: '/ban',
         args: '<user-id> [reason]',
-        description: 'Bans user with given id',
+        description: _t('Bans user with given id'),
     },
     {
         command: '/deop',
         args: '<user-id>',
-        description: 'Deops user with given id',
+        description: _t('Deops user with given id'),
     },
     {
         command: '/invite',
         args: '<user-id>',
-        description: 'Invites user with given id to current room',
+        description: _t('Invites user with given id to current room'),
     },
     {
         command: '/join',
         args: '<room-alias>',
-        description: 'Joins room with given alias',
+        description: _t('Joins room with given alias'),
     },
     {
         command: '/kick',
         args: '<user-id> [reason]',
-        description: 'Kicks user with given id',
+        description: _t('Kicks user with given id'),
     },
     {
         command: '/nick',
         args: '<display-name>',
-        description: 'Changes your display nickname',
+        description: _t('Changes your display nickname'),
     },
     {
         command: '/ddg',
         args: '<query>',
-        description: 'Searches DuckDuckGo for results',
+        description: _t('Searches DuckDuckGo for results'),
     }
 ];
 
@@ -78,7 +79,7 @@ export default class CommandProvider extends AutocompleteProvider {
     }
 
     getName() {
-        return '*️⃣ Commands';
+        return '*️⃣ ' + _t('Commands');
     }
 
     static getInstance(): CommandProvider {

@@ -18,6 +18,7 @@ var MatrixClientPeg = require("./MatrixClientPeg");
 var dis = require("./dispatcher");
 var Tinter = require("./Tinter");
 import sdk from './index';
+import _t from 'counterpart';
 import Modal from './Modal';
 
 
@@ -41,7 +42,7 @@ class Command {
     }
 
     getUsage() {
-        return "Usage: " + this.getCommandWithArgs();
+        return _t('Usage') + ': ' + this.getCommandWithArgs();
     }
 }
 
@@ -62,8 +63,9 @@ var commands = {
         const ErrorDialog = sdk.getComponent('dialogs.ErrorDialog');
         // TODO Don't explain this away, actually show a search UI here.
         Modal.createDialog(ErrorDialog, {
-            title: "/ddg is not a command",
-            description: "To use it, just wait for autocomplete results to load and tab through them.",
+            title: _t('/ddg is not a command'),
+            description: _t('To use it, just wait for autocomplete results to load and tab through them') + '.',
+			button: _t("OK"),
         });
         return success();
     }),

@@ -33,12 +33,11 @@ function countryMatchesSearchQuery(query, country) {
     return false;
 }
 
-const MAX_DISPLAYED_ROWS = 2;
-
 export default class CountryDropdown extends React.Component {
     constructor(props) {
         super(props);
         this._onSearchChange = this._onSearchChange.bind(this);
+        this._onOptionChange = this._onOptionChange.bind(this);
 
         this.state = {
             searchQuery: '',
@@ -50,7 +49,7 @@ export default class CountryDropdown extends React.Component {
             // If no value is given, we start with the first
             // country selected, but our parent component
             // doesn't know this, therefore we do this.
-            this.props.onOptionChange(COUNTRIES[0].iso2);
+            this.props.onOptionChange(COUNTRIES[0]);
         }
     }
 
@@ -60,11 +59,15 @@ export default class CountryDropdown extends React.Component {
         });
     }
 
+    _onOptionChange(iso2) {
+        this.props.onOptionChange(COUNTRIES_BY_ISO2[iso2]);
+    }
+
     _flagImgForIso2(iso2) {
         // Unicode Regional Indicator Symbol letter 'A'
         const RIS_A = 0x1F1E6;
         const ASCII_A = 65;
-        return charactersToImageNode(iso2,
+        return charactersToImageNode(iso2, true,
             RIS_A + (iso2.charCodeAt(0) - ASCII_A),
             RIS_A + (iso2.charCodeAt(1) - ASCII_A),
         );
@@ -93,10 +96,6 @@ export default class CountryDropdown extends React.Component {
             displayedCountries = COUNTRIES;
         }
 
-        if (displayedCountries.length > MAX_DISPLAYED_ROWS) {
-            displayedCountries = displayedCountries.slice(0, MAX_DISPLAYED_ROWS);
-        }
-
         const options = displayedCountries.map((country) => {
             return <div key={country.iso2}>
                 {this._flagImgForIso2(country.iso2)}
@@ -108,10 +107,12 @@ export default class CountryDropdown extends React.Component {
         // values between mounting and the initial value propgating
         const value = this.props.value || COUNTRIES[0].iso2;
 
+        const getShortOption = this.props.isSmall ? this._flagImgForIso2 : undefined;
+
         return <Dropdown className={this.props.className}
-            onOptionChange={this.props.onOptionChange} onSearchChange={this._onSearchChange}
-            menuWidth={298} getShortOption={this._flagImgForIso2}
-            value={value}
+            onOptionChange={this._onOptionChange} onSearchChange={this._onSearchChange}
+            menuWidth={298} getShortOption={getShortOption}
+            value={value} searchEnabled={true}
         >
             {options}
         </Dropdown>
@@ -120,6 +121,7 @@ export default class CountryDropdown extends React.Component {
 
 CountryDropdown.propTypes = {
     className: React.PropTypes.string,
+    isSmall: React.PropTypes.bool,
     onOptionChange: React.PropTypes.func.isRequired,
     value: React.PropTypes.string,
 };

@@ -18,6 +18,7 @@ limitations under the License.
 
 var React = require('react');
 var classNames = require("classnames");
+import _t from 'counterpart';
 var Modal = require('../../../Modal');
 
 var sdk = require('../../../index');
@@ -40,6 +41,7 @@ var eventTileTypes = {
     'm.room.third_party_invite' : 'messages.TextualEvent',
     'm.room.history_visibility' : 'messages.TextualEvent',
     'm.room.encryption' : 'messages.TextualEvent',
+    'm.room.power_levels' : 'messages.TextualEvent',
 };
 
 var MAX_READ_AVATARS = 5;
@@ -283,6 +285,12 @@ module.exports = WithMatrixClient(React.createClass({
     },
 
     getReadAvatars: function() {
+
+        // return early if there are no read receipts
+        if (!this.props.readReceipts || this.props.readReceipts.length === 0) {
+            return (<span className="mx_EventTile_readAvatars"></span>);
+        }
+
         const ReadReceiptMarker = sdk.getComponent('rooms.ReadReceiptMarker');
         const avatars = [];
         const receiptOffset = 15;
@@ -394,8 +402,7 @@ module.exports = WithMatrixClient(React.createClass({
         var msgtype = content.msgtype;
         var eventType = this.props.mxEvent.getType();
 
-        // Info messages are basically information about commands processed on a
-        // room, or emote messages
+        // Info messages are basically information about commands processed on a room
         var isInfoMessage = (eventType !== 'm.room.message');
 
         var EventTileType = sdk.getComponent(eventTileTypes[eventType]);
@@ -423,7 +430,8 @@ module.exports = WithMatrixClient(React.createClass({
             menu: this.state.menu,
             mx_EventTile_verified: this.state.verified == true,
             mx_EventTile_unverified: this.state.verified == false,
-            mx_EventTile_bad: this.props.mxEvent.getContent().msgtype === 'm.bad.encrypted',
+            mx_EventTile_bad: msgtype === 'm.bad.encrypted',
+            mx_EventTile_emote: msgtype === 'm.emote',
             mx_EventTile_redacted: isRedacted,
         });
 
@@ -468,9 +476,9 @@ module.exports = WithMatrixClient(React.createClass({
         if (needsSenderProfile) {
             let aux = null;
             if (!this.props.tileShape) {
-                if (msgtype === 'm.image') aux = "sent an image";
-                else if (msgtype === 'm.video') aux = "sent a video";
-                else if (msgtype === 'm.file') aux = "uploaded a file";
+                if (msgtype === 'm.image') aux = _t('sent an image');
+                else if (msgtype === 'm.video') aux = _t('sent a video');
+                else if (msgtype === 'm.file') aux = _t('uploaded a file');
                 sender = <SenderProfile onClick={ this.onSenderProfileClick } mxEvent={this.props.mxEvent} aux={aux} />;
             }
             else {

@@ -18,7 +18,9 @@ limitations under the License.
 import q from 'q';
 
 var React = require('react');
+import _t from 'counterpart';
 var Matrix = require("matrix-js-sdk");
+import request from 'browser-request';
 
 var MatrixClientPeg = require("../../MatrixClientPeg");
 var PlatformPeg = require("../../PlatformPeg");
@@ -28,6 +30,7 @@ var RoomListSorter = require("../../RoomListSorter");
 var UserActivity = require("../../UserActivity");
 var Presence = require("../../Presence");
 var dis = require("../../dispatcher");
+import UserSettingsStore from '../../UserSettingsStore';
 
 var Modal = require("../../Modal");
 var Tinter = require("../../Tinter");
@@ -392,9 +395,11 @@ module.exports = React.createClass({
                 this.notifyNewScreen('forgot_password');
                 break;
             case 'leave_room':
+                const roomToLeave = MatrixClientPeg.get().getRoom(payload.room_id);
                 Modal.createDialog(QuestionDialog, {
-                    title: "Leave room",
-                    description: "Are you sure you want to leave the room?",
+                    title: _t('Leave room'),
+                    description: _t('Are you sure you want to leave the room %(RoomName)s?', {RoomName: roomToLeave.name}),
+                    button: "OK",
                     onFinished: (should_leave) => {
                         if (should_leave) {
                             const d = MatrixClientPeg.get().leave(payload.room_id);
@@ -412,8 +417,9 @@ module.exports = React.createClass({
                                 modal.close();
                                 console.error("Failed to leave room " + payload.room_id + " " + err);
                                 Modal.createDialog(ErrorDialog, {
-                                    title: "Failed to leave room",
-                                    description: "Server may be unavailable, overloaded, or you hit a bug."
+                                    title: _t('Failed to leave room'),
+                                    description: (err && err.message ? err.message : _t('Server may be unavailable, overloaded, or you hit a bug') + '.'),
+                                    button: _t("OK"),
                                 });
                             });
                         }
@@ -422,8 +428,9 @@ module.exports = React.createClass({
                 break;
             case 'reject_invite':
                 Modal.createDialog(QuestionDialog, {
-                    title: "Reject invitation",
-                    description: "Are you sure you want to reject the invitation?",
+                    title: _t('Reject invitation'),
+                    description: _t('Are you sure you want to reject the invitation?'),
+                    button: "OK",
                     onFinished: (confirm) => {
                         if (confirm) {
                             // FIXME: controller shouldn't be loading a view :(
@@ -438,8 +445,9 @@ module.exports = React.createClass({
                             }, (err) => {
                                 modal.close();
                                 Modal.createDialog(ErrorDialog, {
-                                    title: "Failed to reject invitation",
-                                    description: err.toString()
+                                    title:  _t('Failed to reject invitation'),
+                                    description: err.toString(),
+                                    button: _t("OK"),
                                 });
                             });
                         }
@@ -503,9 +511,9 @@ module.exports = React.createClass({
 
                 var TextInputDialog = sdk.getComponent("dialogs.TextInputDialog");
                 Modal.createDialog(TextInputDialog, {
-                    title: "Create Room",
-                    description: "Room name (optional)",
-                    button: "Create Room",
+                    title: _t('Create Room'),
+                    description: _t('Room name (optional)'),
+                    button: _t('Create Room'),
                     onFinished: (should_create, name) => {
                         if (should_create) {
                             const createOpts = {};
@@ -678,16 +686,20 @@ module.exports = React.createClass({
     _createChat: function() {
         var ChatInviteDialog = sdk.getComponent("dialogs.ChatInviteDialog");
         Modal.createDialog(ChatInviteDialog, {
-            title: "Start a new chat",
+            title: _t('Start a chat'),
+            description: _t("Who would you like to communicate with?"),
+            placeholder: _t("Email, name or matrix ID"),
+            button: _t("Start Chat")
         });
     },
 
     _invite: function(roomId) {
         var ChatInviteDialog = sdk.getComponent("dialogs.ChatInviteDialog");
         Modal.createDialog(ChatInviteDialog, {
-            title: "Invite new room members",
-            button: "Send Invites",
-            description: "Who would you like to add to this room?",
+            title: _t('Invite new room members'),
+            description: _t('Who would you like to add to this room?'),
+            button: _t('Send Invites'),
+            placeholder: _t("Email, name or matrix ID"),
             roomId: roomId,
         });
     },
@@ -869,8 +881,9 @@ module.exports = React.createClass({
         cli.on('Session.logged_out', function(call) {
             var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createDialog(ErrorDialog, {
-                title: "Signed Out",
-                description: "For security, this session has been signed out. Please sign in again."
+                title: _t('Signed Out'),
+                description: _t('For security, this session has been signed out. Please sign in again.'),
+                button: _t("OK"),
             });
             dis.dispatch({
                 action: 'logout'
@@ -1178,7 +1191,7 @@ module.exports = React.createClass({
                 <div className="mx_MatrixChat_splash">
                     <Spinner />
                     <a href="#" className="mx_MatrixChat_splashButtons" onClick={ this.onLogoutClick }>
-                    Logout
+                    { _t('Logout') }
                     </a>
                 </div>
             );

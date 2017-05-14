@@ -21,6 +21,8 @@ var React = require('react');
 var sdk = require('../../../index');
 var MatrixClientPeg = require('../../../MatrixClientPeg');
 
+import _t from 'counterpart';
+
 module.exports = React.createClass({
     displayName: 'RoomPreviewBar',
 
@@ -131,10 +133,10 @@ module.exports = React.createClass({
             joinBlock = (
                 <div>
                     <div className="mx_RoomPreviewBar_invite_text">
-                        You have been invited to join this room by <b>{ this.props.inviterName }</b>
+                        { _t('You have been invited to join this room by %(inviterName)s', {inviterName: <b>this.props.inviterName</b>}) } 
                     </div>
                     <div className="mx_RoomPreviewBar_join_text">
-                        Would you like to <a onClick={ this.props.onJoinClick }>accept</a> or <a onClick={ this.props.onRejectClick }>decline</a> this invitation?
+                        { _t('Would you like to') } <a onClick={ this.props.onJoinClick }>{ _t('accept') }</a> { _t('or') } <a onClick={ this.props.onRejectClick }>{ _t('decline') }</a> { _t('this invitation?') }
                     </div>
                     {emailMatchBlock}
                 </div>
@@ -186,8 +188,8 @@ module.exports = React.createClass({
             joinBlock = (
                 <div>
                     <div className="mx_RoomPreviewBar_join_text">
-                        You are trying to access { name }.<br/>
-                        <a onClick={ this.props.onJoinClick }><b>Click here</b></a> to join the discussion!
+                        { _t('You are trying to access %(roomName)', {roomName: name}) }.<br/>
+                        <a onClick={ this.props.onJoinClick }><b>{ _t('Click here') }</b></a> { _t('to join the discussion') }!
                     </div>
                 </div>
             );
@@ -196,7 +198,7 @@ module.exports = React.createClass({
         if (this.props.canPreview) {
             previewBlock = (
                 <div className="mx_RoomPreviewBar_preview_text">
-                    This is a preview of this room. Room interactions have been disabled.
+                    { _t('This is a preview of this room. Room interactions have been disabled') }.
                 </div>
             );
         }

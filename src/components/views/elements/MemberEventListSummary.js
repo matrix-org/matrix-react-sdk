@@ -15,6 +15,7 @@ limitations under the License.
 */
 import React from 'react';
 const MemberAvatar = require('../avatars/MemberAvatar.js');
+import _t from 'counterpart';
 
 module.exports = React.createClass({
     displayName: 'MemberEventListSummary',
@@ -206,25 +207,27 @@ module.exports = React.createClass({
      * @returns {string} the written English equivalent of the transition.
      */
     _getDescriptionForTransition(t, plural, repeats) {
-        const beConjugated = plural ? "were" : "was";
-        const invitation = "their invitation" + (plural || (repeats > 1) ? "s" : "");
+        const beConjugated = plural ? _t('were') : _t('was');
+        const invitation = (plural || (repeats > 1) ? _t('their invitations') : _t('their invitation'));
 
         let res = null;
         const map = {
-            "joined": "joined",
-            "left": "left",
-            "joined_and_left": "joined and left",
-            "left_and_joined": "left and rejoined",
-            "invite_reject": "rejected " + invitation,
-            "invite_withdrawal": "had " + invitation + " withdrawn",
-            "invited": beConjugated + " invited",
-            "banned": beConjugated + " banned",
-            "unbanned": beConjugated + " unbanned",
-            "kicked": beConjugated + " kicked",
+            "joined": _t('joined'),
+            "left": _t('left'),
+            "joined_and_left": _t('joined and left'),
+            "left_and_joined": _t('left and rejoined'),
+            "invite_reject": _t('rejected') + ' ' + invitation,
+            "invite_withdrawal": _t('had') + ' ' + invitation + ' ' + _t('withdrawn'),
+            "invited": beConjugated + ' ' + _t('was invited'),
+            "banned": beConjugated + ' ' + _t('was banned'),
+            "unbanned": beConjugated + ' ' + _t('was unbanned'),
+            "kicked": beConjugated + ' ' + _t('was kicked'),
+            "changed_name": _t('changed name'),
+            "changed_avatar": _t('changed avatar'),
         };
 
         if (Object.keys(map).includes(t)) {
-            res = map[t] + (repeats > 1 ? " " + repeats + " times" : "" );
+            res = map[t] + (repeats > 1 ? ' ' + repeats + ' ' + _t('times') : '' );
         }
 
         return res;
@@ -252,11 +255,11 @@ module.exports = React.createClass({
             return items[0];
         } else if (remaining) {
             items = items.slice(0, itemLimit);
-            const other = " other" + (remaining > 1 ? "s" : "");
-            return items.join(', ') + ' and ' + remaining + other;
+            const other = ' ' + (remaining > 1 ? _t('others') : _t('other'));
+            return items.join(', ') + ' ' + _t('and') + ' ' + remaining + other;
         } else {
             const lastItem = items.pop();
-            return items.join(', ') + ' and ' + lastItem;
+            return items.join(', ') + ' ' + _t('and') + ' ' + lastItem;
         }
     },
 
@@ -289,7 +292,24 @@ module.exports = React.createClass({
         switch (e.mxEvent.getContent().membership) {
             case 'invite': return 'invited';
             case 'ban': return 'banned';
-            case 'join': return 'joined';
+            case 'join':
+                if (e.mxEvent.getPrevContent().membership === 'join') {
+                    if (e.mxEvent.getContent().displayname !==
+                        e.mxEvent.getPrevContent().displayname)
+                    {
+                        return 'changed_name';
+                    }
+                    else if (e.mxEvent.getContent().avatar_url !==
+                        e.mxEvent.getPrevContent().avatar_url)
+                    {
+                        return 'changed_avatar';
+                    }
+                    // console.log("MELS ignoring duplicate membership join event");
+                    return null;
+                }
+                else {
+                    return 'joined';
+                }
             case 'leave':
                 if (e.mxEvent.getSender() === e.mxEvent.getStateKey()) {
                     switch (e.mxEvent.getPrevContent().membership) {
@@ -350,6 +370,7 @@ module.exports = React.createClass({
 
     render: function() {
         const eventsToRender = this.props.events;
+        const eventIds = eventsToRender.map(e => e.getId()).join(',');
         const fewEvents = eventsToRender.length < this.props.threshold;
         const expanded = this.state.expanded || fewEvents;
 
@@ -360,7 +381,7 @@ module.exports = React.createClass({
 
         if (fewEvents) {
             return (
-                <div className="mx_MemberEventListSummary">
+                <div className="mx_MemberEventListSummary" data-scroll-tokens={eventIds}>
                     {expandedEvents}
                 </div>
             );
@@ -418,7 +439,7 @@ module.exports = React.createClass({
         );
 
         return (
-            <div className="mx_MemberEventListSummary">
+            <div className="mx_MemberEventListSummary" data-scroll-tokens={eventIds}>
                 {toggleButton}
                 {summaryContainer}
                 {expanded ? <div className="mx_MemberEventListSummary_line">&nbsp;</div> : null}

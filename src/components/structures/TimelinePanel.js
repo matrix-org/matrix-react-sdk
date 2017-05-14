@@ -1,5 +1,6 @@
 /*
 Copyright 2016 OpenMarket Ltd
+Copyright 2017 Vector Creations Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,6 +23,7 @@ var Matrix = require("matrix-js-sdk");
 var EventTimeline = Matrix.EventTimeline;
 
 var sdk = require('../../index');
+import _t from 'counterpart';
 var MatrixClientPeg = require("../../MatrixClientPeg");
 var dis = require("../../dispatcher");
 var ObjectUtils = require('../../ObjectUtils');
@@ -102,9 +104,6 @@ var TimelinePanel = React.createClass({
     },
 
     statics: {
-        // a map from room id to read marker event ID
-        roomReadMarkerMap: {},
-
         // a map from room id to read marker event timestamp
         roomReadMarkerTsMap: {},
     },
@@ -121,10 +120,14 @@ var TimelinePanel = React.createClass({
     getInitialState: function() {
         // XXX: we could track RM per TimelineSet rather than per Room.
         // but for now we just do it per room for simplicity.
+        let initialReadMarker = null;
         if (this.props.manageReadMarkers) {
-            var initialReadMarker =
-                TimelinePanel.roomReadMarkerMap[this.props.timelineSet.room.roomId]
-                           || this._getCurrentReadReceipt();
+            const readmarker = this.props.timelineSet.room.getAccountData('m.fully_read');
+            if (readmarker){
+                initialReadMarker = readmarker.getContent().event_id;
+            } else {
+                initialReadMarker = this._getCurrentReadReceipt();
+            }
         }
 
         return {
@@ -166,6 +169,9 @@ var TimelinePanel = React.createClass({
 
             backPaginating: false,
             forwardPaginating: false,
+
+            // cache of matrixClient.getSyncState() (but from the 'sync' event)
+            clientSyncState: MatrixClientPeg.get().getSyncState(),
         };
     },
 
@@ -173,6 +179,7 @@ var TimelinePanel = React.createClass({
         debuglog("TimelinePanel: mounting");
 
         this.last_rr_sent_event_id = undefined;
+        this.last_rm_sent_event_id = undefined;
 
         this.dispatcherRef = dis.register(this.onAction);
         MatrixClientPeg.get().on("Room.timeline", this.onRoomTimeline);
@@ -180,6 +187,8 @@ var TimelinePanel = React.createClass({
         MatrixClientPeg.get().on("Room.redaction", this.onRoomRedaction);
         MatrixClientPeg.get().on("Room.receipt", this.onRoomReceipt);
         MatrixClientPeg.get().on("Room.localEchoUpdated", this.onLocalEchoUpdated);
+        MatrixClientPeg.get().on("Room.accountData", this.onAccountData);
+        MatrixClientPeg.get().on("sync", this.onSync);
 
         this._initTimeline(this.props);
     },
@@ -247,6 +256,8 @@ var TimelinePanel = React.createClass({
             client.removeListener("Room.redaction", this.onRoomRedaction);
             client.removeListener("Room.receipt", this.onRoomReceipt);
             client.removeListener("Room.localEchoUpdated", this.onLocalEchoUpdated);
+            client.removeListener("Room.accountData", this.onAccountData);
+            client.removeListener("sync", this.onSync);
         }
     },
 
@@ -414,6 +425,7 @@ var TimelinePanel = React.createClass({
                 } else if(lastEv && this.getReadMarkerPosition() === 0) {
                     // we know we're stuckAtBottom, so we can advance the RM
                     // immediately, to save a later render cycle
+
                     this._setReadMarker(lastEv.getId(), lastEv.getTs(), true);
                     updatedState.readMarkerVisible = false;
                     updatedState.readMarkerEventId = lastEv.getId();
@@ -466,6 +478,25 @@ var TimelinePanel = React.createClass({
         this._reloadEvents();
     },
 
+    onAccountData: function(ev, room) {
+        if (this.unmounted) return;
+
+        // ignore events for other rooms
+        if (room !== this.props.timelineSet.room) return;
+
+        if (ev.getType() !== "m.fully_read") return;
+
+        // XXX: roomReadMarkerTsMap not updated here so it is now inconsistent. Replace
+        // this mechanism of determining where the RM is relative to the view-port with
+        // one supported by the server (the client needs more than an event ID).
+        this.setState({
+            readMarkerEventId: ev.getContent().event_id,
+        }, this.props.onReadMarkerUpdated);
+    },
+
+    onSync: function(state, prevState, data) {
+        this.setState({clientSyncState: state});
+    },
 
     sendReadReceipt: function() {
         if (!this.refs.messagePanel) return;
@@ -473,7 +504,9 @@ var TimelinePanel = React.createClass({
         // This happens on user_activity_end which is delayed, and it's
         // very possible have logged out within that timeframe, so check
         // we still have a client.
-        if (!MatrixClientPeg.get()) return;
+        const cli = MatrixClientPeg.get();
+        // if no client or client is guest don't send RR
+        if (!cli || cli.isGuest()) return;
 
         var currentReadUpToEventId = this._getCurrentReadReceipt(true);
         var currentReadUpToEventIndex = this._indexForEventId(currentReadUpToEventId);
@@ -505,12 +538,29 @@ var TimelinePanel = React.createClass({
 
         // we also remember the last read receipt we sent to avoid spamming the
         // same one at the server repeatedly
-        if (lastReadEventIndex > currentReadUpToEventIndex
-                && this.last_rr_sent_event_id != lastReadEvent.getId()) {
+        if ((lastReadEventIndex > currentReadUpToEventIndex &&
+            this.last_rr_sent_event_id != lastReadEvent.getId()) ||
+                this.last_rm_sent_event_id != this.state.readMarkerEventId) {
+
             this.last_rr_sent_event_id = lastReadEvent.getId();
-            MatrixClientPeg.get().sendReadReceipt(lastReadEvent).catch(() => {
+            this.last_rm_sent_event_id = this.state.readMarkerEventId;
+
+            MatrixClientPeg.get().setRoomReadMarkers(
+                this.props.timelineSet.room.roomId,
+                this.state.readMarkerEventId,
+                lastReadEvent
+            ).catch((e) => {
+                // /read_markers API is not implemented on this HS, fallback to just RR
+                if (e.errcode === 'M_UNRECOGNIZED') {
+                    return MatrixClientPeg.get().sendReadReceipt(
+                        lastReadEvent
+                    ).catch(() => {
+                        this.last_rr_sent_event_id = undefined;
+                    });
+                }
                 // it failed, so allow retries next time the user is active
                 this.last_rr_sent_event_id = undefined;
+                this.last_rm_sent_event_id = undefined;
             });
 
             // do a quick-reset of our unreadNotificationCount to avoid having
@@ -523,6 +573,7 @@ var TimelinePanel = React.createClass({
                 this.props.timelineSet.room.setUnreadNotificationCount('highlight', 0);
                 dis.dispatch({
                     action: 'on_room_read',
+                    room: this.props.timelineSet.room,
                 });
             }
         }
@@ -706,7 +757,7 @@ var TimelinePanel = React.createClass({
 
         // the messagePanel doesn't know where the read marker is.
         // if we know the timestamp of the read marker, make a guess based on that.
-        var rmTs = TimelinePanel.roomReadMarkerTsMap[this.props.timelineSet.roomId];
+        const rmTs = TimelinePanel.roomReadMarkerTsMap[this.props.timelineSet.room.roomId];
         if (rmTs && this.state.events.length > 0) {
             if (rmTs < this.state.events[0].getTs()) {
                 return -1;
@@ -716,6 +767,19 @@ var TimelinePanel = React.createClass({
         }
 
         return null;
+    },
+
+    canJumpToReadMarker: function() {
+        // 1. Do not show jump bar if neither the RM nor the RR are set.
+        // 2. Only show jump bar if RR !== RM. If they are the same, there are only fully
+        // read messages and unread messages. We already have a badge count and the bottom
+        // bar to jump to "live" when we have unread messages.
+        // 3. We want to show the bar if the read-marker is off the top of the screen.
+        // 4. Also, if pos === null, the event might not be paginated - show the unread bar
+        const pos = this.getReadMarkerPosition();
+        return this.state.readMarkerEventId !== null && // 1.
+            this.state.readMarkerEventId !== this._getCurrentReadReceipt() &&  // 2.
+            (pos < 0 || pos === null); // 3., 4.
     },
 
     /**
@@ -728,7 +792,9 @@ var TimelinePanel = React.createClass({
 
         // jump to the live timeline on ctrl-end, rather than the end of the
         // timeline window.
-        if (ev.ctrlKey && ev.keyCode == KeyCode.END) {
+        if (ev.ctrlKey && !ev.shiftKey && !ev.altKey && !ev.metaKey &&
+            ev.keyCode == KeyCode.END)
+        {
             this.jumpToLiveTimeline();
         } else {
             this.refs.messagePanel.handleScrollKey(ev);
@@ -825,15 +891,13 @@ var TimelinePanel = React.createClass({
                     });
                 };
             }
-            var message = "Tried to load a specific point in this room's timeline, but ";
-            if (error.errcode == 'M_FORBIDDEN') {
-                message += "you do not have permission to view the message in question.";
-            } else {
-                message += "was unable to find it.";
-            }
+            var message = (error.errcode == 'M_FORBIDDEN') 
+            	? _t("Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question") + "."
+                : _t("Tried to load a specific point in this room's timeline, but was unable to find it") + ".";
             Modal.createDialog(ErrorDialog, {
-                title: "Failed to load timeline position",
+                title: _t("Failed to load timeline position"),
                 description: message,
+                button: _t("OK"),
                 onFinished: onFinished,
             });
         };
@@ -956,15 +1020,11 @@ var TimelinePanel = React.createClass({
     _setReadMarker: function(eventId, eventTs, inhibitSetState) {
         var roomId = this.props.timelineSet.room.roomId;
 
-        if (TimelinePanel.roomReadMarkerMap[roomId] == eventId) {
-            // don't update the state (and cause a re-render) if there is
-            // no change to the RM.
+        // don't update the state (and cause a re-render) if there is
+        // no change to the RM.
+        if (eventId === this.state.readMarkerEventId) {
             return;
         }
-
-        // ideally we'd sync these via the server, but for now just stash them
-        // in a map.
-        TimelinePanel.roomReadMarkerMap[roomId] = eventId;
 
         // in order to later figure out if the read marker is
         // above or below the visible timeline, we stash the timestamp.
@@ -974,6 +1034,7 @@ var TimelinePanel = React.createClass({
             return;
         }
 
+        // Do the local echo of the RM
         // run the render cycle before calling the callback, so that
         // getReadMarkerPosition() returns the right thing.
         this.setState({
@@ -1022,11 +1083,17 @@ var TimelinePanel = React.createClass({
         // of paginating our way through the entire history of the room.
         var stickyBottom = !this._timelineWindow.canPaginate(EventTimeline.FORWARDS);
 
+        // If the state is PREPARED, we're still waiting for the js-sdk to sync with
+        // the HS and fetch the latest events, so we are effectively forward paginating.
+        const forwardPaginating = (
+            this.state.forwardPaginating || this.state.clientSyncState == 'PREPARED'
+        );
+
         return (
             <MessagePanel ref="messagePanel"
                     hidden={ this.props.hidden }
                     backPaginating={ this.state.backPaginating }
-                    forwardPaginating={ this.state.forwardPaginating }
+                    forwardPaginating={ forwardPaginating }
                     events={ this.state.events }
                     highlightedEventId={ this.props.highlightedEventId }
                     readMarkerEventId={ this.state.readMarkerEventId }
