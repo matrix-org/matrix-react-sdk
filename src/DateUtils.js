@@ -54,14 +54,11 @@ module.exports = {
     formatDate: function(date) {
         // date.toLocaleTimeString is completely system dependent.
         // just go 24h for now
-<<<<<<< HEAD
         function pad(n) {
             return (n < 10 ? '0' : '') + n;
         }
         const days = getDaysArray();
         const months = getMonthsArray();
-=======
->>>>>>> develop
 
 		// TODO: use standard date localize function provided in counterpart
 		var hoursAndMinutes = pad(date.getHours()) + ':' + pad(date.getMinutes());
@@ -83,6 +80,9 @@ module.exports = {
     },
 
     formatFullDate: function(date) {
+	    const days = getDaysArray();
+        const months = getMonthsArray();
+        var hoursAndMinutes = pad(date.getHours()) + ':' + pad(date.getMinutes());
         return _t('%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s', {weekDayName: days[date.getDay()], monthName: months[date.getMonth()], day: date.getDate(), fullYear: date.getFullYear(),time: hoursAndMinutes});
     },
 
