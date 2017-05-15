@@ -80,6 +80,8 @@ module.exports = {
     },
 
     formatFullDate: function(date) {
+    	const days = getDaysArray();
+        const months = getMonthsArray();
         return _t('%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s', {weekDayName: days[date.getDay()], monthName: months[date.getMonth()], day: date.getDate(), fullYear: fullYear, time: hoursAndMinutes});
     },
 
