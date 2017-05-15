@@ -350,7 +350,7 @@
     "New Composer & Autocomplete": "Nova ferramenta de formatação de mensagens e autocompletar",
     "(not supported by this browser)": "(não é compatível com este navegador)",
     "olm version": "versão olm",
-    "%(senderName)s placed a %(callType) call": "%(senderName)s fez uma chamada de %(callType)",
+    "%(senderName)s placed a %(callType)s call": "%(senderName)s fez uma chamada de %(callType)s",
     "Power level must be positive integer": "O nível de permissões tem que ser um número inteiro e positivo",
     "Press": "Aperte",
     "Reason": "Razão",
