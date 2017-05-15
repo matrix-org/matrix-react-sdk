@@ -46,6 +46,10 @@ function getMonthsArray() {
 	return months;
 }
 
+function pad(n) {
+    return (n < 10 ? '0' : '') + n;
+}
+
 module.exports = {
     formatDate: function(date) {
         // date.toLocaleTimeString is completely system dependent.
@@ -66,19 +70,20 @@ module.exports = {
         	// TODO: use standard date localize function provided in counterpart
             return _t('%(weekDayName)s %(time)s', {weekDayName: days[date.getDay()], time: hoursAndMinutes});
         }
-        else /* if (now.getFullYear() === date.getFullYear()) */ {
+        else if (now.getFullYear() === date.getFullYear()) {
         	// TODO: use standard date localize function provided in counterpart
             return _t('%(weekDayName)s, %(monthName)s %(day)s %(time)s', {weekDayName: days[date.getDay()], monthName: months[date.getMonth()], day: date.getDate(), time: hoursAndMinutes});
         }
-        /*
         else {
-            return days[date.getDay()] + ", " + months[date.getMonth()] + " " + date.getDate() + " " + date.getFullYear() + " " + pad(date.getHours()) + ':' + pad(date.getMinutes());
+            return this.formatFullDate(date);
         }
-        */
+    },
+
+    formatFullDate: function(date) {
+        return _t('%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s', {weekDayName: days[date.getDay()], monthName: months[date.getMonth()], day: date.getDate(), fullYear: fullYear, time: hoursAndMinutes});
     },
 
     formatTime: function(date) {
-        //return pad(date.getHours()) + ':' + pad(date.getMinutes());
-        return ('00' + date.getHours()).slice(-2) + ':' + ('00' + date.getMinutes()).slice(-2);
+        return pad(date.getHours()) + ':' + pad(date.getMinutes());
     }
 };
