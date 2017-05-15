@@ -642,5 +642,6 @@
     "Click to unmute video": "Klicke um Video zu reaktivieren",
     "Click to unmute audio": "Klicke um Ton zu reaktivieren",
     "Failed to load timeline position": "Laden der Position im Zeitstrahl fehlgeschlagen",
-    "Failed to toggle moderator status": "Umschalten des Moderatorstatuses fehlgeschlagen"
+    "Failed to toggle moderator status": "Umschalten des Moderatorstatuses fehlgeschlagen",
+    "Enable encryption": "Verschlüsselung aktivieren"
 }
