@@ -644,5 +644,9 @@
     "Failed to load timeline position": "Laden der Position im Zeitstrahl fehlgeschlagen",
     "Failed to toggle moderator status": "Umschalten des Moderatorstatuses fehlgeschlagen",
     "Enable encryption": "Verschlüsselung aktivieren",
-    "The main address for this room is": "Die Hauptadresse für diesen Raum ist"
+    "The main address for this room is": "Die Hauptadresse für diesen Raum ist",
+    "Autoplay GIFs and videos": "Automatisch GIF's und Videos abspielen",
+    "Don't send typing notifications": "Nicht senden, wenn ich tippe",
+    "Hide read receipts": "Verberge Lesebestätigungen",
+    "Never send encrypted messages to unverified devices in this room": "In diesem Raum keine verschlüsselten Nachrichten an unverifizierte Geräte senden"
 }
