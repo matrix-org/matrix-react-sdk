@@ -144,7 +144,7 @@ function textForCallInviteEvent(event) {
         type = "video";
     }
     var supported = MatrixClientPeg.get().supportsVoip() ? "" : _t('(not supported by this browser)');
-    return _t('%(senderName)s placed a %(callType) call', {senderName: senderName, callType: type}) + '. ' + supported;
+    return _t('%(senderName)s placed a %(callType)s call', {senderName: senderName, callType: type}) + '. ' + supported;
 }
 
 function textForThreePidInviteEvent(event) {

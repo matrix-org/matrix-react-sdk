@@ -374,7 +374,7 @@
     "Must be viewing a room": "Muss einen Raum ansehen",
     "New Composer & Autocomplete": "Neuer Eingabeverarbeiter & Autovervollständigung",
     "(not supported by this browser)": "(nicht von diesem Browser unterstützt)",
-    "%(senderName)s placed a %(callType) call": "%(senderName)s startete einen %(callType)s-Anruf",
+    "%(senderName)s placed a %(callType)s call": "%(senderName)s startete einen %(callType)s-Anruf",
     "Power level must be positive integer": "Berechtigungslevel muss eine positive Zahl sein",
     "Reason": "Grund",
     "%(targetName)s rejected the invitation": "%(targetName)s lehnte die Einladung ab",
