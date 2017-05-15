@@ -80,7 +80,10 @@ module.exports = {
     },
 
     formatFullDate: function(date) {
-        return _t('%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s', {weekDayName: days[date.getDay()], monthName: months[date.getMonth()], day: date.getDate(), fullYear: fullYear, time: hoursAndMinutes});
+	    const days = getDaysArray();
+        const months = getMonthsArray();
+        var hoursAndMinutes = pad(date.getHours()) + ':' + pad(date.getMinutes());
+        return _t('%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s', {weekDayName: days[date.getDay()], monthName: months[date.getMonth()], day: date.getDate(), fullYear: date.getFullYear(),time: hoursAndMinutes});
     },
 
     formatTime: function(date) {
