@@ -43,6 +43,7 @@ export default React.createClass({
           tagOrder: this.props.tag.order,
           new: false,
           tagError: "",
+          index: this.props.index,
         };
       } else {
         return {
@@ -50,6 +51,7 @@ export default React.createClass({
           order: "recent",
           new: true,
           tagError: "",
+          index: -1,
         };
       }
     },
@@ -59,9 +61,9 @@ export default React.createClass({
     },
 
     onNameChange: function(event) {
-      const valid = RoomTagUtil.isTagTextValid(event.target.value);
+      const valid = RoomTagUtil.isTagTextValid(event.target.value, this.state.index);
       // Make sure we're not checking against itself.
-      if( valid.valid || (!this.state.new && name === this.getInitialState().tagName) ) {
+      if( valid.valid ) {
         this.setState({tagName: event.target.value, tagError: ""});
       } else {
         this.setState({tagError: valid.error});
@@ -96,7 +98,7 @@ export default React.createClass({
                       <p>{description}</p>
                       <p className="mx_TextInputDialog_validateMsg">{this.state.tagError}</p>
                       <label htmlFor="tag_name">Tag Name</label>
-                      <input type="text" name="tag_name" ref="tag_name" defaultValue={this.state.tagName}
+                      <input type="text" className="mx_TextInputDialog_input" name="tag_name" ref="tag_name" defaultValue={this.state.tagName}
                           autoFocus={true} onChange={this.onNameChange} size="30"
                       />
                       <label htmlFor="tag_order">Room Ordering</label>
