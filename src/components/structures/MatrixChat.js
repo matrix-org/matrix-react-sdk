@@ -898,23 +898,29 @@ module.exports = React.createClass({
     },
 
     onMessage: function(ev) {
-    		if (!this.state.logged_in) {
-						try {
-								var credentials = JSON.parse(ev.data);
-								console.log('postMessage: logging in from credentials sent by origin requestor');
-								if (
-			              credentials &&
-			              credentials.accessToken &&
-			              credentials.homeserverUrl &&
-			              credentials.identityServerUrl &&
-			              credentials.userId
-			          ) {
-			 						credentials.guest = false;
-			      			Lifecycle.setLoggedIn(credentials);
-			      		}
-						} catch(e) {
-						}
-				}
+    	if (!this.state.logged_in) {
+			try {
+                var credentials = JSON.parse(ev.data);
+                console.log('postMessage: logging in from credentials sent by origin requestor');
+                if (
+                    credentials &&
+                    credentials.accessToken &&
+                    credentials.homeserverUrl &&
+                    credentials.identityServerUrl &&
+                    credentials.userId
+                ) {
+                    credentials.guest = false;
+                    Lifecycle.setLoggedIn(credentials);
+                }
+            } catch(e) {
+            }
+        } else if (
+            credentials &&
+            credentials.accessToken &&
+            credentials.homeserverUrl &&
+            credentials.identityServerUrl &&
+            credentials.userId
+        )
     },
     
     showScreen: function(screen, params) {
