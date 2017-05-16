@@ -19,7 +19,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import sdk from '../../../index';
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 import {field_input_incorrect} from '../../../UiEffects';
 
 

@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import classNames from 'classnames';
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 import sdk from '../../../index';
 import { getAddressType, inviteMultipleToRoom } from '../../../Invite';
 import createRoom from '../../../createRoom';
@@ -49,11 +49,7 @@ module.exports = React.createClass({
 
     getDefaultProps: function() {
         return {
-            title: _t ("Start a chat"),
-            description: _t ("Who would you like to communicate with?"),
             value: "",
-            placeholder: _t ("Email, name or matrix ID"),
-            button: _t ("Start Chat"),
             focus: true
         };
     },
@@ -311,6 +307,7 @@ module.exports = React.createClass({
                 Modal.createDialog(ErrorDialog, {
                     title: "Failed to invite",
                     description: ((err && err.message) ? err.message : "Operation failed"),
+                    button: _t("OK"),
                 });
                 return null;
             })
@@ -324,6 +321,7 @@ module.exports = React.createClass({
                 Modal.createDialog(ErrorDialog, {
                     title: "Failed to invite user",
                     description: ((err && err.message) ? err.message : "Operation failed"),
+                    button: _t("OK"),
                 });
                 return null;
             })
@@ -345,6 +343,7 @@ module.exports = React.createClass({
                 Modal.createDialog(ErrorDialog, {
                     title: "Failed to invite",
                     description: ((err && err.message) ? err.message : "Operation failed"),
+                    button: _t("OK"),
                 });
                 return null;
             })
@@ -404,6 +403,7 @@ module.exports = React.createClass({
             Modal.createDialog(ErrorDialog, {
                 title: "Failed to invite the following users to the " + room.name + " room:",
                 description: errorList.join(", "),
+                button: _t("OK"),
             });
         }
         return addrs;

@@ -16,7 +16,7 @@ limitations under the License.
 
 var MatrixClientPeg = require("./MatrixClientPeg");
 var CallHandler = require("./CallHandler");
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 import * as Roles from './Roles';
 
 function textForMemberEvent(ev) {
@@ -103,7 +103,7 @@ function textForMemberEvent(ev) {
 
 function textForTopicEvent(ev) {
     var senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
-    return _t('%(senderDisplayName)s changed the topic to %(topic)s', {senderDisplayName: senderDisplayName, topic: ev.getContent().topic});
+    return _t('%(senderDisplayName)s changed the topic to %(topic)s"', {senderDisplayName: senderDisplayName, topic: '"' + ev.getContent().topic + '"'});
 }
 
 function textForRoomNameEvent(ev) {
@@ -144,7 +144,7 @@ function textForCallInviteEvent(event) {
         type = "video";
     }
     var supported = MatrixClientPeg.get().supportsVoip() ? "" : _t('(not supported by this browser)');
-    return _t('%(senderName)s placed a %(callType) call', {senderName: senderName, callType: type}) + '. ' + supported;
+    return _t('%(senderName)s placed a %(callType)s call', {senderName: senderName, callType: type}) + '. ' + supported;
 }
 
 function textForThreePidInviteEvent(event) {

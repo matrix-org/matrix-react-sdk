@@ -1,5 +1,5 @@
 import React from 'react';
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 import AutocompleteProvider from './AutocompleteProvider';
 import MatrixClientPeg from '../MatrixClientPeg';
 import Fuse from 'fuse.js';
@@ -51,7 +51,7 @@ export default class RoomProvider extends AutocompleteProvider {
     }
 
     getName() {
-        return _t('💬 Rooms');
+        return '💬 ' + _t('Rooms');
     }
 
     static getInstance() {

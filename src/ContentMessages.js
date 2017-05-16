@@ -21,7 +21,7 @@ var extend = require('./extend');
 var dis = require('./dispatcher');
 var MatrixClientPeg = require('./MatrixClientPeg');
 var sdk = require('./index');
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 var Modal = require('./Modal');
 
 var encrypt = require("browser-encrypt-attachment");
@@ -355,7 +355,8 @@ class ContentMessages {
                 var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
                     title: _t('Upload Failed'),
-                    description: desc
+                    description: desc,
+                    button: _t("OK"),
                 });
             }
         }).finally(() => {

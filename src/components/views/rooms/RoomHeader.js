@@ -17,8 +17,9 @@ limitations under the License.
 'use strict';
 
 var React = require('react');
+var classNames = require('classnames');
 var sdk = require('../../../index');
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 var MatrixClientPeg = require('../../../MatrixClientPeg');
 var Modal = require("../../../Modal");
 var dis = require("../../../dispatcher");
@@ -40,6 +41,7 @@ module.exports = React.createClass({
         oobData: React.PropTypes.object,
         editing: React.PropTypes.bool,
         saving: React.PropTypes.bool,
+        inRoom: React.PropTypes.bool,
         collapsedRhs: React.PropTypes.bool,
         onSettingsClick: React.PropTypes.func,
         onSaveClick: React.PropTypes.func,
@@ -50,7 +52,7 @@ module.exports = React.createClass({
     getDefaultProps: function() {
         return {
             editing: false,
-            onSettingsClick: function() {},
+            inRoom: false,
             onSaveClick: function() {},
         };
     },
@@ -118,8 +120,9 @@ module.exports = React.createClass({
             var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             console.error("Failed to set avatar: " + errMsg);
             Modal.createDialog(ErrorDialog, {
-                title: "Error",
-                description: "Failed to set avatar.",
+                title: _t("Error"),
+                description: _t("Failed to set avatar") + ".",
+                button: _t("OK"),
             });
         }).done();
     },
@@ -204,7 +207,7 @@ module.exports = React.createClass({
             // don't display the search count until the search completes and
             // gives us a valid (possibly zero) searchCount.
             if (this.props.searchInfo && this.props.searchInfo.searchCount !== undefined && this.props.searchInfo.searchCount !== null) {
-                searchStatus = <div className="mx_RoomHeader_searchStatus">&nbsp;(~{ this.props.searchInfo.searchCount } results)</div>;
+                searchStatus = <div className="mx_RoomHeader_searchStatus">&nbsp;{ _t("(~%(searchCount)s results)", { searchCount: this.props.searchInfo.searchCount }) }</div>;
             }
 
             // XXX: this is a bit inefficient - we could just compare room.name for 'Empty room'...
@@ -219,17 +222,17 @@ module.exports = React.createClass({
                 }
             }
 
-            var roomName = 'Join Room';
+            var roomName = _t("Join Room");
             if (this.props.oobData && this.props.oobData.name) {
                 roomName = this.props.oobData.name;
             } else if (this.props.room) {
                 roomName = this.props.room.name;
             }
 
-
+            const emojiTextClasses = classNames('mx_RoomHeader_nametext', { mx_RoomHeader_settingsHint: settingsHint });
             name =
                 <div className="mx_RoomHeader_name" onClick={this.props.onSettingsClick}>
-                    <EmojiText element="div" className={ "mx_RoomHeader_nametext " + (settingsHint ? "mx_RoomHeader_settingsHint" : "") } title={ roomName }>{roomName}</EmojiText>
+                    <EmojiText element="div" className={emojiTextClasses} title={roomName}>{ roomName }</EmojiText>
                     { searchStatus }
                 </div>;
         }
@@ -260,7 +263,7 @@ module.exports = React.createClass({
                     <div className="mx_RoomHeader_avatarPicker_edit">
                         <label htmlFor="avatarInput" ref="file_label">
                             <img src="img/camera.svg"
-                                alt="Upload avatar" title="Upload avatar"
+                                alt={ _t("Upload avatar") } title={ _t("Upload avatar") }
                                 width="17" height="15" />
                         </label>
                         <input id="avatarInput" type="file" onChange={ this.onAvatarSelected }/>
@@ -295,8 +298,16 @@ module.exports = React.createClass({
         var forget_button;
         if (this.props.onForgetClick) {
             forget_button =
-                <AccessibleButton className="mx_RoomHeader_button" onClick={this.props.onForgetClick} title={ _t('Forget room') }>
+                <AccessibleButton className="mx_RoomHeader_button" onClick={this.props.onForgetClick} title={ _t("Forget room") }>
                     <TintableSvg src="img/leave.svg" width="26" height="20"/>
+                </AccessibleButton>;
+        }
+
+        let search_button;
+        if (this.props.onSearchClick && this.props.inRoom) {
+            search_button =
+                <AccessibleButton className="mx_RoomHeader_button" onClick={this.props.onSearchClick} title={ _t("Search") }>
+                    <TintableSvg src="img/icons-search.svg" width="35" height="35"/>
                 </AccessibleButton>;
         }
 
@@ -314,9 +325,7 @@ module.exports = React.createClass({
                 <div className="mx_RoomHeader_rightRow">
                     { settings_button }
                     { forget_button }
-                    <AccessibleButton className="mx_RoomHeader_button" onClick={this.props.onSearchClick} title="Search">
-                        <TintableSvg src="img/icons-search.svg" width="35" height="35"/>
-                    </AccessibleButton>
+                    { search_button }
                     { rightPanel_buttons }
                 </div>;
         }

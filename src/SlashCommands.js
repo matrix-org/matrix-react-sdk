@@ -18,7 +18,7 @@ var MatrixClientPeg = require("./MatrixClientPeg");
 var dis = require("./dispatcher");
 var Tinter = require("./Tinter");
 import sdk from './index';
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 import Modal from './Modal';
 
 
@@ -65,6 +65,7 @@ var commands = {
         Modal.createDialog(ErrorDialog, {
             title: _t('/ddg is not a command'),
             description: _t('To use it, just wait for autocomplete results to load and tab through them') + '.',
+			button: _t("OK"),
         });
         return success();
     }),

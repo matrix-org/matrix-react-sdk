@@ -36,7 +36,6 @@ export default React.createClass({
             title: "",
             value: "",
             description: "",
-            button: "OK",
             focus: true,
         };
     },

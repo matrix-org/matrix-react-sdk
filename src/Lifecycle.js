@@ -27,7 +27,7 @@ import DMRoomMap from './utils/DMRoomMap';
 import RtsClient from './RtsClient';
 import Modal from './Modal';
 import sdk from './index';
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 
 /**
  * Called at startup, to attempt to build a logged-in Matrix session. It tries
@@ -230,7 +230,11 @@ function _handleRestoreFailure(e) {
 
     let msg = e.message;
     if (msg == "OLM.BAD_LEGACY_ACCOUNT_PICKLE") {
-        msg = _t('You need to log back in to generate end-to-end encryption keys for this device and submit the public key to your homeserver. This is a once off; sorry for the inconvenience') + '.';
+        msg = _t(
+            'You need to log back in to generate end-to-end ' +
+            'encryption keys for this device and submit the public key to your homeserver. ' +
+            'This is a once off; sorry for the inconvenience'
+        ) + '.';
 
         _clearLocalStorage();
 

@@ -3,7 +3,7 @@
 import sinon from 'sinon';
 import q from 'q';
 import ReactTestUtils from 'react-addons-test-utils';
-import * as counterpart from 'counterpart';
+import * as counterpart from 'counterpart-riot';
 var languageHandler = require("../src/languageHandler");
 
 import peg from '../src/MatrixClientPeg.js';

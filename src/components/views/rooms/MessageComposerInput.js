@@ -30,6 +30,7 @@ import type {MatrixClient} from 'matrix-js-sdk/lib/matrix';
 import SlashCommands from '../../../SlashCommands';
 import Modal from '../../../Modal';
 import sdk from '../../../index';
+import _t from 'counterpart-riot';
 
 import dis from '../../../dispatcher';
 import KeyCode from '../../../KeyCode';
@@ -509,8 +510,9 @@ export default class MessageComposerInput extends React.Component {
                     console.error("Command failure: %s", err);
                     var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                     Modal.createDialog(ErrorDialog, {
-                        title: "Server error",
-                        description: ((err && err.message) ? err.message : "Server unavailable, overloaded, or something else went wrong."),
+                        title: _t("Server error"),
+                        description: ((err && err.message) ? err.message : _t("Server unavailable, overloaded, or something else went wrong") + "."),
+                        button: _t("OK"),
                     });
                 });
             }
@@ -518,8 +520,9 @@ export default class MessageComposerInput extends React.Component {
                 console.error(cmd.error);
                 var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
-                    title: "Command error",
-                    description: cmd.error
+                    title: _t("Command error"),
+                    description: cmd.error,
+                    button: _t("OK"),
                 });
             }
             return true;
@@ -542,9 +545,9 @@ export default class MessageComposerInput extends React.Component {
         let sendTextFn = this.client.sendTextMessage;
 
         if (contentText.startsWith('/me')) {
-            contentText = contentText.replace('/me ', '');
+            contentText = contentText.substring(4);
             // bit of a hack, but the alternative would be quite complicated
-            if (contentHTML) contentHTML = contentHTML.replace('/me ', '');
+            if (contentHTML) contentHTML = contentHTML.replace(/\/me ?/, '');
             sendHtmlFn = this.client.sendHtmlEmote;
             sendTextFn = this.client.sendEmoteMessage;
         }
@@ -724,7 +727,7 @@ export default class MessageComposerInput extends React.Component {
                 <div className={className}>
                     <img className="mx_MessageComposer_input_markdownIndicator mx_filterFlipColor"
                          onMouseDown={this.onMarkdownToggleClicked}
-                         title={`Markdown is ${this.state.isRichtextEnabled ? 'disabled' : 'enabled'}`}
+                         title={ this.state.isRichtextEnabled ? _t("Markdown is disabled") : _t("Markdown is enabled")}
                          src={`img/button-md-${!this.state.isRichtextEnabled}.png`} />
                     <Editor ref="editor"
                             placeholder={this.props.placeholder}

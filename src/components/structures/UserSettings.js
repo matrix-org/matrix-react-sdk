@@ -29,7 +29,7 @@ const Email = require('../../email');
 const AddThreepid = require('../../AddThreepid');
 const SdkConfig = require('../../SdkConfig');
 import AccessibleButton from '../views/elements/AccessibleButton';
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 const languageHandler = require('../../languageHandler');
 
 
@@ -39,7 +39,7 @@ const REACT_SDK_VERSION = 'dist' in packageJson ? packageJson.version : packageJ
 
 // Simple method to help prettify GH Release Tags and Commit Hashes.
 const semVerRegex = /^v?(\d+\.\d+\.\d+(?:-rc.+)?)(?:-(?:\d+-g)?([0-9a-fA-F]+))?(?:-dirty)?$/i;
-const gHVersionLabel = function(repo, token) {
+const gHVersionLabel = function(repo, token='') {
     const match = token.match(semVerRegex);
     let url;
     if (match && match[1]) { // basic semVer string possibly with commit hash
@@ -55,6 +55,8 @@ const gHVersionLabel = function(repo, token) {
 // Enumerate some simple 'flip a bit' UI settings (if any).
 // 'id' gives the key name in the im.vector.web.settings account data event
 // 'label' is how we describe it in the UI.
+// Warning: Each "label" string below must be added to i18n/strings/en_EN.json, 
+// since they will be translated when rendered.
 const SETTINGS_LABELS = [
     {
         id: 'autoplayGifsAndVideos',
@@ -88,10 +90,12 @@ const SETTINGS_LABELS = [
 */
 ];
 
+// Warning: Each "label" string below must be added to i18n/strings/en_EN.json, 
+// since they will be translated when rendered.
 const CRYPTO_SETTINGS_LABELS = [
     {
         id: 'blacklistUnverifiedDevices',
-        label: _t('Never send encrypted messages to unverified devices from this device'),
+        label: 'Never send encrypted messages to unverified devices from this device',
     },
     // XXX: this is here for documentation; the actual setting is managed via RoomSettings
     // {
@@ -153,10 +157,10 @@ module.exports = React.createClass({
     getInitialState: function() {
         return {
             avatarUrl: null,
-            threePids: [],
+            threepids: [],
             phase: "UserSettings.LOADING", // LOADING, DISPLAY
             email_add_pending: false,
-            vectorVersion: null,
+            vectorVersion: undefined,
             rejectingInvites: false,
         };
     },
@@ -193,20 +197,20 @@ module.exports = React.createClass({
 
         const syncedSettings = UserSettingsStore.getSyncedSettings();
         if (!syncedSettings.theme) {
-            syncedSettings.theme = 'cadcampo';
+            syncedSettings.theme = 'light';
         }
         this._syncedSettings = syncedSettings;
 
         this._localSettings = UserSettingsStore.getLocalSettings();
         if (!this._localSettings.hasOwnProperty('language')) {
-          const language = languageHandler.normalizeLanguageKey(languageHandler.getLanguageFromBrowser());
-          this.setState({
-            Language: language
-          });
-        }else {
-          this.setState({
-            Language: this._localSettings.language
-          });
+            const language = languageHandler.normalizeLanguageKey(languageHandler.getLanguageFromBrowser());
+            this.setState({
+                Language: language
+            });
+        } else {
+            this.setState({
+                Language: this._localSettings.language
+            });
         }
     },
 
@@ -245,6 +249,7 @@ module.exports = React.createClass({
             Modal.createDialog(ErrorDialog, {
                 title: _t("Can't load user settings"),
                 description: ((error && error.message) ? error.message : _t("Server may be unavailable or overloaded")),
+                button: _t("OK"),
             });
         });
     },
@@ -287,6 +292,7 @@ module.exports = React.createClass({
             Modal.createDialog(ErrorDialog, {
                 title: _t("Failed to set avatar"),
                 description: ((err && err.message) ? err.message : _t("Operation failed")),
+                button: _t("OK")
             });
         });
     },
@@ -329,6 +335,7 @@ module.exports = React.createClass({
         Modal.createDialog(ErrorDialog, {
             title: _t("Error"),
             description: errMsg,
+            button: _t("OK"),
         });
     },
 
@@ -337,6 +344,7 @@ module.exports = React.createClass({
         Modal.createDialog(ErrorDialog, {
             title: _t("Success"),
             description: _t("Your password was successfully changed. You will not receive push notifications on other devices until you log back in to them") + ".",
+            button: _t("OK"),
         });
     },
 
@@ -364,6 +372,7 @@ module.exports = React.createClass({
             Modal.createDialog(ErrorDialog, {
                 title: _t("Invalid Email Address"),
                 description: _t("This doesn't appear to be a valid email address"),
+                button: _t("OK"),
             });
             return;
         }
@@ -383,6 +392,7 @@ module.exports = React.createClass({
             Modal.createDialog(ErrorDialog, {
                 title: _t("Unable to add email address"),
                 description: ((err && err.message) ? err.message : _t("Operation failed")),
+                button: _t("OK"),
             });
         });
         ReactDOM.findDOMNode(this.refs.add_email_input).blur();
@@ -408,6 +418,7 @@ module.exports = React.createClass({
                         Modal.createDialog(ErrorDialog, {
                             title: _t("Unable to remove contact information"),
                             description: ((err && err.message) ? err.message : _t("Operation failed")),
+                            button: _t("OK"),
                         });
                     }).done();
                 }
@@ -449,6 +460,7 @@ module.exports = React.createClass({
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Unable to verify email address"),
                     description: ((err && err.message) ? err.message : _t("Operation failed")),
+                    button: _t("OK"),
                 });
             }
         });
@@ -595,7 +607,7 @@ module.exports = React.createClass({
                    onChange={ (e) => UserSettingsStore.setSyncedSetting(setting.id, e.target.checked) }
             />
             <label htmlFor={ setting.id }>
-                { setting.label }
+                { _t(setting.label) }
             </label>
         </div>;
     },
@@ -678,7 +690,7 @@ module.exports = React.createClass({
                     }
             />
             <label htmlFor={ setting.id }>
-                { setting.label }
+                { _t(setting.label) }
             </label>
         </div>;
     },
@@ -879,6 +891,7 @@ module.exports = React.createClass({
             addEmailSection = (
                 <div className="mx_UserSettings_profileTableRow" key="_newEmail">
                     <div className="mx_UserSettings_profileLabelCell">
+                        <label>Email</label>
                     </div>
                     <div className="mx_UserSettings_profileInputCell">
                         <EditableText
@@ -1025,7 +1038,7 @@ module.exports = React.createClass({
                             ? gHVersionLabel('matrix-org/matrix-react-sdk', REACT_SDK_VERSION)
                             : REACT_SDK_VERSION
                         }<br/>
-                        riot-web version: {(this.state.vectorVersion !== null)
+                        riot-web version: {(this.state.vectorVersion !== undefined)
                             ? gHVersionLabel('vector-im/riot-web', this.state.vectorVersion)
                             : 'unknown'
                         }<br/>

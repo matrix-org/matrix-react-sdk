@@ -21,7 +21,7 @@ var React = require('react');
 var sdk = require('../../../index');
 var MatrixClientPeg = require('../../../MatrixClientPeg');
 
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 
 module.exports = React.createClass({
     displayName: 'RoomPreviewBar',
@@ -49,7 +49,7 @@ module.exports = React.createClass({
         // The alias that was used to access this room, if appropriate
         // If given, this will be how the room is referred to (eg.
         // in error messages).
-        roomAlias: React.PropTypes.object,
+        roomAlias: React.PropTypes.string,
     },
 
     getDefaultProps: function() {
@@ -133,7 +133,7 @@ module.exports = React.createClass({
             joinBlock = (
                 <div>
                     <div className="mx_RoomPreviewBar_invite_text">
-                        { _t('You have been invited to join this room by') } <b>{ this.props.inviterName }</b>
+                        { _t('You have been invited to join this room by %(inviterName)s', {inviterName: <b>this.props.inviterName</b>}) } 
                     </div>
                     <div className="mx_RoomPreviewBar_join_text">
                         { _t('Would you like to') } <a onClick={ this.props.onJoinClick }>{ _t('accept') }</a> { _t('or') } <a onClick={ this.props.onRejectClick }>{ _t('decline') }</a> { _t('this invitation?') }

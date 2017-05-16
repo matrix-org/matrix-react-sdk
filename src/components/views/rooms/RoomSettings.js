@@ -17,7 +17,7 @@ limitations under the License.
 
 import q from 'q';
 import React from 'react';
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import SdkConfig from '../../../SdkConfig';
 import sdk from '../../../index';
@@ -59,6 +59,7 @@ const BannedUser = React.createClass({
                     Modal.createDialog(ErrorDialog, {
                         title: _t('Error'),
                         description: _t('Failed to unban'),
+                        button: _t("OK"),
                     });
                 }).done();
             },
@@ -528,7 +529,8 @@ module.exports = React.createClass({
             var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createDialog(ErrorDialog, {
                 title: _t('Error'),
-                description: `${_t('Failed to forget room')} (${errCode})`
+                description: _t("Failed to forget room %(errCode)s", { errCode: errCode }),
+                button: _t("OK"),
             });
         });
     },
@@ -548,6 +550,7 @@ module.exports = React.createClass({
                     <p>{ _t('Encrypted messages will not be visible on clients that do not yet implement encryption') }.</p>
                 </div>
             ),
+            button: "OK",
             onFinished: confirm=>{
                 if (!confirm) {
                     this.refs.encrypt.checked = false;
