@@ -1,4 +1,4 @@
-_t/*
+/*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
 
@@ -950,7 +950,7 @@ module.exports = React.createClass({
 
         ContentMessages.sendContentToRoom(
             file, this.state.room.roomId, MatrixClientPeg.get()
-        ).done(undefined, (error) => {
+        ).done(undefined, (e/*rror) => {
             if (error.name === "UnknownDeviceError") {
                 dis.dispatch({
                     action: 'unknown_device_error',
