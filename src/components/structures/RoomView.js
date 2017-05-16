@@ -950,7 +950,7 @@ module.exports = React.createClass({
 
         ContentMessages.sendContentToRoom(
             file, this.state.room.roomId, MatrixClientPeg.get()
-        ).done(undefined, (e/*rror) => {
+        ).done(undefined, (error) => {
             if (error.name === "UnknownDeviceError") {
                 dis.dispatch({
                     action: 'unknown_device_error',
