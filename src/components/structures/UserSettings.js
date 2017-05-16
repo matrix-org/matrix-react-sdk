@@ -197,20 +197,20 @@ module.exports = React.createClass({
 
         const syncedSettings = UserSettingsStore.getSyncedSettings();
         if (!syncedSettings.theme) {
-            syncedSettings.theme = 'cadcampo';
+            syncedSettings.theme = 'light';
         }
         this._syncedSettings = syncedSettings;
 
         this._localSettings = UserSettingsStore.getLocalSettings();
         if (!this._localSettings.hasOwnProperty('language')) {
-          const language = languageHandler.normalizeLanguageKey(languageHandler.getLanguageFromBrowser());
-          this.setState({
-            Language: language
-          });
-        }else {
-          this.setState({
-            Language: this._localSettings.language
-          });
+            const language = languageHandler.normalizeLanguageKey(languageHandler.getLanguageFromBrowser());
+            this.setState({
+                Language: language
+            });
+        } else {
+            this.setState({
+                Language: this._localSettings.language
+            });
         }
     },
 
