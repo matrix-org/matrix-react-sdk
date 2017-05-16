@@ -577,9 +577,11 @@ module.exports = React.createClass({
                     </div>;
             }
         }
-        const tag = RoomTagUtil.tags.find((tag) => {
-          return (tagName == tag.alias) || (tagName == tag.name);
-        });
+        let tag = RoomTagUtil.getTag(tagName);
+        if (tag === undefined) {
+          tag = {name: tagName};
+        }
+
         const labelText = 'Drop here to ' + ( (tag ? tag.verb : false) || 'tag as ' + tag.name);
 
         return <RoomDropTarget label={labelText} />;
@@ -606,13 +608,21 @@ module.exports = React.createClass({
 
     render: function() {
         const RoomSubList = sdk.getComponent('structures.RoomSubList');
-        const tags = RoomTagUtil.tags;
+        // Clone so we don't end up modifying the tag list.
+        const tags = RoomTagUtil.tags.slice();
+        Object.keys(this.state.lists).forEach((tag) => {
+          if( tags.find((tag) => tag.alias == tag || tag.name == tag) === undefined) {
+            console.log(`Room tag ${tag} is not known and shall be assigned defaults.`);
+            const newTag = RoomTagUtil.tagDefaults;
+            newTag.name = tag;
+            tags.push(newTag);
+          }
+        });
         return (
             <GeminiScrollbar className="mx_RoomList_scrollbar"
                  autoshow={true} onScroll={ this._whenScrolling } ref="gemscroll">
               <div className="mx_RoomList" onMouseOver={ this._onMouseOver }>
               { tags.map((tag) => {
-                  console.log();
                   let onHeaderClick = this.onSubListHeaderClick;
                   let showSpinner = false;
                   if (tag.alias === "im.vector.fake.archived") {

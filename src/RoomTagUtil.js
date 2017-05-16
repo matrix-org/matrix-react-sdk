@@ -134,11 +134,26 @@ class RoomTagUtil {
     });
   }
 
+
+  /**
+   * get tagDefaults - Get the default options for a tag.
+   * @return {object}  Tag defaults.
+   */
+  get tagDefaults() {
+    return {
+      protected: false,
+      order: "manual",
+      start_hidden: false,
+      show_header: false,
+      list_modifiable: true,
+      conflicts_with: [],
+    };
+  }
+
   /**
    * moveTag - Move a tags order (such as in the room list).
    * @param  {number} tagIndex  Index of the tag to move.
    * @param  {number} direction Direction to move the tag in. Negative for up and positive for down.
-   * @
    */
   moveTag(tagIndex, direction) {
     if (direction === 0 ||
