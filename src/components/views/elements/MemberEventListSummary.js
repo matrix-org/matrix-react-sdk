@@ -206,7 +206,7 @@ module.exports = React.createClass({
      * @param {number} repeats the number of times the transition was repeated in a row.
      * @returns {string} the written Human Readable equivalent of the transition.
      */
-    _getDescriptionForTransition(listName, t, plural, repeats) {
+    _getDescriptionForTransition(t, plural, repeats) {
         // The empty interpolations 'severalUsers' and 'oneUser'
         // are there only to show translators to non-English languages
         // that the verb is conjugated to plural or singular Subject.
