@@ -72,6 +72,7 @@ module.exports = React.createClass({
     const tag = RoomTagUtil.tags[this.state.selectedTag];
     Modal.createDialog(ModifyTagDialog, {
         tag,
+        index: this.state.selectedTag,
         onFinished: (modified, newTag) => {
             if (modified) {
               RoomTagUtil.modifyTag(this.state.selectedTag, newTag.name, newTag.order);

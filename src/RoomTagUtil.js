@@ -16,6 +16,21 @@ limitations under the License.
 const UserSettingsStore = require('./UserSettingsStore');
 
 const NAMESPACES = ["org.matrix", "im.vector", "m."];
+// Order is important here.
+/*
+* Tags are given in the format:
+* {
+*  alias: The tag itself (if left empty, assume name)
+*  name: The tag label to display.
+*  verb: Text to display when describing an action on the tag.
+         E.g. "Drag to ${verb} room."
+*  protected: false, Can this tag be deleted or modified.
+*  order: The ordering method to use. Can be 'manual' or 'recent'.
+*  start_hidden: Show the tag in the list if it has no rooms.
+*  list_modifiable: true Can rooms be added to the list. Used for fake tags.
+*  conflicts_with: Tag names/aliases that it conflicts with.
+* }
+*/
 const STATIC_TAGS = [
   {
      name: "Invites",
@@ -33,6 +48,7 @@ const STATIC_TAGS = [
      order: "manual",
      start_hidden: false,
      list_modifiable: true,
+     conflicts_with: ["m.lowpriority"],
   },
   {
      name: "Rooms",
@@ -68,6 +84,7 @@ const STATIC_TAGS = [
      protected: true,
      start_hidden: false,
      list_modifiable: true,
+     conflicts_with: ["m.favourite"],
   },
 ];
 const ROOM_ORDERING = ["recent", "manual"];
@@ -77,7 +94,6 @@ class RoomTagUtil {
 
   _loadTags() {
     const tags = UserSettingsStore.getCustomTags();
-    console.log("Loading...", tags);
     // Remove static tags.
     STATIC_TAGS.forEach( (staticTag) => {
       const index = tags.findIndex((tag) => {return tag.alias === staticTag.alias;});
@@ -91,16 +107,8 @@ class RoomTagUtil {
   }
 
   /**
-   * getRoomTags - Get the avaliable tags that the user has defined
-   *  or has been hardcoded.
-   * In the format:
-   * {
-   *  alias: "m.tagname",  The tag itself (if left empty, assume name)
-   *  name: "Tag Name", The tag label to display.
-   *  protected: false, Can this tag be deleted or modified.
-   *  show_unused: true, Show the tag in the list if unused.
-   *  list_modifiable: true Can rooms be added to the list. Used for fake tags.
-   * }
+   * tags - Get the avaliable tags that the user has defined
+   * or has been built into the SDK.
    * @return {object[]} A list of tags.
    */
   get tags() {
@@ -108,6 +116,15 @@ class RoomTagUtil {
       this._tags = this._loadTags();
     }
     return this._tags;
+  }
+
+  getTag(tagName) {
+    if(tagName === undefined) {
+      return undefined;
+    }
+    return this._tags.find((tag) => {
+      return tag.alias == tagName || tag.name == tagName;
+    });
   }
 
   /**
@@ -134,16 +151,20 @@ class RoomTagUtil {
    * A tag may be found invalid if it already exists, or clashes with a namespace.
    * The return object type is {valid: boolean, error: string}
    * @param  {string} text Tag text
+   * @param  {number} ignoreIndex index to ignore when checking for name clashes
    * @return {object} Object containing a valid flag, and an error message on invalid tags.
    */
-  isTagTextValid(text) {
+  isTagTextValid(text, ignoreIndex = -1) {
     text = text.toLowerCase();
     if (NAMESPACES.some((ns) => { return text.startsWith(ns); })) {
       return {valid: false, error: "This tag cannot clash with this namespace."};
     }
     if (
       this._tags.find(
-        (tag) => {
+        (tag, index) => {
+          if(ignoreIndex == index) {
+            return false;
+          }
           if (typeof tag.alias === "string") {
             if (tag.alias.toLowerCase() === text) {
               return true;
@@ -168,7 +189,7 @@ class RoomTagUtil {
   }
 
   modifyTag(index, name, order) {
-    const result = this.isTagTextValid(name);
+    const result = this.isTagTextValid(name, index);
     if (result.valid === false) {
       throw new Error(result.error);
     }
@@ -202,7 +223,6 @@ class RoomTagUtil {
   }
 
   saveTags() {
-    console.log("Saving...", this._tags);
     UserSettingsStore.setCustomTags(this._tags);
   }
 }

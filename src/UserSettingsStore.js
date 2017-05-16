@@ -134,7 +134,6 @@ module.exports = {
 
     getCustomTags: function() {
       const event = MatrixClientPeg.get().getAccountData("org.matrix.custom_tags");
-      console.log(event);
       return event ? event.getContent().tags : [];
     },
 

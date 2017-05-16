@@ -59,8 +59,9 @@ export default React.createClass({
     },
 
     onNameChange: function(event) {
-      const valid = RoomTagUtil.isTagTextValid(event.target.value)
-      if( valid.valid ) {
+      const valid = RoomTagUtil.isTagTextValid(event.target.value);
+      // Make sure we're not checking against itself.
+      if( valid.valid || (!this.state.new && name === this.getInitialState().tagName) ) {
         this.setState({tagName: event.target.value, tagError: ""});
       } else {
         this.setState({tagError: valid.error});
