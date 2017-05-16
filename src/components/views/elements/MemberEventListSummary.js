@@ -345,7 +345,7 @@ module.exports = React.createClass({
                 }
             break;
         }
-        
+
         return res;
     },
 
