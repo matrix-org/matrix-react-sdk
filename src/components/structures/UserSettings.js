@@ -197,7 +197,7 @@ module.exports = React.createClass({
 
         const syncedSettings = UserSettingsStore.getSyncedSettings();
         if (!syncedSettings.theme) {
-            syncedSettings.theme = 'cadcampo';
+            syncedSettings.theme = 'light';
         }
         this._syncedSettings = syncedSettings;
 
