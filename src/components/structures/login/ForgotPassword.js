@@ -93,7 +93,15 @@ module.exports = React.createClass({
                 title: _t('Warning'),
                 description:
                     <div>
-                        { _t('Resetting password will currently reset any end-to-end encryption keys on all devices, making encrypted chat history unreadable, unless you first export your room keys and re-import them afterwards. In future this <a href="https://github.com/vector-im/riot-web/issues/2671">will be improved</a>') }.
+                        { _t(
+                            'Resetting password will currently reset any ' +
+                            'end-to-end encryption keys on all devices, ' +
+                            'making encrypted chat history unreadable, ' + 
+                            'unless you first export your room keys and re-import ' +
+                            'them afterwards. In future this ' +
+                            '<a href="https://github.com/vector-im/riot-web/issues/2671">' +
+                            'will be improved</a>'
+                        ) }.
                     </div>,
                 button: _t('Continue'),
                 extraButtons: [
