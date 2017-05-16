@@ -698,5 +698,5 @@
     "%(severalUsers)s changed their avatar": "%(severalUsers)s änderten ihre Avatare",
     "%(oneUser)s changed his/her avatar": "%(severalUsers)s änderte seinen/ihren Avatar",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s %(time)s",
-    "%(oneUser)s left and rejoined": "%(oneUser)s ging und trat erneut beu"
+    "%(oneUser)s left and rejoined": "%(oneUser)s ging und trat erneut bei"
 }
