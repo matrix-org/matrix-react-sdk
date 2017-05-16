@@ -188,7 +188,7 @@ module.exports = React.createClass({
             joinBlock = (
                 <div>
                     <div className="mx_RoomPreviewBar_join_text">
-                        { _t('You are trying to access %(roomName)', {roomName: name}) }.<br/>
+                        { _t('You are trying to access %(roomName)s', {roomName: name}) }.<br/>
                         <a onClick={ this.props.onJoinClick }><b>{ _t('Click here') }</b></a> { _t('to join the discussion') }!
                     </div>
                 </div>
