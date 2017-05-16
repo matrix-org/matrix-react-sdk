@@ -16,22 +16,19 @@ limitations under the License.
 */
 
 'use strict';
-const React = require("react");
-const ReactDOM = require("react-dom");
-const GeminiScrollbar = require('react-gemini-scrollbar');
-const MatrixClientPeg = require("../../../MatrixClientPeg");
-const CallHandler = require('../../../CallHandler');
-const dis = require("../../../dispatcher");
-const sdk = require('../../../index');
-const rate_limited_func = require('../../../ratelimitedfunc');
-const Rooms = require('../../../Rooms');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import GeminiScrollbar from 'react-gemini-scrollbar';
+import MatrixClientPeg from '../../../MatrixClientPeg';
+import CallHandler from '../../../CallHandler';
+import dispatcher from '../../../dispatcher';
+import sdk from '../../../index';
+import RateLimitedFunc from '../../../ratelimitedfunc';
+import * as Rooms from '../../../Rooms';
 import DMRoomMap from '../../../utils/DMRoomMap';
-const Receipt = require('../../../utils/Receipt');
-const UserSettingsStore = require('../../../UserSettingsStore');
-const RoomTagUtil = require('../../../RoomTagUtil');
-const constantTimeDispatcher = require('../../../ConstantTimeDispatcher');
-import AccessibleButton from '../elements/AccessibleButton';
-const RoomListSorter = require("../../../RoomListSorter");
+import Receipt from '../../../utils/Receipt';
+import RoomTagUtil from '../../../RoomTagUtil';
+import constantTimeDispatcher from '../../../ConstantTimeDispatcher';
 
 const HIDE_CONFERENCE_CHANS = true;
 
@@ -64,7 +61,7 @@ module.exports = React.createClass({
     },
 
     componentWillMount: function() {
-        var cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.get();
         cli.on("Room", this.onRoom);
         cli.on("deleteRoom", this.onDeleteRoom);
         cli.on("Room.timeline", this.onRoomTimeline);
@@ -85,11 +82,11 @@ module.exports = React.createClass({
 
         // loop count to stop a stack overflow if the user keeps waggling the
         // mouse for >30s in a row, or if running under mocha
-        this._delayedRefreshRoomListLoopCount = 0
+        this._delayedRefreshRoomListLoopCount = 0;
     },
 
     componentDidMount: function() {
-        this.dispatcherRef = dis.register(this.onAction);
+        this.dispatcherRef = dispatcher.register(this.onAction);
         // Initialise the stickyHeaders when the component is created
         this._updateStickyHeaders(true);
     },
@@ -100,11 +97,11 @@ module.exports = React.createClass({
         if (nextProps.selectedRoom !== this.props.selectedRoom) {
             if (this.props.selectedRoom) {
                 constantTimeDispatcher.dispatch(
-                    "RoomTile.select", this.props.selectedRoom, {}
+                    "RoomTile.select", this.props.selectedRoom, {},
                 );
             }
             constantTimeDispatcher.dispatch(
-                "RoomTile.select", nextProps.selectedRoom, { selected: true }
+                "RoomTile.select", nextProps.selectedRoom, { selected: true },
             );
         }
     },
@@ -120,45 +117,45 @@ module.exports = React.createClass({
             case 'view_tooltip':
                 this.tooltip = payload.tooltip;
                 break;
-            case 'call_state':
-                var call = CallHandler.getCall(payload.room_id);
+            case 'call_state': {
+                const call = CallHandler.getCall(payload.room_id);
                 if (call && call.call_state === 'ringing') {
                     this.setState({
-                        incomingCall: call
+                        incomingCall: call,
                     });
                     this._repositionIncomingCallBox(undefined, true);
-                }
-                else {
+                } else {
                     this.setState({
-                        incomingCall: null
+                        incomingCall: null,
                     });
                 }
                 break;
-            case 'on_room_read':
+            }
+            case 'on_room_read': {
                 // poke the right RoomTile to refresh, using the constantTimeDispatcher
                 // to avoid each and every RoomTile registering to the 'on_room_read' event
                 // XXX: if we like the constantTimeDispatcher we might want to dispatch
                 // directly from TimelinePanel rather than needlessly bouncing via here.
                 constantTimeDispatcher.dispatch(
-                    "RoomTile.refresh", payload.room.roomId, {}
+                    "RoomTile.refresh", payload.room.roomId, {},
                 );
 
                 // also have to poke the right list(s)
-                var lists = this.listsForRoomId[payload.room.roomId];
+                const lists = this.listsForRoomId[payload.room.roomId];
                 if (lists) {
-                    lists.forEach(list=>{
+                    lists.forEach((list) => {
                         constantTimeDispatcher.dispatch(
-                            "RoomSubList.refreshHeader", list, { room: payload.room }
+                            "RoomSubList.refreshHeader", list, { room: payload.room },
                         );
                     });
                 }
-
                 break;
+              }
         }
     },
 
     componentWillUnmount: function() {
-        dis.unregister(this.dispatcherRef);
+        dispatcher.unregister(this.dispatcherRef);
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener("Room", this.onRoom);
             MatrixClientPeg.get().removeListener("deleteRoom", this.onDeleteRoom);
@@ -188,7 +185,6 @@ module.exports = React.createClass({
 
     onArchivedHeaderClick: function(isHidden, scrollToPosition) {
         if (!isHidden) {
-            var self = this;
             this.setState({ isLoadingLeftRooms: true });
 
             // Try scrolling to position
@@ -199,8 +195,8 @@ module.exports = React.createClass({
             MatrixClientPeg.get().syncLeftRooms().catch(function(err) {
                 console.error("Failed to sync left rooms: %s", err);
                 console.error(err);
-            }).finally(function() {
-                self.setState({ isLoadingLeftRooms: false });
+            }).finally(() => {
+                this.setState({ isLoadingLeftRooms: false });
             });
         }
     },
@@ -223,16 +219,16 @@ module.exports = React.createClass({
         // correct sublists to just re-sort themselves.  This isn't enormously reacty,
         // but is much faster than the default react reconciler, or having to do voodoo
         // with shouldComponentUpdate and a pleaseRefresh property or similar.
-        var lists = this.listsForRoomId[room.roomId];
+        const lists = this.listsForRoomId[room.roomId];
         if (lists) {
-            lists.forEach(list=>{
+            lists.forEach((list)=>{
                 constantTimeDispatcher.dispatch("RoomSubList.sort", list, { room: room });
             });
         }
 
         // we have to explicitly hit the roomtile which just changed
         constantTimeDispatcher.dispatch(
-            "RoomTile.refresh", room.roomId, {}
+            "RoomTile.refresh", room.roomId, {},
         );
     },
 
@@ -240,25 +236,25 @@ module.exports = React.createClass({
         // because if we read a notification, it will affect notification count
         // only bother updating if there's a receipt from us
         if (Receipt.findReadReceiptFromUserId(receiptEvent, MatrixClientPeg.get().credentials.userId)) {
-            var lists = this.listsForRoomId[room.roomId];
+            const lists = this.listsForRoomId[room.roomId];
             if (lists) {
-                lists.forEach(list=>{
+                lists.forEach((list) => {
                     constantTimeDispatcher.dispatch(
-                        "RoomSubList.refreshHeader", list, { room: room }
+                        "RoomSubList.refreshHeader", list, { room: room },
                     );
                 });
             }
 
             // we have to explicitly hit the roomtile which just changed
             constantTimeDispatcher.dispatch(
-                "RoomTile.refresh", room.roomId, {}
+                "RoomTile.refresh", room.roomId, {},
             );
         }
     },
 
     onRoomName: function(room) {
         constantTimeDispatcher.dispatch(
-            "RoomTile.refresh", room.roomId, {}
+            "RoomTile.refresh", room.roomId, {},
         );
     },
 
@@ -270,20 +266,18 @@ module.exports = React.createClass({
 
     onRoomStateMember: function(ev, state, member) {
         if (ev.getStateKey() === MatrixClientPeg.get().credentials.userId &&
-            ev.getPrevContent() && ev.getPrevContent().membership === "invite")
-        {
+            ev.getPrevContent() && ev.getPrevContent().membership === "invite") {
             this._delayedRefreshRoomList();
-        }
-        else {
+        } else {
             constantTimeDispatcher.dispatch(
-                "RoomTile.refresh", member.roomId, {}
+                "RoomTile.refresh", member.roomId, {},
             );
         }
     },
 
     onRoomMemberName: function(ev, member) {
         constantTimeDispatcher.dispatch(
-            "RoomTile.refresh", member.roomId, {}
+            "RoomTile.refresh", member.roomId, {},
         );
     },
 
@@ -292,21 +286,19 @@ module.exports = React.createClass({
             // XXX: this happens rarely; ideally we should only update the correct
             // sublists when it does (e.g. via a constantTimeDispatch to the right sublist)
             this._delayedRefreshRoomList();
-        }
-        else if (ev.getType() == 'm.push_rules') {
+        } else if (ev.getType() == 'm.push_rules') {
             this._delayedRefreshRoomList();
         }
     },
 
-    _delayedRefreshRoomList: new rate_limited_func(function() {
+    _delayedRefreshRoomList: new RateLimitedFunc(function() {
         // if the mouse has been moving over the RoomList in the last 500ms
         // then delay the refresh further to avoid bouncing around under the
         // cursor
         if (Date.now() - this._lastMouseOverTs > 500 || this._delayedRefreshRoomListLoopCount > 60) {
             this.refreshRoomList();
             this._delayedRefreshRoomListLoopCount = 0;
-        }
-        else {
+        } else {
             this._delayedRefreshRoomListLoopCount++;
             this._delayedRefreshRoomList();
         }
@@ -335,19 +327,17 @@ module.exports = React.createClass({
     },
 
     getRoomLists: function() {
-        const self = this;
+        const lists = {};
 
-        // Get the room tags the user has defined.
-        const tags = RoomTagUtil.tags;
-        const s = { lists: {}, tags };
-
-        tags.forEach((tag) => {
-          s.lists[tag.alias || tag.name] = [];
+        // Get all the tags defined by RoomTagUtil and create a Array of
+        // roomids. Some tags will always be present, see RoomTagUtil.js
+        RoomTagUtil.tags.forEach((tag) => {
+          lists[tag.alias || tag.name] = [];
         });
 
         const dmRoomMap = new DMRoomMap(MatrixClientPeg.get());
 
-        MatrixClientPeg.get().getRooms().forEach(function(room) {
+        MatrixClientPeg.get().getRooms().forEach((room) => {
             const me = room.getMember(MatrixClientPeg.get().credentials.userId);
             if (!me) return;
 
@@ -356,46 +346,38 @@ module.exports = React.createClass({
             //             ", target = " + me.events.member.getStateKey() +
             //             ", prevMembership = " + me.events.member.getPrevContent().membership);
 
-            if (!self.listsForRoomId[room.roomId]) {
-                self.listsForRoomId[room.roomId] = [];
+            if (!this.listsForRoomId[room.roomId]) {
+                this.listsForRoomId[room.roomId] = [];
             }
 
             if (me.membership == "invite") {
-                self.listsForRoomId[room.roomId].push("im.vector.fake.invite");
+                this.listsForRoomId[room.roomId].push("im.vector.fake.invite");
                 lists["im.vector.fake.invite"].push(room);
-            }
-            else if (HIDE_CONFERENCE_CHANS && Rooms.isConfCallRoom(room, me, self.props.ConferenceHandler)) {
+            } else if (HIDE_CONFERENCE_CHANS && Rooms.isConfCallRoom(room, me, this.props.ConferenceHandler)) {
                 // skip past this room & don't put it in any lists
-            }
-            else if (me.membership == "join" || me.membership === "ban" ||
-                     (me.membership === "leave" && me.events.member.getSender() !== me.events.member.getStateKey()))
-            {
+            } else if (me.membership == "join" || me.membership === "ban" ||
+                     (me.membership === "leave" && me.events.member.getSender() !== me.events.member.getStateKey())) {
                 // Used to split rooms via tags
-                var tagNames = Object.keys(room.tags);
+                const tagNames = Object.keys(room.tags);
                 if (tagNames.length) {
-                    for (var i = 0; i < tagNames.length; i++) {
-                        var tagName = tagNames[i];
+                    for (let i = 0; i < tagNames.length; i++) {
+                        const tagName = tagNames[i];
                         lists[tagName] = lists[tagName] || [];
                         lists[tagName].push(room);
-                        self.listsForRoomId[room.roomId].push(tagName);
-                        otherTagNames[tagName] = 1;
+                        this.listsForRoomId[room.roomId].push(tagName);
                     }
-                }
-                else if (dmRoomMap.getUserIdForRoomId(room.roomId)) {
+                } else if (dmRoomMap.getUserIdForRoomId(room.roomId)) {
                     // "Direct Message" rooms (that we're still in and that aren't otherwise tagged)
-                    self.listsForRoomId[room.roomId].push("im.vector.fake.direct");
+                    this.listsForRoomId[room.roomId].push("im.vector.fake.direct");
                     lists["im.vector.fake.direct"].push(room);
-                }
-                else {
-                    self.listsForRoomId[room.roomId].push("im.vector.fake.recent");
+                } else {
+                    this.listsForRoomId[room.roomId].push("im.vector.fake.recent");
                     lists["im.vector.fake.recent"].push(room);
                 }
-            }
-            else if (me.membership === "leave") {
-                self.listsForRoomId[room.roomId].push("im.vector.fake.archived");
+            } else if (me.membership === "leave") {
+                this.listsForRoomId[room.roomId].push("im.vector.fake.archived");
                 lists["im.vector.fake.archived"].push(room);
-            }
-            else {
+            } else {
                 console.error("unrecognised membership: " + me.membership + " - this should never happen");
             }
         });
@@ -421,7 +403,7 @@ module.exports = React.createClass({
     },
 
     _getScrollNode: function() {
-        var panel = ReactDOM.findDOMNode(this);
+        const panel = ReactDOM.findDOMNode(this);
         if (!panel) return null;
 
         // empirically, if we have gm-prevented for some reason, the scroll node
@@ -444,22 +426,22 @@ module.exports = React.createClass({
     },
 
     _repositionIncomingCallBox: function(e, firstTime) {
-        var incomingCallBox = document.getElementById("incomingCallBox");
+        const incomingCallBox = document.getElementById("incomingCallBox");
         if (incomingCallBox && incomingCallBox.parentElement) {
-            var scrollArea = this._getScrollNode();
+            const scrollArea = this._getScrollNode();
             if (!scrollArea) return;
             // Use the offset of the top of the scroll area from the window
             // as this is used to calculate the CSS fixed top position for the stickies
-            var scrollAreaOffset = scrollArea.getBoundingClientRect().top + window.pageYOffset;
+            const scrollAreaOffset = scrollArea.getBoundingClientRect().top + window.pageYOffset;
             // Use the offset of the top of the component from the window
             // as this is used to calculate the CSS fixed top position for the stickies
-            var scrollAreaHeight = ReactDOM.findDOMNode(this).getBoundingClientRect().height;
+            const scrollAreaHeight = ReactDOM.findDOMNode(this).getBoundingClientRect().height;
 
-            var top = (incomingCallBox.parentElement.getBoundingClientRect().top + window.pageYOffset);
+            let top = (incomingCallBox.parentElement.getBoundingClientRect().top + window.pageYOffset);
             // Make sure we don't go too far up, if the headers aren't sticky
             top = (top < scrollAreaOffset) ? scrollAreaOffset : top;
             // make sure we don't go too far down, if the headers aren't sticky
-            var bottomMargin = scrollAreaOffset + (scrollAreaHeight - 45);
+            const bottomMargin = scrollAreaOffset + (scrollAreaHeight - 45);
             top = (top > bottomMargin) ? bottomMargin : top;
 
             incomingCallBox.style.top = top + "px";
@@ -470,14 +452,14 @@ module.exports = React.createClass({
     // Doing the sticky headers as raw DOM, for speed, as it gets very stuttery if done
     // properly through React
     _initAndPositionStickyHeaders: function(initialise, scrollToPosition) {
-        var scrollArea = this._getScrollNode();
+        const scrollArea = this._getScrollNode();
         if (!scrollArea) return;
         // Use the offset of the top of the scroll area from the window
         // as this is used to calculate the CSS fixed top position for the stickies
-        var scrollAreaOffset = scrollArea.getBoundingClientRect().top + window.pageYOffset;
+        const scrollAreaOffset = scrollArea.getBoundingClientRect().top + window.pageYOffset;
         // Use the offset of the top of the component from the window
         // as this is used to calculate the CSS fixed top position for the stickies
-        var scrollAreaHeight = ReactDOM.findDOMNode(this).getBoundingClientRect().height;
+        const scrollAreaHeight = ReactDOM.findDOMNode(this).getBoundingClientRect().height;
 
         if (initialise) {
             // Get a collection of sticky header containers references
@@ -497,7 +479,7 @@ module.exports = React.createClass({
                     sticky.dataset.originalPosition = sticky.offsetTop - scrollArea.offsetTop;
 
                     // Save and set the sticky heights
-                    var originalHeight = sticky.getBoundingClientRect().height;
+                    const originalHeight = sticky.getBoundingClientRect().height;
                     sticky.dataset.originalHeight = originalHeight;
                     sticky.style.height = originalHeight;
 
@@ -506,20 +488,19 @@ module.exports = React.createClass({
             }
         }
 
-        var self = this;
-        var scrollStuckOffset = 0;
+        let scrollStuckOffset = 0;
         // Scroll to the passed in position, i.e. a header was clicked and in a scroll to state
         // rather than a collapsable one (see RoomSubList.isCollapsableOnClick method for details)
         if (scrollToPosition !== undefined) {
             scrollArea.scrollTop = scrollToPosition;
         }
         // Stick headers to top and bottom, or free them
-        Array.prototype.forEach.call(this.stickies, function(sticky, i, stickyWrappers) {
-            var stickyPosition = sticky.dataset.originalPosition;
-            var stickyHeight = sticky.dataset.originalHeight;
-            var stickyHeader = sticky.childNodes[0];
-            var topStuckHeight = stickyHeight * i;
-            var bottomStuckHeight = stickyHeight * (stickyWrappers.length - i);
+        Array.prototype.forEach.call(this.stickies, (sticky, i, stickyWrappers) => {
+            const stickyPosition = sticky.dataset.originalPosition;
+            const stickyHeight = sticky.dataset.originalHeight;
+            const stickyHeader = sticky.childNodes[0];
+            const topStuckHeight = stickyHeight * i;
+            const bottomStuckHeight = stickyHeight * (stickyWrappers.length - i);
 
             if (self.scrollAreaSufficient && stickyPosition < (scrollArea.scrollTop + topStuckHeight)) {
                 // Top stickies
@@ -530,7 +511,7 @@ module.exports = React.createClass({
                 if (scrollToPosition !== undefined && stickyPosition === scrollToPosition) {
                     scrollStuckOffset = topStuckHeight;
                 }
-            } else if (self.scrollAreaSufficient && stickyPosition > ((scrollArea.scrollTop + scrollAreaHeight) - bottomStuckHeight)) {
+            } else if (this.scrollAreaSufficient && stickyPosition > ((scrollArea.scrollTop + scrollAreaHeight) - bottomStuckHeight)) {
                 /// Bottom stickies
                 sticky.dataset.stuck = "bottom";
                 stickyHeader.classList.add("mx_RoomSubList_fixed");
@@ -549,14 +530,12 @@ module.exports = React.createClass({
     },
 
     _updateStickyHeaders: function(initialise, scrollToPosition) {
-        var self = this;
-
         if (initialise) {
             // Useing setTimeout to ensure that the code is run after the painting
             // of the newly rendered object as using requestAnimationFrame caused
             // artefacts to appear on screen briefly
-            window.setTimeout(function() {
-                self._initAndPositionStickyHeaders(initialise, scrollToPosition);
+            window.setTimeout(() => {
+                this._initAndPositionStickyHeaders(initialise, scrollToPosition);
             });
         } else {
             this._initAndPositionStickyHeaders(initialise, scrollToPosition);
@@ -580,7 +559,7 @@ module.exports = React.createClass({
         const RoomDirectoryButton = sdk.getComponent('elements.RoomDirectoryButton');
         const CreateRoomButton = sdk.getComponent('elements.CreateRoomButton');
         if (this.state.totalRoomCount === 0) {
-            const TintableSvg = sdk.getComponent('elements.TintableSvg');
+            // const TintableSvg = sdk.getComponent('elements.TintableSvg');
             switch (section) {
                 case 'im.vector.fake.direct':
                     return <div className="mx_RoomList_emptySubListTip">
@@ -598,8 +577,10 @@ module.exports = React.createClass({
                     </div>;
             }
         }
-
-        const labelText = 'Drop here to ' + (VERBS[section] || 'tag ' + section);
+        const tag = RoomTagUtil.tags.find((tag) => {
+          return (section == tag.alias) || (section == tag.name);
+        });
+        const labelText = 'Drop here to ' + ( (tag ? tag.verb : false) || 'tag ' + section);
 
         return <RoomDropTarget label={labelText} />;
     },
@@ -623,26 +604,25 @@ module.exports = React.createClass({
 
     render: function() {
         const RoomSubList = sdk.getComponent('structures.RoomSubList');
-        const self = this;
-        console.log(self.state.lists);
+        const tags = RoomTagUtil.tags;
         return (
             <GeminiScrollbar className="mx_RoomList_scrollbar"
-                 autoshow={true} onScroll={ self._whenScrolling } ref="gemscroll">
+                 autoshow={true} onScroll={ this._whenScrolling } ref="gemscroll">
               <div className="mx_RoomList">
-              { this.state.tags.map((tag) => {
-                  return ( <RoomSubList list={ self.state.lists[tag.alias||tag.name] }
+              { tags.map((tag) => {
+                  return ( <RoomSubList list={ this.state.lists[tag.alias||tag.name] }
                        key={tag.alias||tag.name}
                        label={ tag.name }
                        editable={ tag.list_modifiable }
                        order={ tag.order }
                        verb={ tag.verb }
                        startAsHidden= { tag.editable }
-                       selectedRoom={ self.props.selectedRoom }
-                       incomingCall={ self.state.incomingCall }
-                       collapsed={ self.props.collapsed }
-                       searchFilter={ self.props.searchFilter }
-                       onHeaderClick={ self.onSubListHeaderClick }
-                       onShowMoreRooms={ self.onShowMoreRooms } />);
+                       selectedRoom={ this.props.selectedRoom }
+                       incomingCall={ this.state.incomingCall }
+                       collapsed={ this.props.collapsed }
+                       searchFilter={ this.props.searchFilter }
+                       onHeaderClick={ this.onSubListHeaderClick }
+                       onShowMoreRooms={ this.onShowMoreRooms } />);
               })
             }
             </div>
