@@ -253,7 +253,7 @@ module.exports = React.createClass({
                 } else {
                     res = (plural)
                         ? _t("%(severalUsers)s left and rejoined", { severalUsers: "" })
-                        : _t("%(oneUser)s left left and rejoined", { oneUser: "" });
+                        : _t("%(oneUser)s left and rejoined", { oneUser: "" });
                 }            break;
             break;
             case "invite_reject":

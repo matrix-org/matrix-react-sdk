@@ -614,7 +614,7 @@
   "%(severalUsers)s left and rejoined %(repeats)s times": "%(severalUsers)s left and rejoined %(repeats)s times",
   "%(oneUser)s left and rejoined %(repeats)s times": "%(oneUser)s left and rejoined %(repeats)s times",
   "%(severalUsers)s left and rejoined": "%(severalUsers)s left and rejoined",
-  "%(oneUser)s left left and rejoined": "%(oneUser)s left left and rejoined",
+  "%(oneUser)s left and rejoined": "%(oneUser)s left and rejoined",
   "%(severalUsers)s rejected their invitations %(repeats)s times": "%(severalUsers)s rejected their invitations %(repeats)s times",
   "%(oneUser)s rejected his/her invitation %(repeats)s times": "%(oneUser)s rejected his/her invitation %(repeats)s times",
   "%(severalUsers)s rejected their invitations": "%(severalUsers)s rejected their invitations",
