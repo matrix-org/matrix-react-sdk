@@ -548,7 +548,7 @@ module.exports = React.createClass({
         this.refs.gemscroll.forceUpdate();
     },
 
-    _getEmptyContent: function(section) {
+    _getEmptyContent: function(tagName) {
         const RoomDropTarget = sdk.getComponent('rooms.RoomDropTarget');
 
         if (this.props.collapsed) {
@@ -560,7 +560,7 @@ module.exports = React.createClass({
         const CreateRoomButton = sdk.getComponent('elements.CreateRoomButton');
         if (this.state.totalRoomCount === 0) {
             // const TintableSvg = sdk.getComponent('elements.TintableSvg');
-            switch (section) {
+            switch (tagName) {
                 case 'im.vector.fake.direct':
                     return <div className="mx_RoomList_emptySubListTip">
                         Press
@@ -578,18 +578,18 @@ module.exports = React.createClass({
             }
         }
         const tag = RoomTagUtil.tags.find((tag) => {
-          return (section == tag.alias) || (section == tag.name);
+          return (tagName == tag.alias) || (tagName == tag.name);
         });
-        const labelText = 'Drop here to ' + ( (tag ? tag.verb : false) || 'tag ' + section);
+        const labelText = 'Drop here to ' + ( (tag ? tag.verb : false) || 'tag as ' + tag.name);
 
         return <RoomDropTarget label={labelText} />;
     },
 
-    _getHeaderItems: function(section) {
+    _getHeaderItems: function(tagName) {
         const StartChatButton = sdk.getComponent('elements.StartChatButton');
         const RoomDirectoryButton = sdk.getComponent('elements.RoomDirectoryButton');
         const CreateRoomButton = sdk.getComponent('elements.CreateRoomButton');
-        switch (section) {
+        switch (tagName) {
             case 'im.vector.fake.direct':
                 return <span className="mx_RoomList_headerButtons">
                     <StartChatButton size="16" />
@@ -599,6 +599,8 @@ module.exports = React.createClass({
                     <RoomDirectoryButton size="16" />
                     <CreateRoomButton size="16" />
                 </span>;
+            default:
+              return null;
         }
     },
 
@@ -608,21 +610,36 @@ module.exports = React.createClass({
         return (
             <GeminiScrollbar className="mx_RoomList_scrollbar"
                  autoshow={true} onScroll={ this._whenScrolling } ref="gemscroll">
-              <div className="mx_RoomList">
+              <div className="mx_RoomList" onMouseOver={ this._onMouseOver }>
               { tags.map((tag) => {
-                  return ( <RoomSubList list={ this.state.lists[tag.alias||tag.name] }
-                       key={tag.alias||tag.name}
+                  console.log();
+                  let onHeaderClick = this.onSubListHeaderClick;
+                  let showSpinner = false;
+                  if (tag.alias === "im.vector.fake.archived") {
+                    onHeaderClick = this.onArchivedHeaderClick;
+                    showSpinner = this.state.isLoadingLeftRooms;
+                  }
+                  const tagName = tag.alias||tag.name;
+                  if (tag.list_modifiable === undefined) {
+                    tag.list_modifiable = true;
+                  }
+                  return ( <RoomSubList list={ this.state.lists[tagName] }
+                       key={tagName}
                        label={ tag.name }
+                       tagName={ tagName }
                        editable={ tag.list_modifiable }
                        order={ tag.order }
-                       verb={ tag.verb }
-                       startAsHidden= { tag.editable }
+                       startAsHidden= { tag.start_hidden }
+                       alwaysShowHeader={ tag.show_header }
                        selectedRoom={ this.props.selectedRoom }
                        incomingCall={ this.state.incomingCall }
                        collapsed={ this.props.collapsed }
                        searchFilter={ this.props.searchFilter }
-                       onHeaderClick={ this.onSubListHeaderClick }
-                       onShowMoreRooms={ this.onShowMoreRooms } />);
+                       onHeaderClick={ onHeaderClick }
+                       onShowMoreRooms={ this.onShowMoreRooms }
+                       emptyContent={this._getEmptyContent(tagName)}
+                       headerItems={this._getHeaderItems(tagName)}
+                       showSpinner={ showSpinner }/>);
               })
             }
             </div>

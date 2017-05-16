@@ -26,7 +26,8 @@ const NAMESPACES = ["org.matrix", "im.vector", "m."];
          E.g. "Drag to ${verb} room."
 *  protected: false, Can this tag be deleted or modified.
 *  order: The ordering method to use. Can be 'manual' or 'recent'.
-*  start_hidden: Show the tag in the list if it has no rooms.
+*  start_hidden: Hide the contents by default.
+*  show_header: Show header, even if it does not have any rooms.
 *  list_modifiable: true Can rooms be added to the list. Used for fake tags.
 *  conflicts_with: Tag names/aliases that it conflicts with.
 * }
@@ -39,6 +40,7 @@ const STATIC_TAGS = [
      order: "manual",
      start_hidden: true,
      list_modifiable: false,
+     show_header: false,
   },
   {
      name: "Favourites",
@@ -47,6 +49,7 @@ const STATIC_TAGS = [
      protected: true,
      order: "manual",
      start_hidden: false,
+     show_header: true,
      list_modifiable: true,
      conflicts_with: ["m.lowpriority"],
   },
@@ -57,6 +60,7 @@ const STATIC_TAGS = [
      protected: true,
      order: "recent",
      start_hidden: false,
+     show_header: true,
      list_modifiable: false,
   },
   {
@@ -66,6 +70,7 @@ const STATIC_TAGS = [
      protected: true,
      order: "recent",
      start_hidden: true,
+     show_header: true,
      list_modifiable: false,
   },
   {
@@ -73,7 +78,8 @@ const STATIC_TAGS = [
      alias: "im.vector.fake.archived",
      protected: true,
      order: "recent",
-     start_hidden: false,
+     start_hidden: true,
+     show_header: true,
      list_modifiable: false,
   },
   {
@@ -82,7 +88,8 @@ const STATIC_TAGS = [
      verb: "demote",
      order: "recent",
      protected: true,
-     start_hidden: false,
+     start_hidden: true,
+     show_header: true,
      list_modifiable: true,
      conflicts_with: ["m.favourite"],
   },
