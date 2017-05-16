@@ -54,9 +54,6 @@ module.exports = {
     formatDate: function(date) {
         // date.toLocaleTimeString is completely system dependent.
         // just go 24h for now
-        function pad(n) {
-            return (n < 10 ? '0' : '') + n;
-        }
         const days = getDaysArray();
         const months = getMonthsArray();
 
