@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 'use strict';
-const q = require("q");
-const MatrixClientPeg = require("./MatrixClientPeg");
-const Notifier = require("./Notifier");
+import q from 'q';
+import MatrixClientPeg from './MatrixClientPeg';
+import Notifier from './Notifier';
 
 /*
  * TODO: Make things use this. This is all WIP - see UserSettings.js for usage.
@@ -73,19 +73,19 @@ module.exports = {
         Notifier.setAudioEnabled(enable);
     },
 
-    changePassword: function(old_password, new_password) {
+    changePassword: function(oldPassword, newPassword) {
         const cli = MatrixClientPeg.get();
 
         const authDict = {
             type: 'm.login.password',
             user: cli.credentials.userId,
-            password: old_password,
+            password: oldPassword,
         };
 
-        return cli.setPassword(authDict, new_password);
+        return cli.setPassword(authDict, newPassword);
     },
 
-    /**
+    /*
      * Returns the email pusher (pusher of type 'email') for a given
      * email address. Email pushers all have the same app ID, so since
      * pushers are unique over (app ID, pushkey), there will be at most
@@ -96,7 +96,7 @@ module.exports = {
             return undefined;
         }
         for (let i = 0; i < pushers.length; ++i) {
-            if (pushers[i].kind == 'email' && pushers[i].pushkey == address) {
+            if (pushers[i].kind === 'email' && pushers[i].pushkey === address) {
                 return pushers[i];
             }
         }
@@ -110,7 +110,7 @@ module.exports = {
     addEmailPusher: function(address, data) {
         return MatrixClientPeg.get().setPusher({
             kind: 'email',
-            app_id: "m.email",
+            app_id: 'm.email',
             pushkey: address,
             app_display_name: 'Email Notifications',
             device_display_name: address,
@@ -121,13 +121,13 @@ module.exports = {
     },
 
     getUrlPreviewsDisabled: function() {
-        const event = MatrixClientPeg.get().getAccountData("org.matrix.preview_urls");
+        const event = MatrixClientPeg.get().getAccountData('org.matrix.preview_urls');
         return (event && event.getContent().disable);
     },
 
     setUrlPreviewsDisabled: function(disabled) {
         // FIXME: handle errors
-        return MatrixClientPeg.get().setAccountData("org.matrix.preview_urls", {
+        return MatrixClientPeg.get().setAccountData('org.matrix.preview_urls', {
             disable: disabled,
         });
     },
@@ -143,7 +143,7 @@ module.exports = {
     },
 
     getSyncedSettings: function() {
-        const event = MatrixClientPeg.get().getAccountData("im.vector.web.settings");
+        const event = MatrixClientPeg.get().getAccountData('im.vector.web.settings');
         return event ? event.getContent() : {};
     },
 
@@ -156,7 +156,7 @@ module.exports = {
         const settings = this.getSyncedSettings();
         settings[type] = value;
         // FIXME: handle errors
-        return MatrixClientPeg.get().setAccountData("im.vector.web.settings", settings);
+        return MatrixClientPeg.get().setAccountData('im.vector.web.settings', settings);
     },
 
     getLocalSettings: function() {

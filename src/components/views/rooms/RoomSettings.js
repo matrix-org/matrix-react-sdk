@@ -54,9 +54,10 @@ const BannedUser = React.createClass({
                     this.props.member.roomId, this.props.member.userId,
                 ).catch((err) => {
                     const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+                    console.error("Failed to unban: " + err);
                     Modal.createDialog(ErrorDialog, {
-                        title: "Failed to unban",
-                        description: err.message,
+                        title: "Error",
+                        description: "Failed to unban",
                     });
                 }).done();
             },
@@ -124,14 +125,26 @@ module.exports = React.createClass({
             console.error("Failed to get room visibility: " + err);
         });
 
+<<<<<<< HEAD
         this.scalarClient = new ScalarAuthClient();
         this.scalarClient.connect().done(() => {
             this.forceUpdate();
         }, (err) => {
             this.setState({
                 scalar_error: err,
+=======
+        this.scalarClient = null;
+        if (SdkConfig.get().integrations_ui_url && SdkConfig.get().integrations_rest_url) {
+            this.scalarClient = new ScalarAuthClient();
+            this.scalarClient.connect().done(() => {
+                this.forceUpdate();
+            }, (err) => {
+                this.setState({
+                    scalar_error: err
+                });
+>>>>>>> upstream/develop
             });
-        });
+        }
 
         dis.dispatch({
             action: 'ui_opacity',
@@ -470,7 +483,7 @@ module.exports = React.createClass({
         ev.preventDefault();
         const IntegrationsManager = sdk.getComponent("views.settings.IntegrationsManager");
         Modal.createDialog(IntegrationsManager, {
-            src: this.scalarClient.hasCredentials() ?
+            src: (this.scalarClient !== null && this.scalarClient.hasCredentials()) ?
                     this.scalarClient.getScalarInterfaceUrlForRoom(this.props.room.roomId) :
                     null,
             onFinished: ()=>{
@@ -744,6 +757,7 @@ module.exports = React.createClass({
 
         let integrationsButton;
         let integrationsError;
+<<<<<<< HEAD
         if (this.state.showIntegrationsError && this.state.scalar_error) {
             console.error(this.state.scalar_error);
             integrationsError = (
@@ -752,26 +766,39 @@ module.exports = React.createClass({
                 </span>
             );
         }
+=======
 
-        if (this.scalarClient.hasCredentials()) {
-            integrationsButton = (
+        if (this.scalarClient !== null) {
+            if (this.state.showIntegrationsError && this.state.scalar_error) {
+                console.error(this.state.scalar_error);
+                integrationsError = (
+                    <span className="mx_RoomSettings_integrationsButton_errorPopup">
+                        Could not connect to the integration server
+                    </span>
+                );
+            }
+>>>>>>> upstream/develop
+
+            if (this.scalarClient.hasCredentials()) {
+                integrationsButton = (
                     <div className="mx_RoomSettings_integrationsButton" onClick={ this.onManageIntegrations }>
-                    Manage Integrations
-                </div>
-            );
-        } else if (this.state.scalar_error) {
-            integrationsButton = (
+                        Manage Integrations
+                    </div>
+                );
+            } else if (this.state.scalar_error) {
+                integrationsButton = (
                     <div className="mx_RoomSettings_integrationsButton_error" onClick={ this.onShowIntegrationsError }>
-                    Integrations Error <img src="img/warning.svg" width="17"/>
-                    { integrationsError }
-                </div>
-            );
-        } else {
-            integrationsButton = (
-                    <div className="mx_RoomSettings_integrationsButton" style={{ opacity: 0.5 }}>
-                    Manage Integrations
-                </div>
-            );
+                        Integrations Error <img src="img/warning.svg" width="17"/>
+                        { integrationsError }
+                    </div>
+                );
+            } else {
+                integrationsButton = (
+                    <div className="mx_RoomSettings_integrationsButton" style={{opacity: 0.5}}>
+                        Manage Integrations
+                    </div>
+                );
+            }
         }
 
         return (
@@ -897,7 +924,7 @@ module.exports = React.createClass({
                         <PowerSelector ref="ban" value={ban_level} controlled={false} disabled={!can_change_levels || current_user_level < ban_level} onChange={this.onPowerLevelsChanged}/>
                     </div>
                     <div className="mx_RoomSettings_powerLevel">
-                        <span className="mx_RoomSettings_powerLevelKey">To redact messages, you must be a </span>
+                        <span className="mx_RoomSettings_powerLevelKey">To redact other users' messages, you must be a </span>
                         <PowerSelector ref="redact" value={redact_level} controlled={false} disabled={!can_change_levels || current_user_level < redact_level} onChange={this.onPowerLevelsChanged}/>
                     </div>
 
