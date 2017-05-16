@@ -490,5 +490,14 @@
     "ve": "venda",
     "vi": "Vietnamita",
     "xh": "xosa",
-    "zu": "zulu"
+    "zu": "zulu",
+    "Failed to forget room %(errCode)s": "Falha ao esquecer a sala %(errCode)s",
+    "Failed to join the room": "Falha ao entrar na sala",
+    "Sunday": "Domingo",
+    "Monday": "Segunda",
+    "Tuesday": "Terça",
+    "Wednesday": "Quarta",
+    "Thursday": "Quinta",
+    "Friday": "Sexta",
+    "Saturday": "Sábado"
 }
