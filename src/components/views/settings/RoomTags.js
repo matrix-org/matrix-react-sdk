@@ -19,18 +19,13 @@ import * as React from 'react';
 import * as sdk from '../../../index';
 const MatrixClientPeg = require('../../../MatrixClientPeg');
 const Modal = require('../../../Modal');
-const RoomTagUtil = require('../../../RoomTagUtil');
+import RoomTagUtil from '../../../RoomTagUtil';
 
 module.exports = React.createClass({
-  getDefaultProps: function() {
-    return {
-    };
-  },
 
   getInitialState: function() {
     return {
       selectedTag: null,
-      tags: RoomTagUtil.getTags(),
     };
   },
 
@@ -45,18 +40,18 @@ module.exports = React.createClass({
       ) {
       return;
     }
-    const tags = RoomTagUtil.moveTag(this.state.selectedTag, -1);
-    this.setState({tags, selectedTag: this.state.selectedTag - 1});
+    RoomTagUtil.moveTag(this.state.selectedTag, -1);
+    this.setState({selectedTag: this.state.selectedTag - 1});
   },
 
   moveTagDown: function() {
     if (this.state.selectedTag === null ||
-       this.state.selectedTag === this.state.tags.length-1
+       this.state.selectedTag === RoomTagUtil.tags.length-1
       ) {
       return;
     }
-    const tags = RoomTagUtil.moveTag(this.state.selectedTag, 1);
-    this.setState({tags, selectedTag: this.state.selectedTag+1});
+    RoomTagUtil.moveTag(this.state.selectedTag, 1);
+    this.setState({selectedTag: this.state.selectedTag+1});
   },
 
   addTag: function() {
@@ -64,8 +59,23 @@ module.exports = React.createClass({
     Modal.createDialog(ModifyTagDialog, {
         onFinished: (modified, newTag) => {
             if (modified) {
-              const tags = RoomTagUtil.addTag(newTag.name, newTag.order);
-              this.setState({tags, selectedTag: tags.length - 1});
+              const position = this.state.selectedTag || 0;
+              RoomTagUtil.addTag(position, newTag.name, newTag.order);
+              this.forceUpdate();
+            }
+        },
+    });
+  },
+
+  modifyTag: function() {
+    const ModifyTagDialog = sdk.getComponent("dialogs.ModifyTagDialog");
+    const tag = RoomTagUtil.tags[this.state.selectedTag];
+    Modal.createDialog(ModifyTagDialog, {
+        tag,
+        onFinished: (modified, newTag) => {
+            if (modified) {
+              RoomTagUtil.modifyTag(this.state.selectedTag, newTag.name, newTag.order);
+              this.forceUpdate();
             }
         },
     });
@@ -75,9 +85,10 @@ module.exports = React.createClass({
     if (this.state.selectedTag === null) {
       return;
     }
-    const tag = this.state.tags[this.state.selectedTag];
+    const tag = RoomTagUtil.tags[this.state.selectedTag];
     const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
     const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+
     Modal.createDialog(QuestionDialog, {
         title: "Warning",
         description:
@@ -87,58 +98,37 @@ module.exports = React.createClass({
         button: "Continue",
         onFinished: (confirmed) => {
             if (confirmed) {
-              let tags;
               try {
-                tags = RoomTagUtil.deleteTag(this.state.selectedTag);
+                RoomTagUtil.deleteTag(this.state.selectedTag);
                 this.state.selectedTag -= 1;
-              }
-              catch (ex) {
+              } catch (ex) {
                 Modal.createDialog(ErrorDialog, {
                     description: "Cannot delete tag: " + ex.message,
                 });
                 return;
               }
+              // Remove the tag from each room.
               const client = MatrixClientPeg.get();
               client.getRooms().filter((room) => {
                 return Object.keys(room.tags).includes(tag.alias || tag.name);
               }).forEach((room) => {
                 client.deleteRoomTag(room.roomId, tag.alias || tag.name);
               });
-              this.setState({tags, selectedTag: this.state.selectedTag});
+              this.setState({selectedTag: this.state.selectedTag});
             }
         },
     });
   },
 
-  changeTagRoomOrder: function() {
-    if (this.state.selectedTag === null) {
-      this.setState({currentOrder: "recent"});
-      return;
-    }
-  },
-
   render: function() {
-    let tagProtected = false;
+    let tagProtected = true;
     if (this.state.selectedTag !== null) {
-      tagProtected = this.state.tags[this.state.selectedTag].protected;
+      tagProtected = RoomTagUtil.tags[this.state.selectedTag].protected;
     }
     return (<div className="mx_UserSettings_section">
-      <div className="mx_UserSettings_RoomTags_Buttons">
-        <div onClick={this.addTag} className="mx_textButton">Add</div>
-        {
-          !tagProtected ? (
-            <span>
-              <div onClick={this.modifyTag} className="mx_textButton">Modify</div>
-              <div onClick={this.deleteTag} className="mx_textButton">Delete</div>
-            </span>
-        ): null
-        }
-        <div onClick={this.moveTagUp} className="mx_textButton">Move Up</div>
-        <div onClick={this.moveTagDown} className="mx_textButton">Move Down</div>
-      </div>
       <div className="mx_UserSettings_RoomTags_List">
         {
-          this.state.tags.map((tag, i) => {
+          RoomTagUtil.tags.map((tag, i) => {
             let className = "mx_UserSettings_RoomTags_ListTag";
             if (this.state.selectedTag === i) {
               className += " selected";
@@ -149,6 +139,25 @@ module.exports = React.createClass({
               </span>
             );
           })
+        }
+      </div>
+      <div className="mx_UserSettings_RoomTags_Buttons">
+        <div onClick={this.addTag} className="mx_textButton">Add</div>
+        {
+          !tagProtected ? (
+            <span>
+              <div onClick={this.modifyTag} className="mx_textButton">Modify</div>
+              <div onClick={this.deleteTag} className="mx_textButton">Delete</div>
+            </span>
+        ): null
+        }
+        {
+          this.state.selectedTag !== null ? (
+            <span>
+              <div onClick={this.moveTagUp} className="mx_textButton">Move Up</div>
+              <div onClick={this.moveTagDown} className="mx_textButton">Move Down</div>
+            </span>
+          ): null
         }
       </div>
     </div>);

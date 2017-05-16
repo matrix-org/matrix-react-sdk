@@ -26,6 +26,7 @@ import ScalarAuthClient from '../../../ScalarAuthClient';
 import ScalarMessaging from '../../../ScalarMessaging';
 import RoomTagUtil from '../../../RoomTagUtil';
 import AccessibleButton from '../elements/AccessibleButton';
+import UserSettingsStore from '../../../UserSettingsStore';
 
 
 // parse a string as an integer; if the input is undefined, or cannot be parsed
@@ -86,11 +87,7 @@ module.exports = React.createClass({
     },
 
     getInitialState: function() {
-        const tags = {};
-        Object.keys(this.props.room.tags).forEach(function(tagName) {
-            tags[tagName] = ['yep'];
-        });
-
+        console.log(this.props.room.tags);
         return {
             name: this._yankValueFromEvent("m.room.name", "name"),
             topic: this._yankValueFromEvent("m.room.topic", "topic"),
@@ -99,7 +96,7 @@ module.exports = React.createClass({
             guest_access: this._yankValueFromEvent("m.room.guest_access", "guest_access"),
             power_levels_changed: false,
             tags_changed: false,
-            tags: tags,
+            tags: new Set(this.props.room.tags),
             // isRoomPublished is loaded async in componentWillMount so when the component
             // inits, the saved value will always be undefined, however getInitialState()
             // is also called from the saving code so we must return the correct value here
@@ -245,25 +242,19 @@ module.exports = React.createClass({
 
         // tags
         if (this.state.tags_changed) {
-            const tagDiffs = ObjectUtils.getKeyValueArrayDiffs(originalState.tags, this.state.tags);
-            // [ {place: add, key: "m.favourite", val: ["yep"]} ]
-            tagDiffs.forEach(function(diff) {
-                switch (diff.place) {
-                    case "add":
-                        promises.push(
-                            MatrixClientPeg.get().setRoomTag(roomId, diff.key, {}),
-                        );
-                        break;
-                    case "del":
-                        promises.push(
-                            MatrixClientPeg.get().deleteRoomTag(roomId, diff.key),
-                        );
-                        break;
-                    default:
-                        console.error("Unknown tag operation: %s", diff.place);
-                        break;
-                }
-            });
+            const oldTags = new Set(originalState.tags);
+            const newTags = new Set([...this.state.tags].filter((tag) => !oldTags.has(tag)));
+            const removedTags = new Set(originalState.tags.filter((tag) => !this.state.tags.has(tag)));
+            for (const tag of newTags) {
+              promises.push(
+                  MatrixClientPeg.get().setRoomTag(roomId, tag, {}),
+              );
+            }
+            for (const tag of removedTags) {
+              promises.push(
+                  MatrixClientPeg.get().deleteRoomTag(roomId, tag),
+              );
+            }
         }
 
         // color scheme
@@ -456,12 +447,10 @@ module.exports = React.createClass({
     },
 
     _onTagChange: function(tagName, event) {
-        // Only allow one tag for the time being.
         if (event.target.checked) {
-          this.state.tags = { };
-          this.state.tags[tagName] = ["yep"];
+          this.state.tags.add(tagName);
         } else {
-            this.state.tags = [];
+          this.state.tags.delete(tagName);
         }
 
         this.setState({
@@ -594,6 +583,7 @@ module.exports = React.createClass({
     render: function() {
         // TODO: go through greying out things you don't have permission to change
         // (or turning them into informative stuff)
+        console.log("Render 1");
 
         const AliasSettings = sdk.getComponent("room_settings.AliasSettings");
         const ColorSettings = sdk.getComponent("room_settings.ColorSettings");
@@ -603,9 +593,7 @@ module.exports = React.createClass({
         const cli = MatrixClientPeg.get();
         const roomState = this.props.room.currentState;
         const userId = cli.credentials.userId;
-
-        const avaliableTags = RoomTagUtil.getTags();
-
+        console.log("Render 1");
         const powerLevelEvent = roomState.getStateEvents('m.room.power_levels', '');
         const powerLevels = powerLevelEvent ? powerLevelEvent.getContent() : {};
         const eventsLevels = powerLevels.events || {};
@@ -618,6 +606,7 @@ module.exports = React.createClass({
         const send_level = parseIntWithDefault(powerLevels.events_default, 0);
         const state_level = powerLevelEvent ? parseIntWithDefault(powerLevels.state_default, 50) : 0;
         const default_user_level = parseIntWithDefault(powerLevels.users_default, 0);
+        console.log("Render 2");
 
         let current_user_level = eventsLevels[userId];
         if (current_user_level === undefined) {
@@ -648,6 +637,7 @@ module.exports = React.createClass({
         } else {
             userLevelsSection = <div>No users have specific privileges in this room.</div>;
         }
+        console.log("Render 3");
 
         const banned = this.props.room.getMembersWithMembership("ban");
         let bannedUsersSection;
@@ -665,6 +655,7 @@ module.exports = React.createClass({
                 </div>;
         }
 
+        console.log("Render 4");
         let unfederatableSection;
         if (this._yankValueFromEvent("m.room.create", "m.federate") === false) {
              unfederatableSection = (
@@ -674,6 +665,7 @@ module.exports = React.createClass({
             );
         }
 
+        console.log("Render 5");
         let leaveButton = null;
         const myMember = this.props.room.getMember(userId);
         if (myMember) {
@@ -691,14 +683,17 @@ module.exports = React.createClass({
                 );
             }
         }
+        console.log("Render 6");
 
-        // TODO: support editing custom events_levels
-        // TODO: support editing custom user_levels
-
-        Object.keys(avaliableTags).sort().forEach(function(tag) {
-            tags.push({ name: tag.tag, label: tag.label || tag.tag, ref: "tag_" + tag.tag });
+        const tags = [...RoomTagUtil.tags].sort().map(function(tag) {
+              return {
+                name: tag.tag,
+                label: tag.label || tag.tag,
+                ref: "tag_" + tag.tag,
+              };
         });
 
+        console.log("Render 7");
         let tagsSection = null;
         if (canSetTag || self.state.tags) {
             tagsSection =
@@ -708,7 +703,7 @@ module.exports = React.createClass({
                             return (<label key={ i }>
                                         <input type="checkbox"
                                                ref={ tag.ref }
-                                               checked={ tag.tag in self.state.tags }
+                                               checked={ self.state.tags.has(tag.tag) }
                                                onChange={ self._onTagChange.bind(self, tag.tag) }/>
                                         { tag.label }
                                     </label>);
@@ -716,6 +711,7 @@ module.exports = React.createClass({
                     }
                 </div>;
         }
+        console.log("Render 8");
 
         // If there is no history_visibility, it is assumed to be 'shared'.
         // http://matrix.org/docs/spec/r0.0.0/client_server.html#id31

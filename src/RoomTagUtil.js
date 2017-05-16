@@ -15,8 +15,7 @@ limitations under the License.
 */
 const UserSettingsStore = require('./UserSettingsStore');
 
-const SETTING_NAME = "org.matrix.room_tags";
-const NAMESPACES = ["org.matrix", "im.vector", "m"];
+const NAMESPACES = ["org.matrix", "im.vector", "m."];
 const STATIC_TAGS = [
   {
      name: "Invites",
@@ -24,7 +23,7 @@ const STATIC_TAGS = [
      protected: true,
      order: "manual",
      start_hidden: true,
-     list_modifiable: true,
+     list_modifiable: false,
   },
   {
      name: "Favourites",
@@ -47,6 +46,7 @@ const STATIC_TAGS = [
   {
      name: "People",
      alias: "im.vector.fake.direct",
+     verb: "tag direct chat",
      protected: true,
      order: "recent",
      start_hidden: true,
@@ -67,11 +67,29 @@ const STATIC_TAGS = [
      order: "recent",
      protected: true,
      start_hidden: false,
+     list_modifiable: true,
   },
 ];
 const ROOM_ORDERING = ["recent", "manual"];
 
 class RoomTagUtil {
+  _tags = null;
+
+  _loadTags() {
+    const tags = UserSettingsStore.getCustomTags();
+    console.log("Loading...", tags);
+    // Remove static tags.
+    STATIC_TAGS.forEach( (staticTag) => {
+      const index = tags.findIndex((tag) => {return tag.alias === staticTag.alias;});
+      if (index === -1) {
+        tags.push(staticTag);
+      } else {
+        tags.splice(index, 1, staticTag);
+      }
+    });
+    return tags;
+  }
+
   /**
    * getRoomTags - Get the avaliable tags that the user has defined
    *  or has been hardcoded.
@@ -85,57 +103,46 @@ class RoomTagUtil {
    * }
    * @return {object[]} A list of tags.
    */
-  getTags() {
-    const tags = UserSettingsStore.getSyncedSetting(SETTING_NAME, []);
-    // Remove static tags.
-    STATIC_TAGS.forEach( (staticTag) => {
-      const index = tags.findIndex((tag) => {return tag.alias === staticTag.alias;});
-      if (index !== -1) {
-        tags.splice(index, 1, staticTag);
-        console.warn(
-          `Replacing tag '${staticTag.alias}' because it clashes with an internal static tag.`,
-        );
-      }
-    });
-
-    return STATIC_TAGS.concat(tags);
+  get tags() {
+    if(this._tags === null) {
+      this._tags = this._loadTags();
+    }
+    return this._tags;
   }
 
   /**
    * moveTag - Move a tags order (such as in the room list).
    * @param  {number} tagIndex  Index of the tag to move.
    * @param  {number} direction Direction to move the tag in. Negative for up and positive for down.
+   * @
    */
   moveTag(tagIndex, direction) {
-    const tags = this.getTags();
     if (direction === 0 ||
-      tagIndex+direction >= tags.length ||
+      tagIndex+direction >= this._tags.length ||
       tagIndex+direction < 0
       ) {
-      throw new Error("Cannot move tag this far.");
+      throw new Error("Cannot move tag.");
     }
-    const otherTag = tags[tagIndex+direction];
-    tags[tagIndex+direction] = tags[tagIndex];
-    tags[tagIndex] = otherTag;
-    UserSettingsStore.setSyncedSetting(SETTING_NAME, tags);
-    return tags;
+    const otherTag = this._tags[tagIndex+direction];
+    this._tags[tagIndex+direction] = this._tags[tagIndex];
+    this._tags[tagIndex] = otherTag;
+    this.saveTags();
   }
 
   /**
-   * isTagValid - Check to see if a tag text is valid.
+   * isTagTextValid - Check to see if a tag text is valid.
    * A tag may be found invalid if it already exists, or clashes with a namespace.
    * The return object type is {valid: boolean, error: string}
    * @param  {string} text Tag text
    * @return {object} Object containing a valid flag, and an error message on invalid tags.
    */
-  isTagValid(text) {
-    const tags = this.getTags();
+  isTagTextValid(text) {
     text = text.toLowerCase();
     if (NAMESPACES.some((ns) => { return text.startsWith(ns); })) {
       return {valid: false, error: "This tag cannot clash with this namespace."};
     }
     if (
-      tags.find(
+      this._tags.find(
         (tag) => {
           if (typeof tag.alias === "string") {
             if (tag.alias.toLowerCase() === text) {
@@ -151,43 +158,52 @@ class RoomTagUtil {
     }
   }
 
-  addTag(text, order = "recent") {
-    const result = this.isTagValid(text);
+  addTag(index, name, order = "recent") {
+    const result = this.isTagTextValid(name);
     if (result.valid === false) {
       throw new Error(result.error);
     }
-    const tags = this.getTags();
-    tags.push({name: text, order});
-    UserSettingsStore.setSyncedSetting(SETTING_NAME, tags);
-    return tags;
+    this._tags.splice(index, 0, {name, order});
+    this.saveTags();
+  }
+
+  modifyTag(index, name, order) {
+    const result = this.isTagTextValid(name);
+    if (result.valid === false) {
+      throw new Error(result.error);
+    }
+    this._tags[index] = {name, order};
+    this.saveTags();
   }
 
   modifyTagRoomOrder(tagIndex, order) {
     if (!ROOM_ORDERING.has(order)) {
       throw new Error("Invalid room ordering type.");
     }
-    const tags = this.getTags();
-    if (tagIndex < 0 || tagIndex >= tags.length) {
+    if (tagIndex < 0 || tagIndex >= this._tags.length) {
       throw new Error("Tag index out of range.");
     }
-    if (tags[tagIndex].protected) {
+    if (this._tags[tagIndex].protected) {
       throw new Error("Can't modify protected tags.");
     }
-    tags[tagIndex].order = order;
-    UserSettingsStore.setSyncedSetting(SETTING_NAME, tags);
+    this._tags[tagIndex].order = order;
+    this.saveTags();
   }
 
   deleteTag(tagIndex) {
-    const tags = this.getTags();
-    if (tagIndex < 0 || tagIndex >= tags.length) {
+    if (tagIndex < 0 || tagIndex >= this._tags.length) {
       throw new Error("Tag index out of range.");
     }
-    if (tags[tagIndex].protected) {
+    if (this._tags[tagIndex].protected) {
       throw new Error("Can't delete protected tags.");
     }
-    tags.splice(tagIndex, 1);
-    UserSettingsStore.setSyncedSetting(SETTING_NAME, tags);
-    return tags;
+    this._tags.splice(tagIndex, 1);
+    this.saveTags();
+  }
+
+  saveTags() {
+    console.log("Saving...", this._tags);
+    UserSettingsStore.setCustomTags(this._tags);
   }
 }
 

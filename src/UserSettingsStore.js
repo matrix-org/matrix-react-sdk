@@ -132,6 +132,16 @@ module.exports = {
         });
     },
 
+    getCustomTags: function() {
+      const event = MatrixClientPeg.get().getAccountData("org.matrix.custom_tags");
+      console.log(event);
+      return event ? event.getContent().tags : [];
+    },
+
+    setCustomTags: function(tags) {
+      return MatrixClientPeg.get().setAccountData("org.matrix.custom_tags", {tags});
+    },
+
     getSyncedSettings: function() {
         const event = MatrixClientPeg.get().getAccountData("im.vector.web.settings");
         return event ? event.getContent() : {};

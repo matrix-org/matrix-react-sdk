@@ -210,7 +210,7 @@ module.exports = React.createClass({
         const self = this;
 
         // Get the room tags the user has defined.
-        const tags = RoomTagUtil.getTags();
+        const tags = RoomTagUtil.tags;
         const s = { lists: {}, tags };
 
         tags.forEach((tag) => {
@@ -456,21 +456,19 @@ module.exports = React.createClass({
     render: function() {
         const RoomSubList = sdk.getComponent('structures.RoomSubList');
         const self = this;
-
+        console.log(self.state.lists);
         return (
             <GeminiScrollbar className="mx_RoomList_scrollbar"
                  autoshow={true} onScroll={ self._whenScrolling } ref="gemscroll">
               <div className="mx_RoomList">
               { this.state.tags.map((tag) => {
-                console.log(tag);
-                  return (
-                    <RoomSubList list={ self.state.lists[tag.alias||tag.name] }
+                  return ( <RoomSubList list={ self.state.lists[tag.alias||tag.name] }
                        key={tag.alias||tag.name}
                        label={ tag.name }
                        editable={ tag.list_modifiable }
                        order={ tag.order }
                        verb={ tag.verb }
-                       startAsHidden= { tag.start_hidden }
+                       startAsHidden= { tag.editable }
                        selectedRoom={ self.props.selectedRoom }
                        incomingCall={ self.state.incomingCall }
                        collapsed={ self.props.collapsed }

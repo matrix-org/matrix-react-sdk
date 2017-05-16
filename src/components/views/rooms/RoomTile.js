@@ -137,7 +137,7 @@ module.exports = React.createClass({
                 this.setState({ hover: false });
             }
 
-            var NotificationStateMenu = sdk.getComponent('context_menus.NotificationStateContextMenu');
+            var NotificationStateMenu = sdk.getComponent('context_menus.RoomTileContextMenu');
             var elementRect = e.target.getBoundingClientRect();
             // The window X and Y offsets are to adjust position when zoomed in to page
             var x = elementRect.right + window.pageXOffset + 3;

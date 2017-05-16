@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import sdk from '../../../index';
+import RoomTagUtil from '../../../RoomTagUtil';
 
 const ROOM_ORDERS = ["recent", "manual"];
 export default React.createClass({
@@ -27,18 +28,29 @@ export default React.createClass({
     },
 
     onOK: function() {
-        // Validate
-        this.props.onFinished(true, this.state.tag);
+      const hasError = this.state.tagError === "";
+      this.props.onFinished(hasError, {
+        name: this.state.tagName,
+        order: this.state.tagOrder,
+      });
     },
 
     getInitialState: function() {
+      // Are we modifying or creating a new tag.
       if (this.props.tag) {
-        return {tag: this.props.tag, new: false};
+        return {
+          tagName: this.props.tag.name,
+          tagOrder: this.props.tag.order,
+          new: false,
+          tagError: "",
+        };
       } else {
-        return {tag: {
+        return {
           name: "New Tag",
           order: "recent",
-        }, new: true };
+          new: true,
+          tagError: "",
+        };
       }
     },
 
@@ -46,19 +58,32 @@ export default React.createClass({
         this.props.onFinished(false);
     },
 
+    onNameChange: function(event) {
+      const valid = RoomTagUtil.isTagTextValid(event.target.value)
+      if( valid.valid ) {
+        this.setState({tagName: event.target.value, tagError: ""});
+      } else {
+        this.setState({tagError: valid.error});
+      }
+    },
+
+    onOrderChange: function(event) {
+      this.setState({tagOrder: event.target.value});
+    },
+
     render: function() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         let title;
         let description;
         let button;
-        if (!this.state.new) {
-          title = `Modifying '${this.state.tag.name}'.`;
-          description = "";
-          button = "Modify tag";
-        } else {
+        if (this.state.new) {
           title = "Add a new tag.";
           description = "Create a new tag for ordering rooms.";
           button = "Add tag";
+        } else {
+          title = `Modifying '${this.props.tag.name}'.`;
+          description = "Modify an existing tag for ordering rooms.";
+          button = "Modify tag";
         }
         return (
             <BaseDialog className="mx_ModifyTagDialog" onFinished={this.props.onFinished}
@@ -68,12 +93,13 @@ export default React.createClass({
               <form onSubmit={this.onSubmit}>
                   <div className="mx_Dialog_content">
                       <p>{description}</p>
-                      <label for="tag_name">Tag Name</label>
-                      <input type="text" name="tag_name" ref="tag_name" value={this.state.tag.name}
-                          autoFocus={true} onChange={this.onValueChange} size="30"
+                      <p className="mx_TextInputDialog_validateMsg">{this.state.tagError}</p>
+                      <label htmlFor="tag_name">Tag Name</label>
+                      <input type="text" name="tag_name" ref="tag_name" defaultValue={this.state.tagName}
+                          autoFocus={true} onChange={this.onNameChange} size="30"
                       />
-                      <label for="tag_order">Room Ordering</label>
-                      <select name="tag_order" ref="tag_order" value={this.state.tag.order} disabled={this.state.tag.protected === true}>
+                      <label htmlFor="tag_order">Room Ordering</label>
+                      <select onChange={this.onOrderChange} name="tag_order" ref="tag_order" defaultValue={this.state.tagOrder}>
                       {
                         ROOM_ORDERS.map((order) => {
                           return (
