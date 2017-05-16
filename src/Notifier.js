@@ -21,7 +21,7 @@ import TextForEvent from './TextForEvent';
 import Avatar from './Avatar';
 import dis from './dispatcher';
 import sdk from './index';
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 import Modal from './Modal';
 
 /*

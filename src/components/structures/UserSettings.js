@@ -29,7 +29,7 @@ const Email = require('../../email');
 const AddThreepid = require('../../AddThreepid');
 const SdkConfig = require('../../SdkConfig');
 import AccessibleButton from '../views/elements/AccessibleButton';
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 const languageHandler = require('../../languageHandler');
 
 

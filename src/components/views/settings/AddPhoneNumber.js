@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 
 import sdk from '../../../index';
 import AddThreepid from '../../../AddThreepid';

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 var MatrixClientPeg = require("./MatrixClientPeg");
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 
 module.exports = {
     usersTypingApartFromMe: function(room) {

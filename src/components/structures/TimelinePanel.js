@@ -23,7 +23,7 @@ var Matrix = require("matrix-js-sdk");
 var EventTimeline = Matrix.EventTimeline;
 
 var sdk = require('../../index');
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 var MatrixClientPeg = require("../../MatrixClientPeg");
 var dis = require("../../dispatcher");
 var ObjectUtils = require('../../ObjectUtils');

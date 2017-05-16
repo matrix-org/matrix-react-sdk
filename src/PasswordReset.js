@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 var Matrix = require("matrix-js-sdk");
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 
 /**
  * Allows a user to reset their password on a homeserver.

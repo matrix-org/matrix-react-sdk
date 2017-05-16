@@ -1,5 +1,5 @@
 import React from 'react';
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 import AutocompleteProvider from './AutocompleteProvider';
 import Q from 'q';
 import Fuse from 'fuse.js';

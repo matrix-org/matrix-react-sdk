@@ -18,7 +18,7 @@ limitations under the License.
 import q from 'q';
 
 var React = require('react');
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 var Matrix = require("matrix-js-sdk");
 import request from 'browser-request';
 

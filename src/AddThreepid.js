@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 var MatrixClientPeg = require("./MatrixClientPeg");
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 
 /**
  * Allows a user to add a third party identifier to their Home Server and,

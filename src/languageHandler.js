@@ -16,7 +16,7 @@ limitations under the License.
 
 import request from 'browser-request';
 // Workaround for broken export
-import * as counterpart from 'counterpart';
+import * as counterpart from 'counterpart-riot';
 import UserSettingsStore from './UserSettingsStore';
 var q = require('q');
 

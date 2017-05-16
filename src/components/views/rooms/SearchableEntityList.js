@@ -17,7 +17,7 @@ var React = require('react');
 var MatrixClientPeg = require("../../../MatrixClientPeg");
 var Modal = require("../../../Modal");
 var sdk = require("../../../index");
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 var GeminiScrollbar = require('react-gemini-scrollbar');
 
 // A list capable of displaying entities which conform to the SearchableEntity

@@ -20,7 +20,7 @@ import React from 'react';
 import filesize from 'filesize';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import sdk from '../../../index';
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 import {decryptFile} from '../../../utils/DecryptFile';
 import Tinter from '../../../Tinter';
 import request from 'browser-request';

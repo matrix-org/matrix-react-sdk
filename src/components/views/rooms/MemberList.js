@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 var React = require('react');
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 var classNames = require('classnames');
 var Matrix = require("matrix-js-sdk");
 var q = require('q');

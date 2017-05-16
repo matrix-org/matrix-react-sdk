@@ -18,7 +18,7 @@ limitations under the License.
 'use strict';
 var React = require("react");
 var ReactDOM = require("react-dom");
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 var GeminiScrollbar = require('react-gemini-scrollbar');
 var MatrixClientPeg = require("../../../MatrixClientPeg");
 var CallHandler = require('../../../CallHandler');

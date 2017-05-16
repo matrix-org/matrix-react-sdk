@@ -18,7 +18,7 @@ limitations under the License.
 
 var React = require('react');
 var classNames = require("classnames");
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 var Modal = require('../../../Modal');
 
 var sdk = require('../../../index');

@@ -19,7 +19,7 @@ import React from 'react';
 import sdk from '../../../index';
 import UserSettingsStore from '../../../UserSettingsStore';
 const _localSettings = UserSettingsStore.getLocalSettings();
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 const languageHandler = require('../../../languageHandler');
 var SdkConfig = require("../../../SdkConfig");
 

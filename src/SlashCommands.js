@@ -18,7 +18,7 @@ var MatrixClientPeg = require("./MatrixClientPeg");
 var dis = require("./dispatcher");
 var Tinter = require("./Tinter");
 import sdk from './index';
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 import Modal from './Modal';
 
 

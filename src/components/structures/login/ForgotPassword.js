@@ -17,7 +17,7 @@ limitations under the License.
 'use strict';
 
 var React = require('react');
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 var sdk = require('../../../index');
 var Modal = require("../../../Modal");
 var MatrixClientPeg = require('../../../MatrixClientPeg');

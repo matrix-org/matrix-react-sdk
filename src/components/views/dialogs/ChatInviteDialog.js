@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import classNames from 'classnames';
-import _t from 'counterpart';
+import _t from 'counterpart-riot';
 import sdk from '../../../index';
 import { getAddressType, inviteMultipleToRoom } from '../../../Invite';
 import createRoom from '../../../createRoom';
