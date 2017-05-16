@@ -125,14 +125,6 @@ module.exports = React.createClass({
             console.error("Failed to get room visibility: " + err);
         });
 
-<<<<<<< HEAD
-        this.scalarClient = new ScalarAuthClient();
-        this.scalarClient.connect().done(() => {
-            this.forceUpdate();
-        }, (err) => {
-            this.setState({
-                scalar_error: err,
-=======
         this.scalarClient = null;
         if (SdkConfig.get().integrations_ui_url && SdkConfig.get().integrations_rest_url) {
             this.scalarClient = new ScalarAuthClient();
@@ -142,7 +134,6 @@ module.exports = React.createClass({
                 this.setState({
                     scalar_error: err
                 });
->>>>>>> upstream/develop
             });
         }
 
@@ -757,17 +748,6 @@ module.exports = React.createClass({
 
         let integrationsButton;
         let integrationsError;
-<<<<<<< HEAD
-        if (this.state.showIntegrationsError && this.state.scalar_error) {
-            console.error(this.state.scalar_error);
-            integrationsError = (
-                <span className="mx_RoomSettings_integrationsButton_errorPopup">
-                    Could not connect to the integration server
-                </span>
-            );
-        }
-=======
-
         if (this.scalarClient !== null) {
             if (this.state.showIntegrationsError && this.state.scalar_error) {
                 console.error(this.state.scalar_error);
@@ -777,7 +757,6 @@ module.exports = React.createClass({
                     </span>
                 );
             }
->>>>>>> upstream/develop
 
             if (this.scalarClient.hasCredentials()) {
                 integrationsButton = (
