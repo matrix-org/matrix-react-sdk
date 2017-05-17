@@ -140,6 +140,7 @@ module.exports = React.createClass({
     // indicate other sizes.
     _getSize: function() {
         if (this.state.syncState === "ERROR" ||
+            this.state.syncState === "RECONNECTING" ||
             (this.state.usersTyping.length > 0) ||
             this.props.numUnreadMessages ||
             !this.props.atEndOfLiveTimeline ||
@@ -245,7 +246,7 @@ module.exports = React.createClass({
         // without a connection! (technically may already have some but meh)
         // It also trumps the "some not sent" msg since you can't resend without
         // a connection!
-        if (this.state.syncState === "ERROR") {
+        if (this.state.syncState === "ERROR" || this.state.syncState === "RECONNECTING") {
             return (
                 <div className="mx_RoomStatusBar_connectionLostBar">
                     <img src="img/warning.svg" width="24" height="23" title="/!\ " alt="/!\ "/>
