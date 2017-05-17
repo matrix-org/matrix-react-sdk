@@ -74,15 +74,6 @@ const STATIC_TAGS = [
      list_modifiable: false,
   },
   {
-     name: "Historical",
-     alias: "im.vector.fake.archived",
-     protected: true,
-     order: "recent",
-     start_hidden: true,
-     show_header: true,
-     list_modifiable: false,
-  },
-  {
      name: "Low Priority",
      alias: "m.lowpriority",
      verb: "demote",
@@ -92,6 +83,15 @@ const STATIC_TAGS = [
      show_header: true,
      list_modifiable: true,
      conflicts_with: ["m.favourite"],
+  },
+  {
+     name: "Historical",
+     alias: "im.vector.fake.archived",
+     protected: true,
+     order: "recent",
+     start_hidden: true,
+     show_header: true,
+     list_modifiable: false,
   },
 ];
 const ROOM_ORDERING = ["recent", "manual"];
