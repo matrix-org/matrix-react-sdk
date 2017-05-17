@@ -898,6 +898,12 @@ module.exports = React.createClass({
     },
 
     onMessage: function(ev) {
+        if (
+            window.location.origin != ev.origin &&
+            (!SdkConfig.get().allowedPostMessageOrigins || SdkConfig.get().allowedPostMessageOrigins.indexOf(ev.origin) == -1)
+        ) {
+            return;
+        }
         var credentials = {};
         try {
             credentials = JSON.parse(ev.data);
