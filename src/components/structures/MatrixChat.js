@@ -898,29 +898,54 @@ module.exports = React.createClass({
     },
 
     onMessage: function(ev) {
-    	if (!this.state.logged_in) {
-			try {
-                var credentials = JSON.parse(ev.data);
-                console.log('postMessage: logging in from credentials sent by origin requestor');
-                if (
-                    credentials &&
-                    credentials.accessToken &&
-                    credentials.homeserverUrl &&
-                    credentials.identityServerUrl &&
-                    credentials.userId
-                ) {
+        try {
+            var credentials = JSON.parse(ev.data);
+            
+            if (
+                credentials &&
+                credentials.accessToken &&
+                credentials.homeserverUrl &&
+                credentials.identityServerUrl &&
+                credentials.userId
+            ) {
+            
+                if (credentials.action=="login") {
+                    console.log('postMessage: logging in from credentials sent by origin requestor');
                     credentials.guest = false;
+                    if (this.state.loggedIn || this.state.loggingIn) {
+                        var currentCredentials = MatrixClientPeg.getCredentials();
+                        if (
+                            credentials.accessToken == currentCredentials.accessToken &&
+                            credentials.homeserverUrl == currentCredentials.homeserverUrl &&
+                            credentials.identityServerUrl == currentCredentials.identityServerUrl &&
+                            credentials.userId == currentCredentials.userId
+                        ) {
+                            console.log('postMessage: user is already logged in');
+                            return;
+                        }
+                    }
+                    delete credentials.action;
                     Lifecycle.setLoggedIn(credentials);
+                    return;
+                } else if (this.state.loggedIn && credentials.action=="logout") {
+                    console.log('postMessage: logging out');
+                    var currentCredentials = MatrixClientPeg.getCredentials();
+                    if (
+                        credentials.accessToken == currentCredentials.accessToken &&
+                        credentials.homeserverUrl == currentCredentials.homeserverUrl &&
+                        credentials.identityServerUrl == currentCredentials.identityServerUrl &&
+                        credentials.userId == currentCredentials.userId
+                    ) {
+                        Lifecycle.logout();
+                    } else {
+                        console.log('postMessage: failed to logout due to invalid credentials');
+                    }
                 }
-            } catch(e) {
+            } else {
+                console.log('postMessage: invalid credentials');
             }
-        } else if (
-            credentials &&
-            credentials.accessToken &&
-            credentials.homeserverUrl &&
-            credentials.identityServerUrl &&
-            credentials.userId
-        )
+        } catch(e) {
+        }
     },
     
     showScreen: function(screen, params) {
