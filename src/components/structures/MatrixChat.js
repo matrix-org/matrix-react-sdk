@@ -256,7 +256,7 @@ module.exports = React.createClass({
         window.addEventListener("focus", this.onFocus);
 
         // Listen to login credentials sent through postMessage from another site
-        window.addEventListener("message", this.onMessage);
+        window.addEventListener('message', this.onMessage);
 
         // this can technically be done anywhere but doing this here keeps all
         // the routing url path logic together.
@@ -302,7 +302,7 @@ module.exports = React.createClass({
         UDEHandler.stopListening();
         window.removeEventListener("focus", this.onFocus);
         window.removeEventListener('resize', this.handleResize);
-        window.removeEventListener("message", this.onMessage);
+        window.removeEventListener('message', this.onMessage);
     },
 
     componentDidUpdate: function() {
@@ -930,7 +930,7 @@ module.exports = React.createClass({
                 credentials.userId == currentCredentials.userId
             );
             switch (credentials.action) {
-                case "login":
+                case 'login':
                     console.log('postMessage: logging in from credentials sent by origin requestor');
                     credentials.guest = false;
                     if (sameUser) {
@@ -939,15 +939,15 @@ module.exports = React.createClass({
                     }
                     delete credentials.action;
                     Lifecycle.setLoggedIn(credentials);
-                break;
-                case "logout":
+                    break;
+                case 'logout':
                     console.log('postMessage: logging out');
                     if (sameUser) {
                         Lifecycle.logout();
                     } else {
-                        console.log("postMessage logout: user is not logged in or credentials are invalid");
+                        console.log('postMessage logout: user is not logged in or credentials are invalid');
                     }
-                break;
+                    break;
             }
         }
     },
