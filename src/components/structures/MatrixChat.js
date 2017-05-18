@@ -927,7 +927,8 @@ module.exports = React.createClass({
                 credentials.accessToken == currentCredentials.accessToken &&
                 credentials.homeserverUrl == currentCredentials.homeserverUrl &&
                 credentials.identityServerUrl == currentCredentials.identityServerUrl &&
-                credentials.userId == currentCredentials.userId
+                credentials.userId == currentCredentials.userId &&
+                (!credentials.deviceId || credentials.deviceId == currentCredentials.deviceId)
             );
             switch (credentials.action) {
                 case 'login':
