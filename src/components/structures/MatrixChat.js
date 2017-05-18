@@ -713,10 +713,6 @@ module.exports = React.createClass({
      * Called whenever someone changes the theme
      */
     _onSetTheme: function(theme) {
-        if (!theme) {
-            theme = SdkConfig.get().themes[0].value || 'light'; //fallback to 'light' if none is defined in config
-        }
-
         // look for the stylesheet elements.
         // styleElements is a map from style name to HTMLLinkElement.
         var styleElements = Object.create(null);
@@ -730,8 +726,10 @@ module.exports = React.createClass({
             }
         }
 
-        if (!(theme in styleElements)) {
-            throw new Error("Unknown theme " + theme);
+        if (!theme || !(theme in styleElements)) {
+            console.log( ( theme ?  "Unknown theme '" + theme + "'." : "No theme set." ) + " Falling back to default theme '" + SdkConfig.get().themes[0].value + "'");
+            
+            theme = SdkConfig.get().themes[0].value;
         }
 
         // disable all of them first, then enable the one we want. Chrome only

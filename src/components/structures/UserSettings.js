@@ -97,9 +97,7 @@ const CRYPTO_SETTINGS_LABELS = [
     // }
 ];
 
-// Themes must be declared in config.json of riot-web. If they are not declared there, the FALLBACK_THEME will be used. Please **do not** include themes here, but directly in config.json! The default theme will always be the **first** theme in config.json.
-
-const FALLBACK_THEME = [{"label":"Light theme", "value": "light"}];
+// Themes must be declared in config.json of riot-web. If they are not declared there, a fallback theme (light) will be used. Please **do not** include themes here, but directly in config.json! The default theme will always be the **first** theme in config.json.
 const THEMES = [];
 
 module.exports = React.createClass({
@@ -146,7 +144,7 @@ module.exports = React.createClass({
         this._unmounted = false;
         this._addThreepid = null;
         
-        var validThemes = SdkConfig.get().themes || FALLBACK_THEME;
+        var validThemes = SdkConfig.get().themes;
         
         validThemes.forEach(function(theme) {
         	var t = {};
