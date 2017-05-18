@@ -59,6 +59,8 @@ module.exports = React.createClass({
     },
 
     componentWillMount: function() {
+        this.mounted = false;
+
         var cli = MatrixClientPeg.get();
         cli.on("Room", this.onRoom);
         cli.on("deleteRoom", this.onDeleteRoom);
@@ -88,6 +90,8 @@ module.exports = React.createClass({
         this.dispatcherRef = dis.register(this.onAction);
         // Initialise the stickyHeaders when the component is created
         this._updateStickyHeaders(true);
+
+        this.mounted = true;
     },
 
     componentWillReceiveProps: function(nextProps) {
@@ -154,6 +158,8 @@ module.exports = React.createClass({
     },
 
     componentWillUnmount: function() {
+        this.mounted = false;
+
         dis.unregister(this.dispatcherRef);
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener("Room", this.onRoom);
@@ -412,13 +418,15 @@ module.exports = React.createClass({
     },
 
     _getScrollNode: function() {
+        if (!this.mounted) return null;
         var panel = ReactDOM.findDOMNode(this);
         if (!panel) return null;
 
-        // empirically, if we have gm-prevented for some reason, the scroll node
-        // is still the 3rd child (i.e. the view child).  This looks to be due
-        // to vdh's improved resize updater logic...?
-        return panel.children[2]; // XXX: Fragile!
+        if (panel.classList.contains('gm-prevented')) {
+            return panel;
+        } else {
+            return panel.children[2]; // XXX: Fragile!
+        }
     },
 
     _whenScrolling: function(e) {
@@ -438,6 +446,7 @@ module.exports = React.createClass({
         var incomingCallBox = document.getElementById("incomingCallBox");
         if (incomingCallBox && incomingCallBox.parentElement) {
             var scrollArea = this._getScrollNode();
+            if (!scrollArea) return;
             // Use the offset of the top of the scroll area from the window
             // as this is used to calculate the CSS fixed top position for the stickies
             var scrollAreaOffset = scrollArea.getBoundingClientRect().top + window.pageYOffset;
@@ -461,10 +470,11 @@ module.exports = React.createClass({
     // properly through React
     _initAndPositionStickyHeaders: function(initialise, scrollToPosition) {
         var scrollArea = this._getScrollNode();
+        if (!scrollArea) return;
         // Use the offset of the top of the scroll area from the window
         // as this is used to calculate the CSS fixed top position for the stickies
         var scrollAreaOffset = scrollArea.getBoundingClientRect().top + window.pageYOffset;
-        // Use the offset of the top of the component from the window
+        // Use the offset of the top of the componet from the window
         // as this is used to calculate the CSS fixed top position for the stickies
         var scrollAreaHeight = ReactDOM.findDOMNode(this).getBoundingClientRect().height;
 
