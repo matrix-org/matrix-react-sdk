@@ -468,7 +468,7 @@ module.exports = React.createClass({
             });
         }).done();
     },
-    
+
     _onExportE2eKeysClicked: function() {
         dis.dispatch({
             action: 'export_e2e_keys_dialog'

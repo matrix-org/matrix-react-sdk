@@ -324,7 +324,7 @@ module.exports = React.createClass({
        Object.assign(newState, state);
        this.setState(newState);
     },
-    
+
     onAction: function(payload) {
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
