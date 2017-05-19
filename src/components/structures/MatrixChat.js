@@ -967,7 +967,7 @@ module.exports = React.createClass({
                 (!credentials.deviceId || credentials.deviceId == currentCredentials.deviceId)
             );
             switch (credentials.action) {
-                case 'login':
+                case 'im.vector.login':
                     console.log('postMessage: logging in from credentials sent by origin requestor');
                     credentials.guest = false;
                     if (sameUser) {
@@ -977,7 +977,7 @@ module.exports = React.createClass({
                     delete credentials.action;
                     Lifecycle.setLoggedIn(credentials);
                     break;
-                case 'logout':
+                case 'im.vector.logout':
                     console.log('postMessage: logging out');
                     if (sameUser) {
                         dis.dispatch({
