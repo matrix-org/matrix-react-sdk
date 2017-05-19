@@ -317,27 +317,14 @@ module.exports = React.createClass({
     onAction: function(payload) {
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-        let roomIndexDelta = 1;
+        const TextInputDialog = sdk.getComponent("dialogs.TextInputDialog");
 
         switch (payload.action) {
             case 'logout':
                 Lifecycle.logout();
                 break;
             case 'start_registration':
-                const params = payload.params || {};
-                this.setStateForNewScreen({
-                    screen: 'register',
-                    // these params may be undefined, but if they are,
-                    // unset them from our state: we don't want to
-                    // resume a previous registration session if the
-                    // user just clicked 'register'
-                    register_client_secret: params.client_secret,
-                    register_session_id: params.session_id,
-                    register_hs_url: params.hs_url,
-                    register_is_url: params.is_url,
-                    register_id_sid: params.sid,
-                });
-                this.notifyNewScreen('register');
+                this._startRegistration(payload.params || {});
                 break;
             case 'start_login':
                 if (MatrixClientPeg.get() &&
@@ -384,35 +371,7 @@ module.exports = React.createClass({
                 this.notifyNewScreen('forgot_password');
                 break;
             case 'leave_room':
-                const roomToLeave = MatrixClientPeg.get().getRoom(payload.room_id);
-                Modal.createDialog(QuestionDialog, {
-                    title: "Leave room",
-                    description: <span>Are you sure you want to leave the room <i>{roomToLeave.name}</i>?</span>,
-                    onFinished: (shouldLeave) => {
-                        if (shouldLeave) {
-                            const d = MatrixClientPeg.get().leave(payload.room_id);
-
-                            // FIXME: controller shouldn't be loading a view :(
-                            const Loader = sdk.getComponent("elements.Spinner");
-                            const modal = Modal.createDialog(Loader, null, 'mx_Dialog_spinner');
-
-                            d.then(() => {
-                                modal.close();
-                                if (this.currentRoomId === payload.room_id) {
-                                    dis.dispatch({action: 'view_next_room'});
-                                }
-                            }, (err) => {
-                                modal.close();
-                                console.error("Failed to leave room " + payload.room_id + " " + err);
-                                Modal.createDialog(ErrorDialog, {
-                                    title: "Failed to leave room",
-                                    description: (err && err.message ? err.message :
-                                        "Server may be unavailable, overloaded, or you hit a bug."),
-                                });
-                            });
-                        }
-                    },
-                });
+                this._leaveRoom(payload.room_id);
                 break;
             case 'reject_invite':
                 Modal.createDialog(QuestionDialog, {
@@ -462,30 +421,13 @@ module.exports = React.createClass({
                 this._viewRoom(payload);
                 break;
             case 'view_prev_room':
-                roomIndexDelta = -1;
+                this._viewNextRoom(-1);
+                break;
             case 'view_next_room':
-                const allRooms = RoomListSorter.mostRecentActivityFirst(
-                    MatrixClientPeg.get().getRooms(),
-                );
-                let roomIndex = -1;
-                for (let i = 0; i < allRooms.length; ++i) {
-                    if (allRooms[i].roomId == this.state.currentRoomId) {
-                        roomIndex = i;
-                        break;
-                    }
-                }
-                roomIndex = (roomIndex + roomIndexDelta) % allRooms.length;
-                if (roomIndex < 0) roomIndex = allRooms.length - 1;
-                this._viewRoom({ room_id: allRooms[roomIndex].roomId });
+                this._viewNextRoom(1);
                 break;
             case 'view_indexed_room':
-                const allRooms = RoomListSorter.mostRecentActivityFirst(
-                    MatrixClientPeg.get().getRooms(),
-                );
-                let roomIndex = payload.roomIndex;
-                if (allRooms[roomIndex]) {
-                    this._viewRoom({ room_id: allRooms[roomIndex].roomId });
-                }
+                this._viewIndexedRoom(payload.roomIndex);
                 break;
             case 'view_user_settings':
                 this._setPage(PageTypes.UserSettings);
@@ -494,8 +436,6 @@ module.exports = React.createClass({
             case 'view_create_room':
                 //this._setPage(PageTypes.CreateRoom);
                 //this.notifyNewScreen('new');
-
-                const TextInputDialog = sdk.getComponent("dialogs.TextInputDialog");
                 Modal.createDialog(TextInputDialog, {
                     title: "Create Room",
                     description: "Room name (optional)",
@@ -587,6 +527,47 @@ module.exports = React.createClass({
         this.setState({
             page_type: pageType,
         });
+    },
+
+    _startRegistration: function(params) {
+        this.setStateForNewScreen({
+            screen: 'register',
+            // these params may be undefined, but if they are,
+            // unset them from our state: we don't want to
+            // resume a previous registration session if the
+            // user just clicked 'register'
+            register_client_secret: params.client_secret,
+            register_session_id: params.session_id,
+            register_hs_url: params.hs_url,
+            register_is_url: params.is_url,
+            register_id_sid: params.sid,
+        });
+        this.notifyNewScreen('register');
+    },
+
+    _viewNextRoom: function(roomIndexDelta) {
+        const allRooms = RoomListSorter.mostRecentActivityFirst(
+            MatrixClientPeg.get().getRooms(),
+        );
+        let roomIndex = -1;
+        for (let i = 0; i < allRooms.length; ++i) {
+            if (allRooms[i].roomId == this.state.currentRoomId) {
+                roomIndex = i;
+                break;
+            }
+        }
+        roomIndex = (roomIndex + roomIndexDelta) % allRooms.length;
+        if (roomIndex < 0) roomIndex = allRooms.length - 1;
+        this._viewRoom({ room_id: allRooms[roomIndex].roomId });
+    },
+
+    _viewIndexedRoom: function(roomIndex) {
+        const allRooms = RoomListSorter.mostRecentActivityFirst(
+            MatrixClientPeg.get().getRooms(),
+        );
+        if (allRooms[roomIndex]) {
+            this._viewRoom({ room_id: allRooms[roomIndex].roomId });
+        }
     },
 
     // switch view to the given room
@@ -683,6 +664,41 @@ module.exports = React.createClass({
             button: "Send Invites",
             description: "Who would you like to add to this room?",
             roomId: roomId,
+        });
+    },
+
+    _leaveRoom: function(roomId) {
+        const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+
+        const roomToLeave = MatrixClientPeg.get().getRoom(roomId);
+        Modal.createDialog(QuestionDialog, {
+            title: "Leave room",
+            description: <span>Are you sure you want to leave the room <i>{roomToLeave.name}</i>?</span>,
+            onFinished: (shouldLeave) => {
+                if (shouldLeave) {
+                    const d = MatrixClientPeg.get().leave(roomId);
+
+                    // FIXME: controller shouldn't be loading a view :(
+                    const Loader = sdk.getComponent("elements.Spinner");
+                    const modal = Modal.createDialog(Loader, null, 'mx_Dialog_spinner');
+
+                    d.then(() => {
+                        modal.close();
+                        if (this.currentRoomId === roomId) {
+                            dis.dispatch({action: 'view_next_room'});
+                        }
+                    }, (err) => {
+                        modal.close();
+                        console.error("Failed to leave room " + roomId + " " + err);
+                        Modal.createDialog(ErrorDialog, {
+                            title: "Failed to leave room",
+                            description: (err && err.message ? err.message :
+                                "Server may be unavailable, overloaded, or you hit a bug."),
+                        });
+                    });
+                }
+            },
         });
     },
 
