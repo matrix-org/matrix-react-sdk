@@ -21,12 +21,12 @@ import ReactDOM from 'react-dom';
 import GeminiScrollbar from 'react-gemini-scrollbar';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import CallHandler from '../../../CallHandler';
-import dispatcher from '../../../dispatcher';
+import dis from '../../../dispatcher';
 import sdk from '../../../index';
 import RateLimitedFunc from '../../../ratelimitedfunc';
 import * as Rooms from '../../../Rooms';
 import DMRoomMap from '../../../utils/DMRoomMap';
-import Receipt from '../../../utils/Receipt';
+import { findReadReceiptFromUserId } from '../../../utils/Receipt';
 import RoomTagUtil from '../../../RoomTagUtil';
 import constantTimeDispatcher from '../../../ConstantTimeDispatcher';
 
@@ -86,7 +86,7 @@ module.exports = React.createClass({
     },
 
     componentDidMount: function() {
-        this.dispatcherRef = dispatcher.register(this.onAction);
+        this.dispatcherRef = dis.register(this.onAction);
         // Initialise the stickyHeaders when the component is created
         this._updateStickyHeaders(true);
     },
@@ -155,7 +155,7 @@ module.exports = React.createClass({
     },
 
     componentWillUnmount: function() {
-        dispatcher.unregister(this.dispatcherRef);
+        dis.unregister(this.dispatcherRef);
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener("Room", this.onRoom);
             MatrixClientPeg.get().removeListener("deleteRoom", this.onDeleteRoom);
@@ -235,7 +235,7 @@ module.exports = React.createClass({
     onRoomReceipt: function(receiptEvent, room) {
         // because if we read a notification, it will affect notification count
         // only bother updating if there's a receipt from us
-        if (Receipt.findReadReceiptFromUserId(receiptEvent, MatrixClientPeg.get().credentials.userId)) {
+        if (findReadReceiptFromUserId(receiptEvent, MatrixClientPeg.get().credentials.userId)) {
             const lists = this.listsForRoomId[room.roomId];
             if (lists) {
                 lists.forEach((list) => {
