@@ -282,11 +282,13 @@ module.exports = React.createClass({
     },
 
     onAccountData: function(ev) {
-        if (ev.getType() == 'm.direct') {
+        if (ev.getType() === 'm.direct') {
             // XXX: this happens rarely; ideally we should only update the correct
             // sublists when it does (e.g. via a constantTimeDispatch to the right sublist)
             this._delayedRefreshRoomList();
-        } else if (ev.getType() == 'm.push_rules') {
+        } else if (ev.getType() === 'm.push_rules') {
+            this._delayedRefreshRoomList();
+        } else if (ev.getType() === "org.matrix.custom_tags") {
             this._delayedRefreshRoomList();
         }
     },
