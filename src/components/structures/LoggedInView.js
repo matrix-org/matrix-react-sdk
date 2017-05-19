@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2017 Vector Creations Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -49,11 +50,16 @@ export default React.createClass({
 
     childContextTypes: {
         matrixClient: React.PropTypes.instanceOf(Matrix.MatrixClient),
+        authCache: React.PropTypes.object,
     },
 
     getChildContext: function() {
         return {
             matrixClient: this._matrixClient,
+            authCache: {
+                auth: {},
+                lastUpdate: 0,
+            },
         };
     },
 
@@ -76,6 +82,13 @@ export default React.createClass({
         return this._scrollStateMap[roomId];
     },
 
+    canResetTimelineInRoom: function(roomId) {
+        if (!this.refs.roomView) {
+            return true;
+        }
+        return this.refs.roomView.canResetTimeline();
+    },
+
     _onKeyDown: function(ev) {
             /*
             // Remove this for now as ctrl+alt = alt-gr so this breaks keyboards which rely on alt-gr for numbers
@@ -96,7 +109,7 @@ export default React.createClass({
         switch (ev.keyCode) {
             case KeyCode.UP:
             case KeyCode.DOWN:
-                if (ev.altKey) {
+                if (ev.altKey && !ev.shiftKey && !ev.ctrlKey && !ev.metaKey) {
                     var action = ev.keyCode == KeyCode.UP ?
                         'view_prev_room' : 'view_next_room';
                     dis.dispatch({action: action});
@@ -106,13 +119,15 @@ export default React.createClass({
 
             case KeyCode.PAGE_UP:
             case KeyCode.PAGE_DOWN:
-                this._onScrollKeyPressed(ev);
-                handled = true;
+                if (!ev.ctrlKey && !ev.shiftKey && !ev.altKey && !ev.metaKey) {
+                    this._onScrollKeyPressed(ev);
+                    handled = true;
+                }
                 break;
 
             case KeyCode.HOME:
             case KeyCode.END:
-                if (ev.ctrlKey) {
+                if (ev.ctrlKey && !ev.shiftKey && !ev.altKey && !ev.metaKey) {
                     this._onScrollKeyPressed(ev);
                     handled = true;
                 }
@@ -130,22 +145,25 @@ export default React.createClass({
         if (this.refs.roomView) {
             this.refs.roomView.handleScrollKey(ev);
         }
+        else if (this.refs.roomDirectory) {
+            this.refs.roomDirectory.handleScrollKey(ev);
+        }
     },
 
     render: function() {
-        var LeftPanel = sdk.getComponent('structures.LeftPanel');
-        var RightPanel = sdk.getComponent('structures.RightPanel');
-        var RoomView = sdk.getComponent('structures.RoomView');
-        var UserSettings = sdk.getComponent('structures.UserSettings');
-        var CreateRoom = sdk.getComponent('structures.CreateRoom');
-        var RoomDirectory = sdk.getComponent('structures.RoomDirectory');
-        var HomePage = sdk.getComponent('structures.HomePage');
-        var MatrixToolbar = sdk.getComponent('globals.MatrixToolbar');
-        var GuestWarningBar = sdk.getComponent('globals.GuestWarningBar');
-        var NewVersionBar = sdk.getComponent('globals.NewVersionBar');
+        const LeftPanel = sdk.getComponent('structures.LeftPanel');
+        const RightPanel = sdk.getComponent('structures.RightPanel');
+        const RoomView = sdk.getComponent('structures.RoomView');
+        const UserSettings = sdk.getComponent('structures.UserSettings');
+        const CreateRoom = sdk.getComponent('structures.CreateRoom');
+        const RoomDirectory = sdk.getComponent('structures.RoomDirectory');
+        const HomePage = sdk.getComponent('structures.HomePage');
+        const MatrixToolbar = sdk.getComponent('globals.MatrixToolbar');
+        const GuestWarningBar = sdk.getComponent('globals.GuestWarningBar');
+        const NewVersionBar = sdk.getComponent('globals.NewVersionBar');
 
-        var page_element;
-        var right_panel = '';
+        let page_element;
+        let right_panel = '';
 
         switch (this.props.page_type) {
             case PageTypes.RoomView:
@@ -175,6 +193,7 @@ export default React.createClass({
                     collapsedRhs={this.props.collapse_rhs}
                     enableLabs={this.props.config.enableLabs}
                     referralBaseUrl={this.props.config.referralBaseUrl}
+                    teamToken={this.props.teamToken}
                 />;
                 if (!this.props.collapse_rhs) right_panel = <RightPanel opacity={this.props.sideOpacity}/>;
                 break;
@@ -189,10 +208,9 @@ export default React.createClass({
 
             case PageTypes.RoomDirectory:
                 page_element = <RoomDirectory
-                    collapsedRhs={this.props.collapse_rhs}
+                    ref="roomDirectory"
                     config={this.props.config.roomDirectory}
                 />;
-                if (!this.props.collapse_rhs) right_panel = <RightPanel opacity={this.props.sideOpacity}/>;
                 break;
 
             case PageTypes.HomePage:
@@ -232,7 +250,12 @@ export default React.createClass({
             <div className='mx_MatrixChat_wrapper'>
                 {topBar}
                 <div className={bodyClasses}>
-                    <LeftPanel selectedRoom={this.props.currentRoomId} collapsed={this.props.collapse_lhs || false} opacity={this.props.sideOpacity}/>
+                    <LeftPanel
+                        selectedRoom={this.props.currentRoomId}
+                        collapsed={this.props.collapse_lhs || false}
+                        opacity={this.props.sideOpacity}
+                        teamToken={this.props.teamToken}
+                    />
                     <main className='mx_MatrixChat_middlePanel'>
                         {page_element}
                     </main>

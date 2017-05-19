@@ -20,6 +20,7 @@ var SlashCommands = require("../../../SlashCommands");
 var Modal = require("../../../Modal");
 var MemberEntry = require("../../../TabCompleteEntries").MemberEntry;
 var sdk = require('../../../index');
+import UserSettingsStore from "../../../UserSettingsStore";
 
 var dis = require("../../../dispatcher");
 var KeyCode = require("../../../KeyCode");
@@ -34,16 +35,11 @@ export function onSendMessageFailed(err, room) {
     // https://github.com/vector-im/riot-web/issues/3148
     console.log('MessageComposer got send failure: ' + err.name + '('+err+')');
     if (err.name === "UnknownDeviceError") {
-        const UnknownDeviceDialog = sdk.getComponent("dialogs.UnknownDeviceDialog");
-        Modal.createDialog(UnknownDeviceDialog, {
-            devices: err.devices,
+        dis.dispatch({
+            action: 'unknown_device_error',
+            err: err,
             room: room,
-            onFinished: (r) => {
-                // XXX: temporary logging to try to diagnose
-                // https://github.com/vector-im/riot-web/issues/3148
-                console.log('UnknownDeviceDialog closed with '+r);
-            },
-        }, "mx_Dialog_unknownDevice");
+        });
     }
     dis.dispatch({
         action: 'message_send_failed',
@@ -70,6 +66,12 @@ export default React.createClass({
 
         // js-sdk Room object
         room: React.PropTypes.object.isRequired,
+
+        // The text to use a placeholder in the input box
+        placeholder: React.PropTypes.string.isRequired,
+
+        // callback to handle files pasted into the composer
+        onFilesPasted: React.PropTypes.func,
     },
 
     componentWillMount: function() {
@@ -313,7 +315,7 @@ export default React.createClass({
                     var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                     Modal.createDialog(ErrorDialog, {
                         title: "Server error",
-                        description: err.message
+                        description: ((err && err.message) ? err.message : "Server unavailable, overloaded, or something else went wrong."),
                     });
                 });
             }
@@ -422,6 +424,7 @@ export default React.createClass({
     },
 
     sendTyping: function(isTyping) {
+        if (UserSettingsStore.getSyncedSetting('dontSendTypingNotifications', false)) return;
         MatrixClientPeg.get().sendTyping(
             this.props.room.roomId,
             this.isTyping, TYPING_SERVER_TIMEOUT
@@ -439,10 +442,27 @@ export default React.createClass({
         this.refs.textarea.focus();
     },
 
+    _onPaste: function(ev) {
+        const items = ev.clipboardData.items;
+        const files = [];
+        for (const item of items) {
+            if (item.kind === 'file') {
+                files.push(item.getAsFile());
+            }
+        }
+        if (files.length && this.props.onFilesPasted) {
+            this.props.onFilesPasted(files);
+            return true;
+        }
+        return false;
+    },
+
     render: function() {
         return (
             <div className="mx_MessageComposer_input" onClick={ this.onInputClick }>
-                <textarea autoFocus ref="textarea" rows="1" onKeyDown={this.onKeyDown} onKeyUp={this.onKeyUp} placeholder="Type a message..." />
+                <textarea autoFocus ref="textarea" rows="1" onKeyDown={this.onKeyDown} onKeyUp={this.onKeyUp} placeholder={this.props.placeholder}
+                    onPaste={this._onPaste}
+                />
             </div>
         );
     }

@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2017 Vector Creations Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -58,6 +59,15 @@ export default React.createClass({
         if (this.scrollElement && this.props.addressList.length > 0 && !this.state.hover) {
             var elementHeight = this.addressListElement.getBoundingClientRect().height;
             this.scrollElement.scrollTop = (this.state.selected * elementHeight) - elementHeight;
+        }
+    },
+
+    moveSelectionTop: function() {
+        if (this.state.selected > 0) {
+            this.setState({
+                selected: 0,
+                hover: false,
+            });
         }
     },
 
@@ -124,7 +134,14 @@ export default React.createClass({
                 // Saving the addressListElement so we can use it to work out, in the componentDidUpdate
                 // method, how far to scroll when using the arrow keys
                 addressList.push(
-                    <div className={classes} onClick={this.onClick.bind(this, i)} onMouseEnter={this.onMouseEnter.bind(this, i)} onMouseLeave={this.onMouseLeave} key={i} ref={(ref) => { this.addressListElement = ref; }} >
+                    <div
+                        className={classes}
+                        onClick={this.onClick.bind(this, i)}
+                        onMouseEnter={this.onMouseEnter.bind(this, i)}
+                        onMouseLeave={this.onMouseLeave}
+                        key={this.props.addressList[i].addressType + "/" + this.props.addressList[i].address}
+                        ref={(ref) => { this.addressListElement = ref; }}
+                    >
                         <AddressTile address={this.props.addressList[i]} justified={true} networkName="vector" networkUrl="img/search-icon-vector.svg" />
                     </div>
                 );

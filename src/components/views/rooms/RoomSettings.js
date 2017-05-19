@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2017 Vector Creations Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,17 +15,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-var q = require("q");
-var React = require('react');
-var MatrixClientPeg = require('../../../MatrixClientPeg');
-var SdkConfig = require('../../../SdkConfig');
-var sdk = require('../../../index');
-var Modal = require('../../../Modal');
-var ObjectUtils = require("../../../ObjectUtils");
-var dis = require("../../../dispatcher");
-var ScalarAuthClient = require("../../../ScalarAuthClient");
-var ScalarMessaging = require('../../../ScalarMessaging');
-var UserSettingsStore = require('../../../UserSettingsStore');
+import q from 'q';
+import React from 'react';
+import MatrixClientPeg from '../../../MatrixClientPeg';
+import SdkConfig from '../../../SdkConfig';
+import sdk from '../../../index';
+import Modal from '../../../Modal';
+import ObjectUtils from '../../../ObjectUtils';
+import dis from '../../../dispatcher';
+import ScalarAuthClient from '../../../ScalarAuthClient';
+import ScalarMessaging from '../../../ScalarMessaging';
+import UserSettingsStore from '../../../UserSettingsStore';
+import AccessibleButton from '../elements/AccessibleButton';
 
 
 // parse a string as an integer; if the input is undefined, or cannot be parsed
@@ -33,6 +35,48 @@ function parseIntWithDefault(val, def) {
     var res = parseInt(val);
     return isNaN(res) ? def : res;
 }
+
+const BannedUser = React.createClass({
+    propTypes: {
+        member: React.PropTypes.object.isRequired, // js-sdk RoomMember
+    },
+
+    _onUnbanClick: function() {
+        const ConfirmUserActionDialog = sdk.getComponent("dialogs.ConfirmUserActionDialog");
+        Modal.createDialog(ConfirmUserActionDialog, {
+            member: this.props.member,
+            action: 'Unban',
+            danger: false,
+            onFinished: (proceed) => {
+                if (!proceed) return;
+
+                MatrixClientPeg.get().unban(
+                    this.props.member.roomId, this.props.member.userId,
+                ).catch((err) => {
+                    const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+                    console.error("Failed to unban: " + err);
+                    Modal.createDialog(ErrorDialog, {
+                        title: "Error",
+                        description: "Failed to unban",
+                    });
+                }).done();
+            },
+        });
+    },
+
+    render: function() {
+        return (
+            <li>
+                <AccessibleButton className="mx_RoomSettings_unbanButton"
+                    onClick={this._onUnbanClick}
+                >
+                    Unban
+                </AccessibleButton>
+                {this.props.member.userId}
+            </li>
+        );
+    }
+});
 
 module.exports = React.createClass({
     displayName: 'RoomSettings',
@@ -73,6 +117,9 @@ module.exports = React.createClass({
 
     componentWillMount: function() {
         ScalarMessaging.startListening();
+
+        MatrixClientPeg.get().on("RoomMember.membership", this._onRoomMemberMembership);
+
         MatrixClientPeg.get().getRoomDirectoryVisibility(
             this.props.room.roomId
         ).done((result) => {
@@ -82,14 +129,17 @@ module.exports = React.createClass({
             console.error("Failed to get room visibility: " + err);
         });
 
-        this.scalarClient = new ScalarAuthClient();
-        this.scalarClient.connect().done(() => {
-            this.forceUpdate();
-        }, (err) => {
-            this.setState({
-                scalar_error: err
+        this.scalarClient = null;
+        if (SdkConfig.get().integrations_ui_url && SdkConfig.get().integrations_rest_url) {
+            this.scalarClient = new ScalarAuthClient();
+            this.scalarClient.connect().done(() => {
+                this.forceUpdate();
+            }, (err) => {
+                this.setState({
+                    scalar_error: err
+                });
             });
-        });
+        }
 
         dis.dispatch({
             action: 'ui_opacity',
@@ -100,6 +150,11 @@ module.exports = React.createClass({
 
     componentWillUnmount: function() {
         ScalarMessaging.stopListening();
+
+        const cli = MatrixClientPeg.get();
+        if (cli) {
+            cli.removeListener("RoomMember.membership", this._onRoomMemberMembership);
+        }
 
         dis.dispatch({
             action: 'ui_opacity',
@@ -438,7 +493,7 @@ module.exports = React.createClass({
         ev.preventDefault();
         var IntegrationsManager = sdk.getComponent("views.settings.IntegrationsManager");
         Modal.createDialog(IntegrationsManager, {
-            src: this.scalarClient.hasCredentials() ?
+            src: (this.scalarClient !== null && this.scalarClient.hasCredentials()) ?
                     this.scalarClient.getScalarInterfaceUrlForRoom(this.props.room.roomId) :
                     null,
             onFinished: ()=>{
@@ -498,6 +553,11 @@ module.exports = React.createClass({
                 }
             },
         });
+    },
+
+    _onRoomMemberMembership: function() {
+        // Update, since our banned user list may have changed
+        this.forceUpdate();
     },
 
     _renderEncryptionSection: function() {
@@ -610,11 +670,9 @@ module.exports = React.createClass({
                 <div>
                     <h3>Banned users</h3>
                     <ul className="mx_RoomSettings_banned">
-                        {banned.map(function(member, i) {
+                        {banned.map(function(member) {
                             return (
-                                <li key={i}>
-                                    {member.userId}
-                                </li>
+                                <BannedUser key={member.userId} member={member} />
                             );
                         })}
                     </ul>
@@ -635,16 +693,16 @@ module.exports = React.createClass({
         if (myMember) {
             if (myMember.membership === "join") {
                 leaveButton = (
-                    <div className="mx_RoomSettings_leaveButton" onClick={ this.onLeaveClick }>
+                    <AccessibleButton className="mx_RoomSettings_leaveButton" onClick={ this.onLeaveClick }>
                         Leave room
-                    </div>
+                    </AccessibleButton>
                 );
             }
             else if (myMember.membership === "leave") {
                 leaveButton = (
-                    <div className="mx_RoomSettings_leaveButton" onClick={ this.onForgetClick }>
+                    <AccessibleButton className="mx_RoomSettings_leaveButton" onClick={ this.onForgetClick }>
                         Forget room
-                    </div>
+                    </AccessibleButton>
                 );
             }
         }
@@ -710,36 +768,39 @@ module.exports = React.createClass({
                 </div>;
         }
 
-        var integrationsButton;
-        var integrationsError;
-        if (this.state.showIntegrationsError && this.state.scalar_error) {
-            console.error(this.state.scalar_error);
-            integrationsError = (
-                <span className="mx_RoomSettings_integrationsButton_errorPopup">
-                    Could not connect to the integration server
-                </span>
-            );
-        }
+        let integrationsButton;
+        let integrationsError;
 
-        if (this.scalarClient.hasCredentials()) {
-            integrationsButton = (
+        if (this.scalarClient !== null) {
+            if (this.state.showIntegrationsError && this.state.scalar_error) {
+                console.error(this.state.scalar_error);
+                integrationsError = (
+                    <span className="mx_RoomSettings_integrationsButton_errorPopup">
+                        Could not connect to the integration server
+                    </span>
+                );
+            }
+
+            if (this.scalarClient.hasCredentials()) {
+                integrationsButton = (
                     <div className="mx_RoomSettings_integrationsButton" onClick={ this.onManageIntegrations }>
-                    Manage Integrations
-                </div>
-            );
-        } else if (this.state.scalar_error) {
-            integrationsButton = (
+                        Manage Integrations
+                    </div>
+                );
+            } else if (this.state.scalar_error) {
+                integrationsButton = (
                     <div className="mx_RoomSettings_integrationsButton_error" onClick={ this.onShowIntegrationsError }>
-                    Integrations Error <img src="img/warning.svg" width="17"/>
-                    { integrationsError }
-                </div>
-            );
-        } else {
-            integrationsButton = (
-                    <div className="mx_RoomSettings_integrationsButton" style={{ opacity: 0.5 }}>
-                    Manage Integrations
-                </div>
-            );
+                        Integrations Error <img src="img/warning.svg" width="17"/>
+                        { integrationsError }
+                    </div>
+                );
+            } else {
+                integrationsButton = (
+                    <div className="mx_RoomSettings_integrationsButton" style={{opacity: 0.5}}>
+                        Manage Integrations
+                    </div>
+                );
+            }
         }
 
         return (
@@ -865,7 +926,7 @@ module.exports = React.createClass({
                         <PowerSelector ref="ban" value={ban_level} controlled={false} disabled={!can_change_levels || current_user_level < ban_level} onChange={this.onPowerLevelsChanged}/>
                     </div>
                     <div className="mx_RoomSettings_powerLevel">
-                        <span className="mx_RoomSettings_powerLevelKey">To redact messages, you must be a </span>
+                        <span className="mx_RoomSettings_powerLevelKey">To redact other users' messages, you must be a </span>
                         <PowerSelector ref="redact" value={redact_level} controlled={false} disabled={!can_change_levels || current_user_level < redact_level} onChange={this.onPowerLevelsChanged}/>
                     </div>
 
