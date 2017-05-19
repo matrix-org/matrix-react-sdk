@@ -18,7 +18,10 @@ import React from 'react';
 import sdk from '../../../index';
 import RoomTagUtil from '../../../RoomTagUtil';
 
-const ROOM_ORDERS = ["recent", "manual"];
+const ROOM_ORDERS = [
+  ["recent", "Order rooms by recent activity"],
+  ["manual", "Manually order your rooms."]
+];
 export default React.createClass({
     displayName: 'ModifyTagDialog',
     propTypes: {
@@ -102,15 +105,18 @@ export default React.createClass({
                           autoFocus={true} onChange={this.onNameChange} size="30"
                       />
                       <label htmlFor="tag_order">Room Ordering</label>
-                      <select onChange={this.onOrderChange} name="tag_order" ref="tag_order" defaultValue={this.state.tagOrder}>
                       {
-                        ROOM_ORDERS.map((order) => {
+                        ROOM_ORDERS.map((order) => { // [order, description]
                           return (
-                            <option key={order} value={order}>{order}</option>
+                            <label title={order[1]} key={order[0]}>
+                              <input type="radio"
+                              checked={this.state.tagOrder == order[0]}
+                              name="tag_order"
+                              onChange={this.onOrderChange}
+                              value={order[0]}></input>{order[0]} - {order[1]}</label>
                           );
                         })
                       }
-                      </select>
                   </div>
               </form>
               <div className="mx_Dialog_buttons">
