@@ -280,31 +280,8 @@ module.exports = React.createClass({
     },
 
     onLogoutClicked: function(ev) {
-        const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-        Modal.createDialog(QuestionDialog, {
-            title: "Sign out?",
-            description:
-                <div>
-                    For security, logging out will delete any end-to-end encryption keys from this browser.
-
-                    If you want to be able to decrypt your conversation history from future Riot sessions,
-                    please export your room keys for safe-keeping.
-                </div>,
-            button: "Sign out",
-            extraButtons: [
-                <button key="export" className="mx_Dialog_primary"
-                        onClick={this._onExportE2eKeysClicked}>
-                    Export E2E room keys
-                </button>,
-            ],
-            onFinished: (confirmed) => {
-                if (confirmed) {
-                    dis.dispatch({action: 'logout'});
-                    if (this.props.onFinished) {
-                        this.props.onFinished();
-                    }
-                }
-            },
+        dis.dispatch({
+            action: 'logout'
         });
     },
 
@@ -491,29 +468,17 @@ module.exports = React.createClass({
             });
         }).done();
     },
-
+    
     _onExportE2eKeysClicked: function() {
-        Modal.createDialogAsync(
-            (cb) => {
-                require.ensure(['../../async-components/views/dialogs/ExportE2eKeysDialog'], () => {
-                    cb(require('../../async-components/views/dialogs/ExportE2eKeysDialog'));
-                }, "e2e-export");
-            }, {
-                matrixClient: MatrixClientPeg.get(),
-            },
-        );
+        dis.dispatch({
+            action: 'export_e2e_keys_dialog'
+        });
     },
 
     _onImportE2eKeysClicked: function() {
-        Modal.createDialogAsync(
-            (cb) => {
-                require.ensure(['../../async-components/views/dialogs/ImportE2eKeysDialog'], () => {
-                    cb(require('../../async-components/views/dialogs/ImportE2eKeysDialog'));
-                }, "e2e-export");
-            }, {
-                matrixClient: MatrixClientPeg.get(),
-            },
-        );
+        dis.dispatch({
+            action: 'import_e2e_keys_dialog'
+        });
     },
 
     _renderReferral: function() {

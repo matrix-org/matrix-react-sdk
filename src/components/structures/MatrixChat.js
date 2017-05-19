@@ -324,7 +324,7 @@ module.exports = React.createClass({
        Object.assign(newState, state);
        this.setState(newState);
     },
-
+    
     onAction: function(payload) {
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
@@ -333,7 +333,36 @@ module.exports = React.createClass({
         var self = this;
         switch (payload.action) {
             case 'logout':
-                Lifecycle.logout();
+                if (payload.forceLogout) {
+                    Lifecycle.logout();
+                } else {
+                    const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+                    Modal.createDialog(QuestionDialog, {
+                        title: "Sign out?",
+                        description:
+                            <div>
+                                For security, logging out will delete any end-to-end encryption 
+                                keys from this browser. If you want to be able to decrypt your 
+                                conversation history from future Riot sessions, please export 
+                                your room keys for safe-keeping.
+                            </div>,
+                        button: "Sign out",
+                        extraButtons: [
+                            <button key="export" className="mx_Dialog_primary"
+                                    onClick={this._exportE2eKeysDialog}>
+                                Export E2E room keys
+                            </button>,
+                        ],
+                        onFinished: (confirmed) => {
+                            if (confirmed) {
+                                Lifecycle.logout();
+                                if (this.props.onFinished) {
+                                    this.props.onFinished();
+                                }
+                            }
+                        },
+                    });
+                }
                 break;
             case 'start_registration':
                 const params = payload.params || {};
@@ -501,6 +530,12 @@ module.exports = React.createClass({
             case 'view_user_settings':
                 this._setPage(PageTypes.UserSettings);
                 this.notifyNewScreen('settings');
+                break;
+            case 'export_e2e_keys_dialog':
+                this._exportE2eKeysDialog();
+                break;
+            case 'import_e2e_keys_dialog':
+                this._importE2eKeysDialog();
                 break;
             case 'view_create_room':
                 //this._setPage(PageTypes.CreateRoom);
@@ -878,7 +913,8 @@ module.exports = React.createClass({
                 description: "For security, this session has been signed out. Please sign in again."
             });
             dis.dispatch({
-                action: 'logout'
+                action: 'logout',
+                forceLogout: true
             });
         });
         cli.on("accountData", function(ev) {
@@ -944,7 +980,10 @@ module.exports = React.createClass({
                 case 'logout':
                     console.log('postMessage: logging out');
                     if (sameUser) {
-                        Lifecycle.logout();
+                        dis.dispatch({
+                            action: 'logout',
+                            forceLogout: credentials.forceLogout
+                        });
                     } else {
                         console.log('postMessage logout: user is not logged in or credentials are invalid');
                     }
@@ -1180,6 +1219,30 @@ module.exports = React.createClass({
                 action: 'view_room_directory',
             });
         }
+    },
+    
+    _exportE2eKeysDialog: function() {
+        Modal.createDialogAsync(
+            (cb) => {
+                require.ensure(['../../async-components/views/dialogs/ExportE2eKeysDialog'], () => {
+                    cb(require('../../async-components/views/dialogs/ExportE2eKeysDialog'));
+                }, "e2e-export");
+            }, {
+                matrixClient: MatrixClientPeg.get(),
+            },
+        );
+    },
+    
+    _importE2eKeysDialog: function() {
+        Modal.createDialogAsync(
+            (cb) => {
+                require.ensure(['../../async-components/views/dialogs/ImportE2eKeysDialog'], () => {
+                    cb(require('../../async-components/views/dialogs/ImportE2eKeysDialog'));
+                }, "e2e-export");
+            }, {
+                matrixClient: MatrixClientPeg.get(),
+            },
+        );
     },
 
     onRoomIdResolved: function(room_id) {
