@@ -23,15 +23,15 @@ import Matrix from "matrix-js-sdk";
 import MatrixClientPeg from "../../MatrixClientPeg";
 import PlatformPeg from "../../PlatformPeg";
 import SdkConfig from "../../SdkConfig";
-import RoomListSorter from "../../RoomListSorter";
+import * as RoomListSorter from "../../RoomListSorter";
 import dis from "../../dispatcher";
 
 import Modal from "../../Modal";
 import Tinter from "../../Tinter";
 import sdk from '../../index';
-import Rooms from '../../Rooms';
+import * as Rooms from '../../Rooms';
 import linkifyMatrix from "../../linkify-matrix";
-import Lifecycle from '../../Lifecycle';
+import * as Lifecycle from '../../Lifecycle';
 import PageTypes from '../../PageTypes';
 
 import createRoom from "../../createRoom";
