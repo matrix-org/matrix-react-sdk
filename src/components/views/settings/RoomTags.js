@@ -18,7 +18,7 @@ limitations under the License.
 import * as React from 'react';
 import * as sdk from '../../../index';
 import * as MatrixClientPeg from '../../../MatrixClientPeg';
-import * as Modal '../../../Modal';
+import * as Modal from '../../../Modal';
 import RoomTagUtil from '../../../RoomTagUtil';
 
 module.exports = React.createClass({
