@@ -58,7 +58,6 @@ export default React.createClass({
 
     onOk: function() {
         const validationResult = this.props.validateInput(this.refs.textinput.value);
-        console.log(validationResult);
         if (validationResult === true) {
           this.props.onFinished(true, this.refs.textinput.value);
         } else {
