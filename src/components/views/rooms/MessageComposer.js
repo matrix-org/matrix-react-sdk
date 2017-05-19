@@ -127,19 +127,11 @@ export default class MessageComposer extends React.Component {
     onLocationClick(ev) {
         const LocationInputDialog = sdk.getComponent("dialogs.LocationInputDialog");
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-        const LocationEnabled = UserSettingsStore.isFeatureEnabled('inline_maps');
         if (!navigator.geolocation) {
             Modal.createDialog(
                 ErrorDialog, {
                 title: "Post Location",
                 description: "You either have disabled location in the browser, or it isn't supported.",
-            });
-            return;
-        } else if (!LocationEnabled) {
-            Modal.createDialog(
-                ErrorDialog, {
-                title: "Post Location",
-                description: 'You have the location picker disabled in settings. Please enable "Inline Maps"',
             });
             return;
         }
@@ -347,14 +339,18 @@ export default class MessageComposer extends React.Component {
                 </div>
             );
 
-            const locationButton = (
-                // Add option for either current or specifed location.
+            let locationButton = (
+                // Add option for either current or specified location.
                 // TODO: Add icon
                 <div key="controls_location" className="mx_MessageComposer_upload"
-                        onClick={this.onLocationClick} title="Post current location">
+                        onClick={this.onLocationClick} title="Post current location test">
                     <TintableSvg src="img/icons-upload.svg" width="35" height="35"/>
                 </div>
             );
+
+            if (!UserSettingsStore.isFeatureEnabled('inline_maps')) {
+                locationButton = null;
+            }
 
             const formattingButton = (
                 <img className="mx_MessageComposer_formatting"
