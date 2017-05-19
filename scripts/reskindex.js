@@ -64,7 +64,7 @@ if (!components) {
     strm.end();
     fs.rename(componentIndexTmp, componentIndex, function(err) {
         if(err) {
-            console.err("Error moving new index into place: " + err);
+            console.error("Error moving new index into place: " + err);
         } else {
             console.log('Reskindex: completed');
         }
@@ -93,7 +93,7 @@ if (!args.w) {
 
 var watchDebouncer = null;
 chokidar.watch(path.join(componentsDir, componentGlob)).on('all', (event, path) => {
-    if (path === componentIndex || path === componentIndexTmp) return;
+    if (path === componentIndex) return;
     if (watchDebouncer) clearTimeout(watchDebouncer);
     watchDebouncer = setTimeout(reskindex, 1000);
 });
