@@ -30,6 +30,8 @@ module.exports = React.createClass({
         avatarsMaxLength: React.PropTypes.number,
         // The minimum number of events needed to trigger summarisation
         threshold: React.PropTypes.number,
+        // Called when the MELS expansion is toggled
+        onToggle: React.PropTypes.func,
     },
 
     getInitialState: function() {
@@ -63,6 +65,7 @@ module.exports = React.createClass({
         this.setState({
             expanded: !this.state.expanded,
         });
+        this.props.onToggle();
     },
 
     /**
@@ -108,7 +111,7 @@ module.exports = React.createClass({
         }
 
         return (
-            <span>
+            <span className="mx_TextualEvent mx_MemberEventListSummary_summary">
                 {summaries.join(", ")}
             </span>
         );
@@ -218,6 +221,8 @@ module.exports = React.createClass({
             "banned": beConjugated + " banned",
             "unbanned": beConjugated + " unbanned",
             "kicked": beConjugated + " kicked",
+            "changed_name": "changed name",
+            "changed_avatar": "changed avatar",
         };
 
         if (Object.keys(map).includes(t)) {
@@ -264,7 +269,7 @@ module.exports = React.createClass({
             );
         });
         return (
-            <span>
+            <span className="mx_MemberEventListSummary_avatars" onClick={ this._toggleSummary }>
                 {avatars}
             </span>
         );
@@ -286,7 +291,24 @@ module.exports = React.createClass({
         switch (e.mxEvent.getContent().membership) {
             case 'invite': return 'invited';
             case 'ban': return 'banned';
-            case 'join': return 'joined';
+            case 'join':
+                if (e.mxEvent.getPrevContent().membership === 'join') {
+                    if (e.mxEvent.getContent().displayname !==
+                        e.mxEvent.getPrevContent().displayname)
+                    {
+                        return 'changed_name';
+                    }
+                    else if (e.mxEvent.getContent().avatar_url !==
+                        e.mxEvent.getPrevContent().avatar_url)
+                    {
+                        return 'changed_avatar';
+                    }
+                    // console.log("MELS ignoring duplicate membership join event");
+                    return null;
+                }
+                else {
+                    return 'joined';
+                }
             case 'leave':
                 if (e.mxEvent.getSender() === e.mxEvent.getStateKey()) {
                     switch (e.mxEvent.getPrevContent().membership) {
@@ -347,6 +369,7 @@ module.exports = React.createClass({
 
     render: function() {
         const eventsToRender = this.props.events;
+        const eventIds = eventsToRender.map(e => e.getId()).join(',');
         const fewEvents = eventsToRender.length < this.props.threshold;
         const expanded = this.state.expanded || fewEvents;
 
@@ -357,7 +380,7 @@ module.exports = React.createClass({
 
         if (fewEvents) {
             return (
-                <div className="mx_MemberEventListSummary">
+                <div className="mx_MemberEventListSummary" data-scroll-tokens={eventIds}>
                     {expandedEvents}
                 </div>
             );
@@ -381,7 +404,7 @@ module.exports = React.createClass({
             // Initialise a user's events
             if (!userEvents[userId]) {
                 userEvents[userId] = [];
-                avatarMembers.push(e.target);
+                if (e.target) avatarMembers.push(e.target);
             }
             userEvents[userId].push({
                 mxEvent: e,
@@ -397,31 +420,28 @@ module.exports = React.createClass({
             (seq1, seq2) => aggregate.indices[seq1] > aggregate.indices[seq2]
         );
 
-        const avatars = this._renderAvatars(avatarMembers);
-        const summary = this._renderSummary(aggregate.names, orderedTransitionSequences);
-        const toggleButton = (
-            <a className="mx_MemberEventListSummary_toggle" onClick={this._toggleSummary}>
-                {expanded ? 'collapse' : 'expand'}
-            </a>
-        );
-
-        const summaryContainer = (
-            <div className="mx_EventTile_line">
-                <div className="mx_EventTile_info">
-                    <span className="mx_MemberEventListSummary_avatars">
-                        {avatars}
-                    </span>
-                    <span className="mx_TextualEvent mx_MemberEventListSummary_summary">
-                        {summary}
-                    </span>&nbsp;
-                    {toggleButton}
+        let summaryContainer = null;
+        if (!expanded) {
+            summaryContainer = (
+                <div className="mx_EventTile_line">
+                    <div className="mx_EventTile_info">
+                        {this._renderAvatars(avatarMembers)}
+                        {this._renderSummary(aggregate.names, orderedTransitionSequences)}
+                    </div>
                 </div>
+            );
+        }
+        const toggleButton = (
+            <div className={"mx_MemberEventListSummary_toggle"} onClick={this._toggleSummary}>
+                {expanded ? 'collapse' : 'expand'}
             </div>
         );
 
         return (
-            <div className="mx_MemberEventListSummary">
+            <div className="mx_MemberEventListSummary" data-scroll-tokens={eventIds}>
+                {toggleButton}
                 {summaryContainer}
+                {expanded ? <div className="mx_MemberEventListSummary_line">&nbsp;</div> : null}
                 {expandedEvents}
             </div>
         );

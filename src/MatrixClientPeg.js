@@ -16,6 +16,7 @@ limitations under the License.
 
 'use strict';
 
+import q from "q";
 import Matrix from 'matrix-js-sdk';
 import utils from 'matrix-js-sdk/lib/utils';
 import EventTimeline from 'matrix-js-sdk/lib/models/event-timeline';
@@ -49,6 +50,18 @@ class MatrixClientPeg {
         this.opts = {
             initialSyncLimit: 20,
         };
+        this.indexedDbWorkerScript = null;
+    }
+
+    /**
+     * Sets the script href passed to the IndexedDB web worker
+     * If set, a separate web worker will be started to run the IndexedDB
+     * queries on.
+     *
+     * @param {string} script href to the script to be passed to the web worker
+     */
+    setIndexedDbWorkerScript(script) {
+        this.indexedDbWorkerScript = script;
     }
 
     get(): MatrixClient {
@@ -71,7 +84,16 @@ class MatrixClientPeg {
         const opts = utils.deepCopy(this.opts);
         // the react sdk doesn't work without this, so don't allow
         opts.pendingEventOrdering = "detached";
-        this.get().startClient(opts);
+
+        let promise = this.matrixClient.store.startup();
+        // log any errors when starting up the database (if one exists)
+        promise.catch((err) => { console.error(err); });
+
+        // regardless of errors, start the client. If we did error out, we'll
+        // just end up doing a full initial /sync.
+        promise.finally(() => {
+            this.get().startClient(opts);
+        });
     }
 
     getCredentials(): MatrixClientCreds {
@@ -110,6 +132,17 @@ class MatrixClientPeg {
 
         if (localStorage) {
             opts.sessionStore = new Matrix.WebStorageSessionStore(localStorage);
+        }
+        if (window.indexedDB && localStorage) {
+            // FIXME: bodge to remove old database. Remove this after a few weeks.
+            window.indexedDB.deleteDatabase("matrix-js-sdk:default");
+
+            opts.store = new Matrix.IndexedDBStore({
+                indexedDB: window.indexedDB,
+                dbName: "riot-web-sync",
+                localStorage: localStorage,
+                workerScript: this.indexedDbWorkerScript,
+            });
         }
 
         this.matrixClient = Matrix.createClient(opts);

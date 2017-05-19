@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2017 Vector Creations Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,6 +26,7 @@ var q = require("q");
 var classNames = require("classnames");
 var Matrix = require("matrix-js-sdk");
 
+var UserSettingsStore = require('../../UserSettingsStore');
 var MatrixClientPeg = require("../../MatrixClientPeg");
 var ContentMessages = require("../../ContentMessages");
 var Modal = require("../../Modal");
@@ -155,8 +157,10 @@ module.exports = React.createClass({
         this.dispatcherRef = dis.register(this.onAction);
         MatrixClientPeg.get().on("Room", this.onRoom);
         MatrixClientPeg.get().on("Room.timeline", this.onRoomTimeline);
+        MatrixClientPeg.get().on("Room.name", this.onRoomName);
         MatrixClientPeg.get().on("Room.accountData", this.onRoomAccountData);
         MatrixClientPeg.get().on("RoomState.members", this.onRoomStateMember);
+        MatrixClientPeg.get().on("RoomMember.membership", this.onRoomMemberMembership);
         MatrixClientPeg.get().on("accountData", this.onAccountData);
 
         this.tabComplete = new TabComplete({
@@ -267,6 +271,7 @@ module.exports = React.createClass({
 
         this._updateConfCallNotification();
 
+        window.addEventListener('beforeunload', this.onPageUnload);
         window.addEventListener('resize', this.onResize);
         this.onResize();
 
@@ -342,11 +347,14 @@ module.exports = React.createClass({
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener("Room", this.onRoom);
             MatrixClientPeg.get().removeListener("Room.timeline", this.onRoomTimeline);
+            MatrixClientPeg.get().removeListener("Room.name", this.onRoomName);
             MatrixClientPeg.get().removeListener("Room.accountData", this.onRoomAccountData);
             MatrixClientPeg.get().removeListener("RoomState.members", this.onRoomStateMember);
+            MatrixClientPeg.get().removeListener("RoomMember.membership", this.onRoomMemberMembership);
             MatrixClientPeg.get().removeListener("accountData", this.onAccountData);
         }
 
+        window.removeEventListener('beforeunload', this.onPageUnload);
         window.removeEventListener('resize', this.onResize);
 
         document.removeEventListener("keydown", this.onKeyDown);
@@ -358,6 +366,17 @@ module.exports = React.createClass({
         // console.log("Tinter.tint from RoomView.unmount");
         // Tinter.tint(); // reset colourscheme
     },
+
+    onPageUnload(event) {
+        if (ContentMessages.getCurrentUploads().length > 0) {
+            return event.returnValue =
+                'You seem to be uploading files, are you sure you want to quit?';
+        } else if (this._getCallForRoom() && this.state.callState !== 'ended') {
+            return event.returnValue =
+                'You seem to be in a call, are you sure you want to quit?';
+        }
+    },
+
 
     onKeyDown: function(ev) {
         let handled = false;
@@ -479,11 +498,53 @@ module.exports = React.createClass({
         }
     },
 
+    onRoomName: function(room) {
+        if (this.state.room && room.roomId == this.state.room.roomId) {
+            this.forceUpdate();
+        }
+    },
+
+    canResetTimeline: function() {
+        if (!this.refs.messagePanel) {
+            return true;
+        }
+        return this.refs.messagePanel.canResetTimeline();
+    },
+
     // called when state.room is first initialised (either at initial load,
     // after a successful peek, or after we join the room).
     _onRoomLoaded: function(room) {
+        this._warnAboutEncryption(room);
         this._calculatePeekRules(room);
         this._updatePreviewUrlVisibility(room);
+    },
+
+    _warnAboutEncryption: function (room) {
+        if (!MatrixClientPeg.get().isRoomEncrypted(room.roomId)) {
+            return;
+        }
+        let userHasUsedEncryption = false;
+        if (localStorage) {
+            userHasUsedEncryption = localStorage.getItem('mx_user_has_used_encryption');
+        }
+        if (!userHasUsedEncryption) {
+            const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+            Modal.createDialog(QuestionDialog, {
+                title: "Warning!",
+                hasCancelButton: false,
+                description: (
+                    <div>
+                        <p>End-to-end encryption is in beta and may not be reliable.</p>
+                        <p>You should <b>not</b> yet trust it to secure data.</p>
+                        <p>Devices will <b>not</b> yet be able to decrypt history from before they joined the room.</p>
+                        <p>Encrypted messages will not be visible on clients that do not yet implement encryption.</p>
+                    </div>
+                ),
+            });
+        }
+        if (localStorage) {
+            localStorage.setItem('mx_user_has_used_encryption', true);
+        }
     },
 
     _calculatePeekRules: function(room) {
@@ -603,6 +664,12 @@ module.exports = React.createClass({
         this._updateRoomMembers();
     },
 
+    onRoomMemberMembership: function(ev, member, oldMembership) {
+        if (member.userId == MatrixClientPeg.get().credentials.userId) {
+            this.forceUpdate();
+        }
+    },
+
     // rate limited because a power level change will emit an event for every
     // member in the room.
     _updateRoomMembers: new rate_limited_func(function() {
@@ -699,17 +766,11 @@ module.exports = React.createClass({
     },
 
     onResendAllClick: function() {
-        var eventsToResend = this._getUnsentMessages(this.state.room);
-        eventsToResend.forEach(function(event) {
-            Resend.resend(event);
-        });
+        Resend.resendUnsentEvents(this.state.room);
     },
 
     onCancelAllClick: function() {
-        var eventsToResend = this._getUnsentMessages(this.state.room);
-        eventsToResend.forEach(function(event) {
-            Resend.removeFromQueue(event);
-        });
+        Resend.cancelUnsentEvents(this.state.room);
     },
 
     onJoinButtonClicked: function(ev) {
@@ -875,8 +936,6 @@ module.exports = React.createClass({
     },
 
     uploadFile: function(file) {
-        var self = this;
-
         if (MatrixClientPeg.get().isGuest()) {
             var NeedToRegisterDialog = sdk.getComponent("dialogs.NeedToRegisterDialog");
             Modal.createDialog(NeedToRegisterDialog, {
@@ -888,11 +947,20 @@ module.exports = React.createClass({
 
         ContentMessages.sendContentToRoom(
             file, this.state.room.roomId, MatrixClientPeg.get()
-        ).done(undefined, function(error) {
-            var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+        ).done(undefined, (error) => {
+            if (error.name === "UnknownDeviceError") {
+                dis.dispatch({
+                    action: 'unknown_device_error',
+                    err: error,
+                    room: this.state.room,
+                });
+                return;
+            }
+            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+            console.error("Failed to upload file " + file + " " + error);
             Modal.createDialog(ErrorDialog, {
                 title: "Failed to upload file",
-                description: error.toString()
+                description: ((error && error.message) ? error.message : "Server may be unavailable, overloaded, or the file too big"),
             });
         });
     },
@@ -976,9 +1044,10 @@ module.exports = React.createClass({
             });
         }, function(error) {
             var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+            console.error("Search failed: " + error);
             Modal.createDialog(ErrorDialog, {
                 title: "Search failed",
-                description: error.toString()
+                description: ((error && error.message) ? error.message : "Server may be unavailable, overloaded, or search timed out :("),
             });
         }).finally(function() {
             self.setState({
@@ -1126,6 +1195,7 @@ module.exports = React.createClass({
         console.log("updateTint from onCancelClick");
         this.updateTint();
         this.setState({editingRoomSettings: false});
+        dis.dispatch({action: 'focus_composer'});
     },
 
     onLeaveClick: function() {
@@ -1199,6 +1269,7 @@ module.exports = React.createClass({
     // jump down to the bottom of this room, where new events are arriving
     jumpToLiveTimeline: function() {
         this.refs.messagePanel.jumpToLiveTimeline();
+        dis.dispatch({action: 'focus_composer'});
     },
 
     // jump up to wherever our read marker is
@@ -1218,12 +1289,7 @@ module.exports = React.createClass({
             return;
         }
 
-        var pos = this.refs.messagePanel.getReadMarkerPosition();
-
-        // we want to show the bar if the read-marker is off the top of the
-        // screen.
-        var showBar = (pos < 0);
-
+        const showBar = this.refs.messagePanel.canJumpToReadMarker();
         if (this.state.showTopUnreadMessagesBar != showBar) {
             this.setState({showTopUnreadMessagesBar: showBar},
                           this.onChildResize);
@@ -1447,6 +1513,7 @@ module.exports = React.createClass({
                             />
                             <div className="mx_RoomView_auxPanel">
                                 <RoomPreviewBar onJoinClick={ this.onJoinButtonClicked }
+                                                onForgetClick={ this.onForgetClick }
                                                 onRejectClick={ this.onRejectThreepidInviteButtonClicked }
                                                 canPreview={ false } error={ this.state.roomLoadError }
                                                 roomAlias={room_alias}
@@ -1489,6 +1556,7 @@ module.exports = React.createClass({
                         />
                         <div className="mx_RoomView_auxPanel">
                             <RoomPreviewBar onJoinClick={ this.onJoinButtonClicked }
+                                            onForgetClick={ this.onForgetClick }
                                             onRejectClick={ this.onRejectButtonClicked }
                                             inviterName={ inviterName }
                                             canPreview={ false }
@@ -1537,7 +1605,7 @@ module.exports = React.createClass({
                 onResize={this.onChildResize}
                 onVisible={this.onStatusBarVisible}
                 onHidden={this.onStatusBarHidden}
-                whoIsTypingLimit={2}
+                whoIsTypingLimit={3}
             />;
         }
 
@@ -1564,6 +1632,7 @@ module.exports = React.createClass({
             }
             aux = (
                 <RoomPreviewBar onJoinClick={this.onJoinButtonClicked}
+                                onForgetClick={ this.onForgetClick }
                                 onRejectClick={this.onRejectThreepidInviteButtonClicked}
                                 spinner={this.state.joining}
                                 inviterName={inviterName}
@@ -1619,14 +1688,14 @@ module.exports = React.createClass({
 
                 videoMuteButton =
                     <div className="mx_RoomView_voipButton" onClick={this.onMuteVideoClick}>
-                        <img src={call.isLocalVideoMuted() ? "img/video-unmute.svg" : "img/video-mute.svg"}
+                        <TintableSvg src={call.isLocalVideoMuted() ? "img/video-unmute.svg" : "img/video-mute.svg"}
                              alt={call.isLocalVideoMuted() ? "Click to unmute video" : "Click to mute video"}
                              width="31" height="27"/>
                     </div>;
             }
             voiceMuteButton =
                 <div className="mx_RoomView_voipButton" onClick={this.onMuteAudioClick}>
-                    <img src={call.isMicrophoneMuted() ? "img/voice-unmute.svg" : "img/voice-mute.svg"}
+                    <TintableSvg src={call.isMicrophoneMuted() ? "img/voice-unmute.svg" : "img/voice-mute.svg"}
                          alt={call.isMicrophoneMuted() ? "Click to unmute audio" : "Click to mute audio"}
                          width="21" height="26"/>
                 </div>;
@@ -1667,7 +1736,7 @@ module.exports = React.createClass({
         var messagePanel = (
             <TimelinePanel ref={this._gatherTimelinePanelRef}
                 timelineSet={this.state.room.getUnfilteredTimelineSet()}
-                manageReadReceipts={true}
+                manageReadReceipts={!UserSettingsStore.getSyncedSetting('hideReadReceipts', false)}
                 manageReadMarkers={true}
                 hidden={hideMessagePanel}
                 highlightedEventId={this.props.highlightedEventId}
@@ -1703,6 +1772,7 @@ module.exports = React.createClass({
                     oobData={this.props.oobData}
                     editing={this.state.editingRoomSettings}
                     saving={this.state.uploadingRoomSettings}
+                    inRoom={myMember && myMember.membership === 'join'}
                     collapsedRhs={ this.props.collapsedRhs }
                     onSearchClick={this.onSearchClick}
                     onSettingsClick={this.onSettingsClick}

@@ -13,6 +13,7 @@ module.exports = {
     plugins: [
       "react",
       "flowtype",
+      "babel"
     ],
     env: {
         es6: true,
@@ -23,6 +24,11 @@ module.exports = {
         }
     },
     rules: {
+        // eslint's built in no-invalid-this rule breaks with class properties
+        "no-invalid-this": "off",
+        // so we replace it with a version that is class property aware
+        "babel/no-invalid-this": "error",
+
         /** react **/
         // This just uses the react plugin to help eslint known when
         // variables have been used in JSX
@@ -58,7 +64,7 @@ module.exports = {
             // to JSX.
             ignorePattern: '^\\s*<',
             ignoreComments: true,
-            code: 90,
+            code: 120,
         }],
         "valid-jsdoc": ["warn"],
         "new-cap": ["warn"],

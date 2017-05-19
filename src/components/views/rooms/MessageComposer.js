@@ -33,6 +33,7 @@ export default class MessageComposer extends React.Component {
         this.onUploadClick = this.onUploadClick.bind(this);
         this.onLocationClick = this.onLocationClick.bind(this);
         this.onUploadFileSelected = this.onUploadFileSelected.bind(this);
+        this.uploadFiles = this.uploadFiles.bind(this);
         this.onVoiceCallClick = this.onVoiceCallClick.bind(this);
         this.onInputContentChanged = this.onInputContentChanged.bind(this);
         this.onUpArrow = this.onUpArrow.bind(this);
@@ -43,6 +44,7 @@ export default class MessageComposer extends React.Component {
         this.onToggleMarkdownClicked = this.onToggleMarkdownClicked.bind(this);
         this.onInputStateChanged = this.onInputStateChanged.bind(this);
         this.onEvent = this.onEvent.bind(this);
+        this.onPageUnload = this.onPageUnload.bind(this);
 
         this.state = {
             autocompleteQuery: '',
@@ -50,7 +52,7 @@ export default class MessageComposer extends React.Component {
             inputState: {
                 style: [],
                 blockType: null,
-                isRichtextEnabled: UserSettingsStore.getSyncedSetting('MessageComposerInput.isRichTextEnabled', true),
+                isRichtextEnabled: UserSettingsStore.getSyncedSetting('MessageComposerInput.isRichTextEnabled', false),
                 wordCount: 0,
             },
             showFormatting: UserSettingsStore.getSyncedSetting('MessageComposer.showFormatting', false),
@@ -64,11 +66,20 @@ export default class MessageComposer extends React.Component {
         // marked as encrypted.
         // XXX: fragile as all hell - fixme somehow, perhaps with a dedicated Room.encryption event or something.
         MatrixClientPeg.get().on("event", this.onEvent);
+
+        window.addEventListener('beforeunload', this.onPageUnload);
     }
 
     componentWillUnmount() {
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener("event", this.onEvent);
+        }
+        window.removeEventListener('beforeunload', this.onPageUnload);
+    }
+
+    onPageUnload(event) {
+        if (this.messageComposerInput) {
+            this.messageComposerInput.sentHistory.saveLastTextEntry();
         }
     }
 
@@ -149,16 +160,18 @@ export default class MessageComposer extends React.Component {
         });
     }
 
-    onUploadFileSelected(ev) {
-        let files = ev.target.files;
+    onUploadFileSelected(files) {
+        this.uploadFiles(files.target.files);
+    }
 
+    uploadFiles(files) {
         let QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
         let TintableSvg = sdk.getComponent("elements.TintableSvg");
 
         let fileList = [];
         for (let i=0; i<files.length; i++) {
             fileList.push(<li key={i}>
-                <TintableSvg key={i} src="img/files.svg" width="16" height="16" /> {files[i].name}
+                <TintableSvg key={i} src="img/files.svg" width="16" height="16" /> {files[i].name || 'Attachment'}
             </li>);
         }
 
@@ -229,7 +242,7 @@ export default class MessageComposer extends React.Component {
     }
 
     onUpArrow() {
-       return this.refs.autocomplete.onUpArrow();
+        return this.refs.autocomplete.onUpArrow();
     }
 
     onDownArrow() {
@@ -281,8 +294,8 @@ export default class MessageComposer extends React.Component {
         );
 
         let e2eImg, e2eTitle, e2eClass;
-
-        if (MatrixClientPeg.get().isRoomEncrypted(this.props.room.roomId)) {
+        const roomIsEncrypted = MatrixClientPeg.get().isRoomEncrypted(this.props.room.roomId);
+        if (roomIsEncrypted) {
             // FIXME: show a /!\ if there are untrusted devices in the room...
             e2eImg = 'img/e2e-verified.svg';
             e2eTitle = 'Encrypted room';
@@ -353,15 +366,20 @@ export default class MessageComposer extends React.Component {
                      key="controls_formatting" />
             );
 
+            const placeholderText = roomIsEncrypted ?
+                "Send an encrypted message…" : "Send a message (unencrypted)…";
+
             controls.push(
                 <MessageComposerInput
                     ref={c => this.messageComposerInput = c}
                     key="controls_input"
                     onResize={this.props.onResize}
                     room={this.props.room}
+                    placeholder={placeholderText}
                     tryComplete={this._tryComplete}
                     onUpArrow={this.onUpArrow}
                     onDownArrow={this.onDownArrow}
+                    onFilesPasted={this.uploadFiles}
                     tabComplete={this.props.tabComplete} // used for old messagecomposerinput/tabcomplete
                     onContentChanged={this.onInputContentChanged}
                     onInputStateChanged={this.onInputStateChanged} />,
