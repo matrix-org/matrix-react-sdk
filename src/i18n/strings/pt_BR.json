@@ -528,5 +528,7 @@
     "es-gt": "Espanhol (Guatemala)",
     "es-hn": "Espanhol (Honduras)",
     "es-mx": "Espanhol (México)",
-    "es-ni": "Espanhol (Nicarágua)"
+    "es-ni": "Espanhol (Nicarágua)",
+    "es-pa": "Espanhol (Panamá)",
+    "%(oneUser)s changed his/her avatar": "%(oneUser)s alterou sua imagem pública"
 }
