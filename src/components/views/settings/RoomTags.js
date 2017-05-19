@@ -17,8 +17,8 @@ limitations under the License.
 'use strict';
 import * as React from 'react';
 import * as sdk from '../../../index';
-const MatrixClientPeg = require('../../../MatrixClientPeg');
-const Modal = require('../../../Modal');
+import * as MatrixClientPeg from '../../../MatrixClientPeg';
+import * as Modal '../../../Modal';
 import RoomTagUtil from '../../../RoomTagUtil';
 
 module.exports = React.createClass({
