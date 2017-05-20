@@ -69,7 +69,7 @@ module.exports = React.createClass({
                 }
             )
         );
-        Leaflet.Icon.Default.prototype.options.imagePath = "/img/";
+        Leaflet.Icon.Default.prototype.options.imagePath = "img/";
         leafletMap.addControl(new Leaflet.Marker(this.state.coords, {
             title: this.state.body,
             icon: new Leaflet.Icon.Default(),
