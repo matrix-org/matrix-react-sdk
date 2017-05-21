@@ -298,10 +298,12 @@ var commands = {
 
                 var fingerprint = matches[3];
 
-                if (device.isVerified() && device.getFingerprint() === fingerprint) {
-                    return reject(`Device already verified!`);
-                } else if (device.isVerified() && device.getFingerprint() !== fingerprint) {
-                    return reject(`WARNING: Device already verified, but keys do NOT MATCH!`);
+                if (device.isVerified()) {
+                    if (device.getFingerprint() === fingerprint) {
+                        return reject(`Device already verified!`);
+                    } else {
+                        return reject(`WARNING: Device already verified, but keys do NOT MATCH!`);
+                    }
                 }
 
                 if (device.getFingerprint() === fingerprint) {
