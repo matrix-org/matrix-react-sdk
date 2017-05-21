@@ -298,11 +298,17 @@ var commands = {
 
                 var fingerprint = matches[3];
 
+                if (device.isVerified() && device.getFingerprint() === fingerprint) {
+                    return reject(`Device already verified!`);
+                } else if (device.isVerified() && device.getFingerprint() !== fingerprint) {
+                    return reject(`WARNING: Device already verified, but keys do NOT MATCH!`);
+                }
+
                 if (device.getFingerprint() === fingerprint) {
 
                     var QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
                     Modal.createDialog(QuestionDialog, {
-                        title: "Approve validated device",
+                        title: "Approve verified device",
                         description: (
                             <div>
                                 <p>
@@ -323,7 +329,7 @@ var commands = {
                                 </p>
                             </div>
                         ),
-                        button: "Accept this validated key",
+                        button: "Accept this verified key",
                         onFinished: confirm => {
                             if (confirm) {
                                 MatrixClientPeg.get().setDeviceVerified(
@@ -335,7 +341,7 @@ var commands = {
 
                     return success();
                 } else {
-                    return reject(`WARNING: KEY VALIDATION FAILED! The signing key for ${userId} and device
+                    return reject(`WARNING: KEY VERIFICATION FAILED! The signing key for ${userId} and device
                             ${deviceId} is \"${device.getFingerprint()}\" which does not match the provided key
                             \"${fingerprint}\" This could mean your communications are being intercepted!`);
                 }
