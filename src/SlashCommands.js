@@ -289,14 +289,14 @@ var commands = {
         if (args) {
             var matches = args.match(/^(\S+) +(\S+) +(\S+)$/);
             if (matches) {
-                var userId = matches[1];
-                var deviceId = matches[2];
-                var device = MatrixClientPeg.get().getStoredDevice(userId, deviceId);
+                const userId = matches[1];
+                const deviceId = matches[2];
+                const fingerprint = matches[3];
+
+                const device = MatrixClientPeg.get().getStoredDevice(userId, deviceId);
                 if (!device) {
                     return reject(`Unknown (user, device) pair: (${userId}, ${deviceId})`);
                 }
-
-                var fingerprint = matches[3];
 
                 if (device.isVerified()) {
                     if (device.getFingerprint() === fingerprint) {
@@ -307,8 +307,7 @@ var commands = {
                 }
 
                 if (device.getFingerprint() === fingerprint) {
-
-                    var QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+                    const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
                     Modal.createDialog(QuestionDialog, {
                         title: "Approve verified device",
                         description: (
@@ -327,7 +326,7 @@ var commands = {
                                     </ul>
                                 </div>
                                 <p>
-                                    If you would like to accept this device as validated, press accept!
+                                    If you would like to accept this device as verified, press accept!
                                 </p>
                             </div>
                         ),
@@ -344,8 +343,8 @@ var commands = {
                     return success();
                 } else {
                     return reject(`WARNING: KEY VERIFICATION FAILED! The signing key for ${userId} and device
-                            ${deviceId} is \"${device.getFingerprint()}\" which does not match the provided key
-                            \"${fingerprint}\" This could mean your communications are being intercepted!`);
+                            ${deviceId} is "${device.getFingerprint()}" which does not match the provided key
+                            "${fingerprint}" This could mean your communications are being intercepted!`);
                 }
             }
         }
