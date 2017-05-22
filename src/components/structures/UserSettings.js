@@ -29,13 +29,9 @@ const Email = require('../../email');
 const AddThreepid = require('../../AddThreepid');
 const SdkConfig = require('../../SdkConfig');
 import AccessibleButton from '../views/elements/AccessibleButton';
-<<<<<<< HEAD
 import _t from 'counterpart-riot';
 const languageHandler = require('../../languageHandler');
-
-=======
 import * as FormattingUtils from '../../utils/FormattingUtils';
->>>>>>> develop
 
 // if this looks like a release, use the 'version' from package.json; else use
 // the git sha. Prepend version with v, to look like riot-web version
