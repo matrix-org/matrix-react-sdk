@@ -31,7 +31,7 @@ const SdkConfig = require('../../SdkConfig');
 import AccessibleButton from '../views/elements/AccessibleButton';
 import _t from 'counterpart-riot';
 const languageHandler = require('../../languageHandler');
-
+import * as FormattingUtils from '../../utils/FormattingUtils';
 
 // if this looks like a release, use the 'version' from package.json; else use
 // the git sha. Prepend version with v, to look like riot-web version
@@ -639,7 +639,12 @@ module.exports = React.createClass({
     _renderCryptoInfo: function() {
         const client = MatrixClientPeg.get();
         const deviceId = client.deviceId;
-        const identityKey = client.getDeviceEd25519Key() || _t("<not supported>");
+        let identityKey = client.getDeviceEd25519Key();
+        if (!identityKey) {
+             identityKey = _t("<not supported>");
+        } else {
+            identityKey = FormattingUtils.formatCryptoKey(identityKey);
+        }
 
         let importExportButtons = null;
 
@@ -830,7 +835,7 @@ module.exports = React.createClass({
     },
 
     nameForMedium: function(medium) {
-        if (medium === 'msisdn') return 'Phone';
+        if (medium === 'msisdn') return _t('Phone');
         return medium[0].toUpperCase() + medium.slice(1);
     },
 
