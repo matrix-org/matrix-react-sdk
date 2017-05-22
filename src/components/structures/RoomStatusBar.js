@@ -176,8 +176,8 @@ module.exports = React.createClass({
                 <div className="mx_RoomStatusBar_scrollDownIndicator"
                         onClick={ this.props.onScrollToBottomClick }>
                     <img src="img/scrolldown.svg" width="24" height="24"
-                        alt="Scroll to bottom of page"
-                        title="Scroll to bottom of page"/>
+                        alt={ _t("Scroll to bottom of page") }
+                        title={ _t("Scroll to bottom of page") }/>
                 </div>
             );
         }
