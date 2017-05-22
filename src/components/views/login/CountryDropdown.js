@@ -19,7 +19,6 @@ import React from 'react';
 import sdk from '../../../index';
 
 import { COUNTRIES } from '../../../phonenumber';
-import { charactersToImageNode } from '../../../HtmlUtils';
 
 const COUNTRIES_BY_ISO2 = new Object(null);
 for (const c of COUNTRIES) {
@@ -27,9 +26,14 @@ for (const c of COUNTRIES) {
 }
 
 function countryMatchesSearchQuery(query, country) {
+    // Remove '+' if present (when searching for a prefix)
+    if (query[0] === '+') {
+        query = query.slice(1);
+    }
+
     if (country.name.toUpperCase().indexOf(query.toUpperCase()) == 0) return true;
     if (country.iso2 == query.toUpperCase()) return true;
-    if (country.prefix == query) return true;
+    if (country.prefix.indexOf(query) !== -1) return true;
     return false;
 }
 
@@ -42,7 +46,7 @@ export default class CountryDropdown extends React.Component {
 
         this.state = {
             searchQuery: '',
-        }
+        };
     }
 
     componentWillMount() {
@@ -65,13 +69,7 @@ export default class CountryDropdown extends React.Component {
     }
 
     _flagImgForIso2(iso2) {
-        // Unicode Regional Indicator Symbol letter 'A'
-        const RIS_A = 0x1F1E6;
-        const ASCII_A = 65;
-        return charactersToImageNode(iso2, true,
-            RIS_A + (iso2.charCodeAt(0) - ASCII_A),
-            RIS_A + (iso2.charCodeAt(1) - ASCII_A),
-        );
+        return <img src={`flags/${iso2}.png`}/>;
     }
 
     _getShortOption(iso2) {
@@ -114,7 +112,7 @@ export default class CountryDropdown extends React.Component {
         const options = displayedCountries.map((country) => {
             return <div key={country.iso2}>
                 {this._flagImgForIso2(country.iso2)}
-                {country.name}
+                {country.name} <span>(+{country.prefix})</span>
             </div>;
         });
 
@@ -122,13 +120,13 @@ export default class CountryDropdown extends React.Component {
         // values between mounting and the initial value propgating
         const value = this.props.value || COUNTRIES[0].iso2;
 
-        return <Dropdown className={this.props.className}
+        return <Dropdown className={this.props.className + " left_aligned"}
             onOptionChange={this._onOptionChange} onSearchChange={this._onSearchChange}
             menuWidth={298} getShortOption={this._getShortOption}
             value={value} searchEnabled={true}
         >
             {options}
-        </Dropdown>
+        </Dropdown>;
     }
 }
 
