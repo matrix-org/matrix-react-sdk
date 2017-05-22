@@ -296,7 +296,7 @@ export default React.createClass({
                 var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Unknown command"),
-                    description: _t("Usage: /markdown on|off"),
+                    description: _t("Usage") + ": /markdown on|off",
                     button: _t("OK"),
                 });
             }
