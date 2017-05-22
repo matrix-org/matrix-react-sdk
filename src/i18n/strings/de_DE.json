@@ -382,7 +382,7 @@
     "%(senderName)s removed their profile picture": "%(senderName)s löschte das Profilbild",
     "%(senderName)s requested a VoIP conference": "%(senderName)s fragte nach einer VoIP-Konferenz",
     "Room %(roomId)s not visible": "Raum %(roomId)s ist nicht sichtbar",
-    "%(senderDisplayName)s sent an image": "%(senderDisplayName)s sandte ein Bild",
+    "%(senderDisplayName)s sent an image": "%(senderDisplayName)s hat ein Bild gesendet",
     "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room": "%(senderName)s sandte eine Einladung an %(targetDisplayName)s um diesem Raum beizutreten",
     "%(senderName)s set a profile picture": "%(senderName)s setzte ein Profilbild",
     "%(senderName)s set their display name to %(displayName)s": "%(senderName)s setzte den Anzeigenamen zu %(displayName)s",
