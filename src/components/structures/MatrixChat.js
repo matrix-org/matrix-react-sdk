@@ -72,6 +72,9 @@ module.exports = React.createClass({
 
         // A function that makes a registration URL
         makeRegistrationUrl: React.PropTypes.func.isRequired,
+        
+        // Theme style elements in document
+        themeStyleElements: React.PropTypes.object,
     },
 
     childContextTypes: {
@@ -713,29 +716,27 @@ module.exports = React.createClass({
      * Called whenever someone changes the theme
      */
     _onSetTheme: function(theme) {
-        // look for the stylesheet elements.
-        // styleElements is a map from style name to HTMLLinkElement.
-        var styleElements = Object.create(null);
-        var i, a;
-        for (i = 0; (a = document.getElementsByTagName("link")[i]); i++) {
-            var href = a.getAttribute("href");
-            // shouldn't we be using the 'title' tag rather than the href?
-            var match = href.match(/^bundles\/.*\/theme-(.*)\.css$/);
-            if (match) {
-                styleElements[match[1]] = a;
-            }
+        var isValidTheme = false;
+        if (theme) {
+            SdkConfig.get().themes.every(function(configTheme, i) {
+                if (theme == configTheme.value) {
+                    isValidTheme = true;
+                    return false;
+                } else {
+                    return true;
+                }
+            });
         }
-
-        if (!theme || !(theme in styleElements)) {
+        if (!isValidTheme) {
             console.log( ( theme ?  "Unknown theme '" + theme + "'." : "No theme set." ) + " Falling back to default theme '" + SdkConfig.get().themes[0].value + "'");
-            
             theme = SdkConfig.get().themes[0].value;
         }
 
-        // disable all of them first, then enable the one we want. Chrome only
+        var styleElements = this.props.themeStyleElements;
+        
+        // disable all style elements first, then enable the one we want. Chrome only
         // bothers to do an update on a true->false transition, so this ensures
         // that we get exactly one update, at the right time.
-
         Object.values(styleElements).forEach((a) => {
             a.disabled = true;
         });
@@ -1132,6 +1133,22 @@ module.exports = React.createClass({
             params.referrer = this.props.startingFragmentQueryParams.referrer;
         }
         return this.props.makeRegistrationUrl(params);
+    },
+    
+    getThemeStyleElements() {
+        // look for the stylesheet elements.
+        // styleElements is a map from style name to HTMLLinkElement.
+        var styleElements = Object.create(null);
+        var i, a;
+        for (i = 0; (a = document.getElementsByTagName("link")[i]); i++) {
+            var href = a.getAttribute("href");
+            // shouldn't we be using the 'title' tag rather than the href?
+            var match = href.match(/^bundles\/.*\/theme-(.*)\.css$/);
+            if (match) {
+                styleElements[match[1]] = a;
+            }
+        }
+        return styleElements;
     },
 
     render: function() {

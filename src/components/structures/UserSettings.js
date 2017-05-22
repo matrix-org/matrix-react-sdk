@@ -97,9 +97,6 @@ const CRYPTO_SETTINGS_LABELS = [
     // }
 ];
 
-// Themes must be declared in config.json of riot-web. If they are not declared there, a fallback theme (light) will be used. Please **do not** include themes here, but directly in config.json! The default theme will always be the **first** theme in config.json.
-const THEMES = [];
-
 module.exports = React.createClass({
     displayName: 'UserSettings',
 
@@ -139,19 +136,22 @@ module.exports = React.createClass({
             rejectingInvites: false,
         };
     },
+    
+    // Themes must be declared in config.json of riot-web. If they are not declared there, a fallback theme (light) will be used. Please **do not** include themes here, but directly in config.json! The default theme will always be the **first** theme in config.json.
+    themes: [],
 
     componentWillMount: function() {
         this._unmounted = false;
         this._addThreepid = null;
-        
+
         var validThemes = SdkConfig.get().themes;
-        
+        const self = this;
         validThemes.forEach(function(theme) {
         	var t = {};
         	t.id = "theme";
         	t.label = theme.label; // TODO: translate when translation is merged
         	t.value = theme.value;
-        	THEMES.push(t);
+        	self.themes.push(t);
         });
 
         if (PlatformPeg.get()) {
@@ -182,7 +182,7 @@ module.exports = React.createClass({
 
         const syncedSettings = UserSettingsStore.getSyncedSettings();
         if (!syncedSettings.theme) {
-            syncedSettings.theme = THEMES[0].value;
+            syncedSettings.theme = this.themes[0].value;
         }
         this._syncedSettings = syncedSettings;
 
@@ -535,7 +535,7 @@ module.exports = React.createClass({
                 <div className="mx_UserSettings_section">
                     { this._renderUrlPreviewSelector() }
                     { SETTINGS_LABELS.map( this._renderSyncedSetting ) }
-                    { THEMES.map( this._renderThemeSelector ) }
+                    { this.themes.map( this._renderThemeSelector ) }
                 </div>
             </div>
         );
