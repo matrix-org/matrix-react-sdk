@@ -18,31 +18,12 @@ limitations under the License.
 import _t from 'counterpart-riot';
 
 function getDaysArray() {
-    var days = [];
-    days.push(_t('Sun'));
-    days.push(_t('Mon'));
-    days.push(_t('Tue'));
-    days.push(_t('Wed'));
-    days.push(_t('Thu'));
-    days.push(_t('Fri'));
-    days.push(_t('Sat'));
+    var days = [_t('Sun'), _t('Mon'), _t('Tue'), _t('Wed'), _t('Thu'), _t('Fri'), _t('Sat')];
     return days;
 }
 
 function getMonthsArray() {
-    var months = [];
-    months.push(_t('Jan'));
-    months.push(_t('Feb'));
-    months.push(_t('Mar'));
-    months.push(_t('Apr'));
-    months.push(_t('May'));
-    months.push(_t('Jun'));
-    months.push(_t('Jul'));
-    months.push(_t('Aug'));
-    months.push(_t('Sep'));
-    months.push(_t('Oct'));
-    months.push(_t('Nov'));
-    months.push(_t('Dec'));
+    var months = [_t('Jan'), _t('Feb'), _t('Mar'), _t('Apr'), _t('May'), _t('Jun'), _t('Jul'), _t('Aug'), _t('Sep'), _t('Oct'), _t('Nov'), _t('Dec')];
     return months;
 }
 
