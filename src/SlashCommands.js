@@ -307,6 +307,11 @@ var commands = {
                 }
 
                 if (device.getFingerprint() === fingerprint) {
+                    MatrixClientPeg.get().setDeviceVerified(
+                            userId, deviceId, true
+                    );
+
+                    // Tell the user we verified everything!
                     const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
                     Modal.createDialog(QuestionDialog, {
                         title: "Verified key",
@@ -320,13 +325,6 @@ var commands = {
                         ),
                         button: "Ok",
                         hasCancelButton: false,
-                        onFinished: confirm => {
-                            if (confirm) {
-                                MatrixClientPeg.get().setDeviceVerified(
-                                    userId, deviceId, true
-                                );
-                            }
-                        },
                     });
 
                     return success();
