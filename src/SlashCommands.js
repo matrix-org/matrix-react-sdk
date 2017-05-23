@@ -309,28 +309,16 @@ var commands = {
                 if (device.getFingerprint() === fingerprint) {
                     const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
                     Modal.createDialog(QuestionDialog, {
-                        title: "Approve verified device",
+                        title: "Verified key",
                         description: (
                             <div>
                                 <p>
-                                    The signing key in your slash command matches the signing key you
-                                    received for this user and device!
-                                </p>
-                                <div className="mx_UserSettings_cryptoSection">
-                                    <ul>
-                                        <li><label>User ID:</label> <span>{ userId }</span></li>
-                                        <li><label>Device name:</label> <span>{ device.getDisplayName() }</span></li>
-                                        <li><label>Device ID:</label>   <span><code>{ device.deviceId}</code></span></li>
-                                        <li><label>Device fingerprint:</label>  <span><code><b>{ device.getFingerprint() }</b></code></span></li>
-                                        <li><label>Device key:</label>  <span><code><b>{ device.getIdentityKey() }</b></code></span></li>
-                                    </ul>
-                                </div>
-                                <p>
-                                    If you would like to accept this device as verified, press accept!
+                                    The signing key you provided matches the signing key you received from
+                                    { userId }'s device { deviceId }
                                 </p>
                             </div>
                         ),
-                        button: "Accept this verified key",
+                        button: "Accept verification",
                         onFinished: confirm => {
                             if (confirm) {
                                 MatrixClientPeg.get().setDeviceVerified(
@@ -344,7 +332,7 @@ var commands = {
                 } else {
                     return reject(`WARNING: KEY VERIFICATION FAILED! The signing key for ${userId} and device
                             ${deviceId} is "${device.getFingerprint()}" which does not match the provided key
-                            "${fingerprint}" This could mean your communications are being intercepted!`);
+                            "${fingerprint}". This could mean your communications are being intercepted!`);
                 }
             }
         }
