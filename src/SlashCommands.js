@@ -313,8 +313,8 @@ var commands = {
                         description: (
                             <div>
                                 <p>
-                                    The signing key you provided matches the signing key you received from
-                                    { userId }'s device { deviceId }
+                                    The signing key you provided matches the signing key you received
+                                    from { userId }'s device { deviceId }
                                 </p>
                             </div>
                         ),
