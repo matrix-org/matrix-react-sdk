@@ -24,7 +24,8 @@ const NAMESPACES = ["org.matrix", "im.vector", "m."];
 *  name: The tag label to display.
 *  verb: Text to display when describing an action on the tag.
          E.g. "Drag to ${verb} room."
-*  protected: false, Can this tag be deleted or modified.
+*  modifiable: true, Can this tag be modified.
+*  deletable: true, Can this tag be deleted.
 *  order: The ordering method to use. Can be 'manual' or 'recent'.
 *  start_hidden: Hide the contents by default.
 *  show_header: Show header, even if it does not have any rooms.
@@ -36,8 +37,9 @@ const STATIC_TAGS = [
   {
      name: "Invites",
      alias: "im.vector.fake.invite",
-     protected: true,
-     order: "manual",
+     modifiable: false,
+     deletable: false,
+     order: "recent",
      start_hidden: true,
      list_modifiable: false,
      show_header: false,
@@ -46,7 +48,8 @@ const STATIC_TAGS = [
      name: "Favourites",
      alias: "m.favourite",
      verb: "favourite",
-     protected: true,
+     modifiable: true,
+     deletable: false,
      order: "manual",
      start_hidden: false,
      show_header: true,
@@ -57,7 +60,8 @@ const STATIC_TAGS = [
      name: "Rooms",
      verb: "restore",
      alias: "im.vector.fake.recent",
-     protected: true,
+     modifiable: true,
+     deletable: false,
      order: "recent",
      start_hidden: false,
      show_header: true,
@@ -67,7 +71,8 @@ const STATIC_TAGS = [
      name: "People",
      alias: "im.vector.fake.direct",
      verb: "tag direct chat",
-     protected: true,
+     modifiable: true,
+     deletable: false,
      order: "recent",
      start_hidden: true,
      show_header: true,
@@ -78,7 +83,8 @@ const STATIC_TAGS = [
      alias: "m.lowpriority",
      verb: "demote",
      order: "recent",
-     protected: true,
+     modifiable: true,
+     deletable: false,
      start_hidden: true,
      show_header: true,
      list_modifiable: true,
@@ -87,7 +93,8 @@ const STATIC_TAGS = [
   {
      name: "Historical",
      alias: "im.vector.fake.archived",
-     protected: true,
+     modifiable: false,
+     deletable: false,
      order: "recent",
      start_hidden: true,
      show_header: true,
@@ -106,7 +113,7 @@ class RoomTagUtil {
       const index = tags.findIndex((tag) => {return tag.alias === staticTag.alias;});
       if (index === -1) {
         tags.push(staticTag);
-      } else {
+      } else if(!staticTag.modifiable) {
         tags.splice(index, 1, staticTag);
       }
     });
@@ -141,7 +148,8 @@ class RoomTagUtil {
    */
   get tagDefaults() {
     return {
-      protected: false,
+      modifiable: true,
+      deletable: true,
       order: "manual",
       start_hidden: false,
       show_header: false,
@@ -206,7 +214,10 @@ class RoomTagUtil {
     if (result.valid === false) {
       throw new Error(result.error);
     }
-    this._tags.splice(index, 0, {name, order});
+    const tag = this.tagDefaults;
+    tag.name = name;
+    tag.order = order;
+    this._tags.splice(index, 0, tag);
     this.saveTags();
   }
 

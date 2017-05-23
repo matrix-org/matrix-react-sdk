@@ -122,9 +122,18 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    let tagProtected = true;
+    let modMenu = null;
     if (this.state.selectedTag !== null) {
-      tagProtected = RoomTagUtil.tags[this.state.selectedTag].protected;
+      const tagDeletable = RoomTagUtil.tags[this.state.selectedTag].deletable;
+      const tagModifiable = RoomTagUtil.tags[this.state.selectedTag].modifiable;
+      if(tagDeletable || tagModifiable) {
+        modMenu = (
+          <span>
+          !tagModifiable ? (<div onClick={this.modifyTag} className="mx_textButton">Modify</div>): null
+          !tagDeletable ? (<div onClick={this.deleteTag} className="mx_textButton">Modify</div>): null
+          </span>
+        );
+      }
     }
     return (<div className="mx_UserSettings_section">
       <div className="mx_UserSettings_RoomTags_List">
@@ -145,12 +154,7 @@ module.exports = React.createClass({
       <div className="mx_UserSettings_RoomTags_Buttons">
         <div onClick={this.addTag} className="mx_textButton">Add</div>
         {
-          !tagProtected ? (
-            <span>
-              <div onClick={this.modifyTag} className="mx_textButton">Modify</div>
-              <div onClick={this.deleteTag} className="mx_textButton">Delete</div>
-            </span>
-        ): null
+            {modMenu}
         }
         {
           this.state.selectedTag !== null ? (
