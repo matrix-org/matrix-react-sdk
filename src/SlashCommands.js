@@ -314,11 +314,12 @@ var commands = {
                             <div>
                                 <p>
                                     The signing key you provided matches the signing key you received
-                                    from { userId }'s device { deviceId }
+                                    from { userId }'s device { deviceId }. Device marked as verified.
                                 </p>
                             </div>
                         ),
-                        button: "Accept verification",
+                        button: "Ok",
+                        hasCancelButton: false,
                         onFinished: confirm => {
                             if (confirm) {
                                 MatrixClientPeg.get().setDeviceVerified(
