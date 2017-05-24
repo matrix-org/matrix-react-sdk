@@ -1047,7 +1047,7 @@ module.exports = React.createClass({
                             ? gHVersionLabel('vector-im/riot-web', this.state.vectorVersion)
                             : 'unknown'
                         }<br/>
-                        { _t("olm version: ") } {olmVersionString}<br/>
+                        { _t("olm version") + ": "} {olmVersionString}<br/>
                     </div>
                 </div>
 
