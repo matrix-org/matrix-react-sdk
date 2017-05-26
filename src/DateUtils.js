@@ -15,9 +15,17 @@ limitations under the License.
 */
 
 'use strict';
+import _t from 'counterpart-riot';
 
-var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+function getDaysArray() {
+    var days = [_t('Sun'), _t('Mon'), _t('Tue'), _t('Wed'), _t('Thu'), _t('Fri'), _t('Sat')];
+    return days;
+}
+
+function getMonthsArray() {
+    var months = [_t('Jan'), _t('Feb'), _t('Mar'), _t('Apr'), _t('May'), _t('Jun'), _t('Jul'), _t('Aug'), _t('Sep'), _t('Oct'), _t('Nov'), _t('Dec')];
+    return months;
+}
 
 function pad(n) {
     return (n < 10 ? '0' : '') + n;
@@ -27,16 +35,22 @@ module.exports = {
     formatDate: function(date) {
         // date.toLocaleTimeString is completely system dependent.
         // just go 24h for now
+        const days = getDaysArray();
+        const months = getMonthsArray();
 
+        // TODO: use standard date localize function provided in counterpart
+        var hoursAndMinutes = pad(date.getHours()) + ':' + pad(date.getMinutes());
         var now = new Date();
         if (date.toDateString() === now.toDateString()) {
-            return pad(date.getHours()) + ':' + pad(date.getMinutes());
+            return hoursAndMinutes;
         }
         else if (now.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
-            return days[date.getDay()] + " " + pad(date.getHours()) + ':' + pad(date.getMinutes());
+            // TODO: use standard date localize function provided in counterpart
+            return _t('%(weekDayName)s %(time)s', {weekDayName: days[date.getDay()], time: hoursAndMinutes});
         }
         else if (now.getFullYear() === date.getFullYear()) {
-            return days[date.getDay()] + ", " + months[date.getMonth()] + " " + date.getDate() + " " + pad(date.getHours()) + ':' + pad(date.getMinutes());
+            // TODO: use standard date localize function provided in counterpart
+            return _t('%(weekDayName)s, %(monthName)s %(day)s %(time)s', {weekDayName: days[date.getDay()], monthName: months[date.getMonth()], day: date.getDate(), time: hoursAndMinutes});
         }
         else {
             return this.formatFullDate(date);
@@ -44,11 +58,13 @@ module.exports = {
     },
 
     formatFullDate: function(date) {
-        return days[date.getDay()] + ", " + months[date.getMonth()] + " " + date.getDate() + " " + date.getFullYear() + " " + pad(date.getHours()) + ':' + pad(date.getMinutes());
+        const days = getDaysArray();
+        const months = getMonthsArray();
+        var hoursAndMinutes = pad(date.getHours()) + ':' + pad(date.getMinutes());
+        return _t('%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s', {weekDayName: days[date.getDay()], monthName: months[date.getMonth()], day: date.getDate(), fullYear: date.getFullYear(),time: hoursAndMinutes});
     },
 
     formatTime: function(date) {
         return pad(date.getHours()) + ':' + pad(date.getMinutes());
     }
 };
-
