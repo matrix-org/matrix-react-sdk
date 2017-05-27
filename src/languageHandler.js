@@ -56,7 +56,7 @@ export function setLanguage(preferredLangs) {
         availLangs = result;
 
         for (let i = 0; i < preferredLangs.length; ++i) {
-            if (preferredLangs[i].indexOf("en-") === 0) {
+            if (preferredLangs[i].startsWith("en-")) {
                 preferredLang = "en";
             } else {
                 preferredLang = preferredLangs[i];
