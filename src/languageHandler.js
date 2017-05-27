@@ -51,14 +51,15 @@ export function setLanguage(preferredLangs) {
 
     let langToUse;
     let availLangs;
+    let preferredLang;
     return getLangsJson().then((result) => {
         availLangs = result;
 
         for (let i = 0; i < preferredLangs.length; ++i) {
             if ((preferredLangs[i] == "en-US") || (preferredLangs[i] == "en-GB")) {
-                const preferredLang = "en";
+                preferredLang = "en";
             } else {
-                const preferredLang = preferredLangs[i];
+                preferredLang = preferredLangs[i];
             }
             if (availLangs.hasOwnProperty(preferredLang)) {
                 langToUse = preferredLang;
