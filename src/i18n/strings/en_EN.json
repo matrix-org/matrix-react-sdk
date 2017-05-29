@@ -719,5 +719,7 @@
   "Unblacklist": "Unblacklist",
   "Blacklist": "Blacklist",
   "Unverify": "Unverify",
-  "Verify...": "Verify..."
+  "Verify...": "Verify...",
+  "ex. @bob:example.com": "ex. @bob:example.com",
+  "Add User": "Add User"
 }
