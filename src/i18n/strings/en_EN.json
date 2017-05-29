@@ -722,5 +722,6 @@
   "Verify...": "Verify...",
   "ex. @bob:example.com": "ex. @bob:example.com",
   "Add User": "Add User",
-  "This Home Server would like to make sure you are not a robot": "This Home Server would like to make sure you are not a robot"
+  "This Home Server would like to make sure you are not a robot": "This Home Server would like to make sure you are not a robot",
+  "Sign in with CAS": "Sign in with CAS"
 }
