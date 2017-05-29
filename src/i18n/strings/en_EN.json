@@ -723,5 +723,10 @@
   "ex. @bob:example.com": "ex. @bob:example.com",
   "Add User": "Add User",
   "This Home Server would like to make sure you are not a robot": "This Home Server would like to make sure you are not a robot",
-  "Sign in with CAS": "Sign in with CAS"
+  "Sign in with CAS": "Sign in with CAS",
+  "Custom Server Options": "Custom Server Options",
+  "You can use the custom server options to sign into other Matrix servers by specifying a different Home server URL.": "You can use the custom server options to sign into other Matrix servers by specifying a different Home server URL.",
+  "This allows you to use this app with an existing Matrix account on a different home server.": "This allows you to use this app with an existing Matrix account on a different home server.",
+  "You can also set a custom identity server but this will typically prevent interaction with users based on email address.",
+  "Dismiss": "Dismiss"
 }
