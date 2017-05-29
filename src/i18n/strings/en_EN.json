@@ -716,8 +716,8 @@
   "\"%(RoomName)s\" contains devices that you haven't seen before.": "\"%(RoomName)s\" contains devices that you haven't seen before.",
   "Unknown devices": "Unknown devices",
   "Unknown Address": "Unknown Address",
-    "Unblacklist": "Unblacklist",
-    "Blacklist": "Blacklist",
-    "Unverify": "Unverify",
-    "Verify...": "Verify..."
+  "Unblacklist": "Unblacklist",
+  "Blacklist": "Blacklist",
+  "Unverify": "Unverify",
+  "Verify...": "Verify..."
 }
