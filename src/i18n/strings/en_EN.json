@@ -747,5 +747,6 @@
   "This image cannot be displayed.": "This image cannot be displayed.",
   "Error decrypting video": "Error decrypting video",
   "Add an Integration": "Add an Integration",
-  "You are about to be taken to a third-party site so you can authenticate your account for use with {integrationsUrl}. Do you wish to continue?": "You are about to be taken to a third-party site so you can authenticate your account for use with {integrationsUrl}. Do you wish to continue?"
+  "You are about to be taken to a third-party site so you can authenticate your account for use with {integrationsUrl}. Do you wish to continue?": "You are about to be taken to a third-party site so you can authenticate your account for use with {integrationsUrl}. Do you wish to continue?",
+  "Removed or unknown message type": "Removed or unknown message type"
 }
