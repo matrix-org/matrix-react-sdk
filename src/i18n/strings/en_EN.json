@@ -740,5 +740,6 @@
   "Custom server": "Custom server",
   "Home server URL": "Home server URL",
   "Identity server URL": "Identity server URL",
-  "What does this mean?": "What does this mean?"
+  "What does this mean?": "What does this mean?",
+  "Error decrypting audio": "Error decrypting audio"
 }
