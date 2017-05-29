@@ -283,8 +283,8 @@ module.exports = React.createClass({
         if (MatrixClientPeg.get().isGuest()) {
             var NeedToRegisterDialog = sdk.getComponent("dialogs.NeedToRegisterDialog");
             Modal.createDialog(NeedToRegisterDialog, {
-                title: "Please Register",
-                description: "Guest users can't invite users. Please register."
+                title: _t("Please Register"),
+                description: _t("Guest users can't invite users. Please register."),
             });
             return;
         }
@@ -305,8 +305,8 @@ module.exports = React.createClass({
                 console.error(err.stack);
                 var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
-                    title: "Failed to invite",
-                    description: ((err && err.message) ? err.message : "Operation failed"),
+                    title: _t("Failed to invite")
+                    description: ((err && err.message) ? err.message : _t("Operation failed")),
                 });
                 return null;
             })
@@ -318,8 +318,8 @@ module.exports = React.createClass({
                 console.error(err.stack);
                 var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
-                    title: "Failed to invite user",
-                    description: ((err && err.message) ? err.message : "Operation failed"),
+                    title: _t("Failed to invite user"),
+                    description: ((err && err.message) ? err.message : _t("Operation failed")),
                 });
                 return null;
             })
@@ -339,8 +339,8 @@ module.exports = React.createClass({
                 console.error(err.stack);
                 var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
-                    title: "Failed to invite",
-                    description: ((err && err.message) ? err.message : "Operation failed"),
+                    title: _t("Failed to invite"),
+                    description: ((err && err.message) ? err.message : _t("Operation failed")),
                 });
                 return null;
             })
@@ -398,7 +398,7 @@ module.exports = React.createClass({
         if (errorList.length > 0) {
             var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createDialog(ErrorDialog, {
-                title: "Failed to invite the following users to the " + room.name + " room:",
+                title: _t("Failed to invite the following users to the %(roomName)s room:", {roomName: room.name}),
                 description: errorList.join(", "),
             });
         }

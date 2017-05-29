@@ -155,7 +155,7 @@
   "Anyone who knows the room's link, including guests": "Anyone who knows the room's link, including guests",
   "Are you sure?": "Are you sure?",
   "Are you sure you want to reject the invitation?": "Are you sure you want to reject the invitation?",
-  "Are you sure you want upload the following files?": "Are you sure you want upload the following files?",
+  "Are you sure you want to upload the following files?": "Are you sure you want to upload the following files?",
   "Attachment": "Attachment",
   "Autoplay GIFs and videos": "Autoplay GIFs and videos",
   "%(senderName)s banned %(targetName)s.": "%(senderName)s banned %(targetName)s.",
@@ -686,5 +686,10 @@
   "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a passphrase below, which will be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a passphrase below, which will be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.".
   "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.",
   "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.", "You must join the room to see its files": "You must join the room to see its files", "Server may be unavailable, overloaded, or you hit a bug.": "Server may be unavailable, overloaded, or you hit a bug.",
-  "Reject all %(invitedRooms)s invites": "Reject all %(invitedRooms)s invites"
+  "Reject all %(invitedRooms)s invites": "Reject all %(invitedRooms)s invites",
+  "Start new Chat": "Start new Chat",
+  "Guest users can't invite users. Please register.": "Guest users can't invite users. Please register.",
+    "Failed to invite": "Failed to invite",
+    "Failed to invite user": "Failed to invite user",
+    "Failed to invite the following users to the %(roomName)s room:": "Failed to invite the following users to the %(roomName)s room:"
 }
