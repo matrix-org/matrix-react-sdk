@@ -715,5 +715,9 @@
   "We recommend you go through the verification process for each device to confirm they belong to their legitimate owner, but you can resend the message without verifying if you prefer.": "We recommend you go through the verification process for each device to confirm they belong to their legitimate owner, but you can resend the message without verifying if you prefer.",
   "\"%(RoomName)s\" contains devices that you haven't seen before.": "\"%(RoomName)s\" contains devices that you haven't seen before.",
   "Unknown devices": "Unknown devices",
-  "Unknown Address": "Unknown Address"
+  "Unknown Address": "Unknown Address",
+    "Unblacklist": "Unblacklist",
+    "Blacklist": "Blacklist",
+    "Unverify": "Unverify",
+    "Verify...": "Verify..."
 }
