@@ -728,5 +728,9 @@
   "You can use the custom server options to sign into other Matrix servers by specifying a different Home server URL.": "You can use the custom server options to sign into other Matrix servers by specifying a different Home server URL.",
   "This allows you to use this app with an existing Matrix account on a different home server.": "This allows you to use this app with an existing Matrix account on a different home server.",
   "You can also set a custom identity server but this will typically prevent interaction with users based on email address.",
-  "Dismiss": "Dismiss"
+  "Dismiss": "Dismiss",
+  "Please check your email to continue registration.": "Please check your email to continue registration.",
+  "Token incorrect": "Token incorrect",
+  "A text message has been sent to": "A text message has been sent to",
+  "Please enter the code it contains:": "Please enter the code it contains:"
 }
