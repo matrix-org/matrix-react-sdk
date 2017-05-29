@@ -744,5 +744,6 @@
   "Error decrypting audio": "Error decrypting audio",
   "Error decrypting image": "Error decrypting image",
   "Image '%(Body)s' cannot be displayed.": "Image '%(Body)s' cannot be displayed.",
-  "This image cannot be displayed.": "This image cannot be displayed."
+  "This image cannot be displayed.": "This image cannot be displayed.",
+  "Error decrypting video": "Error decrypting video"
 }
