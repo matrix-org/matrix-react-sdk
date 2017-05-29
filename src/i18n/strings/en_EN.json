@@ -733,5 +733,7 @@
   "Token incorrect": "Token incorrect",
   "A text message has been sent to": "A text message has been sent to",
   "Please enter the code it contains:": "Please enter the code it contains:",
-  "powered by Matrix": "powered by Matrix"
+  "powered by Matrix": "powered by Matrix",
+  "If you don't specify an email address, you won't be able to reset your password. Are you sure?": "If you don't specify an email address, you won't be able to reset your password. Are you sure?",
+  "You are registering with %(SelectedTeamName)s": "You are registering with %(SelectedTeamName)s"
 }
