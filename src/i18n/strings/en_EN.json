@@ -693,5 +693,10 @@
   "Failed to invite user": "Failed to invite user",
   "Failed to invite the following users to the %(roomName)s room:": "Failed to invite the following users to the %(roomName)s room:",
   "Confirm Removal": "Confirm Removal",
-  "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change."
+  "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.",
+  "Unknown error": "Unknown error",
+  "Incorrect password": "Incorrect password",
+  "This will make your account permanently unusable. You will not be able to re-register the same user ID.": "This will make your account permanently unusable. You will not be able to re-register the same user ID.",
+  "This action is irreversible.": "This action is irreversible.",
+  "To continue, please enter your password.": "To continue, please enter your password."
 }
