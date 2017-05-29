@@ -565,13 +565,8 @@ module.exports = React.createClass({
                 <div className="mx_UserSettings_section">
                     { this._renderUrlPreviewSelector() }
                     { SETTINGS_LABELS.map( this._renderSyncedSetting ) }
-<<<<<<< HEAD
                     { this.themes.map( this._renderThemeSelector ) }
-=======
-                    { THEMES.map( this._renderThemeSelector ) }
                     { this._renderLanguageSetting() }
-
->>>>>>> develop
                 </div>
             </div>
         );
