@@ -752,5 +752,8 @@
   "Disable URL previews by default for participants in this room": "Disable URL previews by default for participants in this room",
   "URL previews are %(globalDisableUrlPreview)s by default for participants in this room.": "URL previews are %(globalDisableUrlPreview)s by default for participants in this room.",
   "URL Previews": "URL Previews",
-  "Enable URL previews for this room (affects only you)": "Enable URL previews for this room (affects only you)"
+  "Enable URL previews for this room (affects only you)": "Enable URL previews for this room (affects only you)",
+  "Drop file here to upload": "Drop file here to upload",
+  " (unsupported)": " (unsupported)",
+  "Ongoing conference call%(supportedText)s. %(joinText)s": "Ongoing conference call%(supportedText)s. %(joinText)s"
 }
