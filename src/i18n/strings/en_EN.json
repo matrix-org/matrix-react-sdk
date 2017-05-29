@@ -741,5 +741,8 @@
   "Home server URL": "Home server URL",
   "Identity server URL": "Identity server URL",
   "What does this mean?": "What does this mean?",
-  "Error decrypting audio": "Error decrypting audio"
+  "Error decrypting audio": "Error decrypting audio",
+  "Error decrypting image": "Error decrypting image",
+  "Image '%(Body)s' cannot be displayed.": "Image '%(Body)s' cannot be displayed.",
+  "This image cannot be displayed.": "This image cannot be displayed."
 }
