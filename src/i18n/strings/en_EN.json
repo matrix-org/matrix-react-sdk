@@ -689,7 +689,9 @@
   "Reject all %(invitedRooms)s invites": "Reject all %(invitedRooms)s invites",
   "Start new Chat": "Start new Chat",
   "Guest users can't invite users. Please register.": "Guest users can't invite users. Please register.",
-    "Failed to invite": "Failed to invite",
-    "Failed to invite user": "Failed to invite user",
-    "Failed to invite the following users to the %(roomName)s room:": "Failed to invite the following users to the %(roomName)s room:"
+  "Failed to invite": "Failed to invite",
+  "Failed to invite user": "Failed to invite user",
+  "Failed to invite the following users to the %(roomName)s room:": "Failed to invite the following users to the %(roomName)s room:",
+  "Confirm Removal": "Confirm Removal",
+  "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change.": "Are you sure you wish to remove (delete) this event? Note that if you delete a room name or topic change, it could undo the change."
 }
