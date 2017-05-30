@@ -18,7 +18,7 @@ import React from 'react';
 import sdk from '../../../index';
 import SdkConfig from '../../../SdkConfig';
 import Modal from '../../../Modal';
-import { _t } from ' ../../../languageHandler';
+import { _t } from '../../../languageHandler';
 
 
 export default React.createClass({
