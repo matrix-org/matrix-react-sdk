@@ -305,7 +305,7 @@ module.exports = React.createClass({
                 console.error(err.stack);
                 var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Failed to invite")
+                    title: _t("Failed to invite"),
                     description: ((err && err.message) ? err.message : _t("Operation failed")),
                 });
                 return null;
