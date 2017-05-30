@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import classNames from 'classnames';
+import { _t } from '../../../languageHandler';
 import sdk from '../../../index';
 import { getAddressType, inviteMultipleToRoom } from '../../../Invite';
 import createRoom from '../../../createRoom';
@@ -29,15 +30,6 @@ import q from 'q';
 import Fuse from 'fuse.js';
 
 const TRUNCATE_QUERY_LIST = 40;
-
-/*
- * Escapes a string so it can be used in a RegExp
- * Basically just replaces: \ ^ $ * + ? . ( ) | { } [ ]
- * From http://stackoverflow.com/a/6969486
- */
-function escapeRegExp(str) {
-    return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-}
 
 module.exports = React.createClass({
     displayName: "ChatInviteDialog",
@@ -57,11 +49,7 @@ module.exports = React.createClass({
 
     getDefaultProps: function() {
         return {
-            title: "Start a chat",
-            description: "Who would you like to communicate with?",
             value: "",
-            placeholder: "Email, name or matrix ID",
-            button: "Start Chat",
             focus: true
         };
     },
@@ -220,20 +208,19 @@ module.exports = React.createClass({
                     }
                 });
 
-                // If the query isn't a user we know about, but is a
-                // valid address, add an entry for that
-                if (queryList.length == 0) {
-                    const addrType = getAddressType(query);
-                    if (addrType !== null) {
-                        queryList[0] = {
-                            addressType: addrType,
-                            address: query,
-                            isKnown: false,
-                        };
-                        if (this._cancelThreepidLookup) this._cancelThreepidLookup();
-                        if (addrType == 'email') {
-                            this._lookupThreepid(addrType, query).done();
-                        }
+                // If the query is a valid address, add an entry for that
+                // This is important, otherwise there's no way to invite
+                // a perfectly valid address if there are close matches.
+                const addrType = getAddressType(query);
+                if (addrType !== null) {
+                    queryList.unshift({
+                        addressType: addrType,
+                        address: query,
+                        isKnown: false,
+                    });
+                    if (this._cancelThreepidLookup) this._cancelThreepidLookup();
+                    if (addrType == 'email') {
+                        this._lookupThreepid(addrType, query).done();
                     }
                 }
             }
@@ -318,8 +305,8 @@ module.exports = React.createClass({
                 console.error(err.stack);
                 var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
-                    title: "Error",
-                    description: "Failed to invite",
+                    title: "Failed to invite",
+                    description: ((err && err.message) ? err.message : "Operation failed"),
                 });
                 return null;
             })
@@ -331,8 +318,8 @@ module.exports = React.createClass({
                 console.error(err.stack);
                 var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
-                    title: "Error",
-                    description: "Failed to invite user",
+                    title: "Failed to invite user",
+                    description: ((err && err.message) ? err.message : "Operation failed"),
                 });
                 return null;
             })
@@ -352,8 +339,8 @@ module.exports = React.createClass({
                 console.error(err.stack);
                 var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createDialog(ErrorDialog, {
-                    title: "Error",
-                    description: "Failed to invite",
+                    title: "Failed to invite",
+                    description: ((err && err.message) ? err.message : "Operation failed"),
                 });
                 return null;
             })

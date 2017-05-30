@@ -1,8 +1,10 @@
 import React from 'react';
+import { _t } from '../languageHandler';
 import AutocompleteProvider from './AutocompleteProvider';
 import Fuse from 'fuse.js';
 import {TextualCompletion} from './Components';
 
+// Warning: Since the description string will be translated in _t(result.description), all these strings below must be in i18n/strings/en_EN.json file
 const COMMANDS = [
     {
         command: '/me',
@@ -43,10 +45,10 @@ const COMMANDS = [
         command: '/ddg',
         args: '<query>',
         description: 'Searches DuckDuckGo for results',
-    }
+    },
 ];
 
-let COMMAND_RE = /(^\/\w*)/g;
+const COMMAND_RE = /(^\/\w*)/g;
 
 let instance = null;
 
@@ -60,15 +62,15 @@ export default class CommandProvider extends AutocompleteProvider {
 
     async getCompletions(query: string, selection: {start: number, end: number}) {
         let completions = [];
-        let {command, range} = this.getCurrentCommand(query, selection);
+        const {command, range} = this.getCurrentCommand(query, selection);
         if (command) {
-            completions = this.fuse.search(command[0]).map(result => {
+            completions = this.fuse.search(command[0]).map((result) => {
                 return {
                     completion: result.command + ' ',
                     component: (<TextualCompletion
                         title={result.command}
                         subtitle={result.args}
-                        description={result.description}
+                        description={ _t(result.description) }
                         />),
                     range,
                 };
@@ -78,12 +80,11 @@ export default class CommandProvider extends AutocompleteProvider {
     }
 
     getName() {
-        return '*️⃣ Commands';
+        return '*️⃣ ' + _t('Commands');
     }
 
     static getInstance(): CommandProvider {
-        if (instance == null)
-            {instance = new CommandProvider();}
+        if (instance === null) instance = new CommandProvider();
 
         return instance;
     }

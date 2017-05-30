@@ -21,6 +21,7 @@ var MatrixClientPeg = require("../../../MatrixClientPeg");
 var Modal = require("../../../Modal");
 var sdk = require("../../../index");
 import AccessibleButton from '../elements/AccessibleButton';
+import { _t } from '../../../languageHandler';
 
 module.exports = React.createClass({
     displayName: 'ChangePassword',
@@ -47,11 +48,11 @@ module.exports = React.createClass({
             onCheckPassword: function(oldPass, newPass, confirmPass) {
                 if (newPass !== confirmPass) {
                     return {
-                        error: "New passwords don't match."
+                        error: _t("New passwords don't match") + "."
                     };
                 } else if (!newPass || newPass.length === 0) {
                     return {
-                        error: "Passwords can't be empty"
+                        error: _t("Passwords can't be empty")
                     };
                 }
             }
@@ -69,15 +70,23 @@ module.exports = React.createClass({
 
         var QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
         Modal.createDialog(QuestionDialog, {
-            title: "Warning",
+            title: _t("Warning!"),
             description:
                 <div>
-                    Changing password will currently reset any end-to-end encryption keys on all devices,
-                    making encrypted chat history unreadable.
-                    This will be <a href="https://github.com/vector-im/riot-web/issues/2671">improved shortly</a>,
-                    but for now be warned.
+                    { _t(
+                        'Changing password will currently reset any end-to-end encryption keys on all devices, ' +
+                        'making encrypted chat history unreadable, unless you first export your room keys ' +
+                        'and re-import them afterwards. ' +
+                        'In future this will be improved.'
+                    ) } (<a href="https://github.com/vector-im/riot-web/issues/2671">https://github.com/vector-im/riot-web/issues/2671</a>)
                 </div>,
-            button: "Continue",
+            button: _t("Continue"),
+            extraButtons: [
+                <button className="mx_Dialog_primary"
+                        onClick={this._onExportE2eKeysClicked}>
+                    { _t('Export E2E room keys') }
+                </button>
+            ],
             onFinished: (confirmed) => {
                 if (confirmed) {
                     var authDict = {
@@ -104,6 +113,18 @@ module.exports = React.createClass({
             },
         });
     },
+
+    _onExportE2eKeysClicked: function() {
+        Modal.createDialogAsync(
+            (cb) => {
+                require.ensure(['../../../async-components/views/dialogs/ExportE2eKeysDialog'], () => {
+                    cb(require('../../../async-components/views/dialogs/ExportE2eKeysDialog'));
+                }, "e2e-export");
+            }, {
+                matrixClient: MatrixClientPeg.get(),
+            }
+        );
+    },    
 
     onClickChange: function() {
         var old_password = this.refs.old_input.value;
@@ -132,7 +153,7 @@ module.exports = React.createClass({
                     <div className={this.props.className}>
                         <div className={rowClassName}>
                             <div className={rowLabelClassName}>
-                                <label htmlFor="passwordold">Current password</label>
+                                <label htmlFor="passwordold">{ _t('Current password') }</label>
                             </div>
                             <div className={rowInputClassName}>
                                 <input id="passwordold" type="password" ref="old_input" />
@@ -140,7 +161,7 @@ module.exports = React.createClass({
                         </div>
                         <div className={rowClassName}>
                             <div className={rowLabelClassName}>
-                                <label htmlFor="password1">New password</label>
+                                <label htmlFor="password1">{ _t('New password') }</label>
                             </div>
                             <div className={rowInputClassName}>
                                 <input id="password1" type="password" ref="new_input" />
@@ -148,7 +169,7 @@ module.exports = React.createClass({
                         </div>
                         <div className={rowClassName}>
                             <div className={rowLabelClassName}>
-                                <label htmlFor="password2">Confirm password</label>
+                                <label htmlFor="password2">{ _t('Confirm password') }</label>
                             </div>
                             <div className={rowInputClassName}>
                                 <input id="password2" type="password" ref="confirm_input" />
@@ -156,7 +177,7 @@ module.exports = React.createClass({
                         </div>
                         <AccessibleButton className={buttonClassName}
                                 onClick={this.onClickChange}>
-                            Change Password
+                            { _t('Change Password') }
                         </AccessibleButton>
                     </div>
                 );

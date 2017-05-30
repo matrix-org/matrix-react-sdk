@@ -14,12 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-var React = require('react');
-var sdk = require('../../index');
-var dis = require("../../dispatcher");
-var WhoIsTyping = require("../../WhoIsTyping");
-var MatrixClientPeg = require("../../MatrixClientPeg");
-const MemberAvatar = require("../views/avatars/MemberAvatar");
+import React from 'react';
+import { _t } from '../../languageHandler';
+import sdk from '../../index';
+import dis from '../../dispatcher';
+import WhoIsTyping from '../../WhoIsTyping';
+import MatrixClientPeg from '../../MatrixClientPeg';
+import MemberAvatar from '../views/avatars/MemberAvatar';
 
 const HIDE_DEBOUNCE_MS = 10000;
 const STATUS_BAR_HIDDEN = 0;
@@ -96,26 +97,12 @@ module.exports = React.createClass({
     componentWillMount: function() {
         MatrixClientPeg.get().on("sync", this.onSyncStateChange);
         MatrixClientPeg.get().on("RoomMember.typing", this.onRoomMemberTyping);
+
+        this._checkSize();
     },
 
-    componentDidUpdate: function(prevProps, prevState) {
-        if(this.props.onResize && this._checkForResize(prevProps, prevState)) {
-            this.props.onResize();
-        }
-
-        const size = this._getSize(this.props, this.state);
-        if (size > 0) {
-            this.props.onVisible();
-        } else {
-            if (this.hideDebouncer) {
-                clearTimeout(this.hideDebouncer);
-            }
-            this.hideDebouncer = setTimeout(() => {
-                // temporarily stop hiding the statusbar as per
-                // https://github.com/vector-im/riot-web/issues/1991#issuecomment-276953915
-                // this.props.onHidden();
-            }, HIDE_DEBOUNCE_MS);
-        }
+    componentDidUpdate: function() {
+        this._checkSize();
     },
 
     componentWillUnmount: function() {
@@ -142,31 +129,31 @@ module.exports = React.createClass({
         });
     },
 
+    // Check whether current size is greater than 0, if yes call props.onVisible
+    _checkSize: function () {
+        if (this.props.onVisible && this._getSize()) {
+            this.props.onVisible();
+        }
+    },
+
     // We don't need the actual height - just whether it is likely to have
     // changed - so we use '0' to indicate normal size, and other values to
     // indicate other sizes.
-    _getSize: function(props, state) {
-        if (state.syncState === "ERROR" ||
-            (state.usersTyping.length > 0) ||
-            props.numUnreadMessages ||
-            !props.atEndOfLiveTimeline ||
-            props.hasActiveCall ||
-            props.tabComplete.isTabCompleting()
+    _getSize: function() {
+        if (this.state.syncState === "ERROR" ||
+            (this.state.usersTyping.length > 0) ||
+            this.props.numUnreadMessages ||
+            !this.props.atEndOfLiveTimeline ||
+            this.props.hasActiveCall ||
+            this.props.tabComplete.isTabCompleting()
         ) {
             return STATUS_BAR_EXPANDED;
-        } else if (props.tabCompleteEntries) {
+        } else if (this.props.tabCompleteEntries) {
             return STATUS_BAR_HIDDEN;
-        } else if (props.unsentMessageError) {
+        } else if (this.props.unsentMessageError) {
             return STATUS_BAR_EXPANDED_LARGE;
         }
         return STATUS_BAR_HIDDEN;
-    },
-
-    // determine if we need to call onResize
-    _checkForResize: function(prevProps, prevState) {
-        // figure out the old height and the new height of the status bar.
-        return this._getSize(prevProps, prevState)
-            !== this._getSize(this.props, this.state);
     },
 
     // return suitable content for the image on the left of the status bar.
@@ -189,8 +176,8 @@ module.exports = React.createClass({
                 <div className="mx_RoomStatusBar_scrollDownIndicator"
                         onClick={ this.props.onScrollToBottomClick }>
                     <img src="img/scrolldown.svg" width="24" height="24"
-                        alt="Scroll to bottom of page"
-                        title="Scroll to bottom of page"/>
+                        alt={ _t("Scroll to bottom of page") }
+                        title={ _t("Scroll to bottom of page") }/>
                 </div>
             );
         }
@@ -264,10 +251,10 @@ module.exports = React.createClass({
                 <div className="mx_RoomStatusBar_connectionLostBar">
                     <img src="img/warning.svg" width="24" height="23" title="/!\ " alt="/!\ "/>
                     <div className="mx_RoomStatusBar_connectionLostBar_title">
-                        Connectivity to the server has been lost.
+                        {_t('Connectivity to the server has been lost.')}
                     </div>
                     <div className="mx_RoomStatusBar_connectionLostBar_desc">
-                        Sent messages will be stored until your connection has returned.
+                        {_t('Sent messages will be stored until your connection has returned.')}
                     </div>
                 </div>
             );
@@ -280,7 +267,7 @@ module.exports = React.createClass({
                         <TabCompleteBar tabComplete={this.props.tabComplete} />
                         <div className="mx_RoomStatusBar_tabCompleteEol" title="->|">
                             <TintableSvg src="img/eol.svg" width="22" height="16"/>
-                            Auto-complete
+                            {_t('Auto-complete')}
                         </div>
                     </div>
                 </div>
@@ -297,13 +284,12 @@ module.exports = React.createClass({
                     <div className="mx_RoomStatusBar_connectionLostBar_desc">
                         <a className="mx_RoomStatusBar_resend_link"
                           onClick={ this.props.onResendAllClick }>
-                            Resend all
-                        </a> or <a
+                            {_t('Resend all')}
+                        </a> {_t('or')} <a
                           className="mx_RoomStatusBar_resend_link"
                           onClick={ this.props.onCancelAllClick }>
-                            cancel all
-                        </a> now. You can also select individual messages to
-                        resend or cancel.
+                            {_t('cancel all')}
+                        </a> {_t('now. You can also select individual messages to resend or cancel.')}
                     </div>
                 </div>
             );
@@ -338,7 +324,7 @@ module.exports = React.createClass({
         if (this.props.hasActiveCall) {
             return (
                 <div className="mx_RoomStatusBar_callBar">
-                    <b>Active call</b>
+                    <b>{_t('Active call')}</b>
                 </div>
             );
         }
