@@ -25,7 +25,7 @@ class Skinner {
                 "Attempted to get a component before a skin has been loaded."+
                 " This is probably because either:"+
                 " a) Your app has not called sdk.loadSkin(), or"+
-                " b) A component has called getComponent at the root level"
+                " b) A component has called getComponent at the root level",
             );
         }
         let comp = this.components[name];
@@ -39,16 +39,10 @@ class Skinner {
             throw new Error("No such component: "+name);
         }
 
-        // components have to be either functions, or objects with 'render'
-        // methods
-        const validType = typeof comp === 'function' || (
-            typeof comp === 'object' && comp.render
-        );
+        // components have to be functions.
+        const validType = typeof comp === 'function';
         if (!validType) {
-            throw new Error(
-                "Not a valid component: " + name + ". It should be either a" +
-                " function, or an object with a `render` method.",
-            );
+            throw new Error(`Not a valid component: ${name}.`);
         }
         return comp;
     }
