@@ -132,7 +132,6 @@ export function setLanguage(preferredLangs) {
         if (!langToUse) {
             throw new Error("Unable to find an appropriate language");
         }
-
         return getLanguage(i18nFolder + availLangs[langToUse]);
     }).then((langData) => {
         counterpart.registerTranslations(langToUse, langData);
@@ -147,11 +146,20 @@ export function setLanguage(preferredLangs) {
     }).then((langData) => {
         if (langData) counterpart.registerTranslations('en', langData);
     });
-};
+}
 
-export function getAllLanguageKeysFromJson() {
-    return getLangsJson().then((langs) => {
-        return Object.keys(langs);
+export function getAllLanguagesFromJson() {
+    return getLangsJson().then((langsObject) => {
+        var langs = [];
+        for (const langKey in langsObject) {
+            if (langsObject.hasOwnProperty(langKey)) {
+                langs.push({
+                    'value': langKey,
+                    'label': langsObject[langKey].label,
+                });
+            }
+        }
+        return langs;
     });
 }
 
