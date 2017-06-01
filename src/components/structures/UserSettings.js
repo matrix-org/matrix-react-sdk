@@ -28,6 +28,7 @@ const GeminiScrollbar = require('react-gemini-scrollbar');
 const Email = require('../../email');
 const AddThreepid = require('../../AddThreepid');
 const SdkConfig = require('../../SdkConfig');
+import Analytics from '../../Analytics';
 import AccessibleButton from '../views/elements/AccessibleButton';
 import { _t } from '../../languageHandler';
 import * as languageHandler from '../../languageHandler';
@@ -55,7 +56,7 @@ const gHVersionLabel = function(repo, token='') {
 // Enumerate some simple 'flip a bit' UI settings (if any).
 // 'id' gives the key name in the im.vector.web.settings account data event
 // 'label' is how we describe it in the UI.
-// Warning: Each "label" string below must be added to i18n/strings/en_EN.json, 
+// Warning: Each "label" string below must be added to i18n/strings/en_EN.json,
 // since they will be translated when rendered.
 const SETTINGS_LABELS = [
     {
@@ -90,12 +91,25 @@ const SETTINGS_LABELS = [
 */
 ];
 
-// Warning: Each "label" string below must be added to i18n/strings/en_EN.json, 
+const ANALYTICS_SETTINGS_LABELS = [
+    {
+        id: 'analyticsOptOut',
+        label: 'Opt out of analytics',
+        fn: function(checked) {
+            Analytics[checked ? 'disable' : 'enable']();
+        },
+    },
+];
+
+// Warning: Each "label" string below must be added to i18n/strings/en_EN.json,
 // since they will be translated when rendered.
 const CRYPTO_SETTINGS_LABELS = [
     {
         id: 'blacklistUnverifiedDevices',
         label: 'Never send encrypted messages to unverified devices from this device',
+        fn: function(checked) {
+            MatrixClientPeg.get().setGlobalBlacklistUnverifiedDevices(checked);
+        },
     },
     // XXX: this is here for documentation; the actual setting is managed via RoomSettings
     // {
@@ -203,6 +217,13 @@ module.exports = React.createClass({
 
         this._localSettings = UserSettingsStore.getLocalSettings();
 
+        if (PlatformPeg.get().isElectron()) {
+            const {ipcRenderer} = require('electron');
+
+            ipcRenderer.on('settings', this._electronSettings);
+            ipcRenderer.send('settings_get');
+        }
+
         this.setState({
             language: languageHandler.getCurrentLanguage(),
         });
@@ -225,6 +246,15 @@ module.exports = React.createClass({
         if (cli) {
             cli.removeListener("RoomMember.membership", this._onInviteStateChange);
         }
+
+        if (PlatformPeg.get().isElectron()) {
+            const {ipcRenderer} = require('electron');
+            ipcRenderer.removeListener('settings', this._electronSettings);
+        }
+    },
+
+    _electronSettings: function(ev, settings) {
+        this.setState({ electron_settings: settings });
     },
 
     _refreshFromServer: function() {
@@ -599,7 +629,12 @@ module.exports = React.createClass({
             <input id={ setting.id }
                    type="checkbox"
                    defaultChecked={ this._syncedSettings[setting.id] }
-                   onChange={ (e) => UserSettingsStore.setSyncedSetting(setting.id, e.target.checked) }
+                   onChange={
+                       (e) => {
+                           UserSettingsStore.setSyncedSetting(setting.id, e.target.checked);
+                           if (setting.fn) setting.fn(e.target.checked);
+                       }
+                   }
             />
             <label htmlFor={ setting.id }>
                 { _t(setting.label) }
@@ -675,7 +710,6 @@ module.exports = React.createClass({
     },
 
     _renderLocalSetting: function(setting) {
-        const client = MatrixClientPeg.get();
         return <div className="mx_UserSettings_toggle" key={ setting.id }>
             <input id={ setting.id }
                    type="checkbox"
@@ -683,11 +717,9 @@ module.exports = React.createClass({
                    onChange={
                         (e) => {
                             UserSettingsStore.setLocalSetting(setting.id, e.target.checked);
-                            if (setting.id === 'blacklistUnverifiedDevices') { // XXX: this is a bit ugly
-                                client.setGlobalBlacklistUnverifiedDevices(e.target.checked);
-                            }
+                            if (setting.fn) setting.fn(e.target.checked);
                         }
-                    }
+                   }
             />
             <label htmlFor={ setting.id }>
                 { _t(setting.label) }
@@ -720,6 +752,16 @@ module.exports = React.createClass({
                 </div>
             </div>
         );
+    },
+
+    _renderAnalyticsControl: function() {
+        return <div>
+            <h3>{ _t('Analytics') }</h3>
+            <div className="mx_UserSettings_section">
+                {_t('Riot collects anonymous analytics to allow us to improve the application.')}
+                {ANALYTICS_SETTINGS_LABELS.map( this._renderLocalSetting )}
+            </div>
+        </div>;
     },
 
     _renderLabs: function() {
@@ -804,7 +846,7 @@ module.exports = React.createClass({
             reject = (
                 <AccessibleButton className="mx_UserSettings_button danger"
                 onClick={this._onRejectAllInvitesClicked.bind(this, invitedRooms)}>
-                    Reject all {invitedRooms.length} invites
+                    {_t("Reject all %(invitedRooms)s invites", {invitedRooms: invitedRooms.length})}
                 </AccessibleButton>
             );
         }
@@ -814,6 +856,29 @@ module.exports = React.createClass({
                 <div className="mx_UserSettings_section">
                     {reject}
                 </div>
+        </div>;
+    },
+
+    _renderElectronSettings: function() {
+        const settings = this.state.electron_settings;
+        if (!settings) return;
+
+        const {ipcRenderer} = require('electron');
+
+        return <div>
+            <h3>{ _t('Desktop specific') }</h3>
+            <div className="mx_UserSettings_section">
+                <div className="mx_UserSettings_toggle">
+                    <input type="checkbox"
+                           name="auto-launch"
+                           defaultChecked={settings['auto-launch']}
+                           onChange={(e) => {
+                               ipcRenderer.send('settings_set', 'auto-launch', e.target.checked);
+                           }}
+                    />
+                    <label htmlFor="auto-launch">{_t('Start automatically after system login')}</label>
+                </div>
+            </div>
         </div>;
     },
 
@@ -1018,6 +1083,10 @@ module.exports = React.createClass({
                 {this._renderCryptoInfo()}
                 {this._renderBulkOptions()}
                 {this._renderBugReport()}
+
+                {PlatformPeg.get().isElectron() && this._renderElectronSettings()}
+
+                {this._renderAnalyticsControl()}
 
                 <h3>{ _t("Advanced") }</h3>
 
