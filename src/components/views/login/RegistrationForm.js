@@ -21,6 +21,7 @@ import sdk from '../../../index';
 import Email from '../../../email';
 import { looksValid as phoneNumberLooksValid } from '../../../phonenumber';
 import Modal from '../../../Modal';
+import { _t } from '../../../languageHandler';
 
 const FIELD_EMAIL = 'field_email';
 const FIELD_PHONE_COUNTRY = 'field_phone_country';
@@ -103,10 +104,10 @@ module.exports = React.createClass({
                     title: "Warning!",
                     description:
                         <div>
-                            If you don't specify an email address, you won't be able to reset your password.<br/>
-                            Are you sure?
+                            {_t("If you don't specify an email address, you won't be able to reset your password. " +
+                                "Are you sure?")}
                         </div>,
-                    button: "Continue",
+                    button: _t("Continue"),
                     onFinished: function(confirmed) {
                         if (confirmed) {
                             self._doSubmit();
@@ -281,7 +282,7 @@ module.exports = React.createClass({
         const emailSection = (
             <div>
                 <input type="text" ref="email"
-                    autoFocus={true} placeholder="Email address (optional)"
+                    autoFocus={true} placeholder={_t("Email address (optional)")}
                     defaultValue={this.props.defaultEmail}
                     className={this._classForField(FIELD_EMAIL, 'mx_Login_field')}
                     onBlur={function() {self.validateField(FIELD_EMAIL);}}
@@ -304,7 +305,7 @@ module.exports = React.createClass({
             } else if (this.state.selectedTeam) {
                 belowEmailSection = (
                     <p className="mx_Login_support">
-                        You are registering with {this.state.selectedTeam.name}
+                        {_t("You are registering with %(SelectedTeamName)s", {SelectedTeamName: this.state.selectedTeam.name})}
                     </p>
                 );
             }
@@ -320,7 +321,7 @@ module.exports = React.createClass({
                     showPrefix={true}
                 />
                 <input type="text" ref="phoneNumber"
-                    placeholder="Mobile phone number (optional)"
+                    placeholder={_t("Mobile phone number (optional)")}
                     defaultValue={this.props.defaultPhoneNumber}
                     className={this._classForField(
                         FIELD_PHONE_NUMBER,
@@ -338,9 +339,9 @@ module.exports = React.createClass({
             <input className="mx_Login_submit" type="submit" value="Register" />
         );
 
-        let placeholderUserName = "User name";
+        let placeholderUserName = _t("User name");
         if (this.props.guestUsername) {
-            placeholderUserName += " (default: " + this.props.guestUsername + ")";
+            placeholderUserName += " " + _t("(default: %(userName)s)", {userName: this.props.guestUsername});
         }
 
         return (
@@ -355,15 +356,15 @@ module.exports = React.createClass({
                         onBlur={function() {self.validateField(FIELD_USERNAME);}} />
                     <br />
                     { this.props.guestUsername ?
-                        <div className="mx_Login_fieldLabel">Setting a user name will create a fresh account</div> : null
+                        <div className="mx_Login_fieldLabel">{_t("Setting a user name will create a fresh account")}</div> : null
                     }
                     <input type="password" ref="password"
                         className={this._classForField(FIELD_PASSWORD, 'mx_Login_field')}
                         onBlur={function() {self.validateField(FIELD_PASSWORD);}}
-                        placeholder="Password" defaultValue={this.props.defaultPassword} />
+                        placeholder={_t("Password")} defaultValue={this.props.defaultPassword} />
                     <br />
                     <input type="password" ref="passwordConfirm"
-                        placeholder="Confirm password"
+                        placeholder={_t("Confirm password")}
                         className={this._classForField(FIELD_PASSWORD_CONFIRM, 'mx_Login_field')}
                         onBlur={function() {self.validateField(FIELD_PASSWORD_CONFIRM);}}
                         defaultValue={this.props.defaultPassword} />
