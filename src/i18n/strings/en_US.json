@@ -266,5 +266,12 @@
     "Error decrypting attachment": "Error decrypting attachment",
     "Event information": "Event information",
     "Existing Call": "Existing Call",
-    "Export": "Export"
+    "Export": "Export",
+    "Export E2E room keys": "Export E2E room keys",
+    "Failed to ban user": "Failed to ban user",
+    "Failed to change password. Is your password correct?": "Failed to change password. Is your password correct?",
+    "Failed to change power level": "Failed to change power level",
+    "Failed to delete device": "Failed to delete device",
+    "Failed to forget room %(errCode)s": "Failed to forget room %(errCode)s",
+    "Failed to join room": "Failed to join room"
 }
