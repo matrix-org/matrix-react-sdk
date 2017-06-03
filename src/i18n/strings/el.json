@@ -190,5 +190,14 @@
     "%(senderDisplayName)s changed the room name to %(roomName)s.": "Ο χρήστης %(senderDisplayName)s άλλαξε το όνομα του δωματίου σε %(roomName)s.",
     "%(senderDisplayName)s changed the topic to \"%(topic)s\".": "Ο χρήστης %(senderDisplayName)s άλλαξε το θέμα σε \"%(topic)s\".",
     "Clear Cache and Reload": "Καθάρισε την μνήμη και Ανανέωσε",
-    "Clear Cache": "Καθάρισε την μνήμη"
+    "Clear Cache": "Καθάρισε την μνήμη",
+    "Bans user with given id": "Διώχνει τον χρήστη με το συγκεκριμένο id",
+    "%(senderDisplayName)s removed the room name.": "Ο χρήστης %(senderDisplayName)s διέγραψε το όνομα του δωματίου.",
+    "Changes your display nickname": "Αλλάζει το όνομα χρήστη",
+    "Click here": "Κάνε κλικ εδώ",
+    "Drop here %(toAction)s": "Άφησε εδώ %(toAction)s",
+    "Conference call failed.": "Η κλήση συνδιάσκεψης απέτυχε.",
+    "powered by Matrix": "βασισμένο στο πρωτόκολλο Matrix",
+    "Confirm password": "Επιβεβαίωση κωδικού",
+    "Confirm your new password": "Επιβεβαίωση του νέου κωδικού"
 }
