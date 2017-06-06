@@ -47,9 +47,11 @@ export function _t(...args) {
         if (isInterpolation && args[1] && typeof args[1] === 'object') {
             Object.keys(args[1]).forEach((k) => {
                 if (args[1][k] === undefined) {
+                    console.warn("_t called with undefined interpolation name: " + k);
                     args[1][k] = 'undefined';
                 }
                 if (args[1][k] === null) {
+                    console.warn("_t called with null interpolation name: " + k);
                     args[1][k] = 'null';
                 }
             });
