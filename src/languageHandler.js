@@ -42,20 +42,17 @@ export function _t(...args) {
     // valid ES6 template strings to i18n strings it's extremely easy to pass undefined/null
     // if there are no existing null guards. To avoid this making the app completely inoperable,
     // we'll check all the values for undefined/null and stringify them here.
-    if (args[0]) {
-        const isInterpolation = ("" + args[0]).indexOf("%(") !== -1;
-        if (isInterpolation && args[1] && typeof args[1] === 'object') {
-            Object.keys(args[1]).forEach((k) => {
-                if (args[1][k] === undefined) {
-                    console.warn("_t called with undefined interpolation name: " + k);
-                    args[1][k] = 'undefined';
-                }
-                if (args[1][k] === null) {
-                    console.warn("_t called with null interpolation name: " + k);
-                    args[1][k] = 'null';
-                }
-            });
-        }
+    if (args[1] && typeof args[1] === 'object') {
+        Object.keys(args[1]).forEach((k) => {
+            if (args[1][k] === undefined) {
+                console.warn("_t called with undefined interpolation name: " + k);
+                args[1][k] = 'undefined';
+            }
+            if (args[1][k] === null) {
+                console.warn("_t called with null interpolation name: " + k);
+                args[1][k] = 'null';
+            }
+        });
     }
     return counterpart.translate(...args);
 }
