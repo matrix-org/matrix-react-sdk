@@ -685,18 +685,18 @@ module.exports = React.createClass({
             homeserverUrl: MatrixClientPeg.get().getHomeserverUrl(),
             onFinished: (submitted, credentials) => {
                 if (!submitted) {
-                    dis.dispatch({
-                        action: 'cancel_after_sync_prepared',
-                    });
+                    dis.dispatch({action: 'cancel_after_sync_prepared'});
                     return;
                 }
                 this.onRegistered(credentials);
             },
             onDifferentServerClicked: (ev) => {
+                dis.dispatch({action: 'cancel_after_sync_prepared'});
                 dis.dispatch({action: 'start_registration'});
                 close();
             },
             onLoginClick: (ev) => {
+                dis.dispatch({action: 'cancel_after_sync_prepared'});
                 dis.dispatch({action: 'start_login'});
                 close();
             },
