@@ -124,7 +124,7 @@ export function _tJsx(jsxText, patterns, subs) {
 
     // this is a bit of a fudge to avoid the 'Each child in an array or iterator
     // should have a unique "key" prop' error: we explicitly pass the generated
-    // nodes into React.createElement as children of a <sapn>.
+    // nodes into React.createElement as children of a <span>.
     return React.createElement('span', null, ...output);
 }
 
