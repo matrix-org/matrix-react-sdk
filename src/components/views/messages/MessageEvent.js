@@ -40,6 +40,9 @@ module.exports = React.createClass({
 
         /* the shsape of the tile, used */
         tileShape: React.PropTypes.string,
+
+        // Width for calculating the size of images in chat, passed to MImageBody
+        chatWidth: React.PropTypes.number,
     },
 
     getEventTileOps: function() {
@@ -73,6 +76,7 @@ module.exports = React.createClass({
                     highlightLink={this.props.highlightLink}
                     showUrlPreview={this.props.showUrlPreview}
                     tileShape={this.props.tileShape}
+                    chatWidth={this.props.chatWidth}
                     onWidgetLoad={this.props.onWidgetLoad} />;
     },
 });
