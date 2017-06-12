@@ -208,7 +208,7 @@ export default React.createClass({
         const leftWidth = collapsedLhs ? 60 : 235;
         const collapsedRhs = this.props.collapse_rhs;
         const rightWidth = collapsedRhs ? 0 : 235;
-        const constantExtraWidth = 251;
+        const constantExtraWidth = 263;
         const chatWidth = windowWidth - leftWidth - rightWidth - constantExtraWidth;
         return chatWidth;
     },
