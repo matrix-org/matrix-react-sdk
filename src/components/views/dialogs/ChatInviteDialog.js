@@ -29,6 +29,35 @@ import dis from '../../../dispatcher';
 const TRUNCATE_QUERY_LIST = 40;
 const QUERY_USER_DIRECTORY_DEBOUNCE_MS = 200;
 
+function randomGroups(id) {
+    const fakeGroups = [
+        {
+            name: 'Best Group EV4',
+        },
+        {
+            name: 'The Sheltie Group',
+        },
+        {
+            name: 'Sheltie conspiracy theorists',
+        },
+        {
+            name: 'Sheltie intelligence agency',
+        },
+        {
+            name: 'Sheltie owners unite',
+        },
+        {
+            name: 'People for Shelties',
+        },
+    ];
+    const n = Math.floor(Math.random() * id.length) % fakeGroups.length;
+    const groups = [];
+    for (let i = 0; i < n; i++) {
+        groups.push(fakeGroups[(i + 2) % fakeGroups.length]);
+    }
+    return groups;
+}
+
 module.exports = React.createClass({
     displayName: "ChatInviteDialog",
     propTypes: {
@@ -303,6 +332,7 @@ module.exports = React.createClass({
                 displayName: user.display_name,
                 avatarMxc: user.avatar_url,
                 isKnown: true,
+                groups: randomGroups(user.user_id),
             });
         });
 
@@ -391,6 +421,7 @@ module.exports = React.createClass({
             var self = this;
             var room;
             createRoom().then(function(roomId) {
+                // should be `waitingForRoom` at this point
                 room = MatrixClientPeg.get().getRoom(roomId);
                 return inviteMultipleToRoom(roomId, addrTexts);
             })

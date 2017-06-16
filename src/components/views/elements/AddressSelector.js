@@ -41,6 +41,8 @@ export default React.createClass({
         return {
             selected: this.props.selected === undefined ? 0 : this.props.selected,
             hover: false,
+            groupDropDownExpanded: false,
+            groupFilters: {},
         };
     },
 
@@ -97,6 +99,21 @@ export default React.createClass({
         this.selectAddress(index);
     },
 
+    onGroupDropdownClicked: function(ev) {
+        this.setState({
+            groupDropDownExpanded: true,
+        });
+    },
+
+    onGroupFilterChanged: function(index) {
+        console.info(arguments);
+        const groupFilters = this.state.groupFilters;
+        groupFilters[index] = !groupFilters[index];
+        this.setState({
+            groupFilters: groupFilters,
+        });
+    },
+
     onMouseEnter: function(index) {
         this.setState({
             selected: index,
@@ -122,6 +139,10 @@ export default React.createClass({
         var maxSelected = this._maxSelected(this.props.addressList);
         var addressList = [];
 
+        console.info(this.state.groupFilters);
+        const includeGroups = Object.keys(this.state.groupFilters).filter((i) => this.state.groupFilters[i]);
+        console.info('include', includeGroups);
+
         // Only create the address elements if there are address
         if (this.props.addressList.length > 0) {
             for (var i = 0; i <= maxSelected; i++) {
@@ -129,6 +150,14 @@ export default React.createClass({
                     "mx_AddressSelector_addressListElement": true,
                     "mx_AddressSelector_selected": this.state.selected === i,
                 });
+
+                if (includeGroups.length > 0) {
+                    const addressGroups = this.props.addressList[i].groups.map((g) => g.name);
+
+                    if (!includeGroups.some((group) => addressGroups.includes(group))) {
+                        continue;
+                    }
+                }
 
                 // NOTE: Defaulting to "vector" as the network, until the network backend stuff is done.
                 // Saving the addressListElement so we can use it to work out, in the componentDidUpdate
@@ -150,6 +179,40 @@ export default React.createClass({
         return addressList;
     },
 
+    createGroupFilter: function() {
+        if (this.props.addressList.length > 0) {
+            const uniqueGroups = new Set(
+                this.props.addressList
+                    .map((address) => address.groups)
+                    .reduce((a, b) => a.concat(b))
+                    .map((group) => group.name),
+            );
+
+            const groupTiles = this.state.groupDropDownExpanded ? [...uniqueGroups].map((name) => {
+                console.info(Boolean(this.state.groupFilters[name]));
+                return <div className="mx_AddressSelector_filter_dropdown_tile" key={name} onClick={this.onGroupFilterChanged.bind(this, name)}>
+                    { name } <input type="checkbox" checked={Boolean(this.state.groupFilters[name])}/>
+                </div>;
+            }) : <div className="mx_AddressSelector_filter_dropdown_header">
+                Click here to filter by group <span className="mx_AddressSelector_filter_dropdown_chevron"></span>
+            </div>;
+
+            if (groupTiles.length === 0) {
+                return;
+            }
+
+            const classes = classNames({
+                "mx_AddressSelector_filter_dropdown": true,
+                "mx_AddressSelector_filter_dropdown_expanded":
+                    this.state.groupDropDownExpanded,
+            });
+
+            return <div className={classes} onClick={this.onGroupDropdownClicked}>
+                { groupTiles }
+            </div>;
+        }
+    },
+
     _maxSelected: function(list) {
         var listSize = list.length === 0 ? 0 : list.length - 1;
         var maxSelected = listSize > (this.props.truncateAt - 1) ? (this.props.truncateAt - 1) : listSize;
@@ -158,14 +221,17 @@ export default React.createClass({
 
     render: function() {
         var classes = classNames({
-            "mx_AddressSelector": true,
+            "mx_AddressSelector_container": true,
             "mx_AddressSelector_empty": this.props.addressList.length === 0,
         });
 
         return (
-            <div className={classes} ref={(ref) => {this.scrollElement = ref;}}>
-                { this.props.header }
-                { this.createAddressListTiles() }
+            <div className={classes}>
+                <div className="mx_AddressSelector" ref={(ref) => {this.scrollElement = ref;}}>
+                    { this.props.header }
+                    { this.createAddressListTiles() }
+                </div>
+                { this.createGroupFilter() }
             </div>
         );
     }

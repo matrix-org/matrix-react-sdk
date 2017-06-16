@@ -38,6 +38,9 @@ export const InviteAddressType = React.PropTypes.shape({
     // user we've seen) or false otherwise (eg. is just an address the
     // user has entered)
     isKnown: React.PropTypes.bool,
+    groups: React.PropTypes.arrayOf(React.PropTypes.shape({
+        'name': React.PropTypes.string,
+    })),
 });
 
 
