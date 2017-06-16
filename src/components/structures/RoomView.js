@@ -93,6 +93,7 @@ module.exports = React.createClass({
             roomId: null,
             roomLoading: true,
             peekLoading: false,
+            shouldPeek: true,
 
             // The event to be scrolled to initially
             initialEventId: null,
@@ -168,7 +169,12 @@ module.exports = React.createClass({
             initialEventId: RoomViewStore.getInitialEventId(),
             initialEventPixelOffset: RoomViewStore.getInitialEventPixelOffset(),
             isInitialEventHighlighted: RoomViewStore.isInitialEventHighlighted(),
+            shouldPeek: RoomViewStore.shouldPeek(),
         };
+
+        // finished joining, start waiting for a room and show a spinner. See onRoom.
+        newState.waitingForRoom = this.state.joining && !newState.joining &&
+                        !RoomViewStore.getJoinError();
 
         // Temporary logging to diagnose https://github.com/vector-im/riot-web/issues/4307
         console.log(
@@ -177,11 +183,10 @@ module.exports = React.createClass({
             newState.roomAlias,
             'loading?', newState.roomLoading,
             'joining?', newState.joining,
+            'initial?', initial,
+            'waiting?', newState.waitingForRoom,
+            'shouldPeek?', newState.shouldPeek,
         );
-
-        // finished joining, start waiting for a room and show a spinner. See onRoom.
-        newState.waitingForRoom = this.state.joining && !newState.joining &&
-                        !RoomViewStore.getJoinError();
 
         // NB: This does assume that the roomID will not change for the lifetime of
         // the RoomView instance
@@ -230,11 +235,15 @@ module.exports = React.createClass({
         if (room) {
             this._updateAutoComplete(room);
             this.tabComplete.loadEntries(room);
+            this.setState({
+                unsentMessageError: this._getUnsentMessageError(room),
+            });
+            this._onRoomLoaded(room);
         }
         if (!this.state.joining && this.state.roomId) {
             if (this.props.autoJoin) {
                 this.onJoinButtonClicked();
-            } else if (!room) {
+            } else if (!room && this.state.shouldPeek) {
                 console.log("Attempting to peek into room %s", this.state.roomId);
                 this.setState({
                     peekLoading: true,
@@ -262,10 +271,6 @@ module.exports = React.createClass({
         } else if (room) {
             // Stop peeking because we have joined this room previously
             MatrixClientPeg.get().stopPeeking();
-            this.setState({
-                unsentMessageError: this._getUnsentMessageError(room),
-            });
-            this._onRoomLoaded(room);
         }
     },
 
@@ -1463,7 +1468,7 @@ module.exports = React.createClass({
 
                 // We have no room object for this room, only the ID.
                 // We've got to this room by following a link, possibly a third party invite.
-                var room_alias = this.state.room_alias;
+                const roomAlias = this.state.roomAlias;
                 return (
                     <div className="mx_RoomView">
                         <RoomHeader ref="header"
@@ -1476,7 +1481,7 @@ module.exports = React.createClass({
                                             onForgetClick={ this.onForgetClick }
                                             onRejectClick={ this.onRejectThreepidInviteButtonClicked }
                                             canPreview={ false } error={ this.state.roomLoadError }
-                                            roomAlias={room_alias}
+                                            roomAlias={roomAlias}
                                             spinner={previewBarSpinner}
                                             inviterName={inviterName}
                                             invitedEmail={invitedEmail}
