@@ -181,12 +181,6 @@ var TimelinePanel = React.createClass({
 
             // always show timestamps on event tiles?
             alwaysShowTimestamps: syncedSettings.alwaysShowTimestamps,
-
-            // hide redacted events as per old behaviour
-            hideRedactions: syncedSettings.hideRedactions,
-
-            // hide membership joins and leaves
-            hideJoinLeaves: syncedSettings.hideJoinLeaves,
         };
     },
 
@@ -1008,10 +1002,18 @@ var TimelinePanel = React.createClass({
         var wrapperRect = ReactDOM.findDOMNode(messagePanel).getBoundingClientRect();
         var myUserId = MatrixClientPeg.get().credentials.userId;
 
+        let lastWasHidden = null;
         for (var i = this.state.events.length-1; i >= 0; --i) {
             var ev = this.state.events[i];
 
             if (ignoreOwn && ev.sender && ev.sender.userId == myUserId) {
+                continue;
+            }
+
+            // If this is the first hidden event in a group,
+            // store its id and pass that instead of i when we return
+            if (!messagePanel._shouldShowEvent(ev)) {
+                if (lastWasHidden === null) lastWasHidden = i;
                 continue;
             }
 
@@ -1026,7 +1028,10 @@ var TimelinePanel = React.createClass({
             var boundingRect = node.getBoundingClientRect();
             if ((allowPartial && boundingRect.top < wrapperRect.bottom) ||
                 (!allowPartial && boundingRect.bottom < wrapperRect.bottom)) {
+                if (lastWasHidden !== null) return lastWasHidden;
                 return i;
+            } else {
+                lastWasHidden = null;
             }
         }
         return null;
@@ -1125,8 +1130,6 @@ var TimelinePanel = React.createClass({
         return (
             <MessagePanel ref="messagePanel"
                           hidden={ this.props.hidden }
-                          hideJoinLeaves={ this.state.hideJoinLeaves }
-                          hideRedactions={ this.state.hideRedactions }
                           backPaginating={ this.state.backPaginating }
                           forwardPaginating={ forwardPaginating }
                           events={ this.state.events }

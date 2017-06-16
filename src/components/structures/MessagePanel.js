@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ShouldHideEvent from '../../ShouldHideEvent';
 import dis from "../../dispatcher";
 import sdk from '../../index';
 
@@ -90,12 +91,6 @@ module.exports = React.createClass({
 
         // show timestamps always
         alwaysShowTimestamps: React.PropTypes.bool,
-
-        // hide redacted events as per old behaviour
-        hideRedactions: React.PropTypes.bool,
-
-        // hide membership joins and parts
-        hideJoinLeaves: React.PropTypes.bool,
     },
 
     componentWillMount: function() {
@@ -115,6 +110,8 @@ module.exports = React.createClass({
         // Remember the read marker ghost node so we can do the cleanup that
         // Velocity requires
         this._readMarkerGhostNode = null;
+
+        this.shouldHideEvent = new ShouldHideEvent();
 
         this._isMounted = true;
     },
@@ -252,36 +249,8 @@ module.exports = React.createClass({
         // Always show highlighted event
         if (this.props.highlightedEventId === mxEv.getId()) return true;
 
-        // Hide redactions if behaviour enabled
-        if (mxEv.isRedacted() && this.props.hideRedactions) return false;
+        if (this.shouldHideEvent.check(mxEv)) return false;
 
-        const isMemberEvent = mxEv.getType() === "m.room.member" && mxEv.getStateKey() !== undefined;
-        if (!isMemberEvent) {
-            return true; // bail early: all the checks below concern member events only
-        }
-
-        // TODO: These checks are done to make sure we're dealing with membership transitions not avatar changes / dupe joins
-        //       These checks are also being done in TextForEvent and should really reside in the JS SDK as a helper function
-        const membership = mxEv.getContent().membership;
-        const prevMembership = mxEv.getPrevContent().membership;
-        if (membership === prevMembership && membership === "join") {
-            // join -> join : This happens when display names change / avatars are set / genuine dupe joins with no changes.
-            //                Find out which we're dealing with.
-            if (mxEv.getPrevContent().displayname !== mxEv.getContent().displayname) {
-                return true; // display name changed
-            }
-            if (mxEv.getPrevContent().avatar_url !== mxEv.getContent().avatar_url) {
-                return true; // avatar url changed
-            }
-            // dupe join event, fall through to hide rules
-        }
-
-        // this only applies to joins/leaves not invites/kicks/bans
-        const isJoinOrLeave = membership === "join" || (membership === "leave" && mxEv.getStateKey() === mxEv.getSender());
-        const hideJoinLeavesGlobally = this.props.hideJoinLeaves;
-        if (isJoinOrLeave && hideJoinLeavesGlobally) {
-            return false;
-        }
         return true;
     },
 
