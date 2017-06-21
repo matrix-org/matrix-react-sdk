@@ -24,11 +24,18 @@ class ModularWidgets {
             description: 'Ingredients - Boeuf Bourguignon',
         },
         {
-            type: 'youtube',
+            type: 'camgirl',
             icon: appWidgetAddress + '/static/etherpad.svg',
             url: 'https://www.youtube.com/embed/ZfkwW4GgAiU?controls=0&enablejsapi=1&iv_load_policy=3&modestbranding=1&playsinline=1&autoplay=1',
             name: 'CamGirl',
             description: 'Live stream - ChatGirl86',
+        },
+        {
+            type: "gamezome",
+            icon: appWidgetAddress + '/static/etherpad.svg',
+            url: "https://www.youtube.com/embed/Dm2Ma1dOFO4?controls=0&enablejsapi=1&iv_load_policy=3&modestbranding=1&playsinline=1&autoplay=1",
+            name: 'GameZone',
+            description: "Live stream - Overwatch Balle Royale",
         },
         {
             type: 'tip',
