@@ -119,9 +119,20 @@ module.exports = React.createClass({
 
     onClickAddWidget: function() {
         Modal.createDialog(AddAppDialog, {
-            onFinished: (proceed, type, value) => {
-                if (!proceed || !type) return;
-                if (type === 'custom' && !value) return;
+            onFinished: (proceed, widget, value) => {
+                if (!proceed || !widget) return;
+
+                const widgetObj = {
+                    type: widget.type,
+                };
+                if (widget.type === 'custom') {
+                    if (!value) {
+                        return;
+                    }
+                    widgetObj.url = value;
+                } else {
+                    widgetObj.url = widget.url;
+                }
 
                 const appsStateEvents = this.props.room.currentState.getStateEvents('im.vector.modular.widgets', '');
                 let appsStateEvent = {};
@@ -129,50 +140,22 @@ module.exports = React.createClass({
                     appsStateEvent = appsStateEvents.getContent();
                 }
 
-                if (appsStateEvent[type]) {
+                if (appsStateEvent[widget.type]) {
                     return;
                 }
 
-                switch (type) {
-                    case 'etherpad':
-                        appsStateEvent.etherpad = {
-                            type: type,
-                            url: 'http://localhost:8000/etherpad.html',
-                        };
-                        break;
-                    case 'grafana':
-                        appsStateEvent.grafana = {
-                            type: type,
-                            url: 'http://localhost:8000/grafana.html',
-                        };
-                        break;
+                appsStateEvent[widget.type] = widgetObj;
+                switch (widget.type) {
                     case 'jitsi':
-                        appsStateEvent.videoConf = {
-                            type: type,
-                            url: 'http://localhost:8000/jitsi.html',
-                            data: {
-                                confId: this.props.room.roomId.replace(/[^A-Za-z0-9]/g, '_') + Date.now(),
-                            },
+                        appsStateEvent[widget.type].data = {
+                            confId: this.props.room.roomId.replace(/[^A-Za-z0-9]/g, '_') + Date.now(),
                         };
                         break;
                     case 'vrdemo':
-                        appsStateEvent.vrDemo = {
-                            type: type,
-                            url: 'http://localhost:8000/vrdemo.html',
-                            data: {
-                                roomAlias: '#vrvc' + this.props.room.roomId.replace(/[^A-Za-z0-9]/g, '_') + Date.now(),
-                            },
+                        appsStateEvent[widget.type].data = {
+                            roomAlias: '#vrvc' + this.props.room.roomId.replace(/[^A-Za-z0-9]/g, '_') + Date.now(),
                         };
                         break;
-                    case 'custom':
-                        appsStateEvent.custom = {
-                            type: type,
-                            url: value,
-                        };
-                        break;
-                    default:
-                        console.warn('Unsupported app type:', type);
-                        return;
                 }
 
                 MatrixClientPeg.get().sendStateEvent(
