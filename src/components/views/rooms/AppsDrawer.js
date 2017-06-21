@@ -67,6 +67,12 @@ module.exports = React.createClass({
                 app.name += ' - ' + app.data.confId;
                 break;
             }
+            case 'lg':
+                app.queryParams = '?roomId=' + this.props.room.roomId;
+                break;
+            case 'tip':
+                app.queryParams = '?roomId=' + this.props.room.roomId;
+                break;
             case 'vrdemo':
                 app.name = 'Matrix VR Demo - ' + app.data.roomAlias;
                 app.queryParams = '?roomAlias=' + encodeURIComponent(app.data.roomAlias);
