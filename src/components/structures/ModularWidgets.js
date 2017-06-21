@@ -31,7 +31,7 @@ class ModularWidgets {
             description: 'Live stream - ChatGirl86',
         },
         {
-            type: "gamezome",
+            type: "gamezone",
             icon: appWidgetAddress + '/static/etherpad.svg',
             url: "https://www.youtube.com/embed/Dm2Ma1dOFO4?controls=0&enablejsapi=1&iv_load_policy=3&modestbranding=1&playsinline=1&autoplay=1",
             name: 'GameZone',
