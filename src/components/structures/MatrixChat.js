@@ -1014,76 +1014,77 @@ module.exports = React.createClass({
         // if the client is about to start, we are, by definition, not ready.
         // Set ready to false now, then it'll be set to true when the sync
         // listener we set below fires.
-        this.setState({ready: false});
-        const cli = MatrixClientPeg.get();
+        this.setState({ready: false}, () => {
+            const cli = MatrixClientPeg.get();
 
-        // Allow the JS SDK to reap timeline events. This reduces the amount of
-        // memory consumed as the JS SDK stores multiple distinct copies of room
-        // state (each of which can be 10s of MBs) for each DISJOINT timeline. This is
-        // particularly noticeable when there are lots of 'limited' /sync responses
-        // such as when laptops unsleep.
-        // https://github.com/vector-im/riot-web/issues/3307#issuecomment-282895568
-        cli.setCanResetTimelineCallback(function(roomId) {
-            console.log("Request to reset timeline in room ", roomId, " viewing:", self.state.currentRoomId);
-            if (roomId !== self.state.currentRoomId) {
-                // It is safe to remove events from rooms we are not viewing.
-                return true;
-            }
-            // We are viewing the room which we want to reset. It is only safe to do
-            // this if we are not scrolled up in the view. To find out, delegate to
-            // the timeline panel. If the timeline panel doesn't exist, then we assume
-            // it is safe to reset the timeline.
-            if (!self.refs.loggedInView) {
-                return true;
-            }
-            return self.refs.loggedInView.canResetTimelineInRoom(roomId);
-        });
-
-        cli.on('sync', function(state, prevState) {
-            // LifecycleStore and others cannot directly subscribe to matrix client for
-            // events because flux only allows store state changes during flux dispatches.
-            // So dispatch directly from here. Ideally we'd use a SyncStateStore that
-            // would do this dispatch and expose the sync state itself (by listening to
-            // its own dispatch).
-            dis.dispatch({action: 'sync_state', prevState, state});
-            self.updateStatusIndicator(state, prevState);
-            if (state === "SYNCING" && prevState === "SYNCING") {
-                return;
-            }
-            console.log("MatrixClient sync state => %s", state);
-            if (state !== "PREPARED") { return; }
-
-            self.firstSyncComplete = true;
-            self.firstSyncPromise.resolve();
-
-            dis.dispatch({action: 'focus_composer'});
-            self.setState({ready: true});
-        });
-        cli.on('Call.incoming', function(call) {
-            dis.dispatch({
-                action: 'incoming_call',
-                call: call,
-            });
-        });
-        cli.on('Session.logged_out', function(call) {
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-            Modal.createDialog(ErrorDialog, {
-                title: _t('Signed Out'),
-                description: _t('For security, this session has been signed out. Please sign in again.'),
-            });
-            dis.dispatch({
-                action: 'logout',
-            });
-        });
-        cli.on("accountData", function(ev) {
-            if (ev.getType() === 'im.vector.web.settings') {
-                if (ev.getContent() && ev.getContent().theme) {
-                    dis.dispatch({
-                        action: 'set_theme',
-                        value: ev.getContent().theme,
-                    });
+            // Allow the JS SDK to reap timeline events. This reduces the amount of
+            // memory consumed as the JS SDK stores multiple distinct copies of room
+            // state (each of which can be 10s of MBs) for each DISJOINT timeline. This is
+            // particularly noticeable when there are lots of 'limited' /sync responses
+            // such as when laptops unsleep.
+            // https://github.com/vector-im/riot-web/issues/3307#issuecomment-282895568
+            cli.setCanResetTimelineCallback(function(roomId) {
+                console.log("Request to reset timeline in room ", roomId, " viewing:", self.state.currentRoomId);
+                if (roomId !== self.state.currentRoomId) {
+                    // It is safe to remove events from rooms we are not viewing.
+                    return true;
                 }
-            }
+                // We are viewing the room which we want to reset. It is only safe to do
+                // this if we are not scrolled up in the view. To find out, delegate to
+                // the timeline panel. If the timeline panel doesn't exist, then we assume
+                // it is safe to reset the timeline.
+                if (!self.refs.loggedInView) {
+                    return true;
+                }
+                return self.refs.loggedInView.canResetTimelineInRoom(roomId);
+            });
+
+            cli.on('sync', function(state, prevState) {
+                // LifecycleStore and others cannot directly subscribe to matrix client for
+                // events because flux only allows store state changes during flux dispatches.
+                // So dispatch directly from here. Ideally we'd use a SyncStateStore that
+                // would do this dispatch and expose the sync state itself (by listening to
+                // its own dispatch).
+                dis.dispatch({action: 'sync_state', prevState, state});
+                self.updateStatusIndicator(state, prevState);
+                if (state === "SYNCING" && prevState === "SYNCING") {
+                    return;
+                }
+                console.log("MatrixClient sync state => %s", state);
+                if (state !== "PREPARED") { return; }
+
+                self.firstSyncComplete = true;
+                self.firstSyncPromise.resolve();
+
+                dis.dispatch({action: 'focus_composer'});
+                self.setState({ready: true});
+            });
+            cli.on('Call.incoming', function(call) {
+                dis.dispatch({
+                    action: 'incoming_call',
+                    call: call,
+                });
+            });
+            cli.on('Session.logged_out', function(call) {
+                const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+                Modal.createDialog(ErrorDialog, {
+                    title: _t('Signed Out'),
+                    description: _t('For security, this session has been signed out. Please sign in again.'),
+                });
+                dis.dispatch({
+                    action: 'logout',
+                });
+            });
+            cli.on("accountData", function(ev) {
+                if (ev.getType() === 'im.vector.web.settings') {
+                    if (ev.getContent() && ev.getContent().theme) {
+                        dis.dispatch({
+                            action: 'set_theme',
+                            value: ev.getContent().theme,
+                        });
+                    }
+                }
+            });
         });
 
         const krh = new KeyRequestHandler(cli);
