@@ -73,9 +73,9 @@ class ModularWidgets {
         },
     ];
 
-    getWidgetConfig(type) {
-        for (let i = 0; i < this.widgetTypes.length; i++) {
-            const widget = this.widgetTypes[i];
+    static getWidgetConfig(type) {
+        for (let i = 0; i < ModularWidgets.widgetTypes.length; i++) {
+            const widget = ModularWidgets.widgetTypes[i];
             if (widget.type === type) {
                 return widget;
             }
@@ -83,4 +83,5 @@ class ModularWidgets {
         return null;
     }
 }
+
 export default ModularWidgets;
