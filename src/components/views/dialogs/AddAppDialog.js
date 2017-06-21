@@ -44,24 +44,14 @@ export default React.createClass({
         this.setState({ value: ev.target.value});
     },
 
-    _getWidgetConfig(type) {
-        for (let i = 0; i < ModularWidgets.widgetTypes.length; i++) {
-            const widget = ModularWidgets.widgetTypes[i];
-            if (widget.type === type) {
-                return widget;
-            }
-        }
-        return null;
-    },
-
     onFormSubmit: function(ev) {
         ev.preventDefault();
-        this.props.onFinished(true, this._getWidgetConfig('custom'), this.state.value);
+        this.props.onFinished(true, ModularWidgets.getWidgetConfig('custom'), this.state.value);
         return false;
     },
 
     onTileClick: function(value) {
-        this.props.onFinished(true, this._getWidgetConfig(value), null);
+        this.props.onFinished(true, ModularWidgets.getWidgetConfig(value), null);
     },
 
     render: function() {

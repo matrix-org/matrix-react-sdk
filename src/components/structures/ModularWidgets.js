@@ -70,5 +70,15 @@ class ModularWidgets {
             description: 'Add your own custom widget',
         },
     ];
+
+    getWidgetConfig(type) {
+        for (let i = 0; i < this.widgetTypes.length; i++) {
+            const widget = this.widgetTypes[i];
+            if (widget.type === type) {
+                return widget;
+            }
+        }
+        return null;
+    }
 }
 export default ModularWidgets;
