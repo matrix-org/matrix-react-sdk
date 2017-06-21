@@ -23,6 +23,7 @@ import dis from '../../../dispatcher';
 import Autocomplete from './Autocomplete';
 import classNames from 'classnames';
 import UserSettingsStore from '../../../UserSettingsStore';
+import ModularWidgets from '../../structures/ModularWidgets';
 
 
 export default class MessageComposer extends React.Component {
@@ -163,10 +164,11 @@ export default class MessageComposer extends React.Component {
         if (appsStateEvents) {
             appsStateEvent = appsStateEvents.getContent();
         }
-        if (!appsStateEvent.videoConf) {
-            appsStateEvent.videoConf = {
+        if (!appsStateEvent.jitsi) {
+            const widget = ModularWidgets.getWidgetConfig('jitsi');
+            appsStateEvent.jitsi = {
                 type: 'jitsi',
-                url: 'http://localhost:8000/jitsi.html',
+                url: widget.url,
                 data: {
                     confId: this.props.room.roomId.replace(/[^A-Za-z0-9]/g, '_') + Date.now(),
                     isAudioConf: isAudioConf,
