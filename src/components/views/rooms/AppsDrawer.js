@@ -70,9 +70,12 @@ module.exports = React.createClass({
             case 'lg':
                 app.queryParams = '?roomId=' + this.props.room.roomId;
                 break;
-            case 'tip':
-                app.queryParams = '?roomId=' + this.props.room.roomId;
+            case 'tip': {
+                const user = MatrixClientPeg.get().getUser(this.props.userId);
+                app.queryParams = '?roomId=' + this.props.room.roomId +
+                    '&displayName=' + encodeURIComponent(user.displayName);
                 break;
+            }
             case 'vrdemo':
                 app.name = 'Matrix VR Demo - ' + app.data.roomAlias;
                 app.queryParams = '?roomAlias=' + encodeURIComponent(app.data.roomAlias);
