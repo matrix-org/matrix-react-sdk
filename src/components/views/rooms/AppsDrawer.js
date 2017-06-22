@@ -56,6 +56,10 @@ module.exports = React.createClass({
                 app.queryParams = '?userName=' + this.props.userId +
                     '&padId=' + this.props.room.roomId;
                 break;
+            case 'agario':
+                app.queryParams = '?userName=' + this.props.userId +
+                    '&room=' + this.props.room.roomId;
+                break;
             case 'jitsi': {
                 const user = MatrixClientPeg.get().getUser(this.props.userId);
                 app.queryParams = '?confId=' + app.data.confId +
@@ -144,6 +148,12 @@ module.exports = React.createClass({
                         appsStateEvent.grafana = {
                             type: type,
                             url: 'http://localhost:8000/grafana.html',
+                        };
+                        break;
+                    case 'agario':
+                        appsStateEvent.agario = {
+                            type: type,
+                            url: 'http://localhost:8000/agario.html',
                         };
                         break;
                     case 'jitsi':

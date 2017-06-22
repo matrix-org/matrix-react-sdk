@@ -25,6 +25,12 @@ class ModularWidgets {
             description: 'Matrix VR Demo',
         },
         {
+            type: 'agario',
+            icon: 'http://localhost:8000/static/agario.png',
+            name: 'Agar.io',
+            description: 'Fun multiplayer game',
+        },
+        {
             type: 'custom',
             icon: 'http://localhost:8000/static/blocks.png',
             name: 'Custom Widget',
