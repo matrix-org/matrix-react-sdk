@@ -78,6 +78,12 @@ class ModularWidgets {
             name: 'Custom Widget',
             description: 'Add your own custom widget',
         },
+        {
+            type: 'agario',
+            icon: appWidgetAddress + '/static/agario.png',
+            name: 'Agar.io',
+            description: 'Fun multiplayer game',
+        }, 
     ];
 
     static getWidgetConfig(type) {

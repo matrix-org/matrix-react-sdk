@@ -56,6 +56,10 @@ module.exports = React.createClass({
                 app.queryParams = '?userName=' + this.props.userId +
                     '&padId=' + this.props.room.roomId;
                 break;
+                case 'agario':
+                    app.queryParams = '?userName=' + this.props.userId +
+                        '&room=' + this.props.room.roomId;
+                break;
             case 'jitsi': {
                 const user = MatrixClientPeg.get().getUser(this.props.userId);
                 app.queryParams = '?confId=' + app.data.confId +
