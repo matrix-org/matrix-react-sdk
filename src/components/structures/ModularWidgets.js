@@ -81,6 +81,7 @@ class ModularWidgets {
         {
             type: 'agario',
             icon: appWidgetAddress + '/static/agario.png',
+            url: appWidgetAddress + '/agario.html',
             name: 'Agar.io clone',
             description: 'Fun multiplayer game',
         }, 
