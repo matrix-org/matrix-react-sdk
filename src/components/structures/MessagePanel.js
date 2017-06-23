@@ -314,10 +314,6 @@ module.exports = React.createClass({
             let last = (i == lastShownEventIndex);
 
             if (!this._shouldShowEvent(mxEv)) {
-                // Event is hidden but may be the read marker event
-                if (mxEv.getId() === this.props.readMarkerEventId) {
-                    ret.push(this._getReadMarkerTile(this.props.readMarkerVisible));
-                }
                 wantTile = false;
             }
 
