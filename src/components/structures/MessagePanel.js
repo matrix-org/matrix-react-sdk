@@ -308,7 +308,7 @@ module.exports = React.createClass({
 
         for (i = 0; i < this.props.events.length; i++) {
             let mxEv = this.props.events[i];
-            let wantTile = false;
+            let wantTile = true;
             let eventId = mxEv.getId();
             let readMarkerInMels = false;
             let last = (i == lastShownEventIndex);
