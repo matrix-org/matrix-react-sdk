@@ -546,7 +546,9 @@ module.exports = React.createClass({
                 this._onLoggedOut();
                 break;
             case 'will_start_client':
-                this._onWillStartClient();
+                this.setState({ready: false}, () => {
+                    this._onWillStartClient();
+                });
                 break;
             case 'new_version':
                 this.onVersion(
@@ -1013,7 +1015,6 @@ module.exports = React.createClass({
         // if the client is about to start, we are, by definition, not ready.
         // Set ready to false now, then it'll be set to true when the sync
         // listener we set below fires.
-        this.setState({ready: false});
         const cli = MatrixClientPeg.get();
 
         // Allow the JS SDK to reap timeline events. This reduces the amount of
