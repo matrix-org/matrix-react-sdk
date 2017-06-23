@@ -308,6 +308,7 @@ module.exports = React.createClass({
 
         for (i = 0; i < this.props.events.length; i++) {
             let mxEv = this.props.events[i];
+            let wantTile = false;
             let eventId = mxEv.getId();
             let readMarkerInMels = false;
             let last = (i == lastShownEventIndex);
@@ -317,7 +318,7 @@ module.exports = React.createClass({
                 if (mxEv.getId() === this.props.readMarkerEventId) {
                     ret.push(this._getReadMarkerTile(this.props.readMarkerVisible));
                 }
-                continue;
+                wantTile = false;
             }
 
             // Wrap consecutive member events in a ListSummary, ignore if redacted
@@ -394,7 +395,7 @@ module.exports = React.createClass({
                 continue;
             }
 
-            if (EventTile.haveTileForEvent(mxEv)) {
+            if (wantTile) {
                 // make sure we unpack the array returned by _getTilesForEvent,
                 // otherwise react will auto-generate keys and we will end up
                 // replacing all of the DOM elements every time we paginate.
