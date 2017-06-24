@@ -343,7 +343,7 @@ module.exports = React.createClass({
                     let collapsedMxEv = this.props.events[i + 1];
 
                     // Ignore redacted member events
-                    if (!EventTile.haveTileForEvent(collapsedMxEv) || !this._shouldShowEvent(collapsedMxEv)) {
+                    if (!this._shouldShowEvent(collapsedMxEv)) {
                         continue;
                     }
 
