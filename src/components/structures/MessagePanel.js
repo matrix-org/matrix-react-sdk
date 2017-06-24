@@ -318,10 +318,7 @@ module.exports = React.createClass({
             }
 
             // Wrap consecutive member events in a ListSummary, ignore if redacted
-            if (isMembershipChange(mxEv) &&
-                EventTile.haveTileForEvent(mxEv) &&
-                !mxEv.isRedacted()
-            ) {
+            if (isMembershipChange(mxEv) && !mxEv.isRedacted() && wantTile) {
                 let ts1 = mxEv.getTs();
                 // Ensure that the key of the MemberEventListSummary does not change with new
                 // member events. This will prevent it from being re-created unnecessarily, and
