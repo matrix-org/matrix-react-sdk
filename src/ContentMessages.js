@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2017 Vector Creations Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,6 +26,7 @@ import { _t } from './languageHandler';
 var Modal = require('./Modal');
 
 var encrypt = require("browser-encrypt-attachment");
+var UserSettingsStore = require('./UserSettingsStore');
 
 // Polyfill for Canvas.toBlob API using Canvas.toDataURL
 require("blueimp-canvas-to-blob");
@@ -223,6 +225,51 @@ function readFileAsArrayBuffer(file) {
 }
 
 /**
+ * Strip EXIF metadata from a JPEG
+ * Taken from http://jsfiddle.net/mowglisanu/frhwm2xe/3/
+ *
+ * @param {ArrayBuffer} data the image data
+ * @return {ArrayBuffer} the stripped image data
+ */
+function stripJpegMetadata(data) {
+    var dv = new DataView(data);
+    var offset = 0, recess = 0;
+    var pieces = [];
+    var i = 0;
+
+    // FIXME: check this isn't stripping off any EXIF color profile data
+    // as that will break the colorimetry of the image.  We're stripping
+    // this for privacy purposes rather than filesize.
+    if (dv.getUint16(offset) == 0xffd8) {
+        offset += 2;
+        var app1 = dv.getUint16(offset);
+        offset += 2;
+        while (offset < dv.byteLength){
+            if (app1 == 0xffe1) {
+                pieces[i] = { recess:recess, offset:offset-2 };
+                recess = offset + dv.getUint16(offset);
+                i++;
+            }
+            else if (app1 == 0xffda) {
+                break;
+            }
+            offset += dv.getUint16(offset);
+            var app1 = dv.getUint16(offset);
+            offset += 2;
+        }
+        if (pieces.length > 0) {
+            var newPieces = [];
+            pieces.forEach(function(v){
+                newPieces.push(this.result.slice(v.recess, v.offset));
+            }, this);
+            newPieces.push(this.result.slice(recess));
+        }
+    }
+
+    return newPieces ? newPieces : data;
+}
+
+/**
  * Upload the file to the content repository.
  * If the room is encrypted then encrypt the file before uploading.
  *
@@ -234,10 +281,28 @@ function readFileAsArrayBuffer(file) {
  *  If the file is encrypted then the object will have a "file" key.
  */
 function uploadFile(matrixClient, roomId, file) {
+    var readDataPromise;
+
+    // strip metadata where we can (n.b. we don't want to strip colorspace metadata)
+    if (file.type === 'image/jpeg' &&
+        UserSettingsStore.getSyncedSetting('stripFileMetadata', false))
+    {
+        readDataPromise = readFileAsArrayBuffer(file).then(function(data) {
+            // fix up arraybuffer
+            data = stripJpegMetadata(data);
+            return q(data);
+        });
+    }
+
     if (matrixClient.isRoomEncrypted(roomId)) {
         // If the room is encrypted then encrypt the file before uploading it.
         // First read the file into memory.
-        return readFileAsArrayBuffer(file).then(function(data) {
+
+        if (!readDataPromise) {
+            readDataPromise = readFileAsArrayBuffer(file);
+        }
+
+        return readDataPromise.then(function(data) {
             // Then encrypt the file.
             return encrypt.encryptAttachment(data);
         }).then(function(encryptResult) {
@@ -257,12 +322,21 @@ function uploadFile(matrixClient, roomId, file) {
             });
         });
     } else {
-        const basePromise = matrixClient.uploadContent(file);
+        if (readDataPromise) {
+            const basePromise = readDataPromise.then(function(data) {
+                return matrixClient.uploadContent(new Blob([data]));
+            });
+        }
+        else {
+            const basePromise = matrixClient.uploadContent(file);
+        }
+
         const promise1 = basePromise.then(function(url) {
             // If the attachment isn't encrypted then include the URL directly.
             return {"url": url};
         });
         // XXX: copy over the abort method to the new promise
+        // FIXME: This is probably broken if you have a readDataPromise defined
         promise1.abort = basePromise.abort;
         return promise1;
     }

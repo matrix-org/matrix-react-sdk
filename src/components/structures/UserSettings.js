@@ -93,6 +93,10 @@ const SETTINGS_LABELS = [
         id: 'disableMarkdown',
         label: 'Disable markdown formatting',
     },
+    {
+        id: 'stripFileMetadata',
+        label: 'Strip metadata from file uploads',
+    },
 /*
     {
         id: 'useFixedWidthFont',
