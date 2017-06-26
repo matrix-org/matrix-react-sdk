@@ -22,6 +22,7 @@ const AddAppDialog = require('../dialogs/AddAppDialog');
 const AppTile = require('../elements/AppTile');
 const Modal = require("../../../Modal");
 const dis = require('../../../dispatcher');
+const ModularWidgets = require('../../structures/ModularWidgets');
 
 module.exports = React.createClass({
     displayName: 'AppsDrawer',
@@ -48,8 +49,8 @@ module.exports = React.createClass({
 
     _initAppConfig: function(appId, app) {
         console.log("App props: ", this.props);
+        app = ModularWidgets.getWidgetConfig(app.type);
         app.id = appId;
-        app.name = app.type;
 
         switch(app.type) {
             case 'etherpad':
