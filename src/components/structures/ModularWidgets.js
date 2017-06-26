@@ -84,7 +84,13 @@ class ModularWidgets {
             url: appWidgetAddress + '/agario.html',
             name: 'Agar.io clone',
             description: 'Fun multiplayer game',
-        }, 
+        },
+        {
+            type: 'gdocs',
+            icon: 'https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Google-Docs-logo-transparent.2e16d0ba.fill-250x250.png',
+            name: 'Google Docs',
+            description: 'Visualise a Google Document',
+        },
     ];
 
     static getWidgetConfig(type) {

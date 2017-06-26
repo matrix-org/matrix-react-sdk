@@ -169,6 +169,20 @@ module.exports = React.createClass({
                             roomAlias: '#vrvc' + this.props.room.roomId.replace(/[^A-Za-z0-9]/g, '_') + Date.now(),
                         };
                         break;
+                    case 'gdocs':
+                        const url = prompt('Published URL of the document\nThe published URL can be found in File > Publish to the web... in the Google Docs interface');
+                        if(!url) {
+                            return;
+                        } else if(!url.includes('https://docs.google.com/document') || !url.includes('/pub')) {
+                            alert('"'+ url +'" is not a valid Google Docs published URL');
+                        }
+
+                        appsStateEvent[widget.type].url = url;
+
+                        if(!url.includes('?embedded=true')) {
+                            appsStateEvent[widget.type].url += '?embedded=true';
+                        }
+                        break;
                 }
 
                 MatrixClientPeg.get().sendStateEvent(
