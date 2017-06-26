@@ -322,13 +322,14 @@ function uploadFile(matrixClient, roomId, file) {
             });
         });
     } else {
+        let basePromise;
         if (readDataPromise) {
-            const basePromise = readDataPromise.then(function(data) {
+            basePromise = readDataPromise.then(function(data) {
                 return matrixClient.uploadContent(new Blob([data]));
             });
         }
         else {
-            const basePromise = matrixClient.uploadContent(file);
+            basePromise = matrixClient.uploadContent(file);
         }
 
         const promise1 = basePromise.then(function(url) {
