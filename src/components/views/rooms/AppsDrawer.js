@@ -175,6 +175,7 @@ module.exports = React.createClass({
                             return;
                         } else if(!url.includes('https://docs.google.com/document') || !url.includes('/pub')) {
                             alert('"'+ url +'" is not a valid Google Docs published URL');
+                            return;
                         }
 
                         appsStateEvent[widget.type].url = url;
