@@ -522,6 +522,7 @@
   "Start a chat": "Start a chat",
   "Start authentication": "Start authentication",
   "Start Chat": "Start Chat",
+  "Strip metadata from file uploads": "Strip metadata from file uploads",
   "Submit": "Submit",
   "Success": "Success",
   "tag as %(tagName)s": "tag as %(tagName)s",
