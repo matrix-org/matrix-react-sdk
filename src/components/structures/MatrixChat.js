@@ -1148,6 +1148,7 @@ module.exports = React.createClass({
             window.location.origin != ev.origin &&
             (!SdkConfig.get().allowedPostMessageOrigins || SdkConfig.get().allowedPostMessageOrigins.indexOf(ev.origin) == -1)
         ) {
+            console.log('postMessage: unallowed postMessageOrigin. Ignoring request...');
             return;
         }
         var credentials = {};
@@ -1156,7 +1157,7 @@ module.exports = React.createClass({
         } catch(e) {
             return;
         };
-            
+
         if (
             credentials &&
             credentials.action &&
