@@ -56,11 +56,11 @@ function twelveHourTime(date) {
     const minutes = pad(date.getMinutes());
     const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
     hours = pad(hours ? hours : 12);
-    return `${hours}:${minutes} ${ampm}`;
+    return `${hours}:${minutes}${ampm}`;
 }
 
 module.exports = {
-    formatDate: function(date) {
+    formatDate: function(date, showTwelveHour=false) {
         var now = new Date();
         const days = getDaysArray();
         const months = getMonthsArray();
@@ -69,7 +69,7 @@ module.exports = {
         }
         else if (now.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
             // TODO: use standard date localize function provided in counterpart
-            return _t('%(weekDayName)s %(time)s', {weekDayName: days[date.getDay()], time: this.formatTime(date)});
+            return _t('%(weekDayName)s %(time)s', {weekDayName: days[date.getDay()], time: this.formatTime(date, showTwelveHour)});
         }
         else if (now.getFullYear() === date.getFullYear()) {
             // TODO: use standard date localize function provided in counterpart
@@ -80,10 +80,10 @@ module.exports = {
                 time: this.formatTime(date),
             });
         }
-        return this.formatFullDate(date);
+        return this.formatFullDate(date, showTwelveHour);
     },
 
-    formatFullDate: function(date) {
+    formatFullDate: function(date, showTwelveHour=false) {
         const days = getDaysArray();
         const months = getMonthsArray();
         return _t('%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s', {
@@ -91,7 +91,7 @@ module.exports = {
             monthName: months[date.getMonth()],
             day: date.getDate(),
             fullYear: date.getFullYear(),
-            time: this.formatTime(date),
+            time: showTwelveHour ? twelveHourTime(date) : this.formatTime(date),
         });
     },
 
