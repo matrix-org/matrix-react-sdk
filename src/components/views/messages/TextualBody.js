@@ -29,6 +29,7 @@ import Modal from '../../../Modal';
 import SdkConfig from '../../../SdkConfig';
 import dis from '../../../dispatcher';
 import { _t } from '../../../languageHandler';
+import UserSettingsStore from "../../../UserSettingsStore";
 
 linkifyMatrix(linkify);
 
@@ -63,6 +64,19 @@ module.exports = React.createClass({
         };
     },
 
+    copyToClipboard: function(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            const successful = document.execCommand('copy');
+        } catch (err) {
+            console.log('Unable to copy');
+        }
+        document.body.removeChild(textArea);
+    },
+
     componentDidMount: function() {
         this._unmounted = false;
 
@@ -77,9 +91,28 @@ module.exports = React.createClass({
                 setTimeout(() => {
                     if (this._unmounted) return;
                     for (let i = 0; i < blocks.length; i++) {
-                        highlight.highlightBlock(blocks[i]);
+                        if (UserSettingsStore.getSyncedSetting("enableSyntaxHighlightLanguageDetection", false)) {
+                            highlight.highlightBlock(blocks[i])
+                        } else {
+                            // Only syntax highlight if there's a class starting with language-
+                            let classes = blocks[i].className.split(/\s+/).filter(function (cl) {
+                                return cl.startsWith('language-');
+                            });
+
+                            if (classes.length != 0) {
+                                highlight.highlightBlock(blocks[i]);
+                            }
+                        }
                     }
                 }, 10);
+            }
+            // add event handlers to the 'copy code' buttons
+            const buttons = ReactDOM.findDOMNode(this).getElementsByClassName("mx_EventTile_copyButton");
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].onclick = (e) => {
+                    const copyCode = buttons[i].parentNode.getElementsByTagName("code")[0];
+                    this.copyToClipboard(copyCode.textContent);
+                };
             }
         }
     },

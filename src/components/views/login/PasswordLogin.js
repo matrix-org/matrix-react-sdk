@@ -16,7 +16,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import sdk from '../../../index';
 import { _t } from '../../../languageHandler';
@@ -70,10 +69,19 @@ class PasswordLogin extends React.Component {
 
     onSubmitForm(ev) {
         ev.preventDefault();
+        if (this.state.loginType === PasswordLogin.LOGIN_FIELD_PHONE) {
+            this.props.onSubmit(
+                '', // XXX: Synapse breaks if you send null here:
+                this.state.phoneCountry,
+                this.state.phoneNumber,
+                this.state.password,
+            );
+            return;
+        }
         this.props.onSubmit(
             this.state.username,
-            this.state.phoneCountry,
-            this.state.phoneNumber,
+            null,
+            null,
             this.state.password,
         );
     }
