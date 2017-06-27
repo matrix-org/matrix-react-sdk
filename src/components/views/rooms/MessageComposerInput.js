@@ -18,7 +18,7 @@ import type SyntheticKeyboardEvent from 'react/lib/SyntheticKeyboardEvent';
 
 import {Editor, EditorState, RichUtils, CompositeDecorator,
     convertFromRaw, convertToRaw, Modifier, EditorChangeType,
-    getDefaultKeyBinding, KeyBindingUtil, ContentState, ContentBlock, SelectionState} from 'draft-js';
+    getDefaultKeyBinding, KeyBindingUtil, ContentState, ContentBlock, SelectionState, Entity} from 'draft-js';
 
 import classNames from 'classnames';
 import escape from 'lodash/escape';
@@ -53,6 +53,20 @@ function stateToMarkdown(state) {
             ZWS, // draft-js-export-markdown adds these
             ''); // this is *not* a zero width space, trust me :)
 }
+
+const Mention = (props) => {
+    return <a href="#" className="mx_Mention">{ props.decoratedText }</a>;
+};
+
+const findMentions = function(contentBlock, callback) {
+    contentBlock.findEntityRanges((character) => {
+        const entityKey = character.getEntity();
+        return (
+            entityKey !== null &&
+            Entity.get(entityKey).getType() === 'MENTION'
+        );
+    }, callback);
+};
 
 /*
  * The textInput part of the MessageComposer
@@ -141,9 +155,13 @@ export default class MessageComposerInput extends React.Component {
      * - contentState was passed in
      */
     createEditorState(richText: boolean, contentState: ?ContentState): EditorState {
+        const mentionDecorator = {
+            strategy: findMentions,
+            component: Mention,
+        };
         let decorators = richText ? RichText.getScopedRTDecorators(this.props) :
                 RichText.getScopedMDDecorators(this.props),
-            compositeDecorator = new CompositeDecorator(decorators);
+            compositeDecorator = new CompositeDecorator(decorators.concat([mentionDecorator]));
 
         let editorState = null;
         if (contentState) {
@@ -445,6 +463,7 @@ export default class MessageComposerInput extends React.Component {
 
 
         let contentText = contentState.getPlainText(), contentHTML;
+        console.info(contentText);
 
         const cmd = SlashCommands.processInput(this.props.room.roomId, contentText);
         if (cmd) {
@@ -475,6 +494,7 @@ export default class MessageComposerInput extends React.Component {
             return true;
         }
 
+        console.info(RichText.contentStateToHTML(contentState));
         if (this.state.isRichtextEnabled) {
             contentHTML = HtmlUtils.stripParagraphs(
                 RichText.contentStateToHTML(contentState),
@@ -498,6 +518,7 @@ export default class MessageComposerInput extends React.Component {
             sendHtmlFn = this.client.sendHtmlEmote;
             sendTextFn = this.client.sendEmoteMessage;
         }
+
 
         this.historyManager.addItem(
             this.state.isRichtextEnabled ? contentHTML : contentState.getPlainText(),
@@ -597,13 +618,27 @@ export default class MessageComposerInput extends React.Component {
 
         const {range = {}, completion = ''} = displayedCompletion;
 
+        const entityKey = Entity.create(
+            'MENTION',
+            'SEGMENTED',
+            {
+                completion,
+                userId: '@lb:ldbco.de',
+            },
+        );
+
         const contentState = Modifier.replaceText(
             activeEditorState.getCurrentContent(),
             RichText.textOffsetsToSelectionState(range, activeEditorState.getCurrentContent().getBlocksAsArray()),
             completion,
+            activeEditorState.getCurrentInlineStyle(),
+        // @Mention
+            entityKey,
         );
 
+
         let editorState = EditorState.push(activeEditorState, contentState, 'insert-characters');
+
         editorState = EditorState.forceSelection(editorState, contentState.getSelectionAfter());
         this.setState({editorState, originalEditorState: activeEditorState});
 

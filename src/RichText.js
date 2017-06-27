@@ -46,7 +46,18 @@ export const contentStateToHTML = (contentState: ContentState) => {
             UNDERLINE: {
                 element: 'u'
             }
-        }
+        },
+        entityStyleFn: (entity) => {
+            const entityType = entity.getType();
+            if (entityType === 'MENTION') {
+                return {
+                    element: 'a',
+                    attributes: {
+                        href: `https://matrix.to/#/${entity.getData()['userId']}`,
+                    },
+                };
+            }
+        },
     });
 };
 

@@ -147,6 +147,7 @@ matrixLinkify.options = {
     },
 
     formatHref: function(href, type) {
+        console.info(href);
         switch (type) {
             case 'roomalias':
             case 'userid':
@@ -170,6 +171,18 @@ matrixLinkify.options = {
                 }
 
                 return href;
+        }
+    },
+
+    className: function(href, type) {
+        const m = href.match(matrixLinkify.MATRIXTO_URL_PATTERN);
+        if (m) {
+            const entity = m[1];
+            if (entity[0] === '@') {
+                return 'mx_mention_lozenge';
+            } else if (entity[0] === '#' || entity[0] === '!') {
+                return 'mx_room_lozenge';
+            }
         }
     },
 
