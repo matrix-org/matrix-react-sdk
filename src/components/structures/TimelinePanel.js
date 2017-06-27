@@ -1020,7 +1020,16 @@ var TimelinePanel = React.createClass({
             var boundingRect = node.getBoundingClientRect();
             if ((allowPartial && boundingRect.top < wrapperRect.bottom) ||
                 (!allowPartial && boundingRect.bottom < wrapperRect.bottom)) {
-                return i;
+                // find last invisible event before the next visible one.
+                // doing this by finding the next visible event (which is not in rect)
+                // and then returning the id of the one above it.
+                for (let j = i; j > this.state.events.length; ++i) {
+                    if (messagePanel._shouldShowEvent(this.state.events[j])) {
+                        // j points to 1 event too far
+                        return j - 1;
+                    }
+                }
+                return this.state.events.length - 1;
             }
         }
         return null;
