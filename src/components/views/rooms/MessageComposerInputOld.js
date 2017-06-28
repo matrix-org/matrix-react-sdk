@@ -331,7 +331,7 @@ export default React.createClass({
             return;
         }
 
-        var isEmote = /^\/me( |'s|$)|my( |$)/i.test(contentText);
+        var isEmote = /^\/me( |'s |$)|my( |$)/i.test(contentText);
         var sendMessagePromise;
 
         if (isEmote) {
