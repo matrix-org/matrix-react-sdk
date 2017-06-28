@@ -331,20 +331,19 @@ export default React.createClass({
             return;
         }
 
-        var isEmote = /^\/me( |'|$)|my( |$)/i.test(contentText);
+        var isEmote = /^\/me( |'s|$)|my( |$)/i.test(contentText);
         var sendMessagePromise;
 
         if (isEmote) {
-        	console.log('old');
-        	if (/^\/me( |$)/i.test(contentText)) {
-        		contentText = contentText.substring(4);
-        	}
-        	if (/^\/me'/i.test(contentText)) {
-        		contentText = contentText.substring(3);
-        	}
-        	if (/^\/my( |$)/i.test(contentText)) {
-        		contentText = '\'s ' + contentText.substring(4);
-        	}
+            if (/^\/me( |$)/i.test(contentText)) {
+                contentText = contentText.substring(4);
+            }
+            if (/^\/me's/i.test(contentText)) {
+                contentText = contentText.substring(3);
+            }
+            if (/^\/my( |$)/i.test(contentText)) {
+                contentText = '\'s ' + contentText.substring(4);
+            }
         }
         else if (contentText[0] === '/') {
             contentText = contentText.substring(1);
