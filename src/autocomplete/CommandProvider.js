@@ -31,12 +31,12 @@ const COMMANDS = [
     {
         command: '/me\'s',
         args: '<message>',
-        description: 'Displays action',
+        description: 'Displays action with \'s after the username',
     },
     {
         command: '/my',
         args: '<message>',
-        description: 'Displays action with \'s at the end',
+        description: 'Displays action with \'s after the username',
     },
     {
         command: '/part',
