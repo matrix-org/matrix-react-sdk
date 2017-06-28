@@ -519,6 +519,7 @@ var TimelinePanel = React.createClass({
         const cli = MatrixClientPeg.get();
         // if no client or client is guest don't send RR or RM
         if (!cli || cli.isGuest()) return;
+        if (UserSettingsStore.getSyncedSetting('dontSendReadReceipts', false)) return;
 
         let shouldSendRR = true;
 
