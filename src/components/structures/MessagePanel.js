@@ -337,30 +337,27 @@ module.exports = React.createClass({
 
                 let summarisedEvents = [mxEv];
                 for (;i + 1 < this.props.events.length; i++) {
-                    let collapsedMxEv = this.props.events[i + 1];
-
-                    // Ignore redacted/hidden member events
-                    if (!this._shouldShowEvent(collapsedMxEv)) {
-                        if (collapsedMxEv.getId() === this.props.readMarkerEventId) {
-                            readMarkerInMels = true;
-                        }
-                        continue;
-                    }
+                    const collapsedMxEv = this.props.events[i + 1];
 
                     if (!isMembershipChange(collapsedMxEv) ||
                         this._wantsDateSeparator(this.props.events[i], collapsedMxEv.getDate())) {
                         break;
                     }
+
+                    if (collapsedMxEv.getId() === this.props.readMarkerEventId) {
+                        readMarkerInMels = true;
+                    }
+
+                    // Ignore redacted/hidden member events
+                    if (!this._shouldShowEvent(collapsedMxEv)) {
+                        continue;
+                    }
+
                     summarisedEvents.push(collapsedMxEv);
                 }
                 // At this point, i = the index of the last event in the summary sequence
 
                 let eventTiles = summarisedEvents.map((e) => {
-                    if (e.getId() === this.props.readMarkerEventId) {
-                        readMarkerInMels = true;
-                    }
-
-
                     // In order to prevent DateSeparators from appearing in the expanded form
                     // of MemberEventListSummary, render each member event as if the previous
                     // one was itself. This way, the timestamp of the previous event === the
