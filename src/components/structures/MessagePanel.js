@@ -16,7 +16,8 @@ limitations under the License.
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ShouldHideEvent from '../../ShouldHideEvent';
+import UserSettingsStore from '../../UserSettingsStore';
+import shouldHideEvent from '../../shouldHideEvent';
 import dis from "../../dispatcher";
 import sdk from '../../index';
 
@@ -111,7 +112,7 @@ module.exports = React.createClass({
         // Velocity requires
         this._readMarkerGhostNode = null;
 
-        this.shouldHideEvent = new ShouldHideEvent();
+        this._syncedSettings = UserSettingsStore.getSyncedSettings();
 
         this._isMounted = true;
     },
@@ -249,15 +250,14 @@ module.exports = React.createClass({
         // Always show highlighted event
         if (this.props.highlightedEventId === mxEv.getId()) return true;
 
-        if (this.shouldHideEvent.check(mxEv)) return false;
-
-        return true;
+        return !shouldHideEvent(mxEv, this._syncedSettings);
     },
 
     _getEventTiles: function() {
-        const EventTile = sdk.getComponent('rooms.EventTile');
         const DateSeparator = sdk.getComponent('messages.DateSeparator');
         const MemberEventListSummary = sdk.getComponent('views.elements.MemberEventListSummary');
+
+        let visible = this.props.readMarkerVisible;
 
         this.eventNodes = {};
 
@@ -399,8 +399,6 @@ module.exports = React.createClass({
             var isVisibleReadMarker = false;
 
             if (eventId == this.props.readMarkerEventId) {
-                var visible = this.props.readMarkerVisible;
-
                 // if the read marker comes at the end of the timeline (except
                 // for local echoes, which are excluded from RMs, because they
                 // don't have useful event ids), we don't want to show it, but
