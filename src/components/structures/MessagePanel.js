@@ -344,6 +344,7 @@ module.exports = React.createClass({
                         break;
                     }
 
+                    // If RM event is in MELS mark it as such and the RM will be appended after MELS.
                     if (collapsedMxEv.getId() === this.props.readMarkerEventId) {
                         readMarkerInMels = true;
                     }
