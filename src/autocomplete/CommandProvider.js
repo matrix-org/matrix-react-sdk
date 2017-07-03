@@ -29,6 +29,16 @@ const COMMANDS = [
         description: 'Displays action',
     },
     {
+        command: '/me\'s',
+        args: '<message>',
+        description: 'Displays action with \'s after the username',
+    },
+    {
+        command: '/my',
+        args: '<message>',
+        description: 'Displays action with \'s after the username',
+    },
+    {
         command: '/part',
         args: '[#alias:domain]',
         description: 'Leave room',

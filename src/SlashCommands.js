@@ -384,6 +384,8 @@ module.exports = {
                 cmd = input;
             }
             if (cmd === "me") return null;
+            if (cmd === "me's") return null;
+            if (cmd === "my") return null;
             if (aliases[cmd]) {
                 cmd = aliases[cmd];
             }
@@ -402,6 +404,8 @@ module.exports = {
             return commands[cmdKey];
         });
         cmds.push(new Command("me", "<action>", function() {}));
+        cmds.push(new Command("my", "<action>", function() {}));
+        cmds.push(new Command("me's", "<action>", function() {}));
         cmds.push(new Command("markdown", "<on|off>", function() {}));
 
         return cmds;

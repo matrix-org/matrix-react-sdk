@@ -549,9 +549,17 @@ export default class MessageComposerInput extends React.Component {
         let sendTextFn = this.client.sendTextMessage;
 
         if (contentText.startsWith('/me')) {
-            contentText = contentText.substring(4);
+            contentText = contentText.startsWith("/me ") ? contentText.substring(4) : contentText.substring(3);
             // bit of a hack, but the alternative would be quite complicated
             if (contentHTML) contentHTML = contentHTML.replace(/\/me ?/, '');
+            sendHtmlFn = this.client.sendHtmlEmote;
+            sendTextFn = this.client.sendEmoteMessage;
+        }
+
+        if (contentText.startsWith('/my')) {
+            contentText = '\'s ' + contentText.substring(3);
+            // bit of a hack, but the alternative would be quite complicated
+            if (contentHTML) contentHTML = contentHTML.replace(/\/my ?/, '\'s ');
             sendHtmlFn = this.client.sendHtmlEmote;
             sendTextFn = this.client.sendEmoteMessage;
         }
