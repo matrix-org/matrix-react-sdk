@@ -134,6 +134,10 @@ export default class MessageComposerInput extends React.Component {
 
             // the original editor state, before we started tabbing through completions
             originalEditorState: null,
+
+            // the virtual state "above" the history stack, the message currently being composed that
+            // we want to persist whilst browsing history
+            currentlyComposedEditorState: null,
         };
 
         // bit of a hack, but we need to do this here since createEditorState needs isRichtextEnabled
@@ -225,7 +229,8 @@ export default class MessageComposerInput extends React.Component {
                     if (this.state.isRichtextEnabled) {
                         contentState = Modifier.setBlockType(contentState, startSelection, 'blockquote');
                     }
-                    const editorState = EditorState.push(this.state.editorState, contentState, 'insert-characters');
+                    let editorState = EditorState.push(this.state.editorState, contentState, 'insert-characters');
+                    editorState = EditorState.moveSelectionToEnd(editorState);
                     this.onEditorContentChanged(editorState);
                     editor.focus();
                 }
@@ -507,9 +512,30 @@ export default class MessageComposerInput extends React.Component {
         }
 
         if (this.state.isRichtextEnabled) {
-            contentHTML = HtmlUtils.processHtmlForSending(
-                RichText.contentStateToHTML(contentState),
-            );
+            // We should only send HTML if any block is styled or contains inline style
+            let shouldSendHTML = false;
+            const blocks = contentState.getBlocksAsArray();
+            if (blocks.some((block) => block.getType() !== 'unstyled')) {
+                shouldSendHTML = true;
+            } else {
+                const characterLists = blocks.map((block) => block.getCharacterList());
+                // For each block of characters, determine if any inline styles are applied
+                // and if yes, send HTML
+                characterLists.forEach((characters) => {
+                    const numberOfStylesForCharacters = characters.map(
+                        (character) => character.getStyle().toArray().length,
+                    ).toArray();
+                    // If any character has more than 0 inline styles applied, send HTML
+                    if (numberOfStylesForCharacters.some((styles) => styles > 0)) {
+                        shouldSendHTML = true;
+                    }
+                });
+            }
+            if (shouldSendHTML) {
+                contentHTML = HtmlUtils.processHtmlForSending(
+                    RichText.contentStateToHTML(contentState),
+                );
+            }
         } else {
             const md = new Markdown(contentText);
             if (md.isPlainText()) {
@@ -538,9 +564,15 @@ export default class MessageComposerInput extends React.Component {
             sendTextFn = this.client.sendEmoteMessage;
         }
 
-        this.historyManager.addItem(
-            this.state.isRichtextEnabled ? contentHTML : contentState.getPlainText(),
-            this.state.isRichtextEnabled ? 'html' : 'markdown');
+        if (this.state.isRichtextEnabled) {
+            this.historyManager.addItem(
+                contentHTML ? contentHTML : contentText,
+                contentHTML ? 'html' : 'markdown',
+            );
+        } else {
+            // Always store MD input as input history
+            this.historyManager.addItem(contentText, 'markdown');
+        }
 
         let sendMessagePromise;
         if (contentHTML) {
@@ -564,47 +596,106 @@ export default class MessageComposerInput extends React.Component {
         this.autocomplete.hide();
 
         return true;
+    }
+
+    onUpArrow = (e) => {
+        this.onVerticalArrow(e, true);
     };
 
-    onUpArrow = async (e) => {
-        const completion = this.autocomplete.onUpArrow();
-        if (completion == null) {
-            const newContent = this.historyManager.getItem(-1, this.state.isRichtextEnabled ? 'html' : 'markdown');
-            if (!newContent) return false;
-            const editorState = EditorState.push(this.state.editorState,
-                newContent,
-                'insert-characters');
-            this.setState({editorState});
-            return true;
-        }
-        e.preventDefault();
-        return await this.setDisplayedCompletion(completion);
+    onDownArrow = (e) => {
+        this.onVerticalArrow(e, false);
     };
 
-    onDownArrow = async (e) => {
-        const completion = this.autocomplete.onDownArrow();
-        if (completion == null) {
-            const newContent = this.historyManager.getItem(+1, this.state.isRichtextEnabled ? 'html' : 'markdown');
-            if (!newContent) return false;
-            const editorState = EditorState.push(this.state.editorState,
-                newContent,
-                'insert-characters');
-            this.setState({editorState});
-            return true;
-        }
-        e.preventDefault();
-        return await this.setDisplayedCompletion(completion);
-    };
-
-    // tab and shift-tab are mapped to down and up arrow respectively
-    onTab = async (e) => {
-        e.preventDefault(); // we *never* want tab's default to happen, but we do want up/down sometimes
+    onVerticalArrow = (e, up) => {
+        // Select history only if we are not currently auto-completing
         if (this.autocomplete.state.completionList.length === 0) {
-            await this.autocomplete.forceComplete();
-            this.onDownArrow(e);
+            // Don't go back in history if we're in the middle of a multi-line message
+            const selection = this.state.editorState.getSelection();
+            const blockKey = selection.getStartKey();
+            const firstBlock = this.state.editorState.getCurrentContent().getFirstBlock();
+            const lastBlock = this.state.editorState.getCurrentContent().getLastBlock();
+
+            const selectionOffset = selection.getAnchorOffset();
+            let canMoveUp = false;
+            let canMoveDown = false;
+            if (blockKey === firstBlock.getKey()) {
+                const textBeforeCursor = firstBlock.getText().slice(0, selectionOffset);
+                canMoveUp = textBeforeCursor.indexOf('\n') === -1;
+            }
+
+            if (blockKey === lastBlock.getKey()) {
+                const textAfterCursor = lastBlock.getText().slice(selectionOffset);
+                canMoveDown = textAfterCursor.indexOf('\n') === -1;
+            }
+
+            if ((up && !canMoveUp) || (!up && !canMoveDown)) return;
+
+            const selected = this.selectHistory(up);
+            if (selected) {
+                // We're selecting history, so prevent the key event from doing anything else
+                e.preventDefault();
+            }
         } else {
-            await (e.shiftKey ? this.onUpArrow : this.onDownArrow)(e);
+            this.moveAutocompleteSelection(up);
         }
+    };
+
+    selectHistory = async (up) => {
+        const delta = up ? -1 : 1;
+
+        // True if we are not currently selecting history, but composing a message
+        if (this.historyManager.currentIndex === this.historyManager.history.length) {
+            // We can't go any further - there isn't any more history, so nop.
+            if (!up) {
+                return;
+            }
+            this.setState({
+                currentlyComposedEditorState: this.state.editorState,
+            });
+        } else if (this.historyManager.currentIndex + delta === this.historyManager.history.length) {
+            // True when we return to the message being composed currently
+            this.setState({
+                editorState: this.state.currentlyComposedEditorState,
+            });
+            this.historyManager.currentIndex = this.historyManager.history.length;
+            return;
+        }
+
+        const newContent = this.historyManager.getItem(delta, this.state.isRichtextEnabled ? 'html' : 'markdown');
+        if (!newContent) return false;
+        let editorState = EditorState.push(
+            this.state.editorState,
+            newContent,
+            'insert-characters',
+        );
+
+        // Move selection to the end of the selected history
+        let newSelection = SelectionState.createEmpty(newContent.getLastBlock().getKey());
+        newSelection = newSelection.merge({
+            focusOffset: newContent.getLastBlock().getLength(),
+            anchorOffset: newContent.getLastBlock().getLength(),
+        });
+        editorState = EditorState.forceSelection(editorState, newSelection);
+
+        this.setState({editorState});
+        return true;
+    };
+
+    onTab = async (e) => {
+        e.preventDefault();
+        if (this.autocomplete.state.completionList.length === 0) {
+            // Force completions to show for the text currently entered
+            await this.autocomplete.forceComplete();
+            // Select the first item by moving "down"
+            await this.moveAutocompleteSelection(false);
+        } else {
+            await this.moveAutocompleteSelection(e.shiftKey);
+        }
+    };
+
+    moveAutocompleteSelection = (up) => {
+        const completion = up ? this.autocomplete.onUpArrow() : this.autocomplete.onDownArrow();
+        return this.setDisplayedCompletion(completion);
     };
 
     onEscape = async (e) => {
