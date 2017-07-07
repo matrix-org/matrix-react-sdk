@@ -210,8 +210,10 @@ export default React.createClass({
         const CreateRoom = sdk.getComponent('structures.CreateRoom');
         const RoomDirectory = sdk.getComponent('structures.RoomDirectory');
         const HomePage = sdk.getComponent('structures.HomePage');
+        const GroupView = sdk.getComponent('structures.GroupView');
         const MatrixToolbar = sdk.getComponent('globals.MatrixToolbar');
         const NewVersionBar = sdk.getComponent('globals.NewVersionBar');
+        const UpdateCheckBar = sdk.getComponent('globals.UpdateCheckBar');
         const PasswordNagBar = sdk.getComponent('globals.PasswordNagBar');
 
         let page_element;
@@ -279,14 +281,21 @@ export default React.createClass({
                 page_element = null; // deliberately null for now
                 right_panel = <RightPanel userId={this.props.viewUserId} opacity={this.props.rightOpacity} />;
                 break;
+            case PageTypes.GroupView:
+                page_element = <GroupView
+                    groupId={this.props.currentGroupId}
+                />;
+                break;
         }
 
+        let topBar;
         const isGuest = this.props.matrixClient.isGuest();
-        var topBar;
         if (this.props.hasNewVersion) {
             topBar = <NewVersionBar version={this.props.version} newVersion={this.props.newVersion}
-                releaseNotes={this.props.newVersionReleaseNotes}
+                                    releaseNotes={this.props.newVersionReleaseNotes}
             />;
+        } else if (this.props.checkingForUpdate) {
+            topBar = <UpdateCheckBar {...this.props.checkingForUpdate} />;
         } else if (this.state.userHasGeneratedPassword) {
             topBar = <PasswordNagBar />;
         } else if (!isGuest && Notifier.supportsDesktopNotifications() && !Notifier.isEnabled() && !Notifier.isToolbarHidden()) {
