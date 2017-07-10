@@ -127,7 +127,9 @@ module.exports = React.createClass({
             return [];
         }
 
-        return appsStateEvents.map((ev) => {
+        return appsStateEvents.filter((ev) => {
+            return ev.getContent().type && ev.getContent().url;
+        }).map((ev) => {
             return this._initAppConfig(ev.getStateKey(), ev.getContent());
         });
     },
