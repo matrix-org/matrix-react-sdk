@@ -143,31 +143,15 @@ Example:
 
 get_widgets
 -----------
-Get a list of all widgets in the room. The response is the `content` field
-of the state event.
+Get a list of all widgets in the room. The response is an object with
+keys as user IDs (which are the state_key) and values as the content
+of that state event.
 
 Request:
  - `room_id` (String) is the room to get the widgets in.
 Response:
 {
-    $widget_id: {
-        type: "example",
-        url: "http://widget.url",
-        name: "Example Widget",
-        data: {
-            key: "val"
-        }
-    },
-    $widget_id: { ... }
-}
-Example:
-{
-    action: "get_widgets",
-    room_id: "!foo:bar",
-    widget_id: "abc123",
-    url: "http://widget.url",
-    type: "example",
-    response: {
+    "@alice:localhost": {
         $widget_id: {
             type: "example",
             url: "http://widget.url",
@@ -177,6 +161,30 @@ Example:
             }
         },
         $widget_id: { ... }
+    },
+    "@bob:localhost": {
+        $widget_id: { ... }
+    }
+}
+Example:
+{
+    action: "get_widgets",
+    room_id: "!foo:bar",
+    response: {
+        "@alice:localhost": {
+            $widget_id: {
+                type: "example",
+                url: "http://widget.url",
+                name: "Example Widget",
+                data: {
+                    key: "val"
+                }
+            },
+            $widget_id: { ... }
+        },
+        "@bob:localhost": {
+            $widget_id: { ... }
+        }
     }
 }
 
@@ -302,7 +310,7 @@ function setWidget(event, roomId) {
     }
 
     // TODO: same dance we do for power levels. It'd be nice if the JS SDK had helper methods to do this.
-    client.getStateEvent(roomId, "im.vector.modular.widgets", "").then((widgets) => {
+    client.getStateEvent(roomId, "im.vector.modular.widgets", client.credentials.userId).then((widgets) => {
         if (widgetUrl === null) {
             delete widgets[widgetId];
         }
@@ -314,7 +322,7 @@ function setWidget(event, roomId) {
                 data: widgetData,
             };
         }
-        return client.sendStateEvent(roomId, "im.vector.modular.widgets", widgets);
+        return client.sendStateEvent(roomId, "im.vector.modular.widgets", widgets, client.credentials.userId);
     }, (err) => {
         if (err.errcode === "M_NOT_FOUND") {
             return client.sendStateEvent(roomId, "im.vector.modular.widgets", {
@@ -324,7 +332,7 @@ function setWidget(event, roomId) {
                     name: widgetName,
                     data: widgetData,
                 }
-            });
+            }, client.credentials.userId);
         }
         throw err;
     }).done(() => {
@@ -337,7 +345,22 @@ function setWidget(event, roomId) {
 }
 
 function getWidgets(event, roomId) {
-    returnStateEvent(event, roomId, "im.vector.modular.widgets", "");
+    const client = MatrixClientPeg.get();
+    if (!client) {
+        sendError(event, _t('You need to be logged in.'));
+        return;
+    }
+    const room = client.getRoom(roomId);
+    if (!room) {
+        sendError(event, _t('This room is not recognised.'));
+        return;
+    }
+    const stateEvents = room.currentState.getStateEvents("im.vector.modular.widgets");
+    const reply = {};
+    stateEvents.forEach((ev) => {
+        reply[ev.getStateKey()] = ev.getContent();
+    })
+    sendResponse(event, reply);
 }
 
 function setPlumbingState(event, roomId, status) {
