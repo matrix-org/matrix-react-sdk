@@ -302,33 +302,17 @@ function setWidget(event, roomId) {
         }
     }
 
-    // TODO: same dance we do for power levels. It'd be nice if the JS SDK had helper methods to do this.
-    client.getStateEvent(roomId, "im.vector.modular.widgets", client.credentials.userId).then((widgets) => {
-        if (widgetUrl === null) {
-            delete widgets[widgetId];
-        }
-        else {
-            widgets[widgetId] = {
-                type: widgetType,
-                url: widgetUrl,
-                name: widgetName,
-                data: widgetData,
-            };
-        }
-        return client.sendStateEvent(roomId, "im.vector.modular.widgets", widgets, client.credentials.userId);
-    }, (err) => {
-        if (err.errcode === "M_NOT_FOUND") {
-            return client.sendStateEvent(roomId, "im.vector.modular.widgets", {
-                [widgetId]: {
-                    type: widgetType,
-                    url: widgetUrl,
-                    name: widgetName,
-                    data: widgetData,
-                }
-            }, client.credentials.userId);
-        }
-        throw err;
-    }).done(() => {
+    let content = {
+        type: widgetType,
+        url: widgetUrl,
+        name: widgetName,
+        data: widgetData,
+    };
+    if (widgetUrl === null) { // widget is being deleted
+        content = {};
+    }
+
+    client.sendStateEvent(roomId, "im.vector.modular.widgets", content, widgetId).done(() => {
         sendResponse(event, {
             success: true,
         });
@@ -349,7 +333,15 @@ function getWidgets(event, roomId) {
         return;
     }
     const stateEvents = room.currentState.getStateEvents("im.vector.modular.widgets");
-    sendResponse(event, stateEvents);
+    // Only return widgets which have required fields
+    let widgetStateEvents = [];
+    stateEvents.forEach((ev) => {
+        if (ev.getContent().type && ev.getContent().url) {
+            widgetStateEvents.push(ev.event); // return the raw event
+        }
+    })
+
+    sendResponse(event, widgetStateEvents);
 }
 
 function setPlumbingState(event, roomId, status) {
