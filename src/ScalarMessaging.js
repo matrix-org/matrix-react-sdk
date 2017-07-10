@@ -143,49 +143,42 @@ Example:
 
 get_widgets
 -----------
-Get a list of all widgets in the room. The response is an object with
-keys as user IDs (which are the state_key) and values as the content
-of that state event.
+Get a list of all widgets in the room. The response is an array
+of state events.
 
 Request:
  - `room_id` (String) is the room to get the widgets in.
 Response:
-{
-    "@alice:localhost": {
-        $widget_id: {
-            type: "example",
-            url: "http://widget.url",
-            name: "Example Widget",
-            data: {
-                key: "val"
-            }
-        },
-        $widget_id: { ... }
-    },
-    "@bob:localhost": {
-        $widget_id: { ... }
+[
+    {
+        type: "im.vector.modular.widgets",
+        state_key: "wid1",
+        content: {
+            type: "grafana",
+            url: "https://grafanaurl",
+            name: "dashboard"
+        }
+        room_id: “!foo:bar”,
+        sender: "@alice:localhost"
     }
-}
+]
 Example:
 {
     action: "get_widgets",
     room_id: "!foo:bar",
-    response: {
-        "@alice:localhost": {
-            $widget_id: {
-                type: "example",
-                url: "http://widget.url",
-                name: "Example Widget",
-                data: {
-                    key: "val"
-                }
-            },
-            $widget_id: { ... }
-        },
-        "@bob:localhost": {
-            $widget_id: { ... }
+    response: [
+        {
+            type: "im.vector.modular.widgets",
+            state_key: "wid1",
+            content: {
+                type: "grafana",
+                url: "https://grafanaurl",
+                name: "dashboard"
+            }
+            room_id: “!foo:bar”,
+            sender: "@alice:localhost"
         }
-    }
+    ]
 }
 
 
@@ -356,11 +349,7 @@ function getWidgets(event, roomId) {
         return;
     }
     const stateEvents = room.currentState.getStateEvents("im.vector.modular.widgets");
-    const reply = {};
-    stateEvents.forEach((ev) => {
-        reply[ev.getStateKey()] = ev.getContent();
-    })
-    sendResponse(event, reply);
+    sendResponse(event, stateEvents);
 }
 
 function setPlumbingState(event, roomId, status) {
