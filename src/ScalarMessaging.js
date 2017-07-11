@@ -156,7 +156,8 @@ Response:
         content: {
             type: "grafana",
             url: "https://grafanaurl",
-            name: "dashboard"
+            name: "dashboard",
+            data: {key: "val"}
         }
         room_id: “!foo:bar”,
         sender: "@alice:localhost"
@@ -173,7 +174,8 @@ Example:
             content: {
                 type: "grafana",
                 url: "https://grafanaurl",
-                name: "dashboard"
+                name: "dashboard",
+                data: {key: "val"}
             }
             room_id: “!foo:bar”,
             sender: "@alice:localhost"
