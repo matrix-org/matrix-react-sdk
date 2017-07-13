@@ -59,7 +59,6 @@ export default React.createClass({
     },
 
     componentWillMount: function() {
-        this._onEditClick = this._onEditClick.bind(this);
         if (!this.isScalarUrl()) {
             return;
         }
@@ -92,10 +91,6 @@ export default React.createClass({
 
     _onEditClick: function(e) {
         console.log("Edit widget ID ", this.props.id);
-        if (e) {
-            e.preventDefault();
-        }
-
         const IntegrationsManager = sdk.getComponent("views.settings.IntegrationsManager");
         const src = this._scalarClient.getScalarInterfaceUrlForRoom(this.props.room.roomId, 'type_' + this.props.type);
         Modal.createDialog(IntegrationsManager, {
