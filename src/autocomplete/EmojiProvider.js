@@ -18,16 +18,50 @@ limitations under the License.
 import React from 'react';
 import { _t } from '../languageHandler';
 import AutocompleteProvider from './AutocompleteProvider';
-import {emojioneList, shortnameToImage, shortnameToUnicode} from 'emojione';
+import {emojioneList, shortnameToImage, shortnameToUnicode, asciiRegexp, unicodeRegexp} from 'emojione';
 import FuzzyMatcher from './FuzzyMatcher';
 import sdk from '../index';
 import {PillCompletion} from './Components';
 import type {SelectionRange, Completion} from './Autocompleter';
 
-const EMOJI_REGEX = /:\w*:?/g;
-const EMOJI_SHORTNAMES = Object.keys(emojioneList).map(shortname => {
+import EmojiData from '../stripped-emoji.json';
+
+const LIMIT = 20;
+const CATEGORY_ORDER = [
+    'people',
+    'food',
+    'objects',
+    'activity',
+    'nature',
+    'travel',
+    'flags',
+    'regional',
+    'symbols',
+    'modifier',
+];
+
+// Match for ":wink:" or ascii-style ";-)" provided by emojione
+// (^|\s|(emojiUnicode)) to make sure we're either at the start of the string or there's a
+// whitespace character or an emoji before the emoji. The reason for unicodeRegexp is
+// that we need to support inputting multiple emoji with no space between them.
+const EMOJI_REGEX = new RegExp('(?:^|\\s|' + unicodeRegexp + ')(' + asciiRegexp + '|:\\w*:?)$', 'g');
+
+// We also need to match the non-zero-length prefixes to remove them from the final match,
+// and update the range so that we don't replace the whitespace or the previous emoji.
+const MATCH_PREFIX_REGEX = new RegExp('(\\s|' + unicodeRegexp + ')');
+
+const EMOJI_SHORTNAMES = Object.keys(EmojiData).map((key) => EmojiData[key]).sort(
+    (a, b) => {
+        if (a.category === b.category) {
+            return a.emoji_order - b.emoji_order;
+        }
+        return CATEGORY_ORDER.indexOf(a.category) - CATEGORY_ORDER.indexOf(b.category);
+    },
+).map((a) => {
     return {
-        shortname,
+        name: a.name,
+        shortname: a.shortname,
+        aliases_ascii: a.aliases_ascii ? a.aliases_ascii.join(' ') : '',
     };
 });
 
@@ -37,7 +71,9 @@ export default class EmojiProvider extends AutocompleteProvider {
     constructor() {
         super(EMOJI_REGEX);
         this.matcher = new FuzzyMatcher(EMOJI_SHORTNAMES, {
-            keys: 'shortname',
+            keys: ['aliases_ascii', 'shortname', 'name'],
+            // For matching against ascii equivalents
+            shouldMatchWordsOnly: false,
         });
     }
 
@@ -45,9 +81,18 @@ export default class EmojiProvider extends AutocompleteProvider {
         const EmojiText = sdk.getComponent('views.elements.EmojiText');
 
         let completions = [];
-        let {command, range} = this.getCurrentCommand(query, selection);
+        const {command, range} = this.getCurrentCommand(query, selection);
         if (command) {
-            completions = this.matcher.match(command[0]).map(result => {
+            let matchedString = command[0];
+
+            // Remove prefix of any length (single whitespace or unicode emoji)
+            const prefixMatch = MATCH_PREFIX_REGEX.exec(matchedString);
+            if (prefixMatch) {
+                matchedString = matchedString.slice(prefixMatch[0].length);
+                range.start += prefixMatch[0].length;
+            }
+
+            completions = this.matcher.match(matchedString).map((result) => {
                 const {shortname} = result;
                 const unicode = shortnameToUnicode(shortname);
                 return {
@@ -57,7 +102,7 @@ export default class EmojiProvider extends AutocompleteProvider {
                     ),
                     range,
                 };
-            }).slice(0, 8);
+            }).slice(0, LIMIT);
         }
         return completions;
     }
@@ -73,7 +118,7 @@ export default class EmojiProvider extends AutocompleteProvider {
     }
 
     renderCompletions(completions: [React.Component]): ?React.Component {
-        return <div className="mx_Autocomplete_Completion_container_pill">
+        return <div className="mx_Autocomplete_Completion_container_pill mx_Autocomplete_Completion_container_truncate">
             {completions}
         </div>;
     }

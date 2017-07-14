@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import q from 'q';
+import Promise from 'bluebird';
 
 import React from 'react';
 import Matrix from "matrix-js-sdk";
@@ -224,7 +224,7 @@ module.exports = React.createClass({
 
         // Used by _viewRoom before getting state from sync
         this.firstSyncComplete = false;
-        this.firstSyncPromise = q.defer();
+        this.firstSyncPromise = Promise.defer();
 
         if (this.props.config.sync_timeline_limit) {
             MatrixClientPeg.opts.initialSyncLimit = this.props.config.sync_timeline_limit;
@@ -290,6 +290,9 @@ module.exports = React.createClass({
         if (this.onUserClick) {
             linkifyMatrix.onUserClick = this.onUserClick;
         }
+        if (this.onGroupClick) {
+            linkifyMatrix.onGroupClick = this.onGroupClick;
+        }
 
         window.addEventListener('resize', this.handleResize);
         this.handleResize();
@@ -320,9 +323,9 @@ module.exports = React.createClass({
                 return;
             }
 
-            // the extra q() ensures that synchronous exceptions hit the same codepath as
+            // the extra Promise.resolve() ensures that synchronous exceptions hit the same codepath as
             // asynchronous ones.
-            return q().then(() => {
+            return Promise.resolve().then(() => {
                 return Lifecycle.loadSession({
                     fragmentQueryParams: this.props.startingFragmentQueryParams,
                     enableGuest: this.props.enableGuest,
@@ -483,6 +486,18 @@ module.exports = React.createClass({
                 this._setPage(PageTypes.RoomDirectory);
                 this.notifyNewScreen('directory');
                 break;
+            case 'view_my_groups':
+                this._setPage(PageTypes.MyGroups);
+                this.notifyNewScreen('groups');
+                break;
+            case 'view_group':
+                {
+                    const groupId = payload.group_id;
+                    this.setState({currentGroupId: groupId});
+                    this._setPage(PageTypes.GroupView);
+                    this.notifyNewScreen('group/' + groupId);
+                }
+                break;
             case 'view_home_page':
                 this._setPage(PageTypes.HomePage);
                 this.notifyNewScreen('home');
@@ -491,7 +506,7 @@ module.exports = React.createClass({
                 this._setMxId(payload);
                 break;
             case 'view_start_chat_or_reuse':
-                this._chatCreateOrReuse(payload.user_id);
+                this._chatCreateOrReuse(payload.user_id, payload.go_home_on_cancel);
                 break;
             case 'view_create_chat':
                 this._createChat();
@@ -679,7 +694,7 @@ module.exports = React.createClass({
 
         // Wait for the first sync to complete so that if a room does have an alias,
         // it would have been retrieved.
-        let waitFor = q(null);
+        let waitFor = Promise.resolve(null);
         if (!this.firstSyncComplete) {
             if (!this.firstSyncPromise) {
                 console.warn('Cannot view a room before first sync. room_id:', roomInfo.room_id);
@@ -786,7 +801,9 @@ module.exports = React.createClass({
         });
     },
 
-    _chatCreateOrReuse: function(userId) {
+    _chatCreateOrReuse: function(userId, goHomeOnCancel) {
+        if (goHomeOnCancel === undefined) goHomeOnCancel = true;
+
         const ChatCreateOrReuseDialog = sdk.getComponent(
             'views.dialogs.ChatCreateOrReuseDialog',
         );
@@ -817,7 +834,7 @@ module.exports = React.createClass({
         const close = Modal.createDialog(ChatCreateOrReuseDialog, {
             userId: userId,
             onFinished: (success) => {
-                if (!success) {
+                if (!success && goHomeOnCancel) {
                     // Dialog cancelled, default to home
                     dis.dispatch({ action: 'view_home_page' });
                 }
@@ -1022,7 +1039,7 @@ module.exports = React.createClass({
         // since we're about to start the client and therefore about
         // to do the first sync
         this.firstSyncComplete = false;
-        this.firstSyncPromise = q.defer();
+        this.firstSyncPromise = Promise.defer();
         const cli = MatrixClientPeg.get();
 
         // Allow the JS SDK to reap timeline events. This reduces the amount of
@@ -1140,6 +1157,10 @@ module.exports = React.createClass({
             dis.dispatch({
                 action: 'view_room_directory',
             });
+        } else if (screen == 'groups') {
+            dis.dispatch({
+                action: 'view_my_groups',
+            });
         } else if (screen == 'post_registration') {
             dis.dispatch({
                 action: 'start_post_registration',
@@ -1199,6 +1220,15 @@ module.exports = React.createClass({
                     member: member,
                 });
             }
+        } else if (screen.indexOf('group/') == 0) {
+            const groupId = screen.substring(6);
+
+            // TODO: Check valid group ID
+
+            dis.dispatch({
+                action: 'view_group',
+                group_id: groupId,
+            });
         } else {
             console.info("Ignoring showScreen for '%s'", screen);
         }
@@ -1225,6 +1255,11 @@ module.exports = React.createClass({
             action: 'view_user',
             member: member,
         });
+    },
+
+    onGroupClick: function(event, groupId) {
+        event.preventDefault();
+        dis.dispatch({action: 'view_group', group_id: groupId});
     },
 
     onLogoutClick: function(event) {
