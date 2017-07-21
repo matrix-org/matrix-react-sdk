@@ -93,6 +93,9 @@ module.exports = React.createClass({
 
         // hide redacted events as per old behaviour
         hideRedactions: React.PropTypes.bool,
+
+        // Width for calculating the size of images in chat, passed to MImageBody
+        chatWidth: React.PropTypes.number,
     },
 
     componentWillMount: function() {
@@ -493,7 +496,10 @@ module.exports = React.createClass({
                         eventSendStatus={mxEv.status}
                         tileShape={this.props.tileShape}
                         isTwelveHour={this.props.isTwelveHour}
-                        last={last} isSelectedEvent={highlight}/>
+                        last={last} 
+                        isSelectedEvent={highlight}
+                        chatWidth={this.props.chatWidth}
+                    />
                 </li>
         );
 

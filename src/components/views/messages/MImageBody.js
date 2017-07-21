@@ -37,6 +37,9 @@ module.exports = React.createClass({
 
         /* called when the image has loaded */
         onWidgetLoad: React.PropTypes.func.isRequired,
+
+        // Width for calculating the size of images in chat
+        chatWidth: React.PropTypes.number,
     },
 
     getInitialState: function() {
@@ -120,7 +123,6 @@ module.exports = React.createClass({
 
     componentDidMount: function() {
         this.dispatcherRef = dis.register(this.onAction);
-        this.fixupHeight();
         const content = this.props.mxEvent.getContent();
         if (content.file !== undefined && this.state.decryptedUrl === null) {
             let thumbnailPromise = Promise.resolve(null);
@@ -158,20 +160,10 @@ module.exports = React.createClass({
         dis.unregister(this.dispatcherRef);
     },
 
-    onAction: function(payload) {
-        if (payload.action === "timeline_resize") {
-            this.fixupHeight();
-        }
-    },
-
-    fixupHeight: function() {
-        if (!this.refs.image) {
-            console.warn("Refusing to fix up height on MImageBody with no image element");
-            return;
-        }
-
+    calculateHeight: function() {
         const content = this.props.mxEvent.getContent();
-        const timelineWidth = this.refs.body.offsetWidth;
+        const timelineWidth = this.props.chatWidth;
+        
         const maxHeight = 600; // let images take up as much width as they can so long as the height doesn't exceed 600px.
         // the alternative here would be 600*timelineWidth/800; to scale them down to fit inside a 4:3 bounding box
 
@@ -180,8 +172,7 @@ module.exports = React.createClass({
         if (content.info) {
             thumbHeight = ImageUtils.thumbHeight(content.info.w, content.info.h, timelineWidth, maxHeight);
         }
-        this.refs.image.style.height = thumbHeight + "px";
-        // console.log("Image height now", thumbHeight);
+        return thumbHeight;
     },
 
     render: function() {
@@ -229,6 +220,9 @@ module.exports = React.createClass({
                 <span className="mx_MImageBody" ref="body">
                     <a href={contentUrl} onClick={ this.onClick }>
                         <img className="mx_MImageBody_thumbnail" src={thumbUrl} ref="image"
+                            style={{
+                                "height": this.calculateHeight() + "px"
+                            }}
                             alt={content.body}
                             onMouseEnter={this.onImageEnter}
                             onMouseLeave={this.onImageLeave} />

@@ -217,6 +217,17 @@ export default React.createClass({
         }
     },
 
+    chatWidth: function() {
+        const windowWidth = window.innerWidth;
+        const collapsedLhs = this.props.collapse_lhs || false;
+        const leftWidth = collapsedLhs ? 60 : 235;
+        const collapsedRhs = this.props.collapse_rhs;
+        const rightWidth = collapsedRhs ? 0 : 235;
+        const constantExtraWidth = 263;
+        const chatWidth = windowWidth - leftWidth - rightWidth - constantExtraWidth;
+        return chatWidth;
+    },
+
     render: function() {
         const LeftPanel = sdk.getComponent('structures.LeftPanel');
         const RightPanel = sdk.getComponent('structures.RightPanel');
@@ -246,6 +257,7 @@ export default React.createClass({
                         eventPixelOffset={this.props.initialEventPixelOffset}
                         key={this.props.currentRoomId || 'roomview'}
                         opacity={this.props.middleOpacity}
+                        chatWidth={this.chatWidth()}
                         collapsedRhs={this.props.collapse_rhs}
                         ConferenceHandler={this.props.ConferenceHandler}
                         scrollStateMap={this._scrollStateMap}

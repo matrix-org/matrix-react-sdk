@@ -135,6 +135,9 @@ module.exports = withMatrixClient(React.createClass({
 
         // show twelve hour timestamps
         isTwelveHour: React.PropTypes.bool,
+
+        // Width for calculating the size of images in chat, passed to MImageBody
+        chatWidth: React.PropTypes.number,
     },
 
     getInitialState: function() {
@@ -530,7 +533,9 @@ module.exports = withMatrixClient(React.createClass({
                             highlights={this.props.highlights}
                             highlightLink={this.props.highlightLink}
                             showUrlPreview={this.props.showUrlPreview}
-                            onWidgetLoad={this.props.onWidgetLoad} />
+                            onWidgetLoad={this.props.onWidgetLoad} 
+                            chatWidth={this.props.chatWidth}
+                        />
                     </div>
                 </div>
             );
@@ -545,7 +550,9 @@ module.exports = withMatrixClient(React.createClass({
                             highlightLink={this.props.highlightLink}
                             showUrlPreview={this.props.showUrlPreview}
                             tileShape={this.props.tileShape}
-                            onWidgetLoad={this.props.onWidgetLoad} />
+                            onWidgetLoad={this.props.onWidgetLoad} 
+                            chatWidth={this.props.chatWidth}
+                        />
                     </div>
                     <a
                         className="mx_EventTile_senderDetailsLink"
@@ -578,7 +585,9 @@ module.exports = withMatrixClient(React.createClass({
                             highlights={this.props.highlights}
                             highlightLink={this.props.highlightLink}
                             showUrlPreview={this.props.showUrlPreview}
-                            onWidgetLoad={this.props.onWidgetLoad} />
+                            onWidgetLoad={this.props.onWidgetLoad} 
+                            chatWidth={this.props.chatWidth}
+                        />
                         { editButton }
                     </div>
                 </div>

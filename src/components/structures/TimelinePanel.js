@@ -102,6 +102,9 @@ var TimelinePanel = React.createClass({
 
         // placeholder text to use if the timeline is empty
         empty: React.PropTypes.string,
+
+        // Width for calculating the size of images in chat, passed to MImageBody
+        chatWidth: React.PropTypes.number,
     },
 
     statics: {
@@ -1142,6 +1145,7 @@ var TimelinePanel = React.createClass({
                           alwaysShowTimestamps={ this.state.alwaysShowTimestamps }
                           className={ this.props.className }
                           tileShape={ this.props.tileShape }
+                          chatWidth={this.props.chatWidth}
             />
         );
     },

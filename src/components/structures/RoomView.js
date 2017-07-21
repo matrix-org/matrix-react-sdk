@@ -85,6 +85,9 @@ module.exports = React.createClass({
 
         // is the RightPanel collapsed?
         collapsedRhs: React.PropTypes.bool,
+
+        // Width for calculating the size of images in chat, passed to MImageBody
+        chatWidth: React.PropTypes.number,
     },
 
     getInitialState: function() {
@@ -1727,6 +1730,7 @@ module.exports = React.createClass({
                 showUrlPreview = { this.state.showUrlPreview }
                 opacity={ this.props.opacity }
                 className="mx_RoomView_messagePanel"
+                chatWidth={this.props.chatWidth}
             />);
 
         var topUnreadMessagesBar = null;
