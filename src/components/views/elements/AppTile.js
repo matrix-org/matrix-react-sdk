@@ -16,13 +16,17 @@ limitations under the License.
 
 'use strict';
 
+import url from 'url';
 import React from 'react';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import ScalarAuthClient from '../../../ScalarAuthClient';
 import SdkConfig from '../../../SdkConfig';
+import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
+import sdk from '../../../index';
 
-import url from 'url';
+const ALLOWED_APP_URL_SCHEMES = ['https:', 'http:'];
+const betaHelpMsg = 'This feature is currently experimental and is intended for beta testing only';
 
 export default React.createClass({
     displayName: 'AppTile',
@@ -32,6 +36,7 @@ export default React.createClass({
         url: React.PropTypes.string.isRequired,
         name: React.PropTypes.string.isRequired,
         room: React.PropTypes.object.isRequired,
+        type: React.PropTypes.string.isRequired,
     },
 
     getDefaultProps: function() {
@@ -45,6 +50,7 @@ export default React.createClass({
             loading: false,
             widgetUrl: this.props.url,
             error: null,
+            deleting: false,
         };
     },
 
@@ -85,30 +91,29 @@ export default React.createClass({
         });
     },
 
-    _onEditClick: function() {
-        console.log("Edit widget %s", this.props.id);
+    _onEditClick: function(e) {
+        console.log("Edit widget ID ", this.props.id);
+        const IntegrationsManager = sdk.getComponent("views.settings.IntegrationsManager");
+        const src = this._scalarClient.getScalarInterfaceUrlForRoom(this.props.room.roomId, 'type_' + this.props.type);
+        Modal.createDialog(IntegrationsManager, {
+            src: src,
+        }, "mx_IntegrationsManager");
     },
 
     _onDeleteClick: function() {
         console.log("Delete widget %s", this.props.id);
-        const appsStateEvents = this.props.room.currentState.getStateEvents('im.vector.modular.widgets', '');
-        if (!appsStateEvents) {
-            return;
-        }
-        const appsStateEvent = appsStateEvents.getContent();
-        if (appsStateEvent[this.props.id]) {
-            delete appsStateEvent[this.props.id];
-            MatrixClientPeg.get().sendStateEvent(
-                this.props.room.roomId,
-                'im.vector.modular.widgets',
-                appsStateEvent,
-                '',
-            ).then(() => {
-                console.log('Deleted widget');
-            }, (e) => {
-                console.error('Failed to delete widget', e);
-            });
-        }
+        this.setState({deleting: true});
+        MatrixClientPeg.get().sendStateEvent(
+            this.props.room.roomId,
+            'im.vector.modular.widgets',
+            {}, // empty content
+            this.props.id,
+        ).then(() => {
+            console.log('Deleted widget');
+        }, (e) => {
+            console.error('Failed to delete widget', e);
+            this.setState({deleting: false});
+        });
     },
 
     formatAppTileName: function() {
@@ -122,29 +127,54 @@ export default React.createClass({
 
     render: function() {
         let appTileBody;
+
+        // Don't render widget if it is in the process of being deleted
+        if (this.state.deleting) {
+            return <div></div>;
+        }
+
         if (this.state.loading) {
             appTileBody = (
                 <div> Loading... </div>
             );
         } else {
+            // Note that there is advice saying allow-scripts shouldn't be used with allow-same-origin
+            // because that would allow the iframe to prgramatically remove the sandbox attribute, but
+            // this would only be for content hosted on the same origin as the riot client: anything
+            // hosted on the same origin as the client will get the same access as if you clicked
+            // a link to it.
+            const sandboxFlags = "allow-forms allow-popups allow-popups-to-escape-sandbox "+
+                "allow-same-origin allow-scripts";
+            const parsedWidgetUrl = url.parse(this.state.widgetUrl);
+            let safeWidgetUrl = '';
+            if (ALLOWED_APP_URL_SCHEMES.indexOf(parsedWidgetUrl.protocol) !== -1) {
+                safeWidgetUrl = url.format(parsedWidgetUrl);
+            }
             appTileBody = (
                 <div className="mx_AppTileBody">
-                    <iframe ref="appFrame" src={this.state.widgetUrl} allowFullScreen="true"></iframe>
+                    <iframe ref="appFrame" src={safeWidgetUrl} allowFullScreen="true"
+                        sandbox={sandboxFlags}
+                    ></iframe>
                 </div>
             );
         }
+
+        // editing is done in scalar
+        const showEditButton = Boolean(this._scalarClient);
+
         return (
             <div className={this.props.fullWidth ? "mx_AppTileFullWidth" : "mx_AppTile"} id={this.props.id}>
                 <div className="mx_AppTileMenuBar">
                     {this.formatAppTileName()}
                     <span className="mx_AppTileMenuBarWidgets">
+                        <span className="mx_Beta" alt={betaHelpMsg} title={betaHelpMsg}>&#946;</span>
                         {/* Edit widget */}
-                        {/* <img
+                        {showEditButton && <img
                             src="img/edit.svg"
                             className="mx_filterFlipColor mx_AppTileMenuBarWidget mx_AppTileMenuBarWidgetPadding"
                             width="8" height="8" alt="Edit"
                             onClick={this._onEditClick}
-                        /> */}
+                        />}
 
                         {/* Delete widget */}
                         <img src="img/cancel.svg"

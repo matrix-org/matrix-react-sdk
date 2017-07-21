@@ -36,15 +36,11 @@ export default class MessageComposer extends React.Component {
         this.uploadFiles = this.uploadFiles.bind(this);
         this.onVoiceCallClick = this.onVoiceCallClick.bind(this);
         this.onInputContentChanged = this.onInputContentChanged.bind(this);
-        this.onUpArrow = this.onUpArrow.bind(this);
-        this.onDownArrow = this.onDownArrow.bind(this);
-        this._tryComplete = this._tryComplete.bind(this);
         this._onAutocompleteConfirm = this._onAutocompleteConfirm.bind(this);
         this.onToggleFormattingClicked = this.onToggleFormattingClicked.bind(this);
         this.onToggleMarkdownClicked = this.onToggleMarkdownClicked.bind(this);
         this.onInputStateChanged = this.onInputStateChanged.bind(this);
         this.onEvent = this.onEvent.bind(this);
-        this.onPageUnload = this.onPageUnload.bind(this);
 
         this.state = {
             autocompleteQuery: '',
@@ -65,20 +61,11 @@ export default class MessageComposer extends React.Component {
         // marked as encrypted.
         // XXX: fragile as all hell - fixme somehow, perhaps with a dedicated Room.encryption event or something.
         MatrixClientPeg.get().on("event", this.onEvent);
-
-        window.addEventListener('beforeunload', this.onPageUnload);
     }
 
     componentWillUnmount() {
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener("event", this.onEvent);
-        }
-        window.removeEventListener('beforeunload', this.onPageUnload);
-    }
-
-    onPageUnload(event) {
-        if (this.messageComposerInput) {
-            this.messageComposerInput.sentHistory.saveLastTextEntry();
         }
     }
 
@@ -226,21 +213,6 @@ export default class MessageComposer extends React.Component {
         this.setState({inputState});
     }
 
-    onUpArrow() {
-        return this.refs.autocomplete.onUpArrow();
-    }
-
-    onDownArrow() {
-        return this.refs.autocomplete.onDownArrow();
-    }
-
-    _tryComplete(): boolean {
-        if (this.refs.autocomplete) {
-            return this.refs.autocomplete.onCompletionClicked();
-        }
-        return false;
-    }
-
     _onAutocompleteConfirm(range, completion) {
         if (this.messageComposerInput) {
             this.messageComposerInput.setDisplayedCompletion(range, completion);
@@ -267,8 +239,7 @@ export default class MessageComposer extends React.Component {
         const uploadInputStyle = {display: 'none'};
         const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
         const TintableSvg = sdk.getComponent("elements.TintableSvg");
-        const MessageComposerInput = sdk.getComponent("rooms.MessageComposerInput" +
-            (UserSettingsStore.isFeatureEnabled('rich_text_editor') ? "" : "Old"));
+        const MessageComposerInput = sdk.getComponent("rooms.MessageComposerInput");
 
         const controls = [];
 
@@ -351,8 +322,7 @@ export default class MessageComposer extends React.Component {
                      title={_t("Show Text Formatting Toolbar")}
                      src="img/button-text-formatting.svg"
                      onClick={this.onToggleFormattingClicked}
-                     style={{visibility: this.state.showFormatting ||
-                       !UserSettingsStore.isFeatureEnabled('rich_text_editor') ? 'hidden' : 'visible'}}
+                     style={{visibility: this.state.showFormatting ? 'hidden' : 'visible'}}
                      key="controls_formatting" />
             );
 
@@ -366,11 +336,7 @@ export default class MessageComposer extends React.Component {
                     onResize={this.props.onResize}
                     room={this.props.room}
                     placeholder={placeholderText}
-                    tryComplete={this._tryComplete}
-                    onUpArrow={this.onUpArrow}
-                    onDownArrow={this.onDownArrow}
                     onFilesPasted={this.uploadFiles}
-                    tabComplete={this.props.tabComplete} // used for old messagecomposerinput/tabcomplete
                     onContentChanged={this.onInputContentChanged}
                     onInputStateChanged={this.onInputStateChanged} />,
                 formattingButton,
@@ -388,18 +354,6 @@ export default class MessageComposer extends React.Component {
                 </div>,
             );
         }
-
-        let autoComplete;
-        if (UserSettingsStore.isFeatureEnabled('rich_text_editor')) {
-            autoComplete = <div className="mx_MessageComposer_autocomplete_wrapper">
-                <Autocomplete
-                    ref="autocomplete"
-                    onConfirm={this._onAutocompleteConfirm}
-                    query={this.state.autocompleteQuery}
-                    selection={this.state.selection} />
-            </div>;
-        }
-
 
         const {style, blockType} = this.state.inputState;
         const formatButtons = ["bold", "italic", "strike", "underline", "code", "quote", "bullet", "numbullet"].map(
@@ -424,30 +378,26 @@ export default class MessageComposer extends React.Component {
                         {controls}
                     </div>
                 </div>
-                {UserSettingsStore.isFeatureEnabled('rich_text_editor') ?
-                    <div className="mx_MessageComposer_formatbar_wrapper">
-                        <div className="mx_MessageComposer_formatbar" style={this.state.showFormatting ? {} : {display: 'none'}}>
-                            {formatButtons}
-                            <div style={{flex: 1}}></div>
-                            <img title={ this.state.inputState.isRichtextEnabled ? _t("Turn Markdown on") : _t("Turn Markdown off") }
-                                 onMouseDown={this.onToggleMarkdownClicked}
-                                className="mx_MessageComposer_formatbar_markdown mx_filterFlipColor"
-                                src={`img/button-md-${!this.state.inputState.isRichtextEnabled}.png`} />
-                            <img title={ _t("Hide Text Formatting Toolbar") }
-                                 onClick={this.onToggleFormattingClicked}
-                                 className="mx_MessageComposer_formatbar_cancel mx_filterFlipColor"
-                                 src="img/icon-text-cancel.svg" />
-                        </div>
-                    </div>: null
-                }
+                <div className="mx_MessageComposer_formatbar_wrapper">
+                    <div className="mx_MessageComposer_formatbar" style={this.state.showFormatting ? {} : {display: 'none'}}>
+                        {formatButtons}
+                        <div style={{flex: 1}}></div>
+                        <img title={ this.state.inputState.isRichtextEnabled ? _t("Turn Markdown on") : _t("Turn Markdown off") }
+                             onMouseDown={this.onToggleMarkdownClicked}
+                            className="mx_MessageComposer_formatbar_markdown mx_filterFlipColor"
+                            src={`img/button-md-${!this.state.inputState.isRichtextEnabled}.png`} />
+                        <img title={ _t("Hide Text Formatting Toolbar") }
+                             onClick={this.onToggleFormattingClicked}
+                             className="mx_MessageComposer_formatbar_cancel mx_filterFlipColor"
+                             src="img/icon-text-cancel.svg" />
+                    </div>
+                </div>
             </div>
         );
     }
 }
 
 MessageComposer.propTypes = {
-    tabComplete: React.PropTypes.any,
-
     // a callback which is called when the height of the composer is
     // changed due to a change in content.
     onResize: React.PropTypes.func,

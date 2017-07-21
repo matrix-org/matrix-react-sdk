@@ -22,7 +22,7 @@ limitations under the License.
 
 var React = require("react");
 var ReactDOM = require("react-dom");
-var q = require("q");
+import Promise from 'bluebird';
 var classNames = require("classnames");
 var Matrix = require("matrix-js-sdk");
 import { _t } from '../../languageHandler';
@@ -33,7 +33,6 @@ var ContentMessages = require("../../ContentMessages");
 var Modal = require("../../Modal");
 var sdk = require('../../index');
 var CallHandler = require('../../CallHandler');
-var TabComplete = require("../../TabComplete");
 var Resend = require("../../Resend");
 var dis = require("../../dispatcher");
 var Tinter = require("../../Tinter");
@@ -49,6 +48,8 @@ import RoomViewStore from '../../stores/RoomViewStore';
 
 let DEBUG = false;
 let debuglog = function() {};
+
+const BROWSER_SUPPORTS_SANDBOX = 'sandbox' in document.createElement('iframe');
 
 if (DEBUG) {
     // using bind means that we get to keep useful line numbers in the console
@@ -141,15 +142,6 @@ module.exports = React.createClass({
         MatrixClientPeg.get().on("RoomState.members", this.onRoomStateMember);
         MatrixClientPeg.get().on("RoomMember.membership", this.onRoomMemberMembership);
         MatrixClientPeg.get().on("accountData", this.onAccountData);
-
-        this.tabComplete = new TabComplete({
-            allowLooping: false,
-            autoEnterTabComplete: true,
-            onClickCompletes: true,
-            onStateChange: (isCompleting) => {
-                this.forceUpdate();
-            },
-        });
 
         // Start listening for RoomViewStore updates
         this._roomStoreToken = RoomViewStore.addListener(this._onRoomViewStoreUpdate);
@@ -275,8 +267,16 @@ module.exports = React.createClass({
     },
 
     _shouldShowApps: function(room) {
-        const appsStateEvents = room.currentState.getStateEvents('im.vector.modular.widgets', '');
-        return appsStateEvents && Object.keys(appsStateEvents.getContent()).length > 0;
+        if (!BROWSER_SUPPORTS_SANDBOX) return false;
+
+        const appsStateEvents = room.currentState.getStateEvents('im.vector.modular.widgets');
+        // any valid widget = show apps
+        for (let i = 0; i < appsStateEvents.length; i++) {
+            if (appsStateEvents[i].getContent().type && appsStateEvents[i].getContent().url) {
+                return true;
+            }
+        }
+        return false;
     },
 
     componentDidMount: function() {
@@ -508,7 +508,6 @@ module.exports = React.createClass({
         // update the tab complete list as it depends on who most recently spoke,
         // and that has probably just changed
         if (ev.sender) {
-            this.tabComplete.onMemberSpoke(ev.sender);
             UserProvider.getInstance().onUserSpoke(ev.sender);
         }
     },
@@ -532,7 +531,6 @@ module.exports = React.createClass({
         this._warnAboutEncryption(room);
         this._calculatePeekRules(room);
         this._updatePreviewUrlVisibility(room);
-        this.tabComplete.loadEntries(room);
         UserProvider.getInstance().setUserListFromRoom(room);
     },
 
@@ -709,7 +707,6 @@ module.exports = React.createClass({
         this._updateConfCallNotification();
 
         // refresh the tab complete list
-        this.tabComplete.loadEntries(this.state.room);
         UserProvider.getInstance().setUserListFromRoom(this.state.room);
 
         // if we are now a member of the room, where we were not before, that
@@ -778,7 +775,7 @@ module.exports = React.createClass({
 
     onSearchResultsFillRequest: function(backwards) {
         if (!backwards) {
-            return q(false);
+            return Promise.resolve(false);
         }
 
         if (this.state.searchResults.next_batch) {
@@ -788,7 +785,7 @@ module.exports = React.createClass({
             return this._handleSearchResult(searchPromise);
         } else {
             debuglog("no more search results");
-            return q(false);
+            return Promise.resolve(false);
         }
     },
 
@@ -849,7 +846,7 @@ module.exports = React.createClass({
             return;
         }
 
-        q().then(() => {
+        Promise.resolve().then(() => {
             const signUrl = this.props.thirdPartyInvite ?
                 this.props.thirdPartyInvite.inviteSignUrl : undefined;
             dis.dispatch({
@@ -868,7 +865,7 @@ module.exports = React.createClass({
                     }
                 }
             }
-            return q();
+            return Promise.resolve();
         });
     },
 
@@ -1562,7 +1559,6 @@ module.exports = React.createClass({
             isStatusAreaExpanded = this.state.statusBarVisible;
             statusBar = <RoomStatusBar
                 room={this.state.room}
-                tabComplete={this.tabComplete}
                 numUnreadMessages={this.state.numUnreadMessages}
                 unsentMessageError={this.state.unsentMessageError}
                 atEndOfLiveTimeline={this.state.atEndOfLiveTimeline}
@@ -1638,7 +1634,6 @@ module.exports = React.createClass({
                     onResize={this.onChildResize}
                     uploadFile={this.uploadFile}
                     callState={this.state.callState}
-                    tabComplete={this.tabComplete}
                     opacity={ this.props.opacity }
                     showApps={ this.state.showApps }
                 />;

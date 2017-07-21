@@ -18,7 +18,7 @@ limitations under the License.
 /*
 Listens for incoming postMessage requests from the integrations UI URL. The following API is exposed:
 {
-    action: "invite" | "membership_state" | "bot_options" | "set_bot_options",
+    action: "invite" | "membership_state" | "bot_options" | "set_bot_options" | etc... ,
     room_id: $ROOM_ID,
     user_id: $USER_ID
     // additional request fields
@@ -110,6 +110,26 @@ Example:
     response: 78
 }
 
+can_send_event
+--------------
+Check if the client can send the given event into the given room. If the client
+is unable to do this, an error response is returned instead of 'response: false'.
+
+Request:
+ - room_id is the room to do the check in.
+ - event_type is the event type which will be sent.
+ - is_state is true if the event to be sent is a state event.
+Response:
+true
+Example:
+{
+    action: "can_send_event",
+    is_state: false,
+    event_type: "m.room.message",
+    room_id: "!foo:bar",
+    response: true
+}
+
 set_widget
 ----------
 Set a new widget in the room. Clobbers based on the ID.
@@ -143,41 +163,44 @@ Example:
 
 get_widgets
 -----------
-Get a list of all widgets in the room. The response is the `content` field
-of the state event.
+Get a list of all widgets in the room. The response is an array
+of state events.
 
 Request:
  - `room_id` (String) is the room to get the widgets in.
 Response:
-{
-    $widget_id: {
-        type: "example",
-        url: "http://widget.url",
-        name: "Example Widget",
-        data: {
-            key: "val"
+[
+    {
+        type: "im.vector.modular.widgets",
+        state_key: "wid1",
+        content: {
+            type: "grafana",
+            url: "https://grafanaurl",
+            name: "dashboard",
+            data: {key: "val"}
         }
-    },
-    $widget_id: { ... }
-}
+        room_id: “!foo:bar”,
+        sender: "@alice:localhost"
+    }
+]
 Example:
 {
     action: "get_widgets",
     room_id: "!foo:bar",
-    widget_id: "abc123",
-    url: "http://widget.url",
-    type: "example",
-    response: {
-        $widget_id: {
-            type: "example",
-            url: "http://widget.url",
-            name: "Example Widget",
-            data: {
-                key: "val"
+    response: [
+        {
+            type: "im.vector.modular.widgets",
+            state_key: "wid1",
+            content: {
+                type: "grafana",
+                url: "https://grafanaurl",
+                name: "dashboard",
+                data: {key: "val"}
             }
-        },
-        $widget_id: { ... }
-    }
+            room_id: “!foo:bar”,
+            sender: "@alice:localhost"
+        }
+    ]
 }
 
 
@@ -301,33 +324,17 @@ function setWidget(event, roomId) {
         }
     }
 
-    // TODO: same dance we do for power levels. It'd be nice if the JS SDK had helper methods to do this.
-    client.getStateEvent(roomId, "im.vector.modular.widgets", "").then((widgets) => {
-        if (widgetUrl === null) {
-            delete widgets[widgetId];
-        }
-        else {
-            widgets[widgetId] = {
-                type: widgetType,
-                url: widgetUrl,
-                name: widgetName,
-                data: widgetData,
-            };
-        }
-        return client.sendStateEvent(roomId, "im.vector.modular.widgets", widgets);
-    }, (err) => {
-        if (err.errcode === "M_NOT_FOUND") {
-            return client.sendStateEvent(roomId, "im.vector.modular.widgets", {
-                [widgetId]: {
-                    type: widgetType,
-                    url: widgetUrl,
-                    name: widgetName,
-                    data: widgetData,
-                }
-            });
-        }
-        throw err;
-    }).done(() => {
+    let content = {
+        type: widgetType,
+        url: widgetUrl,
+        name: widgetName,
+        data: widgetData,
+    };
+    if (widgetUrl === null) { // widget is being deleted
+        content = {};
+    }
+
+    client.sendStateEvent(roomId, "im.vector.modular.widgets", content, widgetId).done(() => {
         sendResponse(event, {
             success: true,
         });
@@ -337,7 +344,26 @@ function setWidget(event, roomId) {
 }
 
 function getWidgets(event, roomId) {
-    returnStateEvent(event, roomId, "im.vector.modular.widgets", "");
+    const client = MatrixClientPeg.get();
+    if (!client) {
+        sendError(event, _t('You need to be logged in.'));
+        return;
+    }
+    const room = client.getRoom(roomId);
+    if (!room) {
+        sendError(event, _t('This room is not recognised.'));
+        return;
+    }
+    const stateEvents = room.currentState.getStateEvents("im.vector.modular.widgets");
+    // Only return widgets which have required fields
+    let widgetStateEvents = [];
+    stateEvents.forEach((ev) => {
+        if (ev.getContent().type && ev.getContent().url) {
+            widgetStateEvents.push(ev.event); // return the raw event
+        }
+    })
+
+    sendResponse(event, widgetStateEvents);
 }
 
 function setPlumbingState(event, roomId, status) {
@@ -436,6 +462,42 @@ function getMembershipCount(event, roomId) {
     sendResponse(event, count);
 }
 
+function canSendEvent(event, roomId) {
+    const evType = "" + event.data.event_type; // force stringify
+    const isState = Boolean(event.data.is_state);
+    const client = MatrixClientPeg.get();
+    if (!client) {
+        sendError(event, _t('You need to be logged in.'));
+        return;
+    }
+    const room = client.getRoom(roomId);
+    if (!room) {
+        sendError(event, _t('This room is not recognised.'));
+        return;
+    }
+    const me = client.credentials.userId;
+    const member = room.getMember(me);
+    if (!member || member.membership !== "join") {
+        sendError(event, _t('You are not in this room.'));
+        return;
+    }
+
+    let canSend = false;
+    if (isState) {
+        canSend = room.currentState.maySendStateEvent(evType, me);
+    }
+    else {
+        canSend = room.currentState.maySendEvent(evType, me);
+    }
+
+    if (!canSend) {
+        sendError(event, _t('You do not have permission to do that in this room.'));
+        return;
+    }
+
+    sendResponse(event, true);
+}
+
 function returnStateEvent(event, roomId, eventType, stateKey) {
     const client = MatrixClientPeg.get();
     if (!client) {
@@ -481,7 +543,7 @@ const onMessage = function(event) {
     // All strings start with the empty string, so for sanity return if the length
     // of the event origin is 0.
     let url = SdkConfig.get().integrations_ui_url;
-    if (event.origin.length === 0 || !url.startsWith(event.origin)) {
+    if (event.origin.length === 0 || !url.startsWith(event.origin) || !event.data.action) {
         return; // don't log this - debugging APIs like to spam postMessage which floods the log otherwise
     }
 
@@ -531,6 +593,9 @@ const onMessage = function(event) {
             return;
         } else if (event.data.action === "get_widgets") {
             getWidgets(event, roomId);
+            return;
+        } else if (event.data.action === "can_send_event") {
+            canSendEvent(event, roomId);
             return;
         }
 

@@ -5,7 +5,7 @@ import flatMap from 'lodash/flatMap';
 import isEqual from 'lodash/isEqual';
 import sdk from '../../../index';
 import type {Completion} from '../../../autocomplete/Autocompleter';
-import Q from 'q';
+import Promise from 'bluebird';
 import UserSettingsStore from '../../../UserSettingsStore';
 
 import {getCompletions} from '../../../autocomplete/Autocompleter';
@@ -50,6 +50,7 @@ export default class Autocomplete extends React.Component {
     }
 
     complete(query, selection) {
+        this.queryRequested = query;
         if (this.debounceCompletionsRequest) {
             clearTimeout(this.debounceCompletionsRequest);
         }
@@ -63,7 +64,7 @@ export default class Autocomplete extends React.Component {
                 // Hide the autocomplete box
                 hide: true,
             });
-            return Q(null);
+            return Promise.resolve(null);
         }
         let autocompleteDelay = UserSettingsStore.getLocalSetting('autocompleteDelay', 200);
 
@@ -72,16 +73,25 @@ export default class Autocomplete extends React.Component {
             autocompleteDelay = 0;
         }
 
-        const deferred = Q.defer();
+        const deferred = Promise.defer();
         this.debounceCompletionsRequest = setTimeout(() => {
-            getCompletions(
-                query, selection, this.state.forceComplete,
-            ).then((completions) => {
-                this.processCompletions(completions);
+            this.processQuery(query, selection).then(() => {
                 deferred.resolve();
             });
         }, autocompleteDelay);
         return deferred.promise;
+    }
+
+    processQuery(query, selection) {
+        return getCompletions(
+            query, selection, this.state.forceComplete,
+        ).then((completions) => {
+            // Only ever process the completions for the most recent query being processed
+            if (query !== this.queryRequested) {
+                return;
+            }
+            this.processCompletions(completions);
+        });
     }
 
     processCompletions(completions) {
@@ -105,14 +115,9 @@ export default class Autocomplete extends React.Component {
         }
 
         let hide = this.state.hide;
-        // These are lists of booleans that indicate whether whether the corresponding provider had a matching pattern
-        const oldMatches = this.state.completions.map((completion) => !!completion.command.command),
-            newMatches = completions.map((completion) => !!completion.command.command);
-
-        // So, essentially, we re-show autocomplete if any provider finds a new pattern or stops finding an old one
-        if (!isEqual(oldMatches, newMatches)) {
-            hide = false;
-        }
+        // If `completion.command.command` is truthy, then a provider has matched with the query
+        const anyMatches = completions.some((completion) => !!completion.command.command);
+        hide = !anyMatches;
 
         this.setState({
             completions,
@@ -171,7 +176,7 @@ export default class Autocomplete extends React.Component {
     }
 
     forceComplete() {
-        const done = Q.defer();
+        const done = Promise.defer();
         this.setState({
             forceComplete: true,
             hide: false,

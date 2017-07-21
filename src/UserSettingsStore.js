@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import q from 'q';
+import Promise from 'bluebird';
 import MatrixClientPeg from './MatrixClientPeg';
 import Notifier from './Notifier';
 import { _t } from './languageHandler';
@@ -27,11 +27,6 @@ export default {
     LABS_FEATURES: [
         {
             name: "-",
-            id: 'rich_text_editor',
-            default: false,
-        },
-        {
-            name: "-",
             id: 'matrix_apps',
             default: false,
         },
@@ -39,8 +34,7 @@ export default {
 
     // horrible but it works. The locality makes this somewhat more palatable.
     doTranslations: function() {
-        this.LABS_FEATURES[0].name = _t("New Composer & Autocomplete");
-        this.LABS_FEATURES[1].name = _t("Matrix Apps");
+        this.LABS_FEATURES[0].name = _t("Matrix Apps");
     },
 
     loadProfileInfo: function() {
@@ -54,7 +48,7 @@ export default {
 
     loadThreePids: function() {
         if (MatrixClientPeg.get().isGuest()) {
-            return q({
+            return Promise.resolve({
                 threepids: [],
             }); // guests can't poke 3pid endpoint
         }
