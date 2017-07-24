@@ -145,7 +145,7 @@ const sanitizeHtmlParams = {
         font: ['color', 'data-mx-bg-color', 'data-mx-color', 'style'], // custom to matrix
         span: ['data-mx-bg-color', 'data-mx-color', 'style'], // custom to matrix
         a: ['href', 'name', 'target', 'rel'], // remote target: custom to matrix
-        img: ['src'],
+        img: ['src', 'width', 'height', 'alt', 'title'],
         ol: ['start'],
         code: ['class'], // We don't actually allow all classes, we filter them in transformTags
     },
@@ -191,7 +191,11 @@ const sanitizeHtmlParams = {
             // because transformTags is used _before_ we filter by allowedSchemesByTag and
             // we don't want to allow images with `https?` `src`s.
             if (!attribs.src.startsWith('mxc://')) {
-                return { tagName, attribs: {}};
+                if (attribs.alt || attribs.title) {
+                    return { tagName: 'span', text: attribs.alt || attribs.title, attribs: {} };
+                } else {
+                    return { tagName, attribs: {}};
+                }
             }
             attribs.src = MatrixClientPeg.get().mxcUrlToHttp(
                 attribs.src,
