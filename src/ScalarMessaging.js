@@ -543,7 +543,8 @@ const onMessage = function(event) {
     // All strings start with the empty string, so for sanity return if the length
     // of the event origin is 0.
     let url = SdkConfig.get().integrations_ui_url;
-    if (event.origin.length === 0 || !url.startsWith(event.origin) || !event.data.action) {
+    /* FIXME -- origin disabled for testing DO NOT DEPLOY IN PRODUCTION!!! */
+    if (false) { //(event.origin.length === 0 || !url.startsWith(event.origin) || !event.data.action) {
         return; // don't log this - debugging APIs like to spam postMessage which floods the log otherwise
     }
 
@@ -553,10 +554,10 @@ const onMessage = function(event) {
         return;
     }
 
-    const roomId = event.data.room_id;
+    const roomId = event.data.room_id; // Pass from widget
     const userId = event.data.user_id;
     if (!roomId) {
-        sendError(event, _t('Missing room_id in request'));
+        // sendError(event, _t('Missing room_id in request'));
         return;
     }
     let promise = Promise.resolve(currentRoomId);
@@ -573,7 +574,7 @@ const onMessage = function(event) {
     }
 
     promise.then((viewingRoomId) => {
-        if (roomId !== viewingRoomId) {
+        if (roomId !== viewingRoomId && event.data.action !== "initiate_call") {
             sendError(event, _t('Room %(roomId)s not visible', {roomId: roomId}));
             return;
         }
@@ -603,7 +604,7 @@ const onMessage = function(event) {
             sendError(event, _t('Missing user_id in request'));
             return;
         }
-        switch (event.data.action) {
+        switch (event.data.action) { // Add place call action
             case "membership_state":
                 getMembershipState(event, roomId, userId);
                 break;
@@ -618,6 +619,18 @@ const onMessage = function(event) {
                 break;
             case "set_bot_power":
                 setBotPower(event, roomId, userId, event.data.level);
+                break;
+            case "initiate_call":
+                console.warn("setting room to ", roomId);
+                dis.dispatch({
+                    action: "view_room",
+                    room_id: roomId,
+                });
+                setTimeout(dis.dispatch({
+                    action: 'place_call',
+                    type: 'video',
+                    room_id: roomId,
+                }), 1000);
                 break;
             default:
                 console.warn("Unhandled postMessage event with action '" + event.data.action +"'");
