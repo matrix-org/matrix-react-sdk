@@ -181,9 +181,6 @@ var TimelinePanel = React.createClass({
 
             // always show timestamps on event tiles?
             alwaysShowTimestamps: syncedSettings.alwaysShowTimestamps,
-
-            // hide redacted events as per old behaviour
-            hideRedactions: syncedSettings.hideRedactions,
         };
     },
 
@@ -1023,7 +1020,16 @@ var TimelinePanel = React.createClass({
             var boundingRect = node.getBoundingClientRect();
             if ((allowPartial && boundingRect.top < wrapperRect.bottom) ||
                 (!allowPartial && boundingRect.bottom < wrapperRect.bottom)) {
-                return i;
+                // find last invisible event before the next visible one.
+                // doing this by finding the next visible event (which is not in rect)
+                // and then returning the id of the one above it.
+                for (let j = i; j > this.state.events.length; ++j) {
+                    if (messagePanel._shouldShowEvent(this.state.events[j])) {
+                        // j points to 1 event too far
+                        return j - 1;
+                    }
+                }
+                return this.state.events.length - 1;
             }
         }
         return null;
@@ -1122,7 +1128,6 @@ var TimelinePanel = React.createClass({
         return (
             <MessagePanel ref="messagePanel"
                           hidden={ this.props.hidden }
-                          hideRedactions={ this.state.hideRedactions }
                           backPaginating={ this.state.backPaginating }
                           forwardPaginating={ forwardPaginating }
                           events={ this.state.events }
