@@ -22,7 +22,7 @@ const PlatformPeg = require("../../PlatformPeg");
 const Modal = require('../../Modal');
 const dis = require("../../dispatcher");
 import sessionStore from '../../stores/SessionStore';
-const q = require('q');
+import Promise from 'bluebird';
 const packageJson = require('../../../package.json');
 const UserSettingsStore = require('../../UserSettingsStore');
 const CallMediaHandler = require('../../CallMediaHandler');
@@ -82,6 +82,10 @@ const SETTINGS_LABELS = [
         label: 'Show timestamps in 12 hour format (e.g. 2:30pm)',
     },
     {
+        id: 'hideJoinLeaves',
+        label: 'Hide join/leave messages (invites/kicks/bans unaffected)',
+    },
+    {
         id: 'useCompactLayout',
         label: 'Use compact timeline layout',
     },
@@ -90,12 +94,12 @@ const SETTINGS_LABELS = [
         label: 'Hide removed messages',
     },
     {
-        id: 'disableMarkdown',
-        label: 'Disable markdown formatting',
-    },
-    {
         id: 'enableSyntaxHighlightLanguageDetection',
         label: 'Enable automatic language detection for syntax highlighting',
+    },
+    {
+        id: 'MessageComposerInput.autoReplaceEmoji',
+        label: 'Automatically replace plain text Emoji',
     },
 /*
     {
@@ -195,7 +199,7 @@ module.exports = React.createClass({
         });
 
         if (PlatformPeg.get()) {
-            q().then(() => {
+            Promise.resolve().then(() => {
                 return PlatformPeg.get().getAppVersion();
             }).done((appVersion) => {
                 if (this._unmounted) return;
@@ -293,7 +297,7 @@ module.exports = React.createClass({
     },
 
     _refreshMediaDevices: function() {
-        q().then(() => {
+        Promise.resolve().then(() => {
             return CallMediaHandler.getDevices();
         }).then((mediaDevices) => {
             // console.log("got mediaDevices", mediaDevices, this._unmounted);
@@ -308,7 +312,7 @@ module.exports = React.createClass({
 
     _refreshFromServer: function() {
         const self = this;
-        q.all([
+        Promise.all([
             UserSettingsStore.loadProfileInfo(), UserSettingsStore.loadThreePids(),
         ]).done(function(resps) {
             self.setState({
@@ -560,15 +564,16 @@ module.exports = React.createClass({
         });
         // reject the invites
         const promises = rooms.map((room) => {
-            return MatrixClientPeg.get().leave(room.roomId);
+            return MatrixClientPeg.get().leave(room.roomId).catch((e) => {
+                // purposefully drop errors to the floor: we'll just have a non-zero number on the UI
+                // after trying to reject all the invites.
+            });
         });
-        // purposefully drop errors to the floor: we'll just have a non-zero number on the UI
-        // after trying to reject all the invites.
-        q.allSettled(promises).then(() => {
+        Promise.all(promises).then(() => {
             this.setState({
                 rejectingInvites: false,
             });
-        }).done();
+        });
     },
 
     _onExportE2eKeysClicked: function() {
@@ -1127,7 +1132,7 @@ module.exports = React.createClass({
 
         const threepidsSection = this.state.threepids.map((val, pidIndex) => {
             const id = "3pid-" + val.address;
-            // TODO; make a separate component to avoid having to rebind onClick
+            // TODO: make a separate component to avoid having to rebind onClick
             // each time we render
             const onRemoveClick = (e) => this.onRemoveThreepidClicked(val);
             return (

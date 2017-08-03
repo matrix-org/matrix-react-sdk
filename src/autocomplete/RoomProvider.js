@@ -23,44 +23,65 @@ import FuzzyMatcher from './FuzzyMatcher';
 import {PillCompletion} from './Components';
 import {getDisplayAliasForRoom} from '../Rooms';
 import sdk from '../index';
+import _sortBy from 'lodash/sortBy';
 
 const ROOM_REGEX = /(?=#)(\S*)/g;
 
 let instance = null;
 
+function score(query, space) {
+    const index = space.indexOf(query);
+    if (index === -1) {
+        return Infinity;
+    } else {
+        return index;
+    }
+}
+
 export default class RoomProvider extends AutocompleteProvider {
     constructor() {
         super(ROOM_REGEX);
         this.matcher = new FuzzyMatcher([], {
-            keys: ['name', 'roomId', 'aliases'],
+            keys: ['displayedAlias', 'name'],
         });
     }
 
     async getCompletions(query: string, selection: {start: number, end: number}, force = false) {
         const RoomAvatar = sdk.getComponent('views.avatars.RoomAvatar');
 
-        let client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.get();
         let completions = [];
         const {command, range} = this.getCurrentCommand(query, selection, force);
         if (command) {
             // the only reason we need to do this is because Fuse only matches on properties
-            this.matcher.setObjects(client.getRooms().filter(room => !!room && !!getDisplayAliasForRoom(room)).map(room => {
+            this.matcher.setObjects(client.getRooms().filter(
+                (room) => !!room && !!getDisplayAliasForRoom(room),
+            ).map((room) => {
                 return {
                     room: room,
                     name: room.name,
-                    aliases: room.getAliases(),
+                    displayedAlias: getDisplayAliasForRoom(room),
                 };
             }));
-            completions = this.matcher.match(command[0]).map(room => {
-                let displayAlias = getDisplayAliasForRoom(room.room) || room.roomId;
+            const matchedString = command[0];
+            completions = this.matcher.match(matchedString);
+            completions = _sortBy(completions, [
+                (c) => score(matchedString, c.displayedAlias),
+                (c) => c.displayedAlias.length,
+            ]).map((room) => {
+                const displayAlias = getDisplayAliasForRoom(room.room) || room.roomId;
                 return {
-                    completion: displayAlias + ' ',
+                    completion: displayAlias,
+                    suffix: ' ',
+                    href: 'https://matrix.to/#/' + displayAlias,
                     component: (
                         <PillCompletion initialComponent={<RoomAvatar width={24} height={24} room={room.room} />} title={room.name} description={displayAlias} />
                     ),
                     range,
                 };
-            }).filter(completion => !!completion.completion && completion.completion.length > 0).slice(0, 4);
+            })
+            .filter((completion) => !!completion.completion && completion.completion.length > 0)
+            .slice(0, 4);
         }
         return completions;
     }
@@ -78,7 +99,7 @@ export default class RoomProvider extends AutocompleteProvider {
     }
 
     renderCompletions(completions: [React.Component]): ?React.Component {
-        return <div className="mx_Autocomplete_Completion_container_pill">
+        return <div className="mx_Autocomplete_Completion_container_pill mx_Autocomplete_Completion_container_truncate">
             {completions}
         </div>;
     }
