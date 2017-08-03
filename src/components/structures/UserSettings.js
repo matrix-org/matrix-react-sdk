@@ -180,7 +180,7 @@ module.exports = React.createClass({
             mediaDevices: null,
         };
     },
-    
+
     // Themes must be declared in config.json of riot-web. If they are not declared there, a fallback theme (light) will be used. Please **do not** include themes here, but directly in config.json! The default theme will always be the **first** theme in config.json.
     themes: [],
 
@@ -188,14 +188,14 @@ module.exports = React.createClass({
         this._unmounted = false;
         this._addThreepid = null;
 
-        var validThemes = SdkConfig.get().themes;
+        const validThemes = SdkConfig.get().themes;
         const self = this;
         validThemes.forEach(function(theme) {
-        	var t = {};
-        	t.id = "theme";
-        	t.label = theme.label; // TODO: translate when translation is merged
-        	t.value = theme.value;
-        	self.themes.push(t);
+            let t = {};
+            t.id = "theme";
+            t.label = theme.label;
+            t.value = theme.value;
+            self.themes.push(t);
         });
 
         if (PlatformPeg.get()) {

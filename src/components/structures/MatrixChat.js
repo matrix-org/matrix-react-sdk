@@ -110,7 +110,7 @@ module.exports = React.createClass({
 
         // A function that makes a registration URL
         makeRegistrationUrl: React.PropTypes.func.isRequired,
-        
+
         // Theme style elements in document
         themeStyleElements: React.PropTypes.object,
     },
@@ -916,7 +916,7 @@ module.exports = React.createClass({
      * @param {string} theme new theme
      */
     _onSetTheme: function(theme) {
-        var isValidTheme = false;
+        let isValidTheme = false;
         if (theme) {
             SdkConfig.get().themes.every(function(configTheme, i) {
                 if (theme == configTheme.value) {
@@ -928,12 +928,13 @@ module.exports = React.createClass({
             });
         }
         if (!isValidTheme) {
-            console.log( ( theme ?  "Unknown theme '" + theme + "'." : "No theme set." ) + " Falling back to default theme '" + SdkConfig.get().themes[0].value + "'");
+            console.log( ( theme ? "Unknown theme '" + theme + "'." : "No theme set." ) 
+                + " Falling back to default theme '" + SdkConfig.get().themes[0].value + "'");
             theme = SdkConfig.get().themes[0].value;
         }
 
-        var styleElements = this.props.themeStyleElements;
-        
+        let styleElements = this.props.themeStyleElements;
+
         // disable all style elements first, then enable the one we want. Chrome only
         // bothers to do an update on a true->false transition, so this ensures
         // that we get exactly one update, at the right time.
@@ -1420,16 +1421,17 @@ module.exports = React.createClass({
         }
         return this.props.makeRegistrationUrl(params);
     },
-    
+
     getThemeStyleElements() {
         // look for the stylesheet elements.
         // styleElements is a map from style name to HTMLLinkElement.
-        var styleElements = Object.create(null);
-        var i, a;
+        let styleElements = Object.create(null);
+        let i;
+        let a;
         for (i = 0; (a = document.getElementsByTagName("link")[i]); i++) {
-            var href = a.getAttribute("href");
+            const href = a.getAttribute("href");
             // shouldn't we be using the 'title' tag rather than the href?
-            var match = href.match(/^bundles\/.*\/theme-(.*)\.css$/);
+            const match = href.match(/^bundles\/.*\/theme-(.*)\.css$/);
             if (match) {
                 styleElements[match[1]] = a;
             }
