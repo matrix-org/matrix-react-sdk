@@ -191,7 +191,7 @@ module.exports = React.createClass({
         const validThemes = SdkConfig.get().themes;
         const self = this;
         validThemes.forEach(function(theme) {
-            let t = {};
+            const t = {};
             t.id = "theme";
             t.label = theme.label;
             t.value = theme.value;

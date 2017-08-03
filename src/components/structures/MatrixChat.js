@@ -928,12 +928,12 @@ module.exports = React.createClass({
             });
         }
         if (!isValidTheme) {
-            console.log( ( theme ? "Unknown theme '" + theme + "'." : "No theme set." ) 
+            console.log( ( theme ? "Unknown theme '" + theme + "'." : "No theme set." )
                 + " Falling back to default theme '" + SdkConfig.get().themes[0].value + "'");
             theme = SdkConfig.get().themes[0].value;
         }
 
-        let styleElements = this.props.themeStyleElements;
+        const styleElements = this.props.themeStyleElements;
 
         // disable all style elements first, then enable the one we want. Chrome only
         // bothers to do an update on a true->false transition, so this ensures
@@ -1425,7 +1425,7 @@ module.exports = React.createClass({
     getThemeStyleElements() {
         // look for the stylesheet elements.
         // styleElements is a map from style name to HTMLLinkElement.
-        let styleElements = Object.create(null);
+        const styleElements = Object.create(null);
         let i;
         let a;
         for (i = 0; (a = document.getElementsByTagName("link")[i]); i++) {
