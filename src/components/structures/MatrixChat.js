@@ -1163,7 +1163,7 @@ module.exports = React.createClass({
     onMessage: function(ev) {
         if (
             window.location.origin != ev.origin &&
-            (!SdkConfig.get().allowedPostMessageOrigins || 
+            (!SdkConfig.get().allowedPostMessageOrigins ||
             SdkConfig.get().allowedPostMessageOrigins.indexOf(ev.origin) == -1)
         ) {
             console.log('postMessage: unallowed postMessageOrigin. Ignoring request...');
