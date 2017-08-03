@@ -5,7 +5,7 @@ import flatMap from 'lodash/flatMap';
 import isEqual from 'lodash/isEqual';
 import sdk from '../../../index';
 import type {Completion} from '../../../autocomplete/Autocompleter';
-import Q from 'q';
+import Promise from 'bluebird';
 import UserSettingsStore from '../../../UserSettingsStore';
 
 import {getCompletions} from '../../../autocomplete/Autocompleter';
@@ -40,25 +40,61 @@ export default class Autocomplete extends React.Component {
         };
     }
 
-    async componentWillReceiveProps(props, state) {
-        if (props.query === this.props.query) {
-            return null;
-        }
-
-        return await this.complete(props.query, props.selection);
-    }
-
-    async complete(query, selection) {
-        let forceComplete = this.state.forceComplete;
-        const completionPromise = getCompletions(query, selection, forceComplete);
-        this.completionPromise = completionPromise;
-        const completions = await this.completionPromise;
-
-        // There's a newer completion request, so ignore results.
-        if (completionPromise !== this.completionPromise) {
+    componentWillReceiveProps(newProps, state) {
+        // Query hasn't changed so don't try to complete it
+        if (newProps.query === this.props.query) {
             return;
         }
 
+        this.complete(newProps.query, newProps.selection);
+    }
+
+    complete(query, selection) {
+        this.queryRequested = query;
+        if (this.debounceCompletionsRequest) {
+            clearTimeout(this.debounceCompletionsRequest);
+        }
+        if (query === "") {
+            this.setState({
+                // Clear displayed completions
+                completions: [],
+                completionList: [],
+                // Reset selected completion
+                selectionOffset: COMPOSER_SELECTED,
+                // Hide the autocomplete box
+                hide: true,
+            });
+            return Promise.resolve(null);
+        }
+        let autocompleteDelay = UserSettingsStore.getLocalSetting('autocompleteDelay', 200);
+
+        // Don't debounce if we are already showing completions
+        if (this.state.completions.length > 0 || this.state.forceComplete) {
+            autocompleteDelay = 0;
+        }
+
+        const deferred = Promise.defer();
+        this.debounceCompletionsRequest = setTimeout(() => {
+            this.processQuery(query, selection).then(() => {
+                deferred.resolve();
+            });
+        }, autocompleteDelay);
+        return deferred.promise;
+    }
+
+    processQuery(query, selection) {
+        return getCompletions(
+            query, selection, this.state.forceComplete,
+        ).then((completions) => {
+            // Only ever process the completions for the most recent query being processed
+            if (query !== this.queryRequested) {
+                return;
+            }
+            this.processCompletions(completions);
+        });
+    }
+
+    processCompletions(completions) {
         const completionList = flatMap(completions, (provider) => provider.completions);
 
         // Reset selection when completion list becomes empty.
@@ -79,32 +115,17 @@ export default class Autocomplete extends React.Component {
         }
 
         let hide = this.state.hide;
-        // These are lists of booleans that indicate whether whether the corresponding provider had a matching pattern
-        const oldMatches = this.state.completions.map((completion) => !!completion.command.command),
-            newMatches = completions.map((completion) => !!completion.command.command);
-
-        // So, essentially, we re-show autocomplete if any provider finds a new pattern or stops finding an old one
-        if (!isEqual(oldMatches, newMatches)) {
-            hide = false;
-        }
-
-        const autocompleteDelay = UserSettingsStore.getSyncedSetting('autocompleteDelay', 200);
-
-        // We had no completions before, but do now, so we should apply our display delay here
-        if (this.state.completionList.length === 0 && completionList.length > 0 &&
-            !forceComplete && autocompleteDelay > 0) {
-            await Q.delay(autocompleteDelay);
-        }
-
-        // Force complete is turned off each time since we can't edit the query in that case
-        forceComplete = false;
+        // If `completion.command.command` is truthy, then a provider has matched with the query
+        const anyMatches = completions.some((completion) => !!completion.command.command);
+        hide = !anyMatches;
 
         this.setState({
             completions,
             completionList,
             selectionOffset,
             hide,
-            forceComplete,
+            // Force complete is turned off each time since we can't edit the query in that case
+            forceComplete: false,
         });
     }
 
@@ -155,13 +176,13 @@ export default class Autocomplete extends React.Component {
     }
 
     forceComplete() {
-        const done = Q.defer();
+        const done = Promise.defer();
         this.setState({
             forceComplete: true,
             hide: false,
         }, () => {
             this.complete(this.props.query, this.props.selection).then(() => {
-                done.resolve();
+                done.resolve(this.countCompletions());
             });
         });
         return done.promise;
