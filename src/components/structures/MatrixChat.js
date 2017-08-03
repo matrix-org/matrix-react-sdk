@@ -391,9 +391,9 @@ module.exports = React.createClass({
                         title: "Sign out?",
                         description:
                             <div>
-                                For security, logging out will delete any end-to-end encryption 
-                                keys from this browser. If you want to be able to decrypt your 
-                                conversation history from future Riot sessions, please export 
+                                For security, logging out will delete any end-to-end encryption
+                                keys from this browser. If you want to be able to decrypt your
+                                conversation history from future Riot sessions, please export
                                 your room keys for safe-keeping.
                             </div>,
                         button: "Sign out",
@@ -1137,7 +1137,7 @@ module.exports = React.createClass({
             });
             dis.dispatch({
                 action: 'logout',
-                forceLogout: true
+                forceLogout: true,
             });
         });
         cli.on("accountData", function(ev) {
@@ -1163,18 +1163,19 @@ module.exports = React.createClass({
     onMessage: function(ev) {
         if (
             window.location.origin != ev.origin &&
-            (!SdkConfig.get().allowedPostMessageOrigins || SdkConfig.get().allowedPostMessageOrigins.indexOf(ev.origin) == -1)
+            (!SdkConfig.get().allowedPostMessageOrigins || 
+            SdkConfig.get().allowedPostMessageOrigins.indexOf(ev.origin) == -1)
         ) {
             console.log('postMessage: unallowed postMessageOrigin. Ignoring request...');
-            ev.source.postMessage('{"postMessage":"invalid origin"}',ev.origin);
+            ev.source.postMessage('{"postMessage":"invalid origin"}', ev.origin);
             return;
         }
-        var credentials = {};
+        let credentials = {};
         try {
             credentials = JSON.parse(ev.data);
         } catch(e) {
             return;
-        };
+        }
 
         if (
             credentials &&
@@ -1184,10 +1185,10 @@ module.exports = React.createClass({
             credentials.identityServerUrl &&
             credentials.userId
         ) {
-            var currentCredentials = (MatrixClientPeg.get())
+            const currentCredentials = (MatrixClientPeg.get())
                 ? MatrixClientPeg.getCredentials()
                 : null;
-            var sameUser = (
+            const sameUser = (
                 currentCredentials &&
                 credentials.accessToken == currentCredentials.accessToken &&
                 credentials.homeserverUrl == currentCredentials.homeserverUrl &&
@@ -1198,7 +1199,7 @@ module.exports = React.createClass({
             switch (credentials.action) {
                 case 'im.vector.login':
                     console.log('postMessage: logging in from credentials sent by origin requestor');
-                    ev.source.postMessage('{"postMessage":"im.vector.login"}',ev.origin);
+                    ev.source.postMessage('{"postMessage":"im.vector.login"}', ev.origin);
                     credentials.guest = false;
                     if (sameUser) {
                         console.log('postMessage: user is already logged in');
@@ -1209,11 +1210,11 @@ module.exports = React.createClass({
                     break;
                 case 'im.vector.logout':
                     console.log('postMessage: logging out');
-                    ev.source.postMessage('{"postMessage":"im.vector.logout"}',ev.origin);
+                    ev.source.postMessage('{"postMessage":"im.vector.logout"}', ev.origin);
                     if (sameUser) {
                         dis.dispatch({
                             action: 'logout',
-                            forceLogout: credentials.forceLogout
+                            forceLogout: credentials.forceLogout,
                         });
                     } else {
                         console.log('postMessage logout: user is not logged in or credentials are invalid');
@@ -1222,7 +1223,7 @@ module.exports = React.createClass({
             }
         }
     },
-    
+
     showScreen: function(screen, params) {
         if (screen == 'register') {
             dis.dispatch({
@@ -1517,7 +1518,7 @@ module.exports = React.createClass({
             });
         }
     },
-    
+
     _exportE2eKeysDialog: function() {
         Modal.createDialogAsync(
             (cb) => {
@@ -1529,7 +1530,7 @@ module.exports = React.createClass({
             },
         );
     },
-    
+
     _importE2eKeysDialog: function() {
         Modal.createDialogAsync(
             (cb) => {
