@@ -1167,13 +1167,20 @@ module.exports = React.createClass({
             SdkConfig.get().allowedPostMessageOrigins.indexOf(ev.origin) == -1)
         ) {
             console.log('postMessage: unallowed postMessageOrigin. Ignoring request...');
-            ev.source.postMessage('{"postMessage":"invalid origin"}', ev.origin);
+            ev.source.postMessage('{"status":"im.vector.error","msg":"invalid origin"}', ev.origin);
             return;
         }
+
+        if (this.state.view == VIEWS.LOADING) {
+            ev.source.postMessage('{"status":"im.vector.loading"}', ev.origin);
+            return;
+        }
+
         let credentials = {};
         try {
             credentials = JSON.parse(ev.data);
         } catch(e) {
+            ev.source.postMessage('{"status":"im.vector.error","msg":"invalid credentials format"}', ev.origin);
             return;
         }
 
@@ -1199,25 +1206,29 @@ module.exports = React.createClass({
             switch (credentials.action) {
                 case 'im.vector.login':
                     console.log('postMessage: logging in from credentials sent by origin requestor');
-                    ev.source.postMessage('{"postMessage":"im.vector.login"}', ev.origin);
                     credentials.guest = false;
                     if (sameUser) {
                         console.log('postMessage: user is already logged in');
+                        ev.source.postMessage('{"status":"im.vector.login",'+
+                            '"msg":"user is already logged in"}', ev.origin);
                         return;
                     }
+                    ev.source.postMessage('{"status":"im.vector.login"}', ev.origin);
                     delete credentials.action;
                     Lifecycle.setLoggedIn(credentials);
                     break;
                 case 'im.vector.logout':
                     console.log('postMessage: logging out');
-                    ev.source.postMessage('{"postMessage":"im.vector.logout"}', ev.origin);
+                    ev.source.postMessage('{"status":"im.vector.logout"}', ev.origin);
                     if (sameUser) {
                         dis.dispatch({
                             action: 'logout',
                             forceLogout: credentials.forceLogout,
                         });
                     } else {
-                        console.log('postMessage logout: user is not logged in or credentials are invalid');
+                        ev.source.postMessage('{"status":"im.vector.error",'+
+                            '"msg":"postMessage logout: user is not logged in or credentials are invalid"}',
+                            ev.origin);
                     }
                     break;
             }
