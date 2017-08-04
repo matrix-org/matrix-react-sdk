@@ -51,8 +51,7 @@ export const contentStateToHTML = (contentState: ContentState) => {
 };
 
 export function htmlToContentState(html: string): ContentState {
-    const blockArray = convertFromHTML(html).contentBlocks;
-    return ContentState.createFromBlockArray(blockArray);
+    return ContentState.createFromBlockArray(convertFromHTML(html));
 }
 
 function unicodeToEmojiUri(str) {
@@ -91,7 +90,7 @@ function findWithRegex(regex, contentBlock: ContentBlock, callback: (start: numb
 
 // Workaround for https://github.com/facebook/draft-js/issues/414
 let emojiDecorator = {
-    strategy: (contentState, contentBlock, callback) => {
+    strategy: (contentBlock, callback) => {
         findWithRegex(EMOJI_REGEX, contentBlock, callback);
     },
     component: (props) => {
@@ -120,7 +119,7 @@ export function getScopedRTDecorators(scope: any): CompositeDecorator {
 export function getScopedMDDecorators(scope: any): CompositeDecorator {
     let markdownDecorators = ['HR', 'BOLD', 'ITALIC', 'CODE', 'STRIKETHROUGH'].map(
         (style) => ({
-            strategy: (contentState, contentBlock, callback) => {
+            strategy: (contentBlock, callback) => {
                 return findWithRegex(MARKDOWN_REGEX[style], contentBlock, callback);
             },
             component: (props) => (
@@ -131,7 +130,7 @@ export function getScopedMDDecorators(scope: any): CompositeDecorator {
         }));
 
     markdownDecorators.push({
-        strategy: (contentState, contentBlock, callback) => {
+        strategy: (contentBlock, callback) => {
             return findWithRegex(MARKDOWN_REGEX.LINK, contentBlock, callback);
         },
         component: (props) => (
@@ -239,7 +238,7 @@ export function attachImmutableEntitiesToEmoji(editorState: EditorState): Editor
             const existingEntityKey = block.getEntityAt(start);
             if (existingEntityKey) {
                 // avoid manipulation in case the emoji already has an entity
-                const entity = newContentState.getEntity(existingEntityKey);
+                const entity = Entity.get(existingEntityKey);
                 if (entity && entity.get('type') === 'emoji') {
                     return;
                 }
@@ -249,10 +248,7 @@ export function attachImmutableEntitiesToEmoji(editorState: EditorState): Editor
                 .set('anchorOffset', start)
                 .set('focusOffset', end);
             const emojiText = plainText.substring(start, end);
-            newContentState = newContentState.createEntity(
-                'emoji', 'IMMUTABLE', { emojiUnicode: emojiText }
-            );
-            const entityKey = newContentState.getLastCreatedEntityKey();
+            const entityKey = Entity.create('emoji', 'IMMUTABLE', { emojiUnicode: emojiText });
             newContentState = Modifier.replaceText(
                 newContentState,
                 selection,
