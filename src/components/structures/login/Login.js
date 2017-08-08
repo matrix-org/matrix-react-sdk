@@ -19,8 +19,11 @@ limitations under the License.
 
 import React from 'react';
 import { _t, _tJsx } from '../../../languageHandler';
+import * as languageHandler from '../../../languageHandler';
 import sdk from '../../../index';
 import Login from '../../../Login';
+import UserSettingsStore from '../../../UserSettingsStore';
+import PlatformPeg from '../../../PlatformPeg';
 
 // For validating phone numbers without country codes
 const PHONE_NUMBER_REGEX = /^[0-9\(\)\-\s]*$/;
@@ -74,6 +77,9 @@ module.exports = React.createClass({
     componentWillMount: function() {
         this._unmounted = false;
         this._initLoginLogic();
+        this.setState({
+            language: languageHandler.getCurrentLanguage(),
+        });
     },
 
     componentWillUnmount: function() {
@@ -306,6 +312,26 @@ module.exports = React.createClass({
         }
     },
 
+    onLanguageChange: function(newLang) {
+        if(this.state.language !== newLang) {
+            UserSettingsStore.setLocalSetting('language', newLang);
+            this.setState({
+                language: newLang,
+            });
+            PlatformPeg.get().reload();
+        }
+    },
+
+    _renderLanguageSetting: function() {
+        const LanguageDropdown = sdk.getComponent('views.elements.LanguageDropdown');
+        return <div className="mx_Login_language_div">
+            <LanguageDropdown onOptionChange={this.onLanguageChange}
+                          className="mx_Login_language"
+                          value={this.state.language}
+            />
+        </div>;
+    },
+
     render: function() {
         const Loader = sdk.getComponent("elements.Spinner");
         const LoginHeader = sdk.getComponent("login.LoginHeader");
@@ -354,6 +380,8 @@ module.exports = React.createClass({
                         </a>
                         { loginAsGuestJsx }
                         { returnToAppJsx }
+                        <br/>
+                        { this._renderLanguageSetting() }
                         <LoginFooter />
                     </div>
                 </div>
