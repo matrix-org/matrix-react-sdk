@@ -374,7 +374,6 @@ module.exports = React.createClass({
                         </a>
                         { loginAsGuestJsx }
                         { returnToAppJsx }
-                        <br/>
                         { this._renderLanguageSetting() }
                         <LoginFooter />
                     </div>
