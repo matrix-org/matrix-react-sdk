@@ -77,9 +77,6 @@ module.exports = React.createClass({
     componentWillMount: function() {
         this._unmounted = false;
         this._initLoginLogic();
-        this.setState({
-            language: languageHandler.getCurrentLanguage(),
-        });
     },
 
     componentWillUnmount: function() {
@@ -312,12 +309,9 @@ module.exports = React.createClass({
         }
     },
 
-    onLanguageChange: function(newLang) {
-        if(this.state.language !== newLang) {
+    _onLanguageChange: function(newLang) {
+        if(languageHandler.getCurrentLanguage() !== newLang) {
             UserSettingsStore.setLocalSetting('language', newLang);
-            this.setState({
-                language: newLang,
-            });
             PlatformPeg.get().reload();
         }
     },
@@ -325,9 +319,9 @@ module.exports = React.createClass({
     _renderLanguageSetting: function() {
         const LanguageDropdown = sdk.getComponent('views.elements.LanguageDropdown');
         return <div className="mx_Login_language_div">
-            <LanguageDropdown onOptionChange={this.onLanguageChange}
+            <LanguageDropdown onOptionChange={this._onLanguageChange}
                           className="mx_Login_language"
-                          value={this.state.language}
+                          value={languageHandler.getCurrentLanguage()}
             />
         </div>;
     },
