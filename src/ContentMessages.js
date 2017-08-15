@@ -259,7 +259,6 @@ function stripJpegMetadata(data) {
             app1 = dv.getUint16(offset);
             offset += 2;
         }
-        console.log("DEBUG", data);
 
         if (pieces.length > 0) {
             pieces.forEach(function(v) {
@@ -268,8 +267,6 @@ function stripJpegMetadata(data) {
             newPieces.push(data.slice(recess));
         }
     }
-
-    console.log("DEBUG", newPieces.length, newPieces, data);
 
     return newPieces.length ? new Blob( newPieces, { type: 'image/jpeg' }) : data;
 }
