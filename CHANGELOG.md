@@ -1,3 +1,13 @@
+Changes in [0.10.0-rc.2](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v0.10.0-rc.2) (2017-08-22)
+===============================================================================================================
+[Full Changelog](https://github.com/matrix-org/matrix-react-sdk/compare/v0.10.0-rc.1...v0.10.0-rc.2)
+
+ * Fix Robot translation
+   [\#1309](https://github.com/matrix-org/matrix-react-sdk/pull/1309)
+ * hotfix bad fn signature regression
+   [\#1310](https://github.com/matrix-org/matrix-react-sdk/pull/1310)
+
+
 Changes in [0.10.0-rc.1](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v0.10.0-rc.1) (2017-08-16)
 ===============================================================================================================
 [Full Changelog](https://github.com/matrix-org/matrix-react-sdk/compare/v0.9.7...v0.10.0-rc.1)
