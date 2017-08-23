@@ -32,6 +32,7 @@ var MatrixClientPeg = require("../../MatrixClientPeg");
 var ContentMessages = require("../../ContentMessages");
 var Modal = require("../../Modal");
 var sdk = require('../../index');
+var SdkConfig = require('../../SdkConfig');
 var CallHandler = require('../../CallHandler');
 var Resend = require("../../Resend");
 var dis = require("../../dispatcher");
@@ -1449,6 +1450,9 @@ module.exports = React.createClass({
         // when waiting for a room to be returned by js-sdk when joining
         const previewBarSpinner = this.state.joining || this.state.waitingForRoom;
 
+        const config = SdkConfig.get();
+        const hideScalar = !config.integrations_ui_url || !config.integrations_rest_url;
+
         if (!this.state.room) {
             if (this.state.roomLoading || this.state.peekLoading) {
                 return (
@@ -1475,6 +1479,7 @@ module.exports = React.createClass({
                             room={this.state.room}
                             oobData={this.props.oobData}
                             collapsedRhs={ this.props.collapsedRhs }
+                            canDisplayScalar={!hideScalar}
                         />
                         <div className="mx_RoomView_auxPanel">
                             <RoomPreviewBar onJoinClick={ this.onJoinButtonClicked }
@@ -1754,6 +1759,7 @@ module.exports = React.createClass({
                     saving={this.state.uploadingRoomSettings}
                     inRoom={myMember && myMember.membership === 'join'}
                     collapsedRhs={ this.props.collapsedRhs }
+                    canDisplayScalar={!hideScalar}
                     onSearchClick={this.onSearchClick}
                     onSettingsClick={this.onSettingsClick}
                     onSaveClick={this.onSettingsSaveClick}
