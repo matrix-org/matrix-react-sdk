@@ -234,7 +234,7 @@ function getLangsJson() {
     const deferred = Promise.defer();
 
     request(
-        { method: "GET", url: i18nFolder + 'languages.json' },
+        { method: "GET", url: i18nFolder + 'languages.json', qs: { cachebuster: Date.now() } },
         (err, response, body) => {
             if (err || response.status < 200 || response.status >= 300) {
                 deferred.reject({err: err, response: response});
@@ -251,7 +251,7 @@ function getLanguage(langPath) {
 
     let response_return = {};
     request(
-        { method: "GET", url: langPath },
+        { method: "GET", url: langPath, qs: { cachebuster: Date.now() } },
         (err, response, body) => {
             if (err || response.status < 200 || response.status >= 300) {
                 deferred.reject({err: err, response: response});
