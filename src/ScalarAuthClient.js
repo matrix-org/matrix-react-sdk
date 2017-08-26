@@ -90,6 +90,11 @@ class ScalarAuthClient {
     }
 
     getStarterLink(starterLinkUrl) {
+        // If the starter link points to Scalar, but the integrations manager isn't scalar, redirect accordingly.
+        // The integration manager is responsible for maintaining the starter link route.
+        let scalarUrl = SdkConfig.get().integrations_rest_url;
+        if (!starterLinkUrl.startsWith(scalarUrl) && starterLinkUrl.startsWith("https://scalar.vector.im/api"))
+            starterLinkUrl = scalarUrl + starterLinkUrl.substring("https://scalar.vector.im/api".length);
         return starterLinkUrl + "?scalar_token=" + encodeURIComponent(this.scalarToken);
     }
 }
