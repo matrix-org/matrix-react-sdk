@@ -340,15 +340,26 @@ module.exports = React.createClass({
 
         if (this.props.highlightLink) {
             body = <a href={ this.props.highlightLink }>{ body }</a>;
-        }
-        else if (content.data && typeof content.data["org.matrix.neb.starter_link"] === "string") {
+        } else if (content.data && typeof content.data["org.matrix.neb.starter_link"] === "string") {
             body = <a href="#" onClick={ this.onStarterLinkClick.bind(this, content.data["org.matrix.neb.starter_link"]) }>{ body }</a>;
         }
 
         var widgets;
         if (this.state.links.length && !this.state.widgetHidden && this.props.showUrlPreview) {
-            var LinkPreviewWidget = sdk.getComponent('rooms.LinkPreviewWidget');
-            widgets = this.state.links.map((link)=>{
+            const LinkPreviewWidget = sdk.getComponent('rooms.LinkPreviewWidget');
+            const YoutubePreviewWidget = sdk.getComponent('rooms.YoutubePreviewWidget');
+            widgets = this.state.links.map((link) => {
+                if (UserSettingsStore.isFeatureEnabled('youtube_preview')) {
+                    const youtubeId = YoutubePreviewWidget.parse(link);
+                    if (youtubeId) {
+                        return <YoutubePreviewWidget
+                            key={ link }
+                            videoId={ youtubeId }
+                            onCancelClick={ this.onCancelClick }
+                            onWidgetLoad={ this.props.onWidgetLoad }/>;
+                    }
+                }
+
                 return <LinkPreviewWidget
                             key={ link }
                             link={ link }
