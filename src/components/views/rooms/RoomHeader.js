@@ -44,6 +44,7 @@ module.exports = React.createClass({
         saving: React.PropTypes.bool,
         inRoom: React.PropTypes.bool,
         collapsedRhs: React.PropTypes.bool,
+        canDisplayScalar: React.PropTypes.bool,
         onSettingsClick: React.PropTypes.func,
         onSaveClick: React.PropTypes.func,
         onSearchClick: React.PropTypes.func,
@@ -324,7 +325,7 @@ module.exports = React.createClass({
 
         let rightRow;
         let manageIntegsButton;
-        if(this.props.room && this.props.room.roomId) {
+        if(this.props.room && this.props.room.roomId && this.props.canDisplayScalar) {
             manageIntegsButton = <ManageIntegsButton
                 roomId={this.props.room.roomId}
             />;

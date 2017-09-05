@@ -85,7 +85,8 @@ module.exports = React.createClass({
             case 'appsDrawer':
                 // When opening the app draw when there aren't any apps, auto-launch the
                 // integrations manager to skip the awkward click on "Add widget"
-                if (action.show) {
+                // assuming there is a scalarClient
+                if (action.show && this.scalarClient) {
                     const apps = this._getApps();
                     if (apps.length === 0) {
                         this._launchManageIntegrations();
@@ -219,9 +220,7 @@ module.exports = React.createClass({
             });
 
         let addWidget;
-        if (this.props.showApps &&
-            this._canUserModify()
-        ) {
+        if (this.props.showApps && this._canUserModify() && this.scalarClient) {
             addWidget = <div
                 onClick={this.onClickAddWidget}
                 role="button"
