@@ -24,18 +24,50 @@ module.exports = {
         const currentLanguage = getCurrentLanguage();
         const now = new Date();
         if (date.toLocaleDateString(currentLanguage) === now.toLocaleDateString(currentLanguage)) {
-            return date.toLocaleString(currentLanguage, {hour: '2-digit', minute:'2-digit', hour12: showTwelveHour});
+            return date.toLocaleString(currentLanguage, {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: showTwelveHour
+            });
         } else if (now.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
-            return date.toLocaleString(currentLanguage, {weekday: 'short', hour: '2-digit', minute:'2-digit', hour12: showTwelveHour});
+            return date.toLocaleString(currentLanguage, {
+                weekday: 'short',
+                hour: '2-digit',
+                minute:'2-digit',
+                hour12: showTwelveHour
+            });
         } else if (now.getFullYear() === date.getFullYear()) {
-            return date.toLocaleString(currentLanguage, {weekday: 'short', month:'short', day: '2-digit', hour: '2-digit', minute:'2-digit', hour12: showTwelveHour});
+            return date.toLocaleString(currentLanguage, {
+                weekday: 'short',
+                month: 'short',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: showTwelveHour
+            });
         }
-        return date.toLocaleString(currentLanguage, {weekday: 'short', month:'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute:'2-digit', hour12: showTwelveHour});
+        return date.toLocaleString(currentLanguage, {
+            weekday: 'short',
+            month: 'short',
+            day: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: showTwelveHour
+        });
     },
 
     formatFullDate: function(date, showTwelveHour=false) {
         const currentLanguage = getCurrentLanguage();
-        return date.toLocaleString(currentLanguage, {weekday: 'short', month:'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute:'2-digit', hour12: showTwelveHour});
+        return date.toLocaleString(currentLanguage, {
+            weekday: 'short',
+            month: 'short',
+            day: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: showTwelveHour
+        });
     },
 
     formatDateSeparator: function(date) {
@@ -49,16 +81,31 @@ module.exports = {
         } else if (date.toDateString() === yesterday.toDateString()) {
             return _t('Yesterday');
         } else if (today.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
-            return date.toLocaleString(currentLanguage, {weekday: 'long'});
+            return date.toLocaleString(currentLanguage, {
+                weekday: 'long'
+            });
         } else if (today.getTime() - date.getTime() < 365 * 24 * 60 * 60 * 1000) {
-            return date.toLocaleString(currentLanguage, {weekday: 'short', month:'short', day: '2-digit'});
+            return date.toLocaleString(currentLanguage, {
+                weekday: 'short',
+                month: 'short',
+                day: '2-digit'
+            });
         } else {
-            return date.toLocaleString(currentLanguage, {weekday: 'short', month:'short', day: '2-digit', year: 'numeric'});
+            return date.toLocaleString(currentLanguage, {
+                weekday: 'short',
+                month: 'short',
+                day: '2-digit',
+                year: 'numeric'
+            });
         }
     },
 
     formatTime: function(date, showTwelveHour=false) {
         const currentLanguage = getCurrentLanguage();
-        return date.toLocaleString(currentLanguage, {hour: '2-digit', minute:'2-digit', hour12: showTwelveHour});
+        return date.toLocaleString(currentLanguage, {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: showTwelveHour
+        });
     },
 };
