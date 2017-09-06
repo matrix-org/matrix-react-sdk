@@ -70,36 +70,6 @@ module.exports = {
         });
     },
 
-    formatDateSeparator: function(date) {
-        const currentLanguage = getCurrentLanguage();
-        const today = new Date();
-        const yesterday = new Date();
-        yesterday.setDate(today.getDate() - 1);
-
-        if (date.toDateString() === today.toDateString()) {
-            return _t('Today');
-        } else if (date.toDateString() === yesterday.toDateString()) {
-            return _t('Yesterday');
-        } else if (today.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
-            return date.toLocaleString(currentLanguage, {
-                weekday: 'long',
-            });
-        } else if (today.getTime() - date.getTime() < 365 * 24 * 60 * 60 * 1000) {
-            return date.toLocaleString(currentLanguage, {
-                weekday: 'short',
-                month: 'short',
-                day: '2-digit',
-            });
-        } else {
-            return date.toLocaleString(currentLanguage, {
-                weekday: 'short',
-                month: 'short',
-                day: '2-digit',
-                year: 'numeric',
-            });
-        }
-    },
-
     formatTime: function(date, showTwelveHour=false) {
         const currentLanguage = getCurrentLanguage();
         return date.toLocaleString(currentLanguage, {
