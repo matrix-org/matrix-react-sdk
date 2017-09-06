@@ -27,14 +27,14 @@ module.exports = {
             return date.toLocaleString(currentLanguage, {
                 hour: '2-digit',
                 minute: '2-digit',
-                hour12: showTwelveHour
+                hour12: showTwelveHour,
             });
         } else if (now.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
             return date.toLocaleString(currentLanguage, {
                 weekday: 'short',
                 hour: '2-digit',
-                minute:'2-digit',
-                hour12: showTwelveHour
+                minute: '2-digit',
+                hour12: showTwelveHour,
             });
         } else if (now.getFullYear() === date.getFullYear()) {
             return date.toLocaleString(currentLanguage, {
@@ -43,7 +43,7 @@ module.exports = {
                 day: '2-digit',
                 hour: '2-digit',
                 minute: '2-digit',
-                hour12: showTwelveHour
+                hour12: showTwelveHour,
             });
         }
         return date.toLocaleString(currentLanguage, {
@@ -53,7 +53,7 @@ module.exports = {
             year: 'numeric',
             hour: '2-digit',
             minute: '2-digit',
-            hour12: showTwelveHour
+            hour12: showTwelveHour,
         });
     },
 
@@ -66,7 +66,7 @@ module.exports = {
             year: 'numeric',
             hour: '2-digit',
             minute: '2-digit',
-            hour12: showTwelveHour
+            hour12: showTwelveHour,
         });
     },
 
@@ -82,20 +82,20 @@ module.exports = {
             return _t('Yesterday');
         } else if (today.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
             return date.toLocaleString(currentLanguage, {
-                weekday: 'long'
+                weekday: 'long',
             });
         } else if (today.getTime() - date.getTime() < 365 * 24 * 60 * 60 * 1000) {
             return date.toLocaleString(currentLanguage, {
                 weekday: 'short',
                 month: 'short',
-                day: '2-digit'
+                day: '2-digit',
             });
         } else {
             return date.toLocaleString(currentLanguage, {
                 weekday: 'short',
                 month: 'short',
                 day: '2-digit',
-                year: 'numeric'
+                year: 'numeric',
             });
         }
     },
@@ -105,7 +105,7 @@ module.exports = {
         return date.toLocaleString(currentLanguage, {
             hour: '2-digit',
             minute: '2-digit',
-            hour12: showTwelveHour
+            hour12: showTwelveHour,
         });
     },
 };
