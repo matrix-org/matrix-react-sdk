@@ -1,6 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
+Copyright 2017 MTRNord
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,90 +17,65 @@ limitations under the License.
 */
 
 'use strict';
-import { _t } from './languageHandler';
-
-function getDaysArray() {
-    return [
-        _t('Sun'),
-        _t('Mon'),
-        _t('Tue'),
-        _t('Wed'),
-        _t('Thu'),
-        _t('Fri'),
-        _t('Sat'),
-    ];
-}
-
-function getMonthsArray() {
-    return [
-        _t('Jan'),
-        _t('Feb'),
-        _t('Mar'),
-        _t('Apr'),
-        _t('May'),
-        _t('Jun'),
-        _t('Jul'),
-        _t('Aug'),
-        _t('Sep'),
-        _t('Oct'),
-        _t('Nov'),
-        _t('Dec'),
-    ];
-}
-
-function pad(n) {
-    return (n < 10 ? '0' : '') + n;
-}
-
-function twelveHourTime(date) {
-    let hours = date.getHours() % 12;
-    const minutes = pad(date.getMinutes());
-    const ampm = date.getHours() >= 12 ? _t('PM') : _t('AM');
-    hours = hours ? hours : 12; // convert 0 -> 12
-    return `${hours}:${minutes}${ampm}`;
-}
+import { _t, getCurrentLanguage } from './languageHandler';
 
 module.exports = {
     formatDate: function(date, showTwelveHour=false) {
+        const currentLanguage = getCurrentLanguage();
         const now = new Date();
-        const days = getDaysArray();
-        const months = getMonthsArray();
-        if (date.toDateString() === now.toDateString()) {
-            return this.formatTime(date);
+        if (date.toLocaleDateString(currentLanguage) === now.toLocaleDateString(currentLanguage)) {
+            return date.toLocaleString(currentLanguage, {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: showTwelveHour,
+            });
         } else if (now.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
-            // TODO: use standard date localize function provided in counterpart
-            return _t('%(weekDayName)s %(time)s', {
-                weekDayName: days[date.getDay()],
-                time: this.formatTime(date, showTwelveHour),
+            return date.toLocaleString(currentLanguage, {
+                weekday: 'short',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: showTwelveHour,
             });
         } else if (now.getFullYear() === date.getFullYear()) {
-            // TODO: use standard date localize function provided in counterpart
-            return _t('%(weekDayName)s, %(monthName)s %(day)s %(time)s', {
-                weekDayName: days[date.getDay()],
-                monthName: months[date.getMonth()],
-                day: date.getDate(),
-                time: this.formatTime(date),
+            return date.toLocaleString(currentLanguage, {
+                weekday: 'short',
+                month: 'short',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: showTwelveHour,
             });
         }
-        return this.formatFullDate(date, showTwelveHour);
+        return date.toLocaleString(currentLanguage, {
+            weekday: 'short',
+            month: 'short',
+            day: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: showTwelveHour,
+        });
     },
 
     formatFullDate: function(date, showTwelveHour=false) {
-        const days = getDaysArray();
-        const months = getMonthsArray();
-        return _t('%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s', {
-            weekDayName: days[date.getDay()],
-            monthName: months[date.getMonth()],
-            day: date.getDate(),
-            fullYear: date.getFullYear(),
-            time: showTwelveHour ? twelveHourTime(date) : this.formatTime(date),
+        const currentLanguage = getCurrentLanguage();
+        return date.toLocaleString(currentLanguage, {
+            weekday: 'short',
+            month: 'short',
+            day: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: showTwelveHour,
         });
     },
 
     formatTime: function(date, showTwelveHour=false) {
-        if (showTwelveHour) {
-          return twelveHourTime(date);
-        }
-        return pad(date.getHours()) + ':' + pad(date.getMinutes());
+        const currentLanguage = getCurrentLanguage();
+        return date.toLocaleString(currentLanguage, {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: showTwelveHour,
+        });
     },
 };
