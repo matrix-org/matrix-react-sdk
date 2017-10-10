@@ -69,6 +69,10 @@ function unicodeToEmojiUri(str) {
         } else {
             // get the unicode codepoint from the actual char
             unicode = emojione.jsEscapeMap[unicodeChar];
+
+            // Strip VS16 variant selector which just means we want an emoji. It's not needed and results in wrong url below
+            unicode = unicode.replace(/-fe0f$/, '');
+
             return emojione.imagePathSVG+unicode+'.svg'+emojione.cacheBustParam;
         }
     });
