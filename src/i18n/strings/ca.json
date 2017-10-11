@@ -35,7 +35,6 @@
     "Hide removed messages": "Amaga els missatges esborrats",
     "Always show message timestamps": "Mostra sempre la marca de temps del missatge",
     "Alias (optional)": "Àlies (opcional)",
-    "and": "i",
     "An email has been sent to": "S'ha enviat un correu electrònic a",
     "Cancel": "Cancel·la",
     "Close": "Tanca",
@@ -54,12 +53,5 @@
     "Notifications": "Notificacions",
     "Remove": "Elimina",
     "unknown error code": "codi d'error desconegut",
-    "Sunday": "Diumenge",
-    "Monday": "Dilluns",
-    "Tuesday": "Dimarts",
-    "Wednesday": "Dimecres",
-    "Thursday": "Dijous",
-    "Friday": "Divendres",
-    "Saturday": "Dissabte",
     "OK": "D'acord"
 }
