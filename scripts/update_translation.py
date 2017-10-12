@@ -15,7 +15,7 @@ import json
 import argparse
 from typing import Sequence, Set
 
-def main() -> None:
+def main() -> int:
     """Main entrypoint"""
 
     args = parse_args()
