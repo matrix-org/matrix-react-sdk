@@ -88,6 +88,8 @@ module.exports = React.createClass({
 
         // is the RightPanel collapsed?
         collapsedRhs: React.PropTypes.bool,
+
+        suggestedUsername: React.PropTypes.string,
     },
 
     getInitialState: function() {
@@ -837,6 +839,7 @@ module.exports = React.createClass({
 
             const SetMxIdDialog = sdk.getComponent('views.dialogs.SetMxIdDialog');
             const close = Modal.createTrackedDialog('Set MXID', '', SetMxIdDialog, {
+                suggestedUsername: this.props.suggestedUsername,
                 homeserverUrl: cli.getHomeserverUrl(),
                 onFinished: (submitted, credentials) => {
                     if (submitted) {

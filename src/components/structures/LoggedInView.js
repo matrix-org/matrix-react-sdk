@@ -52,6 +52,8 @@ export default React.createClass({
 
         teamToken: React.PropTypes.string,
 
+        suggestedUsername: React.PropTypes.string,
+
         // and lots and lots of other stuff.
     },
 
@@ -242,6 +244,7 @@ export default React.createClass({
                         opacity={this.props.middleOpacity}
                         collapsedRhs={this.props.collapseRhs}
                         ConferenceHandler={this.props.ConferenceHandler}
+                        suggestedUsername={this.props.suggestedUsername}
                     />;
                 if (!this.props.collapseRhs) right_panel = <RightPanel roomId={this.props.currentRoomId} opacity={this.props.rightOpacity} />;
                 break;

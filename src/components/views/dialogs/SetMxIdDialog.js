@@ -35,6 +35,8 @@ const USERNAME_CHECK_DEBOUNCE_MS = 250;
 export default React.createClass({
     displayName: 'SetMxIdDialog',
     propTypes: {
+        suggestedUsername: React.PropTypes.string,
+
         onFinished: React.PropTypes.func.isRequired,
         // Called when the user requests to register with a different homeserver
         onDifferentServerClicked: React.PropTypes.func.isRequired,
@@ -45,7 +47,7 @@ export default React.createClass({
     getInitialState: function() {
         return {
             // The entered username
-            username: '',
+            username: this.props.suggestedUsername || '',
             // Indicate ongoing work on the username
             usernameBusy: false,
             // Indicate error with username

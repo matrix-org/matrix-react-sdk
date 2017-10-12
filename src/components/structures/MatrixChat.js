@@ -161,6 +161,8 @@ module.exports = React.createClass({
             register_hs_url: null,
             register_is_url: null,
             register_id_sid: null,
+
+            username_template: null,
         };
         return s;
     },
@@ -172,6 +174,18 @@ module.exports = React.createClass({
             config: {},
             onTokenLoginCompleted: () => {},
         };
+    },
+
+    getSuggestedUsername: function() {
+        if (!this.state.username_template) return "";
+
+        const replaceChar = "."; // arbitrary choice from web IRC clients
+        let username = this.state.username_template;
+        while (username.includes(replaceChar)) {
+            username = username.replace(replaceChar, Math.floor(Math.random() * 10)); // 0-9
+        }
+
+        return username;
     },
 
     getCurrentHsUrl: function() {
@@ -265,6 +279,15 @@ module.exports = React.createClass({
             console.log('Setting register_hs_url ', paramHs);
             this.setState({
                 register_hs_url: paramHs,
+            });
+        }
+
+        // Grab a username template from the query string
+        const usernameTemplate = this.props.startingFragmentQueryParams.username_template;
+        if (usernameTemplate) {
+            console.log('Setting username_template ' + usernameTemplate);
+            this.setState({
+                username_template: usernameTemplate,
             });
         }
 
@@ -722,6 +745,7 @@ module.exports = React.createClass({
     _setMxId: function(payload) {
         const SetMxIdDialog = sdk.getComponent('views.dialogs.SetMxIdDialog');
         const close = Modal.createTrackedDialog('Set MXID', '', SetMxIdDialog, {
+            suggestedUsername: this.getSuggestedUsername(),
             homeserverUrl: MatrixClientPeg.get().getHomeserverUrl(),
             onFinished: (submitted, credentials) => {
                 if (!submitted) {
@@ -1438,6 +1462,7 @@ module.exports = React.createClass({
                         onRegistered={this.onRegistered}
                         currentRoomId={this.state.currentRoomId}
                         teamToken={this._teamToken}
+                        suggestedUsername={this.getSuggestedUsername()}
                         {...this.props}
                         {...this.state}
                     />
@@ -1465,6 +1490,7 @@ module.exports = React.createClass({
                     idSid={this.state.register_id_sid}
                     email={this.props.startingFragmentQueryParams.email}
                     referrer={this.props.startingFragmentQueryParams.referrer}
+                    suggestedUsername={this.getSuggestedUsername()}
                     defaultHsUrl={this.getDefaultHsUrl()}
                     defaultIsUrl={this.getDefaultIsUrl()}
                     brand={this.props.config.brand}

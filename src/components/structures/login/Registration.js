@@ -38,6 +38,7 @@ module.exports = React.createClass({
         sessionId: React.PropTypes.string,
         makeRegistrationUrl: React.PropTypes.func.isRequired,
         idSid: React.PropTypes.string,
+        suggestedUsername: React.PropTypes.string,
         customHsUrl: React.PropTypes.string,
         customIsUrl: React.PropTypes.string,
         defaultHsUrl: React.PropTypes.string,
@@ -73,6 +74,7 @@ module.exports = React.createClass({
             // them in this component's state since this component
             // persist for the duration of the registration process.
             formVals: {
+                username: this.props.suggestedUsername,
                 email: this.props.email,
             },
             // true if we're waiting for the user to complete
