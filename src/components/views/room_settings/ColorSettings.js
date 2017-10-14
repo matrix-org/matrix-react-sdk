@@ -122,17 +122,22 @@ module.exports = React.createClass({
     },
 
     _getColorIndex: function(scheme) {
-        if (!scheme || !scheme.primary_color || !scheme.secondary_color) {
+        if (!scheme || !scheme.primary_color) {
             return -1;
         }
+
         // XXX: we should validate these values
         for (let i = 0; i < ROOM_COLORS.length; i++) {
             const room_color = ROOM_COLORS[i];
-            if (room_color.primary_color.toLowerCase() === String(scheme.primary_color).toLowerCase() &&
-                    room_color.secondary_color.toLowerCase() === String(scheme.secondary_color).toLowerCase()) {
-                return i;
-            }
+            if (room_color.primary_color.toLowerCase() !== String(scheme.primary_color).toLowerCase()) continue;
+
+            // Secondary color is optional. Only validate it if it is set on either side
+            if ((room_color.secondary_color && !scheme.secondary_color) || (!room_color.secondary_color && scheme.secondary_color)) continue;
+            if (room_color.secondary_color && room_color.secondary_color.toLowerCase() !== String(scheme.secondary_color).toLowerCase()) continue;
+
+            return i;
         }
+
         return -1;
     },
 
