@@ -56,7 +56,7 @@ function createRoom(opts) {
         powerLevelOverrides = {
             // Disallow people from redacting messages by default in 1:1 chats
             "redact": 101,
-            events: {
+            "events": {
                 "m.room.redaction": 101,
 
                 // The rest are reasonable defaults
@@ -72,7 +72,7 @@ function createRoom(opts) {
             "ban": 50,
             "users_default": 0,
             "events_default": 0,
-            "users": {}
+            "users": {},
         };
         powerLevelOverrides.users[client.getUserId()] = 100;
         powerLevelOverrides.users[opts.dmUserId] = 100;
@@ -110,7 +110,7 @@ function createRoom(opts) {
         createOpts.initial_state.push({
             content: powerLevelOverrides,
             type: "m.room.power_levels",
-            state_key: ''
+            state_key: '',
         });
     }
 
