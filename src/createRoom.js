@@ -47,6 +47,37 @@ function createRoom(opts) {
 
     const defaultPreset = opts.dmUserId ? 'trusted_private_chat' : 'private_chat';
 
+    // Less-important power level overrides should go here, as there's a chance that
+    // they may not be sent through successfully.
+    let powerLevelOverrides = {};
+    if (defaultPreset === "trusted_private_chat") {
+        // We need to populate the entire content body as we, and other clients,
+        // rely on this information being here.
+        powerLevelOverrides = {
+            // Disallow people from redacting messages by default in 1:1 chats
+            "redact": 101,
+            "events": {
+                "m.room.redaction": 101,
+
+                // The rest are reasonable defaults
+                "m.room.avatar": 50,
+                "m.room.name": 50,
+                "m.room.canonical_alias": 50,
+                "m.room.history_visibility": 100,
+                "m.room.power_levels": 100,
+            },
+            "kick": 50,
+            "invite": 0,
+            "state_default": 50,
+            "ban": 50,
+            "users_default": 0,
+            "events_default": 0,
+            "users": {},
+        };
+        powerLevelOverrides.users[client.getUserId()] = 100;
+        powerLevelOverrides.users[opts.dmUserId] = 100;
+    }
+
     // set some defaults for the creation
     const createOpts = opts.createOpts || {};
     createOpts.preset = createOpts.preset || defaultPreset;
@@ -75,6 +106,13 @@ function createRoom(opts) {
             state_key: '',
         },
     ];
+    if (powerLevelOverrides) {
+        createOpts.initial_state.push({
+            content: powerLevelOverrides,
+            type: "m.room.power_levels",
+            state_key: '',
+        });
+    }
 
     const modal = Modal.createDialog(Loader, null, 'mx_Dialog_spinner');
 
