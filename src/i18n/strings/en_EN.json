@@ -371,6 +371,7 @@
     "riot-web version:": "riot-web version:",
     "Room %(roomId)s not visible": "Room %(roomId)s not visible",
     "Room Colour": "Room Colour",
+    "Default Room Colour": "Default Room Colour",
     "Room contains unknown devices": "Room contains unknown devices",
     "Room name (optional)": "Room name (optional)",
     "%(roomName)s does not exist.": "%(roomName)s does not exist.",

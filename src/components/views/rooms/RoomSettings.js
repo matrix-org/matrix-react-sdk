@@ -131,6 +131,7 @@ module.exports = React.createClass({
             join_rule: this._yankValueFromEvent("m.room.join_rules", "join_rule"),
             history_visibility: this._yankValueFromEvent("m.room.history_visibility", "history_visibility"),
             guest_access: this._yankValueFromEvent("m.room.guest_access", "guest_access"),
+            default_color_scheme: this._getDefaultColorScheme(),
             power_levels_changed: false,
             tags_changed: false,
             tags: tags,
@@ -301,9 +302,13 @@ module.exports = React.createClass({
             });
         }
 
-        // color scheme
+        // default and personal color scheme
         let p;
         p = this.saveColor();
+        if (!p.isFulfilled()) {
+            promises.push(p);
+        }
+        p = this.saveDefaultColor();
         if (!p.isFulfilled()) {
             promises.push(p);
         }
@@ -342,6 +347,11 @@ module.exports = React.createClass({
     saveColor: function() {
         if (!this.refs.color_settings) { return Promise.resolve(); }
         return this.refs.color_settings.saveSettings();
+    },
+
+    saveDefaultColor: function() {
+        if (!this.refs.default_color_settings) { return Promise.resolve(); }
+        return this.refs.default_color_settings.saveSettings();
     },
 
     saveUrlPreviewSettings: function() {
@@ -433,6 +443,12 @@ module.exports = React.createClass({
         }
         const content = event.getContent();
         return keyName in content ? content[keyName] : defaultValue;
+    },
+
+    _getDefaultColorScheme: function() {
+        const event = this.props.room.currentState.getStateEvents("im.vector.room.color_scheme", '');
+        if (event) return event.getContent();
+        return null;
     },
 
     _onHistoryRadioToggle: function(ev) {
@@ -889,7 +905,10 @@ module.exports = React.createClass({
 
                 <div>
                     <h3>{ _t('Room Colour') }</h3>
-                    <ColorSettings ref="color_settings" room={this.props.room} />
+                    <ColorSettings ref="color_settings" room={this.props.room} forRoomDefaults={false} />
+                    <h3>{ _t('Default Room Colour') }</h3>
+                    <ColorSettings ref="default_color_settings" room={this.props.room} forRoomDefaults={true}
+                        disabled={!roomState.mayClientSendStateEvent("im.vector.room.color_scheme", cli)} />
                 </div>
 
                 <a id="addresses" />
