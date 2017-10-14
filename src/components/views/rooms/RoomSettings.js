@@ -43,6 +43,7 @@ const plEventsToLabels = {
     "m.room.history_visibility": _td("To change the room's history visibility, you must be a"),
     "m.room.power_levels": _td("To change the permissions in the room, you must be a"),
     "m.room.topic": _td("To change the topic, you must be a"),
+    "m.room.redaction": _td("To be able to remove a message, including your own, you must be a"),
 
     "im.vector.modular.widgets": _td("To modify widgets in the room, you must be a"),
 };
@@ -55,6 +56,7 @@ const plEventsToShow = {
     "m.room.history_visibility": {isState: true},
     "m.room.power_levels": {isState: true},
     "m.room.topic": {isState: true},
+    "m.room.redaction": {isState: false},
 
     "im.vector.modular.widgets": {isState: true},
 };
