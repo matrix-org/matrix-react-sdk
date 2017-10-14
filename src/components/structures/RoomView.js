@@ -53,6 +53,7 @@ const DEBUG = false;
 let debuglog = function() {};
 
 const BROWSER_SUPPORTS_SANDBOX = 'sandbox' in document.createElement('iframe');
+const TINT_COLOR_REGEX = /^[#]?([0-9a-fA-F]{3}){1,2}$/;
 
 if (DEBUG) {
     // using bind means that we get to keep useful line numbers in the console
@@ -147,6 +148,7 @@ module.exports = React.createClass({
         MatrixClientPeg.get().on("Room.name", this.onRoomName);
         MatrixClientPeg.get().on("Room.accountData", this.onRoomAccountData);
         MatrixClientPeg.get().on("RoomState.members", this.onRoomStateMember);
+        MatrixClientPeg.get().on("RoomState.events", this.onRoomStateEvents);
         MatrixClientPeg.get().on("RoomMember.membership", this.onRoomMemberMembership);
         MatrixClientPeg.get().on("accountData", this.onAccountData);
 
@@ -392,6 +394,7 @@ module.exports = React.createClass({
             MatrixClientPeg.get().removeListener("Room.name", this.onRoomName);
             MatrixClientPeg.get().removeListener("Room.accountData", this.onRoomAccountData);
             MatrixClientPeg.get().removeListener("RoomState.members", this.onRoomStateMember);
+            MatrixClientPeg.get().removeListener("RoomState.events", this.onRoomStateEvents);
             MatrixClientPeg.get().removeListener("RoomMember.membership", this.onRoomMemberMembership);
             MatrixClientPeg.get().removeListener("accountData", this.onAccountData);
         }
@@ -663,14 +666,29 @@ module.exports = React.createClass({
         const room = this.state.room;
         if (!room) return;
 
+        // Try to get color scheme from room account data
         const color_scheme_event = room.getAccountData("org.matrix.room.color_scheme");
-        let color_scheme = {};
         if (color_scheme_event) {
-            color_scheme = color_scheme_event.getContent();
-            // XXX: we should validate the event
+            let color_scheme = color_scheme_event.getContent();
+            console.log("Try tint from updateTint - room account data");
+            if (this._setTintFromContent(color_scheme, false)) {
+                return;
+            } else console.log("Tint failed - trying state event");
         }
-        console.log("Tinter.tint from updateTint");
-        Tinter.tint(color_scheme.primary_color, color_scheme.secondary_color);
+
+        // If we don't have the color scheme in the room account data, get the state version
+        const color_scheme_state_event = room.currentState.getStateEvents("im.vector.room.color_scheme", '');
+        if (color_scheme_state_event) {
+            let color_scheme = color_scheme_state_event.getContent();
+            console.log("Try tint from updateTint - room state event");
+            if (this._setTintFromContent(color_scheme, false)) {
+                return;
+            } else console.log("Tint failed - using defaults");
+        }
+
+        // If all else fails, reset to defaults
+        console.log("Tint from updateTint - default");
+        this._setTintFromContent({/*intentionally empty*/});
     },
 
     onAccountData: function(event) {
@@ -679,13 +697,19 @@ module.exports = React.createClass({
         }
     },
 
+    onRoomStateEvents: function(event) {
+        if (!this.state.room) return;
+        if (event.getType() !== "im.vector.room.color_scheme") return;
+
+        console.log("Updating tint from room state event update");
+        this.updateTint();
+    },
+
     onRoomAccountData: function(event, room) {
         if (room.roomId == this.state.roomId) {
             if (event.getType() === "org.matrix.room.color_scheme") {
-                const color_scheme = event.getContent();
-                // XXX: we should validate the event
-                console.log("Tinter.tint from onRoomAccountData");
-                Tinter.tint(color_scheme.primary_color, color_scheme.secondary_color);
+                console.log("updateTint called from onRoomAccountData");
+                this.updateTint();
             } else if (event.getType() === "org.matrix.room.preview_urls") {
                 this._updatePreviewUrlVisibility(room);
             }
@@ -739,6 +763,61 @@ module.exports = React.createClass({
             }
         }
     }, 500),
+
+    // Returns false if we were unable to set the tint
+    _setTintFromContent: function(eventContent, useDefaultIfInvalid=true) {
+        // eventContent spec:
+        // {
+        //    primary_color: "#AABBCC",
+        //    secondary_color: "#DDEEFF",
+        //    tertiary_color:  "#001122"
+        // }
+        // Both secondary_color and tertiary_color are optional.
+        // The secondary_color will be ignored if the primary_color is invalid/missing.
+        // The tertiary_color will be ignored if the primary_color or secondary_color is invalid/missing.
+
+        if (!eventContent) {
+            console.warn("No color scheme supplied");
+            if (!useDefaultIfInvalid) return false;
+            eventContent = {};
+        }
+
+        let primaryColor = eventContent.primary_color;
+        let secondaryColor = eventContent.secondary_color;
+        let tertiaryColor = eventContent.tertiary_color;
+
+        console.log("Attempting to tint with scheme: " + primaryColor + ", " + secondaryColor+", " + tertiaryColor);
+
+        // If we have a primary color, validate it
+        if (primaryColor && (typeof(primaryColor) !== "string" || !primaryColor.match(TINT_COLOR_REGEX))) {
+            primaryColor = null; // try for defaults
+        }
+
+        // Follow the spec, and our method contract if we don't have a primary color
+        if (!primaryColor) {
+            if (!useDefaultIfInvalid) return false;
+
+            // As per spec, don't use secondary or tertiary colors if the primary is invalid
+            secondaryColor = null;
+            tertiaryColor = null;
+        }
+
+        // Validate secondary and tertiary the same way we do the primary
+        if (secondaryColor && (typeof(secondaryColor) !== "string" || !secondaryColor.match(TINT_COLOR_REGEX))) {
+            if (!useDefaultIfInvalid) return false; // we consider this to be an invalid event
+
+            secondaryColor = null;
+            tertiaryColor = null; // As per spec, don't use tertiary if the secondary is invalid
+        }
+        if (tertiaryColor && (typeof(tertiaryColor) !== "string" || !tertiaryColor.match(TINT_COLOR_REGEX))) {
+            if (!useDefaultIfInvalid) return false; // we consider this to be an invalid event
+
+            tertiaryColor = null;
+        }
+
+        Tinter.tint(primaryColor, secondaryColor, tertiaryColor);
+        return true; // we did it!
+    },
 
     _getUnsentMessageError: function(room) {
         const unsentMessages = this._getUnsentMessages(room);
@@ -1036,7 +1115,7 @@ module.exports = React.createClass({
             // favour longer (more specific) terms first
             highlights = highlights.sort(function(a, b) {
                 return b.length - a.length;
-});
+            });
 
             self.setState({
                 searchHighlights: highlights,
