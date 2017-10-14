@@ -32,7 +32,7 @@ const ROOM_COLORS = [
     {primary_color: "#dad658", secondary_color: "#f5f4ea"},
     {primary_color: "#80c553", secondary_color: "#eef5ea"},
     {primary_color: "#bb814e", secondary_color: "#eee8e3"},
-    {primary_color: "#595959", secondary_color: "#ececec"},
+    //{primary_color: "#595959", secondary_color: "#ececec"}, // Grey makes everything appear disabled, so remove it for now
 ];
 
 module.exports = React.createClass({

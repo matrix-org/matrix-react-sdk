@@ -118,6 +118,7 @@ module.exports = React.createClass({
             guestsCanJoin: false,
             canPeek: false,
             showApps: false,
+            isAlone: false,
             isPeeking: false,
 
             // error object, as from the matrix client/server API
@@ -464,6 +465,8 @@ module.exports = React.createClass({
         switch (payload.action) {
             case 'message_send_failed':
             case 'message_sent':
+                this._checkIfAlone(this.state.room);
+                // no break; to intentionally fall through
             case 'message_send_cancelled':
                 this.setState({
                     unsentMessageError: this._getUnsentMessageError(this.state.room),
@@ -764,6 +767,20 @@ module.exports = React.createClass({
         }
     }, 500),
 
+    _checkIfAlone: function(room) {
+        let warnedAboutLonelyRoom = false;
+        if (localStorage) {
+            warnedAboutLonelyRoom = localStorage.getItem('mx_user_alone_warned_' + this.state.room.roomId);
+        }
+        if (warnedAboutLonelyRoom) {
+            if (this.state.isAlone) this.setState({isAlone: false});
+            return;
+        }
+
+        const joinedMembers = room.currentState.getMembers().filter(m => m.membership === "join" || m.membership === "invite");
+        this.setState({isAlone: joinedMembers.length === 1});
+    },
+
     // Returns false if we were unable to set the tint
     _setTintFromContent: function(eventContent, useDefaultIfInvalid=true) {
         // eventContent spec:
@@ -898,6 +915,22 @@ module.exports = React.createClass({
 
     onCancelAllClick: function() {
         Resend.cancelUnsentEvents(this.state.room);
+    },
+
+    onInviteButtonClick: function() {
+        // call AddressPickerDialog
+        dis.dispatch({
+            action: 'view_invite',
+            roomId: this.state.room.roomId,
+        });
+        this.setState({isAlone: false}); // there's a good chance they'll invite someone
+    },
+
+    onStopAloneWarningClick: function() {
+        if (localStorage) {
+            localStorage.setItem('mx_user_alone_warned_' + this.state.room.roomId, true);
+        }
+        this.setState({isAlone: false});
     },
 
     onJoinButtonClicked: function(ev) {
@@ -1660,9 +1693,12 @@ module.exports = React.createClass({
                 numUnreadMessages={this.state.numUnreadMessages}
                 unsentMessageError={this.state.unsentMessageError}
                 atEndOfLiveTimeline={this.state.atEndOfLiveTimeline}
+                sentMessageAndIsAlone={this.state.isAlone}
                 hasActiveCall={inCall}
                 onResendAllClick={this.onResendAllClick}
                 onCancelAllClick={this.onCancelAllClick}
+                onInviteClick={this.onInviteButtonClick}
+                onStopWarningClick={this.onStopAloneWarningClick}
                 onScrollToBottomClick={this.jumpToLiveTimeline}
                 onResize={this.onChildResize}
                 onVisible={this.onStatusBarVisible}
