@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
 """
-Tool to update translation files.
-Exit value 0 if no changes are needed, or if the file was automatically updated. Exit value 1 if changes are needed but file was not updated.
+Tool to update translation files. Requires Python 3.5 or later.
+
+Exit value 0 if no changes are needed, or if the file was automatically updated.
+Exit value 1 if changes are needed but file was not updated.
 
 Usage:
 scripts/update_translation.py src/i18n/strings/en_EN.json src/**/*.js
@@ -13,6 +15,8 @@ import sys
 import re
 import json
 import argparse
+import glob
+import itertools
 from typing import Sequence, Set
 
 def main() -> int:
@@ -81,6 +85,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('--auto-add', dest='auto_add', action='store_true', default=False, help='Automatically add missing string')
     parser.add_argument('--auto-remove', dest='auto_remove', action='store_true', default=False, help='Automatically remove extra strings')
     args = parser.parse_args()
+
+    # Expand globs in case the shell does not know how to do it
+    globbed = (glob.glob(pattern, recursive=True) for pattern in args.src_paths)
+    args.src_paths = list(itertools.chain.from_iterable(globbed))
 
     return args
 
