@@ -117,7 +117,7 @@ def find_strings(src_paths: Sequence[str]) -> Set[str]:
 
             # Find strings
             for match in texpr.findall(content):
-                found.add(match[1].replace(r"\'", "'")) # Unescape javascript quotes
+                found.add(match[1].replace(r"\'", "'").replace(r'\"', '"')) # Unescape javascript quotes
 
     return found
 
