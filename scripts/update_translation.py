@@ -69,7 +69,7 @@ def main() -> int:
 
     if args.auto_remove or args.auto_add:
         with open(args.strings_path, 'w', encoding='utf-8') as json_file:
-            json.dump(ref, json_file, indent=4)
+            json.dump(ref, json_file, indent=4, sort_keys=True)
         print()
         print('Updated %s'%args.strings_path)
         return 0
@@ -82,8 +82,8 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='Update translation')
     parser.add_argument('strings_path', metavar='JSON_STRING_FILE', help='JSON file with strings')
     parser.add_argument('src_paths', metavar='JS_SRC_FILE', nargs='+', help='.js source file')
-    parser.add_argument('--auto-add', dest='auto_add', action='store_true', default=False, help='Automatically add missing string')
-    parser.add_argument('--auto-remove', dest='auto_remove', action='store_true', default=False, help='Automatically remove extra strings')
+    parser.add_argument('--auto-add', dest='auto_add', action='store_true', help='Automatically add missing string')
+    parser.add_argument('--auto-remove', dest='auto_remove', action='store_true', help='Automatically remove extra strings')
     args = parser.parse_args()
 
     # Expand globs in case the shell does not know how to do it
