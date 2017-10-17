@@ -29,9 +29,7 @@ def main() -> int:
 
     args = parse_args()
 
-    # Regular expression to account for plural forms
-    # Could probably be made more general if more forms are introduced
-    numexpr = re.compile('[|](zero|one|other)')
+    plural_separator = '|' # The separator used to indicate where a string ends and the plural type begins
 
     # Open JSON file containing translated strings
     try:
@@ -39,7 +37,7 @@ def main() -> int:
             ref = json.load(json_file)
 
         # Remove information about plurals. In the source code the base form is used.
-        existing = set(numexpr.sub('', x) for x in ref.keys())
+        existing = set(x.split(plural_separator, 1)[0] for x in ref.keys())
     except (AttributeError, json.JSONDecodeError, IOError):
         print('Error opening file %s'%args.string_path)
         return 1
@@ -47,6 +45,7 @@ def main() -> int:
     found = find_strings(args.src_paths)
 
     if found == existing:
+        # Nothing to do, found strings match what is already in the translation file
         return 0
 
     added = found - existing
@@ -62,7 +61,6 @@ def main() -> int:
     print()
 
     removed = existing - found
-
     if bool(removed):
         print('Removed:')
         print('--------')
@@ -70,11 +68,17 @@ def main() -> int:
 
     if args.auto_remove:
         for string in removed:
-            del ref[string]
+            # Loop over all translation keys and see if it matches what should be removed
+            # Also take into account the plural options by checking if there is a match up to the separator
+            for key in list(ref):
+                if key == string or key.startswith(string + plural_separator):
+                    del ref[key]
 
     if args.auto_remove or args.auto_add:
+        # Update translation file
         with open(args.strings_path, 'w', encoding='utf-8') as json_file:
             json.dump(ref, json_file, indent=4, sort_keys=True)
+
         print()
         print('Updated %s'%args.strings_path)
         return 0
