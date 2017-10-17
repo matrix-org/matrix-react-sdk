@@ -7,8 +7,8 @@ Exit value 0 if no changes are needed, or if the file was automatically updated.
 Exit value 1 if changes are needed but file was not updated.
 
 Usage:
-scripts/update_translation.py src/i18n/strings/en_EN.json src/**/*.js
-scripts/update_translation.py --auto-add --auto-remove src/i18n/strings/en_EN.json src/**/*.js
+scripts/update_translation.py src/i18n/strings/en_EN.json "src/**/*.js"
+scripts/update_translation.py --auto-add --auto-remove src/i18n/strings/en_EN.json "src/**/*.js"
 """
 
 import sys
