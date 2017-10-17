@@ -17,7 +17,12 @@ import json
 import argparse
 import glob
 import itertools
-from typing import Sequence, Set
+
+try:
+    from typing import Sequence, Set
+except ImportError:
+    print('%s requires Python 3.5 or later!'%sys.argv[1])
+    raise
 
 def main() -> int:
     """Main entrypoint"""
