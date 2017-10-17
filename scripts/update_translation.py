@@ -87,7 +87,12 @@ def parse_args() -> argparse.Namespace:
     args = parser.parse_args()
 
     # Expand globs in case the shell does not know how to do it
-    globbed = (glob.glob(pattern, recursive=True) for pattern in args.src_paths)
+    try:
+        globbed = (glob.glob(pattern, recursive=True) for pattern in args.src_paths)
+    except TypeError:
+        print('%s requires Python 3.5 or later!'%sys.argv[1])
+        raise
+
     args.src_paths = list(itertools.chain.from_iterable(globbed))
 
     return args
