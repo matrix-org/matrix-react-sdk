@@ -16,25 +16,23 @@ limitations under the License.
 import Promise from 'bluebird';
 const React = require('react');
 
-const sdk = require('../../../index');
 const Tinter = require('../../../Tinter');
 const MatrixClientPeg = require("../../../MatrixClientPeg");
 const Modal = require("../../../Modal");
-
 import dis from '../../../dispatcher';
 
 const ROOM_COLORS = [
     // magic room default values courtesy of Ribot
-    ["#76cfa6", "#eaf5f0"],
-    ["#81bddb", "#eaf1f4"],
-    ["#bd79cb", "#f3eaf5"],
-    ["#c65d94", "#f5eaef"],
-    ["#e55e5e", "#f5eaea"],
-    ["#eca46f", "#f5eeea"],
-    ["#dad658", "#f5f4ea"],
-    ["#80c553", "#eef5ea"],
-    ["#bb814e", "#eee8e3"],
-    //["#595959", "#ececec"], // Grey makes everything appear disabled, so remove it for now
+    {primary_color: "#76cfa6", secondary_color: "#eaf5f0"},
+    {primary_color: "#81bddb", secondary_color: "#eaf1f4"},
+    {primary_color: "#bd79cb", secondary_color: "#f3eaf5"},
+    {primary_color: "#c65d94", secondary_color: "#f5eaef"},
+    {primary_color: "#e55e5e", secondary_color: "#f5eaea"},
+    {primary_color: "#eca46f", secondary_color: "#f5eeea"},
+    {primary_color: "#dad658", secondary_color: "#f5f4ea"},
+    {primary_color: "#80c553", secondary_color: "#eef5ea"},
+    {primary_color: "#bb814e", secondary_color: "#eee8e3"},
+    //{primary_color: "#595959", secondary_color: "#ececec"}, // Grey makes everything appear disabled, so remove it for now
 ];
 
 module.exports = React.createClass({
@@ -42,6 +40,9 @@ module.exports = React.createClass({
 
     propTypes: {
         room: React.PropTypes.object.isRequired,
+        forRoomDefaults: React.PropTypes.bool, // whether to manage the personal settings or default settings
+
+        disabled: React.PropTypes.bool,
     },
 
     getInitialState: function() {
@@ -50,24 +51,54 @@ module.exports = React.createClass({
             primary_color: ROOM_COLORS[0].primary_color,
             secondary_color: ROOM_COLORS[0].secondary_color,
             hasChanged: false,
+            usingRoomDefaults: true,
         };
-        const event = this.props.room.getAccountData("org.matrix.room.color_scheme");
-        if (!event) {
-            return data;
-        }
-        const scheme = event.getContent();
-        data.primary_color = scheme.primary_color;
-        data.secondary_color = scheme.secondary_color;
-        data.index = this._getColorIndex(data);
 
+        const defaultEvent = this.props.room.currentState.getStateEvents('im.vector.room.color_scheme', '');
+        if (defaultEvent && defaultEvent.getContent()) {
+            const defaultScheme = defaultEvent.getContent();
+            if (defaultScheme.primary_color) {
+                data.primary_color = defaultScheme.primary_color;
+                data.secondary_color = defaultScheme.secondary_color;
+            }
+        }
+
+        if (!this.props.forRoomDefaults) {
+            const event = this.props.room.getAccountData("org.matrix.room.color_scheme");
+            if (event && event.getContent()) {
+                const scheme = event.getContent();
+                if (scheme.primary_color) {
+                    data.primary_color = scheme.primary_color;
+                    data.secondary_color = scheme.secondary_color;
+                    data.usingRoomDefaults = false;
+                }
+            }
+        }
+
+        data.index = this._getColorIndex(data);
         if (data.index === -1) {
             // append the unrecognised colours to our palette
             data.index = ROOM_COLORS.length;
-            ROOM_COLORS.push([
-                scheme.primary_color, scheme.secondary_color,
-            ]);
+            ROOM_COLORS.push({
+                primary_color: data.primary_color,
+                secondary_color: data.secondary_color,
+            });
         }
         return data;
+    },
+
+    componentWillMount: function() {
+        this.dispatcherRef = dis.register(this.onAction);
+    },
+
+    componentWillUnmount: function() {
+        dis.unregister(this.dispatcherRef);
+    },
+
+    onAction: function(payload) {
+        if (payload.action !== "room_default_color_picked") return;
+
+        this._tryUseRoomDefault(payload.chosenColorIndex);
     },
 
     saveSettings: function() { // : Promise
@@ -78,47 +109,61 @@ module.exports = React.createClass({
         if (originalState.primary_color !== this.state.primary_color ||
                 originalState.secondary_color !== this.state.secondary_color) {
             console.log("ColorSettings: Saving new color");
-            // We would like guests to be able to set room colour but currently
-            // they can't, so we still send the request but display a sensible
-            // error if it fails.
-            return MatrixClientPeg.get().setRoomAccountData(
-                this.props.room.roomId, "org.matrix.room.color_scheme", {
-                    primary_color: this.state.primary_color,
-                    secondary_color: this.state.secondary_color,
-                },
-            ).catch(function(err) {
-                if (err.errcode == 'M_GUEST_ACCESS_FORBIDDEN') {
-                    dis.dispatch({action: 'view_set_mxid'});
-                }
-            });
+            const content = {
+                primary_color: this.state.primary_color,
+                secondary_color: this.state.secondary_color,
+            };
+
+            if (this.props.forRoomDefaults) {
+                return MatrixClientPeg.get().sendStateEvent(this.props.room.roomId, "im.vector.room.color_scheme", content, '');
+            } else return MatrixClientPeg.get().setRoomAccountData(this.props.room.roomId, "org.matrix.room.color_scheme", content);
         }
         return Promise.resolve(); // no color diff
     },
 
     _getColorIndex: function(scheme) {
-        if (!scheme || !scheme.primary_color || !scheme.secondary_color) {
+        if (!scheme || !scheme.primary_color) {
             return -1;
         }
+
         // XXX: we should validate these values
         for (let i = 0; i < ROOM_COLORS.length; i++) {
             const room_color = ROOM_COLORS[i];
-            if (room_color[0] === String(scheme.primary_color).toLowerCase() &&
-                    room_color[1] === String(scheme.secondary_color).toLowerCase()) {
-                return i;
-            }
+            if (room_color.primary_color.toLowerCase() !== String(scheme.primary_color).toLowerCase()) continue;
+
+            // Secondary color is optional. Only validate it if it is set on either side
+            if ((room_color.secondary_color && !scheme.secondary_color) || (!room_color.secondary_color && scheme.secondary_color)) continue;
+            if (room_color.secondary_color && room_color.secondary_color.toLowerCase() !== String(scheme.secondary_color).toLowerCase()) continue;
+
+            return i;
         }
+
         return -1;
+    },
+
+    _tryUseRoomDefault: function(index) {
+        if (this.props.forRoomDefaults || this.state.hasChanged || !this.state.usingRoomDefaults) return;
+
+        this.setState({
+            index: index,
+            primary_color: ROOM_COLORS[index].primary_color,
+            secondary_color: ROOM_COLORS[index].secondary_color,
+            //hasChanged: true, // we're just giving the user a visual indicator
+        });
     },
 
     _onColorSchemeChanged: function(index) {
         // preview what the user just changed the scheme to.
-        Tinter.tint(ROOM_COLORS[index][0], ROOM_COLORS[index][1]);
+        Tinter.tint(ROOM_COLORS[index].primary_color, ROOM_COLORS[index].secondary_color);
         this.setState({
             index: index,
-            primary_color: ROOM_COLORS[index][0],
-            secondary_color: ROOM_COLORS[index][1],
+            primary_color: ROOM_COLORS[index].primary_color,
+            secondary_color: ROOM_COLORS[index].secondary_color,
             hasChanged: true,
         });
+        if (this.props.forRoomDefaults) {
+            dis.dispatch({action: "room_default_color_picked", chosenColorIndex: index});
+        }
     },
 
     render: function() {
@@ -133,14 +178,15 @@ module.exports = React.createClass({
                             </div>
                         );
                     }
-                    const boundClick = this._onColorSchemeChanged.bind(this, i);
+                    let boundClick = this._onColorSchemeChanged.bind(this, i);
+                    if (this.props.disabled) boundClick = null;
                     return (
-                        <div className="mx_RoomSettings_roomColor"
+                        <div className={"mx_RoomSettings_roomColor" + (this.props.disabled ? ' mx_RoomSettings_roomColor_disabled' : '') }
                               key={"room_color_" + i}
-                              style={{ backgroundColor: room_color[1] }}
+                              style={{ backgroundColor: room_color.secondary_color }}
                               onClick={boundClick}>
                             { selected }
-                            <div className="mx_RoomSettings_roomColorPrimary" style={{ backgroundColor: room_color[0] }}></div>
+                            <div className="mx_RoomSettings_roomColorPrimary" style={{ backgroundColor: room_color.primary_color }}></div>
                         </div>
                     );
                 }) }
