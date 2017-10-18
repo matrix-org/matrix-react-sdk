@@ -1,6 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
+Copyright 2017 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -31,12 +32,12 @@ import dis from "../../dispatcher";
 import Modal from "../../Modal";
 import Tinter from "../../Tinter";
 import sdk from '../../index';
+import { showStartChatInviteDialog, showRoomInviteDialog } from '../../RoomInvite';
 import * as Rooms from '../../Rooms';
 import linkifyMatrix from "../../linkify-matrix";
 import * as Lifecycle from '../../Lifecycle';
 // LifecycleStore is not used but does listen to and dispatch actions
 require('../../stores/LifecycleStore');
-import RoomViewStore from '../../stores/RoomViewStore';
 import PageTypes from '../../PageTypes';
 
 import createRoom from "../../createRoom";
@@ -131,9 +132,6 @@ module.exports = React.createClass({
             // the master view we are showing.
             view: VIEWS.LOADING,
 
-            // a thing to call showScreen with once login completes.
-            screenAfterLogin: this.props.initialScreenAfterLogin,
-
             // What the LoggedInView would be showing if visible
             page_type: null,
 
@@ -145,10 +143,8 @@ module.exports = React.createClass({
             // If we're trying to just view a user ID (i.e. /user URL), this is it
             viewUserId: null,
 
-            collapse_lhs: false,
-            collapse_rhs: false,
-            ready: false,
-            width: 10000,
+            collapseLhs: false,
+            collapseRhs: false,
             leftOpacity: 1.0,
             middleOpacity: 1.0,
             rightOpacity: 1.0,
@@ -217,9 +213,6 @@ module.exports = React.createClass({
     componentWillMount: function() {
         SdkConfig.put(this.props.config);
 
-        this._roomViewStoreToken = RoomViewStore.addListener(this._onRoomViewStoreUpdated);
-        this._onRoomViewStoreUpdated();
-
         if (!UserSettingsStore.getLocalSetting('analyticsOptOut', false)) Analytics.enable();
 
         // Used by _viewRoom before getting state from sync
@@ -274,6 +267,15 @@ module.exports = React.createClass({
                 register_hs_url: paramHs,
             });
         }
+
+        // a thing to call showScreen with once login completes.  this is kept
+        // outside this.state because updating it should never trigger a
+        // rerender.
+        this._screenAfterLogin = this.props.initialScreenAfterLogin;
+
+        this._windowWidth = 10000;
+        this.handleResize();
+        window.addEventListener('resize', this.handleResize);
     },
 
     componentDidMount: function() {
@@ -297,9 +299,6 @@ module.exports = React.createClass({
             linkifyMatrix.onGroupClick = this.onGroupClick;
         }
 
-        window.addEventListener('resize', this.handleResize);
-        this.handleResize();
-
         const teamServerConfig = this.props.config.teamServerConfig || {};
         Lifecycle.initRtsClient(teamServerConfig.teamServerURL);
 
@@ -315,13 +314,12 @@ module.exports = React.createClass({
 
             // if the user has followed a login or register link, don't reanimate
             // the old creds, but rather go straight to the relevant page
-            const firstScreen = this.state.screenAfterLogin ?
-                this.state.screenAfterLogin.screen : null;
+            const firstScreen = this._screenAfterLogin ?
+                this._screenAfterLogin.screen : null;
 
             if (firstScreen === 'login' ||
                     firstScreen === 'register' ||
                     firstScreen === 'forgot_password') {
-                this.setState({loading: false});
                 this._showScreenAfterLogin();
                 return;
             }
@@ -355,7 +353,6 @@ module.exports = React.createClass({
         window.removeEventListener("focus", this.onFocus);
         window.removeEventListener('resize', this.handleResize);
         window.removeEventListener('message', this.onMessage);
-        this._roomViewStoreToken.remove();
     },
 
     componentDidUpdate: function() {
@@ -371,9 +368,9 @@ module.exports = React.createClass({
         }
         const newState = {
             viewUserId: null,
-       };
-       Object.assign(newState, state);
-       this.setState(newState);
+        };
+        Object.assign(newState, state);
+        this.setState(newState);
     },
 
     onAction: function(payload) {
@@ -387,20 +384,20 @@ module.exports = React.createClass({
                     Lifecycle.logout();
                 } else {
                     const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-                    Modal.createDialog(QuestionDialog, {
-                        title: "Sign out?",
+                    Modal.createTrackedDialog('Logout E2E Export', '', QuestionDialog, {
+                        title: _t("Sign out"),
                         description:
                             <div>
-                                For security, logging out will delete any end-to-end encryption
-                                keys from this browser. If you want to be able to decrypt your
-                                conversation history from future Riot sessions, please export
-                                your room keys for safe-keeping.
+                         { _t("For security, logging out will delete any end-to-end " +
+                              "encryption keys from this browser. If you want to be able " +
+                              "to decrypt your conversation history from future Riot sessions, " +
+                              "please export your room keys for safe-keeping.") }.
                             </div>,
-                        button: "Sign out",
+                        button: _t("Sign out"),
                         extraButtons: [
                             <button key="export" className="mx_Dialog_primary"
                                     onClick={this._exportE2eKeysDialog}>
-                                Export E2E room keys
+                               { _t("Export E2E room keys") }
                             </button>,
                         ],
                         onFinished: (confirmed) => {
@@ -443,7 +440,7 @@ module.exports = React.createClass({
                 this._leaveRoom(payload.room_id);
                 break;
             case 'reject_invite':
-                Modal.createDialog(QuestionDialog, {
+                Modal.createTrackedDialog('Reject invitation', '', QuestionDialog, {
                     title: _t('Reject invitation'),
                     description: _t('Are you sure you want to reject the invitation?'),
                     onFinished: (confirm) => {
@@ -459,7 +456,7 @@ module.exports = React.createClass({
                                 }
                             }, (err) => {
                                 modal.close();
-                                Modal.createDialog(ErrorDialog, {
+                                Modal.createTrackedDialog('Failed to reject invitation', '', ErrorDialog, {
                                     title: _t('Failed to reject invitation'),
                                     description: err.toString(),
                                 });
@@ -470,7 +467,7 @@ module.exports = React.createClass({
                 break;
             case 'view_user':
                 // FIXME: ugly hack to expand the RightPanel and then re-dispatch.
-                if (this.state.collapse_rhs) {
+                if (this.state.collapseRhs) {
                     setTimeout(()=>{
                         dis.dispatch({
                             action: 'show_right_panel',
@@ -551,29 +548,29 @@ module.exports = React.createClass({
                 this._createChat();
                 break;
             case 'view_invite':
-                this._invite(payload.roomId);
+                showRoomInviteDialog(payload.roomId);
                 break;
             case 'notifier_enabled':
                 this.forceUpdate();
                 break;
             case 'hide_left_panel':
                 this.setState({
-                    collapse_lhs: true,
+                    collapseLhs: true,
                 });
                 break;
             case 'show_left_panel':
                 this.setState({
-                    collapse_lhs: false,
+                    collapseLhs: false,
                 });
                 break;
             case 'hide_right_panel':
                 this.setState({
-                    collapse_rhs: true,
+                    collapseRhs: true,
                 });
                 break;
             case 'show_right_panel':
                 this.setState({
-                    collapse_rhs: false,
+                    collapseRhs: false,
                 });
                 break;
             case 'ui_opacity': {
@@ -622,10 +619,6 @@ module.exports = React.createClass({
                 this.onSendEvent(payload.room_id, payload.event);
                 break;
         }
-    },
-
-    _onRoomViewStoreUpdated: function() {
-        this.setState({ currentRoomId: RoomViewStore.getRoomId() });
     },
 
     _setPage: function(pageType) {
@@ -714,10 +707,10 @@ module.exports = React.createClass({
         this.focusComposer = true;
 
         const newState = {
+            currentRoomId: roomInfo.room_id || null,
             page_type: PageTypes.RoomView,
             thirdPartyInvite: roomInfo.third_party_invite,
             roomOobData: roomInfo.oob_data,
-            autoJoin: roomInfo.auto_join,
         };
 
         if (roomInfo.room_alias) {
@@ -767,7 +760,7 @@ module.exports = React.createClass({
 
     _setMxId: function(payload) {
         const SetMxIdDialog = sdk.getComponent('views.dialogs.SetMxIdDialog');
-        const close = Modal.createDialog(SetMxIdDialog, {
+        const close = Modal.createTrackedDialog('Set MXID', '', SetMxIdDialog, {
             homeserverUrl: MatrixClientPeg.get().getHomeserverUrl(),
             onFinished: (submitted, credentials) => {
                 if (!submitted) {
@@ -805,13 +798,7 @@ module.exports = React.createClass({
             dis.dispatch({action: 'view_set_mxid'});
             return;
         }
-        const ChatInviteDialog = sdk.getComponent("dialogs.ChatInviteDialog");
-        Modal.createDialog(ChatInviteDialog, {
-            title: _t('Start a chat'),
-            description: _t("Who would you like to communicate with?"),
-            placeholder: _t("Email, name or matrix ID"),
-            button: _t("Start Chat"),
-        });
+        showStartChatInviteDialog();
     },
 
     _createRoom: function() {
@@ -825,15 +812,13 @@ module.exports = React.createClass({
             dis.dispatch({action: 'view_set_mxid'});
             return;
         }
-        const TextInputDialog = sdk.getComponent("dialogs.TextInputDialog");
-        Modal.createDialog(TextInputDialog, {
-            title: _t('Create Room'),
-            description: _t('Room name (optional)'),
-            button: _t('Create Room'),
-            onFinished: (shouldCreate, name) => {
+        const CreateRoomDialog = sdk.getComponent('dialogs.CreateRoomDialog');
+        Modal.createTrackedDialog('Create Room', '', CreateRoomDialog, {
+            onFinished: (shouldCreate, name, noFederate) => {
                 if (shouldCreate) {
                     const createOpts = {};
                     if (name) createOpts.name = name;
+                    if (noFederate) createOpts.creation_content = {'m.federate': false};
                     createRoom({createOpts}).done();
                 }
             },
@@ -870,7 +855,7 @@ module.exports = React.createClass({
             return;
         }
 
-        const close = Modal.createDialog(ChatCreateOrReuseDialog, {
+        const close = Modal.createTrackedDialog('Chat create or reuse', '', ChatCreateOrReuseDialog, {
             userId: userId,
             onFinished: (success) => {
                 if (!success && goHomeOnCancel) {
@@ -896,27 +881,16 @@ module.exports = React.createClass({
         }).close;
     },
 
-    _invite: function(roomId) {
-        const ChatInviteDialog = sdk.getComponent("dialogs.ChatInviteDialog");
-        Modal.createDialog(ChatInviteDialog, {
-            title: _t('Invite new room members'),
-            description: _t('Who would you like to add to this room?'),
-            button: _t('Send Invites'),
-            placeholder: _t("Email, name or matrix ID"),
-            roomId: roomId,
-        });
-    },
-
     _leaveRoom: function(roomId) {
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
 
         const roomToLeave = MatrixClientPeg.get().getRoom(roomId);
-        Modal.createDialog(QuestionDialog, {
+        Modal.createTrackedDialog('Leave room', '', QuestionDialog, {
             title: _t("Leave room"),
             description: (
                 <span>
-                {_t("Are you sure you want to leave the room '%(roomName)s'?", {roomName: roomToLeave.name})}
+                { _t("Are you sure you want to leave the room '%(roomName)s'?", {roomName: roomToLeave.name}) }
                 </span>
             ),
             onFinished: (shouldLeave) => {
@@ -935,7 +909,7 @@ module.exports = React.createClass({
                     }, (err) => {
                         modal.close();
                         console.error("Failed to leave room " + roomId + " " + err);
-                        Modal.createDialog(ErrorDialog, {
+                        Modal.createTrackedDialog('Failed to leave room', '', ErrorDialog, {
                             title: _t("Failed to leave room"),
                             description: (err && err.message ? err.message :
                                 _t("Server may be unavailable, overloaded, or you hit a bug.")),
@@ -1031,14 +1005,12 @@ module.exports = React.createClass({
     _showScreenAfterLogin: function() {
         // If screenAfterLogin is set, use that, then null it so that a second login will
         // result in view_home_page, _user_settings or _room_directory
-        if (this.state.screenAfterLogin && this.state.screenAfterLogin.screen) {
+        if (this._screenAfterLogin && this._screenAfterLogin.screen) {
             this.showScreen(
-                this.state.screenAfterLogin.screen,
-                this.state.screenAfterLogin.params,
+                this._screenAfterLogin.screen,
+                this._screenAfterLogin.params,
             );
-            // XXX: is this necessary? `showScreen` should do it for us.
-            this.notifyNewScreen(this.state.screenAfterLogin.screen);
-            this.setState({screenAfterLogin: null});
+            this._screenAfterLogin = null;
         } else if (localStorage && localStorage.getItem('mx_last_room_id')) {
             // Before defaulting to directory, show the last viewed room
             dis.dispatch({
@@ -1058,8 +1030,8 @@ module.exports = React.createClass({
         this.setStateForNewView({
             view: VIEWS.LOGIN,
             ready: false,
-            collapse_lhs: false,
-            collapse_rhs: false,
+            collapseLhs: false,
+            collapseRhs: false,
             currentRoomId: null,
             page_type: PageTypes.RoomDirectory,
         });
@@ -1124,14 +1096,17 @@ module.exports = React.createClass({
             self.setState({ready: true});
         });
         cli.on('Call.incoming', function(call) {
+            // we dispatch this synchronously to make sure that the event
+            // handlers on the call are set up immediately (so that if
+            // we get an immediate hangup, we don't get a stuck call)
             dis.dispatch({
                 action: 'incoming_call',
                 call: call,
-            });
+            }, true);
         });
         cli.on('Session.logged_out', function(call) {
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-            Modal.createDialog(ErrorDialog, {
+            Modal.createTrackedDialog('Signed out', '', ErrorDialog, {
                 title: _t('Signed Out'),
                 description: _t('For security, this session has been signed out. Please sign in again.'),
             });
@@ -1320,21 +1295,24 @@ module.exports = React.createClass({
         } else if (screen.indexOf('user/') == 0) {
             const userId = screen.substring(5);
 
-            if (params.action === 'chat') {
-                this._chatCreateOrReuse(userId);
-                return;
-            }
+            // Wait for the first sync so that `getRoom` gives us a room object if it's
+            // in the sync response
+            const waitFor = this.firstSyncPromise ?
+                this.firstSyncPromise.promise : Promise.resolve();
+            waitFor.then(() => {
+                if (params.action === 'chat') {
+                    this._chatCreateOrReuse(userId);
+                    return;
+                }
 
-            this.setState({ viewUserId: userId });
-            this._setPage(PageTypes.UserView);
-            this.notifyNewScreen('user/' + userId);
-            const member = new Matrix.RoomMember(null, userId);
-            if (member) {
+                this._setPage(PageTypes.UserView);
+                this.notifyNewScreen('user/' + userId);
+                const member = new Matrix.RoomMember(null, userId);
                 dis.dispatch({
                     action: 'view_user',
                     member: member,
                 });
-            }
+            });
         } else if (screen.indexOf('group/') == 0) {
             const groupId = screen.substring(6);
 
@@ -1391,20 +1369,20 @@ module.exports = React.createClass({
         const hideRhsThreshold = 820;
         const showRhsThreshold = 820;
 
-        if (this.state.width > hideLhsThreshold && window.innerWidth <= hideLhsThreshold) {
+        if (this._windowWidth > hideLhsThreshold && window.innerWidth <= hideLhsThreshold) {
             dis.dispatch({ action: 'hide_left_panel' });
         }
-        if (this.state.width <= showLhsThreshold && window.innerWidth > showLhsThreshold) {
+        if (this._windowWidth <= showLhsThreshold && window.innerWidth > showLhsThreshold) {
             dis.dispatch({ action: 'show_left_panel' });
         }
-        if (this.state.width > hideRhsThreshold && window.innerWidth <= hideRhsThreshold) {
+        if (this._windowWidth > hideRhsThreshold && window.innerWidth <= hideRhsThreshold) {
             dis.dispatch({ action: 'hide_right_panel' });
         }
-        if (this.state.width <= showRhsThreshold && window.innerWidth > showRhsThreshold) {
+        if (this._windowWidth <= showRhsThreshold && window.innerWidth > showRhsThreshold) {
             dis.dispatch({ action: 'show_right_panel' });
         }
 
-        this.setState({width: window.innerWidth});
+        this._windowWidth = window.innerWidth;
     },
 
     onRoomCreated: function(roomId) {
@@ -1531,27 +1509,23 @@ module.exports = React.createClass({
     },
 
     _exportE2eKeysDialog: function() {
-        Modal.createDialogAsync(
-            (cb) => {
-                require.ensure(['../../async-components/views/dialogs/ExportE2eKeysDialog'], () => {
-                    cb(require('../../async-components/views/dialogs/ExportE2eKeysDialog'));
-                }, "e2e-export");
-            }, {
-                matrixClient: MatrixClientPeg.get(),
-            },
-        );
+        Modal.createTrackedDialogAsync('Export E2E Keys', '', (cb) => {
+            require.ensure(['../../async-components/views/dialogs/ExportE2eKeysDialog'], () => {
+                cb(require('../../async-components/views/dialogs/ExportE2eKeysDialog'));
+            }, "e2e-export");
+        }, {
+            matrixClient: MatrixClientPeg.get(),
+        });
     },
 
     _importE2eKeysDialog: function() {
-        Modal.createDialogAsync(
-            (cb) => {
-                require.ensure(['../../async-components/views/dialogs/ImportE2eKeysDialog'], () => {
-                    cb(require('../../async-components/views/dialogs/ImportE2eKeysDialog'));
-                }, "e2e-export");
-            }, {
-                matrixClient: MatrixClientPeg.get(),
-            },
-        );
+        Modal.createTrackedDialogAsync('Import E2E Keys', '', (cb) => {
+            require.ensure(['../../async-components/views/dialogs/ImportE2eKeysDialog'], () => {
+                cb(require('../../async-components/views/dialogs/ImportE2eKeysDialog'));
+            }, "e2e-export");
+        }, {
+            matrixClient: MatrixClientPeg.get(),
+        });
     },
 
     _makeRegistrationUrl: function(params) {
@@ -1609,7 +1583,7 @@ module.exports = React.createClass({
                 return (
                     <div className="mx_MatrixChat_splash">
                         <Spinner />
-                        <a href="#" className="mx_MatrixChat_splashButtons" onClick={ this.onLogoutClick }>
+                        <a href="#" className="mx_MatrixChat_splashButtons" onClick={this.onLogoutClick}>
                         { _t('Logout') }
                         </a>
                     </div>

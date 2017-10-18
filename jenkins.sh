@@ -4,7 +4,7 @@ set -e
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-nvm use 4
+nvm use 6
 
 set -x
 
@@ -21,9 +21,7 @@ npm run test -- --no-colors
 npm run lintall -- -f checkstyle -o eslint.xml || true
 
 # re-run the linter, excluding any files known to have errors or warnings.
-./node_modules/.bin/eslint --max-warnings 0 \
-    --ignore-path .eslintignore.errorfiles \
-    src test
+npm run lintwithexclusions
 
 # delete the old tarball, if it exists
 rm -f matrix-react-sdk-*.tgz

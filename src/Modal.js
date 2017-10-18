@@ -17,8 +17,8 @@ limitations under the License.
 
 'use strict';
 
-var React = require('react');
-var ReactDOM = require('react-dom');
+const React = require('react');
+const ReactDOM = require('react-dom');
 import Analytics from './Analytics';
 import sdk from './index';
 
@@ -103,11 +103,18 @@ class ModalManager {
         return container;
     }
 
+    createTrackedDialog(analyticsAction, analyticsInfo, Element, props, className) {
+        Analytics.trackEvent('Modal', analyticsAction, analyticsInfo);
+        return this.createDialog(Element, props, className);
+    }
+
     createDialog(Element, props, className) {
-        if (props && props.title) {
-            Analytics.trackEvent('Modal', props.title, 'createDialog');
-        }
         return this.createDialogAsync((cb) => {cb(Element);}, props, className);
+    }
+
+    createTrackedDialogAsync(analyticsAction, analyticsInfo, loader, props, className) {
+        Analytics.trackEvent('Modal', analyticsAction, analyticsInfo);
+        return this.createDialogAsync(loader, props, className);
     }
 
     /**
@@ -130,15 +137,15 @@ class ModalManager {
      * @param {String} className   CSS class to apply to the modal wrapper
      */
     createDialogAsync(loader, props, className) {
-        var self = this;
+        const self = this;
         const modal = {};
 
         // never call this from onFinished() otherwise it will loop
         //
         // nb explicit function() rather than arrow function, to get `arguments`
-        var closeDialog = function() {
+        const closeDialog = function() {
             if (props && props.onFinished) props.onFinished.apply(null, arguments);
-            var i = self._modals.indexOf(modal);
+            const i = self._modals.indexOf(modal);
             if (i >= 0) {
                 self._modals.splice(i, 1);
             }
@@ -153,7 +160,7 @@ class ModalManager {
         // property set here so you can't close the dialog from a button click!
         modal.elem = (
             <AsyncWrapper key={modalCount} loader={loader} {...props}
-                onFinished={closeDialog}/>
+                onFinished={closeDialog} />
         );
         modal.onFinished = props ? props.onFinished : null;
         modal.className = className;
@@ -184,13 +191,13 @@ class ModalManager {
             return;
         }
 
-        var modal = this._modals[0];
-        var dialog = (
-            <div className={"mx_Dialog_wrapper " + (modal.className ? modal.className : '') }>
+        const modal = this._modals[0];
+        const dialog = (
+            <div className={"mx_Dialog_wrapper " + (modal.className ? modal.className : '')}>
                 <div className="mx_Dialog">
-                    {modal.elem}
+                    { modal.elem }
                 </div>
-                <div className="mx_Dialog_background" onClick={ this.closeAll }></div>
+                <div className="mx_Dialog_background" onClick={this.closeAll}></div>
             </div>
         );
 

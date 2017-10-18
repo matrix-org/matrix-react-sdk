@@ -17,7 +17,7 @@ limitations under the License.
 import commonmark from 'commonmark';
 import escape from 'lodash/escape';
 
-const ALLOWED_HTML_TAGS = ['del', 'u'];
+const ALLOWED_HTML_TAGS = ['sub', 'sup', 'del', 'u'];
 
 // These types of node are definitely text
 const TEXT_NODES = ['text', 'softbreak', 'linebreak', 'paragraph', 'document'];
@@ -48,11 +48,30 @@ function html_if_tag_allowed(node) {
  * or false if it is only a single line.
  */
 function is_multi_line(node) {
-    var par = node;
+    let par = node;
     while (par.parent) {
         par = par.parent;
     }
     return par.firstChild != par.lastChild;
+}
+
+import linkifyMatrix from './linkify-matrix';
+import * as linkify from 'linkifyjs';
+linkifyMatrix(linkify);
+
+// Thieved from draft-js-export-markdown
+function escapeMarkdown(s) {
+    return s.replace(/[*_`]/g, '\\$&');
+}
+
+// Replace URLs, room aliases and user IDs with md-escaped URLs
+function linkifyMarkdown(s) {
+    const links = linkify.find(s);
+    links.forEach((l) => {
+        // This may replace several instances of `l.value` at once, but that's OK
+        s = s.replace(l.value, escapeMarkdown(l.value));
+    });
+    return s;
 }
 
 /**
@@ -62,7 +81,7 @@ function is_multi_line(node) {
  */
 export default class Markdown {
     constructor(input) {
-        this.input = input;
+        this.input = linkifyMarkdown(input);
 
         const parser = new commonmark.Parser();
         this.parsed = parser.parse(this.input);
@@ -124,7 +143,7 @@ export default class Markdown {
             if (isMultiLine) this.cr();
             html_if_tag_allowed.call(this, node);
             if (isMultiLine) this.cr();
-        }
+        };
 
         return renderer.render(this.parsed);
     }
@@ -159,7 +178,7 @@ export default class Markdown {
         renderer.html_block = function(node) {
             this.lit(node.literal);
             if (is_multi_line(node) && node.next) this.lit('\n\n');
-        }
+        };
 
         return renderer.render(this.parsed);
     }

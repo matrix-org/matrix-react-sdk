@@ -16,10 +16,10 @@ limitations under the License.
 
 'use strict';
 
-var React = require('react');
-var MatrixClientPeg = require("../../../MatrixClientPeg");
-var Modal = require("../../../Modal");
-var sdk = require("../../../index");
+const React = require('react');
+const MatrixClientPeg = require("../../../MatrixClientPeg");
+const Modal = require("../../../Modal");
+const sdk = require("../../../index");
 
 import Promise from 'bluebird';
 import AccessibleButton from '../elements/AccessibleButton';
@@ -45,7 +45,7 @@ module.exports = React.createClass({
     Phases: {
         Edit: "edit",
         Uploading: "uploading",
-        Error: "error"
+        Error: "error",
     },
 
     getDefaultProps: function() {
@@ -55,11 +55,11 @@ module.exports = React.createClass({
             onCheckPassword: function(oldPass, newPass, confirmPass) {
                 if (newPass !== confirmPass) {
                     return {
-                        error: _t("New passwords don't match")
+                        error: _t("New passwords don't match"),
                     };
                 } else if (!newPass || newPass.length === 0) {
                     return {
-                        error: _t("Passwords can't be empty")
+                        error: _t("Passwords can't be empty"),
                     };
                 }
             },
@@ -104,7 +104,7 @@ module.exports = React.createClass({
         }
 
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-        Modal.createDialog(QuestionDialog, {
+        Modal.createTrackedDialog('Change Password', '', QuestionDialog, {
             title: _t("Warning!"),
             description:
                 <div>
@@ -112,7 +112,7 @@ module.exports = React.createClass({
                         'Changing password will currently reset any end-to-end encryption keys on all devices, ' +
                         'making encrypted chat history unreadable, unless you first export your room keys ' +
                         'and re-import them afterwards. ' +
-                        'In future this will be improved.'
+                        'In future this will be improved.',
                     ) } (<a href="https://github.com/vector-im/riot-web/issues/2671">https://github.com/vector-im/riot-web/issues/2671</a>)
                 </div>,
             button: _t("Continue"),
@@ -120,7 +120,7 @@ module.exports = React.createClass({
                 <button className="mx_Dialog_primary"
                         onClick={this._onExportE2eKeysClicked}>
                     { _t('Export E2E room keys') }
-                </button>
+                </button>,
             ],
             onFinished: (confirmed) => {
                 if (confirmed) {
@@ -164,7 +164,7 @@ module.exports = React.createClass({
         const deferred = Promise.defer();
         // Ask for an email otherwise the user has no way to reset their password
         const SetEmailDialog = sdk.getComponent("dialogs.SetEmailDialog");
-        Modal.createDialog(SetEmailDialog, {
+        Modal.createTrackedDialog('Do you want to set an email address?', '', SetEmailDialog, {
             title: _t('Do you want to set an email address?'),
             onFinished: (confirmed) => {
                 // ignore confirmed, setting an email is optional
@@ -175,15 +175,13 @@ module.exports = React.createClass({
     },
 
     _onExportE2eKeysClicked: function() {
-        Modal.createDialogAsync(
-            (cb) => {
-                require.ensure(['../../../async-components/views/dialogs/ExportE2eKeysDialog'], () => {
-                    cb(require('../../../async-components/views/dialogs/ExportE2eKeysDialog'));
-                }, "e2e-export");
-            }, {
-                matrixClient: MatrixClientPeg.get(),
-            }
-        );
+        Modal.createTrackedDialogAsync('Export E2E Keys', 'Change Password', (cb) => {
+            require.ensure(['../../../async-components/views/dialogs/ExportE2eKeysDialog'], () => {
+                cb(require('../../../async-components/views/dialogs/ExportE2eKeysDialog'));
+            }, "e2e-export");
+        }, {
+            matrixClient: MatrixClientPeg.get(),
+        });
     },
 
     onClickChange: function() {
@@ -210,7 +208,7 @@ module.exports = React.createClass({
         if (!this.state.cachedPassword) {
             currentPassword = <div className={rowClassName}>
                 <div className={rowLabelClassName}>
-                    <label htmlFor="passwordold">Current password</label>
+                    <label htmlFor="passwordold">{ _t('Current password') }</label>
                 </div>
                 <div className={rowInputClassName}>
                     <input id="passwordold" type="password" ref="old_input" />
@@ -256,5 +254,5 @@ module.exports = React.createClass({
                     </div>
                 );
         }
-    }
+    },
 });

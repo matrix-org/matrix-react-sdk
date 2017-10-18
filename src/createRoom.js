@@ -79,12 +79,6 @@ function createRoom(opts) {
     const modal = Modal.createDialog(Loader, null, 'mx_Dialog_spinner');
 
     let roomId;
-    if (opts.andView) {
-        // We will possibly have a successful join, indicate as such
-        dis.dispatch({
-            action: 'will_join',
-        });
-    }
     return client.createRoom(createOpts).finally(function() {
         modal.close();
     }).then(function(res) {
@@ -104,8 +98,10 @@ function createRoom(opts) {
                 action: 'view_room',
                 room_id: roomId,
                 should_peek: false,
-                // Creating a room will have joined us to the room
-                joined: true,
+                // Creating a room will have joined us to the room,
+                // so we are expecting the room to come down the sync
+                // stream, if it hasn't already.
+                joining: true,
             });
         }
         return roomId;
@@ -115,7 +111,7 @@ function createRoom(opts) {
             action: 'join_room_error',
         });
         console.error("Failed to create room " + roomId + " " + err);
-        Modal.createDialog(ErrorDialog, {
+        Modal.createTrackedDialog('Failure to create room', '', ErrorDialog, {
             title: _t("Failure to create room"),
             description: _t("Server may be unavailable, overloaded, or you hit a bug."),
         });

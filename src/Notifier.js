@@ -1,6 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
+Copyright 2017 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,8 +34,15 @@ import Modal from './Modal';
  * }
  */
 
+const MAX_PENDING_ENCRYPTED = 20;
+
 const Notifier = {
     notifsByRoom: {},
+
+    // A list of event IDs that we've received but need to wait until
+    // they're decrypted until we decide whether to notify for them
+    // or not
+    pendingEncryptedEventIds: [],
 
     notificationMessageForEvent: function(ev) {
         return TextForEvent.textForEvent(ev);
@@ -72,10 +80,11 @@ const Notifier = {
             if (ev.getContent().body) msg = ev.getContent().body;
         }
 
-        const avatarUrl = ev.sender ? Avatar.avatarUrlForMember(
-            ev.sender, 40, 40, 'crop'
-        ) : null;
+        if (!this.isBodyEnabled()) {
+            msg = '';
+        }
 
+        const avatarUrl = ev.sender ? Avatar.avatarUrlForMember(ev.sender, 40, 40, 'crop') : null;
         const notif = plaf.displayNotification(title, msg, avatarUrl, room);
 
         // if displayNotification returns non-null,  the platform supports
@@ -89,17 +98,18 @@ const Notifier = {
     _playAudioNotification: function(ev, room) {
         const e = document.getElementById("messageAudio");
         if (e) {
-            e.load();
             e.play();
         }
     },
 
     start: function() {
-        this.boundOnRoomTimeline = this.onRoomTimeline.bind(this);
+        this.boundOnEvent = this.onEvent.bind(this);
         this.boundOnSyncStateChange = this.onSyncStateChange.bind(this);
         this.boundOnRoomReceipt = this.onRoomReceipt.bind(this);
-        MatrixClientPeg.get().on('Room.timeline', this.boundOnRoomTimeline);
+        this.boundOnEventDecrypted = this.onEventDecrypted.bind(this);
+        MatrixClientPeg.get().on('event', this.boundOnEvent);
         MatrixClientPeg.get().on('Room.receipt', this.boundOnRoomReceipt);
+        MatrixClientPeg.get().on('Event.decrypted', this.boundOnEventDecrypted);
         MatrixClientPeg.get().on("sync", this.boundOnSyncStateChange);
         this.toolbarHidden = false;
         this.isSyncing = false;
@@ -107,8 +117,9 @@ const Notifier = {
 
     stop: function() {
         if (MatrixClientPeg.get() && this.boundOnRoomTimeline) {
-            MatrixClientPeg.get().removeListener('Room.timeline', this.boundOnRoomTimeline);
+            MatrixClientPeg.get().removeListener('Event', this.boundOnEvent);
             MatrixClientPeg.get().removeListener('Room.receipt', this.boundOnRoomReceipt);
+            MatrixClientPeg.get().removeListener('Event.decrypted', this.boundOnEventDecrypted);
             MatrixClientPeg.get().removeListener('sync', this.boundOnSyncStateChange);
         }
         this.isSyncing = false;
@@ -142,7 +153,7 @@ const Notifier = {
                         ? _t('Riot does not have permission to send you notifications - please check your browser settings')
                         : _t('Riot was not given permission to send notifications - please try again');
                     const ErrorDialog = sdk.getComponent('dialogs.ErrorDialog');
-                    Modal.createDialog(ErrorDialog, {
+                    Modal.createTrackedDialog('Unable to enable Notifications', result, ErrorDialog, {
                         title: _t('Unable to enable Notifications'),
                         description,
                     });
@@ -182,6 +193,19 @@ const Notifier = {
 
         const enabled = global.localStorage.getItem('notifications_enabled');
         if (enabled === null) return true;
+        return enabled === 'true';
+    },
+
+    setBodyEnabled: function(enable) {
+        if (!global.localStorage) return;
+        global.localStorage.setItem('notifications_body_enabled', enable ? 'true' : 'false');
+    },
+
+    isBodyEnabled: function() {
+        if (!global.localStorage) return true;
+        const enabled = global.localStorage.getItem('notifications_body_enabled');
+        // default to true if the popups are enabled
+        if (enabled === null) return this.isEnabled();
         return enabled === 'true';
     },
 
@@ -237,23 +261,30 @@ const Notifier = {
         }
     },
 
-    onRoomTimeline: function(ev, room, toStartOfTimeline, removed, data) {
-        if (toStartOfTimeline) return;
-        if (!room) return;
+    onEvent: function(ev) {
         if (!this.isSyncing) return; // don't alert for any messages initially
         if (ev.sender && ev.sender.userId === MatrixClientPeg.get().credentials.userId) return;
-        if (data.timeline.getTimelineSet() !== room.getUnfilteredTimelineSet()) return;
 
-        const actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
-        if (actions && actions.notify) {
-            if (this.isEnabled()) {
-                this._displayPopupNotification(ev, room);
+        // If it's an encrypted event and the type is still 'm.room.encrypted',
+        // it hasn't yet been decrypted, so wait until it is.
+        if (ev.isBeingDecrypted() || ev.isDecryptionFailure()) {
+            this.pendingEncryptedEventIds.push(ev.getId());
+            // don't let the list fill up indefinitely
+            while (this.pendingEncryptedEventIds.length > MAX_PENDING_ENCRYPTED) {
+                this.pendingEncryptedEventIds.shift();
             }
-            if (actions.tweaks.sound && this.isAudioEnabled()) {
-                PlatformPeg.get().loudNotification(ev, room);
-                this._playAudioNotification(ev, room);
-            }
+            return;
         }
+
+        this._evaluateEvent(ev);
+    },
+
+    onEventDecrypted: function(ev) {
+        const idx = this.pendingEncryptedEventIds.indexOf(ev.getId());
+        if (idx === -1) return;
+
+        this.pendingEncryptedEventIds.splice(idx, 1);
+        this._evaluateEvent(ev);
     },
 
     onRoomReceipt: function(ev, room) {
@@ -271,6 +302,20 @@ const Notifier = {
                 plaf.clearNotification(notif);
             }
             delete this.notifsByRoom[room.roomId];
+        }
+    },
+
+    _evaluateEvent: function(ev) {
+        const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
+        const actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
+        if (actions && actions.notify) {
+            if (this.isEnabled()) {
+                this._displayPopupNotification(ev, room);
+            }
+            if (actions.tweaks.sound && this.isAudioEnabled()) {
+                PlatformPeg.get().loudNotification(ev, room);
+                this._playAudioNotification(ev, room);
+            }
         }
     },
 };

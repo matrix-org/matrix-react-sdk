@@ -106,6 +106,16 @@ export default React.createClass({
     },
 
     _doUsernameCheck: function() {
+        // XXX: SPEC-1
+        // Check if username is valid
+        // Naive impl copied from https://github.com/matrix-org/matrix-react-sdk/blob/66c3a6d9ca695780eb6b662e242e88323053ff33/src/components/views/login/RegistrationForm.js#L190
+        if (encodeURIComponent(this.state.username) !== this.state.username) {
+            this.setState({
+                usernameError: _t('User names may only contain letters, numbers, dots, hyphens and underscores.'),
+            });
+            return Promise.reject();
+        }
+
         // Check if username is available
         return this._matrixClient.isUsernameAvailable(this.state.username).then(
             (isAvailable) => {
@@ -216,7 +226,7 @@ export default React.createClass({
         let usernameIndicator = null;
         let usernameBusyIndicator = null;
         if (this.state.usernameBusy) {
-            usernameBusyIndicator = <Spinner w="24" h="24"/>;
+            usernameBusyIndicator = <Spinner w="24" h="24" />;
         } else {
             const usernameAvailable = this.state.username &&
                 this.state.usernameCheckSupport && !this.state.usernameError;
@@ -242,7 +252,7 @@ export default React.createClass({
         return (
             <BaseDialog className="mx_SetMxIdDialog"
                 onFinished={this.props.onFinished}
-                title="To get started, please pick a username!"
+                title={_t('To get started, please pick a username!')}
             >
                 <div className="mx_Dialog_content">
                     <div className="mx_SetMxIdDialog_input_group">
@@ -265,17 +275,17 @@ export default React.createClass({
                                 /<a>(.*?)<\/a>/,
                             ],
                             [
-                                (sub) => <span>{this.props.homeserverUrl}</span>,
-                                (sub) => <a href="#" onClick={this.props.onDifferentServerClicked}>{sub}</a>,
+                                (sub) => <span>{ this.props.homeserverUrl }</span>,
+                                (sub) => <a href="#" onClick={this.props.onDifferentServerClicked}>{ sub }</a>,
                             ],
-                        )}
+                        ) }
                     </p>
                     <p>
                         { _tJsx(
                             'If you already have a Matrix account you can <a>log in</a> instead.',
                             /<a>(.*?)<\/a>/,
-                            [(sub) => <a href="#" onClick={this.props.onLoginClick}>{sub}</a>],
-                        )}
+                            [(sub) => <a href="#" onClick={this.props.onLoginClick}>{ sub }</a>],
+                        ) }
                     </p>
                     { auth }
                     { authErrorIndicator }

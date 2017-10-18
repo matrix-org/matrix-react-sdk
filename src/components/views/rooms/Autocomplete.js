@@ -143,7 +143,6 @@ export default class Autocomplete extends React.Component {
             return null;
         }
         this.setSelection(selectionOffset);
-        return selectionOffset === COMPOSER_SELECTED ? null : this.state.completionList[selectionOffset - 1];
     }
 
     // called from MessageComposerInput
@@ -155,7 +154,6 @@ export default class Autocomplete extends React.Component {
             return null;
         }
         this.setSelection(selectionOffset);
-        return selectionOffset === COMPOSER_SELECTED ? null : this.state.completionList[selectionOffset - 1];
     }
 
     onEscape(e): boolean {
@@ -172,7 +170,7 @@ export default class Autocomplete extends React.Component {
     }
 
     hide() {
-        this.setState({hide: true, selectionOffset: 0});
+        this.setState({hide: true, selectionOffset: 0, completions: [], completionList: []});
     }
 
     forceComplete() {
@@ -201,6 +199,9 @@ export default class Autocomplete extends React.Component {
 
     setSelection(selectionOffset: number) {
         this.setState({selectionOffset, hide: false});
+        if (this.props.onSelectionChange) {
+            this.props.onSelectionChange(this.state.completionList[selectionOffset - 1]);
+        }
     }
 
     componentDidUpdate() {
@@ -232,7 +233,7 @@ export default class Autocomplete extends React.Component {
                 const componentPosition = position;
                 position++;
 
-                const onMouseOver = () => this.setSelection(componentPosition);
+                const onMouseMove = () => this.setSelection(componentPosition);
                 const onClick = () => {
                     this.setSelection(componentPosition);
                     this.onCompletionClicked();
@@ -242,7 +243,7 @@ export default class Autocomplete extends React.Component {
                     key: i,
                     ref: `completion${position - 1}`,
                     className,
-                    onMouseOver,
+                    onMouseMove,
                     onClick,
                 });
             });
@@ -250,15 +251,15 @@ export default class Autocomplete extends React.Component {
 
             return completions.length > 0 ? (
                 <div key={i} className="mx_Autocomplete_ProviderSection">
-                    <EmojiText element="div" className="mx_Autocomplete_provider_name">{completionResult.provider.getName()}</EmojiText>
-                    {completionResult.provider.renderCompletions(completions)}
+                    <EmojiText element="div" className="mx_Autocomplete_provider_name">{ completionResult.provider.getName() }</EmojiText>
+                    { completionResult.provider.renderCompletions(completions) }
                 </div>
             ) : null;
         }).filter((completion) => !!completion);
 
         return !this.state.hide && renderedCompletions.length > 0 ? (
             <div className="mx_Autocomplete" ref={(e) => this.container = e}>
-                {renderedCompletions}
+                { renderedCompletions }
             </div>
         ) : null;
     }
