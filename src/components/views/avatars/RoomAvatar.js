@@ -63,7 +63,7 @@ module.exports = React.createClass({
                 props.resizeMethod,
             ), // highest priority
             this.getRoomAvatarUrl(props),
-            this.getOriginalRoomAvatarUrl(props),
+            this.getOriginalRoomAvatarUrl(props), // fallback, in case thumbnail not found
             this.getOneToOneAvatar(props), // lowest priority
         ].filter(function(url) {
             return (url != null && url != "");
@@ -83,8 +83,14 @@ module.exports = React.createClass({
     },
 
     getOriginalRoomAvatarUrl: function(props) {
+        if (!props.room) return null;
+
         return props.room.getAvatarUrl(
-            MatrixClientPeg.get().getHomeserverUrl()
+            MatrixClientPeg.get().getHomeserverUrl(),
+            null,
+            null,
+            null,
+            false
         );
     },
 
