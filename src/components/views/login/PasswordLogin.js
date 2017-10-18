@@ -194,7 +194,7 @@ class PasswordLogin extends React.Component {
         if (this.props.hsUrl) {
             try {
                 const parsedHsUrl = new URL(this.props.hsUrl);
-                matrixIdText = _t('%(serverName)s Matrix ID', {serverName: parsedHsUrl.hostname});
+                matrixIdText = _t('Matrix ID on %(serverName)s', {serverName: parsedHsUrl.hostname});
             } catch (e) {
                 // pass
             }
