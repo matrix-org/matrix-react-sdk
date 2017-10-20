@@ -45,6 +45,8 @@ const plEventsToLabels = {
     "m.room.topic": _td("To change the topic, you must be a"),
 
     "im.vector.modular.widgets": _td("To modify widgets in the room, you must be a"),
+
+    "m.room.redaction": _td("To remove your own messages, you must be a"),
 };
 
 const plEventsToShow = {
@@ -57,6 +59,8 @@ const plEventsToShow = {
     "m.room.topic": {isState: true},
 
     "im.vector.modular.widgets": {isState: true},
+
+    "m.room.redaction": {isState: false},
 };
 
 const BannedUser = React.createClass({
