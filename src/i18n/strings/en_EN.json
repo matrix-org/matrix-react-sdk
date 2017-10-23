@@ -351,6 +351,7 @@
     "To change the permissions in the room, you must be a": "To change the permissions in the room, you must be a",
     "To change the topic, you must be a": "To change the topic, you must be a",
     "To modify widgets in the room, you must be a": "To modify widgets in the room, you must be a",
+    "To remove your own messages, you must be a": "To remove your own messages, you must be a",
     "Failed to unban": "Failed to unban",
     "Banned by %(displayName)s": "Banned by %(displayName)s",
     "Privacy warning": "Privacy warning",
