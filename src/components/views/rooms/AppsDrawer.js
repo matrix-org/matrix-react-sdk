@@ -205,7 +205,7 @@ module.exports = React.createClass({
         const apps = this.state.apps.map(
             (app, index, arr) => {
                 return (<AppTile
-                    key={app.id}
+                    key={app.url}
                     id={app.id}
                     url={app.url}
                     name={app.name}
