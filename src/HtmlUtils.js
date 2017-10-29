@@ -152,7 +152,7 @@ export function sanitizedHtmlNode(insaneHtml) {
     return <div dangerouslySetInnerHTML={{ __html: saneHtml }} dir="auto" />;
 }
 
-const sanitizeHtmlParams = {
+export const sanitizeHtmlParams = {
     allowedTags: [
         'font', // custom to matrix for IRC-style font coloring
         'del', // for markdown
