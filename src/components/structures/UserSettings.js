@@ -103,6 +103,10 @@ const SETTINGS_LABELS = [
         label: _td('Enable automatic language detection for syntax highlighting'),
     },
     {
+        id: 'MessageComposer.Textarea',
+        label: _td('Use a Textarea based input'),
+    },
+    {
         id: 'MessageComposerInput.autoReplaceEmoji',
         label: _td('Automatically replace plain text Emoji'),
     },

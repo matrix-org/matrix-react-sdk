@@ -240,7 +240,15 @@ export default class MessageComposer extends React.Component {
         const uploadInputStyle = {display: 'none'};
         const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
         const TintableSvg = sdk.getComponent("elements.TintableSvg");
-        const MessageComposerInput = sdk.getComponent("rooms.MessageComposerInput");
+
+
+        const wantsTextarea = UserSettingsStore.getSyncedSetting('MessageComposer.Textarea', false);
+        let MessageComposerInput = null;
+        if (wantsTextarea) {
+            MessageComposerInput = sdk.getComponent("rooms.MessageComposerInputTextarea");
+        } else {
+            MessageComposerInput = sdk.getComponent("rooms.MessageComposerInput");
+        }
 
         const controls = [];
 
@@ -316,7 +324,7 @@ export default class MessageComposer extends React.Component {
                 </div>
             );
 
-            const formattingButton = (
+            const formattingButton = wantsTextarea ? null : (
                 <img className="mx_MessageComposer_formatting"
                      title={_t("Show Text Formatting Toolbar")}
                      src="img/button-text-formatting.svg"
@@ -370,6 +378,24 @@ export default class MessageComposer extends React.Component {
             },
         );
 
+        let formatBar = null;
+        if (!wantsTextarea) {
+            formatBar = <div className="mx_MessageComposer_formatbar_wrapper">
+                <div className="mx_MessageComposer_formatbar" style={this.state.showFormatting ? {} : {display: 'none'}}>
+                    { formatButtons }
+                    <div style={{flex: 1}}></div>
+                    <img title={this.state.inputState.isRichtextEnabled ? _t("Turn Markdown on") : _t("Turn Markdown off")}
+                         onMouseDown={this.onToggleMarkdownClicked}
+                         className="mx_MessageComposer_formatbar_markdown mx_filterFlipColor"
+                         src={`img/button-md-${!this.state.inputState.isRichtextEnabled}.png`} />
+                    <img title={_t("Hide Text Formatting Toolbar")}
+                         onClick={this.onToggleFormattingClicked}
+                         className="mx_MessageComposer_formatbar_cancel mx_filterFlipColor"
+                         src="img/icon-text-cancel.svg" />
+                </div>
+            </div>;
+        }
+
         return (
             <div className="mx_MessageComposer mx_fadable" style={{ opacity: this.props.opacity }}>
                 <div className="mx_MessageComposer_wrapper">
@@ -377,20 +403,7 @@ export default class MessageComposer extends React.Component {
                         { controls }
                     </div>
                 </div>
-                <div className="mx_MessageComposer_formatbar_wrapper">
-                    <div className="mx_MessageComposer_formatbar" style={this.state.showFormatting ? {} : {display: 'none'}}>
-                        { formatButtons }
-                        <div style={{flex: 1}}></div>
-                        <img title={this.state.inputState.isRichtextEnabled ? _t("Turn Markdown on") : _t("Turn Markdown off")}
-                             onMouseDown={this.onToggleMarkdownClicked}
-                            className="mx_MessageComposer_formatbar_markdown mx_filterFlipColor"
-                            src={`img/button-md-${!this.state.inputState.isRichtextEnabled}.png`} />
-                        <img title={_t("Hide Text Formatting Toolbar")}
-                             onClick={this.onToggleFormattingClicked}
-                             className="mx_MessageComposer_formatbar_cancel mx_filterFlipColor"
-                             src="img/icon-text-cancel.svg" />
-                    </div>
-                </div>
+                { formatBar }
             </div>
         );
     }
