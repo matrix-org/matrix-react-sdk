@@ -49,25 +49,8 @@ export default React.createClass({
         });
     },
 
-    _onGroupIdBlur: function(e) {
-        this._checkGroupId();
-    },
-
-    _checkGroupId: function(e) {
-        let error = null;
-        if (!/^[a-zA-Z0-9]*$/.test(this.state.groupId)) {
-            error = _t("Community IDs may only contain alphanumeric characters");
-        }
-        this.setState({
-            groupIdError: error,
-        });
-        return error;
-    },
-
     _onFormSubmit: function(e) {
         e.preventDefault();
-
-        if (this._checkGroupId()) return;
 
         const profile = {};
         if (this.state.groupName !== '') {
@@ -143,14 +126,10 @@ export default React.createClass({
                                     size="32"
                                     placeholder={_t('example')}
                                     onChange={this._onGroupIdChange}
-                                    onBlur={this._onGroupIdBlur}
                                     value={this.state.groupId}
                                 />
                                 <span>:{ MatrixClientPeg.get().getDomain() }</span>
                             </div>
-                        </div>
-                        <div className="error">
-                            { this.state.groupIdError }
                         </div>
                         { createErrorNode }
                     </div>
