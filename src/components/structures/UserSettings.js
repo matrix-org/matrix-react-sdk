@@ -183,7 +183,16 @@ const THEMES = [
         label: _td('Dark theme'),
         value: 'dark',
     },
-];
+        {
+        id: 'theme',
+        label: 'Light high contrast theme',
+        value: 'contrastlight'
+    },
+    {
+        id: 'theme',
+        label: 'Light high contrast condensed text theme',
+        value: 'contrastlightcondensed'
+    }];
 
 const IgnoredUser = React.createClass({
     propTypes: {
