@@ -62,7 +62,7 @@ export default class ManageIntegsButton extends React.Component {
             return;
         }
         const IntegrationsManager = sdk.getComponent("views.settings.IntegrationsManager");
-        Modal.createDialog(IntegrationsManager, {
+        Modal.createTrackedDialog('Integrations Manager', '', IntegrationsManager, {
             src: (this.scalarClient !== null && this.scalarClient.hasCredentials()) ?
                 this.scalarClient.getScalarInterfaceUrlForRoom(this.props.roomId) :
                 null,
