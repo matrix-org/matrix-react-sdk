@@ -547,7 +547,16 @@ const onMessage = function(event) {
     }
 
     if (event.data.action === "close_scalar") {
-        dis.dispatch({ action: "close_scalar" });
+        // FIXME -- Currently broken!!
+        // dis.dispatch({action: 'close_scalar'});
+        // Show apps drawer if the users has just added a new integration
+        if (event.data.data && event.data.data.widgetsAdded > 0) {
+            dis.dispatch({action: 'close_scalar'});
+            // dis.dispatch({
+            //     action: "appsDrawer",
+            //     show: true,
+            // });
+        }
         sendResponse(event, null);
         return;
     }
