@@ -690,6 +690,8 @@
     "Failed to update community": "Failed to update community",
     "Unable to accept invite": "Unable to accept invite",
     "Unable to reject invite": "Unable to reject invite",
+    "Unverified widget source": "Unverified widget source",
+    "This widget is being hosted from an unknown or unverified source.": "This widget is being hosted from an unknown or unverified source.",
     "Leave Community": "Leave Community",
     "Leave %(groupName)s?": "Leave %(groupName)s?",
     "Leave": "Leave",

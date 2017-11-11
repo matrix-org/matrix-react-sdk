@@ -255,6 +255,18 @@ export default React.createClass({
         }
     },
 
+    /**
+     * Show widget source warning dialog
+     */
+    _onWidgetSourceWarningClick() {
+        const InfoDialog = sdk.getComponent("dialogs.InfoDialog");
+        Modal.createTrackedDialog('Unverified widget info', '', InfoDialog, {
+            title: _t("Unverified widget source"),
+            description: _t(
+                "This widget is being hosted from an unknown or unverified source."),
+        });
+    },
+
     _onLoaded() {
         this.setState({loading: false});
     },
@@ -383,6 +395,18 @@ export default React.createClass({
                 <div ref="menu_bar" className="mx_AppTileMenuBar" onClick={this.onClickMenuBar}>
                     { this.formatAppTileName() }
                     <span className="mx_AppTileMenuBarWidgets">
+                        { /* Non-Scalar warning */ }
+                        {
+                            <img
+                                src="img/warning_yellow.svg"
+                                className="mx_AppTileMenuBarWidget mx_AppTileMenuBarWidgetPadding"
+                                width="10" height="10"
+                                alt={_t('Unverified widget source')}
+                                title={_t('Unverified widget source')}
+                                onClick={this._onWidgetSourceWarningClick}
+                            />
+                        }
+
                         { /* Edit widget */ }
                         { showEditButton && <img
                             src="img/edit.svg"
