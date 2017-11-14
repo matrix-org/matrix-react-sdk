@@ -280,6 +280,18 @@ export default React.createClass({
         return _td('Revoke widget access');
     },
 
+    /**
+     * Is the current state widget URL hosted by Sclar
+     * @return {Boolean} True for scalar hosted or unset URLs
+     */
+    _isScalarWidget() {
+        if (!this.state.widgetUrl) {
+            return true;
+        }
+
+        return this.isScalarUrl(this.state.widgetUrl);
+    },
+
     /* TODO -- Store permission in account data so that it is persisted across multiple devices */
     _grantWidgetPermission() {
         console.warn('Granting permission to load widget - ', this.state.widgetUrl);
@@ -396,7 +408,7 @@ export default React.createClass({
                     { this.formatAppTileName() }
                     <span className="mx_AppTileMenuBarWidgets">
                         { /* Non-Scalar warning */ }
-                        {
+                        { !this._isScalarWidget() &&
                             <img
                                 src="img/warning_yellow.svg"
                                 className="mx_AppTileMenuBarWidget mx_AppTileMenuBarWidgetPadding"
