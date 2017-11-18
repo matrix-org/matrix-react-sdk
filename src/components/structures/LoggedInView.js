@@ -217,6 +217,7 @@ export default React.createClass({
         const RightPanel = sdk.getComponent('structures.RightPanel');
         const RoomView = sdk.getComponent('structures.RoomView');
         const UserSettings = sdk.getComponent('structures.UserSettings');
+        const NewUserSettings = sdk.getComponent('structures.settings.NewUserSettings');
         const CreateRoom = sdk.getComponent('structures.CreateRoom');
         const RoomDirectory = sdk.getComponent('structures.RoomDirectory');
         const HomePage = sdk.getComponent('structures.HomePage');
@@ -229,6 +230,7 @@ export default React.createClass({
 
         let page_element;
         let right_panel = '';
+        let fullPageElement = false;
 
         switch (this.props.page_type) {
             case PageTypes.RoomView:
@@ -257,6 +259,18 @@ export default React.createClass({
                     teamToken={this.props.teamToken}
                 />;
                 if (!this.props.collapseRhs) right_panel = <RightPanel disabled={this.props.rightDisabled} />;
+
+                if (SettingsStore.isFeatureEnabled("feature_settings")) {
+                    fullPageElement = true;
+                    right_panel = null;
+                    page_element = <NewUserSettings
+                        onClose={this.props.onUserSettingsClose}
+                        brand={this.props.config.brand}
+                        referralBaseUrl={this.props.config.referralBaseUrl}
+                        teamToken={this.props.teamToken}
+                    />;
+                }
+
                 break;
 
             case PageTypes.MyGroups:
@@ -330,20 +344,33 @@ export default React.createClass({
             bodyClasses += ' mx_MatrixChat_useCompactLayout';
         }
 
+        let body = (
+            <div className={bodyClasses}>
+                <LeftPanel
+                    selectedRoom={this.props.currentRoomId}
+                    collapsed={this.props.collapseLhs || false}
+                    disabled={this.props.leftDisabled}
+                />
+                <main className='mx_MatrixChat_middlePanel'>
+                    { page_element }
+                </main>
+                { right_panel }
+            </div>
+        );
+        if (fullPageElement) {
+            body = (
+                <div className={bodyClasses}>
+                    <main className='mx_MatrixChat_middlePanel mx_MatrixChat_fullPagePanel'>
+                        { page_element }
+                    </main>
+                </div>
+            );
+        }
+
         return (
             <div className='mx_MatrixChat_wrapper'>
                 { topBar }
-                <div className={bodyClasses}>
-                    <LeftPanel
-                        selectedRoom={this.props.currentRoomId}
-                        collapsed={this.props.collapseLhs || false}
-                        disabled={this.props.leftDisabled}
-                    />
-                    <main className='mx_MatrixChat_middlePanel'>
-                        { page_element }
-                    </main>
-                    { right_panel }
-                </div>
+                { body }
             </div>
         );
     },
