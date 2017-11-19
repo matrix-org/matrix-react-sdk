@@ -17,6 +17,7 @@ limitations under the License.
 import * as React from "react";
 import {_td} from "../../../languageHandler";
 import {TabbedView, Tab} from "../TabbedView";
+import GeneralUserSettingsPanel from "./user/GeneralUserSettingsPanel";
 
 module.exports = React.createClass({
     displayName: 'NewUserSettings',
@@ -43,7 +44,7 @@ module.exports = React.createClass({
 
     _getTabs: function () {
         return [
-            new Tab(_td("Test Tab 1"), (<div><h3>This is a tab</h3><p>Hello world!</p></div>)),
+            new Tab(_td("General"), (<GeneralUserSettingsPanel />)),
             new Tab(_td("Test Tab 2"), (<div><h3>This is another tab</h3><p>Woo!</p></div>)),
         ];
     },

@@ -16,6 +16,7 @@ limitations under the License.
 
 import * as React from "react";
 import {_t, _td} from '../../languageHandler';
+import GeminiScrollbar from 'react-gemini-scrollbar';
 
 const DEFAULT_EXIT_STRING = _td("Return to app");
 
@@ -45,7 +46,7 @@ export class TabbedView extends React.Component {
      * @private
      */
     _showTab(tab) {
-        console.log("Show tab: " + tab.label);
+        console.log("TODO Show tab: " + tab.label);
     }
 
     /**
@@ -56,7 +57,8 @@ export class TabbedView extends React.Component {
      */
     _getTabLabel(tab) {
         return (
-            <span className="mx_TabbedView_tabLabel" onClick={() => this._showTab(tab)}>
+            <span className="mx_TabbedView_tabLabel" key={"tab_label_ " + tab.label}
+                  onClick={() => this._showTab(tab)}>
                 { _t(tab.label) }
             </span>
         );
@@ -69,7 +71,7 @@ export class TabbedView extends React.Component {
         for (const tab of this.props.tabs) {
             labels.push(this._getTabLabel(tab));
             panels.push((
-                <div className="mx_TabbedView_tabPanel">
+                <div className="mx_TabbedView_tabPanel" key={"tab_panel_ " + tab.label}>
                     { tab.body }
                 </div>
             ));
@@ -88,7 +90,9 @@ export class TabbedView extends React.Component {
                     { labels }
                 </div>
                 <div className="mx_TabbedView_tabPanels">
-                    { panels }
+                    <GeminiScrollbar>
+                        { panels }
+                    </GeminiScrollbar>
                 </div>
             </div>
         );
