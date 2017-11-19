@@ -31,6 +31,7 @@ module.exports = React.createClass({
     getInitialState: function() {
         return {
             avatarUrl: null,
+            original: {},
         };
     },
 
@@ -43,10 +44,14 @@ module.exports = React.createClass({
         Promise.all([
             UserSettingsStore.loadProfileInfo(), UserSettingsStore.loadThreePids(),
         ]).then(function(resps) {
+            const originals = self.state.original;
+            originals.displayName = resps[0].displayname;
+            originals.avatarUrl = resps[0].avatar_url;
             self.setState({
                 avatarUrl: resps[0].avatar_url,
                 displayName: resps[0].displayname,
                 threepids: resps[1].threepids,
+                original: originals,
             });
         }).catch(function(error) {
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
@@ -99,8 +104,10 @@ module.exports = React.createClass({
     },
 
     onAvatarRemoveClick: function() {
-        MatrixClientPeg.get().setAvatarUrl(null);
-        this.setState({avatarUrl: null}); // the avatar update will complete async for us
+        if (this.refs.changeAvatar) {
+            this.refs.changeAvatar.forceAvatarUrl(null);
+        }
+        this.setState({avatarUrl: null});
     },
 
     onAvatarSelected: function(ev) {
@@ -123,6 +130,38 @@ module.exports = React.createClass({
         });
     },
 
+    onDisplayNameChanged: function(ev) {
+        this.setState({
+            displayName: ev.target.value,
+        });
+    },
+
+    onPersonalizationCommitted: function() {
+        const promises = [];
+        const displayNameChanged = this.state.displayName !== this.state.original.displayName;
+        const avatarChanged =
+            (this.refs.changeAvatar && !this.refs.changeAvatar.isCommitted())
+            || (this.state.avatarUrl !== this.state.original.avatarUrl);
+
+        if (avatarChanged) {
+            if (this.state.avatarUrl !== null) {
+                promises.push(this.refs.changeAvatar.commitAvatar());
+            } else {
+                promises.push(MatrixClientPeg.get().setAvatarUrl(null));
+            }
+        }
+
+        if(displayNameChanged) {
+            promises.push(MatrixClientPeg.get().setDisplayName(this.state.displayName));
+        }
+
+        return Promise.all(promises).then(() => this._refreshFromServer());
+    },
+
+    onPersonalizationReverted: function() {
+        return this._refreshFromServer();
+    },
+
     renderAvatarPicker: function() {
         const ChangeAvatar = sdk.getComponent('settings.ChangeAvatar');
 
@@ -130,11 +169,13 @@ module.exports = React.createClass({
 
         return (
             <div className="mx_GeneralUserSettingsPanel_avatarOptions">
-                <ChangeAvatar ref="changeAvatar" initialAvatarUrl={avatarUrl} onClick={this.onAvatarPickerClick}
-                              showUploadSection={false} className="mx_GeneralUserSettingsPanel_avatarImg" />
-                <div className="mx_GeneralUserSettingsPanel_avatarCamera">
-                    <img src="img/camera.svg" title={_t("Upload avatar")} width="17" height="15"
-                         onClick={this.onAvatarPickerClick} />
+                <div onClick={this.onAvatarPickerClick}>
+                    <ChangeAvatar ref="changeAvatar" initialAvatarUrl={avatarUrl} setImmediate={false}
+                                  showUploadSection={false} className="mx_GeneralUserSettingsPanel_avatarImg" />
+                    <div className="mx_GeneralUserSettingsPanel_avatarCamera">
+                        <img src="img/camera.svg" title={_t("Upload avatar")} width="17" height="15"
+                             onClick={this.onAvatarPickerClick} />
+                    </div>
                 </div>
                 <div className="mx_GeneralUserSettingsPanel_avatarRemove" onClick={this.onAvatarRemoveClick}>
                     { _t("remove") }
@@ -147,13 +188,30 @@ module.exports = React.createClass({
     },
 
     renderPersonalizationSection: function() {
+        const FieldCommitment = sdk.getComponent('settings.FieldCommitment');
+        const displayNameChanged = this.state.displayName !== this.state.original.displayName;
+        const avatarChanged =
+            (this.refs.changeAvatar && !this.refs.changeAvatar.isCommitted())
+            || (this.state.avatarUrl !== this.state.original.avatarUrl);
+
+        const pendingChanges = displayNameChanged || avatarChanged;
+        let commitment = null;
+        if (pendingChanges) {
+            commitment = (
+                <FieldCommitment onCommit={this.onPersonalizationCommitted} onRevert={this.onPersonalizationReverted}
+                                 attachment="bottom" />
+            );
+        }
+
         return (
             <div className="mx_GeneralUserSettingsPanel_personalization">
                 { this.renderAvatarPicker() }
                 <div className="mx_GeneralSettingsPanel_displayName">
                     <label htmlFor="displayName">{ _t("Display Name") }</label>
-                    <input type="text" ref="displayName" id="displayName" value={this.state.displayName} />
+                    <input type="text" ref="displayName" id="displayName"
+                           value={this.state.displayName} onChange={this.onDisplayNameChanged} />
                 </div>
+                { commitment }
             </div>
         );
     },

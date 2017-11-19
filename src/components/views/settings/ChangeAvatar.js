@@ -29,6 +29,7 @@ module.exports = React.createClass({
         width: React.PropTypes.number,
         height: React.PropTypes.number,
         className: React.PropTypes.string,
+        setImmediate: React.PropTypes.bool,
     },
 
     Phases: {
@@ -43,6 +44,7 @@ module.exports = React.createClass({
             className: "",
             width: 80,
             height: 80,
+            setImmediate: true,
         };
     },
 
@@ -50,6 +52,8 @@ module.exports = React.createClass({
         return {
             avatarUrl: this.props.initialAvatarUrl,
             phase: this.Phases.Display,
+            uploadedAvatarMxcUrl: null,
+            isCommitted: true,
         };
     },
 
@@ -89,6 +93,28 @@ module.exports = React.createClass({
         }
     },
 
+    commitAvatar: function() {
+        this.setState({ isCommitted: true });
+        if (this.props.room) {
+            return MatrixClientPeg.get().sendStateEvent(
+                self.props.room.roomId,
+                'm.room.avatar',
+                {url: this.state.uploadedAvatarMxcUrl},
+                '',
+            );
+        } else {
+            return MatrixClientPeg.get().setAvatarUrl(this.state.uploadedAvatarMxcUrl);
+        }
+    },
+
+    forceAvatarUrl: function(newUrl) {
+        this.setState({ avatarUrl: newUrl });
+    },
+
+    isCommitted: function() {
+        return this.state.isCommitted;
+    },
+
     setAvatarFromFile: function(file) {
         let newUrl = null;
 
@@ -97,16 +123,14 @@ module.exports = React.createClass({
         });
         const self = this;
         const httpPromise = MatrixClientPeg.get().uploadContent(file).then(function(url) {
+            self.setState({
+                uploadedAvatarMxcUrl: url,
+                isCommitted: false,
+            });
             newUrl = url;
-            if (self.props.room) {
-                return MatrixClientPeg.get().sendStateEvent(
-                    self.props.room.roomId,
-                    'm.room.avatar',
-                    {url: url},
-                    '',
-                );
-            } else {
-                return MatrixClientPeg.get().setAvatarUrl(url);
+
+            if (self.props.setImmediate) {
+                return self.commitAvatar();
             }
         });
 
