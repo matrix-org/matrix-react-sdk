@@ -206,7 +206,7 @@ module.exports = React.createClass({
         return (
             <div className="mx_GeneralUserSettingsPanel_personalization">
                 { this.renderAvatarPicker() }
-                <div className="mx_GeneralSettingsPanel_displayName">
+                <div className="mx_GeneralUserSettingsPanel_displayName">
                     <label htmlFor="displayName">{ _t("Display Name") }</label>
                     <input type="text" ref="displayName" id="displayName"
                            value={this.state.displayName} onChange={this.onDisplayNameChanged} />

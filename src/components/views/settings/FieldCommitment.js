@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import * as React from "react";
-import {_td} from "../../../languageHandler";
+import {_t, _td} from "../../../languageHandler";
 import {TabbedView, Tab} from "../../structures/TabbedView";
 import GeneralUserSettingsPanel from "../../structures/settings/user/GeneralUserSettingsPanel";
 
@@ -37,11 +37,19 @@ module.exports = React.createClass({
     },
 
     render: function () {
+        // TODO: {Travis} actually use the attachment property (and figure out how to make it generic?)
+        // TODO: {Travis} Saving/revert indicator
         return (
-            <div className={"mx_FieldCommitment mx_FieldCommitment_attach_" + this.props.atttachment}>
-                Unsaved changes
-                <button onClick={this.props.onCommit}>Commit</button>
-                <button onClick={this.props.onRevert}>Revert</button>
+            <div className={"mx_FieldCommitment mx_FieldCommitment_attach_" + this.props.attachment}>
+                <span className="mx_FieldCommitment_label">{ _t("Unsaved changes") }</span>
+                <button className="mx_FieldCommitment_button mx_FieldCommitment_revertButton"
+                        onClick={this.props.onRevert}>
+                    <img src="img/icon-revert.svg" width="16" height="16" alt={_t("Undo Changes")} />
+                </button>
+                <button className="mx_FieldCommitment_button mx_FieldCommitment_commitButton"
+                        onClick={this.props.onCommit}>
+                    <img src="img/icon-checkmark.svg" width="16" height="16" alt={_t("Save Changes")} />
+                </button>
             </div>
         );
     },
