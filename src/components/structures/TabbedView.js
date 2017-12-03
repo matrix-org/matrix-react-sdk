@@ -19,6 +19,7 @@ import {_t, _td} from '../../languageHandler';
 import GeminiScrollbar from 'react-gemini-scrollbar';
 
 const DEFAULT_EXIT_STRING = _td("Return to app");
+const DELAY_BEFORE_NEXT_TAB = 25; // milliseconds before we'll accept scrolling to the next tab
 
 /**
  * Represents a tab for the TabbedView
@@ -38,6 +39,21 @@ export class Tab {
 export class TabbedView extends React.Component {
     constructor() {
         super();
+        this.onMouseWheel = this.onMouseWheel.bind(this);
+
+        // This is used to track when the user has scrolled all the way up or down so we
+        // don't immediately start flipping between tabs.
+        this._reachedEndAt = 0;
+    }
+
+    getInitialState() {
+        return {
+            activeTabIndex: 0,
+        };
+    }
+
+    _getActiveTabIndex() {
+        return this.state ? this.state.activeTabIndex : 0;
     }
 
     /**
@@ -45,8 +61,29 @@ export class TabbedView extends React.Component {
      * @param {Tab} tab the tab to show
      * @private
      */
-    _showTab(tab) {
-        console.log("TODO Show tab: " + tab.label);
+    _setActiveTab(tab) {
+        const idx = this.props.tabs.indexOf(tab);
+        if (idx !== -1) {
+            this.setState({activeTabIndex: idx});
+            this._reachedEndAt = 0; // reset scroll timer
+        }
+        else console.error("Could not find tab " + tab.label + " in tabs");
+    }
+
+    _nextTab() {
+        let targetIndex = this._getActiveTabIndex() + 1;
+        if (targetIndex < this.props.tabs.length) {
+            this.setState({activeTabIndex: targetIndex});
+            this._reachedEndAt = 0; // reset scroll timer
+        }
+    }
+
+    _previousTab() {
+        let targetIndex = this._getActiveTabIndex() - 1;
+        if (targetIndex >= 0) {
+            this.setState({activeTabIndex: targetIndex});
+            this._reachedEndAt = 0; // reset scroll timer
+        }
     }
 
     /**
@@ -56,43 +93,91 @@ export class TabbedView extends React.Component {
      * @private
      */
     _getTabLabel(tab) {
+        let classes = "mx_TabbedView_tabLabel ";
+
+        const idx = this.props.tabs.indexOf(tab);
+        if (idx === this._getActiveTabIndex()) classes += "mx_TabbedView_tabLabel_active";
+
         return (
-            <span className="mx_TabbedView_tabLabel" key={"tab_label_ " + tab.label}
-                  onClick={() => this._showTab(tab)}>
-                { _t(tab.label) }
+            <span className={classes} key={"tab_label_ " + tab.label}
+                  onClick={() => this._setActiveTab(tab)}>
+                {_t(tab.label)}
             </span>
         );
     }
 
-    render() {
-        const labels = [];
-        const panels = [];
+    _getScrollNode() {
+        if (!this.refs.geminiScrollbar) return null;
+        return this.refs.geminiScrollbar.scrollbar.getViewElement();
+    }
 
-        for (const tab of this.props.tabs) {
-            labels.push(this._getTabLabel(tab));
-            panels.push((
+    onMouseWheel(ev) {
+        const node = this._getScrollNode();
+        if (!node) {
+            console.warn("Scrolling tabs without a scroll node!");
+            return;
+        }
+
+        const availableHeight = window.innerHeight;
+        const panelTop = node.scrollTop;
+        const bottomY = panelTop + availableHeight;
+        const absoluteBottom = node.scrollHeight;
+
+        let direction = 0; // + = next, - = prev, 0 = no change
+        if (bottomY >= absoluteBottom && ev.deltaY > 0) {
+            direction = 1; // next tab
+        }
+        if (panelTop <= 0 && ev.deltaY < 0) {
+            direction = -1; // previous tab
+        }
+        if (direction === 0) {
+            // we're not scrolled enough, so reset our timeout and stop processing
+            this._reachedEndAt = 0;
+            return;
+        }
+
+        // we've scrolled enough: check our timer and scroll if we've waited long enough
+        const now = new Date().getTime();
+        if (this._reachedEndAt === 0) {
+            this._reachedEndAt = now;
+        } else if (now - this._reachedEndAt > DELAY_BEFORE_NEXT_TAB) {
+            // next and previous tab methods both handle out of range values internally
+            if (direction > 0) this._nextTab();
+            else if (direction < 0) this._previousTab();
+        }
+    }
+
+    render() {
+        const labels = this.props.tabs.map(t => this._getTabLabel(t));
+
+        let panel = <div>E_NO_TAB</div>; // This should never happen for a default
+        const tab = this.props.tabs[this._getActiveTabIndex()];
+        if (tab) {
+            panel = (
                 <div className="mx_TabbedView_tabPanel" key={"tab_panel_ " + tab.label}>
-                    { tab.body }
+                    <GeminiScrollbar ref="geminiScrollbar" onWheel={this.onMouseWheel}>
+                        <div className="mx_TabbedView_tabPanelContent">
+                            {tab.body}
+                        </div>
+                    </GeminiScrollbar>
                 </div>
-            ));
+            );
         }
 
         const returnToApp = (
-            <span className="mx_TabbedView_tabLabel" onClick={this.props.onExit}>
-                { _t(this.props.exitLabel || DEFAULT_EXIT_STRING) }
+            <span className="mx_TabbedView_tabLabel mx_TabbedView_exit" onClick={this.props.onExit}>
+                {_t(this.props.exitLabel || DEFAULT_EXIT_STRING)}
             </span>
         );
 
         return (
             <div className="mx_TabbedView">
                 <div className="mx_TabbedView_tabLabels">
-                    { returnToApp }
-                    { labels }
+                    {returnToApp}
+                    {labels}
                 </div>
                 <div className="mx_TabbedView_tabPanels">
-                    <GeminiScrollbar>
-                        { panels }
-                    </GeminiScrollbar>
+                    {panel}
                 </div>
             </div>
         );

@@ -46,6 +46,8 @@ module.exports = React.createClass({
         return [
             new Tab(_td("General"), (<GeneralUserSettingsPanel />)),
             new Tab(_td("Test Tab 2"), (<div><h3>This is another tab</h3><p>Woo!</p></div>)),
+            // new Tab(_td("Test Tab 3"), (<div><h3>Tab 3</h3><p>Here we go!</p></div>)),
+            // new Tab(_td("Test Tab 4"), (<div><h3>This is the FOURTH tab</h3><p>Yay!</p></div>)),
         ];
     },
 

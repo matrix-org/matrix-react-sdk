@@ -216,16 +216,36 @@ module.exports = React.createClass({
         );
     },
 
+    renderFlairSection: function() {
+        // TODO: {Travis} Generify GroupUserSettings
+        // const GroupUserSettings = sdk.getComponent('groups.GroupUserSettings');
+        // return <GroupUserSettings />;
+        return (
+            <div>
+                <h3>Flair</h3>
+                <p>This is where flair controls would normally go.</p>
+            </div>
+        );
+    },
+
     render: function () {
+        const spam = [];
+        for (let i = 0; i < 25; i++) {
+            spam.push(<p key={i}>Spam item {i}</p>);
+        }
+
         return (
             <div className="mx_GeneralUserSettingsPanel">
                 <h1>{ _t("Your Account") }</h1>
                 <button className="mx_GeneralUserSettingsPanel_button mx_GeneralUserSettingsPanel_logout"
                         onClick={this.onLogoutClick}>
-                    { _t("Logout") }
+                    { _t("Sign out") }
                 </button>
 
                 { this.renderPersonalizationSection() }
+                { this.renderFlairSection() }
+
+                {spam}
             </div>
         );
     },
