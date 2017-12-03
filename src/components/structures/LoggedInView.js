@@ -19,7 +19,7 @@ limitations under the License.
 import * as Matrix from 'matrix-js-sdk';
 import React from 'react';
 
-import KeyCode from '../../KeyCode';
+import { KeyCode, isOnlyCtrlOrCmdKeyEvent } from '../../Keyboard';
 import Notifier from '../../Notifier';
 import PageTypes from '../../PageTypes';
 import CallMediaHandler from '../../CallMediaHandler';
@@ -153,13 +153,7 @@ export default React.createClass({
             */
 
         let handled = false;
-        const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-        let ctrlCmdOnly;
-        if (isMac) {
-            ctrlCmdOnly = ev.metaKey && !ev.altKey && !ev.ctrlKey && !ev.shiftKey;
-        } else {
-            ctrlCmdOnly = ev.ctrlKey && !ev.altKey && !ev.metaKey && !ev.shiftKey;
-        }
+        const ctrlCmdOnly = isOnlyCtrlOrCmdKeyEvent(ev);
 
         switch (ev.keyCode) {
             case KeyCode.UP:
@@ -213,6 +207,7 @@ export default React.createClass({
     },
 
     render: function() {
+        const TagPanel = sdk.getComponent('structures.TagPanel');
         const LeftPanel = sdk.getComponent('structures.LeftPanel');
         const RightPanel = sdk.getComponent('structures.RightPanel');
         const RoomView = sdk.getComponent('structures.RoomView');
@@ -346,6 +341,7 @@ export default React.createClass({
 
         let body = (
             <div className={bodyClasses}>
+                { SettingsStore.isFeatureEnabled("feature_tag_panel") ? <TagPanel /> : <div /> }
                 <LeftPanel
                     selectedRoom={this.props.currentRoomId}
                     collapsed={this.props.collapseLhs || false}
