@@ -17,8 +17,14 @@ limitations under the License.
 import * as React from "react";
 import {_td} from "../../../languageHandler";
 import {TabbedView, Tab} from "../TabbedView";
-import GeneralUserSettingsPanel from "./user/GeneralUserSettingsPanel";
 import AboutAppSettingsPanel from "./user/AboutAppSettingsPanel";
+import AccountSettingsPanel from "./user/AccountSettingsPanel";
+import AdvancedSettingsPanel from "./user/AdvancedSettingsPanel";
+import CryptoSettingsPanel from "./user/CryptoSettingsPanel";
+import GeneralSettingsPanel from "./user/GeneralSettingsPanel";
+import InterfaceSettingsPanel from "./user/InterfaceSettingsPanel";
+import NotificationsSettingsPanel from "./user/NotificationsSettingsPanel";
+import VoipSettingsPanel from "./user/VoipSettingsPanel";
 
 module.exports = React.createClass({
     displayName: 'NewUserSettings',
@@ -45,7 +51,12 @@ module.exports = React.createClass({
 
     _getTabs: function () {
         return [
-            new Tab(_td("General"), (<GeneralUserSettingsPanel />)),
+            new Tab(_td("General"), (<GeneralSettingsPanel />)),
+            new Tab(_td("Account"), (<AccountSettingsPanel />)),
+            new Tab(_td("Notifications"), (<NotificationsSettingsPanel />)),
+            new Tab(_td("Interface"), (<InterfaceSettingsPanel />)),
+            new Tab(_td("Cryptography"), (<CryptoSettingsPanel />)),
+            new Tab(_td("Advanced"), (<AdvancedSettingsPanel />)),
             new Tab(_td("About"), (<AboutAppSettingsPanel />)),
         ];
     },

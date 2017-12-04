@@ -15,9 +15,7 @@ limitations under the License.
 */
 
 import * as React from "react";
-import {_t, _td} from "../../../languageHandler";
-import {TabbedView, Tab} from "../../structures/TabbedView";
-import GeneralUserSettingsPanel from "../../structures/settings/user/GeneralUserSettingsPanel";
+import {_t} from "../../../languageHandler";
 
 module.exports = React.createClass({
     displayName: 'FieldCommitment',

@@ -115,6 +115,7 @@ module.exports = React.createClass({
                     { _t("Logged in as:") } { MatrixClientPeg.get().getUserId() }
                 </div>
 
+                { /* TODO: {Travis} Move to advanced section */ }
                 <div className="mx_AboutAppSettingsPanel_item">
                     { _t("Access token:") }&nbsp;
                     <span className="mx_AboutAppSettingsPanel_accessTokenSpoiler"

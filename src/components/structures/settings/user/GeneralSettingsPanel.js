@@ -24,7 +24,7 @@ import dis from "../../../../dispatcher";
 import Modal from "../../../../Modal";
 
 module.exports = React.createClass({
-    displayName: 'GeneralUserSettingsPanel',
+    displayName: 'GeneralSettingsPanel',
 
     propTypes: {},
 
@@ -168,16 +168,16 @@ module.exports = React.createClass({
         const avatarUrl = this.state.avatarUrl ? MatrixClientPeg.get().mxcUrlToHttp(this.state.avatarUrl) : null;
 
         return (
-            <div className="mx_GeneralUserSettingsPanel_avatarOptions">
+            <div className="mx_GeneralSettingsPanel_avatarOptions">
                 <div onClick={this.onAvatarPickerClick}>
                     <ChangeAvatar ref="changeAvatar" initialAvatarUrl={avatarUrl} setImmediate={false}
-                                  showUploadSection={false} className="mx_GeneralUserSettingsPanel_avatarImg" />
-                    <div className="mx_GeneralUserSettingsPanel_avatarCamera">
+                                  showUploadSection={false} className="mx_GeneralSettingsPanel_avatarImg" />
+                    <div className="mx_GeneralSettingsPanel_avatarCamera">
                         <img src="img/camera.svg" title={_t("Upload avatar")} width="17" height="15"
                              onClick={this.onAvatarPickerClick} />
                     </div>
                 </div>
-                <div className="mx_GeneralUserSettingsPanel_avatarRemove" onClick={this.onAvatarRemoveClick}>
+                <div className="mx_GeneralSettingsPanel_avatarRemove" onClick={this.onAvatarRemoveClick}>
                     { _t("remove") }
                 </div>
 
@@ -204,11 +204,11 @@ module.exports = React.createClass({
         }
 
         return (
-            <div className="mx_GeneralUserSettingsPanel_personalization">
+            <div className="mx_TabbedSettings_well">
                 { this.renderAvatarPicker() }
-                <div className="mx_GeneralUserSettingsPanel_displayName">
+                <div className="mx_GeneralSettingsPanel_displayName">
                     <label htmlFor="displayName">{ _t("Display Name") }</label>
-                    <input type="text" ref="displayName" id="displayName"
+                    <input type="text" ref="displayName" id="displayName" className="mx_TabbedSettings_input"
                            value={this.state.displayName} onChange={this.onDisplayNameChanged} />
                 </div>
                 { commitment }
@@ -222,7 +222,7 @@ module.exports = React.createClass({
         // return <GroupUserSettings />;
         return (
             <div>
-                <h3>Flair</h3>
+                <h1>Flair</h1>
                 <p>This is where flair controls would normally go.</p>
             </div>
         );
@@ -230,9 +230,9 @@ module.exports = React.createClass({
 
     render: function () {
         return (
-            <div className="mx_GeneralUserSettingsPanel">
+            <div className="mx_GeneralSettingsPanel">
                 <h1>{ _t("Your Account") }</h1>
-                <button className="mx_TabbedSettings_button mx_GeneralUserSettingsPanel_logout"
+                <button className="mx_TabbedSettings_button mx_GeneralSettingsPanel_logout"
                         onClick={this.onLogoutClick}>
                     { _t("Sign out") }
                 </button>
