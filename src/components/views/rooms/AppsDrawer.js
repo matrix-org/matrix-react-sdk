@@ -81,16 +81,25 @@ module.exports = React.createClass({
     },
 
     onAction: function(action) {
+        const hideWidgetKey = this.props.room.roomId + "_hide_widget_drawer";
         switch (action.action) {
             case 'appsDrawer':
-                // When opening the app draw when there aren't any apps, auto-launch the
-                // integrations manager to skip the awkward click on "Add widget"
+                // When opening the app drawer when there aren't any apps,
+                // auto-launch the integrations manager to skip the awkward
+                // click on "Add widget"
                 if (action.show) {
                     const apps = this._getApps();
                     if (apps.length === 0) {
                         this._launchManageIntegrations();
                     }
+
+                    localStorage.removeItem(hideWidgetKey);
+                } else {
+                    // Store hidden state of widget
+                    // Don't show if previously hidden
+                    localStorage.setItem(hideWidgetKey, true);
                 }
+
                 break;
         }
     },
@@ -124,7 +133,7 @@ module.exports = React.createClass({
             '$matrix_avatar_url': user ? MatrixClientPeg.get().mxcUrlToHttp(user.avatarUrl) : '',
         };
 
-        if(app.data) {
+        if (app.data) {
             Object.keys(app.data).forEach((key) => {
                 params['$' + key] = app.data[key];
             });
@@ -168,7 +177,7 @@ module.exports = React.createClass({
     _canUserModify: function() {
         try {
             return WidgetUtils.canUserModifyWidgets(this.props.room.roomId);
-        } catch(err) {
+        } catch (err) {
             console.error(err);
             return false;
         }
@@ -231,16 +240,16 @@ module.exports = React.createClass({
                     "mx_AddWidget_button"
                 }
                 title={_t('Add a widget')}>
-                [+] {_t('Add a widget')}
+                [+] { _t('Add a widget') }
             </div>;
         }
 
         return (
             <div className="mx_AppsDrawer">
                 <div id="apps" className="mx_AppsContainer">
-                    {apps}
+                    { apps }
                 </div>
-                {this._canUserModify() && addWidget}
+                { this._canUserModify() && addWidget }
             </div>
         );
     },
