@@ -75,6 +75,7 @@ export default React.createClass({
         return {
             // use compact timeline view
             useCompactLayout: SettingsStore.getValue('useCompactLayout'),
+            interfaceScale: SettingsStore.getValue('interfaceScale')
         };
     },
 
@@ -326,7 +327,7 @@ export default React.createClass({
         }
 
         return (
-            <div className='mx_MatrixChat_wrapper'>
+            <div className='mx_MatrixChat_wrapper' style={{zoom: this.state.interfaceScale + '%'}}>
                 { topBar }
                 <div className={bodyClasses}>
                     { SettingsStore.isFeatureEnabled("feature_tag_panel") ? <TagPanel /> : <div /> }

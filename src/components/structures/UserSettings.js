@@ -228,6 +228,7 @@ module.exports = React.createClass({
 
         this.setState({
             language: languageHandler.getCurrentLanguage(),
+            interfaceScale: SettingsStore.getValue("interfaceScale")
         });
 
         this._sessionStore = sessionStore;
@@ -631,6 +632,17 @@ module.exports = React.createClass({
         }
     },
 
+    onInterfaceScaleChange: function(newInterfaceScale) {
+        newInterfaceScale = parseInt(newInterfaceScale);
+        if (this.state.interfaceScale !== newInterfaceScale) {
+            SettingsStore.setValue("interfaceScale", null, SettingLevel.DEVICE, newInterfaceScale);
+            this.setState({
+                interfaceScale: newInterfaceScale,
+            });
+            PlatformPeg.get().reload();
+        }
+    },
+
     _renderLanguageSetting: function() {
         const LanguageDropdown = sdk.getComponent('views.elements.LanguageDropdown');
         return <div>
@@ -638,6 +650,17 @@ module.exports = React.createClass({
             <LanguageDropdown ref="language" onOptionChange={this.onLanguageChange}
                           className="mx_UserSettings_language"
                           value={this.state.language}
+            />
+        </div>;
+    },
+
+    _renderInterfaceScaleSetting: function() {
+        const InterfaceScaleSlider = sdk.getComponent('views.elements.InterfaceScaleSlider');
+        return <div>
+            <label htmlFor="interfaceScaleSelector">{ _t('Interface Scale') }</label>
+            <InterfaceScaleSlider ref="interfaceScaleSelector" onValueChange={this.onInterfaceScaleChange}
+                          className="mx_UserSettings_scale"
+                          value={this.state.interfaceScale}
             />
         </div>;
     },
@@ -668,6 +691,7 @@ module.exports = React.createClass({
                         </tbody>
                     </table>
                     { this._renderLanguageSetting() }
+                    { this._renderInterfaceScaleSetting() }
                 </div>
             </div>
         );
