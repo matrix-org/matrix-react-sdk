@@ -37,7 +37,7 @@ export default class InterfaceScaleSlider extends React.Component {
         let interfaceScale = SettingsStore.getValue("interfaceScale", null, /*excludeDefault:*/true);
         let value = this.props.value || interfaceScale;
         return <div>
-                <input type="range" min="50" max="150" step="25" className={this.props.className}
+                <input type="range" min="70" max="150" step="10" className={this.props.className}
                 onChange={this._onValueChange} value={value} />
                 {value}%
             </div>

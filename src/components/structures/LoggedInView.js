@@ -82,6 +82,7 @@ export default React.createClass({
     componentWillMount: function() {
         // stash the MatrixClient in case we log out before we are unmounted
         this._matrixClient = this.props.matrixClient;
+        this.dispatcherRef = dis.register(this.onAction);
 
         CallMediaHandler.loadDevices();
 
@@ -97,6 +98,7 @@ export default React.createClass({
     },
 
     componentWillUnmount: function() {
+        dis.unregister(this.dispatcherRef);
         document.removeEventListener('keydown', this._onKeyDown);
         this._matrixClient.removeListener("accountData", this.onAccountData);
         if (this._sessionStoreToken) {
@@ -125,6 +127,14 @@ export default React.createClass({
         this.setState({
             userHasGeneratedPassword: Boolean(this._sessionStore.getCachedPassword()),
         });
+    },
+
+    onAction(payload) {
+        if(payload.action === 'set_scale') {
+            this.setState({
+                interfaceScale: payload.value
+            });
+        }
     },
 
     onAccountData: function(event) {

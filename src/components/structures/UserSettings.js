@@ -26,6 +26,7 @@ const Modal = require('../../Modal');
 const dis = require("../../dispatcher");
 import sessionStore from '../../stores/SessionStore';
 import Promise from 'bluebird';
+import _debounce from 'lodash/debounce';
 const packageJson = require('../../../package.json');
 const UserSettingsStore = require('../../UserSettingsStore');
 const CallMediaHandler = require('../../CallMediaHandler');
@@ -240,6 +241,9 @@ module.exports = React.createClass({
 
     componentDidMount: function() {
         this.dispatcherRef = dis.register(this.onAction);
+        this._debouncedDispatchScaleChange = _debounce((newInterfaceScale) => {
+            dis.dispatch({action: 'set_scale', value: newInterfaceScale});
+        }, 2000);
         this._me = MatrixClientPeg.get().credentials.userId;
     },
 
@@ -639,7 +643,7 @@ module.exports = React.createClass({
             this.setState({
                 interfaceScale: newInterfaceScale,
             });
-            PlatformPeg.get().reload();
+            this._debouncedDispatchScaleChange(newInterfaceScale);
         }
     },
 
