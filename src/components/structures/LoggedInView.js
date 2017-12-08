@@ -75,7 +75,7 @@ export default React.createClass({
         return {
             // use compact timeline view
             useCompactLayout: SettingsStore.getValue('useCompactLayout'),
-            interfaceScale: SettingsStore.getValue('interfaceScale')
+            interfaceScale: SettingsStore.getValue('interfaceScale'),
         };
     },
 
@@ -130,9 +130,9 @@ export default React.createClass({
     },
 
     onAction(payload) {
-        if(payload.action === 'set_scale') {
+        if (payload.action === 'set_scale') {
             this.setState({
-                interfaceScale: payload.value
+                interfaceScale: payload.value,
             });
         }
     },

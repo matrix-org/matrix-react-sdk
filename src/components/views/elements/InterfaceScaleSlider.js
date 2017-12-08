@@ -17,7 +17,6 @@ limitations under the License.
 
 import React from 'react';
 
-import sdk from '../../../index';
 import SettingsStore from "../../../settings/SettingsStore";
 
 export default class InterfaceScaleSlider extends React.Component {
@@ -34,13 +33,13 @@ export default class InterfaceScaleSlider extends React.Component {
     }
 
     render() {
-        let interfaceScale = SettingsStore.getValue("interfaceScale", null, /*excludeDefault:*/true);
-        let value = this.props.value || interfaceScale;
-        return <div>
-                <input type="range" min="70" max="150" step="10" className={this.props.className}
-                onChange={this._onValueChange} value={value} />
-                {value}%
-            </div>
+        const interfaceScale = SettingsStore.getValue("interfaceScale", null, /*excludeDefault:*/true);
+        const value = this.props.value || interfaceScale;
+        return <div className={this.props.className}>
+            <input type="range" min="70" max="150" step="10" className={this.props.className + "_input"}
+            onChange={this._onValueChange} value={value} />
+            <div className={this.props.className + "_label"}>{ value }%</div>
+        </div>;
     }
 }
 

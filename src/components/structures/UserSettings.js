@@ -229,7 +229,7 @@ module.exports = React.createClass({
 
         this.setState({
             language: languageHandler.getCurrentLanguage(),
-            interfaceScale: SettingsStore.getValue("interfaceScale")
+            interfaceScale: SettingsStore.getValue("interfaceScale"),
         });
 
         this._sessionStore = sessionStore;
@@ -663,7 +663,6 @@ module.exports = React.createClass({
         return <div>
             <label htmlFor="interfaceScaleSelector">{ _t('Interface Scale') }</label>
             <InterfaceScaleSlider ref="interfaceScaleSelector" onValueChange={this.onInterfaceScaleChange}
-                          className="mx_UserSettings_scale"
                           value={this.state.interfaceScale}
             />
         </div>;
