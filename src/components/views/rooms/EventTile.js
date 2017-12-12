@@ -19,6 +19,7 @@ limitations under the License.
 
 const React = require('react');
 const classNames = require("classnames");
+import ReactResizeDetector from 'react-resize-detector';
 import { _t, _td } from '../../../languageHandler';
 const Modal = require('../../../Modal');
 
@@ -599,6 +600,7 @@ module.exports = withMatrixClient(React.createClass({
                             onWidgetLoad={this.props.onWidgetLoad} />
                         { editButton }
                     </div>
+                    <ReactResizeDetector handleHeight onResize={this.props.onWidgetLoad} />
                 </div>
             );
         }

@@ -17,6 +17,7 @@ limitations under the License.
 const React = require("react");
 const ReactDOM = require("react-dom");
 const GeminiScrollbar = require('react-gemini-scrollbar');
+import ReactResizeDetector from 'react-resize-detector';
 import Promise from 'bluebird';
 import { KeyCode } from '../../Keyboard';
 
@@ -221,9 +222,10 @@ module.exports = React.createClass({
     },
 
     onResize: function() {
+        if (!this._getScrollNode()) return;
         this.props.onResize();
         this.checkScroll();
-        this.refs.geminiPanel.forceUpdate();
+        if (this.refs.geminiPanel) this.refs.geminiPanel.forceUpdate();
     },
 
     // after an update to the contents of the panel, check that the scroll is
@@ -620,7 +622,6 @@ module.exports = React.createClass({
 
     _restoreSavedScrollState: function() {
         const scrollState = this.scrollState;
-        const scrollNode = this._getScrollNode();
 
         if (scrollState.stuckAtBottom) {
             this._setScrollTop(Number.MAX_VALUE);
@@ -664,6 +665,8 @@ module.exports = React.createClass({
             throw new Error("ScrollPanel._getScrollNode called when unmounted");
         }
 
+        if (!this.refs.geminiPanel) return;
+
         return this.refs.geminiPanel.scrollbar.getViewElement();
     },
 
@@ -678,6 +681,7 @@ module.exports = React.createClass({
                         <ol ref="itemlist" className="mx_RoomView_MessageList" aria-live="polite">
                             { this.props.children }
                         </ol>
+                        <ReactResizeDetector handleHeight onResize={this.onResize} />
                     </div>
                 </GeminiScrollbar>
                );
