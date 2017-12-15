@@ -650,7 +650,9 @@ module.exports = React.createClass({
                 "mx_MessagePanel_alwaysShowTimestamps": this.props.alwaysShowTimestamps,
             },
         );
+                // { topSpinner }
 
+                // { bottomSpinner }
         return (
             <ScrollPanel ref="scrollPanel" className={className}
                     onScroll={this.props.onScroll}
@@ -659,9 +661,7 @@ module.exports = React.createClass({
                     onUnfillRequest={this.props.onUnfillRequest}
                     style={style}
                     stickyBottom={this.props.stickyBottom}>
-                { topSpinner }
                 { this._getEventTiles() }
-                { bottomSpinner }
             </ScrollPanel>
         );
     },
