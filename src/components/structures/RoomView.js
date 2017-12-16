@@ -25,6 +25,7 @@ import shouldHideEvent from "../../shouldHideEvent";
 const React = require("react");
 const ReactDOM = require("react-dom");
 import Promise from 'bluebird';
+import 'whatwg-fetch';
 const classNames = require("classnames");
 import { _t } from '../../languageHandler';
 
@@ -855,11 +856,13 @@ module.exports = React.createClass({
         ev.dataTransfer.dropEffect = 'none';
 
         const items = ev.dataTransfer.items;
-        if (items.length == 1) {
-            if (items[0].kind == 'file') {
-                this.setState({ draggingFile: true });
-                ev.dataTransfer.dropEffect = 'copy';
-            }
+        if (items.length == 1 && items[0].kind == 'file') {
+            this.setState({ draggingFile: true });
+            ev.dataTransfer.dropEffect = 'copy';
+        }
+        if (items.length == 2 && items[0].type == 'text/uri-list') {
+            this.setState({ draggingFile: true });
+            ev.dataTransfer.dropEffect = 'copy';
         }
     },
 
@@ -868,8 +871,17 @@ module.exports = React.createClass({
         ev.preventDefault();
         this.setState({ draggingFile: false });
         const files = ev.dataTransfer.files;
+        const fileUrl = ev.dataTransfer.getData('text/uri-list');
         if (files.length == 1) {
             this.uploadFile(files[0]);
+        } else if (fileUrl) {
+            fetch(fileUrl)
+            .then(res => {
+                return res.blob();
+            })
+            .then(blob => {
+                this.uploadFile(new File(blob));
+            });
         }
     },
 
