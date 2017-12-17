@@ -35,6 +35,7 @@ import {RoomMember} from 'matrix-js-sdk';
 import classNames from 'classnames';
 import SettingsStore from "../../../settings/SettingsStore";
 import PushProcessor from 'matrix-js-sdk/lib/pushprocessor';
+import * as url from "url";
 
 linkifyMatrix(linkify);
 
@@ -387,9 +388,9 @@ module.exports = React.createClass({
         // Go fetch a scalar token
         const scalarClient = new ScalarAuthClient();
         scalarClient.connect().then(() => {
-            const completeUrl = scalarClient.getStarterLink(starterLink);
+            const completeUrl = scalarClient.getScalarInterfaceUrlForPath(starterLink);
             const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-            const integrationsUrl = SdkConfig.get().integrations_ui_url;
+            const integrationsUrl = url.parse(completeUrl).host;
             Modal.createTrackedDialog('Add an integration', '', QuestionDialog, {
                 title: _t("Add an Integration"),
                 description:

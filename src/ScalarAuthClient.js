@@ -118,12 +118,22 @@ class ScalarAuthClient {
         return url;
     }
 
+    getScalarInterfaceUrlForPath(path) {
+        if (path.startsWith("http://") || path.startsWith("https://")) {
+            // It's already an interface URL, so we'll just give it a token and move on
+            return this.getStarterLink(path);
+        }
+
+        let url = SdkConfig.get().integrations_ui_url;
+
+        // Take off the slashes as we'll be manually adding them later on
+        if (url.endsWith("/")) url = url.substring(0, url.length - 1);
+        if (path.startsWith("/")) path = path.substring(1);
+
+        return this.getStarterLink(url + "/" + path);
+    }
+
     getStarterLink(starterLinkUrl) {
-        // If the starter link points to Scalar, but the integrations manager isn't scalar, redirect accordingly.
-        // The integration manager is responsible for maintaining the starter link route.
-        let scalarUrl = SdkConfig.get().integrations_rest_url;
-        if (!starterLinkUrl.startsWith(scalarUrl) && starterLinkUrl.startsWith("https://scalar.vector.im/api"))
-            starterLinkUrl = scalarUrl + starterLinkUrl.substring("https://scalar.vector.im/api".length);
         return starterLinkUrl + "?scalar_token=" + encodeURIComponent(this.scalarToken);
     }
 }
