@@ -20,12 +20,15 @@ import React from 'react';
 import SettingsStore from "../../../settings/SettingsStore";
 
 export default class InterfaceScaleSlider extends React.Component {
+    propTypes = {
+        className: React.PropTypes.string,
+        onValueChange: React.PropTypes.func.isRequired,
+        value: React.PropTypes.number,
+    };
+
     constructor(props) {
         super(props);
         this._onValueChange = this._onValueChange.bind(this);
-    }
-
-    componentWillMount() {
     }
 
     _onValueChange(e) {
@@ -33,7 +36,7 @@ export default class InterfaceScaleSlider extends React.Component {
     }
 
     render() {
-        const interfaceScale = SettingsStore.getValue("interfaceScale", null, /*excludeDefault:*/true);
+        const interfaceScale = SettingsStore.getValue("interfaceScale", null, true);
         const value = this.props.value || interfaceScale;
         return <div className={this.props.className}>
             <input type="range" min="70" max="150" step="10" className={this.props.className + "_input"}
@@ -42,9 +45,3 @@ export default class InterfaceScaleSlider extends React.Component {
         </div>;
     }
 }
-
-InterfaceScaleSlider.propTypes = {
-    className: React.PropTypes.string,
-    onValueChange: React.PropTypes.func.isRequired,
-    value: React.PropTypes.number,
-};
