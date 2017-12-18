@@ -15,14 +15,16 @@ limitations under the License.
 */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import SettingsStore from "../../../settings/SettingsStore";
 
+
 export default class InterfaceScaleSlider extends React.Component {
     propTypes = {
-        className: React.PropTypes.string,
-        onValueChange: React.PropTypes.func.isRequired,
-        value: React.PropTypes.number,
+        className: PropTypes.string,
+        onValueChange: PropTypes.func.isRequired,
+        value: PropTypes.number,
     };
 
     constructor(props) {
