@@ -18,6 +18,8 @@ limitations under the License.
 
 import * as Matrix from 'matrix-js-sdk';
 import React from 'react';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 import { KeyCode, isOnlyCtrlOrCmdKeyEvent } from '../../Keyboard';
 import Notifier from '../../Notifier';
@@ -38,7 +40,7 @@ import SettingsStore from "../../settings/SettingsStore";
  *
  * Components mounted below us can access the matrix client via the react context.
  */
-export default React.createClass({
+const LoggedInView = React.createClass({
     displayName: 'LoggedInView',
 
     propTypes: {
@@ -371,3 +373,5 @@ export default React.createClass({
         );
     },
 });
+
+export default DragDropContext(HTML5Backend)(LoggedInView);
