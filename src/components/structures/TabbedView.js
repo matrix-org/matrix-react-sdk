@@ -18,6 +18,7 @@ import * as React from "react";
 import {_t, _td} from '../../languageHandler';
 import GeminiScrollbar from 'react-gemini-scrollbar';
 import PropTypes from "prop-types";
+import scrollSnapPolyfill from 'css-scroll-snap-polyfill';
 
 const DEFAULT_EXIT_STRING = _td("Return to app");
 
@@ -105,6 +106,20 @@ export class TabbedView extends React.Component {
                 {tab.body}
             </div>
         );
+    }
+
+    componentDidUpdate() {
+        window.requestAnimationFrame(() => {
+            console.log("SCROLL SNAP POLYFILL: UPDATE");
+            scrollSnapPolyfill();
+        });
+    }
+
+    componentDidMount() {
+        window.requestAnimationFrame(() => {
+            console.log("SCROLL SNAP POLYFILL: MOUNT");
+            scrollSnapPolyfill();
+        });
     }
 
     render() {
