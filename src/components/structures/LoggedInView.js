@@ -258,8 +258,8 @@ const LoggedInView = React.createClass({
                 if (!this.props.collapseRhs) right_panel = <RightPanel disabled={this.props.rightDisabled} />;
 
                 if (SettingsStore.isFeatureEnabled("feature_settings")) {
-                    fullPageElement = true;
-                    right_panel = null;
+                    fullPageElement = false;
+                    right_panel = null; // force the RHS to be closed
                     page_element = <NewUserSettings
                         onClose={this.props.onUserSettingsClose}
                         brand={this.props.config.brand}
