@@ -17,9 +17,9 @@ limitations under the License.
 import * as React from "react";
 import {_t, _td} from '../../languageHandler';
 import GeminiScrollbar from 'react-gemini-scrollbar';
+import PropTypes from "prop-types";
 
 const DEFAULT_EXIT_STRING = _td("Return to app");
-const DELAY_BEFORE_NEXT_TAB = 25; // milliseconds before we'll accept scrolling to the next tab
 
 /**
  * Represents a tab for the TabbedView
@@ -39,7 +39,6 @@ export class Tab {
 export class TabbedView extends React.Component {
     constructor() {
         super();
-        this.onMouseWheel = this.onMouseWheel.bind(this);
 
         // This is used to track when the user has scrolled all the way up or down so we
         // don't immediately start flipping between tabs.
@@ -86,12 +85,6 @@ export class TabbedView extends React.Component {
         }
     }
 
-    /**
-     * Gets the label for a tab
-     * @param {Tab} tab the tab
-     * @returns {string} The tab label
-     * @private
-     */
     _getTabLabel(tab) {
         let classes = "mx_TabbedView_tabLabel ";
 
@@ -106,62 +99,21 @@ export class TabbedView extends React.Component {
         );
     }
 
-    _getScrollNode() {
-        if (!this.refs.geminiScrollbar) return null;
-        return this.refs.geminiScrollbar.scrollbar.getViewElement();
-    }
-
-    onMouseWheel(ev) {
-        const node = this._getScrollNode();
-        if (!node) {
-            console.warn("Scrolling tabs without a scroll node!");
-            return;
-        }
-
-        const availableHeight = window.innerHeight;
-        const panelTop = node.scrollTop;
-        const bottomY = panelTop + availableHeight;
-        const absoluteBottom = node.scrollHeight;
-
-        let direction = 0; // + = next, - = prev, 0 = no change
-        if (bottomY >= absoluteBottom && ev.deltaY > 0) {
-            direction = 1; // next tab
-        }
-        if (panelTop <= 0 && ev.deltaY < 0) {
-            direction = -1; // previous tab
-        }
-        if (direction === 0) {
-            // we're not scrolled enough, so reset our timeout and stop processing
-            this._reachedEndAt = 0;
-            return;
-        }
-
-        // we've scrolled enough: check our timer and scroll if we've waited long enough
-        const now = new Date().getTime();
-        if (this._reachedEndAt === 0) {
-            this._reachedEndAt = now;
-        } else if (now - this._reachedEndAt > DELAY_BEFORE_NEXT_TAB) {
-            // next and previous tab methods both handle out of range values internally
-            if (direction > 0) this._nextTab();
-            else if (direction < 0) this._previousTab();
-        }
+    _getTabPanel(tab) {
+        return (
+            <div className="mx_TabbedView_tabPanel" key={"mx_tabpanel_" + tab.label}>
+                {tab.body}
+            </div>
+        );
     }
 
     render() {
-        const labels = this.props.tabs.map(t => this._getTabLabel(t));
+        const labels = [];
+        const tabs = [];
 
-        let panel = <div>E_NO_TAB</div>; // This should never happen for a default
-        const tab = this.props.tabs[this._getActiveTabIndex()];
-        if (tab) {
-            panel = (
-                <div className="mx_TabbedView_tabPanel" key={"tab_panel_ " + tab.label}>
-                    <GeminiScrollbar ref="geminiScrollbar" onWheel={this.onMouseWheel}>
-                        <div className="mx_TabbedView_tabPanelContent">
-                            {tab.body}
-                        </div>
-                    </GeminiScrollbar>
-                </div>
-            );
+        for (const tab of this.props.tabs) {
+            labels.push(this._getTabLabel(tab));
+            tabs.push(this._getTabPanel(tab));
         }
 
         const returnToApp = (
@@ -177,7 +129,9 @@ export class TabbedView extends React.Component {
                     {labels}
                 </div>
                 <div className="mx_TabbedView_tabPanels">
-                    {panel}
+                    <GeminiScrollbar>
+                        {tabs}
+                    </GeminiScrollbar>
                 </div>
             </div>
         );
@@ -186,12 +140,12 @@ export class TabbedView extends React.Component {
 
 TabbedView.PropTypes = {
     // Called when the user clicks the "Exit" or "Return to app" button
-    onExit: React.PropTypes.func.isRequired,
+    onExit: PropTypes.func.isRequired,
 
     // The untranslated label for the "Return to app" button.
     // Default: "Return to app"
-    exitLabel: React.PropTypes.string,
+    exitLabel: PropTypes.string,
 
     // The tabs to show
-    tabs: React.PropTypes.arrayOf(Tab).isRequired,
+    tabs: PropTypes.arrayOf(Tab).isRequired,
 };
