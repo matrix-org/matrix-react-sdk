@@ -512,7 +512,9 @@ module.exports = React.createClass({
         this.scrollElement = null;
 
         const queryList = this.state.queryList.filter((query) => {
-            return !this.state.userList.find((entry) => entry.address === query.address);
+            return !this.state.userList.find((entry) => {
+                return entry.address === query.address && entry.addressType === query.addressType;
+            });
         });
 
         const query = [];
