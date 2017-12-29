@@ -79,7 +79,6 @@ const CategoryRoomList = React.createClass({
 
     onAddRoomsToSummaryClicked: function(ev) {
         ev.preventDefault();
-
         const AddressPickerDialog = sdk.getComponent("dialogs.AddressPickerDialog");
         Modal.createTrackedDialog('Add Rooms to Group Summary', '', AddressPickerDialog, {
             title: _t('Add rooms to the community summary'),
@@ -260,7 +259,6 @@ const RoleUserList = React.createClass({
 
     onAddUsersClicked: function(ev) {
         ev.preventDefault();
-
         const AddressPickerDialog = sdk.getComponent("dialogs.AddressPickerDialog");
         Modal.createTrackedDialog('Add Users to Group Summary', '', AddressPickerDialog, {
             title: _t('Add users to the community summary'),

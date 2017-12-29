@@ -72,7 +72,7 @@ export function showRoomInviteDialog(roomId) {
         description: _t('Who would you like to add to this room?'),
         excludedAddresses: room.currentState.getMembers().filter((member) => {
             const membership = member.membership;
-            // Filter out users which are in the room, have already been invited or have been banned.
+            // Filter to users which are in the room, have already been invited or have been banned.
             return membership === 'join' || membership === 'invite' || membership === 'ban';
         }).map((member) => ({
             addressType: 'mx-user-id',
