@@ -80,11 +80,6 @@ const CategoryRoomList = React.createClass({
     onAddRoomsToSummaryClicked: function(ev) {
         ev.preventDefault();
 
-        const excludedAddresses = this.props.rooms.map((room) => ({
-            addressType: 'mx-room-id',
-            address: room.room_id,
-        }));
-
         const AddressPickerDialog = sdk.getComponent("dialogs.AddressPickerDialog");
         Modal.createTrackedDialog('Add Rooms to Group Summary', '', AddressPickerDialog, {
             title: _t('Add rooms to the community summary'),
@@ -93,7 +88,10 @@ const CategoryRoomList = React.createClass({
             button: _t("Add to summary"),
             pickerType: 'room',
             validAddressTypes: ['mx-room-id'],
-            excludedAddresses,
+            excludedAddresses: this.props.rooms.map((room) => ({
+                addressType: 'mx-room-id',
+                address: room.room_id,
+            })),
             groupId: this.props.groupId,
             onFinished: (success, addrs) => {
                 if (!success) return;
@@ -263,11 +261,6 @@ const RoleUserList = React.createClass({
     onAddUsersClicked: function(ev) {
         ev.preventDefault();
 
-        const excludedAddresses = this.props.users.map((user) => ({
-            addressType: 'mx-user-id',
-            address: user.summaryInfo.user_id,
-        }));
-
         const AddressPickerDialog = sdk.getComponent("dialogs.AddressPickerDialog");
         Modal.createTrackedDialog('Add Users to Group Summary', '', AddressPickerDialog, {
             title: _t('Add users to the community summary'),
@@ -275,7 +268,10 @@ const RoleUserList = React.createClass({
             placeholder: _t("Name or matrix ID"),
             button: _t("Add to summary"),
             validAddressTypes: ['mx-user-id'],
-            excludedAddresses,
+            excludedAddresses: this.props.users.map((user) => ({
+                addressType: 'mx-user-id',
+                address: user.summaryInfo.user_id,
+            })),
             groupId: this.props.groupId,
             shouldOmitSelf: false,
             onFinished: (success, addrs) => {
