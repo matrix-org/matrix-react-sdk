@@ -42,6 +42,10 @@ module.exports = React.createClass({
         button: PropTypes.string,
         focus: PropTypes.bool,
         validAddressTypes: PropTypes.arrayOf(PropTypes.oneOf(addressTypes)),
+        excludedAddresses: PropTypes.arrayOf(PropTypes.shape({
+            addressType: PropTypes.oneOf(addressTypes),
+            address: PropTypes.string.isRequired,
+        })),
         onFinished: PropTypes.func.isRequired,
         groupId: PropTypes.string,
         // The type of entity to search for. Default: 'user'.
@@ -393,11 +397,7 @@ module.exports = React.createClass({
                 });
                 return;
             }
-            if (!this.props.includeSelf &&
-                result.user_id === MatrixClientPeg.get().credentials.userId
-            ) {
-                return;
-            }
+            if (!this.props.includeSelf && result.user_id === MatrixClientPeg.get().credentials.userId) return;
 
             // Return objects, structure of which is defined
             // by UserAddressType
@@ -512,6 +512,11 @@ module.exports = React.createClass({
         this.scrollElement = null;
 
         const queryList = this.state.queryList.filter((query) => {
+            const isExcluded = this.props.excludedAddresses.find((entry) => {
+                return entry.address === query.address && entry.addressType === query.addressType;
+            });
+            if (isExcluded) return false;
+
             return !this.state.userList.find((entry) => {
                 return entry.address === query.address && entry.addressType === query.addressType;
             });
