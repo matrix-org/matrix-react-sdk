@@ -111,6 +111,7 @@ module.exports = React.createClass({
                     type="text"
                     size="3"
                     defaultValue={this.props.value}
+                    key={this.props.value}
                     onBlur={this.onCustomBlur}
                     onKeyDown={this.onCustomKeyDown}
                 />
