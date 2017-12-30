@@ -765,8 +765,8 @@ module.exports = withMatrixClient(React.createClass({
             spinner = <Loader imgClassName="mx_ContextualMenu_spinner" />;
         }
 
-        if (this.state.can.kick) {
-            const membership = this.props.member.membership;
+        const membership = this.props.member.membership;
+        if (this.state.can.kick && membership && membership !== 'leave') {
             const kickLabel = membership === "invite" ? _t("Disinvite") : _t("Kick");
             kickButton = (
                 <AccessibleButton className="mx_MemberInfo_field"
@@ -777,7 +777,7 @@ module.exports = withMatrixClient(React.createClass({
         }
         if (this.state.can.ban) {
             let label = _t("Ban");
-            if (this.props.member.membership === 'ban') {
+            if (membership === 'ban') {
                 label = _t("Unban");
             }
             banButton = (
