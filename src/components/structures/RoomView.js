@@ -47,6 +47,18 @@ import SettingsStore from "../../settings/SettingsStore";
 
 const DEBUG = false;
 let debuglog = function() {};
+const getURLFromDropEvent = function(dataTransfer){
+    const supportedTypes = ["text/uri-list", "text/plain"];
+    const type = supportedTypes.find(t => dataTransfer.getData(t));
+    let url;
+    try {
+        if(type){ url = new URL(dataTransfer.getData(type)); }
+    } catch(e) {
+        console.log("Dropped link did not provide a valid URL", e)
+    } finally {
+        return url;
+    }
+}
 
 const BROWSER_SUPPORTS_SANDBOX = 'sandbox' in document.createElement('iframe');
 
@@ -851,19 +863,11 @@ module.exports = React.createClass({
     onDragOver: function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
-
         ev.dataTransfer.dropEffect = 'none';
-
         const items = [...ev.dataTransfer.items];
         if (items.length >= 1) {
-            const isDraggingFiles = items.every(function(item) {
-                return item.kind == 'file';
-            });
-
-            if (isDraggingFiles) {
-                this.setState({ draggingFile: true });
-                ev.dataTransfer.dropEffect = 'copy';
-            }
+            this.setState({ draggingFile: true });
+            ev.dataTransfer.dropEffect = 'copy';
         }
     },
 
@@ -871,8 +875,13 @@ module.exports = React.createClass({
         ev.stopPropagation();
         ev.preventDefault();
         this.setState({ draggingFile: false });
-        const files = [...ev.dataTransfer.files];
-        files.forEach(this.uploadFile);
+        const url = getURLFromDropEvent(ev.dataTransfer);
+        if(url){
+            ContentMessages.getFileFromURL(url).then(this.uploadFile);
+        } else {
+          const files = [...ev.dataTransfer.files];
+          files.forEach(this.uploadFile);
+        }
     },
 
     onDragLeaveOrEnd: function(ev) {

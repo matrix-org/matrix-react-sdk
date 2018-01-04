@@ -199,6 +199,43 @@ function infoForVideoFile(matrixClient, roomId, videoFile) {
 }
 
 /**
+ * Construct file params from given {URL Object}
+ *
+ * @param {URL} URL
+ * @param {String} type - According to the spec, if file type is not defined, defaults to ""
+ * @return {Object}
+ */
+function _constructFileParamsFromURL(URL, type){
+    let lastPath = URL.pathname.split('/').slice(-1)[0];
+    let fname = lastPath.split("?")[0];
+    return {name: fname, opts: {type: type, lastModified: Date.now()}};
+}
+
+/**
+ * Fetch blob from given URL and convert to File
+ *
+ * @param {URL} URL
+ * @return {Promise} A promise that resolves to named File constructed from URL + Response
+ */
+function _getFileFromURL(URL) {
+    return fetch(URL)
+        .then(function(response){
+            if(response.ok) {
+                return response.blob().then(function(blob){
+                    let type = response.headers.get("content-type");
+                    let { name, opts } = _constructFileParamsFromURL(URL, type);
+                    let f = new File([blob], name, opts);
+                    return f;
+                });
+            }
+            throw new Error('Network response on _getFileFromURL fetch was not ok.')
+        })
+        .catch(function(error){
+            console.log('There was a problem in the fetch operation: ', error)
+        });
+}
+
+/**
  * Read the file as an ArrayBuffer.
  * @return {Promise} A promise that resolves with an ArrayBuffer when the file
  *   is read.
@@ -378,6 +415,10 @@ class ContentMessages {
 
     getCurrentUploads() {
         return this.inprogress;
+    }
+
+    getFileFromURL(URL){
+        return _getFileFromURL(URL);
     }
 
     cancelUpload(promise) {
