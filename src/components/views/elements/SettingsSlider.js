@@ -22,22 +22,28 @@ export default class SettingsSlider extends React.Component {
     static propTypes = {
         className: PropTypes.string,
         onValueChange: PropTypes.func.isRequired,
+        onValueCommitted: PropTypes.func.isRequired,
         value: PropTypes.number,
     };
 
     constructor(props) {
         super(props);
         this._onValueChange = this._onValueChange.bind(this);
+        this._onMouseUp = this._onMouseUp.bind(this);
     }
 
     _onValueChange(e) {
         this.props.onValueChange(parseInt(e.target.value));
     }
 
+    _onMouseUp(e) {
+        this.props.onValueCommitted(parseInt(e.target.value));
+    }
+
     render() {
         return <div className={this.props.className}>
             <input type="range" min={this.props.min} max={this.props.max} step={this.props.step} className={this.props.className + "_input"}
-            onChange={this._onValueChange} value={this.props.value} />
+            onChange={this._onValueChange} value={this.props.value} onMouseUp={this._onMouseUp} />
             <div className={this.props.className + "_label"}>{ this.props.value }%</div>
         </div>;
     }

@@ -345,7 +345,7 @@ const LoggedInView = React.createClass({
         }
 
         return (
-            <div className='mx_MatrixChat_wrapper' style={{'zoom': this.state.interfaceScale + '%', 'font-size': this.state.chatFontScale + '%'}}>
+            <div className='mx_MatrixChat_wrapper' style={{zoom: this.state.interfaceScale + '%', fontSize: this.state.chatFontScale + '%'}}>
                 { topBar }
                 <div className={bodyClasses}>
                     { SettingsStore.isFeatureEnabled("feature_tag_panel") ? <TagPanel /> : <div /> }

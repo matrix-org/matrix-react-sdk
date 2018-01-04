@@ -242,12 +242,6 @@ module.exports = React.createClass({
 
     componentDidMount: function() {
         this.dispatcherRef = dis.register(this.onAction);
-        this._debouncedDispatchInterfaceScaleChange = _debounce((newInterfaceScale) => {
-            dis.dispatch({action: 'set_interface_scale', value: newInterfaceScale});
-        }, 2000);
-        this._debouncedDispatchChatFontScaleChange = _debounce((newChatFontScale) => {
-            dis.dispatch({action: 'set_chat_font_scale', value: newChatFontScale});
-        }, 2000);
         this._me = MatrixClientPeg.get().credentials.userId;
     },
 
@@ -640,27 +634,30 @@ module.exports = React.createClass({
         }
     },
 
-    // TODO: make this into getScaleChangeSetting that closure on the specific property?
     onInterfaceScaleChange: function(newInterfaceScale) {
-        newInterfaceScale = parseInt(newInterfaceScale);
         if (this.state.interfaceScale !== newInterfaceScale) {
-            SettingsStore.setValue("interfaceScale", null, SettingLevel.DEVICE, newInterfaceScale);
             this.setState({
                 interfaceScale: newInterfaceScale,
             });
-            this._debouncedDispatchInterfaceScaleChange(newInterfaceScale);
         }
     },
 
+    onInterfaceScaleCommitted: function(newInterfaceScale) {
+        SettingsStore.setValue("interfaceScale", null, SettingLevel.DEVICE, newInterfaceScale);
+        dis.dispatch({action: 'set_interface_scale', value: newInterfaceScale});
+    },
+
     onChatFontScaleChange: function(newChatFontScale) {
-        newChatFontScale = parseInt(newChatFontScale);
         if (this.state.chatFontScale !== newChatFontScale) {
-            SettingsStore.setValue("chatFontScale", null, SettingLevel.DEVICE, newChatFontScale);
             this.setState({
                 chatFontScale: newChatFontScale,
             });
-            this._debouncedDispatchChatFontScaleChange(newChatFontScale);
         }
+    },
+
+    onChatFontScaleCommitted: function(newChatFontScale) {
+        SettingsStore.setValue("chatFontScale", null, SettingLevel.DEVICE, newChatFontScale);
+        dis.dispatch({action: 'set_chat_font_scale', value: newChatFontScale});
     },
 
     _renderLanguageSetting: function() {
@@ -679,10 +676,12 @@ module.exports = React.createClass({
         return <div>
             <label htmlFor="interfaceScaleSelector">{ _t('Interface Scale') }</label>
             <SettingsSlider ref="interfaceScaleSelector" onValueChange={this.onInterfaceScaleChange}
+                          onValueCommitted={this.onInterfaceScaleCommitted}
                           value={this.state.interfaceScale} min={50} max={200} step={10}
             />
             <label htmlFor="chatFontScaleSelector">{ _t('Chat Font Scale') }</label>
             <SettingsSlider ref="chatFontScaleSelector" onValueChange={this.onChatFontScaleChange}
+                          onValueCommitted={this.onChatFontScaleCommitted}
                           value={this.state.chatFontScale} min={70} max={150} step={10}
             />
         </div>;
