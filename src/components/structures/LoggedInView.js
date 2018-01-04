@@ -78,6 +78,7 @@ const LoggedInView = React.createClass({
             // use compact timeline view
             useCompactLayout: SettingsStore.getValue('useCompactLayout'),
             interfaceScale: SettingsStore.getValue('interfaceScale'),
+            chatFontScale: SettingsStore.getValue('chatFontScale'),
         };
     },
 
@@ -132,9 +133,14 @@ const LoggedInView = React.createClass({
     },
 
     onAction(payload) {
-        if (payload.action === 'set_scale') {
+        if (payload.action === 'set_interface_scale') {
             this.setState({
                 interfaceScale: payload.value,
+            });
+        }
+        if (payload.action === 'set_chat_font_scale') {
+            this.setState({
+                chatFontScale: payload.value,
             });
         }
     },
@@ -339,7 +345,7 @@ const LoggedInView = React.createClass({
         }
 
         return (
-            <div className='mx_MatrixChat_wrapper' style={{zoom: this.state.interfaceScale + '%'}}>
+            <div className='mx_MatrixChat_wrapper' style={{'zoom': this.state.interfaceScale + '%', 'font-size': this.state.chatFontScale + '%'}}>
                 { topBar }
                 <div className={bodyClasses}>
                     { SettingsStore.isFeatureEnabled("feature_tag_panel") ? <TagPanel /> : <div /> }

@@ -17,11 +17,9 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SettingsStore from "../../../settings/SettingsStore";
 
-
-export default class InterfaceScaleSlider extends React.Component {
-    propTypes = {
+export default class SettingsSlider extends React.Component {
+    static propTypes = {
         className: PropTypes.string,
         onValueChange: PropTypes.func.isRequired,
         value: PropTypes.number,
@@ -37,12 +35,10 @@ export default class InterfaceScaleSlider extends React.Component {
     }
 
     render() {
-        const interfaceScale = SettingsStore.getValue("interfaceScale", null, true);
-        const value = this.props.value || interfaceScale;
         return <div className={this.props.className}>
-            <input type="range" min="70" max="150" step="10" className={this.props.className + "_input"}
-            onChange={this._onValueChange} value={value} />
-            <div className={this.props.className + "_label"}>{ value }%</div>
+            <input type="range" min={this.props.min} max={this.props.max} step={this.props.step} className={this.props.className + "_input"}
+            onChange={this._onValueChange} value={this.props.value} />
+            <div className={this.props.className + "_label"}>{ this.props.value }%</div>
         </div>;
     }
 }
