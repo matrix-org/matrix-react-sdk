@@ -856,29 +856,53 @@ module.exports = React.createClass({
 
         const items = [...ev.dataTransfer.items];
         if (items.length >= 1) {
-            const isDraggingFiles = items.every(function(item) {
-                return item.kind == 'file';
-            });
-
-            if (isDraggingFiles) {
-                this.setState({ draggingFile: true });
-                ev.dataTransfer.dropEffect = 'copy';
-            }
+            this.setState({ draggingFile: true });
+            ev.dataTransfer.dropEffect = 'copy';
         }
     },
 
     onDrop: function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
-        this.setState({ draggingFile: false });
-        const files = [...ev.dataTransfer.files];
-        files.forEach(this.uploadFile);
+
+        if (ev.dataTransfer.files.length > 0) {
+            this.setState({ draggingFile: false });
+            const files = [...ev.dataTransfer.files];
+            files.forEach(this.uploadFile);
+        } else {
+            ["text/uri-list", "text/plain"].forEach((type) => {
+                const url = ev.dataTransfer.getData(type);
+                this.resolveUrl(url);
+            });
+        }
     },
 
     onDragLeaveOrEnd: function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
         this.setState({ draggingFile: false });
+    },
+
+    resolveUrl: function(url) {
+        if (MatrixClientPeg.get().isGuest()) {
+            dis.dispatch({action: 'view_set_mxid'});
+            return;
+        }
+
+        ContentMessages.sendUrlToRoom(
+            url, this.state.room.roomId, MatrixClientPeg.get(),
+        ).done(undefined, (error) => {
+            if (error.name === "UnknownDeviceError") {
+                // Let the staus bar handle this
+                return;
+            }
+            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+            console.error("Failed to resolve file " + url + " " + error);
+            Modal.createTrackedDialog('Failed to resolve file', '', ErrorDialog, {
+                title: _t('Failed to resolve file'),
+                description: ((error && error.message) ? error.message : _t("Server may be unavailable, overloaded, or the file too big")),
+            });
+        });
     },
 
     uploadFile: function(file) {

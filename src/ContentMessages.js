@@ -268,11 +268,77 @@ function uploadFile(matrixClient, roomId, file, progressHandler) {
     }
 }
 
+/**
+ * Upload the file to the content repository.
+ * If the room is encrypted then encrypt the file before uploading.
+ *
+ * @param {MatrixClient} matrixClient The matrix client to upload the file with.
+ * @param {String} roomId The ID of the room being uploaded to.
+ * @param {File} file The file to upload.
+ * @param {Function?} progressHandler optional callback to be called when a chunk of
+ *    data is uploaded.
+ * @return {Promise} A promise that resolves with an object.
+ *  If the file is unencrypted then the object will have a "url" key.
+ *  If the file is encrypted then the object will have a "file" key.
+ */
+function resolveUrl(matrixClient, roomId, url) {
+    // TODO: review encrypted functionality ....
+    if (matrixClient.isRoomEncrypted(roomId)) {
+        const encryptResult = encrypt.encryptAttachment(url);
+        // Record the information needed to decrypt the attachment.
+        const encryptInfo = encryptResult.info;
+        // Pass the encrypted data as a Blob to the uploader.
+        const blob = new Blob([encryptResult.data]);
+        return matrixClient.resolveUrl(blob).then(function(url) {
+            // If the attachment is encrypted then bundle the URL along
+            // with the information needed to decrypt the attachment and
+            // add it under a file key.
+            encryptInfo.url = url;
+            return {"file": encryptInfo};
+        });
+    } else {
+        const basePromise = matrixClient.resolveUrl(url);
+        const promise1 = basePromise.then(function(url) {
+            // If the attachment isn't encrypted then include the URL directly.
+            return {"url": url};
+        });
+        // XXX: copy over the abort method to the new promise
+        promise1.abort = basePromise.abort;
+        return promise1;
+    }
+}
 
 class ContentMessages {
     constructor() {
         this.inprogress = [];
         this.nextId = 0;
+    }
+
+    sendUrlToRoom(url, roomId, matrixClient) {
+        const content = { info: {} };
+
+        const promise = resolveUrl(matrixClient, roomId, url);
+        promise.then(function(result) {
+            content.file = result.file;
+            content.url = result.url;
+
+            // TODO: result should return msgtype and file format by mime type:
+            content.body = result.filename;
+            content.msgtype = result.msgtype;
+            content.info.size = result.file_size;
+
+            return matrixClient.sendMessage(roomId, content);
+        }, function(err) {
+            let desc = _t('The url \'%(url)s\' failed to resolve', {url: url}) + '.';
+            if (err.http_status == 413) {
+                desc = _t('The url \'%(url)s\' exceeds this home server\'s size limit for uploads', {url: url});
+            }
+            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+            Modal.createTrackedDialog('Upload failed', '', ErrorDialog, {
+                title: _t('Upload Failed'),
+                description: desc,
+            });
+        });
     }
 
     sendContentToRoom(file, roomId, matrixClient) {
