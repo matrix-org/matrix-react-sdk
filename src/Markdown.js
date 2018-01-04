@@ -16,8 +16,9 @@ limitations under the License.
 
 import commonmark from 'commonmark';
 import escape from 'lodash/escape';
+import {sanitizeHtmlParams} from './HtmlUtils';
 
-const ALLOWED_HTML_TAGS = ['sub', 'sup', 'del', 'u'];
+const ALLOWED_HTML_TAGS = sanitizeHtmlParams.allowedTags;
 
 // These types of node are definitely text
 const TEXT_NODES = ['text', 'softbreak', 'linebreak', 'paragraph', 'document'];
