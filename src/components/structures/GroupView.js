@@ -269,7 +269,10 @@ const RoleUserList = React.createClass({
             excludedAddresses: this.props.users.map((user) => ({
                 addressType: 'mx-user-id',
                 address: user.summaryInfo.user_id,
-            })),
+            })).concat({
+                addressType: 'mx-user-id',
+                address: MatrixClientPeg.get().getUserId(),
+            }),
             groupId: this.props.groupId,
             shouldOmitSelf: false,
             onFinished: (success, addrs) => {

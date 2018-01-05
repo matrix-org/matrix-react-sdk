@@ -59,6 +59,10 @@ export function showStartChatInviteDialog() {
         placeholder: _t("Email, name or matrix ID"),
         button: _t("Start Chat"),
         onFinished: _onStartChatFinished,
+        excludedAddresses: {
+            addressType: 'mx-user-id',
+            address: MatrixClientPeg.get().getUserId(),
+        },
     });
 }
 
@@ -77,7 +81,7 @@ export function showRoomInviteDialog(roomId) {
         }).map((member) => ({
             addressType: 'mx-user-id',
             address: member.userId,
-        })),
+        })), // no need to add ourselves as we must already be in the room
         button: _t('Send Invites'),
         placeholder: _t("Email, name or matrix ID"),
         onFinished: (shouldInvite, addrs) => {
