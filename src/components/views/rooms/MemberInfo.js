@@ -766,7 +766,7 @@ module.exports = withMatrixClient(React.createClass({
         }
 
         const membership = this.props.member.membership;
-        if (this.state.can.kick && membership && membership !== 'leave') {
+        if (this.state.can.kick && (membership === 'join' || membership === 'invite')) {
             const kickLabel = membership === "invite" ? _t("Disinvite") : _t("Kick");
             kickButton = (
                 <AccessibleButton className="mx_MemberInfo_field"
