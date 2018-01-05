@@ -50,9 +50,6 @@ module.exports = React.createClass({
         groupId: PropTypes.string,
         // The type of entity to search for. Default: 'user'.
         pickerType: PropTypes.oneOf(['user', 'room']),
-        // Whether the current user should be included in the addresses returned. Only
-        // applicable when pickerType is `user`. Default: false.
-        includeSelf: PropTypes.bool,
     },
 
     getDefaultProps: function() {
@@ -61,7 +58,6 @@ module.exports = React.createClass({
             focus: true,
             validAddressTypes: addressTypes,
             pickerType: 'user',
-            includeSelf: false,
         };
     },
 
@@ -387,27 +383,33 @@ module.exports = React.createClass({
     _processResults: function(results, query) {
         const queryList = [];
         results.forEach((result) => {
+            let newEntry;
+
             if (result.room_id) {
-                queryList.push({
+                newEntry = {
                     addressType: 'mx-room-id',
                     address: result.room_id,
                     displayName: result.name,
                     avatarMxc: result.avatar_url,
                     isKnown: true,
-                });
-                return;
+                };
+            } else {
+                // Return objects, structure of which is defined
+                // by UserAddressType
+                newEntry = {
+                    addressType: 'mx-user-id',
+                    address: result.user_id,
+                    displayName: result.display_name,
+                    avatarMxc: result.avatar_url,
+                    isKnown: true,
+                };
             }
-            if (!this.props.includeSelf && result.user_id === MatrixClientPeg.get().credentials.userId) return;
 
-            // Return objects, structure of which is defined
-            // by UserAddressType
-            queryList.push({
-                addressType: 'mx-user-id',
-                address: result.user_id,
-                displayName: result.display_name,
-                avatarMxc: result.avatar_url,
-                isKnown: true,
-            });
+            // Don't add it if it is in the excludedAddresses
+            if (this.props.excludedAddresses.find((entry) => {
+                return entry.address === newEntry.address && entry.addressType === newEntry.addressType;
+            })) return;
+            queryList.push(newEntry);
         });
 
         // If the query is a valid address, add an entry for that
@@ -512,11 +514,6 @@ module.exports = React.createClass({
         this.scrollElement = null;
 
         const queryList = this.state.queryList.filter((query) => {
-            const isExcluded = this.props.excludedAddresses.find((entry) => {
-                return entry.address === query.address && entry.addressType === query.addressType;
-            });
-            if (isExcluded) return false;
-
             return !this.state.userList.find((entry) => {
                 return entry.address === query.address && entry.addressType === query.addressType;
             });
