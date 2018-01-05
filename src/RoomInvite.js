@@ -67,8 +67,7 @@ export function showStartChatInviteDialog() {
 }
 
 export function showRoomInviteDialog(roomId) {
-    const cli = MatrixClientPeg.get();
-    const room = cli.getRoom(roomId);
+    const room = MatrixClientPeg.get().getRoom(roomId);
 
     const AddressPickerDialog = sdk.getComponent("dialogs.AddressPickerDialog");
     Modal.createTrackedDialog('Chat Invite', '', AddressPickerDialog, {
