@@ -80,7 +80,7 @@ export function showRoomInviteDialog(roomId) {
         }).map((member) => ({
             addressType: 'mx-user-id',
             address: member.userId,
-        })), // no need to add ourselves as we must already be in the room
+        })), // no need to add the user as they must already be in the room
         button: _t('Send Invites'),
         placeholder: _t("Email, name or matrix ID"),
         onFinished: (shouldInvite, addrs) => {

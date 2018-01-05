@@ -43,7 +43,7 @@ export function showGroupInviteDialog(groupId) {
         excludedAddresses: groupStore.getGroupMembers().concat(groupStore.getGroupInvitedMembers()).map((member) => ({
             addressType: 'mx-user-id',
             address: member.userId,
-        })), // no need to add ourselves as we must already be in the group
+        })), // no need to add the user as they must already be in the group
         onFinished: (success, addrs) => {
             if (!success) return;
 
