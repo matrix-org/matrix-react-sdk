@@ -344,8 +344,10 @@ const LoggedInView = React.createClass({
             bodyClasses += ' mx_MatrixChat_useCompactLayout';
         }
 
+        const relativeFontSize = ( 100 / this.state.interfaceScale ) * this.state.chatFontScale;
+
         return (
-            <div className='mx_MatrixChat_wrapper' style={{zoom: this.state.interfaceScale + '%', fontSize: this.state.chatFontScale + '%'}}>
+            <div className='mx_MatrixChat_wrapper' style={{zoom: this.state.interfaceScale + '%', fontSize: relativeFontSize + '%'}}>
                 { topBar }
                 <div className={bodyClasses}>
                     { SettingsStore.isFeatureEnabled("feature_tag_panel") ? <TagPanel /> : <div /> }
