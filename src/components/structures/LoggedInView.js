@@ -133,15 +133,17 @@ const LoggedInView = React.createClass({
     },
 
     onAction(payload) {
-        if (payload.action === 'set_interface_scale') {
-            this.setState({
-                interfaceScale: payload.value,
-            });
-        }
-        if (payload.action === 'set_chat_font_scale') {
-            this.setState({
-                chatFontScale: payload.value,
-            });
+        switch(payload.action) {
+            case 'set_interface_scale': 
+                this.setState({
+                    interfaceScale: payload.value,
+                });
+                break;
+            case 'set_chat_font_scale': 
+                this.setState({
+                    chatFontScale: payload.value,
+                });
+                break
         }
     },
 
@@ -256,6 +258,7 @@ const LoggedInView = React.createClass({
                         key={this.props.currentRoomId || 'roomview'}
                         disabled={this.props.middleDisabled}
                         collapsedRhs={this.props.collapseRhs}
+                        chatFontScale={this.state.chatFontScale}
                         ConferenceHandler={this.props.ConferenceHandler}
                     />;
                 if (!this.props.collapseRhs) {
@@ -343,11 +346,9 @@ const LoggedInView = React.createClass({
         if (this.state.useCompactLayout) {
             bodyClasses += ' mx_MatrixChat_useCompactLayout';
         }
-
-        const relativeFontSize = ( 100 / this.state.interfaceScale ) * this.state.chatFontScale;
-
+        
         return (
-            <div className='mx_MatrixChat_wrapper' style={{zoom: this.state.interfaceScale + '%', fontSize: relativeFontSize + '%'}}>
+            <div className='mx_MatrixChat_wrapper' style={{zoom: this.state.interfaceScale + '%'}}>
                 { topBar }
                 <div className={bodyClasses}>
                     { SettingsStore.isFeatureEnabled("feature_tag_panel") ? <TagPanel /> : <div /> }

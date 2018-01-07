@@ -84,6 +84,8 @@ module.exports = React.createClass({
 
         // is the RightPanel collapsed?
         collapsedRhs: React.PropTypes.bool,
+
+        chatFontScale: React.PropTypes.number,
     },
 
     getInitialState: function() {
@@ -1737,7 +1739,7 @@ module.exports = React.createClass({
                     onLeaveClick={(myMember && myMember.membership === "join") ? this.onLeaveClick : null}
                 />
                 { auxPanel }
-                <div className={fadableSectionClasses}>
+                <div className={fadableSectionClasses} style={{fontSize: this.props.chatFontScale + '%'}}>
                     { topUnreadMessagesBar }
                     { messagePanel }
                     { searchResultsPanel }
