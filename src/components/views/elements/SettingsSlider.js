@@ -26,6 +26,10 @@ export default class SettingsSlider extends React.Component {
         value: PropTypes.number,
     };
 
+    static defaultProps = {
+        className: 'mx_SettingsSlider'
+    };
+
     constructor(props) {
         super(props);
         this._onValueChange = this._onValueChange.bind(this);
