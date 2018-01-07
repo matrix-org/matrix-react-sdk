@@ -27,7 +27,7 @@ export default class SettingsSlider extends React.Component {
     };
 
     static defaultProps = {
-        className: 'mx_SettingsSlider'
+        className: 'mx_SettingsSlider',
     };
 
     constructor(props) {

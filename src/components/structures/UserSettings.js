@@ -26,7 +26,6 @@ const Modal = require('../../Modal');
 const dis = require("../../dispatcher");
 import sessionStore from '../../stores/SessionStore';
 import Promise from 'bluebird';
-import _debounce from 'lodash/debounce';
 const packageJson = require('../../../package.json');
 const UserSettingsStore = require('../../UserSettingsStore');
 const CallMediaHandler = require('../../CallMediaHandler');
