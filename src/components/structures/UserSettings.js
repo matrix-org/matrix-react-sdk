@@ -677,12 +677,12 @@ module.exports = React.createClass({
             <label htmlFor="interfaceScaleSelector">{ _t('Interface Scale') }</label>
             <SettingsSlider ref="interfaceScaleSelector" onValueChange={this.onInterfaceScaleChange}
                           onValueCommitted={this.onInterfaceScaleCommitted}
-                          value={this.state.interfaceScale} min={50} max={200} step={10}
+                          value={this.state.interfaceScale} min={70} max={150} step={10}
             />
             <label htmlFor="chatFontScaleSelector">{ _t('Chat Font Scale') }</label>
             <SettingsSlider ref="chatFontScaleSelector" onValueChange={this.onChatFontScaleChange}
                           onValueCommitted={this.onChatFontScaleCommitted}
-                          value={this.state.chatFontScale} min={70} max={150} step={10}
+                          value={this.state.chatFontScale} min={70} max={200} step={10}
             />
         </div>;
     },
