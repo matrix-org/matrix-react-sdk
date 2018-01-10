@@ -44,6 +44,7 @@ import { KeyCode, isOnlyCtrlOrCmdKeyEvent } from '../../Keyboard';
 import RoomViewStore from '../../stores/RoomViewStore';
 import RoomScrollStateStore from '../../stores/RoomScrollStateStore';
 import SettingsStore from "../../settings/SettingsStore";
+import isEmpty from "lodash/isEmpty";
 
 const DEBUG = false;
 let debuglog = function() {};
@@ -864,16 +865,16 @@ module.exports = React.createClass({
     onDrop: function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
+        this.setState({ draggingFile: false });
 
         if (ev.dataTransfer.files.length > 0) {
-            this.setState({ draggingFile: false });
             const files = [...ev.dataTransfer.files];
             files.forEach(this.uploadFile);
         } else {
-            ["text/uri-list", "text/plain"].forEach((type) => {
-                const url = ev.dataTransfer.getData(type);
-                this.resolveUrl(url);
-            });
+            ["text/uri-list", "text/plain"]
+                .forEach(ev.dataTransfer.getData)
+                .filter(isEmpty)
+                .forEach(this.resolveUrl);
         }
     },
 

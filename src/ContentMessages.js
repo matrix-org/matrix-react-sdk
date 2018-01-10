@@ -319,13 +319,12 @@ class ContentMessages {
 
         const promise = resolveUrl(matrixClient, roomId, url);
         promise.then(function(result) {
-            content.file = result.file;
+            // Don't need to pass specific type because the chat message
+            // will be automatically resolved in RoomView in case if it's
+            // possible to preview it.
+            content.body = result.url;
+            content.msgtype = 'm.image';
             content.url = result.url;
-
-            // TODO: result should return msgtype and file format by mime type:
-            content.body = result.filename;
-            content.msgtype = result.msgtype;
-            content.info.size = result.file_size;
 
             return matrixClient.sendMessage(roomId, content);
         }, function(err) {
@@ -339,6 +338,8 @@ class ContentMessages {
                 description: desc,
             });
         });
+
+        return promise;
     }
 
     sendContentToRoom(file, roomId, matrixClient) {

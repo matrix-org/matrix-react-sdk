@@ -786,6 +786,7 @@
     "You seem to be uploading files, are you sure you want to quit?": "You seem to be uploading files, are you sure you want to quit?",
     "You seem to be in a call, are you sure you want to quit?": "You seem to be in a call, are you sure you want to quit?",
     "Failed to upload file": "Failed to upload file",
+    "Failed to resolve url": "Failed to resolve url",
     "Server may be unavailable, overloaded, or the file too big": "Server may be unavailable, overloaded, or the file too big",
     "Search failed": "Search failed",
     "Server may be unavailable, overloaded, or search timed out :(": "Server may be unavailable, overloaded, or search timed out :(",
