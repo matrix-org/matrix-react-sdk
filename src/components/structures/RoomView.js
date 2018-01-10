@@ -872,9 +872,9 @@ module.exports = React.createClass({
             files.forEach(this.uploadFile);
         } else {
             ["text/uri-list", "text/plain"]
-                .forEach(ev.dataTransfer.getData)
-                .filter(isEmpty)
-                .forEach(this.resolveUrl);
+                .map((type) => ev.dataTransfer.getData(type))
+                .filter((url) => !isEmpty(url))
+                .forEach((url) => this.resolveUrl(url));
         }
     },
 
