@@ -159,6 +159,18 @@ const LoggedInView = React.createClass({
         const ctrlCmdOnly = isOnlyCtrlOrCmdKeyEvent(ev);
 
         switch (ev.keyCode) {
+            case KeyCode.ESCAPE:
+
+                // Implemented this way so possible handling for other pages is neater
+                switch (this.props.page_type) {
+                    case PageTypes.UserSettings:
+                        this.props.onUserSettingsClose();
+                        handled = true;
+                        break;
+                }
+
+                break;
+
             case KeyCode.UP:
             case KeyCode.DOWN:
                 if (ev.altKey && !ev.shiftKey && !ev.ctrlKey && !ev.metaKey) {
