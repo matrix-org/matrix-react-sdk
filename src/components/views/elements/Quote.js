@@ -112,6 +112,7 @@ export default class Quote extends React.Component {
             return;
         }
 
+        // TODO use new /room/{roomId}/event{eventId} API instead of Context API for performance
         await MatrixClientPeg.get().getEventTimeline(room.getUnfilteredTimelineSet(), eventId);
         event = room.findEventById(eventId);
         this.setState({room, event});
