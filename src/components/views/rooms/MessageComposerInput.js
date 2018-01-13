@@ -54,6 +54,7 @@ import SettingsStore, {SettingLevel} from "../../../settings/SettingsStore";
 import {makeEventPermalink, makeUserPermalink} from "../../../matrix-to";
 import QuotePreview from "./QuotePreview";
 import RoomViewStore from '../../../stores/RoomViewStore';
+import Quote from "../elements/Quote";
 
 const EMOJI_SHORTNAMES = Object.keys(emojioneList);
 const EMOJI_UNICODE_TO_SHORTNAME = mapUnicodeToShort();
@@ -847,11 +848,8 @@ export default class MessageComposerInput extends React.Component {
             const room = cli.getRoom(quotingEv.getRoomId());
             const sender = room.currentState.getMember(quotingEv.getSender());
 
-            const {body/*, formatted_body*/} = quotingEv.getContent();
-
-            const perma = makeEventPermalink(quotingEv.getRoomId(), quotingEv.getId());
-            contentText = `${sender.name}:\n> ${body}\n\n${contentText}`;
-            contentHTML = `<a href="${perma}">Quote<br></a>${contentHTML}`;
+            contentText = `${contentText}`;
+            contentHTML = Quote.makeHTMLQuote(quotingEv, sender) + contentHTML;
 
             // we have finished quoting, clear the quotingEvent
             dis.dispatch({

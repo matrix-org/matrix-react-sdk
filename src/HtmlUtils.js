@@ -162,6 +162,7 @@ const sanitizeHtmlParams = {
     ],
     allowedAttributes: {
         // custom ones first:
+        blockquote: ['cite'], // custom to matrix: used for rich replies
         font: ['color', 'data-mx-bg-color', 'data-mx-color', 'style'], // custom to matrix
         span: ['data-mx-bg-color', 'data-mx-color', 'style'], // custom to matrix
         a: ['href', 'name', 'target', 'rel'], // remote target: custom to matrix

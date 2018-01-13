@@ -182,7 +182,6 @@ module.exports = React.createClass({
 
                 // If the link is a (localised) matrix.to link, replace it with a pill
                 const Pill = sdk.getComponent('elements.Pill');
-                const Quote = sdk.getComponent('elements.Quote');
                 if (Pill.isMessagePillUrl(href)) {
                     const pillContainer = document.createElement('span');
 
@@ -201,12 +200,17 @@ module.exports = React.createClass({
 
                     // update the current node with one that's now taken its place
                     node = pillContainer;
-                } else if (SettingsStore.isFeatureEnabled("feature_rich_quoting") && Quote.isMessageUrl(href)) {
+                }
+            } else if (node.tagName === 'BLOCKQUOTE' && node.getAttribute('cite')) {
+                const Quote = sdk.getComponent('elements.Quote');
+                const cite = node.getAttribute('cite');
+
+                if (SettingsStore.isFeatureEnabled("feature_rich_quoting") && Quote.isMessageUrl(cite)) {
                     // only allow this branch if we're not already in a quote, as fun as infinite nesting is.
                     const quoteContainer = document.createElement('span');
 
                     const quote =
-                        <Quote url={href} parentEv={this.props.mxEvent} isNested={this.props.tileShape === 'quote'} />;
+                        <Quote url={cite} parentEv={this.props.mxEvent} isNested={this.props.tileShape === 'quote'} />;
 
                     ReactDOM.render(quote, quoteContainer);
                     node.parentNode.replaceChild(quoteContainer, node);
