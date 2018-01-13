@@ -45,7 +45,7 @@ export default class Quote extends React.Component {
 
     static makeHTMLQuote(ev, sender) {
         const perma = makeEventPermalink(ev.getRoomId(), ev.getId());
-        const main = _t('<a>In reply to </a><pill>', {}, {
+        const main = _t('<a>In reply to</a> <pill>', {}, {
             a: (sub) => `<a href="${perma}">${sub}</a>`,
             pill: `<a href="${makeUserPermalink(sender.userId)}">${sender.name}</a>`,
         });
