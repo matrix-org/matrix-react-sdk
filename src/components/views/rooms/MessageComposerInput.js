@@ -848,7 +848,7 @@ export default class MessageComposerInput extends React.Component {
             const room = cli.getRoom(quotingEv.getRoomId());
             const sender = room.currentState.getMember(quotingEv.getSender());
 
-            contentText = `${contentText}`;
+            contentText = Quote.makePlaintextQuote(quotingEv, sender) + contentText;
             contentHTML = Quote.makeHTMLQuote(quotingEv, sender) + contentHTML;
 
             // we have finished quoting, clear the quotingEvent

@@ -53,6 +53,7 @@ export default class Quote extends React.Component {
     }
 
     static makePlaintextQuote(ev, sender) {
+        // TODO improve plaintext formatting
         const {body/*, formatted_body*/} = ev.getContent();
         return `${sender.name}:\\n> ${body}\\n\\n`;
     }
