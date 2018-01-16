@@ -64,7 +64,7 @@ const gHVersionLabel = function(repo, token='') {
 const SIMPLE_SETTINGS = [
     { id: "urlPreviewsEnabled" },
     { id: "autoplayGifsAndVideos" },
-    { id: "hideInlineEncryptionIconUntilHover" },
+    { id: "alwaysShowEncryptionIcons" },
     { id: "hideReadReceipts" },
     { id: "dontSendTypingNotifications" },
     { id: "alwaysShowTimestamps" },

@@ -682,10 +682,10 @@ function E2ePadlockUnencrypted(props) {
 }
 
 function E2ePadlock(props) {
-    if (SettingsStore.getValue("hideInlineEncryptionIconUntilHover")) {
-        return <img className="mx_EventTile_e2eIcon" hidden {...props} />;
-    } else {
+    if (SettingsStore.getValue("alwaysShowEncryptionIcons")) {
         return <img className="mx_EventTile_e2eIcon" {...props} />;
+    } else {
+        return <img className="mx_EventTile_e2eIcon" hidden {...props} />;
     }
 }
 
