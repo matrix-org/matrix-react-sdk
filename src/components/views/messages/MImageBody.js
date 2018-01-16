@@ -17,6 +17,7 @@ limitations under the License.
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import MFileBody from './MFileBody';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import ImageUtils from '../../../ImageUtils';
@@ -25,18 +26,18 @@ import sdk from '../../../index';
 import dis from '../../../dispatcher';
 import { decryptFile, readBlobAsDataUri } from '../../../utils/DecryptFile';
 import Promise from 'bluebird';
-import UserSettingsStore from '../../../UserSettingsStore';
 import { _t } from '../../../languageHandler';
+import SettingsStore from "../../../settings/SettingsStore";
 
 module.exports = React.createClass({
     displayName: 'MImageBody',
 
     propTypes: {
         /* the MatrixEvent to show */
-        mxEvent: React.PropTypes.object.isRequired,
+        mxEvent: PropTypes.object.isRequired,
 
         /* called when the image has loaded */
-        onWidgetLoad: React.PropTypes.func.isRequired,
+        onWidgetLoad: PropTypes.func.isRequired,
     },
 
     getInitialState: function() {
@@ -81,7 +82,7 @@ module.exports = React.createClass({
     },
 
     onImageEnter: function(e) {
-        if (!this._isGif() || UserSettingsStore.getSyncedSetting("autoplayGifsAndVideos", false)) {
+        if (!this._isGif() || SettingsStore.getValue("autoplayGifsAndVideos")) {
             return;
         }
         const imgElement = e.target;
@@ -89,7 +90,7 @@ module.exports = React.createClass({
     },
 
     onImageLeave: function(e) {
-        if (!this._isGif() || UserSettingsStore.getSyncedSetting("autoplayGifsAndVideos", false)) {
+        if (!this._isGif() || SettingsStore.getValue("autoplayGifsAndVideos")) {
             return;
         }
         const imgElement = e.target;
@@ -218,7 +219,7 @@ module.exports = React.createClass({
 
         const contentUrl = this._getContentUrl();
         let thumbUrl;
-        if (this._isGif() && UserSettingsStore.getSyncedSetting("autoplayGifsAndVideos", false)) {
+        if (this._isGif() && SettingsStore.getValue("autoplayGifsAndVideos")) {
           thumbUrl = contentUrl;
         } else {
           thumbUrl = this._getThumbUrl();
@@ -230,6 +231,7 @@ module.exports = React.createClass({
                     <a href={contentUrl} onClick={this.onClick}>
                         <img className="mx_MImageBody_thumbnail" src={thumbUrl} ref="image"
                             alt={content.body}
+                            onLoad={this.props.onWidgetLoad}
                             onMouseEnter={this.onImageEnter}
                             onMouseLeave={this.onImageLeave} />
                     </a>

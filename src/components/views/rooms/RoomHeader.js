@@ -17,6 +17,7 @@ limitations under the License.
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import sdk from '../../../index';
 import { _t } from '../../../languageHandler';
@@ -31,7 +32,7 @@ import linkifyMatrix from '../../../linkify-matrix';
 import AccessibleButton from '../elements/AccessibleButton';
 import ManageIntegsButton from '../elements/ManageIntegsButton';
 import {CancelButton} from './SimpleRoomHeader';
-import UserSettingsStore from "../../../UserSettingsStore";
+import SettingsStore from "../../../settings/SettingsStore";
 
 linkifyMatrix(linkify);
 
@@ -39,18 +40,18 @@ module.exports = React.createClass({
     displayName: 'RoomHeader',
 
     propTypes: {
-        room: React.PropTypes.object,
-        oobData: React.PropTypes.object,
-        editing: React.PropTypes.bool,
-        saving: React.PropTypes.bool,
-        inRoom: React.PropTypes.bool,
-        collapsedRhs: React.PropTypes.bool,
-        onSettingsClick: React.PropTypes.func,
-        onPinnedClick: React.PropTypes.func,
-        onSaveClick: React.PropTypes.func,
-        onSearchClick: React.PropTypes.func,
-        onLeaveClick: React.PropTypes.func,
-        onCancelClick: React.PropTypes.func,
+        room: PropTypes.object,
+        oobData: PropTypes.object,
+        editing: PropTypes.bool,
+        saving: PropTypes.bool,
+        inRoom: PropTypes.bool,
+        collapsedRhs: PropTypes.bool,
+        onSettingsClick: PropTypes.func,
+        onPinnedClick: PropTypes.func,
+        onSaveClick: PropTypes.func,
+        onSearchClick: PropTypes.func,
+        onLeaveClick: PropTypes.func,
+        onCancelClick: PropTypes.func,
     },
 
     getDefaultProps: function() {
@@ -339,7 +340,7 @@ module.exports = React.createClass({
                 </AccessibleButton>;
         }
 
-        if (this.props.onPinnedClick && UserSettingsStore.isFeatureEnabled('feature_pinning')) {
+        if (this.props.onPinnedClick && SettingsStore.isFeatureEnabled('feature_pinning')) {
             let pinsIndicator = null;
             if (this._hasUnreadPins()) {
                 pinsIndicator = (<div className="mx_RoomHeader_pinsIndicator mx_RoomHeader_pinsIndicatorUnread" />);
@@ -389,7 +390,7 @@ module.exports = React.createClass({
 
         let rightRow;
         let manageIntegsButton;
-        if(this.props.room && this.props.room.roomId && this.props.inRoom) {
+        if (this.props.room && this.props.room.roomId && this.props.inRoom) {
             manageIntegsButton = <ManageIntegsButton
                 roomId={this.props.room.roomId}
             />;

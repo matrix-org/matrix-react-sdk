@@ -16,16 +16,17 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher';
-import KeyCode from '../../../KeyCode';
+import { KeyCode } from '../../../Keyboard';
 
 
 module.exports = React.createClass({
     displayName: 'ForwardMessage',
 
     propTypes: {
-        onCancelClick: React.PropTypes.func.isRequired,
+        onCancelClick: PropTypes.func.isRequired,
     },
 
     componentWillMount: function() {

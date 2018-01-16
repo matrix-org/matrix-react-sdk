@@ -17,11 +17,12 @@ limitations under the License.
 
 import Promise from 'bluebird';
 import React from 'react';
+import PropTypes from 'prop-types';
 import sdk from '../../../index';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import classnames from 'classnames';
-import KeyCode from '../../../KeyCode';
-import { _t, _tJsx } from '../../../languageHandler';
+import { KeyCode } from '../../../Keyboard';
+import { _t } from '../../../languageHandler';
 
 // The amount of time to wait for further changes to the input username before
 // sending a request to the server
@@ -35,11 +36,11 @@ const USERNAME_CHECK_DEBOUNCE_MS = 250;
 export default React.createClass({
     displayName: 'SetMxIdDialog',
     propTypes: {
-        onFinished: React.PropTypes.func.isRequired,
+        onFinished: PropTypes.func.isRequired,
         // Called when the user requests to register with a different homeserver
-        onDifferentServerClicked: React.PropTypes.func.isRequired,
+        onDifferentServerClicked: PropTypes.func.isRequired,
         // Called if the user wants to switch to login instead
-        onLoginClick: React.PropTypes.func.isRequired,
+        onLoginClick: PropTypes.func.isRequired,
     },
 
     getInitialState: function() {
@@ -267,24 +268,21 @@ export default React.createClass({
                     </div>
                     { usernameIndicator }
                     <p>
-                        { _tJsx(
+                        { _t(
                             'This will be your account name on the <span></span> ' +
                             'homeserver, or you can pick a <a>different server</a>.',
-                            [
-                                /<span><\/span>/,
-                                /<a>(.*?)<\/a>/,
-                            ],
-                            [
-                                (sub) => <span>{ this.props.homeserverUrl }</span>,
-                                (sub) => <a href="#" onClick={this.props.onDifferentServerClicked}>{ sub }</a>,
-                            ],
+                            {},
+                            {
+                                'span': <span>{ this.props.homeserverUrl }</span>,
+                                'a': (sub) => <a href="#" onClick={this.props.onDifferentServerClicked}>{ sub }</a>,
+                            },
                         ) }
                     </p>
                     <p>
-                        { _tJsx(
+                        { _t(
                             'If you already have a Matrix account you can <a>log in</a> instead.',
-                            /<a>(.*?)<\/a>/,
-                            [(sub) => <a href="#" onClick={this.props.onLoginClick}>{ sub }</a>],
+                            {},
+                            { 'a': (sub) => <a href="#" onClick={this.props.onLoginClick}>{ sub }</a> },
                         ) }
                     </p>
                     { auth }

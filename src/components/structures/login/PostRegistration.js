@@ -17,6 +17,7 @@ limitations under the License.
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import sdk from '../../../index';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
@@ -25,7 +26,7 @@ module.exports = React.createClass({
     displayName: 'PostRegistration',
 
     propTypes: {
-        onComplete: React.PropTypes.func.isRequired,
+        onComplete: PropTypes.func.isRequired,
     },
 
     getInitialState: function() {
@@ -59,9 +60,10 @@ module.exports = React.createClass({
     render: function() {
         const ChangeDisplayName = sdk.getComponent('settings.ChangeDisplayName');
         const ChangeAvatar = sdk.getComponent('settings.ChangeAvatar');
+        const LoginPage = sdk.getComponent('login.LoginPage');
         const LoginHeader = sdk.getComponent('login.LoginHeader');
         return (
-            <div className="mx_Login">
+            <LoginPage>
                 <div className="mx_Login_box">
                     <LoginHeader />
                     <div className="mx_Login_profile">
@@ -74,7 +76,7 @@ module.exports = React.createClass({
                         { this.state.errorString }
                     </div>
                 </div>
-            </div>
+            </LoginPage>
         );
     },
 });

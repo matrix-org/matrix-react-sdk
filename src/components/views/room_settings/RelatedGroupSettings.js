@@ -15,10 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import {MatrixEvent, MatrixClient} from 'matrix-js-sdk';
 import sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
+import isEqual from 'lodash/isEqual';
 
 const GROUP_ID_REGEX = /\+\S+\:\S+/;
 
@@ -26,13 +28,13 @@ module.exports = React.createClass({
     displayName: 'RelatedGroupSettings',
 
     propTypes: {
-        roomId: React.PropTypes.string.isRequired,
-        canSetRelatedGroups: React.PropTypes.bool.isRequired,
-        relatedGroupsEvent: React.PropTypes.instanceOf(MatrixEvent),
+        roomId: PropTypes.string.isRequired,
+        canSetRelatedGroups: PropTypes.bool.isRequired,
+        relatedGroupsEvent: PropTypes.instanceOf(MatrixEvent),
     },
 
     contextTypes: {
-        matrixClient: React.PropTypes.instanceOf(MatrixClient),
+        matrixClient: PropTypes.instanceOf(MatrixClient),
     },
 
     getDefaultProps: function() {
@@ -43,13 +45,25 @@ module.exports = React.createClass({
 
     getInitialState: function() {
         return {
-            newGroupsList: this.props.relatedGroupsEvent ?
-                (this.props.relatedGroupsEvent.getContent().groups || []) : [],
+            newGroupsList: this.getInitialGroupList(),
             newGroupId: null,
         };
     },
 
+    getInitialGroupList: function() {
+        return this.props.relatedGroupsEvent ? (this.props.relatedGroupsEvent.getContent().groups || []) : [];
+    },
+
+    needsSaving: function() {
+        const cli = this.context.matrixClient;
+        const room = cli.getRoom(this.props.roomId);
+        if (!room.currentState.maySendStateEvent('m.room.related_groups', cli.getUserId())) return false;
+        return !isEqual(this.getInitialGroupList(), this.state.newGroupsList);
+    },
+
     saveSettings: function() {
+        if (!this.needsSaving()) return Promise.resolve();
+
         return this.context.matrixClient.sendStateEvent(
             this.props.roomId,
             'm.room.related_groups',
@@ -97,15 +111,15 @@ module.exports = React.createClass({
 
     onGroupDeleted: function(index) {
         const newGroupsList = this.state.newGroupsList.slice();
-        newGroupsList.splice(index, 1),
+        newGroupsList.splice(index, 1);
         this.setState({ newGroupsList });
     },
 
     render: function() {
         const localDomain = this.context.matrixClient.getDomain();
         const EditableItemList = sdk.getComponent('elements.EditableItemList');
-        return (<div>
-            <h3>{ _t('Related Communities') }</h3>
+        return <div>
+            <h3>{ _t('Flair') }</h3>
             <EditableItemList
                 items={this.state.newGroupsList}
                 className={"mx_RelatedGroupSettings"}
@@ -115,12 +129,12 @@ module.exports = React.createClass({
                 onItemAdded={this.onGroupAdded}
                 onItemEdited={this.onGroupEdited}
                 onItemRemoved={this.onGroupDeleted}
-                itemsLabel={_t('Related communities for this room:')}
-                noItemsLabel={_t('This room has no related communities')}
+                itemsLabel={_t('Showing flair for these communities:')}
+                noItemsLabel={_t('This room is not showing flair for any communities')}
                 placeholder={_t(
                     'New community ID (e.g. +foo:%(localDomain)s)', {localDomain},
                 )}
             />
-        </div>);
+        </div>;
     },
 });

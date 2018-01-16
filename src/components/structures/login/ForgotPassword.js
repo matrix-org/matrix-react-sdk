@@ -17,25 +17,26 @@ limitations under the License.
 
 'use strict';
 
-const React = require('react');
+import React from 'react';
+import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
-const sdk = require('../../../index');
-const Modal = require("../../../Modal");
-const MatrixClientPeg = require('../../../MatrixClientPeg');
+import sdk from '../../../index';
+import Modal from "../../../Modal";
+import MatrixClientPeg from "../../../MatrixClientPeg";
 
-const PasswordReset = require("../../../PasswordReset");
+import PasswordReset from "../../../PasswordReset";
 
 module.exports = React.createClass({
     displayName: 'ForgotPassword',
 
     propTypes: {
-        defaultHsUrl: React.PropTypes.string,
-        defaultIsUrl: React.PropTypes.string,
-        customHsUrl: React.PropTypes.string,
-        customIsUrl: React.PropTypes.string,
-        onLoginClick: React.PropTypes.func,
-        onRegisterClick: React.PropTypes.func,
-        onComplete: React.PropTypes.func.isRequired,
+        defaultHsUrl: PropTypes.string,
+        defaultIsUrl: PropTypes.string,
+        customHsUrl: PropTypes.string,
+        customIsUrl: PropTypes.string,
+        onLoginClick: PropTypes.func,
+        onRegisterClick: PropTypes.func,
+        onComplete: PropTypes.func.isRequired,
     },
 
     getInitialState: function() {
@@ -154,6 +155,7 @@ module.exports = React.createClass({
     },
 
     render: function() {
+        const LoginPage = sdk.getComponent("login.LoginPage");
         const LoginHeader = sdk.getComponent("login.LoginHeader");
         const LoginFooter = sdk.getComponent("login.LoginFooter");
         const ServerConfig = sdk.getComponent("login.ServerConfig");
@@ -165,7 +167,7 @@ module.exports = React.createClass({
             resetPasswordJsx = <Spinner />;
         } else if (this.state.progress === "sent_email") {
             resetPasswordJsx = (
-                <div>
+                <div className="mx_Login_prompt">
                     { _t("An email has been sent to %(emailAddress)s. Once you've followed the link it contains, click below.", { emailAddress: this.state.email }) }
                     <br />
                     <input className="mx_Login_submit" type="button" onClick={this.onVerify}
@@ -174,7 +176,7 @@ module.exports = React.createClass({
             );
         } else if (this.state.progress === "complete") {
             resetPasswordJsx = (
-                <div>
+                <div className="mx_Login_prompt">
                     <p>{ _t('Your password has been reset') }.</p>
                     <p>{ _t('You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device') }.</p>
                     <input className="mx_Login_submit" type="button" onClick={this.props.onComplete}
@@ -182,6 +184,20 @@ module.exports = React.createClass({
                 </div>
             );
         } else {
+            let serverConfigSection;
+            if (!config.disable_custom_urls) {
+                serverConfigSection = (
+                    <ServerConfig ref="serverConfig"
+                        withToggleButton={true}
+                        defaultHsUrl={this.props.defaultHsUrl}
+                        defaultIsUrl={this.props.defaultIsUrl}
+                        customHsUrl={this.props.customHsUrl}
+                        customIsUrl={this.props.customIsUrl}
+                        onServerConfigChange={this.onServerConfigChange}
+                        delayTimeMs={0} />
+                );
+            }
+
             resetPasswordJsx = (
             <div>
                 <div className="mx_Login_prompt">
@@ -209,16 +225,7 @@ module.exports = React.createClass({
                         <br />
                         <input className="mx_Login_submit" type="submit" value={_t('Send Reset Email')} />
                     </form>
-                    <ServerConfig ref="serverConfig"
-                        withToggleButton={true}
-                        defaultHsUrl={this.props.defaultHsUrl}
-                        defaultIsUrl={this.props.defaultIsUrl}
-                        customHsUrl={this.props.customHsUrl}
-                        customIsUrl={this.props.customIsUrl}
-                        onServerConfigChange={this.onServerConfigChange}
-                        delayTimeMs={0} />
-                    <div className="mx_Login_error">
-                    </div>
+                    { serverConfigSection }
                     <a className="mx_Login_create" onClick={this.props.onLoginClick} href="#">
                         { _t('Return to login screen') }
                     </a>
@@ -233,12 +240,12 @@ module.exports = React.createClass({
 
 
         return (
-            <div className="mx_Login">
+            <LoginPage>
                 <div className="mx_Login_box">
                     <LoginHeader />
                     { resetPasswordJsx }
                 </div>
-            </div>
+            </LoginPage>
         );
     },
 });

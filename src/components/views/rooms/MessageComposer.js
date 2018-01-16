@@ -15,14 +15,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import CallHandler from '../../../CallHandler';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import Modal from '../../../Modal';
 import sdk from '../../../index';
 import dis from '../../../dispatcher';
-import Autocomplete from './Autocomplete';
-import UserSettingsStore from '../../../UserSettingsStore';
+import RoomViewStore from '../../../stores/RoomViewStore';
+import SettingsStore, {SettingLevel} from "../../../settings/SettingsStore";
 
 
 export default class MessageComposer extends React.Component {
@@ -42,6 +43,7 @@ export default class MessageComposer extends React.Component {
         this.onToggleMarkdownClicked = this.onToggleMarkdownClicked.bind(this);
         this.onInputStateChanged = this.onInputStateChanged.bind(this);
         this.onEvent = this.onEvent.bind(this);
+        this._onRoomViewStoreUpdate = this._onRoomViewStoreUpdate.bind(this);
 
         this.state = {
             autocompleteQuery: '',
@@ -49,10 +51,11 @@ export default class MessageComposer extends React.Component {
             inputState: {
                 style: [],
                 blockType: null,
-                isRichtextEnabled: UserSettingsStore.getSyncedSetting('MessageComposerInput.isRichTextEnabled', false),
+                isRichtextEnabled: SettingsStore.getValue('MessageComposerInput.isRichTextEnabled'),
                 wordCount: 0,
             },
-            showFormatting: UserSettingsStore.getSyncedSetting('MessageComposer.showFormatting', false),
+            showFormatting: SettingsStore.getValue('MessageComposer.showFormatting'),
+            isQuoting: Boolean(RoomViewStore.getQuotingEvent()),
         };
     }
 
@@ -62,11 +65,15 @@ export default class MessageComposer extends React.Component {
         // marked as encrypted.
         // XXX: fragile as all hell - fixme somehow, perhaps with a dedicated Room.encryption event or something.
         MatrixClientPeg.get().on("event", this.onEvent);
+        this._roomStoreToken = RoomViewStore.addListener(this._onRoomViewStoreUpdate);
     }
 
     componentWillUnmount() {
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener("event", this.onEvent);
+        }
+        if (this._roomStoreToken) {
+            this._roomStoreToken.remove();
         }
     }
 
@@ -74,6 +81,12 @@ export default class MessageComposer extends React.Component {
         if (event.getType() !== 'm.room.encryption') return;
         if (event.getRoomId() !== this.props.room.roomId) return;
         this.forceUpdate();
+    }
+
+    _onRoomViewStoreUpdate() {
+        const isQuoting = Boolean(RoomViewStore.getQuotingEvent());
+        if (this.state.isQuoting === isQuoting) return;
+        this.setState({ isQuoting });
     }
 
     onUploadClick(ev) {
@@ -111,10 +124,10 @@ export default class MessageComposer extends React.Component {
                 </div>
             ),
             onFinished: (shouldUpload) => {
-                if(shouldUpload) {
+                if (shouldUpload) {
                     // MessageComposer shouldn't have to rely on its parent passing in a callback to upload a file
                     if (files) {
-                        for(let i=0; i<files.length; i++) {
+                        for (let i=0; i<files.length; i++) {
                             this.props.uploadFile(files[i]);
                         }
                     }
@@ -226,7 +239,7 @@ export default class MessageComposer extends React.Component {
     }
 
     onToggleFormattingClicked() {
-        UserSettingsStore.setSyncedSetting('MessageComposer.showFormatting', !this.state.showFormatting);
+        SettingsStore.setValue("MessageComposer.showFormatting", null, SettingLevel.DEVICE, !this.state.showFormatting);
         this.setState({showFormatting: !this.state.showFormatting});
     }
 
@@ -238,7 +251,7 @@ export default class MessageComposer extends React.Component {
     render() {
         const me = this.props.room.getMember(MatrixClientPeg.get().credentials.userId);
         const uploadInputStyle = {display: 'none'};
-        const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
+        const MemberPresenceAvatar = sdk.getComponent('avatars.MemberPresenceAvatar');
         const TintableSvg = sdk.getComponent("elements.TintableSvg");
         const MessageComposerInput = sdk.getComponent("rooms.MessageComposerInput");
 
@@ -246,7 +259,7 @@ export default class MessageComposer extends React.Component {
 
         controls.push(
             <div key="controls_avatar" className="mx_MessageComposer_avatar">
-                <MemberAvatar member={me} width={24} height={24} />
+                <MemberPresenceAvatar member={me} width={24} height={24} />
             </div>,
         );
 
@@ -325,8 +338,20 @@ export default class MessageComposer extends React.Component {
                      key="controls_formatting" />
             );
 
-            const placeholderText = roomIsEncrypted ?
-                _t('Send an encrypted message') + '…' : _t('Send a message (unencrypted)') + '…';
+            let placeholderText;
+            if (this.state.isQuoting) {
+                if (roomIsEncrypted) {
+                    placeholderText = _t('Send an encrypted reply…');
+                } else {
+                    placeholderText = _t('Send a reply (unencrypted)…');
+                }
+            } else {
+                if (roomIsEncrypted) {
+                    placeholderText = _t('Send an encrypted message…');
+                } else {
+                    placeholderText = _t('Send a message (unencrypted)…');
+                }
+            }
 
             controls.push(
                 <MessageComposerInput
@@ -399,17 +424,17 @@ export default class MessageComposer extends React.Component {
 MessageComposer.propTypes = {
     // a callback which is called when the height of the composer is
     // changed due to a change in content.
-    onResize: React.PropTypes.func,
+    onResize: PropTypes.func,
 
     // js-sdk Room object
-    room: React.PropTypes.object.isRequired,
+    room: PropTypes.object.isRequired,
 
     // string representing the current voip call state
-    callState: React.PropTypes.string,
+    callState: PropTypes.string,
 
     // callback when a file to upload is chosen
-    uploadFile: React.PropTypes.func.isRequired,
+    uploadFile: PropTypes.func.isRequired,
 
     // string representing the current room app drawer state
-    showApps: React.PropTypes.bool,
+    showApps: PropTypes.bool,
 };

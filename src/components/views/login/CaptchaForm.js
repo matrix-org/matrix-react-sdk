@@ -18,7 +18,8 @@ limitations under the License.
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { _t, _tJsx } from '../../../languageHandler';
+import PropTypes from 'prop-types';
+import { _t } from '../../../languageHandler';
 
 const DIV_ID = 'mx_recaptcha';
 
@@ -29,10 +30,10 @@ module.exports = React.createClass({
     displayName: 'CaptchaForm',
 
     propTypes: {
-        sitePublicKey: React.PropTypes.string,
+        sitePublicKey: PropTypes.string,
 
         // called with the captcha response
-        onCaptchaResponse: React.PropTypes.func,
+        onCaptchaResponse: PropTypes.func,
     },
 
     getDefaultProps: function() {
@@ -67,10 +68,10 @@ module.exports = React.createClass({
                 // * jumping straight to a hosted captcha page (but we don't support that yet)
                 // * embedding the captcha in an iframe (if that works)
                 // * using a better captcha lib
-                ReactDOM.render(_tJsx(
+                ReactDOM.render(_t(
                     "Robot check is currently unavailable on desktop - please use a <a>web browser</a>",
-                    /<a>(.*?)<\/a>/,
-                    (sub) => { return <a href='https://riot.im/app'>{ sub }</a>; }), warning);
+                    {},
+                    { 'a': (sub) => { return <a href='https://riot.im/app'>{ sub }</a>; }}), warning);
                 this.refs.recaptchaContainer.appendChild(warning);
             } else {
                 const scriptTag = document.createElement('script');

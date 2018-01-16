@@ -15,8 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import SettingsStore from "../../settings/SettingsStore";
+
 const React = require('react');
 const ReactDOM = require("react-dom");
+import PropTypes from 'prop-types';
 import Promise from 'bluebird';
 
 const Matrix = require("matrix-js-sdk");
@@ -29,8 +32,7 @@ const dis = require("../../dispatcher");
 const ObjectUtils = require('../../ObjectUtils');
 const Modal = require("../../Modal");
 const UserActivity = require("../../UserActivity");
-const KeyCode = require('../../KeyCode');
-import UserSettingsStore from '../../UserSettingsStore';
+import { KeyCode } from '../../Keyboard';
 
 const PAGINATE_SIZE = 20;
 const INITIAL_SIZE = 20;
@@ -57,49 +59,49 @@ var TimelinePanel = React.createClass({
         // representing.  This may or may not have a room, depending on what it's
         // a timeline representing.  If it has a room, we maintain RRs etc for
         // that room.
-        timelineSet: React.PropTypes.object.isRequired,
+        timelineSet: PropTypes.object.isRequired,
 
-        showReadReceipts: React.PropTypes.bool,
+        showReadReceipts: PropTypes.bool,
         // Enable managing RRs and RMs. These require the timelineSet to have a room.
-        manageReadReceipts: React.PropTypes.bool,
-        manageReadMarkers: React.PropTypes.bool,
+        manageReadReceipts: PropTypes.bool,
+        manageReadMarkers: PropTypes.bool,
 
         // true to give the component a 'display: none' style.
-        hidden: React.PropTypes.bool,
+        hidden: PropTypes.bool,
 
         // ID of an event to highlight. If undefined, no event will be highlighted.
         // typically this will be either 'eventId' or undefined.
-        highlightedEventId: React.PropTypes.string,
+        highlightedEventId: PropTypes.string,
 
         // id of an event to jump to. If not given, will go to the end of the
         // live timeline.
-        eventId: React.PropTypes.string,
+        eventId: PropTypes.string,
 
         // where to position the event given by eventId, in pixels from the
         // bottom of the viewport. If not given, will try to put the event
         // half way down the viewport.
-        eventPixelOffset: React.PropTypes.number,
+        eventPixelOffset: PropTypes.number,
 
         // Should we show URL Previews
-        showUrlPreview: React.PropTypes.bool,
+        showUrlPreview: PropTypes.bool,
 
         // callback which is called when the panel is scrolled.
-        onScroll: React.PropTypes.func,
+        onScroll: PropTypes.func,
 
         // callback which is called when the read-up-to mark is updated.
-        onReadMarkerUpdated: React.PropTypes.func,
+        onReadMarkerUpdated: PropTypes.func,
 
         // maximum number of events to show in a timeline
-        timelineCap: React.PropTypes.number,
+        timelineCap: PropTypes.number,
 
         // classname to use for the messagepanel
-        className: React.PropTypes.string,
+        className: PropTypes.string,
 
         // shape property to be passed to EventTiles
-        tileShape: React.PropTypes.string,
+        tileShape: PropTypes.string,
 
         // placeholder text to use if the timeline is empty
-        empty: React.PropTypes.string,
+        empty: PropTypes.string,
     },
 
     statics: {
@@ -128,8 +130,6 @@ var TimelinePanel = React.createClass({
                 initialReadMarker = this._getCurrentReadReceipt();
             }
         }
-
-        const syncedSettings = UserSettingsStore.getSyncedSettings();
 
         return {
             events: [],
@@ -175,10 +175,10 @@ var TimelinePanel = React.createClass({
             clientSyncState: MatrixClientPeg.get().getSyncState(),
 
             // should the event tiles have twelve hour times
-            isTwelveHour: syncedSettings.showTwelveHourTimestamps,
+            isTwelveHour: SettingsStore.getValue("showTwelveHourTimestamps"),
 
             // always show timestamps on event tiles?
-            alwaysShowTimestamps: syncedSettings.alwaysShowTimestamps,
+            alwaysShowTimestamps: SettingsStore.getValue("alwaysShowTimestamps"),
         };
     },
 
@@ -311,7 +311,7 @@ var TimelinePanel = React.createClass({
             return Promise.resolve(false);
         }
 
-        if(!this._timelineWindow.canPaginate(dir)) {
+        if (!this._timelineWindow.canPaginate(dir)) {
             debuglog("TimelinePanel: can't", dir, "paginate any further");
             this.setState({[canPaginateKey]: false});
             return Promise.resolve(false);
@@ -441,7 +441,7 @@ var TimelinePanel = React.createClass({
                 var callback = null;
                 if (sender != myUserId && !UserActivity.userCurrentlyActive()) {
                     updatedState.readMarkerVisible = true;
-                } else if(lastEv && this.getReadMarkerPosition() === 0) {
+                } else if (lastEv && this.getReadMarkerPosition() === 0) {
                     // we know we're stuckAtBottom, so we can advance the RM
                     // immediately, to save a later render cycle
 
@@ -658,7 +658,7 @@ var TimelinePanel = React.createClass({
 
         // the read-marker should become invisible, so that if the user scrolls
         // down, they don't see it.
-        if(this.state.readMarkerVisible) {
+        if (this.state.readMarkerVisible) {
             this.setState({
                 readMarkerVisible: false,
             });

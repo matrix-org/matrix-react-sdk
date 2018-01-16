@@ -15,11 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Matrix from 'matrix-js-sdk';
 import sdk from '../../index';
 import MatrixClientPeg from '../../MatrixClientPeg';
-import { _t, _tJsx } from '../../languageHandler';
+import { _t } from '../../languageHandler';
 
 /*
  * Component which shows the filtered file using a TimelinePanel
@@ -28,7 +29,7 @@ const FilePanel = React.createClass({
     displayName: 'FilePanel',
 
     propTypes: {
-        roomId: React.PropTypes.string.isRequired,
+        roomId: PropTypes.string.isRequired,
     },
 
     getInitialState: function() {
@@ -92,7 +93,10 @@ const FilePanel = React.createClass({
         if (MatrixClientPeg.get().isGuest()) {
             return <div className="mx_FilePanel mx_RoomView_messageListWrapper">
                 <div className="mx_RoomView_empty">
-                { _tJsx("You must <a>register</a> to use this functionality", /<a>(.*?)<\/a>/, (sub) => <a href="#/register" key="sub">{ sub }</a>) }
+                { _t("You must <a>register</a> to use this functionality",
+                    {},
+                    { 'a': (sub) => <a href="#/register" key="sub">{ sub }</a> })
+                }
                 </div>
             </div>;
         } else if (this.noRoom) {
