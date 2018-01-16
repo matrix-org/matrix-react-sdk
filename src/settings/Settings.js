@@ -150,6 +150,11 @@ export const SETTINGS = {
         displayName: _td('Autoplay GIFs and videos'),
         default: false,
     },
+    "hideInlineEncryptionIconUntilHover": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Hide inline encryption icons except when hovering over a message'),
+        default: false,
+    },
     "enableSyntaxHighlightLanguageDetection": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Enable automatic language detection for syntax highlighting'),
