@@ -1029,8 +1029,9 @@
     "Device ID:": "Device ID:",
     "Device key:": "Device key:",
     "Ignored Users": "Ignored Users",
-    "Debug Logs Submission": "Debug Logs Submission",
-    "If you've submitted a bug via GitHub, debug logs can help us track down the problem. Debug logs contain application usage data including your username, the IDs or aliases of the rooms or groups you have visited and the usernames of other users. They do not contian messages.": "If you've submitted a bug via GitHub, debug logs can help us track down the problem. Debug logs contain application usage data including your username, the IDs or aliases of the rooms or groups you have visited and the usernames of other users. They do not contian messages.",
+    "Bug Report": "Bug Report",
+    "Found a bug?": "Found a bug?",
+    "Report it": "Report it",
     "Riot collects anonymous analytics to allow us to improve the application.": "Riot collects anonymous analytics to allow us to improve the application.",
     "Privacy is important to us, so we don't collect any personal or identifiable data for our analytics.": "Privacy is important to us, so we don't collect any personal or identifiable data for our analytics.",
     "Learn more about how we use analytics.": "Learn more about how we use analytics.",
@@ -1157,8 +1158,5 @@
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.",
     "File to import": "File to import",
-    "Import": "Import",
-    "Failed to set direct chat tag": "Failed to set direct chat tag",
-    "Failed to remove tag %(tagName)s from room": "Failed to remove tag %(tagName)s from room",
-    "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room"
+    "Import": "Import"
 }
