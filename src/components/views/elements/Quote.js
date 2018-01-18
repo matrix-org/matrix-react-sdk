@@ -20,14 +20,14 @@ import PropTypes from 'prop-types';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import {wantsDateSeparator} from '../../../DateUtils';
 import {MatrixEvent} from 'matrix-js-sdk';
+import {makeEventPermalink, makeUserPermalink} from "../../../matrix-to";
 
-// For URLs of matrix.to links in the timeline which have been reformatted by
-// HttpUtils transformTags to relative links. This excludes event URLs (with `[^\/]*`)
-const REGEX_LOCAL_MATRIXTO = /^#\/room\/(([\#\!])[^\/]*)\/(\$[^\/]*)$/;
+// This link would have been in a HTML attribute that HtmlUtils did not change to a local link.
+const LOOSE_REGEX_MATRIXTO = /#\/(([\#\!])[^\/]*)\/(\$[^\/]*)$/;
 
 export default class Quote extends React.Component {
     static isMessageUrl(url) {
-        return !!REGEX_LOCAL_MATRIXTO.exec(url);
+        return !!LOOSE_REGEX_MATRIXTO.exec(url);
     }
 
     static childContextTypes = {
@@ -42,6 +42,21 @@ export default class Quote extends React.Component {
         // Whether this isn't the first Quote, and we're being nested
         isNested: PropTypes.bool,
     };
+
+    static makeHTMLQuote(ev, sender) {
+        const perma = makeEventPermalink(ev.getRoomId(), ev.getId());
+        const main = _t('<a>In reply to</a> <pill>', {}, {
+            a: (sub) => `<a href="${perma}">${sub}</a>`,
+            pill: `<a href="${makeUserPermalink(sender.userId)}">${sender.name}</a>`,
+        });
+        return `<blockquote cite="${perma}">${main}<br></blockquote>`;
+    }
+
+    static makePlaintextQuote(ev, sender) {
+        // TODO improve plaintext formatting
+        const {body/*, formatted_body*/} = ev.getContent();
+        return `${sender.name}:\\n> ${body}\\n\\n`;
+    }
 
     constructor(props, context) {
         super(props, context);
@@ -69,7 +84,7 @@ export default class Quote extends React.Component {
         if (nextProps.url) {
             // Default to the empty array if no match for simplicity
             // resource and prefix will be undefined instead of throwing
-            const matrixToMatch = REGEX_LOCAL_MATRIXTO.exec(nextProps.url) || [];
+            const matrixToMatch = LOOSE_REGEX_MATRIXTO.exec(nextProps.url) || [];
 
             roomId = matrixToMatch[1]; // The room ID
             prefix = matrixToMatch[2]; // The first character of prefix
@@ -97,6 +112,7 @@ export default class Quote extends React.Component {
             return;
         }
 
+        // TODO use new /room/{roomId}/event{eventId} API instead of Context API for performance
         await MatrixClientPeg.get().getEventTimeline(room.getUnfilteredTimelineSet(), eventId);
         event = room.findEventById(eventId);
         this.setState({room, event});
