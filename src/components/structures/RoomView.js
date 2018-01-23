@@ -108,6 +108,7 @@ module.exports = React.createClass({
             numUnreadMessages: 0,
             draggingFile: false,
             searching: false,
+            seachingStarred: false,
             searchResults: null,
             callState: null,
             guestsCanJoin: false,
@@ -1085,7 +1086,7 @@ module.exports = React.createClass({
     },
 
     onPinnedClick: function() {
-        this.setState({showingPinned: !this.state.showingPinned, searching: false});
+        this.setState({showingPinned: !this.state.showingPinned, searching: false, seachingStarred: false });
     },
 
     onSettingsClick: function() {
@@ -1206,13 +1207,19 @@ module.exports = React.createClass({
         });
     },
 
+    onSearchStarredClick: function() {
+        this.setState({ seachingStarred: true, searching: true, showingPinned: false });
+        this.onSearch(':starred', 'Room');
+    },
+
     onSearchClick: function() {
-        this.setState({ searching: true, showingPinned: false });
+        this.setState({ searching: true, seachingStarred: false, showingPinned: false });
     },
 
     onCancelSearchClick: function() {
         this.setState({
             searching: false,
+            seachingStarred: false,
             searchResults: null,
         });
     },
@@ -1408,6 +1415,7 @@ module.exports = React.createClass({
         const RoomSettings = sdk.getComponent("rooms.RoomSettings");
         const AuxPanel = sdk.getComponent("rooms.AuxPanel");
         const SearchBar = sdk.getComponent("rooms.SearchBar");
+        const SimpleSearchBar = sdk.getComponent("rooms.SimpleSearchBar");
         const PinnedEventsPanel = sdk.getComponent("rooms.PinnedEventsPanel");
         const ScrollPanel = sdk.getComponent("structures.ScrollPanel");
         const TintableSvg = sdk.getComponent("elements.TintableSvg");
@@ -1547,6 +1555,9 @@ module.exports = React.createClass({
             aux = <Loader />;
         } else if (this.state.forwardingEvent !== null) {
             aux = <ForwardMessage onCancelClick={this.onCancelClick} />;
+        } else if (this.state.seachingStarred) {
+            hideCancel = true; // has own cancel
+            aux = <SimpleSearchBar ref="simple_search_bar" searchInProgress={this.state.searchInProgress} onCancelClick={this.onCancelSearchClick} />;
         } else if (this.state.searching) {
             hideCancel = true; // has own cancel
             aux = <SearchBar ref="search_bar" searchInProgress={this.state.searchInProgress} onCancelClick={this.onCancelSearchClick} onSearch={this.onSearch} />;
@@ -1732,6 +1743,7 @@ module.exports = React.createClass({
                     inRoom={myMember && myMember.membership === 'join'}
                     collapsedRhs={this.props.collapsedRhs}
                     onSearchClick={this.onSearchClick}
+                    onSearchStarredClick={this.onSearchStarredClick}
                     onSettingsClick={this.onSettingsClick}
                     onPinnedClick={this.onPinnedClick}
                     onSaveClick={this.onSettingsSaveClick}

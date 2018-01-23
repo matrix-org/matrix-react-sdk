@@ -50,6 +50,7 @@ module.exports = React.createClass({
         onPinnedClick: PropTypes.func,
         onSaveClick: PropTypes.func,
         onSearchClick: PropTypes.func,
+        onSearchStarredClick: PropTypes.func,
         onLeaveClick: PropTypes.func,
         onCancelClick: PropTypes.func,
     },
@@ -380,6 +381,14 @@ module.exports = React.createClass({
                 </AccessibleButton>;
         }
 
+        let searchStarredEventsButton;
+        if (this.props.onSearchStarredClick && this.props.inRoom) {
+            searchStarredEventsButton =
+                <AccessibleButton className="mx_RoomHeader_button" onClick={this.props.onSearchStarredClick} title={_t("Starred Messages")}>
+                    <TintableSvg src="img/icons-search-starred.svg" width="35" height="35" />
+                </AccessibleButton>;
+        }
+
         let rightPanelButtons;
         if (this.props.collapsedRhs) {
             rightPanelButtons =
@@ -404,6 +413,7 @@ module.exports = React.createClass({
                     { manageIntegsButton }
                     { forgetButton }
                     { searchButton }
+                    { searchStarredEventsButton }
                     { rightPanelButtons }
                 </div>;
         }
