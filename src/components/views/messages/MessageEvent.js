@@ -19,9 +19,16 @@ limitations under the License.
 const React = require('react');
 import PropTypes from 'prop-types';
 const sdk = require('../../../index');
+import { _t } from '../../../languageHandler';
 
 module.exports = React.createClass({
     displayName: 'MessageEvent',
+
+    getInitialState: function() {
+        return {
+            bodyHidden: false,
+        };
+    },
 
     propTypes: {
         /* the MatrixEvent to show */
@@ -44,7 +51,17 @@ module.exports = React.createClass({
     },
 
     getEventTileOps: function() {
-        return this.refs.body && this.refs.body.getEventTileOps ? this.refs.body.getEventTileOps() : null;
+        const eventTileOps = this.refs.body && this.refs.body.getEventTileOps ? this.refs.body.getEventTileOps() : {};
+
+        eventTileOps.isBodyHidden = () => {
+            return this.state.bodyHidden;
+        };
+
+        eventTileOps.toggleBodyHidden = () => {
+            this.state.bodyHidden = !this.state.bodyHidden;
+        };
+
+        return eventTileOps;
     },
 
     render: function() {
@@ -70,10 +87,16 @@ module.exports = React.createClass({
             BodyType = bodyTypes['m.file'];
         }
 
-        return <BodyType ref="body" mxEvent={this.props.mxEvent} highlights={this.props.highlights}
-                    highlightLink={this.props.highlightLink}
-                    showUrlPreview={this.props.showUrlPreview}
-                    tileShape={this.props.tileShape}
-                    onWidgetLoad={this.props.onWidgetLoad} />;
+        if (this.state.bodyHidden) {
+            const tooltip = _t("You have hidden this message.");
+            return <span className="mx_HiddenBody" title={tooltip}>
+                   </span>;
+        } else {
+            return <BodyType ref="body" mxEvent={this.props.mxEvent} highlights={this.props.highlights}
+                        highlightLink={this.props.highlightLink}
+                        showUrlPreview={this.props.showUrlPreview}
+                        tileShape={this.props.tileShape}
+                        onWidgetLoad={this.props.onWidgetLoad} />;
+        }
     },
 });
