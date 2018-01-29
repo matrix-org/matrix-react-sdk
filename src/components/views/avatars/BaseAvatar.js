@@ -55,6 +55,7 @@ module.exports = React.createClass({
     },
 
     componentWillUnmount() {
+        if (!MatrixClientPeg.get()) return;
         MatrixClientPeg.get().removeListener('sync', this.onClientSync);
     },
 

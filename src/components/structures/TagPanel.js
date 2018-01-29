@@ -61,6 +61,7 @@ const TagPanel = React.createClass({
 
     componentWillUnmount() {
         this.unmounted = true;
+        if (!this.context.matrixClient) return;
         this.context.matrixClient.removeListener("Group.myMembership", this._onGroupMyMembership);
         this.context.matrixClient.removeListener("sync", this._onClientSync);
         if (this._filterStoreToken) {
