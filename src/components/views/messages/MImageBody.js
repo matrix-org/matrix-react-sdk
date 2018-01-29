@@ -51,15 +51,18 @@ module.exports = React.createClass({
     },
 
     componentWillMount() {
+        this.unmounted = false;
         MatrixClientPeg.get().on('sync', this.onClientSync);
     },
 
     componentWillUnmount() {
+        this.unmounted = true;
         if (!MatrixClientPeg.get()) return;
         MatrixClientPeg.get().removeListener('sync', this.onClientSync);
     },
 
     onClientSync(syncState, prevState) {
+        if (this.unmounted) return;
         // Consider the client reconnected if there is no error with syncing.
         // This means the state could be RECONNECTING, SYNCING or PREPARED.
         const reconnected = syncState !== "ERROR" && prevState !== syncState;
