@@ -46,9 +46,29 @@ module.exports = React.createClass({
             decryptedThumbnailUrl: null,
             decryptedBlob: null,
             error: null,
+            imgError: null,
         };
     },
 
+    componentWillMount() {
+        MatrixClientPeg.get().on('sync', this.onClientSync);
+    },
+
+    componentWillUnmount() {
+        MatrixClientPeg.get().removeListener('sync', this.onClientSync);
+    },
+
+    onClientSync(syncState, prevState) {
+        // Consider the client reconnected if there is no error with syncing.
+        // This means the state could be RECONNECTING, SYNCING or PREPARED.
+        const reconnected = syncState !== "ERROR" && prevState !== syncState;
+        if (reconnected && this.state.imgError) {
+            // Load the image again
+            this.setState({
+                imgError: false,
+            });
+        }
+    },
 
     onClick: function onClick(ev) {
         if (ev.button == 0 && !ev.metaKey) {
@@ -95,6 +115,12 @@ module.exports = React.createClass({
         }
         const imgElement = e.target;
         imgElement.src = this._getThumbUrl();
+    },
+
+    onImageError: function() {
+        this.setState({
+            imgError: true,
+        });
     },
 
     _getContentUrl: function() {
@@ -217,6 +243,14 @@ module.exports = React.createClass({
             );
         }
 
+        if (this.state.imgError) {
+            return (
+                <span className="mx_MImageBody">
+                    { _t("This image cannot be displayed.") }
+                </span>
+            );
+        }
+
         const contentUrl = this._getContentUrl();
         let thumbUrl;
         if (this._isGif() && SettingsStore.getValue("autoplayGifsAndVideos")) {
@@ -231,6 +265,7 @@ module.exports = React.createClass({
                     <a href={contentUrl} onClick={this.onClick}>
                         <img className="mx_MImageBody_thumbnail" src={thumbUrl} ref="image"
                             alt={content.body}
+                            onError={this.onImageError}
                             onLoad={this.props.onWidgetLoad}
                             onMouseEnter={this.onImageEnter}
                             onMouseLeave={this.onImageLeave} />
