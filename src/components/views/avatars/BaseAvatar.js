@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import MatrixClientPeg from '../../../MatrixClientPeg';
 import AvatarLogic from '../../../Avatar';
 import sdk from '../../../index';
 import AccessibleButton from '../elements/AccessibleButton';
@@ -49,6 +50,14 @@ module.exports = React.createClass({
         return this._getState(this.props);
     },
 
+    componentWillMount() {
+        MatrixClientPeg.get().on('sync', this.onClientSync);
+    },
+
+    componentWillUnmount() {
+        MatrixClientPeg.get().removeListener('sync', this.onClientSync);
+    },
+
     componentWillReceiveProps: function(nextProps) {
         // work out if we need to call setState (if the image URLs array has changed)
         const newState = this._getState(nextProps);
@@ -64,6 +73,21 @@ module.exports = React.createClass({
                     break;
                 }
             }
+        }
+    },
+
+    onClientSync(syncState, prevState) {
+        // Consider the client reconnected if there is no error with syncing.
+        // This means the state could be RECONNECTING, SYNCING or PREPARED.
+        const reconnected = syncState !== "ERROR" && prevState !== syncState;
+        if (reconnected &&
+            // Did we fall back?
+            this.state.urlsIndex > 0
+        ) {
+            // Start from the highest priority URL again
+            this.setState({
+                urlsIndex: 0,
+            });
         }
     },
 
