@@ -39,7 +39,6 @@ module.exports = {
 
     getOrCreateContainer: function() {
         let container = document.getElementById(this.ContextualMenuContainerId);
-
         if (!container) {
             container = document.createElement("div");
             container.id = this.ContextualMenuContainerId;
@@ -47,6 +46,36 @@ module.exports = {
         }
 
         return container;
+    },
+
+    afterRender: function() {
+      // Logic to correctly position the menu if the window is too small and
+      // the menu would normally be out of the window
+      let container = document.getElementById(this.ContextualMenuContainerId);
+      let wrapper = container.getElementsByClassName(
+        'mx_ContextualMenu_wrapper')[0];
+      let menu = container.getElementsByClassName(
+        'mx_ContextualMenu')[0];
+      let menuNode = ReactDOM.findDOMNode(menu);
+      let DOMRect = menuNode.getBoundingClientRect();
+      let [width, height] = [DOMRect.width, DOMRect.height];
+
+      let overflowX = this.positionX + width > window.innerWidth;
+      let overflowY = this.positionY + height > window.innerHeight;
+
+      console.log(width, height, this.positionX, this.positionY, overflowX, overflowY);
+
+      if(overflowX) {
+        this.positionX = this.positionX - width - 20;
+        wrapper.style.left = this.positionX+'px';
+      }
+
+      if(overflowY) {
+        this.positionY = this.positionY - height + 30;
+        wrapper.style.top = this.positionY+'px';
+      }
+
+      console.log(width, height, this.positionX, this.positionY, overflowX, overflowY);
     },
 
     createMenu: function(Element, props) {
@@ -60,22 +89,18 @@ module.exports = {
             }
         };
 
-        const position = {};
-        let chevronFace = null;
+        let position = {};
+        // Calculate absolute Y position of component
+        this.positionY = position.top = props.top ?
+          props.top :
+          window.innerHeight - props.bottom;
 
-        if (props.top) {
-            position.top = props.top;
-        } else {
-            position.bottom = props.bottom;
-        }
+        // Calculate absolute X position of component
+        this.positionX = position.left = props.left ?
+          props.left :
+          window.innerWidth - props.right;
 
-        if (props.left) {
-            position.left = props.left;
-            chevronFace = 'left';
-        } else {
-            position.right = props.right;
-            chevronFace = 'right';
-        }
+        let chevronFace = props.left ? 'left' : 'right';
 
         const chevronOffset = {};
         if (props.chevronFace) {
@@ -143,7 +168,8 @@ module.exports = {
             </div>
         );
 
-        ReactDOM.render(menu, this.getOrCreateContainer());
+        let component = ReactDOM.render(
+          menu, this.getOrCreateContainer(), this.afterRender.bind(this));
 
         return {close: closeMenu};
     },
