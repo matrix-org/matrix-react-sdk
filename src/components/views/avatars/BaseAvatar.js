@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import MatrixClientPeg from '../../../MatrixClientPeg';
+import { MatrixClient } from 'matrix-js-sdk';
 import AvatarLogic from '../../../Avatar';
 import sdk from '../../../index';
 import AccessibleButton from '../elements/AccessibleButton';
@@ -37,6 +37,10 @@ module.exports = React.createClass({
         defaultToInitialLetter: PropTypes.bool, // true to add default url
     },
 
+    contextTypes: {
+        matrixClient: PropTypes.instanceOf(MatrixClient),
+    },
+
     getDefaultProps: function() {
         return {
             width: 40,
@@ -52,13 +56,12 @@ module.exports = React.createClass({
 
     componentWillMount() {
         this.unmounted = false;
-        MatrixClientPeg.get().on('sync', this.onClientSync);
+        this.context.matrixClient.on('sync', this.onClientSync);
     },
 
     componentWillUnmount() {
         this.unmounted = true;
-        if (!MatrixClientPeg.get()) return;
-        MatrixClientPeg.get().removeListener('sync', this.onClientSync);
+        this.context.matrixClient.removeListener('sync', this.onClientSync);
     },
 
     componentWillReceiveProps: function(nextProps) {

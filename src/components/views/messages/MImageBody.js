@@ -18,8 +18,9 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { MatrixClient } from 'matrix-js-sdk';
+
 import MFileBody from './MFileBody';
-import MatrixClientPeg from '../../../MatrixClientPeg';
 import ImageUtils from '../../../ImageUtils';
 import Modal from '../../../Modal';
 import sdk from '../../../index';
@@ -40,6 +41,10 @@ module.exports = React.createClass({
         onWidgetLoad: PropTypes.func.isRequired,
     },
 
+    contextTypes: {
+        matrixClient: PropTypes.instanceOf(MatrixClient),
+    },
+
     getInitialState: function() {
         return {
             decryptedUrl: null,
@@ -52,13 +57,12 @@ module.exports = React.createClass({
 
     componentWillMount() {
         this.unmounted = false;
-        MatrixClientPeg.get().on('sync', this.onClientSync);
+        this.context.matrixClient.on('sync', this.onClientSync);
     },
 
     componentWillUnmount() {
         this.unmounted = true;
-        if (!MatrixClientPeg.get()) return;
-        MatrixClientPeg.get().removeListener('sync', this.onClientSync);
+        this.context.matrixClient.removeListener('sync', this.onClientSync);
     },
 
     onClientSync(syncState, prevState) {
@@ -132,7 +136,7 @@ module.exports = React.createClass({
         if (content.file !== undefined) {
             return this.state.decryptedUrl;
         } else {
-            return MatrixClientPeg.get().mxcUrlToHttp(content.url);
+            return this.context.matrixClient.mxcUrlToHttp(content.url);
         }
     },
 
@@ -145,7 +149,7 @@ module.exports = React.createClass({
             }
             return this.state.decryptedUrl;
         } else {
-            return MatrixClientPeg.get().mxcUrlToHttp(content.url, 800, 600);
+            return this.context.matrixClient.mxcUrlToHttp(content.url, 800, 600);
         }
     },
 
