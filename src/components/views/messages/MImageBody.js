@@ -60,11 +60,6 @@ module.exports = React.createClass({
         this.context.matrixClient.on('sync', this.onClientSync);
     },
 
-    componentWillUnmount() {
-        this.unmounted = true;
-        this.context.matrixClient.removeListener('sync', this.onClientSync);
-    },
-
     onClientSync(syncState, prevState) {
         if (this.unmounted) return;
         // Consider the client reconnected if there is no error with syncing.
@@ -190,7 +185,9 @@ module.exports = React.createClass({
     },
 
     componentWillUnmount: function() {
+        this.unmounted = true;
         dis.unregister(this.dispatcherRef);
+        this.context.matrixClient.removeListener('sync', this.onClientSync);
     },
 
     onAction: function(payload) {
