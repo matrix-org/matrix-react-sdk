@@ -117,7 +117,6 @@ describe('MemberEventListSummary', function() {
         renderer.render(<MemberEventListSummary {...props} />);
         const result = renderer.getRenderOutput();
 
-        expect(result.type).toBe('div');
         expect(result.props.children).toEqual([
           <div className="event_tile" key="event0">Expanded membership</div>,
         ]);
@@ -140,7 +139,6 @@ describe('MemberEventListSummary', function() {
         renderer.render(<MemberEventListSummary {...props} />);
         const result = renderer.getRenderOutput();
 
-        expect(result.type).toBe('div');
         expect(result.props.children).toEqual([
           <div className="event_tile" key="event0">Expanded membership</div>,
           <div className="event_tile" key="event1">Expanded membership</div>,
