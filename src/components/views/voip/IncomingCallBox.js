@@ -26,18 +26,27 @@ module.exports = React.createClass({
         incomingCall: PropTypes.object,
     },
 
-    onAnswerClick: function() {
+    _discardEvent: function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    },
+
+    onAnswerClick: function(e) {
         dis.dispatch({
             action: 'answer',
             room_id: this.props.incomingCall.roomId,
         });
+        e.preventDefault();
+        e.stopPropagation();
     },
 
-    onRejectClick: function() {
+    onRejectClick: function(e) {
         dis.dispatch({
             action: 'hangup',
             room_id: this.props.incomingCall.roomId,
         });
+        e.preventDefault();
+        e.stopPropagation();
     },
 
     render: function() {
@@ -59,6 +68,11 @@ module.exports = React.createClass({
             }
         }
 
+        // Note that we need to discard mousedown events here, otherwise currently (in chrome somewhere
+        // 64 < x <= 66) the mousedown event bubbles out of the button and causes a focus toggle on
+        // the room list header, which, apart from causing unexpected focus changes, means the buttons
+        // don't work because once the focus has changed, they don't get the matching mouseup and therefore
+        // don't generate a click event.
         return (
             <div className="mx_IncomingCallBox" id="incomingCallBox">
                 <img className="mx_IncomingCallBox_chevron" src="img/chevron-left.png" width="9" height="16" />
@@ -67,12 +81,12 @@ module.exports = React.createClass({
                 </div>
                 <div className="mx_IncomingCallBox_buttons">
                     <div className="mx_IncomingCallBox_buttons_cell">
-                        <div className="mx_IncomingCallBox_buttons_decline" onClick={this.onRejectClick}>
+                        <div className="mx_IncomingCallBox_buttons_decline" onClick={this.onRejectClick} onMouseDown={this._discardEvent}>
                             { _t("Decline") }
                         </div>
                     </div>
                     <div className="mx_IncomingCallBox_buttons_cell">
-                        <div className="mx_IncomingCallBox_buttons_accept" onClick={this.onAnswerClick}>
+                        <div className="mx_IncomingCallBox_buttons_accept" onClick={this.onAnswerClick} onMouseDown={this._discardEvent}>
                             { _t("Accept") }
                         </div>
                     </div>
