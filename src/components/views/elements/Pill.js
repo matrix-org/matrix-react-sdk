@@ -68,7 +68,7 @@ const Pill = React.createClass({
 
     getChildContext() {
         return {
-            matrixClient: MatrixClientPeg.get(),
+            matrixClient: this._matrixClient,
         };
     },
 
@@ -146,6 +146,7 @@ const Pill = React.createClass({
 
     componentWillMount() {
         this._unmounted = false;
+        this._matrixClient = MatrixClientPeg.get();
         this.componentWillReceiveProps(this.props);
     },
 
