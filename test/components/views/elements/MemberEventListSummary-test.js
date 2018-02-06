@@ -6,6 +6,10 @@ import * as languageHandler from '../../../../src/languageHandler';
 import peg from '../../../../src/MatrixClientPeg';
 import * as testUtils from '../../../test-utils';
 
+// Give MELS a matrixClient in its child context
+const MemberEventListSummary = testUtils.wrapInMatrixClientContext(
+    sdk.getComponent('views.elements.MemberEventListSummary'),
+);
 
 describe('MemberEventListSummary', function() {
     let sandbox;
