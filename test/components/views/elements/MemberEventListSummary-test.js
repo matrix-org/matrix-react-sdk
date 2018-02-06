@@ -1,12 +1,12 @@
-const expect = require('expect');
-const React = require('react');
-const ReactDOM = require("react-dom");
-const ReactTestUtils = require('react-addons-test-utils');
-const sdk = require('matrix-react-sdk');
-const MemberEventListSummary = sdk.getComponent('views.elements.MemberEventListSummary');
+import expect from 'expect';
+import React from 'react';
+import ReactTestUtils from 'react-addons-test-utils';
+import sdk from 'matrix-react-sdk';
 import * as languageHandler from '../../../../src/languageHandler';
+import peg from '../../../../src/MatrixClientPeg';
+import * as testUtils from '../../../test-utils';
 
-const testUtils = require('../../../test-utils');
+
 describe('MemberEventListSummary', function() {
     let sandbox;
 
