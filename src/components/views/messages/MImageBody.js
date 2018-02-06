@@ -51,7 +51,7 @@ module.exports = React.createClass({
             decryptedThumbnailUrl: null,
             decryptedBlob: null,
             error: null,
-            imgError: null,
+            imgError: false,
         };
     },
 
