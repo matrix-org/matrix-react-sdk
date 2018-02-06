@@ -3,7 +3,6 @@ import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 import sdk from 'matrix-react-sdk';
 import * as languageHandler from '../../../../src/languageHandler';
-import peg from '../../../../src/MatrixClientPeg';
 import * as testUtils from '../../../test-utils';
 
 // Give MELS a matrixClient in its child context
