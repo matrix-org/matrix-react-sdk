@@ -20,7 +20,6 @@ import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import sdk from '../../../index';
 import MatrixClientPeg from '../../../MatrixClientPeg';
-import AccessibleButton from '../elements/AccessibleButton';
 import Promise from 'bluebird';
 import { addressTypes, getAddressType } from '../../../UserAddress.js';
 import GroupStoreCache from '../../../stores/GroupStoreCache';
@@ -34,6 +33,8 @@ module.exports = React.createClass({
     propTypes: {
         title: PropTypes.string.isRequired,
         description: PropTypes.node,
+        // Extra node inserted after picker input, dropdown and errors
+        extraNode: PropTypes.node,
         value: PropTypes.string,
         placeholder: PropTypes.string,
         roomId: PropTypes.string,
@@ -242,7 +243,7 @@ module.exports = React.createClass({
 
     _doNaiveGroupRoomSearch: function(query) {
         const lowerCaseQuery = query.toLowerCase();
-        const groupStore = GroupStoreCache.getGroupStore(MatrixClientPeg.get(), this.props.groupId);
+        const groupStore = GroupStoreCache.getGroupStore(this.props.groupId);
         const results = [];
         groupStore.getGroupRooms().forEach((r) => {
             const nameMatch = (r.name || '').toLowerCase().includes(lowerCaseQuery);
@@ -268,27 +269,53 @@ module.exports = React.createClass({
         const rooms = MatrixClientPeg.get().getRooms();
         const results = [];
         rooms.forEach((room) => {
+            let rank = Infinity;
             const nameEvent = room.currentState.getStateEvents('m.room.name', '');
-            const topicEvent = room.currentState.getStateEvents('m.room.topic', '');
             const name = nameEvent ? nameEvent.getContent().name : '';
             const canonicalAlias = room.getCanonicalAlias();
-            const topic = topicEvent ? topicEvent.getContent().topic : '';
+            const aliasEvents = room.currentState.getStateEvents('m.room.aliases');
+            const aliases = aliasEvents.map((ev) => ev.getContent().aliases).reduce((a, b) => {
+                return a.concat(b);
+            }, []);
 
             const nameMatch = (name || '').toLowerCase().includes(lowerCaseQuery);
-            const aliasMatch = (canonicalAlias || '').toLowerCase().includes(lowerCaseQuery);
-            const topicMatch = (topic || '').toLowerCase().includes(lowerCaseQuery);
-            if (!(nameMatch || topicMatch || aliasMatch)) {
+            let aliasMatch = false;
+            let shortestMatchingAliasLength = Infinity;
+            aliases.forEach((alias) => {
+                if ((alias || '').toLowerCase().includes(lowerCaseQuery)) {
+                    aliasMatch = true;
+                    if (shortestMatchingAliasLength > alias.length) {
+                        shortestMatchingAliasLength = alias.length;
+                    }
+                }
+            });
+
+            if (!(nameMatch || aliasMatch)) {
                 return;
             }
+
+            if (aliasMatch) {
+                // A shorter matching alias will give a better rank
+                rank = shortestMatchingAliasLength;
+            }
+
             const avatarEvent = room.currentState.getStateEvents('m.room.avatar', '');
             const avatarUrl = avatarEvent ? avatarEvent.getContent().url : undefined;
+
             results.push({
+                rank,
                 room_id: room.roomId,
                 avatar_url: avatarUrl,
-                name: name || canonicalAlias,
+                name: name || canonicalAlias || aliases[0] || _t('Unnamed Room'),
             });
         });
-        this._processResults(results, query);
+
+        // Sort by rank ascending (a high rank being less relevant)
+        const sortedResults = results.sort((a, b) => {
+            return a.rank - b.rank;
+        });
+
+        this._processResults(sortedResults, query);
         this.setState({
             busy: false,
         });
@@ -479,7 +506,8 @@ module.exports = React.createClass({
     },
 
     render: function() {
-        const TintableSvg = sdk.getComponent("elements.TintableSvg");
+        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
+        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         const AddressSelector = sdk.getComponent("elements.AddressSelector");
         this.scrollElement = null;
 
@@ -552,14 +580,8 @@ module.exports = React.createClass({
         }
 
         return (
-            <div className="mx_ChatInviteDialog" onKeyDown={this.onKeyDown}>
-                <div className="mx_Dialog_title">
-                    { this.props.title }
-                </div>
-                <AccessibleButton className="mx_ChatInviteDialog_cancel"
-                        onClick={this.onCancel} >
-                    <TintableSvg src="img/icons-close-button.svg" width="35" height="35" />
-                </AccessibleButton>
+            <BaseDialog className="mx_ChatInviteDialog" onKeyDown={this.onKeyDown}
+                onFinished={this.props.onFinished} title={this.props.title}>
                 <div className="mx_ChatInviteDialog_label">
                     <label htmlFor="textinput">{ this.props.description }</label>
                 </div>
@@ -567,13 +589,12 @@ module.exports = React.createClass({
                     <div className="mx_ChatInviteDialog_inputContainer">{ query }</div>
                     { error }
                     { addressSelector }
+                    { this.props.extraNode }
                 </div>
-                <div className="mx_Dialog_buttons">
-                    <button className="mx_Dialog_primary" onClick={this.onButtonClick}>
-                        { this.props.button }
-                    </button>
-                </div>
-            </div>
+                <DialogButtons primaryButton={this.props.button}
+                    onPrimaryButtonClick={this.onButtonClick}
+                    onCancel={this.onCancel} />
+            </BaseDialog>
         );
     },
 });

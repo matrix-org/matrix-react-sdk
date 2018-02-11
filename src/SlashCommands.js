@@ -20,6 +20,7 @@ import Tinter from "./Tinter";
 import sdk from './index';
 import { _t } from './languageHandler';
 import Modal from './Modal';
+import SettingsStore, {SettingLevel} from "./settings/SettingsStore";
 
 
 class Command {
@@ -95,11 +96,11 @@ const commands = {
                 colorScheme.primary_color = matches[1];
                 if (matches[4]) {
                     colorScheme.secondary_color = matches[4];
+                } else {
+                    colorScheme.secondary_color = colorScheme.primary_color;
                 }
                 return success(
-                    MatrixClientPeg.get().setRoomAccountData(
-                        roomId, "org.matrix.room.color_scheme", colorScheme,
-                    ),
+                    SettingsStore.setValue("roomColor", roomId, SettingLevel.ROOM_ACCOUNT, colorScheme),
                 );
             }
         }
@@ -296,7 +297,7 @@ const commands = {
     // Define the power level of a user
     op: new Command("op", "<userId> [<power level>]", function(roomId, args) {
         if (args) {
-            const matches = args.match(/^(\S+?)( +(\d+))?$/);
+            const matches = args.match(/^(\S+?)( +(-?\d+))?$/);
             let powerLevel = 50; // default power level for op
             if (matches) {
                 const userId = matches[1];

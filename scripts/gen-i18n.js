@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /*
 Copyright 2017 New Vector Ltd
 
@@ -30,9 +32,17 @@ const walk = require('walk');
 const flowParser = require('flow-parser');
 const estreeWalker = require('estree-walker');
 
-const TRANSLATIONS_FUNCS = ['_t', '_td', '_tJsx'];
+const TRANSLATIONS_FUNCS = ['_t', '_td'];
 
 const INPUT_TRANSLATIONS_FILE = 'src/i18n/strings/en_EN.json';
+const OUTPUT_FILE = 'src/i18n/strings/en_EN.json';
+
+// NB. The sync version of walk is broken for single files so we walk
+// all of res rather than just res/home.html.
+// https://git.daplie.com/Daplie/node-walk/merge_requests/1 fixes it,
+// or if we get bored waiting for it to be merged, we could switch
+// to a project that's actively maintained.
+const SEARCH_PATHS = ['src', 'res'];
 
 const FLOW_PARSER_OPTS = {
   esproposal_class_instance_fields: true,
@@ -64,7 +74,42 @@ function getTKey(arg) {
     return null;
 }
 
-function getTranslations(file) {
+function getFormatStrings(str) {
+    // Match anything that starts with %
+    // We could make a regex that matched the full placeholder, but this
+    // would just not match invalid placeholders and so wouldn't help us
+    // detect the invalid ones.
+    // Also note that for simplicity, this just matches a % character and then
+    // anything up to the next % character (or a single %, or end of string).
+    const formatStringRe = /%([^%]+|%|$)/g;
+    const formatStrings = new Set();
+
+    let match;
+    while ( (match = formatStringRe.exec(str)) !== null ) {
+        const placeholder = match[1]; // Minus the leading '%'
+        if (placeholder === '%') continue; // Literal % is %%
+
+        const placeholderMatch = placeholder.match(/^\((.*?)\)(.)/);
+        if (placeholderMatch === null) {
+            throw new Error("Invalid format specifier: '"+match[0]+"'");
+        }
+        if (placeholderMatch.length < 3) {
+            throw new Error("Malformed format specifier");
+        }
+        const placeholderName = placeholderMatch[1];
+        const placeholderFormat = placeholderMatch[2];
+
+        if (placeholderFormat !== 's') {
+            throw new Error(`'${placeholderFormat}' used as format character: you probably meant 's'`);
+        }
+
+        formatStrings.add(placeholderName);
+    }
+
+    return formatStrings;
+}
+
+function getTranslationsJs(file) {
     const tree = flowParser.parse(fs.readFileSync(file, { encoding: 'utf8' }), FLOW_PARSER_OPTS);
 
     const trs = new Set();
@@ -79,6 +124,43 @@ function getTranslations(file) {
                 // This happens whenever we call _t with non-literals (ie. whenever we've
                 // had to use a _td to compensate) so is expected.
                 if (tKey === null) return;
+
+                // check the format string against the args
+                // We only check _t: _td has no args
+                if (node.callee.name === '_t') {
+                    try {
+                        const placeholders = getFormatStrings(tKey);
+                        for (const placeholder of placeholders) {
+                            if (node.arguments.length < 2) {
+                                throw new Error(`Placeholder found ('${placeholder}') but no substitutions given`);
+                            }
+                            const value = getObjectValue(node.arguments[1], placeholder);
+                            if (value === null) {
+                                throw new Error(`No value found for placeholder '${placeholder}'`);
+                            }
+                        }
+
+                        // Validate tag replacements
+                        if (node.arguments.length > 2) {
+                            const tagMap = node.arguments[2];
+                            for (const prop of tagMap.properties) {
+                                if (prop.key.type === 'Literal') {
+                                    const tag = prop.key.value;
+                                    // RegExp same as in src/languageHandler.js
+                                    const regexp = new RegExp(`(<${tag}>(.*?)<\\/${tag}>|<${tag}>|<${tag}\\s*\\/>)`);
+                                    if (!tKey.match(regexp)) {
+                                        throw new Error(`No match for ${regexp} in ${tKey}`);
+                                    }
+                                }
+                            }
+                        }
+
+                    } catch (e) {
+                        console.log();
+                        console.error(`ERROR: ${file}:${node.loc.start.line} ${tKey}`);
+                        process.exit(1);
+                    }
+                }
 
                 let isPlural = false;
                 if (node.arguments.length > 1 && node.arguments[1].type == 'ObjectExpression') {
@@ -106,6 +188,20 @@ function getTranslations(file) {
     return trs;
 }
 
+function getTranslationsOther(file) {
+    const contents = fs.readFileSync(file, { encoding: 'utf8' });
+
+    const trs = new Set();
+
+    // Taken from riot-web src/components/structures/HomePage.js
+    const translationsRegex = /_t\(['"]([\s\S]*?)['"]\)/mg;
+    let matches;
+    while (matches = translationsRegex.exec(contents)) {
+        trs.add(matches[1]);
+    }
+    return trs;
+}
+
 // gather en_EN plural strings from the input translations file:
 // the en_EN strings are all in the source with the exception of
 // pluralised strings, which we need to pull in from elsewhere.
@@ -123,31 +219,50 @@ for (const key of Object.keys(inputTranslationsRaw)) {
 
 const translatables = new Set();
 
-walk.walkSync("src", {
+const walkOpts = {
     listeners: {
         file: function(root, fileStats, next) {
-            if (!fileStats.name.endsWith('.js')) return;
-
             const fullPath = path.join(root, fileStats.name);
-            const trs = getTranslations(fullPath);
+
+            let ltrs;
+            if (fileStats.name.endsWith('.js')) {
+                trs = getTranslationsJs(fullPath);
+            } else if (fileStats.name.endsWith('.html')) {
+                trs = getTranslationsOther(fullPath);
+            } else {
+                return;
+            }
             console.log(`${fullPath} (${trs.size} strings)`);
             for (const tr of trs.values()) {
                 translatables.add(tr);
             }
         },
     }
-});
+};
+
+for (const path of SEARCH_PATHS) {
+    if (fs.existsSync(path)) {
+        walk.walkSync(path, walkOpts);
+    }
+}
 
 const trObj = {};
 for (const tr of translatables) {
-    trObj[tr] = tr;
     if (tr.includes("|")) {
-        trObj[tr] = inputTranslationsRaw[tr];
+        if (inputTranslationsRaw[tr]) {
+            trObj[tr] = inputTranslationsRaw[tr];
+        } else {
+            trObj[tr] = tr.split("|")[0];
+        }
+    } else {
+        trObj[tr] = tr;
     }
 }
 
 fs.writeFileSync(
-    "src/i18n/strings/en_EN.json",
+    OUTPUT_FILE,
     JSON.stringify(trObj, translatables.values(), 4) + "\n"
 );
 
+console.log();
+console.log(`Wrote ${translatables.size} strings to ${OUTPUT_FILE}`);

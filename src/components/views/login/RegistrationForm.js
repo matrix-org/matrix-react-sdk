@@ -16,12 +16,15 @@ limitations under the License.
 */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { field_input_incorrect } from '../../../UiEffects';
 import sdk from '../../../index';
 import Email from '../../../email';
 import { looksValid as phoneNumberLooksValid } from '../../../phonenumber';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
+import SdkConfig from '../../../SdkConfig';
+import SettingsStore from "../../../settings/SettingsStore";
 
 const FIELD_EMAIL = 'field_email';
 const FIELD_PHONE_COUNTRY = 'field_phone_country';
@@ -38,25 +41,25 @@ module.exports = React.createClass({
 
     propTypes: {
         // Values pre-filled in the input boxes when the component loads
-        defaultEmail: React.PropTypes.string,
-        defaultPhoneCountry: React.PropTypes.string,
-        defaultPhoneNumber: React.PropTypes.string,
-        defaultUsername: React.PropTypes.string,
-        defaultPassword: React.PropTypes.string,
-        teamsConfig: React.PropTypes.shape({
+        defaultEmail: PropTypes.string,
+        defaultPhoneCountry: PropTypes.string,
+        defaultPhoneNumber: PropTypes.string,
+        defaultUsername: PropTypes.string,
+        defaultPassword: PropTypes.string,
+        teamsConfig: PropTypes.shape({
             // Email address to request new teams
-            supportEmail: React.PropTypes.string,
-            teams: React.PropTypes.arrayOf(React.PropTypes.shape({
+            supportEmail: PropTypes.string,
+            teams: PropTypes.arrayOf(React.PropTypes.shape({
                 // The displayed name of the team
-                "name": React.PropTypes.string,
+                "name": PropTypes.string,
                 // The domain of team email addresses
-                "domain": React.PropTypes.string,
+                "domain": PropTypes.string,
             })).required,
         }),
 
-        minPasswordLength: React.PropTypes.number,
-        onError: React.PropTypes.func,
-        onRegisterClick: React.PropTypes.func.isRequired, // onRegisterClick(Object) => ?Promise
+        minPasswordLength: PropTypes.number,
+        onError: PropTypes.func,
+        onRegisterClick: PropTypes.func.isRequired, // onRegisterClick(Object) => ?Promise
     },
 
     getDefaultProps: function() {
@@ -122,7 +125,7 @@ module.exports = React.createClass({
             password: this.refs.password.value.trim(),
             email: email,
             phoneCountry: this.state.phoneCountry,
-            phoneNumber: this.refs.phoneNumber.value.trim(),
+            phoneNumber: this.refs.phoneNumber ? this.refs.phoneNumber.value.trim() : '',
         });
 
         if (promise) {
@@ -180,7 +183,7 @@ module.exports = React.createClass({
                 this.markFieldValid(field_id, emailValid, "RegistrationForm.ERR_EMAIL_INVALID");
                 break;
             case FIELD_PHONE_NUMBER:
-                const phoneNumber = this.refs.phoneNumber.value;
+                const phoneNumber = this.refs.phoneNumber ? this.refs.phoneNumber.value : '';
                 const phoneNumberValid = phoneNumber === '' || phoneNumberLooksValid(phoneNumber);
                 this.markFieldValid(field_id, phoneNumberValid, "RegistrationForm.ERR_PHONE_NUMBER_INVALID");
                 break;
@@ -273,10 +276,14 @@ module.exports = React.createClass({
     render: function() {
         const self = this;
 
+        const theme = SettingsStore.getValue("theme");
+        // FIXME: remove hardcoded Status team tweaks at some point
+        const emailPlaceholder = theme === 'status' ? _t("Email address") : _t("Email address (optional)");
+
         const emailSection = (
             <div>
                 <input type="text" ref="email"
-                    autoFocus={true} placeholder={_t("Email address (optional)")}
+                    autoFocus={true} placeholder={emailPlaceholder}
                     defaultValue={this.props.defaultEmail}
                     className={this._classForField(FIELD_EMAIL, 'mx_Login_field')}
                     onBlur={function() {self.validateField(FIELD_EMAIL);}}
@@ -306,28 +313,31 @@ module.exports = React.createClass({
         }
 
         const CountryDropdown = sdk.getComponent('views.login.CountryDropdown');
-        const phoneSection = (
-            <div className="mx_Login_phoneSection">
-                <CountryDropdown ref="phone_country" onOptionChange={this._onPhoneCountryChange}
-                    className="mx_Login_phoneCountry mx_Login_field_prefix"
-                    value={this.state.phoneCountry}
-                    isSmall={true}
-                    showPrefix={true}
-                />
-                <input type="text" ref="phoneNumber"
-                    placeholder={_t("Mobile phone number (optional)")}
-                    defaultValue={this.props.defaultPhoneNumber}
-                    className={this._classForField(
-                        FIELD_PHONE_NUMBER,
-                        'mx_Login_phoneNumberField',
-                        'mx_Login_field',
-                        'mx_Login_field_has_prefix',
-                    )}
-                    onBlur={function() {self.validateField(FIELD_PHONE_NUMBER);}}
-                    value={self.state.phoneNumber}
-                />
-            </div>
-        );
+        let phoneSection;
+        if (!SdkConfig.get().disable_3pid_login) {
+            phoneSection = (
+                <div className="mx_Login_phoneSection">
+                    <CountryDropdown ref="phone_country" onOptionChange={this._onPhoneCountryChange}
+                        className="mx_Login_phoneCountry mx_Login_field_prefix"
+                        value={this.state.phoneCountry}
+                        isSmall={true}
+                        showPrefix={true}
+                    />
+                    <input type="text" ref="phoneNumber"
+                        placeholder={_t("Mobile phone number (optional)")}
+                        defaultValue={this.props.defaultPhoneNumber}
+                        className={this._classForField(
+                            FIELD_PHONE_NUMBER,
+                            'mx_Login_phoneNumberField',
+                            'mx_Login_field',
+                            'mx_Login_field_has_prefix',
+                        )}
+                        onBlur={function() {self.validateField(FIELD_PHONE_NUMBER);}}
+                        value={self.state.phoneNumber}
+                    />
+                </div>
+            );
+        }
 
         const registerButton = (
             <input className="mx_Login_submit" type="submit" value={_t("Register")} />

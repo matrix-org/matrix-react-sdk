@@ -15,18 +15,20 @@ limitations under the License.
 */
 
 import React from "react";
+import PropTypes from 'prop-types';
 import MatrixClientPeg from "../../../MatrixClientPeg";
 import AccessibleButton from "../elements/AccessibleButton";
 import PinnedEventTile from "./PinnedEventTile";
 import { _t } from '../../../languageHandler';
+import PinningUtils from "../../../utils/PinningUtils";
 
 module.exports = React.createClass({
     displayName: 'PinnedEventsPanel',
     propTypes: {
         // The Room from the js-sdk we're going to show pinned events for
-        room: React.PropTypes.object.isRequired,
+        room: PropTypes.object.isRequired,
 
-        onCancelClick: React.PropTypes.func,
+        onCancelClick: PropTypes.func,
     },
 
     getInitialState: function() {
@@ -61,20 +63,39 @@ module.exports = React.createClass({
 
             Promise.all(promises).then((contexts) => {
                 // Filter out the messages before we try to render them
-                const pinned = contexts.filter((context) => {
-                    if (!context) return false; // no context == not applicable for the room
-                    if (context.event.getType() !== "m.room.message") return false;
-                    if (context.event.isRedacted()) return false;
-                    return true;
-                });
+                const pinned = contexts.filter((context) => PinningUtils.isPinnable(context.event));
 
                 this.setState({ loading: false, pinned });
+            });
+        }
+
+        this._updateReadState();
+    },
+
+    _updateReadState: function() {
+        const pinnedEvents = this.props.room.currentState.getStateEvents("m.room.pinned_events", "");
+        if (!pinnedEvents) return; // nothing to read
+
+        let readStateEvents = [];
+        const readPinsEvent = this.props.room.getAccountData("im.vector.room.read_pins");
+        if (readPinsEvent && readPinsEvent.getContent()) {
+            readStateEvents = readPinsEvent.getContent().event_ids || [];
+        }
+
+        if (!readStateEvents.includes(pinnedEvents.getId())) {
+            readStateEvents.push(pinnedEvents.getId());
+
+            // Only keep the last 10 event IDs to avoid infinite growth
+            readStateEvents = readStateEvents.reverse().splice(0, 10).reverse();
+
+            MatrixClientPeg.get().setRoomAccountData(this.props.room.roomId, "im.vector.room.read_pins", {
+                event_ids: readStateEvents,
             });
         }
     },
 
     _getPinnedTiles: function() {
-        if (this.state.pinned.length == 0) {
+        if (this.state.pinned.length === 0) {
             return (<div>{ _t("No pinned messages.") }</div>);
         }
 
@@ -95,7 +116,9 @@ module.exports = React.createClass({
         return (
             <div className="mx_PinnedEventsPanel">
                 <div className="mx_PinnedEventsPanel_body">
-                    <AccessibleButton className="mx_PinnedEventsPanel_cancel" onClick={this.props.onCancelClick}><img src="img/cancel.svg" width="18" height="18" /></AccessibleButton>
+                    <AccessibleButton className="mx_PinnedEventsPanel_cancel" onClick={this.props.onCancelClick}>
+                        <img className="mx_filterFlipColor" src="img/cancel.svg" width="18" height="18" />
+                    </AccessibleButton>
                     <h3 className="mx_PinnedEventsPanel_header">{ _t("Pinned Messages") }</h3>
                     { tiles }
                 </div>

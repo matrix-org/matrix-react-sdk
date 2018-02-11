@@ -15,18 +15,19 @@ limitations under the License.
 */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import sdk from '../../../index';
 import SdkConfig from '../../../SdkConfig';
 import Modal from '../../../Modal';
-import { _t, _tJsx } from '../../../languageHandler';
+import { _t } from '../../../languageHandler';
 
 
 export default React.createClass({
     displayName: 'SessionRestoreErrorDialog',
 
     propTypes: {
-        error: React.PropTypes.string.isRequired,
-        onFinished: React.PropTypes.func.isRequired,
+        error: PropTypes.string.isRequired,
+        onFinished: PropTypes.func.isRequired,
     },
 
     _sendBugReport: function() {
@@ -40,14 +41,16 @@ export default React.createClass({
 
     render: function() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
+        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         let bugreport;
 
         if (SdkConfig.get().bug_report_endpoint_url) {
             bugreport = (
                 <p>
-                { _tJsx(
+                { _t(
                     "Otherwise, <a>click here</a> to send a bug report.",
-                    /<a>(.*?)<\/a>/, (sub) => <a onClick={this._sendBugReport} key="bugreport" href='#'>{ sub }</a>,
+                    {},
+                    { 'a': (sub) => <a onClick={this._sendBugReport} key="bugreport" href='#'>{ sub }</a> },
                 ) }
                 </p>
             );
@@ -67,11 +70,9 @@ export default React.createClass({
 
                     { bugreport }
                 </div>
-                <div className="mx_Dialog_buttons">
-                    <button className="mx_Dialog_primary" onClick={this._continueClicked}>
-                        { _t("Continue anyway") }
-                    </button>
-                </div>
+                <DialogButtons primaryButton={_t("Continue anyway")}
+                    onPrimaryButtonClick={this._continueClicked}
+                    onCancel={this.props.onFinished} />
             </BaseDialog>
         );
     },

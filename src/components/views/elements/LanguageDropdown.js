@@ -16,10 +16,11 @@ limitations under the License.
 */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import sdk from '../../../index';
-import UserSettingsStore from '../../../UserSettingsStore';
 import * as languageHandler from '../../../languageHandler';
+import SettingsStore from "../../../settings/SettingsStore";
 
 function languageMatchesSearchQuery(query, language) {
     if (language.label.toUpperCase().indexOf(query.toUpperCase()) == 0) return true;
@@ -41,8 +42,8 @@ export default class LanguageDropdown extends React.Component {
     componentWillMount() {
         languageHandler.getAllLanguagesFromJson().then((langs) => {
             langs.sort(function(a, b) {
-                if(a.label < b.label) return -1;
-                if(a.label > b.label) return 1;
+                if (a.label < b.label) return -1;
+                if (a.label > b.label) return 1;
                 return 0;
             });
             this.setState({langs});
@@ -54,10 +55,10 @@ export default class LanguageDropdown extends React.Component {
             // If no value is given, we start with the first
             // country selected, but our parent component
             // doesn't know this, therefore we do this.
-            const _localSettings = UserSettingsStore.getLocalSettings();
-            if (_localSettings.hasOwnProperty('language')) {
-              this.props.onOptionChange(_localSettings.language);
-            }else {
+            const language = SettingsStore.getValue("language", null, /*excludeDefault:*/true);
+            if (language) {
+              this.props.onOptionChange(language);
+            } else {
               const language = languageHandler.normalizeLanguageKey(languageHandler.getLanguageFromBrowser());
               this.props.onOptionChange(language);
             }
@@ -95,12 +96,12 @@ export default class LanguageDropdown extends React.Component {
 
         // default value here too, otherwise we need to handle null / undefined
         // values between mounting and the initial value propgating
+        let language = SettingsStore.getValue("language", null, /*excludeDefault:*/true);
         let value = null;
-        const _localSettings = UserSettingsStore.getLocalSettings();
-        if (_localSettings.hasOwnProperty('language')) {
-          value = this.props.value || _localSettings.language;
+        if (language) {
+          value = this.props.value || language;
         } else {
-          const language = navigator.language || navigator.userLanguage;
+          language = navigator.language || navigator.userLanguage;
           value = this.props.value || language;
         }
 
@@ -114,7 +115,7 @@ export default class LanguageDropdown extends React.Component {
 }
 
 LanguageDropdown.propTypes = {
-    className: React.PropTypes.string,
-    onOptionChange: React.PropTypes.func.isRequired,
-    value: React.PropTypes.string,
+    className: PropTypes.string,
+    onOptionChange: PropTypes.func.isRequired,
+    value: PropTypes.string,
 };

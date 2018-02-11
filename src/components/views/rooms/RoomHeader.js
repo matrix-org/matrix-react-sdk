@@ -17,6 +17,7 @@ limitations under the License.
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import sdk from '../../../index';
 import { _t } from '../../../languageHandler';
@@ -31,7 +32,7 @@ import linkifyMatrix from '../../../linkify-matrix';
 import AccessibleButton from '../elements/AccessibleButton';
 import ManageIntegsButton from '../elements/ManageIntegsButton';
 import {CancelButton} from './SimpleRoomHeader';
-import UserSettingsStore from "../../../UserSettingsStore";
+import SettingsStore from "../../../settings/SettingsStore";
 
 linkifyMatrix(linkify);
 
@@ -39,18 +40,18 @@ module.exports = React.createClass({
     displayName: 'RoomHeader',
 
     propTypes: {
-        room: React.PropTypes.object,
-        oobData: React.PropTypes.object,
-        editing: React.PropTypes.bool,
-        saving: React.PropTypes.bool,
-        inRoom: React.PropTypes.bool,
-        collapsedRhs: React.PropTypes.bool,
-        onSettingsClick: React.PropTypes.func,
-        onPinnedClick: React.PropTypes.func,
-        onSaveClick: React.PropTypes.func,
-        onSearchClick: React.PropTypes.func,
-        onLeaveClick: React.PropTypes.func,
-        onCancelClick: React.PropTypes.func,
+        room: PropTypes.object,
+        oobData: PropTypes.object,
+        editing: PropTypes.bool,
+        saving: PropTypes.bool,
+        inRoom: PropTypes.bool,
+        collapsedRhs: PropTypes.bool,
+        onSettingsClick: PropTypes.func,
+        onPinnedClick: PropTypes.func,
+        onSaveClick: PropTypes.func,
+        onSearchClick: PropTypes.func,
+        onLeaveClick: PropTypes.func,
+        onCancelClick: PropTypes.func,
     },
 
     getDefaultProps: function() {
@@ -65,6 +66,7 @@ module.exports = React.createClass({
     componentDidMount: function() {
         const cli = MatrixClientPeg.get();
         cli.on("RoomState.events", this._onRoomStateEvents);
+        cli.on("Room.accountData", this._onRoomAccountData);
 
         // When a room name occurs, RoomState.events is fired *before*
         // room.name is updated. So we have to listen to Room.name as well as
@@ -87,6 +89,7 @@ module.exports = React.createClass({
         const cli = MatrixClientPeg.get();
         if (cli) {
             cli.removeListener("RoomState.events", this._onRoomStateEvents);
+            cli.removeListener("Room.accountData", this._onRoomAccountData);
         }
     },
 
@@ -96,6 +99,13 @@ module.exports = React.createClass({
         }
 
         // redisplay the room name, topic, etc.
+        this._rateLimitedUpdate();
+    },
+
+    _onRoomAccountData: function(event, room) {
+        if (!this.props.room || room.roomId !== this.props.room.roomId) return;
+        if (event.getType() !== "im.vector.room.read_pins") return;
+
         this._rateLimitedUpdate();
     },
 
@@ -137,6 +147,32 @@ module.exports = React.createClass({
 
     onShowRhsClick: function(ev) {
         dis.dispatch({ action: 'show_right_panel' });
+    },
+
+    _hasUnreadPins: function() {
+        const currentPinEvent = this.props.room.currentState.getStateEvents("m.room.pinned_events", '');
+        if (!currentPinEvent) return false;
+        if (currentPinEvent.getContent().pinned && currentPinEvent.getContent().pinned.length <= 0) {
+            return false; // no pins == nothing to read
+        }
+
+        const readPinsEvent = this.props.room.getAccountData("im.vector.room.read_pins");
+        if (readPinsEvent && readPinsEvent.getContent()) {
+            const readStateEvents = readPinsEvent.getContent().event_ids || [];
+            if (readStateEvents) {
+                return !readStateEvents.includes(currentPinEvent.getId());
+            }
+        }
+
+        // There's pins, and we haven't read any of them
+        return true;
+    },
+
+    _hasPins: function() {
+        const currentPinEvent = this.props.room.currentState.getStateEvents("m.room.pinned_events", '');
+        if (!currentPinEvent) return false;
+
+        return !(currentPinEvent.getContent().pinned && currentPinEvent.getContent().pinned.length <= 0);
     },
 
     /**
@@ -281,8 +317,11 @@ module.exports = React.createClass({
                         <input id="avatarInput" type="file" onChange={this.onAvatarSelected} />
                     </div>
                     <div className="mx_RoomHeader_avatarPicker_remove" onClick={this.onAvatarRemoveClick}>
-                        <img src="img/cancel.svg" width="10"
-                             alt={_t("Remove avatar")} title={_t("Remove avatar")} />
+                        <img src="img/cancel.svg"
+                            className="mx_filterFlipColor"
+                            width="10"
+                            alt={_t("Remove avatar")}
+                            title={_t("Remove avatar")} />
                     </div>
                 </div>
             );
@@ -301,9 +340,18 @@ module.exports = React.createClass({
                 </AccessibleButton>;
         }
 
-        if (this.props.onPinnedClick && UserSettingsStore.isFeatureEnabled('feature_pinning')) {
+        if (this.props.onPinnedClick && SettingsStore.isFeatureEnabled('feature_pinning')) {
+            let pinsIndicator = null;
+            if (this._hasUnreadPins()) {
+                pinsIndicator = (<div className="mx_RoomHeader_pinsIndicator mx_RoomHeader_pinsIndicatorUnread" />);
+            } else if (this._hasPins()) {
+                pinsIndicator = (<div className="mx_RoomHeader_pinsIndicator" />);
+            }
+
             pinnedEventsButton =
-                <AccessibleButton className="mx_RoomHeader_button" onClick={this.props.onPinnedClick} title={_t("Pinned Messages")}>
+                <AccessibleButton className="mx_RoomHeader_button mx_RoomHeader_pinnedButton"
+                                  onClick={this.props.onPinnedClick} title={_t("Pinned Messages")}>
+                    { pinsIndicator }
                     <TintableSvg src="img/icons-pin.svg" width="16" height="16" />
                 </AccessibleButton>;
         }
@@ -342,7 +390,7 @@ module.exports = React.createClass({
 
         let rightRow;
         let manageIntegsButton;
-        if(this.props.room && this.props.room.roomId && this.props.inRoom) {
+        if (this.props.room && this.props.room.roomId && this.props.inRoom) {
             manageIntegsButton = <ManageIntegsButton
                 roomId={this.props.room.roomId}
             />;

@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2017 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,6 +19,7 @@ limitations under the License.
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import highlight from 'highlight.js';
 import * as HtmlUtils from '../../../HtmlUtils';
 import * as linkify from 'linkifyjs';
@@ -29,11 +31,10 @@ import Modal from '../../../Modal';
 import SdkConfig from '../../../SdkConfig';
 import dis from '../../../dispatcher';
 import { _t } from '../../../languageHandler';
-import UserSettingsStore from "../../../UserSettingsStore";
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import ContextualMenu from '../../structures/ContextualMenu';
-import {RoomMember} from 'matrix-js-sdk';
-import classNames from 'classnames';
+import SettingsStore from "../../../settings/SettingsStore";
+import PushProcessor from 'matrix-js-sdk/lib/pushprocessor';
 
 linkifyMatrix(linkify);
 
@@ -42,19 +43,26 @@ module.exports = React.createClass({
 
     propTypes: {
         /* the MatrixEvent to show */
-        mxEvent: React.PropTypes.object.isRequired,
+        mxEvent: PropTypes.object.isRequired,
 
         /* a list of words to highlight */
-        highlights: React.PropTypes.array,
+        highlights: PropTypes.array,
 
         /* link URL for the highlights */
-        highlightLink: React.PropTypes.string,
+        highlightLink: PropTypes.string,
 
         /* should show URL previews for this event */
-        showUrlPreview: React.PropTypes.bool,
+        showUrlPreview: PropTypes.bool,
 
         /* callback for when our widget has loaded */
-        onWidgetLoad: React.PropTypes.func,
+        onWidgetLoad: PropTypes.func,
+
+        /* the shape of the tile, used */
+        tileShape: PropTypes.string,
+    },
+
+    contextTypes: {
+        addRichQuote: PropTypes.func,
     },
 
     getInitialState: function() {
@@ -103,7 +111,7 @@ module.exports = React.createClass({
                 setTimeout(() => {
                     if (this._unmounted) return;
                     for (let i = 0; i < blocks.length; i++) {
-                        if (UserSettingsStore.getSyncedSetting("enableSyntaxHighlightLanguageDetection", false)) {
+                        if (SettingsStore.getValue("enableSyntaxHighlightLanguageDetection")) {
                             highlight.highlightBlock(blocks[i]);
                         } else {
                             // Only syntax highlight if there's a class starting with language-
@@ -168,14 +176,17 @@ module.exports = React.createClass({
     },
 
     pillifyLinks: function(nodes) {
-        const shouldShowPillAvatar = !UserSettingsStore.getSyncedSetting("Pill.shouldHidePillAvatar", false);
-        for (let i = 0; i < nodes.length; i++) {
-            const node = nodes[i];
+        const shouldShowPillAvatar = !SettingsStore.getValue("Pill.shouldHidePillAvatar");
+        let node = nodes[0];
+        while (node) {
+            let pillified = false;
+
             if (node.tagName === "A" && node.getAttribute("href")) {
                 const href = node.getAttribute("href");
 
                 // If the link is a (localised) matrix.to link, replace it with a pill
                 const Pill = sdk.getComponent('elements.Pill');
+                const Quote = sdk.getComponent('elements.Quote');
                 if (Pill.isMessagePillUrl(href)) {
                     const pillContainer = document.createElement('span');
 
@@ -189,10 +200,86 @@ module.exports = React.createClass({
 
                     ReactDOM.render(pill, pillContainer);
                     node.parentNode.replaceChild(pillContainer, node);
+                    // Pills within pills aren't going to go well, so move on
+                    pillified = true;
+
+                    // update the current node with one that's now taken its place
+                    node = pillContainer;
+                } else if (SettingsStore.isFeatureEnabled("feature_rich_quoting") && Quote.isMessageUrl(href)) {
+                    if (this.context.addRichQuote) { // We're already a Rich Quote so just append the next one above
+                        this.context.addRichQuote(href);
+                        node.remove();
+                    } else { // We're the first in the chain
+                        const quoteContainer = document.createElement('span');
+
+                        const quote =
+                            <Quote url={href} parentEv={this.props.mxEvent} node={node} />;
+
+                        ReactDOM.render(quote, quoteContainer);
+                        node.parentNode.replaceChild(quoteContainer, node);
+                        node = quoteContainer;
+                    }
+                    pillified = true;
                 }
-            } else if (node.children && node.children.length) {
-                this.pillifyLinks(node.children);
+            } else if (node.nodeType == Node.TEXT_NODE) {
+                const Pill = sdk.getComponent('elements.Pill');
+
+                let currentTextNode = node;
+                const roomNotifTextNodes = [];
+
+                // Take a textNode and break it up to make all the instances of @room their
+                // own textNode, adding those nodes to roomNotifTextNodes
+                while (currentTextNode !== null) {
+                    const roomNotifPos = Pill.roomNotifPos(currentTextNode.textContent);
+                    let nextTextNode = null;
+                    if (roomNotifPos > -1) {
+                        let roomTextNode = currentTextNode;
+
+                        if (roomNotifPos > 0) roomTextNode = roomTextNode.splitText(roomNotifPos);
+                        if (roomTextNode.textContent.length > Pill.roomNotifLen()) {
+                            nextTextNode = roomTextNode.splitText(Pill.roomNotifLen());
+                        }
+                        roomNotifTextNodes.push(roomTextNode);
+                    }
+                    currentTextNode = nextTextNode;
+                }
+
+                if (roomNotifTextNodes.length > 0) {
+                    const pushProcessor = new PushProcessor(MatrixClientPeg.get());
+                    const atRoomRule = pushProcessor.getPushRuleById(".m.rule.roomnotif");
+                    if (atRoomRule && pushProcessor.ruleMatchesEvent(atRoomRule, this.props.mxEvent)) {
+                        // Now replace all those nodes with Pills
+                        for (const roomNotifTextNode of roomNotifTextNodes) {
+                            const pillContainer = document.createElement('span');
+                            const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
+                            const pill = <Pill
+                                type={Pill.TYPE_AT_ROOM_MENTION}
+                                inMessage={true}
+                                room={room}
+                                shouldShowPillAvatar={true}
+                            />;
+
+                            ReactDOM.render(pill, pillContainer);
+                            roomNotifTextNode.parentNode.replaceChild(pillContainer, roomNotifTextNode);
+
+                            // Set the next node to be processed to the one after the node
+                            // we're adding now, since we've just inserted nodes into the structure
+                            // we're iterating over.
+                            // Note we've checked roomNotifTextNodes.length > 0 so we'll do this at least once
+                            node = roomNotifTextNode.nextSibling;
+                        }
+                        // Nothing else to do for a text node (and we don't need to advance
+                        // the loop pointer because we did it above)
+                        continue;
+                    }
+                }
             }
+
+            if (node.childNodes && node.childNodes.length && !pillified) {
+                this.pillifyLinks(node.childNodes);
+            }
+
+            node = node.nextSibling;
         }
     },
 
@@ -355,7 +442,7 @@ module.exports = React.createClass({
         const content = mxEvent.getContent();
 
         let body = HtmlUtils.bodyToHtml(content, this.props.highlights, {
-            disableBigEmoji: UserSettingsStore.getSyncedSetting('TextualBody.disableBigEmoji', false),
+            disableBigEmoji: SettingsStore.getValue('TextualBody.disableBigEmoji'),
         });
 
         if (this.props.highlightLink) {

@@ -18,23 +18,27 @@ limitations under the License.
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import sdk from '../../../index';
 import dis from '../../../dispatcher';
+
+import SettingsStore from "../../../settings/SettingsStore";
 
 module.exports = React.createClass({
     displayName: 'VideoView',
 
     propTypes: {
         // maxHeight style attribute for the video element
-        maxHeight: React.PropTypes.number,
+        maxHeight: PropTypes.number,
 
         // a callback which is called when the user clicks on the video div
-        onClick: React.PropTypes.func,
+        onClick: PropTypes.func,
 
         // a callback which is called when the video element is resized due to
         // a change in video metadata
-        onResize: React.PropTypes.func,
+        onResize: PropTypes.func,
     },
 
     componentDidMount: function() {
@@ -108,14 +112,18 @@ module.exports = React.createClass({
                  document.mozFullScreenElement ||
                  document.webkitFullscreenElement);
         const maxVideoHeight = fullscreenElement ? null : this.props.maxHeight;
-
+        const localVideoFeedClasses = classNames("mx_VideoView_localVideoFeed",
+            { "mx_VideoView_localVideoFeed_flipped":
+                SettingsStore.getValue('VideoView.flipVideoHorizontally'),
+            },
+        );
         return (
             <div className="mx_VideoView" ref={this.setContainer} onClick={this.props.onClick}>
                 <div className="mx_VideoView_remoteVideoFeed">
                     <VideoFeed ref="remote" onResize={this.props.onResize}
                         maxHeight={maxVideoHeight} />
                 </div>
-                <div className="mx_VideoView_localVideoFeed">
+                <div className={localVideoFeedClasses}>
                     <VideoFeed ref="local" />
                 </div>
             </div>

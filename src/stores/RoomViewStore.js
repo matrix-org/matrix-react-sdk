@@ -1,5 +1,6 @@
 /*
 Copyright 2017 Vector Creations Ltd
+Copyright 2017 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -41,6 +42,8 @@ const INITIAL_STATE = {
     roomLoadError: null,
 
     forwardingEvent: null,
+
+    quotingEvent: null,
 };
 
 /**
@@ -72,6 +75,13 @@ class RoomViewStore extends Store {
             case 'view_room':
                 this._viewRoom(payload);
                 break;
+            case 'view_my_groups':
+            case 'view_group':
+                this._setState({
+                    roomId: null,
+                    roomAlias: null,
+                });
+                break;
             case 'view_room_error':
                 this._viewRoomError(payload);
                 break;
@@ -101,6 +111,10 @@ class RoomViewStore extends Store {
                     forwardingEvent: payload.event,
                 });
                 break;
+            case 'quote_event':
+                this._setState({
+                    quotingEvent: payload.event,
+                });
         }
     }
 
@@ -118,6 +132,8 @@ class RoomViewStore extends Store {
                 shouldPeek: payload.should_peek === undefined ? true : payload.should_peek,
                 // have we sent a join request for this room and are waiting for a response?
                 joining: payload.joining || false,
+                // Reset quotingEvent because we don't want cross-room because bad UX
+                quotingEvent: null,
             };
 
             if (this._state.forwardingEvent) {
@@ -277,6 +293,11 @@ class RoomViewStore extends Store {
     // The mxEvent if one is about to be forwarded
     getForwardingEvent() {
         return this._state.forwardingEvent;
+    }
+
+    // The mxEvent if one is currently being replied to/quoted
+    getQuotingEvent() {
+        return this._state.quotingEvent;
     }
 
     shouldPeek() {

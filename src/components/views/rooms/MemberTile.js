@@ -17,6 +17,7 @@ limitations under the License.
 'use strict';
 
 const React = require('react');
+import PropTypes from 'prop-types';
 
 const MatrixClientPeg = require('../../../MatrixClientPeg');
 const sdk = require('../../../index');
@@ -28,7 +29,7 @@ module.exports = React.createClass({
     displayName: 'MemberTile',
 
     propTypes: {
-        member: React.PropTypes.any.isRequired, // RoomMember
+        member: PropTypes.any.isRequired, // RoomMember
     },
 
     getInitialState: function() {
@@ -86,13 +87,19 @@ module.exports = React.createClass({
         }
         this.member_last_modified_time = member.getLastModifiedTime();
 
+        // We deliberately leave power levels that are not 100 or 50 undefined
+        const powerStatus = {
+            100: EntityTile.POWER_STATUS_ADMIN,
+            50: EntityTile.POWER_STATUS_MODERATOR,
+        }[this.props.member.powerLevel];
+
         return (
             <EntityTile {...this.props} presenceState={presenceState}
                 presenceLastActiveAgo={member.user ? member.user.lastActiveAgo : 0}
                 presenceLastTs={member.user ? member.user.lastPresenceTs : 0}
                 presenceCurrentlyActive={member.user ? member.user.currentlyActive : false}
                 avatarJsx={av} title={this.getPowerLabel()} onClick={this.onClick}
-                name={name} powerLevel={this.props.member.powerLevel} />
+                name={name} powerStatus={powerStatus} />
         );
     },
 });

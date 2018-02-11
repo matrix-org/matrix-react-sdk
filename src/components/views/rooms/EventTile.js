@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2017 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,8 +19,9 @@ limitations under the License.
 
 
 const React = require('react');
+import PropTypes from 'prop-types';
 const classNames = require("classnames");
-import { _t } from '../../../languageHandler';
+import { _t, _td } from '../../../languageHandler';
 const Modal = require('../../../Modal');
 
 const sdk = require('../../../index');
@@ -28,26 +30,35 @@ import withMatrixClient from '../../../wrappers/withMatrixClient';
 
 const ContextualMenu = require('../../structures/ContextualMenu');
 import dis from '../../../dispatcher';
+import {makeEventPermalink} from "../../../matrix-to";
 
 const ObjectUtils = require('../../../ObjectUtils');
 
 const eventTileTypes = {
     'm.room.message': 'messages.MessageEvent',
-    'm.room.member': 'messages.TextualEvent',
     'm.call.invite': 'messages.TextualEvent',
     'm.call.answer': 'messages.TextualEvent',
     'm.call.hangup': 'messages.TextualEvent',
+};
+
+const stateEventTileTypes = {
+    'm.room.member': 'messages.TextualEvent',
     'm.room.name': 'messages.TextualEvent',
     'm.room.avatar': 'messages.RoomAvatarEvent',
-    'm.room.topic': 'messages.TextualEvent',
     'm.room.third_party_invite': 'messages.TextualEvent',
     'm.room.history_visibility': 'messages.TextualEvent',
     'm.room.encryption': 'messages.TextualEvent',
+    'm.room.topic': 'messages.TextualEvent',
     'm.room.power_levels': 'messages.TextualEvent',
-    'm.room.pinned_events' : 'messages.TextualEvent',
+    'm.room.pinned_events': 'messages.TextualEvent',
 
     'im.vector.modular.widgets': 'messages.TextualEvent',
 };
+
+function getHandlerTile(ev) {
+    const type = ev.getType();
+    return ev.isState() ? stateEventTileTypes[type] : eventTileTypes[type];
+}
 
 const MAX_READ_AVATARS = 5;
 
@@ -67,65 +78,65 @@ module.exports = withMatrixClient(React.createClass({
 
     propTypes: {
         /* MatrixClient instance for sender verification etc */
-        matrixClient: React.PropTypes.object.isRequired,
+        matrixClient: PropTypes.object.isRequired,
 
         /* the MatrixEvent to show */
-        mxEvent: React.PropTypes.object.isRequired,
+        mxEvent: PropTypes.object.isRequired,
 
         /* true if mxEvent is redacted. This is a prop because using mxEvent.isRedacted()
          * might not be enough when deciding shouldComponentUpdate - prevProps.mxEvent
          * references the same this.props.mxEvent.
          */
-        isRedacted: React.PropTypes.bool,
+        isRedacted: PropTypes.bool,
 
         /* true if this is a continuation of the previous event (which has the
          * effect of not showing another avatar/displayname
          */
-        continuation: React.PropTypes.bool,
+        continuation: PropTypes.bool,
 
         /* true if this is the last event in the timeline (which has the effect
          * of always showing the timestamp)
          */
-        last: React.PropTypes.bool,
+        last: PropTypes.bool,
 
         /* true if this is search context (which has the effect of greying out
          * the text
          */
-        contextual: React.PropTypes.bool,
+        contextual: PropTypes.bool,
 
         /* a list of words to highlight, ordered by longest first */
-        highlights: React.PropTypes.array,
+        highlights: PropTypes.array,
 
         /* link URL for the highlights */
-        highlightLink: React.PropTypes.string,
+        highlightLink: PropTypes.string,
 
         /* should show URL previews for this event */
-        showUrlPreview: React.PropTypes.bool,
+        showUrlPreview: PropTypes.bool,
 
         /* is this the focused event */
-        isSelectedEvent: React.PropTypes.bool,
+        isSelectedEvent: PropTypes.bool,
 
         /* callback called when dynamic content in events are loaded */
-        onWidgetLoad: React.PropTypes.func,
+        onWidgetLoad: PropTypes.func,
 
         /* a list of read-receipts we should show. Each object has a 'roomMember' and 'ts'. */
-        readReceipts: React.PropTypes.arrayOf(React.PropTypes.object),
+        readReceipts: PropTypes.arrayOf(React.PropTypes.object),
 
         /* opaque readreceipt info for each userId; used by ReadReceiptMarker
          * to manage its animations. Should be an empty object when the room
          * first loads
          */
-        readReceiptMap: React.PropTypes.object,
+        readReceiptMap: PropTypes.object,
 
         /* A function which is used to check if the parent panel is being
          * unmounted, to avoid unnecessary work. Should return true if we
          * are being unmounted.
          */
-        checkUnmounting: React.PropTypes.func,
+        checkUnmounting: PropTypes.func,
 
         /* the status of this event - ie, mxEvent.status. Denormalised to here so
          * that we can tell when it changes. */
-        eventSendStatus: React.PropTypes.string,
+        eventSendStatus: PropTypes.string,
 
         /* the shape of the tile. by default, the layout is intended for the
          * normal room timeline.  alternative values are: "file_list", "file_grid"
@@ -134,10 +145,10 @@ module.exports = withMatrixClient(React.createClass({
          * boiilerplatey.  So just make the necessary render decisions conditional
          * for now.
          */
-        tileShape: React.PropTypes.string,
+        tileShape: PropTypes.string,
 
         // show twelve hour timestamps
-        isTwelveHour: React.PropTypes.bool,
+        isTwelveHour: PropTypes.bool,
     },
 
     getInitialState: function() {
@@ -188,6 +199,8 @@ module.exports = withMatrixClient(React.createClass({
      */
     _onDecrypted: function() {
         // we need to re-verify the sending device.
+        // (we call onWidgetLoad in _verifyEvent to handle the case where decryption
+        // has caused a change in size of the event tile)
         this._verifyEvent(this.props.mxEvent);
         this.forceUpdate();
     },
@@ -206,6 +219,9 @@ module.exports = withMatrixClient(React.createClass({
         const verified = await this.props.matrixClient.isEventSenderVerified(mxEvent);
         this.setState({
             verified: verified,
+        }, () => {
+            // Decryption may have caused a change in size
+            this.props.onWidgetLoad();
         });
     },
 
@@ -433,7 +449,7 @@ module.exports = withMatrixClient(React.createClass({
         // Info messages are basically information about commands processed on a room
         const isInfoMessage = (eventType !== 'm.room.message');
 
-        const EventTileType = sdk.getComponent(eventTileTypes[eventType]);
+        const EventTileType = sdk.getComponent(getHandlerTile(this.props.mxEvent));
         // This shouldn't happen: the caller should check we support this type
         // before trying to instantiate us
         if (!EventTileType) {
@@ -463,9 +479,7 @@ module.exports = withMatrixClient(React.createClass({
             mx_EventTile_redacted: isRedacted,
         });
 
-        const permalink = "https://matrix.to/#/" +
-            this.props.mxEvent.getRoomId() + "/" +
-            this.props.mxEvent.getId();
+        const permalink = makeEventPermalink(this.props.mxEvent.getRoomId(), this.props.mxEvent.getId());
 
         const readAvatars = this.getReadAvatars();
 
@@ -502,12 +516,12 @@ module.exports = withMatrixClient(React.createClass({
         }
 
         if (needsSenderProfile) {
-            let aux = null;
-            if (!this.props.tileShape) {
-                if (msgtype === 'm.image') aux = _t('sent an image');
-                else if (msgtype === 'm.video') aux = _t('sent a video');
-                else if (msgtype === 'm.file') aux = _t('uploaded a file');
-                sender = <SenderProfile onClick={this.onSenderProfileClick} mxEvent={this.props.mxEvent} enableFlair={!aux} aux={aux} />;
+            let text = null;
+            if (!this.props.tileShape || this.props.tileShape === 'quote') {
+                if (msgtype === 'm.image') text = _td('%(senderName)s sent an image');
+                else if (msgtype === 'm.video') text = _td('%(senderName)s sent a video');
+                else if (msgtype === 'm.file') text = _td('%(senderName)s uploaded a file');
+                sender = <SenderProfile onClick={this.onSenderProfileClick} mxEvent={this.props.mxEvent} enableFlair={!text} text={text} />;
             } else {
                 sender = <SenderProfile mxEvent={this.props.mxEvent} enableFlair={true} />;
             }
@@ -520,79 +534,104 @@ module.exports = withMatrixClient(React.createClass({
         const timestamp = this.props.mxEvent.getTs() ?
             <MessageTimestamp showTwelveHour={this.props.isTwelveHour} ts={this.props.mxEvent.getTs()} /> : null;
 
-        if (this.props.tileShape === "notif") {
-            const room = this.props.matrixClient.getRoom(this.props.mxEvent.getRoomId());
-            return (
-                <div className={classes}>
-                    <div className="mx_EventTile_roomName">
-                        <a href={permalink} onClick={this.onPermalinkClicked}>
-                            { room ? room.name : '' }
-                        </a>
-                    </div>
-                    <div className="mx_EventTile_senderDetails">
-                        { avatar }
-                        <a href={permalink} onClick={this.onPermalinkClicked}>
-                            { sender }
-                            { timestamp }
-                        </a>
-                    </div>
-                    <div className="mx_EventTile_line" >
-                        <EventTileType ref="tile"
-                            mxEvent={this.props.mxEvent}
-                            highlights={this.props.highlights}
-                            highlightLink={this.props.highlightLink}
-                            showUrlPreview={this.props.showUrlPreview}
-                            onWidgetLoad={this.props.onWidgetLoad} />
-                    </div>
-                </div>
-            );
-        } else if (this.props.tileShape === "file_grid") {
-            return (
-                <div className={classes}>
-                    <div className="mx_EventTile_line" >
-                        <EventTileType ref="tile"
-                            mxEvent={this.props.mxEvent}
-                            highlights={this.props.highlights}
-                            highlightLink={this.props.highlightLink}
-                            showUrlPreview={this.props.showUrlPreview}
-                            tileShape={this.props.tileShape}
-                            onWidgetLoad={this.props.onWidgetLoad} />
-                    </div>
-                    <a
-                        className="mx_EventTile_senderDetailsLink"
-                        href={permalink}
-                        onClick={this.onPermalinkClicked}
-                    >
+        switch (this.props.tileShape) {
+            case 'notif': {
+                const room = this.props.matrixClient.getRoom(this.props.mxEvent.getRoomId());
+                return (
+                    <div className={classes}>
+                        <div className="mx_EventTile_roomName">
+                            <a href={permalink} onClick={this.onPermalinkClicked}>
+                                { room ? room.name : '' }
+                            </a>
+                        </div>
                         <div className="mx_EventTile_senderDetails">
+                            { avatar }
+                            <a href={permalink} onClick={this.onPermalinkClicked}>
                                 { sender }
                                 { timestamp }
+                            </a>
                         </div>
-                    </a>
-                </div>
-            );
-        } else {
-            return (
-                <div className={classes}>
-                    <div className="mx_EventTile_msgOption">
-                        { readAvatars }
+                        <div className="mx_EventTile_line" >
+                            <EventTileType ref="tile"
+                                           mxEvent={this.props.mxEvent}
+                                           highlights={this.props.highlights}
+                                           highlightLink={this.props.highlightLink}
+                                           showUrlPreview={this.props.showUrlPreview}
+                                           onWidgetLoad={this.props.onWidgetLoad} />
+                        </div>
                     </div>
-                    { avatar }
-                    { sender }
-                    <div className="mx_EventTile_line">
-                        <a href={permalink} onClick={this.onPermalinkClicked}>
-                            { timestamp }
+                );
+            }
+            case 'file_grid': {
+                return (
+                    <div className={classes}>
+                        <div className="mx_EventTile_line" >
+                            <EventTileType ref="tile"
+                                           mxEvent={this.props.mxEvent}
+                                           highlights={this.props.highlights}
+                                           highlightLink={this.props.highlightLink}
+                                           showUrlPreview={this.props.showUrlPreview}
+                                           tileShape={this.props.tileShape}
+                                           onWidgetLoad={this.props.onWidgetLoad} />
+                        </div>
+                        <a
+                            className="mx_EventTile_senderDetailsLink"
+                            href={permalink}
+                            onClick={this.onPermalinkClicked}
+                        >
+                            <div className="mx_EventTile_senderDetails">
+                                { sender }
+                                { timestamp }
+                            </div>
                         </a>
-                        { this._renderE2EPadlock() }
-                        <EventTileType ref="tile"
-                            mxEvent={this.props.mxEvent}
-                            highlights={this.props.highlights}
-                            highlightLink={this.props.highlightLink}
-                            showUrlPreview={this.props.showUrlPreview}
-                            onWidgetLoad={this.props.onWidgetLoad} />
-                        { editButton }
                     </div>
-                </div>
-            );
+                );
+            }
+            case 'quote': {
+                return (
+                    <div className={classes}>
+                        { avatar }
+                        { sender }
+                        <div className="mx_EventTile_line mx_EventTile_quote">
+                            <a href={permalink} onClick={this.onPermalinkClicked}>
+                                { timestamp }
+                            </a>
+                            { this._renderE2EPadlock() }
+                            <EventTileType ref="tile"
+                                           tileShape="quote"
+                                           mxEvent={this.props.mxEvent}
+                                           highlights={this.props.highlights}
+                                           highlightLink={this.props.highlightLink}
+                                           onWidgetLoad={this.props.onWidgetLoad}
+                                           showUrlPreview={false} />
+                        </div>
+                    </div>
+                );
+            }
+            default: {
+                return (
+                    <div className={classes}>
+                        <div className="mx_EventTile_msgOption">
+                            { readAvatars }
+                        </div>
+                        { avatar }
+                        { sender }
+                        <div className="mx_EventTile_line">
+                            <a href={permalink} onClick={this.onPermalinkClicked}>
+                                { timestamp }
+                            </a>
+                            { this._renderE2EPadlock() }
+                            <EventTileType ref="tile"
+                                           mxEvent={this.props.mxEvent}
+                                           highlights={this.props.highlights}
+                                           highlightLink={this.props.highlightLink}
+                                           showUrlPreview={this.props.showUrlPreview}
+                                           onWidgetLoad={this.props.onWidgetLoad} />
+                            { editButton }
+                        </div>
+                    </div>
+                );
+            }
         }
     },
 }));
@@ -600,8 +639,10 @@ module.exports = withMatrixClient(React.createClass({
 module.exports.haveTileForEvent = function(e) {
     // Only messages have a tile (black-rectangle) if redacted
     if (e.isRedacted() && e.getType() !== 'm.room.message') return false;
-    if (eventTileTypes[e.getType()] == undefined) return false;
-    if (eventTileTypes[e.getType()] == 'messages.TextualEvent') {
+
+    const handler = getHandlerTile(e);
+    if (handler === undefined) return false;
+    if (handler === 'messages.TextualEvent') {
         return TextForEvent.textForEvent(e) !== '';
     } else {
         return true;
@@ -643,3 +684,5 @@ function E2ePadlockUnencrypted(props) {
 function E2ePadlock(props) {
     return <img className="mx_EventTile_e2eIcon" {...props} />;
 }
+
+module.exports.getHandlerTile = getHandlerTile;
