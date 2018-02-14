@@ -112,6 +112,18 @@ class RoomListStore extends Store {
             "im.vector.fake.archived": [],
         };
 
+        const listOrders = {
+            "manual": [
+                "m.favourite",
+            ],
+            "recent": [
+                "im.vector.fake.invite",
+                "im.vector.fake.recent",
+                "im.vector.fake.direct",
+                "m.lowpriority",
+                "im.vector.fake.archived",
+            ],
+        };
 
         const dmRoomMap = DMRoomMap.shared();
 
@@ -143,6 +155,12 @@ class RoomListStore extends Store {
                 if (tagNames.length) {
                     for (let i = 0; i < tagNames.length; i++) {
                         const tagName = tagNames[i];
+
+                        // Custom tags are assumed to be ordered manually
+                        if (!lists[tagName]) {
+                            listOrders.manual.push(tagName);
+                        }
+
                         lists[tagName] = lists[tagName] || [];
                         lists[tagName].push(room);
                     }
@@ -158,19 +176,6 @@ class RoomListStore extends Store {
                 console.error("unrecognised membership: " + me.membership + " - this should never happen");
             }
         });
-
-        const listOrders = {
-            "manual": [
-                "m.favourite",
-            ],
-            "recent": [
-                "im.vector.fake.invite",
-                "im.vector.fake.recent",
-                "im.vector.fake.direct",
-                "m.lowpriority",
-                "im.vector.fake.archived",
-            ],
-        };
 
         Object.keys(listOrders).forEach((order) => {
             listOrders[order].forEach((listKey) => {
