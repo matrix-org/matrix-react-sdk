@@ -335,7 +335,7 @@ module.exports = React.createClass({
                               */ }
                             <a ref="dummyLink" />
                         </div>
-                        <iframe src={renderer_url} onLoad={onIframeLoad} ref="iframe" />
+                        <iframe src={renderer_url} sandbox="allow-scripts" onLoad={onIframeLoad} ref="iframe" />
                     </div>
                 </span>
             );
