@@ -68,8 +68,9 @@ Tinter.registerTintable(updateTintedDownloadImage);
 // client. Otherwise those scripts written by remote users can read
 // the access token and end-to-end keys that are in local storage.
 //
-// For attachments downloaded directly from the homeserver we can use
-// Content-Security-Policy headers to disable script execution.
+// Attachments downloaded directly from the homeserver are embedded via
+// the src attribut of the img tag with plain-old http(s):// links.
+// Browsers make sure that usual images cannot execute JS.
 //
 // But attachments with end-to-end encryption are more difficult to handle.
 // We need to decrypt the attachment on the client and then display it.
