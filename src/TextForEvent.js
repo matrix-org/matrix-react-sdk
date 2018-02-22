@@ -52,8 +52,7 @@ function textForMemberEvent(ev) {
         case 'join':
             if (prevContent && prevContent.membership === 'join') {
                 if (prevContent.displayname && content.displayname && prevContent.displayname !== content.displayname) {
-                    return _t('%(senderName)s changed their display name from %(oldDisplayName)s to %(displayName)s.', {
-                        senderName,
+                    return _t('%(oldDisplayName)s changed their display name to %(displayName)s.', {
                         oldDisplayName: prevContent.displayname,
                         displayName: content.displayname,
                     });
@@ -151,9 +150,9 @@ function textForCallHangupEvent(event) {
     const senderName = event.sender ? event.sender.name : _t('Someone');
     const eventContent = event.getContent();
     let reason = "";
-    if(!MatrixClientPeg.get().supportsVoip()) {
+    if (!MatrixClientPeg.get().supportsVoip()) {
         reason = _t('(not supported by this browser)');
-    } else if(eventContent.reason) {
+    } else if (eventContent.reason) {
         if (eventContent.reason === "ice_failed") {
             reason = _t('(could not connect media)');
         } else if (eventContent.reason === "invite_timeout") {

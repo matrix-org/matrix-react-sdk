@@ -15,6 +15,7 @@ limitations under the License.
 */
 import Promise from 'bluebird';
 const React = require('react');
+import PropTypes from 'prop-types';
 
 const sdk = require('../../../index');
 const Tinter = require('../../../Tinter');
@@ -22,10 +23,11 @@ const MatrixClientPeg = require("../../../MatrixClientPeg");
 const Modal = require("../../../Modal");
 
 import dis from '../../../dispatcher';
+import SettingsStore, {SettingLevel} from "../../../settings/SettingsStore";
 
 const ROOM_COLORS = [
     // magic room default values courtesy of Ribot
-    ["#76cfa6", "#eaf5f0"],
+    [Tinter.getKeyRgb()[0], Tinter.getKeyRgb()[1]],
     ["#81bddb", "#eaf1f4"],
     ["#bd79cb", "#f3eaf5"],
     ["#c65d94", "#f5eaef"],
@@ -41,23 +43,23 @@ module.exports = React.createClass({
     displayName: 'ColorSettings',
 
     propTypes: {
-        room: React.PropTypes.object.isRequired,
+        room: PropTypes.object.isRequired,
     },
 
     getInitialState: function() {
         const data = {
             index: 0,
-            primary_color: ROOM_COLORS[0].primary_color,
-            secondary_color: ROOM_COLORS[0].secondary_color,
+            primary_color: ROOM_COLORS[0][0],
+            secondary_color: ROOM_COLORS[0][1],
             hasChanged: false,
         };
-        const event = this.props.room.getAccountData("org.matrix.room.color_scheme");
-        if (!event) {
-            return data;
+        const scheme = SettingsStore.getValueAt(SettingLevel.ROOM_ACCOUNT, "roomColor", this.props.room.roomId);
+
+        if (scheme.primary_color && scheme.secondary_color) {
+            // We only use the user's scheme if the scheme is valid.
+            data.primary_color = scheme.primary_color;
+            data.secondary_color = scheme.secondary_color;
         }
-        const scheme = event.getContent();
-        data.primary_color = scheme.primary_color;
-        data.secondary_color = scheme.secondary_color;
         data.index = this._getColorIndex(data);
 
         if (data.index === -1) {
@@ -81,13 +83,13 @@ module.exports = React.createClass({
             // We would like guests to be able to set room colour but currently
             // they can't, so we still send the request but display a sensible
             // error if it fails.
-            return MatrixClientPeg.get().setRoomAccountData(
-                this.props.room.roomId, "org.matrix.room.color_scheme", {
-                    primary_color: this.state.primary_color,
-                    secondary_color: this.state.secondary_color,
-                },
-            ).catch(function(err) {
-                if (err.errcode == 'M_GUEST_ACCESS_FORBIDDEN') {
+            // TODO: Support guests for room color. Technically this is possible via granular settings
+            // Granular settings would mean the guest is forced to use the DEVICE level though.
+            SettingsStore.setValue("roomColor", this.props.room.roomId, SettingLevel.ROOM_ACCOUNT, {
+                primary_color: this.state.primary_color,
+                secondary_color: this.state.secondary_color,
+            }).catch(function(err) {
+                if (err.errcode === 'M_GUEST_ACCESS_FORBIDDEN') {
                     dis.dispatch({action: 'view_set_mxid'});
                 }
             });

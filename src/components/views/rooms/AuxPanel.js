@@ -16,13 +16,13 @@ limitations under the License.
 */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import MatrixClientPeg from "../../../MatrixClientPeg";
 import sdk from '../../../index';
 import dis from "../../../dispatcher";
 import ObjectUtils from '../../../ObjectUtils';
 import AppsDrawer from './AppsDrawer';
-import { _t, _tJsx} from '../../../languageHandler';
-import UserSettingsStore from '../../../UserSettingsStore';
+import { _t } from '../../../languageHandler';
 
 
 module.exports = React.createClass({
@@ -30,26 +30,26 @@ module.exports = React.createClass({
 
     propTypes: {
         // js-sdk room object
-        room: React.PropTypes.object.isRequired,
-        userId: React.PropTypes.string.isRequired,
-        showApps: React.PropTypes.bool,
+        room: PropTypes.object.isRequired,
+        userId: PropTypes.string.isRequired,
+        showApps: PropTypes.bool,
 
         // Conference Handler implementation
-        conferenceHandler: React.PropTypes.object,
+        conferenceHandler: PropTypes.object,
 
         // set to true to show the file drop target
-        draggingFile: React.PropTypes.bool,
+        draggingFile: PropTypes.bool,
 
         // set to true to show the 'active conf call' banner
-        displayConfCallNotification: React.PropTypes.bool,
+        displayConfCallNotification: PropTypes.bool,
 
         // maxHeight attribute for the aux panel and the video
         // therein
-        maxHeight: React.PropTypes.number,
+        maxHeight: PropTypes.number,
 
         // a callback which is called when the content of the aux panel changes
         // content in a way that is likely to make it change size.
-        onResize: React.PropTypes.func,
+        onResize: PropTypes.func,
     },
 
     shouldComponentUpdate: function(nextProps, nextState) {
@@ -100,13 +100,13 @@ module.exports = React.createClass({
                 supportedText = _t(" (unsupported)");
             } else {
                 joinNode = (<span>
-                    { _tJsx(
+                    { _t(
                         "Join as <voiceText>voice</voiceText> or <videoText>video</videoText>.",
-                        [/<voiceText>(.*?)<\/voiceText>/, /<videoText>(.*?)<\/videoText>/],
-                        [
-                            (sub) => <a onClick={(event)=>{ this.onConferenceNotificationClick(event, 'voice');}} href="#">{ sub }</a>,
-                            (sub) => <a onClick={(event)=>{ this.onConferenceNotificationClick(event, 'video');}} href="#">{ sub }</a>,
-                        ],
+                        {},
+                        {
+                            'voiceText': (sub) => <a onClick={(event)=>{ this.onConferenceNotificationClick(event, 'voice');}} href="#">{ sub }</a>,
+                            'videoText': (sub) => <a onClick={(event)=>{ this.onConferenceNotificationClick(event, 'video');}} href="#">{ sub }</a>,
+                        },
                     ) }
                 </span>);
             }

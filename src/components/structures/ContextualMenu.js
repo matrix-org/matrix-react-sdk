@@ -20,6 +20,7 @@ limitations under the License.
 const classNames = require('classnames');
 const React = require('react');
 const ReactDOM = require('react-dom');
+import PropTypes from 'prop-types';
 
 // Shamelessly ripped off Modal.js.  There's probably a better way
 // of doing reusable widgets like dialog boxes & menus where we go and
@@ -29,10 +30,11 @@ module.exports = {
     ContextualMenuContainerId: "mx_ContextualMenu_Container",
 
     propTypes: {
-        menuWidth: React.PropTypes.number,
-        menuHeight: React.PropTypes.number,
-        chevronOffset: React.PropTypes.number,
-        menuColour: React.PropTypes.string,
+        menuWidth: PropTypes.number,
+        menuHeight: PropTypes.number,
+        chevronOffset: PropTypes.number,
+        menuColour: PropTypes.string,
+        chevronFace: PropTypes.string, // top, bottom, left, right
     },
 
     getOrCreateContainer: function() {
@@ -58,12 +60,30 @@ module.exports = {
             }
         };
 
-        const position = {
-            top: props.top,
-        };
+        const position = {};
+        let chevronFace = null;
+
+        if (props.top) {
+            position.top = props.top;
+        } else {
+            position.bottom = props.bottom;
+        }
+
+        if (props.left) {
+            position.left = props.left;
+            chevronFace = 'left';
+        } else {
+            position.right = props.right;
+            chevronFace = 'right';
+        }
 
         const chevronOffset = {};
-        if (props.chevronOffset) {
+        if (props.chevronFace) {
+            chevronFace = props.chevronFace;
+        }
+        if (chevronFace === 'top' || chevronFace === 'bottom') {
+            chevronOffset.left = props.chevronOffset;
+        } else {
             chevronOffset.top = props.chevronOffset;
         }
 
@@ -74,28 +94,27 @@ module.exports = {
                 .mx_ContextualMenu_chevron_left:after {
                     border-right-color: ${props.menuColour};
                 }
-
                 .mx_ContextualMenu_chevron_right:after {
+                    border-left-color: ${props.menuColour};
+                }
+                .mx_ContextualMenu_chevron_top:after {
+                    border-left-color: ${props.menuColour};
+                }
+                .mx_ContextualMenu_chevron_bottom:after {
                     border-left-color: ${props.menuColour};
                 }
             `;
         }
 
-        let chevron = null;
-        if (props.left) {
-            chevron = <div style={chevronOffset} className="mx_ContextualMenu_chevron_left"></div>;
-            position.left = props.left;
-        } else {
-            chevron = <div style={chevronOffset} className="mx_ContextualMenu_chevron_right"></div>;
-            position.right = props.right;
-        }
-
+        const chevron = <div style={chevronOffset} className={"mx_ContextualMenu_chevron_" + chevronFace}></div>;
         const className = 'mx_ContextualMenu_wrapper';
 
         const menuClasses = classNames({
             'mx_ContextualMenu': true,
-            'mx_ContextualMenu_left': props.left,
-            'mx_ContextualMenu_right': !props.left,
+            'mx_ContextualMenu_left': chevronFace === 'left',
+            'mx_ContextualMenu_right': chevronFace === 'right',
+            'mx_ContextualMenu_top': chevronFace === 'top',
+            'mx_ContextualMenu_bottom': chevronFace === 'bottom',
         });
 
         const menuStyle = {};

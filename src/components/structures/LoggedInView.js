@@ -18,9 +18,9 @@ limitations under the License.
 
 import * as Matrix from 'matrix-js-sdk';
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import UserSettingsStore from '../../UserSettingsStore';
-import KeyCode from '../../KeyCode';
+import { KeyCode, isOnlyCtrlOrCmdKeyEvent } from '../../Keyboard';
 import Notifier from '../../Notifier';
 import PageTypes from '../../PageTypes';
 import CallMediaHandler from '../../CallMediaHandler';
@@ -28,6 +28,7 @@ import sdk from '../../index';
 import dis from '../../dispatcher';
 import sessionStore from '../../stores/SessionStore';
 import MatrixClientPeg from '../../MatrixClientPeg';
+import SettingsStore from "../../settings/SettingsStore";
 
 /**
  * This is what our MatrixChat shows when we are logged in. The precise view is
@@ -38,27 +39,27 @@ import MatrixClientPeg from '../../MatrixClientPeg';
  *
  * Components mounted below us can access the matrix client via the react context.
  */
-export default React.createClass({
+const LoggedInView = React.createClass({
     displayName: 'LoggedInView',
 
     propTypes: {
-        matrixClient: React.PropTypes.instanceOf(Matrix.MatrixClient).isRequired,
-        page_type: React.PropTypes.string.isRequired,
-        onRoomCreated: React.PropTypes.func,
-        onUserSettingsClose: React.PropTypes.func,
+        matrixClient: PropTypes.instanceOf(Matrix.MatrixClient).isRequired,
+        page_type: PropTypes.string.isRequired,
+        onRoomCreated: PropTypes.func,
+        onUserSettingsClose: PropTypes.func,
 
         // Called with the credentials of a registered user (if they were a ROU that
         // transitioned to PWLU)
-        onRegistered: React.PropTypes.func,
+        onRegistered: PropTypes.func,
 
-        teamToken: React.PropTypes.string,
+        teamToken: PropTypes.string,
 
         // and lots and lots of other stuff.
     },
 
     childContextTypes: {
-        matrixClient: React.PropTypes.instanceOf(Matrix.MatrixClient),
-        authCache: React.PropTypes.object,
+        matrixClient: PropTypes.instanceOf(Matrix.MatrixClient),
+        authCache: PropTypes.object,
     },
 
     getChildContext: function() {
@@ -74,7 +75,7 @@ export default React.createClass({
     getInitialState: function() {
         return {
             // use compact timeline view
-            useCompactLayout: UserSettingsStore.getSyncedSetting('useCompactLayout'),
+            useCompactLayout: SettingsStore.getValue('useCompactLayout'),
         };
     },
 
@@ -153,13 +154,7 @@ export default React.createClass({
             */
 
         let handled = false;
-        const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-        let ctrlCmdOnly;
-        if (isMac) {
-            ctrlCmdOnly = ev.metaKey && !ev.altKey && !ev.ctrlKey && !ev.shiftKey;
-        } else {
-            ctrlCmdOnly = ev.ctrlKey && !ev.altKey && !ev.metaKey && !ev.shiftKey;
-        }
+        const ctrlCmdOnly = isOnlyCtrlOrCmdKeyEvent(ev);
 
         switch (ev.keyCode) {
             case KeyCode.UP:
@@ -213,6 +208,7 @@ export default React.createClass({
     },
 
     render: function() {
+        const TagPanel = sdk.getComponent('structures.TagPanel');
         const LeftPanel = sdk.getComponent('structures.LeftPanel');
         const RightPanel = sdk.getComponent('structures.RightPanel');
         const RoomView = sdk.getComponent('structures.RoomView');
@@ -334,8 +330,8 @@ export default React.createClass({
             <div className='mx_MatrixChat_wrapper'>
                 { topBar }
                 <div className={bodyClasses}>
+                    { SettingsStore.isFeatureEnabled("feature_tag_panel") ? <TagPanel /> : <div /> }
                     <LeftPanel
-                        selectedRoom={this.props.currentRoomId}
                         collapsed={this.props.collapseLhs || false}
                         disabled={this.props.leftDisabled}
                     />
@@ -348,3 +344,5 @@ export default React.createClass({
         );
     },
 });
+
+export default LoggedInView;

@@ -28,6 +28,7 @@ import _sortBy from 'lodash/sortBy';
 import MatrixClientPeg from '../MatrixClientPeg';
 
 import type {Room, RoomMember} from 'matrix-js-sdk';
+import {makeUserPermalink} from "../matrix-to";
 
 const USER_REGEX = /@\S*/g;
 
@@ -53,8 +54,10 @@ export default class UserProvider extends AutocompleteProvider {
     }
 
     destroy() {
-        MatrixClientPeg.get().removeListener("Room.timeline", this._onRoomTimelineBound);
-        MatrixClientPeg.get().removeListener("RoomState.members", this._onRoomStateMemberBound);
+        if (MatrixClientPeg.get()) {
+            MatrixClientPeg.get().removeListener("Room.timeline", this._onRoomTimelineBound);
+            MatrixClientPeg.get().removeListener("RoomState.members", this._onRoomStateMemberBound);
+        }
     }
 
     _onRoomTimeline(ev, room, toStartOfTimeline, removed, data) {
@@ -104,7 +107,7 @@ export default class UserProvider extends AutocompleteProvider {
                     // relies on the length of the entity === length of the text in the decoration.
                     completion: user.rawDisplayName.replace(' (IRC)', ''),
                     suffix: range.start === 0 ? ': ' : ' ',
-                    href: 'https://matrix.to/#/' + user.userId,
+                    href: makeUserPermalink(user.userId),
                     component: (
                         <PillCompletion
                             initialComponent={<MemberAvatar member={user} width={24} height={24} />}
@@ -126,7 +129,7 @@ export default class UserProvider extends AutocompleteProvider {
         const events = this.room.getLiveTimeline().getEvents();
         const lastSpoken = {};
 
-        for(const event of events) {
+        for (const event of events) {
             lastSpoken[event.getSender()] = event.getTs();
         }
 

@@ -17,6 +17,15 @@ limitations under the License.
 import EventEmitter from 'events';
 import { groupMemberFromApiObject, groupRoomFromApiObject } from '../groups';
 import FlairStore from './FlairStore';
+import MatrixClientPeg from '../MatrixClientPeg';
+
+function parseMembersResponse(response) {
+    return response.chunk.map((apiMember) => groupMemberFromApiObject(apiMember));
+}
+
+function parseRoomsResponse(response) {
+    return response.chunk.map((apiRoom) => groupRoomFromApiObject(apiRoom));
+}
 
 /**
  * Stores the group summary for a room and provides an API to change it and
@@ -31,85 +40,112 @@ export default class GroupStore extends EventEmitter {
         GroupRooms: 'GroupRooms',
     };
 
-    constructor(matrixClient, groupId) {
+    constructor(groupId) {
         super();
         if (!groupId) {
             throw new Error('GroupStore needs a valid groupId to be created');
         }
         this.groupId = groupId;
-        this._matrixClient = matrixClient;
-        this._summary = {};
-        this._rooms = [];
-        this._members = [];
-        this._invitedMembers = [];
+        this._state = {};
+        this._state[GroupStore.STATE_KEY.Summary] = {};
+        this._state[GroupStore.STATE_KEY.GroupRooms] = [];
+        this._state[GroupStore.STATE_KEY.GroupMembers] = [];
+        this._state[GroupStore.STATE_KEY.GroupInvitedMembers] = [];
         this._ready = {};
+
+        this._fetchResourcePromise = {};
+        this._resourceFetcher = {
+            [GroupStore.STATE_KEY.Summary]: () => {
+                return MatrixClientPeg.get()
+                    .getGroupSummary(this.groupId);
+            },
+            [GroupStore.STATE_KEY.GroupRooms]: () => {
+                return MatrixClientPeg.get()
+                    .getGroupRooms(this.groupId)
+                    .then(parseRoomsResponse);
+            },
+            [GroupStore.STATE_KEY.GroupMembers]: () => {
+                return MatrixClientPeg.get()
+                    .getGroupUsers(this.groupId)
+                    .then(parseMembersResponse);
+            },
+            [GroupStore.STATE_KEY.GroupInvitedMembers]: () => {
+                return MatrixClientPeg.get()
+                    .getGroupInvitedUsers(this.groupId)
+                    .then(parseMembersResponse);
+            },
+        };
 
         this.on('error', (err) => {
             console.error(`GroupStore for ${this.groupId} encountered error`, err);
         });
     }
 
-    _fetchMembers() {
-        this._matrixClient.getGroupUsers(this.groupId).then((result) => {
-            this._members = result.chunk.map((apiMember) => {
-                return groupMemberFromApiObject(apiMember);
-            });
-            this._ready[GroupStore.STATE_KEY.GroupMembers] = true;
-            this._notifyListeners();
-        }).catch((err) => {
-            console.error("Failed to get group member list: " + err);
-            this.emit('error', err);
-        });
+    _fetchResource(stateKey) {
+        // Ongoing request, ignore
+        if (this._fetchResourcePromise[stateKey]) return;
 
-        this._matrixClient.getGroupInvitedUsers(this.groupId).then((result) => {
-            this._invitedMembers = result.chunk.map((apiMember) => {
-                return groupMemberFromApiObject(apiMember);
-            });
-            this._ready[GroupStore.STATE_KEY.GroupInvitedMembers] = true;
+        const clientPromise = this._resourceFetcher[stateKey]();
+
+        // Indicate ongoing request
+        this._fetchResourcePromise[stateKey] = clientPromise;
+
+        clientPromise.then((result) => {
+            this._state[stateKey] = result;
+            this._ready[stateKey] = true;
             this._notifyListeners();
         }).catch((err) => {
             // Invited users not visible to non-members
-            if (err.httpStatus === 403) {
+            if (stateKey === GroupStore.STATE_KEY.GroupInvitedMembers && err.httpStatus === 403) {
                 return;
             }
-            console.error("Failed to get group invited member list: " + err);
-            this.emit('error', err);
-        });
-    }
 
-    _fetchSummary() {
-        this._matrixClient.getGroupSummary(this.groupId).then((resp) => {
-            this._summary = resp;
-            this._ready[GroupStore.STATE_KEY.Summary] = true;
-            this._notifyListeners();
-        }).catch((err) => {
+            console.error("Failed to get resource " + stateKey + ":" + err);
             this.emit('error', err);
+        }).finally(() => {
+            // Indicate finished request, allow for future fetches
+            delete this._fetchResourcePromise[stateKey];
         });
-    }
 
-    _fetchRooms() {
-        this._matrixClient.getGroupRooms(this.groupId).then((resp) => {
-            this._rooms = resp.chunk.map((apiRoom) => {
-                return groupRoomFromApiObject(apiRoom);
-            });
-            this._ready[GroupStore.STATE_KEY.GroupRooms] = true;
-            this._notifyListeners();
-        }).catch((err) => {
-            this.emit('error', err);
-        });
+        return clientPromise;
     }
 
     _notifyListeners() {
         this.emit('update');
     }
 
+    /**
+     * Register a listener to recieve updates from the store. This also
+     * immediately triggers an update to send the current state of the
+     * store (which could be the initial state).
+     *
+     * This also causes a fetch of all group data, which might cause
+     * 4 separate HTTP requests, but only said requests aren't already
+     * ongoing.
+     *
+     * @param {function} fn the function to call when the store updates.
+     * @return {Object} tok a registration "token" with a single
+     *                      property `unregister`, a function that can
+     *                      be called to unregister the listener such
+     *                      that it won't be called any more.
+     */
     registerListener(fn) {
         this.on('update', fn);
         // Call to set initial state (before fetching starts)
         this.emit('update');
-        this._fetchSummary();
-        this._fetchRooms();
-        this._fetchMembers();
+
+        this._fetchResource(GroupStore.STATE_KEY.Summary);
+        this._fetchResource(GroupStore.STATE_KEY.GroupRooms);
+        this._fetchResource(GroupStore.STATE_KEY.GroupMembers);
+        this._fetchResource(GroupStore.STATE_KEY.GroupInvitedMembers);
+
+        // Similar to the Store of flux/utils, we return a "token" that
+        // can be used to unregister the listener.
+        return {
+            unregister: () => {
+                this.unregisterListener(fn);
+            },
+        };
     }
 
     unregisterListener(fn) {
@@ -121,90 +157,94 @@ export default class GroupStore extends EventEmitter {
     }
 
     getSummary() {
-        return this._summary;
+        return this._state[GroupStore.STATE_KEY.Summary];
     }
 
     getGroupRooms() {
-        return this._rooms;
+        return this._state[GroupStore.STATE_KEY.GroupRooms];
     }
 
-    getGroupMembers( ) {
-        return this._members;
+    getGroupMembers() {
+        return this._state[GroupStore.STATE_KEY.GroupMembers];
     }
 
-    getGroupInvitedMembers( ) {
-        return this._invitedMembers;
+    getGroupInvitedMembers() {
+        return this._state[GroupStore.STATE_KEY.GroupInvitedMembers];
     }
 
     getGroupPublicity() {
-        return this._summary.user ? this._summary.user.is_publicised : null;
+        return this._state[GroupStore.STATE_KEY.Summary].user ?
+            this._state[GroupStore.STATE_KEY.Summary].user.is_publicised : null;
     }
 
     isUserPrivileged() {
-        return this._summary.user ? this._summary.user.is_privileged : null;
+        return this._state[GroupStore.STATE_KEY.Summary].user ?
+            this._state[GroupStore.STATE_KEY.Summary].user.is_privileged : null;
     }
 
     addRoomToGroup(roomId, isPublic) {
-        return this._matrixClient
+        return MatrixClientPeg.get()
             .addRoomToGroup(this.groupId, roomId, isPublic)
-            .then(this._fetchRooms.bind(this));
+            .then(this._fetchResource.bind(this, GroupStore.STATE_KEY.GroupRooms));
     }
 
     updateGroupRoomVisibility(roomId, isPublic) {
-        return this._matrixClient
+        return MatrixClientPeg.get()
             .updateGroupRoomVisibility(this.groupId, roomId, isPublic)
-            .then(this._fetchRooms.bind(this));
+            .then(this._fetchResource.bind(this, GroupStore.STATE_KEY.GroupRooms));
     }
 
     removeRoomFromGroup(roomId) {
-        return this._matrixClient
+        return MatrixClientPeg.get()
             .removeRoomFromGroup(this.groupId, roomId)
             // Room might be in the summary, refresh just in case
-            .then(this._fetchSummary.bind(this))
-            .then(this._fetchRooms.bind(this));
+            .then(this._fetchResource.bind(this, GroupStore.STATE_KEY.Summary))
+            .then(this._fetchResource.bind(this, GroupStore.STATE_KEY.GroupRooms));
     }
 
     inviteUserToGroup(userId) {
-        return this._matrixClient.inviteUserToGroup(this.groupId, userId)
-            .then(this._fetchMembers.bind(this));
+        return MatrixClientPeg.get().inviteUserToGroup(this.groupId, userId)
+            .then(this._fetchResource.bind(this, GroupStore.STATE_KEY.GroupInvitedMembers));
     }
 
     acceptGroupInvite() {
-        return this._matrixClient.acceptGroupInvite(this.groupId)
+        return MatrixClientPeg.get().acceptGroupInvite(this.groupId)
             // The user might be able to see more rooms now
-            .then(this._fetchRooms.bind(this))
+            .then(this._fetchResource.bind(this, GroupStore.STATE_KEY.GroupRooms))
             // The user should now appear as a member
-            .then(this._fetchMembers.bind(this));
+            .then(this._fetchResource.bind(this, GroupStore.STATE_KEY.GroupMembers))
+            // The user should now not appear as an invited member
+            .then(this._fetchResource.bind(this, GroupStore.STATE_KEY.GroupInvitedMembers));
     }
 
     addRoomToGroupSummary(roomId, categoryId) {
-        return this._matrixClient
+        return MatrixClientPeg.get()
             .addRoomToGroupSummary(this.groupId, roomId, categoryId)
-            .then(this._fetchSummary.bind(this));
+            .then(this._fetchResource.bind(this, GroupStore.STATE_KEY.Summary));
     }
 
     addUserToGroupSummary(userId, roleId) {
-        return this._matrixClient
+        return MatrixClientPeg.get()
             .addUserToGroupSummary(this.groupId, userId, roleId)
-            .then(this._fetchSummary.bind(this));
+            .then(this._fetchResource.bind(this, GroupStore.STATE_KEY.Summary));
     }
 
     removeRoomFromGroupSummary(roomId) {
-        return this._matrixClient
+        return MatrixClientPeg.get()
             .removeRoomFromGroupSummary(this.groupId, roomId)
-            .then(this._fetchSummary.bind(this));
+            .then(this._fetchResource.bind(this, GroupStore.STATE_KEY.Summary));
     }
 
     removeUserFromGroupSummary(userId) {
-        return this._matrixClient
+        return MatrixClientPeg.get()
             .removeUserFromGroupSummary(this.groupId, userId)
-            .then(this._fetchSummary.bind(this));
+            .then(this._fetchResource.bind(this, GroupStore.STATE_KEY.Summary));
     }
 
     setGroupPublicity(isPublished) {
-        return this._matrixClient
+        return MatrixClientPeg.get()
             .setGroupPublicity(this.groupId, isPublished)
-            .then(() => { FlairStore.invalidatePublicisedGroups(this._matrixClient.credentials.userId); })
-            .then(this._fetchSummary.bind(this));
+            .then(() => { FlairStore.invalidatePublicisedGroups(MatrixClientPeg.get().credentials.userId); })
+            .then(this._fetchResource.bind(this, GroupStore.STATE_KEY.Summary));
     }
 }
