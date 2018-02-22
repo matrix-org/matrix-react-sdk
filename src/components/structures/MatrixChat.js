@@ -593,9 +593,6 @@ export default React.createClass({
                     this._onWillStartClient();
                 });
                 break;
-            case 'client_started':
-                this._onClientStarted();
-                break;
             case 'new_version':
                 this.onVersion(
                     payload.currentVersion, payload.newVersion,
@@ -1199,23 +1196,13 @@ export default React.createClass({
                     break;
             }
         });
-    },
-
-    /**
-     * Called shortly after the matrix client has started. Useful for
-     * setting up anything that requires the client to be started.
-     * @private
-     */
-    _onClientStarted: function() {
-        const cli = MatrixClientPeg.get();
-
-        if (cli.isCryptoEnabled()) {
+        cli.on("crypto.initComplete", () => {
             const blacklistEnabled = SettingsStore.getValueAt(
                 SettingLevel.DEVICE,
                 "blacklistUnverifiedDevices",
             );
             cli.setGlobalBlacklistUnverifiedDevices(blacklistEnabled);
-        }
+        });
     },
 
     showScreen: function(screen, params) {
