@@ -1642,6 +1642,8 @@ export default React.createClass({
         }, {
             matrixClient: MatrixClientPeg.get(),
         });
+    },
+
     onServerConfigChange(config) {
         const newState = {};
         if (config.hsUrl) {
