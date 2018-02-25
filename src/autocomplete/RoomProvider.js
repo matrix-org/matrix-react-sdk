@@ -1,6 +1,7 @@
 /*
 Copyright 2016 Aviral Dasgupta
 Copyright 2017 Vector Creations Ltd
+Copyright 2017 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -24,10 +25,9 @@ import {PillCompletion} from './Components';
 import {getDisplayAliasForRoom} from '../Rooms';
 import sdk from '../index';
 import _sortBy from 'lodash/sortBy';
+import {makeRoomPermalink} from "../matrix-to";
 
 const ROOM_REGEX = /(?=#)(\S*)/g;
-
-let instance = null;
 
 function score(query, space) {
     const index = space.indexOf(query);
@@ -48,6 +48,12 @@ export default class RoomProvider extends AutocompleteProvider {
 
     async getCompletions(query: string, selection: {start: number, end: number}, force = false) {
         const RoomAvatar = sdk.getComponent('views.avatars.RoomAvatar');
+
+        // Disable autocompletions when composing commands because of various issues
+        // (see https://github.com/vector-im/riot-web/issues/4762)
+        if (/^(\/join|\/leave)/.test(query)) {
+            return [];
+        }
 
         const client = MatrixClientPeg.get();
         let completions = [];
@@ -73,7 +79,7 @@ export default class RoomProvider extends AutocompleteProvider {
                 return {
                     completion: displayAlias,
                     suffix: ' ',
-                    href: 'https://matrix.to/#/' + displayAlias,
+                    href: makeRoomPermalink(displayAlias),
                     component: (
                         <PillCompletion initialComponent={<RoomAvatar width={24} height={24} room={room.room} />} title={room.name} description={displayAlias} />
                     ),
@@ -90,17 +96,9 @@ export default class RoomProvider extends AutocompleteProvider {
         return '💬 ' + _t('Rooms');
     }
 
-    static getInstance() {
-        if (instance == null) {
-            instance = new RoomProvider();
-        }
-
-        return instance;
-    }
-
     renderCompletions(completions: [React.Component]): ?React.Component {
         return <div className="mx_Autocomplete_Completion_container_pill mx_Autocomplete_Completion_container_truncate">
-            {completions}
+            { completions }
         </div>;
     }
 }

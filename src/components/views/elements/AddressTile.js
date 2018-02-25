@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2017 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,41 +15,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import sdk from "../../../index";
 import MatrixClientPeg from "../../../MatrixClientPeg";
 import { _t } from '../../../languageHandler';
-
-// React PropType definition for an object describing
-// an address that can be invited to a room (which
-// could be a third party identifier or a matrix ID)
-// along with some additional information about the
-// address / target.
-export const InviteAddressType = React.PropTypes.shape({
-    addressType: React.PropTypes.oneOf([
-        'mx', 'email'
-    ]).isRequired,
-    address: React.PropTypes.string.isRequired,
-    displayName: React.PropTypes.string,
-    avatarMxc: React.PropTypes.string,
-    // true if the address is known to be a valid address (eg. is a real
-    // user we've seen) or false otherwise (eg. is just an address the
-    // user has entered)
-    isKnown: React.PropTypes.bool,
-});
+import { UserAddressType } from '../../../UserAddress.js';
 
 
 export default React.createClass({
     displayName: 'AddressTile',
 
     propTypes: {
-        address: InviteAddressType.isRequired,
-        canDismiss: React.PropTypes.bool,
-        onDismissed: React.PropTypes.func,
-        justified: React.PropTypes.bool,
+        address: UserAddressType.isRequired,
+        canDismiss: PropTypes.bool,
+        onDismissed: PropTypes.func,
+        justified: PropTypes.bool,
     },
 
     getDefaultProps: function() {
@@ -63,11 +46,12 @@ export default React.createClass({
         const address = this.props.address;
         const name = address.displayName || address.address;
 
-        let imgUrls = [];
+        const imgUrls = [];
+        const isMatrixAddress = ['mx-user-id', 'mx-room-id'].includes(address.addressType);
 
-        if (address.addressType === "mx" && address.avatarMxc) {
+        if (isMatrixAddress && address.avatarMxc) {
             imgUrls.push(MatrixClientPeg.get().mxcUrlToHttp(
-                address.avatarMxc, 25, 25, 'crop'
+                address.avatarMxc, 25, 25, 'crop',
             ));
         } else if (address.addressType === 'email') {
             imgUrls.push('img/icon-email-user.svg');
@@ -95,7 +79,7 @@ export default React.createClass({
 
         let info;
         let error = false;
-        if (address.addressType === "mx" && address.isKnown) {
+        if (isMatrixAddress && address.isKnown) {
             const idClasses = classNames({
                 "mx_AddressTile_id": true,
                 "mx_AddressTile_justified": this.props.justified,
@@ -104,10 +88,13 @@ export default React.createClass({
             info = (
                 <div className="mx_AddressTile_mx">
                     <div className={nameClasses}>{ name }</div>
-                    <div className={idClasses}>{ address.address }</div>
+                    { this.props.showAddress ?
+                        <div className={idClasses}>{ address.address }</div> :
+                        <div />
+                    }
                 </div>
             );
-        } else if (address.addressType === "mx") {
+        } else if (isMatrixAddress) {
             const unknownMxClasses = classNames({
                 "mx_AddressTile_unknownMx": true,
                 "mx_AddressTile_justified": this.props.justified,
@@ -124,24 +111,24 @@ export default React.createClass({
 
             let nameNode = null;
             if (address.displayName) {
-                nameNode = <div className={nameClasses}>{ address.displayName }</div>
+                nameNode = <div className={nameClasses}>{ address.displayName }</div>;
             }
 
             info = (
                 <div className="mx_AddressTile_mx">
                     <div className={emailClasses}>{ address.address }</div>
-                    {nameNode}
+                    { nameNode }
                 </div>
             );
         } else {
             error = true;
-            var unknownClasses = classNames({
+            const unknownClasses = classNames({
                 "mx_AddressTile_unknown": true,
                 "mx_AddressTile_justified": this.props.justified,
             });
 
             info = (
-                <div className={unknownClasses}>{_t("Unknown Address")}</div>
+                <div className={unknownClasses}>{ _t("Unknown Address") }</div>
             );
         }
 
@@ -168,5 +155,5 @@ export default React.createClass({
                 { dismiss }
             </div>
         );
-    }
+    },
 });

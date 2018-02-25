@@ -1,6 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
+Copyright 2017 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,9 +18,10 @@ limitations under the License.
 
 import * as Matrix from 'matrix-js-sdk';
 import React from 'react';
+import PropTypes from 'prop-types';
+import { DragDropContext } from 'react-beautiful-dnd';
 
-import UserSettingsStore from '../../UserSettingsStore';
-import KeyCode from '../../KeyCode';
+import { KeyCode, isOnlyCtrlOrCmdKeyEvent } from '../../Keyboard';
 import Notifier from '../../Notifier';
 import PageTypes from '../../PageTypes';
 import CallMediaHandler from '../../CallMediaHandler';
@@ -27,6 +29,10 @@ import sdk from '../../index';
 import dis from '../../dispatcher';
 import sessionStore from '../../stores/SessionStore';
 import MatrixClientPeg from '../../MatrixClientPeg';
+import SettingsStore from "../../settings/SettingsStore";
+
+import TagOrderActions from '../../actions/TagOrderActions';
+import RoomListActions from '../../actions/RoomListActions';
 
 /**
  * This is what our MatrixChat shows when we are logged in. The precise view is
@@ -37,27 +43,27 @@ import MatrixClientPeg from '../../MatrixClientPeg';
  *
  * Components mounted below us can access the matrix client via the react context.
  */
-export default React.createClass({
+const LoggedInView = React.createClass({
     displayName: 'LoggedInView',
 
     propTypes: {
-        matrixClient: React.PropTypes.instanceOf(Matrix.MatrixClient).isRequired,
-        page_type: React.PropTypes.string.isRequired,
-        onRoomCreated: React.PropTypes.func,
-        onUserSettingsClose: React.PropTypes.func,
+        matrixClient: PropTypes.instanceOf(Matrix.MatrixClient).isRequired,
+        page_type: PropTypes.string.isRequired,
+        onRoomCreated: PropTypes.func,
+        onUserSettingsClose: PropTypes.func,
 
         // Called with the credentials of a registered user (if they were a ROU that
         // transitioned to PWLU)
-        onRegistered: React.PropTypes.func,
+        onRegistered: PropTypes.func,
 
-        teamToken: React.PropTypes.string,
+        teamToken: PropTypes.string,
 
         // and lots and lots of other stuff.
     },
 
     childContextTypes: {
-        matrixClient: React.PropTypes.instanceOf(Matrix.MatrixClient),
-        authCache: React.PropTypes.object,
+        matrixClient: PropTypes.instanceOf(Matrix.MatrixClient),
+        authCache: PropTypes.object,
     },
 
     getChildContext: function() {
@@ -73,17 +79,13 @@ export default React.createClass({
     getInitialState: function() {
         return {
             // use compact timeline view
-            useCompactLayout: UserSettingsStore.getSyncedSetting('useCompactLayout'),
+            useCompactLayout: SettingsStore.getValue('useCompactLayout'),
         };
     },
 
     componentWillMount: function() {
         // stash the MatrixClient in case we log out before we are unmounted
         this._matrixClient = this.props.matrixClient;
-
-        // _scrollStateMap is a map from room id to the scroll state returned by
-        // RoomView.getScrollState()
-        this._scrollStateMap = {};
 
         CallMediaHandler.loadDevices();
 
@@ -116,10 +118,6 @@ export default React.createClass({
         return Boolean(MatrixClientPeg.get());
     },
 
-    getScrollStateForRoom: function(roomId) {
-        return this._scrollStateMap[roomId];
-    },
-
     canResetTimelineInRoom: function(roomId) {
         if (!this.refs.roomView) {
             return true;
@@ -139,6 +137,9 @@ export default React.createClass({
                 useCompactLayout: event.getContent().useCompactLayout,
             });
         }
+        if (event.getType() === "m.ignored_user_list") {
+            dis.dispatch({action: "ignore_state_changed"});
+        }
     },
 
     _onKeyDown: function(ev) {
@@ -157,19 +158,13 @@ export default React.createClass({
             */
 
         let handled = false;
-        const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-        let ctrlCmdOnly;
-        if (isMac) {
-            ctrlCmdOnly = ev.metaKey && !ev.altKey && !ev.ctrlKey && !ev.shiftKey;
-        } else {
-            ctrlCmdOnly = ev.ctrlKey && !ev.altKey && !ev.metaKey && !ev.shiftKey;
-        }
+        const ctrlCmdOnly = isOnlyCtrlOrCmdKeyEvent(ev);
 
         switch (ev.keyCode) {
             case KeyCode.UP:
             case KeyCode.DOWN:
                 if (ev.altKey && !ev.shiftKey && !ev.ctrlKey && !ev.metaKey) {
-                    let action = ev.keyCode == KeyCode.UP ?
+                    const action = ev.keyCode == KeyCode.UP ?
                         'view_prev_room' : 'view_next_room';
                     dis.dispatch({action: action});
                     handled = true;
@@ -211,10 +206,53 @@ export default React.createClass({
     _onScrollKeyPressed: function(ev) {
         if (this.refs.roomView) {
             this.refs.roomView.handleScrollKey(ev);
-        }
-        else if (this.refs.roomDirectory) {
+        } else if (this.refs.roomDirectory) {
             this.refs.roomDirectory.handleScrollKey(ev);
         }
+    },
+
+    _onDragEnd: function(result) {
+        // Dragged to an invalid destination, not onto a droppable
+        if (!result.destination) {
+            return;
+        }
+
+        const dest = result.destination.droppableId;
+
+        if (dest === 'tag-panel-droppable') {
+            // Could be "GroupTile +groupId:domain"
+            const draggableId = result.draggableId.split(' ').pop();
+
+            // Dispatch synchronously so that the TagPanel receives an
+            // optimistic update from TagOrderStore before the previous
+            // state is shown.
+            dis.dispatch(TagOrderActions.moveTag(
+                this._matrixClient,
+                draggableId,
+                result.destination.index,
+            ), true);
+        } else if (dest.startsWith('room-sub-list-droppable_')) {
+            this._onRoomTileEndDrag(result);
+        }
+    },
+
+    _onRoomTileEndDrag: function(result) {
+        let newTag = result.destination.droppableId.split('_')[1];
+        let prevTag = result.source.droppableId.split('_')[1];
+        if (newTag === 'undefined') newTag = undefined;
+        if (prevTag === 'undefined') prevTag = undefined;
+
+        const roomId = result.draggableId.split('_')[1];
+
+        const oldIndex = result.source.index;
+        const newIndex = result.destination.index;
+
+        dis.dispatch(RoomListActions.tagRoom(
+            this._matrixClient,
+            this._matrixClient.getRoom(roomId),
+            prevTag, newTag,
+            oldIndex, newIndex,
+        ), true);
     },
 
     render: function() {
@@ -245,23 +283,23 @@ export default React.createClass({
                         oobData={this.props.roomOobData}
                         eventPixelOffset={this.props.initialEventPixelOffset}
                         key={this.props.currentRoomId || 'roomview'}
-                        opacity={this.props.middleOpacity}
-                        collapsedRhs={this.props.collapse_rhs}
+                        disabled={this.props.middleDisabled}
+                        collapsedRhs={this.props.collapseRhs}
                         ConferenceHandler={this.props.ConferenceHandler}
-                        scrollStateMap={this._scrollStateMap}
                     />;
-                if (!this.props.collapse_rhs) right_panel = <RightPanel roomId={this.props.currentRoomId} opacity={this.props.rightOpacity} />;
+                if (!this.props.collapseRhs) {
+                    right_panel = <RightPanel roomId={this.props.currentRoomId} disabled={this.props.rightDisabled} />;
+                }
                 break;
 
             case PageTypes.UserSettings:
                 page_element = <UserSettings
                     onClose={this.props.onUserSettingsClose}
                     brand={this.props.config.brand}
-                    enableLabs={this.props.config.enableLabs}
                     referralBaseUrl={this.props.config.referralBaseUrl}
                     teamToken={this.props.teamToken}
                 />;
-                if (!this.props.collapse_rhs) right_panel = <RightPanel opacity={this.props.rightOpacity}/>;
+                if (!this.props.collapseRhs) right_panel = <RightPanel disabled={this.props.rightDisabled} />;
                 break;
 
             case PageTypes.MyGroups:
@@ -271,9 +309,9 @@ export default React.createClass({
             case PageTypes.CreateRoom:
                 page_element = <CreateRoom
                     onRoomCreated={this.props.onRoomCreated}
-                    collapsedRhs={this.props.collapse_rhs}
+                    collapsedRhs={this.props.collapseRhs}
                 />;
-                if (!this.props.collapse_rhs) right_panel = <RightPanel opacity={this.props.rightOpacity}/>;
+                if (!this.props.collapseRhs) right_panel = <RightPanel disabled={this.props.rightDisabled} />;
                 break;
 
             case PageTypes.RoomDirectory:
@@ -301,13 +339,15 @@ export default React.createClass({
 
             case PageTypes.UserView:
                 page_element = null; // deliberately null for now
-                right_panel = <RightPanel userId={this.props.viewUserId} opacity={this.props.rightOpacity} />;
+                right_panel = <RightPanel disabled={this.props.rightDisabled} />;
                 break;
             case PageTypes.GroupView:
                 page_element = <GroupView
                     groupId={this.props.currentGroupId}
+                    isNew={this.props.currentGroupIsNew}
+                    collapsedRhs={this.props.collapseRhs}
                 />;
-                //right_panel = <RightPanel userId={this.props.viewUserId} opacity={this.props.rightOpacity} />;
+                if (!this.props.collapseRhs) right_panel = <RightPanel groupId={this.props.currentGroupId} disabled={this.props.rightDisabled} />;
                 break;
         }
 
@@ -325,7 +365,7 @@ export default React.createClass({
             topBar = <MatrixToolbar />;
         }
 
-        var bodyClasses = 'mx_MatrixChat';
+        let bodyClasses = 'mx_MatrixChat';
         if (topBar) {
             bodyClasses += ' mx_MatrixChat_toolbarShowing';
         }
@@ -335,19 +375,22 @@ export default React.createClass({
 
         return (
             <div className='mx_MatrixChat_wrapper'>
-                {topBar}
-                <div className={bodyClasses}>
-                    <LeftPanel
-                        selectedRoom={this.props.currentRoomId}
-                        collapsed={this.props.collapse_lhs || false}
-                        opacity={this.props.leftOpacity}
-                    />
-                    <main className='mx_MatrixChat_middlePanel'>
-                        {page_element}
-                    </main>
-                    {right_panel}
-                </div>
+                { topBar }
+                <DragDropContext onDragEnd={this._onDragEnd}>
+                    <div className={bodyClasses}>
+                        <LeftPanel
+                            collapsed={this.props.collapseLhs || false}
+                            disabled={this.props.leftDisabled}
+                        />
+                        <main className='mx_MatrixChat_middlePanel'>
+                            { page_element }
+                        </main>
+                        { right_panel }
+                    </div>
+                </DragDropContext>
             </div>
         );
     },
 });
+
+export default LoggedInView;

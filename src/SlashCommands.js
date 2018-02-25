@@ -20,6 +20,7 @@ import Tinter from "./Tinter";
 import sdk from './index';
 import { _t } from './languageHandler';
 import Modal from './Modal';
+import SettingsStore, {SettingLevel} from "./settings/SettingsStore";
 
 
 class Command {
@@ -68,7 +69,7 @@ const commands = {
     ddg: new Command("ddg", "<query>", function(roomId, args) {
         const ErrorDialog = sdk.getComponent('dialogs.ErrorDialog');
         // TODO Don't explain this away, actually show a search UI here.
-        Modal.createDialog(ErrorDialog, {
+        Modal.createTrackedDialog('Slash Commands', '/ddg is not a command', ErrorDialog, {
             title: _t('/ddg is not a command'),
             description: _t('To use it, just wait for autocomplete results to load and tab through them.'),
         });
@@ -95,11 +96,11 @@ const commands = {
                 colorScheme.primary_color = matches[1];
                 if (matches[4]) {
                     colorScheme.secondary_color = matches[4];
+                } else {
+                    colorScheme.secondary_color = colorScheme.primary_color;
                 }
                 return success(
-                    MatrixClientPeg.get().setRoomAccountData(
-                        roomId, "org.matrix.room.color_scheme", colorScheme,
-                    ),
+                    SettingsStore.setValue("roomColor", roomId, SettingLevel.ROOM_ACCOUNT, colorScheme),
                 );
             }
         }
@@ -240,10 +241,63 @@ const commands = {
         return reject(this.getUsage());
     }),
 
+    ignore: new Command("ignore", "<userId>", function(roomId, args) {
+        if (args) {
+            const matches = args.match(/^(\S+)$/);
+            if (matches) {
+                const userId = matches[1];
+                const ignoredUsers = MatrixClientPeg.get().getIgnoredUsers();
+                ignoredUsers.push(userId); // de-duped internally in the js-sdk
+                return success(
+                    MatrixClientPeg.get().setIgnoredUsers(ignoredUsers).then(() => {
+                        const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+                        Modal.createTrackedDialog('Slash Commands', 'User ignored', QuestionDialog, {
+                            title: _t("Ignored user"),
+                            description: (
+                                <div>
+                                    <p>{ _t("You are now ignoring %(userId)s", {userId: userId}) }</p>
+                                </div>
+                            ),
+                            hasCancelButton: false,
+                        });
+                    }),
+                );
+            }
+        }
+        return reject(this.getUsage());
+    }),
+
+    unignore: new Command("unignore", "<userId>", function(roomId, args) {
+        if (args) {
+            const matches = args.match(/^(\S+)$/);
+            if (matches) {
+                const userId = matches[1];
+                const ignoredUsers = MatrixClientPeg.get().getIgnoredUsers();
+                const index = ignoredUsers.indexOf(userId);
+                if (index !== -1) ignoredUsers.splice(index, 1);
+                return success(
+                    MatrixClientPeg.get().setIgnoredUsers(ignoredUsers).then(() => {
+                        const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+                        Modal.createTrackedDialog('Slash Commands', 'User unignored', QuestionDialog, {
+                            title: _t("Unignored user"),
+                            description: (
+                                <div>
+                                    <p>{ _t("You are no longer ignoring %(userId)s", {userId: userId}) }</p>
+                                </div>
+                            ),
+                            hasCancelButton: false,
+                        });
+                    }),
+                );
+            }
+        }
+        return reject(this.getUsage());
+    }),
+
     // Define the power level of a user
     op: new Command("op", "<userId> [<power level>]", function(roomId, args) {
         if (args) {
-            const matches = args.match(/^(\S+?)( +(\d+))?$/);
+            const matches = args.match(/^(\S+?)( +(-?\d+))?$/);
             let powerLevel = 50; // default power level for op
             if (matches) {
                 const userId = matches[1];
@@ -292,6 +346,13 @@ const commands = {
         return reject(this.getUsage());
     }),
 
+    // Open developer tools
+    devtools: new Command("devtools", "", function(roomId) {
+        const DevtoolsDialog = sdk.getComponent("dialogs.DevtoolsDialog");
+        Modal.createDialog(DevtoolsDialog, { roomId });
+        return success();
+    }),
+
     // Verify a user, device, and pubkey tuple
     verify: new Command("verify", "<userId> <deviceId> <deviceSigningKey>", function(roomId, args) {
         if (args) {
@@ -326,13 +387,11 @@ const commands = {
                                    {deviceId: deviceId, fprint: fprint, userId: userId, fingerprint: fingerprint}));
                         }
 
-                        return MatrixClientPeg.get().setDeviceVerified(
-                            userId, deviceId, true,
-                        );
+                        return MatrixClientPeg.get().setDeviceVerified(userId, deviceId, true);
                     }).then(() => {
                         // Tell the user we verified everything
                         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-                        Modal.createDialog(QuestionDialog, {
+                        Modal.createTrackedDialog('Slash Commands', 'Verified key', QuestionDialog, {
                             title: _t("Verified key"),
                             description: (
                                 <div>

@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2017 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,40 +16,47 @@ limitations under the License.
 */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import sdk from '../../../index';
-import { getAddressType, inviteMultipleToRoom } from '../../../Invite';
-import createRoom from '../../../createRoom';
 import MatrixClientPeg from '../../../MatrixClientPeg';
-import DMRoomMap from '../../../utils/DMRoomMap';
-import Modal from '../../../Modal';
-import AccessibleButton from '../elements/AccessibleButton';
 import Promise from 'bluebird';
-import dis from '../../../dispatcher';
+import { addressTypes, getAddressType } from '../../../UserAddress.js';
+import GroupStoreCache from '../../../stores/GroupStoreCache';
 
 const TRUNCATE_QUERY_LIST = 40;
 const QUERY_USER_DIRECTORY_DEBOUNCE_MS = 200;
 
 module.exports = React.createClass({
-    displayName: "ChatInviteDialog",
+    displayName: "AddressPickerDialog",
+
     propTypes: {
-        title: React.PropTypes.string.isRequired,
-        description: React.PropTypes.oneOfType([
-            React.PropTypes.element,
-            React.PropTypes.string,
-        ]),
-        value: React.PropTypes.string,
-        placeholder: React.PropTypes.string,
-        roomId: React.PropTypes.string,
-        button: React.PropTypes.string,
-        focus: React.PropTypes.bool,
-        onFinished: React.PropTypes.func.isRequired,
+        title: PropTypes.string.isRequired,
+        description: PropTypes.node,
+        // Extra node inserted after picker input, dropdown and errors
+        extraNode: PropTypes.node,
+        value: PropTypes.string,
+        placeholder: PropTypes.string,
+        roomId: PropTypes.string,
+        button: PropTypes.string,
+        focus: PropTypes.bool,
+        validAddressTypes: PropTypes.arrayOf(PropTypes.oneOf(addressTypes)),
+        onFinished: PropTypes.func.isRequired,
+        groupId: PropTypes.string,
+        // The type of entity to search for. Default: 'user'.
+        pickerType: PropTypes.oneOf(['user', 'room']),
+        // Whether the current user should be included in the addresses returned. Only
+        // applicable when pickerType is `user`. Default: false.
+        includeSelf: PropTypes.bool,
     },
 
     getDefaultProps: function() {
         return {
             value: "",
             focus: true,
+            validAddressTypes: addressTypes,
+            pickerType: 'user',
+            includeSelf: false,
         };
     },
 
@@ -56,9 +64,9 @@ module.exports = React.createClass({
         return {
             error: false,
 
-            // List of AddressTile.InviteAddressType objects representing
+            // List of UserAddressType objects representing
             // the list of addresses we're going to invite
-            inviteList: [],
+            userList: [],
 
             // Whether a search is ongoing
             busy: false,
@@ -68,7 +76,7 @@ module.exports = React.createClass({
             serverSupportsUserDirectory: true,
             // The query being searched for
             query: "",
-            // List of AddressTile.InviteAddressType objects representing
+            // List of UserAddressType objects representing
             // the set of auto-completion results for the current search
             // query.
             queryList: [],
@@ -83,57 +91,14 @@ module.exports = React.createClass({
     },
 
     onButtonClick: function() {
-        let inviteList = this.state.inviteList.slice();
+        let userList = this.state.userList.slice();
         // Check the text input field to see if user has an unconverted address
-        // If there is and it's valid add it to the local inviteList
+        // If there is and it's valid add it to the local userList
         if (this.refs.textinput.value !== '') {
-            inviteList = this._addInputToList();
-            if (inviteList === null) return;
+            userList = this._addInputToList();
+            if (userList === null) return;
         }
-
-        const addrTexts = inviteList.map(addr => addr.address);
-        if (inviteList.length > 0) {
-            if (this._isDmChat(addrTexts)) {
-                const userId = inviteList[0].address;
-                // Direct Message chat
-                const rooms = this._getDirectMessageRooms(userId);
-                if (rooms.length > 0) {
-                    // A Direct Message room already exists for this user, so select a
-                    // room from a list that is similar to the one in MemberInfo panel
-                    const ChatCreateOrReuseDialog = sdk.getComponent(
-                        "views.dialogs.ChatCreateOrReuseDialog",
-                    );
-                    const close = Modal.createDialog(ChatCreateOrReuseDialog, {
-                        userId: userId,
-                        onFinished: (success) => {
-                            this.props.onFinished(success);
-                        },
-                        onNewDMClick: () => {
-                            dis.dispatch({
-                                action: 'start_chat',
-                                user_id: userId,
-                            });
-                            close(true);
-                        },
-                        onExistingRoomSelected: (roomId) => {
-                            dis.dispatch({
-                                action: 'view_room',
-                                room_id: roomId,
-                            });
-                            close(true);
-                        },
-                    }).close;
-                } else {
-                    this._startChat(inviteList);
-                }
-            } else {
-                // Multi invite chat
-                this._startChat(inviteList);
-            }
-        } else {
-            // No addresses supplied
-            this.setState({ error: true });
-        }
+        this.props.onFinished(true, userList);
     },
 
     onCancel: function() {
@@ -157,10 +122,10 @@ module.exports = React.createClass({
             e.stopPropagation();
             e.preventDefault();
             if (this.addressSelector) this.addressSelector.chooseSelection();
-        } else if (this.refs.textinput.value.length === 0 && this.state.inviteList.length && e.keyCode === 8) { // backspace
+        } else if (this.refs.textinput.value.length === 0 && this.state.userList.length && e.keyCode === 8) { // backspace
             e.stopPropagation();
             e.preventDefault();
-            this.onDismissed(this.state.inviteList.length - 1)();
+            this.onDismissed(this.state.userList.length - 1)();
         } else if (e.keyCode === 13) { // enter
             e.stopPropagation();
             e.preventDefault();
@@ -185,10 +150,22 @@ module.exports = React.createClass({
         // Only do search if there is something to search
         if (query.length > 0 && query != '@' && query.length >= 2) {
             this.queryChangedDebouncer = setTimeout(() => {
-                if (this.state.serverSupportsUserDirectory) {
-                    this._doUserDirectorySearch(query);
+                if (this.props.pickerType === 'user') {
+                    if (this.props.groupId) {
+                        this._doNaiveGroupSearch(query);
+                    } else if (this.state.serverSupportsUserDirectory) {
+                        this._doUserDirectorySearch(query);
+                    } else {
+                        this._doLocalSearch(query);
+                    }
+                } else if (this.props.pickerType === 'room') {
+                    if (this.props.groupId) {
+                        this._doNaiveGroupRoomSearch(query);
+                    } else {
+                        this._doRoomSearch(query);
+                    }
                 } else {
-                    this._doLocalSearch(query);
+                    console.error('Unknown pickerType', this.props.pickerType);
                 }
             }, QUERY_USER_DIRECTORY_DEBOUNCE_MS);
         } else {
@@ -201,12 +178,11 @@ module.exports = React.createClass({
     },
 
     onDismissed: function(index) {
-        var self = this;
         return () => {
-            var inviteList = self.state.inviteList.slice();
-            inviteList.splice(index, 1);
-            self.setState({
-                inviteList: inviteList,
+            const userList = this.state.userList.slice();
+            userList.splice(index, 1);
+            this.setState({
+                userList: userList,
                 queryList: [],
                 query: "",
             });
@@ -215,21 +191,134 @@ module.exports = React.createClass({
     },
 
     onClick: function(index) {
-        var self = this;
-        return function() {
-            self.onSelected(index);
+        return () => {
+            this.onSelected(index);
         };
     },
 
     onSelected: function(index) {
-        var inviteList = this.state.inviteList.slice();
-        inviteList.push(this.state.queryList[index]);
+        const userList = this.state.userList.slice();
+        userList.push(this.state.queryList[index]);
         this.setState({
-            inviteList: inviteList,
+            userList: userList,
             queryList: [],
             query: "",
         });
         if (this._cancelThreepidLookup) this._cancelThreepidLookup();
+    },
+
+    _doNaiveGroupSearch: function(query) {
+        const lowerCaseQuery = query.toLowerCase();
+        this.setState({
+            busy: true,
+            query,
+            searchError: null,
+        });
+        MatrixClientPeg.get().getGroupUsers(this.props.groupId).then((resp) => {
+            const results = [];
+            resp.chunk.forEach((u) => {
+                const userIdMatch = u.user_id.toLowerCase().includes(lowerCaseQuery);
+                const displayNameMatch = (u.displayname || '').toLowerCase().includes(lowerCaseQuery);
+                if (!(userIdMatch || displayNameMatch)) {
+                    return;
+                }
+                results.push({
+                    user_id: u.user_id,
+                    avatar_url: u.avatar_url,
+                    display_name: u.displayname,
+                });
+            });
+            this._processResults(results, query);
+        }).catch((err) => {
+            console.error('Error whilst searching group rooms: ', err);
+            this.setState({
+                searchError: err.errcode ? err.message : _t('Something went wrong!'),
+            });
+        }).done(() => {
+            this.setState({
+                busy: false,
+            });
+        });
+    },
+
+    _doNaiveGroupRoomSearch: function(query) {
+        const lowerCaseQuery = query.toLowerCase();
+        const groupStore = GroupStoreCache.getGroupStore(this.props.groupId);
+        const results = [];
+        groupStore.getGroupRooms().forEach((r) => {
+            const nameMatch = (r.name || '').toLowerCase().includes(lowerCaseQuery);
+            const topicMatch = (r.topic || '').toLowerCase().includes(lowerCaseQuery);
+            const aliasMatch = (r.canonical_alias || '').toLowerCase().includes(lowerCaseQuery);
+            if (!(nameMatch || topicMatch || aliasMatch)) {
+                return;
+            }
+            results.push({
+                room_id: r.room_id,
+                avatar_url: r.avatar_url,
+                name: r.name || r.canonical_alias,
+            });
+        });
+        this._processResults(results, query);
+        this.setState({
+            busy: false,
+        });
+    },
+
+    _doRoomSearch: function(query) {
+        const lowerCaseQuery = query.toLowerCase();
+        const rooms = MatrixClientPeg.get().getRooms();
+        const results = [];
+        rooms.forEach((room) => {
+            let rank = Infinity;
+            const nameEvent = room.currentState.getStateEvents('m.room.name', '');
+            const name = nameEvent ? nameEvent.getContent().name : '';
+            const canonicalAlias = room.getCanonicalAlias();
+            const aliasEvents = room.currentState.getStateEvents('m.room.aliases');
+            const aliases = aliasEvents.map((ev) => ev.getContent().aliases).reduce((a, b) => {
+                return a.concat(b);
+            }, []);
+
+            const nameMatch = (name || '').toLowerCase().includes(lowerCaseQuery);
+            let aliasMatch = false;
+            let shortestMatchingAliasLength = Infinity;
+            aliases.forEach((alias) => {
+                if ((alias || '').toLowerCase().includes(lowerCaseQuery)) {
+                    aliasMatch = true;
+                    if (shortestMatchingAliasLength > alias.length) {
+                        shortestMatchingAliasLength = alias.length;
+                    }
+                }
+            });
+
+            if (!(nameMatch || aliasMatch)) {
+                return;
+            }
+
+            if (aliasMatch) {
+                // A shorter matching alias will give a better rank
+                rank = shortestMatchingAliasLength;
+            }
+
+            const avatarEvent = room.currentState.getStateEvents('m.room.avatar', '');
+            const avatarUrl = avatarEvent ? avatarEvent.getContent().url : undefined;
+
+            results.push({
+                rank,
+                room_id: room.roomId,
+                avatar_url: avatarUrl,
+                name: name || canonicalAlias || aliases[0] || _t('Unnamed Room'),
+            });
+        });
+
+        // Sort by rank ascending (a high rank being less relevant)
+        const sortedResults = results.sort((a, b) => {
+            return a.rank - b.rank;
+        });
+
+        this._processResults(sortedResults, query);
+        this.setState({
+            busy: false,
+        });
     },
 
     _doUserDirectorySearch: function(query) {
@@ -292,17 +381,30 @@ module.exports = React.createClass({
 
     _processResults: function(results, query) {
         const queryList = [];
-        results.forEach((user) => {
-            if (user.user_id === MatrixClientPeg.get().credentials.userId) {
+        results.forEach((result) => {
+            if (result.room_id) {
+                queryList.push({
+                    addressType: 'mx-room-id',
+                    address: result.room_id,
+                    displayName: result.name,
+                    avatarMxc: result.avatar_url,
+                    isKnown: true,
+                });
                 return;
             }
+            if (!this.props.includeSelf &&
+                result.user_id === MatrixClientPeg.get().credentials.userId
+            ) {
+                return;
+            }
+
             // Return objects, structure of which is defined
-            // by InviteAddressType
+            // by UserAddressType
             queryList.push({
-                addressType: 'mx',
-                address: user.user_id,
-                displayName: user.display_name,
-                avatarMxc: user.avatar_url,
+                addressType: 'mx-user-id',
+                address: result.user_id,
+                displayName: result.display_name,
+                avatarMxc: result.avatar_url,
                 isKnown: true,
             });
         });
@@ -311,7 +413,7 @@ module.exports = React.createClass({
         // This is important, otherwise there's no way to invite
         // a perfectly valid address if there are close matches.
         const addrType = getAddressType(query);
-        if (addrType !== null) {
+        if (this.props.validAddressTypes.includes(addrType)) {
             queryList.unshift({
                 addressType: addrType,
                 address: query,
@@ -330,132 +432,6 @@ module.exports = React.createClass({
         });
     },
 
-    _getDirectMessageRooms: function(addr) {
-        const dmRoomMap = new DMRoomMap(MatrixClientPeg.get());
-        const dmRooms = dmRoomMap.getDMRoomsForUserId(addr);
-        const rooms = [];
-        dmRooms.forEach(dmRoom => {
-            let room = MatrixClientPeg.get().getRoom(dmRoom);
-            if (room) {
-                const me = room.getMember(MatrixClientPeg.get().credentials.userId);
-                if (me.membership == 'join') {
-                    rooms.push(room);
-                }
-            }
-        });
-        return rooms;
-    },
-
-    _startChat: function(addrs) {
-        if (MatrixClientPeg.get().isGuest()) {
-            dis.dispatch({action: 'view_set_mxid'});
-            return;
-        }
-
-        const addrTexts = addrs.map((addr) => {
-            return addr.address;
-        });
-
-        if (this.props.roomId) {
-            // Invite new user to a room
-            var self = this;
-            inviteMultipleToRoom(this.props.roomId, addrTexts)
-            .then(function(addrs) {
-                var room = MatrixClientPeg.get().getRoom(self.props.roomId);
-                return self._showAnyInviteErrors(addrs, room);
-            })
-            .catch(function(err) {
-                console.error(err.stack);
-                var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-                Modal.createDialog(ErrorDialog, {
-                    title: _t("Failed to invite"),
-                    description: ((err && err.message) ? err.message : _t("Operation failed")),
-                });
-                return null;
-            })
-            .done();
-        } else if (this._isDmChat(addrTexts)) {
-            // Start the DM chat
-            createRoom({dmUserId: addrTexts[0]})
-            .catch(function(err) {
-                console.error(err.stack);
-                var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-                Modal.createDialog(ErrorDialog, {
-                    title: _t("Failed to invite user"),
-                    description: ((err && err.message) ? err.message : _t("Operation failed")),
-                });
-                return null;
-            })
-            .done();
-        } else {
-            // Start multi user chat
-            var self = this;
-            var room;
-            createRoom().then(function(roomId) {
-                room = MatrixClientPeg.get().getRoom(roomId);
-                return inviteMultipleToRoom(roomId, addrTexts);
-            })
-            .then(function(addrs) {
-                return self._showAnyInviteErrors(addrs, room);
-            })
-            .catch(function(err) {
-                console.error(err.stack);
-                var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-                Modal.createDialog(ErrorDialog, {
-                    title: _t("Failed to invite"),
-                    description: ((err && err.message) ? err.message : _t("Operation failed")),
-                });
-                return null;
-            })
-            .done();
-        }
-
-        // Close - this will happen before the above, as that is async
-        this.props.onFinished(true, addrTexts);
-    },
-
-    _isOnInviteList: function(uid) {
-        for (let i = 0; i < this.state.inviteList.length; i++) {
-            if (
-                this.state.inviteList[i].addressType == 'mx' &&
-                this.state.inviteList[i].address.toLowerCase() === uid
-            ) {
-                return true;
-            }
-        }
-        return false;
-    },
-
-    _isDmChat: function(addrTexts) {
-        if (addrTexts.length === 1 &&
-            getAddressType(addrTexts[0]) === "mx" &&
-            !this.props.roomId
-        ) {
-            return true;
-        } else {
-            return false;
-        }
-    },
-
-    _showAnyInviteErrors: function(addrs, room) {
-        // Show user any errors
-        var errorList = [];
-        for (var addr in addrs) {
-            if (addrs.hasOwnProperty(addr) && addrs[addr] === "error") {
-                errorList.push(addr);
-            }
-        }
-
-        if (errorList.length > 0) {
-            var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-            Modal.createDialog(ErrorDialog, {
-                title: _t("Failed to invite the following users to the %(roomName)s room:", {roomName: room.name}),
-                description: errorList.join(", "),
-            });
-        }
-        return addrs;
-    },
-
     _addInputToList: function() {
         const addressText = this.refs.textinput.value.trim();
         const addrType = getAddressType(addressText);
@@ -464,27 +440,34 @@ module.exports = React.createClass({
             address: addressText,
             isKnown: false,
         };
-        if (addrType == null) {
+        if (!this.props.validAddressTypes.includes(addrType)) {
             this.setState({ error: true });
             return null;
-        } else if (addrType == 'mx') {
+        } else if (addrType == 'mx-user-id') {
             const user = MatrixClientPeg.get().getUser(addrObj.address);
             if (user) {
                 addrObj.displayName = user.displayName;
                 addrObj.avatarMxc = user.avatarUrl;
                 addrObj.isKnown = true;
             }
+        } else if (addrType == 'mx-room-id') {
+            const room = MatrixClientPeg.get().getRoom(addrObj.address);
+            if (room) {
+                addrObj.displayName = room.name;
+                addrObj.avatarMxc = room.avatarUrl;
+                addrObj.isKnown = true;
+            }
         }
 
-        const inviteList = this.state.inviteList.slice();
-        inviteList.push(addrObj);
+        const userList = this.state.userList.slice();
+        userList.push(addrObj);
         this.setState({
-            inviteList: inviteList,
+            userList: userList,
             queryList: [],
             query: "",
         });
         if (this._cancelThreepidLookup) this._cancelThreepidLookup();
-        return inviteList;
+        return userList;
     },
 
     _lookupThreepid: function(medium, address) {
@@ -495,7 +478,7 @@ module.exports = React.createClass({
         // not like they leak.
         this._cancelThreepidLookup = function() {
             cancelled = true;
-        }
+        };
 
         // wait a bit to let the user finish typing
         return Promise.delay(500).then(() => {
@@ -511,7 +494,7 @@ module.exports = React.createClass({
             if (cancelled) return null;
             this.setState({
                 queryList: [{
-                    // an InviteAddressType
+                    // a UserAddressType
                     addressType: medium,
                     address: address,
                     displayName: res.displayname,
@@ -523,24 +506,30 @@ module.exports = React.createClass({
     },
 
     render: function() {
-        const TintableSvg = sdk.getComponent("elements.TintableSvg");
+        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
+        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         const AddressSelector = sdk.getComponent("elements.AddressSelector");
         this.scrollElement = null;
 
-        var query = [];
+        const query = [];
         // create the invite list
-        if (this.state.inviteList.length > 0) {
-            var AddressTile = sdk.getComponent("elements.AddressTile");
-            for (let i = 0; i < this.state.inviteList.length; i++) {
+        if (this.state.userList.length > 0) {
+            const AddressTile = sdk.getComponent("elements.AddressTile");
+            for (let i = 0; i < this.state.userList.length; i++) {
                 query.push(
-                    <AddressTile key={i} address={this.state.inviteList[i]} canDismiss={true} onDismissed={ this.onDismissed(i) } />
+                    <AddressTile
+                        key={i}
+                        address={this.state.userList[i]}
+                        canDismiss={true}
+                        onDismissed={this.onDismissed(i)}
+                        showAddress={this.props.pickerType === 'user'} />,
                 );
             }
         }
 
         // Add the query at the end
         query.push(
-            <textarea key={this.state.inviteList.length}
+            <textarea key={this.state.userList.length}
                 rows="1"
                 id="textinput"
                 ref="textinput"
@@ -555,34 +544,44 @@ module.exports = React.createClass({
         let error;
         let addressSelector;
         if (this.state.error) {
-            error = <div className="mx_ChatInviteDialog_error">{_t("You have entered an invalid contact. Try using their Matrix ID or email address.")}</div>;
+            let tryUsing = '';
+            const validTypeDescriptions = this.props.validAddressTypes.map((t) => {
+                return {
+                    'mx-user-id': _t("Matrix ID"),
+                    'mx-room-id': _t("Matrix Room ID"),
+                    'email': _t("email address"),
+                }[t];
+            });
+            tryUsing = _t("Try using one of the following valid address types: %(validTypesList)s.", {
+                validTypesList: validTypeDescriptions.join(", "),
+            });
+            error = <div className="mx_ChatInviteDialog_error">
+                { _t("You have entered an invalid address.") }
+                <br />
+                { tryUsing }
+            </div>;
         } else if (this.state.searchError) {
-            error = <div className="mx_ChatInviteDialog_error">{this.state.searchError}</div>;
+            error = <div className="mx_ChatInviteDialog_error">{ this.state.searchError }</div>;
         } else if (
             this.state.query.length > 0 &&
             this.state.queryList.length === 0 &&
             !this.state.busy
         ) {
-            error = <div className="mx_ChatInviteDialog_error">{_t("No results")}</div>;
+            error = <div className="mx_ChatInviteDialog_error">{ _t("No results") }</div>;
         } else {
             addressSelector = (
                 <AddressSelector ref={(ref) => {this.addressSelector = ref;}}
-                    addressList={ this.state.queryList }
-                    onSelected={ this.onSelected }
-                    truncateAt={ TRUNCATE_QUERY_LIST }
+                    addressList={this.state.queryList}
+                    showAddress={this.props.pickerType === 'user'}
+                    onSelected={this.onSelected}
+                    truncateAt={TRUNCATE_QUERY_LIST}
                 />
             );
         }
 
         return (
-            <div className="mx_ChatInviteDialog" onKeyDown={this.onKeyDown}>
-                <div className="mx_Dialog_title">
-                    {this.props.title}
-                </div>
-                <AccessibleButton className="mx_ChatInviteDialog_cancel"
-                        onClick={this.onCancel} >
-                    <TintableSvg src="img/icons-close-button.svg" width="35" height="35" />
-                </AccessibleButton>
+            <BaseDialog className="mx_ChatInviteDialog" onKeyDown={this.onKeyDown}
+                onFinished={this.props.onFinished} title={this.props.title}>
                 <div className="mx_ChatInviteDialog_label">
                     <label htmlFor="textinput">{ this.props.description }</label>
                 </div>
@@ -590,13 +589,12 @@ module.exports = React.createClass({
                     <div className="mx_ChatInviteDialog_inputContainer">{ query }</div>
                     { error }
                     { addressSelector }
+                    { this.props.extraNode }
                 </div>
-                <div className="mx_Dialog_buttons">
-                    <button className="mx_Dialog_primary" onClick={this.onButtonClick}>
-                        {this.props.button}
-                    </button>
-                </div>
-            </div>
+                <DialogButtons primaryButton={this.props.button}
+                    onPrimaryButtonClick={this.onButtonClick}
+                    onCancel={this.onCancel} />
+            </BaseDialog>
         );
-    }
+    },
 });

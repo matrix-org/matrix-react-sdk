@@ -43,7 +43,7 @@ export function getOnlyOtherMember(room, me) {
     return null;
 }
 
-export function isConfCallRoom(room, me, conferenceHandler) {
+function _isConfCallRoom(room, me, conferenceHandler) {
     if (!conferenceHandler) return false;
 
     if (me.membership != "join") {
@@ -58,12 +58,31 @@ export function isConfCallRoom(room, me, conferenceHandler) {
     if (conferenceHandler.isConferenceUser(otherMember.userId)) {
         return true;
     }
+
+    return false;
+}
+
+// Cache whether a room is a conference call. Assumes that rooms will always
+// either will or will not be a conference call room.
+const isConfCallRoomCache = {
+    // $roomId: bool
+};
+
+export function isConfCallRoom(room, me, conferenceHandler) {
+    if (isConfCallRoomCache[room.roomId] !== undefined) {
+        return isConfCallRoomCache[room.roomId];
+    }
+
+    const result = _isConfCallRoom(room, me, conferenceHandler);
+
+    isConfCallRoomCache[room.roomId] = result;
+
+    return result;
 }
 
 export function looksLikeDirectMessageRoom(room, me) {
     if (me.membership == "join" || me.membership === "ban" ||
-        (me.membership === "leave" && me.events.member.getSender() !== me.events.member.getStateKey()))
-    {
+        (me.membership === "leave" && me.events.member.getSender() !== me.events.member.getStateKey())) {
         // Used to split rooms via tags
         const tagNames = Object.keys(room.tags);
         // Used for 1:1 direct chats

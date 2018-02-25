@@ -15,6 +15,7 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * AccessibleButton is a generic wrapper for any element that should be treated
@@ -32,7 +33,7 @@ export default function AccessibleButton(props) {
     };
     restProps.tabIndex = restProps.tabIndex || "0";
     restProps.role = "button";
-    restProps.className = (restProps.className ? restProps.className + " " : "") + 
+    restProps.className = (restProps.className ? restProps.className + " " : "") +
                           "mx_AccessibleButton";
     return React.createElement(element, restProps, children);
 }
@@ -44,9 +45,9 @@ export default function AccessibleButton(props) {
  *           implemented exactly like a normal onClick handler.
  */
 AccessibleButton.propTypes = {
-    children: React.PropTypes.node,
-    element: React.PropTypes.string,
-    onClick: React.PropTypes.func.isRequired,
+    children: PropTypes.node,
+    element: PropTypes.string,
+    onClick: PropTypes.func.isRequired,
 };
 
 AccessibleButton.defaultProps = {

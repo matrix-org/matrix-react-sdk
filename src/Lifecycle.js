@@ -240,7 +240,7 @@ function _handleRestoreFailure(e) {
     const SessionRestoreErrorDialog =
           sdk.getComponent('views.dialogs.SessionRestoreErrorDialog');
 
-    Modal.createDialog(SessionRestoreErrorDialog, {
+    Modal.createTrackedDialog('Session Restore Error', '', SessionRestoreErrorDialog, {
         error: e.message,
         onFinished: (success) => {
             def.resolve(success);
@@ -318,7 +318,7 @@ async function _doSetLoggedIn(credentials, clearStorage) {
         await _clearStorage();
     }
 
-    Analytics.setGuest(credentials.guest);
+    Analytics.setLoggedIn(credentials.guest, credentials.homeserverUrl, credentials.identityServerUrl);
 
     // Resolves by default
     let teamPromise = Promise.resolve(null);
@@ -362,7 +362,7 @@ async function _doSetLoggedIn(credentials, clearStorage) {
         dis.dispatch({action: 'on_logged_in', teamToken: teamToken});
     });
 
-    startMatrixClient();
+    await startMatrixClient();
     return MatrixClientPeg.get();
 }
 
@@ -389,6 +389,8 @@ function _persistCredentialsToLocalStorage(credentials) {
  * Logs the current session out and transitions to the logged-out state
  */
 export function logout() {
+    if (!MatrixClientPeg.get()) return;
+
     if (MatrixClientPeg.get().isGuest()) {
         // logout doesn't work for guest sessions
         // Also we sometimes want to re-log in a guest session
@@ -421,7 +423,7 @@ export function logout() {
  * Starts the matrix client and all other react-sdk services that
  * listen for events while a session is logged in.
  */
-function startMatrixClient() {
+async function startMatrixClient() {
     console.log(`Lifecycle: Starting MatrixClient`);
 
     // dispatch this before starting the matrix client: it's used
@@ -435,7 +437,11 @@ function startMatrixClient() {
     Presence.start();
     DMRoomMap.makeShared().start();
 
-    MatrixClientPeg.start();
+    await MatrixClientPeg.start();
+
+    // dispatch that we finished starting up to wire up any other bits
+    // of the matrix client that cannot be set prior to starting up.
+    dis.dispatch({action: 'client_started'});
 }
 
 /*
