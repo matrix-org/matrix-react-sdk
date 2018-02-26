@@ -1277,7 +1277,7 @@ export default React.createClass({
         let credentials = {};
         try {
             credentials = JSON.parse(ev.data);
-        } catch(e) {
+        } catch (e) {
             ev.source.postMessage('{"status":"im.vector.error","msg":"invalid credentials format"}', ev.origin);
             return;
         }
