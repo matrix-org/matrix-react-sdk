@@ -101,6 +101,16 @@ module.exports = React.createClass({
         }
     },
 
+    getValue: function() {
+        if (this.refs.custom) {
+            return parseInt(this.refs.custom.value);
+        }
+        if (this.refs.select) {
+            return this.refs.select.value;
+        }
+        return undefined;
+    },
+
     render: function() {
         let customPicker;
         if (this.state.custom) {
