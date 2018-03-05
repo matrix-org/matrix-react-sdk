@@ -58,6 +58,7 @@ module.exports = React.createClass({
             'm.file': sdk.getComponent('messages.MFileBody'),
             'm.audio': sdk.getComponent('messages.MAudioBody'),
             'm.video': sdk.getComponent('messages.MVideoBody'),
+            'm.location': sdk.getComponent('messages.MLocationBody'),
         };
 
         const content = this.props.mxEvent.getContent();
