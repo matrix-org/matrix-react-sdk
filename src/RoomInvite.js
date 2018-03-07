@@ -59,14 +59,28 @@ export function showStartChatInviteDialog() {
         placeholder: _t("Email, name or matrix ID"),
         button: _t("Start Chat"),
         onFinished: _onStartChatFinished,
+        excludedAddresses: {
+            addressType: 'mx-user-id',
+            address: MatrixClientPeg.get().getUserId(),
+        },
     });
 }
 
 export function showRoomInviteDialog(roomId) {
+    const room = MatrixClientPeg.get().getRoom(roomId);
+
     const AddressPickerDialog = sdk.getComponent("dialogs.AddressPickerDialog");
     Modal.createTrackedDialog('Chat Invite', '', AddressPickerDialog, {
         title: _t('Invite new room members'),
         description: _t('Who would you like to add to this room?'),
+        excludedAddresses: room.currentState.getMembers().filter((member) => {
+            const membership = member.membership;
+            // Filter to users which are in the room, have already been invited or have been banned.
+            return membership === 'join' || membership === 'invite' || membership === 'ban';
+        }).map((member) => ({
+            addressType: 'mx-user-id',
+            address: member.userId,
+        })), // no need to add the user as they must already be in the room
         button: _t('Send Invites'),
         placeholder: _t("Email, name or matrix ID"),
         onFinished: (shouldInvite, addrs) => {

@@ -89,6 +89,10 @@ const CategoryRoomList = React.createClass({
             button: _t("Add to summary"),
             pickerType: 'room',
             validAddressTypes: ['mx-room-id'],
+            excludedAddresses: this.props.rooms.map((room) => ({
+                addressType: 'mx-room-id',
+                address: room.room_id,
+            })),
             groupId: this.props.groupId,
             onFinished: (success, addrs) => {
                 if (!success) return;
@@ -264,6 +268,13 @@ const RoleUserList = React.createClass({
             placeholder: _t("Name or matrix ID"),
             button: _t("Add to summary"),
             validAddressTypes: ['mx-user-id'],
+            excludedAddresses: this.props.users.map((user) => ({
+                addressType: 'mx-user-id',
+                address: user.summaryInfo.user_id,
+            })).concat({
+                addressType: 'mx-user-id',
+                address: MatrixClientPeg.get().getUserId(),
+            }),
             groupId: this.props.groupId,
             shouldOmitSelf: false,
             onFinished: (success, addrs) => {

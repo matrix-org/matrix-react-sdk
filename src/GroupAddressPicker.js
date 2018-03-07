@@ -32,6 +32,7 @@ export function showGroupInviteDialog(groupId) {
         </div>
     </div>;
 
+    const groupStore = GroupStoreCache.getGroupStore(groupId);
     const AddressPickerDialog = sdk.getComponent("dialogs.AddressPickerDialog");
     Modal.createTrackedDialog('Group Invite', '', AddressPickerDialog, {
         title: _t("Invite new community members"),
@@ -39,6 +40,10 @@ export function showGroupInviteDialog(groupId) {
         placeholder: _t("Name or matrix ID"),
         button: _t("Invite to Community"),
         validAddressTypes: ['mx-user-id'],
+        excludedAddresses: groupStore.getGroupMembers().concat(groupStore.getGroupInvitedMembers()).map((member) => ({
+            addressType: 'mx-user-id',
+            address: member.userId,
+        })), // no need to add the user as they must already be in the group
         onFinished: (success, addrs) => {
             if (!success) return;
 
@@ -64,6 +69,7 @@ export function showGroupAddRoomDialog(groupId) {
             </div>
         </label>;
 
+        const groupStore = GroupStoreCache.getGroupStore(groupId);
         const AddressPickerDialog = sdk.getComponent("dialogs.AddressPickerDialog");
         Modal.createTrackedDialog('Add Rooms to Group', '', AddressPickerDialog, {
             title: _t("Add rooms to the community"),
@@ -73,6 +79,10 @@ export function showGroupAddRoomDialog(groupId) {
             button: _t("Add to community"),
             pickerType: 'room',
             validAddressTypes: ['mx-room-id'],
+            excludedAddresses: groupStore.getGroupRooms().map((room) => ({
+                addressType: 'mx-room-id',
+                address: room.roomId,
+            })),
             onFinished: (success, addrs) => {
                 if (!success) return;
 

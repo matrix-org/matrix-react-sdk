@@ -41,13 +41,14 @@ module.exports = React.createClass({
         button: PropTypes.string,
         focus: PropTypes.bool,
         validAddressTypes: PropTypes.arrayOf(PropTypes.oneOf(addressTypes)),
+        excludedAddresses: PropTypes.arrayOf(PropTypes.shape({
+            addressType: PropTypes.oneOf(addressTypes),
+            address: PropTypes.string.isRequired,
+        })),
         onFinished: PropTypes.func.isRequired,
         groupId: PropTypes.string,
         // The type of entity to search for. Default: 'user'.
         pickerType: PropTypes.oneOf(['user', 'room']),
-        // Whether the current user should be included in the addresses returned. Only
-        // applicable when pickerType is `user`. Default: false.
-        includeSelf: PropTypes.bool,
     },
 
     getDefaultProps: function() {
@@ -56,7 +57,6 @@ module.exports = React.createClass({
             focus: true,
             validAddressTypes: addressTypes,
             pickerType: 'user',
-            includeSelf: false,
         };
     },
 
@@ -129,7 +129,7 @@ module.exports = React.createClass({
         } else if (e.keyCode === 13) { // enter
             e.stopPropagation();
             e.preventDefault();
-            if (this.refs.textinput.value == '') {
+            if (this.refs.textinput.value === '') {
                 // if there's nothing in the input box, submit the form
                 this.onButtonClick();
             } else {
@@ -148,7 +148,7 @@ module.exports = React.createClass({
             clearTimeout(this.queryChangedDebouncer);
         }
         // Only do search if there is something to search
-        if (query.length > 0 && query != '@' && query.length >= 2) {
+        if (query.length > 0 && query !== '@' && query.length >= 2) {
             this.queryChangedDebouncer = setTimeout(() => {
                 if (this.props.pickerType === 'user') {
                     if (this.props.groupId) {
@@ -382,31 +382,33 @@ module.exports = React.createClass({
     _processResults: function(results, query) {
         const queryList = [];
         results.forEach((result) => {
+            let newEntry;
+
             if (result.room_id) {
-                queryList.push({
+                newEntry = {
                     addressType: 'mx-room-id',
                     address: result.room_id,
                     displayName: result.name,
                     avatarMxc: result.avatar_url,
                     isKnown: true,
-                });
-                return;
-            }
-            if (!this.props.includeSelf &&
-                result.user_id === MatrixClientPeg.get().credentials.userId
-            ) {
-                return;
+                };
+            } else {
+                // Return objects, structure of which is defined
+                // by UserAddressType
+                newEntry = {
+                    addressType: 'mx-user-id',
+                    address: result.user_id,
+                    displayName: result.display_name,
+                    avatarMxc: result.avatar_url,
+                    isKnown: true,
+                };
             }
 
-            // Return objects, structure of which is defined
-            // by UserAddressType
-            queryList.push({
-                addressType: 'mx-user-id',
-                address: result.user_id,
-                displayName: result.display_name,
-                avatarMxc: result.avatar_url,
-                isKnown: true,
-            });
+            // Don't add it if it is in the excludedAddresses
+            if (this.props.excludedAddresses.find((entry) => {
+                return entry.address === newEntry.address && entry.addressType === newEntry.addressType;
+            })) return;
+            queryList.push(newEntry);
         });
 
         // If the query is a valid address, add an entry for that
@@ -420,7 +422,7 @@ module.exports = React.createClass({
                 isKnown: false,
             });
             if (this._cancelThreepidLookup) this._cancelThreepidLookup();
-            if (addrType == 'email') {
+            if (addrType === 'email') {
                 this._lookupThreepid(addrType, query).done();
             }
         }
@@ -443,14 +445,14 @@ module.exports = React.createClass({
         if (!this.props.validAddressTypes.includes(addrType)) {
             this.setState({ error: true });
             return null;
-        } else if (addrType == 'mx-user-id') {
+        } else if (addrType === 'mx-user-id') {
             const user = MatrixClientPeg.get().getUser(addrObj.address);
             if (user) {
                 addrObj.displayName = user.displayName;
                 addrObj.avatarMxc = user.avatarUrl;
                 addrObj.isKnown = true;
             }
-        } else if (addrType == 'mx-room-id') {
+        } else if (addrType === 'mx-room-id') {
             const room = MatrixClientPeg.get().getRoom(addrObj.address);
             if (room) {
                 addrObj.displayName = room.name;
@@ -511,6 +513,12 @@ module.exports = React.createClass({
         const AddressSelector = sdk.getComponent("elements.AddressSelector");
         this.scrollElement = null;
 
+        const queryList = this.state.queryList.filter((query) => {
+            return !this.state.userList.find((entry) => {
+                return entry.address === query.address && entry.addressType === query.addressType;
+            });
+        });
+
         const query = [];
         // create the invite list
         if (this.state.userList.length > 0) {
@@ -544,7 +552,6 @@ module.exports = React.createClass({
         let error;
         let addressSelector;
         if (this.state.error) {
-            let tryUsing = '';
             const validTypeDescriptions = this.props.validAddressTypes.map((t) => {
                 return {
                     'mx-user-id': _t("Matrix ID"),
@@ -552,7 +559,7 @@ module.exports = React.createClass({
                     'email': _t("email address"),
                 }[t];
             });
-            tryUsing = _t("Try using one of the following valid address types: %(validTypesList)s.", {
+            const tryUsing = _t("Try using one of the following valid address types: %(validTypesList)s.", {
                 validTypesList: validTypeDescriptions.join(", "),
             });
             error = <div className="mx_ChatInviteDialog_error">
@@ -562,16 +569,12 @@ module.exports = React.createClass({
             </div>;
         } else if (this.state.searchError) {
             error = <div className="mx_ChatInviteDialog_error">{ this.state.searchError }</div>;
-        } else if (
-            this.state.query.length > 0 &&
-            this.state.queryList.length === 0 &&
-            !this.state.busy
-        ) {
+        } else if (this.state.query.length > 0 && queryList.length === 0 && !this.state.busy) {
             error = <div className="mx_ChatInviteDialog_error">{ _t("No results") }</div>;
         } else {
             addressSelector = (
                 <AddressSelector ref={(ref) => {this.addressSelector = ref;}}
-                    addressList={this.state.queryList}
+                    addressList={queryList}
                     showAddress={this.props.pickerType === 'user'}
                     onSelected={this.onSelected}
                     truncateAt={TRUNCATE_QUERY_LIST}
