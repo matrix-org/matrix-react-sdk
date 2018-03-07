@@ -637,7 +637,7 @@ module.exports = React.createClass({
         const prevScroll = scrollNode.scrollTop;
 
         // FF ignores attempts to set scrollTop to very large numbers
-        scrollNode.scrollTop = Math.min(scrollTop, scrollNode.scrollHeight);
+        // scrollNode.scrollTop = Math.min(scrollTop, scrollNode.scrollHeight);
 
         // If this change generates a scroll event, we should not update the
         // saved scroll state on it. See the comments in onScroll.
