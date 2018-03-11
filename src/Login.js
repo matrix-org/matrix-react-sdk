@@ -1,18 +1,34 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017 Vector Creations Ltd
+Copyright (C) 2018 Kamax Sàrl
+https://www.kamax.io/
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    http://www.apache.org/licenses/LICENSE-2.0
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+This file incorporates work covered by the following copyright and
+permission notice:
+
+    Copyright 2015, 2016 OpenMarket Ltd
+    Copyright 2017 Vector Creations Ltd
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 */
 
 import Matrix from "matrix-js-sdk";
@@ -62,7 +78,8 @@ export default class Login {
         const self = this;
         const client = this._createTemporaryClient();
         return client.loginFlows().then(function(result) {
-            self._flows = result.flows;
+            //TODO: MXSID should return us the flow we are looking for.
+            self._flows =[{"type":"io.kamax.google.oauth2"},{"type":"m.login.password"}]; //result.flows;
             self._currentFlowIndex = 0;
             // technically the UI should display options for all flows for the
             // user to then choose one, so return all the flows here.
@@ -212,6 +229,36 @@ export default class Login {
                 return tryLowercaseUsername(originalLoginError);
             }
             throw originalLoginError;
+        }).catch((error) => {
+            console.log("Login failed", error);
+            throw error;
+        });
+    }
+
+    loginWithGoogle(gId, tokenId) {
+        const self = this;
+        let identifier;
+        identifier = {
+            type: 'm.id.thirdparty',
+            medium: 'io.kamax.google.id',
+            address: gId,
+        };
+
+        const loginParams = {
+            password: tokenId,
+            identifier: identifier,
+            initial_device_display_name: this._defaultDeviceDisplayName,
+        };
+
+        const client = this._createTemporaryClient();
+        return client.login('m.login.password', loginParams).then(function(data) {
+            return Promise.resolve({
+                homeserverUrl: self._hsUrl,
+                identityServerUrl: self._isUrl,
+                userId: data.user_id,
+                deviceId: data.device_id,
+                accessToken: data.access_token,
+            });
         }).catch((error) => {
             console.log("Login failed", error);
             throw error;
