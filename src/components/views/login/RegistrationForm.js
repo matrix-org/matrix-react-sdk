@@ -1,34 +1,45 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017 Vector Creations Ltd
+Copyright (C) 2018 Kamax Sàrl
+https://www.kamax.io/
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    http://www.apache.org/licenses/LICENSE-2.0
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+This file incorporates work covered by the following copyright and
+permission notice:
+
+    Copyright 2015, 2016 OpenMarket Ltd
+    Copyright 2017 Vector Creations Ltd
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 */
 
 import React from 'react';
 import { field_input_incorrect } from '../../../UiEffects';
 import sdk from '../../../index';
-import Email from '../../../email';
-import { looksValid as phoneNumberLooksValid } from '../../../phonenumber';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
 
-const FIELD_EMAIL = 'field_email';
-const FIELD_PHONE_COUNTRY = 'field_phone_country';
-const FIELD_PHONE_NUMBER = 'field_phone_number';
+import GoogleAuthLogin from "./GoogleAuthLogin";
+
 const FIELD_USERNAME = 'field_username';
-const FIELD_PASSWORD = 'field_password';
-const FIELD_PASSWORD_CONFIRM = 'field_password_confirm';
 
 /**
  * A pure UI component which displays a registration form.
@@ -38,30 +49,12 @@ module.exports = React.createClass({
 
     propTypes: {
         // Values pre-filled in the input boxes when the component loads
-        defaultEmail: React.PropTypes.string,
-        defaultPhoneCountry: React.PropTypes.string,
-        defaultPhoneNumber: React.PropTypes.string,
-        defaultUsername: React.PropTypes.string,
-        defaultPassword: React.PropTypes.string,
-        teamsConfig: React.PropTypes.shape({
-            // Email address to request new teams
-            supportEmail: React.PropTypes.string,
-            teams: React.PropTypes.arrayOf(React.PropTypes.shape({
-                // The displayed name of the team
-                "name": React.PropTypes.string,
-                // The domain of team email addresses
-                "domain": React.PropTypes.string,
-            })).required,
-        }),
-
-        minPasswordLength: React.PropTypes.number,
         onError: React.PropTypes.func,
         onRegisterClick: React.PropTypes.func.isRequired, // onRegisterClick(Object) => ?Promise
     },
 
     getDefaultProps: function() {
         return {
-            minPasswordLength: 6,
             onError: function(e) {
                 console.error(e);
             },
@@ -71,6 +64,7 @@ module.exports = React.createClass({
     getInitialState: function() {
         return {
             fieldValid: {},
+            googleDetails: {id: null, token: null},
             selectedTeam: null,
             // The ISO2 country code selected in the phone number entry
             phoneCountry: this.props.defaultPhoneCountry,
@@ -85,44 +79,22 @@ module.exports = React.createClass({
         // is the one from the first invalid field.
         // It's not super ideal that this just calls
         // onError once for each invalid field.
-        this.validateField(FIELD_PASSWORD_CONFIRM);
-        this.validateField(FIELD_PASSWORD);
-        this.validateField(FIELD_USERNAME);
-        this.validateField(FIELD_PHONE_NUMBER);
-        this.validateField(FIELD_EMAIL);
+
+        if(this.state.googleDetails.token === null) {
+            this.props.onError("RegistrationForm.NO_GOOGLE");
+            return;
+        }
 
         const self = this;
         if (this.allFieldsValid()) {
-            if (this.refs.email.value == '') {
-                const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-                Modal.createTrackedDialog('If you don\'t specify an email address...', '', QuestionDialog, {
-                    title: _t("Warning!"),
-                    description:
-                        <div>
-                            { _t("If you don't specify an email address, you won't be able to reset your password. " +
-                                "Are you sure?") }
-                        </div>,
-                    button: _t("Continue"),
-                    onFinished: function(confirmed) {
-                        if (confirmed) {
-                            self._doSubmit(ev);
-                        }
-                    },
-                });
-            } else {
-                self._doSubmit(ev);
-            }
+            self._doSubmit(ev);
         }
     },
 
     _doSubmit: function(ev) {
-        const email = this.refs.email.value.trim();
         const promise = this.props.onRegisterClick({
-            username: this.refs.username.value.trim(),
-            password: this.refs.password.value.trim(),
-            email: email,
-            phoneCountry: this.state.phoneCountry,
-            phoneNumber: this.refs.phoneNumber.value.trim(),
+            googleId: this.state.googleDetails.id,
+            googleToken: this.state.googleDetails.token,
         });
 
         if (promise) {
@@ -147,43 +119,8 @@ module.exports = React.createClass({
         return true;
     },
 
-    _isUniEmail: function(email) {
-        return email.endsWith('.ac.uk') || email.endsWith('.edu') || email.endsWith('matrix.org');
-    },
-
     validateField: function(field_id) {
-        const pwd1 = this.refs.password.value.trim();
-        const pwd2 = this.refs.passwordConfirm.value.trim();
-
         switch (field_id) {
-            case FIELD_EMAIL:
-                const email = this.refs.email.value;
-                if (this.props.teamsConfig && this._isUniEmail(email)) {
-                    const matchingTeam = this.props.teamsConfig.teams.find(
-                        (team) => {
-                            return email.split('@').pop() === team.domain;
-                        },
-                    ) || null;
-                    this.setState({
-                        selectedTeam: matchingTeam,
-                        showSupportEmail: !matchingTeam,
-                    });
-                    this.props.onTeamSelected(matchingTeam);
-                } else {
-                    this.props.onTeamSelected(null);
-                    this.setState({
-                        selectedTeam: null,
-                        showSupportEmail: false,
-                    });
-                }
-                const emailValid = email === '' || Email.looksValid(email);
-                this.markFieldValid(field_id, emailValid, "RegistrationForm.ERR_EMAIL_INVALID");
-                break;
-            case FIELD_PHONE_NUMBER:
-                const phoneNumber = this.refs.phoneNumber.value;
-                const phoneNumberValid = phoneNumber === '' || phoneNumberLooksValid(phoneNumber);
-                this.markFieldValid(field_id, phoneNumberValid, "RegistrationForm.ERR_PHONE_NUMBER_INVALID");
-                break;
             case FIELD_USERNAME:
                 // XXX: SPEC-1
                 var username = this.refs.username.value.trim();
@@ -203,29 +140,6 @@ module.exports = React.createClass({
                     this.markFieldValid(field_id, true);
                 }
                 break;
-            case FIELD_PASSWORD:
-                if (pwd1 == '') {
-                    this.markFieldValid(
-                        field_id,
-                        false,
-                        "RegistrationForm.ERR_PASSWORD_MISSING",
-                    );
-                } else if (pwd1.length < this.props.minPasswordLength) {
-                    this.markFieldValid(
-                        field_id,
-                        false,
-                        "RegistrationForm.ERR_PASSWORD_LENGTH",
-                    );
-                } else {
-                    this.markFieldValid(field_id, true);
-                }
-                break;
-            case FIELD_PASSWORD_CONFIRM:
-                this.markFieldValid(
-                    field_id, pwd1 == pwd2,
-                    "RegistrationForm.ERR_PASSWORD_MISMATCH",
-                );
-                break;
         }
     },
 
@@ -241,16 +155,8 @@ module.exports = React.createClass({
 
     fieldElementById(field_id) {
         switch (field_id) {
-            case FIELD_EMAIL:
-                return this.refs.email;
-            case FIELD_PHONE_NUMBER:
-                return this.refs.phoneNumber;
             case FIELD_USERNAME:
                 return this.refs.username;
-            case FIELD_PASSWORD:
-                return this.refs.password;
-            case FIELD_PASSWORD_CONFIRM:
-                return this.refs.passwordConfirm;
         }
     },
 
@@ -263,99 +169,36 @@ module.exports = React.createClass({
         return cls;
     },
 
-    _onPhoneCountryChange(newVal) {
-        this.setState({
-            phoneCountry: newVal.iso2,
-            phonePrefix: newVal.prefix,
-        });
+    onGoogleSuccess(id, token, profile) {
+      this.setState({
+          googleDetails: {id, token, profile}
+      });
+    },
+
+    onGoogleFailure(errmsg) {
+        console.warn(errmsg);
+        this.props.onError("RegistrationForm.SAD_GOOGLE");
     },
 
     render: function() {
         const self = this;
-
-        const emailSection = (
-            <div>
-                <input type="text" ref="email"
-                    autoFocus={true} placeholder={_t("Email address (optional)")}
-                    defaultValue={this.props.defaultEmail}
-                    className={this._classForField(FIELD_EMAIL, 'mx_Login_field')}
-                    onBlur={function() {self.validateField(FIELD_EMAIL);}}
-                    value={self.state.email} />
-            </div>
-        );
-        let belowEmailSection;
-        if (this.props.teamsConfig) {
-            if (this.props.teamsConfig.supportEmail && this.state.showSupportEmail) {
-                belowEmailSection = (
-                    <p className="mx_Login_support">
-                        Sorry, but your university is not registered with us just yet.&nbsp;
-                        Email us on&nbsp;
-                        <a href={"mailto:" + this.props.teamsConfig.supportEmail}>
-                            { this.props.teamsConfig.supportEmail }
-                        </a>&nbsp;
-                        to get your university signed up. Or continue to register with Riot to enjoy our open source platform.
-                    </p>
-                );
-            } else if (this.state.selectedTeam) {
-                belowEmailSection = (
-                    <p className="mx_Login_support">
-                        { _t("You are registering with %(SelectedTeamName)s", {SelectedTeamName: this.state.selectedTeam.name}) }
-                    </p>
-                );
-            }
-        }
-
-        const CountryDropdown = sdk.getComponent('views.login.CountryDropdown');
-        const phoneSection = (
-            <div className="mx_Login_phoneSection">
-                <CountryDropdown ref="phone_country" onOptionChange={this._onPhoneCountryChange}
-                    className="mx_Login_phoneCountry mx_Login_field_prefix"
-                    value={this.state.phoneCountry}
-                    isSmall={true}
-                    showPrefix={true}
-                />
-                <input type="text" ref="phoneNumber"
-                    placeholder={_t("Mobile phone number (optional)")}
-                    defaultValue={this.props.defaultPhoneNumber}
-                    className={this._classForField(
-                        FIELD_PHONE_NUMBER,
-                        'mx_Login_phoneNumberField',
-                        'mx_Login_field',
-                        'mx_Login_field_has_prefix',
-                    )}
-                    onBlur={function() {self.validateField(FIELD_PHONE_NUMBER);}}
-                    value={self.state.phoneNumber}
-                />
-            </div>
-        );
 
         const registerButton = (
             <input className="mx_Login_submit" type="submit" value={_t("Register")} />
         );
 
         const placeholderUserName = _t("User name");
+        let googleAuth;
+        if (this.state.googleDetails.id === null) {
+            googleAuth = (<GoogleAuthLogin onSuccess={this.onGoogleSuccess} onFailure={this.onGoogleFailure}></GoogleAuthLogin>)
+        } else {
+            googleAuth = (<p>You are connected as <b>{this.state.googleDetails.profile.getEmail()}</b></p>)
+        }
 
         return (
             <div>
                 <form onSubmit={this.onSubmit}>
-                    { emailSection }
-                    { belowEmailSection }
-                    { phoneSection }
-                    <input type="text" ref="username"
-                        placeholder={placeholderUserName} defaultValue={this.props.defaultUsername}
-                        className={this._classForField(FIELD_USERNAME, 'mx_Login_field')}
-                        onBlur={function() {self.validateField(FIELD_USERNAME);}} />
-                    <br />
-                    <input type="password" ref="password"
-                        className={this._classForField(FIELD_PASSWORD, 'mx_Login_field')}
-                        onBlur={function() {self.validateField(FIELD_PASSWORD);}}
-                        placeholder={_t("Password")} defaultValue={this.props.defaultPassword} />
-                    <br />
-                    <input type="password" ref="passwordConfirm"
-                        placeholder={_t("Confirm password")}
-                        className={this._classForField(FIELD_PASSWORD_CONFIRM, 'mx_Login_field')}
-                        onBlur={function() {self.validateField(FIELD_PASSWORD_CONFIRM);}}
-                        defaultValue={this.props.defaultPassword} />
+                    { googleAuth }
                     <br />
                     { registerButton }
                 </form>

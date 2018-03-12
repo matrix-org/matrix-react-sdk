@@ -1,18 +1,34 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017 Vector Creations Ltd
+Copyright (C) 2018 Kamax Sàrl
+https://www.kamax.io/
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    http://www.apache.org/licenses/LICENSE-2.0
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+This file incorporates work covered by the following copyright and
+permission notice:
+
+    Copyright 2015, 2016 OpenMarket Ltd
+    Copyright 2017 Vector Creations Ltd
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 */
 
 /*
@@ -41,6 +57,12 @@ import AccessibleButton from '../elements/AccessibleButton';
 import GeminiScrollbar from 'react-gemini-scrollbar';
 import RoomViewStore from '../../../stores/RoomViewStore';
 
+const PROFILE_3PID_MAP = {
+    "email": {
+        "label": "Email",
+        "link": "mailto:"
+    }
+}
 
 module.exports = withMatrixClient(React.createClass({
     displayName: 'MemberInfo',
@@ -58,6 +80,7 @@ module.exports = withMatrixClient(React.createClass({
                 mute: false,
                 modifyLevel: false,
             },
+            profile: null,
             muted: false,
             isTargetMod: false,
             updating: 0,
@@ -84,7 +107,12 @@ module.exports = withMatrixClient(React.createClass({
         cli.on("RoomMember.name", this.onRoomMemberName);
         cli.on("RoomMember.membership", this.onRoomMemberMembership);
         cli.on("accountData", this.onAccountData);
-
+        cli.getProfileInfo(this.props.member.userId).then((profile) => {
+            console.log("Got profile", profile);
+            this.setState({profile});
+        }).catch((err) => {
+            console.warn(`Couldn't get profile for ${this.props.member.userId}. ${err}`);
+        });
         this._checkIgnoreState();
     },
 
@@ -705,6 +733,34 @@ module.exports = withMatrixClient(React.createClass({
         );
     },
 
+    _render3PIDProfile: function() {
+        const rows = [];
+        if(this.state.profile === null || this.state.profile.threepids == null) {
+            return null;
+        }
+        for (var profileField of this.state.profile.threepids) {
+            const definition = PROFILE_3PID_MAP[profileField.medium];
+            if (definition === undefined) {
+                continue;
+            }
+            let link;
+            if(definition.link != null) {
+                link = (<a href={definition.link+profileField.address}>{profileField.address}</a>);
+            } else {
+                link = profileField.address;
+            }
+            rows.push(
+                (
+                    <div className="mx_MemberInfo_profileField">
+                        { definition.label }
+                        <span>{link}</span>
+                    </div>
+                )
+            );
+        }
+        return rows;
+    },
+
     render: function() {
         let startChat;
         let kickButton;
@@ -838,6 +894,7 @@ module.exports = withMatrixClient(React.createClass({
             const PowerSelector = sdk.getComponent('elements.PowerSelector');
             const PresenceLabel = sdk.getComponent('rooms.PresenceLabel');
             roomMemberDetails = <div>
+                {this._render3PIDProfile()}
                 <div className="mx_MemberInfo_profileField">
                     { _t("Level:") } <b>
                         <PowerSelector controlled={true}

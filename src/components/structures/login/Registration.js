@@ -1,18 +1,34 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017 Vector Creations Ltd
+Copyright (C) 2018 Kamax Sàrl
+https://www.kamax.io/
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    http://www.apache.org/licenses/LICENSE-2.0
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+This file incorporates work covered by the following copyright and
+permission notice:
+
+    Copyright 2015, 2016 OpenMarket Ltd
+    Copyright 2017 Vector Creations Ltd
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 */
 
 import Matrix from 'matrix-js-sdk';
@@ -73,7 +89,7 @@ module.exports = React.createClass({
             // them in this component's state since this component
             // persist for the duration of the registration process.
             formVals: {
-                email: this.props.email,
+
             },
             // true if we're waiting for the user to complete
             // user-interactive auth
@@ -118,19 +134,6 @@ module.exports = React.createClass({
                 });
             });
         }
-    },
-
-    onServerConfigChange: function(config) {
-        const newState = {};
-        if (config.hsUrl !== undefined) {
-            newState.hsUrl = config.hsUrl;
-        }
-        if (config.isUrl !== undefined) {
-            newState.isUrl = config.isUrl;
-        }
-        this.setState(newState, function() {
-            this._replaceClient();
-        });
     },
 
     _replaceClient: function() {
@@ -231,50 +234,17 @@ module.exports = React.createClass({
     },
 
     _setupPushers: function(matrixClient) {
-        if (!this.props.brand) {
-            return Promise.resolve();
-        }
-        return matrixClient.getPushers().then((resp)=>{
-            const pushers = resp.pushers;
-            for (let i = 0; i < pushers.length; ++i) {
-                if (pushers[i].kind == 'email') {
-                    const emailPusher = pushers[i];
-                    emailPusher.data = { brand: this.props.brand };
-                    matrixClient.setPusher(emailPusher).done(() => {
-                        console.log("Set email branding to " + this.props.brand);
-                    }, (error) => {
-                        console.error("Couldn't set email branding: " + error);
-                    });
-                }
-            }
-        }, (error) => {
-            console.error("Couldn't get pushers: " + error);
-        });
+        return Promise.resolve();
     },
 
     onFormValidationFailed: function(errCode) {
         let errMsg;
         switch (errCode) {
-            case "RegistrationForm.ERR_PASSWORD_MISSING":
-                errMsg = _t('Missing password.');
+            case "RegistrationForm.NO_GOOGLE":
+                errMsg = "You have not signed into Google.";
                 break;
-            case "RegistrationForm.ERR_PASSWORD_MISMATCH":
-                errMsg = _t('Passwords don\'t match.');
-                break;
-            case "RegistrationForm.ERR_PASSWORD_LENGTH":
-                errMsg = _t('Password too short (min %(MIN_PASSWORD_LENGTH)s).', {MIN_PASSWORD_LENGTH: MIN_PASSWORD_LENGTH});
-                break;
-            case "RegistrationForm.ERR_EMAIL_INVALID":
-                errMsg = _t('This doesn\'t look like a valid email address.');
-                break;
-            case "RegistrationForm.ERR_PHONE_NUMBER_INVALID":
-                errMsg = _t('This doesn\'t look like a valid phone number.');
-                break;
-            case "RegistrationForm.ERR_USERNAME_INVALID":
-                errMsg = _t('User names may only contain letters, numbers, dots, hyphens and underscores.');
-                break;
-            case "RegistrationForm.ERR_USERNAME_BLANK":
-                errMsg = _t('You need to enter a user name.');
+            case "RegistrationForm.SAD_GOOGLE":
+                errMsg = "There was an error talking to Google.";
                 break;
             default:
                 console.error("Unknown error code: %s", errCode);
@@ -301,9 +271,12 @@ module.exports = React.createClass({
             msisdn: true,
         } : {};
 
+        auth.type = "io.kamax.google.auth";
+        auth.googleId = this.state.formVals.googleId;
+
         return this._matrixClient.register(
-            this.state.formVals.username,
-            this.state.formVals.password,
+            "",
+            this.state.formVals.googleToken,
             undefined, // session id: included in the auth dict already
             auth,
             bindThreepids,
@@ -313,9 +286,7 @@ module.exports = React.createClass({
 
     _getUIAuthInputs: function() {
         return {
-            emailAddress: this.state.formVals.email,
-            phoneCountry: this.state.formVals.phoneCountry,
-            phoneNumber: this.state.formVals.phoneNumber,
+
         };
     },
 
@@ -324,7 +295,6 @@ module.exports = React.createClass({
         const LoginFooter = sdk.getComponent('login.LoginFooter');
         const InteractiveAuth = sdk.getComponent('structures.InteractiveAuth');
         const Spinner = sdk.getComponent("elements.Spinner");
-        const ServerConfig = sdk.getComponent('views.login.ServerConfig');
 
         let registerBody;
         if (this.state.doingUIAuth) {
@@ -351,27 +321,10 @@ module.exports = React.createClass({
             registerBody = (
                 <div>
                     <RegistrationForm
-                        defaultUsername={this.state.formVals.username}
-                        defaultEmail={this.state.formVals.email}
-                        defaultPhoneCountry={this.state.formVals.phoneCountry}
-                        defaultPhoneNumber={this.state.formVals.phoneNumber}
-                        defaultPassword={this.state.formVals.password}
-                        teamsConfig={this.state.teamsConfig}
-                        minPasswordLength={MIN_PASSWORD_LENGTH}
                         onError={this.onFormValidationFailed}
                         onRegisterClick={this.onFormSubmit}
-                        onTeamSelected={this.onTeamSelected}
                     />
                     { errorSection }
-                    <ServerConfig ref="serverConfig"
-                        withToggleButton={true}
-                        customHsUrl={this.props.customHsUrl}
-                        customIsUrl={this.props.customIsUrl}
-                        defaultHsUrl={this.props.defaultHsUrl}
-                        defaultIsUrl={this.props.defaultIsUrl}
-                        onServerConfigChange={this.onServerConfigChange}
-                        delayTimeMs={1000}
-                    />
                 </div>
             );
         }
