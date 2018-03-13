@@ -22,6 +22,8 @@ import AvatarLogic from '../../../Avatar';
 import sdk from '../../../index';
 import AccessibleButton from '../elements/AccessibleButton';
 
+import shallowCompare from 'react-addons-shallow-compare';
+
 module.exports = React.createClass({
     displayName: 'BaseAvatar',
 
@@ -81,6 +83,21 @@ module.exports = React.createClass({
                 }
             }
         }
+    },
+
+    shouldComponentUpdate(nextProps, nextState) {
+        // There's a list of URLs in both props ('urls') and state ('imageUrls').
+        // state.imageUrls is derived from props.urls (for better or worse) in
+        // componentWillReceiveProps so we only need to compare each URL in state.imageUrls
+        if (this.state.imageUrls && nextState.imageUrls) {
+            if (this.state.imageUrls.length !== nextState.imageUrls.length) return true;
+            for (let i = 0; i < this.state.imageUrls.length; ++i) {
+                if (this.state.imageUrls[i] !== nextState.imageUrls[i]) return true;
+            }
+        }
+
+        // otherwise, defer to shallow comparison
+        return shallowCompare(this, nextProps, nextState);
     },
 
     onClientSync: function(syncState, prevState) {
