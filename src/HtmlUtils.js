@@ -186,6 +186,7 @@ const sanitizeHtmlParams = {
         // custom ones first:
         font: ['color', 'data-mx-bg-color', 'data-mx-color', 'style'], // custom to matrix
         span: ['data-mx-bg-color', 'data-mx-color', 'style'], // custom to matrix
+        blockquote: ['data-mx-border-color', 'style'], // custom to matrix
         a: ['href', 'name', 'target', 'rel'], // remote target: custom to matrix
         img: ['src', 'width', 'height', 'alt', 'title'],
         ol: ['start'],
@@ -258,11 +259,11 @@ const sanitizeHtmlParams = {
             // because attributes are stripped after transforming
             delete attribs.style;
 
-            // Sanitise and transform data-mx-color and data-mx-bg-color to their CSS
-            // equivalents
+            // Sanitise and transform custom matrix attributes to their CSS equivalents
             const customCSSMapper = {
                 'data-mx-color': 'color',
                 'data-mx-bg-color': 'background-color',
+                'data-mx-border-color': 'border-color',
                 // $customAttributeKey: $cssAttributeKey
             };
 
