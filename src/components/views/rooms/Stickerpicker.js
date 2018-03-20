@@ -18,9 +18,10 @@ import React from 'react';
 import { _t } from '../../../languageHandler';
 import Widgets from '../../../utils/widgets';
 import AppTile from '../elements/AppTile';
-import ContextualMenu from '../../structures/ContextualMenu';
+import PersistentContextualMenu from '../../structures/PersistentContextualMenu';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import Modal from '../../../Modal';
+import TintableSvg from '../elements/TintableSvg';
 import sdk from '../../../index';
 import SdkConfig from '../../../SdkConfig';
 import ScalarAuthClient from '../../../ScalarAuthClient';
@@ -31,12 +32,13 @@ const widgetType = 'm.stickerpicker';
 export default class Stickerpicker extends React.Component {
     constructor(props) {
         super(props);
-        this.onShowStickersClick = this.onShowStickersClick.bind(this);
-        this.onHideStickersClick = this.onHideStickersClick.bind(this);
-        this.onFinished = this.onFinished.bind(this);
+
+        this._onStickersMenuShouldHide = this._onStickersMenuShouldHide.bind(this);
         this._launchManageIntegrations = this._launchManageIntegrations.bind(this);
         this._removeStickerpickerWidgets = this._removeStickerpickerWidgets.bind(this);
         this._onWidgetAction = this._onWidgetAction.bind(this);
+        this.onShowStickersClick = this.onShowStickersClick.bind(this);
+        this.onHideStickersClick = this.onHideStickersClick.bind(this);
 
         this.defaultStickersContent = (
             <div className='mx_Stickers_contentPlaceholder'>
@@ -45,6 +47,7 @@ export default class Stickerpicker extends React.Component {
                 <img src='img/stickerpack-placeholder.png' alt={_t('Add a stickerpack')} />
             </div>
         );
+
         this.popoverWidth = 300;
         this.popoverHeight = 300;
 
@@ -68,28 +71,29 @@ export default class Stickerpicker extends React.Component {
         }
         Widgets.removeStickerpickerWidgets();
         this._getStickerPickerWidget();
-        setTimeout(() => this.stickersMenu.close());
+        setTimeout(() => this.setState({showStickers: false}));
     }
 
     componentDidMount() {
         this.scalarClient = null;
+
         if (SdkConfig.get().integrations_ui_url && SdkConfig.get().integrations_rest_url) {
             this.scalarClient = new ScalarAuthClient();
             this.scalarClient.connect().then(() => {
+                this._getStickerPickerWidget().then(() => {
+                    this.dispatcherRef = dis.register(this._onWidgetAction);
+                });
                 this.forceUpdate();
             }).catch((e) => {
                 this._imError("Failed to connect to integrations server", e);
             });
         }
-
-        if (!this.state.imError) {
-            this._getStickerPickerWidget();
-            this.dispatcherRef = dis.register(this._onWidgetAction);
-        }
     }
 
     componentWillUnmount() {
-        dis.unregister(this.dispatcherRef);
+        if (this.dispatcherRef) {
+            dis.unregister(this.dispatcherRef);
+        }
     }
 
     _imError(errorMsg, e) {
@@ -107,73 +111,75 @@ export default class Stickerpicker extends React.Component {
             this._getStickerPickerWidget();
             return;
         } else if (payload.action === "stickerpicker_close") {
-          setTimeout(() => this.stickersMenu.close());
+          setTimeout(() => this.setState({showStickers: false}));
         }
     }
 
     _getStickerPickerWidget() {
-        // Stickers
-        // TODO - Add support for Stickerpickers from multiple app stores.
-        // Render content from multiple stickerpack sources, each within their own iframe, within the stickerpicker UI element.
-        const stickerpickerWidget = Widgets.getStickerpickerWidgets()[0];
-        let stickersContent;
+        return new Promise((resolve, reject) => {
+            // Stickers
+            // TODO - Add support for Stickerpickers from multiple app stores.
+            // Render content from multiple stickerpack sources, each within their own iframe, within the stickerpicker UI element.
+            const stickerpickerWidget = Widgets.getStickerpickerWidgets()[0];
+            let stickersContent;
 
-        // Load stickerpack content
-        if (stickerpickerWidget && stickerpickerWidget.content && stickerpickerWidget.content.url) {
-            // Set default name
-            stickerpickerWidget.content.name = stickerpickerWidget.name || "Stickerpack";
-            this.widgetId = stickerpickerWidget.id;
+            // Load stickerpack content
+            if (stickerpickerWidget && stickerpickerWidget.content && stickerpickerWidget.content.url) {
+                // Set default name
+                stickerpickerWidget.content.name = stickerpickerWidget.name || "Stickerpack";
+                this.widgetId = stickerpickerWidget.id;
 
-            stickersContent = (
-                <div
-                    style={{
-                        overflow: 'hidden',
-                        height: '300px',
-                    }}
-                >
+                stickersContent = (
                     <div
-                        id='stickersContent'
-                        className='mx_Stickers_content'
                         style={{
-                            border: 'none',
-                            height: this.popoverHeight,
-                            width: this.popoverWidth,
+                            overflow: 'hidden',
+                            height: '300px',
                         }}
                     >
-                        <AppTile
-                            id={stickerpickerWidget.id}
-                            url={stickerpickerWidget.content.url}
-                            name={stickerpickerWidget.content.name}
-                            room={this.props.room}
-                            type={stickerpickerWidget.content.type}
-                            fullWidth={true}
-                            userId={stickerpickerWidget.sender || MatrixClientPeg.get().credentials.userId}
-                            creatorUserId={MatrixClientPeg.get().credentials.userId}
-                            waitForIframeLoad={true}
-                            show={true}
-                            showMenubar={true}
-                            onEditClick={this._launchManageIntegrations}
-                            onDeleteClick={this._removeStickerpickerWidgets}
-                            showTitle={false}
-                            showMinimise={true}
-                            showDelete={false}
-                            onMinimiseClick={this.onHideStickersClick}
-                            handleMinimisePointerEvents={true}
-                            whitelistCapabilities={['m.sticker']}
-                        />
+                        <div
+                            id='stickersContent'
+                            className='mx_Stickers_content'
+                            style={{
+                                border: 'none',
+                                height: this.popoverHeight,
+                                width: this.popoverWidth,
+                            }}
+                        >
+                            <AppTile
+                                id={stickerpickerWidget.id}
+                                url={stickerpickerWidget.content.url}
+                                name={stickerpickerWidget.content.name}
+                                room={this.props.room}
+                                type={stickerpickerWidget.content.type}
+                                fullWidth={true}
+                                userId={stickerpickerWidget.sender || MatrixClientPeg.get().credentials.userId}
+                                creatorUserId={MatrixClientPeg.get().credentials.userId}
+                                waitForIframeLoad={true}
+                                show={true}
+                                showMenubar={true}
+                                onEditClick={this._launchManageIntegrations}
+                                onDeleteClick={this._removeStickerpickerWidgets}
+                                showTitle={false}
+                                showMinimise={true}
+                                showDelete={false}
+                                onMinimiseClick={this.onHideStickersClick}
+                                handleMinimisePointerEvents={true}
+                                whitelistCapabilities={['m.sticker']}
+                            />
+                        </div>
                     </div>
-                </div>
-            );
-        } else {
-            // Default content to show if stickerpicker widget not added
-            console.warn("No available sticker picker widgets");
-            stickersContent = this.defaultStickersContent;
-            this.widgetId = null;
-            this.forceUpdate();
-        }
-        this.setState({
-            showStickers: false,
-            stickersContent: stickersContent,
+                );
+            } else {
+                // Default content to show if stickerpicker widget not added
+                console.warn("No available sticker picker widgets");
+                stickersContent = this.defaultStickersContent;
+                this.widgetId = null;
+                this.forceUpdate();
+            }
+            this.setState({
+                showStickers: false,
+                stickersContent: stickersContent,
+            }, resolve());
         });
     }
 
@@ -183,27 +189,7 @@ export default class Stickerpicker extends React.Component {
      * @param  {Event} e Event that triggered the function
      */
     onShowStickersClick(e) {
-        this._getStickerPickerWidget();
-        const GenericElementContextMenu = sdk.getComponent('context_menus.GenericElementContextMenu');
-        const buttonRect = e.target.getBoundingClientRect();
-
-        // The window X and Y offsets are to adjust position when zoomed in to page
-        const x = buttonRect.right + window.pageXOffset - 42;
-        const y = (buttonRect.top + (buttonRect.height / 2) + window.pageYOffset) - 19;
-        // const self = this;
-        this.stickersMenu = ContextualMenu.createMenu(GenericElementContextMenu, {
-            chevronOffset: 10,
-            chevronFace: 'bottom',
-            left: x,
-            top: y,
-            menuWidth: this.popoverWidth,
-            menuHeight: this.popoverHeight,
-            element: this.state.stickersContent,
-            onFinished: this.onFinished,
-            menuPaddingTop: 0,
-        });
-
-
+        console.warn('Showing sticker menu', this);
         this.setState({showStickers: true});
     }
 
@@ -212,13 +198,14 @@ export default class Stickerpicker extends React.Component {
      * @param  {Event} ev Event that triggered the function call
      */
     onHideStickersClick(ev) {
-        setTimeout(() => this.stickersMenu.close());
+        this._onStickersMenuShouldHide();
     }
 
     /**
-     * The stickers picker was hidden
+     * The stickerpicker should hide
      */
-    onFinished() {
+    _onStickersMenuShouldHide() {
+        console.warn('Hiding sticker menu', this);
         this.setState({showStickers: false});
     }
 
@@ -238,13 +225,15 @@ export default class Stickerpicker extends React.Component {
             src: src,
         }, "mx_IntegrationsManager");
 
-        // Wrap this in a timeout in order to avoid the DOM node from being pulled from under its feet
-        setTimeout(() => this.stickersMenu.close());
+        // Wrap this in a timeout in order to avoid the DOM node from being
+        // pulled from under its feet
+        setTimeout(() => this.setState({showStickers: false}));
     }
 
     render() {
-        const TintableSvg = sdk.getComponent("elements.TintableSvg");
-        let stickersButton;
+        let stickersButton = null;
+
+        // Sticker buttons
         if (this.state.showStickers) {
             // Show hide-stickers button
             stickersButton =
@@ -253,8 +242,9 @@ export default class Stickerpicker extends React.Component {
                     key="controls_hide_stickers"
                     className="mx_MessageComposer_stickers mx_Stickers_hideStickers"
                     onClick={this.onHideStickersClick}
-                    ref='target'
-                    title={_t("Hide Stickers")}>
+                    ref='stickersButton'
+                    title={_t("Hide Stickers")}
+                >
                     <TintableSvg src="img/icons-hide-stickers.svg" width="35" height="35" />
                 </div>;
         } else {
@@ -265,10 +255,31 @@ export default class Stickerpicker extends React.Component {
                     key="constrols_show_stickers"
                     className="mx_MessageComposer_stickers"
                     onClick={this.onShowStickersClick}
-                    title={_t("Show Stickers")}>
+                    title={_t("Show Stickers")}
+                    ref='stickersButton'
+                >
                     <TintableSvg src="img/icons-show-stickers.svg" width="35" height="35" />
                 </div>;
         }
-        return stickersButton;
+
+        const stickersMenu = '';
+        // const stickersMenu = <PersistentContextualMenu
+        //     chevronOffset={10}
+        //     chevronFace={'bottom'}
+        //     left={0}
+        //     top={0}
+        //     menuWidth={this.popoverWidth}
+        //     menuHeight={this.popoverHeight}
+        //     menuPaddingTop={0}
+        //     onMenuShouldHide={this._onStickersMenuShouldHide}
+        //     visible={this.state.showStickers}
+        // >{ this.state.stickersContent }</PersistentContextualMenu>;
+
+        return (
+            <div>
+                { stickersButton }
+                { stickersMenu }
+            </div>
+        );
     }
 }
