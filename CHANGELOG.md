@@ -1,3 +1,10 @@
+Changes in [0.11.4-cryptowarning.1](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v0.11.4-cryptowarning.1) (2018-03-26)
+=====================================================================================================================================
+[Full Changelog](https://github.com/matrix-org/matrix-react-sdk/compare/v0.11.4...v0.11.4-cryptowarning.1)
+
+ * Show error if indexeddb store version is too new
+   [\#1813](https://github.com/matrix-org/matrix-react-sdk/pull/1813)
+
 Changes in [0.11.4](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v0.11.4) (2018-02-09)
 =====================================================================================================
 [Full Changelog](https://github.com/matrix-org/matrix-react-sdk/compare/v0.11.3...v0.11.4)
