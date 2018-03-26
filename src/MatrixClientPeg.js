@@ -21,6 +21,7 @@ import utils from 'matrix-js-sdk/lib/utils';
 import EventTimeline from 'matrix-js-sdk/lib/models/event-timeline';
 import EventTimelineSet from 'matrix-js-sdk/lib/models/event-timeline-set';
 import createMatrixClient from './utils/createMatrixClient';
+import sdk from '.';
 
 interface MatrixClientCreds {
     homeserverUrl: string,
@@ -88,6 +89,25 @@ class MatrixClientPeg {
             // this can happen for a number of reasons, the most likely being
             // that the olm library was missing. It's not fatal.
             console.warn("Unable to initialise e2e: " + e);
+
+            if (e.name == 'VersionError') {
+                // XXX: import here to avoid cyclical dependencies
+                const Modal = require('./Modal');
+                const _t = require('./languageHandler')._t;
+                const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+                Modal.createTrackedDialog('New crypto data detected', '', ErrorDialog, {
+                    title: _t("Cryptography Disabled"),
+                    description: _t(
+                        "The cryptography data in this browser session is "+
+                        "too new for this version of Riot to understand. "+
+                        "Cryptography has been disabled. To re-enable it, go "+
+                        "back to the newer version of Riot. If you'd like to "+
+                        "use cryptography on this version, go back to the new "+
+                        "version, export your keys and log out, then return to "+
+                        "this version.",
+                    ),
+                });
+            }
         }
 
         const opts = utils.deepCopy(this.opts);
