@@ -154,7 +154,7 @@ export default React.createClass({
             viewUserId: null,
 
             collapseLhs: false,
-            collapseRhs: false,
+            collapseRhs: true,
             leftDisabled: false,
             middleDisabled: false,
             rightDisabled: false,
