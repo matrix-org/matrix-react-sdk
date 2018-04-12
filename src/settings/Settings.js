@@ -88,9 +88,15 @@ export const SETTINGS = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_presence_management": {
+    "feature_tag_panel": {
         isFeature: true,
-        displayName: _td("Presence Management"),
+        displayName: _td("Tag Panel"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
+    "feature_sticker_messages": {
+        isFeature: true,
+        displayName: _td("Sticker Messages"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
