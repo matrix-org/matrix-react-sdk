@@ -48,9 +48,31 @@ module.exports = React.createClass({
         };
     },
 
+    componentWillMount: function() {
+        MatrixClientPeg.get().on("RoomState.events", this.onRoomStateEvents);
+    },
+
+    componentWillUnmount: function() {
+        const cli = MatrixClientPeg.get();
+        if (cli) {
+            cli.removeListener("RoomState.events", this.onRoomStateEvents);
+        }
+    },
+
     componentWillReceiveProps: function(newProps) {
         this.setState({
             urls: this.getImageUrls(newProps),
+        });
+    },
+
+    onRoomStateEvents: function(ev) {
+        if (!this.props.room ||
+            ev.getRoomId() !== this.props.room.roomId ||
+            ev.getType() !== 'm.room.avatar'
+        ) return;
+
+        this.setState({
+            urls: this.getImageUrls(this.props),
         });
     },
 
@@ -87,10 +109,15 @@ module.exports = React.createClass({
 
         const mlist = props.room.currentState.members;
         const userIds = [];
+        const leftUserIds = [];
         // for .. in optimisation to return early if there are >2 keys
         for (const uid in mlist) {
             if (mlist.hasOwnProperty(uid)) {
-                userIds.push(uid);
+                if (["join", "invite"].includes(mlist[uid].membership)) {
+                    userIds.push(uid);
+                } else {
+                    leftUserIds.push(uid);
+                }
             }
             if (userIds.length > 2) {
                 return null;
@@ -112,6 +139,14 @@ module.exports = React.createClass({
                 false,
             );
         } else if (userIds.length == 1) {
+            // The other 1-1 user left, leaving just the current user, so show the left user's avatar
+            if (leftUserIds.length === 1) {
+                return mlist[leftUserIds[0]].getAvatarUrl(
+                    MatrixClientPeg.get().getHomeserverUrl(),
+                    props.width, props.height, props.resizeMethod,
+                    false,
+                );
+            }
             return mlist[userIds[0]].getAvatarUrl(
                 MatrixClientPeg.get().getHomeserverUrl(),
                 Math.floor(props.width * window.devicePixelRatio),
