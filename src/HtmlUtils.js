@@ -441,7 +441,9 @@ export function bodyToHtml(content, highlights, opts={}) {
             // escaped plaintext body.
             if (bodyHasEmoji) {
                 isHtml = true;
-                safeBody = sanitizeHtml(escape(content.body), sanitizeHtmlParams);
+                // We are converting from plaintext to html here so replace newlines with <br>s
+                // after escaping so that they are not escaped
+                safeBody = sanitizeHtml(escape(content.body).replace(/\n/g, '<br>'), sanitizeHtmlParams);
             }
         }
 
