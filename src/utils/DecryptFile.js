@@ -24,24 +24,6 @@ import Promise from 'bluebird';
 
 
 /**
- * Read blob as a data:// URI.
- * @return {Promise} A promise that resolves with the data:// URI.
- */
-export function readBlobAsDataUri(file) {
-    const deferred = Promise.defer();
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        deferred.resolve(e.target.result);
-    };
-    reader.onerror = function(e) {
-        deferred.reject(e);
-    };
-    reader.readAsDataURL(file);
-    return deferred.promise;
-}
-
-
-/**
  * Decrypt a file attached to a matrix event.
  * @param file {Object} The json taken from the matrix event.
  *   This passed to [link]{@link https://github.com/matrix-org/browser-encrypt-attachments}
