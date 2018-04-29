@@ -20,7 +20,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MFileBody from './MFileBody';
 import MatrixClientPeg from '../../../MatrixClientPeg';
-import decryptFile from '../../../utils/DecryptFile';
+import { decryptFile } from '../../../utils/DecryptFile';
 import Promise from 'bluebird';
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";

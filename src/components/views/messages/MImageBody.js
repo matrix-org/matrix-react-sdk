@@ -25,7 +25,7 @@ import ImageUtils from '../../../ImageUtils';
 import Modal from '../../../Modal';
 import sdk from '../../../index';
 import dis from '../../../dispatcher';
-import decryptFile from '../../../utils/DecryptFile';
+import { decryptFile } from '../../../utils/DecryptFile';
 import Promise from 'bluebird';
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";

@@ -20,7 +20,7 @@ import React from 'react';
 import MFileBody from './MFileBody';
 
 import MatrixClientPeg from '../../../MatrixClientPeg';
-import decryptFile from '../../../utils/DecryptFile';
+import { decryptFile } from '../../../utils/DecryptFile';
 import { _t } from '../../../languageHandler';
 
 export default class MAudioBody extends React.Component {
