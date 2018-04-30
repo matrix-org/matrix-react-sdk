@@ -466,6 +466,10 @@ export default React.createClass({
     _onGroupMyMembership: function(group) {
         if (group.groupId !== this.props.groupId) return;
 
+        if (group.myMembership === 'leave') {
+            // Leave settings - the user might have clicked the "Leave" button
+            this._closeSettings();
+        }
         this.setState({membershipBusy: false});
     },
 
@@ -562,6 +566,10 @@ export default React.createClass({
     },
 
     _onCancelClick: function() {
+        this._closeSettings();
+    },
+
+    _closeSettings() {
         this.setState({
             editing: false,
             profileForm: null,
@@ -662,8 +670,13 @@ export default React.createClass({
         });
     },
 
-    _onAcceptInviteClick: function() {
+    _onAcceptInviteClick: async function() {
         this.setState({membershipBusy: true});
+
+        // Wait 500ms to prevent flashing. Do this before sending a request otherwise we risk the
+        // spinner disappearing after we have fetched new group data.
+        await Promise.delay(500);
+
         this._groupStore.acceptGroupInvite().then(() => {
             // don't reset membershipBusy here: wait for the membership change to come down the sync
         }).catch((e) => {
@@ -676,9 +689,14 @@ export default React.createClass({
         });
     },
 
-    _onRejectInviteClick: function() {
+    _onRejectInviteClick: async function() {
         this.setState({membershipBusy: true});
-        this._matrixClient.leaveGroup(this.props.groupId).then(() => {
+
+        // Wait 500ms to prevent flashing. Do this before sending a request otherwise we risk the
+        // spinner disappearing after we have fetched new group data.
+        await Promise.delay(500);
+
+        this._groupStore.leaveGroup().then(() => {
             // don't reset membershipBusy here: wait for the membership change to come down the sync
         }).catch((e) => {
             this.setState({membershipBusy: false});
@@ -690,9 +708,14 @@ export default React.createClass({
         });
     },
 
-    _onJoinClick: function() {
+    _onJoinClick: async function() {
         this.setState({membershipBusy: true});
-        this._matrixClient.joinGroup(this.props.groupId).then(() => {
+
+        // Wait 500ms to prevent flashing. Do this before sending a request otherwise we risk the
+        // spinner disappearing after we have fetched new group data.
+        await Promise.delay(500);
+
+        this._groupStore.joinGroup().then(() => {
             // don't reset membershipBusy here: wait for the membership change to come down the sync
         }).catch((e) => {
             this.setState({membershipBusy: false});
@@ -711,11 +734,16 @@ export default React.createClass({
             description: _t("Leave %(groupName)s?", {groupName: this.props.groupId}),
             button: _t("Leave"),
             danger: true,
-            onFinished: (confirmed) => {
+            onFinished: async (confirmed) => {
                 if (!confirmed) return;
 
                 this.setState({membershipBusy: true});
-                this._matrixClient.leaveGroup(this.props.groupId).then(() => {
+
+                // Wait 500ms to prevent flashing. Do this before sending a request otherwise we risk the
+                // spinner disappearing after we have fetched new group data.
+                await Promise.delay(500);
+
+                this._groupStore.leaveGroup().then(() => {
                     // don't reset membershipBusy here: wait for the membership change to come down the sync
                 }).catch((e) => {
                     this.setState({membershipBusy: false});
@@ -989,8 +1017,8 @@ export default React.createClass({
 
         return <div className={membershipContainerClasses}>
             <div className="mx_GroupView_membershipSubSection">
-                { /* Empty div for flex alignment */ }
-                <div />
+                { /* The <div /> is for flex alignment */ }
+                { this.state.membershipBusy ? <Spinner /> : <div /> }
                 <div className="mx_GroupView_membership_buttonContainer">
                     <AccessibleButton
                         className={membershipButtonClasses}

@@ -17,6 +17,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import {ContentRepo} from "matrix-js-sdk";
 import MatrixClientPeg from "../../../MatrixClientPeg";
+import Modal from '../../../Modal';
 import sdk from "../../../index";
 
 module.exports = React.createClass({
@@ -31,6 +32,7 @@ module.exports = React.createClass({
         width: PropTypes.number,
         height: PropTypes.number,
         resizeMethod: PropTypes.string,
+        viewAvatarOnClick: PropTypes.bool,
     },
 
     getDefaultProps: function() {
@@ -109,10 +111,15 @@ module.exports = React.createClass({
 
         const mlist = props.room.currentState.members;
         const userIds = [];
+        const leftUserIds = [];
         // for .. in optimisation to return early if there are >2 keys
         for (const uid in mlist) {
             if (mlist.hasOwnProperty(uid)) {
-                userIds.push(uid);
+                if (["join", "invite"].includes(mlist[uid].membership)) {
+                    userIds.push(uid);
+                } else {
+                    leftUserIds.push(uid);
+                }
             }
             if (userIds.length > 2) {
                 return null;
@@ -134,6 +141,14 @@ module.exports = React.createClass({
                 false,
             );
         } else if (userIds.length == 1) {
+            // The other 1-1 user left, leaving just the current user, so show the left user's avatar
+            if (leftUserIds.length === 1) {
+                return mlist[leftUserIds[0]].getAvatarUrl(
+                    MatrixClientPeg.get().getHomeserverUrl(),
+                    props.width, props.height, props.resizeMethod,
+                    false,
+                );
+            }
             return mlist[userIds[0]].getAvatarUrl(
                 MatrixClientPeg.get().getHomeserverUrl(),
                 Math.floor(props.width * window.devicePixelRatio),
@@ -146,6 +161,19 @@ module.exports = React.createClass({
         }
     },
 
+    onRoomAvatarClick: function() {
+        const avatarUrl = this.props.room.getAvatarUrl(
+            MatrixClientPeg.get().getHomeserverUrl(),
+            null, null, null, false);
+        const ImageView = sdk.getComponent("elements.ImageView");
+        const params = {
+            src: avatarUrl,
+            name: this.props.room.name,
+        };
+
+        Modal.createDialog(ImageView, params, "mx_Dialog_lightbox");
+    },
+
     render: function() {
         const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
 
@@ -156,7 +184,8 @@ module.exports = React.createClass({
         return (
             <BaseAvatar {...otherProps} name={roomName}
                 idName={room ? room.roomId : null}
-                urls={this.state.urls} />
+                urls={this.state.urls}
+                onClick={this.props.viewAvatarOnClick ? this.onRoomAvatarClick : null} />
         );
     },
 });

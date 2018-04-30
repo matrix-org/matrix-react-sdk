@@ -88,12 +88,6 @@ export const SETTINGS = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_presence_management": {
-        isFeature: true,
-        displayName: _td("Presence Management"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-    },
     "feature_tag_panel": {
         isFeature: true,
         displayName: _td("Tag Panel"),
@@ -155,6 +149,11 @@ export const SETTINGS = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Autoplay GIFs and videos'),
         default: false,
+    },
+    "alwaysShowEncryptionIcons": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Always show encryption icons'),
+        default: true,
     },
     "enableSyntaxHighlightLanguageDetection": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
