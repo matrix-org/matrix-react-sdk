@@ -139,7 +139,10 @@ export default class extends React.Component {
     }
 
     onImageLoad() {
-        this.fixupHeight();
+        // there shouldn't be any surprises having loaded the actual thumbnail
+        // so no point in fixing up the height here.
+
+        //this.fixupHeight();
         this.props.onWidgetLoad();
     }
 
@@ -174,6 +177,8 @@ export default class extends React.Component {
 
     componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
+        // fix up the height in case we're spinning whilst decrypting the thumbnail
+        this.fixupHeight();
         const content = this.props.mxEvent.getContent();
         if (content.file !== undefined && this.state.decryptedUrl === null) {
             let thumbnailPromise = Promise.resolve(null);
@@ -231,12 +236,8 @@ export default class extends React.Component {
     }
 
     fixupHeight() {
-        if (!this.refs.image) {
-            console.warn(`Refusing to fix up height on ${this.displayName} with no image element`);
-            return;
-        }
-
         const content = this.props.mxEvent.getContent();
+        if (!this.refs.body) return;
         const timelineWidth = this.refs.body.offsetWidth;
         const maxHeight = 600; // let images take up as much width as they can so long as the height doesn't exceed 600px.
         // the alternative here would be 600*timelineWidth/800; to scale them down to fit inside a 4:3 bounding box
@@ -253,17 +254,36 @@ export default class extends React.Component {
         // console.log("trying to fit image into timelineWidth of " + this.refs.body.offsetWidth + " or " + this.refs.body.clientWidth);
         let thumbHeight = null;
         if (content.info) {
-            thumbHeight = ImageUtils.thumbHeight(content.info.w, content.info.h, timelineWidth, maxHeight);
+            if (content.file !== undefined ||
+                content.info.mimetype == "image/svg+xml" && content.info.thumbnail_url) {
+                // encrypted image or SVG so using clientside-created thumbnail
+                if (content.info.thumbnail_info) {
+                    thumbHeight = ImageUtils.thumbHeight(content.info.thumbnail_info.w, content.info.thumbnail_info.h, timelineWidth, maxHeight);
+                }
+            } else {
+                thumbHeight = ImageUtils.thumbHeight(content.info.w, content.info.h, timelineWidth, maxHeight);
+            }
         }
-        this.refs.image.style.height = thumbHeight + "px";
+
+        if (this.refs.image &&
+            this.refs.image.offsetHeight !== thumbHeight)
+        {
+            console.log(`Resizing height of ${ content.info.body } from ${ this.refs.image.style.height } to ${ thumbHeight } with timelineWidth ${ timelineWidth }`);
+            this.refs.image.style.height = thumbHeight + "px";
+        }
         // console.log("Image height now", thumbHeight);
+
+        return thumbHeight;
     }
 
     _messageContent(contentUrl, thumbUrl, content) {
+        const thumbHeight = this.fixupHeight();
+
         const thumbnail = (
             <a href={contentUrl} onClick={this.onClick}>
                 <img className="mx_MImageBody_thumbnail" src={thumbUrl} ref="image"
                     alt={content.body}
+                    height={thumbHeight}
                     onError={this.onImageError}
                     onLoad={this.onImageLoad}
                     onMouseEnter={this.onImageEnter}
@@ -301,6 +321,8 @@ export default class extends React.Component {
                         "display": "flex",
                         "alignItems": "center",
                         "width": "100%",
+                        // make space for a single line download link to minimise popping
+                        "paddingBottom": "34px",
                     }}>
                         <img src="img/spinner.gif" alt={content.body} width="32" height="32" style={{
                             "margin": "auto",
