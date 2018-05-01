@@ -271,7 +271,7 @@ const LoggedInView = React.createClass({
         const PasswordNagBar = sdk.getComponent('globals.PasswordNagBar');
 
         let page_element;
-        let right_panel = '';
+        let right_panel = <div className="mx_RightPanel_hidden"></div>;
 
         switch (this.props.page_type) {
             case PageTypes.RoomView:
