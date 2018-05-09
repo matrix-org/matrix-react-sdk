@@ -45,6 +45,7 @@ import { KeyCode, isOnlyCtrlOrCmdKeyEvent } from '../../Keyboard';
 import RoomViewStore from '../../stores/RoomViewStore';
 import RoomScrollStateStore from '../../stores/RoomScrollStateStore';
 import SettingsStore from "../../settings/SettingsStore";
+import SdkConfig from "../../SdkConfig";
 
 const DEBUG = false;
 let debuglog = function() {};
@@ -979,6 +980,7 @@ module.exports = React.createClass({
         debuglog("sending search request");
 
         const searchPromise = MatrixClientPeg.get().searchRoomEvents({
+            custom_search_url: SdkConfig.get()['custom_search_url'],
             filter: filter,
             term: term,
         });
