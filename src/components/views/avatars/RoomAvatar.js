@@ -17,6 +17,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import {ContentRepo} from "matrix-js-sdk";
 import MatrixClientPeg from "../../../MatrixClientPeg";
+import Modal from '../../../Modal';
 import sdk from "../../../index";
 
 module.exports = React.createClass({
@@ -31,6 +32,7 @@ module.exports = React.createClass({
         width: PropTypes.number,
         height: PropTypes.number,
         resizeMethod: PropTypes.string,
+        viewAvatarOnClick: PropTypes.bool,
     },
 
     getDefaultProps: function() {
@@ -159,17 +161,32 @@ module.exports = React.createClass({
         }
     },
 
+    onRoomAvatarClick: function() {
+        const avatarUrl = this.props.room.getAvatarUrl(
+            MatrixClientPeg.get().getHomeserverUrl(),
+            null, null, null, false);
+        const ImageView = sdk.getComponent("elements.ImageView");
+        const params = {
+            src: avatarUrl,
+            name: this.props.room.name,
+        };
+
+        Modal.createDialog(ImageView, params, "mx_Dialog_lightbox");
+    },
+
     render: function() {
         const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
 
-        const {room, oobData, ...otherProps} = this.props;
+        /*eslint no-unused-vars: ["error", { "ignoreRestSiblings": true }]*/
+        const {room, oobData, viewAvatarOnClick, ...otherProps} = this.props;
 
         const roomName = room ? room.name : oobData.name;
 
         return (
             <BaseAvatar {...otherProps} name={roomName}
                 idName={room ? room.roomId : null}
-                urls={this.state.urls} />
+                urls={this.state.urls}
+                onClick={this.props.viewAvatarOnClick ? this.onRoomAvatarClick : null} />
         );
     },
 });
