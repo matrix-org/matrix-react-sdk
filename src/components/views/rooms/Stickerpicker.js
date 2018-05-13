@@ -90,11 +90,7 @@ export default class Stickerpicker extends React.Component {
         if (!this.state.imError) {
             this.dispatcherRef = dis.register(this._onWidgetAction);
         }
-        const stickerpickerWidget = Widgets.getStickerpickerWidgets()[0];
-        this.setState({
-            stickerpickerWidget,
-            widgetId: stickerpickerWidget ? stickerpickerWidget.id : null,
-        });
+        this._findWidget();
     }
 
     componentWillUnmount() {
@@ -108,6 +104,14 @@ export default class Stickerpicker extends React.Component {
         this._sendVisibilityToWidget(this.state.showStickers);
     }
 
+    _findWidget() {
+        const stickerpickerWidget = Widgets.getStickerpickerWidgets()[0];
+        this.setState({
+            stickerpickerWidget,
+            widgetId: stickerpickerWidget ? stickerpickerWidget.id : null,
+        });
+    }
+
     _imError(errorMsg, e) {
         console.error(errorMsg, e);
         this.setState({
@@ -119,6 +123,7 @@ export default class Stickerpicker extends React.Component {
     _onWidgetAction(payload) {
         if (payload.action === "user_widget_updated") {
             this.forceUpdate();
+            this._findWidget();
         } else if (payload.action === "stickerpicker_close") {
             this.setState({showStickers: false});
         }
