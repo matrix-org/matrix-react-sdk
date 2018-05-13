@@ -883,29 +883,56 @@ module.exports = React.createClass({
 
         const items = [...ev.dataTransfer.items];
         if (items.length >= 1) {
-            const isDraggingFiles = items.every(function(item) {
-                return item.kind == 'file';
-            });
-
-            if (isDraggingFiles) {
-                this.setState({ draggingFile: true });
-                ev.dataTransfer.dropEffect = 'copy';
-            }
+            this.setState({ draggingFile: true });
+            ev.dataTransfer.dropEffect = 'copy';
         }
+    },
+
+    getLink: function(dataTransfer) {
+        let link;
+        try {
+            const dataText = dataTransfer.getData('text/html');
+            if (typeof dataText === 'string' && dataText) {
+                const matches = dataText.match(/src\s*=\s*"(.+?)"/);
+                if (matches) {
+                    link = matches[1];
+                }
+            } else {
+                const dataURL = dataTransfer.getData('url');
+                if (typeof dataURL === 'string' && dataURL) {
+                    link = dataURL;
+                }
+            }
+        } catch (e) {
+            // IE issues
+        }
+        return link;
     },
 
     onDrop: function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
         this.setState({ draggingFile: false });
+        const link = this.getLink(ev.dataTransfer);
         const files = [...ev.dataTransfer.files];
-        files.forEach(this.uploadFile);
+        if (!files.length && link) this.uploadFilefromURL(link);
+        else files.forEach(this.uploadFile);
     },
 
     onDragLeaveOrEnd: function(ev) {
         ev.stopPropagation();
         ev.preventDefault();
         this.setState({ draggingFile: false });
+    },
+
+    uploadFilefromURL: async function(url) {
+        if (url.startsWith('file://')) {
+            console.log('if local just upload');
+        } else {
+            const response = await fetch(url);
+            const file = await response.blob();
+            if (file) this.uploadFile(file);
+        }
     },
 
     uploadFile: async function(file) {
