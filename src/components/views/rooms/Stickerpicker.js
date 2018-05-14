@@ -50,6 +50,7 @@ export default class Stickerpicker extends React.Component {
             stickerpickerY: null,
             stickerpickerWidget: null,
             widgetId: null,
+            noStickerpickerLogWarningShown: false,
         };
     }
 
@@ -223,7 +224,12 @@ export default class Stickerpicker extends React.Component {
             );
         } else {
             // Default content to show if stickerpicker widget not added
-            console.warn("No available sticker picker widgets");
+            if(!this.state.noStickerpickerLogWarningShown) {
+                console.warn("No available sticker picker widgets");
+                this.setState({
+                    noStickerpickerLogWarningShown: true,
+                });
+            }
             stickersContent = this._defaultStickerpickerContent();
         }
         return stickersContent;
