@@ -39,6 +39,7 @@ import * as Lifecycle from '../../Lifecycle';
 // LifecycleStore is not used but does listen to and dispatch actions
 require('../../stores/LifecycleStore');
 import PageTypes from '../../PageTypes';
+import Unread from '../../Unread';
 
 import createRoom from "../../createRoom";
 import KeyRequestHandler from '../../KeyRequestHandler';
@@ -1517,6 +1518,7 @@ export default React.createClass({
 
     updateStatusIndicator: function(state, prevState) {
         let notifCount = 0;
+        let hasUnread = false;
 
         const rooms = MatrixClientPeg.get().getRooms();
         for (let i = 0; i < rooms.length; ++i) {
@@ -1527,7 +1529,13 @@ export default React.createClass({
                 // notifCount += rooms[i].getUnreadNotificationCount();
                 // instead, we just count the number of rooms with notifs.
                 notifCount++;
+            } else if (!hasUnread && Unread.doesRoomHaveUnreadMessages(rooms[i])) {
+                hasUnread = true;
             }
+        }
+
+        if (notifCount === 0) {
+            notifCount = hasUnread ? '+' : notifCount;
         }
 
         if (PlatformPeg.get()) {
