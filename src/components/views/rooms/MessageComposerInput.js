@@ -23,11 +23,6 @@ import { Editor } from 'slate-react';
 import { getEventTransfer } from 'slate-react';
 import { Value, Document, Event, Inline, Text, Range, Node } from 'slate';
 
-import Html from 'slate-html-serializer';
-import Md from 'slate-md-serializer';
-import Plain from 'slate-plain-serializer';
-import PlainWithPillsSerializer from "../../../autocomplete/PlainWithPillsSerializer";
-
 // import {Editor, EditorState, RichUtils, CompositeDecorator, Modifier,
 //     getDefaultKeyBinding, KeyBindingUtil, ContentState, ContentBlock, SelectionState,
 //     Entity} from 'draft-js';
@@ -77,9 +72,6 @@ const TYPING_USER_TIMEOUT = 10000, TYPING_SERVER_TIMEOUT = 30000;
 const ENTITY_TYPES = {
     AT_ROOM_PILL: 'ATROOMPILL',
 };
-
-// the Slate node type to default to for unstyled text
-const DEFAULT_NODE = 'paragraph';
 
 // map HTML elements through to our Slate schema node types
 // used for the HTML deserializer.
@@ -173,123 +165,6 @@ export default class MessageComposerInput extends React.Component {
         };
 
         this.client = MatrixClientPeg.get();
-
-        this.plainWithMdPills    = new PlainWithPillsSerializer({ pillFormat: 'md' });
-        this.plainWithIdPills    = new PlainWithPillsSerializer({ pillFormat: 'id' });
-        this.plainWithPlainPills = new PlainWithPillsSerializer({ pillFormat: 'plain' });
-
-        this.md = new Md({
-            rules: [
-                {
-                    serialize: (obj, children) => {
-                        if (obj.object === 'string') {
-                            // escape any MD in it. i have no idea why the serializer doesn't
-                            // do this already.
-                            // TODO: this can probably be more robust - it doesn't consider
-                            // indenting or lists for instance.
-                            return children.replace(/([*_~`+])/g, '\\$1')
-                                           .replace(/^([>#\|])/g, '\\$1');
-                        }
-                        else if (obj.object === 'inline') {
-                            switch (obj.type) {
-                                case 'pill':
-                                    return `[${ obj.data.get('completion') }](${ obj.data.get('href') })`;
-                                case 'emoji':
-                                    return obj.data.get('emojiUnicode');
-                            }
-                        }
-                    }
-                }
-            ]
-        });
-
-        this.html = new Html({
-            rules: [
-                {
-                    deserialize: (el, next) => {
-                        const tag = el.tagName.toLowerCase();
-                        let type = BLOCK_TAGS[tag];
-                        if (type) {
-                            return {
-                                object: 'block',
-                                type: type,
-                                nodes: next(el.childNodes),
-                            }
-                        }
-                        type = MARK_TAGS[tag];
-                        if (type) {
-                            return {
-                                object: 'mark',
-                                type: type,
-                                nodes: next(el.childNodes),
-                            }
-                        }
-                        // special case links
-                        if (tag === 'a') {
-                            const href = el.getAttribute('href');
-                            let m;
-                            if (href) {
-                                m = href.match(MATRIXTO_URL_PATTERN);
-                            }
-                            if (m) {
-                                return {
-                                    object: 'inline',
-                                    type: 'pill',
-                                    data: {
-                                        href,
-                                        completion: el.innerText,
-                                        completionId: m[1],
-                                    },
-                                    isVoid: true,
-                                }
-                            }
-                            else {
-                                return {
-                                    object: 'inline',
-                                    type: 'link',
-                                    data: { href },
-                                    nodes: next(el.childNodes),
-                                }
-                            }
-                        }
-                    },
-                    serialize: (obj, children) => {
-                        if (obj.object === 'block') {
-                            return this.renderNode({
-                                node: obj,
-                                children: children,
-                            });
-                        }
-                        else if (obj.object === 'mark') {
-                            return this.renderMark({
-                                mark: obj,
-                                children: children,
-                            });
-                        }
-                        else if (obj.object === 'inline') {
-                            // special case links, pills and emoji otherwise we
-                            // end up with React components getting rendered out(!)
-                            switch (obj.type) {
-                                case 'pill':
-                                    return <a href={ obj.data.get('href') }>{ obj.data.get('completion') }</a>;
-                                case 'link':
-                                    return <a href={ obj.data.get('href') }>{ children }</a>;
-                                case 'emoji':
-                                    // XXX: apparently you can't return plain strings from serializer rules
-                                    // until https://github.com/ianstormtaylor/slate/pull/1854 is merged.
-                                    // So instead we temporarily wrap emoji from RTE in an arbitrary tag
-                                    // (<b/>).  <span/> would be nicer, but in practice it causes CSS issues.
-                                    return <b>{ obj.data.get('emojiUnicode') }</b>;
-                            }
-                            return this.renderNode({
-                                node: obj,
-                                children: children,
-                            });
-                        }
-                    }
-                }
-            ]
-        });
 
         this.suppressAutoComplete = false;
         this.direction = '';
@@ -590,37 +465,8 @@ export default class MessageComposerInput extends React.Component {
 
         let editorState = null;
         if (enabled) {
-            // for consistency when roundtripping, we could use slate-md-serializer rather than
-            // commonmark, but then we would lose pills as the MD deserialiser doesn't know about
-            // them and doesn't have any extensibility hooks.
-            //
-            // The code looks like this:
-            //
-            // const markdown = this.plainWithMdPills.serialize(this.state.editorState);
-            //
-            // // weirdly, the Md serializer can't deserialize '' to a valid Value...
-            // if (markdown !== '') {
-            //     editorState = this.md.deserialize(markdown);
-            // }
-            // else {
-            //     editorState = Plain.deserialize('', { defaultBlock: DEFAULT_NODE });
-            // }
-
-            // so, instead, we use commonmark proper (which is arguably more logical to the user
-            // anyway, as they'll expect the RTE view to match what they'll see in the timeline,
-            // but the HTML->MD conversion is anyone's guess).
-
-            const sourceWithPills = this.plainWithMdPills.serialize(this.state.editorState);
-            const markdown = new Markdown(sourceWithPills);
-            editorState = this.html.deserialize(markdown.toHTML());
         } else {
-            // let markdown = RichText.stateToMarkdown(this.state.editorState.getCurrentContent());
-            // value = ContentState.createFromText(markdown);
-
-            editorState = Plain.deserialize(
-                this.md.serialize(this.state.editorState),
-                { defaultBlock: DEFAULT_NODE }
-            );
+            editorState = RichText.richToMdEditorState(this.state.editorState);
         }
 
         Analytics.setRichtextMode(enabled);
