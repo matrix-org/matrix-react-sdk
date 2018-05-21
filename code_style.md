@@ -165,7 +165,7 @@ ECMAScript
 
 React
 -----
-- Use React.createClass rather than ES6 classes for components, as the boilerplate is way too heavy on ES6 currently.  ES7 might improve it.
+- Use ES6 classes, although bear in mind a lot of code uses createClass.
 - Pull out functions in props to the class, generally as specific event handlers:
 
   ```jsx
