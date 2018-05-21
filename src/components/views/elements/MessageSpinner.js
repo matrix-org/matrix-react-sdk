@@ -16,10 +16,8 @@ limitations under the License.
 
 import React from 'react';
 
-module.exports = React.createClass({
-    displayName: 'MessageSpinner',
-
-    render: function() {
+export default class MessageSpinner extends React.PureComponent {
+    render() {
         const w = this.props.w || 32;
         const h = this.props.h || 32;
         const imgClass = this.props.imgClassName || "";
@@ -30,5 +28,5 @@ module.exports = React.createClass({
                 <img src="img/spinner.gif" width={w} height={h} className={imgClass} />
             </div>
         );
-    },
-});
+    }
+}

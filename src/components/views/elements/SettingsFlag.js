@@ -19,9 +19,8 @@ import PropTypes from 'prop-types';
 import SettingsStore from "../../../settings/SettingsStore";
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
-    displayName: 'SettingsFlag',
-    propTypes: {
+export default class SettingsFlag extends React.PureComponent {
+    static propTypes = {
         name: PropTypes.string.isRequired,
         level: PropTypes.string.isRequired,
         roomId: PropTypes.string, // for per-room settings
@@ -33,38 +32,36 @@ module.exports = React.createClass({
         // If group is supplied, then this will create a radio button instead.
         group: PropTypes.string,
         value: PropTypes.any, // the value for the radio button
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            value: SettingsStore.getValueAt(
-                this.props.level,
-                this.props.name,
-                this.props.roomId,
-                this.props.isExplicit,
-            ),
-        };
-    },
+    state = {
+        value: SettingsStore.getValueAt(
+            this.props.level,
+            this.props.name,
+            this.props.roomId,
+            this.props.isExplicit,
+        ),
+    };
 
-    onChange: function(e) {
+    onChange = (e) => {
         if (this.props.group && !e.target.checked) return;
 
         const newState = this.props.group ? this.props.value : e.target.checked;
         if (!this.props.manualSave) this.save(newState);
         else this.setState({ value: newState });
         if (this.props.onChange) this.props.onChange(newState);
-    },
+    };
 
-    save: function(val = undefined) {
+    save = (val = undefined) => {
         return SettingsStore.setValue(
             this.props.name,
             this.props.roomId,
             this.props.level,
             val !== undefined ? val : this.state.value,
         );
-    },
+    };
 
-    render: function() {
+    render() {
         const value = this.props.manualSave ? this.state.value : SettingsStore.getValueAt(
             this.props.level,
             this.props.name,
@@ -107,5 +104,5 @@ module.exports = React.createClass({
                 { label }
             </label>
         );
-    },
-});
+    }
+}

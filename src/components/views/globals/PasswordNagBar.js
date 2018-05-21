@@ -20,13 +20,13 @@ import sdk from '../../../index';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
 
-export default React.createClass({
-    onUpdateClicked: function() {
+export default class extends React.PureComponent {
+    onUpdateClicked = () => {
         const SetPasswordDialog = sdk.getComponent('dialogs.SetPasswordDialog');
         Modal.createTrackedDialog('Set Password Dialog', 'Password Nag Bar', SetPasswordDialog);
-    },
+    };
 
-    render: function() {
+    render() {
         const toolbarClasses = "mx_MatrixToolbar mx_MatrixToolbar_clickable";
         return (
             <div className={toolbarClasses} onClick={this.onUpdateClicked}>
@@ -48,5 +48,5 @@ export default React.createClass({
                 </button>
             </div>
         );
-    },
-});
+    }
+}

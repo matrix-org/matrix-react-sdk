@@ -38,10 +38,8 @@ function getUnsentMessages(room) {
     });
 };
 
-module.exports = React.createClass({
-    displayName: 'RoomStatusBar',
-
-    propTypes: {
+export default class RoomStatusBar extends React.PureComponent {
+    static propTypes = {
         // the room this statusbar is representing.
         room: PropTypes.object.isRequired,
 
@@ -96,35 +94,31 @@ module.exports = React.createClass({
         // callback for when the status bar is displaying something and should
         // be visible
         onVisible: PropTypes.func,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            whoIsTypingLimit: 3,
-        };
-    },
+    static defaultProps = {
+        whoIsTypingLimit: 3,
+    };
 
-    getInitialState: function() {
-        return {
-            syncState: MatrixClientPeg.get().getSyncState(),
-            usersTyping: WhoIsTyping.usersTypingApartFromMe(this.props.room),
-            unsentMessages: getUnsentMessages(this.props.room),
-        };
-    },
+    state = {
+        syncState: MatrixClientPeg.get().getSyncState(),
+        usersTyping: WhoIsTyping.usersTypingApartFromMe(this.props.room),
+        unsentMessages: getUnsentMessages(this.props.room),
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         MatrixClientPeg.get().on("sync", this.onSyncStateChange);
         MatrixClientPeg.get().on("RoomMember.typing", this.onRoomMemberTyping);
         MatrixClientPeg.get().on("Room.localEchoUpdated", this._onRoomLocalEchoUpdated);
 
         this._checkSize();
-    },
+    }
 
-    componentDidUpdate: function() {
+    componentDidUpdate() {
         this._checkSize();
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         // we may have entirely lost our client as we're logging out before clicking login on the guest bar...
         const client = MatrixClientPeg.get();
         if (client) {
@@ -132,65 +126,65 @@ module.exports = React.createClass({
             client.removeListener("RoomMember.typing", this.onRoomMemberTyping);
             client.removeListener("Room.localEchoUpdated", this._onRoomLocalEchoUpdated);
         }
-    },
+    }
 
-    onSyncStateChange: function(state, prevState) {
+    onSyncStateChange = (state, prevState) => {
         if (state === "SYNCING" && prevState === "SYNCING") {
             return;
         }
         this.setState({
             syncState: state,
         });
-    },
+    };
 
-    onRoomMemberTyping: function(ev, member) {
+    onRoomMemberTyping = (ev, member) => {
         this.setState({
             usersTyping: WhoIsTyping.usersTypingApartFromMeAndIgnored(this.props.room),
         });
-    },
+    };
 
-    _onSendWithoutVerifyingClick: function() {
+    _onSendWithoutVerifyingClick = () => {
         cryptodevices.getUnknownDevicesForRoom(MatrixClientPeg.get(), this.props.room).then((devices) => {
             cryptodevices.markAllDevicesKnown(MatrixClientPeg.get(), devices);
             Resend.resendUnsentEvents(this.props.room);
         });
-    },
+    };
 
-    _onResendAllClick: function() {
+    _onResendAllClick = () => {
         Resend.resendUnsentEvents(this.props.room);
         dis.dispatch({action: 'focus_composer'});
-    },
+    };
 
-    _onCancelAllClick: function() {
+    _onCancelAllClick = () => {
         Resend.cancelUnsentEvents(this.props.room);
         dis.dispatch({action: 'focus_composer'});
-    },
+    };
 
-    _onShowDevicesClick: function() {
+    _onShowDevicesClick = () => {
         cryptodevices.showUnknownDeviceDialogForMessages(MatrixClientPeg.get(), this.props.room);
-    },
+    };
 
-    _onRoomLocalEchoUpdated: function(event, room, oldEventId, oldStatus) {
+    _onRoomLocalEchoUpdated = (event, room, oldEventId, oldStatus) => {
         if (room.roomId !== this.props.room.roomId) return;
 
         this.setState({
             unsentMessages: getUnsentMessages(this.props.room),
         });
-    },
+    };
 
     // Check whether current size is greater than 0, if yes call props.onVisible
-    _checkSize: function() {
+    _checkSize = () => {
         if (this._getSize()) {
             if (this.props.onVisible) this.props.onVisible();
         } else {
             if (this.props.onHidden) this.props.onHidden();
         }
-    },
+    };
 
     // We don't need the actual height - just whether it is likely to have
     // changed - so we use '0' to indicate normal size, and other values to
     // indicate other sizes.
-    _getSize: function() {
+    _getSize = () => {
         if (this.state.syncState === "ERROR" ||
             (this.state.usersTyping.length > 0) ||
             this.props.numUnreadMessages ||
@@ -203,13 +197,13 @@ module.exports = React.createClass({
             return STATUS_BAR_EXPANDED_LARGE;
         }
         return STATUS_BAR_HIDDEN;
-    },
+    };
 
     // return suitable content for the image on the left of the status bar.
     //
     // if wantPlaceholder is true, we include a "..." placeholder if
     // there is nothing better to put in.
-    _getIndicator: function(wantPlaceholder) {
+    _getIndicator = (wantPlaceholder) => {
         if (this.props.numUnreadMessages) {
             return (
                 <div className="mx_RoomStatusBar_scrollDownIndicator"
@@ -251,9 +245,9 @@ module.exports = React.createClass({
         }
 
         return null;
-    },
+    };
 
-    _renderTypingIndicatorAvatars: function(limit) {
+    _renderTypingIndicatorAvatars = (limit) => {
         let users = this.state.usersTyping;
 
         let othersCount = 0;
@@ -283,9 +277,9 @@ module.exports = React.createClass({
         }
 
         return avatars;
-    },
+    };
 
-    _getUnsentMessageContent: function() {
+    _getUnsentMessageContent = () => {
         const unsentMessages = this.state.unsentMessages;
         if (!unsentMessages.length) return null;
 
@@ -360,10 +354,10 @@ module.exports = React.createClass({
                 </div>
             </div>
         </div>;
-    },
+    };
 
     // return suitable content for the main (text) part of the status bar.
-    _getContent: function() {
+    _getContent = () => {
         const EmojiText = sdk.getComponent('elements.EmojiText');
 
         // no conn bar trumps unread count since you can't get unread messages
@@ -443,9 +437,9 @@ module.exports = React.createClass({
         }
 
         return null;
-    },
+    };
 
-    render: function() {
+    render() {
         const content = this._getContent();
         const indicator = this._getIndicator(this.state.usersTyping.length > 0);
 
@@ -457,5 +451,5 @@ module.exports = React.createClass({
                 { content }
             </div>
         );
-    },
-});
+    }
+};

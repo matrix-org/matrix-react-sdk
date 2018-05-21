@@ -36,10 +36,8 @@ const FIELD_PASSWORD_CONFIRM = 'field_password_confirm';
 /**
  * A pure UI component which displays a registration form.
  */
-module.exports = React.createClass({
-    displayName: 'RegistrationForm',
-
-    propTypes: {
+export default class RegistrationForm extends React.PureComponent {
+    static propTypes = {
         // Values pre-filled in the input boxes when the component loads
         defaultEmail: PropTypes.string,
         defaultPhoneCountry: PropTypes.string,
@@ -60,27 +58,23 @@ module.exports = React.createClass({
         minPasswordLength: PropTypes.number,
         onError: PropTypes.func,
         onRegisterClick: PropTypes.func.isRequired, // onRegisterClick(Object) => ?Promise
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            minPasswordLength: 6,
-            onError: function(e) {
-                console.error(e);
-            },
-        };
-    },
+    static defaultProps = {
+        minPasswordLength: 6,
+        onError: function(e) {
+            console.error(e);
+        },
+    };
 
-    getInitialState: function() {
-        return {
-            fieldValid: {},
-            selectedTeam: null,
-            // The ISO2 country code selected in the phone number entry
-            phoneCountry: this.props.defaultPhoneCountry,
-        };
-    },
+    state = {
+        fieldValid: {},
+        selectedTeam: null,
+        // The ISO2 country code selected in the phone number entry
+        phoneCountry: this.props.defaultPhoneCountry,
+    };
 
-    onSubmit: function(ev) {
+    onSubmit = (ev) => {
         ev.preventDefault();
 
         // validate everything, in reverse order so
@@ -116,9 +110,9 @@ module.exports = React.createClass({
                 self._doSubmit(ev);
             }
         }
-    },
+    };
 
-    _doSubmit: function(ev) {
+    _doSubmit = (ev) => {
         const email = this.refs.email.value.trim();
         const promise = this.props.onRegisterClick({
             username: this.refs.username.value.trim(),
@@ -134,13 +128,13 @@ module.exports = React.createClass({
                 ev.target.disabled = false;
             });
         }
-    },
+    };
 
     /**
      * Returns true if all fields were valid last time
      * they were validated.
      */
-    allFieldsValid: function() {
+    allFieldsValid = () => {
         const keys = Object.keys(this.state.fieldValid);
         for (let i = 0; i < keys.length; ++i) {
             if (this.state.fieldValid[keys[i]] == false) {
@@ -148,13 +142,13 @@ module.exports = React.createClass({
             }
         }
         return true;
-    },
+    };
 
-    _isUniEmail: function(email) {
+    _isUniEmail = (email) => {
         return email.endsWith('.ac.uk') || email.endsWith('.edu') || email.endsWith('matrix.org');
-    },
+    };
 
-    validateField: function(field_id) {
+    validateField = (field_id) => {
         const pwd1 = this.refs.password.value.trim();
         const pwd2 = this.refs.passwordConfirm.value.trim();
 
@@ -230,9 +224,9 @@ module.exports = React.createClass({
                 );
                 break;
         }
-    },
+    };
 
-    markFieldValid: function(field_id, val, error_code) {
+    markFieldValid = (field_id, val, error_code) => {
         const fieldValid = this.state.fieldValid;
         fieldValid[field_id] = val;
         this.setState({fieldValid: fieldValid});
@@ -240,9 +234,9 @@ module.exports = React.createClass({
             field_input_incorrect(this.fieldElementById(field_id));
             this.props.onError(error_code);
         }
-    },
+    };
 
-    fieldElementById(field_id) {
+    fieldElementById = (field_id) => {
         switch (field_id) {
             case FIELD_EMAIL:
                 return this.refs.email;
@@ -255,25 +249,25 @@ module.exports = React.createClass({
             case FIELD_PASSWORD_CONFIRM:
                 return this.refs.passwordConfirm;
         }
-    },
+    };
 
-    _classForField: function(field_id, ...baseClasses) {
+    _classForField = (field_id, ...baseClasses) => {
         let cls = baseClasses.join(' ');
         if (this.state.fieldValid[field_id] === false) {
             if (cls) cls += ' ';
             cls += 'error';
         }
         return cls;
-    },
+    };
 
-    _onPhoneCountryChange(newVal) {
+    _onPhoneCountryChange = (newVal) => {
         this.setState({
             phoneCountry: newVal.iso2,
             phonePrefix: newVal.prefix,
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const self = this;
 
         const theme = SettingsStore.getValue("theme");
@@ -371,5 +365,5 @@ module.exports = React.createClass({
                 </form>
             </div>
         );
-    },
-});
+    }
+}

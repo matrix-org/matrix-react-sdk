@@ -32,27 +32,23 @@ import GroupStore from '../../../stores/GroupStore';
 //  - Rooms that are part of the group
 //  - Direct messages with members of the group
 // with the intention that this could be expanded to arbitrary tags in future.
-export default React.createClass({
-    displayName: 'TagTile',
-
-    propTypes: {
+export default class TagTile extends React.Component {
+    static propTypes = {
         // A string tag such as "m.favourite" or a group ID such as "+groupid:domain.bla"
         // For now, only group IDs are handled.
         tag: PropTypes.string,
-    },
+    };
 
-    contextTypes: {
+    static contextTypes = {
         matrixClient: PropTypes.instanceOf(MatrixClient).isRequired,
-    },
+    };
 
-    getInitialState() {
-        return {
-            // Whether the mouse is over the tile
-            hover: false,
-            // The profile data of the group if this.props.tag is a group ID
-            profile: null,
-        };
-    },
+    state = {
+        // Whether the mouse is over the tile
+        hover: false,
+        // The profile data of the group if this.props.tag is a group ID
+        profile: null,
+    };
 
     componentWillMount() {
         this.unmounted = false;
@@ -62,16 +58,16 @@ export default React.createClass({
             // New rooms or members may have been added to the group, fetch async
             this._refreshGroup(this.props.tag);
         }
-    },
+    }
 
     componentWillUnmount() {
         this.unmounted = true;
         if (this.props.tag[0] === '+') {
             FlairStore.removeListener('updateGroupProfile', this._onFlairStoreUpdated);
         }
-    },
+    }
 
-    _onFlairStoreUpdated() {
+    _onFlairStoreUpdated = () => {
         if (this.unmounted) return;
         FlairStore.getGroupProfileCached(
             this.context.matrixClient,
@@ -82,14 +78,14 @@ export default React.createClass({
         }).catch((err) => {
             console.warn('Could not fetch group profile for ' + this.props.tag, err);
         });
-    },
+    };
 
-    _refreshGroup(groupId) {
+    _refreshGroup = (groupId) => {
         GroupStore.refreshGroupRooms(groupId);
         GroupStore.refreshGroupMembers(groupId);
-    },
+    };
 
-    onClick: function(e) {
+    onClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
         dis.dispatch({
@@ -102,9 +98,9 @@ export default React.createClass({
             // New rooms or members may have been added to the group, fetch async
             this._refreshGroup(this.props.tag);
         }
-    },
+    };
 
-    _openContextMenu: function(x, y, chevronOffset) {
+    _openContextMenu(x, y, chevronOffset) {
         // Hide the (...) immediately
         this.setState({ hover: false });
 
@@ -119,9 +115,9 @@ export default React.createClass({
             },
         });
         this.setState({ menuDisplayed: true });
-    },
+    }
 
-    onContextButtonClick: function(e) {
+    onContextButtonClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
@@ -134,24 +130,24 @@ export default React.createClass({
         y = y - (chevronOffset + 8); // where 8 is half the height of the chevron
 
         this._openContextMenu(x, y, chevronOffset);
-    },
+    };
 
-    onContextMenu: function(e) {
+    onContextMenu = (e) => {
         e.preventDefault();
 
         const chevronOffset = 12;
         this._openContextMenu(e.clientX, e.clientY - (chevronOffset + 8), chevronOffset);
-    },
+    };
 
-    onMouseOver: function() {
+    onMouseOver = () => {
         this.setState({hover: true});
-    },
+    };
 
-    onMouseOut: function() {
+    onMouseOut = () => {
         this.setState({hover: false});
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseAvatar = sdk.getComponent('avatars.BaseAvatar');
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         const RoomTooltip = sdk.getComponent('rooms.RoomTooltip');
@@ -188,5 +184,5 @@ export default React.createClass({
                 { contextButton }
             </div>
         </AccessibleButton>;
-    },
-});
+    }
+}

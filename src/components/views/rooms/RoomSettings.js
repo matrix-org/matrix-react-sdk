@@ -59,15 +59,15 @@ const plEventsToShow = {
     "im.vector.modular.widgets": {isState: true},
 };
 
-const BannedUser = React.createClass({
-    propTypes: {
+class BannedUser extends React.PureComponent {
+    static propTypes = {
         canUnban: PropTypes.bool,
         member: PropTypes.object.isRequired, // js-sdk RoomMember
         by: PropTypes.string.isRequired,
         reason: PropTypes.string,
-    },
+    };
 
-    _onUnbanClick: function() {
+    _onUnbanClick = () => {
         const ConfirmUserActionDialog = sdk.getComponent("dialogs.ConfirmUserActionDialog");
         Modal.createTrackedDialog('Confirm User Action Dialog', 'onUnbanClick', ConfirmUserActionDialog, {
             member: this.props.member,
@@ -89,9 +89,9 @@ const BannedUser = React.createClass({
                 }).done();
             },
         });
-    },
+    };
 
-    render: function() {
+    render() {
         let unbanButton;
 
         if (this.props.canUnban) {
@@ -109,17 +109,17 @@ const BannedUser = React.createClass({
                 </span>
             </li>
         );
-    },
-});
+    }
+}
 
-module.exports = React.createClass({
-    displayName: 'RoomSettings',
-
-    propTypes: {
+export default class RoomSettings extends React.PureComponent {
+    static propTypes = {
         room: PropTypes.object.isRequired,
-    },
+    };
 
-    getInitialState: function() {
+    state = this.getInitialState();
+
+    getInitialState() {
         const tags = {};
         Object.keys(this.props.room.tags).forEach(function(tagName) {
             tags[tagName] = ['yep'];
@@ -144,9 +144,9 @@ module.exports = React.createClass({
             // components from uncontrolled to controlled
             isRoomPublished: this._originalIsRoomPublished || false,
         };
-    },
+    }
 
-    componentWillMount: function() {
+    componentWillMount() {
         MatrixClientPeg.get().on("RoomMember.membership", this._onRoomMemberMembership);
 
         MatrixClientPeg.get().getRoomDirectoryVisibility(
@@ -163,9 +163,9 @@ module.exports = React.createClass({
             sideDisabled: true,
             middleDisabled: true,
         });
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         const cli = MatrixClientPeg.get();
         if (cli) {
             cli.removeListener("RoomMember.membership", this._onRoomMemberMembership);
@@ -176,19 +176,19 @@ module.exports = React.createClass({
             sideDisabled: false,
             middleDisabled: false,
         });
-    },
+    }
 
-    setName: function(name) {
+    setName(name) {
         this.setState({
             name: name,
         });
-    },
+    }
 
-    setTopic: function(topic) {
+    setTopic(topic) {
         this.setState({
             topic: topic,
         });
-    },
+    }
 
     /**
      * Returns a promise which resolves once all of the save operations have completed or failed.
@@ -196,7 +196,7 @@ module.exports = React.createClass({
      * The result is a list of promise state snapshots, each with the form
      * `{ state: "fulfilled", value: v }` or `{ state: "rejected", reason: r }`.
      */
-    save: function() {
+    save() {
         const stateWasSetDefer = Promise.defer();
         // the caller may have JUST called setState on stuff, so we need to re-render before saving
         // else we won't use the latest values of things.
@@ -220,9 +220,9 @@ module.exports = React.createClass({
                 this._calcSavePromises().map(mapPromiseToSnapshot),
             );
         });
-    },
+    }
 
-    _calcSavePromises: function() {
+    _calcSavePromises() {
         const roomId = this.props.room.roomId;
         const promises = this.saveAliases(); // returns Promise[]
         const originalState = this.getInitialState();
@@ -328,29 +328,29 @@ module.exports = React.createClass({
 
         console.log("Performing %s operations: %s", promises.length, JSON.stringify(promises));
         return promises;
-    },
+    }
 
-    saveAliases: function() {
+    saveAliases() {
         if (!this.refs.alias_settings) { return [Promise.resolve()]; }
         return this.refs.alias_settings.saveSettings();
-    },
+    }
 
-    saveRelatedGroups: function() {
+    saveRelatedGroups() {
         if (!this.refs.related_groups) { return Promise.resolve(); }
         return this.refs.related_groups.saveSettings();
-    },
+    }
 
-    saveColor: function() {
+    saveColor() {
         if (!this.refs.color_settings) { return Promise.resolve(); }
         return this.refs.color_settings.saveSettings();
-    },
+    }
 
-    saveUrlPreviewSettings: function() {
+    saveUrlPreviewSettings() {
         if (!this.refs.url_preview_settings) { return Promise.resolve(); }
         return this.refs.url_preview_settings.saveSettings();
-    },
+    }
 
-    saveEnableEncryption: function() {
+    saveEnableEncryption() {
         if (!this.refs.encrypt) { return Promise.resolve(); }
 
         const encrypt = this.refs.encrypt.checked;
@@ -361,9 +361,9 @@ module.exports = React.createClass({
             roomId, "m.room.encryption",
             { algorithm: "m.megolm.v1.aes-sha2" },
         );
-    },
+    }
 
-    saveBlacklistUnverifiedDevicesPerRoom: function() {
+    saveBlacklistUnverifiedDevicesPerRoom() {
         if (!this.refs.blacklistUnverifiedDevices) return;
         this.refs.blacklistUnverifiedDevices.save().then(() => {
             const value = SettingsStore.getValueAt(
@@ -374,17 +374,17 @@ module.exports = React.createClass({
             );
             this.props.room.setBlacklistUnverifiedDevices(value);
         });
-    },
+    }
 
-    _hasDiff: function(strA, strB) {
+    _hasDiff(strA, strB) {
         // treat undefined as an empty string because other components may blindly
         // call setName("") when there has been no diff made to the name!
         strA = strA || "";
         strB = strB || "";
         return strA !== strB;
-    },
+    }
 
-    onPowerLevelsChanged: function(value, powerLevelKey) {
+    onPowerLevelsChanged = (value, powerLevelKey) => {
         const powerLevels = Object.assign({}, this.state.powerLevels);
         const eventsLevelPrefix = "event_levels_";
 
@@ -411,18 +411,18 @@ module.exports = React.createClass({
             powerLevels,
             powerLevelsChanged: true,
         });
-    },
+    };
 
-    _yankContentFromEvent: function(stateEventType, defaultValue) {
+    _yankContentFromEvent(stateEventType, defaultValue) {
         // E.g.("m.room.name") would yank the content of "m.room.name"
         const event = this.props.room.currentState.getStateEvents(stateEventType, '');
         if (!event) {
             return defaultValue;
         }
         return event.getContent() || defaultValue;
-    },
+    }
 
-    _yankValueFromEvent: function(stateEventType, keyName, defaultValue) {
+    _yankValueFromEvent(stateEventType, keyName, defaultValue) {
         // E.g.("m.room.name","name") would yank the "name" content key from "m.room.name"
         const event = this.props.room.currentState.getStateEvents(stateEventType, '');
         if (!event) {
@@ -430,9 +430,9 @@ module.exports = React.createClass({
         }
         const content = event.getContent();
         return keyName in content ? content[keyName] : defaultValue;
-    },
+    }
 
-    _onHistoryRadioToggle: function(ev) {
+    _onHistoryRadioToggle = (ev) => {
         const self = this;
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
 
@@ -456,9 +456,9 @@ module.exports = React.createClass({
                 }
             },
         });
-    },
+    };
 
-    _onRoomAccessRadioToggle: function(ev) {
+    _onRoomAccessRadioToggle = (ev) => {
         //                         join_rule
         //                      INVITE  |  PUBLIC
         //        ----------------------+----------------
@@ -492,16 +492,16 @@ module.exports = React.createClass({
                 });
                 break;
         }
-    },
+    };
 
-    _onToggle: function(keyName, checkedValue, uncheckedValue, ev) {
+    _onToggle = (keyName, checkedValue, uncheckedValue, ev) => {
         console.log("Checkbox toggle: %s %s", keyName, ev.target.checked);
         const state = {};
         state[keyName] = ev.target.checked ? checkedValue : uncheckedValue;
         this.setState(state);
-    },
+    };
 
-    _onTagChange: function(tagName, event) {
+    _onTagChange = (tagName, event) => {
         if (event.target.checked) {
             if (tagName === 'm.favourite') {
                 delete this.state.tags['m.lowpriority'];
@@ -518,23 +518,23 @@ module.exports = React.createClass({
             tags: this.state.tags,
             tags_changed: true,
         });
-    },
+    };
 
-    mayChangeRoomAccess: function() {
+    mayChangeRoomAccess() {
         const cli = MatrixClientPeg.get();
         const roomState = this.props.room.currentState;
         return (roomState.mayClientSendStateEvent("m.room.join_rules", cli) &&
                 roomState.mayClientSendStateEvent("m.room.guest_access", cli));
-    },
+    }
 
-    onLeaveClick() {
+    onLeaveClick = () => {
         dis.dispatch({
             action: 'leave_room',
             room_id: this.props.room.roomId,
         });
-    },
+    };
 
-    onForgetClick() {
+    onForgetClick = () => {
         // FIXME: duplicated with RoomTagContextualMenu (and dead code in RoomView)
         MatrixClientPeg.get().forget(this.props.room.roomId).done(function() {
             dis.dispatch({ action: 'view_next_room' });
@@ -546,9 +546,9 @@ module.exports = React.createClass({
                 description: _t("Failed to forget room %(errCode)s", { errCode: errCode }),
             });
         });
-    },
+    };
 
-    onEnableEncryptionClick() {
+    onEnableEncryptionClick = () => {
         if (!this.refs.encrypt.checked) return;
 
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
@@ -569,22 +569,22 @@ module.exports = React.createClass({
                 }
             },
         });
-    },
+    };
 
-    _onRoomMemberMembership: function() {
+    _onRoomMemberMembership = () => {
         // Update, since our banned user list may have changed
         this.forceUpdate();
-    },
+    };
 
-    _populateDefaultPlEvents: function(eventsSection, stateLevel, eventsLevel) {
+    _populateDefaultPlEvents(eventsSection, stateLevel, eventsLevel) {
         for (const desiredEvent of Object.keys(plEventsToShow)) {
             if (!(desiredEvent in eventsSection)) {
                 eventsSection[desiredEvent] = (plEventsToShow[desiredEvent].isState ? stateLevel : eventsLevel);
             }
         }
-    },
+    }
 
-    _renderEncryptionSection: function() {
+    _renderEncryptionSection() {
         const SettingsFlag = sdk.getComponent("elements.SettingsFlag");
 
         const cli = MatrixClientPeg.get();
@@ -625,9 +625,9 @@ module.exports = React.createClass({
                 </div>
             );
         }
-    },
+    }
 
-    render: function() {
+    render() {
         // TODO: go through greying out things you don't have permission to change
         // (or turning them into informative stuff)
 
@@ -1043,5 +1043,5 @@ module.exports = React.createClass({
                 </div>
             </div>
         );
-    },
-});
+    }
+}

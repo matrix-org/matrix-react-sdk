@@ -23,14 +23,12 @@ var dis = require('../../dispatcher');
 var rate_limited_func = require('../../ratelimitedfunc');
 var AccessibleButton = require('../../components/views/elements/AccessibleButton');
 
-module.exports = React.createClass({
-    displayName: 'LoginBox',
-
-    propTypes: {
+export default class LoginBox extends React.PureComponent {
+    static propTypes = {
         collapsed: React.PropTypes.bool,
-    },
+    };
 
-    onToggleCollapse: function(show) {
+    onToggleCollapse = (show) => {
         if (show) {
             dis.dispatch({
                 action: 'show_left_panel',
@@ -41,17 +39,17 @@ module.exports = React.createClass({
                 action: 'hide_left_panel',
             });
         }
-    },
+    };
 
-    onLoginClick: function() {
+    onLoginClick = () => {
         dis.dispatch({ action: 'start_login' });
-    },
+    };
 
-    onRegisterClick: function() {
+    onRegisterClick = () => {
         dis.dispatch({ action: 'start_registration' });
-    },
+    };
 
-    render: function() {
+    render() {
         var TintableSvg = sdk.getComponent('elements.TintableSvg');
 
         var toggleCollapse;
@@ -90,4 +88,4 @@ module.exports = React.createClass({
             </div>
         );
     }
-});
+};

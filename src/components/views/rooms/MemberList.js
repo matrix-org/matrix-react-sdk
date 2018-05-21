@@ -28,14 +28,14 @@ const INITIAL_LOAD_NUM_MEMBERS = 30;
 const INITIAL_LOAD_NUM_INVITED = 5;
 const SHOW_MORE_INCREMENT = 100;
 
-module.exports = React.createClass({
-    displayName: 'MemberList',
+export default class MemberList extends React.PureComponent {
+    constructor(props) {
+        super(props);
 
-    getInitialState: function() {
         this.memberDict = this.getMemberDict();
         const members = this.roomMembers();
 
-        return {
+        this.state = {
             members: members,
             filteredJoinedMembers: this._filterMembers(members, 'join'),
             filteredInvitedMembers: this._filterMembers(members, 'invite'),
@@ -46,9 +46,9 @@ module.exports = React.createClass({
             truncateAtInvited: INITIAL_LOAD_NUM_INVITED,
             searchQuery: "",
         };
-    },
+    }
 
-    componentWillMount: function() {
+    componentWillMount() {
         const cli = MatrixClientPeg.get();
         cli.on("RoomState.members", this.onRoomStateMember);
         cli.on("RoomMember.name", this.onRoomMemberName);
@@ -67,9 +67,9 @@ module.exports = React.createClass({
         if (enablePresenceByHsUrl && enablePresenceByHsUrl[hsUrl] !== undefined) {
             this._showPresence = enablePresenceByHsUrl[hsUrl];
         }
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         const cli = MatrixClientPeg.get();
         if (cli) {
             cli.removeListener("RoomState.members", this.onRoomStateMember);
@@ -82,7 +82,7 @@ module.exports = React.createClass({
 
         // cancel any pending calls to the rate_limited_funcs
         this._updateList.cancelPendingCall();
-    },
+    }
 
 /*
     onRoomTimeline: function(ev, room, toStartOfTimeline, removed, data) {
@@ -112,7 +112,7 @@ module.exports = React.createClass({
     },
 */
 
-    onUserLastPresenceTs(event, user) {
+    onUserLastPresenceTs = (event, user) => {
         // Attach a SINGLE listener for global presence changes then locate the
         // member tile and re-render it. This is more efficient than every tile
         // evar attaching their own listener.
@@ -121,9 +121,9 @@ module.exports = React.createClass({
         if (tile) {
             this._updateList(); // reorder the membership list
         }
-    },
+    };
 
-    onRoom: function(room) {
+    onRoom = (room) => {
         if (room.roomId !== this.props.roomId) {
             return;
         }
@@ -131,23 +131,23 @@ module.exports = React.createClass({
         // we need to wait till the room is fully populated with state
         // before refreshing the member list else we get a stale list.
         this._updateList();
-    },
+    };
 
-    onRoomStateMember: function(ev, state, member) {
+    onRoomStateMember = (ev, state, member) => {
         this._updateList();
-    },
+    };
 
-    onRoomMemberName: function(ev, member) {
+    onRoomMemberName = (ev, member) => {
         this._updateList();
-    },
+    };
 
-    onRoomStateEvent: function(event, state) {
+    onRoomStateEvent = (event, state) => {
         if (event.getType() === "m.room.third_party_invite") {
             this._updateList();
         }
-    },
+    };
 
-    _updateList: new rate_limited_func(function() {
+    _updateList = new rate_limited_func(function() {
         // console.log("Updating memberlist");
         this.memberDict = this.getMemberDict();
 
@@ -157,9 +157,9 @@ module.exports = React.createClass({
         newState.filteredJoinedMembers = this._filterMembers(newState.members, 'join', this.state.searchQuery);
         newState.filteredInvitedMembers = this._filterMembers(newState.members, 'invite', this.state.searchQuery);
         this.setState(newState);
-    }, 500),
+    }, 500);
 
-    getMemberDict: function() {
+    getMemberDict() {
         if (!this.props.roomId) return {};
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(this.props.roomId);
@@ -180,9 +180,9 @@ module.exports = React.createClass({
         });
 
         return all_members;
-    },
+    }
 
-    roomMembers: function() {
+    roomMembers() {
         const all_members = this.memberDict || {};
         const all_user_ids = Object.keys(all_members);
         const ConferenceHandler = CallHandler.getConferenceHandler();
@@ -203,17 +203,17 @@ module.exports = React.createClass({
             }
         }
         return to_display;
-    },
+    }
 
-    _createOverflowTileJoined: function(overflowCount, totalCount) {
+    _createOverflowTileJoined = (overflowCount, totalCount) => {
         return this._createOverflowTile(overflowCount, totalCount, this._showMoreJoinedMemberList);
-    },
+    };
 
-    _createOverflowTileInvited: function(overflowCount, totalCount) {
+    _createOverflowTileInvited = (overflowCount, totalCount) => {
         return this._createOverflowTile(overflowCount, totalCount, this._showMoreInvitedMemberList);
-    },
+    };
 
-    _createOverflowTile: function(overflowCount, totalCount, onClick) {
+    _createOverflowTile(overflowCount, totalCount, onClick) {
         // For now we'll pretend this is any entity. It should probably be a separate tile.
         const EntityTile = sdk.getComponent("rooms.EntityTile");
         const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
@@ -224,32 +224,32 @@ module.exports = React.createClass({
             } name={text} presenceState="online" suppressOnHover={true}
             onClick={onClick} />
         );
-    },
+    }
 
-    _showMoreJoinedMemberList: function() {
+    _showMoreJoinedMemberList = () => {
         this.setState({
             truncateAtJoined: this.state.truncateAtJoined + SHOW_MORE_INCREMENT,
         });
-    },
+    };
 
-    _showMoreInvitedMemberList: function() {
+    _showMoreInvitedMemberList = () => {
         this.setState({
             truncateAtInvited: this.state.truncateAtInvited + SHOW_MORE_INCREMENT,
         });
-    },
+    };
 
-    memberString: function(member) {
+    memberString(member) {
         if (!member) {
             return "(null)";
         } else {
             return "(" + member.name + ", " + member.powerLevel + ", " + member.user.lastActiveAgo + ", " + member.user.currentlyActive + ")";
         }
-    },
+    };
 
     // returns negative if a comes before b,
     // returns 0 if a and b are equivalent in ordering
     // returns positive if a comes after b.
-    memberSort: function(userIdA, userIdB) {
+    memberSort = (userIdA, userIdB) => {
             // order by last active, with "active now" first.
             // ...and then by power
             // ...and then alphabetically.
@@ -294,18 +294,18 @@ module.exports = React.createClass({
             // For now, let's just order things by timestamp. It's really annoying
             // that a user disappears from sight just because they temporarily go offline
             return userB.getLastActiveTs() - userA.getLastActiveTs();
-    },
+    };
 
-    onSearchQueryChanged: function(ev) {
+    onSearchQueryChanged = (ev) => {
         const q = ev.target.value;
         this.setState({
             searchQuery: q,
             filteredJoinedMembers: this._filterMembers(this.state.members, 'join', q),
             filteredInvitedMembers: this._filterMembers(this.state.members, 'invite', q),
         });
-    },
+    };
 
-    _filterMembers: function(members, membership, query) {
+    _filterMembers(members, membership, query) {
         return members.filter((userId) => {
             const m = this.memberDict[userId];
 
@@ -321,9 +321,9 @@ module.exports = React.createClass({
 
             return m.membership === membership;
         });
-    },
+    }
 
-    _getPending3PidInvites: function() {
+    _getPending3PidInvites() {
         // include 3pid invites (m.room.third_party_invite) state events.
         // The HS may have already converted these into m.room.member invites so
         // we shouldn't add them if the 3pid invite state key (token) is in the
@@ -345,9 +345,9 @@ module.exports = React.createClass({
                 return true;
             });
         }
-    },
+    }
 
-    _makeMemberTiles: function(members, membership) {
+    _makeMemberTiles(members, membership) {
         const MemberTile = sdk.getComponent("rooms.MemberTile");
 
         const memberList = members.map((userId) => {
@@ -374,25 +374,25 @@ module.exports = React.createClass({
         }
 
         return memberList;
-    },
+    }
 
-    _getChildrenJoined: function(start, end) {
+    _getChildrenJoined = (start, end) => {
         return this._makeMemberTiles(this.state.filteredJoinedMembers.slice(start, end));
-    },
+    };
 
-    _getChildCountJoined: function() {
+    _getChildCountJoined = () => {
         return this.state.filteredJoinedMembers.length;
-    },
+    };
 
-    _getChildrenInvited: function(start, end) {
+    _getChildrenInvited = (start, end) => {
         return this._makeMemberTiles(this.state.filteredInvitedMembers.slice(start, end), 'invite');
-    },
+    };
 
-    _getChildCountInvited: function() {
+    _getChildCountInvited = () => {
         return this.state.filteredInvitedMembers.length + (this._getPending3PidInvites() || []).length;
-    },
+    };
 
-    render: function() {
+    render() {
         const TruncatedList = sdk.getComponent("elements.TruncatedList");
         const GeminiScrollbarWrapper = sdk.getComponent("elements.GeminiScrollbarWrapper");
 
@@ -433,5 +433,5 @@ module.exports = React.createClass({
                 </GeminiScrollbarWrapper>
             </div>
         );
-    },
-});
+    }
+}

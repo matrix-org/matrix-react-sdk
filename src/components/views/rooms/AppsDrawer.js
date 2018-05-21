@@ -33,33 +33,29 @@ import SettingsStore from "../../../settings/SettingsStore";
 // The maximum number of widgets that can be added in a room
 const MAX_WIDGETS = 2;
 
-module.exports = React.createClass({
-    displayName: 'AppsDrawer',
-
-    propTypes: {
+export default class AppsDrawer extends React.PureComponent {
+    static propTypes = {
         userId: PropTypes.string.isRequired,
         room: PropTypes.object.isRequired,
         showApps: PropTypes.bool, // Should apps be rendered
         hide: PropTypes.bool, // If rendered, should apps drawer be visible
-    },
+    };
 
-    defaultProps: {
+    static defaultProps = {
         showApps: true,
         hide: false,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            apps: this._getApps(),
-        };
-    },
+    state = {
+        apps: this._getApps(),
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         ScalarMessaging.startListening();
         MatrixClientPeg.get().on('RoomState.events', this.onRoomStateEvents);
-    },
+    }
 
-    componentDidMount: function() {
+    componentDidMount() {
         this.scalarClient = null;
         if (SdkConfig.get().integrations_ui_url && SdkConfig.get().integrations_rest_url) {
             this.scalarClient = new ScalarAuthClient();
@@ -75,22 +71,22 @@ module.exports = React.createClass({
         }
 
         this.dispatcherRef = dis.register(this.onAction);
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         ScalarMessaging.stopListening();
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener('RoomState.events', this.onRoomStateEvents);
         }
         dis.unregister(this.dispatcherRef);
-    },
+    }
 
     componentWillReceiveProps(newProps) {
         // Room has changed probably, update apps
         this._updateApps();
-    },
+    }
 
-    onAction: function(action) {
+    onAction = (action) => {
         const hideWidgetKey = this.props.room.roomId + '_hide_widget_drawer';
         switch (action.action) {
             case 'appsDrawer':
@@ -104,7 +100,7 @@ module.exports = React.createClass({
 
                 break;
         }
-    },
+    };
 
     /**
      * Encodes a URI according to a set of template variables. Variables will be
@@ -114,7 +110,7 @@ module.exports = React.createClass({
      * variables with. E.g. { '$bar': 'baz' }.
      * @return {string} The result of replacing all template variables e.g. '/foo/baz'.
      */
-    encodeUri: function(pathTemplate, variables) {
+    encodeUri(pathTemplate, variables) {
         for (const key in variables) {
             if (!variables.hasOwnProperty(key)) {
                 continue;
@@ -124,9 +120,9 @@ module.exports = React.createClass({
             );
         }
         return pathTemplate;
-    },
+    }
 
-    _initAppConfig: function(appId, app, sender) {
+    _initAppConfig(appId, app, sender) {
         const user = MatrixClientPeg.get().getUser(this.props.userId);
         const params = {
             '$matrix_user_id': this.props.userId,
@@ -153,38 +149,38 @@ module.exports = React.createClass({
         app.creatorUserId = (sender && sender.userId) ? sender.userId : null;
 
         return app;
-    },
+    }
 
-    onRoomStateEvents: function(ev, state) {
+    onRoomStateEvents = (ev, state) => {
         if (ev.getRoomId() !== this.props.room.roomId || ev.getType() !== 'im.vector.modular.widgets') {
             return;
         }
         this._updateApps();
-    },
+    };
 
-    _getApps: function() {
+    _getApps() {
         return WidgetUtils.getRoomWidgets(this.props.room).map((ev) => {
             return this._initAppConfig(ev.getStateKey(), ev.getContent(), ev.sender);
         });
-    },
+    }
 
-    _updateApps: function() {
+    _updateApps() {
         const apps = this._getApps();
         this.setState({
             apps: apps,
         });
-    },
+    }
 
-    _canUserModify: function() {
+    _canUserModify() {
         try {
             return WidgetUtils.canUserModifyWidgets(this.props.room.roomId);
         } catch (err) {
             console.error(err);
             return false;
         }
-    },
+    }
 
-    _launchManageIntegrations: function() {
+    _launchManageIntegrations() {
         const IntegrationsManager = sdk.getComponent('views.settings.IntegrationsManager');
         const src = (this.scalarClient !== null && this.scalarClient.hasCredentials()) ?
                 this.scalarClient.getScalarInterfaceUrlForRoom(this.props.room, 'add_integ') :
@@ -192,9 +188,9 @@ module.exports = React.createClass({
         Modal.createTrackedDialog('Integrations Manager', '', IntegrationsManager, {
             src: src,
         }, 'mx_IntegrationsManager');
-    },
+    }
 
-    onClickAddWidget: function(e) {
+    onClickAddWidget = (e) => {
         e.preventDefault();
         // Display a warning dialog if the max number of widgets have already been added to the room
         const apps = this._getApps();
@@ -209,9 +205,9 @@ module.exports = React.createClass({
             return;
         }
         this._launchManageIntegrations();
-    },
+    };
 
-    render: function() {
+    render() {
         const enableScreenshots = SettingsStore.getValue("enableWidgetScreenshots", this.props.room.room_id);
 
         const apps = this.state.apps.map(
@@ -258,5 +254,5 @@ module.exports = React.createClass({
                 { this._canUserModify() && addWidget }
             </div>
         );
-    },
-});
+    }
+}

@@ -194,18 +194,14 @@ function computedStyle(element) {
     return cssText;
 }
 
-module.exports = React.createClass({
-    displayName: 'MFileBody',
-
-    getInitialState: function() {
-        return {
-            decryptedBlob: (this.props.decryptedBlob ? this.props.decryptedBlob : null),
-        };
-    },
-
-    contextTypes: {
+export default class MFileBody extends React.Component {
+    static contextTypes = {
         appConfig: PropTypes.object,
-    },
+    };
+
+    state = {
+        decryptedBlob: (this.props.decryptedBlob ? this.props.decryptedBlob : null),
+    };
 
     /**
      * Extracts a human readable label for the file attachment to use as
@@ -214,7 +210,7 @@ module.exports = React.createClass({
      * @params {Object} content The "content" key of the matrix event.
      * @return {string} the human readable link text for the attachment.
      */
-    presentableTextForFile: function(content) {
+    presentableTextForFile = (content) => {
         let linkText = _t("Attachment");
         if (content.body && content.body.length > 0) {
             // The content body should be the name of the file including a
@@ -233,27 +229,27 @@ module.exports = React.createClass({
             linkText += ' (' + filesize(content.info.size) + ')';
         }
         return linkText;
-    },
+    };
 
-    _getContentUrl: function() {
+    _getContentUrl = () => {
         const content = this.props.mxEvent.getContent();
         return MatrixClientPeg.get().mxcUrlToHttp(content.url);
-    },
+    };
 
-    componentDidMount: function() {
+    componentDidMount() {
         // Add this to the list of mounted components to receive notifications
         // when the tint changes.
         this.id = nextMountId++;
         mounts[this.id] = this;
         this.tint();
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         // Remove this from the list of mounted components
         delete mounts[this.id];
-    },
+    }
 
-    tint: function() {
+    tint = () => {
         // Update our tinted copy of "img/download.svg"
         if (this.refs.downloadImage) {
             this.refs.downloadImage.src = tintedDownloadImageURL;
@@ -268,9 +264,9 @@ module.exports = React.createClass({
                 style: computedStyle(this.refs.dummyLink),
             }, "*");
         }
-    },
+    };
 
-    render: function() {
+    render() {
         const content = this.props.mxEvent.getContent();
         const text = this.presentableTextForFile(content);
         const isEncrypted = content.file !== undefined;
@@ -389,5 +385,5 @@ module.exports = React.createClass({
                 { _t("Invalid file%(extra)s", { extra: extra }) }
             </span>;
         }
-    },
-});
+    }
+}

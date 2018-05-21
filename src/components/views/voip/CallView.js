@@ -21,10 +21,8 @@ import sdk from '../../../index';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
-    displayName: 'CallView',
-
-    propTypes: {
+export default class CallView extends React.PureComponent {
+    static propTypes = {
         // js-sdk room object. If set, we will only show calls for the given
         // room; if not, we will show any active call.
         room: PropTypes.object,
@@ -46,34 +44,32 @@ module.exports = React.createClass({
 
         // render ongoing audio call details - useful when in LeftPanel
         showVoice: PropTypes.bool,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            // the call this view is displaying (if any)
-            call: null,
-        };
-    },
+    state = {
+        // the call this view is displaying (if any)
+        call: null,
+    };
 
-    componentDidMount: function() {
+    componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
         this.showCall();
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         dis.unregister(this.dispatcherRef);
-    },
+    }
 
-    onAction: function(payload) {
+    onAction = (payload) => {
         // don't filter out payloads for room IDs other than props.room because
         // we may be interested in the conf 1:1 room
         if (payload.action !== 'call_state') {
             return;
         }
         this.showCall();
-    },
+    };
 
-    showCall: function() {
+    showCall = () => {
         let call;
 
         if (this.props.room) {
@@ -117,13 +113,13 @@ module.exports = React.createClass({
         if (this.props.onResize) {
             this.props.onResize();
         }
-    },
+    };
 
-    getVideoView: function() {
+    getVideoView = () => {
         return this.refs.video;
-    },
+    };
 
-    render: function() {
+    render() {
         const VideoView = sdk.getComponent('voip.VideoView');
 
         let voice;
@@ -145,6 +141,6 @@ module.exports = React.createClass({
                 { voice }
             </div>
         );
-    },
-});
+    }
+}
 

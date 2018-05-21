@@ -27,10 +27,8 @@ const Modal = require('../../../Modal');
 const sdk = require('../../../index');
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
-    displayName: 'ImageView',
-
-    propTypes: {
+export default class ImageView extends React.PureComponent {
+    static propTypes = {
         src: React.PropTypes.string.isRequired, // the source of the image being displayed
         name: React.PropTypes.string, // the main title ('name') for the image
         link: React.PropTypes.string, // the link (if any) applied to the name of the image
@@ -44,27 +42,27 @@ module.exports = React.createClass({
         // properties above, which let us use lightboxes to display images which aren't associated
         // with events.
         mxEvent: React.PropTypes.object,
-    },
+    };
 
     // XXX: keyboard shortcuts for managing dialogs should be done by the modal
     // dialog base class somehow, surely...
-    componentDidMount: function() {
+    componentDidMount() {
         document.addEventListener("keydown", this.onKeyDown);
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         document.removeEventListener("keydown", this.onKeyDown);
-    },
+    }
 
-    onKeyDown: function(ev) {
+    onKeyDown = (ev) => {
         if (ev.keyCode == 27) { // escape
             ev.stopPropagation();
             ev.preventDefault();
             this.props.onFinished();
         }
-    },
+    };
 
-    onRedactClick: function() {
+    onRedactClick = () => {
         const ConfirmRedactDialog = sdk.getComponent("dialogs.ConfirmRedactDialog");
         Modal.createTrackedDialog('Confirm Redact Dialog', 'Image View', ConfirmRedactDialog, {
             onFinished: (proceed) => {
@@ -83,17 +81,17 @@ module.exports = React.createClass({
                 }).done();
             }
         });
-    },
+    };
 
-    getName: function () {
+    getName = () => {
         var name = this.props.name;
         if (name && this.props.link) {
             name = <a href={ this.props.link } target="_blank" rel="noopener">{ name }</a>;
         }
         return name;
-    },
+    };
 
-    render: function() {
+    render() {
 
 /*
         // In theory max-width: 80%, max-height: 80% on the CSS should work
@@ -202,4 +200,4 @@ module.exports = React.createClass({
             </div>
         );
     }
-});
+}

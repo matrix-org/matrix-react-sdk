@@ -20,19 +20,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
-    displayName: 'CasLogin',
-
-    propTypes: {
+export default class CasLogin extends React.PureComponent {
+    static propTypes = {
       onSubmit: PropTypes.func, // fn()
-    },
+    };
 
-    render: function() {
+    render() {
         return (
             <div>
                 <button onClick={this.props.onSubmit}>{ _t("Sign in with CAS") }</button>
             </div>
         );
-    },
-
-});
+    }
+}

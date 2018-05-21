@@ -29,26 +29,24 @@ import Modal from '../../../Modal';
  *
  * On success, `onFinished(true)` is called.
  */
-export default React.createClass({
-    displayName: 'SetEmailDialog',
-    propTypes: {
+export default class SetEmailDialog extends React.PureComponent {
+    static propTypes = {
         onFinished: PropTypes.func.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            emailAddress: '',
-            emailBusy: false,
-        };
-    },
+    state = {
+        emailAddress: '',
+        emailBusy: false,
+    };
 
-    onEmailAddressChanged: function(value) {
+    /// @param {string} value The new email address.
+    onEmailAddressChanged = (value) => {
         this.setState({
             emailAddress: value,
         });
-    },
+    };
 
-    onSubmit: function() {
+    onSubmit = () => {
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
 
@@ -82,21 +80,22 @@ export default React.createClass({
             });
         });
         this.setState({emailBusy: true});
-    },
+    };
 
-    onCancelled: function() {
+    onCancelled = () => {
         this.props.onFinished(false);
-    },
+    };
 
-    onEmailDialogFinished: function(ok) {
+    /// @param {boolean} whether the user decided to continue email verification.
+    onEmailDialogFinished = (ok) => {
         if (ok) {
             this.verifyEmailAddress();
         } else {
             this.setState({emailBusy: false});
         }
-    },
+    };
 
-    verifyEmailAddress: function() {
+    verifyEmailAddress = () => {
         this._addThreepid.checkEmailLinkClicked().done(() => {
             this.props.onFinished(true);
         }, (err) => {
@@ -120,9 +119,9 @@ export default React.createClass({
                 });
             }
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const Spinner = sdk.getComponent('elements.Spinner');
         const EditableText = sdk.getComponent('elements.EditableText');
@@ -162,5 +161,5 @@ export default React.createClass({
                 </div>
             </BaseDialog>
         );
-    },
-});
+    }
+}

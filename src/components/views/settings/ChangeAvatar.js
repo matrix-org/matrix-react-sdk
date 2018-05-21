@@ -20,9 +20,8 @@ const MatrixClientPeg = require("../../../MatrixClientPeg");
 const sdk = require('../../../index');
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
-    displayName: 'ChangeAvatar',
-    propTypes: {
+export default class ChangeAvatar extends React.PureComponent {
+    static propTypes = {
         initialAvatarUrl: PropTypes.string,
         room: PropTypes.object,
         // if false, you need to call changeAvatar.onFileSelected yourself.
@@ -30,35 +29,31 @@ module.exports = React.createClass({
         width: PropTypes.number,
         height: PropTypes.number,
         className: PropTypes.string,
-    },
+    };
 
-    Phases: {
+    Phases = {
         Display: "display",
         Uploading: "uploading",
         Error: "error",
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            showUploadSection: true,
-            className: "",
-            width: 80,
-            height: 80,
-        };
-    },
+    static defaultProps = {
+        showUploadSection: true,
+        className: "",
+        width: 80,
+        height: 80,
+    };
 
-    getInitialState: function() {
-        return {
-            avatarUrl: this.props.initialAvatarUrl,
-            phase: this.Phases.Display,
-        };
-    },
+    state = {
+        avatarUrl: this.props.initialAvatarUrl,
+        phase: this.Phases.Display,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         MatrixClientPeg.get().on("RoomState.events", this.onRoomStateEvents);
-    },
+    }
 
-    componentWillReceiveProps: function(newProps) {
+    componentWillReceiveProps(newProps) {
         if (this.avatarSet) {
             // don't clobber what the user has just set
             return;
@@ -66,15 +61,15 @@ module.exports = React.createClass({
         this.setState({
             avatarUrl: newProps.initialAvatarUrl,
         });
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener("RoomState.events", this.onRoomStateEvents);
         }
-    },
+    }
 
-    onRoomStateEvents: function(ev) {
+    onRoomStateEvents = (ev) => {
         if (!this.props.room) {
             return;
         }
@@ -88,9 +83,9 @@ module.exports = React.createClass({
             this.avatarSet = false;
             this.setState({}); // force update
         }
-    },
+    };
 
-    setAvatarFromFile: function(file) {
+    setAvatarFromFile(file) {
         let newUrl = null;
 
         this.setState({
@@ -124,20 +119,20 @@ module.exports = React.createClass({
         });
 
         return httpPromise;
-    },
+    }
 
-    onFileSelected: function(ev) {
+    onFileSelected = (ev) => {
         this.avatarSet = true;
         return this.setAvatarFromFile(ev.target.files[0]);
-    },
+    };
 
-    onError: function(error) {
+    onError = (error) => {
         this.setState({
             errorText: _t("Failed to upload profile picture!"),
         });
-    },
+    };
 
-    render: function() {
+    render() {
         let avatarImg;
         // Having just set an avatar we just display that since it will take a little
         // time to propagate through to the RoomAvatar.
@@ -179,5 +174,5 @@ module.exports = React.createClass({
                     <Loader />
                 );
         }
-    },
-});
+    }
+}

@@ -21,10 +21,8 @@ import PropTypes from 'prop-types';
 import * as Roles from '../../../Roles';
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
-    displayName: 'PowerSelector',
-
-    propTypes: {
+export default class PowerSelector extends React.PureComponent {
+    static propTypes = {
         value: PropTypes.number.isRequired,
         // The maximum value that can be set with the power selector
         maxValue: PropTypes.number.isRequired,
@@ -45,32 +43,28 @@ module.exports = React.createClass({
 
         // Optional key to pass as the second argument to `onChange`
         powerLevelKey: PropTypes.string,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            levelRoleMap: {},
-            // List of power levels to show in the drop-down
-            options: [],
-        };
-    },
+    static defaultProps = {
+        maxValue: Infinity,
+        usersDefault: 0,
+    };
 
-    getDefaultProps: function() {
-        return {
-            maxValue: Infinity,
-            usersDefault: 0,
-        };
-    },
+    state = {
+        levelRoleMap: {},
+        // List of power levels to show in the drop-down
+        options: [],
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._initStateFromProps(this.props);
-    },
+    }
 
-    componentWillReceiveProps: function(newProps) {
+    componentWillReceiveProps(newProps) {
         this._initStateFromProps(newProps);
-    },
+    }
 
-    _initStateFromProps: function(newProps) {
+    _initStateFromProps = (newProps) => {
         // This needs to be done now because levelRoleMap has translated strings
         const levelRoleMap = Roles.levelRoleMap(newProps.usersDefault);
         const options = Object.keys(levelRoleMap).filter((l) => {
@@ -82,26 +76,26 @@ module.exports = React.createClass({
             options,
             custom: levelRoleMap[newProps.value] === undefined,
         });
-    },
+    };
 
-    onSelectChange: function(event) {
+    onSelectChange = (event) => {
         this.setState({ custom: event.target.value === "SELECT_VALUE_CUSTOM" });
         if (event.target.value !== "SELECT_VALUE_CUSTOM") {
             this.props.onChange(event.target.value, this.props.powerLevelKey);
         }
-    },
+    };
 
-    onCustomBlur: function(event) {
+    onCustomBlur = (event) => {
         this.props.onChange(parseInt(this.refs.custom.value), this.props.powerLevelKey);
-    },
+    };
 
-    onCustomKeyDown: function(event) {
+    onCustomKeyDown = (event) => {
         if (event.key == "Enter") {
             this.props.onChange(parseInt(this.refs.custom.value), this.props.powerLevelKey);
         }
-    },
+    };
 
-    render: function() {
+    render() {
         let customPicker;
         if (this.state.custom) {
             if (this.props.disabled) {
@@ -160,5 +154,5 @@ module.exports = React.createClass({
                 { customPicker }
             </span>
         );
-    },
-});
+    }
+}

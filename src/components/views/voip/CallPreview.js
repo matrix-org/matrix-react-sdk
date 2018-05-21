@@ -21,43 +21,39 @@ import CallHandler from '../../../CallHandler';
 import dis from '../../../dispatcher';
 import sdk from '../../../index';
 
-module.exports = React.createClass({
-    displayName: 'CallPreview',
-
-    propTypes: {
+export default class CallPreview extends React.PureComponent {
+    static propTypes = {
         // A Conference Handler implementation
         // Must have a function signature:
         //  getConferenceCallForRoom(roomId: string): MatrixCall
         ConferenceHandler: PropTypes.object,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            roomId: RoomViewStore.getRoomId(),
-            activeCall: CallHandler.getAnyActiveCall(),
-        };
-    },
+    state = {
+        roomId: RoomViewStore.getRoomId(),
+        activeCall: CallHandler.getAnyActiveCall(),
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._roomStoreToken = RoomViewStore.addListener(this._onRoomViewStoreUpdate);
         this.dispatcherRef = dis.register(this._onAction);
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         if (this._roomStoreToken) {
             this._roomStoreToken.remove();
         }
         dis.unregister(this.dispatcherRef);
-    },
+    }
 
-    _onRoomViewStoreUpdate: function(payload) {
+    _onRoomViewStoreUpdate = (payload) => {
         if (RoomViewStore.getRoomId() === this.state.roomId) return;
         this.setState({
             roomId: RoomViewStore.getRoomId(),
         });
-    },
+    };
 
-    _onAction: function(payload) {
+    _onAction = (payload) => {
         switch (payload.action) {
             // listen for call state changes to prod the render method, which
             // may hide the global CallView if the call it is tracking is dead
@@ -67,9 +63,9 @@ module.exports = React.createClass({
                 });
                 break;
         }
-    },
+    };
 
-    _onCallViewClick: function() {
+    _onCallViewClick = () => {
         const call = CallHandler.getAnyActiveCall();
         if (call) {
             dis.dispatch({
@@ -77,9 +73,9 @@ module.exports = React.createClass({
                 room_id: call.groupRoomId || call.roomId,
             });
         }
-    },
+    };
 
-    render: function() {
+    render() {
         const callForRoom = CallHandler.getCallForRoom(this.state.roomId);
         const showCall = (this.state.activeCall && this.state.activeCall.call_state === 'connected' && !callForRoom);
 
@@ -93,6 +89,6 @@ module.exports = React.createClass({
             );
         }
         return null;
-    },
-});
+    }
+}
 

@@ -20,19 +20,15 @@ import { _t } from '../../../languageHandler';
 const sdk = require('../../../index');
 const MatrixClientPeg = require("../../../MatrixClientPeg");
 
-module.exports = React.createClass({
-    displayName: 'EncryptedEventDialog',
-
-    propTypes: {
+export default class EncryptedEventDialog extends React.PureComponent {
+    static propTypes = {
         event: PropTypes.object.isRequired,
         onFinished: PropTypes.func.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return { device: null };
-    },
+    state = { device: null };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._unmounted = false;
         const client = MatrixClientPeg.get();
 
@@ -57,39 +53,39 @@ module.exports = React.createClass({
         }, (err)=>{
             console.log("Error downloading devices", err);
         });
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         this._unmounted = true;
         const client = MatrixClientPeg.get();
         if (client) {
             client.removeListener("deviceVerificationChanged", this.onDeviceVerificationChanged);
         }
-    },
+    }
 
-    refreshDevice: function() {
+    refreshDevice = () => {
         // Promise.resolve to handle transition from static result to promise; can be removed
         // in future
         return Promise.resolve(MatrixClientPeg.get().getEventSenderDeviceInfo(this.props.event));
-    },
+    };
 
-    onDeviceVerificationChanged: function(userId, device) {
+    onDeviceVerificationChanged = (userId, device) => {
         if (userId == this.props.event.getSender()) {
             this.refreshDevice().then((dev) => {
                 this.setState({ device: dev });
             });
         }
-    },
+    };
 
-    onKeyDown: function(e) {
+    onKeyDown = (e) => {
         if (e.keyCode === 27) { // escape
             e.stopPropagation();
             e.preventDefault();
             this.props.onFinished(false);
         }
-    },
+    };
 
-    _renderDeviceInfo: function() {
+    _renderDeviceInfo = () => {
         const device = this.state.device;
         if (!device) {
             return (<i>{ _t('unknown device') }</i>);
@@ -124,9 +120,9 @@ module.exports = React.createClass({
                 </tbody>
             </table>
         );
-    },
+    };
 
-    _renderEventInfo: function() {
+    _renderEventInfo = () => {
         const event = this.props.event;
 
         return (
@@ -163,9 +159,9 @@ module.exports = React.createClass({
                 </tbody>
             </table>
         );
-    },
+    };
 
-    render: function() {
+    render() {
         const DeviceVerifyButtons = sdk.getComponent('elements.DeviceVerifyButtons');
 
         let buttons = null;
@@ -197,5 +193,5 @@ module.exports = React.createClass({
                 </div>
             </div>
         );
-    },
-});
+    }
+}

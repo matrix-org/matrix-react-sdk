@@ -22,29 +22,25 @@ import dis from '../../dispatcher';
 import withMatrixClient from '../../wrappers/withMatrixClient';
 import AccessibleButton from '../views/elements/AccessibleButton';
 
-export default withMatrixClient(React.createClass({
-    displayName: 'MyGroups',
-
-    propTypes: {
+export default withMatrixClient(class MyGroups extends React.Component {
+    static propTypes = {
         matrixClient: PropTypes.object.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            groups: null,
-            error: null,
-        };
-    },
+    state = {
+        groups: null,
+        error: null,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._fetch();
-    },
+    }
 
-    _onCreateGroupClick: function() {
+    _onCreateGroupClick = () => {
         dis.dispatch({action: 'view_create_group'});
-    },
+    };
 
-    _fetch: function() {
+    _fetch = () => {
         this.props.matrixClient.getJoinedGroups().done((result) => {
             this.setState({groups: result.groups, error: null});
         }, (err) => {
@@ -55,9 +51,9 @@ export default withMatrixClient(React.createClass({
             }
             this.setState({groups: null, error: err});
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const Loader = sdk.getComponent("elements.Spinner");
         const SimpleRoomHeader = sdk.getComponent('rooms.SimpleRoomHeader');
         const TintableSvg = sdk.getComponent("elements.TintableSvg");
@@ -147,5 +143,5 @@ export default withMatrixClient(React.createClass({
                 { content }
             </div>
         </div>;
-    },
-}));
+    }
+});

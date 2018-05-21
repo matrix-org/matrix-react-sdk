@@ -23,66 +23,64 @@ import sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import GroupStore from '../../../stores/GroupStore';
 
-module.exports = React.createClass({
-    displayName: 'GroupRoomInfo',
+module.exports = class extends React.Component {
+    static displayName = 'GroupRoomInfo';
 
-    contextTypes: {
+    static contextTypes = {
         matrixClient: PropTypes.instanceOf(MatrixClient),
-    },
+    };
 
-    propTypes: {
+    static propTypes = {
         groupId: PropTypes.string,
         groupRoomId: PropTypes.string,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            isUserPrivilegedInGroup: null,
-            groupRoom: null,
-            groupRoomPublicityLoading: false,
-            groupRoomRemoveLoading: false,
-        };
-    },
+    state = {
+        isUserPrivilegedInGroup: null,
+        groupRoom: null,
+        groupRoomPublicityLoading: false,
+        groupRoomRemoveLoading: false,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._initGroupStore(this.props.groupId);
-    },
+    }
 
     componentWillReceiveProps(newProps) {
         if (newProps.groupId !== this.props.groupId) {
             this._unregisterGroupStore(this.props.groupId);
             this._initGroupStore(newProps.groupId);
         }
-    },
+    }
 
     componentWillUnmount() {
         this._unregisterGroupStore(this.props.groupId);
-    },
+    }
 
-    _initGroupStore(groupId) {
+    _initGroupStore = (groupId) => {
         GroupStore.registerListener(groupId, this.onGroupStoreUpdated);
-    },
+    };
 
-    _unregisterGroupStore(groupId) {
+    _unregisterGroupStore = (groupId) => {
         GroupStore.unregisterListener(this.onGroupStoreUpdated);
-    },
+    };
 
-    _updateGroupRoom() {
+    _updateGroupRoom = () => {
         this.setState({
             groupRoom: GroupStore.getGroupRooms(this.props.groupId).find(
                 (r) => r.roomId === this.props.groupRoomId,
             ),
         });
-    },
+    };
 
-    onGroupStoreUpdated: function() {
+    onGroupStoreUpdated = () => {
         this.setState({
             isUserPrivilegedInGroup: GroupStore.isUserPrivileged(this.props.groupId),
         });
         this._updateGroupRoom();
-    },
+    };
 
-    _onRemove: function(e) {
+    _onRemove = (e) => {
         const groupId = this.props.groupId;
         const roomName = this.state.groupRoom.displayname;
         e.preventDefault();
@@ -115,15 +113,15 @@ module.exports = React.createClass({
                 });
             },
         });
-    },
+    };
 
-    _onCancel: function(e) {
+    _onCancel = (e) => {
         dis.dispatch({
             action: "view_group_room_list",
         });
-    },
+    };
 
-    _changeGroupRoomPublicity(e) {
+    _changeGroupRoomPublicity = (e) => {
         const isPublic = e.target.value === "public";
         this.setState({
             groupRoomPublicityLoading: true,
@@ -146,9 +144,9 @@ module.exports = React.createClass({
                 groupRoomPublicityLoading: false,
             });
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseAvatar = sdk.getComponent('avatars.BaseAvatar');
         const EmojiText = sdk.getComponent('elements.EmojiText');
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
@@ -233,5 +231,5 @@ module.exports = React.createClass({
                 </GeminiScrollbarWrapper>
             </div>
         );
-    },
-});
+    }
+};

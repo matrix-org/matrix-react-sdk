@@ -21,18 +21,16 @@ import { _t } from '../../../languageHandler';
 import Notifier from '../../../Notifier';
 import AccessibleButton from '../../../components/views/elements/AccessibleButton';
 
-module.exports = React.createClass({
-    displayName: 'MatrixToolbar',
-
-    hideToolbar: function() {
+export default class MatrixToolbar extends React.PureComponent {
+    hideToolbar = () => {
         Notifier.setToolbarHidden(true);
-    },
+    };
 
-    onClick: function() {
+    onClick = () => {
         Notifier.setEnabled(true);
-    },
+    };
 
-    render: function() {
+    render() {
         return (
             <div className="mx_MatrixToolbar">
                 <img className="mx_MatrixToolbar_warning" src="img/warning.svg" width="24" height="23" alt="Warning"/>
@@ -42,5 +40,5 @@ module.exports = React.createClass({
                 <AccessibleButton className="mx_MatrixToolbar_close" onClick={ this.hideToolbar } ><img src="img/cancel.svg" width="18" height="18" /></AccessibleButton>
             </div>
         );
-    },
-});
+    }
+}

@@ -4,17 +4,8 @@
 
 const React = require('react');
 
-module.exports = function(opts) {
-    opts = opts || {};
-    if (!opts.displayName) {
-        opts.displayName = 'StubComponent';
+export default class StubComponent extends React.PureComponent {
+    render() {
+        return <div>{ this.displayName }</div>;
     }
-
-    if (!opts.render) {
-        opts.render = function() {
-            return <div>{ this.displayName }</div>;
-        };
-    }
-
-    return React.createClass(opts);
-};
+}

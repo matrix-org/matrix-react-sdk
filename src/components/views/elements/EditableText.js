@@ -18,10 +18,8 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 
-module.exports = React.createClass({
-    displayName: 'EditableText',
-
-    propTypes: {
+export default class EditableText extends React.PureComponent {
+    static propTypes = {
         onValueChanged: PropTypes.func,
         initialValue: PropTypes.string,
         label: PropTypes.string,
@@ -34,56 +32,52 @@ module.exports = React.createClass({
         // Will cause onValueChanged(value, true) to fire on blur
         blurToSubmit: PropTypes.bool,
         editable: PropTypes.bool,
-    },
+    };
 
-    Phases: {
+    Phases = {
         Display: "display",
         Edit: "edit",
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            onValueChanged: function() {},
-            initialValue: '',
-            label: '',
-            placeholder: '',
-            editable: true,
-            className: "mx_EditableText",
-            placeholderClassName: "mx_EditableText_placeholder",
-            blurToSubmit: false,
-        };
-    },
+    static defaultProps = {
+        onValueChanged: function() {},
+        initialValue: '',
+        label: '',
+        placeholder: '',
+        editable: true,
+        className: "mx_EditableText",
+        placeholderClassName: "mx_EditableText_placeholder",
+        blurToSubmit: false,
+    };
 
-    getInitialState: function() {
-        return {
-            phase: this.Phases.Display,
-        };
-    },
+    state = {
+        phase: this.Phases.Display,
+    };
 
-    componentWillReceiveProps: function(nextProps) {
+    componentWillReceiveProps(nextProps) {
         if (nextProps.initialValue !== this.props.initialValue) {
             this.value = nextProps.initialValue;
             if (this.refs.editable_div) {
                 this.showPlaceholder(!this.value);
             }
         }
-    },
+    }
 
-    componentWillMount: function() {
+    componentWillMount() {
         // we track value as an JS object field rather than in React state
         // as React doesn't play nice with contentEditable.
         this.value = '';
         this.placeholder = false;
-    },
+    }
 
-    componentDidMount: function() {
+    componentDidMount() {
         this.value = this.props.initialValue;
         if (this.refs.editable_div) {
             this.showPlaceholder(!this.value);
         }
-    },
+    }
 
-    showPlaceholder: function(show) {
+    showPlaceholder(show) {
         if (show) {
             this.refs.editable_div.textContent = this.props.placeholder;
             this.refs.editable_div.setAttribute("class", this.props.className + " " + this.props.placeholderClassName);
@@ -94,24 +88,24 @@ module.exports = React.createClass({
             this.refs.editable_div.setAttribute("class", this.props.className);
             this.placeholder = false;
         }
-    },
+    }
 
-    getValue: function() {
+    getValue() {
         return this.value;
-    },
+    }
 
-    setValue: function(value) {
+    setValue(value) {
         this.value = value;
         this.showPlaceholder(!this.value);
-    },
+    }
 
-    edit: function() {
+    edit() {
         this.setState({
             phase: this.Phases.Edit,
         });
-    },
+    }
 
-    cancelEdit: function() {
+    cancelEdit() {
         this.setState({
             phase: this.Phases.Display,
         });
@@ -119,13 +113,13 @@ module.exports = React.createClass({
         this.showPlaceholder(!this.value);
         this.onValueChanged(false);
         this.refs.editable_div.blur();
-    },
+    }
 
-    onValueChanged: function(shouldSubmit) {
+    onValueChanged = (shouldSubmit) => {
         this.props.onValueChanged(this.value, shouldSubmit);
-    },
+    };
 
-    onKeyDown: function(ev) {
+    onKeyDown = (ev) => {
         // console.log("keyDown: textContent=" + ev.target.textContent + ", value=" + this.value + ", placeholder=" + this.placeholder);
 
         if (this.placeholder) {
@@ -138,9 +132,9 @@ module.exports = React.createClass({
         }
 
         // console.log("keyDown: textContent=" + ev.target.textContent + ", value=" + this.value + ", placeholder=" + this.placeholder);
-    },
+    };
 
-    onKeyUp: function(ev) {
+    onKeyUp = (ev) => {
         // console.log("keyUp: textContent=" + ev.target.textContent + ", value=" + this.value + ", placeholder=" + this.placeholder);
 
         if (!ev.target.textContent) {
@@ -156,17 +150,17 @@ module.exports = React.createClass({
         }
 
         // console.log("keyUp: textContent=" + ev.target.textContent + ", value=" + this.value + ", placeholder=" + this.placeholder);
-    },
+    };
 
-    onClickDiv: function(ev) {
+    onClickDiv = (ev) => {
         if (!this.props.editable) return;
 
         this.setState({
             phase: this.Phases.Edit,
         });
-    },
+    };
 
-    onFocus: function(ev) {
+    onFocus = (ev) => {
         //ev.target.setSelectionRange(0, ev.target.textContent.length);
 
         const node = ev.target.childNodes[0];
@@ -179,9 +173,9 @@ module.exports = React.createClass({
             sel.removeAllRanges();
             sel.addRange(range);
         }
-    },
+    };
 
-    onFinish: function(ev, shouldSubmit) {
+    onFinish = (ev, shouldSubmit) => {
         const self = this;
         const submit = (ev.key === "Enter") || shouldSubmit;
         this.setState({
@@ -191,9 +185,9 @@ module.exports = React.createClass({
                 self.onValueChanged(submit);
             }
         });
-    },
+    };
 
-    onBlur: function(ev) {
+    onBlur = (ev) => {
         const sel = window.getSelection();
         sel.removeAllRanges();
 
@@ -204,9 +198,9 @@ module.exports = React.createClass({
         }
 
         this.showPlaceholder(!this.value);
-    },
+    };
 
-    render: function() {
+    render() {
         const {className, editable, initialValue, label, labelClassName} = this.props;
         let editableEl;
 
@@ -227,5 +221,5 @@ module.exports = React.createClass({
         }
 
         return editableEl;
-    },
-});
+    }
+}

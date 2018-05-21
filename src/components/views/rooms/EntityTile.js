@@ -53,10 +53,8 @@ function presenceClassForMember(presenceState, lastActiveAgo, showPresence) {
     }
 }
 
-const EntityTile = React.createClass({
-    displayName: 'EntityTile',
-
-    propTypes: {
+class EntityTile extends React.Component {
+    static propTypes = {
         name: PropTypes.string,
         title: PropTypes.string,
         avatarJsx: PropTypes.any, // <BaseAvatar />
@@ -70,41 +68,37 @@ const EntityTile = React.createClass({
         onClick: PropTypes.func,
         suppressOnHover: PropTypes.bool,
         showPresence: PropTypes.bool,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            shouldComponentUpdate: function(nextProps, nextState) { return true; },
-            onClick: function() {},
-            presenceState: "offline",
-            presenceLastActiveAgo: 0,
-            presenceLastTs: 0,
-            showInviteButton: false,
-            suppressOnHover: false,
-            showPresence: true,
-        };
-    },
+    static defaultProps = {
+        shouldComponentUpdate: function(nextProps, nextState) { return true; },
+        onClick: function() {},
+        presenceState: "offline",
+        presenceLastActiveAgo: 0,
+        presenceLastTs: 0,
+        showInviteButton: false,
+        suppressOnHover: false,
+        showPresence: true,
+    };
 
-    getInitialState: function() {
-        return {
-            hover: false,
-        };
-    },
+    state = {
+        hover: false,
+    };
 
-    shouldComponentUpdate: function(nextProps, nextState) {
+    shouldComponentUpdate(nextProps, nextState) {
         if (this.state.hover !== nextState.hover) return true;
         return this.props.shouldComponentUpdate(nextProps, nextState);
-    },
+    }
 
-    mouseEnter: function(e) {
+    mouseEnter = (e) => {
         this.setState({ 'hover': true });
-    },
+    };
 
-    mouseLeave: function(e) {
+    mouseLeave = (e) => {
         this.setState({ 'hover': false });
-    },
+    };
 
-    render: function() {
+    render() {
         const presenceClass = presenceClassForMember(
             this.props.presenceState, this.props.presenceLastActiveAgo, this.props.showPresence,
         );
@@ -183,8 +177,8 @@ const EntityTile = React.createClass({
                 { inviteButton }
             </AccessibleButton>
         );
-    },
-});
+    }
+}
 
 EntityTile.POWER_STATUS_MODERATOR = "moderator";
 EntityTile.POWER_STATUS_ADMIN = "admin";

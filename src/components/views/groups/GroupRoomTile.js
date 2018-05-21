@@ -21,23 +21,23 @@ import sdk from '../../../index';
 import dis from '../../../dispatcher';
 import { GroupRoomType } from '../../../groups';
 
-const GroupRoomTile = React.createClass({
-    displayName: 'GroupRoomTile',
+class GroupRoomTile extends React.Component {
+    static displayName = 'GroupRoomTile';
 
-    propTypes: {
+    static propTypes = {
         groupId: PropTypes.string.isRequired,
         groupRoom: GroupRoomType.isRequired,
-    },
+    };
 
-    onClick: function(e) {
+    onClick = (e) => {
         dis.dispatch({
             action: 'view_group_room',
             groupId: this.props.groupId,
             groupRoomId: this.props.groupRoom.roomId,
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseAvatar = sdk.getComponent('avatars.BaseAvatar');
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         const avatarUrl = this.context.matrixClient.mxcUrlToHttp(
@@ -62,8 +62,8 @@ const GroupRoomTile = React.createClass({
                 </div>
             </AccessibleButton>
         );
-    },
-});
+    }
+}
 
 GroupRoomTile.contextTypes = {
     matrixClient: PropTypes.instanceOf(MatrixClient).isRequired,

@@ -36,10 +36,8 @@ try {
 } catch (e) {
 }
 
-module.exports = React.createClass({
-    displayName: 'ReadReceiptMarker',
-
-    propTypes: {
+export default class ReadReceiptMarker extends React.Component {
+    static propTypes = {
         // the RoomMember to show the RR for
         member: PropTypes.object.isRequired,
 
@@ -70,25 +68,17 @@ module.exports = React.createClass({
 
         // True to show twelve hour format, false otherwise
         showTwelveHour: PropTypes.bool,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            leftOffset: 0,
-        };
-    },
+    static defaultProps = {
+        leftOffset: 0,
+    };
 
-    getInitialState: function() {
-        // if we are going to animate the RR, we don't show it on first render,
-        // and instead just add a placeholder to the DOM; once we've been
-        // mounted, we start an animation which moves the RR from its old
-        // position.
-        return {
-            suppressDisplay: !this.props.suppressAnimation,
-        };
-    },
+    state = {
+        suppressDisplay: !this.props.suppressAnimation,
+    };
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         // before we remove the rr, store its location in the map, so that if
         // it reappears, it can be animated from the right place.
         const rrInfo = this.props.readReceiptInfo;
@@ -107,9 +97,9 @@ module.exports = React.createClass({
         rrInfo.top = avatarNode.offsetTop;
         rrInfo.left = avatarNode.offsetLeft;
         rrInfo.parent = avatarNode.offsetParent;
-    },
+    }
 
-    componentDidMount: function() {
+    componentDidMount() {
         if (!this.state.suppressDisplay) {
             // we've already done our display - nothing more to do.
             return;
@@ -168,10 +158,9 @@ module.exports = React.createClass({
             startStyles: startStyles,
             enterTransitionOpts: enterTransitionOpts,
         });
-    },
+    }
 
-
-    render: function() {
+    render() {
         const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
         if (this.state.suppressDisplay) {
             return <div />;
@@ -216,5 +205,5 @@ module.exports = React.createClass({
                 />
             </Velociraptor>
         );
-    },
-});
+    }
+}

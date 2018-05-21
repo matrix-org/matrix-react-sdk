@@ -20,10 +20,8 @@ import SettingsStore from "../../../settings/SettingsStore";
 
 const React = require('react');
 
-module.exports = React.createClass({
-    displayName: 'LoginPage',
-
-    render: function() {
+export default class LoginPage extends React.PureComponent {
+    render() {
         // FIXME: this should be turned into a proper skin with a StatusLoginPage component
         if (SettingsStore.getValue("theme") === 'status') {
             return (
@@ -55,5 +53,5 @@ module.exports = React.createClass({
                 </div>
             );
         }
-    },
-});
+    }
+}

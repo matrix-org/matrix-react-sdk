@@ -20,39 +20,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
-    displayName: 'UserSelector',
-
-    propTypes: {
+export default class UserSelector extends React.PureComponent {
+    static propTypes = {
         onChange: PropTypes.func,
         selected_users: PropTypes.arrayOf(React.PropTypes.string),
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            onChange: function() {},
-            selected: [],
-        };
-    },
+    static defaultProps = {
+        onChange: function() {},
+        selected: [],
+    };
 
-    addUser: function(user_id) {
+    addUser = (user_id) => {
         if (this.props.selected_users.indexOf(user_id == -1)) {
             this.props.onChange(this.props.selected_users.concat([user_id]));
         }
-    },
+    };
 
-    removeUser: function(user_id) {
+    removeUser = (user_id) => {
         this.props.onChange(this.props.selected_users.filter(function(e) {
             return e != user_id;
         }));
-    },
+    };
 
-    onAddUserId: function() {
+    onAddUserId = () => {
         this.addUser(this.refs.user_id_input.value);
         this.refs.user_id_input.value = "";
-    },
+    };
 
-    render: function() {
+    render() {
         const self = this;
         return (
             <div>
@@ -67,5 +63,5 @@ module.exports = React.createClass({
                 </button>
             </div>
         );
-    },
-});
+    }
+}

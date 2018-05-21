@@ -34,21 +34,21 @@ const ROOM_ID = '!room:localhost';
 const USER_ID = '@me:localhost';
 
 // wrap TimelinePanel with a component which provides the MatrixClient in the context.
-const WrappedTimelinePanel = React.createClass({
-    childContextTypes: {
+class WrappedTimelinePanel extends React.Component {
+    static childContextTypes = {
         matrixClient: React.PropTypes.object,
-    },
+    };
 
-    getChildContext: function() {
+    getChildContext() {
         return {
             matrixClient: peg.get(),
         };
-    },
+    }
 
-    render: function() {
+    render() {
         return <TimelinePanel ref="panel" {...this.props} />;
-    },
-});
+    }
+}
 
 
 describe('TimelinePanel', function() {

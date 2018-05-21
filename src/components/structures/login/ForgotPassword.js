@@ -25,10 +25,8 @@ import SdkConfig from "../../../SdkConfig";
 
 import PasswordReset from "../../../PasswordReset";
 
-module.exports = React.createClass({
-    displayName: 'ForgotPassword',
-
-    propTypes: {
+export default class ForgotPassword extends React.PureComponent {
+    static propTypes = {
         defaultHsUrl: PropTypes.string,
         defaultIsUrl: PropTypes.string,
         customHsUrl: PropTypes.string,
@@ -36,19 +34,17 @@ module.exports = React.createClass({
         onLoginClick: PropTypes.func,
         onRegisterClick: PropTypes.func,
         onComplete: PropTypes.func.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            enteredHomeserverUrl: this.props.customHsUrl || this.props.defaultHsUrl,
-            enteredIdentityServerUrl: this.props.customIsUrl || this.props.defaultIsUrl,
-            progress: null,
-            password: null,
-            password2: null,
-        };
-    },
+    state = {
+        enteredHomeserverUrl: this.props.customHsUrl || this.props.defaultHsUrl,
+        enteredIdentityServerUrl: this.props.customIsUrl || this.props.defaultIsUrl,
+        progress: null,
+        password: null,
+        password2: null,
+    };
 
-    submitPasswordReset: function(hsUrl, identityUrl, email, password) {
+    submitPasswordReset = (hsUrl, identityUrl, email, password) => {
         this.setState({
             progress: "sending_email",
         });
@@ -63,9 +59,9 @@ module.exports = React.createClass({
                 progress: null,
             });
         });
-    },
+    };
 
-    onVerify: function(ev) {
+    onVerify = (ev) => {
         ev.preventDefault();
         if (!this.reset) {
             console.error("onVerify called before submitPasswordReset!");
@@ -76,9 +72,9 @@ module.exports = React.createClass({
         }, (err) => {
             this.showErrorDialog(err.message);
         });
-    },
+    };
 
-    onSubmitForm: function(ev) {
+    onSubmitForm = (ev) => {
         ev.preventDefault();
 
         if (!this.state.email) {
@@ -118,9 +114,9 @@ module.exports = React.createClass({
                 },
             });
         }
-    },
+    };
 
-    _onExportE2eKeysClicked: function() {
+    _onExportE2eKeysClicked = () => {
         Modal.createTrackedDialogAsync('Export E2E Keys', 'Forgot Password', (cb) => {
             require.ensure(['../../../async-components/views/dialogs/ExportE2eKeysDialog'], () => {
                 cb(require('../../../async-components/views/dialogs/ExportE2eKeysDialog'));
@@ -128,15 +124,15 @@ module.exports = React.createClass({
         }, {
             matrixClient: MatrixClientPeg.get(),
         });
-    },
+    };
 
-    onInputChanged: function(stateKey, ev) {
+    onInputChanged = (stateKey, ev) => {
         this.setState({
             [stateKey]: ev.target.value,
         });
-    },
+    };
 
-    onServerConfigChange: function(config) {
+    onServerConfigChange = (config) => {
         const newState = {};
         if (config.hsUrl !== undefined) {
             newState.enteredHomeserverUrl = config.hsUrl;
@@ -145,17 +141,17 @@ module.exports = React.createClass({
             newState.enteredIdentityServerUrl = config.isUrl;
         }
         this.setState(newState);
-    },
+    };
 
-    showErrorDialog: function(body, title) {
+    showErrorDialog = (body, title) => {
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         Modal.createTrackedDialog('Forgot Password Error', '', ErrorDialog, {
             title: title,
             description: body,
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const LoginPage = sdk.getComponent("login.LoginPage");
         const LoginHeader = sdk.getComponent("login.LoginHeader");
         const LoginFooter = sdk.getComponent("login.LoginFooter");
@@ -253,5 +249,5 @@ module.exports = React.createClass({
                 </div>
             </LoginPage>
         );
-    },
-});
+    }
+};

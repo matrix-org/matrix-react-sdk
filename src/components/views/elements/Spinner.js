@@ -18,10 +18,8 @@ limitations under the License.
 
 var React = require('react');
 
-module.exports = React.createClass({
-    displayName: 'Spinner',
-
-    render: function() {
+export default class Spinner extends React.PureComponent {
+    render() {
         var w = this.props.w || 32;
         var h = this.props.h || 32;
         var imgClass = this.props.imgClassName || "";
@@ -31,4 +29,4 @@ module.exports = React.createClass({
             </div>
         );
     }
-});
+}

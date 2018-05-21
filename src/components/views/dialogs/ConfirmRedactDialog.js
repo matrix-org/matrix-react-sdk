@@ -21,10 +21,8 @@ import { _t } from '../../../languageHandler';
 /*
  * A dialog for confirming a redaction.
  */
-export default React.createClass({
-    displayName: 'ConfirmRedactDialog',
-
-    render: function() {
+export default class ConfirmRedactDialog extends React.PureComponent {
+    render() {
         const QuestionDialog = sdk.getComponent('views.dialogs.QuestionDialog');
         return (
             <QuestionDialog onFinished={this.props.onFinished}
@@ -35,5 +33,5 @@ export default React.createClass({
                 button={_t("Remove")}>
             </QuestionDialog>
         );
-    },
-});
+    }
+}

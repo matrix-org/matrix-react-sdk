@@ -25,25 +25,19 @@ const dis = require('../../../dispatcher');
 const Modal = require("../../../Modal");
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
-    displayName: 'MemberTile',
-
-    propTypes: {
+export default class MemberTile extends React.Component {
+    static propTypes = {
         member: PropTypes.any.isRequired, // RoomMember
         showPresence: PropTypes.bool,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            showPresence: true,
-        };
-    },
+    static defaultProps = {
+        showPresence: true,
+    };
 
-    getInitialState: function() {
-        return {};
-    },
+    state = {};
 
-    shouldComponentUpdate: function(nextProps, nextState) {
+    shouldComponentUpdate(nextProps, nextState) {
         if (
             this.member_last_modified_time === undefined ||
             this.member_last_modified_time < nextProps.member.getLastModifiedTime()
@@ -58,24 +52,24 @@ module.exports = React.createClass({
             return true;
         }
         return false;
-    },
+    }
 
-    onClick: function(e) {
+    onClick = (e) => {
         dis.dispatch({
             action: 'view_user',
             member: this.props.member,
         });
-    },
+    };
 
-    _getDisplayName: function() {
+    _getDisplayName = () => {
         return this.props.member.name;
-    },
+    };
 
-    getPowerLabel: function() {
+    getPowerLabel = () => {
         return _t("%(userName)s (power %(powerLevelNumber)s)", {userName: this.props.member.userId, powerLevelNumber: this.props.member.powerLevel});
-    },
+    };
 
-    render: function() {
+    render() {
         const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
         const BaseAvatar = sdk.getComponent('avatars.BaseAvatar');
         const EntityTile = sdk.getComponent('rooms.EntityTile');
@@ -108,5 +102,5 @@ module.exports = React.createClass({
                 avatarJsx={av} title={this.getPowerLabel()} onClick={this.onClick}
                 name={name} powerStatus={powerStatus} showPresence={this.props.showPresence} />
         );
-    },
-});
+    }
+};

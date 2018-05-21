@@ -22,10 +22,8 @@ import { _t } from '../../../languageHandler';
 /**
  * Basic container for buttons in modal dialogs.
  */
-module.exports = React.createClass({
-    displayName: "DialogButtons",
-
-    propTypes: {
+export default class DialogButtons extends React.PureComponent {
+    static propTypes = {
         // The primary button which is styled differently and has default focus.
         primaryButton: PropTypes.node.isRequired,
 
@@ -44,20 +42,18 @@ module.exports = React.createClass({
         focus: PropTypes.bool,
 
         disabled: PropTypes.bool,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            hasCancel: true,
-            disabled: false,
-        };
-    },
+    static defaultProps = {
+        hasCancel: true,
+        disabled: false,
+    };
 
-    _onCancelClick: function() {
+    _onCancelClick = () => {
         this.props.onCancel();
-    },
+    };
 
-    render: function() {
+    render() {
         let primaryButtonClassName = "mx_Dialog_primary";
         if (this.props.primaryButtonClass) {
             primaryButtonClassName += " " + this.props.primaryButtonClass;
@@ -81,5 +77,5 @@ module.exports = React.createClass({
                 { cancelButton }
             </div>
         );
-    },
-});
+    }
+}

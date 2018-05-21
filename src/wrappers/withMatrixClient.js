@@ -27,15 +27,15 @@ import PropTypes from 'prop-types';
  * mechanism in future.
  */
 export default function(WrappedComponent) {
-    return React.createClass({
-        displayName: "withMatrixClient<" + WrappedComponent.displayName + ">",
+    return class extends React.Component {
+        static displayName = "withMatrixClient<" + WrappedComponent.displayName + ">";
 
-        contextTypes: {
+        static contextTypes = {
             matrixClient: PropTypes.instanceOf(Matrix.MatrixClient).isRequired,
-        },
+        };
 
-        render: function() {
+        render() {
             return <WrappedComponent {...this.props} matrixClient={this.context.matrixClient} />;
-        },
-    });
+        }
+    };
 }

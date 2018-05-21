@@ -18,10 +18,10 @@ limitations under the License.
 
 var React = require('react');
 
-module.exports = React.createClass({
-    displayName: 'RoomDropTarget',
+module.exports = class extends React.Component {
+    static displayName = 'RoomDropTarget';
 
-    render: function() {
+    render() {
         return (
             <div className="mx_RoomDropTarget_container">
                 <div className="mx_RoomDropTarget">
@@ -32,4 +32,4 @@ module.exports = React.createClass({
             </div>
         );
     }
-});
+};

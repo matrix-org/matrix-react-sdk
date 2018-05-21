@@ -27,41 +27,37 @@ const PresetValues = {
     Custom: "custom",
 };
 
-module.exports = React.createClass({
-    displayName: 'CreateRoom',
+export default class extends React.PureComponent {
+    static displayName = 'CreateRoom';
 
-    propTypes: {
+    static propTypes = {
         onRoomCreated: PropTypes.func,
         collapsedRhs: PropTypes.bool,
-    },
+    };
 
-    phases: {
+    static phases = {
         CONFIG: "CONFIG",  // We're waiting for user to configure and hit create.
         CREATING: "CREATING",  // We're sending the request.
         CREATED: "CREATED",  // We successfully created the room.
         ERROR: "ERROR",  // There was an error while trying to create room.
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            onRoomCreated: function() {},
-        };
-    },
+    static defaultProps = {
+        onRoomCreated: function() {},
+    };
 
-    getInitialState: function() {
-        return {
-            phase: this.phases.CONFIG,
-            error_string: "",
-            is_private: true,
-            share_history: false,
-            default_preset: PresetValues.PrivateChat,
-            topic: '',
-            room_name: '',
-            invited_users: [],
-        };
-    },
+    state = {
+        phase: this.phases.CONFIG,
+        error_string: "",
+        is_private: true,
+        share_history: false,
+        default_preset: PresetValues.PrivateChat,
+        topic: '',
+        room_name: '',
+        invited_users: [],
+    };
 
-    onCreateRoom: function() {
+    onCreateRoom = () => {
         const options = {};
 
         if (this.state.room_name) {
@@ -130,29 +126,29 @@ module.exports = React.createClass({
                 error_string: err.toString(),
             });
         });
-    },
+    };
 
-    getPreset: function() {
+    getPreset() {
         return this.refs.presets.getPreset();
-    },
+    }
 
-    getName: function() {
+    getName() {
         return this.refs.name_textbox.getName();
-    },
+    }
 
-    getTopic: function() {
+    getTopic() {
         return this.refs.topic.getTopic();
-    },
+    }
 
-    getAliasLocalpart: function() {
+    getAliasLocalpart() {
         return this.refs.alias.getAliasLocalpart();
-    },
+    }
 
-    getInvitedUsers: function() {
+    getInvitedUsers() {
         return this.refs.user_selector.getUserIds();
-    },
+    }
 
-    onPresetChanged: function(preset) {
+    onPresetChanged = preset => {
         switch (preset) {
             case PresetValues.PrivateChat:
                 this.setState({
@@ -174,53 +170,53 @@ module.exports = React.createClass({
                 });
                 break;
         }
-    },
+    };
 
-    onPrivateChanged: function(ev) {
+    onPrivateChanged = ev => {
         this.setState({
             preset: PresetValues.Custom,
             is_private: ev.target.checked,
         });
-    },
+    };
 
-    onShareHistoryChanged: function(ev) {
+    onShareHistoryChanged = ev => {
         this.setState({
             preset: PresetValues.Custom,
             share_history: ev.target.checked,
         });
-    },
+    };
 
-    onTopicChange: function(ev) {
+    onTopicChange = ev => {
         this.setState({
             topic: ev.target.value,
         });
-    },
+    };
 
-    onNameChange: function(ev) {
+    onNameChange = ev => {
         this.setState({
             room_name: ev.target.value,
         });
-    },
+    };
 
-    onInviteChanged: function(invited_users) {
+    onInviteChanged = invited_users => {
         this.setState({
             invited_users: invited_users,
         });
-    },
+    };
 
-    onAliasChanged: function(alias) {
+    onAliasChanged = alias => {
         this.setState({
             alias: alias,
         });
-    },
+    };
 
-    onEncryptChanged: function(ev) {
+    onEncryptChanged = ev => {
         this.setState({
             encrypt: ev.target.checked,
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const curr_phase = this.state.phase;
         if (curr_phase == this.phases.CREATING) {
             const Loader = sdk.getComponent("elements.Spinner");
@@ -280,5 +276,5 @@ module.exports = React.createClass({
             </div>
             );
         }
-    },
-});
+    }
+}

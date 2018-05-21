@@ -28,9 +28,8 @@ import { _t } from '../../../languageHandler';
 
 import sessionStore from '../../../stores/SessionStore';
 
-module.exports = React.createClass({
-    displayName: 'ChangePassword',
-    propTypes: {
+export default class ChangePassword extends React.PureComponent {
+    static propTypes = {
         onFinished: PropTypes.func,
         onError: PropTypes.func,
         onCheckPassword: PropTypes.func,
@@ -41,62 +40,58 @@ module.exports = React.createClass({
         confirm: PropTypes.bool,
         // Whether to autoFocus the new password input
         autoFocusNewPasswordInput: PropTypes.bool,
-    },
+    };
 
-    Phases: {
+    Phases = {
         Edit: "edit",
         Uploading: "uploading",
         Error: "error",
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            onFinished: function() {},
-            onError: function() {},
-            onCheckPassword: function(oldPass, newPass, confirmPass) {
-                if (newPass !== confirmPass) {
-                    return {
-                        error: _t("New passwords don't match"),
-                    };
-                } else if (!newPass || newPass.length === 0) {
-                    return {
-                        error: _t("Passwords can't be empty"),
-                    };
-                }
-            },
-            confirm: true,
-        };
-    },
+    static defaultProps = {
+        onFinished: function() {},
+        onError: function() {},
+        onCheckPassword: function(oldPass, newPass, confirmPass) {
+            if (newPass !== confirmPass) {
+                return {
+                    error: _t("New passwords don't match"),
+                };
+            } else if (!newPass || newPass.length === 0) {
+                return {
+                    error: _t("Passwords can't be empty"),
+                };
+            }
+        },
+        confirm: true,
+    };
 
-    getInitialState: function() {
-        return {
-            phase: this.Phases.Edit,
-            cachedPassword: null,
-        };
-    },
+    state = {
+        phase: this.Phases.Edit,
+        cachedPassword: null,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._sessionStore = sessionStore;
         this._sessionStoreToken = this._sessionStore.addListener(
             this._setStateFromSessionStore,
         );
 
         this._setStateFromSessionStore();
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         if (this._sessionStoreToken) {
             this._sessionStoreToken.remove();
         }
-    },
+    }
 
-    _setStateFromSessionStore: function() {
+    _setStateFromSessionStore = () => {
         this.setState({
             cachedPassword: this._sessionStore.getCachedPassword(),
         });
-    },
+    }
 
-    changePassword: function(oldPassword, newPassword) {
+    changePassword(oldPassword, newPassword) {
         const cli = MatrixClientPeg.get();
 
         if (!this.props.confirm) {
@@ -129,9 +124,9 @@ module.exports = React.createClass({
                 }
             },
         });
-    },
+    }
 
-    _changePassword: function(cli, oldPassword, newPassword) {
+    _changePassword(cli, oldPassword, newPassword) {
         const authDict = {
             type: 'm.login.password',
             user: cli.credentials.userId,
@@ -162,9 +157,9 @@ module.exports = React.createClass({
                 phase: this.Phases.Edit,
             });
         }).done();
-    },
+    }
 
-    _optionallySetEmail: function() {
+    _optionallySetEmail() {
         const deferred = Promise.defer();
         // Ask for an email otherwise the user has no way to reset their password
         const SetEmailDialog = sdk.getComponent("dialogs.SetEmailDialog");
@@ -176,9 +171,9 @@ module.exports = React.createClass({
             },
         });
         return deferred.promise;
-    },
+    }
 
-    _onExportE2eKeysClicked: function() {
+    _onExportE2eKeysClicked = () => {
         Modal.createTrackedDialogAsync('Export E2E Keys', 'Change Password', (cb) => {
             require.ensure(['../../../async-components/views/dialogs/ExportE2eKeysDialog'], () => {
                 cb(require('../../../async-components/views/dialogs/ExportE2eKeysDialog'));
@@ -186,9 +181,9 @@ module.exports = React.createClass({
         }, {
             matrixClient: MatrixClientPeg.get(),
         });
-    },
+    };
 
-    onClickChange: function(ev) {
+    onClickChange = (ev) => {
         ev.preventDefault();
         const oldPassword = this.state.cachedPassword || this.refs.old_input.value;
         const newPassword = this.refs.new_input.value;
@@ -201,9 +196,9 @@ module.exports = React.createClass({
         } else {
             this.changePassword(oldPassword, newPassword);
         }
-    },
+    };
 
-    render: function() {
+    render() {
         const rowClassName = this.props.rowClassName;
         const rowLabelClassName = this.props.rowLabelClassName;
         const rowInputClassName = this.props.rowInputClassName;
@@ -259,5 +254,5 @@ module.exports = React.createClass({
                     </div>
                 );
         }
-    },
-});
+    }
+}

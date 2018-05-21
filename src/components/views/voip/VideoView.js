@@ -26,10 +26,8 @@ import dis from '../../../dispatcher';
 
 import SettingsStore from "../../../settings/SettingsStore";
 
-module.exports = React.createClass({
-    displayName: 'VideoView',
-
-    propTypes: {
+export default class VideoView extends React.Component {
+    static propTypes = {
         // maxHeight style attribute for the video element
         maxHeight: PropTypes.number,
 
@@ -39,21 +37,21 @@ module.exports = React.createClass({
         // a callback which is called when the video element is resized due to
         // a change in video metadata
         onResize: PropTypes.func,
-    },
+    };
 
-    componentDidMount: function() {
+    componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         dis.unregister(this.dispatcherRef);
-    },
+    }
 
-    getRemoteVideoElement: function() {
+    getRemoteVideoElement = () => {
         return ReactDOM.findDOMNode(this.refs.remote);
-    },
+    };
 
-    getRemoteAudioElement: function() {
+    getRemoteAudioElement = () => {
         // this needs to be somewhere at the top of the DOM which
         // always exists to avoid audio interruptions.
         // Might as well just use DOM.
@@ -63,17 +61,17 @@ module.exports = React.createClass({
                 + "You need to add an <audio/> to the DOM.");
         }
         return remoteAudioElement;
-    },
+    };
 
-    getLocalVideoElement: function() {
+    getLocalVideoElement = () => {
         return ReactDOM.findDOMNode(this.refs.local);
-    },
+    };
 
-    setContainer: function(c) {
+    setContainer = (c) => {
         this.container = c;
-    },
+    };
 
-    onAction: function(payload) {
+    onAction = (payload) => {
         switch (payload.action) {
             case 'video_fullscreen': {
                 if (!this.container) {
@@ -102,9 +100,9 @@ module.exports = React.createClass({
                 break;
             }
         }
-    },
+    };
 
-    render: function() {
+    render() {
         const VideoFeed = sdk.getComponent('voip.VideoFeed');
 
         // if we're fullscreen, we don't want to set a maxHeight on the video element.
@@ -128,5 +126,5 @@ module.exports = React.createClass({
                 </div>
             </div>
         );
-    },
-});
+    }
+}

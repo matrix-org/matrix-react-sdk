@@ -33,21 +33,21 @@ const mockclock = require('mock-clock');
 let client;
 
 // wrap MessagePanel with a component which provides the MatrixClient in the context.
-const WrappedMessagePanel = React.createClass({
-    childContextTypes: {
+class WrappedMessagePanel extends React.Component {
+    static childContextTypes = {
         matrixClient: React.PropTypes.object,
-    },
+    };
 
-    getChildContext: function() {
+    getChildContext() {
         return {
             matrixClient: client,
         };
-    },
+    }
 
-    render: function() {
+    render() {
         return <MessagePanel {...this.props} />;
-    },
-});
+    }
+}
 
 describe('MessagePanel', function() {
     const clock = mockclock.clock();

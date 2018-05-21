@@ -39,40 +39,40 @@ const ROOM_COLORS = [
     //["#595959", "#ececec"], // Grey makes everything appear disabled, so remove it for now
 ];
 
-module.exports = React.createClass({
-    displayName: 'ColorSettings',
-
-    propTypes: {
+export default class ColorSettings extends React.PureComponent {
+    static propTypes = {
         room: PropTypes.object.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        const data = {
+    constructor(props) {
+        super(props);
+
+        this.state = {
             index: 0,
             primary_color: ROOM_COLORS[0][0],
             secondary_color: ROOM_COLORS[0][1],
             hasChanged: false,
         };
+
         const scheme = SettingsStore.getValueAt(SettingLevel.ROOM_ACCOUNT, "roomColor", this.props.room.roomId);
 
         if (scheme.primary_color && scheme.secondary_color) {
             // We only use the user's scheme if the scheme is valid.
-            data.primary_color = scheme.primary_color;
-            data.secondary_color = scheme.secondary_color;
+            this.state.primary_color = scheme.primary_color;
+            this.state.secondary_color = scheme.secondary_color;
         }
-        data.index = this._getColorIndex(data);
+        this.state.index = this._getColorIndex(this.state);
 
-        if (data.index === -1) {
+        if (this.state.index === -1) {
             // append the unrecognised colours to our palette
-            data.index = ROOM_COLORS.length;
+            this.state.index = ROOM_COLORS.length;
             ROOM_COLORS.push([
                 scheme.primary_color, scheme.secondary_color,
             ]);
         }
-        return data;
-    },
+    }
 
-    saveSettings: function() { // : Promise
+    saveSettings() { // : Promise
         if (!this.state.hasChanged) {
             return Promise.resolve(); // They didn't explicitly give a color to save.
         }
@@ -95,9 +95,9 @@ module.exports = React.createClass({
             });
         }
         return Promise.resolve(); // no color diff
-    },
+    }
 
-    _getColorIndex: function(scheme) {
+    _getColorIndex(scheme) {
         if (!scheme || !scheme.primary_color || !scheme.secondary_color) {
             return -1;
         }
@@ -110,9 +110,9 @@ module.exports = React.createClass({
             }
         }
         return -1;
-    },
+    }
 
-    _onColorSchemeChanged: function(index) {
+    _onColorSchemeChanged(index) {
         // preview what the user just changed the scheme to.
         Tinter.tint(ROOM_COLORS[index][0], ROOM_COLORS[index][1]);
         this.setState({
@@ -121,9 +121,9 @@ module.exports = React.createClass({
             secondary_color: ROOM_COLORS[index][1],
             hasChanged: true,
         });
-    },
+    }
 
-    render: function() {
+    render() {
         return (
             <div className="mx_RoomSettings_roomColors">
                 { ROOM_COLORS.map((room_color, i) => {
@@ -148,5 +148,5 @@ module.exports = React.createClass({
                 }) }
             </div>
         );
-    },
-});
+    }
+}

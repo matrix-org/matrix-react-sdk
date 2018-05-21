@@ -20,10 +20,8 @@ import sdk from '../../../index';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
-    displayName: 'ChangeDisplayName',
-
-    _getDisplayName: async function() {
+export default class ChangeDisplayName extends React.PureComponent {
+    _getDisplayName = async () => {
         const cli = MatrixClientPeg.get();
         try {
             const res = await cli.getProfileInfo(cli.getUserId());
@@ -31,16 +29,16 @@ module.exports = React.createClass({
         } catch (e) {
             throw new Error("Failed to fetch display name");
         }
-    },
+    };
 
-    _changeDisplayName: function(newDisplayname) {
+    _changeDisplayName = (newDisplayname) => {
         const cli = MatrixClientPeg.get();
         return cli.setDisplayName(newDisplayname).catch(function(e) {
             throw new Error("Failed to set display name", e);
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const EditableTextContainer = sdk.getComponent('elements.EditableTextContainer');
         return (
             <EditableTextContainer
@@ -49,5 +47,5 @@ module.exports = React.createClass({
                 blurToSubmit={true}
                 onSubmit={this._changeDisplayName} />
         );
-    },
-});
+    }
+}

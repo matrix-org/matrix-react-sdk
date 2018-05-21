@@ -22,10 +22,10 @@ import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 
 
-module.exports = React.createClass({
-    displayName: 'PresenceLabel',
+module.exports = class extends React.Component {
+    static displayName = 'PresenceLabel';
 
-    propTypes: {
+    static propTypes = {
         // number of milliseconds ago this user was last active.
         // zero = unknown
         activeAgo: PropTypes.number,
@@ -36,18 +36,16 @@ module.exports = React.createClass({
 
         // offline, online, etc
         presenceState: PropTypes.string,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            ago: -1,
-            presenceState: null,
-        };
-    },
+    static defaultProps = {
+        ago: -1,
+        presenceState: null,
+    };
 
     // Return duration as a string using appropriate time units
     // XXX: This would be better handled using a culture-aware library, but we don't use one yet.
-    getDuration: function(time) {
+    getDuration = (time) => {
         if (!time) return;
         const t = parseInt(time / 1000);
         const s = t % 60;
@@ -67,9 +65,9 @@ module.exports = React.createClass({
             return _t("%(duration)sh", {duration: h});
         }
         return _t("%(duration)sd", {duration: d});
-    },
+    };
 
-    getPrettyPresence: function(presence, activeAgo, currentlyActive) {
+    getPrettyPresence = (presence, activeAgo, currentlyActive) => {
         if (!currentlyActive && activeAgo !== undefined && activeAgo > 0) {
             const duration = this.getDuration(activeAgo);
             if (presence === "online") return _t("Online for %(duration)s", { duration: duration });
@@ -82,13 +80,13 @@ module.exports = React.createClass({
             if (presence === "offline") return _t("Offline");
             return _t("Unknown");
         }
-    },
+    };
 
-    render: function() {
+    render() {
         return (
             <div className="mx_PresenceLabel">
                 { this.getPrettyPresence(this.props.presenceState, this.props.activeAgo, this.props.currentlyActive) }
             </div>
         );
-    },
-});
+    }
+};

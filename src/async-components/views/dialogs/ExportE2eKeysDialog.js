@@ -26,30 +26,26 @@ import sdk from '../../../index';
 const PHASE_EDIT = 1;
 const PHASE_EXPORTING = 2;
 
-export default React.createClass({
-    displayName: 'ExportE2eKeysDialog',
-
-    propTypes: {
+export default class ExportE2eKeysDialog extends React.PureComponent {
+    static propTypes = {
         matrixClient: PropTypes.instanceOf(Matrix.MatrixClient).isRequired,
         onFinished: PropTypes.func.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            phase: PHASE_EDIT,
-            errStr: null,
-        };
-    },
+    state = {
+        phase: PHASE_EDIT,
+        errStr: null,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._unmounted = false;
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         this._unmounted = true;
-    },
+    }
 
-    _onPassphraseFormSubmit: function(ev) {
+    _onPassphraseFormSubmit = (ev) => {
         ev.preventDefault();
 
         const passphrase = this.refs.passphrase1.value;
@@ -64,9 +60,9 @@ export default React.createClass({
 
         this._startExport(passphrase);
         return false;
-    },
+    };
 
-    _startExport: function(passphrase) {
+    _startExport = (passphrase) => {
         // extra Promise.resolve() to turn synchronous exceptions into
         // asynchronous ones.
         Promise.resolve().then(() => {
@@ -97,15 +93,15 @@ export default React.createClass({
             errStr: null,
             phase: PHASE_EXPORTING,
         });
-    },
+    };
 
-    _onCancelClick: function(ev) {
+    _onCancelClick = (ev) => {
         ev.preventDefault();
         this.props.onFinished(false);
         return false;
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
 
         const disableForm = (this.state.phase === PHASE_EXPORTING);
@@ -179,5 +175,5 @@ export default React.createClass({
                 </form>
             </BaseDialog>
         );
-    },
-});
+    }
+}

@@ -23,20 +23,18 @@ import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
 
 
-export default React.createClass({
-    displayName: 'SessionRestoreErrorDialog',
-
-    propTypes: {
+export default class SessionRestoreErrorDialog extends React.PureComponent {
+    static propTypes = {
         error: PropTypes.string.isRequired,
         onFinished: PropTypes.func.isRequired,
-    },
+    };
 
-    _sendBugReport: function() {
+    _sendBugReport = () => {
         const BugReportDialog = sdk.getComponent("dialogs.BugReportDialog");
         Modal.createTrackedDialog('Session Restore Error', 'Send Bug Report Dialog', BugReportDialog, {});
-    },
+    };
 
-    _onClearStorageClick: function() {
+    _onClearStorageClick = () => {
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
         Modal.createTrackedDialog('Session Restore Confirm Logout', '', QuestionDialog, {
             title: _t("Sign out"),
@@ -46,15 +44,15 @@ export default React.createClass({
             danger: true,
             onFinished: this.props.onFinished,
         });
-    },
+    };
 
-    _onRefreshClick: function() {
+    _onRefreshClick = () => {
         // Is this likely to help? Probably not, but giving only one button
         // that clears your storage seems awful.
         window.location.reload(true);
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
 
@@ -106,5 +104,5 @@ export default React.createClass({
                 { dialogButtons }
             </BaseDialog>
         );
-    },
-});
+    }
+}

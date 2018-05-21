@@ -43,10 +43,8 @@ import RoomListActions from '../../actions/RoomListActions';
  *
  * Components mounted below us can access the matrix client via the react context.
  */
-const LoggedInView = React.createClass({
-    displayName: 'LoggedInView',
-
-    propTypes: {
+class LoggedInView extends React.Component {
+    static propTypes = {
         matrixClient: PropTypes.instanceOf(Matrix.MatrixClient).isRequired,
         page_type: PropTypes.string.isRequired,
         onRoomCreated: PropTypes.func,
@@ -59,14 +57,19 @@ const LoggedInView = React.createClass({
         teamToken: PropTypes.string,
 
         // and lots and lots of other stuff.
-    },
+    };
 
-    childContextTypes: {
+    static childContextTypes = {
         matrixClient: PropTypes.instanceOf(Matrix.MatrixClient),
         authCache: PropTypes.object,
-    },
+    };
 
-    getChildContext: function() {
+    state = {
+        // use compact timeline view
+        useCompactLayout: SettingsStore.getValue('useCompactLayout'),
+    };
+
+    getChildContext() {
         return {
             matrixClient: this._matrixClient,
             authCache: {
@@ -74,16 +77,9 @@ const LoggedInView = React.createClass({
                 lastUpdate: 0,
             },
         };
-    },
+    }
 
-    getInitialState: function() {
-        return {
-            // use compact timeline view
-            useCompactLayout: SettingsStore.getValue('useCompactLayout'),
-        };
-    },
-
-    componentWillMount: function() {
+    componentWillMount() {
         // stash the MatrixClient in case we log out before we are unmounted
         this._matrixClient = this.props.matrixClient;
 
@@ -98,15 +94,15 @@ const LoggedInView = React.createClass({
         this._setStateFromSessionStore();
 
         this._matrixClient.on("accountData", this.onAccountData);
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         document.removeEventListener('keydown', this._onKeyDown);
         this._matrixClient.removeListener("accountData", this.onAccountData);
         if (this._sessionStoreToken) {
             this._sessionStoreToken.remove();
         }
-    },
+    }
 
     // Child components assume that the client peg will not be null, so give them some
     // sort of assurance here by only allowing a re-render if the client is truthy.
@@ -114,24 +110,24 @@ const LoggedInView = React.createClass({
     // This is required because `LoggedInView` maintains its own state and if this state
     // updates after the client peg has been made null (during logout), then it will
     // attempt to re-render and the children will throw errors.
-    shouldComponentUpdate: function() {
+    shouldComponentUpdate() {
         return Boolean(MatrixClientPeg.get());
-    },
+    }
 
-    canResetTimelineInRoom: function(roomId) {
+    canResetTimelineInRoom = (roomId) => {
         if (!this.refs.roomView) {
             return true;
         }
         return this.refs.roomView.canResetTimeline();
-    },
+    };
 
-    _setStateFromSessionStore() {
+    _setStateFromSessionStore = () => {
         this.setState({
             userHasGeneratedPassword: Boolean(this._sessionStore.getCachedPassword()),
         });
-    },
+    };
 
-    onAccountData: function(event) {
+    onAccountData = (event) => {
         if (event.getType() === "im.vector.web.settings") {
             this.setState({
                 useCompactLayout: event.getContent().useCompactLayout,
@@ -140,9 +136,9 @@ const LoggedInView = React.createClass({
         if (event.getType() === "m.ignored_user_list") {
             dis.dispatch({action: "ignore_state_changed"});
         }
-    },
+    };
 
-    _onKeyDown: function(ev) {
+    _onKeyDown = (ev) => {
             /*
             // Remove this for now as ctrl+alt = alt-gr so this breaks keyboards which rely on alt-gr for numbers
             // Will need to find a better meta key if anyone actually cares about using this.
@@ -200,18 +196,18 @@ const LoggedInView = React.createClass({
             ev.stopPropagation();
             ev.preventDefault();
         }
-    },
+    };
 
     /** dispatch a page-up/page-down/etc to the appropriate component */
-    _onScrollKeyPressed: function(ev) {
+    _onScrollKeyPressed = (ev) => {
         if (this.refs.roomView) {
             this.refs.roomView.handleScrollKey(ev);
         } else if (this.refs.roomDirectory) {
             this.refs.roomDirectory.handleScrollKey(ev);
         }
-    },
+    };
 
-    _onDragEnd: function(result) {
+    _onDragEnd = (result) => {
         // Dragged to an invalid destination, not onto a droppable
         if (!result.destination) {
             return;
@@ -234,9 +230,9 @@ const LoggedInView = React.createClass({
         } else if (dest.startsWith('room-sub-list-droppable_')) {
             this._onRoomTileEndDrag(result);
         }
-    },
+    };
 
-    _onRoomTileEndDrag: function(result) {
+    _onRoomTileEndDrag = (result) => {
         let newTag = result.destination.droppableId.split('_')[1];
         let prevTag = result.source.droppableId.split('_')[1];
         if (newTag === 'undefined') newTag = undefined;
@@ -253,9 +249,9 @@ const LoggedInView = React.createClass({
             prevTag, newTag,
             oldIndex, newIndex,
         ), true);
-    },
+    };
 
-    _onClick: function(ev) {
+    _onClick = (ev) => {
         // When the panels are disabled, clicking on them results in a mouse event
         // which bubbles to certain elements in the tree. When this happens, close
         // any settings page that is currently open (user/room/group).
@@ -269,9 +265,9 @@ const LoggedInView = React.createClass({
         ) {
             dis.dispatch({ action: 'close_settings' });
         }
-    },
+    };
 
-    render: function() {
+    render() {
         const LeftPanel = sdk.getComponent('structures.LeftPanel');
         const RightPanel = sdk.getComponent('structures.RightPanel');
         const RoomView = sdk.getComponent('structures.RoomView');
@@ -412,7 +408,7 @@ const LoggedInView = React.createClass({
                 </DragDropContext>
             </div>
         );
-    },
-});
+    }
+}
 
 export default LoggedInView;

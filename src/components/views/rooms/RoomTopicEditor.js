@@ -21,38 +21,36 @@ import PropTypes from 'prop-types';
 const sdk = require('../../../index');
 import { _t } from "../../../languageHandler";
 
-module.exports = React.createClass({
-    displayName: 'RoomTopicEditor',
+module.exports = class extends React.Component {
+    static displayName = 'RoomTopicEditor';
 
-    propTypes: {
+    static propTypes = {
         room: PropTypes.object.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            topic: null,
-        };
-    },
+    state = {
+        topic: null,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         const room = this.props.room;
         const topic = room.currentState.getStateEvents('m.room.topic', '');
         this.setState({
             topic: topic ? topic.getContent().topic : '',
         });
-    },
+    }
 
-    getTopic: function() {
+    getTopic = () => {
         return this.state.topic;
-    },
+    };
 
-    _onValueChanged: function(value) {
+    _onValueChanged = (value) => {
         this.setState({
             topic: value,
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const EditableText = sdk.getComponent("elements.EditableText");
 
         return (
@@ -65,5 +63,5 @@ module.exports = React.createClass({
                      onValueChanged={this._onValueChanged}
                      dir="auto" />
         );
-    },
-});
+    }
+};

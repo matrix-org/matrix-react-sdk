@@ -19,14 +19,12 @@ limitations under the License.
 import { _t } from '../../../languageHandler';
 import React from 'react';
 
-module.exports = React.createClass({
-    displayName: 'LoginFooter',
-
-    render: function() {
+export default class LoginFooter extends React.PureComponent {
+    render() {
         return (
             <div className="mx_Login_links">
                 <a href="https://matrix.org">{ _t("powered by Matrix") }</a>
             </div>
         );
-    },
-});
+    }
+}

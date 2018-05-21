@@ -24,22 +24,23 @@ import MemberAvatar from "../avatars/MemberAvatar";
 import { _t } from '../../../languageHandler';
 import {formatFullDate} from '../../../DateUtils';
 
-module.exports = React.createClass({
-    displayName: 'PinnedEventTile',
-    propTypes: {
+export default class PinnedEventTile extends React.PureComponent {
+    static propTypes = {
         mxRoom: PropTypes.object.isRequired,
         mxEvent: PropTypes.object.isRequired,
         onUnpinned: PropTypes.func,
-    },
-    onTileClicked: function() {
+    };
+
+    onTileClicked = () => {
         dis.dispatch({
             action: 'view_room',
             event_id: this.props.mxEvent.getId(),
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
         });
-    },
-    onUnpinClicked: function() {
+    };
+
+    onUnpinClicked = () => {
         const pinnedEvents = this.props.mxRoom.currentState.getStateEvents("m.room.pinned_events", "");
         if (!pinnedEvents || !pinnedEvents.getContent().pinned) {
             // Nothing to do: already unpinned
@@ -55,11 +56,13 @@ module.exports = React.createClass({
                 });
             } else if (this.props.onUnpinned) this.props.onUnpinned();
         }
-    },
-    _canUnpin: function() {
+    };
+
+    _canUnpin = () => {
         return this.props.mxRoom.currentState.mayClientSendStateEvent('m.room.pinned_events', MatrixClientPeg.get());
-    },
-    render: function() {
+    };
+
+    render() {
         const sender = this.props.mxRoom.getMember(this.props.mxEvent.getSender());
         const avatarSize = 40;
 
@@ -97,5 +100,5 @@ module.exports = React.createClass({
                 </div>
             </div>
         );
-    },
-});
+    }
+}

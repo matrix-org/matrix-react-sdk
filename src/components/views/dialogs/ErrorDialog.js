@@ -30,9 +30,8 @@ import PropTypes from 'prop-types';
 import sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 
-export default React.createClass({
-    displayName: 'ErrorDialog',
-    propTypes: {
+export default class ErrorDialog extends React.PureComponent {
+    static propTypes = {
         title: PropTypes.string,
         description: PropTypes.oneOfType([
             PropTypes.element,
@@ -41,18 +40,16 @@ export default React.createClass({
         button: PropTypes.string,
         focus: PropTypes.bool,
         onFinished: PropTypes.func.isRequired,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            focus: true,
-            title: null,
-            description: null,
-            button: null,
-        };
-    },
+    static defaultProps = {
+        focus: true,
+        title: null,
+        description: null,
+        button: null,
+    };
 
-    render: function() {
+    render() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         return (
             <BaseDialog className="mx_ErrorDialog" onFinished={this.props.onFinished}
@@ -69,5 +66,5 @@ export default React.createClass({
                 </div>
             </BaseDialog>
         );
-    },
-});
+    }
+}

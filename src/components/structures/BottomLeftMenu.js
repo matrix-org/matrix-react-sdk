@@ -25,100 +25,96 @@ import SettingsStore from '../../settings/SettingsStore';
 
 const CALLOUT_ANIM_DURATION = 1000;
 
-module.exports = React.createClass({
-    displayName: 'BottomLeftMenu',
-
-    propTypes: {
+export default class BottomLeftMenu extends React.PureComponent {
+    static propTypes = {
         collapsed: React.PropTypes.bool.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return({
-            directoryHover : false,
-            roomsHover : false,
-            homeHover: false,
-            peopleHover : false,
-            settingsHover : false,
-        });
-    },
+    state = {
+        directoryHover : false,
+        roomsHover : false,
+        homeHover: false,
+        peopleHover : false,
+        settingsHover : false,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._dispatcherRef = dis.register(this.onAction);
         this._peopleButton = null;
         this._directoryButton = null;
         this._createRoomButton = null;
         this._lastCallouts = {};
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         dis.unregister(this._dispatcherRef);
-    },
+    }
 
     // Room events
-    onDirectoryClick: function() {
+    onDirectoryClick = () => {
         dis.dispatch({ action: 'view_room_directory' });
-    },
+    };
 
-    onDirectoryMouseEnter: function() {
+    onDirectoryMouseEnter = () => {
         this.setState({ directoryHover: true });
-    },
+    };
 
-    onDirectoryMouseLeave: function() {
+    onDirectoryMouseLeave = () => {
         this.setState({ directoryHover: false });
-    },
+    };
 
-    onRoomsClick: function() {
+    onRoomsClick = () => {
         dis.dispatch({ action: 'view_create_room' });
-    },
+    };
 
-    onRoomsMouseEnter: function() {
+    onRoomsMouseEnter = () => {
         this.setState({ roomsHover: true });
-    },
+    };
 
-    onRoomsMouseLeave: function() {
+    onRoomsMouseLeave = () => {
         this.setState({ roomsHover: false });
-    },
+    };
 
     // Home button events
-    onHomeClick: function() {
+    onHomeClick = () => {
         dis.dispatch({ action: 'view_home_page' });
-    },
+    };
 
-    onHomeMouseEnter: function() {
+    onHomeMouseEnter = () => {
         this.setState({ homeHover: true });
-    },
+    };
 
-    onHomeMouseLeave: function() {
+    onHomeMouseLeave = () => {
         this.setState({ homeHover: false });
-    },
+    };
 
     // People events
-    onPeopleClick: function() {
+    onPeopleClick = () => {
         dis.dispatch({ action: 'view_create_chat' });
-    },
+    };
 
-    onPeopleMouseEnter: function() {
+    onPeopleMouseEnter = () => {
         this.setState({ peopleHover: true });
-    },
+    };
 
-    onPeopleMouseLeave: function() {
+    onPeopleMouseLeave = () => {
         this.setState({ peopleHover: false });
-    },
+    };
 
     // Settings events
-    onSettingsClick: function() {
+    onSettingsClick = () => {
         dis.dispatch({ action: 'view_user_settings' });
-    },
+    };
 
-    onSettingsMouseEnter: function() {
+    onSettingsMouseEnter = () => {
         this.setState({ settingsHover: true });
-    },
+    };
 
-    onSettingsMouseLeave: function() {
+    onSettingsMouseLeave = () => {
         this.setState({ settingsHover: false });
-    },
+    };
 
-    onAction: function(payload) {
+    onAction = (payload) => {
         let calloutElement;
         switch (payload.action) {
             // Incoming instruction: dance!
@@ -140,29 +136,29 @@ module.exports = React.createClass({
                 Velocity(ReactDOM.findDOMNode(calloutElement), "callout.bounce", CALLOUT_ANIM_DURATION);
             }
         }
-    },
+    };
 
     // Get the label/tooltip to show
-    getLabel: function(label, show) {
+    getLabel = (label, show) => {
         if (show) {
             var RoomTooltip = sdk.getComponent("rooms.RoomTooltip");
             return <RoomTooltip className="mx_BottomLeftMenu_tooltip" label={label} />;
         }
-    },
+    };
 
-    _collectPeopleButton: function(e) {
+    _collectPeopleButton = (e) => {
         this._peopleButton = e;
-    },
+    };
 
-    _collectDirectoryButton: function(e) {
+    _collectDirectoryButton = (e) => {
         this._directoryButton = e;
-    },
+    };
 
-    _collectCreateRoomButton: function(e) {
+    _collectCreateRoomButton = (e) => {
         this._createRoomButton = e;
-    },
+    };
 
-    render: function() {
+    render() {
         const HomeButton = sdk.getComponent('elements.HomeButton');
         const StartChatButton = sdk.getComponent('elements.StartChatButton');
         const RoomDirectoryButton = sdk.getComponent('elements.RoomDirectoryButton');
@@ -193,5 +189,5 @@ module.exports = React.createClass({
                 </div>
             </div>
         );
-    },
-});
+    }
+};

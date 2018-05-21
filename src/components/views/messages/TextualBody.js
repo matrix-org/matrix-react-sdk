@@ -40,10 +40,8 @@ import {host as matrixtoHost} from '../../../matrix-to';
 
 linkifyMatrix(linkify);
 
-module.exports = React.createClass({
-    displayName: 'TextualBody',
-
-    propTypes: {
+export default class TextualBody extends React.Component {
+    static propTypes = {
         /* the MatrixEvent to show */
         mxEvent: PropTypes.object.isRequired,
 
@@ -61,20 +59,18 @@ module.exports = React.createClass({
 
         /* the shape of the tile, used */
         tileShape: PropTypes.string,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            // the URLs (if any) to be previewed with a LinkPreviewWidget
-            // inside this TextualBody.
-            links: [],
+    state = {
+        // the URLs (if any) to be previewed with a LinkPreviewWidget
+        // inside this TextualBody.
+        links: [],
 
-            // track whether the preview widget is hidden
-            widgetHidden: false,
-        };
-    },
+        // track whether the preview widget is hidden
+        widgetHidden: false,
+    };
 
-    copyToClipboard: function(text) {
+    copyToClipboard = (text) => {
         const textArea = document.createElement("textarea");
         textArea.value = text;
         document.body.appendChild(textArea);
@@ -89,9 +85,9 @@ module.exports = React.createClass({
 
         document.body.removeChild(textArea);
         return successful;
-    },
+    };
 
-    componentDidMount: function() {
+    componentDidMount() {
         this._unmounted = false;
 
         // pillifyLinks BEFORE linkifyElement because plain room/user URLs in the composer
@@ -126,17 +122,17 @@ module.exports = React.createClass({
             }
             this._addCodeCopyButton();
         }
-    },
+    }
 
-    componentDidUpdate: function() {
+    componentDidUpdate() {
         this.calculateUrlPreview();
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         this._unmounted = true;
-    },
+    }
 
-    shouldComponentUpdate: function(nextProps, nextState) {
+    shouldComponentUpdate(nextProps, nextState) {
         //console.log("shouldComponentUpdate: ShowUrlPreview for %s is %s", this.props.mxEvent.getId(), this.props.showUrlPreview);
 
         // exploit that events are immutable :)
@@ -146,9 +142,9 @@ module.exports = React.createClass({
                 nextProps.showUrlPreview !== this.props.showUrlPreview ||
                 nextState.links !== this.state.links ||
                 nextState.widgetHidden !== this.state.widgetHidden);
-    },
+    }
 
-    calculateUrlPreview: function() {
+    calculateUrlPreview = () => {
         //console.log("calculateUrlPreview: ShowUrlPreview for %s is %s", this.props.mxEvent.getId(), this.props.showUrlPreview);
 
         if (this.props.showUrlPreview && !this.state.links.length) {
@@ -171,9 +167,9 @@ module.exports = React.createClass({
                 }
             }
         }
-    },
+    };
 
-    pillifyLinks: function(nodes) {
+    pillifyLinks = (nodes) => {
         const shouldShowPillAvatar = !SettingsStore.getValue("Pill.shouldHidePillAvatar");
         let node = nodes[0];
         while (node) {
@@ -263,9 +259,9 @@ module.exports = React.createClass({
 
             node = node.nextSibling;
         }
-    },
+    };
 
-    findLinks: function(nodes) {
+    findLinks = (nodes) => {
         let links = [];
 
         for (let i = 0; i < nodes.length; i++) {
@@ -282,9 +278,9 @@ module.exports = React.createClass({
             }
         }
         return links;
-    },
+    };
 
-    isLinkPreviewable: function(node) {
+    isLinkPreviewable = (node) => {
         // don't try to preview relative links
         if (!node.getAttribute("href").startsWith("http://") &&
             !node.getAttribute("href").startsWith("https://")) {
@@ -315,9 +311,9 @@ module.exports = React.createClass({
                 return true;
             }
         }
-    },
+    };
 
-    _addCodeCopyButton() {
+    _addCodeCopyButton = () => {
         // Add 'copy' buttons to pre blocks
         Array.from(ReactDOM.findDOMNode(this).querySelectorAll('.mx_EventTile_body pre')).forEach((p) => {
             const button = document.createElement("span");
@@ -353,26 +349,26 @@ module.exports = React.createClass({
             div.appendChild(p);
             div.appendChild(button);
         });
-    },
+    };
 
-    onCancelClick: function(event) {
+    onCancelClick = (event) => {
         this.setState({ widgetHidden: true });
         // FIXME: persist this somewhere smarter than local storage
         if (global.localStorage) {
             global.localStorage.setItem("hide_preview_" + this.props.mxEvent.getId(), "1");
         }
         this.forceUpdate();
-    },
+    };
 
-    onEmoteSenderClick: function(event) {
+    onEmoteSenderClick = (event) => {
         const mxEvent = this.props.mxEvent;
         dis.dispatch({
             action: 'insert_mention',
             user_id: mxEvent.getSender(),
         });
-    },
+    };
 
-    getEventTileOps: function() {
+    getEventTileOps = () => {
         return {
             isWidgetHidden: () => {
                 return this.state.widgetHidden;
@@ -389,9 +385,9 @@ module.exports = React.createClass({
                 return this.refs.content.innerText;
             },
         };
-    },
+    };
 
-    onStarterLinkClick: function(starterLink, ev) {
+    onStarterLinkClick = (starterLink, ev) => {
         ev.preventDefault();
         // We need to add on our scalar token to the starter link, but we may not have one!
         // In addition, we can't fetch one on click and then go to it immediately as that
@@ -427,9 +423,9 @@ module.exports = React.createClass({
                 },
             });
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const EmojiText = sdk.getComponent('elements.EmojiText');
         const mxEvent = this.props.mxEvent;
         const content = mxEvent.getContent();
@@ -492,5 +488,5 @@ module.exports = React.createClass({
                     </span>
                 );
         }
-    },
-});
+    }
+}

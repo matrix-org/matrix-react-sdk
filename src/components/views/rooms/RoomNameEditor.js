@@ -22,20 +22,18 @@ const sdk = require('../../../index');
 const MatrixClientPeg = require('../../../MatrixClientPeg');
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
-    displayName: 'RoomNameEditor',
+module.exports = class extends React.Component {
+    static displayName = 'RoomNameEditor';
 
-    propTypes: {
+    static propTypes = {
         room: PropTypes.object.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            name: null,
-        };
-    },
+    state = {
+        name: null,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         const room = this.props.room;
         const name = room.currentState.getStateEvents('m.room.name', '');
         const myId = MatrixClientPeg.get().credentials.userId;
@@ -49,19 +47,19 @@ module.exports = React.createClass({
         if (defaultName && defaultName !== 'Empty room') { // default name from JS SDK, needs no translation as we don't ever show it.
             this._placeholderName += " (" + defaultName + ")";
         }
-    },
+    }
 
-    getRoomName: function() {
+    getRoomName = () => {
         return this.state.name;
-    },
+    };
 
-    _onValueChanged: function(value, shouldSubmit) {
+    _onValueChanged = (value, shouldSubmit) => {
         this.setState({
             name: value,
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const EditableText = sdk.getComponent("elements.EditableText");
 
         return (
@@ -76,5 +74,5 @@ module.exports = React.createClass({
                          dir="auto" />
                 </div>
         );
-    },
-});
+    }
+};

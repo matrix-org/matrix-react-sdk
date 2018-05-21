@@ -26,33 +26,27 @@ const DIV_ID = 'mx_recaptcha';
 /**
  * A pure UI component which displays a captcha form.
  */
-module.exports = React.createClass({
-    displayName: 'CaptchaForm',
-
-    propTypes: {
+export default class CaptchaForm extends React.PureComponent {
+    static propTypes = {
         sitePublicKey: PropTypes.string,
 
         // called with the captcha response
         onCaptchaResponse: PropTypes.func,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            onCaptchaResponse: () => {},
-        };
-    },
+    static defaultProps = {
+        onCaptchaResponse: () => {},
+    };
 
-    getInitialState: function() {
-        return {
-            errorText: null,
-        };
-    },
+    state = {
+        errorText: null,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._captchaWidgetId = null;
-    },
+    }
 
-    componentDidMount: function() {
+    componentDidMount() {
         // Just putting a script tag into the returned jsx doesn't work, annoyingly,
         // so we do this instead.
         if (global.grecaptcha) {
@@ -81,13 +75,14 @@ module.exports = React.createClass({
                 this.refs.recaptchaContainer.appendChild(scriptTag);
             }
         }
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         this._resetRecaptcha();
-    },
+    }
 
-    _renderRecaptcha: function(divId) {
+    /// @param {string} divId The ID of the DIV element where Recaptcha will be rendered.
+    _renderRecaptcha = (divId) => {
         if (!global.grecaptcha) {
             console.error("grecaptcha not loaded!");
             throw new Error("Recaptcha did not load successfully");
@@ -106,15 +101,15 @@ module.exports = React.createClass({
             sitekey: publicKey,
             callback: this.props.onCaptchaResponse,
         });
-    },
+    };
 
-    _resetRecaptcha: function() {
+    _resetRecaptcha = () => {
         if (this._captchaWidgetId !== null) {
             global.grecaptcha.reset(this._captchaWidgetId);
         }
-    },
+    };
 
-    _onCaptchaLoaded: function() {
+    _onCaptchaLoaded = () => {
         console.log("Loaded recaptcha script.");
         try {
             this._renderRecaptcha(DIV_ID);
@@ -123,9 +118,9 @@ module.exports = React.createClass({
                 errorText: e.toString(),
             });
         }
-    },
+    };
 
-    render: function() {
+    render() {
         let error = null;
         if (this.state.errorText) {
             error = (
@@ -143,5 +138,5 @@ module.exports = React.createClass({
                 { error }
             </div>
         );
-    },
-});
+    }
+}

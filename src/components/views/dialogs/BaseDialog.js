@@ -33,10 +33,8 @@ import MatrixClientPeg from '../../../MatrixClientPeg';
  * Includes a div for the title, and a keypress handler which cancels the
  * dialog on escape.
  */
-export default React.createClass({
-    displayName: 'BaseDialog',
-
-    propTypes: {
+export default class BaseDialog extends React.Component {
+    static propTypes = {
         // onFinished callback to call when Escape is pressed
         // Take a boolean which is true if the dialog was dismissed
         // with a positive / confirm action or false if it was
@@ -69,29 +67,28 @@ export default React.createClass({
 
         // optional additional class for the title element
         titleClass: PropTypes.string,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            hasCancel: true,
-        };
-    },
+    static defaultProps = {
+        hasCancel: true,
+    };
 
-    childContextTypes: {
+    static childContextTypes = {
         matrixClient: PropTypes.instanceOf(MatrixClient),
-    },
+    };
 
-    getChildContext: function() {
+    getChildContext() {
         return {
             matrixClient: this._matrixClient,
         };
-    },
+    }
 
     componentWillMount() {
         this._matrixClient = MatrixClientPeg.get();
-    },
+    }
 
-    _onKeyDown: function(e) {
+    /// @param {Event} e Event to handle
+    _onKeyDown = (e) => {
         if (this.props.onKeyDown) {
             this.props.onKeyDown(e);
         }
@@ -100,13 +97,14 @@ export default React.createClass({
             e.preventDefault();
             this.props.onFinished(false);
         }
-    },
+    };
 
-    _onCancelClick: function(e) {
+    /// @param {Event} e Event to handle
+    _onCancelClick = (e) => {
         this.props.onFinished(false);
-    },
+    };
 
-    render: function() {
+    render() {
         const TintableSvg = sdk.getComponent("elements.TintableSvg");
 
         let cancelButton;
@@ -136,5 +134,5 @@ export default React.createClass({
                 { this.props.children }
             </FocusTrap>
         );
-    },
-});
+    }
+}

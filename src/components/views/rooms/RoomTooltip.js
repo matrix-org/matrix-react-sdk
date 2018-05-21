@@ -22,10 +22,10 @@ import classNames from 'classnames';
 
 const MIN_TOOLTIP_HEIGHT = 25;
 
-module.exports = React.createClass({
-    displayName: 'RoomTooltip',
+module.exports = class extends React.Component {
+    static displayName = 'RoomTooltip';
 
-    propTypes: {
+    static propTypes = {
         // Class applied to the element used to position the tooltip
         className: React.PropTypes.string.isRequired,
         // Class applied to the tooltip itself
@@ -33,10 +33,10 @@ module.exports = React.createClass({
         // The tooltip is derived from either the room name or a label
         room: React.PropTypes.object,
         label: React.PropTypes.node,
-    },
+    };
 
     // Create a wrapper for the tooltip outside the parent and attach it to the body element
-    componentDidMount: function() {
+    componentDidMount() {
         this.tooltipContainer = document.createElement("div");
         this.tooltipContainer.className = "mx_RoomTileTooltip_wrapper";
         document.body.appendChild(this.tooltipContainer);
@@ -45,14 +45,14 @@ module.exports = React.createClass({
         this.parent = ReactDOM.findDOMNode(this).parentNode;
 
         this._renderTooltip();
-    },
+    }
 
-    componentDidUpdate: function() {
+    componentDidUpdate() {
         this._renderTooltip();
-    },
+    }
 
     // Remove the wrapper element, as the tooltip has finished using it
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         dis.dispatch({
             action: 'view_tooltip',
             tooltip: null,
@@ -62,9 +62,9 @@ module.exports = React.createClass({
         ReactDOM.unmountComponentAtNode(this.tooltipContainer);
         document.body.removeChild(this.tooltipContainer);
         window.removeEventListener('scroll', this._renderTooltip, true);
-    },
+    }
 
-    _updatePosition(style) {
+    _updatePosition = (style) => {
         const parentBox = this.parent.getBoundingClientRect();
         let offset = 0;
         if (parentBox.height > MIN_TOOLTIP_HEIGHT) {
@@ -73,9 +73,9 @@ module.exports = React.createClass({
         style.top = (parentBox.top - 2) + window.pageYOffset + offset;
         style.left = 6 + parentBox.right + window.pageXOffset;
         return style;
-    },
+    };
 
-    _renderTooltip: function() {
+    _renderTooltip = () => {
         // Add the parent's position to the tooltips, so it's correctly
         // positioned, also taking into account any window zoom
         // NOTE: The additional 6 pixels for the left position, is to take account of the
@@ -103,13 +103,13 @@ module.exports = React.createClass({
             tooltip: this.tooltip,
             parent: parent,
         });
-    },
+    };
 
-    render: function() {
+    render() {
         // Render a placeholder
         return (
             <div className={this.props.className} >
             </div>
         );
-    },
-});
+    }
+};

@@ -20,39 +20,37 @@ import sdk from '../../../index';
 import GroupStore from '../../../stores/GroupStore';
 import { _t } from '../../../languageHandler.js';
 
-export default React.createClass({
-    displayName: 'GroupPublicityToggle',
+export default class extends React.Component {
+    static displayName = 'GroupPublicityToggle';
 
-    propTypes: {
+    static propTypes = {
         groupId: PropTypes.string.isRequired,
-    },
+    };
 
-    getInitialState() {
-        return {
-            busy: false,
-            ready: false,
-            isGroupPublicised: null,
-        };
-    },
+    state = {
+        busy: false,
+        ready: false,
+        isGroupPublicised: null,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._initGroupStore(this.props.groupId);
-    },
+    }
 
-    _initGroupStore: function(groupId) {
+    _initGroupStore = (groupId) => {
         this._groupStoreToken = GroupStore.registerListener(groupId, () => {
             this.setState({
                 isGroupPublicised: GroupStore.getGroupPublicity(groupId),
                 ready: GroupStore.isStateReady(groupId, GroupStore.STATE_KEY.Summary),
             });
         });
-    },
+    };
 
     componentWillUnmount() {
         if (this._groupStoreToken) this._groupStoreToken.unregister();
-    },
+    }
 
-    _onPublicityToggle: function(e) {
+    _onPublicityToggle = (e) => {
         e.stopPropagation();
         this.setState({
             busy: true,
@@ -64,7 +62,7 @@ export default React.createClass({
                 busy: false,
             });
         });
-    },
+    };
 
     render() {
         const GroupTile = sdk.getComponent('groups.GroupTile');
@@ -84,5 +82,5 @@ export default React.createClass({
                 { labelText }
             </label>
         </div>;
-    },
-});
+    }
+}

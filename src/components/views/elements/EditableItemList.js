@@ -19,10 +19,8 @@ import PropTypes from 'prop-types';
 import sdk from '../../../index';
 import {_t} from '../../../languageHandler.js';
 
-const EditableItem = React.createClass({
-    displayName: 'EditableItem',
-
-    propTypes: {
+class EditableItem extends React.PureComponent {
+    static propTypes = {
         initialValue: PropTypes.string,
         index: PropTypes.number,
         placeholder: PropTypes.string,
@@ -32,23 +30,23 @@ const EditableItem = React.createClass({
         onAdd: PropTypes.func,
 
         addOnChange: PropTypes.bool,
-    },
+    };
 
-    onChange: function(value) {
+    onChange = (value) => {
         this.setState({ value });
         if (this.props.onChange) this.props.onChange(value, this.props.index);
         if (this.props.addOnChange && this.props.onAdd) this.props.onAdd(value);
-    },
+    };
 
-    onRemove: function() {
+    onRemove = () => {
         if (this.props.onRemove) this.props.onRemove(this.props.index);
-    },
+    };
 
-    onAdd: function() {
+    onAdd = () => {
         if (this.props.onAdd) this.props.onAdd(this.state.value);
-    },
+    };
 
-    render: function() {
+    render() {
         const EditableText = sdk.getComponent('elements.EditableText');
         return <div className="mx_EditableItem">
             <EditableText
@@ -73,13 +71,11 @@ const EditableItem = React.createClass({
                 </div>
             }
         </div>;
-    },
-});
+    }
+}
 
-module.exports = React.createClass({
-    displayName: 'EditableItemList',
-
-    propTypes: {
+export default class EditableItemList extends React.PureComponent {
+    static propTypes = {
         items: PropTypes.arrayOf(PropTypes.string).isRequired,
         onNewItemChanged: PropTypes.func,
         onItemAdded: PropTypes.func,
@@ -87,38 +83,36 @@ module.exports = React.createClass({
         onItemRemoved: PropTypes.func,
 
         canEdit: PropTypes.bool,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            onItemAdded: () => {},
-            onItemEdited: () => {},
-            onItemRemoved: () => {},
-            onNewItemChanged: () => {},
-        };
-    },
+    static defaultProps = {
+        onItemAdded: () => {},
+        onItemEdited: () => {},
+        onItemRemoved: () => {},
+        onNewItemChanged: () => {},
+    };
 
-    onItemAdded: function(value) {
+    onItemAdded = (value) => {
         this.props.onItemAdded(value);
-    },
+    };
 
-    onItemEdited: function(value, index) {
+    onItemEdited = (value, index) => {
         if (value.length === 0) {
             this.onItemRemoved(index);
         } else {
             this.props.onItemEdited(value, index);
         }
-    },
+    };
 
-    onItemRemoved: function(index) {
+    onItemRemoved = (index) => {
         this.props.onItemRemoved(index);
-    },
+    };
 
-    onNewItemChanged: function(value) {
+    onNewItemChanged = (value) => {
         this.props.onNewItemChanged(value);
-    },
+    };
 
-    render: function() {
+    render() {
         const editableItems = this.props.items.map((item, index) => {
             return <EditableItem
                 key={index}
@@ -152,5 +146,5 @@ module.exports = React.createClass({
                 /> : <div />
             }
         </div>);
-    },
-});
+    }
+}

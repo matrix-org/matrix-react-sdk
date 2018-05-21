@@ -20,30 +20,28 @@ import sdk from '../../../index';
 import { MatrixClient } from 'matrix-js-sdk';
 import { _t } from '../../../languageHandler';
 
-export default React.createClass({
-    displayName: 'GroupUserSettings',
+export default class extends React.Component {
+    static displayName = 'GroupUserSettings';
 
-    contextTypes: {
+    static contextTypes = {
         matrixClient: PropTypes.instanceOf(MatrixClient),
-    },
+    };
 
-    getInitialState() {
-        return {
-            error: null,
-            groups: null,
-        };
-    },
+    state = {
+        error: null,
+        groups: null,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this.context.matrixClient.getJoinedGroups().done((result) => {
             this.setState({groups: result.groups || [], error: null});
         }, (err) => {
             console.error(err);
             this.setState({groups: null, error: err});
         });
-    },
+    }
 
-    _renderGroupPublicity() {
+    _renderGroupPublicity = () => {
         let text = "";
         let scrollbox = <div />;
         const groups = this.state.groups;
@@ -77,7 +75,7 @@ export default React.createClass({
                 { scrollbox }
             </div>
         </div>;
-    },
+    };
 
     render() {
         const groupPublicity = this._renderGroupPublicity();
@@ -85,5 +83,5 @@ export default React.createClass({
         return <div>
             { groupPublicity }
         </div>;
-    },
-});
+    }
+}

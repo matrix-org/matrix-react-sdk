@@ -18,14 +18,12 @@ limitations under the License.
 
 const React = require('react');
 
-module.exports = React.createClass({
-    displayName: 'LoginHeader',
-
-    render: function() {
+export default class LoginHeader extends React.PureComponent {
+    render() {
         return (
             <div className="mx_Login_logo">
                 Matrix
             </div>
         );
-    },
-});
+    }
+}

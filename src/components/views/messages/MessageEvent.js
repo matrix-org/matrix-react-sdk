@@ -20,10 +20,8 @@ const React = require('react');
 import PropTypes from 'prop-types';
 const sdk = require('../../../index');
 
-module.exports = React.createClass({
-    displayName: 'MessageEvent',
-
-    propTypes: {
+export default class MessageEvent extends React.PureComponent {
+    static propTypes = {
         /* the MatrixEvent to show */
         mxEvent: PropTypes.object.isRequired,
 
@@ -44,13 +42,13 @@ module.exports = React.createClass({
 
         /* the maximum image height to use, if the event is an image */
         maxImageHeight: PropTypes.number,
-    },
+    };
 
-    getEventTileOps: function() {
+    getEventTileOps = () => {
         return this.refs.body && this.refs.body.getEventTileOps ? this.refs.body.getEventTileOps() : null;
-    },
+    };
 
-    render: function() {
+    render() {
         const UnknownBody = sdk.getComponent('messages.UnknownBody');
 
         const bodyTypes = {
@@ -90,5 +88,5 @@ module.exports = React.createClass({
             tileShape={this.props.tileShape}
             maxImageHeight={this.props.maxImageHeight}
             onWidgetLoad={this.props.onWidgetLoad} />;
-    },
-});
+    }
+}

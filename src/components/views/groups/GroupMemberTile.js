@@ -22,28 +22,26 @@ import dis from '../../../dispatcher';
 import { GroupMemberType } from '../../../groups';
 import withMatrixClient from '../../../wrappers/withMatrixClient';
 
-export default withMatrixClient(React.createClass({
-    displayName: 'GroupMemberTile',
+export default withMatrixClient(class extends React.Component {
+    static displayName = 'GroupMemberTile';
 
-    propTypes: {
+    static propTypes = {
         matrixClient: PropTypes.object,
         groupId: PropTypes.string.isRequired,
         member: GroupMemberType.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {};
-    },
+    state = {};
 
-    onClick: function(e) {
+    onClick = (e) => {
         dis.dispatch({
             action: 'view_group_user',
             member: this.props.member,
             groupId: this.props.groupId,
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseAvatar = sdk.getComponent('avatars.BaseAvatar');
         const EntityTile = sdk.getComponent('rooms.EntityTile');
 
@@ -66,5 +64,5 @@ export default withMatrixClient(React.createClass({
                 powerStatus={this.props.member.isPrivileged ? EntityTile.POWER_STATUS_ADMIN : null}
             />
         );
-    },
-}));
+    }
+});

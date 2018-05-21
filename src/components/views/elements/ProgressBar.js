@@ -19,14 +19,13 @@ limitations under the License.
 const React = require('react');
 import PropTypes from 'prop-types';
 
-module.exports = React.createClass({
-    displayName: 'ProgressBar',
-    propTypes: {
+export default class ProgressBar extends React.PureComponent {
+    static propTypes = {
         value: PropTypes.number,
         max: PropTypes.number,
-    },
+    };
 
-    render: function() {
+    render() {
         // Would use an HTML5 progress tag but if that doesn't animate if you
         // use the HTML attributes rather than styles
         const progressStyle = {
@@ -35,5 +34,5 @@ module.exports = React.createClass({
         return (
             <div className="mx_ProgressBar"><div className="mx_ProgressBar_fill" style={progressStyle}></div></div>
         );
-    },
-});
+    }
+}

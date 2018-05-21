@@ -85,15 +85,11 @@ const ONBOARDING_FLOW_STARTERS = [
     'view_create_group',
 ];
 
-export default React.createClass({
+export default class MatrixChat extends React.Component {
     // we export this so that the integration tests can use it :-S
-    statics: {
-        VIEWS: VIEWS,
-    },
+    static VIEWS = VIEWS;
 
-    displayName: 'MatrixChat',
-
-    propTypes: {
+    static propTypes = {
         config: PropTypes.object,
         ConferenceHandler: PropTypes.any,
         onNewScreen: PropTypes.func,
@@ -122,76 +118,71 @@ export default React.createClass({
 
         // A function that makes a registration URL
         makeRegistrationUrl: PropTypes.func.isRequired,
-    },
+    };
 
-    childContextTypes: {
+    static childContextTypes = {
         appConfig: PropTypes.object,
-    },
+    };
 
-    AuxPanel: {
+    static defaultProps = {
+      realQueryParams: {},
+      startingFragmentQueryParams: {},
+      config: {},
+      onTokenLoginCompleted: () => {},
+    };
+
+    AuxPanel = {
         RoomSettings: "room_settings",
-    },
+    };
 
-    getChildContext: function() {
+    getChildContext() {
         return {
             appConfig: this.props.config,
         };
-    },
+    }
 
-    getInitialState: function() {
-        const s = {
-            // the master view we are showing.
-            view: VIEWS.LOADING,
+    state = {
+        // the master view we are showing.
+        view: VIEWS.LOADING,
 
-            // What the LoggedInView would be showing if visible
-            page_type: null,
+        // What the LoggedInView would be showing if visible
+        page_type: null,
 
-            // The ID of the room we're viewing. This is either populated directly
-            // in the case where we view a room by ID or by RoomView when it resolves
-            // what ID an alias points at.
-            currentRoomId: null,
+        // The ID of the room we're viewing. This is either populated directly
+        // in the case where we view a room by ID or by RoomView when it resolves
+        // what ID an alias points at.
+        currentRoomId: null,
 
-            // If we're trying to just view a user ID (i.e. /user URL), this is it
-            viewUserId: null,
+        // If we're trying to just view a user ID (i.e. /user URL), this is it
+        viewUserId: null,
 
-            collapseLhs: false,
-            collapseRhs: false,
-            leftDisabled: false,
-            middleDisabled: false,
-            rightDisabled: false,
+        collapseLhs: false,
+        collapseRhs: false,
+        leftDisabled: false,
+        middleDisabled: false,
+        rightDisabled: false,
 
-            version: null,
-            newVersion: null,
-            hasNewVersion: false,
-            newVersionReleaseNotes: null,
-            checkingForUpdate: null,
+        version: null,
+        newVersion: null,
+        hasNewVersion: false,
+        newVersionReleaseNotes: null,
+        checkingForUpdate: null,
 
-            showCookieBar: false,
+        showCookieBar: false,
 
-            // Parameters used in the registration dance with the IS
-            register_client_secret: null,
-            register_session_id: null,
-            register_hs_url: null,
-            register_is_url: null,
-            register_id_sid: null,
+        // Parameters used in the registration dance with the IS
+        register_client_secret: null,
+        register_session_id: null,
+        register_hs_url: null,
+        register_is_url: null,
+        register_id_sid: null,
 
-            // When showing Modal dialogs we need to set aria-hidden on the root app element
-            // and disable it when there are no dialogs
-            hideToSRUsers: false,
-        };
-        return s;
-    },
+        // When showing Modal dialogs we need to set aria-hidden on the root app element
+        // and disable it when there are no dialogs
+        hideToSRUsers: false,
+    };
 
-    getDefaultProps: function() {
-        return {
-            realQueryParams: {},
-            startingFragmentQueryParams: {},
-            config: {},
-            onTokenLoginCompleted: () => {},
-        };
-    },
-
-    getCurrentHsUrl: function() {
+    getCurrentHsUrl() {
         if (this.state.register_hs_url) {
             return this.state.register_hs_url;
         } else if (MatrixClientPeg.get()) {
@@ -201,17 +192,17 @@ export default React.createClass({
         } else {
             return this.getDefaultHsUrl();
         }
-    },
+    }
 
     getDefaultHsUrl() {
         return this.props.config.default_hs_url || "https://matrix.org";
-    },
+    }
 
-    getFallbackHsUrl: function() {
+    getFallbackHsUrl() {
         return this.props.config.fallback_hs_url;
-    },
+    }
 
-    getCurrentIsUrl: function() {
+    getCurrentIsUrl() {
         if (this.state.register_is_url) {
             return this.state.register_is_url;
         } else if (MatrixClientPeg.get()) {
@@ -221,13 +212,13 @@ export default React.createClass({
         } else {
             return this.getDefaultIsUrl();
         }
-    },
+    }
 
     getDefaultIsUrl() {
         return this.props.config.default_is_url || "https://vector.im";
-    },
+    }
 
-    componentWillMount: function() {
+    componentWillMount() {
         SdkConfig.put(this.props.config);
 
         // Used by _viewRoom before getting state from sync
@@ -298,9 +289,9 @@ export default React.createClass({
         // N.B. we don't call the whole of setTheme() here as we may be
         // racing with the theme CSS download finishing from index.js
         Tinter.tint();
-    },
+    }
 
-    componentDidMount: function() {
+    componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
 
         this.focusComposer = false;
@@ -372,22 +363,22 @@ export default React.createClass({
         if (SettingsStore.getValue("analyticsOptIn")) {
             Analytics.enable();
         }
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         Lifecycle.stopMatrixClient();
         dis.unregister(this.dispatcherRef);
         window.removeEventListener("focus", this.onFocus);
         window.removeEventListener('resize', this.handleResize);
-    },
+    }
 
-    componentWillUpdate: function(props, state) {
+    componentWillUpdate(props, state) {
         if (this.shouldTrackPageChange(this.state, state)) {
             this.startPageChangeTimer();
         }
-    },
+    }
 
-    componentDidUpdate: function(prevProps, prevState) {
+    componentDidUpdate(prevProps, prevState) {
         if (this.shouldTrackPageChange(prevState, this.state)) {
             const durationMs = this.stopPageChangeTimer();
             Analytics.trackPageChange(durationMs);
@@ -396,7 +387,7 @@ export default React.createClass({
             dis.dispatch({action: 'focus_composer'});
             this.focusComposer = false;
         }
-    },
+    }
 
     startPageChangeTimer() {
         // Tor doesn't support performance
@@ -410,7 +401,7 @@ export default React.createClass({
         }
         this._pageChanging = true;
         performance.mark('riot_MatrixChat_page_change_start');
-    },
+    }
 
     stopPageChangeTimer() {
         // Tor doesn't support performance
@@ -435,15 +426,15 @@ export default React.createClass({
         if (!measurement) return null;
 
         return measurement.duration;
-    },
+    }
 
     shouldTrackPageChange(prevState, state) {
         return prevState.currentRoomId !== state.currentRoomId ||
             prevState.view !== state.view ||
             prevState.page_type !== state.page_type;
-    },
+    }
 
-    setStateForNewView: function(state) {
+    setStateForNewView(state) {
         if (state.view === undefined) {
             throw new Error("setStateForNewView with no view!");
         }
@@ -452,9 +443,9 @@ export default React.createClass({
         };
         Object.assign(newState, state);
         this.setState(newState);
-    },
+    }
 
-    onAction: function(payload) {
+    onAction = (payload) => {
         // console.log(`MatrixClientPeg.onAction: ${payload.action}`);
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
@@ -721,15 +712,15 @@ export default React.createClass({
                 });
                 break;
         }
-    },
+    };
 
-    _setPage: function(pageType) {
+    _setPage(pageType) {
         this.setState({
             page_type: pageType,
         });
-    },
+    }
 
-    _startRegistration: function(params) {
+    _startRegistration(params) {
         const newState = {
             view: VIEWS.REGISTER,
         };
@@ -751,10 +742,10 @@ export default React.createClass({
 
         this.setStateForNewView(newState);
         this.notifyNewScreen('register');
-    },
+    }
 
     // TODO: Move to RoomViewStore
-    _viewNextRoom: function(roomIndexDelta) {
+    _viewNextRoom(roomIndexDelta) {
         const allRooms = RoomListSorter.mostRecentActivityFirst(
             MatrixClientPeg.get().getRooms(),
         );
@@ -780,10 +771,10 @@ export default React.createClass({
             action: 'view_room',
             room_id: allRooms[roomIndex].roomId,
         });
-    },
+    }
 
     // TODO: Move to RoomViewStore
-    _viewIndexedRoom: function(roomIndex) {
+    _viewIndexedRoom(roomIndex) {
         const allRooms = RoomListSorter.mostRecentActivityFirst(
             MatrixClientPeg.get().getRooms(),
         );
@@ -793,7 +784,7 @@ export default React.createClass({
                 room_id: allRooms[roomIndex].roomId,
             });
         }
-    },
+    }
 
     // switch view to the given room
     //
@@ -812,7 +803,7 @@ export default React.createClass({
     // @param {Object=} roomInfo.oob_data Object of additional data about the room
     //                               that has been passed out-of-band (eg.
     //                               room name and avatar from an invite email)
-    _viewRoom: function(roomInfo) {
+    _viewRoom(roomInfo) {
         this.focusComposer = true;
 
         const newState = {
@@ -865,9 +856,9 @@ export default React.createClass({
             newState.ready = true;
             this.setState(newState);
         });
-    },
+    }
 
-    _viewGroup: function(payload) {
+    _viewGroup(payload) {
         const groupId = payload.group_id;
         this.setState({
             currentGroupId: groupId,
@@ -875,14 +866,14 @@ export default React.createClass({
         });
         this._setPage(PageTypes.GroupView);
         this.notifyNewScreen('group/' + groupId);
-    },
+    }
 
-    _viewHome: function() {
+    _viewHome() {
         this._setPage(PageTypes.HomePage);
         this.notifyNewScreen('home');
-    },
+    }
 
-    _setMxId: function(payload) {
+    _setMxId(payload) {
         const SetMxIdDialog = sdk.getComponent('views.dialogs.SetMxIdDialog');
         const close = Modal.createTrackedDialog('Set MXID', '', SetMxIdDialog, {
             homeserverUrl: MatrixClientPeg.get().getHomeserverUrl(),
@@ -909,9 +900,9 @@ export default React.createClass({
                 close();
             },
         }).close;
-    },
+    }
 
-    _createRoom: function() {
+    _createRoom() {
         const CreateRoomDialog = sdk.getComponent('dialogs.CreateRoomDialog');
         Modal.createTrackedDialog('Create Room', '', CreateRoomDialog, {
             onFinished: (shouldCreate, name, noFederate) => {
@@ -923,9 +914,9 @@ export default React.createClass({
                 }
             },
         });
-    },
+    }
 
-    _chatCreateOrReuse: function(userId, goHomeOnCancel) {
+    _chatCreateOrReuse(userId, goHomeOnCancel) {
         if (goHomeOnCancel === undefined) goHomeOnCancel = true;
 
         const ChatCreateOrReuseDialog = sdk.getComponent(
@@ -979,9 +970,9 @@ export default React.createClass({
                 close(true);
             },
         }).close;
-    },
+    }
 
-    _leaveRoomWarnings: function(roomId) {
+    _leaveRoomWarnings(roomId) {
         const roomToLeave = MatrixClientPeg.get().getRoom(roomId);
         // Show a warning if there are additional complications.
         const joinRules = roomToLeave.currentState.getStateEvents('m.room.join_rules', '');
@@ -998,9 +989,9 @@ export default React.createClass({
             }
         }
         return warnings;
-    },
+    }
 
-    _leaveRoom: function(roomId) {
+    _leaveRoom(roomId) {
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         const roomToLeave = MatrixClientPeg.get().getRoom(roomId);
@@ -1049,14 +1040,14 @@ export default React.createClass({
                 }
             },
         });
-    },
+    }
 
     /**
      * Called whenever someone changes the theme
      *
      * @param {string} theme new theme
      */
-    _onSetTheme: function(theme) {
+    _onSetTheme = (theme) => {
         if (!theme) {
             theme = SettingsStore.getValue("theme");
         }
@@ -1125,14 +1116,14 @@ export default React.createClass({
             styleElements[theme].onload = undefined;
             switchTheme();
         }
-    },
+    };
 
     /**
      * Called when a new logged in session has started
      *
      * @param {string} teamToken
      */
-    _onLoggedIn: function(teamToken) {
+    _onLoggedIn = (teamToken) => {
         this.setState({
             view: VIEWS.LOGGED_IN,
         });
@@ -1157,9 +1148,9 @@ export default React.createClass({
         } else {
             this._showScreenAfterLogin();
         }
-    },
+    };
 
-    _showScreenAfterLogin: function() {
+    _showScreenAfterLogin() {
         // If screenAfterLogin is set, use that, then null it so that a second login will
         // result in view_home_page, _user_settings or _room_directory
         if (this._screenAfterLogin && this._screenAfterLogin.screen) {
@@ -1177,12 +1168,12 @@ export default React.createClass({
         } else {
             dis.dispatch({action: 'view_home_page'});
         }
-    },
+    }
 
     /**
      * Called when the session is logged out
      */
-    _onLoggedOut: function() {
+    _onLoggedOut = () => {
         this.notifyNewScreen('login');
         this.setStateForNewView({
             view: VIEWS.LOGIN,
@@ -1194,13 +1185,13 @@ export default React.createClass({
         });
         this._teamToken = null;
         this._setPageSubtitle();
-    },
+    };
 
     /**
      * Called just before the matrix client is started
      * (useful for setting listeners)
      */
-    _onWillStartClient() {
+    _onWillStartClient = () => {
         const self = this;
 
         // reset the 'have completed first sync' flag,
@@ -1356,14 +1347,14 @@ export default React.createClass({
                     break;
             }
         });
-    },
+    };
 
     /**
      * Called shortly after the matrix client has started. Useful for
      * setting up anything that requires the client to be started.
      * @private
      */
-    _onClientStarted: function() {
+    _onClientStarted = () => {
         const cli = MatrixClientPeg.get();
 
         if (cli.isCryptoEnabled()) {
@@ -1373,9 +1364,9 @@ export default React.createClass({
             );
             cli.setGlobalBlacklistUnverifiedDevices(blacklistEnabled);
         }
-    },
+    };
 
-    showScreen: function(screen, params) {
+    showScreen(screen, params) {
         if (screen == 'register') {
             dis.dispatch({
                 action: 'start_registration',
@@ -1490,20 +1481,20 @@ export default React.createClass({
         } else {
             console.info("Ignoring showScreen for '%s'", screen);
         }
-    },
+    }
 
-    notifyNewScreen: function(screen) {
+    notifyNewScreen(screen) {
         if (this.props.onNewScreen) {
             this.props.onNewScreen(screen);
         }
-    },
+    }
 
-    onAliasClick: function(event, alias) {
+    onAliasClick = (event, alias) => {
         event.preventDefault();
         dis.dispatch({action: 'view_room', room_alias: alias});
-    },
+    };
 
-    onUserClick: function(event, userId) {
+    onUserClick = (event, userId) => {
         event.preventDefault();
 
         const member = new Matrix.RoomMember(null, userId);
@@ -1512,22 +1503,22 @@ export default React.createClass({
             action: 'view_user',
             member: member,
         });
-    },
+    };
 
-    onGroupClick: function(event, groupId) {
+    onGroupClick = (event, groupId) => {
         event.preventDefault();
         dis.dispatch({action: 'view_group', group_id: groupId});
-    },
+    };
 
-    onLogoutClick: function(event) {
+    onLogoutClick = (event) => {
         dis.dispatch({
             action: 'logout',
         });
         event.stopPropagation();
         event.preventDefault();
-    },
+    };
 
-    handleResize: function(e) {
+    handleResize = (e) => {
         const hideLhsThreshold = 1000;
         const showLhsThreshold = 1000;
         const hideRhsThreshold = 820;
@@ -1547,51 +1538,51 @@ export default React.createClass({
         }
 
         this._windowWidth = window.innerWidth;
-    },
+    };
 
-    onRoomCreated: function(roomId) {
+    onRoomCreated = (roomId) => {
         dis.dispatch({
             action: "view_room",
             room_id: roomId,
         });
-    },
+    };
 
-    onRegisterClick: function() {
+    onRegisterClick = () => {
         this.showScreen("register");
-    },
+    };
 
-    onLoginClick: function() {
+    onLoginClick = () => {
         this.showScreen("login");
-    },
+    };
 
-    onForgotPasswordClick: function() {
+    onForgotPasswordClick = () => {
         this.showScreen("forgot_password");
-    },
+    };
 
-    onReturnToAppClick: function() {
+    onReturnToAppClick = () => {
         // treat it the same as if the user had completed the login
         this._onLoggedIn(null);
-    },
+    };
 
     // returns a promise which resolves to the new MatrixClient
-    onRegistered: function(credentials, teamToken) {
+    onRegistered = (credentials, teamToken) => {
         // XXX: These both should be in state or ideally store(s) because we risk not
         //      rendering the most up-to-date view of state otherwise.
         // teamToken may not be truthy
         this._teamToken = teamToken;
         this._is_registered = true;
         return Lifecycle.setLoggedIn(credentials);
-    },
+    };
 
-    onFinishPostRegistration: function() {
+    onFinishPostRegistration = () => {
         // Don't confuse this with "PageType" which is the middle window to show
         this.setState({
             view: VIEWS.LOGGED_IN,
         });
         this.showScreen("settings");
-    },
+    };
 
-    onVersion: function(current, latest, releaseNotes) {
+    onVersion = (current, latest, releaseNotes) => {
         this.setState({
             version: current,
             newVersion: latest,
@@ -1599,9 +1590,9 @@ export default React.createClass({
             newVersionReleaseNotes: releaseNotes,
             checkingForUpdate: null,
         });
-    },
+    };
 
-    onSendEvent: function(roomId, event) {
+    onSendEvent = (roomId, event) => {
         const cli = MatrixClientPeg.get();
         if (!cli) {
             dis.dispatch({action: 'message_send_failed'});
@@ -1613,13 +1604,13 @@ export default React.createClass({
         }, (err) => {
             dis.dispatch({action: 'message_send_failed'});
         });
-    },
+    };
 
-    _setPageSubtitle: function(subtitle='') {
+    _setPageSubtitle(subtitle='') {
         document.title = `Riot ${subtitle}`;
-    },
+    }
 
-    updateStatusIndicator: function(state, prevState) {
+    updateStatusIndicator(state, prevState) {
         let notifCount = 0;
 
         const rooms = MatrixClientPeg.get().getRooms();
@@ -1648,13 +1639,13 @@ export default React.createClass({
         }
 
         this._setPageSubtitle(subtitle);
-    },
+    }
 
     onCloseAllSettings() {
         dis.dispatch({ action: 'close_settings' });
-    },
+    }
 
-    onServerConfigChange(config) {
+    onServerConfigChange = (config) => {
         const newState = {};
         if (config.hsUrl) {
             newState.register_hs_url = config.hsUrl;
@@ -1663,20 +1654,20 @@ export default React.createClass({
             newState.register_is_url = config.isUrl;
         }
         this.setState(newState);
-    },
+    };
 
-    _makeRegistrationUrl: function(params) {
+    _makeRegistrationUrl = (params) => {
         if (this.props.startingFragmentQueryParams.referrer) {
             params.referrer = this.props.startingFragmentQueryParams.referrer;
         }
         return this.props.makeRegistrationUrl(params);
-    },
+    };
 
-    _collectLoggedInView: function(ref) {
+    _collectLoggedInView = (ref) => {
         this._loggedInView = ref;
-    },
+    };
 
-    render: function() {
+    render() {
         // console.log(`Rendering MatrixChat with view ${this.state.view}`);
 
         if (this.state.view === VIEWS.LOADING || this.state.view === VIEWS.LOGGING_IN) {
@@ -1795,5 +1786,5 @@ export default React.createClass({
         }
 
         console.error(`Unknown view ${this.state.view}`);
-    },
-});
+    }
+}

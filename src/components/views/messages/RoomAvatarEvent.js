@@ -23,15 +23,13 @@ import sdk from '../../../index';
 import Modal from '../../../Modal';
 import AccessibleButton from '../elements/AccessibleButton';
 
-module.exports = React.createClass({
-    displayName: 'RoomAvatarEvent',
-
-    propTypes: {
+export default class RoomAvatarEvent extends React.PureComponent {
+    static propTypes = {
         /* the MatrixEvent to show */
         mxEvent: PropTypes.object.isRequired,
-    },
+    };
 
-    onAvatarClick: function(name) {
+    onAvatarClick = (name) => {
         const httpUrl = MatrixClientPeg.get().mxcUrlToHttp(this.props.mxEvent.getContent().url);
         const ImageView = sdk.getComponent("elements.ImageView");
         const params = {
@@ -39,9 +37,9 @@ module.exports = React.createClass({
             name: name,
         };
         Modal.createDialog(ImageView, params, "mx_Dialog_lightbox");
-    },
+    };
 
-    render: function() {
+    render() {
         const ev = this.props.mxEvent;
         const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
         const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
@@ -82,5 +80,5 @@ module.exports = React.createClass({
                 }
             </div>
         );
-    },
-});
+    }
+}

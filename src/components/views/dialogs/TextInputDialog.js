@@ -18,9 +18,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import sdk from '../../../index';
 
-export default React.createClass({
-    displayName: 'TextInputDialog',
-    propTypes: {
+export default class TextInputDialog extends React.PureComponent {
+    static propTypes = {
         title: PropTypes.string,
         description: PropTypes.oneOfType([
             PropTypes.element,
@@ -30,33 +29,31 @@ export default React.createClass({
         button: PropTypes.string,
         focus: PropTypes.bool,
         onFinished: PropTypes.func.isRequired,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            title: "",
-            value: "",
-            description: "",
-            focus: true,
-        };
-    },
+    static defaultProps = {
+        title: "",
+        value: "",
+        description: "",
+        focus: true,
+    };
 
-    componentDidMount: function() {
+    componentDidMount() {
         if (this.props.focus) {
             // Set the cursor at the end of the text input
             this.refs.textinput.value = this.props.value;
         }
-    },
+    }
 
-    onOk: function() {
+    onOk = () => {
         this.props.onFinished(true, this.refs.textinput.value);
-    },
+    };
 
-    onCancel: function() {
+    onCancel = () => {
         this.props.onFinished(false);
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         return (
@@ -78,5 +75,5 @@ export default React.createClass({
                     onCancel={this.onCancel} />
             </BaseDialog>
         );
-    },
-});
+    }
+}

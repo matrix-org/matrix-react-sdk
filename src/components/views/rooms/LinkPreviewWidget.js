@@ -29,23 +29,19 @@ const linkifyElement = require('linkifyjs/element');
 const linkifyMatrix = require('../../../linkify-matrix');
 linkifyMatrix(linkify);
 
-module.exports = React.createClass({
-    displayName: 'LinkPreviewWidget',
-
-    propTypes: {
+export default class LinkPreviewWidget extends React.PureComponent {
+    static propTypes = {
         link: PropTypes.string.isRequired, // the URL being previewed
         mxEvent: PropTypes.object.isRequired, // the Event associated with the preview
         onCancelClick: PropTypes.func, // called when the preview's cancel ('hide') button is clicked
         onWidgetLoad: PropTypes.func, // called when the preview's contents has loaded
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            preview: null,
-        };
-    },
+    state = {
+        preview: null,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this.unmounted = false;
         MatrixClientPeg.get().getUrlPreview(this.props.link, this.props.mxEvent.getTs()).then((res)=>{
             if (this.unmounted) {
@@ -58,25 +54,25 @@ module.exports = React.createClass({
         }, (error)=>{
             console.error("Failed to get preview for " + this.props.link + " " + error);
         }).done();
-    },
+    }
 
-    componentDidMount: function() {
+    componentDidMount() {
         if (this.refs.description) {
             linkifyElement(this.refs.description, linkifyMatrix.options);
         }
-    },
+    }
 
-    componentDidUpdate: function() {
+    componentDidUpdate() {
         if (this.refs.description) {
             linkifyElement(this.refs.description, linkifyMatrix.options);
         }
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         this.unmounted = true;
-    },
+    }
 
-    onImageClick: function(ev) {
+    onImageClick = (ev) => {
         const p = this.state.preview;
         if (ev.button != 0 || ev.metaKey) return;
         ev.preventDefault();
@@ -97,9 +93,9 @@ module.exports = React.createClass({
         };
 
         Modal.createDialog(ImageView, params, "mx_Dialog_lightbox");
-    },
+    };
 
-    render: function() {
+    render() {
         const p = this.state.preview;
         if (!p || Object.keys(p).length === 0) {
             return <div />;
@@ -139,5 +135,5 @@ module.exports = React.createClass({
                     onClick={this.props.onCancelClick} />
             </div>
         );
-    },
-});
+    }
+}

@@ -23,15 +23,13 @@ import { _t } from '../../../languageHandler';
 import AccessibleButton from '../elements/AccessibleButton';
 const sdk = require('../../../index');
 
-module.exports = React.createClass({
-    displayName: 'TopUnreadMessagesBar',
-
-    propTypes: {
+export class TopUnreadMessagesBar extends React.PureComponent {
+    static propTypes = {
         onScrollUpClick: PropTypes.func,
         onCloseClick: PropTypes.func,
-    },
+    };
 
-    render: function() {
+    render() {
         return (
             <div className="mx_TopUnreadMessagesBar">
                 <AccessibleButton className="mx_TopUnreadMessagesBar_scrollUp"
@@ -52,5 +50,5 @@ module.exports = React.createClass({
                     onClick={this.props.onCloseClick} />
             </div>
         );
-    },
-});
+    }
+}

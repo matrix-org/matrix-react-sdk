@@ -17,28 +17,24 @@ limitations under the License.
 import React from 'react';
 import sdk from '../../../index';
 
-module.exports = React.createClass({
-    displayName: 'ToolTipButton',
+export default class ToolTipButton extends React.PureComponent {
+    state = {
+        hover: false,
+    };
 
-    getInitialState: function() {
-        return {
-            hover: false,
-        };
-    },
-
-    onMouseOver: function() {
+    onMouseOver = () => {
         this.setState({
             hover: true,
         });
-    },
+    };
 
-    onMouseOut: function() {
+    onMouseOut = () => {
         this.setState({
             hover: false,
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const RoomTooltip = sdk.getComponent("rooms.RoomTooltip");
         const tip = this.state.hover ? <RoomTooltip
             className="mx_ToolTipButton_container"
@@ -51,5 +47,5 @@ module.exports = React.createClass({
                 { tip }
             </div>
         );
-    },
-});
+    }
+}

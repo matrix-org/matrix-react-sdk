@@ -22,10 +22,8 @@ const Avatar = require('../../../Avatar');
 const sdk = require("../../../index");
 const dispatcher = require("../../../dispatcher");
 
-module.exports = React.createClass({
-    displayName: 'MemberAvatar',
-
-    propTypes: {
+export default class MemberAvatar extends React.PureComponent {
+    static propTypes = {
         member: PropTypes.object.isRequired,
         width: PropTypes.number,
         height: PropTypes.number,
@@ -35,26 +33,20 @@ module.exports = React.createClass({
         // Whether the onClick of the avatar should be overriden to dispatch 'view_user'
         viewUserOnClick: PropTypes.bool,
         title: PropTypes.string,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            width: 40,
-            height: 40,
-            resizeMethod: 'crop',
-            viewUserOnClick: false,
-        };
-    },
+    static defaultProps = {
+        width: 40,
+        height: 40,
+        resizeMethod: 'crop',
+        viewUserOnClick: false,
+    };
 
-    getInitialState: function() {
-        return this._getState(this.props);
-    },
-
-    componentWillReceiveProps: function(nextProps) {
+    componentWillReceiveProps(nextProps) {
         this.setState(this._getState(nextProps));
-    },
+    }
 
-    _getState: function(props) {
+    _getState = (props) => {
         if (!props.member) {
             console.error("MemberAvatar called somehow with null member");
         }
@@ -66,9 +58,11 @@ module.exports = React.createClass({
                                          props.height,
                                          props.resizeMethod),
         };
-    },
+    };
 
-    render: function() {
+    state = this._getState(this.props);
+
+    render() {
         const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
 
         let {member, onClick, viewUserOnClick, ...otherProps} = this.props;
@@ -86,5 +80,5 @@ module.exports = React.createClass({
             <BaseAvatar {...otherProps} name={this.state.name} title={this.state.title}
                 idName={member.userId} url={this.state.imageUrl} onClick={onClick} />
         );
-    },
-});
+    }
+}

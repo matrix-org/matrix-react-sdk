@@ -21,30 +21,28 @@ import dis from '../../../dispatcher';
 import { _t } from '../../../languageHandler';
 import sdk from '../../../index';
 
-module.exports = React.createClass({
-    displayName: 'IncomingCallBox',
-
-    propTypes: {
+export default class IncomingCallBox extends React.PureComponent {
+    static propTypes = {
         incomingCall: PropTypes.object,
-    },
+    };
 
-    onAnswerClick: function(e) {
+    onAnswerClick = (e) => {
         e.stopPropagation();
         dis.dispatch({
             action: 'answer',
             room_id: this.props.incomingCall.roomId,
         });
-    },
+    };
 
-    onRejectClick: function(e) {
+    onRejectClick = (e) => {
         e.stopPropagation();
         dis.dispatch({
             action: 'hangup',
             room_id: this.props.incomingCall.roomId,
         });
-    },
+    };
 
-    render: function() {
+    render() {
         let room = null;
         if (this.props.incomingCall) {
             room = MatrixClientPeg.get().getRoom(this.props.incomingCall.roomId);
@@ -84,6 +82,6 @@ module.exports = React.createClass({
                 </div>
             </div>
         );
-    },
-});
+    }
+}
 

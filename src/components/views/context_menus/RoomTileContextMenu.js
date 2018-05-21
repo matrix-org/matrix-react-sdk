@@ -31,34 +31,36 @@ import * as RoomNotifs from '../../../RoomNotifs';
 import Modal from '../../../Modal';
 import RoomListActions from '../../../actions/RoomListActions';
 
-module.exports = React.createClass({
-    displayName: 'RoomTileContextMenu',
+module.exports = class extends React.Component {
+    static displayName = 'RoomTileContextMenu';
 
-    propTypes: {
+    static propTypes = {
         room: PropTypes.object.isRequired,
         /* callback called when the menu is dismissed */
         onFinished: PropTypes.func,
-    },
+    };
 
-    getInitialState() {
+    constructor(props) {
+        super(props);
         const dmRoomMap = new DMRoomMap(MatrixClientPeg.get());
-        return {
-            roomNotifState: RoomNotifs.getRoomNotifsState(this.props.room.roomId),
-            isFavourite: this.props.room.tags.hasOwnProperty("m.favourite"),
-            isLowPriority: this.props.room.tags.hasOwnProperty("m.lowpriority"),
-            isDirectMessage: Boolean(dmRoomMap.getUserIdForRoomId(this.props.room.roomId)),
+
+        this.state = {
+            roomNotifState: RoomNotifs.getRoomNotifsState(props.room.roomId),
+            isFavourite: props.room.tags.hasOwnProperty("m.favourite"),
+            isLowPriority: props.room.tags.hasOwnProperty("m.lowpriority"),
+            isDirectMessage: Boolean(dmRoomMap.getUserIdForRoomId(props.room.roomId)),
         };
-    },
+    }
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._unmounted = false;
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         this._unmounted = true;
-    },
+    }
 
-    _toggleTag: function(tagNameOn, tagNameOff) {
+    _toggleTag = (tagNameOn, tagNameOff) => {
         if (!MatrixClientPeg.get().isGuest()) {
             Promise.delay(500).then(() => {
                 dis.dispatch(RoomListActions.tagRoom(
@@ -71,9 +73,9 @@ module.exports = React.createClass({
                 this.props.onFinished();
             });
         }
-    },
+    };
 
-    _onClickFavourite: function() {
+    _onClickFavourite = () => {
         // Tag room as 'Favourite'
         if (!this.state.isFavourite && this.state.isLowPriority) {
             this.setState({
@@ -88,9 +90,9 @@ module.exports = React.createClass({
             this.setState({isFavourite: true});
             this._toggleTag("m.favourite");
         }
-    },
+    };
 
-    _onClickLowPriority: function() {
+    _onClickLowPriority = () => {
         // Tag room as 'Low Priority'
         if (!this.state.isLowPriority && this.state.isFavourite) {
             this.setState({
@@ -105,9 +107,9 @@ module.exports = React.createClass({
             this.setState({isLowPriority: true});
             this._toggleTag("m.lowpriority");
         }
-    },
+    };
 
-    _onClickDM: function() {
+    _onClickDM = () => {
         if (MatrixClientPeg.get().isGuest()) return;
 
         const newIsDirectMessage = !this.state.isDirectMessage;
@@ -129,9 +131,9 @@ module.exports = React.createClass({
                 description: ((err && err.message) ? err.message : _t('Operation failed')),
             });
         });
-    },
+    };
 
-    _onClickLeave: function() {
+    _onClickLeave = () => {
         // Leave room
         dis.dispatch({
             action: 'leave_room',
@@ -142,9 +144,9 @@ module.exports = React.createClass({
         if (this.props.onFinished) {
             this.props.onFinished();
         }
-    },
+    };
 
-    _onClickReject: function() {
+    _onClickReject = () => {
         dis.dispatch({
             action: 'reject_invite',
             room_id: this.props.room.roomId,
@@ -154,9 +156,9 @@ module.exports = React.createClass({
         if (this.props.onFinished) {
             this.props.onFinished();
         }
-    },
+    };
 
-    _onClickForget: function() {
+    _onClickForget = () => {
         // FIXME: duplicated with RoomSettings (and dead code in RoomView)
         MatrixClientPeg.get().forget(this.props.room.roomId).done(function() {
             dis.dispatch({ action: 'view_next_room' });
@@ -173,9 +175,9 @@ module.exports = React.createClass({
         if (this.props.onFinished) {
             this.props.onFinished();
         }
-    },
+    };
 
-    _saveNotifState: function(newState) {
+    _saveNotifState = (newState) => {
         if (MatrixClientPeg.get().isGuest()) return;
 
         const oldState = this.state.roomNotifState;
@@ -203,25 +205,25 @@ module.exports = React.createClass({
                 roomNotifState: oldState,
             });
         });
-    },
+    };
 
-    _onClickAlertMe: function() {
+    _onClickAlertMe = () => {
         this._saveNotifState(RoomNotifs.ALL_MESSAGES_LOUD);
-    },
+    };
 
-    _onClickAllNotifs: function() {
+    _onClickAllNotifs = () => {
         this._saveNotifState(RoomNotifs.ALL_MESSAGES);
-    },
+    };
 
-    _onClickMentions: function() {
+    _onClickMentions = () => {
         this._saveNotifState(RoomNotifs.MENTIONS_ONLY);
-    },
+    };
 
-    _onClickMute: function() {
+    _onClickMute = () => {
         this._saveNotifState(RoomNotifs.MUTE);
-    },
+    };
 
-    _renderNotifMenu: function() {
+    _renderNotifMenu = () => {
         const alertMeClasses = classNames({
             'mx_RoomTileContextMenu_notif_field': true,
             'mx_RoomTileContextMenu_notif_fieldSet': this.state.roomNotifState == RoomNotifs.ALL_MESSAGES_LOUD,
@@ -269,9 +271,9 @@ module.exports = React.createClass({
                 </div>
             </div>
         );
-    },
+    };
 
-    _renderLeaveMenu: function(membership) {
+    _renderLeaveMenu = (membership) => {
         if (!membership) {
             return null;
         }
@@ -303,9 +305,9 @@ module.exports = React.createClass({
                 </div>
             </div>
         );
-    },
+    };
 
-    _renderRoomTagMenu: function() {
+    _renderRoomTagMenu = () => {
         const favouriteClasses = classNames({
             'mx_RoomTileContextMenu_tag_field': true,
             'mx_RoomTileContextMenu_tag_fieldSet': this.state.isFavourite,
@@ -343,9 +345,9 @@ module.exports = React.createClass({
                 </div>
             </div>
         );
-    },
+    };
 
-    render: function() {
+    render() {
         const myMember = this.props.room.getMember(
             MatrixClientPeg.get().credentials.userId,
         );
@@ -364,5 +366,5 @@ module.exports = React.createClass({
                 { this._renderRoomTagMenu() }
             </div>
         );
-    },
-});
+    }
+};

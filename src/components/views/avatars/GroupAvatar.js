@@ -19,10 +19,8 @@ import PropTypes from 'prop-types';
 import sdk from '../../../index';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 
-export default React.createClass({
-    displayName: 'GroupAvatar',
-
-    propTypes: {
+export default class GroupAvatar extends React.PureComponent {
+    static propTypes = {
         groupId: PropTypes.string,
         groupName: PropTypes.string,
         groupAvatarUrl: PropTypes.string,
@@ -30,26 +28,24 @@ export default React.createClass({
         height: PropTypes.number,
         resizeMethod: PropTypes.string,
         onClick: PropTypes.func,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            width: 36,
-            height: 36,
-            resizeMethod: 'crop',
-        };
-    },
+    static defaultProps = {
+        width: 36,
+        height: 36,
+        resizeMethod: 'crop',
+    };
 
-    getGroupAvatarUrl: function() {
+    getGroupAvatarUrl = () => {
         return MatrixClientPeg.get().mxcUrlToHttp(
             this.props.groupAvatarUrl,
             this.props.width,
             this.props.height,
             this.props.resizeMethod,
         );
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
         // extract the props we use from props so we can pass any others through
         // should consider adding this as a global rule in js-sdk?
@@ -64,5 +60,5 @@ export default React.createClass({
                 {...otherProps}
             />
         );
-    },
-});
+    }
+}

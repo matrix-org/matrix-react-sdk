@@ -21,21 +21,19 @@ import { _t } from '../../../languageHandler';
 import PlatformPeg from '../../../PlatformPeg';
 import AccessibleButton from '../../../components/views/elements/AccessibleButton';
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.PureComponent {
+    static propTypes = {
         status: React.PropTypes.string.isRequired,
         // Currently for error detail but will be usable for download progress
         // once that is a thing that squirrel passes through electron.
         detail: React.PropTypes.string,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            detail: '',
-        }
-    },
+    static defaultProps = {
+        detail: '',
+    };
 
-    getStatusText: function() {
+    getStatusText = () => {
         // we can't import the enum from riot-web as we don't want matrix-react-sdk
         // to depend on riot-web. so we grab it as a normal object via API instead.
         const updateCheckStatusEnum = PlatformPeg.get().getUpdateCheckStatusEnum();
@@ -49,13 +47,13 @@ export default React.createClass({
             case updateCheckStatusEnum.DOWNLOADING:
                 return _t('Downloading update...');
         }
-    },
+    };
 
-    hideToolbar: function() {
+    hideToolbar = () => {
         PlatformPeg.get().stopUpdateCheck();
-    },
+    };
 
-    render: function() {
+    render() {
         const message = this.getStatusText();
         const warning = _t('Warning');
 
@@ -88,4 +86,4 @@ export default React.createClass({
             </div>
         );
     }
-});
+}

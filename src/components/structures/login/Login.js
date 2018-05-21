@@ -22,7 +22,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import sdk from '../../../index';
-import Login from '../../../Login';
+import LoginLogic from '../../../Login';
 import SdkConfig from '../../../SdkConfig';
 import SettingsStore from "../../../settings/SettingsStore";
 
@@ -32,10 +32,8 @@ const PHONE_NUMBER_REGEX = /^[0-9()\-\s]*$/;
 /**
  * A wire component which glues together login UI components and Login logic
  */
-module.exports = React.createClass({
-    displayName: 'Login',
-
-    propTypes: {
+export default class Login extends React.PureComponent {
+    static propTypes = {
         onLoggedIn: PropTypes.func.isRequired,
 
         enableGuest: PropTypes.bool,
@@ -58,25 +56,23 @@ module.exports = React.createClass({
         onForgotPasswordClick: PropTypes.func,
         onCancelClick: PropTypes.func,
         onServerConfigChange: PropTypes.func.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            busy: false,
-            errorText: null,
-            loginIncorrect: false,
-            enteredHomeserverUrl: this.props.customHsUrl || this.props.defaultHsUrl,
-            enteredIdentityServerUrl: this.props.customIsUrl || this.props.defaultIsUrl,
+    state = {
+        busy: false,
+        errorText: null,
+        loginIncorrect: false,
+        enteredHomeserverUrl: this.props.customHsUrl || this.props.defaultHsUrl,
+        enteredIdentityServerUrl: this.props.customIsUrl || this.props.defaultIsUrl,
 
-            // used for preserving form values when changing homeserver
-            username: "",
-            phoneCountry: null,
-            phoneNumber: "",
-            currentFlow: "m.login.password",
-        };
-    },
+        // used for preserving form values when changing homeserver
+        username: "",
+        phoneCountry: null,
+        phoneNumber: "",
+        currentFlow: "m.login.password",
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._unmounted = false;
 
         // map from login step type to a function which will render a control
@@ -87,20 +83,20 @@ module.exports = React.createClass({
         };
 
         this._initLoginLogic();
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         this._unmounted = true;
-    },
+    }
 
-    onPasswordLoginError: function(errorText) {
+    onPasswordLoginError = (errorText) => {
         this.setState({
             errorText,
             loginIncorrect: Boolean(errorText),
         });
-    },
+    };
 
-    onPasswordLogin: function(username, phoneCountry, phoneNumber, password) {
+    onPasswordLogin = (username, phoneCountry, phoneNumber, password) => {
         this.setState({
             busy: true,
             errorText: null,
@@ -159,13 +155,13 @@ module.exports = React.createClass({
                 busy: false,
             });
         }).done();
-    },
+    };
 
-    onCasLogin: function() {
+    onCasLogin = () => {
       this._loginLogic.redirectToCas();
-    },
+    };
 
-    _onLoginAsGuestClick: function() {
+    _onLoginAsGuestClick = () => {
         const self = this;
         self.setState({
             busy: true,
@@ -191,17 +187,17 @@ module.exports = React.createClass({
                 busy: false,
             });
         }).done();
-    },
+    };
 
-    onUsernameChanged: function(username) {
+    onUsernameChanged = (username) => {
         this.setState({ username: username });
-    },
+    };
 
-    onPhoneCountryChanged: function(phoneCountry) {
+    onPhoneCountryChanged = (phoneCountry) => {
         this.setState({ phoneCountry: phoneCountry });
-    },
+    };
 
-    onPhoneNumberChanged: function(phoneNumber) {
+    onPhoneNumberChanged = (phoneNumber) => {
         // Validate the phone number entered
         if (!PHONE_NUMBER_REGEX.test(phoneNumber)) {
             this.setState({ errorText: _t('The phone number entered looks invalid') });
@@ -212,9 +208,9 @@ module.exports = React.createClass({
             phoneNumber: phoneNumber,
             errorText: null,
         });
-    },
+    };
 
-    onServerConfigChange: function(config) {
+    onServerConfigChange = (config) => {
         const self = this;
         const newState = {
             errorText: null, // reset err messages
@@ -230,16 +226,16 @@ module.exports = React.createClass({
         this.setState(newState, function() {
             self._initLoginLogic(config.hsUrl || null, config.isUrl);
         });
-    },
+    };
 
-    _initLoginLogic: function(hsUrl, isUrl) {
+    _initLoginLogic = (hsUrl, isUrl) => {
         const self = this;
         hsUrl = hsUrl || this.state.enteredHomeserverUrl;
         isUrl = isUrl || this.state.enteredIdentityServerUrl;
 
         const fallbackHsUrl = hsUrl === this.props.defaultHsUrl ? this.props.fallbackHsUrl : null;
 
-        const loginLogic = new Login(hsUrl, isUrl, fallbackHsUrl, {
+        const loginLogic = new LoginLogic(hsUrl, isUrl, fallbackHsUrl, {
             defaultDeviceDisplayName: this.props.defaultDeviceDisplayName,
         });
         this._loginLogic = loginLogic;
@@ -285,9 +281,9 @@ module.exports = React.createClass({
                 busy: false,
             });
         }).done();
-    },
+    };
 
-    _isSupportedFlow: function(flow) {
+    _isSupportedFlow = (flow) => {
         // technically the flow can have multiple steps, but no one does this
         // for login and loginLogic doesn't support it so we can ignore it.
         if (!this._stepRendererMap[flow.type]) {
@@ -295,13 +291,13 @@ module.exports = React.createClass({
             return false;
         }
         return true;
-    },
+    };
 
-    _getCurrentFlowStep: function() {
+    _getCurrentFlowStep = () => {
         return this._loginLogic ? this._loginLogic.getCurrentFlowStep() : null;
-    },
+    };
 
-    _errorTextFromError(err) {
+    _errorTextFromError = (err) => {
         let errCode = err.errcode;
         if (!errCode && err.httpStatus) {
             errCode = "HTTP " + err.httpStatus;
@@ -343,9 +339,9 @@ module.exports = React.createClass({
         }
 
         return errorText;
-    },
+    };
 
-    componentForStep: function(step) {
+    componentForStep = (step) => {
         if (!step) {
             return null;
         }
@@ -357,9 +353,9 @@ module.exports = React.createClass({
         }
 
         return null;
-    },
+    };
 
-    _renderPasswordStep: function() {
+    _renderPasswordStep = () => {
         const PasswordLogin = sdk.getComponent('login.PasswordLogin');
         return (
             <PasswordLogin
@@ -376,16 +372,16 @@ module.exports = React.createClass({
                hsUrl={this.state.enteredHomeserverUrl}
                />
         );
-    },
+    };
 
-    _renderCasStep: function() {
+    _renderCasStep = () => {
         const CasLogin = sdk.getComponent('login.CasLogin');
         return (
             <CasLogin onSubmit={this.onCasLogin} />
         );
-    },
+    };
 
-    render: function() {
+    render() {
         const Loader = sdk.getComponent("elements.Spinner");
         const LoginPage = sdk.getComponent("login.LoginPage");
         const LoginHeader = sdk.getComponent("login.LoginHeader");
@@ -455,5 +451,5 @@ module.exports = React.createClass({
                 </div>
             </LoginPage>
         );
-    },
-});
+    }
+}

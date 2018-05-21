@@ -25,14 +25,12 @@ const sdk = require('../../../index');
 const dis = require('../../../dispatcher');
 const Modal = require("../../../Modal");
 
-module.exports = React.createClass({
-    displayName: 'UserTile',
-
-    propTypes: {
+export default class UserTile extends React.PureComponent {
+    static propTypes = {
         user: PropTypes.any.isRequired, // User
-    },
+    };
 
-    render: function() {
+    render() {
         const EntityTile = sdk.getComponent("rooms.EntityTile");
         const user = this.props.user;
         const name = user.displayName || user.userId;
@@ -53,5 +51,5 @@ module.exports = React.createClass({
                 presenceCurrentlyActive={user.currentlyActive}
                 name={name} title={user.userId} avatarJsx={avatarJsx} />
         );
-    },
-});
+    }
+}

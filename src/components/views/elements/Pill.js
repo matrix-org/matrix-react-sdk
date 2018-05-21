@@ -31,27 +31,29 @@ const REGEX_MATRIXTO = new RegExp(MATRIXTO_URL_PATTERN);
 // HttpUtils transformTags to relative links. This excludes event URLs (with `[^\/]*`)
 const REGEX_LOCAL_MATRIXTO = /^#\/(?:user|room|group)\/(([#!@+])[^\/]*)$/;
 
-const Pill = React.createClass({
-    statics: {
-        isPillUrl: (url) => {
-            return !!REGEX_MATRIXTO.exec(url);
-        },
-        isMessagePillUrl: (url) => {
-            return !!REGEX_LOCAL_MATRIXTO.exec(url);
-        },
-        roomNotifPos: (text) => {
-            return text.indexOf("@room");
-        },
-        roomNotifLen: () => {
-            return "@room".length;
-        },
-        TYPE_USER_MENTION: 'TYPE_USER_MENTION',
-        TYPE_ROOM_MENTION: 'TYPE_ROOM_MENTION',
-        TYPE_GROUP_MENTION: 'TYPE_GROUP_MENTION',
-        TYPE_AT_ROOM_MENTION: 'TYPE_AT_ROOM_MENTION', // '@room' mention
-    },
+class Pill extends React.Component {
+    static isPillUrl(url) {
+        return !!REGEX_MATRIXTO.exec(url);
+    }
 
-    props: {
+    static isMessagePillUrl(url) {
+        return !!REGEX_LOCAL_MATRIXTO.exec(url);
+    }
+
+    static roomNotifPos(text) {
+        return text.indexOf("@room");
+    }
+
+    static roomNotifLen() {
+        return "@room".length;
+    }
+
+    static TYPE_USER_MENTION = 'TYPE_USER_MENTION';
+    static TYPE_ROOM_MENTION = 'TYPE_ROOM_MENTION';
+    static TYPE_GROUP_MENTION: 'TYPE_GROUP_MENTION';
+    static TYPE_AT_ROOM_MENTION = 'TYPE_AT_ROOM_MENTION'; // '@room' mention
+
+    static propTypes = {
         // The Type of this Pill. If url is given, this is auto-detected.
         type: PropTypes.string,
         // The URL to pillify (no validation is done, see isPillUrl and isMessagePillUrl)
@@ -62,34 +64,31 @@ const Pill = React.createClass({
         room: PropTypes.instanceOf(Room),
         // Whether to include an avatar in the pill
         shouldShowPillAvatar: PropTypes.bool,
-    },
+    };
 
-
-    childContextTypes: {
+    static childContextTypes = {
         matrixClient: PropTypes.instanceOf(MatrixClient),
-    },
+    };
 
     getChildContext() {
         return {
             matrixClient: this._matrixClient,
         };
-    },
+    }
 
-    getInitialState() {
-        return {
-            // ID/alias of the room/user
-            resourceId: null,
-            // Type of pill
-            pillType: null,
+    static state = {
+        // ID/alias of the room/user
+        resourceId: null,
+        // Type of pill
+        pillType: null,
 
-            // The member related to the user pill
-            member: null,
-            // The group related to the group pill
-            group: null,
-            // The room related to the room pill
-            room: null,
-        };
-    },
+        // The member related to the user pill
+        member: null,
+        // The group related to the group pill
+        group: null,
+        // The room related to the room pill
+        room: null,
+    };
 
     async componentWillReceiveProps(nextProps) {
         let regex = REGEX_MATRIXTO;
@@ -162,19 +161,19 @@ const Pill = React.createClass({
             }
         }
         this.setState({resourceId, pillType, member, group, room});
-    },
+    }
 
     componentWillMount() {
         this._unmounted = false;
         this._matrixClient = MatrixClientPeg.get();
         this.componentWillReceiveProps(this.props);
-    },
+    }
 
     componentWillUnmount() {
         this._unmounted = true;
-    },
+    }
 
-    doProfileLookup: function(userId, member) {
+    doProfileLookup(userId, member) {
         MatrixClientPeg.get().getProfileInfo(userId).then((resp) => {
             if (this._unmounted) {
                 return;
@@ -190,15 +189,15 @@ const Pill = React.createClass({
         }).catch((err) => {
             console.error('Could not retrieve profile data for ' + userId + ':', err);
         });
-    },
+    }
 
-    onUserPillClicked: function() {
+    onUserPillClicked = () => {
         dis.dispatch({
             action: 'view_user',
             member: this.state.member,
         });
-    },
-    render: function() {
+    };
+    render() {
         const BaseAvatar = sdk.getComponent('views.avatars.BaseAvatar');
         const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
         const RoomAvatar = sdk.getComponent('avatars.RoomAvatar');
@@ -284,7 +283,7 @@ const Pill = React.createClass({
             // Deliberately render nothing if the URL isn't recognised
             return null;
         }
-    },
-});
+    }
+}
 
 export default Pill;

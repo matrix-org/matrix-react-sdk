@@ -24,51 +24,47 @@ import FlairStore from '../../../stores/FlairStore';
 
 function nop() {}
 
-const GroupTile = React.createClass({
-    displayName: 'GroupTile',
+class GroupTile extends React.Component {
+    static displayName = 'GroupTile';
 
-    propTypes: {
+    static propTypes = {
         groupId: PropTypes.string.isRequired,
         // Whether to show the short description of the group on the tile
         showDescription: PropTypes.bool,
         // Height of the group avatar in pixels
         avatarHeight: PropTypes.number,
-    },
+    };
 
-    contextTypes: {
+    static contextTypes = {
         matrixClient: PropTypes.instanceOf(MatrixClient).isRequired,
-    },
+    };
 
-    getInitialState() {
-        return {
-            profile: null,
-        };
-    },
+    static defaultProps = {
+        showDescription: true,
+        avatarHeight: 50,
+    };
 
-    getDefaultProps() {
-        return {
-            showDescription: true,
-            avatarHeight: 50,
-        };
-    },
+    state = {
+        profile: null,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         FlairStore.getGroupProfileCached(this.context.matrixClient, this.props.groupId).then((profile) => {
             this.setState({profile});
         }).catch((err) => {
             console.error('Error whilst getting cached profile for GroupTile', err);
         });
-    },
+    }
 
-    onMouseDown: function(e) {
+    onMouseDown = (e) => {
         e.preventDefault();
         dis.dispatch({
             action: 'view_group',
             group_id: this.props.groupId,
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseAvatar = sdk.getComponent('avatars.BaseAvatar');
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         const profile = this.state.profile || {};
@@ -132,7 +128,7 @@ const GroupTile = React.createClass({
                 <div className="mx_GroupTile_groupId">{ this.props.groupId }</div>
             </div>
         </AccessibleButton>;
-    },
-});
+    }
+}
 
 export default GroupTile;

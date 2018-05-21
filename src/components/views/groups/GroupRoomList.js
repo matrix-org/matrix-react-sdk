@@ -21,34 +21,32 @@ import PropTypes from 'prop-types';
 
 const INITIAL_LOAD_NUM_ROOMS = 30;
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.Component {
+    static propTypes = {
         groupId: PropTypes.string.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            rooms: null,
-            truncateAt: INITIAL_LOAD_NUM_ROOMS,
-            searchQuery: "",
-        };
-    },
+    state = {
+        rooms: null,
+        truncateAt: INITIAL_LOAD_NUM_ROOMS,
+        searchQuery: "",
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._unmounted = false;
         this._initGroupStore(this.props.groupId);
-    },
+    }
 
     componentWillUnmount() {
         this._unmounted = true;
         this._unregisterGroupStore();
-    },
+    }
 
-    _unregisterGroupStore() {
+    _unregisterGroupStore = () => {
         GroupStore.unregisterListener(this.onGroupStoreUpdated);
-    },
+    };
 
-    _initGroupStore: function(groupId) {
+    _initGroupStore = (groupId) => {
         GroupStore.registerListener(groupId, this.onGroupStoreUpdated);
         // XXX: This should be more fluxy - let's get the error from GroupStore .getError or something
         // XXX: This is also leaked - we should remove it when unmounting
@@ -58,16 +56,16 @@ export default React.createClass({
                 rooms: null,
             });
         });
-    },
+    };
 
-    onGroupStoreUpdated: function() {
+    onGroupStoreUpdated = () => {
         if (this._unmounted) return;
         this.setState({
             rooms: GroupStore.getGroupRooms(this.props.groupId),
         });
-    },
+    };
 
-    _createOverflowTile: function(overflowCount, totalCount) {
+    _createOverflowTile = (overflowCount, totalCount) => {
         // For now we'll pretend this is any entity. It should probably be a separate tile.
         const EntityTile = sdk.getComponent("rooms.EntityTile");
         const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
@@ -78,19 +76,19 @@ export default React.createClass({
             } name={text} presenceState="online" suppressOnHover={true}
             onClick={this._showFullRoomList} />
         );
-    },
+    };
 
-    _showFullRoomList: function() {
+    _showFullRoomList = () => {
         this.setState({
             truncateAt: -1,
         });
-    },
+    };
 
-    onSearchQueryChanged: function(ev) {
+    onSearchQueryChanged = (ev) => {
         this.setState({ searchQuery: ev.target.value });
-    },
+    };
 
-    makeGroupRoomTiles: function(query) {
+    makeGroupRoomTiles = (query) => {
         const GroupRoomTile = sdk.getComponent("groups.GroupRoomTile");
         query = (query || "").toLowerCase();
 
@@ -113,9 +111,9 @@ export default React.createClass({
         });
 
         return roomList;
-    },
+    };
 
-    render: function() {
+    render() {
         if (this.state.rooms === null) {
             return null;
         }
@@ -141,5 +139,5 @@ export default React.createClass({
                 </GeminiScrollbarWrapper>
             </div>
         );
-    },
-});
+    }
+}

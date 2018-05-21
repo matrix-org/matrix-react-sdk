@@ -78,10 +78,8 @@ const MAX_READ_AVATARS = 5;
 // |    '--------------------------------------'              |
 // '----------------------------------------------------------'
 
-module.exports = withMatrixClient(React.createClass({
-    displayName: 'EventTile',
-
-    propTypes: {
+module.exports = withMatrixClient(class EventTile extends React.Component {
+    static propTypes = {
         /* MatrixClient instance for sender verification etc */
         matrixClient: PropTypes.object.isRequired,
 
@@ -154,81 +152,77 @@ module.exports = withMatrixClient(React.createClass({
 
         // show twelve hour timestamps
         isTwelveHour: PropTypes.bool,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            // no-op function because onWidgetLoad is optional yet some sub-components assume its existence
-            onWidgetLoad: function() {},
-        };
-    },
+    static defaultProps = {
+        // no-op function because onWidgetLoad is optional yet some sub-components assume its existence
+        onWidgetLoad: function() {},
+    };
 
-    getInitialState: function() {
-        return {
-            // Whether the context menu is being displayed.
-            menu: false,
-            // Whether all read receipts are being displayed. If not, only display
-            // a truncation of them.
-            allReadAvatars: false,
-            // Whether the event's sender has been verified.
-            verified: null,
-            // Whether onRequestKeysClick has been called since mounting.
-            previouslyRequestedKeys: false,
-        };
-    },
+    state = {
+        // Whether the context menu is being displayed.
+        menu: false,
+        // Whether all read receipts are being displayed. If not, only display
+        // a truncation of them.
+        allReadAvatars: false,
+        // Whether the event's sender has been verified.
+        verified: null,
+        // Whether onRequestKeysClick has been called since mounting.
+        previouslyRequestedKeys: false,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         // don't do RR animations until we are mounted
         this._suppressReadReceiptAnimation = true;
         this._verifyEvent(this.props.mxEvent);
-    },
+    }
 
-    componentDidMount: function() {
+    componentDidMount() {
         this._suppressReadReceiptAnimation = false;
         this.props.matrixClient.on("deviceVerificationChanged",
                                  this.onDeviceVerificationChanged);
         this.props.mxEvent.on("Event.decrypted", this._onDecrypted);
-    },
+    }
 
-    componentWillReceiveProps: function(nextProps) {
+    componentWillReceiveProps(nextProps) {
         // re-check the sender verification as outgoing events progress through
         // the send process.
         if (nextProps.eventSendStatus !== this.props.eventSendStatus) {
             this._verifyEvent(nextProps.mxEvent);
         }
-    },
+    }
 
-    shouldComponentUpdate: function(nextProps, nextState) {
+    shouldComponentUpdate(nextProps, nextState) {
         if (!ObjectUtils.shallowEqual(this.state, nextState)) {
             return true;
         }
 
         return !this._propsEqual(this.props, nextProps);
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         const client = this.props.matrixClient;
         client.removeListener("deviceVerificationChanged", this.onDeviceVerificationChanged);
         this.props.mxEvent.removeListener("Event.decrypted", this._onDecrypted);
-    },
+    }
 
     /** called when the event is decrypted after we show it.
      */
-    _onDecrypted: function() {
+    _onDecrypted = () => {
         // we need to re-verify the sending device.
         // (we call onWidgetLoad in _verifyEvent to handle the case where decryption
         // has caused a change in size of the event tile)
         this._verifyEvent(this.props.mxEvent);
         this.forceUpdate();
-    },
+    };
 
-    onDeviceVerificationChanged: function(userId, device) {
+    onDeviceVerificationChanged = (userId, device) => {
         if (userId === this.props.mxEvent.getSender()) {
             this._verifyEvent(this.props.mxEvent);
         }
-    },
+    };
 
-    _verifyEvent: async function(mxEvent) {
+    _verifyEvent = async (mxEvent) => {
         if (!mxEvent.isEncrypted()) {
             return;
         }
@@ -240,9 +234,9 @@ module.exports = withMatrixClient(React.createClass({
             // Decryption may have caused a change in size
             this.props.onWidgetLoad();
         });
-    },
+    };
 
-    _propsEqual: function(objA, objB) {
+    _propsEqual = (objA, objB) => {
         const keysA = Object.keys(objA);
         const keysB = Object.keys(objB);
 
@@ -284,9 +278,9 @@ module.exports = withMatrixClient(React.createClass({
             }
         }
         return true;
-    },
+    };
 
-    shouldHighlight: function() {
+    shouldHighlight = () => {
         const actions = this.props.matrixClient.getPushActionsForEvent(this.props.mxEvent);
         if (!actions || !actions.tweaks) { return false; }
 
@@ -296,9 +290,9 @@ module.exports = withMatrixClient(React.createClass({
         }
 
         return actions.tweaks.highlight;
-    },
+    };
 
-    onEditClicked: function(e) {
+    onEditClicked = (e) => {
         const MessageContextMenu = sdk.getComponent('context_menus.MessageContextMenu');
         const buttonRect = e.target.getBoundingClientRect();
 
@@ -321,15 +315,15 @@ module.exports = withMatrixClient(React.createClass({
             },
         });
         this.setState({menu: true});
-    },
+    };
 
-    toggleAllReadAvatars: function() {
+    toggleAllReadAvatars = () => {
         this.setState({
             allReadAvatars: !this.state.allReadAvatars,
         });
-    },
+    };
 
-    getReadAvatars: function() {
+    getReadAvatars = () => {
         // return early if there are no read receipts
         if (!this.props.readReceipts || this.props.readReceipts.length === 0) {
             return (<span className="mx_EventTile_readAvatars" />);
@@ -394,17 +388,17 @@ module.exports = withMatrixClient(React.createClass({
             { remText }
             { avatars }
         </span>;
-    },
+    };
 
-    onSenderProfileClick: function(event) {
+    onSenderProfileClick = (event) => {
         const mxEvent = this.props.mxEvent;
         dis.dispatch({
             action: 'insert_mention',
             user_id: mxEvent.getSender(),
         });
-    },
+    };
 
-    onCryptoClicked: function(e) {
+    onCryptoClicked = (e) => {
         const event = this.props.mxEvent;
 
         Modal.createTrackedDialogAsync('Encrypted Event Dialog', '', (cb) => {
@@ -412,9 +406,9 @@ module.exports = withMatrixClient(React.createClass({
         }, {
             event: event,
         });
-    },
+    };
 
-    onRequestKeysClick: function() {
+    onRequestKeysClick = () => {
         this.setState({
             // Indicate in the UI that the keys have been requested (this is expected to
             // be reset if the component is mounted in the future).
@@ -425,9 +419,9 @@ module.exports = withMatrixClient(React.createClass({
         // is received for the request with the required keys, the event could be
         // decrypted successfully.
         this.props.matrixClient.cancelAndResendEventRoomKeyRequest(this.props.mxEvent);
-    },
+    };
 
-    onPermalinkClicked: function(e) {
+    onPermalinkClicked = (e) => {
         // This allows the permalink to be opened in a new tab/window or copied as
         // matrix.to, but also for it to enable routing within Riot when clicked.
         e.preventDefault();
@@ -437,9 +431,9 @@ module.exports = withMatrixClient(React.createClass({
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
         });
-    },
+    };
 
-    _renderE2EPadlock: function() {
+    _renderE2EPadlock = () => {
         const ev = this.props.mxEvent;
         const props = {onClick: this.onCryptoClicked};
 
@@ -468,9 +462,9 @@ module.exports = withMatrixClient(React.createClass({
 
         // no padlock needed
         return null;
-    },
+    };
 
-    render: function() {
+    render() {
         const MessageTimestamp = sdk.getComponent('messages.MessageTimestamp');
         const SenderProfile = sdk.getComponent('messages.SenderProfile');
         const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
@@ -715,8 +709,8 @@ module.exports = withMatrixClient(React.createClass({
                 );
             }
         }
-    },
-}));
+    }
+});
 
 // XXX this'll eventually be dynamic based on the fields once we have extensible event types
 const messageTypes = ['m.room.message', 'm.sticker'];

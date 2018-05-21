@@ -22,47 +22,47 @@ import dis from '../../../dispatcher';
 import { KeyCode } from '../../../Keyboard';
 
 
-module.exports = React.createClass({
-    displayName: 'ForwardMessage',
+module.exports = class extends React.Component {
+    static displayName = 'ForwardMessage';
 
-    propTypes: {
+    static propTypes = {
         onCancelClick: PropTypes.func.isRequired,
-    },
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         dis.dispatch({
             action: 'panel_disable',
             rightDisabled: true,
             middleDisabled: true,
         });
-    },
+    }
 
-    componentDidMount: function() {
+    componentDidMount() {
         document.addEventListener('keydown', this._onKeyDown);
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         dis.dispatch({
             action: 'panel_disable',
             sideDisabled: false,
             middleDisabled: false,
         });
         document.removeEventListener('keydown', this._onKeyDown);
-    },
+    }
 
-    _onKeyDown: function(ev) {
+    _onKeyDown = (ev) => {
         switch (ev.keyCode) {
             case KeyCode.ESCAPE:
                 this.props.onCancelClick();
                 break;
         }
-    },
+    };
 
-    render: function() {
+    render() {
         return (
             <div className="mx_ForwardMessage">
                 <h1>{ _t('Please select the destination room for this message') }</h1>
             </div>
         );
-    },
-});
+    }
+};

@@ -22,45 +22,43 @@ import PropTypes from 'prop-types';
 
 const INITIAL_LOAD_NUM_MEMBERS = 30;
 
-export default React.createClass({
-    displayName: 'GroupMemberList',
+export default class extends React.Component {
+    static displayName = 'GroupMemberList';
 
-    propTypes: {
+    static propTypes = {
         groupId: PropTypes.string.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            members: null,
-            invitedMembers: null,
-            truncateAt: INITIAL_LOAD_NUM_MEMBERS,
-        };
-    },
+    state = {
+        members: null,
+        invitedMembers: null,
+        truncateAt: INITIAL_LOAD_NUM_MEMBERS,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._unmounted = false;
         this._initGroupStore(this.props.groupId);
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         this._unmounted = true;
-    },
+    }
 
-    _initGroupStore: function(groupId) {
+    _initGroupStore = (groupId) => {
         GroupStore.registerListener(groupId, () => {
             this._fetchMembers();
         });
-    },
+    };
 
-    _fetchMembers: function() {
+    _fetchMembers = () => {
         if (this._unmounted) return;
         this.setState({
             members: GroupStore.getGroupMembers(this.props.groupId),
             invitedMembers: GroupStore.getGroupInvitedMembers(this.props.groupId),
         });
-    },
+    };
 
-    _createOverflowTile: function(overflowCount, totalCount) {
+    _createOverflowTile = (overflowCount, totalCount) => {
         // For now we'll pretend this is any entity. It should probably be a separate tile.
         const EntityTile = sdk.getComponent("rooms.EntityTile");
         const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
@@ -71,19 +69,19 @@ export default React.createClass({
             } name={text} presenceState="online" suppressOnHover={true}
             onClick={this._showFullMemberList} />
         );
-    },
+    };
 
-    _showFullMemberList: function() {
+    _showFullMemberList = () => {
         this.setState({
             truncateAt: -1,
         });
-    },
+    };
 
-    onSearchQueryChanged: function(ev) {
+    onSearchQueryChanged = (ev) => {
         this.setState({ searchQuery: ev.target.value });
-    },
+    };
 
-    makeGroupMemberTiles: function(query, memberList) {
+    makeGroupMemberTiles = (query, memberList) => {
         const GroupMemberTile = sdk.getComponent("groups.GroupMemberTile");
         const TruncatedList = sdk.getComponent("elements.TruncatedList");
         query = (query || "").toLowerCase();
@@ -133,9 +131,9 @@ export default React.createClass({
         >
             { memberTiles }
         </TruncatedList>;
-    },
+    };
 
-    render: function() {
+    render() {
         const GeminiScrollbarWrapper = sdk.getComponent("elements.GeminiScrollbarWrapper");
         if (this.state.fetching || this.state.fetchingInvitedMembers) {
             const Spinner = sdk.getComponent("elements.Spinner");
@@ -171,5 +169,5 @@ export default React.createClass({
                 </GeminiScrollbarWrapper>
             </div>
         );
-    },
-});
+    }
+}

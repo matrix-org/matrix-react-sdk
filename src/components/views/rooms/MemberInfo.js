@@ -42,32 +42,28 @@ import AccessibleButton from '../elements/AccessibleButton';
 import RoomViewStore from '../../../stores/RoomViewStore';
 import SdkConfig from '../../../SdkConfig';
 
-module.exports = withMatrixClient(React.createClass({
-    displayName: 'MemberInfo',
-
-    propTypes: {
+module.exports = withMatrixClient(class MemberInfo extends React.PureComponent {
+    static propTypes = {
         matrixClient: PropTypes.object.isRequired,
         member: PropTypes.object.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            can: {
-                kick: false,
-                ban: false,
-                mute: false,
-                modifyLevel: false,
-            },
-            muted: false,
-            isTargetMod: false,
-            updating: 0,
-            devicesLoading: true,
-            devices: null,
-            isIgnoring: false,
-        };
-    },
+    state = {
+        can: {
+            kick: false,
+            ban: false,
+            mute: false,
+            modifyLevel: false,
+        },
+        muted: false,
+        isTargetMod: false,
+        updating: 0,
+        devicesLoading: true,
+        devices: null,
+        isIgnoring: false,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._cancelDeviceList = null;
 
         // only display the devices list if our client supports E2E
@@ -86,19 +82,19 @@ module.exports = withMatrixClient(React.createClass({
         cli.on("accountData", this.onAccountData);
 
         this._checkIgnoreState();
-    },
+    }
 
-    componentDidMount: function() {
+    componentDidMount() {
         this._updateStateForNewMember(this.props.member);
-    },
+    }
 
-    componentWillReceiveProps: function(newProps) {
+    componentWillReceiveProps(newProps) {
         if (this.props.member.userId !== newProps.member.userId) {
             this._updateStateForNewMember(newProps.member);
         }
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         const client = this.props.matrixClient;
         if (client) {
             client.removeListener("deviceVerificationChanged", this.onDeviceVerificationChanged);
@@ -115,14 +111,14 @@ module.exports = withMatrixClient(React.createClass({
         if (this._cancelDeviceList) {
             this._cancelDeviceList();
         }
-    },
+    }
 
-    _checkIgnoreState: function() {
+    _checkIgnoreState = () => {
         const isIgnoring = this.props.matrixClient.isUserIgnored(this.props.member.userId);
         this.setState({isIgnoring: isIgnoring});
-    },
+    };
 
-    _disambiguateDevices: function(devices) {
+    _disambiguateDevices = (devices) => {
         const names = Object.create(null);
         for (let i = 0; i < devices.length; i++) {
             const name = devices[i].getDisplayName();
@@ -137,9 +133,9 @@ module.exports = withMatrixClient(React.createClass({
                 });
             }
         }
-    },
+    };
 
-    onDeviceVerificationChanged: function(userId, device) {
+    onDeviceVerificationChanged = (userId, device) => {
         if (!this._enableDevices) {
             return;
         }
@@ -154,52 +150,52 @@ module.exports = withMatrixClient(React.createClass({
                 this.setState({devices: devices});
             });
         }
-    },
+    };
 
-    onRoom: function(room) {
+    onRoom = (room) => {
         this.forceUpdate();
-    },
+    };
 
-    onDeleteRoom: function(roomId) {
+    onDeleteRoom = (roomId) => {
         this.forceUpdate();
-    },
+    };
 
-    onRoomTimeline: function(ev, room, toStartOfTimeline) {
+    onRoomTimeline = (ev, room, toStartOfTimeline) => {
         if (toStartOfTimeline) return;
         this.forceUpdate();
-    },
+    };
 
-    onRoomName: function(room) {
+    onRoomName = (room) => {
         this.forceUpdate();
-    },
+    };
 
-    onRoomReceipt: function(receiptEvent, room) {
+    onRoomReceipt = (receiptEvent, room) => {
         // because if we read a notification, it will affect notification count
         // only bother updating if there's a receipt from us
         if (findReadReceiptFromUserId(receiptEvent, this.props.matrixClient.credentials.userId)) {
             this.forceUpdate();
         }
-    },
+    };
 
-    onRoomStateEvents: function(ev, state) {
+    onRoomStateEvents = (ev, state) => {
         this.forceUpdate();
-    },
+    };
 
-    onRoomMemberName: function(ev, member) {
+    onRoomMemberName = (ev, member) => {
         this.forceUpdate();
-    },
+    };
 
-    onRoomMemberMembership: function(ev, member) {
+    onRoomMemberMembership = (ev, member) => {
         if (this.props.member.userId === member.userId) this.forceUpdate();
-    },
+    };
 
-    onAccountData: function(ev) {
+    onAccountData = (ev) => {
         if (ev.getType() === 'm.direct') {
             this.forceUpdate();
         }
-    },
+    };
 
-    _updateStateForNewMember: function(member) {
+    _updateStateForNewMember = (member) => {
         const newState = this._calculateOpsPermissions(member);
         newState.devicesLoading = true;
         newState.devices = null;
@@ -211,9 +207,9 @@ module.exports = withMatrixClient(React.createClass({
         }
 
         this._downloadDeviceList(member);
-    },
+    };
 
-    _downloadDeviceList: function(member) {
+    _downloadDeviceList = (member) => {
         if (!this._enableDevices) {
             return;
         }
@@ -238,9 +234,9 @@ module.exports = withMatrixClient(React.createClass({
             console.log("Error downloading devices", err);
             self.setState({devicesLoading: false});
         });
-    },
+    };
 
-    onIgnoreToggle: function() {
+    onIgnoreToggle = () => {
         const ignoredUsers = this.props.matrixClient.getIgnoredUsers();
         if (this.state.isIgnoring) {
             const index = ignoredUsers.indexOf(this.props.member.userId);
@@ -252,9 +248,9 @@ module.exports = withMatrixClient(React.createClass({
         this.props.matrixClient.setIgnoredUsers(ignoredUsers).then(() => {
             return this.setState({isIgnoring: !this.state.isIgnoring});
         });
-    },
+    };
 
-    onKick: function() {
+    onKick = () => {
         const membership = this.props.member.membership;
         const ConfirmUserActionDialog = sdk.getComponent("dialogs.ConfirmUserActionDialog");
         Modal.createTrackedDialog('Confirm User Action Dialog', 'onKick', ConfirmUserActionDialog, {
@@ -287,9 +283,9 @@ module.exports = withMatrixClient(React.createClass({
                 });
             },
         });
-    },
+    };
 
-    onBanOrUnban: function() {
+    onBanOrUnban = () => {
         const ConfirmUserActionDialog = sdk.getComponent("dialogs.ConfirmUserActionDialog");
         Modal.createTrackedDialog('Confirm User Action Dialog', 'onBanOrUnban', ConfirmUserActionDialog, {
             member: this.props.member,
@@ -330,9 +326,9 @@ module.exports = withMatrixClient(React.createClass({
                 });
             },
         });
-    },
+    };
 
-    onMuteToggle: function() {
+    onMuteToggle = () => {
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         const roomId = this.props.member.roomId;
         const target = this.props.member.userId;
@@ -374,9 +370,9 @@ module.exports = withMatrixClient(React.createClass({
                 this.setState({ updating: this.state.updating - 1 });
             });
         }
-    },
+    };
 
-    onModToggle: function() {
+    onModToggle = () => {
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         const roomId = this.props.member.roomId;
         const target = this.props.member.userId;
@@ -414,9 +410,9 @@ module.exports = withMatrixClient(React.createClass({
         ).finally(()=>{
             this.setState({ updating: this.state.updating - 1 });
         });
-    },
+    };
 
-    _applyPowerChange: function(roomId, target, powerLevel, powerLevelEvent) {
+    _applyPowerChange = (roomId, target, powerLevel, powerLevelEvent) => {
         this.setState({ updating: this.state.updating + 1 });
         this.props.matrixClient.setPowerLevel(roomId, target, parseInt(powerLevel), powerLevelEvent).then(
             function() {
@@ -434,9 +430,9 @@ module.exports = withMatrixClient(React.createClass({
         ).finally(()=>{
             this.setState({ updating: this.state.updating - 1 });
         }).done();
-    },
+    };
 
-    onPowerChange: function(powerLevel) {
+    onPowerChange = (powerLevel) => {
         const roomId = this.props.member.roomId;
         const target = this.props.member.userId;
         const room = this.props.matrixClient.getRoom(roomId);
@@ -491,23 +487,23 @@ module.exports = withMatrixClient(React.createClass({
             return;
         }
         this._applyPowerChange(roomId, target, powerLevel, powerLevelEvent);
-    },
+    };
 
-    onNewDMClick: function() {
+    onNewDMClick = () => {
         this.setState({ updating: this.state.updating + 1 });
         createRoom({dmUserId: this.props.member.userId}).finally(() => {
             this.setState({ updating: this.state.updating - 1 });
         }).done();
-    },
+    };
 
-    onLeaveClick: function() {
+    onLeaveClick = () => {
         dis.dispatch({
             action: 'leave_room',
             room_id: this.props.member.roomId,
         });
-    },
+    };
 
-    _calculateOpsPermissions: function(member) {
+    _calculateOpsPermissions = (member) => {
         const defaultPerms = {
             can: {},
             muted: false,
@@ -529,9 +525,9 @@ module.exports = withMatrixClient(React.createClass({
             muted: this._isMuted(them, powerLevels.getContent()),
             isTargetMod: them.powerLevel > powerLevels.getContent().users_default,
         };
-    },
+    };
 
-    _calculateCanPermissions: function(me, them, powerLevels) {
+    _calculateCanPermissions = (me, them, powerLevels) => {
         const isMe = me.userId === them.userId;
         const can = {
             kick: false,
@@ -557,9 +553,9 @@ module.exports = withMatrixClient(React.createClass({
         can.modifyLevelMax = me.powerLevel;
 
         return can;
-    },
+    };
 
-    _isMuted: function(member, powerLevelContent) {
+    _isMuted = (member, powerLevelContent) => {
         if (!powerLevelContent || !member) return false;
 
         const levelToSend = (
@@ -567,16 +563,16 @@ module.exports = withMatrixClient(React.createClass({
             powerLevelContent.events_default
         );
         return member.powerLevel < levelToSend;
-    },
+    };
 
-    onCancel: function(e) {
+    onCancel = (e) => {
         dis.dispatch({
             action: "view_user",
             member: null,
         });
-    },
+    };
 
-    onMemberAvatarClick: function() {
+    onMemberAvatarClick = () => {
         const member = this.props.member;
         const avatarUrl = member.user ? member.user.avatarUrl : member.events.member.getContent().avatar_url;
         if (!avatarUrl) return;
@@ -589,16 +585,16 @@ module.exports = withMatrixClient(React.createClass({
         };
 
         Modal.createDialog(ImageView, params, "mx_Dialog_lightbox");
-    },
+    };
 
-    onRoomTileClick(roomId) {
+    onRoomTileClick = (roomId) => {
         dis.dispatch({
             action: 'view_room',
             room_id: roomId,
         });
-    },
+    };
 
-    _renderDevices: function() {
+    _renderDevices = () => {
         if (!this._enableDevices) return null;
 
         const devices = this.state.devices;
@@ -630,16 +626,16 @@ module.exports = withMatrixClient(React.createClass({
                 </div>
             </div>
         );
-    },
+    };
 
-    onShareUserClick: function() {
+    onShareUserClick = () => {
         const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
         Modal.createTrackedDialog('share room member dialog', '', ShareDialog, {
             target: this.props.member,
         });
-    },
+    };
 
-    _renderUserOptions: function() {
+    _renderUserOptions = () => {
         const cli = this.props.matrixClient;
         const member = this.props.member;
 
@@ -730,9 +726,9 @@ module.exports = withMatrixClient(React.createClass({
                 </div>
             </div>
         );
-    },
+    };
 
-    render: function() {
+    render() {
         let startChat;
         let kickButton;
         let banButton;
@@ -942,5 +938,5 @@ module.exports = withMatrixClient(React.createClass({
                 </GeminiScrollbarWrapper>
             </div>
         );
-    },
-}));
+    }
+});

@@ -20,27 +20,26 @@ import sdk from '../../../index';
 import SdkConfig from '../../../SdkConfig';
 import { _t } from '../../../languageHandler';
 
-export default React.createClass({
-    displayName: 'CreateRoomDialog',
-    propTypes: {
+export default class CreateRoomDialog extends React.PureComponent {
+    static propTypes = {
         onFinished: PropTypes.func.isRequired,
-    },
+    };
 
-    componentDidMount: function() {
+    componentDidMount() {
         const config = SdkConfig.get();
         // Dialog shows inverse of m.federate (noFederate) strict false check to skip undefined check (default = true)
         this.defaultNoFederate = config.default_federate === false;
-    },
+    }
 
-    onOk: function() {
+    onOk = () => {
         this.props.onFinished(true, this.refs.textinput.value, this.refs.checkbox.checked);
-    },
+    };
 
-    onCancel: function() {
+    onCancel = () => {
         this.props.onFinished(false);
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         return (
@@ -75,5 +74,5 @@ export default React.createClass({
                     onCancel={this.onCancel} />
             </BaseDialog>
         );
-    },
-});
+    }
+}

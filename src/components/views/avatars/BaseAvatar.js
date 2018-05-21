@@ -22,10 +22,8 @@ import AvatarLogic from '../../../Avatar';
 import sdk from '../../../index';
 import AccessibleButton from '../elements/AccessibleButton';
 
-module.exports = React.createClass({
-    displayName: 'BaseAvatar',
-
-    propTypes: {
+export default class BaseAvatar extends React.Component {
+    static propTypes = {
         name: PropTypes.string.isRequired, // The name (first initial used as default)
         idName: PropTypes.string, // ID for generating hash colours
         title: PropTypes.string, // onHover title text
@@ -36,36 +34,30 @@ module.exports = React.createClass({
         // XXX resizeMethod not actually used.
         resizeMethod: PropTypes.string,
         defaultToInitialLetter: PropTypes.bool, // true to add default url
-    },
+    };
 
-    contextTypes: {
+    static contextTypes = {
         matrixClient: PropTypes.instanceOf(MatrixClient),
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            width: 40,
-            height: 40,
-            resizeMethod: 'crop',
-            defaultToInitialLetter: true,
-        };
-    },
-
-    getInitialState: function() {
-        return this._getState(this.props);
-    },
+    static defaultProps = {
+        width: 40,
+        height: 40,
+        resizeMethod: 'crop',
+        defaultToInitialLetter: true,
+    };
 
     componentWillMount() {
         this.unmounted = false;
         this.context.matrixClient.on('sync', this.onClientSync);
-    },
+    }
 
     componentWillUnmount() {
         this.unmounted = true;
         this.context.matrixClient.removeListener('sync', this.onClientSync);
-    },
+    }
 
-    componentWillReceiveProps: function(nextProps) {
+    componentWillReceiveProps(nextProps) {
         // work out if we need to call setState (if the image URLs array has changed)
         const newState = this._getState(nextProps);
         const newImageUrls = newState.imageUrls;
@@ -81,9 +73,9 @@ module.exports = React.createClass({
                 }
             }
         }
-    },
+    }
 
-    onClientSync: function(syncState, prevState) {
+    onClientSync = (syncState, prevState) => {
         if (this.unmounted) return;
 
         // Consider the client reconnected if there is no error with syncing.
@@ -98,9 +90,9 @@ module.exports = React.createClass({
                 urlsIndex: 0,
             });
         }
-    },
+    };
 
-    _getState: function(props) {
+    _getState = (props) => {
         // work out the full set of urls to try to load. This is formed like so:
         // imageUrls: [ props.url, props.urls, default image ]
 
@@ -121,9 +113,9 @@ module.exports = React.createClass({
             defaultImageUrl: defaultImageUrl,
             urlsIndex: 0,
         };
-    },
+    };
 
-    onError: function(ev) {
+    onError = (ev) => {
         const nextIndex = this.state.urlsIndex + 1;
         if (nextIndex < this.state.imageUrls.length) {
             // try the next one
@@ -131,13 +123,13 @@ module.exports = React.createClass({
                 urlsIndex: nextIndex,
             });
         }
-    },
+    };
 
     /**
      * returns the first (non-sigil) character of 'name',
      * converted to uppercase
      */
-    _getInitialLetter: function(name) {
+    _getInitialLetter = (name) => {
         if (name.length < 1) {
             return undefined;
         }
@@ -163,9 +155,11 @@ module.exports = React.createClass({
 
         const firstChar = name.substring(idx, idx+chars);
         return firstChar.toUpperCase();
-    },
+    };
 
-    render: function() {
+    state = this._getState(this.props);
+
+    render() {
         const EmojiText = sdk.getComponent('elements.EmojiText');
         const imageUrl = this.state.imageUrls[this.state.urlsIndex];
 
@@ -229,5 +223,5 @@ module.exports = React.createClass({
                     {...otherProps} />
             );
         }
-    },
-});
+    }
+}

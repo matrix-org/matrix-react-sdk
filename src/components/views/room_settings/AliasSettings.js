@@ -23,30 +23,22 @@ const sdk = require("../../../index");
 import { _t } from '../../../languageHandler';
 const Modal = require("../../../Modal");
 
-module.exports = React.createClass({
-    displayName: 'AliasSettings',
-
-    propTypes: {
+export default class AliasSettings extends React.PureComponent {
+    static propTypes = {
         roomId: PropTypes.string.isRequired,
         canSetCanonicalAlias: PropTypes.bool.isRequired,
         canSetAliases: PropTypes.bool.isRequired,
         aliasEvents: PropTypes.array, // [MatrixEvent]
         canonicalAliasEvent: PropTypes.object, // MatrixEvent
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            canSetAliases: false,
-            canSetCanonicalAlias: false,
-            aliasEvents: [],
-        };
-    },
+    static defaultProps = {
+        canSetAliases: false,
+        canSetCanonicalAlias: false,
+        aliasEvents: [],
+    };
 
-    getInitialState: function() {
-        return this.recalculateState(this.props.aliasEvents, this.props.canonicalAliasEvent);
-    },
-
-    recalculateState: function(aliasEvents, canonicalAliasEvent) {
+    recalculateState = (aliasEvents, canonicalAliasEvent) => {
         aliasEvents = aliasEvents || [];
 
         const state = {
@@ -67,9 +59,9 @@ module.exports = React.createClass({
         }
 
         return state;
-    },
+    };
 
-    saveSettings: function() {
+    saveSettings = () => {
         let promises = [];
 
         // save new aliases for m.room.aliases
@@ -115,9 +107,9 @@ module.exports = React.createClass({
         }
 
         return promises;
-    },
+    };
 
-    aliasEventsToDictionary: function(aliasEvents) { // m.room.alias events
+    aliasEventsToDictionary = (aliasEvents) => { // m.room.alias events
         const dict = {};
         aliasEvents.forEach((event) => {
             dict[event.getStateKey()] = (
@@ -125,23 +117,23 @@ module.exports = React.createClass({
             );
         });
         return dict;
-    },
+    };
 
-    isAliasValid: function(alias) {
+    isAliasValid = (alias) => {
         // XXX: FIXME SPEC-1
         return (alias.match(/^#([^\/:,]+?):(.+)$/) && encodeURI(alias) === alias);
-    },
+    };
 
-    getAliasOperations: function() {
+    getAliasOperations = () => {
         const oldAliases = this.aliasEventsToDictionary(this.props.aliasEvents);
         return ObjectUtils.getKeyValueArrayDiffs(oldAliases, this.state.domainToAliases);
-    },
+    };
 
-    onNewAliasChanged: function(value) {
+    onNewAliasChanged = (value) => {
         this.setState({newAlias: value});
-    },
+    };
 
-    onLocalAliasAdded: function(alias) {
+    onLocalAliasAdded = (alias) => {
         if (!alias || alias.length === 0) return; // ignore attempts to create blank aliases
 
         const localDomain = MatrixClientPeg.get().getDomain();
@@ -161,9 +153,9 @@ module.exports = React.createClass({
                 description: _t('\'%(alias)s\' is not a valid format for an alias', { alias: alias }),
             });
         }
-    },
+    };
 
-    onLocalAliasChanged: function(alias, index) {
+    onLocalAliasChanged = (alias, index) => {
         if (alias === "") return; // hit the delete button to delete please
         const localDomain = MatrixClientPeg.get().getDomain();
         if (this.isAliasValid(alias) && alias.endsWith(localDomain)) {
@@ -175,9 +167,9 @@ module.exports = React.createClass({
                 description: _t('\'%(alias)s\' is not a valid format for an address', { alias: alias }),
             });
         }
-    },
+    };
 
-    onLocalAliasDeleted: function(index) {
+    onLocalAliasDeleted = (index) => {
         const localDomain = MatrixClientPeg.get().getDomain();
         // It's a bit naughty to directly manipulate this.state, and React would
         // normally whine at you, but it can't see us doing the splice.  Given we
@@ -188,15 +180,17 @@ module.exports = React.createClass({
         this.setState({
             domainToAliases: this.state.domainToAliases,
         });
-    },
+    };
 
-    onCanonicalAliasChange: function(event) {
+    onCanonicalAliasChange = (event) => {
         this.setState({
             canonicalAlias: event.target.value,
         });
-    },
+    };
 
-    render: function() {
+    state = this.recalculateState(this.props.aliasEvents, this.props.canonicalAliasEvent);
+
+    render() {
         const self = this;
         const EditableText = sdk.getComponent("elements.EditableText");
         const EditableItemList = sdk.getComponent("elements.EditableItemList");
@@ -278,5 +272,5 @@ module.exports = React.createClass({
 
             </div>
         );
-    },
-});
+    }
+}

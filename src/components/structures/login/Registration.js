@@ -32,10 +32,8 @@ import SettingsStore from "../../../settings/SettingsStore";
 
 const MIN_PASSWORD_LENGTH = 6;
 
-module.exports = React.createClass({
-    displayName: 'Registration',
-
-    propTypes: {
+export default class Registration extends React.PureComponent {
+    static propTypes = {
         onLoggedIn: PropTypes.func.isRequired,
         clientSecret: PropTypes.string,
         sessionId: PropTypes.string,
@@ -68,34 +66,32 @@ module.exports = React.createClass({
             trackReferral: PropTypes.func.isRequired,
             getTeam: PropTypes.func.isRequired,
         }),
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            busy: false,
-            teamServerBusy: false,
-            errorText: null,
-            // We remember the values entered by the user because
-            // the registration form will be unmounted during the
-            // course of registration, but if there's an error we
-            // want to bring back the registration form with the
-            // values the user entered still in it. We can keep
-            // them in this component's state since this component
-            // persist for the duration of the registration process.
-            formVals: {
-                email: this.props.email,
-            },
-            // true if we're waiting for the user to complete
-            // user-interactive auth
-            // If we've been given a session ID, we're resuming
-            // straight back into UI auth
-            doingUIAuth: Boolean(this.props.sessionId),
-            hsUrl: this.props.customHsUrl,
-            isUrl: this.props.customIsUrl,
-        };
-    },
+    state = {
+        busy: false,
+        teamServerBusy: false,
+        errorText: null,
+        // We remember the values entered by the user because
+        // the registration form will be unmounted during the
+        // course of registration, but if there's an error we
+        // want to bring back the registration form with the
+        // values the user entered still in it. We can keep
+        // them in this component's state since this component
+        // persist for the duration of the registration process.
+        formVals: {
+            email: this.props.email,
+        },
+        // true if we're waiting for the user to complete
+        // user-interactive auth
+        // If we've been given a session ID, we're resuming
+        // straight back into UI auth
+        doingUIAuth: Boolean(this.props.sessionId),
+        hsUrl: this.props.customHsUrl,
+        isUrl: this.props.customIsUrl,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._unmounted = false;
 
         this._replaceClient();
@@ -128,9 +124,9 @@ module.exports = React.createClass({
                 });
             });
         }
-    },
+    }
 
-    onServerConfigChange: function(config) {
+    onServerConfigChange = (config) => {
         const newState = {};
         if (config.hsUrl !== undefined) {
             newState.hsUrl = config.hsUrl;
@@ -142,25 +138,25 @@ module.exports = React.createClass({
         this.setState(newState, () => {
             this._replaceClient();
         });
-    },
+    };
 
-    _replaceClient: function() {
+    _replaceClient = () => {
         this._matrixClient = Matrix.createClient({
             baseUrl: this.state.hsUrl,
             idBaseUrl: this.state.isUrl,
         });
-    },
+    };
 
-    onFormSubmit: function(formVals) {
+    onFormSubmit = (formVals) => {
         this.setState({
             errorText: "",
             busy: true,
             formVals: formVals,
             doingUIAuth: true,
         });
-    },
+    };
 
-    _onUIAuthFinished: function(success, response, extra) {
+    _onUIAuthFinished = (success, response, extra) => {
         if (!success) {
             let msg = response.message || response.toString();
             // can we give a better error message?
@@ -239,9 +235,9 @@ module.exports = React.createClass({
         }).then((cli) => {
             return this._setupPushers(cli);
         });
-    },
+    };
 
-    _setupPushers: function(matrixClient) {
+    _setupPushers = (matrixClient) => {
         if (!this.props.brand) {
             return Promise.resolve();
         }
@@ -261,9 +257,9 @@ module.exports = React.createClass({
         }, (error) => {
             console.error("Couldn't get pushers: " + error);
         });
-    },
+    };
 
-    onFormValidationFailed: function(errCode) {
+    onFormValidationFailed = (errCode) => {
         let errMsg;
         switch (errCode) {
             case "RegistrationForm.ERR_PASSWORD_MISSING":
@@ -295,15 +291,15 @@ module.exports = React.createClass({
         this.setState({
             errorText: errMsg,
         });
-    },
+    };
 
-    onTeamSelected: function(teamSelected) {
+    onTeamSelected = (teamSelected) => {
         if (!this._unmounted) {
             this.setState({ teamSelected });
         }
-    },
+    };
 
-    _makeRegisterRequest: function(auth) {
+    _makeRegisterRequest = (auth) => {
         // Only send the bind params if we're sending username / pw params
         // (Since we need to send no params at all to use the ones saved in the
         // session).
@@ -320,17 +316,17 @@ module.exports = React.createClass({
             bindThreepids,
             null,
         );
-    },
+    };
 
-    _getUIAuthInputs: function() {
+    _getUIAuthInputs = () => {
         return {
             emailAddress: this.state.formVals.email,
             phoneCountry: this.state.formVals.phoneCountry,
             phoneNumber: this.state.formVals.phoneNumber,
         };
-    },
+    };
 
-    render: function() {
+    render() {
         const LoginHeader = sdk.getComponent('login.LoginHeader');
         const LoginFooter = sdk.getComponent('login.LoginFooter');
         const LoginPage = sdk.getComponent('login.LoginPage');
@@ -432,5 +428,5 @@ module.exports = React.createClass({
                 </div>
             </LoginPage>
         );
-    },
-});
+    }
+}

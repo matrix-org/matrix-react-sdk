@@ -19,10 +19,8 @@ import sdk from '../../../index';
 const MemberAvatar = require('../avatars/MemberAvatar.js');
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
-    displayName: 'MemberEventListSummary',
-
-    propTypes: {
+export default class MemberEventListSummary extends React.Component {
+    static propTypes = {
         // An array of member events to summarise
         events: PropTypes.array.isRequired,
         // An array of EventTiles to render when expanded
@@ -37,23 +35,19 @@ module.exports = React.createClass({
         onToggle: PropTypes.func,
         // Whether or not to begin with state.expanded=true
         startExpanded: PropTypes.bool,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            expanded: Boolean(this.props.startExpanded),
-        };
-    },
+    static defaultProps = {
+        summaryLength: 1,
+        threshold: 3,
+        avatarsMaxLength: 5,
+    };
 
-    getDefaultProps: function() {
-        return {
-            summaryLength: 1,
-            threshold: 3,
-            avatarsMaxLength: 5,
-        };
-    },
+    state = {
+        expanded: Boolean(this.props.startExpanded),
+    };
 
-    shouldComponentUpdate: function(nextProps, nextState) {
+    shouldComponentUpdate(nextProps, nextState) {
         // Update if
         //  - The number of summarised events has changed
         //  - or if the summary is currently expanded
@@ -64,14 +58,14 @@ module.exports = React.createClass({
             this.state.expanded || nextState.expanded ||
             nextProps.events.length < this.props.threshold
         );
-    },
+    }
 
-    _toggleSummary: function() {
+    _toggleSummary = () => {
         this.setState({
             expanded: !this.state.expanded,
         });
         this.props.onToggle();
-    },
+    };
 
     /**
      * Render the JSX for users aggregated by their transition sequences (`eventAggregates`) where
@@ -83,7 +77,7 @@ module.exports = React.createClass({
      * @returns {ReactElement} a single <span> containing the textual summary of the aggregated
      * events that occurred.
      */
-    _renderSummary: function(eventAggregates, orderedTransitionSequences) {
+    _renderSummary = (eventAggregates, orderedTransitionSequences) => {
         const summaries = orderedTransitionSequences.map((transitions) => {
             const userNames = eventAggregates[transitions];
             const nameList = this._renderNameList(userNames);
@@ -123,7 +117,7 @@ module.exports = React.createClass({
                 </EmojiText>
             </span>
         );
-    },
+    };
 
     /**
      * @param {string[]} users an array of user display names or user IDs.
@@ -131,9 +125,9 @@ module.exports = React.createClass({
      * more items in `users` than `this.props.summaryLength`, which is the number of names
      * included before "and [n] others".
      */
-    _renderNameList: function(users) {
+    _renderNameList = (users) => {
         return this._renderCommaSeparatedList(users, this.props.summaryLength);
-    },
+    };
 
     /**
      * Canonicalise an array of transitions such that some pairs of transitions become
@@ -142,7 +136,7 @@ module.exports = React.createClass({
      * @param {string[]} transitions an array of transitions.
      * @returns {string[]} an array of transitions.
      */
-    _getCanonicalTransitions: function(transitions) {
+    _getCanonicalTransitions = (transitions) => {
         const modMap = {
             'joined': {
                 'after': 'left',
@@ -173,7 +167,7 @@ module.exports = React.createClass({
             res.push(transition);
         }
         return res;
-    },
+    };
 
     /**
      * Transform an array of transitions into an array of transitions and how many times
@@ -189,7 +183,7 @@ module.exports = React.createClass({
      * @param {string[]} transitions the array of transitions to transform.
      * @returns {object[]} an array of coalesced transitions.
      */
-    _coalesceRepeatedTransitions: function(transitions) {
+    _coalesceRepeatedTransitions = (transitions) => {
         const res = [];
         for (let i = 0; i < transitions.length; i++) {
             if (res.length > 0 && res[res.length - 1].transitionType === transitions[i]) {
@@ -202,7 +196,7 @@ module.exports = React.createClass({
             }
         }
         return res;
-    },
+    };
 
     /**
      * For a certain transition, t, describe what happened to the users that
@@ -212,7 +206,7 @@ module.exports = React.createClass({
      * @param {number} repeats the number of times the transition was repeated in a row.
      * @returns {string} the written Human Readable equivalent of the transition.
      */
-    _getDescriptionForTransition(t, userCount, repeats) {
+    _getDescriptionForTransition = (t, userCount, repeats) => {
         // The empty interpolations 'severalUsers' and 'oneUser'
         // are there only to show translators to non-English languages
         // that the verb is conjugated to plural or singular Subject.
@@ -281,7 +275,7 @@ module.exports = React.createClass({
         }
 
         return res;
-    },
+    };
 
     /**
      * Constructs a written English string representing `items`, with an optional limit on
@@ -295,7 +289,7 @@ module.exports = React.createClass({
      * @returns {string} a string constructed by joining `items` with a comma between each
      * item, but with the last item appended as " and [lastItem]".
      */
-    _renderCommaSeparatedList(items, itemLimit) {
+    _renderCommaSeparatedList = (items, itemLimit) => {
         const remaining = itemLimit === undefined ? 0 : Math.max(
             items.length - itemLimit, 0,
         );
@@ -310,9 +304,9 @@ module.exports = React.createClass({
             const lastItem = items.pop();
             return _t("%(items)s and %(lastItem)s", { items: items.join(', '), lastItem: lastItem });
         }
-    },
+    };
 
-    _renderAvatars: function(roomMembers) {
+    _renderAvatars = (roomMembers) => {
         const avatars = roomMembers.slice(0, this.props.avatarsMaxLength).map((m) => {
             return (
                 <MemberAvatar key={m.userId} member={m} width={14} height={14} />
@@ -323,11 +317,11 @@ module.exports = React.createClass({
                 { avatars }
             </span>
         );
-    },
+    };
 
-    _getTransitionSequence: function(events) {
+    _getTransitionSequence = (events) => {
         return events.map(this._getTransition);
-    },
+    };
 
     /**
      * Label a given membership event, `e`, where `getContent().membership` has
@@ -337,7 +331,7 @@ module.exports = React.createClass({
      * @returns {string?} the transition type given to this event. This defaults to `null`
      * if a transition is not recognised.
      */
-    _getTransition: function(e) {
+    _getTransition = (e) => {
         switch (e.mxEvent.getContent().membership) {
             case 'invite': return 'invited';
             case 'ban': return 'banned';
@@ -370,9 +364,9 @@ module.exports = React.createClass({
                 }
             default: return null;
         }
-    },
+    };
 
-    _getAggregate: function(userEvents) {
+    _getAggregate = (userEvents) => {
         // A map of aggregate type to arrays of display names. Each aggregate type
         // is a comma-delimited string of transitions, e.g. "joined,left,kicked".
         // The array of display names is the array of users who went through that
@@ -411,9 +405,9 @@ module.exports = React.createClass({
             names: aggregate,
             indices: aggregateIndices,
         };
-    },
+    };
 
-    render: function() {
+    render() {
         const eventsToRender = this.props.events;
         const eventIds = eventsToRender.map((e) => e.getId()).join(',');
         const fewEvents = eventsToRender.length < this.props.threshold;
@@ -491,5 +485,5 @@ module.exports = React.createClass({
                 { expandedEvents }
             </div>
         );
-    },
-});
+    }
+}

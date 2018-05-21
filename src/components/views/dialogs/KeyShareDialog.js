@@ -29,22 +29,20 @@ import { _t, _td } from '../../../languageHandler';
  * should not, and `undefined` if the dialog is cancelled. (In other words:
  * truthy: do the key share. falsy: don't share the keys).
  */
-export default React.createClass({
-    propTypes: {
+export default class extends React.PureComponent {
+    static propTypes = {
         matrixClient: PropTypes.object.isRequired,
         userId: PropTypes.string.isRequired,
         deviceId: PropTypes.string.isRequired,
         onFinished: PropTypes.func.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            deviceInfo: null,
-            wasNewDevice: false,
-        };
-    },
+    state = {
+        deviceInfo: null,
+        wasNewDevice: false,
+    };
 
-    componentDidMount: function() {
+    componentDidMount() {
         this._unmounted = false;
         const userId = this.props.userId;
         const deviceId = this.props.deviceId;
@@ -78,14 +76,13 @@ export default React.createClass({
                 );
             }
         }).done();
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         this._unmounted = true;
-    },
+    }
 
-
-    _onVerifyClicked: function() {
+    _onVerifyClicked = () => {
         const DeviceVerifyDialog = sdk.getComponent('views.dialogs.DeviceVerifyDialog');
 
         console.log("KeyShareDialog: Starting verify dialog");
@@ -99,19 +96,20 @@ export default React.createClass({
                 }
             },
         });
-    },
+    };
 
-    _onShareClicked: function() {
+    _onShareClicked = () => {
         console.log("KeyShareDialog: User clicked 'share'");
         this.props.onFinished(true);
-    },
+    };
 
-    _onIgnoreClicked: function() {
+    _onIgnoreClicked = () => {
         console.log("KeyShareDialog: User clicked 'ignore'");
         this.props.onFinished(false);
-    },
+    };
 
-    _renderContent: function() {
+    /// @return {ReactElement} The rendered React element.
+    _renderContent = () => {
         const displayName = this.state.deviceInfo.getDisplayName() ||
             this.state.deviceInfo.deviceId;
 
@@ -142,9 +140,9 @@ export default React.createClass({
                 </div>
             </div>
         );
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const Spinner = sdk.getComponent('views.elements.Spinner');
 
@@ -170,5 +168,5 @@ export default React.createClass({
                 { content }
             </BaseDialog>
         );
-    },
-});
+    }
+}

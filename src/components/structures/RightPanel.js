@@ -82,22 +82,20 @@ HeaderButton.propTypes = {
     title: PropTypes.string.isRequired,
 };
 
-module.exports = React.createClass({
-    displayName: 'RightPanel',
-
-    propTypes: {
+export default class RightPanel extends React.Component {
+    static propTypes = {
         // TODO: We're trying to move away from these being props, but we need to know
         // whether we should be displaying a room or group member list
         roomId: React.PropTypes.string, // if showing panels for a given room, this is set
         groupId: React.PropTypes.string, // if showing panels for a given group, this is set
         collapsed: React.PropTypes.bool, // currently unused property to request for a minimized view of the panel
-    },
+    };
 
-    contextTypes: {
+    static contextTypes = {
         matrixClient: PropTypes.instanceOf(MatrixClient),
-    },
+    };
 
-    Phase: {
+    Phase = {
         RoomMemberList: 'RoomMemberList',
         GroupMemberList: 'GroupMemberList',
         GroupRoomList: 'GroupRoomList',
@@ -106,59 +104,57 @@ module.exports = React.createClass({
         NotificationPanel: 'NotificationPanel',
         RoomMemberInfo: 'RoomMemberInfo',
         GroupMemberInfo: 'GroupMemberInfo',
-    },
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this.dispatcherRef = dis.register(this.onAction);
         const cli = this.context.matrixClient;
         cli.on("RoomState.members", this.onRoomStateMember);
         this._initGroupStore(this.props.groupId);
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         dis.unregister(this.dispatcherRef);
         if (this.context.matrixClient) {
             this.context.matrixClient.removeListener("RoomState.members", this.onRoomStateMember);
         }
         this._unregisterGroupStore(this.props.groupId);
-    },
+    }
 
-    getInitialState: function() {
-        return {
-            phase: this.props.groupId ? this.Phase.GroupMemberList : this.Phase.RoomMemberList,
-            isUserPrivilegedInGroup: null,
-        };
-    },
+    state = {
+        phase: this.props.groupId ? this.Phase.GroupMemberList : this.Phase.RoomMemberList,
+        isUserPrivilegedInGroup: null,
+    };
 
     componentWillReceiveProps(newProps) {
         if (newProps.groupId !== this.props.groupId) {
             this._unregisterGroupStore(this.props.groupId);
             this._initGroupStore(newProps.groupId);
         }
-    },
+    }
 
     _initGroupStore(groupId) {
         if (!groupId) return;
         GroupStore.registerListener(groupId, this.onGroupStoreUpdated);
-    },
+    }
 
     _unregisterGroupStore() {
         GroupStore.unregisterListener(this.onGroupStoreUpdated);
-    },
+    }
 
-    onGroupStoreUpdated: function() {
+    onGroupStoreUpdated = () => {
         this.setState({
             isUserPrivilegedInGroup: GroupStore.isUserPrivileged(this.props.groupId),
         });
-    },
+    };
 
-    onCollapseClick: function() {
+    onCollapseClick = () => {
         dis.dispatch({
             action: 'hide_right_panel',
         });
-    },
+    };
 
-    onInviteButtonClick: function() {
+    onInviteButtonClick = () => {
         if (this.context.matrixClient.isGuest()) {
             dis.dispatch({action: 'view_set_mxid'});
             return;
@@ -169,23 +165,23 @@ module.exports = React.createClass({
             action: 'view_invite',
             roomId: this.props.roomId,
         });
-    },
+    };
 
-    onInviteToGroupButtonClick: function() {
+    onInviteToGroupButtonClick = () => {
         showGroupInviteDialog(this.props.groupId).then(() => {
             this.setState({
                 phase: this.Phase.GroupMemberList,
             });
         });
-    },
+    };
 
-    onAddRoomToGroupButtonClick: function() {
+    onAddRoomToGroupButtonClick = () => {
         showGroupAddRoomDialog(this.props.groupId).then(() => {
             this.forceUpdate();
         });
-    },
+    };
 
-    onRoomStateMember: function(ev, state, member) {
+    onRoomStateMember = (ev, state, member) => {
         // redraw the badge on the membership list
         if (this.state.phase === this.Phase.RoomMemberList && member.roomId === this.props.roomId) {
             this._delayedUpdate();
@@ -194,13 +190,13 @@ module.exports = React.createClass({
             // refresh the member info (e.g. new power level)
             this._delayedUpdate();
         }
-    },
+    };
 
-    _delayedUpdate: new RateLimitedFunc(function() {
+    _delayedUpdate = new RateLimitedFunc(function() {
         this.forceUpdate(); // eslint-disable-line babel/no-invalid-this
-    }, 500),
+    }, 500);
 
-    onAction: function(payload) {
+    onAction = (payload) => {
         if (payload.action === "view_user") {
             dis.dispatch({
                 action: 'show_right_panel',
@@ -254,9 +250,9 @@ module.exports = React.createClass({
                 phase: payload.phase,
             });
         }
-    },
+    };
 
-    render: function() {
+    render() {
         const MemberList = sdk.getComponent('rooms.MemberList');
         const MemberInfo = sdk.getComponent('rooms.MemberInfo');
         const NotificationPanel = sdk.getComponent('structures.NotificationPanel');
@@ -417,5 +413,5 @@ module.exports = React.createClass({
                 </div>
             </aside>
         );
-    },
-});
+    }
+}

@@ -34,10 +34,8 @@ const addressTypeName = {
 };
 
 
-module.exports = React.createClass({
-    displayName: "AddressPickerDialog",
-
-    propTypes: {
+export default class AddressPickerDialog extends React.PureComponent {
+    static propTypes = {
         title: PropTypes.string.isRequired,
         description: PropTypes.node,
         // Extra node inserted after picker input, dropdown and errors
@@ -55,48 +53,44 @@ module.exports = React.createClass({
         // Whether the current user should be included in the addresses returned. Only
         // applicable when pickerType is `user`. Default: false.
         includeSelf: PropTypes.bool,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            value: "",
-            focus: true,
-            validAddressTypes: addressTypes,
-            pickerType: 'user',
-            includeSelf: false,
-        };
-    },
+    static defaultProps = {
+        value: "",
+        focus: true,
+        validAddressTypes: addressTypes,
+        pickerType: 'user',
+        includeSelf: false,
+    };
 
-    getInitialState: function() {
-        return {
-            error: false,
+    state = {
+        error: false,
 
-            // List of UserAddressType objects representing
-            // the list of addresses we're going to invite
-            selectedList: [],
+        // List of UserAddressType objects representing
+        // the list of addresses we're going to invite
+        selectedList: [],
 
-            // Whether a search is ongoing
-            busy: false,
-            // An error message generated during the user directory search
-            searchError: null,
-            // Whether the server supports the user_directory API
-            serverSupportsUserDirectory: true,
-            // The query being searched for
-            query: "",
-            // List of UserAddressType objects representing the set of
-            // auto-completion results for the current search query.
-            suggestedList: [],
-        };
-    },
+        // Whether a search is ongoing
+        busy: false,
+        // An error message generated during the user directory search
+        searchError: null,
+        // Whether the server supports the user_directory API
+        serverSupportsUserDirectory: true,
+        // The query being searched for
+        query: "",
+        // List of UserAddressType objects representing the set of
+        // auto-completion results for the current search query.
+        suggestedList: [],
+    };
 
-    componentDidMount: function() {
+    componentDidMount() {
         if (this.props.focus) {
             // Set the cursor at the end of the text input
             this.refs.textinput.value = this.props.value;
         }
-    },
+    }
 
-    onButtonClick: function() {
+    onButtonClick = () => {
         let selectedList = this.state.selectedList.slice();
         // Check the text input field to see if user has an unconverted address
         // If there is and it's valid add it to the local selectedList
@@ -105,13 +99,13 @@ module.exports = React.createClass({
             if (selectedList === null) return;
         }
         this.props.onFinished(true, selectedList);
-    },
+    };
 
-    onCancel: function() {
+    onCancel = () => {
         this.props.onFinished(false);
-    },
+    };
 
-    onKeyDown: function(e) {
+    onKeyDown = (e) => {
         if (e.keyCode === 27) { // escape
             e.stopPropagation();
             e.preventDefault();
@@ -146,9 +140,9 @@ module.exports = React.createClass({
             e.preventDefault();
             this._addInputToList();
         }
-    },
+    };
 
-    onQueryChanged: function(ev) {
+    onQueryChanged = (ev) => {
         const query = ev.target.value;
         if (this.queryChangedDebouncer) {
             clearTimeout(this.queryChangedDebouncer);
@@ -181,9 +175,9 @@ module.exports = React.createClass({
                 searchError: null,
             });
         }
-    },
+    };
 
-    onDismissed: function(index) {
+    onDismissed = (index) => {
         return () => {
             const selectedList = this.state.selectedList.slice();
             selectedList.splice(index, 1);
@@ -194,15 +188,15 @@ module.exports = React.createClass({
             });
             if (this._cancelThreepidLookup) this._cancelThreepidLookup();
         };
-    },
+    };
 
-    onClick: function(index) {
+    onClick = (index) => {
         return () => {
             this.onSelected(index);
         };
-    },
+    };
 
-    onSelected: function(index) {
+    onSelected = (index) => {
         const selectedList = this.state.selectedList.slice();
         selectedList.push(this.state.suggestedList[index]);
         this.setState({
@@ -211,9 +205,9 @@ module.exports = React.createClass({
             query: "",
         });
         if (this._cancelThreepidLookup) this._cancelThreepidLookup();
-    },
+    };
 
-    _doNaiveGroupSearch: function(query) {
+    _doNaiveGroupSearch = (query) => {
         const lowerCaseQuery = query.toLowerCase();
         this.setState({
             busy: true,
@@ -245,9 +239,9 @@ module.exports = React.createClass({
                 busy: false,
             });
         });
-    },
+    };
 
-    _doNaiveGroupRoomSearch: function(query) {
+    _doNaiveGroupRoomSearch = (query) => {
         const lowerCaseQuery = query.toLowerCase();
         const results = [];
         GroupStore.getGroupRooms(this.props.groupId).forEach((r) => {
@@ -267,9 +261,9 @@ module.exports = React.createClass({
         this.setState({
             busy: false,
         });
-    },
+    };
 
-    _doRoomSearch: function(query) {
+    _doRoomSearch = (query) => {
         const lowerCaseQuery = query.toLowerCase();
         const rooms = MatrixClientPeg.get().getRooms();
         const results = [];
@@ -324,9 +318,9 @@ module.exports = React.createClass({
         this.setState({
             busy: false,
         });
-    },
+    };
 
-    _doUserDirectorySearch: function(query) {
+    _doUserDirectorySearch = (query) => {
         this.setState({
             busy: true,
             query,
@@ -358,9 +352,9 @@ module.exports = React.createClass({
                 busy: false,
             });
         });
-    },
+    };
 
-    _doLocalSearch: function(query) {
+    _doLocalSearch = (query) => {
         this.setState({
             query,
             searchError: null,
@@ -382,9 +376,9 @@ module.exports = React.createClass({
             });
         });
         this._processResults(results, query);
-    },
+    };
 
-    _processResults: function(results, query) {
+    _processResults = (results, query) => {
         const suggestedList = [];
         results.forEach((result) => {
             if (result.room_id) {
@@ -435,9 +429,9 @@ module.exports = React.createClass({
         }, () => {
             if (this.addressSelector) this.addressSelector.moveSelectionTop();
         });
-    },
+    };
 
-    _addInputToList: function() {
+    _addInputToList = () => {
         const addressText = this.refs.textinput.value.trim();
         const addrType = getAddressType(addressText);
         const addrObj = {
@@ -473,9 +467,9 @@ module.exports = React.createClass({
         });
         if (this._cancelThreepidLookup) this._cancelThreepidLookup();
         return selectedList;
-    },
+    };
 
-    _lookupThreepid: function(medium, address) {
+    _lookupThreepid = (medium, address) => {
         let cancelled = false;
         // Note that we can't safely remove this after we're done
         // because we don't know that it's the same one, so we just
@@ -508,9 +502,9 @@ module.exports = React.createClass({
                 }],
             });
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         const AddressSelector = sdk.getComponent("elements.AddressSelector");
@@ -601,5 +595,5 @@ module.exports = React.createClass({
                     onCancel={this.onCancel} />
             </BaseDialog>
         );
-    },
-});
+    }
+}

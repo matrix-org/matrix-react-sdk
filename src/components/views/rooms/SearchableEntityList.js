@@ -22,62 +22,51 @@ import { _t } from '../../../languageHandler';
 
 // A list capable of displaying entities which conform to the SearchableEntity
 // interface which is an object containing getJsx(): Jsx and matches(query: string): boolean
-const SearchableEntityList = React.createClass({
-    displayName: 'SearchableEntityList',
+class SearchableEntityList extends React.Component {
+    static displayName = 'SearchableEntityList';
 
-    propTypes: {
+    static propTypes = {
         emptyQueryShowsAll: PropTypes.bool,
         showInputBox: PropTypes.bool,
         onQueryChanged: PropTypes.func, // fn(inputText)
         onSubmit: PropTypes.func, // fn(inputText)
         entities: PropTypes.array,
         truncateAt: PropTypes.number,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            showInputBox: true,
-            entities: [],
-            emptyQueryShowsAll: false,
-            onSubmit: function() {},
-            onQueryChanged: function(input) {},
-        };
-    },
+    static defaultProps = {
+        showInputBox: true,
+        entities: [],
+        emptyQueryShowsAll: false,
+        onSubmit: function() {},
+        onQueryChanged: function(input) {},
+    };
 
-    getInitialState: function() {
-        return {
-            query: "",
-            focused: false,
-            truncateAt: this.props.truncateAt,
-            results: this.getSearchResults("", this.props.entities),
-        };
-    },
-
-    componentWillReceiveProps: function(newProps) {
+    componentWillReceiveProps(newProps) {
         // recalculate the search results in case we got new entities
         this.setState({
             results: this.getSearchResults(this.state.query, newProps.entities),
         });
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         // pretend the query box was blanked out else filters could still be
         // applied to other components which rely on onQueryChanged.
         this.props.onQueryChanged("");
-    },
+    }
 
     /**
      * Public-facing method to set the input query text to the given input.
      * @param {string} input
      */
-    setQuery: function(input) {
+    setQuery = (input) => {
         this.setState({
             query: input,
             results: this.getSearchResults(input, this.props.entities),
         });
-    },
+    };
 
-    onQueryChanged: function(ev) {
+    onQueryChanged = (ev) => {
         const q = ev.target.value;
         this.setState({
             query: q,
@@ -92,29 +81,29 @@ const SearchableEntityList = React.createClass({
             // search term and not the current one!
             this.props.onQueryChanged(q);
         });
-    },
+    };
 
-    onQuerySubmit: function(ev) {
+    onQuerySubmit = (ev) => {
         ev.preventDefault();
         this.props.onSubmit(this.state.query);
-    },
+    };
 
-    getSearchResults: function(query, entities) {
+    getSearchResults = (query, entities) => {
         if (!query || query.length === 0) {
             return this.props.emptyQueryShowsAll ? entities : [];
         }
         return entities.filter(function(e) {
             return e.matches(query);
         });
-    },
+    };
 
-    _showAll: function() {
+    _showAll = () => {
         this.setState({
             truncateAt: -1,
         });
-    },
+    };
 
-    _createOverflowEntity: function(overflowCount, totalCount) {
+    _createOverflowEntity = (overflowCount, totalCount) => {
         const EntityTile = sdk.getComponent("rooms.EntityTile");
         const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
         const text = _t("and %(count)s others...", { count: overflowCount });
@@ -124,9 +113,16 @@ const SearchableEntityList = React.createClass({
             } name={text} presenceState="online" suppressOnHover={true}
             onClick={this._showAll} />
         );
-    },
+    };
 
-    render: function() {
+    state = {
+        query: "",
+        focused: false,
+        truncateAt: this.props.truncateAt,
+        results: this.getSearchResults("", this.props.entities),
+    };
+
+    render() {
         let inputBox;
 
         if (this.props.showInputBox) {
@@ -179,7 +175,7 @@ const SearchableEntityList = React.createClass({
                 { list ? <div className="mx_SearchableEntityList_hrWrapper"><hr /></div> : '' }
             </div>
         );
-    },
-});
+    }
+}
 
- module.exports = SearchableEntityList;
+module.exports = SearchableEntityList;

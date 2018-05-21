@@ -25,10 +25,8 @@ import { _t } from '../../../languageHandler';
 /**
  * A pure UI component which displays the HS and IS to use.
  */
-module.exports = React.createClass({
-    displayName: 'ServerConfig',
-
-    propTypes: {
+export default class ServerConfig extends React.PureComponent {
+    static propTypes = {
         onServerConfigChange: PropTypes.func,
 
         // default URLs are defined in config.json (or the hardcoded defaults)
@@ -47,30 +45,26 @@ module.exports = React.createClass({
 
         withToggleButton: PropTypes.bool,
         delayTimeMs: PropTypes.number, // time to wait before invoking onChanged
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            onServerConfigChange: function() {},
-            customHsUrl: "",
-            customIsUrl: "",
-            withToggleButton: false,
-            delayTimeMs: 0,
-        };
-    },
+    static defaultProps = {
+        onServerConfigChange: function() {},
+        customHsUrl: "",
+        customIsUrl: "",
+        withToggleButton: false,
+        delayTimeMs: 0,
+    };
 
-    getInitialState: function() {
-        return {
-            hs_url: this.props.customHsUrl,
-            is_url: this.props.customIsUrl,
-            // if withToggleButton is false, then show the config all the time given we have no way otherwise of making it visible
-            configVisible: !this.props.withToggleButton ||
-                           (this.props.customHsUrl !== this.props.defaultHsUrl) ||
-                           (this.props.customIsUrl !== this.props.defaultIsUrl),
-        };
-    },
+    state = {
+        hs_url: this.props.customHsUrl,
+        is_url: this.props.customIsUrl,
+        // if withToggleButton is false, then show the config all the time given we have no way otherwise of making it visible
+        configVisible: !this.props.withToggleButton ||
+                       (this.props.customHsUrl !== this.props.defaultHsUrl) ||
+                       (this.props.customIsUrl !== this.props.defaultIsUrl),
+    };
 
-    onHomeserverChanged: function(ev) {
+    onHomeserverChanged = (ev) => {
         this.setState({hs_url: ev.target.value}, function() {
             this._hsTimeoutId = this._waitThenInvoke(this._hsTimeoutId, function() {
                 let hsUrl = this.state.hs_url.trim().replace(/\/$/, "");
@@ -81,9 +75,9 @@ module.exports = React.createClass({
                 });
             });
         });
-    },
+    };
 
-    onIdentityServerChanged: function(ev) {
+    onIdentityServerChanged = (ev) => {
         this.setState({is_url: ev.target.value}, function() {
             this._isTimeoutId = this._waitThenInvoke(this._isTimeoutId, function() {
                 let isUrl = this.state.is_url.trim().replace(/\/$/, "");
@@ -94,16 +88,16 @@ module.exports = React.createClass({
                 });
             });
         });
-    },
+    };
 
-    _waitThenInvoke: function(existingTimeoutId, fn) {
+    _waitThenInvoke = (existingTimeoutId, fn) => {
         if (existingTimeoutId) {
             clearTimeout(existingTimeoutId);
         }
         return setTimeout(fn.bind(this), this.props.delayTimeMs);
-    },
+    };
 
-    onServerConfigVisibleChange: function(visible, ev) {
+    onServerConfigVisibleChange = (visible, ev) => {
         this.setState({
             configVisible: visible,
         });
@@ -118,14 +112,14 @@ module.exports = React.createClass({
                 isUrl: this.state.is_url,
             });
         }
-    },
+    };
 
-    showHelpPopup: function() {
+    showHelpPopup = () => {
         const CustomServerDialog = sdk.getComponent('login.CustomServerDialog');
         Modal.createTrackedDialog('Custom Server Dialog', '', CustomServerDialog);
-    },
+    };
 
-    render: function() {
+    render() {
         const serverConfigStyle = {};
         serverConfigStyle.display = this.state.configVisible ? 'block' : 'none';
 
@@ -178,5 +172,5 @@ module.exports = React.createClass({
             </div>
         </div>
         );
-    },
-});
+    }
+}

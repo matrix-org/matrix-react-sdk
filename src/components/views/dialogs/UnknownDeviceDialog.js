@@ -90,10 +90,8 @@ UnknownDeviceList.propTypes = {
 };
 
 
-export default React.createClass({
-    displayName: 'UnknownDeviceDialog',
-
-    propTypes: {
+export default class UnknownDeviceDialog extends React.PureComponent {
+    static propTypes = {
         room: PropTypes.object.isRequired,
 
         // map from userid -> deviceid -> deviceinfo or null if devices are not yet loaded
@@ -109,43 +107,43 @@ export default React.createClass({
 
         // function to retry the request once all devices are verified / known
         onSend: PropTypes.func.isRequired,
-    },
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         MatrixClientPeg.get().on("deviceVerificationChanged", this._onDeviceVerificationChanged);
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener("deviceVerificationChanged", this._onDeviceVerificationChanged);
         }
-    },
+    }
 
-    _onDeviceVerificationChanged: function(userId, deviceId, deviceInfo) {
+    _onDeviceVerificationChanged = (userId, deviceId, deviceInfo) => {
         if (this.props.devices[userId] && this.props.devices[userId][deviceId]) {
             // XXX: Mutating props :/
             this.props.devices[userId][deviceId] = deviceInfo;
             this.forceUpdate();
         }
-    },
+    };
 
-    _onDismissClicked: function() {
+    _onDismissClicked = () => {
         this.props.onFinished();
-    },
+    };
 
-    _onSendAnywayClicked: function() {
+    _onSendAnywayClicked = () => {
         markAllDevicesKnown(MatrixClientPeg.get(), this.props.devices);
 
         this.props.onFinished();
         this.props.onSend();
-    },
+    };
 
-    _onSendClicked: function() {
+    _onSendClicked = () => {
         this.props.onFinished();
         this.props.onSend();
-    },
+    };
 
-    render: function() {
+    render() {
         const GeminiScrollbarWrapper = sdk.getComponent("elements.GeminiScrollbarWrapper");
         if (this.props.devices === null) {
             const Spinner = sdk.getComponent("elements.Spinner");
@@ -208,5 +206,5 @@ export default React.createClass({
         );
         // XXX: do we want to give the user the option to enable blacklistUnverifiedDevices for this room (or globally) at this point?
         // It feels like confused users will likely turn it on and then disappear in a cloud of UISIs...
-    },
-});
+    }
+}

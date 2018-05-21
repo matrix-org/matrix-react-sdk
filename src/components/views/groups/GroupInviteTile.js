@@ -25,50 +25,46 @@ import classNames from 'classnames';
 import MatrixClientPeg from "../../../MatrixClientPeg";
 import {createMenu} from "../../structures/ContextualMenu";
 
-export default React.createClass({
-    displayName: 'GroupInviteTile',
-
-    propTypes: {
+export default class GroupInviteTile extends React.Component {
+    static propTypes = {
         group: PropTypes.object.isRequired,
-    },
+    };
 
-    contextTypes: {
+    static contextTypes = {
         matrixClient: PropTypes.instanceOf(MatrixClient),
-    },
+    };
 
-    getInitialState: function() {
-        return ({
-            hover: false,
-            badgeHover: false,
-            menuDisplayed: false,
-            selected: this.props.group.groupId === null, // XXX: this needs linking to LoggedInView/GroupView state
-        });
-    },
+    state = {
+        hover: false,
+        badgeHover: false,
+        menuDisplayed: false,
+        selected: this.props.group.groupId === null, // XXX: this needs linking to LoggedInView/GroupView state
+    };
 
-    onClick: function(e) {
+    onClick = (e) => {
         dis.dispatch({
             action: 'view_group',
             group_id: this.props.group.groupId,
         });
-    },
+    };
 
-    onMouseEnter: function() {
+    onMouseEnter = () => {
         const state = {hover: true};
         // Only allow non-guests to access the context menu
         if (!this.context.matrixClient.isGuest()) {
             state.badgeHover = true;
         }
         this.setState(state);
-    },
+    };
 
-    onMouseLeave: function() {
+    onMouseLeave = () => {
         this.setState({
             badgeHover: false,
             hover: false,
         });
-    },
+    };
 
-    _showContextMenu: function(x, y, chevronOffset) {
+    _showContextMenu(x, y, chevronOffset) {
         const GroupInviteTileContextMenu = sdk.getComponent('context_menus.GroupInviteTileContextMenu');
 
         createMenu(GroupInviteTileContextMenu, {
@@ -81,9 +77,9 @@ export default React.createClass({
             },
         });
         this.setState({ menuDisplayed: true });
-    },
+    }
 
-    onContextMenu: function(e) {
+    onContextMenu = (e) => {
         // Prevent the RoomTile onClick event firing as well
         e.preventDefault();
         // Only allow non-guests to access the context menu
@@ -91,9 +87,9 @@ export default React.createClass({
 
         const chevronOffset = 12;
         this._showContextMenu(e.clientX, e.clientY - (chevronOffset + 8), chevronOffset);
-    },
+    };
 
-    onBadgeClicked: function(e) {
+    onBadgeClicked = (e) => {
         // Prevent the RoomTile onClick event firing as well
         e.stopPropagation();
         // Only allow non-guests to access the context menu
@@ -113,9 +109,9 @@ export default React.createClass({
         y = y - (chevronOffset + 8); // where 8 is half the height of the chevron
 
         this._showContextMenu(x, y, chevronOffset);
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseAvatar = sdk.getComponent('avatars.BaseAvatar');
         const EmojiText = sdk.getComponent('elements.EmojiText');
 
@@ -169,5 +165,5 @@ export default React.createClass({
                 { tooltip }
             </AccessibleButton>
         );
-    },
-});
+    }
+}

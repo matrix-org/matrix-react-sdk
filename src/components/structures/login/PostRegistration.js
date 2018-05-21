@@ -22,22 +22,18 @@ import sdk from '../../../index';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
-    displayName: 'PostRegistration',
-
-    propTypes: {
+export default class PostRegistration extends React.PureComponent {
+    static propTypes = {
         onComplete: PropTypes.func.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            avatarUrl: null,
-            errorString: null,
-            busy: false,
-        };
-    },
+    state = {
+        avatarUrl: null,
+        errorString: null,
+        busy: false,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         // There is some assymetry between ChangeDisplayName and ChangeAvatar,
         // as ChangeDisplayName will auto-get the name but ChangeAvatar expects
         // the URL to be passed to you (because it's also used for room avatars).
@@ -55,9 +51,9 @@ module.exports = React.createClass({
                 busy: false,
             });
         });
-    },
+    }
 
-    render: function() {
+    render() {
         const ChangeDisplayName = sdk.getComponent('settings.ChangeDisplayName');
         const ChangeAvatar = sdk.getComponent('settings.ChangeAvatar');
         const LoginPage = sdk.getComponent('login.LoginPage');
@@ -78,5 +74,5 @@ module.exports = React.createClass({
                 </div>
             </LoginPage>
         );
-    },
-});
+    }
+}

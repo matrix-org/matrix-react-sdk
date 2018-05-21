@@ -43,42 +43,42 @@ export const roomShape = PropTypes.shape({
     guestCanJoin: PropTypes.bool,
 });
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.Component {
+    static propTypes = {
         room: roomShape,
         // passes ev, room as args
         onClick: PropTypes.func,
         onMouseDown: PropTypes.func,
-    },
+    };
 
-    _linkifyTopic: function() {
+    _linkifyTopic = () => {
         if (this.refs.topic) {
             linkifyElement(this.refs.topic, linkifyMatrix.options);
         }
-    },
+    };
 
-    componentDidMount: function() {
+    componentDidMount() {
         this._linkifyTopic();
-    },
+    }
 
-    componentDidUpdate: function() {
+    componentDidUpdate() {
         this._linkifyTopic();
-    },
+    }
 
-    onClick: function(ev) {
+    onClick = (ev) => {
         ev.preventDefault();
         if (this.props.onClick) {
             this.props.onClick(ev, this.props.room);
         }
-    },
+    };
 
-    onTopicClick: function(ev) {
+    onTopicClick = (ev) => {
         // When clicking a link in the topic, prevent the event being propagated
         // to `onClick`.
         ev.stopPropagation();
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseAvatar = sdk.getComponent('avatars.BaseAvatar');
 
         const room = this.props.room;
@@ -116,5 +116,5 @@ export default React.createClass({
                 { room.numJoinedMembers }
             </td>
         </tr>;
-    },
-});
+    }
+}

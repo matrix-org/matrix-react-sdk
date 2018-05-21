@@ -23,37 +23,35 @@ var classNames = require('classnames');
 var AccessibleButton = require('../../../components/views/elements/AccessibleButton');
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
-    displayName: 'SearchBar',
+module.exports = class extends React.Component {
+    static displayName = 'SearchBar';
 
-    getInitialState: function() {
-        return ({
-            scope: 'Room'
-        });
-    },
+    state = {
+        scope: 'Room'
+    };
 
-    onThisRoomClick: function() {
+    onThisRoomClick = () => {
         this.setState({ scope: 'Room' });
-    },
+    };
 
-    onAllRoomsClick: function() {
+    onAllRoomsClick = () => {
         this.setState({ scope: 'All' });
-    },
+    };
 
-    onSearchChange: function(e) {
+    onSearchChange = (e) => {
         if (e.keyCode === 13) { // on enter...
             this.onSearch();
         }
         if (e.keyCode === 27) { // escape...
             this.props.onCancelClick();
         }
-    },
+    };
 
-    onSearch: function() {
+    onSearch = () => {
         this.props.onSearch(this.refs.search_term.value, this.state.scope);
-    },
+    };
 
-    render: function() {
+    render() {
         var searchButtonClasses = classNames({ mx_SearchBar_searchButton : true, mx_SearchBar_searching: this.props.searchInProgress });
         var thisRoomClasses = classNames({ mx_SearchBar_button : true, mx_SearchBar_unselected : this.state.scope !== 'Room' });
         var allRoomsClasses = classNames({ mx_SearchBar_button : true, mx_SearchBar_unselected : this.state.scope !== 'All' });
@@ -68,4 +66,4 @@ module.exports = React.createClass({
             </div>
         );
     }
-});
+};

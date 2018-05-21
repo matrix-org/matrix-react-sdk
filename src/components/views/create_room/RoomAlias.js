@@ -18,24 +18,21 @@ const React = require('react');
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
-    displayName: 'RoomAlias',
-    propTypes: {
+export default class RoomAlias extends React.PureComponent {
+    static propTypes = {
         // Specifying a homeserver will make magical things happen when you,
         // e.g. start typing in the room alias box.
         homeserver: PropTypes.string,
         alias: PropTypes.string,
         onChange: PropTypes.func,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            onChange: function() {},
-            alias: '',
-        };
-    },
+    static defaultProps = {
+        onChange: function() {},
+        alias: '',
+    };
 
-    getAliasLocalpart: function() {
+    getAliasLocalpart = () => {
         let room_alias = this.props.alias;
 
         if (room_alias && this.props.homeserver) {
@@ -46,13 +43,13 @@ module.exports = React.createClass({
         }
 
         return room_alias;
-    },
+    };
 
-    onValueChanged: function(ev) {
+    onValueChanged = (ev) => {
         this.props.onChange(ev.target.value);
-    },
+    };
 
-    onFocus: function(ev) {
+    onFocus = (ev) => {
         const target = ev.target;
         const curr_val = ev.target.value;
 
@@ -73,9 +70,9 @@ module.exports = React.createClass({
                 }, 0);
             }
         }
-    },
+    };
 
-    onBlur: function(ev) {
+    onBlur = (ev) => {
         const curr_val = ev.target.value;
 
         if (this.props.homeserver) {
@@ -92,13 +89,13 @@ module.exports = React.createClass({
                 ev.target.value = new_val;
             }
         }
-    },
+    };
 
-    render: function() {
+    render() {
         return (
             <input type="text" className="mx_RoomAlias" placeholder={_t("Alias (optional)")}
                 onChange={this.onValueChanged} onFocus={this.onFocus} onBlur={this.onBlur}
                 value={this.props.alias} />
         );
-    },
-});
+    }
+};

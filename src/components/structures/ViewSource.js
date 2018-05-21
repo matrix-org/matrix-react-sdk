@@ -21,31 +21,29 @@ import PropTypes from 'prop-types';
 import SyntaxHighlight from '../views/elements/SyntaxHighlight';
 
 
-module.exports = React.createClass({
-    displayName: 'ViewSource',
-
-    propTypes: {
+export default class ViewSource extends React.PureComponent {
+    static propTypes = {
         content: PropTypes.object.isRequired,
         onFinished: PropTypes.func.isRequired,
-    },
+    };
 
-    componentDidMount: function() {
+    componentDidMount() {
         document.addEventListener("keydown", this.onKeyDown);
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         document.removeEventListener("keydown", this.onKeyDown);
-    },
+    }
 
-    onKeyDown: function(ev) {
+    onKeyDown = (ev) => {
         if (ev.keyCode == 27) { // escape
             ev.stopPropagation();
             ev.preventDefault();
             this.props.onFinished();
         }
-    },
+    };
 
-    render: function() {
+    render() {
         return (
             <div className="mx_ViewSource">
                 <SyntaxHighlight className="json">
@@ -54,4 +52,4 @@ module.exports = React.createClass({
             </div>
         );
     }
-});
+};

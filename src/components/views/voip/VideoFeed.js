@@ -19,37 +19,35 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 
-module.exports = React.createClass({
-    displayName: 'VideoFeed',
-
-    propTypes: {
+export default class VideoFeed extends React.PureComponent {
+    static propTypes = {
         // maxHeight style attribute for the video element
         maxHeight: PropTypes.number,
 
         // a callback which is called when the video element is resized
         // due to a change in video metadata
         onResize: PropTypes.func,
-    },
+    };
 
     componentDidMount() {
         this.refs.vid.addEventListener('resize', this.onResize);
-    },
+    }
 
     componentWillUnmount() {
         this.refs.vid.removeEventListener('resize', this.onResize);
-    },
+    }
 
-    onResize: function(e) {
+    onResize = (e) => {
         if (this.props.onResize) {
             this.props.onResize(e);
         }
-    },
+    };
 
-    render: function() {
+    render() {
         return (
             <video ref="vid" style={{maxHeight: this.props.maxHeight}}>
             </video>
         );
-    },
-});
+    }
+}
 

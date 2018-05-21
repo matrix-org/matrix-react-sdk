@@ -28,30 +28,26 @@ import VectorConferenceHandler from '../../VectorConferenceHandler';
 import SettingsStore from '../../settings/SettingsStore';
 
 
-var LeftPanel = React.createClass({
-    displayName: 'LeftPanel',
-
+class LeftPanel extends React.Component {
     // NB. If you add props, don't forget to update
     // shouldComponentUpdate!
-    propTypes: {
+    static propTypes = {
         collapsed: PropTypes.bool.isRequired,
-    },
+    };
 
-    contextTypes: {
+    static contextTypes = {
         matrixClient: PropTypes.instanceOf(MatrixClient),
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            searchFilter: '',
-        };
-    },
+    state = {
+        searchFilter: '',
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this.focusedElement = null;
-    },
+    }
 
-    shouldComponentUpdate: function(nextProps, nextState) {
+    shouldComponentUpdate(nextProps, nextState) {
         // MatrixChat will update whenever the user switches
         // rooms, but propagating this change all the way down
         // the react tree is quite slow, so we cut this off
@@ -70,17 +66,17 @@ var LeftPanel = React.createClass({
         }
 
         return false;
-    },
+    }
 
-    _onFocus: function(ev) {
+    _onFocus = (ev) => {
         this.focusedElement = ev.target;
-    },
+    };
 
-    _onBlur: function(ev) {
+    _onBlur = (ev) => {
         this.focusedElement = null;
-    },
+    };
 
-    _onKeyDown: function(ev) {
+    _onKeyDown = (ev) => {
         if (!this.focusedElement) return;
         let handled = true;
 
@@ -108,9 +104,9 @@ var LeftPanel = React.createClass({
             ev.stopPropagation();
             ev.preventDefault();
         }
-    },
+    };
 
-    _onMoveFocus: function(up) {
+    _onMoveFocus = (up) => {
         let element = this.focusedElement;
 
         // unclear why this isn't needed
@@ -159,23 +155,23 @@ var LeftPanel = React.createClass({
             this.focusedElement = element;
             this.focusedDescending = descending;
         }
-    },
+    };
 
-    onHideClick: function() {
+    onHideClick = () => {
         dis.dispatch({
             action: 'hide_left_panel',
         });
-    },
+    };
 
-    onSearch: function(term) {
+    onSearch = (term) => {
         this.setState({ searchFilter: term });
-    },
+    };
 
-    collectRoomList: function(ref) {
+    collectRoomList = (ref) => {
         this._roomList = ref;
-    },
+    };
 
-    render: function() {
+    render() {
         const RoomList = sdk.getComponent('rooms.RoomList');
         const TagPanel = sdk.getComponent('structures.TagPanel');
         const BottomLeftMenu = sdk.getComponent('structures.BottomLeftMenu');
@@ -225,6 +221,6 @@ var LeftPanel = React.createClass({
             </div>
         );
     }
-});
+}
 
 module.exports = LeftPanel;

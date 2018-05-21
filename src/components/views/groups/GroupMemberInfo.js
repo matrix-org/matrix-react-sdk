@@ -26,52 +26,48 @@ import { GroupMemberType } from '../../../groups';
 import GroupStore from '../../../stores/GroupStore';
 import AccessibleButton from '../elements/AccessibleButton';
 
-module.exports = React.createClass({
-    displayName: 'GroupMemberInfo',
-
-    contextTypes: {
+export default class GroupMemberInfo extends React.Component {
+    static contextTypes = {
         matrixClient: PropTypes.instanceOf(MatrixClient),
-    },
+    };
 
-    propTypes: {
+    static propTypes = {
         groupId: PropTypes.string,
         groupMember: GroupMemberType,
         isInvited: PropTypes.bool,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            removingUser: false,
-            isUserPrivilegedInGroup: null,
-        };
-    },
+    state = {
+        removingUser: false,
+        isUserPrivilegedInGroup: null,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._unmounted = false;
         this._initGroupStore(this.props.groupId);
-    },
+    }
 
     componentWillReceiveProps(newProps) {
         if (newProps.groupId !== this.props.groupId) {
             this._unregisterGroupStore(this.props.groupId);
             this._initGroupStore(newProps.groupId);
         }
-    },
+    }
 
     componentWillUnmount() {
         this._unmounted = true;
         this._unregisterGroupStore(this.props.groupId);
-    },
+    }
 
-    _initGroupStore(groupId) {
+    _initGroupStore = (groupId) => {
         GroupStore.registerListener(groupId, this.onGroupStoreUpdated);
-    },
+    };
 
-    _unregisterGroupStore(groupId) {
+    _unregisterGroupStore = (groupId) => {
         GroupStore.unregisterListener(this.onGroupStoreUpdated);
-    },
+    };
 
-    onGroupStoreUpdated: function() {
+    onGroupStoreUpdated = () => {
         if (this._unmounted) return;
         this.setState({
             isUserInvited: GroupStore.getGroupInvitedMembers(this.props.groupId).some(
@@ -79,9 +75,9 @@ module.exports = React.createClass({
             ),
             isUserPrivilegedInGroup: GroupStore.isUserPrivileged(this.props.groupId),
         });
-    },
+    };
 
-    _onKick: function() {
+    _onKick = () => {
         const ConfirmUserActionDialog = sdk.getComponent("dialogs.ConfirmUserActionDialog");
         Modal.createDialog(ConfirmUserActionDialog, {
             matrixClient: this.context.matrixClient,
@@ -115,24 +111,24 @@ module.exports = React.createClass({
                 });
             },
         });
-    },
+    };
 
-    _onCancel: function(e) {
+    _onCancel = (e) => {
         // Go back to the user list
         dis.dispatch({
             action: "view_user",
             member: null,
         });
-    },
+    };
 
-    onRoomTileClick(roomId) {
+    onRoomTileClick = (roomId) => {
         dis.dispatch({
             action: 'view_room',
             room_id: roomId,
         });
-    },
+    };
 
-    render: function() {
+    render() {
         if (this.state.removingUser) {
             const Spinner = sdk.getComponent("elements.Spinner");
             return <div className="mx_MemberInfo">
@@ -206,5 +202,5 @@ module.exports = React.createClass({
                 </GeminiScrollbarWrapper>
             </div>
         );
-    },
-});
+    }
+}

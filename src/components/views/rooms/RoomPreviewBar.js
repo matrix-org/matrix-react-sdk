@@ -24,10 +24,10 @@ const MatrixClientPeg = require('../../../MatrixClientPeg');
 
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
-    displayName: 'RoomPreviewBar',
+module.exports = class extends React.Component {
+    static displayName = 'RoomPreviewBar';
 
-    propTypes: {
+    static propTypes = {
         onJoinClick: PropTypes.func,
         onRejectClick: PropTypes.func,
         onForgetClick: PropTypes.func,
@@ -51,22 +51,18 @@ module.exports = React.createClass({
         // If given, this will be how the room is referred to (eg.
         // in error messages).
         roomAlias: PropTypes.string,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            onJoinClick: function() {},
-            canPreview: true,
-        };
-    },
+    static defaultProps = {
+        onJoinClick: function() {},
+        canPreview: true,
+    };
 
-    getInitialState: function() {
-        return {
-            busy: false,
-        };
-    },
+    state = {
+        busy: false,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         // If this is an invite and we've been told what email
         // address was invited, fetch the user's list of 3pids
         // so we can check them against the one that was invited
@@ -82,13 +78,13 @@ module.exports = React.createClass({
                 this.setState({threePidFetchError: err});
             });
         }
-    },
+    }
 
-    _roomNameElement: function() {
+    _roomNameElement = () => {
         return this.props.room ? this.props.room.name : (this.props.room_alias || "");
-    },
+    };
 
-    render: function() {
+    render() {
         let joinBlock, previewBlock;
 
         if (this.props.spinner || this.state.busy) {
@@ -237,5 +233,5 @@ module.exports = React.createClass({
                 </div>
             </div>
         );
-    },
-});
+    }
+};

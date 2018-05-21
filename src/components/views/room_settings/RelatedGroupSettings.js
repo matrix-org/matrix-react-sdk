@@ -24,44 +24,33 @@ import isEqual from 'lodash/isEqual';
 
 const GROUP_ID_REGEX = /\+\S+\:\S+/;
 
-module.exports = React.createClass({
-    displayName: 'RelatedGroupSettings',
-
-    propTypes: {
+export default class RelatedGroupSettings extends React.Component {
+    static propTypes = {
         roomId: PropTypes.string.isRequired,
         canSetRelatedGroups: PropTypes.bool.isRequired,
         relatedGroupsEvent: PropTypes.instanceOf(MatrixEvent),
-    },
+    };
 
-    contextTypes: {
+    static contextTypes = {
         matrixClient: PropTypes.instanceOf(MatrixClient),
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            canSetRelatedGroups: false,
-        };
-    },
+    static defaultProps = {
+        canSetRelatedGroups: false,
+    };
 
-    getInitialState: function() {
-        return {
-            newGroupsList: this.getInitialGroupList(),
-            newGroupId: null,
-        };
-    },
-
-    getInitialGroupList: function() {
+    getInitialGroupList = () => {
         return this.props.relatedGroupsEvent ? (this.props.relatedGroupsEvent.getContent().groups || []) : [];
-    },
+    };
 
-    needsSaving: function() {
+    needsSaving = () => {
         const cli = this.context.matrixClient;
         const room = cli.getRoom(this.props.roomId);
         if (!room.currentState.maySendStateEvent('m.room.related_groups', cli.getUserId())) return false;
         return !isEqual(this.getInitialGroupList(), this.state.newGroupsList);
-    },
+    };
 
-    saveSettings: function() {
+    saveSettings = () => {
         if (!this.needsSaving()) return Promise.resolve();
 
         return this.context.matrixClient.sendStateEvent(
@@ -72,9 +61,9 @@ module.exports = React.createClass({
             },
             '',
         );
-    },
+    };
 
-    validateGroupId: function(groupId) {
+    validateGroupId = (groupId) => {
         if (!GROUP_ID_REGEX.test(groupId)) {
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog('Invalid related community ID', '', ErrorDialog, {
@@ -84,13 +73,13 @@ module.exports = React.createClass({
             return false;
         }
         return true;
-    },
+    };
 
-    onNewGroupChanged: function(newGroupId) {
+    onNewGroupChanged = (newGroupId) => {
         this.setState({ newGroupId });
-    },
+    };
 
-    onGroupAdded: function(groupId) {
+    onGroupAdded = (groupId) => {
         if (groupId.length === 0 || !this.validateGroupId(groupId)) {
             return;
         }
@@ -98,24 +87,29 @@ module.exports = React.createClass({
             newGroupsList: this.state.newGroupsList.concat([groupId]),
             newGroupId: '',
         });
-    },
+    };
 
-    onGroupEdited: function(groupId, index) {
+    onGroupEdited = (groupId, index) => {
         if (groupId.length === 0 || !this.validateGroupId(groupId)) {
             return;
         }
         this.setState({
             newGroupsList: Object.assign(this.state.newGroupsList, {[index]: groupId}),
         });
-    },
+    };
 
-    onGroupDeleted: function(index) {
+    onGroupDeleted = (index) => {
         const newGroupsList = this.state.newGroupsList.slice();
         newGroupsList.splice(index, 1);
         this.setState({ newGroupsList });
-    },
+    };
 
-    render: function() {
+    state = {
+        newGroupsList: this.getInitialGroupList(),
+        newGroupId: null,
+    };
+
+    render() {
         const localDomain = this.context.matrixClient.getDomain();
         const EditableItemList = sdk.getComponent('elements.EditableItemList');
         return <div>
@@ -136,5 +130,5 @@ module.exports = React.createClass({
                 )}
             />
         </div>;
-    },
-});
+    }
+}

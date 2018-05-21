@@ -25,13 +25,11 @@ const dis = require("../../dispatcher");
 /*
  * Component which shows the global notification list using a TimelinePanel
  */
-const NotificationPanel = React.createClass({
-    displayName: 'NotificationPanel',
+class NotificationPanel extends React.PureComponent {
+    static propTypes = {
+    };
 
-    propTypes: {
-    },
-
-    render: function() {
+    render() {
         // wrap a TimelinePanel with the jump-to-event bits turned off.
         const TimelinePanel = sdk.getComponent("structures.TimelinePanel");
         const Loader = sdk.getComponent("elements.Spinner");
@@ -57,7 +55,7 @@ const NotificationPanel = React.createClass({
                 </div>
             );
         }
-    },
-});
+    }
+}
 
 module.exports = NotificationPanel;

@@ -50,26 +50,22 @@ function phraseForSection(section) {
     }
 }
 
-module.exports = React.createClass({
-    displayName: 'RoomList',
-
-    propTypes: {
+export default class RoomList extends React.PureComponent {
+    static propTypes = {
         ConferenceHandler: PropTypes.any,
         collapsed: PropTypes.bool.isRequired,
         searchFilter: PropTypes.string,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            isLoadingLeftRooms: false,
-            totalRoomCount: null,
-            lists: {},
-            incomingCall: null,
-            selectedTags: [],
-        };
-    },
+    state = {
+        isLoadingLeftRooms: false,
+        totalRoomCount: null,
+        lists: {},
+        incomingCall: null,
+        selectedTags: [],
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this.mounted = false;
 
         const cli = MatrixClientPeg.get();
@@ -122,23 +118,23 @@ module.exports = React.createClass({
         // loop count to stop a stack overflow if the user keeps waggling the
         // mouse for >30s in a row, or if running under mocha
         this._delayedRefreshRoomListLoopCount = 0;
-    },
+    }
 
-    componentDidMount: function() {
+    componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
         // Initialise the stickyHeaders when the component is created
         this._updateStickyHeaders(true);
 
         this.mounted = true;
-    },
+    }
 
-    componentDidUpdate: function() {
+    componentDidUpdate() {
         // Reinitialise the stickyHeaders when the component is updated
         this._updateStickyHeaders(true);
         this._repositionIncomingCallBox(undefined, false);
-    },
+    }
 
-    onAction: function(payload) {
+    onAction = (payload) => {
         switch (payload.action) {
             case 'view_tooltip':
                 this.tooltip = payload.tooltip;
@@ -157,9 +153,9 @@ module.exports = React.createClass({
                 }
                 break;
         }
-    },
+    };
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         this.mounted = false;
 
         dis.unregister(this.dispatcherRef);
@@ -188,17 +184,17 @@ module.exports = React.createClass({
 
         // cancel any pending calls to the rate_limited_funcs
         this._delayedRefreshRoomList.cancelPendingCall();
-    },
+    }
 
-    onRoom: function(room) {
+    onRoom = (room) => {
         this.updateVisibleRooms();
-    },
+    };
 
-    onDeleteRoom: function(roomId) {
+    onDeleteRoom = (roomId) => {
         this.updateVisibleRooms();
-    },
+    };
 
-    onArchivedHeaderClick: function(isHidden, scrollToPosition) {
+    onArchivedHeaderClick = (isHidden, scrollToPosition) => {
         if (!isHidden) {
             const self = this;
             this.setState({ isLoadingLeftRooms: true });
@@ -215,46 +211,46 @@ module.exports = React.createClass({
                 self.setState({ isLoadingLeftRooms: false });
             });
         }
-    },
+    };
 
-    onSubListHeaderClick: function(isHidden, scrollToPosition) {
+    onSubListHeaderClick = (isHidden, scrollToPosition) => {
         // The scroll area has expanded or contracted, so re-calculate sticky headers positions
         this._updateStickyHeaders(true, scrollToPosition);
-    },
+    };
 
-    onRoomReceipt: function(receiptEvent, room) {
+    onRoomReceipt = (receiptEvent, room) => {
         // because if we read a notification, it will affect notification count
         // only bother updating if there's a receipt from us
         if (Receipt.findReadReceiptFromUserId(receiptEvent, MatrixClientPeg.get().credentials.userId)) {
             this._delayedRefreshRoomList();
         }
-    },
+    };
 
-    onRoomMemberName: function(ev, member) {
+    onRoomMemberName = (ev, member) => {
         this._delayedRefreshRoomList();
-    },
+    };
 
-    onEventDecrypted: function(ev) {
+    onEventDecrypted = (ev) => {
         // An event being decrypted may mean we need to re-order the room list
         this._delayedRefreshRoomList();
-    },
+    };
 
-    onAccountData: function(ev) {
+    onAccountData = (ev) => {
         if (ev.getType() == 'm.direct') {
             this._delayedRefreshRoomList();
         }
-    },
+    };
 
-    _onGroupMyMembership: function(group) {
+    _onGroupMyMembership = (group) => {
         this.forceUpdate();
-    },
+    };
 
-    _delayedRefreshRoomList: new rate_limited_func(function() {
+    _delayedRefreshRoomList = new rate_limited_func(function() {
         this.refreshRoomList();
-    }, 500),
+    }, 500);
 
     // Update which rooms and users should appear in RoomList for a given group tag
-    updateVisibleRoomsForTag: function(dmRoomMap, tag) {
+    updateVisibleRoomsForTag(dmRoomMap, tag) {
         if (!this.mounted) return;
         // For now, only handle group tags
         if (tag[0] !== '+') return;
@@ -268,10 +264,10 @@ module.exports = React.createClass({
             );
         });
         // TODO: Check if room has been tagged to the group by the user
-    },
+    }
 
     // Update which rooms and users should appear according to which tags are selected
-    updateVisibleRooms: function() {
+    updateVisibleRooms() {
         const selectedTags = TagOrderStore.getSelectedTags();
         const visibleGroupRooms = [];
         selectedTags.forEach((tag) => {
@@ -298,9 +294,9 @@ module.exports = React.createClass({
             this._visibleRooms = MatrixClientPeg.get().getRooms();
         }
         this._delayedRefreshRoomList();
-    },
+    }
 
-    refreshRoomList: function() {
+    refreshRoomList() {
         // TODO: ideally we'd calculate this once at start, and then maintain
         // any changes to it incrementally, updating the appropriate sublists
         // as needed.
@@ -319,9 +315,9 @@ module.exports = React.createClass({
         });
 
         // this._lastRefreshRoomListTs = Date.now();
-    },
+    }
 
-    getRoomLists: function() {
+    getRoomLists() {
         const lists = RoomListStore.getRoomLists();
 
         const filteredLists = {};
@@ -354,9 +350,9 @@ module.exports = React.createClass({
         });
 
         return filteredLists;
-    },
+    }
 
-    _getScrollNode: function() {
+    _getScrollNode() {
         if (!this.mounted) return null;
         const panel = ReactDOM.findDOMNode(this);
         if (!panel) return null;
@@ -366,22 +362,22 @@ module.exports = React.createClass({
         } else {
             return panel.children[2]; // XXX: Fragile!
         }
-    },
+    }
 
-    _whenScrolling: function(e) {
+    _whenScrolling = (e) => {
         this._hideTooltip(e);
         this._repositionIncomingCallBox(e, false);
         this._updateStickyHeaders(false);
-    },
+    }
 
-    _hideTooltip: function(e) {
+    _hideTooltip(e) {
         // Hide tooltip when scrolling, as we'll no longer be over the one we were on
         if (this.tooltip && this.tooltip.style.display !== "none") {
             this.tooltip.style.display = "none";
         }
-    },
+    }
 
-    _repositionIncomingCallBox: function(e, firstTime) {
+    _repositionIncomingCallBox(e, firstTime) {
         const incomingCallBox = document.getElementById("incomingCallBox");
         if (incomingCallBox && incomingCallBox.parentElement) {
             const scrollArea = this._getScrollNode();
@@ -403,11 +399,11 @@ module.exports = React.createClass({
             incomingCallBox.style.top = top + "px";
             incomingCallBox.style.left = scrollArea.offsetLeft + scrollArea.offsetWidth + 12 + "px";
         }
-    },
+    }
 
     // Doing the sticky headers as raw DOM, for speed, as it gets very stuttery if done
     // properly through React
-    _initAndPositionStickyHeaders: function(initialise, scrollToPosition) {
+    _initAndPositionStickyHeaders(initialise, scrollToPosition) {
         const scrollArea = this._getScrollNode();
         if (!scrollArea) return;
         // Use the offset of the top of the scroll area from the window
@@ -484,9 +480,9 @@ module.exports = React.createClass({
         if (scrollToPosition !== undefined) {
             scrollArea.scrollTop -= scrollStuckOffset;
         }
-    },
+    }
 
-    _updateStickyHeaders: function(initialise, scrollToPosition) {
+    _updateStickyHeaders(initialise, scrollToPosition) {
         const self = this;
 
         if (initialise) {
@@ -499,16 +495,16 @@ module.exports = React.createClass({
         } else {
             this._initAndPositionStickyHeaders(initialise, scrollToPosition);
         }
-    },
+    }
 
-    onShowMoreRooms: function() {
+    onShowMoreRooms = () => {
         // kick gemini in the balls to get it to wake up
         // XXX: uuuuuuugh.
         if (!this._gemScroll) return;
         this._gemScroll.forceUpdate();
-    },
+    };
 
-    _getEmptyContent: function(section) {
+    _getEmptyContent(section) {
         if (this.state.selectedTags.length > 0) {
             return null;
         }
@@ -564,9 +560,9 @@ module.exports = React.createClass({
         const labelText = phraseForSection(section);
 
         return <RoomDropTarget label={labelText} />;
-    },
+    }
 
-    _getHeaderItems: function(section) {
+    _getHeaderItems(section) {
         const StartChatButton = sdk.getComponent('elements.StartChatButton');
         const RoomDirectoryButton = sdk.getComponent('elements.RoomDirectoryButton');
         const CreateRoomButton = sdk.getComponent('elements.CreateRoomButton');
@@ -581,7 +577,7 @@ module.exports = React.createClass({
                     <CreateRoomButton size="16" />
                 </span>;
         }
-    },
+    };
 
     _makeGroupInviteTiles(filter) {
         const ret = [];
@@ -598,13 +594,13 @@ module.exports = React.createClass({
         }
 
         return ret;
-    },
+    }
 
-    _collectGemini(gemScroll) {
+    _collectGemini = (gemScroll) => {
         this._gemScroll = gemScroll;
-    },
+    };
 
-    render: function() {
+    render() {
         const RoomSubList = sdk.getComponent('structures.RoomSubList');
         const GeminiScrollbarWrapper = sdk.getComponent("elements.GeminiScrollbarWrapper");
 
@@ -726,5 +722,5 @@ module.exports = React.createClass({
             </div>
             </GeminiScrollbarWrapper>
         );
-    },
-});
+    }
+}

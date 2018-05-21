@@ -36,18 +36,18 @@ export function CancelButton(props) {
  * A stripped-down room header used for things like the user settings
  * and room directory.
  */
-export default React.createClass({
-    displayName: 'SimpleRoomHeader',
+export default class extends React.Component {
+    static displayName = 'SimpleRoomHeader';
 
-    propTypes: {
+    static propTypes = {
         title: PropTypes.string,
         onCancelClick: PropTypes.func,
 
         // `src` to a TintableSvg. Optional.
         icon: PropTypes.string,
-    },
+    };
 
-    render: function() {
+    render() {
         let cancelButton;
         let icon;
         if (this.props.onCancelClick) {
@@ -72,5 +72,5 @@ export default React.createClass({
                 </div>
             </div>
         );
-    },
-});
+    }
+}

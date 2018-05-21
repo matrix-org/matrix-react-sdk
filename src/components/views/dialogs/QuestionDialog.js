@@ -20,9 +20,8 @@ import PropTypes from 'prop-types';
 import sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 
-export default React.createClass({
-    displayName: 'QuestionDialog',
-    propTypes: {
+export default class QuestionDialog extends React.PureComponent {
+    static propTypes = {
         title: PropTypes.string,
         description: PropTypes.node,
         extraButtons: PropTypes.node,
@@ -30,28 +29,26 @@ export default React.createClass({
         danger: PropTypes.bool,
         focus: PropTypes.bool,
         onFinished: PropTypes.func.isRequired,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            title: "",
-            description: "",
-            extraButtons: null,
-            focus: true,
-            hasCancelButton: true,
-            danger: false,
-        };
-    },
+    static defaultProps = {
+        title: "",
+        description: "",
+        extraButtons: null,
+        focus: true,
+        hasCancelButton: true,
+        danger: false,
+    };
 
-    onOk: function() {
+    onOk = () => {
         this.props.onFinished(true);
-    },
+    };
 
-    onCancel: function() {
+    onCancel = () => {
         this.props.onFinished(false);
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         let primaryButtonClass = "";
@@ -78,5 +75,5 @@ export default React.createClass({
                 </DialogButtons>
             </BaseDialog>
         );
-    },
-});
+    }
+}

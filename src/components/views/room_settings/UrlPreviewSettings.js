@@ -24,25 +24,23 @@ import { _t, _td } from '../../../languageHandler';
 import SettingsStore, {SettingLevel} from "../../../settings/SettingsStore";
 
 
-module.exports = React.createClass({
-    displayName: 'UrlPreviewSettings',
-
-    propTypes: {
+export default class UrlPreviewSettings extends React.PureComponent {
+    static propTypes = {
         room: PropTypes.object,
-    },
+    };
 
-    contextTypes: {
+    static contextTypes = {
         matrixClient: PropTypes.instanceOf(MatrixClient).isRequired,
-    },
+    };
 
-    saveSettings: function() {
+    saveSettings = () => {
         const promises = [];
         if (this.refs.urlPreviewsRoom) promises.push(this.refs.urlPreviewsRoom.save());
         if (this.refs.urlPreviewsSelf) promises.push(this.refs.urlPreviewsSelf.save());
         return promises;
-    },
+    };
 
-    render: function() {
+    render() {
         const SettingsFlag = sdk.getComponent("elements.SettingsFlag");
         const roomId = this.props.room.roomId;
         const isEncrypted = this.context.matrixClient.isRoomEncrypted(roomId);
@@ -116,5 +114,5 @@ module.exports = React.createClass({
                 <label>{ previewsForRoomAccount }</label>
             </div>
         );
-    },
-});
+    }
+}

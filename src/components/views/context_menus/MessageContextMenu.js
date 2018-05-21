@@ -29,10 +29,10 @@ import SettingsStore from '../../../settings/SettingsStore';
 import {makeEventPermalink} from '../../../matrix-to';
 import { isUrlPermitted } from '../../../HtmlUtils';
 
-module.exports = React.createClass({
-    displayName: 'MessageContextMenu',
+module.exports = class extends React.Component {
+    static displayName = 'MessageContextMenu';
 
-    propTypes: {
+    static propTypes = {
         /* the MatrixEvent associated with the context menu */
         mxEvent: PropTypes.object.isRequired,
 
@@ -44,28 +44,26 @@ module.exports = React.createClass({
 
         /* callback called when the menu is dismissed */
         onFinished: PropTypes.func,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            canRedact: false,
-            canPin: false,
-        };
-    },
+    state = {
+        canRedact: false,
+        canPin: false,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         MatrixClientPeg.get().on('RoomMember.powerLevel', this._checkPermissions);
         this._checkPermissions();
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         const cli = MatrixClientPeg.get();
         if (cli) {
             cli.removeListener('RoomMember.powerLevel', this._checkPermissions);
         }
-    },
+    }
 
-    _checkPermissions: function() {
+    _checkPermissions = () => {
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(this.props.mxEvent.getRoomId());
 
@@ -76,38 +74,38 @@ module.exports = React.createClass({
         if (!SettingsStore.isFeatureEnabled("feature_pinning")) canPin = false;
 
         this.setState({canRedact, canPin});
-    },
+    };
 
-    _isPinned: function() {
+    _isPinned = () => {
         const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
         const pinnedEvent = room.currentState.getStateEvents('m.room.pinned_events', '');
         if (!pinnedEvent) return false;
         return pinnedEvent.getContent().pinned.includes(this.props.mxEvent.getId());
-    },
+    };
 
-    onResendClick: function() {
+    onResendClick = () => {
         Resend.resend(this.props.mxEvent);
         this.closeMenu();
-    },
+    };
 
-    onViewSourceClick: function() {
+    onViewSourceClick = () => {
         const ViewSource = sdk.getComponent('structures.ViewSource');
         Modal.createTrackedDialog('View Event Source', '', ViewSource, {
             content: this.props.mxEvent.event,
         }, 'mx_Dialog_viewsource');
         this.closeMenu();
-    },
+    };
 
-    onViewClearSourceClick: function() {
+    onViewClearSourceClick = () => {
         const ViewSource = sdk.getComponent('structures.ViewSource');
         Modal.createTrackedDialog('View Clear Event Source', '', ViewSource, {
             // FIXME: _clearEvent is private
             content: this.props.mxEvent._clearEvent,
         }, 'mx_Dialog_viewsource');
         this.closeMenu();
-    },
+    };
 
-    onRedactClick: function() {
+    onRedactClick = () => {
         const ConfirmRedactDialog = sdk.getComponent("dialogs.ConfirmRedactDialog");
         Modal.createTrackedDialog('Confirm Redact Dialog', '', ConfirmRedactDialog, {
             onFinished: (proceed) => {
@@ -126,22 +124,22 @@ module.exports = React.createClass({
             },
         }, 'mx_Dialog_confirmredact');
         this.closeMenu();
-    },
+    };
 
-    onCancelSendClick: function() {
+    onCancelSendClick = () => {
         Resend.removeFromQueue(this.props.mxEvent);
         this.closeMenu();
-    },
+    };
 
-    onForwardClick: function() {
+    onForwardClick = () => {
         dis.dispatch({
             action: 'forward_event',
             event: this.props.mxEvent,
         });
         this.closeMenu();
-    },
+    };
 
-    onPinClick: function() {
+    onPinClick = () => {
         MatrixClientPeg.get().getStateEvent(this.props.mxEvent.getRoomId(), 'm.room.pinned_events', '')
             .catch((e) => {
                 // Intercept the Event Not Found error and fall through the promise chain with no event.
@@ -162,50 +160,50 @@ module.exports = React.createClass({
                 cli.sendStateEvent(this.props.mxEvent.getRoomId(), 'm.room.pinned_events', {pinned: eventIds}, '');
             });
         this.closeMenu();
-    },
+    };
 
-    closeMenu: function() {
+    closeMenu = () => {
         if (this.props.onFinished) this.props.onFinished();
-    },
+    };
 
-    onUnhidePreviewClick: function() {
+    onUnhidePreviewClick = () => {
         if (this.props.eventTileOps) {
             this.props.eventTileOps.unhideWidget();
         }
         this.closeMenu();
-    },
+    };
 
-    onQuoteClick: function() {
+    onQuoteClick = () => {
         dis.dispatch({
             action: 'quote',
             text: this.props.eventTileOps.getInnerText(),
         });
         this.closeMenu();
-    },
+    };
 
-    onPermalinkClick: function(e: Event) {
+    onPermalinkClick = (e: Event) => {
         e.preventDefault();
         const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
         Modal.createTrackedDialog('share room message dialog', '', ShareDialog, {
             target: this.props.mxEvent,
         });
         this.closeMenu();
-    },
+    };
 
-    onReplyClick: function() {
+    onReplyClick = () => {
         dis.dispatch({
             action: 'reply_to_event',
             event: this.props.mxEvent,
         });
         this.closeMenu();
-    },
+    };
 
-    onCollapseReplyThreadClick: function() {
+    onCollapseReplyThreadClick = () => {
         this.props.collapseReplyThread();
         this.closeMenu();
-    },
+    };
 
-    render: function() {
+    render() {
         const eventStatus = this.props.mxEvent.status;
         let resendButton;
         let redactButton;
@@ -349,5 +347,5 @@ module.exports = React.createClass({
                 { collapseReplyThread }
             </div>
         );
-    },
-});
+    }
+};

@@ -25,10 +25,8 @@ import AppsDrawer from './AppsDrawer';
 import { _t } from '../../../languageHandler';
 
 
-module.exports = React.createClass({
-    displayName: 'AuxPanel',
-
-    propTypes: {
+export default class AuxPanel extends React.PureComponent {
+    static propTypes = {
         // js-sdk room object
         room: PropTypes.object.isRequired,
         userId: PropTypes.string.isRequired,
@@ -51,26 +49,21 @@ module.exports = React.createClass({
         // a callback which is called when the content of the aux panel changes
         // content in a way that is likely to make it change size.
         onResize: PropTypes.func,
-    },
+    };
 
-    defaultProps: {
+    static defaultProps = {
         showApps: true,
         hideAppsDrawer: false,
-    },
+    };
 
-    shouldComponentUpdate: function(nextProps, nextState) {
-        return (!ObjectUtils.shallowEqual(this.props, nextProps) ||
-                !ObjectUtils.shallowEqual(this.state, nextState));
-    },
-
-    componentDidUpdate: function(prevProps, prevState) {
+    componentDidUpdate(prevProps, prevState) {
         // most changes are likely to cause a resize
         if (this.props.onResize) {
             this.props.onResize();
         }
-    },
+    }
 
-    onConferenceNotificationClick: function(ev, type) {
+    onConferenceNotificationClick = (ev, type) => {
         dis.dispatch({
             action: 'place_call',
             type: type,
@@ -78,9 +71,9 @@ module.exports = React.createClass({
         });
         ev.stopPropagation();
         ev.preventDefault();
-    },
+    };
 
-    render: function() {
+    render() {
         const CallView = sdk.getComponent("voip.CallView");
         const TintableSvg = sdk.getComponent("elements.TintableSvg");
 
@@ -152,5 +145,5 @@ module.exports = React.createClass({
                 { this.props.children }
             </div>
         );
-    },
-});
+    }
+}

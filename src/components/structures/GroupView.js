@@ -61,10 +61,8 @@ const UserSummaryType = PropTypes.shape({
     }).isRequired,
 });
 
-const CategoryRoomList = React.createClass({
-    displayName: 'CategoryRoomList',
-
-    props: {
+class CategoryRoomList extends React.PureComponent {
+    static propTypes = {
         rooms: PropTypes.arrayOf(RoomSummaryType).isRequired,
         category: PropTypes.shape({
             profile: PropTypes.shape({
@@ -75,9 +73,9 @@ const CategoryRoomList = React.createClass({
 
         // Whether the list should be editable
         editing: PropTypes.bool.isRequired,
-    },
+    };
 
-    onAddRoomsToSummaryClicked: function(ev) {
+    onAddRoomsToSummaryClicked = (ev) => {
         ev.preventDefault();
         const AddressPickerDialog = sdk.getComponent("dialogs.AddressPickerDialog");
         Modal.createTrackedDialog('Add Rooms to Group Summary', '', AddressPickerDialog, {
@@ -114,9 +112,9 @@ const CategoryRoomList = React.createClass({
                 });
             },
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const TintableSvg = sdk.getComponent("elements.TintableSvg");
         const addButton = this.props.editing ?
             (<AccessibleButton className="mx_GroupView_featuredThings_addButton"
@@ -147,19 +145,17 @@ const CategoryRoomList = React.createClass({
             { roomNodes }
             { addButton }
         </div>;
-    },
-});
+    }
+}
 
-const FeaturedRoom = React.createClass({
-    displayName: 'FeaturedRoom',
-
-    props: {
+class FeaturedRoom extends React.PureComponent {
+    static propTypes = {
         summaryInfo: RoomSummaryType.isRequired,
         editing: PropTypes.bool.isRequired,
         groupId: PropTypes.string.isRequired,
-    },
+    };
 
-    onClick: function(e) {
+    onClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
@@ -168,9 +164,9 @@ const FeaturedRoom = React.createClass({
             room_alias: this.props.summaryInfo.profile.canonical_alias,
             room_id: this.props.summaryInfo.room_id,
         });
-    },
+    };
 
-    onDeleteClicked: function(e) {
+    onDeleteClicked = (e) => {
         e.preventDefault();
         e.stopPropagation();
         GroupStore.removeRoomFromGroupSummary(
@@ -193,9 +189,9 @@ const FeaturedRoom = React.createClass({
                 description: _t("The room '%(roomName)s' could not be removed from the summary.", {roomName}),
             });
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const RoomAvatar = sdk.getComponent("avatars.RoomAvatar");
 
         const roomName = this.props.summaryInfo.profile.name ||
@@ -235,13 +231,11 @@ const FeaturedRoom = React.createClass({
             <div className="mx_GroupView_featuredThing_name">{ roomNameNode }</div>
             { deleteButton }
         </AccessibleButton>;
-    },
-});
+    }
+}
 
-const RoleUserList = React.createClass({
-    displayName: 'RoleUserList',
-
-    props: {
+class RoleUserList extends React.PureComponent {
+    static propTypes = {
         users: PropTypes.arrayOf(UserSummaryType).isRequired,
         role: PropTypes.shape({
             profile: PropTypes.shape({
@@ -252,9 +246,9 @@ const RoleUserList = React.createClass({
 
         // Whether the list should be editable
         editing: PropTypes.bool.isRequired,
-    },
+    };
 
-    onAddUsersClicked: function(ev) {
+    onAddUsersClicked = (ev) => {
         ev.preventDefault();
         const AddressPickerDialog = sdk.getComponent("dialogs.AddressPickerDialog");
         Modal.createTrackedDialog('Add Users to Group Summary', '', AddressPickerDialog, {
@@ -291,9 +285,9 @@ const RoleUserList = React.createClass({
                 });
             },
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const TintableSvg = sdk.getComponent("elements.TintableSvg");
         const addButton = this.props.editing ?
             (<AccessibleButton className="mx_GroupView_featuredThings_addButton" onClick={this.onAddUsersClicked}>
@@ -318,19 +312,17 @@ const RoleUserList = React.createClass({
             { userNodes }
             { addButton }
         </div>;
-    },
-});
+    }
+}
 
-const FeaturedUser = React.createClass({
-    displayName: 'FeaturedUser',
-
-    props: {
+class FeaturedUser extends React.PureComponent {
+    static propTypes = {
         summaryInfo: UserSummaryType.isRequired,
         editing: PropTypes.bool.isRequired,
         groupId: PropTypes.string.isRequired,
-    },
+    };
 
-    onClick: function(e) {
+    onClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
@@ -339,9 +331,9 @@ const FeaturedUser = React.createClass({
             user_id: this.props.summaryInfo.user_id,
             go_home_on_cancel: false,
         });
-    },
+    };
 
-    onDeleteClicked: function(e) {
+    onDeleteClicked = (e) => {
         e.preventDefault();
         e.stopPropagation();
         GroupStore.removeUserFromGroupSummary(
@@ -362,9 +354,9 @@ const FeaturedUser = React.createClass({
                 description: _t("The user '%(displayName)s' could not be removed from the summary.", {displayName}),
             });
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
         const name = this.props.summaryInfo.displayname || this.props.summaryInfo.user_id;
 
@@ -388,44 +380,40 @@ const FeaturedUser = React.createClass({
             <div className="mx_GroupView_featuredThing_name">{ userNameNode }</div>
             { deleteButton }
         </AccessibleButton>;
-    },
-});
+    }
+}
 
 const GROUP_JOINPOLICY_OPEN = "open";
 const GROUP_JOINPOLICY_INVITE = "invite";
 
-export default React.createClass({
-    displayName: 'GroupView',
-
-    propTypes: {
+export default class GroupView extends React.Component {
+    static propTypes = {
         groupId: PropTypes.string.isRequired,
         // Whether this is the first time the group admin is viewing the group
         groupIsNew: PropTypes.bool,
-    },
+    };
 
-    childContextTypes: {
+    static childContextTypes = {
         groupStore: PropTypes.instanceOf(GroupStore),
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            summary: null,
-            isGroupPublicised: null,
-            isUserPrivileged: null,
-            groupRooms: null,
-            groupRoomsLoading: null,
-            error: null,
-            editing: false,
-            saving: false,
-            uploadingAvatar: false,
-            avatarChanged: false,
-            membershipBusy: false,
-            publicityBusy: false,
-            inviterProfile: null,
-        };
-    },
+    state = {
+        summary: null,
+        isGroupPublicised: null,
+        isUserPrivileged: null,
+        groupRooms: null,
+        groupRoomsLoading: null,
+        error: null,
+        editing: false,
+        saving: false,
+        uploadingAvatar: false,
+        avatarChanged: false,
+        membershipBusy: false,
+        publicityBusy: false,
+        inviterProfile: null,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._unmounted = false;
         this._matrixClient = MatrixClientPeg.get();
         this._matrixClient.on("Group.myMembership", this._onGroupMyMembership);
@@ -434,15 +422,15 @@ export default React.createClass({
         this._initGroupStore(this.props.groupId, true);
 
         this._dispatcherRef = dis.register(this._onAction);
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         this._unmounted = true;
         this._matrixClient.removeListener("Group.myMembership", this._onGroupMyMembership);
         dis.unregister(this._dispatcherRef);
-    },
+    }
 
-    componentWillReceiveProps: function(newProps) {
+    componentWillReceiveProps(newProps) {
         if (this.props.groupId != newProps.groupId) {
             this.setState({
                 summary: null,
@@ -451,18 +439,18 @@ export default React.createClass({
                 this._initGroupStore(newProps.groupId);
             });
         }
-    },
+    }
 
-    _onGroupMyMembership: function(group) {
+    _onGroupMyMembership = (group) => {
         if (this._unmounted || group.groupId !== this.props.groupId) return;
         if (group.myMembership === 'leave') {
             // Leave settings - the user might have clicked the "Leave" button
             this._closeSettings();
         }
         this.setState({membershipBusy: false});
-    },
+    };
 
-    _initGroupStore: function(groupId, firstInit) {
+    _initGroupStore(groupId, firstInit) {
         const group = this._matrixClient.getGroup(groupId);
         if (group && group.inviter && group.inviter.userId) {
             this._fetchInviterProfile(group.inviter.userId);
@@ -489,9 +477,9 @@ export default React.createClass({
                 editing: false,
             });
         });
-    },
+    }
 
-    onGroupStoreUpdated(firstInit) {
+    onGroupStoreUpdated = (firstInit) => {
         if (this._unmounted) return;
         const summary = GroupStore.getSummary(this.props.groupId);
         if (summary.profile) {
@@ -517,7 +505,7 @@ export default React.createClass({
         if (this.props.groupIsNew && firstInit) {
             this._onEditClick();
         }
-    },
+    };
 
     _fetchInviterProfile(userId) {
         this.setState({
@@ -539,13 +527,13 @@ export default React.createClass({
                 inviterProfileBusy: false,
             });
         });
-    },
+    }
 
-    _onShowRhsClick: function(ev) {
+    _onShowRhsClick = (ev) => {
         dis.dispatch({ action: 'show_right_panel' });
-    },
+    };
 
-    _onEditClick: function() {
+    _onEditClick = () => {
         this.setState({
             editing: true,
             profileForm: Object.assign({}, this.state.summary.profile),
@@ -560,20 +548,20 @@ export default React.createClass({
             action: 'panel_disable',
             sideDisabled: true,
         });
-    },
+    };
 
-    _onShareClick: function() {
+    _onShareClick = () => {
         const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
         Modal.createTrackedDialog('share community dialog', '', ShareDialog, {
             target: this._matrixClient.getGroup(this.props.groupId),
         });
-    },
+    };
 
-    _onCancelClick: function() {
+    _onCancelClick = () => {
         this._closeSettings();
-    },
+    };
 
-    _onAction(payload) {
+    _onAction = (payload) => {
         switch (payload.action) {
             // NOTE: close_settings is an app-wide dispatch; as it is dispatched from MatrixChat
             case 'close_settings':
@@ -585,34 +573,34 @@ export default React.createClass({
             default:
                 break;
         }
-    },
+    };
 
     _closeSettings() {
         dis.dispatch({action: 'close_settings'});
-    },
+    }
 
-    _onNameChange: function(value) {
+    _onNameChange = (value) => {
         const newProfileForm = Object.assign(this.state.profileForm, { name: value });
         this.setState({
             profileForm: newProfileForm,
         });
-    },
+    };
 
-    _onShortDescChange: function(value) {
+    _onShortDescChange = (value) => {
         const newProfileForm = Object.assign(this.state.profileForm, { short_description: value });
         this.setState({
             profileForm: newProfileForm,
         });
-    },
+    };
 
-    _onLongDescChange: function(e) {
+    _onLongDescChange = (e) => {
         const newProfileForm = Object.assign(this.state.profileForm, { long_description: e.target.value });
         this.setState({
             profileForm: newProfileForm,
         });
-    },
+    };
 
-    _onAvatarSelected: function(ev) {
+    _onAvatarSelected = (ev) => {
         const file = ev.target.files[0];
         if (!file) return;
 
@@ -636,15 +624,15 @@ export default React.createClass({
                 description: _t('Failed to upload image'),
             });
         }).done();
-    },
+    };
 
-    _onJoinableChange: function(ev) {
+    _onJoinableChange = (ev) => {
         this.setState({
             joinableForm: { policyType: ev.target.value },
         });
-    },
+    };
 
-    _onSaveClick: function() {
+    _onSaveClick = () => {
         this.setState({saving: true});
         const savePromise = this.state.isUserPrivileged ? this._saveGroup() : Promise.resolve();
         savePromise.then((result) => {
@@ -675,16 +663,16 @@ export default React.createClass({
                 avatarChanged: false,
             });
         }).done();
-    },
+    };
 
-    _saveGroup: async function() {
+    async _saveGroup() {
         await this._matrixClient.setGroupProfile(this.props.groupId, this.state.profileForm);
         await this._matrixClient.setGroupJoinPolicy(this.props.groupId, {
             type: this.state.joinableForm.policyType,
         });
-    },
+    }
 
-    _onAcceptInviteClick: async function() {
+    _onAcceptInviteClick = async () => {
         this.setState({membershipBusy: true});
 
         // Wait 500ms to prevent flashing. Do this before sending a request otherwise we risk the
@@ -701,9 +689,9 @@ export default React.createClass({
                 description: _t("Unable to accept invite"),
             });
         });
-    },
+    };
 
-    _onRejectInviteClick: async function() {
+    _onRejectInviteClick = async () => {
         this.setState({membershipBusy: true});
 
         // Wait 500ms to prevent flashing. Do this before sending a request otherwise we risk the
@@ -720,9 +708,9 @@ export default React.createClass({
                 description: _t("Unable to reject invite"),
             });
         });
-    },
+    };
 
-    _onJoinClick: async function() {
+    _onJoinClick = async () => {
         this.setState({membershipBusy: true});
 
         // Wait 500ms to prevent flashing. Do this before sending a request otherwise we risk the
@@ -739,9 +727,9 @@ export default React.createClass({
                 description: _t("Unable to join community"),
             });
         });
-    },
+    };
 
-    _onLeaveClick: function() {
+    _onLeaveClick = () => {
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
         Modal.createTrackedDialog('Leave Group', '', QuestionDialog, {
             title: _t("Leave Community"),
@@ -769,13 +757,13 @@ export default React.createClass({
                 });
             },
         });
-    },
+    };
 
-    _onAddRoomsClick: function() {
+    _onAddRoomsClick = () => {
         showGroupAddRoomDialog(this.props.groupId);
-    },
+    };
 
-    _getGroupSection: function() {
+    _getGroupSection() {
         const groupSettingsSectionClasses = classnames({
             "mx_GroupView_group": this.state.editing,
             "mx_GroupView_group_disabled": this.state.editing && !this.state.isUserPrivileged,
@@ -801,9 +789,9 @@ export default React.createClass({
             { this._getLongDescriptionNode() }
             { this._getRoomsNode() }
         </div>;
-    },
+    }
 
-    _getRoomsNode: function() {
+    _getRoomsNode() {
         const RoomDetailList = sdk.getComponent('rooms.RoomDetailList');
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         const TintableSvg = sdk.getComponent('elements.TintableSvg');
@@ -847,9 +835,9 @@ export default React.createClass({
                     className={roomDetailListClassName} />
             }
         </div>;
-    },
+    }
 
-    _getFeaturedRoomsNode: function() {
+    _getFeaturedRoomsNode() {
         const summary = this.state.summary;
 
         const defaultCategoryRooms = [];
@@ -888,9 +876,9 @@ export default React.createClass({
             { defaultCategoryNode }
             { categoryRoomNodes }
         </div>;
-    },
+    }
 
-    _getFeaturedUsersNode: function() {
+    _getFeaturedUsersNode() {
         const summary = this.state.summary;
 
         const noRoleUsers = [];
@@ -929,9 +917,9 @@ export default React.createClass({
             { noRoleNode }
             { roleUserNodes }
         </div>;
-    },
+    }
 
-    _getMembershipSection: function() {
+    _getMembershipSection() {
         const Spinner = sdk.getComponent("elements.Spinner");
         const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
 
@@ -1044,9 +1032,9 @@ export default React.createClass({
                 </div>
             </div>
         </div>;
-    },
+    }
 
-    _getJoinableNode: function() {
+    _getJoinableNode() {
         return this.state.editing ? <div>
             <h3>
                 { _t('Who can join this community?') }
@@ -1079,9 +1067,9 @@ export default React.createClass({
                 </label>
             </div>
         </div> : null;
-    },
+    }
 
-    _getLongDescriptionNode: function() {
+    _getLongDescriptionNode() {
         const summary = this.state.summary;
         let description = null;
         if (summary.profile && summary.profile.long_description) {
@@ -1118,9 +1106,9 @@ export default React.createClass({
             <div className="mx_GroupView_groupDesc">
                 { description }
             </div>;
-    },
+    }
 
-    render: function() {
+    render() {
         const GroupAvatar = sdk.getComponent("avatars.GroupAvatar");
         const Spinner = sdk.getComponent("elements.Spinner");
         const TintableSvg = sdk.getComponent("elements.TintableSvg");
@@ -1306,5 +1294,5 @@ export default React.createClass({
             console.error("Invalid state for GroupView");
             return <div />;
         }
-    },
-});
+    }
+}

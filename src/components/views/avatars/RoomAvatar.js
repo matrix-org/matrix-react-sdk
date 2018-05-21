@@ -20,54 +20,44 @@ import MatrixClientPeg from "../../../MatrixClientPeg";
 import Modal from '../../../Modal';
 import sdk from "../../../index";
 
-module.exports = React.createClass({
-    displayName: 'RoomAvatar',
-
+export default class RoomAvatar extends React.PureComponent {
     // Room may be left unset here, but if it is,
     // oobData.avatarUrl should be set (else there
     // would be nowhere to get the avatar from)
-    propTypes: {
+    static propTypes = {
         room: PropTypes.object,
         oobData: PropTypes.object,
         width: PropTypes.number,
         height: PropTypes.number,
         resizeMethod: PropTypes.string,
         viewAvatarOnClick: PropTypes.bool,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            width: 36,
-            height: 36,
-            resizeMethod: 'crop',
-            oobData: {},
-        };
-    },
+    static defaultProps = {
+        width: 36,
+        height: 36,
+        resizeMethod: 'crop',
+        oobData: {},
+    };
 
-    getInitialState: function() {
-        return {
-            urls: this.getImageUrls(this.props),
-        };
-    },
-
-    componentWillMount: function() {
+    componentWillMount() {
         MatrixClientPeg.get().on("RoomState.events", this.onRoomStateEvents);
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         const cli = MatrixClientPeg.get();
         if (cli) {
             cli.removeListener("RoomState.events", this.onRoomStateEvents);
         }
-    },
+    }
 
-    componentWillReceiveProps: function(newProps) {
+    componentWillReceiveProps(newProps) {
         this.setState({
             urls: this.getImageUrls(newProps),
         });
-    },
+    }
 
-    onRoomStateEvents: function(ev) {
+    onRoomStateEvents = (ev) => {
         if (!this.props.room ||
             ev.getRoomId() !== this.props.room.roomId ||
             ev.getType() !== 'm.room.avatar'
@@ -76,9 +66,9 @@ module.exports = React.createClass({
         this.setState({
             urls: this.getImageUrls(this.props),
         });
-    },
+    };
 
-    getImageUrls: function(props) {
+    getImageUrls = (props) => {
         return [
             ContentRepo.getHttpUriForMxc(
                 MatrixClientPeg.get().getHomeserverUrl(),
@@ -92,9 +82,9 @@ module.exports = React.createClass({
         ].filter(function(url) {
             return (url != null && url != "");
         });
-    },
+    };
 
-    getRoomAvatarUrl: function(props) {
+    getRoomAvatarUrl = (props) => {
         if (!props.room) return null;
 
         return props.room.getAvatarUrl(
@@ -104,9 +94,9 @@ module.exports = React.createClass({
             props.resizeMethod,
             false,
         );
-    },
+    };
 
-    getOneToOneAvatar: function(props) {
+    getOneToOneAvatar = (props) => {
         if (!props.room) return null;
 
         const mlist = props.room.currentState.members;
@@ -159,9 +149,9 @@ module.exports = React.createClass({
         } else {
            return null;
         }
-    },
+    };
 
-    onRoomAvatarClick: function() {
+    onRoomAvatarClick = () => {
         const avatarUrl = this.props.room.getAvatarUrl(
             MatrixClientPeg.get().getHomeserverUrl(),
             null, null, null, false);
@@ -172,9 +162,13 @@ module.exports = React.createClass({
         };
 
         Modal.createDialog(ImageView, params, "mx_Dialog_lightbox");
-    },
+    };
 
-    render: function() {
+    state = {
+        urls: this.getImageUrls(this.props),
+    };
+
+    render() {
         const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
 
         /*eslint no-unused-vars: ["error", { "ignoreRestSiblings": true }]*/
@@ -188,5 +182,5 @@ module.exports = React.createClass({
                 urls={this.state.urls}
                 onClick={this.props.viewAvatarOnClick ? this.onRoomAvatarClick : null} />
         );
-    },
-});
+    }
+}

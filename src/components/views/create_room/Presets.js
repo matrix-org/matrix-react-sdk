@@ -26,26 +26,23 @@ const Presets = {
     Custom: "custom",
 };
 
-module.exports = React.createClass({
-    displayName: 'CreateRoomPresets',
-    propTypes: {
+export default class CreateRoomPresets extends React.PureComponent {
+    static propTypes = {
         onChange: PropTypes.func,
         preset: PropTypes.string,
-    },
+    };
 
-    Presets: Presets,
+    Presets = Presets;
 
-    getDefaultProps: function() {
-        return {
-            onChange: function() {},
-        };
-    },
+    static defaultProps = {
+        onChange: function() {},
+    };
 
-    onValueChanged: function(ev) {
+    onValueChanged = (ev) => {
         this.props.onChange(ev.target.value);
-    },
+    };
 
-    render: function() {
+    render() {
         return (
             <select className="mx_Presets" onChange={this.onValueChanged} value={this.props.preset}>
                 <option value={this.Presets.PrivateChat}>{ _t("Private Chat") }</option>
@@ -53,5 +50,5 @@ module.exports = React.createClass({
                 <option value={this.Presets.Custom}>{ _t("Custom") }</option>
             </select>
         );
-    },
-});
+    }
+}

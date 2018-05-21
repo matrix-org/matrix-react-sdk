@@ -20,10 +20,10 @@ const React = require('react');
 import PropTypes from 'prop-types';
 const sdk = require('../../../index');
 
-module.exports = React.createClass({
-    displayName: 'SearchResult',
+module.exports = class extends React.Component {
+    static displayName = 'SearchResult';
 
-    propTypes: {
+    static propTypes = {
         // a matrix-js-sdk SearchResult containing the details of this result
         searchResult: PropTypes.object.isRequired,
 
@@ -34,9 +34,9 @@ module.exports = React.createClass({
         resultLink: PropTypes.string,
 
         onWidgetLoad: PropTypes.func,
-    },
+    };
 
-    render: function() {
+    render() {
         const DateSeparator = sdk.getComponent('messages.DateSeparator');
         const EventTile = sdk.getComponent('rooms.EventTile');
         const result = this.props.searchResult;
@@ -64,5 +64,5 @@ module.exports = React.createClass({
             <li data-scroll-tokens={eventId+"+"+j}>
                 { ret }
             </li>);
-    },
-});
+    }
+};

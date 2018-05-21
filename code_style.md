@@ -165,7 +165,7 @@ ECMAScript
 
 React
 -----
-- Use ES6 classes, although bear in mind a lot of code uses createClass.
+- Use ES6 classes.
 - Pull out functions in props to the class, generally as specific event handlers:
 
   ```jsx

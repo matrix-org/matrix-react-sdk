@@ -62,35 +62,29 @@ import { _t } from '../../../languageHandler';
  *    focus: set the input focus appropriately in the form.
  */
 
-export const PasswordAuthEntry = React.createClass({
-    displayName: 'PasswordAuthEntry',
+export class PasswordAuthEntry extends React.PureComponent {
+    static LOGIN_TYPE = "m.login.password";
 
-    statics: {
-        LOGIN_TYPE: "m.login.password",
-    },
-
-    propTypes: {
+    static propTypes = {
         matrixClient: PropTypes.object.isRequired,
         submitAuthDict: PropTypes.func.isRequired,
         errorText: PropTypes.string,
         // is the auth logic currently waiting for something to
         // happen?
         busy: PropTypes.bool,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            passwordValid: false,
-        };
-    },
+    state = {
+        passwordValid: false,
+    };
 
-    focus: function() {
+    focus = () => {
         if (this.refs.passwordField) {
             this.refs.passwordField.focus();
         }
-    },
+    };
 
-    _onSubmit: function(e) {
+    _onSubmit = (e) => {
         e.preventDefault();
         if (this.props.busy) return;
 
@@ -99,16 +93,16 @@ export const PasswordAuthEntry = React.createClass({
             user: this.props.matrixClient.credentials.userId,
             password: this.refs.passwordField.value,
         });
-    },
+    };
 
-    _onPasswordFieldChange: function(ev) {
+    _onPasswordFieldChange = (ev) => {
         // enable the submit button iff the password is non-empty
         this.setState({
             passwordValid: Boolean(this.refs.passwordField.value),
         });
-    },
+    };
 
-    render: function() {
+    render() {
         let passwordBoxClass = null;
 
         if (this.props.errorText) {
@@ -156,31 +150,27 @@ export const PasswordAuthEntry = React.createClass({
             { errorSection }
             </div>
         );
-    },
-});
+    }
+}
 
-export const RecaptchaAuthEntry = React.createClass({
-    displayName: 'RecaptchaAuthEntry',
+export class RecaptchaAuthEntry extends React.PureComponent {
+    static LOGIN_TYPE = "m.login.recaptcha";
 
-    statics: {
-        LOGIN_TYPE: "m.login.recaptcha",
-    },
-
-    propTypes: {
+    static propTypes = {
         submitAuthDict: PropTypes.func.isRequired,
         stageParams: PropTypes.object.isRequired,
         errorText: PropTypes.string,
         busy: PropTypes.bool,
-    },
+    };
 
-    _onCaptchaResponse: function(response) {
+    _onCaptchaResponse = (response) => {
         this.props.submitAuthDict({
             type: RecaptchaAuthEntry.LOGIN_TYPE,
             response: response,
         });
-    },
+    };
 
-    render: function() {
+    render() {
         if (this.props.busy) {
             const Loader = sdk.getComponent("elements.Spinner");
             return <Loader />;
@@ -206,17 +196,13 @@ export const RecaptchaAuthEntry = React.createClass({
                 { errorSection }
             </div>
         );
-    },
-});
+    }
+}
 
-export const EmailIdentityAuthEntry = React.createClass({
-    displayName: 'EmailIdentityAuthEntry',
+export class EmailIdentityAuthEntry extends React.PureComponent {
+    static LOGIN_TYPE = "m.login.email.identity";
 
-    statics: {
-        LOGIN_TYPE: "m.login.email.identity",
-    },
-
-    propTypes: {
+    static propTypes = {
         matrixClient: PropTypes.object.isRequired,
         submitAuthDict: PropTypes.func.isRequired,
         authSessionId: PropTypes.string.isRequired,
@@ -226,15 +212,13 @@ export const EmailIdentityAuthEntry = React.createClass({
         fail: PropTypes.func.isRequired,
         setEmailSid: PropTypes.func.isRequired,
         makeRegistrationUrl: PropTypes.func.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            requestingToken: false,
-        };
-    },
+    state = {
+        requestingToken: false,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         if (this.props.stageState.emailSid === null) {
             this.setState({requestingToken: true});
             this._requestEmailToken().catch((e) => {
@@ -243,12 +227,12 @@ export const EmailIdentityAuthEntry = React.createClass({
                 this.setState({requestingToken: false});
             }).done();
         }
-    },
+    }
 
     /*
      * Requests a verification token by email.
      */
-    _requestEmailToken: function() {
+    _requestEmailToken = () => {
         const nextLink = this.props.makeRegistrationUrl({
             client_secret: this.props.clientSecret,
             hs_url: this.props.matrixClient.getHomeserverUrl(),
@@ -264,9 +248,9 @@ export const EmailIdentityAuthEntry = React.createClass({
         ).then((result) => {
             this.props.setEmailSid(result.sid);
         });
-    },
+    };
 
-    render: function() {
+    render() {
         if (this.state.requestingToken) {
             const Loader = sdk.getComponent("elements.Spinner");
             return <Loader />;
@@ -281,17 +265,13 @@ export const EmailIdentityAuthEntry = React.createClass({
                 </div>
             );
         }
-    },
-});
+    }
+}
 
-export const MsisdnAuthEntry = React.createClass({
-    displayName: 'MsisdnAuthEntry',
+export class MsisdnAuthEntry extends React.PureComponent {
+    static LOGIN_TYPE = "m.login.msisdn";
 
-    statics: {
-        LOGIN_TYPE: "m.login.msisdn",
-    },
-
-    propTypes: {
+    static propTypes = {
         inputs: PropTypes.shape({
             phoneCountry: PropTypes.string,
             phoneNumber: PropTypes.string,
@@ -301,16 +281,14 @@ export const MsisdnAuthEntry = React.createClass({
         submitAuthDict: PropTypes.func.isRequired,
         matrixClient: PropTypes.object,
         submitAuthDict: PropTypes.func,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            token: '',
-            requestingToken: false,
-        };
-    },
+    state = {
+        token: '',
+        requestingToken: false,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._sid = null;
         this._msisdn = null;
         this._tokenBox = null;
@@ -321,12 +299,12 @@ export const MsisdnAuthEntry = React.createClass({
         }).finally(() => {
             this.setState({requestingToken: false});
         }).done();
-    },
+    }
 
     /*
      * Requests a verification token by SMS.
      */
-    _requestMsisdnToken: function() {
+    _requestMsisdnToken = () => {
         return this.props.matrixClient.requestRegisterMsisdnToken(
             this.props.inputs.phoneCountry,
             this.props.inputs.phoneNumber,
@@ -336,15 +314,15 @@ export const MsisdnAuthEntry = React.createClass({
             this._sid = result.sid;
             this._msisdn = result.msisdn;
         });
-    },
+    };
 
-    _onTokenChange: function(e) {
+    _onTokenChange = (e) => {
         this.setState({
             token: e.target.value,
         });
-    },
+    };
 
-    _onFormSubmit: function(e) {
+    _onFormSubmit = (e) => {
         e.preventDefault();
         if (this.state.token == '') return;
 
@@ -376,9 +354,9 @@ export const MsisdnAuthEntry = React.createClass({
             this.props.fail(e);
             console.log("Failed to submit msisdn token");
         }).done();
-    },
+    };
 
-    render: function() {
+    render() {
         if (this.state.requestingToken) {
             const Loader = sdk.getComponent("elements.Spinner");
             return <Loader />;
@@ -422,58 +400,56 @@ export const MsisdnAuthEntry = React.createClass({
                 </div>
             );
         }
-    },
-});
+    }
+}
 
-export const FallbackAuthEntry = React.createClass({
-    displayName: 'FallbackAuthEntry',
-
-    propTypes: {
+export class FallbackAuthEntry extends React.PureComponent {
+    static propTypes = {
         matrixClient: PropTypes.object.isRequired,
         authSessionId: PropTypes.string.isRequired,
         loginType: PropTypes.string.isRequired,
         submitAuthDict: PropTypes.func.isRequired,
         errorText: PropTypes.string,
-    },
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         // we have to make the user click a button, as browsers will block
         // the popup if we open it immediately.
         this._popupWindow = null;
         window.addEventListener("message", this._onReceiveMessage);
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         window.removeEventListener("message", this._onReceiveMessage);
         if (this._popupWindow) {
             this._popupWindow.close();
         }
-    },
+    }
 
-    focus: function() {
+    focus = () => {
         if (this.refs.fallbackButton) {
             this.refs.fallbackButton.focus();
         }
-    },
+    };
 
-    _onShowFallbackClick: function() {
+    _onShowFallbackClick = () => {
         const url = this.props.matrixClient.getFallbackAuthUrl(
             this.props.loginType,
             this.props.authSessionId,
         );
         this._popupWindow = window.open(url);
-    },
+    };
 
-    _onReceiveMessage: function(event) {
+    _onReceiveMessage = (event) => {
         if (
             event.data === "authDone" &&
             event.origin === this.props.matrixClient.getHomeserverUrl()
         ) {
             this.props.submitAuthDict({});
         }
-    },
+    };
 
-    render: function() {
+    render() {
         let errorSection;
         if (this.props.errorText) {
             errorSection = (
@@ -488,8 +464,8 @@ export const FallbackAuthEntry = React.createClass({
                 {errorSection}
             </div>
         );
-    },
-});
+    }
+}
 
 const AuthEntryComponents = [
     PasswordAuthEntry,

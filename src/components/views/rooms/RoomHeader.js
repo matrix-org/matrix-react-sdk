@@ -36,10 +36,8 @@ import SettingsStore from "../../../settings/SettingsStore";
 
 linkifyMatrix(linkify);
 
-module.exports = React.createClass({
-    displayName: 'RoomHeader',
-
-    propTypes: {
+export default class RoomHeader extends React.PureComponent {
+    static propTypes = {
         room: PropTypes.object,
         oobData: PropTypes.object,
         editing: PropTypes.bool,
@@ -52,18 +50,16 @@ module.exports = React.createClass({
         onSearchClick: PropTypes.func,
         onLeaveClick: PropTypes.func,
         onCancelClick: PropTypes.func,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            editing: false,
-            inRoom: false,
-            onSaveClick: function() {},
-            onCancelClick: null,
-        };
-    },
+    static defaultProps = {
+        editing: false,
+        inRoom: false,
+        onSaveClick: function() {},
+        onCancelClick: null,
+    };
 
-    componentDidMount: function() {
+    componentDidMount() {
         const cli = MatrixClientPeg.get();
         cli.on("RoomState.events", this._onRoomStateEvents);
         cli.on("Room.accountData", this._onRoomAccountData);
@@ -74,15 +70,15 @@ module.exports = React.createClass({
         if (this.props.room) {
             this.props.room.on("Room.name", this._onRoomNameChange);
         }
-    },
+    }
 
-    componentDidUpdate: function() {
+    componentDidUpdate() {
         if (this.refs.topic) {
             linkifyElement(this.refs.topic, linkifyMatrix.options);
         }
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         if (this.props.room) {
             this.props.room.removeListener("Room.name", this._onRoomNameChange);
         }
@@ -91,40 +87,40 @@ module.exports = React.createClass({
             cli.removeListener("RoomState.events", this._onRoomStateEvents);
             cli.removeListener("Room.accountData", this._onRoomAccountData);
         }
-    },
+    }
 
-    _onRoomStateEvents: function(event, state) {
+    _onRoomStateEvents = (event, state) => {
         if (!this.props.room || event.getRoomId() !== this.props.room.roomId) {
             return;
         }
 
         // redisplay the room name, topic, etc.
         this._rateLimitedUpdate();
-    },
+    };
 
-    _onRoomAccountData: function(event, room) {
+    _onRoomAccountData = (event, room) => {
         if (!this.props.room || room.roomId !== this.props.room.roomId) return;
         if (event.getType() !== "im.vector.room.read_pins") return;
 
         this._rateLimitedUpdate();
-    },
+    };
 
-    _rateLimitedUpdate: new RateLimitedFunc(function() {
+    _rateLimitedUpdate = new RateLimitedFunc(function() {
         /* eslint-disable babel/no-invalid-this */
         this.forceUpdate();
-    }, 500),
+    }, 500);
 
-    _onRoomNameChange: function(room) {
+    _onRoomNameChange = (room) => {
         this.forceUpdate();
-    },
+    };
 
-    onAvatarPickerClick: function(ev) {
+    onAvatarPickerClick = (ev) => {
         if (this.refs.file_label) {
             this.refs.file_label.click();
         }
-    },
+    };
 
-    onAvatarSelected: function(ev) {
+    onAvatarSelected = (ev) => {
         const changeAvatar = this.refs.changeAvatar;
         if (!changeAvatar) {
             console.error("No ChangeAvatar found to upload image to!");
@@ -139,24 +135,24 @@ module.exports = React.createClass({
                 description: _t("Failed to set avatar."),
             });
         }).done();
-    },
+    };
 
-    onAvatarRemoveClick: function() {
+    onAvatarRemoveClick = () => {
         MatrixClientPeg.get().sendStateEvent(this.props.room.roomId, 'm.room.avatar', {url: null}, '');
-    },
+    };
 
-    onShowRhsClick: function(ev) {
+    onShowRhsClick = (ev) => {
         dis.dispatch({ action: 'show_right_panel' });
-    },
+    };
 
-    onShareRoomClick: function(ev) {
+    onShareRoomClick = (ev) => {
         const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
         Modal.createTrackedDialog('share room dialog', '', ShareDialog, {
             target: this.props.room,
         });
-    },
+    };
 
-    _hasUnreadPins: function() {
+    _hasUnreadPins() {
         const currentPinEvent = this.props.room.currentState.getStateEvents("m.room.pinned_events", '');
         if (!currentPinEvent) return false;
         if (currentPinEvent.getContent().pinned && currentPinEvent.getContent().pinned.length <= 0) {
@@ -173,42 +169,42 @@ module.exports = React.createClass({
 
         // There's pins, and we haven't read any of them
         return true;
-    },
+    }
 
-    _hasPins: function() {
+    _hasPins() {
         const currentPinEvent = this.props.room.currentState.getStateEvents("m.room.pinned_events", '');
         if (!currentPinEvent) return false;
 
         return !(currentPinEvent.getContent().pinned && currentPinEvent.getContent().pinned.length <= 0);
-    },
+    }
 
     /**
      * After editing the settings, get the new name for the room
      *
      * @return {?string} newName or undefined if we didn't let the user edit the room name
      */
-    getEditedName: function() {
+    getEditedName() {
         let newName;
         if (this.refs.nameEditor) {
             newName = this.refs.nameEditor.getRoomName();
         }
         return newName;
-    },
+    }
 
     /**
      * After editing the settings, get the new topic for the room
      *
      * @return {?string} newTopic or undefined if we didn't let the user edit the room topic
      */
-    getEditedTopic: function() {
+    getEditedTopic() {
         let newTopic;
         if (this.refs.topicEditor) {
             newTopic = this.refs.topicEditor.getTopic();
         }
         return newTopic;
-    },
+    }
 
-    render: function() {
+    render() {
         const RoomAvatar = sdk.getComponent("avatars.RoomAvatar");
         const ChangeAvatar = sdk.getComponent("settings.ChangeAvatar");
         const TintableSvg = sdk.getComponent("elements.TintableSvg");
@@ -442,5 +438,5 @@ module.exports = React.createClass({
                 </div>
             </div>
         );
-    },
-});
+    }
+}

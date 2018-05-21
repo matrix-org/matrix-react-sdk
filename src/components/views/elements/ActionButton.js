@@ -21,49 +21,43 @@ import dis from '../../../dispatcher';
 import sdk from '../../../index';
 import Analytics from '../../../Analytics';
 
-export default React.createClass({
-    displayName: 'RoleButton',
-
-    propTypes: {
+export default class RoleButton extends React.PureComponent {
+    static propTypes = {
         size: PropTypes.string,
         tooltip: PropTypes.bool,
         action: PropTypes.string.isRequired,
         mouseOverAction: PropTypes.string,
         label: PropTypes.string.isRequired,
         iconPath: PropTypes.string.isRequired,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            size: "25",
-            tooltip: false,
-        };
-    },
+    static defaultProps = {
+        size: "25",
+        tooltip: false,
+    };
 
-    getInitialState: function() {
-        return {
-            showTooltip: false,
-        };
-    },
+    state = {
+        showTooltip: false,
+    };
 
-    _onClick: function(ev) {
+    _onClick = (ev) => {
         ev.stopPropagation();
         Analytics.trackEvent('Action Button', 'click', this.props.action);
         dis.dispatch({action: this.props.action});
-    },
+    };
 
-    _onMouseEnter: function() {
+    _onMouseEnter = () => {
         if (this.props.tooltip) this.setState({showTooltip: true});
         if (this.props.mouseOverAction) {
             dis.dispatch({action: this.props.mouseOverAction});
         }
-    },
+    };
 
-    _onMouseLeave: function() {
+    _onMouseLeave = () => {
         this.setState({showTooltip: false});
-    },
+    };
 
-    render: function() {
+    render() {
         const TintableSvg = sdk.getComponent("elements.TintableSvg");
 
         let tooltip;
@@ -83,5 +77,5 @@ export default React.createClass({
                 { tooltip }
             </AccessibleButton>
         );
-    },
-});
+    }
+}

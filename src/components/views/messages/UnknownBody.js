@@ -19,10 +19,8 @@ limitations under the License.
 import React from 'react';
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
-    displayName: 'UnknownBody',
-
-    render: function() {
+export default class UnknownBody extends React.PureComponent {
+    render() {
         let tooltip = _t("Removed or unknown message type");
         if (this.props.mxEvent.isRedacted()) {
             const redactedBecauseUserId = this.props.mxEvent.getUnsigned().redacted_because.sender;
@@ -37,5 +35,5 @@ module.exports = React.createClass({
                 { text }
             </span>
         );
-    },
-});
+    }
+}

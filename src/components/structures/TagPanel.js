@@ -28,21 +28,17 @@ import { _t } from '../../languageHandler';
 import { Droppable } from 'react-beautiful-dnd';
 import classNames from 'classnames';
 
-const TagPanel = React.createClass({
-    displayName: 'TagPanel',
-
-    contextTypes: {
+class TagPanel extends React.Component {
+    static contextTypes = {
         matrixClient: PropTypes.instanceOf(MatrixClient),
-    },
+    };
 
-    getInitialState() {
-        return {
-            orderedTags: [],
-            selectedTags: [],
-        };
-    },
+    state = {
+        orderedTags: [],
+        selectedTags: [],
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this.unmounted = false;
         this.context.matrixClient.on("Group.myMembership", this._onGroupMyMembership);
         this.context.matrixClient.on("sync", this._onClientSync);
@@ -58,7 +54,7 @@ const TagPanel = React.createClass({
         });
         // This could be done by anything with a matrix client
         dis.dispatch(GroupActions.fetchJoinedGroups(this.context.matrixClient));
-    },
+    }
 
     componentWillUnmount() {
         this.unmounted = true;
@@ -67,14 +63,14 @@ const TagPanel = React.createClass({
         if (this._filterStoreToken) {
             this._filterStoreToken.remove();
         }
-    },
+    }
 
-    _onGroupMyMembership() {
+    _onGroupMyMembership = () => {
         if (this.unmounted) return;
         dis.dispatch(GroupActions.fetchJoinedGroups(this.context.matrixClient));
-    },
+    };
 
-    _onClientSync(syncState, prevState) {
+    _onClientSync = (syncState, prevState) => {
         // Consider the client reconnected if there is no error with syncing.
         // This means the state could be RECONNECTING, SYNCING or PREPARED.
         const reconnected = syncState !== "ERROR" && prevState !== syncState;
@@ -82,23 +78,23 @@ const TagPanel = React.createClass({
             // Load joined groups
             dis.dispatch(GroupActions.fetchJoinedGroups(this.context.matrixClient));
         }
-    },
+    };
 
-    onMouseDown(e) {
+    onMouseDown = (e) => {
         // only dispatch if its not a no-op
         if (this.state.selectedTags.length > 0) {
             dis.dispatch({action: 'deselect_tags'});
         }
-    },
+    };
 
-    onCreateGroupClick(ev) {
+    onCreateGroupClick = (ev) => {
         ev.stopPropagation();
         dis.dispatch({action: 'view_create_group'});
-    },
+    };
 
-    onClearFilterClick(ev) {
+    onClearFilterClick = (ev) => {
         dis.dispatch({action: 'deselect_tags'});
-    },
+    };
 
     render() {
         const GroupsButton = sdk.getComponent('elements.GroupsButton');
@@ -165,6 +161,7 @@ const TagPanel = React.createClass({
                 <GroupsButton tooltip={true} />
             </div>
         </div>;
-    },
-});
+    }
+}
+
 export default TagPanel;

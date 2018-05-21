@@ -10,10 +10,8 @@ const Velocity = require('velocity-vector');
  * from DOM order. This makes it a lot simpler and lighter: if you need fully
  * automatic positional animation, look at react-shuffle or similar libraries.
  */
-module.exports = React.createClass({
-    displayName: 'Velociraptor',
-
-    propTypes: {
+export default class Velociraptor extends React.PureComponent {
+    static propTypes = {
         // either a list of child nodes, or a single child.
         children: PropTypes.any,
 
@@ -25,28 +23,26 @@ module.exports = React.createClass({
 
         // a list of transition options from the corresponding startStyle
         enterTransitionOpts: PropTypes.array,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            startStyles: [],
-            enterTransitionOpts: [],
-        };
-    },
+    static defaultProps = {
+        startStyles: [],
+        enterTransitionOpts: [],
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this.nodes = {};
         this._updateChildren(this.props.children);
-    },
+    }
 
-    componentWillReceiveProps: function(nextProps) {
+    componentWillReceiveProps(nextProps) {
         this._updateChildren(nextProps.children);
-    },
+    }
 
     /**
      * update `this.children` according to the new list of children given
      */
-    _updateChildren: function(newChildren) {
+    _updateChildren = (newChildren) => {
         const self = this;
         const oldChildren = this.children || {};
         this.children = {};
@@ -89,7 +85,7 @@ module.exports = React.createClass({
                 self.children[c.key] = React.cloneElement(c, newProps);
             }
         });
-    },
+    };
 
     /**
      * called when a child element is mounted/unmounted
@@ -98,7 +94,7 @@ module.exports = React.createClass({
      * @param {null|Object} node          On mount: React node. On unmount: null
      * @param {Object}     restingStyle   final style
      */
-    _collectNode: function(k, node, restingStyle) {
+    _collectNode = (k, node, restingStyle) => {
         if (
             node &&
             this.nodes[k] === undefined &&
@@ -150,13 +146,13 @@ module.exports = React.createClass({
             if (domNode) Velocity.Utilities.removeData(domNode);
         }
         this.nodes[k] = node;
-    },
+    };
 
-    render: function() {
+    render() {
         return (
             <span>
                 { Object.values(this.children) }
             </span>
         );
-    },
-});
+    }
+};

@@ -21,22 +21,22 @@ const dis = require('../../dispatcher');
 const filesize = require('filesize');
 import { _t } from '../../languageHandler';
 
-module.exports = React.createClass({displayName: 'UploadBar',
-    propTypes: {
+export default class UploadBar extends React.PureComponent {
+    static propTypes = {
         room: PropTypes.object,
-    },
+    };
 
-    componentDidMount: function() {
+    componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
         this.mounted = true;
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         this.mounted = false;
         dis.unregister(this.dispatcherRef);
-    },
+    }
 
-    onAction: function(payload) {
+    onAction = (payload) => {
         switch (payload.action) {
             case 'upload_progress':
             case 'upload_finished':
@@ -44,9 +44,9 @@ module.exports = React.createClass({displayName: 'UploadBar',
                 if (this.mounted) this.forceUpdate();
                 break;
         }
-    },
+    };
 
-    render: function() {
+    render() {
         const uploads = ContentMessages.getCurrentUploads();
 
         // for testing UI... - also fix up the ContentMessages.getCurrentUploads().length
@@ -101,5 +101,5 @@ module.exports = React.createClass({displayName: 'UploadBar',
                 <div className="mx_UploadBar_uploadFilename">{ uploadText }</div>
             </div>
         );
-    },
-});
+    }
+};

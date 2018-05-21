@@ -33,41 +33,39 @@ const USERNAME_CHECK_DEBOUNCE_MS = 250;
  *
  * On success, `onFinished(true, newDisplayName)` is called.
  */
-export default React.createClass({
-    displayName: 'SetMxIdDialog',
-    propTypes: {
+export default class SetMxIdDialog extends React.PureComponent {
+    static propTypes = {
         onFinished: PropTypes.func.isRequired,
         // Called when the user requests to register with a different homeserver
         onDifferentServerClicked: PropTypes.func.isRequired,
         // Called if the user wants to switch to login instead
         onLoginClick: PropTypes.func.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            // The entered username
-            username: '',
-            // Indicate ongoing work on the username
-            usernameBusy: false,
-            // Indicate error with username
-            usernameError: '',
-            // Assume the homeserver supports username checking until "M_UNRECOGNIZED"
-            usernameCheckSupport: true,
+    state = {
+        // The entered username
+        username: '',
+        // Indicate ongoing work on the username
+        usernameBusy: false,
+        // Indicate error with username
+        usernameError: '',
+        // Assume the homeserver supports username checking until "M_UNRECOGNIZED"
+        usernameCheckSupport: true,
 
-            // Whether the auth UI is currently being used
-            doingUIAuth: false,
-            // Indicate error with auth
-            authError: '',
-        };
-    },
+        // Whether the auth UI is currently being used
+        doingUIAuth: false,
+        // Indicate error with auth
+        authError: '',
+    };
 
-    componentDidMount: function() {
+    componentDidMount() {
         this.refs.input_value.select();
 
         this._matrixClient = MatrixClientPeg.get();
-    },
+    }
 
-    onValueChange: function(ev) {
+    /// @param {Event} ev Event to handle
+    onValueChange = (ev) => {
         this.setState({
             username: ev.target.value,
             usernameBusy: true,
@@ -92,21 +90,24 @@ export default React.createClass({
                 });
             }, USERNAME_CHECK_DEBOUNCE_MS);
         });
-    },
+    };
 
-    onKeyUp: function(ev) {
+    /// @param {Event} ev Event to handle
+    onKeyUp = (ev) => {
         if (ev.keyCode === KeyCode.ENTER) {
             this.onSubmit();
         }
-    },
+    };
 
-    onSubmit: function(ev) {
+    /// @param {Event} ev Event to handle
+    onSubmit = (ev) => {
         this.setState({
             doingUIAuth: true,
         });
-    },
+    };
 
-    _doUsernameCheck: function() {
+    /// @returns {Promise} Resolves when username verification finishes.
+    _doUsernameCheck = () => {
         // XXX: SPEC-1
         // Check if username is valid
         // Naive impl copied from https://github.com/matrix-org/matrix-react-sdk/blob/66c3a6d9ca695780eb6b662e242e88323053ff33/src/components/views/login/RegistrationForm.js#L190
@@ -158,13 +159,19 @@ export default React.createClass({
                 this.setState(newState);
             },
         );
-    },
+    };
 
-    _generatePassword: function() {
+    // @returns {string} Generated password.
+    _generatePassword = () => {
         return Math.random().toString(36).slice(2);
-    },
+    };
 
-    _makeRegisterRequest: function(auth) {
+    /**
+     * @param {Object} auth The new auth dict to submit the request
+     * @returns {Promise} Resolves: The successful response.
+     * @returns {MatrixError} Rejects: with an error response.
+     */
+    _makeRegisterRequest = (auth) => {
         // Not upgrading - changing mxids
         const guestAccessToken = null;
         if (!this._generatedPassword) {
@@ -178,9 +185,13 @@ export default React.createClass({
             {},
             guestAccessToken,
         );
-    },
+    };
 
-    _onUIAuthFinished: function(success, response) {
+    /**
+     * @param {boolean} success Whether authentication is successful
+     * @param {object} response The successful response
+     */
+    _onUIAuthFinished = (success, response) => {
         this.setState({
             doingUIAuth: false,
         });
@@ -202,9 +213,9 @@ export default React.createClass({
             password: this._generatedPassword,
             teamToken: teamToken,
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const InteractiveAuth = sdk.getComponent('structures.InteractiveAuth');
         const Spinner = sdk.getComponent('elements.Spinner');
@@ -299,5 +310,5 @@ export default React.createClass({
                 </div>
             </BaseDialog>
         );
-    },
-});
+    }
+}

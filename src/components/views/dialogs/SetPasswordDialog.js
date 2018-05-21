@@ -60,32 +60,29 @@ const WarmFuzzy = function(props) {
  *
  * On success, `onFinished()` when finished
  */
-export default React.createClass({
-    displayName: 'SetPasswordDialog',
-    propTypes: {
+export default class SetPasswordDialog extends React.PureComponent {
+    static propTypes = {
         onFinished: React.PropTypes.func.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            error: null,
-        };
-    },
+    state = {
+        error: null,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         console.info('SetPasswordDialog component will mount');
-    },
+    }
 
-    _onPasswordChanged: function(res) {
+    _onPasswordChanged = (res) => {
         Modal.createDialog(WarmFuzzy, {
             didSetEmail: res.didSetEmail,
             onFinished: () => {
                 this.props.onFinished();
             },
         });
-    },
+    };
 
-    _onPasswordChangeError: function(err) {
+    _onPasswordChangeError = (err) => {
         let errMsg = err.error || "";
         if (err.httpStatus === 403) {
             errMsg = _t('Failed to change password. Is your password correct?');
@@ -98,9 +95,9 @@ export default React.createClass({
         this.setState({
             error: errMsg,
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const ChangePassword = sdk.getComponent('views.settings.ChangePassword');
 
@@ -130,5 +127,5 @@ export default React.createClass({
                 </div>
             </BaseDialog>
         );
-    },
-});
+    }
+}

@@ -61,47 +61,41 @@ function portLegacyActions(actions) {
     }
 }
 
-module.exports = React.createClass({
-    displayName: 'Notifications',
-
-    phases: {
+export default class Notifications extends React.PureComponent {
+    phases = {
         LOADING: "LOADING", // The component is loading or sending data to the hs
         DISPLAY: "DISPLAY", // The component is ready and display data
         ERROR: "ERROR"      // There was an error
-    },
+    };
 
-    propTypes: {
+    static propTypes = {
         // The array of threepids from the JS SDK (required for email notifications)
         threepids: React.PropTypes.array.isRequired,
         // The brand string set when creating an email pusher
         brand: React.PropTypes.string,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            threepids: []
-        };
-    },
+    static defaultProps = {
+        threepids: []
+    };
 
-    getInitialState: function() {
-        return {
-            phase: this.phases.LOADING,
-            masterPushRule: undefined,      // The master rule ('.m.rule.master')
-            vectorPushRules: [],            // HS default push rules displayed in Vector UI
-            vectorContentRules: {           // Keyword push rules displayed in Vector UI
-                vectorState: PushRuleVectorState.ON,
-                rules: []
-            },
-            externalPushRules: [],          // Push rules (except content rule) that have been defined outside Vector UI
-            externalContentRules: []        // Keyword push rules that have been defined outside Vector UI
-        };
-    },
+    state = {
+        phase: this.phases.LOADING,
+        masterPushRule: undefined,      // The master rule ('.m.rule.master')
+        vectorPushRules: [],            // HS default push rules displayed in Vector UI
+        vectorContentRules: {           // Keyword push rules displayed in Vector UI
+            vectorState: PushRuleVectorState.ON,
+            rules: []
+        },
+        externalPushRules: [],          // Push rules (except content rule) that have been defined outside Vector UI
+        externalContentRules: []        // Keyword push rules that have been defined outside Vector UI
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._refreshFromServer();
-    },
+    }
 
-    onEnableNotificationsChange: function(event) {
+    onEnableNotificationsChange = (event) => {
         const self = this;
         this.setState({
             phase: this.phases.LOADING
@@ -110,9 +104,9 @@ module.exports = React.createClass({
         MatrixClientPeg.get().setPushRuleEnabled('global', self.state.masterPushRule.kind, self.state.masterPushRule.rule_id, !event.target.checked).done(function() {
            self._refreshFromServer();
         });
-    },
+    };
 
-    onEnableDesktopNotificationsChange: function(event) {
+    onEnableDesktopNotificationsChange = (event) => {
         SettingsStore.setValue(
             "notificationsEnabled", null,
             SettingLevel.DEVICE,
@@ -120,9 +114,9 @@ module.exports = React.createClass({
         ).finally(() => {
             this.forceUpdate();
         });
-    },
+    };
 
-    onEnableDesktopNotificationBodyChange: function(event) {
+    onEnableDesktopNotificationBodyChange = (event) => {
         SettingsStore.setValue(
             "notificationBodyEnabled", null,
             SettingLevel.DEVICE,
@@ -130,9 +124,9 @@ module.exports = React.createClass({
         ).finally(() => {
             this.forceUpdate();
         });
-    },
+    };
 
-    onEnableAudioNotificationsChange: function(event) {
+    onEnableAudioNotificationsChange = (event) => {
         SettingsStore.setValue(
             "audioNotificationsEnabled", null,
             SettingLevel.DEVICE,
@@ -140,9 +134,9 @@ module.exports = React.createClass({
         ).finally(() => {
             this.forceUpdate();
         });
-    },
+    };
 
-    onEnableEmailNotificationsChange: function(address, event) {
+    onEnableEmailNotificationsChange = (address, event) => {
         let emailPusherPromise;
         if (event.target.checked) {
             const data = {}
@@ -162,9 +156,9 @@ module.exports = React.createClass({
                 description: _t('An error occurred whilst saving your email notification preferences.'),
             });
         });
-    },
+    };
 
-    onNotifStateButtonClicked: function(event) {
+    onNotifStateButtonClicked = (event) => {
         // FIXME: use .bind() rather than className metadata here surely
         const vectorRuleId = event.target.className.split("-")[0];
         const newPushRuleVectorState = event.target.className.split("-")[1];
@@ -178,9 +172,9 @@ module.exports = React.createClass({
                 this._setPushRuleVectorState(rule, newPushRuleVectorState);
             }
         }
-    },
+    };
 
-    onKeywordsClicked: function(event) {
+    onKeywordsClicked = (event) => {
         const self = this;
 
         // Compute the keywords list to display
@@ -226,18 +220,18 @@ module.exports = React.createClass({
                 }
             }
         });
-    },
+    };
 
-    getRule: function(vectorRuleId) {
+    getRule(vectorRuleId) {
         for (let i in this.state.vectorPushRules) {
             const rule = this.state.vectorPushRules[i];
             if (rule.vectorRuleId === vectorRuleId) {
                 return rule;
             }
         }
-    },
+    }
 
-    _setPushRuleVectorState: function(rule, newPushRuleVectorState) {
+    _setPushRuleVectorState(rule, newPushRuleVectorState) {
         if (rule && rule.vectorState !== newPushRuleVectorState) {
 
             this.setState({
@@ -274,9 +268,9 @@ module.exports = React.createClass({
                 });
             });
         }
-    },
+    }
 
-    _setKeywordsPushRuleVectorState: function(newPushRuleVectorState) {
+    _setKeywordsPushRuleVectorState(newPushRuleVectorState) {
         // Is there really a change?
         if (this.state.vectorContentRules.vectorState === newPushRuleVectorState
             || this.state.vectorContentRules.rules.length === 0) {
@@ -343,9 +337,9 @@ module.exports = React.createClass({
                 onFinished: self._refreshFromServer
             });
         });
-    },
+    }
 
-    _setKeywords: function(newKeywords) {
+    _setKeywords(newKeywords) {
         this.setState({
             phase: this.phases.LOADING
         });
@@ -429,19 +423,19 @@ module.exports = React.createClass({
                 self._refreshFromServer();
             }, onError);
         }, onError);
-    },
+    }
 
     // Create a push rule but disabled
-    _addDisabledPushRule: function(scope, kind, ruleId, body) {
+    _addDisabledPushRule(scope, kind, ruleId, body) {
         const cli = MatrixClientPeg.get();
         return cli.addPushRule(scope, kind, ruleId, body).then(() =>
             cli.setPushRuleEnabled(scope, kind, ruleId, false)
         );
-    },
+    }
 
     // Check if any legacy im.vector rules need to be ported to the new API
     // for overriding the actions of default rules.
-    _portRulesToNewAPI: function(rulesets) {
+    _portRulesToNewAPI = (rulesets) => {
         const self = this;
         const needsUpdate = [];
         const cli = MatrixClientPeg.get();
@@ -475,9 +469,9 @@ module.exports = React.createClass({
             // Otherwise return the rules that we already have.
             return rulesets;
         }
-    },
+    };
 
-    _refreshFromServer: function() {
+    _refreshFromServer = () => {
         const self = this;
         const pushRulesPromise = MatrixClientPeg.get().getPushRules().then(self._portRulesToNewAPI).then(function(rulesets) {
 
@@ -639,9 +633,9 @@ module.exports = React.createClass({
                 externalPushRules: self.state.externalPushRules,
             });
         }).done();
-    },
+    };
 
-    _updatePushRuleActions: function(rule, actions, enabled) {
+    _updatePushRuleActions = (rule, actions, enabled) => {
         const cli = MatrixClientPeg.get();
 
         return cli.setPushRuleActions(
@@ -654,9 +648,9 @@ module.exports = React.createClass({
                 );
             }
         });
-    },
+    };
 
-    renderNotifRulesTableRow: function(title, className, pushRuleVectorState) {
+    renderNotifRulesTableRow(title, className, pushRuleVectorState) {
         return (
             <tr key={ className }>
                 <th>
@@ -685,9 +679,9 @@ module.exports = React.createClass({
                 </th>
             </tr>
         );
-    },
+    }
 
-    renderNotifRulesTableRows: function() {
+    renderNotifRulesTableRows() {
         const rows = [];
         for (let i in this.state.vectorPushRules) {
             const rule = this.state.vectorPushRules[i];
@@ -695,9 +689,9 @@ module.exports = React.createClass({
             rows.push(this.renderNotifRulesTableRow(rule.description, rule.vectorRuleId, rule.vectorState));
         }
         return rows;
-    },
+    }
 
-    emailNotificationsRow: function(address, label) {
+    emailNotificationsRow(address, label) {
         return (<div className="mx_UserNotifSettings_tableRow">
             <div className="mx_UserNotifSettings_inputCell">
                 <input id="enableEmailNotifications_{address}"
@@ -713,9 +707,9 @@ module.exports = React.createClass({
                 </label>
             </div>
         </div>);
-    },
+    }
 
-    render: function() {
+    render() {
         const self = this;
 
         let spinner;
@@ -916,4 +910,4 @@ module.exports = React.createClass({
             </div>
         );
     }
-});
+}

@@ -25,27 +25,23 @@ import Promise from 'bluebird';
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
 
-module.exports = React.createClass({
-    displayName: 'MVideoBody',
-
-    propTypes: {
+export default class MVideoBody extends React.PureComponent {
+    static propTypes = {
         /* the MatrixEvent to show */
         mxEvent: PropTypes.object.isRequired,
 
         /* called when the video has loaded */
         onWidgetLoad: PropTypes.func.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            decryptedUrl: null,
-            decryptedThumbnailUrl: null,
-            decryptedBlob: null,
-            error: null,
-        };
-    },
+    state = {
+        decryptedUrl: null,
+        decryptedThumbnailUrl: null,
+        decryptedBlob: null,
+        error: null,
+    };
 
-    thumbScale: function(fullWidth, fullHeight, thumbWidth, thumbHeight) {
+    thumbScale = (fullWidth, fullHeight, thumbWidth, thumbHeight) => {
         if (!fullWidth || !fullHeight) {
             // Cannot calculate thumbnail height for image: missing w/h in metadata. We can't even
             // log this because it's spammy
@@ -64,18 +60,18 @@ module.exports = React.createClass({
             // height is the dominant dimension so scaling will be fixed on that
             return heightMulti;
         }
-    },
+    };
 
-    _getContentUrl: function() {
+    _getContentUrl = () => {
         const content = this.props.mxEvent.getContent();
         if (content.file !== undefined) {
             return this.state.decryptedUrl;
         } else {
             return MatrixClientPeg.get().mxcUrlToHttp(content.url);
         }
-    },
+    };
 
-    _getThumbUrl: function() {
+    _getThumbUrl = () => {
         const content = this.props.mxEvent.getContent();
         if (content.file !== undefined) {
             return this.state.decryptedThumbnailUrl;
@@ -84,9 +80,9 @@ module.exports = React.createClass({
         } else {
             return null;
         }
-    },
+    };
 
-    componentDidMount: function() {
+    componentDidMount() {
         const content = this.props.mxEvent.getContent();
         if (content.file !== undefined && this.state.decryptedUrl === null) {
             let thumbnailPromise = Promise.resolve(null);
@@ -118,18 +114,18 @@ module.exports = React.createClass({
                 });
             }).done();
         }
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         if (this.state.decryptedUrl) {
             URL.revokeObjectURL(this.state.decryptedUrl);
         }
         if (this.state.decryptedThumbnailUrl) {
             URL.revokeObjectURL(this.state.decryptedThumbnailUrl);
         }
-    },
+    }
 
-    render: function() {
+    render() {
         const content = this.props.mxEvent.getContent();
 
         if (this.state.error !== null) {
@@ -182,5 +178,5 @@ module.exports = React.createClass({
                 <MFileBody {...this.props} decryptedBlob={this.state.decryptedBlob} />
             </span>
         );
-    },
-});
+    }
+}

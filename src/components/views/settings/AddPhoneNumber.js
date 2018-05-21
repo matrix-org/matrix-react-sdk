@@ -23,56 +23,52 @@ import AddThreepid from '../../../AddThreepid';
 import withMatrixClient from '../../../wrappers/withMatrixClient';
 import Modal from '../../../Modal';
 
-export default withMatrixClient(React.createClass({
-    displayName: 'AddPhoneNumber',
-
-    propTypes: {
+export default withMatrixClient(class AddPhoneNumber extends React.PureComponent {
+    static propTypes = {
         matrixClient: PropTypes.object.isRequired,
         onThreepidAdded: PropTypes.func,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            busy: false,
-            phoneCountry: null,
-            phoneNumber: "",
-            msisdn_add_pending: false,
-        };
-    },
+    state = {
+        busy: false,
+        phoneCountry: null,
+        phoneNumber: "",
+        msisdn_add_pending: false,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._addThreepid = null;
         this._addMsisdnInput = null;
         this._unmounted = false;
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         this._unmounted = true;
-    },
+    }
 
-    _onPhoneCountryChange: function(phoneCountry) {
+    _onPhoneCountryChange = (phoneCountry) => {
         this.setState({ phoneCountry: phoneCountry.iso2 });
-    },
+    };
 
-    _onPhoneNumberChange: function(ev) {
+    _onPhoneNumberChange = (ev) => {
         this.setState({ phoneNumber: ev.target.value });
-    },
+    };
 
-    _onAddMsisdnEditFinished: function(value, shouldSubmit) {
+    _onAddMsisdnEditFinished = (value, shouldSubmit) => {
         if (!shouldSubmit) return;
         this._addMsisdn();
-    },
+    };
 
-    _onAddMsisdnSubmit: function(ev) {
+    _onAddMsisdnSubmit = (ev) => {
         ev.preventDefault();
         this._addMsisdn();
-    },
+    };
 
-    _collectAddMsisdnInput: function(e) {
+    _collectAddMsisdnInput = (e) => {
         this._addMsisdnInput = e;
-    },
+    };
 
-    _addMsisdn: function() {
+    _addMsisdn = () => {
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
 
         this._addThreepid = new AddThreepid();
@@ -93,9 +89,9 @@ export default withMatrixClient(React.createClass({
         }).done();
         this._addMsisdnInput.blur();
         this.setState({msisdn_add_pending: true});
-    },
+    };
 
-    _promptForMsisdnVerificationCode: function(msisdn, err) {
+    _promptForMsisdnVerificationCode = (msisdn, err) => {
         if (this._unmounted) return;
         const TextInputDialog = sdk.getComponent("dialogs.TextInputDialog");
         const msgElements = [
@@ -131,9 +127,9 @@ export default withMatrixClient(React.createClass({
                 }).done();
             },
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const Loader = sdk.getComponent("elements.Spinner");
         if (this.state.msisdn_add_pending) {
             return <Loader />;
@@ -170,5 +166,5 @@ export default withMatrixClient(React.createClass({
                 </div>
             </form>
         );
-    },
-}));
+    }
+});

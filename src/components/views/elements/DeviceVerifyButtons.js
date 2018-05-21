@@ -21,63 +21,59 @@ import sdk from '../../../index';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
 
-export default React.createClass({
-    displayName: 'DeviceVerifyButtons',
-
-    propTypes: {
+export default class DeviceVerifyButtons extends React.PureComponent {
+    static propTypes = {
         userId: PropTypes.string.isRequired,
         device: PropTypes.object.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            device: this.props.device,
-        };
-    },
+    state = {
+        device: this.props.device,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         const cli = MatrixClientPeg.get();
         cli.on("deviceVerificationChanged", this.onDeviceVerificationChanged);
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         const cli = MatrixClientPeg.get();
         cli.removeListener("deviceVerificationChanged", this.onDeviceVerificationChanged);
-    },
+    }
 
-    onDeviceVerificationChanged: function(userId, deviceId, deviceInfo) {
+    onDeviceVerificationChanged = (userId, deviceId, deviceInfo) => {
         if (userId === this.props.userId && deviceId === this.props.device.deviceId) {
             this.setState({ device: deviceInfo });
         }
-    },
+    };
 
-    onVerifyClick: function() {
+    onVerifyClick = () => {
         const DeviceVerifyDialog = sdk.getComponent('views.dialogs.DeviceVerifyDialog');
         Modal.createTrackedDialog('Device Verify Dialog', '', DeviceVerifyDialog, {
             userId: this.props.userId,
             device: this.state.device,
         });
-    },
+    };
 
-    onUnverifyClick: function() {
+    onUnverifyClick = () => {
         MatrixClientPeg.get().setDeviceVerified(
             this.props.userId, this.state.device.deviceId, false,
         );
-    },
+    };
 
-    onBlacklistClick: function() {
+    onBlacklistClick = () => {
         MatrixClientPeg.get().setDeviceBlocked(
             this.props.userId, this.state.device.deviceId, true,
         );
-    },
+    };
 
-    onUnblacklistClick: function() {
+    onUnblacklistClick = () => {
         MatrixClientPeg.get().setDeviceBlocked(
             this.props.userId, this.state.device.deviceId, false,
         );
-    },
+    };
 
-    render: function() {
+    render() {
         let blacklistButton = null, verifyButton = null;
 
         if (this.state.device.isBlocked()) {
@@ -119,5 +115,5 @@ export default React.createClass({
                 { blacklistButton }
             </div>
         );
-    },
-});
+    }
+}

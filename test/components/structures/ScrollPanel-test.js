@@ -25,14 +25,12 @@ const sdk = require('matrix-react-sdk');
 const ScrollPanel = sdk.getComponent('structures.ScrollPanel');
 const test_utils = require('test-utils');
 
-const Tester = React.createClass({
-    getInitialState: function() {
-        return {
-            tileKeys: [],
-        };
-    },
+class Tester extends React.PureComponent {
+    state = {
+        tileKeys: [],
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this.fillCounts = {'b': 0, 'f': 0};
         this._fillHandlers = {'b': null, 'f': null};
         this._fillDefers = {'b': null, 'f': null};
@@ -40,9 +38,9 @@ const Tester = React.createClass({
 
         // scrollTop at the last scroll event
         this.lastScrollEvent = null;
-    },
+    }
 
-    _onFillRequest: function(back) {
+    _onFillRequest = (back) => {
         const dir = back ? 'b': 'f';
         console.log("FillRequest: " + dir);
         this.fillCounts[dir]++;
@@ -65,21 +63,21 @@ const Tester = React.createClass({
             defer.resolve();
         }
         return res;
-    },
+    };
 
-    addFillHandler: function(dir, handler) {
+    addFillHandler = (dir, handler) => {
         this._fillHandlers[dir] = handler;
-    },
+    };
 
     /* returns a promise which will resolve when the fill happens */
-    awaitFill: function(dir) {
+    awaitFill = (dir) => {
         console.log("ScrollPanel Tester: awaiting " + dir + " fill");
         const defer = Promise.defer();
         this._fillDefers[dir] = defer;
         return defer.promise;
-    },
+    };
 
-    _onScroll: function(ev) {
+    _onScroll = (ev) => {
         const st = ev.target.scrollTop;
         console.log("ScrollPanel Tester: scroll event; scrollTop: " + st);
         this.lastScrollEvent = st;
@@ -89,25 +87,25 @@ const Tester = React.createClass({
             this._scrollDefer = null;
             d.resolve();
         }
-    },
+    };
 
     /* returns a promise which will resolve when a scroll event happens */
-    awaitScroll: function() {
+    awaitScroll = () => {
         console.log("Awaiting scroll");
         this._scrollDefer = Promise.defer();
         return this._scrollDefer.promise;
-    },
+    };
 
-    setTileKeys: function(keys) {
+    setTileKeys = (keys) => {
         console.log("Updating keys: len=" + keys.length);
         this.setState({tileKeys: keys.slice()});
-    },
+    };
 
-    scrollPanel: function() {
+    scrollPanel = () => {
         return this.refs.sp;
-    },
+    };
 
-    _mkTile: function(key) {
+    _mkTile = (key) => {
         // each tile is 150 pixels high:
         // 98 pixels of body
         // 2 pixels of border
@@ -122,9 +120,9 @@ const Tester = React.createClass({
                 </div>
              </li>
          );
-    },
+    };
 
-    render: function() {
+    render() {
         const tiles = this.state.tileKeys.map(this._mkTile);
         console.log("rendering with " + tiles.length + " tiles");
         return (
@@ -134,8 +132,8 @@ const Tester = React.createClass({
                     { tiles }
             </ScrollPanel>
         );
-    },
-});
+    }
+}
 
 describe('ScrollPanel', function() {
     let parentDiv;

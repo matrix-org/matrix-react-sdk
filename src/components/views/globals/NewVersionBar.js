@@ -31,14 +31,14 @@ function checkVersion(ver) {
     return parts.length == 5 && parts[1] == 'react' && parts[3] == 'js';
 }
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.PureComponent {
+    static propTypes = {
         version: React.PropTypes.string.isRequired,
         newVersion: React.PropTypes.string.isRequired,
         releaseNotes: React.PropTypes.string,
-    },
+    };
 
-    displayReleaseNotes: function(releaseNotes) {
+    displayReleaseNotes = (releaseNotes) => {
         const QuestionDialog = sdk.getComponent('dialogs.QuestionDialog');
         Modal.createTrackedDialog('Display release notes', '', QuestionDialog, {
             title: _t("What's New"),
@@ -50,9 +50,9 @@ export default React.createClass({
                 }
             }
         });
-    },
+    };
 
-    displayChangelog: function() {
+    displayChangelog = () => {
         const ChangelogDialog = sdk.getComponent('dialogs.ChangelogDialog');
         Modal.createTrackedDialog('Display Changelog', '', ChangelogDialog, {
             version: this.props.version,
@@ -63,13 +63,13 @@ export default React.createClass({
                 }
             }
         });
-    },
+    };
 
-    onUpdateClicked: function() {
+    onUpdateClicked = () => {
         PlatformPeg.get().installUpdate();
-    },
+    };
 
-    render: function() {
+    render() {
         let action_button;
         // If we have release notes to display, we display them. Otherwise,
         // we display the Changelog Dialog which takes two versions and
@@ -104,4 +104,4 @@ export default React.createClass({
             </div>
         );
     }
-});
+}

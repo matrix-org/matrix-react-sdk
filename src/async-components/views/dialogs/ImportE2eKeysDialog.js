@@ -37,44 +37,40 @@ function readFileAsArrayBuffer(file) {
 const PHASE_EDIT = 1;
 const PHASE_IMPORTING = 2;
 
-export default React.createClass({
-    displayName: 'ImportE2eKeysDialog',
-
-    propTypes: {
+export default class ImportE2eKeysDialog extends React.PureComponent {
+    static propTypes = {
         matrixClient: PropTypes.instanceOf(Matrix.MatrixClient).isRequired,
         onFinished: PropTypes.func.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            enableSubmit: false,
-            phase: PHASE_EDIT,
-            errStr: null,
-        };
-    },
+    state = {
+        enableSubmit: false,
+        phase: PHASE_EDIT,
+        errStr: null,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._unmounted = false;
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         this._unmounted = true;
-    },
+    }
 
-    _onFormChange: function(ev) {
+    _onFormChange = (ev) => {
         const files = this.refs.file.files || [];
         this.setState({
             enableSubmit: (this.refs.passphrase.value !== "" && files.length > 0),
         });
-    },
+    };
 
-    _onFormSubmit: function(ev) {
+    _onFormSubmit = (ev) => {
         ev.preventDefault();
         this._startImport(this.refs.file.files[0], this.refs.passphrase.value);
         return false;
-    },
+    };
 
-    _startImport: function(file, passphrase) {
+    _startImport = (file, passphrase) => {
         this.setState({
             errStr: null,
             phase: PHASE_IMPORTING,
@@ -100,15 +96,15 @@ export default React.createClass({
                 phase: PHASE_EDIT,
             });
         });
-    },
+    };
 
-    _onCancelClick: function(ev) {
+    _onCancelClick = (ev) => {
         ev.preventDefault();
         this.props.onFinished(false);
         return false;
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
 
         const disableForm = (this.state.phase !== PHASE_EDIT);
@@ -177,5 +173,5 @@ export default React.createClass({
                 </form>
             </BaseDialog>
         );
-    },
-});
+    }
+}

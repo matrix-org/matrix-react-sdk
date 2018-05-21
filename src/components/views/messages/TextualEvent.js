@@ -22,20 +22,18 @@ import PropTypes from 'prop-types';
 const TextForEvent = require('../../../TextForEvent');
 import sdk from '../../../index';
 
-module.exports = React.createClass({
-    displayName: 'TextualEvent',
-
-    propTypes: {
+export default class TextualEvent extends React.PureComponent {
+    static propTypes = {
         /* the MatrixEvent to show */
         mxEvent: PropTypes.object.isRequired,
-    },
+    };
 
-    render: function() {
+    render() {
         const EmojiText = sdk.getComponent('elements.EmojiText');
         const text = TextForEvent.textForEvent(this.props.mxEvent);
         if (text == null || text.length === 0) return null;
         return (
             <EmojiText element="div" className="mx_TextualEvent">{ text }</EmojiText>
         );
-    },
-});
+    }
+}

@@ -23,10 +23,8 @@ import { _t } from '../../../languageHandler';
 
 import AccessibleButton from '../elements/AccessibleButton';
 
-export default React.createClass({
-    displayName: 'InteractiveAuthDialog',
-
-    propTypes: {
+export default class InteractiveAuthDialog extends React.PureComponent {
+    static propTypes = {
         // matrix client to use for UI auth requests
         matrixClient: PropTypes.object.isRequired,
 
@@ -44,15 +42,13 @@ export default React.createClass({
         onFinished: PropTypes.func.isRequired,
 
         title: PropTypes.string,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            authError: null,
-        };
-    },
+    state = {
+        authError: null,
+    };
 
-    _onAuthFinished: function(success, result) {
+    _onAuthFinished = (success, result) => {
         if (success) {
             this.props.onFinished(true, result);
         } else {
@@ -60,13 +56,13 @@ export default React.createClass({
                 authError: result,
             });
         }
-    },
+    };
 
-    _onDismissClick: function() {
+    _onDismissClick = () => {
         this.props.onFinished(false);
-    },
+    };
 
-    render: function() {
+    render() {
         const InteractiveAuth = sdk.getComponent("structures.InteractiveAuth");
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
 
@@ -106,5 +102,5 @@ export default React.createClass({
                 { content }
             </BaseDialog>
         );
-    },
-});
+    }
+}

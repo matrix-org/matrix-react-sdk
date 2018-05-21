@@ -19,25 +19,22 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
-module.exports = React.createClass({
-    displayName: 'CreateRoomButton',
-    propTypes: {
+export default class CreateRoomButton extends React.PureComponent {
+    static propTypes = {
         onCreateRoom: PropTypes.func,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            onCreateRoom: function() {},
-        };
-    },
+    static defaultProps = {
+        onCreateRoom: function() {},
+    };
 
-    onClick: function() {
+    onClick = () => {
         this.props.onCreateRoom();
-    },
+    };
 
-    render: function() {
+    render() {
         return (
             <button className="mx_CreateRoomButton" onClick={this.onClick}>{ _t("Create Room") }</button>
         );
-    },
-});
+    }
+}

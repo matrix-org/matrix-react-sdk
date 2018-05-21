@@ -15,17 +15,15 @@ limitations under the License.
 */
 
 import Matrix from 'matrix-js-sdk';
-const InteractiveAuth = Matrix.InteractiveAuth;
+const InteractiveAuthLogic = Matrix.InteractiveAuth;
 
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import {getEntryComponentForLoginType} from '../views/login/InteractiveAuthEntryComponents';
 
-export default React.createClass({
-    displayName: 'InteractiveAuth',
-
-    propTypes: {
+export default class InteractiveAuth extends React.PureComponent {
+    static propTypes = {
         // matrix client to use for UI auth requests
         matrixClient: PropTypes.object.isRequired,
 
@@ -68,21 +66,19 @@ export default React.createClass({
         // If true, poll to see if the auth flow has been completed
         // out-of-band
         poll: PropTypes.bool,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            authStage: null,
-            busy: false,
-            errorText: null,
-            stageErrorText: null,
-            submitButtonEnabled: false,
-        };
-    },
+    state = {
+        authStage: null,
+        busy: false,
+        errorText: null,
+        stageErrorText: null,
+        submitButtonEnabled: false,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._unmounted = false;
-        this._authLogic = new InteractiveAuth({
+        this._authLogic = new InteractiveAuthLogic({
             authData: this.props.authData,
             doRequest: this._requestCallback,
             inputs: this.props.inputs,
@@ -118,17 +114,17 @@ export default React.createClass({
                 this._authLogic.poll();
             }, 2000);
         }
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         this._unmounted = true;
 
         if (this._intervalId !== null) {
             clearInterval(this._intervalId);
         }
-    },
+    }
 
-    _authStateUpdated: function(stageType, stageState) {
+    _authStateUpdated = (stageType, stageState) => {
         const oldStage = this.state.authStage;
         this.setState({
             authStage: stageType,
@@ -137,9 +133,9 @@ export default React.createClass({
         }, () => {
             if (oldStage != stageType) this._setFocus();
         });
-    },
+    };
 
-    _requestCallback: function(auth, background) {
+    _requestCallback = (auth, background) => {
         const makeRequestPromise = this.props.makeRequest(auth);
 
         // if it's a background request, just do it: we don't want
@@ -160,19 +156,19 @@ export default React.createClass({
                 busy: false,
             });
         });
-    },
+    };
 
-    _setFocus: function() {
+    _setFocus = () => {
         if (this.refs.stageComponent && this.refs.stageComponent.focus) {
             this.refs.stageComponent.focus();
         }
-    },
+    };
 
-    _submitAuthDict: function(authData) {
+    _submitAuthDict = (authData) => {
         this._authLogic.submitAuthDict(authData);
-    },
+    };
 
-    _renderCurrentStage: function() {
+    _renderCurrentStage = () => {
         const stage = this.state.authStage;
         if (!stage) return null;
 
@@ -194,16 +190,17 @@ export default React.createClass({
                 makeRegistrationUrl={this.props.makeRegistrationUrl}
             />
         );
-    },
+    };
 
-    _onAuthStageFailed: function(e) {
+    _onAuthStageFailed = (e) => {
         this.props.onAuthFinished(false, e);
-    },
-    _setEmailSid: function(sid) {
-        this._authLogic.setEmailSid(sid);
-    },
+    };
 
-    render: function() {
+    _setEmailSid = (sid) => {
+        this._authLogic.setEmailSid(sid);
+    };
+
+    render() {
         let error = null;
         if (this.state.errorText) {
             error = (
@@ -221,5 +218,5 @@ export default React.createClass({
                 </div>
             </div>
         );
-    },
-});
+    }
+}

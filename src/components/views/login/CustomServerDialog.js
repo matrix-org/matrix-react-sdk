@@ -17,10 +17,8 @@ limitations under the License.
 import React from 'react';
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
-    displayName: 'CustomServerDialog',
-
-    render: function() {
+export default class CustomServerDialog extends React.PureComponent {
+    render() {
         return (
             <div className="mx_ErrorDialog">
                 <div className="mx_Dialog_title">
@@ -46,5 +44,5 @@ module.exports = React.createClass({
                 </div>
             </div>
         );
-    },
-});
+    }
+}

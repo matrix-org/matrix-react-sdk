@@ -24,29 +24,25 @@ import dis from '../../dispatcher';
 import rate_limited_func from '../../ratelimitedfunc';
 import AccessibleButton from '../../components/views/elements/AccessibleButton';
 
-module.exports = React.createClass({
-    displayName: 'SearchBox',
-
-    propTypes: {
+export default class  SearchBox extends React.PureComponent {
+    static propTypes = {
         collapsed: React.PropTypes.bool,
         onSearch: React.PropTypes.func,
-    },
+    }
 
-    getInitialState: function() {
-        return {
-            searchTerm: "",
-        };
-    },
+    state = {
+        searchTerm: "",
+    };
 
-    componentDidMount: function() {
+    componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         dis.unregister(this.dispatcherRef);
-    },
+    }
 
-    onAction: function(payload) {
+    onAction = (payload) => {
         switch (payload.action) {
             case 'view_room':
                 if (this.refs.search && payload.clear_search) {
@@ -60,22 +56,22 @@ module.exports = React.createClass({
                 }
                 break;
         }
-    },
+    };
 
-    onChange: function() {
+    onChange = () => {
         if (!this.refs.search) return;
         this.setState({ searchTerm: this.refs.search.value });
         this.onSearch();
-    },
+    };
 
-    onSearch: new rate_limited_func(
+    onSearch = new rate_limited_func(
         function() {
             this.props.onSearch(this.refs.search.value);
         },
         100
-    ),
+    );
 
-    onToggleCollapse: function(show) {
+    onToggleCollapse = (show) => {
         if (show) {
             dis.dispatch({
                 action: 'show_left_panel',
@@ -86,23 +82,23 @@ module.exports = React.createClass({
                 action: 'hide_left_panel',
             });
         }
-    },
+    };
 
-    _onKeyDown: function(ev) {
+    _onKeyDown = (ev) => {
         switch (ev.keyCode) {
             case KeyCode.ESCAPE:
                 this._clearSearch();
                 dis.dispatch({action: 'focus_composer'});
                 break;
         }
-    },
+    };
 
-    _clearSearch: function() {
+    _clearSearch = () => {
         this.refs.search.value = "";
         this.onChange();
-    },
+    };
 
-    render: function() {
+    render() {
         var TintableSvg = sdk.getComponent('elements.TintableSvg');
 
         var collapseTabIndex = this.refs.search && this.refs.search.value !== "" ? "-1" : "0";
@@ -160,4 +156,4 @@ module.exports = React.createClass({
             </div>
         );
     }
-});
+}

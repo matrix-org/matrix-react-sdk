@@ -23,30 +23,30 @@ import classNames from 'classnames';
 
 import {roomShape} from './RoomDetailRow';
 
-export default React.createClass({
-    displayName: 'RoomDetailList',
+export default class extends React.Component {
+    static displayName = 'RoomDetailList';
 
-    propTypes: {
+    static propTypes = {
         rooms: PropTypes.arrayOf(roomShape),
         className: PropTypes.string,
-    },
+    };
 
-    getRows: function() {
+    getRows = () => {
         if (!this.props.rooms) return [];
 
         const RoomDetailRow = sdk.getComponent('rooms.RoomDetailRow');
         return this.props.rooms.map((room, index) => {
             return <RoomDetailRow key={index} room={room} onClick={this.onDetailsClick} />;
         });
-    },
+    };
 
-    onDetailsClick: function(ev, room) {
+    onDetailsClick = (ev, room) => {
         dis.dispatch({
             action: 'view_room',
             room_id: room.roomId,
             room_alias: room.canonicalAlias || (room.aliases || [])[0],
         });
-    },
+    };
 
     render() {
         const rows = this.getRows();
@@ -63,5 +63,5 @@ export default React.createClass({
         return <div className={classNames("mx_RoomDetailList", this.props.className)}>
             { rooms }
         </div>;
-    },
-});
+    }
+}

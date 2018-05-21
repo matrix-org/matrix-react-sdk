@@ -21,39 +21,36 @@ import dis from '../../../dispatcher';
 import { _t } from '../../../languageHandler';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 
-export default React.createClass({
-    displayName: 'CreateGroupDialog',
-    propTypes: {
+export default class CreateGroupDialog extends React.PureComponent {
+    static propTypes = {
         onFinished: PropTypes.func.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            groupName: '',
-            groupId: '',
-            groupError: null,
-            creating: false,
-            createError: null,
-        };
-    },
+    state = {
+        groupName: '',
+        groupId: '',
+        groupError: null,
+        creating: false,
+        createError: null,
+    };
 
-    _onGroupNameChange: function(e) {
+    _onGroupNameChange = (e) => {
         this.setState({
             groupName: e.target.value,
         });
-    },
+    };
 
-    _onGroupIdChange: function(e) {
+    _onGroupIdChange = (e) => {
         this.setState({
             groupId: e.target.value,
         });
-    },
+    };
 
-    _onGroupIdBlur: function(e) {
+    _onGroupIdBlur = (e) => {
         this._checkGroupId();
-    },
+    };
 
-    _checkGroupId: function(e) {
+    _checkGroupId = (e) => {
         let error = null;
         if (!this.state.groupId) {
             error = _t("Community IDs cannot not be empty.");
@@ -66,9 +63,9 @@ export default React.createClass({
             createError: null,
         });
         return error;
-    },
+    };
 
-    _onFormSubmit: function(e) {
+    _onFormSubmit = (e) => {
         e.preventDefault();
 
         if (this._checkGroupId()) return;
@@ -93,13 +90,13 @@ export default React.createClass({
         }).finally(() => {
             this.setState({creating: false});
         }).done();
-    },
+    };
 
-    _onCancel: function() {
+    _onCancel = () => {
         this.props.onFinished(false);
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const Spinner = sdk.getComponent('elements.Spinner');
 
@@ -170,5 +167,5 @@ export default React.createClass({
                 </form>
             </BaseDialog>
         );
-    },
-});
+    }
+}

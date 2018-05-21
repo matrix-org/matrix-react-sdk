@@ -20,29 +20,27 @@ const Notifier = require("../../../Notifier");
 const dis = require("../../../dispatcher");
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
-    displayName: 'EnableNotificationsButton',
-
-    componentDidMount: function() {
+export default class EnableNotificationsButton extends React.PureComponent {
+    componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         dis.unregister(this.dispatcherRef);
-    },
+    }
 
-    onAction: function(payload) {
+    onAction = (payload) => {
         if (payload.action !== "notifier_enabled") {
             return;
         }
         this.forceUpdate();
-    },
+    };
 
-    enabled: function() {
+    enabled = () => {
         return Notifier.isEnabled();
-    },
+    };
 
-    onClick: function() {
+    onClick = () => {
         const self = this;
         if (!Notifier.supportsDesktopNotifications()) {
             return;
@@ -55,9 +53,9 @@ module.exports = React.createClass({
             Notifier.setEnabled(false);
         }
         this.forceUpdate();
-    },
+    };
 
-    render: function() {
+    render() {
         if (this.enabled()) {
             return (
                 <button className="mx_EnableNotificationsButton" onClick={this.onClick}>
@@ -71,5 +69,5 @@ module.exports = React.createClass({
                 </button>
             );
         }
-    },
-});
+    }
+}

@@ -19,23 +19,20 @@ limitations under the License.
 var React = require('react');
 import { _t } from '../../languageHandler';
 
-module.exports = React.createClass({
-    displayName: 'CompatibilityPage',
-    propTypes: {
+module.exports = class CompatibilityPage extends React.PureComponent {
+    static propTypes = {
         onAccept: React.PropTypes.func
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            onAccept: function() {} // NOP
-        };
-    },
+    static defaultProps = {
+        onAccept: function() {} // NOP
+    };
 
-    onAccept: function() {
+    onAccept = () => {
         this.props.onAccept();
-    },
+    };
 
-    render: function() {
+    render() {
 
         return (
         <div className="mx_CompatibilityPage">
@@ -70,4 +67,4 @@ module.exports = React.createClass({
         </div>
         );
     }
-});
+};

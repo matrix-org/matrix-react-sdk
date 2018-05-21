@@ -36,32 +36,26 @@ import {instanceForInstanceId, protocolNameForInstanceId} from '../../utils/Dire
 
 linkifyMatrix(linkify);
 
-module.exports = React.createClass({
-    displayName: 'RoomDirectory',
-
-    propTypes: {
+export default class RoomDirectory extends React.PureComponent {
+    static propTypes = {
         config: React.PropTypes.object,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            config: {},
-        }
-    },
+    static defaultProps = {
+        config: {},
+    };
 
-    getInitialState: function() {
-        return {
-            publicRooms: [],
-            loading: true,
-            protocolsLoading: true,
-            instanceId: null,
-            includeAll: false,
-            roomServer: null,
-            filterString: null,
-        }
-    },
+    state = {
+        publicRooms: [],
+        loading: true,
+        protocolsLoading: true,
+        instanceId: null,
+        includeAll: false,
+        roomServer: null,
+        filterString: null,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._unmounted = false;
         this.nextBatch = null;
         this.filterTimeout = null;
@@ -93,9 +87,9 @@ module.exports = React.createClass({
         //     sideDisabled: true,
         //     middleDisabled: true,
         // });
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         // dis.dispatch({
         //     action: 'panel_disable',
         //     sideDisabled: false,
@@ -105,18 +99,18 @@ module.exports = React.createClass({
             clearTimeout(this.filterTimeout);
         }
         this._unmounted = true;
-    },
+    }
 
-    refreshRoomList: function() {
+    refreshRoomList = () => {
         this.nextBatch = null;
         this.setState({
             publicRooms: [],
             loading: true,
         });
         this.getMoreRooms().done();
-    },
+    };
 
-    getMoreRooms: function() {
+    getMoreRooms = () => {
         if (!MatrixClientPeg.get()) return Promise.resolve();
 
         const my_filter_string = this.state.filterString;
@@ -183,7 +177,7 @@ module.exports = React.createClass({
                 description: ((err && err.message) ? err.message : _t('The server may be unavailable or overloaded'))
             });
         });
-    },
+    };
 
     /**
      * A limited interface for removing rooms from the directory.
@@ -192,7 +186,7 @@ module.exports = React.createClass({
      * HS admins to do this through the RoomSettings interface, but
      * this needs SPEC-417.
      */
-    removeFromDirectory: function(room) {
+    removeFromDirectory = (room) => {
         var alias = get_display_alias_for_room(room);
         var name = room.name || alias || _t('Unnamed room');
 
@@ -234,18 +228,18 @@ module.exports = React.createClass({
                 });
             }
         });
-    },
+    };
 
-    onRoomClicked: function(room, ev) {
+    onRoomClicked = (room, ev) => {
         if (ev.shiftKey) {
             ev.preventDefault();
             this.removeFromDirectory(room);
         } else {
             this.showRoom(room);
         }
-    },
+    };
 
-    onOptionChange: function(server, instanceId, includeAll) {
+    onOptionChange = (server, instanceId, includeAll) => {
         // clear next batch so we don't try to load more rooms
         this.nextBatch = null;
         this.setState({
@@ -263,15 +257,15 @@ module.exports = React.createClass({
         // find the five gitter ones, at which point we do not want
         // to render all those rooms when switching back to 'all networks'.
         // Easiest to just blow away the state & re-fetch.
-    },
+    };
 
-    onFillRequest: function(backwards) {
+    onFillRequest = (backwards) => {
         if (backwards || !this.nextBatch) return Promise.resolve(false);
 
         return this.getMoreRooms();
-    },
+    };
 
-    onFilterChange: function(alias) {
+    onFilterChange = (alias) => {
         this.setState({
             filterString: alias || null,
         });
@@ -287,9 +281,9 @@ module.exports = React.createClass({
             this.filterTimeout = null;
             this.refreshRoomList();
         }, 700);
-    },
+    };
 
-    onFilterClear: function() {
+    onFilterClear = () => {
         // update immediately
         this.setState({
             filterString: null,
@@ -298,9 +292,9 @@ module.exports = React.createClass({
         if (this.filterTimeout) {
             clearTimeout(this.filterTimeout);
         }
-    },
+    };
 
-    onJoinClick: function(alias) {
+    onJoinClick = (alias) => {
         // If we don't have a particular instance id selected, just show that rooms alias
         if (!this.state.instanceId) {
             // If the user specified an alias without a domain, add on whichever server is selected
@@ -340,13 +334,13 @@ module.exports = React.createClass({
                 });
             });
         }
-    },
+    };
 
-    showRoomAlias: function(alias) {
+    showRoomAlias = (alias) => {
         this.showRoom(null, alias);
-    },
+    };
 
-    showRoom: function(room, room_alias) {
+    showRoom = (room, room_alias) => {
         var payload = {action: 'view_room'};
         if (room) {
             // Don't let the user view a room they won't be able to either
@@ -380,9 +374,9 @@ module.exports = React.createClass({
             payload.room_id = room.room_id;
         }
         dis.dispatch(payload);
-    },
+    };
 
-    getRows: function() {
+    getRows = () => {
         var BaseAvatar = sdk.getComponent('avatars.BaseAvatar');
 
         if (!this.state.publicRooms) return [];
@@ -443,22 +437,22 @@ module.exports = React.createClass({
             );
         }
         return rows;
-    },
+    };
 
-    collectScrollPanel: function(element) {
+    collectScrollPanel = (element) => {
         this.scrollPanel = element;
-    },
+    };
 
-    _stringLooksLikeId: function(s, field_type) {
+    _stringLooksLikeId = (s, field_type) => {
         let pat = /^#[^\s]+:[^\s]/;
         if (field_type && field_type.regexp) {
             pat = new RegExp(field_type.regexp);
         }
 
         return pat.test(s);
-    },
+    };
 
-    _getFieldsForThirdPartyLocation: function(userInput, protocol, instance) {
+    _getFieldsForThirdPartyLocation = (userInput, protocol, instance) => {
         // make an object with the fields specified by that protocol. We
         // require that the values of all but the last field come from the
         // instance. The last is the user input.
@@ -472,20 +466,20 @@ module.exports = React.createClass({
         }
         fields[requiredFields[requiredFields.length - 1]] = userInput;
         return fields;
-    },
+    };
 
     /**
      * called by the parent component when PageUp/Down/etc is pressed.
      *
      * We pass it down to the scroll panel.
      */
-    handleScrollKey: function(ev) {
+    handleScrollKey = (ev) => {
         if (this.scrollPanel) {
             this.scrollPanel.handleScrollKey(ev);
         }
-    },
+    };
 
-    render: function() {
+    render() {
         const SimpleRoomHeader = sdk.getComponent('rooms.SimpleRoomHeader');
         const Loader = sdk.getComponent("elements.Spinner");
 
@@ -578,7 +572,7 @@ module.exports = React.createClass({
             </div>
         );
     }
-});
+};
 
 // Similar to matrix-react-sdk's MatrixTools.getDisplayAliasForRoom
 // but works with the objects we get from the public room list

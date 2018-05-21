@@ -29,9 +29,8 @@ import { GroupMemberType } from '../../../groups';
  * to make it obvious what is going to happen.
  * Also tweaks the style for 'dangerous' actions (albeit only with colour)
  */
-export default React.createClass({
-    displayName: 'ConfirmUserActionDialog',
-    propTypes: {
+export default class ConfirmUserActionDialog extends React.PureComponent {
+    static propTypes = {
         // matrix-js-sdk (room) member object. Supply either this or 'groupMember'
         member: PropTypes.object,
         // group member object. Supply either this or 'member'
@@ -47,34 +46,34 @@ export default React.createClass({
         askReason: PropTypes.bool,
         danger: PropTypes.bool,
         onFinished: PropTypes.func.isRequired,
-    },
+    };
 
-    defaultProps: {
+    static defaultProps = {
         danger: false,
         askReason: false,
-    },
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._reasonField = null;
-    },
+    }
 
-    onOk: function() {
+    onOk = () => {
         let reason;
         if (this._reasonField) {
             reason = this._reasonField.value;
         }
         this.props.onFinished(true, reason);
-    },
+    };
 
-    onCancel: function() {
+    onCancel = () => {
         this.props.onFinished(false);
-    },
+    };
 
-    _collectReasonField: function(e) {
+    _collectReasonField = (e) => {
         this._reasonField = e;
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         const MemberAvatar = sdk.getComponent("views.avatars.MemberAvatar");
@@ -132,5 +131,5 @@ export default React.createClass({
                     onCancel={this.onCancel} />
             </BaseDialog>
         );
-    },
-});
+    }
+}

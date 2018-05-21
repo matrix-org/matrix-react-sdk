@@ -30,21 +30,19 @@ const DIALOG_CONTAINER_ID = "mx_Dialog_Container";
  * Wrap an asynchronous loader function with a react component which shows a
  * spinner until the real component loads.
  */
-const AsyncWrapper = React.createClass({
-    propTypes: {
+class AsyncWrapper extends React.PureComponent {
+    static propTypes = {
         /** A function which takes a 'callback' argument which it will call
          * with the real component once it loads.
          */
         loader: PropTypes.func.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            component: null,
-        };
-    },
+    state = {
+        component: null,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this._unmounted = false;
         // XXX: temporary logging to try to diagnose
         // https://github.com/vector-im/riot-web/issues/3148
@@ -58,13 +56,13 @@ const AsyncWrapper = React.createClass({
             }
             this.setState({component: e});
         });
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         this._unmounted = true;
-    },
+    }
 
-    render: function() {
+    render() {
         const {loader, ...otherProps} = this.props;
         if (this.state.component) {
             const Component = this.state.component;
@@ -74,8 +72,8 @@ const AsyncWrapper = React.createClass({
             const Spinner = sdk.getComponent("elements.Spinner");
             return <Spinner />;
         }
-    },
-});
+    }
+}
 
 class ModalManager {
     constructor() {

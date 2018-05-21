@@ -25,24 +25,20 @@ import { _t } from '../../languageHandler';
 /*
  * Component which shows the filtered file using a TimelinePanel
  */
-const FilePanel = React.createClass({
-    displayName: 'FilePanel',
-
-    propTypes: {
+class FilePanel extends React.PureComponent {
+    static propTypes = {
         roomId: PropTypes.string.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            timelineSet: null,
-        };
-    },
+    state = {
+        timelineSet: null,
+    };
 
-    componentWillMount: function() {
+    componentWillMount() {
         this.updateTimelineSet(this.props.roomId);
-    },
+    }
 
-    componentWillReceiveProps: function(nextProps) {
+    componentWillReceiveProps(nextProps) {
         if (nextProps.roomId !== this.props.roomId) {
             // otherwise we race between re-rendering the TimelinePanel and setting the new timelineSet.
             //
@@ -53,9 +49,9 @@ const FilePanel = React.createClass({
             this.setState({ timelineSet: null });
             this.updateTimelineSet(nextProps.roomId);
         }
-    },
+    }
 
-    updateTimelineSet: function(roomId) {
+    updateTimelineSet = (roomId) => {
         const client = MatrixClientPeg.get();
         const room = client.getRoom(roomId);
 
@@ -90,9 +86,9 @@ const FilePanel = React.createClass({
         } else {
             console.error("Failed to add filtered timelineSet for FilePanel as no room!");
         }
-    },
+    };
 
-    render: function() {
+    render() {
         if (MatrixClientPeg.get().isGuest()) {
             return <div className="mx_FilePanel mx_RoomView_messageListWrapper">
                 <div className="mx_RoomView_empty">
@@ -133,7 +129,7 @@ const FilePanel = React.createClass({
                 </div>
             );
         }
-    },
-});
+    }
+}
 
 module.exports = FilePanel;

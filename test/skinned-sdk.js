@@ -16,20 +16,20 @@ require('babel-polyfill');
 const sdk = require("../src/index");
 
 const skin = require('../src/component-index.js');
-const stubComponent = require('./components/stub-component.js');
+const StubComponent = require('./components/stub-component.js');
 
 const components = skin.components;
-components['structures.LeftPanel'] = stubComponent();
-components['structures.RightPanel'] = stubComponent();
-components['structures.RoomDirectory'] = stubComponent();
-components['views.globals.MatrixToolbar'] = stubComponent();
-components['views.globals.GuestWarningBar'] = stubComponent();
-components['views.globals.NewVersionBar'] = stubComponent();
-components['views.elements.Spinner'] = stubComponent({displayName: 'Spinner'});
-components['views.messages.DateSeparator'] = stubComponent({displayName: 'DateSeparator'});
-components['views.messages.MessageTimestamp'] = stubComponent({displayName: 'MessageTimestamp'});
-components['views.messages.SenderProfile'] = stubComponent({displayName: 'SenderProfile'});
-components['views.rooms.SearchBar'] = stubComponent();
+components['structures.LeftPanel'] = class extends StubComponent {};
+components['structures.RightPanel'] = class extends StubComponent {};
+components['structures.RoomDirectory'] = class extends StubComponent {};
+components['views.globals.MatrixToolbar'] = class extends StubComponent {};
+components['views.globals.GuestWarningBar'] = class extends StubComponent {};
+components['views.globals.NewVersionBar'] = class extends StubComponent {};
+components['views.elements.Spinner'] = class Spinner extends StubComponent {};
+components['views.messages.DateSeparator'] = class DateSeparator extends StubComponent {};
+components['views.messages.MessageTimestamp'] = class MessageTimestamp extends StubComponent {};
+components['views.messages.SenderProfile'] = class SenderProfile extends StubComponent {};
+components['views.rooms.SearchBar'] = class extends StubComponent {};
 
 sdk.loadSkin(skin);
 
