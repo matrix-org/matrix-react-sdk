@@ -124,6 +124,7 @@ const THEMES = [
     { label: _td('Light theme'), value: 'light' },
     { label: _td('Dark theme'), value: 'dark' },
     { label: _td('Status.im theme'), value: 'status' },
+    { label: _td('Blueshine theme'), value: 'blueshine' },
 ];
 
 const IgnoredUser = React.createClass({
