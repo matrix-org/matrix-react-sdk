@@ -342,6 +342,32 @@ class ContentMessages {
         return promise;
     }
 
+    _getMessageType(fileType, content, deferred) {
+        if (fileType.indexOf('image/') == 0) {
+            content.msgtype = 'm.image';
+            infoForImageFile(matrixClient, roomId, file).then((imageInfo)=>{
+                extend(content.info, imageInfo);
+                deferred.resolve();
+            }, (error)=>{
+                console.error(error);
+                content.msgtype = 'm.file';
+                deferred.resolve();
+            });
+        } else if (file.type.indexOf('audio/') == 0) {
+            content.msgtype = 'm.audio';
+            deferred.resolve();
+        } else if (file.type.indexOf('video/') == 0) {
+            infoForVideoFile(matrixClient, roomId, file).then((videoInfo)=>{
+                extend(content.info, videoInfo);
+                def.resolve('m.video');
+            }, (error)=>{
+                def.resolve('m.file');
+            });
+        } else {
+            deferred.resolve('m.file');
+        }
+    }
+
     sendContentToRoom(file, roomId, matrixClient) {
         const content = {
             body: file.name || 'Attachment',
@@ -356,32 +382,6 @@ class ContentMessages {
         }
 
         const def = Promise.defer();
-        if (file.type.indexOf('image/') == 0) {
-            content.msgtype = 'm.image';
-            infoForImageFile(matrixClient, roomId, file).then((imageInfo)=>{
-                extend(content.info, imageInfo);
-                def.resolve();
-            }, (error)=>{
-                console.error(error);
-                content.msgtype = 'm.file';
-                def.resolve();
-            });
-        } else if (file.type.indexOf('audio/') == 0) {
-            content.msgtype = 'm.audio';
-            def.resolve();
-        } else if (file.type.indexOf('video/') == 0) {
-            content.msgtype = 'm.video';
-            infoForVideoFile(matrixClient, roomId, file).then((videoInfo)=>{
-                extend(content.info, videoInfo);
-                def.resolve();
-            }, (error)=>{
-                content.msgtype = 'm.file';
-                def.resolve();
-            });
-        } else {
-            content.msgtype = 'm.file';
-            def.resolve();
-        }
 
         const upload = {
             fileName: file.name || 'Attachment',
