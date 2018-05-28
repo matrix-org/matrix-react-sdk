@@ -680,6 +680,12 @@ module.exports = React.createClass({
 
     render: function() {
         const GeminiScrollbarWrapper = sdk.getComponent("elements.GeminiScrollbarWrapper");
+        // We only wish to set aria-live to polite when the list is scrolled to the bottom
+        // to avoid flooding screen readers with loads of DOM changes when scrolling
+        // causing presentation of random message events.
+        // To avoid presenting outgoing events twice we are only setting aria-live when there is
+        // a new content to add so e.g. style changes and similar won't be propagated to assistive tools.
+        let enableLiveRegion = (this.scrollState.stuckAtBottom && this._pendingFillRequests['f']);
         // TODO: the classnames on the div and ol could do with being updated to
         // reflect the fact that we don't necessarily contain a list of messages.
         // it's not obvious why we have a separate div and ol anyway.
@@ -687,7 +693,7 @@ module.exports = React.createClass({
                 onScroll={this.onScroll} onResize={this.onResize}
                 className={this.props.className} style={this.props.style}>
                     <div className="mx_RoomView_messageListWrapper">
-                        <ol ref="itemlist" className="mx_RoomView_MessageList" aria-live="polite">
+                        <ol ref="itemlist" className="mx_RoomView_MessageList" aria-live={ enableLiveRegion ? "polite" : "off" }>
                             { this.props.children }
                         </ol>
                     </div>
