@@ -1,5 +1,6 @@
 /*
 Copyright 2017 Vector Creations Ltd
+Copyright 2017 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -41,6 +42,8 @@ const INITIAL_STATE = {
     roomLoadError: null,
 
     forwardingEvent: null,
+
+    quotingEvent: null,
 };
 
 /**
@@ -108,6 +111,11 @@ class RoomViewStore extends Store {
                     forwardingEvent: payload.event,
                 });
                 break;
+            case 'reply_to_event':
+                this._setState({
+                    replyingToEvent: payload.event,
+                });
+                break;
         }
     }
 
@@ -125,6 +133,8 @@ class RoomViewStore extends Store {
                 shouldPeek: payload.should_peek === undefined ? true : payload.should_peek,
                 // have we sent a join request for this room and are waiting for a response?
                 joining: payload.joining || false,
+                // Reset replyingToEvent because we don't want cross-room because bad UX
+                replyingToEvent: null,
             };
 
             if (this._state.forwardingEvent) {
@@ -284,6 +294,11 @@ class RoomViewStore extends Store {
     // The mxEvent if one is about to be forwarded
     getForwardingEvent() {
         return this._state.forwardingEvent;
+    }
+
+    // The mxEvent if one is currently being replied to/quoted
+    getQuotingEvent() {
+        return this._state.replyingToEvent;
     }
 
     shouldPeek() {

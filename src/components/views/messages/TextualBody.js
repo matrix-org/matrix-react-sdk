@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2017 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,6 +19,7 @@ limitations under the License.
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import highlight from 'highlight.js';
 import * as HtmlUtils from '../../../HtmlUtils';
 import * as linkify from 'linkifyjs';
@@ -30,11 +32,10 @@ import SdkConfig from '../../../SdkConfig';
 import dis from '../../../dispatcher';
 import { _t } from '../../../languageHandler';
 import MatrixClientPeg from '../../../MatrixClientPeg';
-import ContextualMenu from '../../structures/ContextualMenu';
-import {RoomMember} from 'matrix-js-sdk';
-import classNames from 'classnames';
+import * as ContextualMenu from '../../structures/ContextualMenu';
 import SettingsStore from "../../../settings/SettingsStore";
 import PushProcessor from 'matrix-js-sdk/lib/pushprocessor';
+import ReplyThread from "../elements/ReplyThread";
 
 linkifyMatrix(linkify);
 
@@ -43,19 +44,22 @@ module.exports = React.createClass({
 
     propTypes: {
         /* the MatrixEvent to show */
-        mxEvent: React.PropTypes.object.isRequired,
+        mxEvent: PropTypes.object.isRequired,
 
         /* a list of words to highlight */
-        highlights: React.PropTypes.array,
+        highlights: PropTypes.array,
 
         /* link URL for the highlights */
-        highlightLink: React.PropTypes.string,
+        highlightLink: PropTypes.string,
 
         /* should show URL previews for this event */
-        showUrlPreview: React.PropTypes.bool,
+        showUrlPreview: PropTypes.bool,
 
         /* callback for when our widget has loaded */
-        onWidgetLoad: React.PropTypes.func,
+        onWidgetLoad: PropTypes.func,
+
+        /* the shape of the tile, used */
+        tileShape: PropTypes.string,
     },
 
     getInitialState: function() {
@@ -314,7 +318,7 @@ module.exports = React.createClass({
 
     _addCodeCopyButton() {
         // Add 'copy' buttons to pre blocks
-        ReactDOM.findDOMNode(this).querySelectorAll('.mx_EventTile_body pre').forEach((p) => {
+        Array.from(ReactDOM.findDOMNode(this).querySelectorAll('.mx_EventTile_body pre')).forEach((p) => {
             const button = document.createElement("span");
             button.className = "mx_EventTile_copyButton";
             button.onclick = (e) => {
@@ -418,8 +422,12 @@ module.exports = React.createClass({
         const mxEvent = this.props.mxEvent;
         const content = mxEvent.getContent();
 
+        const stripReply = SettingsStore.isFeatureEnabled("feature_rich_quoting") &&
+            ReplyThread.getParentEventId(mxEvent);
         let body = HtmlUtils.bodyToHtml(content, this.props.highlights, {
             disableBigEmoji: SettingsStore.getValue('TextualBody.disableBigEmoji'),
+            // Part of Replies fallback support
+            stripReplyFallback: stripReply,
         });
 
         if (this.props.highlightLink) {

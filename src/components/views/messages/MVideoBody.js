@@ -17,9 +17,10 @@ limitations under the License.
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import MFileBody from './MFileBody';
 import MatrixClientPeg from '../../../MatrixClientPeg';
-import { decryptFile, readBlobAsDataUri } from '../../../utils/DecryptFile';
+import { decryptFile } from '../../../utils/DecryptFile';
 import Promise from 'bluebird';
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
@@ -29,10 +30,10 @@ module.exports = React.createClass({
 
     propTypes: {
         /* the MatrixEvent to show */
-        mxEvent: React.PropTypes.object.isRequired,
+        mxEvent: PropTypes.object.isRequired,
 
         /* called when the video has loaded */
-        onWidgetLoad: React.PropTypes.func.isRequired,
+        onWidgetLoad: PropTypes.func.isRequired,
     },
 
     getInitialState: function() {
@@ -93,14 +94,14 @@ module.exports = React.createClass({
                 thumbnailPromise = decryptFile(
                     content.info.thumbnail_file,
                 ).then(function(blob) {
-                    return readBlobAsDataUri(blob);
+                    return URL.createObjectURL(blob);
                 });
             }
             let decryptedBlob;
             thumbnailPromise.then((thumbnailUrl) => {
                 return decryptFile(content.file).then(function(blob) {
                     decryptedBlob = blob;
-                    return readBlobAsDataUri(blob);
+                    return URL.createObjectURL(blob);
                 }).then((contentUrl) => {
                     this.setState({
                         decryptedUrl: contentUrl,
@@ -116,6 +117,15 @@ module.exports = React.createClass({
                     error: err,
                 });
             }).done();
+        }
+    },
+
+    componentWillUnmount: function() {
+        if (this.state.decryptedUrl) {
+            URL.revokeObjectURL(this.state.decryptedUrl);
+        }
+        if (this.state.decryptedThumbnailUrl) {
+            URL.revokeObjectURL(this.state.decryptedThumbnailUrl);
         }
     },
 
