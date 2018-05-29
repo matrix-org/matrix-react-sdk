@@ -279,8 +279,8 @@ class Tinter {
             this.tintSvgWhite('#2d2d2d');
             this.tintSvgBlack('#dddddd');
         } else if (theme === 'blueshine') {
-            this.tintSvgWhite('#0B0C10');
-            this.tintSvgBlack('#dddddd');
+            this.tintSvgWhite('#18191D');
+            this.tintSvgBlack('#DFE0E1');
         } else {
             this.tintSvgWhite('#ffffff');
             this.tintSvgBlack('#000000');
