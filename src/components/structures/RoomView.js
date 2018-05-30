@@ -921,14 +921,18 @@ module.exports = React.createClass({
             url, this.state.room.roomId, MatrixClientPeg.get(),
         ).done(undefined, (error) => {
             if (error.name === "UnknownDeviceError") {
-                // Let the staus bar handle this
+                // Let the status bar handle this
                 return;
             }
+
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-            console.error("Failed to resolve file " + url + " " + error);
-            Modal.createTrackedDialog('Failed to resolve file', '', ErrorDialog, {
-                title: _t('Failed to resolve file'),
-                description: ((error && error.message) ? error.message : _t("Server may be unavailable, overloaded, or the file too big")),
+            console.error("Failed to resolve url " + url + " " + error);
+            Modal.createTrackedDialog('Failed to resolve url', '', ErrorDialog, {
+                title: _t('Failed to resolve url'),
+                description: (
+                    (error && error.message) ?
+                        error.message :
+                        _t("Server may be unavailable, overloaded, or the file too big")),
             });
         });
     },

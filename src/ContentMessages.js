@@ -289,22 +289,17 @@ function resolveUrl(matrixClient, roomId, url) {
         const encryptInfo = encryptResult.info;
         // Pass the encrypted data as a Blob to the uploader.
         const blob = new Blob([encryptResult.data]);
-        return matrixClient.resolveUrl(blob).then(function(url) {
+        return matrixClient.resolveUrl(blob).then(function(data) {
             // If the attachment is encrypted then bundle the URL along
             // with the information needed to decrypt the attachment and
             // add it under a file key.
-            encryptInfo.url = url;
-            return {"file": encryptInfo};
+            encryptInfo.content = data;
+            return encryptInfo;
         });
     } else {
-        const basePromise = matrixClient.resolveUrl(url);
-        const promise1 = basePromise.then(function(url) {
-            // If the attachment isn't encrypted then include the URL directly.
-            return {"url": url};
+        return matrixClient.resolveUrl(url).then(function(data) {
+            return {content: data};
         });
-        // XXX: copy over the abort method to the new promise
-        promise1.abort = basePromise.abort;
-        return promise1;
     }
 }
 
@@ -321,34 +316,17 @@ class ContentMessages {
         });
     }
 
-    sendContentToRoom(file, roomId, matrixClient) {
-        const content = {
-            body: file.name || 'Attachment',
-            info: {
-                size: file.size,
-            },
-        };
+    sendUrlToRoom(url, roomId, matrixClient) {
+        const content = {};
 
         const promise = resolveUrl(matrixClient, roomId, url);
         promise.then(function(result) {
-            // Don't need to pass specific type because the chat message
-            // will be automatically resolved in RoomView in case if it's
-            // possible to preview it.
-            content.body = result.url;
-            content.msgtype = 'm.image';
-            content.url = result.url;
+            const { content_uri, msgtype } = result.content;
+            content.msgtype = msgtype;
+            content.body = content_uri;
+            content.url = content_uri;
 
             return matrixClient.sendMessage(roomId, content);
-        }, function(err) {
-            let desc = _t('The url \'%(url)s\' failed to resolve', {url: url}) + '.';
-            if (err.http_status == 413) {
-                desc = _t('The url \'%(url)s\' exceeds this home server\'s size limit for uploads', {url: url});
-            }
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-            Modal.createTrackedDialog('Upload failed', '', ErrorDialog, {
-                title: _t('Upload Failed'),
-                description: desc,
-            });
         });
 
         return promise;
