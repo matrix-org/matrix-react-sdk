@@ -19,7 +19,6 @@ limitations under the License.
 //  - Search results component
 //  - Drag and drop
 //  - File uploading - uploadFile()
-//
 import shouldHideEvent from "../../shouldHideEvent";
 
 const React = require("react");
