@@ -99,6 +99,11 @@ export const SETTINGS = {
         displayName: _td('Disable Emoji suggestions while typing'),
         default: false,
     },
+    "MessageComposerInput.enterSends": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Use Enter to send message'),
+        default: true,
+    },
     "useCompactLayout": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Use compact timeline layout'),

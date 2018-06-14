@@ -688,7 +688,7 @@ export default class MessageComposerInput extends React.Component {
         return editorState.blocks.some(node => node.type == type)
     };
 
-    onKeyDown = (ev: Event, change: Change, editor: Editor) => {
+    onKeyDown = (ev: KeyboardEvent, change: Change, editor: Editor) => {
 
         this.suppressAutoComplete = false;
 
@@ -696,14 +696,14 @@ export default class MessageComposerInput extends React.Component {
         // https://github.com/ianstormtaylor/slate/issues/762#issuecomment-304855095
         if (ev.keyCode === KeyCode.LEFT) {
             this.direction = 'Previous';
-        }
-        else if (ev.keyCode === KeyCode.RIGHT) {
+        } else if (ev.keyCode === KeyCode.RIGHT) {
             this.direction = 'Next';
         } else {
             this.direction = '';
         }
 
-        if (isOnlyCtrlOrCmdKeyEvent(ev)) {
+        // CTRL-ENTER is defined so don't bundle it in with this
+        if (isOnlyCtrlOrCmdKeyEvent(ev) && ev.keyCode !== KeyCode.ENTER) {
             const ctrlCmdCommand = {
                 // C-m => Toggles between rich text and markdown modes
                 [KeyCode.KEY_M]: 'toggle-mode',
@@ -719,9 +719,20 @@ export default class MessageComposerInput extends React.Component {
             return false;
         }
 
+        const enterSends = SettingsStore.getValue('MessageComposerInput.enterSends');
+
         switch (ev.keyCode) {
             case KeyCode.ENTER:
-                return this.handleReturn(ev, change);
+                // don't intercept SHIFT-ENTER, it should always newline
+                if (ev.shiftKey) return;
+                // CTRL-ENTER always sends message
+                if (ev.ctrlKey) this.handleReturn(ev, change);
+                // ENTER on its own varies on setting
+                if (enterSends) {
+                    return this.handleReturn(ev, change);
+                } else {
+                    return;
+                }
             case KeyCode.BACKSPACE:
                 return this.onBackspace(ev, change);
             case KeyCode.UP:
