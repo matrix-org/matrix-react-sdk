@@ -76,6 +76,7 @@ const SIMPLE_SETTINGS = [
     { id: "enableSyntaxHighlightLanguageDetection" },
     { id: "MessageComposerInput.autoReplaceEmoji" },
     { id: "MessageComposerInput.dontSuggestEmoji" },
+    { id: "MessageComposerInput.enterSends" },
     { id: "Pill.shouldHidePillAvatar" },
     { id: "TextualBody.disableBigEmoji" },
     { id: "VideoView.flipVideoHorizontally" },
