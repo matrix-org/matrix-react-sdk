@@ -21,7 +21,7 @@ import type SyntheticKeyboardEvent from 'react/lib/SyntheticKeyboardEvent';
 
 import { Editor } from 'slate-react';
 import { getEventTransfer } from 'slate-react';
-import { Value, Document, Event, Block, Inline, Text, Range, Node } from 'slate';
+import { Value, Document, Block, Inline, Text, Range, Node, Change } from 'slate';
 
 import Html from 'slate-html-serializer';
 import Md from 'slate-md-serializer';
@@ -343,7 +343,7 @@ export default class MessageComposerInput extends React.Component {
                 // If so, what should be the format, and how do we differentiate it from replies?
 
                 const quote = Block.create('block-quote');
-                if (this.state.isRichTextEnabled) {    
+                if (this.state.isRichTextEnabled) {
                     let change = editorState.change();
                     if (editorState.anchorText.text === '' && editorState.anchorBlock.nodes.size === 1) {
                         // replace the current block rather than split the block
@@ -703,7 +703,7 @@ export default class MessageComposerInput extends React.Component {
         }
 
         // CTRL-ENTER is defined so don't bundle it in with this
-        if (isOnlyCtrlOrCmdKeyEvent(ev) && ev.keyCode !== KeyCode.ENTER) {
+        if (ev.keyCode !== KeyCode.ENTER && isOnlyCtrlOrCmdKeyEvent(ev)) {
             const ctrlCmdCommand = {
                 // C-m => Toggles between rich text and markdown modes
                 [KeyCode.KEY_M]: 'toggle-mode',
@@ -726,7 +726,7 @@ export default class MessageComposerInput extends React.Component {
                 // don't intercept SHIFT-ENTER, it should always newline
                 if (ev.shiftKey) return;
                 // CTRL-ENTER always sends message
-                if (ev.ctrlKey) this.handleReturn(ev, change);
+                if (isOnlyCtrlOrCmdKeyEvent(ev)) this.handleReturn(ev, change);
                 // ENTER on its own varies on setting
                 if (enterSends) {
                     return this.handleReturn(ev, change);
