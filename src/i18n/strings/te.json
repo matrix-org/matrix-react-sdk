@@ -262,7 +262,6 @@
     "Low Priority": "తక్కువ ప్రాధాన్యత",
     "Set Password": "రహస్యపదాన్నీ  అమర్చండి",
     "An error occurred whilst saving your email notification preferences.": "మీ ఇమెయిల్ ప్రకటన ప్రాధాన్యాలు బద్రపరిచేతప్పుడు ఎదో తప్పు జరిగింది.",
-    "Enable audible notifications in web client": "వెబ్ బంట్రౌతు వినిపించే నోటిఫికేషన్లను ప్రారంభించండి",
     "Off": "ఆపు",
     "Mentions only": "మాత్రమే ప్రస్తావిస్తుంది",
     "Failed to remove tag %(tagName)s from room": "గది నుండి బొందు %(tagName)s తొలగించడంలో విఫలమైంది",

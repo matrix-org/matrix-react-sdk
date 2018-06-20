@@ -1,6 +1,5 @@
 {
     "Couldn't find a matching Matrix room": "Не атрымалася знайсці адпаведны пакой Matrix",
-    "Enable audible notifications in web client": "Ўключыць гукавыя апавяшчэнні ў вэб-кліенце",
     "All messages (noisy)": "Усе паведамленні (гучна)",
     "Reject": "Адхіліць",
     "Failed to forget room %(errCode)s": "Не атрымалася забыць пакой %(errCode)s",
