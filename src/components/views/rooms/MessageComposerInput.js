@@ -685,9 +685,23 @@ export default class MessageComposerInput extends React.Component {
         return true;
     }
 
+    async returnComplete() {
+        const completionCount = await this.autocomplete.forceComplete();
+        this.setState({
+            someCompletions: completionCount > 0,
+        });
+        await this.moveAutocompleteSelection(false);
+        this.autocomplete.onCompletionClicked();
+    }
+
     handleReturn(ev) {
         if (ev.shiftKey) {
             this.onEditorContentChanged(RichUtils.insertSoftNewline(this.state.editorState));
+            return true;
+        }
+
+        if (!this.state.originalEditorState && this.autocomplete.countCompletions() > 0) {
+            this.returnComplete();
             return true;
         }
 
