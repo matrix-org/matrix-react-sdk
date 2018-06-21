@@ -80,9 +80,9 @@ module.exports = withMatrixClient(React.createClass({
         cli.on("Room.timeline", this.onRoomTimeline);
         cli.on("Room.name", this.onRoomName);
         cli.on("Room.receipt", this.onRoomReceipt);
-        cli.on("RoomState.events", this.onRoomStateEvents);
         cli.on("RoomMember.name", this.onRoomMemberName);
         cli.on("RoomMember.membership", this.onRoomMemberMembership);
+        cli.on("RoomMember.powerLevel", this.onRoomMemberPowerlevel);
         cli.on("accountData", this.onAccountData);
 
         this._checkIgnoreState();
@@ -107,9 +107,9 @@ module.exports = withMatrixClient(React.createClass({
             client.removeListener("Room.timeline", this.onRoomTimeline);
             client.removeListener("Room.name", this.onRoomName);
             client.removeListener("Room.receipt", this.onRoomReceipt);
-            client.removeListener("RoomState.events", this.onRoomStateEvents);
             client.removeListener("RoomMember.name", this.onRoomMemberName);
             client.removeListener("RoomMember.membership", this.onRoomMemberMembership);
+            client.removeListener("RoomMember.powerLevel", this.onRoomMemberPowerlevel);
             client.removeListener("accountData", this.onAccountData);
         }
         if (this._cancelDeviceList) {
@@ -181,8 +181,8 @@ module.exports = withMatrixClient(React.createClass({
         }
     },
 
-    onRoomStateEvents: function(ev, state) {
-        this.forceUpdate();
+    onRoomMemberPowerlevel: function(ev, member) {
+        if (this.props.member.userId === member.userId) this.setState(this._calculateOpsPermissions(member));
     },
 
     onRoomMemberName: function(ev, member) {
@@ -804,8 +804,8 @@ module.exports = withMatrixClient(React.createClass({
             spinner = <Loader imgClassName="mx_ContextualMenu_spinner" />;
         }
 
-        if (this.state.can.kick) {
-            const membership = this.props.member.membership;
+        const membership = this.props.member.membership;
+        if (this.state.can.kick && (membership === 'join' || membership === 'invite')) {
             const kickLabel = membership === "invite" ? _t("Disinvite") : _t("Kick");
             kickButton = (
                 <AccessibleButton className="mx_MemberInfo_field"
@@ -816,7 +816,7 @@ module.exports = withMatrixClient(React.createClass({
         }
         if (this.state.can.ban) {
             let label = _t("Ban");
-            if (this.props.member.membership === 'ban') {
+            if (membership === 'ban') {
                 label = _t("Unban");
             }
             banButton = (

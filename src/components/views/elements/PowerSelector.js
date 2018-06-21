@@ -115,6 +115,9 @@ module.exports = React.createClass({
                     type="text"
                     size="3"
                     defaultValue={this.props.value}
+                    // set `key` so that it gets remounted when props.value changes, otherwise this uncontrolled input
+                    // would not be showing the new powerlevel when it changes externally
+                    key={this.props.value}
                     onBlur={this.onCustomBlur}
                     onKeyDown={this.onCustomKeyDown}
                 />
