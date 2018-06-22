@@ -1,6 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017, 2018 New Vector Ltd
+Copyright 2018 Michael Telatynski <7t3chguy@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,14 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
-import ReplyThread from "./components/views/elements/ReplyThread";
-
-const React = require('react');
-const sanitizeHtml = require('sanitize-html');
-const highlight = require('highlight.js');
-const linkifyMatrix = require('./linkify-matrix');
+import React from 'react';
+import ReplyThread from './components/views/elements/ReplyThread';
+import sanitizeHtml from 'sanitize-html';
+import linkifyMatrix from './linkify-matrix';
 import escape from 'lodash/escape';
 import emojione from 'emojione';
 import classNames from 'classnames';
@@ -64,11 +61,15 @@ export function containsEmoji(str) {
  * because we want to include emoji shortnames in title text
  */
 function unicodeToImage(str) {
-    let replaceWith, unicode, alt, short, fname;
+    let replaceWith;
+    let unicode;
+    let alt;
+    let short;
+    let fname;
     const mappedUnicode = emojione.mapUnicodeToShort();
 
     str = str.replace(emojione.regUnicode, function(unicodeChar) {
-        if ( (typeof unicodeChar === 'undefined') || (unicodeChar === '') || (!(unicodeChar in emojione.jsEscapeMap)) ) {
+        if ((typeof unicodeChar === 'undefined') || (unicodeChar === '') || (!(unicodeChar in emojione.jsEscapeMap))) {
             // if the unicodeChar doesnt exist just return the entire match
             return unicodeChar;
         } else {
@@ -82,7 +83,8 @@ function unicodeToImage(str) {
             alt = (emojione.unicodeAlt) ? emojione.convert(unicode.toUpperCase()) : mappedUnicode[unicode];
             const title = mappedUnicode[unicode];
 
-            replaceWith = `<img class="mx_emojione" title="${title}" alt="${alt}" src="${emojione.imagePathSVG}${fname}.svg${emojione.cacheBustParam}"/>`;
+            replaceWith = `<img class="mx_emojione" title="${title}" alt="${alt}" ` +
+                `src="${emojione.imagePathSVG}${fname}.svg${emojione.cacheBustParam}"/>`;
             return replaceWith;
         }
     });
@@ -95,10 +97,10 @@ function unicodeToImage(str) {
  * character number), return an image node with the corresponding
  * emoji.
  *
- * @param alt {string} String to use for the image alt text
- * @param useSvg {boolean} Whether to use SVG image src. If False, PNG will be used.
- * @param unicode {integer} One or more integers representing unicode characters
- * @returns A img node with the corresponding emoji
+ * @param {string} alt String to use for the image alt text
+ * @param {boolean} useSvg Whether to use SVG image src. If False, PNG will be used.
+ * @param {number} unicode One or more integers representing unicode characters
+ * @returns {Element} A img node with the corresponding emoji
  */
 export function charactersToImageNode(alt, useSvg, ...unicode) {
     const fileName = unicode.map((u) => {
@@ -134,9 +136,7 @@ export function processHtmlForSending(html: string): string {
             // Replace "<br>\n" with "\n" within `<pre>` tags because the <br> is
             // redundant. This is a workaround for a bug in draft-js-export-html:
             //   https://github.com/sstur/draft-js-export-html/issues/62
-            contentHTML += '<pre>' +
-                element.innerHTML.replace(/<br>\n/g, '\n').trim() +
-                '</pre>';
+            contentHTML += `<pre>${element.innerHTML.replace(/<br>\n/g, '\n').trim()}</pre>`;
         } else {
             const temp = document.createElement('div');
             temp.appendChild(element.cloneNode(true));
@@ -163,7 +163,8 @@ export function sanitizedHtmlNode(insaneHtml) {
  * Note that the HTML sanitiser library has its own internal logic for
  * doing this, to which we pass the same list of schemes. This is used in
  * other places we need to sanitise URLs.
- * @return true if permitted, otherwise false
+ * @param {string} inputUrl the url to test
+ * @return {boolean} true if permitted, otherwise false
  */
 export function isUrlPermitted(inputUrl) {
     try {
@@ -309,10 +310,11 @@ class BaseHighlighter {
      * @param {string[]} safeHighlights A list of substrings to highlight,
      *     sorted by descending length.
      *
-     * returns a list of results (strings for HtmlHighligher, react nodes for
+     * @returns {*[]} a list of results (strings for HtmlHighligher, react nodes for
      * TextHighlighter).
      */
     applyHighlights(safeSnippet, safeHighlights) {
+        let subSnippet;
         let lastOffset = 0;
         let offset;
         let nodes = [];
@@ -321,7 +323,7 @@ class BaseHighlighter {
         while ((offset = safeSnippet.toLowerCase().indexOf(safeHighlight.toLowerCase(), lastOffset)) >= 0) {
             // handle preamble
             if (offset > lastOffset) {
-                var subSnippet = safeSnippet.substring(lastOffset, offset);
+                subSnippet = safeSnippet.substring(lastOffset, offset);
                 nodes = nodes.concat(this._applySubHighlights(subSnippet, safeHighlights));
             }
 
@@ -366,12 +368,10 @@ class HtmlHighlighter extends BaseHighlighter {
             return snippet;
         }
 
-        let span = "<span class=\""+this.highlightClass+"\">"
-            + snippet + "</span>";
+        let span = `<span class="${this.highlightClass}">${snippet}</span>`;
 
         if (this.highlightLink) {
-            span = "<a href=\""+encodeURI(this.highlightLink)+"\">"
-                +span+"</a>";
+            span = `<a href="${encodeURI(this.highlightLink)}">${span}</a>`;
         }
         return span;
     }
@@ -407,16 +407,16 @@ class TextHighlighter extends BaseHighlighter {
 }
 
 
-    /* turn a matrix event body into html
-     *
-     * content: 'content' of the MatrixEvent
-     *
-     * highlights: optional list of words to highlight, ordered by longest word first
-     *
-     * opts.highlightLink: optional href to add to highlighted words
-     * opts.disableBigEmoji: optional argument to disable the big emoji class.
-     * opts.stripReplyFallback: optional argument specifying the event is a reply and so fallback needs removing
-     */
+/* turn a matrix event body into html
+ *
+ * content: 'content' of the MatrixEvent
+ *
+ * highlights: optional list of words to highlight, ordered by longest word first
+ *
+ * opts.highlightLink: optional href to add to highlighted words
+ * opts.disableBigEmoji: optional argument to disable the big emoji class.
+ * opts.stripReplyFallback: optional argument specifying the event is a reply and so fallback needs removing
+ */
 export function bodyToHtml(content, highlights, opts={}) {
     const isHtmlMessage = content.format === "org.matrix.custom.html" && content.formatted_body;
 

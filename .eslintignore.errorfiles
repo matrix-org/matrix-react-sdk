@@ -92,7 +92,6 @@ src/components/views/settings/DevicesPanel.js
 src/components/views/settings/IntegrationsManager.js
 src/components/views/settings/Notifications.js
 src/ContentMessages.js
-src/HtmlUtils.js
 src/ImageUtils.js
 src/languageHandler.js
 src/linkify-matrix.js
