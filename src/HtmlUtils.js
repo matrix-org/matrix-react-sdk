@@ -240,6 +240,11 @@ const sanitizeHtmlParams = {
                 attribs.width || 800,
                 attribs.height || 600,
             );
+
+            if (!attribs.title && attribs.alt) {
+                attribs.title = attribs.alt;
+            }
+
             return { tagName: tagName, attribs: attribs };
         },
         'code': function(tagName, attribs) {
