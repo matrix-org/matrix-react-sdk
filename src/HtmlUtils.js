@@ -377,36 +377,6 @@ class HtmlHighlighter extends BaseHighlighter {
     }
 }
 
-class TextHighlighter extends BaseHighlighter {
-    constructor(highlightClass, highlightLink) {
-        super(highlightClass, highlightLink);
-        this._key = 0;
-    }
-
-    /* create a <span> node to hold the given content
-     *
-     * snippet: content of the span
-     * highlight: true to highlight as a search match
-     *
-     * returns a React node
-     */
-    _processSnippet(snippet, highlight) {
-        const key = this._key++;
-
-        let node =
-            <span key={key} className={highlight ? this.highlightClass : null}>
-                { snippet }
-            </span>;
-
-        if (highlight && this.highlightLink) {
-            node = <a key={key} href={this.highlightLink}>{ node }</a>;
-        }
-
-        return node;
-    }
-}
-
-
 /* turn a matrix event body into html
  *
  * content: 'content' of the MatrixEvent
