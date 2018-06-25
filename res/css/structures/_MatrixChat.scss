@@ -75,7 +75,7 @@ limitations under the License.
     padding-right: 22px;
     background-color: $primary-bg-color;
 
-    flex: 1;
+    flex: 1 1 auto;
 
     /* Experimental fix for https://github.com/vector-im/vector-web/issues/947
        and https://github.com/vector-im/vector-web/issues/946.
@@ -99,6 +99,18 @@ limitations under the License.
     flex: 0 0 235px;
 }
 
+.mx_MatrixChat .mx_RightPanel_hidden {
+    order: 3;
+
+    // N.B. 100x flex-shrink factor to make the right panel only take up room
+    // if you are on a wide enough screen that the MiddlePanel is not squashed.
+    // This ensures the Middle/RightPanel spacing remains the same when you toggle
+    // the RightPanel on and off, assuming the MiddlePanel is not squished.
+    flex: 0 100 235px;
+}
+
+// N.B. this isn't used currently as we hide the RightPanel outright rather
+// than switching it to collapsed mode
 .mx_MatrixChat .mx_RightPanel.collapsed {
     flex: 0 0 122px;
 }

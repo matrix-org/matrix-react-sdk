@@ -350,7 +350,7 @@ module.exports = React.createClass({
             );
         }
 
-        let panel = <div />;
+        let panel = <div className="mx_RightPanel_blank" />;
         if (!this.props.collapsed) {
             if (this.props.roomId && this.state.phase === this.Phase.RoomMemberList) {
                 panel = <MemberList roomId={this.props.roomId} key={this.props.roomId} />;
@@ -375,10 +375,6 @@ module.exports = React.createClass({
             } else if (this.state.phase === this.Phase.FilePanel) {
                 panel = <FilePanel roomId={this.props.roomId} />;
             }
-        }
-
-        if (!panel) {
-            panel = <div className="mx_RightPanel_blank" />;
         }
 
         if (this.props.groupId && this.state.isUserPrivilegedInGroup) {
