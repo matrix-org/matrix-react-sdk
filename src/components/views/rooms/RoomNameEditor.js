@@ -51,6 +51,10 @@ module.exports = React.createClass({
         }
     },
 
+    shouldComponentUpdate: function(nextProps, nextState) {
+        return this.props.room.roomId !== nextProps.room.roomId;
+    },
+
     getRoomName: function() {
         return this.state.name;
     },
