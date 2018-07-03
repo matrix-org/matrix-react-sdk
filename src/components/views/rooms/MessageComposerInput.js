@@ -37,7 +37,7 @@ import Promise from 'bluebird';
 
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import type {MatrixClient} from 'matrix-js-sdk/lib/matrix';
-import SlashCommands from '../../../SlashCommands';
+import {processCommandInput} from '../../../SlashCommands';
 import { KeyCode, isOnlyCtrlOrCmdKeyEvent } from '../../../Keyboard';
 import Modal from '../../../Modal';
 import sdk from '../../../index';
@@ -54,8 +54,7 @@ import Markdown from '../../../Markdown';
 import ComposerHistoryManager from '../../../ComposerHistoryManager';
 import MessageComposerStore from '../../../stores/MessageComposerStore';
 
-import {MATRIXTO_URL_PATTERN, MATRIXTO_MD_LINK_PATTERN} from '../../../linkify-matrix';
-const REGEX_MATRIXTO = new RegExp(MATRIXTO_URL_PATTERN);
+import {MATRIXTO_MD_LINK_PATTERN} from '../../../linkify-matrix';
 const REGEX_MATRIXTO_MARKDOWN_GLOBAL = new RegExp(MATRIXTO_MD_LINK_PATTERN, 'g');
 
 import {asciiRegexp, unicodeRegexp, shortnameToUnicode, emojioneList, asciiList, mapUnicodeToShort, toShort} from 'emojione';
@@ -308,13 +307,12 @@ export default class MessageComposerInput extends React.Component {
     }
 
     onAction = (payload) => {
-        const editor = this.refs.editor;
         let editorState = this.state.editorState;
 
         switch (payload.action) {
             case 'reply_to_event':
             case 'focus_composer':
-                editor.focus();
+                this.focusComposer();
                 break;
             case 'insert_mention':
                 {
@@ -343,7 +341,7 @@ export default class MessageComposerInput extends React.Component {
                 // If so, what should be the format, and how do we differentiate it from replies?
 
                 const quote = Block.create('block-quote');
-                if (this.state.isRichTextEnabled) {    
+                if (this.state.isRichTextEnabled) {
                     let change = editorState.change();
                     if (editorState.anchorText.text === '' && editorState.anchorBlock.nodes.size === 1) {
                         // replace the current block rather than split the block
@@ -996,7 +994,7 @@ export default class MessageComposerInput extends React.Component {
             firstGrandChild.text[0] === '/')
         {
             commandText = this.plainWithIdPills.serialize(editorState);
-            cmd = SlashCommands.processInput(this.props.room.roomId, commandText);
+            cmd = processCommandInput(this.props.room.roomId, commandText);
         }
 
         if (cmd) {
@@ -1511,6 +1509,10 @@ export default class MessageComposerInput extends React.Component {
         }
     };
 
+    focusComposer = () => {
+        this.refs.editor.focus();
+    };
+
     render() {
         const activeEditorState = this.state.originalEditorState || this.state.editorState;
 
@@ -1519,9 +1521,9 @@ export default class MessageComposerInput extends React.Component {
         });
 
         return (
-            <div className="mx_MessageComposer_input_wrapper">
+            <div className="mx_MessageComposer_input_wrapper" onClick={this.focusComposer}>
                 <div className="mx_MessageComposer_autocomplete_wrapper">
-                    { SettingsStore.isFeatureEnabled("feature_rich_quoting") && <ReplyPreview /> }
+                    <ReplyPreview />
                     <Autocomplete
                         ref={(e) => this.autocomplete = e}
                         room={this.props.room}
