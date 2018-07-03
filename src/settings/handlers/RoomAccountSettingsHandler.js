@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import {SettingEventType} from '../SettingsStore';
 import SettingsHandler from "./SettingsHandler";
 import MatrixClientPeg from '../../MatrixClientPeg';
 
@@ -59,7 +60,7 @@ export default class RoomAccountSettingsHandler extends SettingsHandler {
 
         const content = this._getSettings(roomId) || {};
         content[settingName] = newValue;
-        return MatrixClientPeg.get().setRoomAccountData(roomId, "im.vector.web.settings", content);
+        return MatrixClientPeg.get().setRoomAccountData(roomId, SettingEventType, content);
     }
 
     canSetValue(settingName, roomId) {
@@ -74,7 +75,7 @@ export default class RoomAccountSettingsHandler extends SettingsHandler {
         return cli !== undefined && cli !== null;
     }
 
-    _getSettings(roomId, eventType = "im.vector.web.settings") {
+    _getSettings(roomId, eventType = SettingEventType) {
         const room = MatrixClientPeg.get().getRoom(roomId);
         if (!room) return null;
 

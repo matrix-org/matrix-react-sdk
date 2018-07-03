@@ -44,7 +44,7 @@ import PageTypes from '../../PageTypes';
 import createRoom from "../../createRoom";
 import KeyRequestHandler from '../../KeyRequestHandler';
 import { _t, getCurrentLanguage } from '../../languageHandler';
-import SettingsStore, {SettingLevel} from "../../settings/SettingsStore";
+import SettingsStore, {SettingLevel, SettingEventType} from "../../settings/SettingsStore";
 
 /** constants for MatrixChat.state.view */
 const VIEWS = {
@@ -1294,7 +1294,7 @@ export default React.createClass({
         });
 
         cli.on("accountData", function(ev) {
-            if (ev.getType() === 'im.vector.web.settings') {
+            if (ev.getType() === SettingEventType) {
                 if (ev.getContent() && ev.getContent().theme) {
                     dis.dispatch({
                         action: 'set_theme',
