@@ -28,9 +28,8 @@ import _sortBy from 'lodash/sortBy';
 import MatrixClientPeg from '../MatrixClientPeg';
 
 import type {MatrixEvent, Room, RoomMember, RoomState} from 'matrix-js-sdk';
-import type {SelectionRange} from './Autocompleter';
-import {makeUserPermalink} from "../matrix-to";
 import type {Completion, SelectionRange} from "./Autocompleter";
+import {makeUserPermalink} from "../matrix-to";
 
 const USER_REGEX = /\B@\S*/g;
 
