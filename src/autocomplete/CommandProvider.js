@@ -38,7 +38,9 @@ export default class CommandProvider extends AutocompleteProvider {
     }
 
     async getCompletions(query: string, selection: SelectionRange, force?: boolean): Array<Completion> {
+        // Commands only complete if they're at the very beginning of the input
         if (!selection.beginning) return [];
+
         const {command, range} = this.getCurrentCommand(query, selection);
         if (!command) return [];
 
