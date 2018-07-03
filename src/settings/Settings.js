@@ -21,15 +21,16 @@ import {
     NotificationBodyEnabledController,
     NotificationsEnabledController,
 } from "./controllers/NotificationControllers";
-
+import {SettingLevel} from './SettingsStore';
+const {DEVICE, ROOM_DEVICE, ROOM_ACCOUNT, ACCOUNT, ROOM, CONFIG, DEFAULT} = SettingLevel;
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
-const LEVELS_ROOM_SETTINGS = ['device', 'room-device', 'room-account', 'account', 'config'];
-const LEVELS_ROOM_SETTINGS_WITH_ROOM = ['device', 'room-device', 'room-account', 'account', 'config', 'room'];
-const LEVELS_ACCOUNT_SETTINGS = ['device', 'account', 'config'];
-const LEVELS_FEATURE = ['device', 'config'];
-const LEVELS_DEVICE_ONLY_SETTINGS = ['device'];
-const LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG = ['device', 'config'];
+const LEVELS_ROOM_SETTINGS = [DEVICE, ROOM_DEVICE, ROOM_ACCOUNT, ACCOUNT, CONFIG];
+const LEVELS_ROOM_SETTINGS_WITH_ROOM = [DEVICE, ROOM_DEVICE, ROOM_ACCOUNT, ACCOUNT, CONFIG, ROOM];
+const LEVELS_ACCOUNT_SETTINGS = [DEVICE, ACCOUNT, CONFIG];
+const LEVELS_FEATURE = [DEVICE, CONFIG];
+const LEVELS_DEVICE_ONLY_SETTINGS = [DEVICE];
+const LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG = [DEVICE, CONFIG];
 
 export const SETTINGS = {
     // EXAMPLE SETTING:
@@ -42,9 +43,9 @@ export const SETTINGS = {
     //
     //     // Display name can also be an object for different levels.
     //     //displayName: {
-    //     //    "device": _td("Name for when the setting is used at 'device'"),
-    //     //    "room": _td("Name for when the setting is used at 'room'"),
-    //     //    "default": _td("The name for all other levels"),
+    //     //    [DEVICE]: _td("Name for when the setting is used at DEVICE"),
+    //     //    [ROOM]: _td("Name for when the setting is used at ROOM"),
+    //     //    [DEFAULT]: _td("The name for all other levels"),
     //     //}
     //
     //     // The supported levels are required. Preferably, use the preset arrays
@@ -52,14 +53,14 @@ export const SETTINGS = {
     //     supportedLevels: [
     //         // The order does not matter.
     //
-    //         "device",        // Affects the current device only
-    //         "room-device",   // Affects the current room on the current device
-    //         "room-account",  // Affects the current room for the current account
-    //         "account",       // Affects the current account
-    //         "room",          // Affects the current room (controlled by room admins)
-    //         "config",        // Affects the current application
+    //         DEVICE,        // Affects the current device only
+    //         ROOM_DEVICE,   // Affects the current room on the current device
+    //         ROOM_ACCOUNT,  // Affects the current room for the current account
+    //         ACCOUNT,       // Affects the current account
+    //         ROOM,          // Affects the current room (controlled by room admins)
+    //         CONFIG,        // Affects the current application
     //
-    //         // "default" is always supported and does not get listed here.
+    //         // DEFAULT is always supported and does not get listed here.
     //     ],
     //
     //     // Required. Can be any data type. The value specified here should match
@@ -228,27 +229,27 @@ export const SETTINGS = {
     "blacklistUnverifiedDevices": {
         // We specifically want to have room-device > device so that users may set a device default
         // with a per-room override.
-        supportedLevels: ['room-device', 'device'],
+        supportedLevels: [ROOM_DEVICE, DEVICE],
         supportedLevelsAreOrdered: true,
         displayName: {
-            "default": _td('Never send encrypted messages to unverified devices from this device'),
-            "room-device": _td('Never send encrypted messages to unverified devices in this room from this device'),
+            [DEFAULT]: _td('Never send encrypted messages to unverified devices from this device'),
+            [ROOM_DEVICE]: _td('Never send encrypted messages to unverified devices in this room from this device'),
         },
         default: false,
     },
     "urlPreviewsEnabled": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
         displayName: {
-            "default": _td('Enable inline URL previews by default'),
-            "room-account": _td("Enable URL previews for this room (only affects you)"),
-            "room": _td("Enable URL previews by default for participants in this room"),
+            [DEFAULT]: _td('Enable inline URL previews by default'),
+            [ROOM_ACCOUNT]: _td("Enable URL previews for this room (only affects you)"),
+            [ROOM]: _td("Enable URL previews by default for participants in this room"),
         },
         default: true,
     },
     "urlPreviewsEnabled_e2ee": {
-        supportedLevels: ['room-device', 'room-account'],
+        supportedLevels: [ROOM_DEVICE, ROOM_ACCOUNT],
         displayName: {
-            "room-account": _td("Enable URL previews for this room (only affects you)"),
+            [ROOM_ACCOUNT]: _td("Enable URL previews for this room (only affects you)"),
         },
         default: false,
     },
@@ -281,7 +282,7 @@ export const SETTINGS = {
         default: false,
     },
     "PinnedEvents.isOpen": {
-        supportedLevels: ['room-device'],
+        supportedLevels: [ROOM_DEVICE],
         default: false,
     },
 };

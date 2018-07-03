@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import {SettingEventType} from '../SettingsStore';
 import SettingsHandler from "./SettingsHandler";
 import MatrixClientPeg from '../../MatrixClientPeg';
 
@@ -45,14 +46,14 @@ export default class RoomSettingsHandler extends SettingsHandler {
 
         const content = this._getSettings(roomId) || {};
         content[settingName] = newValue;
-        return MatrixClientPeg.get().sendStateEvent(roomId, "im.vector.web.settings", content, "");
+        return MatrixClientPeg.get().sendStateEvent(roomId, SettingEventType, content, "");
     }
 
     canSetValue(settingName, roomId) {
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(roomId);
 
-        let eventType = "im.vector.web.settings";
+        let eventType = SettingEventType;
         if (settingName === "urlPreviewsEnabled") eventType = "org.matrix.room.preview_urls";
 
         if (!room) return false;
@@ -64,7 +65,7 @@ export default class RoomSettingsHandler extends SettingsHandler {
         return cli !== undefined && cli !== null;
     }
 
-    _getSettings(roomId, eventType = "im.vector.web.settings") {
+    _getSettings(roomId, eventType = SettingEventType) {
         const room = MatrixClientPeg.get().getRoom(roomId);
         if (!room) return null;
 

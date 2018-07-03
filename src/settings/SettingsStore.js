@@ -40,6 +40,10 @@ export const SettingLevel = {
     CONFIG: "config",
     DEFAULT: "default",
 };
+const {DEVICE, ROOM_DEVICE, ROOM_ACCOUNT, ACCOUNT, ROOM, CONFIG, DEFAULT} = SettingLevel;
+
+export const SettingEventType = 'im.vector.web.settings';
+
 
 // Convert the settings to easier to manage objects for the handlers
 const defaultSettings = {};
@@ -50,13 +54,13 @@ for (const key of Object.keys(SETTINGS)) {
 }
 
 const LEVEL_HANDLERS = {
-    "device": new DeviceSettingsHandler(featureNames),
-    "room-device": new RoomDeviceSettingsHandler(),
-    "room-account": new RoomAccountSettingsHandler(),
-    "account": new AccountSettingsHandler(),
-    "room": new RoomSettingsHandler(),
-    "config": new ConfigSettingsHandler(),
-    "default": new DefaultSettingsHandler(defaultSettings),
+    [DEVICE]: new DeviceSettingsHandler(featureNames),
+    [ROOM_DEVICE]: new RoomDeviceSettingsHandler(),
+    [ROOM_ACCOUNT]: new RoomAccountSettingsHandler(),
+    [ACCOUNT]: new AccountSettingsHandler(),
+    [ROOM]: new RoomSettingsHandler(),
+    [CONFIG]: new ConfigSettingsHandler(),
+    [DEFAULT]: new DefaultSettingsHandler(defaultSettings),
 };
 
 // Wrap all the handlers with local echo
@@ -65,7 +69,7 @@ for (const key of Object.keys(LEVEL_HANDLERS)) {
 }
 
 const LEVEL_ORDER = [
-    'device', 'room-device', 'room-account', 'account', 'room', 'config', 'default',
+    DEVICE, ROOM_DEVICE, ROOM_ACCOUNT, DEVICE, ACCOUNT, ROOM, CONFIG, DEFAULT,
 ];
 
 /**
@@ -99,13 +103,13 @@ export default class SettingsStore {
      * The level to get the display name for; Defaults to 'default'.
      * @return {String} The display name for the setting, or null if not found.
      */
-    static getDisplayName(settingName, atLevel = "default") {
+    static getDisplayName(settingName, atLevel = DEFAULT) {
         if (!SETTINGS[settingName] || !SETTINGS[settingName].displayName) return null;
 
         let displayName = SETTINGS[settingName].displayName;
         if (displayName instanceof Object) {
             if (displayName[atLevel]) displayName = displayName[atLevel];
-            else displayName = displayName["default"];
+            else displayName = displayName[DEFAULT];
         }
 
         return _t(displayName);
@@ -164,7 +168,7 @@ export default class SettingsStore {
             throw new Error("Setting " + settingName + " is not a feature");
         }
 
-        return SettingsStore.setValue(settingName, null, "device", value);
+        return SettingsStore.setValue(settingName, null, DEVICE, value);
     }
 
     /**
@@ -206,7 +210,7 @@ export default class SettingsStore {
 
         const setting = SETTINGS[settingName];
         const levelOrder = (setting.supportedLevelsAreOrdered ? setting.supportedLevels : LEVEL_ORDER);
-        if (!levelOrder.includes("default")) levelOrder.push("default"); // always include default
+        if (!levelOrder.includes(DEFAULT)) levelOrder.push(DEFAULT); // always include default
 
         const minIndex = levelOrder.indexOf(level);
         if (minIndex === -1) throw new Error("Level " + level + " is not prioritized");
@@ -230,7 +234,7 @@ export default class SettingsStore {
         for (let i = minIndex; i < levelOrder.length; i++) {
             const handler = handlers[levelOrder[i]];
             if (!handler) continue;
-            if (excludeDefault && levelOrder[i] === "default") continue;
+            if (excludeDefault && levelOrder[i] === DEFAULT) continue;
 
             const value = handler.getValue(settingName, roomId);
             if (value === null || value === undefined) continue;
@@ -330,7 +334,7 @@ export default class SettingsStore {
         }
 
         // Always support 'default'
-        if (!handlers['default']) handlers['default'] = LEVEL_HANDLERS['default'];
+        if (!handlers[DEFAULT]) handlers[DEFAULT] = LEVEL_HANDLERS[DEFAULT];
 
         return handlers;
     }

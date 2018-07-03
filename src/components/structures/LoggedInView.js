@@ -29,7 +29,7 @@ import sdk from '../../index';
 import dis from '../../dispatcher';
 import sessionStore from '../../stores/SessionStore';
 import MatrixClientPeg from '../../MatrixClientPeg';
-import SettingsStore from "../../settings/SettingsStore";
+import SettingsStore, {SettingEventType} from "../../settings/SettingsStore";
 
 import TagOrderActions from '../../actions/TagOrderActions';
 import RoomListActions from '../../actions/RoomListActions';
@@ -132,7 +132,7 @@ const LoggedInView = React.createClass({
     },
 
     onAccountData: function(event) {
-        if (event.getType() === "im.vector.web.settings") {
+        if (event.getType() === SettingEventType) {
             this.setState({
                 useCompactLayout: event.getContent().useCompactLayout,
             });

@@ -45,7 +45,7 @@ import { KeyCode, isOnlyCtrlOrCmdKeyEvent } from '../../Keyboard';
 
 import RoomViewStore from '../../stores/RoomViewStore';
 import RoomScrollStateStore from '../../stores/RoomScrollStateStore';
-import SettingsStore, {SettingLevel} from "../../settings/SettingsStore";
+import SettingsStore, {SettingLevel, SettingEventType} from "../../settings/SettingsStore";
 import WidgetUtils from '../../utils/WidgetUtils';
 
 const DEBUG = false;
@@ -643,7 +643,7 @@ module.exports = React.createClass({
 
     onAccountData: function(event) {
         const type = event.getType();
-        if ((type === "org.matrix.preview_urls" || type === "im.vector.web.settings") && this.state.room) {
+        if ((type === "org.matrix.preview_urls" || type === SettingEventType) && this.state.room) {
             // non-e2ee url previews are stored in legacy event type `org.matrix.room.preview_urls`
             this._updatePreviewUrlVisibility(this.state.room);
         }
@@ -657,7 +657,7 @@ module.exports = React.createClass({
                 // XXX: we should validate the event
                 console.log("Tinter.tint from onRoomAccountData");
                 Tinter.tint(color_scheme.primary_color, color_scheme.secondary_color);
-            } else if (type === "org.matrix.room.preview_urls" || type === "im.vector.web.settings") {
+            } else if (type === "org.matrix.room.preview_urls" || type === SettingEventType) {
                 // non-e2ee url previews are stored in legacy event type `org.matrix.room.preview_urls`
                 this._updatePreviewUrlVisibility(room);
             }
