@@ -488,7 +488,7 @@ export function processCommandInput(roomId, input) {
     // trim any trailing whitespace, as it can confuse the parser for
     // IRC-style commands
     input = input.replace(/\s+$/, '');
-    if (input[0] !== '/' || input[1] === '/') return null; // not a command
+    if (input[0] !== '/') return null; // not a command
 
     const bits = input.match(/^(\S+?)( +((.|\n)*))?$/);
     let cmd;
