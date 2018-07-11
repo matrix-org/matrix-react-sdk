@@ -24,6 +24,7 @@ import FuzzyMatcher from './FuzzyMatcher';
 import {TextualCompletion} from './Components';
 import type {Completion, SelectionRange} from "./Autocompleter";
 import {CommandMap} from '../SlashCommands';
+import SettingsStore from "../settings/SettingsStore";
 
 const COMMANDS = Object.values(CommandMap);
 
@@ -43,6 +44,8 @@ export default class CommandProvider extends AutocompleteProvider {
 
         let matches = [];
         if (command[0] !== command[1]) {
+            // if user does not wish to see autocomplete for args now that they are entering args
+            if (!SettingsStore.getValue("autocompleteCommandsShowForArgs")) return [];
             // The input looks like a command with arguments, perform exact match
             const name = command[1].substr(1); // strip leading `/`
             if (CommandMap[name]) {

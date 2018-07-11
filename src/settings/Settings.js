@@ -284,4 +284,9 @@ export const SETTINGS = {
         supportedLevels: ['room-device'],
         default: false,
     },
+    "autocompleteCommandsShowForArgs": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Show command autocomplete whilst entering arguments'),
+        default: true,
+    },
 };
