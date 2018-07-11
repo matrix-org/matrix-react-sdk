@@ -234,6 +234,7 @@
     "Enable URL previews by default for participants in this room": "Enable URL previews by default for participants in this room",
     "Room Colour": "Room Colour",
     "Enable widget screenshots on supported widgets": "Enable widget screenshots on supported widgets",
+    "Show command autocomplete whilst entering arguments": "Show command autocomplete whilst entering arguments",
     "Collecting app version information": "Collecting app version information",
     "Collecting logs": "Collecting logs",
     "Uploading report": "Uploading report",
