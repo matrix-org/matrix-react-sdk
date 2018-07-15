@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2018 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,28 +15,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
-var React = require('react');
-
-var MatrixClientPeg = require('../../MatrixClientPeg');
-var ContentRepo = require("matrix-js-sdk").ContentRepo;
-var Modal = require('../../Modal');
-var sdk = require('../../index');
-var dis = require('../../dispatcher');
-
-var linkify = require('linkifyjs');
-var linkifyString = require('linkifyjs/string');
-var linkifyMatrix = require('../../linkify-matrix');
-var sanitizeHtml = require('sanitize-html');
+import React from 'react';
 import Promise from 'bluebird';
 
-import { _t } from '../../languageHandler';
-
+import MatrixClientPeg from '../../MatrixClientPeg';
+import Modal from '../../Modal';
+import sdk from '../../index';
+import dis from '../../dispatcher';
+import {_t} from '../../languageHandler';
 import {getDisplayAliasForRoom} from '../views/rooms/RoomDetailRow';
 import {instanceForInstanceId, protocolNameForInstanceId} from '../../utils/DirectoryUtils';
 
-linkifyMatrix(linkify);
+
+function nop() {}
 
 module.exports = React.createClass({
     displayName: 'RoomDirectory',
@@ -47,7 +39,7 @@ module.exports = React.createClass({
     getDefaultProps: function() {
         return {
             config: {},
-        }
+        };
     },
 
     getInitialState: function() {
@@ -59,7 +51,7 @@ module.exports = React.createClass({
             includeAll: false,
             roomServer: null,
             filterString: null,
-        }
+        };
     },
 
     componentWillMount: function() {
@@ -120,14 +112,14 @@ module.exports = React.createClass({
     getMoreRooms: function() {
         if (!MatrixClientPeg.get()) return Promise.resolve();
 
-        const my_filter_string = this.state.filterString;
-        const my_server = this.state.roomServer;
+        const myFilterString = this.state.filterString;
+        const myServer = this.state.roomServer;
         // remember the next batch token when we sent the request
         // too. If it's changed, appending to the list will corrupt it.
-        const my_next_batch = this.nextBatch;
+        const myNextBatch = this.nextBatch;
         const opts = {limit: 20};
-        if (my_server != MatrixClientPeg.getHomeServerName()) {
-            opts.server = my_server;
+        if (myServer !== MatrixClientPeg.getHomeServerName()) {
+            opts.server = myServer;
         }
         if (this.state.instanceId) {
             opts.third_party_instance_id = this.state.instanceId;
@@ -135,13 +127,10 @@ module.exports = React.createClass({
             opts.include_all_networks = true;
         }
         if (this.nextBatch) opts.since = this.nextBatch;
-        if (my_filter_string) opts.filter = { generic_search_term: my_filter_string } ;
+        if (myFilterString) opts.filter = { generic_search_term: myFilterString };
         return MatrixClientPeg.get().publicRooms(opts).then((data) => {
-            if (
-                my_filter_string != this.state.filterString ||
-                my_server != this.state.roomServer ||
-                my_next_batch != this.nextBatch)
-            {
+            const {filterString, roomServer} = this.state;
+            if (myFilterString !== filterString || myServer !== roomServer || myNextBatch !== this.nextBatch) {
                 // if the filter or server has changed since this request was sent,
                 // throw away the result (don't even clear the busy flag
                 // since we must still have a request in flight)
@@ -161,11 +150,8 @@ module.exports = React.createClass({
             });
             return Boolean(data.next_batch);
         }, (err) => {
-            if (
-                my_filter_string != this.state.filterString ||
-                my_server != this.state.roomServer ||
-                my_next_batch != this.nextBatch)
-            {
+            const {filterString, roomServer} = this.state;
+            if (myFilterString !== filterString || myServer !== roomServer || myNextBatch !== this.nextBatch) {
                 // as above: we don't care about errors for old
                 // requests either
                 return;
@@ -178,10 +164,10 @@ module.exports = React.createClass({
 
             this.setState({ loading: false });
             console.error("Failed to get publicRooms: %s", JSON.stringify(err));
-            var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog('Failed to get public room list', '', ErrorDialog, {
                 title: _t('Failed to get public room list'),
-                description: ((err && err.message) ? err.message : _t('The server may be unavailable or overloaded'))
+                description: ((err && err.message) ? err.message : _t('The server may be unavailable or overloaded')),
             });
         });
     },
@@ -194,28 +180,28 @@ module.exports = React.createClass({
      * this needs SPEC-417.
      */
     removeFromDirectory: function(room) {
-        var alias = getDisplayAliasForRoom(room);
-        var name = room.name || alias || _t('Unnamed room');
+        const alias = getDisplayAliasForRoom(room);
+        const name = room.name || alias || _t('Unnamed room');
 
-        var QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-        var ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+        const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
 
-        var desc;
+        let desc;
         if (alias) {
-            desc = _t('Delete the room alias %(alias)s and remove %(name)s from the directory?', {alias: alias, name: name});
+            desc = _t('Delete the room alias %(alias)s and remove %(name)s from the directory?', {alias, name});
         } else {
-            desc = _t('Remove %(name)s from the directory?', {name: name});
+            desc = _t('Remove %(name)s from the directory?', {name});
         }
 
         Modal.createTrackedDialog('Remove from Directory', '', QuestionDialog, {
             title: _t('Remove from Directory'),
             description: desc,
-            onFinished: (should_delete) => {
-                if (!should_delete) return;
+            onFinished: (shouldDelete) => {
+                if (!shouldDelete) return;
 
-                var Loader = sdk.getComponent("elements.Spinner");
-                var modal = Modal.createDialog(Loader);
-                var step = _t('remove %(name)s from the directory.', {name: name});
+                const Loader = sdk.getComponent("elements.Spinner");
+                const modal = Modal.createDialog(Loader);
+                let step = _t('remove %(name)s from the directory.', {name});
 
                 MatrixClientPeg.get().setRoomDirectoryVisibility(room.room_id, 'private').then(() => {
                     if (!alias) return;
@@ -230,10 +216,11 @@ module.exports = React.createClass({
                     console.error("Failed to " + step + ": " + err);
                     Modal.createTrackedDialog('Remove from Directory Error', '', ErrorDialog, {
                         title: _t('Error'),
-                        description: ((err && err.message) ? err.message : _t('The server may be unavailable or overloaded'))
+                        description: ((err && err.message) ? err.message
+                            : _t('The server may be unavailable or overloaded')),
                     });
                 });
-            }
+            },
         });
     },
 
@@ -306,7 +293,7 @@ module.exports = React.createClass({
         if (!this.state.instanceId) {
             // If the user specified an alias without a domain, add on whichever server is selected
             // in the dropdown
-            if (alias.indexOf(':') == -1) {
+            if (!alias.includes(':')) {
                 alias = alias + ':' + this.state.roomServer;
             }
             this.showRoomAlias(alias);
@@ -314,7 +301,8 @@ module.exports = React.createClass({
             // This is a 3rd party protocol. Let's see if we can join it
             const protocolName = protocolNameForInstanceId(this.protocols, this.state.instanceId);
             const instance = instanceForInstanceId(this.protocols, this.state.instanceId);
-            const fields = protocolName ? this._getFieldsForThirdPartyLocation(alias, this.protocols[protocolName], instance) : null;
+            const fields = protocolName
+                ? this._getFieldsForThirdPartyLocation(alias, this.protocols[protocolName], instance) : null;
             if (!fields) {
                 const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createTrackedDialog('Unable to join network', '', ErrorDialog, {
@@ -347,8 +335,8 @@ module.exports = React.createClass({
         this.showRoom(null, alias);
     },
 
-    showRoom: function(room, room_alias) {
-        var payload = {action: 'view_room'};
+    showRoom: function(room, roomAlias) {
+        const payload = {action: 'view_room'};
         if (room) {
             // Don't let the user view a room they won't be able to either
             // peek or join: fail earlier so they don't have to click back
@@ -360,23 +348,23 @@ module.exports = React.createClass({
                 }
             }
 
-            if (!room_alias) {
-                room_alias = getDisplayAliasForRoom(room);
+            if (!roomAlias) {
+                roomAlias = getDisplayAliasForRoom(room);
             }
 
             payload.oob_data = {
                 avatarUrl: room.avatarUrl,
                 // XXX: This logic is duplicated from the JS SDK which
                 // would normally decide what the name is.
-                name: room.name || room_alias || _t('Unnamed room'),
+                name: room.name || roomAlias || _t('Unnamed room'),
             };
         }
         // It's not really possible to join Matrix rooms by ID because the HS has no way to know
         // which servers to start querying. However, there's no other way to join rooms in
         // this list without aliases at present, so if roomAlias isn't set here we have no
         // choice but to supply the ID.
-        if (room_alias) {
-            payload.room_alias = room_alias;
+        if (roomAlias) {
+            payload.room_alias = roomAlias;
         } else {
             payload.room_id = room.roomId;
         }
@@ -405,10 +393,10 @@ module.exports = React.createClass({
         this.scrollPanel = element;
     },
 
-    _stringLooksLikeId: function(s, field_type) {
+    _stringLooksLikeId: function(s, fieldType) {
         let pat = /^#[^\s]+:[^\s]/;
-        if (field_type && field_type.regexp) {
-            pat = new RegExp(field_type.regexp);
+        if (fieldType && fieldType.regexp) {
+            pat = new RegExp(fieldType.regexp);
         }
 
         return pat.test(s);
@@ -432,8 +420,8 @@ module.exports = React.createClass({
 
     /**
      * called by the parent component when PageUp/Down/etc is pressed.
-     *
      * We pass it down to the scroll panel.
+     * @param {Event} ev
      */
     handleScrollKey: function(ev) {
         if (this.scrollPanel) {
@@ -445,7 +433,10 @@ module.exports = React.createClass({
         const SimpleRoomHeader = sdk.getComponent('rooms.SimpleRoomHeader');
         const Loader = sdk.getComponent("elements.Spinner");
 
-        if (this.state.protocolsLoading) {
+        const {protocolsLoading, loading, instanceId, roomServer, filterString} = this.state;
+
+
+        if (protocolsLoading) {
             return (
                 <div className="mx_RoomDirectory">
                     <SimpleRoomHeader title={ _t('Directory') } />
@@ -455,7 +446,7 @@ module.exports = React.createClass({
         }
 
         let content;
-        if (this.state.loading) {
+        if (loading) {
             content = <div className="mx_RoomDirectory">
                 <Loader />
             </div>;
@@ -464,11 +455,11 @@ module.exports = React.createClass({
             // we still show the scrollpanel, at least for now, because
             // otherwise we don't fetch more because we don't get a fill
             // request from the scrollpanel because there isn't one
-            let scrollpanel_content;
-            if (rows.length == 0) {
-                scrollpanel_content = <i>{ _t('No rooms to show') }</i>;
+            let scrollpanelContent;
+            if (rows.length === 0) {
+                scrollpanelContent = <i>{ _t('No rooms to show') }</i>;
             } else {
-                scrollpanel_content = <table ref="directory_table" className="mx_RoomDirectory_table">
+                scrollpanelContent = <table ref="directory_table" className="mx_RoomDirectory_table">
                     <tbody>
                         { this.getRows() }
                     </tbody>
@@ -480,14 +471,14 @@ module.exports = React.createClass({
                 onFillRequest={ this.onFillRequest }
                 stickyBottom={false}
                 startAtBottom={false}
-                onResize={function(){}}
+                onResize={nop}
             >
-                { scrollpanel_content }
+                { scrollpanelContent }
             </ScrollPanel>;
         }
 
-        const protocolName = protocolNameForInstanceId(this.protocols, this.state.instanceId);
-        let instance_expected_field_type;
+        const protocolName = protocolNameForInstanceId(this.protocols, instanceId);
+        let instanceExpectedFieldType;
         if (
             protocolName &&
             this.protocols &&
@@ -495,22 +486,22 @@ module.exports = React.createClass({
             this.protocols[protocolName].location_fields.length > 0 &&
             this.protocols[protocolName].field_types
         ) {
-            const last_field = this.protocols[protocolName].location_fields.slice(-1)[0];
-            instance_expected_field_type = this.protocols[protocolName].field_types[last_field];
+            const lastField = this.protocols[protocolName].location_fields.slice(-1)[0];
+            instanceExpectedFieldType = this.protocols[protocolName].field_types[lastField];
         }
 
 
         let placeholder = _t('Search for a room');
-        if (!this.state.instanceId) {
-            placeholder = _t('#example') + ':' + this.state.roomServer;
-        } else if (instance_expected_field_type) {
-            placeholder = instance_expected_field_type.placeholder;
+        if (!instanceId) {
+            placeholder = _t('#example') + ':' + roomServer;
+        } else if (instanceExpectedFieldType) {
+            placeholder = instanceExpectedFieldType.placeholder;
         }
 
-        let showJoinButton = this._stringLooksLikeId(this.state.filterString, instance_expected_field_type);
+        let showJoinButton = this._stringLooksLikeId(filterString, instanceExpectedFieldType);
         if (protocolName) {
-            const instance = instanceForInstanceId(this.protocols, this.state.instanceId);
-            if (this._getFieldsForThirdPartyLocation(this.state.filterString, this.protocols[protocolName], instance) === null) {
+            const instance = instanceForInstanceId(this.protocols, instanceId);
+            if (this._getFieldsForThirdPartyLocation(filterString, this.protocols[protocolName], instance) === null) {
                 showJoinButton = false;
             }
         }
@@ -533,7 +524,7 @@ module.exports = React.createClass({
                 </div>
             </div>
         );
-    }
+    },
 });
 
 // Maps a snake-cased room directory response to a camel case keyed object as components expect
