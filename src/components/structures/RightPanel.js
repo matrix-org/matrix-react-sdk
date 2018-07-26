@@ -1,7 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
-Copyright 2017 New Vector Ltd
+Copyright 2017, 2018 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -150,6 +150,14 @@ module.exports = React.createClass({
         this.setState({
             isUserPrivilegedInGroup: GroupStore.isUserPrivileged(this.props.groupId),
         });
+    },
+
+    _onContainerClick: function() {
+        if (this.props.disabled) {
+            dis.dispatch({
+                action: 'close_settings',
+            });
+        }
     },
 
     onCollapseClick: function() {
@@ -405,15 +413,17 @@ module.exports = React.createClass({
         });
 
         return (
-            <aside className={classes}>
-                <div className="mx_RightPanel_header">
-                    <div className="mx_RightPanel_headerButtonGroup">
-                        { headerButtons }
+            <aside className="mx_RightPanel_container" onClick={this._onContainerClick}>
+                <div className={classes}>
+                    <div className="mx_RightPanel_header">
+                        <div className="mx_RightPanel_headerButtonGroup">
+                            { headerButtons }
+                        </div>
                     </div>
-                </div>
-                { panel }
-                <div className="mx_RightPanel_footer">
-                    { inviteGroup }
+                    { panel }
+                    <div className="mx_RightPanel_footer">
+                        { inviteGroup }
+                    </div>
                 </div>
             </aside>
         );

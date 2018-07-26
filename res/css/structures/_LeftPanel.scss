@@ -22,15 +22,20 @@ limitations under the License.
     flex-direction: column;
 }
 
-.mx_LeftPanel_container {
+.mx_LeftPanel_outerContainer {
     display: flex;
     /* LeftPanel 235px */
     flex: 0 0 235px;
 }
 
-.mx_LeftPanel_container.mx_LeftPanel_container_hasTagPanel {
+.mx_LeftPanel_outerContainer.mx_LeftPanel_outerContainer_hasTagPanel {
     /* TagPanel 60px + LeftPanel 235px */
     flex: 0 0 295px;
+}
+
+.mx_LeftPanel_container {
+    display: flex;
+    width: 100%;
 }
 
 .mx_LeftPanel_container_collapsed {
