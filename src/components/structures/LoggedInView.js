@@ -255,6 +255,14 @@ const LoggedInView = React.createClass({
         ), true);
     },
 
+    _onSidePanelContainerClick: function() {
+        if (this.props.leftDisabled && this.props.rightDisabled) {
+            dis.dispatch({
+                action: 'close_settings',
+            });
+        }
+    },
+
     render: function() {
         const LeftPanel = sdk.getComponent('structures.LeftPanel');
         const RightPanel = sdk.getComponent('structures.RightPanel');
@@ -384,14 +392,18 @@ const LoggedInView = React.createClass({
                 { topBar }
                 <DragDropContext onDragEnd={this._onDragEnd}>
                     <div className={bodyClasses}>
-                        <LeftPanel
-                            collapsed={this.props.collapseLhs || false}
-                            disabled={this.props.leftDisabled}
-                        />
+                        <aside className="mx_MatrixChat_leftWrapper" onClick={this._onSidePanelContainerClick}>
+                            <LeftPanel
+                                collapsed={this.props.collapseLhs || false}
+                                disabled={this.props.leftDisabled}
+                            />
+                        </aside>
                         <main className='mx_MatrixChat_middlePanel'>
                             { page_element }
                         </main>
-                        { right_panel }
+                        <aside className="mx_MatrixChat_rightWrapper" onClick={this._onSidePanelContainerClick}>
+                            { right_panel }
+                        </aside>
                     </div>
                 </DragDropContext>
             </div>

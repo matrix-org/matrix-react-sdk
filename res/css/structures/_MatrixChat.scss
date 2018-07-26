@@ -75,7 +75,7 @@ limitations under the License.
     padding-right: 22px;
     background-color: $primary-bg-color;
 
-    flex: 1;
+    flex: 0 1 960;
 
     /* Experimental fix for https://github.com/vector-im/vector-web/issues/947
        and https://github.com/vector-im/vector-web/issues/946.
@@ -93,10 +93,14 @@ limitations under the License.
     height: 100%;
 }
 
-.mx_MatrixChat .mx_RightPanel_container {
+.mx_MatrixChat_leftWrapper {
+    flex: 1 0 auto;
+}
+
+.mx_MatrixChat_rightWrapper {
     order: 3;
 
-    flex: 0 0 235px;
+    flex: 1 0 235px;
 }
 
 .mx_MatrixChat .mx_RightPanel.collapsed {

@@ -161,14 +161,6 @@ var LeftPanel = React.createClass({
         }
     },
 
-    _onClick: function() {
-        if (this.props.disabled) {
-            dis.dispatch({
-                action: 'close_settings',
-            });
-        }
-    },
-
     onHideClick: function() {
         dis.dispatch({
             action: 'hide_left_panel',
@@ -208,13 +200,6 @@ var LeftPanel = React.createClass({
         const tagPanelEnabled = !SettingsStore.getValue("TagPanel.disableTagPanel");
         const tagPanel = tagPanelEnabled ? <TagPanel /> : <div />;
 
-        const outerContainerClasses = classNames(
-            "mx_LeftPanel_outerContainer",
-            {
-                "mx_LeftPanel_outerContainer_hasTagPanel": tagPanelEnabled,
-            },
-        );
-
         const containerClasses = classNames(
             "mx_LeftPanel_container", "mx_fadable",
             {
@@ -224,21 +209,19 @@ var LeftPanel = React.createClass({
         );
 
         return (
-            <aside className={outerContainerClasses} onClick={this._onClick}>
-                <div className={containerClasses}>
-                    { tagPanel }
-                    <div className={classes} onKeyDown={ this._onKeyDown } onFocus={ this._onFocus } onBlur={ this._onBlur }>
-                        { topBox }
-                        <CallPreview ConferenceHandler={VectorConferenceHandler} />
-                        <RoomList
-                            ref={this.collectRoomList}
-                            collapsed={this.props.collapsed}
-                            searchFilter={this.state.searchFilter}
-                            ConferenceHandler={VectorConferenceHandler} />
-                        <BottomLeftMenu collapsed={this.props.collapsed}/>
-                    </div>
+            <div className={containerClasses}>
+                { tagPanel }
+                <div className={classes} onKeyDown={ this._onKeyDown } onFocus={ this._onFocus } onBlur={ this._onBlur }>
+                    { topBox }
+                    <CallPreview ConferenceHandler={VectorConferenceHandler} />
+                    <RoomList
+                        ref={this.collectRoomList}
+                        collapsed={this.props.collapsed}
+                        searchFilter={this.state.searchFilter}
+                        ConferenceHandler={VectorConferenceHandler} />
+                    <BottomLeftMenu collapsed={this.props.collapsed}/>
                 </div>
-            </aside>
+            </div>
         );
     }
 });

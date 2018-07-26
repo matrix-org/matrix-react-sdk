@@ -152,14 +152,6 @@ module.exports = React.createClass({
         });
     },
 
-    _onContainerClick: function() {
-        if (this.props.disabled) {
-            dis.dispatch({
-                action: 'close_settings',
-            });
-        }
-    },
-
     onCollapseClick: function() {
         dis.dispatch({
             action: 'hide_right_panel',
@@ -413,19 +405,17 @@ module.exports = React.createClass({
         });
 
         return (
-            <aside className="mx_RightPanel_container" onClick={this._onContainerClick}>
-                <div className={classes}>
-                    <div className="mx_RightPanel_header">
-                        <div className="mx_RightPanel_headerButtonGroup">
-                            { headerButtons }
-                        </div>
-                    </div>
-                    { panel }
-                    <div className="mx_RightPanel_footer">
-                        { inviteGroup }
+            <div className={classes}>
+                <div className="mx_RightPanel_header">
+                    <div className="mx_RightPanel_headerButtonGroup">
+                        { headerButtons }
                     </div>
                 </div>
-            </aside>
+                { panel }
+                <div className="mx_RightPanel_footer">
+                    { inviteGroup }
+                </div>
+            </div>
         );
     },
 });
