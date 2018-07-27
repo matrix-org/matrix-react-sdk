@@ -259,15 +259,9 @@ const LoggedInView = React.createClass({
         // When the panels are disabled, clicking on them results in a mouse event
         // which bubbles to certain elements in the tree. When this happens, close
         // any settings page that is currently open (user/room/group).
-        if (this.props.leftDisabled &&
-            this.props.rightDisabled &&
-            (
-                ev.target.className === 'mx_MatrixChat' ||
-                ev.target.className === 'mx_MatrixChat_middlePanel' ||
-                ev.target.className === 'mx_RoomView'
-            )
-        ) {
+        if (this.props.leftDisabled && this.props.rightDisabled) {
             dis.dispatch({ action: 'close_settings' });
+            ev.stopPropagation();
         }
     },
 
@@ -396,7 +390,7 @@ const LoggedInView = React.createClass({
         }
 
         return (
-            <div className='mx_MatrixChat_wrapper' aria-hidden={this.props.hideToSRUsers} onClick={this._onClick}>
+            <div className='mx_MatrixChat_wrapper' aria-hidden={this.props.hideToSRUsers} onClickCapture={this._onClick}>
                 { topBar }
                 <DragDropContext onDragEnd={this._onDragEnd}>
                     <div className={bodyClasses}>
