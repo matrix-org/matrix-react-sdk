@@ -85,7 +85,6 @@ textarea {
 
 .mx_fadable.mx_fadable_faded {
     opacity: 0.3;
-    pointer-events: none;
 }
 
 /* XXX: critical hack to GeminiScrollbar to allow them to work in FF 42 and Chrome 48.
