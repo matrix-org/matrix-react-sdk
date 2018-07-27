@@ -204,7 +204,6 @@ var LeftPanel = React.createClass({
             "mx_LeftPanel_container", "mx_fadable",
             {
                 "mx_LeftPanel_container_collapsed": this.props.collapsed,
-                "mx_LeftPanel_container_hasTagPanel": tagPanelEnabled,
                 "mx_fadable_faded": this.props.disabled,
             },
         );
@@ -212,7 +211,7 @@ var LeftPanel = React.createClass({
         return (
             <div className={containerClasses}>
                 { tagPanel }
-                <aside className={classes} onKeyDown={ this._onKeyDown } onFocus={ this._onFocus } onBlur={ this._onBlur }>
+                <div className={classes} onKeyDown={ this._onKeyDown } onFocus={ this._onFocus } onBlur={ this._onBlur }>
                     { topBox }
                     <CallPreview ConferenceHandler={VectorConferenceHandler} />
                     <RoomList
@@ -221,7 +220,7 @@ var LeftPanel = React.createClass({
                         searchFilter={this.state.searchFilter}
                         ConferenceHandler={VectorConferenceHandler} />
                     <BottomLeftMenu collapsed={this.props.collapsed}/>
-                </aside>
+                </div>
             </div>
         );
     }
