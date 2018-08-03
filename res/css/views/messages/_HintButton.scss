@@ -1,0 +1,27 @@
+.mx_HintsContainer {
+    padding-top: 5pt;
+    padding-bottom: 5pt;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.mx_HintButton {
+    min-width: 16%;
+    max-width: 46%;
+    margin: 1%;
+    padding: 1%;
+    background: #76cfa6;
+    color: #3b4d45;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.mx_HintButton img {
+    display: block;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    float: left;
+}

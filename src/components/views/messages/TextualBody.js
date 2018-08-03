@@ -431,6 +431,7 @@ module.exports = React.createClass({
 
     render: function() {
         const EmojiText = sdk.getComponent('elements.EmojiText');
+        const HintButton = sdk.getComponent('messages.HintButton');
         const mxEvent = this.props.mxEvent;
         const content = mxEvent.getContent();
 
@@ -459,7 +460,16 @@ module.exports = React.createClass({
                             onWidgetLoad={this.props.onWidgetLoad} />;
             });
         }
-
+        
+        let hints;
+        if(content.hints && content.hints.length > 0){
+            hints = content.hints.map((hint)=> {
+                return <HintButton
+                    mxEvent={this.props.mxEvent}
+                    hint={hint} />;
+            })
+        }
+        
         switch (content.msgtype) {
             case "m.emote":
                 const name = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
@@ -475,6 +485,7 @@ module.exports = React.createClass({
                         &nbsp;
                         { body }
                         { widgets }
+                        <div className="mx_HintsContainer">{ hints }</div>
                     </span>
                 );
             case "m.notice":
@@ -489,6 +500,7 @@ module.exports = React.createClass({
                     <span ref="content" className="mx_MTextBody mx_EventTile_content">
                         { body }
                         { widgets }
+                        <div className="mx_HintsContainer">{ hints }</div>
                     </span>
                 );
         }
