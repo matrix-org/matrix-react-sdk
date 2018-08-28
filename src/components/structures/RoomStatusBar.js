@@ -300,7 +300,8 @@ module.exports = React.createClass({
             this.state.syncStateData.error &&
             this.state.syncStateData.error.errcode === 'M_RESOURCE_LIMIT_EXCEEDED'
         );
-        return this.state.syncState === "ERROR" && !errorIsMauError;
+        return this.state.syncState == "RECONNECTING" ||
+            (this.state.syncState === "ERROR" && !errorIsMauError);
     },
 
     _getUnsentMessageContent: function() {
