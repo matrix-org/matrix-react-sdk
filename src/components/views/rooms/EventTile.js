@@ -325,6 +325,13 @@ module.exports = withMatrixClient(React.createClass({
         this.setState({menu: true});
     },
 
+    onReplyClicked: function(e) {
+        dis.dispatch({
+            action: 'reply_to_event',
+            event: this.props.mxEvent,
+        });
+    },
+
     toggleAllReadAvatars: function() {
         this.setState({
             allReadAvatars: !this.state.allReadAvatars,
@@ -583,6 +590,10 @@ module.exports = withMatrixClient(React.createClass({
             <span className="mx_EventTile_editButton" title={_t("Options")} onClick={this.onEditClicked} />
         );
 
+        const replyButton = (
+            <span className="mx_EventTile_replyButton" title={_t("Reply")} onClick={this.onReplyClicked} />
+        );
+
         const timestamp = this.props.mxEvent.getTs() ?
             <MessageTimestamp showTwelveHour={this.props.isTwelveHour} ts={this.props.mxEvent.getTs()} /> : null;
 
@@ -721,6 +732,7 @@ module.exports = withMatrixClient(React.createClass({
                                            onWidgetLoad={this.props.onWidgetLoad} />
                             { keyRequestInfo }
                             { editButton }
+                            { replyButton }
                         </div>
                         {
                             // The avatar goes after the event tile as it's absolutly positioned to be over the

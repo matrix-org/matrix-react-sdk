@@ -223,7 +223,7 @@ limitations under the License.
     visibility: hidden;
     cursor: pointer;
     top: 6px;
-    right: 6px;
+    right: 25px;
     width: 19px;
     height: 19px;
     background-image: url($edit-button-url);
@@ -235,6 +235,27 @@ limitations under the License.
 
 .mx_EventTile:hover .mx_EventTile_editButton,
 .mx_EventTile.menu .mx_EventTile_editButton {
+    visibility: visible;
+}
+
+.mx_EventTile_replyButton {
+    position: absolute;
+    display: inline-block;
+    visibility: hidden;
+    cursor: pointer;
+    top: 6px;
+    right: 6px;
+    width: 19px;
+    height: 19px;
+    background-image: url($reply-button-url);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.mx_EventTile:hover .mx_EventTile_replyButton,
+.mx_EventTile.menu .mx_EventTile_replyButton {
     visibility: visible;
 }
 
