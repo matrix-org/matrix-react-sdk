@@ -121,7 +121,7 @@ export function guessAndSetDMRoom(room, isDirect) {
                    this room as a DM room
  * @returns {object} A promise
  */
-export async function setDMRoom(roomId, userId) {
+export function setDMRoom(roomId, userId) {
     if (MatrixClientPeg.get().isGuest()) {
         return Promise.resolve();
     }
@@ -131,14 +131,16 @@ export async function setDMRoom(roomId, userId) {
 
     if (mDirectEvent !== undefined) dmRoomMap = mDirectEvent.getContent();
 
+    let modified = false;
     // remove it from the lists of any others users
     // (it can only be a DM room for one person)
     for (const thisUserId of Object.keys(dmRoomMap)) {
         const roomList = dmRoomMap[thisUserId];
-
+        // removal happens here, as userId is null and never equal
         if (thisUserId != userId) {
             const indexOfRoom = roomList.indexOf(roomId);
             if (indexOfRoom > -1) {
+                modified = true;
                 roomList.splice(indexOfRoom, 1);
             }
         }
@@ -150,8 +152,12 @@ export async function setDMRoom(roomId, userId) {
         dmRoomMap[userId] = roomList;
         if (roomList.indexOf(roomId) == -1) {
             roomList.push(roomId);
-            await MatrixClientPeg.get().setAccountData('m.direct', dmRoomMap);
+            return MatrixClientPeg.get().setAccountData('m.direct', dmRoomMap);
         }
+    } else if (modified) {
+        return MatrixClientPeg.get().setAccountData('m.direct', dmRoomMap);
+    } else {
+        return Promise.resolve();
     }
 }
 
