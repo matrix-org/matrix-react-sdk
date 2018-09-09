@@ -21,6 +21,13 @@ limitations under the License.
     cursor: pointer;
 }
 
+.mx_EntityTile_online {
+    display: table-row;
+    position: relative;
+    color: $accent-color;
+    cursor: pointer;
+}
+
 .mx_EntityTile_invite {
     display: table-cell;
     vertical-align: middle;
