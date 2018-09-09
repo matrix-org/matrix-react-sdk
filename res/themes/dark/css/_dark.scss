@@ -1,7 +1,7 @@
 
 // typical text (dark-on-white in light skin)
-$primary-fg-color: #d6d7d9;
-$primary-bg-color: #36393F;
+$primary-fg-color: #dddddd;
+$primary-bg-color: #2d2d2d;
 
 // used for focusing form controls
 $focus-bg-color: #101010;
@@ -11,7 +11,7 @@ $light-fg-color: #747474;
 
 // button UI (white-on-green in light skin)
 $accent-fg-color: $primary-bg-color;
-$accent-color: #068ABD;
+$accent-color: #76CFA6;
 
 $selection-fg-color: $primary-fg-color;
 
@@ -26,7 +26,6 @@ $info-bg-color: #2A9EDF;
 $info-plinth-bg-color: #454545;
 
 $other-user-pill-bg-color: rgba(255, 255, 255, 0.1);
-
 
 $preview-bar-bg-color: #333;
 
@@ -200,7 +199,6 @@ $progressbar-color: #000;
         }
     }
 }
-
 
 // Add a line to the right side of the left panel to distinguish it from the middle panel
 .mx_LeftPanel {
