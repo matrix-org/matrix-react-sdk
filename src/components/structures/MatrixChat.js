@@ -1245,6 +1245,22 @@ export default React.createClass({
             return self._loggedInView.child.canResetTimelineInRoom(roomId);
         });
 
+        cli.on("sync_stats", (stats) => {
+            if (stats.limitedTimelines !== 0) {
+                /*
+                const category = "web.gappySyncPerf";
+                const action = stats.initialSync ? "initialSync" : "incrementalSync";
+                Analytics.trackEvent(category, action, "processingDuration", stats.processingDuration);
+                Analytics.trackEvent(category, action, "requestDuration", stats.requestDuration);
+                Analytics.trackEvent(category, action, "memberEventsInLimitedTimelines", stats.memberEventsInLimitedTimelines);
+                Analytics.trackEvent(category, action, "memberEvents", stats.memberEvents);
+                Analytics.trackEvent(category, action, "limitedTimelines", stats.limitedTimelines);
+                Analytics.trackEvent(category, action, "responseSize", stats.responseSize);
+                */
+                console.log("sync_stats", stats);
+            }
+        });
+
         cli.on('sync', function(state, prevState, data) {
             // LifecycleStore and others cannot directly subscribe to matrix client for
             // events because flux only allows store state changes during flux dispatches.
