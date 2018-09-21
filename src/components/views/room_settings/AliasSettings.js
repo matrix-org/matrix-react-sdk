@@ -76,33 +76,10 @@ module.exports = React.createClass({
         return state;
     },
 
-    getProposedLocalAliases: function() {
-        const localDomain = MatrixClientPeg.get().getDomain();
-        const localAliases = {};
-        const localAliasList = this.aliasEventsToDictionary(this.props.aliasEvents)[localDomain] || [];
-        for (const alias of localAliasList) {
-            localAliases[alias] = true;
-        }
-
-        for (const op of this.getAliasOperations()) {
-            switch (op.place) {
-                case 'add':
-                    localAliases[op.val] = true;
-                    break;
-                case 'del':
-                    delete localAliases[op.val];
-                    break;
-                default:
-                    console.warn("Unknown alias operation, ignoring: " + op.place);
-            }
-        }
-
-        return Object.keys(localAliases);
-    },
-
     refreshHasAliases: function() {
+        const localDomain = MatrixClientPeg.get().getDomain();
         this.props.onRefreshHasAliases(
-            this.getProposedLocalAliases().length > 0 ||
+            this.state.domainToAliases[localDomain].length > 0 ||
             this.state.remoteDomains.length > 0 ||
             !!this.state.canonicalAlias
         );
