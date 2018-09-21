@@ -144,6 +144,7 @@ module.exports = React.createClass({
             // Default to false if it's undefined, otherwise react complains about changing
             // components from uncontrolled to controlled
             isRoomPublished: this._originalIsRoomPublished || false,
+            hasAliases: false, // will be populated by AliasSettings
         };
     },
 
@@ -224,6 +225,15 @@ module.exports = React.createClass({
     },
 
     _calcSavePromises: function() {
+        // we do validation at this point as we don't enforce this one dynamically
+        // to avoid the awkward UX of disabling checkboxes on the fly
+        if (this.state.join_rule === 'public' && !this.state.hasAliases) {
+            return [Promise.reject(_t('Public rooms must have an address specified so users can join them.'))];
+        }
+        if (this.state.isRoomPublished && !this.state.hasAliases) {
+            return [Promise.reject(_t('Public rooms must have an address specified so users can join them.'))];
+        }
+
         const roomId = this.props.room.roomId;
         const promises = this.saveAliases(); // returns Promise[]
         const originalState = this.getInitialState();
@@ -270,7 +280,6 @@ module.exports = React.createClass({
                 "",
             ));
         }
-
 
         // power levels
         const powerLevels = this.state.powerLevels;
@@ -602,6 +611,7 @@ module.exports = React.createClass({
                           level={SettingLevel.ROOM_DEVICE}
                           roomId={this.props.room.roomId}
                           manualSave={true}
+                          disabled={!this.refs.encrypt || !this.refs.encrypt.checked}
                           ref="blacklistUnverifiedDevices"
             />
         );
@@ -631,6 +641,10 @@ module.exports = React.createClass({
                 </div>
             );
         }
+    },
+
+    _onRefreshHasAliases: function(hasAliases) {
+        this.setState({ hasAliases });
     },
 
     render: function() {
@@ -853,18 +867,23 @@ module.exports = React.createClass({
         const historyVisibility = this.state.history_visibility || "shared";
 
         let addressWarning;
-        const aliasEvents = this.props.room.currentState.getStateEvents('m.room.aliases') || [];
-        let aliasCount = 0;
-        aliasEvents.forEach((event) => {
-            const aliases = event.getContent().aliases || [];
-            aliasCount += aliases.length;
-        });
-
-        if (this.state.join_rule === "public" && aliasCount == 0) {
+        if (this.state.join_rule === "public" && !this.state.hasAliases) {
             addressWarning =
                 <div className="mx_RoomSettings_warning">
                         { _t(
                             'To link to a room it must have <a>an address</a>.',
+                            {},
+                            { 'a': (sub) => <a href="#addresses">{ sub }</a> },
+                        ) }
+                </div>;
+        }
+
+        let addressWarning2;
+        if (this.state.isRoomPublished && !this.state.hasAliases) {
+            addressWarning2 =
+                <div className="mx_RoomSettings_warning">
+                        { _t(
+                            'To publish a room it must have <a>an address</a>.',
                             {},
                             { 'a': (sub) => <a href="#addresses">{ sub }</a> },
                         ) }
@@ -954,7 +973,7 @@ module.exports = React.createClass({
                         <h3>{ _t('Who can access this room?') }</h3>
                         { inviteGuestWarning }
                         <label>
-                            <input type="radio" name="roomVis" value="invite_only"
+                            <input type="radio" name="roomVis" value="invite_only" ref="invite_only"
                                 disabled={!this.mayChangeRoomAccess()}
                                 onChange={this._onRoomAccessRadioToggle}
                                 checked={this.state.join_rule !== "public"} />
@@ -983,6 +1002,7 @@ module.exports = React.createClass({
                                    checked={this.state.isRoomPublished} />
                             { _t("Publish this room to the public in %(domain)s's room directory?", { domain: MatrixClientPeg.get().getDomain() }) }
                         </label>
+                        { addressWarning2 }
                     </div>
                     <div className="mx_RoomSettings_settings">
                         <h3>{ _t('Who can read history?') }</h3>
@@ -1033,7 +1053,9 @@ module.exports = React.createClass({
                         /* Originally, we arbitrarily restricted creating aliases to room admins: roomState.mayClientSendStateEvent("m.room.aliases", cli) */
                     }
                     canonicalAliasEvent={this.props.room.currentState.getStateEvents('m.room.canonical_alias', '')}
-                    aliasEvents={this.props.room.currentState.getStateEvents('m.room.aliases')} />
+                    aliasEvents={this.props.room.currentState.getStateEvents('m.room.aliases')}
+                    onRefreshHasAliases={this._onRefreshHasAliases}
+                    />
 
                 { relatedGroupsSection }
 

@@ -538,6 +538,7 @@
     "Favourite": "Favourite",
     "Tagged as: ": "Tagged as: ",
     "To link to a room it must have <a>an address</a>.": "To link to a room it must have <a>an address</a>.",
+    "To publish a room it must have <a>an address</a>.": "To publish a room it must have <a>an address</a>.",
     "Guests cannot join this room even if explicitly invited.": "Guests cannot join this room even if explicitly invited.",
     "Click here to fix": "Click here to fix",
     "To send events of type <eventType/>, you must be a": "To send events of type <eventType/>, you must be a",
@@ -1257,5 +1258,6 @@
     "Import": "Import",
     "Failed to set direct chat tag": "Failed to set direct chat tag",
     "Failed to remove tag %(tagName)s from room": "Failed to remove tag %(tagName)s from room",
-    "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room"
+    "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room",
+    "Public rooms must have an address specified so users can join them.": "Public rooms must have an address specified so users can join them."
 }

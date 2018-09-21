@@ -33,6 +33,7 @@ module.exports = React.createClass({
         canSetAliases: PropTypes.bool.isRequired,
         aliasEvents: PropTypes.array, // [MatrixEvent]
         canonicalAliasEvent: PropTypes.object, // MatrixEvent
+        onRefreshHasAliases: PropTypes.func.isRequired,
     },
 
     getDefaultProps: function() {
@@ -43,10 +44,14 @@ module.exports = React.createClass({
         };
     },
 
+    componentDidMount: function() {
+        this.refreshHasAliases();
+    },
+
     getInitialState: function() {
         return this.recalculateState(this.props.aliasEvents, this.props.canonicalAliasEvent);
     },
-
+    
     recalculateState: function(aliasEvents, canonicalAliasEvent) {
         aliasEvents = aliasEvents || [];
 
@@ -65,9 +70,42 @@ module.exports = React.createClass({
 
         if (canonicalAliasEvent) {
             state.canonicalAlias = canonicalAliasEvent.getContent().alias;
+            state.initialCanonicalAlias = state.canonicalAlias;
         }
 
         return state;
+    },
+
+    getProposedLocalAliases: function() {
+        const localDomain = MatrixClientPeg.get().getDomain();
+        const localAliases = {};
+        const localAliasList = this.aliasEventsToDictionary(this.props.aliasEvents)[localDomain] || [];
+        for (const alias of localAliasList) {
+            localAliases[alias] = true;
+        }
+
+        for (const op of this.getAliasOperations()) {
+            switch (op.place) {
+                case 'add':
+                    localAliases[op.val] = true;
+                    break;
+                case 'del':
+                    delete localAliases[op.val];
+                    break;
+                default:
+                    console.warn("Unknown alias operation, ignoring: " + op.place);
+            }
+        }
+
+        return Object.keys(localAliases);
+    },
+
+    refreshHasAliases: function() {
+        this.props.onRefreshHasAliases(
+            this.getProposedLocalAliases().length > 0 ||
+            this.state.remoteDomains.length > 0 ||
+            !!this.state.canonicalAlias
+        );
     },
 
     saveSettings: function() {
@@ -94,15 +132,11 @@ module.exports = React.createClass({
                     );
                     break;
                 default:
-                    console.log("Unknown alias operation, ignoring: " + alias_operation.place);
+                    console.warn("Unknown alias operation, ignoring: " + alias_operation.place);
             }
         }
 
-        let oldCanonicalAlias = null;
-        if (this.props.canonicalAliasEvent) {
-            oldCanonicalAlias = this.props.canonicalAliasEvent.getContent().alias;
-        }
-
+        let oldCanonicalAlias = this.state.initialCanonicalAlias;
         let newCanonicalAlias = this.state.canonicalAlias;
 
         if (this.props.canSetCanonicalAlias && oldCanonicalAlias !== newCanonicalAlias) {
@@ -140,7 +174,7 @@ module.exports = React.createClass({
     },
 
     onNewAliasChanged: function(value) {
-        this.setState({newAlias: value});
+        this.setState({newAlias: value}, this.refreshHasAliases);
     },
 
     onLocalAliasAdded: function(alias) {
@@ -156,7 +190,7 @@ module.exports = React.createClass({
                 domainToAliases: this.state.domainToAliases,
                 // Reset the add field
                 newAlias: "",
-            });
+            }, this.refreshHasAliases);
         } else {
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog('Invalid alias format', '', ErrorDialog, {
@@ -165,10 +199,10 @@ module.exports = React.createClass({
             });
         }
 
-        if (!this.props.canonicalAlias) {
+        if (!this.state.initialCanonicalAlias) {
             this.setState({
                 canonicalAlias: alias
-            });
+            }, this.refreshHasAliases);
         }
     },
 
@@ -178,6 +212,9 @@ module.exports = React.createClass({
         if (!alias.includes(':')) alias += ':' + localDomain;
         if (this.isAliasValid(alias) && alias.endsWith(localDomain)) {
             this.state.domainToAliases[localDomain][index] = alias;
+            this.setState({
+                domainToAliases: this.state.domainToAliases
+            }, this.refreshHasAliases);
         } else {
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog('Invalid address format', '', ErrorDialog, {
@@ -194,21 +231,21 @@ module.exports = React.createClass({
         // promptly setState anyway, it's just about acceptable.  The alternative
         // would be to arbitrarily deepcopy to a temp variable and then setState
         // that, but why bother when we can cut this corner.
-        const alias = this.state.domainToAliases[localDomain].splice(index, 1);
+        const alias = this.state.domainToAliases[localDomain].splice(index, 1)[0];
         this.setState({
             domainToAliases: this.state.domainToAliases,
-        });
-        if (this.props.canonicalAlias === alias) {
+        }, this.refreshHasAliases);
+        if (this.state.initialCanonicalAlias === alias) {
             this.setState({
                 canonicalAlias: null,
-            });
+            }, this.refreshHasAliases);
         }
     },
 
     onCanonicalAliasChange: function(event) {
         this.setState({
             canonicalAlias: event.target.value,
-        });
+        }, this.refreshHasAliases);
     },
 
     render: function() {
@@ -221,7 +258,7 @@ module.exports = React.createClass({
         if (this.props.canSetCanonicalAlias) {
             let found = false;
             canonical_alias_section = (
-                <select onChange={this.onCanonicalAliasChange} value={this.state.canonicalAlias}>
+                <select onChange={this.onCanonicalAliasChange} value={this.state.canonicalAlias || ''}>
                     <option value="" key="unset">{ _t('not specified') }</option>
                     {
                         Object.keys(self.state.domainToAliases).map((domain, i) => {

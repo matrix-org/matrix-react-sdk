@@ -29,6 +29,7 @@ module.exports = React.createClass({
         onChange: PropTypes.func,
         isExplicit: PropTypes.bool,
         manualSave: PropTypes.bool,
+        disabled: PropTypes.bool,
 
         // If group is supplied, then this will create a radio button instead.
         group: PropTypes.string,
@@ -72,7 +73,8 @@ module.exports = React.createClass({
             this.props.isExplicit,
         );
 
-        const canChange = SettingsStore.canSetValue(this.props.name, this.props.roomId, this.props.level);
+        let canChange = SettingsStore.canSetValue(this.props.name, this.props.roomId, this.props.level);
+        if (this.props.disabled) canChange = false;
 
         let label = this.props.label;
         if (!label) label = SettingsStore.getDisplayName(this.props.name, this.props.level);

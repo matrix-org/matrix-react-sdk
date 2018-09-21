@@ -1046,7 +1046,7 @@ module.exports = React.createClass({
             // favour longer (more specific) terms first
             highlights = highlights.sort(function(a, b) {
                 return b.length - a.length;
-});
+            });
 
             self.setState({
                 searchHighlights: highlights,
@@ -1201,7 +1201,6 @@ module.exports = React.createClass({
             this.setState({
                 uploadingRoomSettings: false,
             });
-            dis.dispatch({ action: 'close_settings' });
         }).done();
     },
 
