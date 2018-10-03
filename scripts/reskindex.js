@@ -37,7 +37,7 @@ function reskindex() {
 
     if (packageJson['matrix-react-parent']) {
         const parentIndex = packageJson['matrix-react-parent'] +
-              '/lib/component-index';
+              '/src/component-index';
         strm.write(
 `let components = require('${parentIndex}').components;
 if (!components) {
