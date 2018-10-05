@@ -42,28 +42,37 @@ try {
  * @returns {MatrixClient} the newly-created MatrixClient
  */
 export default function createMatrixClient(opts, useIndexedDb) {
-    if (useIndexedDb === undefined) useIndexedDb = true;
-
-    const storeOpts = {
+    const defaultOpts = {
         useAuthorizationHeader: true,
+        store: opts.store || createStore(useIndexedDB),
     };
 
     if (localStorage) {
-        storeOpts.sessionStore = new Matrix.WebStorageSessionStore(localStorage);
+        defaultOpts.sessionStore = new Matrix.WebStorageSessionStore(localStorage);
     }
 
-    if (indexedDB && localStorage && useIndexedDb) {
-        storeOpts.store = new Matrix.IndexedDBStore({
+    opts = Object.assign(defaultOpts, opts);
+
+    return Matrix.createClient(opts);
+}
+
+
+function createStore(useIndexedDB) {
+    if (useIndexedDb === undefined) {
+        useIndexedDb = true;
+    }
+    if (useIndexedDB && indexedDB && localStorage) {
+        return new Matrix.IndexedDBStore({
             indexedDB: indexedDB,
             dbName: "riot-web-sync",
             localStorage: localStorage,
             workerScript: createMatrixClient.indexedDbWorkerScript,
         });
+    } else {
+        return new Matrix.MatrixInMemoryStore({
+            localStorage: localStorage,
+        });
     }
-
-    opts = Object.assign(storeOpts, opts);
-
-    return Matrix.createClient(opts);
 }
 
 createMatrixClient.indexedDbWorkerScript = null;
