@@ -235,5 +235,6 @@ export default {
      */
     stop() {
         this._matrixClientListenersStop.forEach((stopListener) => stopListener());
+        this._matrixClientListenersStop = [];
     },
 };
