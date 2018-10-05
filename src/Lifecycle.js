@@ -248,36 +248,35 @@ async function _handleInvalidStore(e) {
         });
     }
 
-    switch (e.reason) {
-        case Matrix.InvalidStoreError.NEEDS_DOWNGRADE:
-            const DatabaseDowngradeDialog =
-                sdk.getComponent("views.dialogs.DatabaseDowngradeDialog");
-            const appVersion = await PlatformPeg.get().getAppVersion();
-            const clearCache = await new Promise((resolve) => {
-                Modal.createDialog(DatabaseDowngradeDialog, {
-                    onFinished: resolve,
-                    appVersion,
-                });
+    const needsDowngrade = e.reason === Matrix.InvalidStoreError.NEEDS_DOWNGRADE;
+    const wasLLToggled = e.reason === Matrix.InvalidStoreError.TOGGLED_LAZY_LOADING;
+    const hasStoreWithLLEnabled = wasLLToggled && !e.value;
+    const wasLLEnabled = wasLLToggled && e.value;
+
+    if (needsDowngrade || hasStoreWithLLEnabled) {
+        const DatabaseDowngradeDialog =
+            sdk.getComponent("views.dialogs.DatabaseDowngradeDialog");
+        const appVersion = await PlatformPeg.get().getAppVersion();
+        const clearCache = await new Promise((resolve) => {
+            Modal.createDialog(DatabaseDowngradeDialog, {
+                onFinished: resolve,
+                appVersion,
             });
-            if (clearCache) {
-                return deleteAllDateAndTriggerRefresh();
-            } else {
-                return false;   //retry but dont use indexeddb
-            }
-            break;
-        case Matrix.InvalidStoreError.TOGGLED_LAZY_LOADING:
-            const lazyLoadEnabled = e.value;
-            if (lazyLoadEnabled) {
-                const LazyLoadingResyncDialog =
-                    sdk.getComponent("views.dialogs.LazyLoadingResyncDialog");
-                await new Promise((resolve) => {
-                    Modal.createDialog(LazyLoadingResyncDialog, {
-                        onFinished: resolve,
-                    });
-                });
-            }
+        });
+        if (clearCache) {
             return deleteAllDateAndTriggerRefresh();
-            break;
+        } else {
+            return false;   //retry but use memory store instead of indexeddb
+        }
+    } else if (wasLLEnabled) {
+        const LazyLoadingResyncDialog =
+            sdk.getComponent("views.dialogs.LazyLoadingResyncDialog");
+        await new Promise((resolve) => {
+            Modal.createDialog(LazyLoadingResyncDialog, {
+                onFinished: resolve,
+            });
+        });
+        return deleteAllDateAndTriggerRefresh();
     }
 }
 
