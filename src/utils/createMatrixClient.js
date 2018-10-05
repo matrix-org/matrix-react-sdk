@@ -44,7 +44,7 @@ try {
 export default function createMatrixClient(opts, useIndexedDb) {
     const defaultOpts = {
         useAuthorizationHeader: true,
-        store: opts.store || createStore(useIndexedDB),
+        store: opts.store || createStore(useIndexedDb),
     };
 
     if (localStorage) {
@@ -57,11 +57,11 @@ export default function createMatrixClient(opts, useIndexedDb) {
 }
 
 
-function createStore(useIndexedDB) {
+function createStore(useIndexedDb) {
     if (useIndexedDb === undefined) {
         useIndexedDb = true;
     }
-    if (useIndexedDB && indexedDB && localStorage) {
+    if (useIndexedDb && indexedDB && localStorage) {
         return new Matrix.IndexedDBStore({
             indexedDB: indexedDB,
             dbName: "riot-web-sync",

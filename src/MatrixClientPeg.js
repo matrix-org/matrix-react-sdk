@@ -18,8 +18,6 @@ limitations under the License.
 
 'use strict';
 
-import Matrix from 'matrix-js-sdk';
-
 import utils from 'matrix-js-sdk/lib/utils';
 import EventTimeline from 'matrix-js-sdk/lib/models/event-timeline';
 import EventTimelineSet from 'matrix-js-sdk/lib/models/event-timeline-set';
