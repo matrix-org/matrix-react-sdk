@@ -235,29 +235,52 @@ async function _restoreFromLocalStorage() {
     }
 }
 
+async function _handleInvalidStore(e) {
+
+    function deleteAllDateAndTriggerRefresh() {
+        return MatrixClientPeg.get().store.deleteAllData().then(() => {
+            PlatformPeg.get().reload();
+            // return a promise that never resolves
+            // so the login flow doesn't continue
+            return new Promise((resolve) => {});
+        });
+    }
+
+    switch (e.reason) {
+        case Matrix.InvalidStoreError.NEEDS_DOWNGRADE:
+            const DatabaseDowngradeDialog =
+                sdk.getComponent("views.dialogs.DatabaseDowngradeDialog");
+            const appVersion = await PlatformPeg.get().getAppVersion();
+            const clearCache = await new Promise((resolve) => {
+                Modal.createDialog(DatabaseDowngradeDialog, {
+                    onFinished: resolve,
+                    appVersion,
+                });
+            });
+            if (clearCache) {
+                return deleteAllDateAndTriggerRefresh();
+            } else {
+                return false;   //retry but dont use indexeddb
+            }
+            break;
+        case Matrix.InvalidStoreError.TOGGLED_LAZY_LOADING:
+            const lazyLoadEnabled = e.value;
+            if (lazyLoadEnabled) {
+                const LazyLoadingResyncDialog =
+                    sdk.getComponent("views.dialogs.LazyLoadingResyncDialog");
+                await new Promise((resolve) => {
+                    Modal.createDialog(LazyLoadingResyncDialog, {
+                        onFinished: resolve,
+                    });
+                });
+            }
+            return deleteAllDateAndTriggerRefresh();
+            break;
+    }
+}
+
 function _handleLoadSessionFailure(e) {
     console.log("Unable to load session", e);
-
-    if (e instanceof Matrix.InvalidStoreError) {
-        if (e.reason === Matrix.InvalidStoreError.TOGGLED_LAZY_LOADING) {
-            return Promise.resolve().then(() => {
-                const lazyLoadEnabled = e.value;
-                if (lazyLoadEnabled) {
-                    const LazyLoadingResyncDialog =
-                        sdk.getComponent("views.dialogs.LazyLoadingResyncDialog");
-                    return new Promise((resolve) => {
-                        Modal.createDialog(LazyLoadingResyncDialog, {
-                            onFinished: resolve,
-                        });
-                    });
-                }
-            }).then(() => {
-                return MatrixClientPeg.get().store.deleteAllData();
-            }).then(() => {
-                PlatformPeg.get().reload();
-            });
-        }
-    }
 
     const def = Promise.defer();
     const SessionRestoreErrorDialog =
@@ -386,7 +409,12 @@ async function _doSetLoggedIn(credentials, clearStorage) {
     try {
         await startMatrixClient(credentials, true);
     } catch(err) {
-        await startMatrixClient(credentials, false);
+        let useIndexedDbInRetry = false;
+        if (err instanceof Matrix.InvalidStoreError) {
+            // never resolves if refreshing after clearing store
+            useIndexedDbInRetry = await _handleInvalidStore(err);
+        }
+        await startMatrixClient(credentials, useIndexedDbInRetry);
     }
     return MatrixClientPeg.get();
 }
