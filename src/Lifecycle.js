@@ -379,13 +379,15 @@ async function _doSetLoggedIn(credentials, clearStorage) {
         console.warn("No local storage available: can't persist session!");
     }
 
-    MatrixClientPeg.replaceUsingCreds(credentials);
-
     teamPromise.then((teamToken) => {
         dis.dispatch({action: 'on_logged_in', teamToken: teamToken});
     });
 
-    await startMatrixClient();
+    try {
+        await startMatrixClient(credentials, true);
+    } catch(err) {
+        await startMatrixClient(credentials, false);
+    }
     return MatrixClientPeg.get();
 }
 
@@ -453,7 +455,7 @@ export function isLoggingOut() {
  * Starts the matrix client and all other react-sdk services that
  * listen for events while a session is logged in.
  */
-async function startMatrixClient() {
+async function startMatrixClient(creds, useIndexedDb) {
     console.log(`Lifecycle: Starting MatrixClient`);
 
     // dispatch this before starting the matrix client: it's used
@@ -468,7 +470,7 @@ async function startMatrixClient() {
     DMRoomMap.makeShared().start();
     ActiveWidgetStore.start();
 
-    await MatrixClientPeg.start();
+    await MatrixClientPeg.start(creds, useIndexedDb);
 
     // dispatch that we finished starting up to wire up any other bits
     // of the matrix client that cannot be set prior to starting up.
