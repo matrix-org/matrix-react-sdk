@@ -171,11 +171,12 @@ async function _registerAsGuest(hsUrl, isUrl, defaultDeviceDisplayName) {
         baseUrl: hsUrl,
     });
 
-    return client.registerGuest({
-        body: {
-            initial_device_display_name: defaultDeviceDisplayName,
-        },
-    }).then((creds) => {
+    try {
+        const creds = await client.registerGuest({
+            body: {
+                initial_device_display_name: defaultDeviceDisplayName,
+            },
+        });
         console.log(`Registered as guest: ${creds.user_id}`);
         await _doSetLoggedIn({
             userId: creds.user_id,
@@ -186,10 +187,10 @@ async function _registerAsGuest(hsUrl, isUrl, defaultDeviceDisplayName) {
             guest: true,
         }, true);
         return true;
-    }, (err) => {
+    } catch (err) {
         console.error("Failed to register as guest: " + err + " " + err.data);
         return false;
-    });
+    }
 }
 
 // returns a promise which resolves to true if a session is found in
