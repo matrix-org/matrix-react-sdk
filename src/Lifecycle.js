@@ -85,13 +85,14 @@ export async function loadSession(opts) {
             fragmentQueryParams.guest_access_token
            ) {
             console.log("Using guest access credentials");
-            return _doSetLoggedIn({
+            await _doSetLoggedIn({
                 userId: fragmentQueryParams.guest_user_id,
                 accessToken: fragmentQueryParams.guest_access_token,
                 homeserverUrl: guestHsUrl,
                 identityServerUrl: guestIsUrl,
                 guest: true,
-            }, true).then(() => true);
+            }, true);
+            return true;
         }
         const success = await _restoreFromLocalStorage();
         if (success) {
@@ -159,7 +160,7 @@ export function attemptTokenLogin(queryParams, defaultDeviceDisplayName) {
     });
 }
 
-function _registerAsGuest(hsUrl, isUrl, defaultDeviceDisplayName) {
+async function _registerAsGuest(hsUrl, isUrl, defaultDeviceDisplayName) {
     console.log(`Doing guest login on ${hsUrl}`);
 
     // TODO: we should probably de-duplicate this and Login.loginAsGuest.
@@ -176,14 +177,15 @@ function _registerAsGuest(hsUrl, isUrl, defaultDeviceDisplayName) {
         },
     }).then((creds) => {
         console.log(`Registered as guest: ${creds.user_id}`);
-        return _doSetLoggedIn({
+        await _doSetLoggedIn({
             userId: creds.user_id,
             deviceId: creds.device_id,
             accessToken: creds.access_token,
             homeserverUrl: hsUrl,
             identityServerUrl: isUrl,
             guest: true,
-        }, true).then(() => true);
+        }, true);
+        return true;
     }, (err) => {
         console.error("Failed to register as guest: " + err + " " + err.data);
         return false;
