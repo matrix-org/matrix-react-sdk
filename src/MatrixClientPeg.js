@@ -51,9 +51,6 @@ class MatrixClientPeg {
         this.opts = {
             initialSyncLimit: 20,
         };
-        // the credentials used to init the current client object.
-        // used if we tear it down & recreate it with a different store
-        this._currentClientCreds = null;
     }
 
     /**
@@ -77,8 +74,15 @@ class MatrixClientPeg {
         MatrixActionCreators.stop();
     }
 
-    async start(creds: MatrixClientCreds, useIndexedDb: bool) {
-        this._createClient(creds, useIndexedDb);
+    /**
+     * Replace this MatrixClientPeg's client with a client instance that has
+     * Home Server / Identity Server URLs and active credentials
+     */
+    replaceUsingCreds(creds: MatrixClientCreds) {
+        this._createClient(creds);
+    }
+
+    async start() {
         try {
             const promise = this.matrixClient.store.startup();
             console.log(`MatrixClientPeg: waiting for MatrixClient store to initialise`);
@@ -141,7 +145,7 @@ class MatrixClientPeg {
         return matches[1];
     }
 
-    _createClient(creds: MatrixClientCreds, useIndexedDb) {
+    _createClient(creds: MatrixClientCreds) {
         const opts = {
             baseUrl: creds.homeserverUrl,
             idBaseUrl: creds.identityServerUrl,
@@ -151,8 +155,8 @@ class MatrixClientPeg {
             timelineSupport: true,
             forceTURN: SettingsStore.getValue('webRtcForceTURN', false),
         };
-
-        this.matrixClient = createMatrixClient(opts, useIndexedDb);
+        // true to prefer indexedDB
+        this.matrixClient = createMatrixClient(opts, true);
 
         // we're going to add eventlisteners for each matrix event tile, so the
         // potential number of event listeners is quite high.

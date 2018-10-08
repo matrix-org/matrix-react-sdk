@@ -24,7 +24,7 @@ export default (props) => {
 
     return (<QuestionDialog
         hasCancelButton={false}
-        title={_t(`Local cache incompatible with Riot ${appVersion}`)}
+        title={_t(`Local cache incompatible with this version of Riot`)}
         description={<div>{description}</div>}
         button={_t("Clear cache and resync")}
         cancelButton={_t("Ignore cache")}

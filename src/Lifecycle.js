@@ -239,51 +239,61 @@ async function _restoreFromLocalStorage() {
 }
 
 async function _handleInvalidStore(e) {
-
-    function deleteAllDateAndTriggerRefresh() {
-        return MatrixClientPeg.get().store.deleteAllData().then(() => {
-            PlatformPeg.get().reload();
-            // return a promise that never resolves
-            // so the login flow doesn't continue
-            return new Promise((resolve) => {});
-        });
+    async function deleteAllDataAndTriggerRefresh() {
+        await MatrixClientPeg.get().store.deleteAllData();
+        e.causedRefresh = true;
+        PlatformPeg.get().reload();
+        // don't retry with memory store
+        return false;
     }
 
     const needsDowngrade = e.reason === Matrix.InvalidStoreError.NEEDS_DOWNGRADE;
     const wasLLToggled = e.reason === Matrix.InvalidStoreError.TOGGLED_LAZY_LOADING;
-    const hasStoreWithLLEnabled = wasLLToggled && !e.value;
-    const wasLLEnabled = wasLLToggled && e.value;
 
-    if (needsDowngrade || hasStoreWithLLEnabled) {
+    if (needsDowngrade) {
         const DatabaseDowngradeDialog =
             sdk.getComponent("views.dialogs.DatabaseDowngradeDialog");
-        const appVersion = await PlatformPeg.get().getAppVersion();
         const clearCache = await new Promise((resolve) => {
             Modal.createDialog(DatabaseDowngradeDialog, {
                 onFinished: resolve,
-                appVersion,
             });
         });
         if (clearCache) {
-            return deleteAllDateAndTriggerRefresh();
-        } else {
-            return false;   //retry but use memory store instead of indexeddb
+            return deleteAllDataAndTriggerRefresh();
         }
-    } else if (wasLLEnabled) {
-        const LazyLoadingResyncDialog =
-            sdk.getComponent("views.dialogs.LazyLoadingResyncDialog");
-        await new Promise((resolve) => {
-            Modal.createDialog(LazyLoadingResyncDialog, {
-                onFinished: resolve,
+    } else if (wasLLToggled) {
+        const lazyLoadingEnabled = e.value;
+        if (lazyLoadingEnabled) {
+            const LazyLoadingResyncDialog =
+                sdk.getComponent("views.dialogs.LazyLoadingResyncDialog");
+            await new Promise((resolve) => {
+                Modal.createDialog(LazyLoadingResyncDialog, {
+                    onFinished: resolve,
+                });
             });
-        });
-        return deleteAllDateAndTriggerRefresh();
+        }
+        // note that returning true here for
+        // falling back to memory store will break
+        // things (infinite spinner),
+        // as the TOGGLED_LAZY_LOADING error is generated
+        // in MatrixClient::startClient, at which point,
+        // the bootstrapping process is apparently too far
+        // to retry with a different store.
+        // so don't change this line unless certain
+        // the above is not a problem anymore
+        return deleteAllDataAndTriggerRefresh();
     }
+    // retry with memory store
+    return true;
 }
 
 function _handleLoadSessionFailure(e) {
-    console.log("Unable to load session", e);
+    // the page is refreshing, no need to show a dialog
+    if (e.causedRefresh) {
+        return Promise.resolve(false);
+    }
 
+    console.log("Unable to load session", e);
     const def = Promise.defer();
     const SessionRestoreErrorDialog =
           sdk.getComponent('views.dialogs.SessionRestoreErrorDialog');
@@ -404,19 +414,30 @@ async function _doSetLoggedIn(credentials, clearStorage) {
         console.warn("No local storage available: can't persist session!");
     }
 
+    MatrixClientPeg.replaceUsingCreds(credentials);
+
     teamPromise.then((teamToken) => {
         dis.dispatch({action: 'on_logged_in', teamToken: teamToken});
     });
 
     try {
-        await startMatrixClient(credentials, true);
-    } catch(err) {
-        let useIndexedDbInRetry = false;
+        await startMatrixClient();
+    } catch (err) {
+        let retryWithMemoryStore = true;
         if (err instanceof Matrix.InvalidStoreError) {
-            // never resolves if refreshing after clearing store
-            useIndexedDbInRetry = await _handleInvalidStore(err);
+            retryWithMemoryStore = await _handleInvalidStore(err);
         }
-        await startMatrixClient(credentials, useIndexedDbInRetry);
+        if (retryWithMemoryStore) {
+            // replace store on existing client instead of creating
+            // new client because once will_start_client has been dispatched,
+            // we can't easily replace the client anymore
+            MatrixClientPeg.get().store = new Matrix.MatrixInMemoryStore({
+                localStorage: window.localStorage,
+            });
+            await startMatrixClient();
+        } else {
+            throw err;
+        }
     }
     return MatrixClientPeg.get();
 }
@@ -485,7 +506,7 @@ export function isLoggingOut() {
  * Starts the matrix client and all other react-sdk services that
  * listen for events while a session is logged in.
  */
-async function startMatrixClient(creds, useIndexedDb) {
+async function startMatrixClient() {
     console.log(`Lifecycle: Starting MatrixClient`);
 
     // dispatch this before starting the matrix client: it's used
@@ -500,7 +521,7 @@ async function startMatrixClient(creds, useIndexedDb) {
     DMRoomMap.makeShared().start();
     ActiveWidgetStore.start();
 
-    await MatrixClientPeg.start(creds, useIndexedDb);
+    await MatrixClientPeg.start();
 
     // dispatch that we finished starting up to wire up any other bits
     // of the matrix client that cannot be set prior to starting up.
