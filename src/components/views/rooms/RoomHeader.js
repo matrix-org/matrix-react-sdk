@@ -17,6 +17,7 @@ limitations under the License.
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import sdk from '../../../index';
 import { _t } from '../../../languageHandler';
@@ -39,18 +40,18 @@ module.exports = React.createClass({
     displayName: 'RoomHeader',
 
     propTypes: {
-        room: React.PropTypes.object,
-        oobData: React.PropTypes.object,
-        editing: React.PropTypes.bool,
-        saving: React.PropTypes.bool,
-        inRoom: React.PropTypes.bool,
-        collapsedRhs: React.PropTypes.bool,
-        onSettingsClick: React.PropTypes.func,
-        onPinnedClick: React.PropTypes.func,
-        onSaveClick: React.PropTypes.func,
-        onSearchClick: React.PropTypes.func,
-        onLeaveClick: React.PropTypes.func,
-        onCancelClick: React.PropTypes.func,
+        room: PropTypes.object,
+        oobData: PropTypes.object,
+        editing: PropTypes.bool,
+        saving: PropTypes.bool,
+        inRoom: PropTypes.bool,
+        collapsedRhs: PropTypes.bool,
+        onSettingsClick: PropTypes.func,
+        onPinnedClick: PropTypes.func,
+        onSaveClick: PropTypes.func,
+        onSearchClick: PropTypes.func,
+        onLeaveClick: PropTypes.func,
+        onCancelClick: PropTypes.func,
     },
 
     getDefaultProps: function() {
@@ -146,6 +147,13 @@ module.exports = React.createClass({
 
     onShowRhsClick: function(ev) {
         dis.dispatch({ action: 'show_right_panel' });
+    },
+
+    onShareRoomClick: function(ev) {
+        const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
+        Modal.createTrackedDialog('share room dialog', '', ShareDialog, {
+            target: this.props.room,
+        });
     },
 
     _hasUnreadPins: function() {
@@ -326,9 +334,8 @@ module.exports = React.createClass({
             );
         } else if (this.props.room || (this.props.oobData && this.props.oobData.name)) {
             roomAvatar = (
-                <div onClick={this.props.onSettingsClick}>
-                    <RoomAvatar room={this.props.room} width={48} height={48} oobData={this.props.oobData} />
-                </div>
+                <RoomAvatar room={this.props.room} width={48} height={48} oobData={this.props.oobData}
+                    viewAvatarOnClick={true} />
             );
         }
 
@@ -379,6 +386,14 @@ module.exports = React.createClass({
                 </AccessibleButton>;
         }
 
+        let shareRoomButton;
+        if (this.props.inRoom) {
+            shareRoomButton =
+                <AccessibleButton className="mx_RoomHeader_button" onClick={this.onShareRoomClick} title={_t('Share room')}>
+                    <TintableSvg src="img/icons-share.svg" width="16" height="16" />
+                </AccessibleButton>;
+        }
+
         let rightPanelButtons;
         if (this.props.collapsedRhs) {
             rightPanelButtons =
@@ -391,7 +406,7 @@ module.exports = React.createClass({
         let manageIntegsButton;
         if (this.props.room && this.props.room.roomId && this.props.inRoom) {
             manageIntegsButton = <ManageIntegsButton
-                roomId={this.props.room.roomId}
+                room={this.props.room}
             />;
         }
 
@@ -400,6 +415,7 @@ module.exports = React.createClass({
                 <div className="mx_RoomHeader_rightRow">
                     { settingsButton }
                     { pinnedEventsButton }
+                    { shareRoomButton }
                     { manageIntegsButton }
                     { forgetButton }
                     { searchButton }

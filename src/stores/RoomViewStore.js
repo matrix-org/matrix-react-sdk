@@ -1,5 +1,6 @@
 /*
 Copyright 2017 Vector Creations Ltd
+Copyright 2017, 2018 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -41,6 +42,10 @@ const INITIAL_STATE = {
     roomLoadError: null,
 
     forwardingEvent: null,
+
+    quotingEvent: null,
+
+    isEditingSettings: false,
 };
 
 /**
@@ -108,6 +113,21 @@ class RoomViewStore extends Store {
                     forwardingEvent: payload.event,
                 });
                 break;
+            case 'reply_to_event':
+                this._setState({
+                    replyingToEvent: payload.event,
+                });
+                break;
+            case 'open_room_settings':
+                this._setState({
+                    isEditingSettings: true,
+                });
+                break;
+            case 'close_settings':
+                this._setState({
+                    isEditingSettings: false,
+                });
+                break;
         }
     }
 
@@ -125,6 +145,10 @@ class RoomViewStore extends Store {
                 shouldPeek: payload.should_peek === undefined ? true : payload.should_peek,
                 // have we sent a join request for this room and are waiting for a response?
                 joining: payload.joining || false,
+                // Reset replyingToEvent because we don't want cross-room because bad UX
+                replyingToEvent: null,
+                // pull the user out of Room Settings
+                isEditingSettings: false,
             };
 
             if (this._state.forwardingEvent) {
@@ -199,7 +223,13 @@ class RoomViewStore extends Store {
                 action: 'join_room_error',
                 err: err,
             });
-            const msg = err.message ? err.message : JSON.stringify(err);
+            let msg = err.message ? err.message : JSON.stringify(err);
+            if (err.errcode === 'M_INCOMPATIBLE_ROOM_VERSION') {
+                msg = <div>
+                    {_t("Sorry, your homeserver is too old to participate in this room.")}<br />
+                    {_t("Please contact your homeserver administrator.")}
+                </div>;
+            }
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog('Failed to join room', '', ErrorDialog, {
                 title: _t("Failed to join room"),
@@ -284,6 +314,15 @@ class RoomViewStore extends Store {
     // The mxEvent if one is about to be forwarded
     getForwardingEvent() {
         return this._state.forwardingEvent;
+    }
+
+    // The mxEvent if one is currently being replied to/quoted
+    getQuotingEvent() {
+        return this._state.replyingToEvent;
+    }
+
+    isEditingSettings() {
+        return this._state.isEditingSettings;
     }
 
     shouldPeek() {

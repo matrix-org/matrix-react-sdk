@@ -15,6 +15,7 @@ limitations under the License.
 */
 import Promise from 'bluebird';
 const React = require('react');
+import PropTypes from 'prop-types';
 
 const sdk = require('../../../index');
 const Tinter = require('../../../Tinter');
@@ -42,7 +43,7 @@ module.exports = React.createClass({
     displayName: 'ColorSettings',
 
     propTypes: {
-        room: React.PropTypes.object.isRequired,
+        room: PropTypes.object.isRequired,
     },
 
     getInitialState: function() {
@@ -89,7 +90,7 @@ module.exports = React.createClass({
                 secondary_color: this.state.secondary_color,
             }).catch(function(err) {
                 if (err.errcode === 'M_GUEST_ACCESS_FORBIDDEN') {
-                    dis.dispatch({action: 'view_set_mxid'});
+                    dis.dispatch({action: 'require_registration'});
                 }
             });
         }

@@ -14,9 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from "react";
+import PropTypes from 'prop-types';
 import {ContentRepo} from "matrix-js-sdk";
 import MatrixClientPeg from "../../../MatrixClientPeg";
+import Modal from '../../../Modal';
 import sdk from "../../../index";
+import DMRoomMap from '../../../utils/DMRoomMap';
 
 module.exports = React.createClass({
     displayName: 'RoomAvatar',
@@ -25,11 +28,12 @@ module.exports = React.createClass({
     // oobData.avatarUrl should be set (else there
     // would be nowhere to get the avatar from)
     propTypes: {
-        room: React.PropTypes.object,
-        oobData: React.PropTypes.object,
-        width: React.PropTypes.number,
-        height: React.PropTypes.number,
-        resizeMethod: React.PropTypes.string,
+        room: PropTypes.object,
+        oobData: PropTypes.object,
+        width: PropTypes.number,
+        height: PropTypes.number,
+        resizeMethod: PropTypes.string,
+        viewAvatarOnClick: PropTypes.bool,
     },
 
     getDefaultProps: function() {
@@ -47,9 +51,31 @@ module.exports = React.createClass({
         };
     },
 
+    componentWillMount: function() {
+        MatrixClientPeg.get().on("RoomState.events", this.onRoomStateEvents);
+    },
+
+    componentWillUnmount: function() {
+        const cli = MatrixClientPeg.get();
+        if (cli) {
+            cli.removeListener("RoomState.events", this.onRoomStateEvents);
+        }
+    },
+
     componentWillReceiveProps: function(newProps) {
         this.setState({
             urls: this.getImageUrls(newProps),
+        });
+    },
+
+    onRoomStateEvents: function(ev) {
+        if (!this.props.room ||
+            ev.getRoomId() !== this.props.room.roomId ||
+            ev.getType() !== 'm.room.avatar'
+        ) return;
+
+        this.setState({
+            urls: this.getImageUrls(this.props),
         });
     },
 
@@ -82,58 +108,57 @@ module.exports = React.createClass({
     },
 
     getOneToOneAvatar: function(props) {
-        if (!props.room) return null;
-
-        const mlist = props.room.currentState.members;
-        const userIds = [];
-        // for .. in optimisation to return early if there are >2 keys
-        for (const uid in mlist) {
-            if (mlist.hasOwnProperty(uid)) {
-                userIds.push(uid);
-            }
-            if (userIds.length > 2) {
-                return null;
-            }
+        const room = props.room;
+        if (!room) {
+            return null;
         }
-
-        if (userIds.length == 2) {
-            let theOtherGuy = null;
-            if (mlist[userIds[0]].userId == MatrixClientPeg.get().credentials.userId) {
-                theOtherGuy = mlist[userIds[1]];
-            } else {
-                theOtherGuy = mlist[userIds[0]];
-            }
-            return theOtherGuy.getAvatarUrl(
-                MatrixClientPeg.get().getHomeserverUrl(),
-                Math.floor(props.width * window.devicePixelRatio),
-                Math.floor(props.height * window.devicePixelRatio),
-                props.resizeMethod,
-                false,
-            );
-        } else if (userIds.length == 1) {
-            return mlist[userIds[0]].getAvatarUrl(
-                MatrixClientPeg.get().getHomeserverUrl(),
-                Math.floor(props.width * window.devicePixelRatio),
-                Math.floor(props.height * window.devicePixelRatio),
-                props.resizeMethod,
-                false,
-            );
+        let otherMember = null;
+        const otherUserId = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
+        if (otherUserId) {
+            otherMember = room.getMember(otherUserId);
         } else {
-           return null;
+            // if the room is not marked as a 1:1, but only has max 2 members
+            // then still try to show any avatar (pref. other member)
+            otherMember = room.getAvatarFallbackMember();
         }
+        if (otherMember) {
+            return otherMember.getAvatarUrl(
+                MatrixClientPeg.get().getHomeserverUrl(),
+                Math.floor(props.width * window.devicePixelRatio),
+                Math.floor(props.height * window.devicePixelRatio),
+                props.resizeMethod,
+                false,
+            );
+        }
+        return null;
+    },
+
+    onRoomAvatarClick: function() {
+        const avatarUrl = this.props.room.getAvatarUrl(
+            MatrixClientPeg.get().getHomeserverUrl(),
+            null, null, null, false);
+        const ImageView = sdk.getComponent("elements.ImageView");
+        const params = {
+            src: avatarUrl,
+            name: this.props.room.name,
+        };
+
+        Modal.createDialog(ImageView, params, "mx_Dialog_lightbox");
     },
 
     render: function() {
         const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
 
-        const {room, oobData, ...otherProps} = this.props;
+        /*eslint no-unused-vars: ["error", { "ignoreRestSiblings": true }]*/
+        const {room, oobData, viewAvatarOnClick, ...otherProps} = this.props;
 
         const roomName = room ? room.name : oobData.name;
 
         return (
             <BaseAvatar {...otherProps} name={roomName}
                 idName={room ? room.roomId : null}
-                urls={this.state.urls} />
+                urls={this.state.urls}
+                onClick={this.props.viewAvatarOnClick ? this.onRoomAvatarClick : null} />
         );
     },
 });

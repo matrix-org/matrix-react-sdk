@@ -1,6 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017 New Vector Ltd
+Copyright 2017, 2018 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,14 +16,17 @@ limitations under the License.
 */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import Matrix from 'matrix-js-sdk';
-import { _t } from '../../languageHandler';
+import { _t, _td } from '../../languageHandler';
 import sdk from '../../index';
 import WhoIsTyping from '../../WhoIsTyping';
 import MatrixClientPeg from '../../MatrixClientPeg';
 import MemberAvatar from '../views/avatars/MemberAvatar';
 import Resend from '../../Resend';
-import { showUnknownDeviceDialogForMessages } from '../../cryptodevices';
+import * as cryptodevices from '../../cryptodevices';
+import dis from '../../dispatcher';
+import { messageForResourceLimitError } from '../../utils/ErrorUtils';
 
 const STATUS_BAR_HIDDEN = 0;
 const STATUS_BAR_EXPANDED = 1;
@@ -41,59 +44,59 @@ module.exports = React.createClass({
 
     propTypes: {
         // the room this statusbar is representing.
-        room: React.PropTypes.object.isRequired,
+        room: PropTypes.object.isRequired,
 
         // the number of messages which have arrived since we've been scrolled up
-        numUnreadMessages: React.PropTypes.number,
+        numUnreadMessages: PropTypes.number,
 
         // this is true if we are fully scrolled-down, and are looking at
         // the end of the live timeline.
-        atEndOfLiveTimeline: React.PropTypes.bool,
+        atEndOfLiveTimeline: PropTypes.bool,
 
         // This is true when the user is alone in the room, but has also sent a message.
         // Used to suggest to the user to invite someone
-        sentMessageAndIsAlone: React.PropTypes.bool,
+        sentMessageAndIsAlone: PropTypes.bool,
 
         // true if there is an active call in this room (means we show
         // the 'Active Call' text in the status bar if there is nothing
         // more interesting)
-        hasActiveCall: React.PropTypes.bool,
+        hasActiveCall: PropTypes.bool,
 
         // Number of names to display in typing indication. E.g. set to 3, will
         // result in "X, Y, Z and 100 others are typing."
-        whoIsTypingLimit: React.PropTypes.number,
+        whoIsTypingLimit: PropTypes.number,
 
         // callback for when the user clicks on the 'resend all' button in the
         // 'unsent messages' bar
-        onResendAllClick: React.PropTypes.func,
+        onResendAllClick: PropTypes.func,
 
         // callback for when the user clicks on the 'cancel all' button in the
         // 'unsent messages' bar
-        onCancelAllClick: React.PropTypes.func,
+        onCancelAllClick: PropTypes.func,
 
         // callback for when the user clicks on the 'invite others' button in the
         // 'you are alone' bar
-        onInviteClick: React.PropTypes.func,
+        onInviteClick: PropTypes.func,
 
         // callback for when the user clicks on the 'stop warning me' button in the
         // 'you are alone' bar
-        onStopWarningClick: React.PropTypes.func,
+        onStopWarningClick: PropTypes.func,
 
         // callback for when the user clicks on the 'scroll to bottom' button
-        onScrollToBottomClick: React.PropTypes.func,
+        onScrollToBottomClick: PropTypes.func,
 
         // callback for when we do something that changes the size of the
         // status bar. This is used to trigger a re-layout in the parent
         // component.
-        onResize: React.PropTypes.func,
+        onResize: PropTypes.func,
 
         // callback for when the status bar can be hidden from view, as it is
         // not displaying anything
-        onHidden: React.PropTypes.func,
+        onHidden: PropTypes.func,
 
         // callback for when the status bar is displaying something and should
         // be visible
-        onVisible: React.PropTypes.func,
+        onVisible: PropTypes.func,
     },
 
     getDefaultProps: function() {
@@ -105,6 +108,7 @@ module.exports = React.createClass({
     getInitialState: function() {
         return {
             syncState: MatrixClientPeg.get().getSyncState(),
+            syncStateData: MatrixClientPeg.get().getSyncStateData(),
             usersTyping: WhoIsTyping.usersTypingApartFromMe(this.props.room),
             unsentMessages: getUnsentMessages(this.props.room),
         };
@@ -132,12 +136,13 @@ module.exports = React.createClass({
         }
     },
 
-    onSyncStateChange: function(state, prevState) {
+    onSyncStateChange: function(state, prevState, data) {
         if (state === "SYNCING" && prevState === "SYNCING") {
             return;
         }
         this.setState({
             syncState: state,
+            syncStateData: data,
         });
     },
 
@@ -147,16 +152,25 @@ module.exports = React.createClass({
         });
     },
 
+    _onSendWithoutVerifyingClick: function() {
+        cryptodevices.getUnknownDevicesForRoom(MatrixClientPeg.get(), this.props.room).then((devices) => {
+            cryptodevices.markAllDevicesKnown(MatrixClientPeg.get(), devices);
+            Resend.resendUnsentEvents(this.props.room);
+        });
+    },
+
     _onResendAllClick: function() {
         Resend.resendUnsentEvents(this.props.room);
+        dis.dispatch({action: 'focus_composer'});
     },
 
     _onCancelAllClick: function() {
         Resend.cancelUnsentEvents(this.props.room);
+        dis.dispatch({action: 'focus_composer'});
     },
 
     _onShowDevicesClick: function() {
-        showUnknownDeviceDialogForMessages(MatrixClientPeg.get(), this.props.room);
+        cryptodevices.showUnknownDeviceDialogForMessages(MatrixClientPeg.get(), this.props.room);
     },
 
     _onRoomLocalEchoUpdated: function(event, room, oldEventId, oldStatus) {
@@ -169,8 +183,10 @@ module.exports = React.createClass({
 
     // Check whether current size is greater than 0, if yes call props.onVisible
     _checkSize: function() {
-        if (this.props.onVisible && this._getSize()) {
-            this.props.onVisible();
+        if (this._getSize()) {
+            if (this.props.onVisible) this.props.onVisible();
+        } else {
+            if (this.props.onHidden) this.props.onHidden();
         }
     },
 
@@ -178,7 +194,7 @@ module.exports = React.createClass({
     // changed - so we use '0' to indicate normal size, and other values to
     // indicate other sizes.
     _getSize: function() {
-        if (this.state.syncState === "ERROR" ||
+        if (this._shouldShowConnectionError() ||
             (this.state.usersTyping.length > 0) ||
             this.props.numUnreadMessages ||
             !this.props.atEndOfLiveTimeline ||
@@ -225,7 +241,7 @@ module.exports = React.createClass({
             );
         }
 
-        if (this.state.syncState === "ERROR") {
+        if (this._shouldShowConnectionError()) {
             return null;
         }
 
@@ -272,6 +288,21 @@ module.exports = React.createClass({
         return avatars;
     },
 
+    _shouldShowConnectionError: function() {
+        // no conn bar trumps unread count since you can't get unread messages
+        // without a connection! (technically may already have some but meh)
+        // It also trumps the "some not sent" msg since you can't resend without
+        // a connection!
+        // There's one situation in which we don't show this 'no connection' bar, and that's
+        // if it's a resource limit exceeded error: those are shown in the top bar.
+        const errorIsMauError = Boolean(
+            this.state.syncStateData &&
+            this.state.syncStateData.error &&
+            this.state.syncStateData.error.errcode === 'M_RESOURCE_LIMIT_EXCEEDED'
+        );
+        return this.state.syncState === "ERROR" && !errorIsMauError;
+    },
+
     _getUnsentMessageContent: function() {
         const unsentMessages = this.state.unsentMessages;
         if (!unsentMessages.length) return null;
@@ -286,15 +317,52 @@ module.exports = React.createClass({
         if (hasUDE) {
             title = _t("Message not sent due to unknown devices being present");
             content = _t(
-                "<showDevicesText>Show devices</showDevicesText> or <cancelText>cancel all</cancelText>.",
+                "<showDevicesText>Show devices</showDevicesText>, <sendAnywayText>send anyway</sendAnywayText> or <cancelText>cancel</cancelText>.",
                 {},
                 {
                     'showDevicesText': (sub) => <a className="mx_RoomStatusBar_resend_link" key="resend" onClick={this._onShowDevicesClick}>{ sub }</a>,
+                    'sendAnywayText': (sub) => <a className="mx_RoomStatusBar_resend_link" key="sendAnyway" onClick={this._onSendWithoutVerifyingClick}>{ sub }</a>,
                     'cancelText': (sub) => <a className="mx_RoomStatusBar_resend_link" key="cancel" onClick={this._onCancelAllClick}>{ sub }</a>,
                 },
             );
         } else {
-            if (
+            let consentError = null;
+            let resourceLimitError = null;
+            for (const m of unsentMessages) {
+                if (m.error && m.error.errcode === 'M_CONSENT_NOT_GIVEN') {
+                    consentError = m.error;
+                    break;
+                } else if (m.error && m.error.errcode === 'M_RESOURCE_LIMIT_EXCEEDED') {
+                    resourceLimitError = m.error;
+                    break;
+                }
+            }
+            if (consentError) {
+                title = _t(
+                    "You can't send any messages until you review and agree to " +
+                    "<consentLink>our terms and conditions</consentLink>.",
+                    {},
+                    {
+                        'consentLink': (sub) =>
+                            <a href={consentError.data && consentError.data.consent_uri} target="_blank">
+                                { sub }
+                            </a>,
+                    },
+                );
+            } else if (resourceLimitError) {
+                title = messageForResourceLimitError(
+                    resourceLimitError.data.limit_type,
+                    resourceLimitError.data.admin_contact, {
+                    'monthly_active_user': _td(
+                        "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. " +
+                        "Please <a>contact your service administrator</a> to continue using the service.",
+                    ),
+                    '': _td(
+                        "Your message wasn't sent because this homeserver has exceeded a resource limit. " +
+                        "Please <a>contact your service administrator</a> to continue using the service.",
+                    ),
+                });
+            } else if (
                 unsentMessages.length === 1 &&
                 unsentMessages[0].error &&
                 unsentMessages[0].error.data &&
@@ -302,11 +370,11 @@ module.exports = React.createClass({
             ) {
                 title = unsentMessages[0].error.data.error;
             } else {
-                title = _t("Some of your messages have not been sent.");
+                title = _t('%(count)s of your messages have not been sent.', { count: unsentMessages.length });
             }
-            content = _t("<resendText>Resend all</resendText> or <cancelText>cancel all</cancelText> now. " +
+            content = _t("%(count)s <resendText>Resend all</resendText> or <cancelText>cancel all</cancelText> now. " +
                "You can also select individual messages to resend or cancel.",
-                {},
+                { count: unsentMessages.length },
                 {
                     'resendText': (sub) =>
                         <a className="mx_RoomStatusBar_resend_link" key="resend" onClick={this._onResendAllClick}>{ sub }</a>,
@@ -318,11 +386,13 @@ module.exports = React.createClass({
 
         return <div className="mx_RoomStatusBar_connectionLostBar">
             <img src="img/warning.svg" width="24" height="23" title={_t("Warning")} alt={_t("Warning")} />
-            <div className="mx_RoomStatusBar_connectionLostBar_title">
-                { title }
-            </div>
-            <div className="mx_RoomStatusBar_connectionLostBar_desc">
-                { content }
+            <div>
+                <div className="mx_RoomStatusBar_connectionLostBar_title">
+                    { title }
+                </div>
+                <div className="mx_RoomStatusBar_connectionLostBar_desc">
+                    { content }
+                </div>
             </div>
         </div>;
     },
@@ -331,19 +401,17 @@ module.exports = React.createClass({
     _getContent: function() {
         const EmojiText = sdk.getComponent('elements.EmojiText');
 
-        // no conn bar trumps unread count since you can't get unread messages
-        // without a connection! (technically may already have some but meh)
-        // It also trumps the "some not sent" msg since you can't resend without
-        // a connection!
-        if (this.state.syncState === "ERROR") {
+        if (this._shouldShowConnectionError()) {
             return (
                 <div className="mx_RoomStatusBar_connectionLostBar">
                     <img src="img/warning.svg" width="24" height="23" title="/!\ " alt="/!\ " />
-                    <div className="mx_RoomStatusBar_connectionLostBar_title">
-                        { _t('Connectivity to the server has been lost.') }
-                    </div>
-                    <div className="mx_RoomStatusBar_connectionLostBar_desc">
-                        { _t('Sent messages will be stored until your connection has returned.') }
+                    <div>
+                        <div className="mx_RoomStatusBar_connectionLostBar_title">
+                            { _t('Connectivity to the server has been lost.') }
+                        </div>
+                        <div className="mx_RoomStatusBar_connectionLostBar_desc">
+                            { _t('Sent messages will be stored until your connection has returned.') }
+                        </div>
                     </div>
                 </div>
             );

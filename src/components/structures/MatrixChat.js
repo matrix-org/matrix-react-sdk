@@ -1,7 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
-Copyright 2017 New Vector Ltd
+Copyright 2017, 2018 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,9 +19,11 @@ limitations under the License.
 import Promise from 'bluebird';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import Matrix from "matrix-js-sdk";
 
 import Analytics from "../../Analytics";
+import { DecryptionFailureTracker } from "../../DecryptionFailureTracker";
 import MatrixClientPeg from "../../MatrixClientPeg";
 import PlatformPeg from "../../PlatformPeg";
 import SdkConfig from "../../SdkConfig";
@@ -43,6 +45,12 @@ import createRoom from "../../createRoom";
 import KeyRequestHandler from '../../KeyRequestHandler';
 import { _t, getCurrentLanguage } from '../../languageHandler';
 import SettingsStore, {SettingLevel} from "../../settings/SettingsStore";
+import { startAnyRegistrationFlow } from "../../Registration.js";
+import { messageForSyncError } from '../../utils/ErrorUtils';
+
+// Disable warnings for now: we use deprecated bluebird functions
+// and need to migrate, but they spam the console with warnings.
+Promise.config({warnings: false});
 
 /** constants for MatrixChat.state.view */
 const VIEWS = {
@@ -92,38 +100,38 @@ export default React.createClass({
     displayName: 'MatrixChat',
 
     propTypes: {
-        config: React.PropTypes.object,
-        ConferenceHandler: React.PropTypes.any,
-        onNewScreen: React.PropTypes.func,
-        registrationUrl: React.PropTypes.string,
-        enableGuest: React.PropTypes.bool,
+        config: PropTypes.object,
+        ConferenceHandler: PropTypes.any,
+        onNewScreen: PropTypes.func,
+        registrationUrl: PropTypes.string,
+        enableGuest: PropTypes.bool,
 
         // the queryParams extracted from the [real] query-string of the URI
-        realQueryParams: React.PropTypes.object,
+        realQueryParams: PropTypes.object,
 
         // the initial queryParams extracted from the hash-fragment of the URI
-        startingFragmentQueryParams: React.PropTypes.object,
+        startingFragmentQueryParams: PropTypes.object,
 
         // called when we have completed a token login
-        onTokenLoginCompleted: React.PropTypes.func,
+        onTokenLoginCompleted: PropTypes.func,
 
         // Represents the screen to display as a result of parsing the initial
         // window.location
-        initialScreenAfterLogin: React.PropTypes.shape({
-            screen: React.PropTypes.string.isRequired,
-            params: React.PropTypes.object,
+        initialScreenAfterLogin: PropTypes.shape({
+            screen: PropTypes.string.isRequired,
+            params: PropTypes.object,
         }),
 
         // displayname, if any, to set on the device when logging
         // in/registering.
-        defaultDeviceDisplayName: React.PropTypes.string,
+        defaultDeviceDisplayName: PropTypes.string,
 
         // A function that makes a registration URL
-        makeRegistrationUrl: React.PropTypes.func.isRequired,
+        makeRegistrationUrl: PropTypes.func.isRequired,
     },
 
     childContextTypes: {
-        appConfig: React.PropTypes.object,
+        appConfig: PropTypes.object,
     },
 
     AuxPanel: {
@@ -164,12 +172,20 @@ export default React.createClass({
             newVersionReleaseNotes: null,
             checkingForUpdate: null,
 
+            showCookieBar: false,
+
             // Parameters used in the registration dance with the IS
             register_client_secret: null,
             register_session_id: null,
             register_hs_url: null,
             register_is_url: null,
             register_id_sid: null,
+
+            // When showing Modal dialogs we need to set aria-hidden on the root app element
+            // and disable it when there are no dialogs
+            hideToSRUsers: false,
+
+            syncError: null, // If the current syncing status is ERROR, the error object, otherwise null.
         };
         return s;
     },
@@ -221,8 +237,6 @@ export default React.createClass({
 
     componentWillMount: function() {
         SdkConfig.put(this.props.config);
-
-        if (!SettingsStore.getValue("analyticsOptOut")) Analytics.enable();
 
         // Used by _viewRoom before getting state from sync
         this.firstSyncComplete = false;
@@ -276,6 +290,14 @@ export default React.createClass({
                 register_hs_url: paramHs,
             });
         }
+        // Set a default IS with query param `is_url`
+        const paramIs = this.props.startingFragmentQueryParams.is_url;
+        if (paramIs) {
+            console.log('Setting register_is_url ', paramIs);
+            this.setState({
+                register_is_url: paramIs,
+            });
+        }
 
         // a thing to call showScreen with once login completes.  this is kept
         // outside this.state because updating it should never trigger a
@@ -285,6 +307,8 @@ export default React.createClass({
         this._windowWidth = 10000;
         this.handleResize();
         window.addEventListener('resize', this.handleResize);
+
+        this._pageChanging = false;
 
         // check we have the right tint applied for this theme.
         // N.B. we don't call the whole of setTheme() here as we may be
@@ -344,16 +368,26 @@ export default React.createClass({
                     guestIsUrl: this.getCurrentIsUrl(),
                     defaultDeviceDisplayName: this.props.defaultDeviceDisplayName,
                 });
-            }).catch((e) => {
-                console.error(`Error attempting to load session: ${e}`);
-                return false;
             }).then((loadedSession) => {
                 if (!loadedSession) {
                     // fall back to showing the login screen
                     dis.dispatch({action: "start_login"});
                 }
             });
-        }).done();
+            // Note we don't catch errors from this: we catch everything within
+            // loadSession as there's logic there to ask the user if they want
+            // to try logging out.
+        });
+
+        if (SettingsStore.getValue("showCookieBar")) {
+            this.setState({
+                showCookieBar: true,
+            });
+        }
+
+        if (SettingsStore.getValue("analyticsOptIn")) {
+            Analytics.enable();
+        }
     },
 
     componentWillUnmount: function() {
@@ -363,11 +397,66 @@ export default React.createClass({
         window.removeEventListener('resize', this.handleResize);
     },
 
-    componentDidUpdate: function() {
+    componentWillUpdate: function(props, state) {
+        if (this.shouldTrackPageChange(this.state, state)) {
+            this.startPageChangeTimer();
+        }
+    },
+
+    componentDidUpdate: function(prevProps, prevState) {
+        if (this.shouldTrackPageChange(prevState, this.state)) {
+            const durationMs = this.stopPageChangeTimer();
+            Analytics.trackPageChange(durationMs);
+        }
         if (this.focusComposer) {
             dis.dispatch({action: 'focus_composer'});
             this.focusComposer = false;
         }
+    },
+
+    startPageChangeTimer() {
+        // Tor doesn't support performance
+        if (!performance || !performance.mark) return null;
+
+        // This shouldn't happen because componentWillUpdate and componentDidUpdate
+        // are used.
+        if (this._pageChanging) {
+            console.warn('MatrixChat.startPageChangeTimer: timer already started');
+            return;
+        }
+        this._pageChanging = true;
+        performance.mark('riot_MatrixChat_page_change_start');
+    },
+
+    stopPageChangeTimer() {
+        // Tor doesn't support performance
+        if (!performance || !performance.mark) return null;
+
+        if (!this._pageChanging) {
+            console.warn('MatrixChat.stopPageChangeTimer: timer not started');
+            return;
+        }
+        this._pageChanging = false;
+        performance.mark('riot_MatrixChat_page_change_stop');
+        performance.measure(
+            'riot_MatrixChat_page_change_delta',
+            'riot_MatrixChat_page_change_start',
+            'riot_MatrixChat_page_change_stop',
+        );
+        performance.clearMarks('riot_MatrixChat_page_change_start');
+        performance.clearMarks('riot_MatrixChat_page_change_stop');
+        const measurement = performance.getEntriesByName('riot_MatrixChat_page_change_delta').pop();
+
+        // In practice, sometimes the entries list is empty, so we get no measurement
+        if (!measurement) return null;
+
+        return measurement.duration;
+    },
+
+    shouldTrackPageChange(prevState, state) {
+        return prevState.currentRoomId !== state.currentRoomId ||
+            prevState.view !== state.view ||
+            prevState.page_type !== state.page_type;
     },
 
     setStateForNewView: function(state) {
@@ -398,7 +487,7 @@ export default React.createClass({
                 action: 'do_after_sync_prepared',
                 deferred_action: payload,
             });
-            dis.dispatch({action: 'view_set_mxid'});
+            dis.dispatch({action: 'require_registration'});
             return;
         }
 
@@ -406,7 +495,11 @@ export default React.createClass({
             case 'logout':
                 Lifecycle.logout();
                 break;
+            case 'require_registration':
+                startAnyRegistrationFlow(payload);
+                break;
             case 'start_registration':
+                // This starts the full registration flow
                 this._startRegistration(payload.params || {});
                 break;
             case 'start_login':
@@ -494,6 +587,27 @@ export default React.createClass({
                 this._setPage(PageTypes.UserSettings);
                 this.notifyNewScreen('settings');
                 break;
+            case 'close_settings':
+                this.setState({
+                    leftDisabled: false,
+                    rightDisabled: false,
+                    middleDisabled: false,
+                });
+                if (this.state.page_type === PageTypes.UserSettings) {
+                    // We do this to get setPage and notifyNewScreen
+                    if (this.state.currentRoomId) {
+                        this._viewRoom({
+                            room_id: this.state.currentRoomId,
+                        });
+                    } else if (this.state.currentGroupId) {
+                        this._viewGroup({
+                            group_id: this.state.currentGroupId,
+                        });
+                    } else {
+                        this._viewHome();
+                    }
+                }
+                break;
             case 'view_create_room':
                 this._createRoom();
                 break;
@@ -511,19 +625,10 @@ export default React.createClass({
                 this.notifyNewScreen('groups');
                 break;
             case 'view_group':
-                {
-                    const groupId = payload.group_id;
-                    this.setState({
-                        currentGroupId: groupId,
-                        currentGroupIsNew: payload.group_is_new,
-                    });
-                    this._setPage(PageTypes.GroupView);
-                    this.notifyNewScreen('group/' + groupId);
-                }
+                this._viewGroup(payload);
                 break;
             case 'view_home_page':
-                this._setPage(PageTypes.HomePage);
-                this.notifyNewScreen('home');
+                this._viewHome();
                 break;
             case 'view_set_mxid':
                 this._setMxId(payload);
@@ -566,7 +671,8 @@ export default React.createClass({
                     middleDisabled: payload.middleDisabled || false,
                     rightDisabled: payload.rightDisabled || payload.sideDisabled || false,
                 });
-                break; }
+                break;
+            }
             case 'set_theme':
                 this._onSetTheme(payload.value);
                 break;
@@ -607,6 +713,33 @@ export default React.createClass({
             case 'send_event':
                 this.onSendEvent(payload.room_id, payload.event);
                 break;
+            case 'aria_hide_main_app':
+                this.setState({
+                    hideToSRUsers: true,
+                });
+                break;
+            case 'aria_unhide_main_app':
+                this.setState({
+                    hideToSRUsers: false,
+                });
+                break;
+            case 'accept_cookies':
+                SettingsStore.setValue("analyticsOptIn", null, SettingLevel.DEVICE, true);
+                SettingsStore.setValue("showCookieBar", null, SettingLevel.DEVICE, false);
+
+                this.setState({
+                    showCookieBar: false,
+                });
+                Analytics.enable();
+                break;
+            case 'reject_cookies':
+                SettingsStore.setValue("analyticsOptIn", null, SettingLevel.DEVICE, false);
+                SettingsStore.setValue("showCookieBar", null, SettingLevel.DEVICE, false);
+
+                this.setState({
+                    showCookieBar: false,
+                });
+                break;
         }
     },
 
@@ -617,18 +750,26 @@ export default React.createClass({
     },
 
     _startRegistration: function(params) {
-        this.setStateForNewView({
+        const newState = {
             view: VIEWS.REGISTER,
-            // these params may be undefined, but if they are,
-            // unset them from our state: we don't want to
-            // resume a previous registration session if the
-            // user just clicked 'register'
-            register_client_secret: params.client_secret,
-            register_session_id: params.session_id,
-            register_hs_url: params.hs_url,
-            register_is_url: params.is_url,
-            register_id_sid: params.sid,
-        });
+        };
+
+        // Only honour params if they are all present, otherwise we reset
+        // HS and IS URLs when switching to registration.
+        if (params.client_secret &&
+            params.session_id &&
+            params.hs_url &&
+            params.is_url &&
+            params.sid
+        ) {
+            newState.register_client_secret = params.client_secret;
+            newState.register_session_id = params.session_id;
+            newState.register_hs_url = params.hs_url;
+            newState.register_is_url = params.is_url;
+            newState.register_id_sid = params.sid;
+        }
+
+        this.setStateForNewView(newState);
         this.notifyNewScreen('register');
     },
 
@@ -680,7 +821,6 @@ export default React.createClass({
     // @param {string=} roomInfo.room_id ID of the room to join. One of room_id or room_alias must be given.
     // @param {string=} roomInfo.room_alias Alias of the room to join. One of room_id or room_alias must be given.
     // @param {boolean=} roomInfo.auto_join If true, automatically attempt to join the room if not already a member.
-    // @param {boolean=} roomInfo.show_settings Makes RoomView show the room settings dialog.
     // @param {string=} roomInfo.event_id ID of the event in this room to show: this will cause a switch to the
     //                                    context of that particular event.
     // @param {boolean=} roomInfo.highlighted If true, add event_id to the hash of the URL
@@ -747,6 +887,21 @@ export default React.createClass({
         });
     },
 
+    _viewGroup: function(payload) {
+        const groupId = payload.group_id;
+        this.setState({
+            currentGroupId: groupId,
+            currentGroupIsNew: payload.group_is_new,
+        });
+        this._setPage(PageTypes.GroupView);
+        this.notifyNewScreen('group/' + groupId);
+    },
+
+    _viewHome: function() {
+        this._setPage(PageTypes.HomePage);
+        this.notifyNewScreen('home');
+    },
+
     _setMxId: function(payload) {
         const SetMxIdDialog = sdk.getComponent('views.dialogs.SetMxIdDialog');
         const close = Modal.createTrackedDialog('Set MXID', '', SetMxIdDialog, {
@@ -810,7 +965,7 @@ export default React.createClass({
                 });
             }
             dis.dispatch({
-                action: 'view_set_mxid',
+                action: 'require_registration',
                 // If the set_mxid dialog is cancelled, view /home because if the browser
                 // was pointing at /user/@someone:domain?action=chat, the URL needs to be
                 // reset so that they can revisit /user/.. // (and trigger
@@ -846,16 +1001,37 @@ export default React.createClass({
         }).close;
     },
 
+    _leaveRoomWarnings: function(roomId) {
+        const roomToLeave = MatrixClientPeg.get().getRoom(roomId);
+        // Show a warning if there are additional complications.
+        const joinRules = roomToLeave.currentState.getStateEvents('m.room.join_rules', '');
+        const warnings = [];
+        if (joinRules) {
+            const rule = joinRules.getContent().join_rule;
+            if (rule !== "public") {
+                warnings.push((
+                    <span className="warning" key="non_public_warning">
+                        {' '/* Whitespace, otherwise the sentences get smashed together */ }
+                        { _t("This room is not public. You will not be able to rejoin without an invite.") }
+                    </span>
+                ));
+            }
+        }
+        return warnings;
+    },
+
     _leaveRoom: function(roomId) {
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-
         const roomToLeave = MatrixClientPeg.get().getRoom(roomId);
+        const warnings = this._leaveRoomWarnings(roomId);
+
         Modal.createTrackedDialog('Leave room', '', QuestionDialog, {
             title: _t("Leave room"),
             description: (
                 <span>
                 { _t("Are you sure you want to leave the room '%(roomName)s'?", {roomName: roomToLeave.name}) }
+                { warnings }
                 </span>
             ),
             onFinished: (shouldLeave) => {
@@ -874,10 +1050,20 @@ export default React.createClass({
                     }, (err) => {
                         modal.close();
                         console.error("Failed to leave room " + roomId + " " + err);
+                        let title = _t("Failed to leave room");
+                        let message = _t("Server may be unavailable, overloaded, or you hit a bug.");
+                        if (err.errcode == 'M_CANNOT_LEAVE_SERVER_NOTICE_ROOM') {
+                            title = _t("Can't leave Server Notices room");
+                            message = _t(
+                                "This room is used for important messages from the Homeserver, " +
+                                "so you cannot leave it.",
+                            );
+                        } else if (err && err.message) {
+                            message = err.message;
+                        }
                         Modal.createTrackedDialog('Failed to leave room', '', ErrorDialog, {
-                            title: _t("Failed to leave room"),
-                            description: (err && err.message ? err.message :
-                                _t("Server may be unavailable, overloaded, or you hit a bug.")),
+                            title: title,
+                            description: message,
                         });
                     });
                 }
@@ -966,7 +1152,7 @@ export default React.createClass({
      *
      * @param {string} teamToken
      */
-    _onLoggedIn: function(teamToken) {
+    _onLoggedIn: async function(teamToken) {
         this.setState({
             view: VIEWS.LOGGED_IN,
         });
@@ -978,18 +1164,18 @@ export default React.createClass({
         } else if (this._is_registered) {
             this._is_registered = false;
 
-            // Set the display name = user ID localpart
-            MatrixClientPeg.get().setDisplayName(
-                MatrixClientPeg.get().getUserIdLocalpart(),
-            );
-
             if (this.props.config.welcomeUserId && getCurrentLanguage().startsWith("en")) {
-                createRoom({
+                const roomId = await createRoom({
                     dmUserId: this.props.config.welcomeUserId,
                     // Only view the welcome user if we're NOT looking at a room
                     andView: !this.state.currentRoomId,
                 });
-                return;
+                // if successful, return because we're already
+                // viewing the welcomeUserId room
+                // else, if failed, fall through to view_home_page
+                if (roomId) {
+                    return;
+                }
             }
             // The user has just logged in after registering
             dis.dispatch({action: 'view_home_page'});
@@ -1065,19 +1251,26 @@ export default React.createClass({
             // this if we are not scrolled up in the view. To find out, delegate to
             // the timeline panel. If the timeline panel doesn't exist, then we assume
             // it is safe to reset the timeline.
-            if (!self._loggedInView) {
+            if (!self._loggedInView || !self._loggedInView.child) {
                 return true;
             }
-            return self._loggedInView.canResetTimelineInRoom(roomId);
+            return self._loggedInView.child.canResetTimelineInRoom(roomId);
         });
 
-        cli.on('sync', function(state, prevState) {
+        cli.on('sync', function(state, prevState, data) {
             // LifecycleStore and others cannot directly subscribe to matrix client for
             // events because flux only allows store state changes during flux dispatches.
             // So dispatch directly from here. Ideally we'd use a SyncStateStore that
             // would do this dispatch and expose the sync state itself (by listening to
             // its own dispatch).
             dis.dispatch({action: 'sync_state', prevState, state});
+
+            if (state === "ERROR" || state === "RECONNECTING") {
+                self.setState({syncError: data.error || true});
+            } else if (self.state.syncError) {
+                self.setState({syncError: null});
+            }
+
             self.updateStatusIndicator(state, prevState);
             if (state === "SYNCING" && prevState === "SYNCING") {
                 return;
@@ -1101,6 +1294,7 @@ export default React.createClass({
             }, true);
         });
         cli.on('Session.logged_out', function(call) {
+            if (Lifecycle.isLoggingOut()) return;
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog('Signed out', '', ErrorDialog, {
                 title: _t('Signed Out'),
@@ -1110,6 +1304,28 @@ export default React.createClass({
                 action: 'logout',
             });
         });
+        cli.on('no_consent', function(message, consentUri) {
+            const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+            Modal.createTrackedDialog('No Consent Dialog', '', QuestionDialog, {
+                title: _t('Terms and Conditions'),
+                description: <div>
+                    <p> { _t(
+                            'To continue using the %(homeserverDomain)s homeserver ' +
+                            'you must review and agree to our terms and conditions.',
+                            { homeserverDomain: cli.getDomain() },
+                        ) }
+                    </p>
+                </div>,
+                button: _t('Review terms and conditions'),
+                cancelButton: _t('Dismiss'),
+                onFinished: (confirmed) => {
+                    if (confirmed) {
+                        window.open(consentUri, '_blank');
+                    }
+                },
+            }, null, true);
+        });
+
         cli.on("accountData", function(ev) {
             if (ev.getType() === 'im.vector.web.settings') {
                 if (ev.getContent() && ev.getContent().theme) {
@@ -1120,6 +1336,32 @@ export default React.createClass({
                 }
             }
         });
+
+        const dft = new DecryptionFailureTracker((total, errorCode) => {
+            Analytics.trackEvent('E2E', 'Decryption failure', errorCode, total);
+        }, (errorCode) => {
+            // Map JS-SDK error codes to tracker codes for aggregation
+            switch (errorCode) {
+                case 'MEGOLM_UNKNOWN_INBOUND_SESSION_ID':
+                    return 'olm_keys_not_sent_error';
+                case 'OLM_UNKNOWN_MESSAGE_INDEX':
+                    return 'olm_index_error';
+                case undefined:
+                    return 'unexpected_error';
+                default:
+                    return 'unspecified_error';
+            }
+        });
+
+        // Shelved for later date when we have time to think about persisting history of
+        // tracked events across sessions.
+        // dft.loadTrackedEventHashMap();
+
+        dft.start();
+
+        // When logging out, stop tracking failures and destroy state
+        cli.on("Session.logged_out", () => dft.stop());
+        cli.on("Event.decrypted", (e, err) => dft.eventDecrypted(e, err));
 
         const krh = new KeyRequestHandler(cli);
         cli.on("crypto.roomKeyRequest", (req) => {
@@ -1142,18 +1384,6 @@ export default React.createClass({
         cli.on("crypto.warning", (type) => {
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             switch (type) {
-                case 'CRYPTO_WARNING_ACCOUNT_MIGRATED':
-                    Modal.createTrackedDialog('Crypto migrated', '', ErrorDialog, {
-                        title: _t('Cryptography data migrated'),
-                        description: _t(
-                            "A one-off migration of cryptography data has been performed. "+
-                            "End-to-end encryption will not work if you go back to an older "+
-                            "version of Riot. If you need to use end-to-end cryptography on "+
-                            "an older version, log out of Riot first. To retain message history, "+
-                            "export and re-import your keys.",
-                        ),
-                    });
-                    break;
                 case 'CRYPTO_WARNING_OLD_VERSION_DETECTED':
                     Modal.createTrackedDialog('Crypto migrated', '', ErrorDialog, {
                         title: _t('Old cryptography data detected'),
@@ -1220,7 +1450,7 @@ export default React.createClass({
         } else if (screen == 'start') {
             this.showScreen('home');
             dis.dispatch({
-                action: 'view_set_mxid',
+                action: 'require_registration',
             });
         } else if (screen == 'directory') {
             dis.dispatch({
@@ -1310,7 +1540,6 @@ export default React.createClass({
         if (this.props.onNewScreen) {
             this.props.onNewScreen(screen);
         }
-        Analytics.trackPageChange();
     },
 
     onAliasClick: function(event, alias) {
@@ -1465,19 +1694,19 @@ export default React.createClass({
         this._setPageSubtitle(subtitle);
     },
 
-    onUserSettingsClose: function() {
-        // XXX: use browser history instead to find the previous room?
-        // or maintain a this.state.pageHistory in _setPage()?
-        if (this.state.currentRoomId) {
-            dis.dispatch({
-                action: 'view_room',
-                room_id: this.state.currentRoomId,
-            });
-        } else {
-            dis.dispatch({
-                action: 'view_home_page',
-            });
+    onCloseAllSettings() {
+        dis.dispatch({ action: 'close_settings' });
+    },
+
+    onServerConfigChange(config) {
+        const newState = {};
+        if (config.hsUrl) {
+            newState.register_hs_url = config.hsUrl;
         }
+        if (config.isUrl) {
+            newState.register_is_url = config.isUrl;
+        }
+        this.setState(newState);
     },
 
     _makeRegistrationUrl: function(params) {
@@ -1525,10 +1754,11 @@ export default React.createClass({
                 return (
                    <LoggedInView ref={this._collectLoggedInView} matrixClient={MatrixClientPeg.get()}
                         onRoomCreated={this.onRoomCreated}
-                        onUserSettingsClose={this.onUserSettingsClose}
+                        onCloseAllSettings={this.onCloseAllSettings}
                         onRegistered={this.onRegistered}
                         currentRoomId={this.state.currentRoomId}
                         teamToken={this._teamToken}
+                        showCookieBar={this.state.showCookieBar}
                         {...this.props}
                         {...this.state}
                     />
@@ -1536,8 +1766,15 @@ export default React.createClass({
             } else {
                 // we think we are logged in, but are still waiting for the /sync to complete
                 const Spinner = sdk.getComponent('elements.Spinner');
+                let errorBox;
+                if (this.state.syncError) {
+                    errorBox = <div className="mx_MatrixChat_syncError">
+                        {messageForSyncError(this.state.syncError)}
+                    </div>;
+                }
                 return (
                     <div className="mx_MatrixChat_splash">
+                        {errorBox}
                         <Spinner />
                         <a href="#" className="mx_MatrixChat_splashButtons" onClick={this.onLogoutClick}>
                         { _t('Logout') }
@@ -1568,6 +1805,7 @@ export default React.createClass({
                     onLoginClick={this.onLoginClick}
                     onRegisterClick={this.onRegisterClick}
                     onCancelClick={MatrixClientPeg.get() ? this.onReturnToAppClick : null}
+                    onServerConfigChange={this.onServerConfigChange}
                     />
             );
         }
@@ -1602,6 +1840,7 @@ export default React.createClass({
                     onForgotPasswordClick={this.onForgotPasswordClick}
                     enableGuest={this.props.enableGuest}
                     onCancelClick={MatrixClientPeg.get() ? this.onReturnToAppClick : null}
+                    onServerConfigChange={this.onServerConfigChange}
                 />
             );
         }

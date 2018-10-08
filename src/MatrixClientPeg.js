@@ -98,7 +98,10 @@ class MatrixClientPeg {
         const opts = utils.deepCopy(this.opts);
         // the react sdk doesn't work without this, so don't allow
         opts.pendingEventOrdering = "detached";
-        opts.disablePresence = true; // we do this manually
+
+        if (SettingsStore.isFeatureEnabled('feature_lazyloading')) {
+            opts.lazyLoadMembers = true;
+        }
 
         try {
             const promise = this.matrixClient.store.startup();
@@ -106,7 +109,7 @@ class MatrixClientPeg {
             await promise;
         } catch (err) {
             // log any errors when starting up the database (if one exists)
-            console.error(`Error starting matrixclient store: ${err}`);
+            console.error('Error starting matrixclient store', err);
         }
 
         // regardless of errors, start the client. If we did error out, we'll
@@ -116,7 +119,7 @@ class MatrixClientPeg {
         MatrixActionCreators.start(this.matrixClient);
 
         console.log(`MatrixClientPeg: really starting MatrixClient`);
-        this.get().startClient(opts);
+        await this.get().startClient(opts);
         console.log(`MatrixClientPeg: MatrixClient started`);
     }
 
@@ -175,4 +178,4 @@ class MatrixClientPeg {
 if (!global.mxMatrixClientPeg) {
     global.mxMatrixClientPeg = new MatrixClientPeg();
 }
-module.exports = global.mxMatrixClientPeg;
+export default global.mxMatrixClientPeg;

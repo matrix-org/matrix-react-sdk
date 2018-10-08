@@ -135,6 +135,10 @@ const Notifier = {
         const plaf = PlatformPeg.get();
         if (!plaf) return;
 
+        // Dev note: We don't set the "notificationsEnabled" setting to true here because it is a
+        // calculated value. It is determined based upon whether or not the master rule is enabled
+        // and other flags. Setting it here would cause a circular reference.
+
         Analytics.trackEvent('Notifier', 'Set Enabled', enable);
 
         // make sure that we persist the current setting audio_enabled setting
@@ -166,15 +170,15 @@ const Notifier = {
                     value: true,
                 });
             });
-            // clear the notifications_hidden flag, so that if notifications are
-            // disabled again in the future, we will show the banner again.
-            this.setToolbarHidden(false);
         } else {
             dis.dispatch({
                 action: "notifier_enabled",
                 value: false,
             });
         }
+        // set the notifications_hidden flag, as the user has knowingly interacted
+        // with the setting we shouldn't nag them any further
+        this.setToolbarHidden(true);
     },
 
     isEnabled: function() {
@@ -252,6 +256,10 @@ const Notifier = {
     },
 
     onEventDecrypted: function(ev) {
+        // 'decrypted' means the decryption process has finished: it may have failed,
+        // in which case it might decrypt soon if the keys arrive
+        if (ev.isDecryptionFailure()) return;
+
         const idx = this.pendingEncryptedEventIds.indexOf(ev.getId());
         if (idx === -1) return;
 

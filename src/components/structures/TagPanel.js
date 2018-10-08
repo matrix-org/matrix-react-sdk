@@ -1,5 +1,5 @@
 /*
-Copyright 2017 New Vector Ltd.
+Copyright 2017, 2018 New Vector Ltd.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,15 +17,16 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { MatrixClient } from 'matrix-js-sdk';
-import FilterStore from '../../stores/FilterStore';
-import FlairStore from '../../stores/FlairStore';
 import TagOrderStore from '../../stores/TagOrderStore';
 
 import GroupActions from '../../actions/GroupActions';
-import TagOrderActions from '../../actions/TagOrderActions';
 
 import sdk from '../../index';
 import dis from '../../dispatcher';
+import { _t } from '../../languageHandler';
+
+import { Droppable } from 'react-beautiful-dnd';
+import classNames from 'classnames';
 
 const TagPanel = React.createClass({
     displayName: 'TagPanel',
@@ -36,17 +37,7 @@ const TagPanel = React.createClass({
 
     getInitialState() {
         return {
-            // A list of group profiles for tags that are group IDs. The intention in future
-            // is to allow arbitrary tags to be selected in the TagPanel, not just groups.
-            // For now, it suffices to maintain a list of ordered group profiles.
-            orderedGroupTagProfiles: [
-            // {
-            //     groupId: '+awesome:foo.bar',{
-            //     name: 'My Awesome Community',
-            //     avatarUrl: 'mxc://...',
-            //     shortDescription: 'Some description...',
-            // },
-            ],
+            orderedTags: [],
             selectedTags: [],
         };
     },
@@ -54,28 +45,15 @@ const TagPanel = React.createClass({
     componentWillMount: function() {
         this.unmounted = false;
         this.context.matrixClient.on("Group.myMembership", this._onGroupMyMembership);
+        this.context.matrixClient.on("sync", this._onClientSync);
 
-        this._filterStoreToken = FilterStore.addListener(() => {
-            if (this.unmounted) {
-                return;
-            }
-            this.setState({
-                selectedTags: FilterStore.getSelectedTags(),
-            });
-        });
         this._tagOrderStoreToken = TagOrderStore.addListener(() => {
             if (this.unmounted) {
                 return;
             }
-
-            const orderedTags = TagOrderStore.getOrderedTags() || [];
-            const orderedGroupTags = orderedTags.filter((t) => t[0] === '+');
-            // XXX: One profile lookup failing will bring the whole lot down
-            Promise.all(orderedGroupTags.map(
-                (groupId) => FlairStore.getGroupProfileCached(this.context.matrixClient, groupId),
-            )).then((orderedGroupTagProfiles) => {
-                if (this.unmounted) return;
-                this.setState({orderedGroupTagProfiles});
+            this.setState({
+                orderedTags: TagOrderStore.getOrderedTags() || [],
+                selectedTags: TagOrderStore.getSelectedTags(),
             });
         });
         // This could be done by anything with a matrix client
@@ -85,6 +63,7 @@ const TagPanel = React.createClass({
     componentWillUnmount() {
         this.unmounted = true;
         this.context.matrixClient.removeListener("Group.myMembership", this._onGroupMyMembership);
+        this.context.matrixClient.removeListener("sync", this._onClientSync);
         if (this._filterStoreToken) {
             this._filterStoreToken.remove();
         }
@@ -95,8 +74,21 @@ const TagPanel = React.createClass({
         dis.dispatch(GroupActions.fetchJoinedGroups(this.context.matrixClient));
     },
 
-    onClick() {
-        dis.dispatch({action: 'deselect_tags'});
+    _onClientSync(syncState, prevState) {
+        // Consider the client reconnected if there is no error with syncing.
+        // This means the state could be RECONNECTING, SYNCING, PREPARED or CATCHUP.
+        const reconnected = syncState !== "ERROR" && prevState !== syncState;
+        if (reconnected) {
+            // Load joined groups
+            dis.dispatch(GroupActions.fetchJoinedGroups(this.context.matrixClient));
+        }
+    },
+
+    onMouseDown(e) {
+        // only dispatch if its not a no-op
+        if (this.state.selectedTags.length > 0) {
+            dis.dispatch({action: 'deselect_tags'});
+        }
     },
 
     onCreateGroupClick(ev) {
@@ -104,30 +96,74 @@ const TagPanel = React.createClass({
         dis.dispatch({action: 'view_create_group'});
     },
 
-    onTagTileEndDrag() {
-        dis.dispatch(TagOrderActions.commitTagOrdering(this.context.matrixClient));
+    onClearFilterClick(ev) {
+        dis.dispatch({action: 'deselect_tags'});
     },
 
     render() {
+        const GroupsButton = sdk.getComponent('elements.GroupsButton');
+        const DNDTagTile = sdk.getComponent('elements.DNDTagTile');
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         const TintableSvg = sdk.getComponent('elements.TintableSvg');
-        const DNDTagTile = sdk.getComponent('elements.DNDTagTile');
+        const GeminiScrollbarWrapper = sdk.getComponent("elements.GeminiScrollbarWrapper");
 
-        const tags = this.state.orderedGroupTagProfiles.map((groupProfile, index) => {
+
+        const tags = this.state.orderedTags.map((tag, index) => {
             return <DNDTagTile
-                key={groupProfile.groupId + '_' + index}
-                groupProfile={groupProfile}
-                selected={this.state.selectedTags.includes(groupProfile.groupId)}
-                onEndDrag={this.onTagTileEndDrag}
+                key={tag}
+                tag={tag}
+                index={index}
+                selected={this.state.selectedTags.includes(tag)}
             />;
         });
-        return <div className="mx_TagPanel" onClick={this.onClick}>
-            <div className="mx_TagPanel_tagTileContainer">
-                { tags }
+
+        const itemsSelected = this.state.selectedTags.length > 0;
+
+        let clearButton;
+        if (itemsSelected) {
+            clearButton = <AccessibleButton className="mx_TagPanel_clearButton" onClick={this.onClearFilterClick}>
+                <TintableSvg src="img/icons-close.svg" width="24" height="24"
+                             alt={_t("Clear filter")}
+                             title={_t("Clear filter")}
+                />
+            </AccessibleButton>;
+        }
+
+        const classes = classNames('mx_TagPanel', {
+            mx_TagPanel_items_selected: itemsSelected,
+        });
+
+        return <div className={classes}>
+            <div className="mx_TagPanel_clearButton_container">
+                { clearButton }
             </div>
-            <AccessibleButton className="mx_TagPanel_createGroupButton" onClick={this.onCreateGroupClick}>
-                <TintableSvg src="img/icons-create-room.svg" width="25" height="25" />
-            </AccessibleButton>
+            <div className="mx_TagPanel_divider" />
+            <GeminiScrollbarWrapper
+                className="mx_TagPanel_scroller"
+                autoshow={true}
+                // XXX: Use onMouseDown as a workaround for https://github.com/atlassian/react-beautiful-dnd/issues/273
+                // instead of onClick. Otherwise we experience https://github.com/vector-im/riot-web/issues/6253
+                onMouseDown={this.onMouseDown}
+            >
+                <Droppable
+                    droppableId="tag-panel-droppable"
+                    type="draggable-TagTile"
+                >
+                    { (provided, snapshot) => (
+                            <div
+                                className="mx_TagPanel_tagTileContainer"
+                                ref={provided.innerRef}
+                            >
+                                { tags }
+                                { provided.placeholder }
+                            </div>
+                    ) }
+                </Droppable>
+            </GeminiScrollbarWrapper>
+            <div className="mx_TagPanel_divider" />
+            <div className="mx_TagPanel_groupsButton">
+                <GroupsButton tooltip={true} />
+            </div>
         </div>;
     },
 });

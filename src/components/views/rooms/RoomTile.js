@@ -1,6 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 New Vector Ltd
+Copyright 2018 Michael Telatynski <7t3chguy@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,17 +16,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
 
-const React = require('react');
-const ReactDOM = require("react-dom");
-const classNames = require('classnames');
-const MatrixClientPeg = require('../../../MatrixClientPeg');
+import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import dis from '../../../dispatcher';
+import MatrixClientPeg from '../../../MatrixClientPeg';
 import DMRoomMap from '../../../utils/DMRoomMap';
-const sdk = require('../../../index');
-const ContextualMenu = require('../../structures/ContextualMenu');
-const RoomNotifs = require('../../../RoomNotifs');
-const FormattingUtils = require('../../../utils/FormattingUtils');
+import sdk from '../../../index';
+import {createMenu} from '../../structures/ContextualMenu';
+import * as RoomNotifs from '../../../RoomNotifs';
+import * as FormattingUtils from '../../../utils/FormattingUtils';
 import AccessibleButton from '../elements/AccessibleButton';
 import ActiveRoomObserver from '../../../ActiveRoomObserver';
 import RoomViewStore from '../../../stores/RoomViewStore';
@@ -34,17 +35,16 @@ module.exports = React.createClass({
     displayName: 'RoomTile',
 
     propTypes: {
-        connectDragSource: React.PropTypes.func,
-        connectDropTarget: React.PropTypes.func,
-        onClick: React.PropTypes.func,
-        isDragging: React.PropTypes.bool,
+        onClick: PropTypes.func,
 
-        room: React.PropTypes.object.isRequired,
-        collapsed: React.PropTypes.bool.isRequired,
-        unread: React.PropTypes.bool.isRequired,
-        highlight: React.PropTypes.bool.isRequired,
-        isInvite: React.PropTypes.bool.isRequired,
-        incomingCall: React.PropTypes.object,
+        room: PropTypes.object.isRequired,
+        collapsed: PropTypes.bool.isRequired,
+        unread: PropTypes.bool.isRequired,
+        highlight: PropTypes.bool.isRequired,
+        // If true, apply mx_RoomTile_transparent class
+        transparent: PropTypes.bool,
+        isInvite: PropTypes.bool.isRequired,
+        incomingCall: PropTypes.object,
     },
 
     getDefaultProps: function() {
@@ -58,7 +58,9 @@ module.exports = React.createClass({
             hover: false,
             badgeHover: false,
             menuDisplayed: false,
+            roomName: this.props.room.name,
             notifState: RoomNotifs.getRoomNotifsState(this.props.room.roomId),
+            notificationCount: this.props.room.getUnreadNotificationCount(),
             selected: this.props.room.roomId === RoomViewStore.getRoomId(),
         });
     },
@@ -69,23 +71,48 @@ module.exports = React.createClass({
     },
 
     _shouldShowMentionBadge: function() {
-        return this.state.notifState != RoomNotifs.MUTE;
+        return this.state.notifState !== RoomNotifs.MUTE;
     },
 
     _isDirectMessageRoom: function(roomId) {
         const dmRooms = DMRoomMap.shared().getUserIdForRoomId(roomId);
-        if (dmRooms) {
-            return true;
-        } else {
-            return false;
-        }
+        return Boolean(dmRooms);
+    },
+
+    onRoomTimeline: function(ev, room) {
+        if (room !== this.props.room) return;
+        this.setState({
+            notificationCount: this.props.room.getUnreadNotificationCount(),
+        });
+    },
+
+    onRoomName: function(room) {
+        if (room !== this.props.room) return;
+        this.setState({
+            roomName: this.props.room.name,
+        });
     },
 
     onAccountData: function(accountDataEvent) {
-        if (accountDataEvent.getType() == 'm.push_rules') {
+        if (accountDataEvent.getType() === 'm.push_rules') {
             this.setState({
                 notifState: RoomNotifs.getRoomNotifsState(this.props.room.roomId),
             });
+        }
+    },
+
+    onAction: function(payload) {
+        switch (payload.action) {
+            // XXX: slight hack in order to zero the notification count when a room
+            // is read. Ideally this state would be given to this via props (as we
+            // do with `unread`). This is still better than forceUpdating the entire
+            // RoomList when a room is read.
+            case 'on_room_read':
+                if (payload.roomId !== this.props.room.roomId) break;
+                this.setState({
+                    notificationCount: this.props.room.getUnreadNotificationCount(),
+                });
+            break;
         }
     },
 
@@ -97,15 +124,46 @@ module.exports = React.createClass({
 
     componentWillMount: function() {
         MatrixClientPeg.get().on("accountData", this.onAccountData);
+        MatrixClientPeg.get().on("Room.timeline", this.onRoomTimeline);
+        MatrixClientPeg.get().on("Room.name", this.onRoomName);
         ActiveRoomObserver.addListener(this.props.room.roomId, this._onActiveRoomChange);
+        this.dispatcherRef = dis.register(this.onAction);
     },
 
     componentWillUnmount: function() {
         const cli = MatrixClientPeg.get();
         if (cli) {
             MatrixClientPeg.get().removeListener("accountData", this.onAccountData);
+            MatrixClientPeg.get().removeListener("Room.timeline", this.onRoomTimeline);
+            MatrixClientPeg.get().removeListener("Room.name", this.onRoomName);
         }
         ActiveRoomObserver.removeListener(this.props.room.roomId, this._onActiveRoomChange);
+        dis.unregister(this.dispatcherRef);
+    },
+
+    componentWillReceiveProps: function(props) {
+        // XXX: This could be a lot better - this makes the assumption that
+        // the notification count may have changed when the properties of
+        // the room tile change.
+        this.setState({
+            notificationCount: this.props.room.getUnreadNotificationCount(),
+        });
+    },
+
+    // Do a simple shallow comparison of props and state to avoid unnecessary
+    // renders. The assumption made here is that only state and props are used
+    // in rendering this component and children.
+    //
+    // RoomList is frequently made to forceUpdate, so this decreases number of
+    // RoomTile renderings.
+    shouldComponentUpdate: function(newProps, newState) {
+        if (Object.keys(newProps).some((k) => newProps[k] !== this.props[k])) {
+            return true;
+        }
+        if (Object.keys(newState).some((k) => newState[k] !== this.state[k])) {
+            return true;
+        }
+        return false;
     },
 
     onClick: function(ev) {
@@ -124,6 +182,32 @@ module.exports = React.createClass({
         this.badgeOnMouseLeave();
     },
 
+    _showContextMenu: function(x, y, chevronOffset) {
+        const RoomTileContextMenu = sdk.getComponent('context_menus.RoomTileContextMenu');
+
+        createMenu(RoomTileContextMenu, {
+            chevronOffset,
+            left: x,
+            top: y,
+            room: this.props.room,
+            onFinished: () => {
+                this.setState({ menuDisplayed: false });
+                this.props.refreshSubList();
+            },
+        });
+        this.setState({ menuDisplayed: true });
+    },
+
+    onContextMenu: function(e) {
+        // Prevent the RoomTile onClick event firing as well
+        e.preventDefault();
+        // Only allow non-guests to access the context menu
+        if (MatrixClientPeg.get().isGuest()) return;
+
+        const chevronOffset = 12;
+        this._showContextMenu(e.clientX, e.clientY - (chevronOffset + 8), chevronOffset);
+    },
+
     badgeOnMouseEnter: function() {
         // Only allow non-guests to access the context menu
         // and only change it if it needs to change
@@ -137,44 +221,30 @@ module.exports = React.createClass({
     },
 
     onBadgeClicked: function(e) {
-        // Only allow none guests to access the context menu
-        if (!MatrixClientPeg.get().isGuest()) {
-            // If the badge is clicked, then no longer show tooltip
-            if (this.props.collapsed) {
-                this.setState({ hover: false });
-            }
-
-            const RoomTileContextMenu = sdk.getComponent('context_menus.RoomTileContextMenu');
-            const elementRect = e.target.getBoundingClientRect();
-
-            // The window X and Y offsets are to adjust position when zoomed in to page
-            const x = elementRect.right + window.pageXOffset + 3;
-            const chevronOffset = 12;
-            let y = (elementRect.top + (elementRect.height / 2) + window.pageYOffset);
-            y = y - (chevronOffset + 8); // where 8 is half the height of the chevron
-
-            const self = this;
-            ContextualMenu.createMenu(RoomTileContextMenu, {
-                chevronOffset: chevronOffset,
-                left: x,
-                top: y,
-                room: this.props.room,
-                onFinished: function() {
-                    self.setState({ menuDisplayed: false });
-                    self.props.refreshSubList();
-                },
-            });
-            this.setState({ menuDisplayed: true });
-        }
         // Prevent the RoomTile onClick event firing as well
         e.stopPropagation();
+        // Only allow non-guests to access the context menu
+        if (MatrixClientPeg.get().isGuest()) return;
+
+        // If the badge is clicked, then no longer show tooltip
+        if (this.props.collapsed) {
+            this.setState({ hover: false });
+        }
+
+        const elementRect = e.target.getBoundingClientRect();
+
+        // The window X and Y offsets are to adjust position when zoomed in to page
+        const x = elementRect.right + window.pageXOffset + 3;
+        const chevronOffset = 12;
+        let y = (elementRect.top + (elementRect.height / 2) + window.pageYOffset);
+        y = y - (chevronOffset + 8); // where 8 is half the height of the chevron
+
+        this._showContextMenu(x, y, chevronOffset);
     },
 
     render: function() {
-        const myUserId = MatrixClientPeg.get().credentials.userId;
-        const me = this.props.room.currentState.members[myUserId];
-
-        const notificationCount = this.props.room.getUnreadNotificationCount();
+        const isInvite = this.props.room.getMyMembership() === "invite";
+        const notificationCount = this.state.notificationCount;
         // var highlightCount = this.props.room.getUnreadNotificationCount("highlight");
 
         const notifBadges = notificationCount > 0 && this._shouldShowNotifBadge();
@@ -187,9 +257,10 @@ module.exports = React.createClass({
             'mx_RoomTile_unread': this.props.unread,
             'mx_RoomTile_unreadNotify': notifBadges,
             'mx_RoomTile_highlight': mentionBadges,
-            'mx_RoomTile_invited': (me && me.membership == 'invite'),
+            'mx_RoomTile_invited': isInvite,
             'mx_RoomTile_menuDisplayed': this.state.menuDisplayed,
             'mx_RoomTile_noBadges': !badges,
+            'mx_RoomTile_transparent': this.props.transparent,
         });
 
         const avatarClasses = classNames({
@@ -201,12 +272,10 @@ module.exports = React.createClass({
             'mx_RoomTile_badgeButton': this.state.badgeHover || this.state.menuDisplayed,
         });
 
-        // XXX: We should never display raw room IDs, but sometimes the
-        // room name js sdk gives is undefined (cannot repro this -- k)
-        let name = this.props.room.name || this.props.room.roomId;
+        let name = this.state.roomName;
+        if (name == undefined || name == null) name = '';
         name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
 
-        let badge;
         let badgeContent;
 
         if (this.state.badgeHover || this.state.menuDisplayed) {
@@ -218,7 +287,7 @@ module.exports = React.createClass({
             badgeContent = '\u200B';
         }
 
-        badge = <div className={badgeClasses} onClick={this.onBadgeClicked}>{ badgeContent }</div>;
+        const badge = <div className={badgeClasses} onClick={this.onBadgeClicked}>{ badgeContent }</div>;
 
         const EmojiText = sdk.getComponent('elements.EmojiText');
         let label;
@@ -239,7 +308,7 @@ module.exports = React.createClass({
             }
         } else if (this.state.hover) {
             const RoomTooltip = sdk.getComponent("rooms.RoomTooltip");
-            tooltip = <RoomTooltip className="mx_RoomTile_tooltip" room={this.props.room} dir="auto" />;
+            tooltip = <RoomTooltip className="mx_RoomTile_tooltip" label={this.props.room.name} dir="auto" />;
         }
 
         //var incomingCallBox;
@@ -250,40 +319,30 @@ module.exports = React.createClass({
 
         const RoomAvatar = sdk.getComponent('avatars.RoomAvatar');
 
-        let directMessageIndicator;
+        let dmIndicator;
         if (this._isDirectMessageRoom(this.props.room.roomId)) {
-         directMessageIndicator = <img src="img/icon_person.svg" className="mx_RoomTile_dm" width="11" height="13" alt="dm" />;
+            dmIndicator = <img src="img/icon_person.svg" className="mx_RoomTile_dm" width="11" height="13" alt="dm" />;
         }
 
-        // These props are injected by React DnD,
-        // as defined by your `collect` function above:
-        const isDragging = this.props.isDragging;
-        const connectDragSource = this.props.connectDragSource;
-        const connectDropTarget = this.props.connectDropTarget;
-
-
-        let ret = (
-            <div> { /* Only native elements can be wrapped in a DnD object. */ }
-            <AccessibleButton className={classes} tabIndex="0" onClick={this.onClick} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-                <div className={avatarClasses}>
-                    <div className="mx_RoomTile_avatar_container">
-                        <RoomAvatar room={this.props.room} width={24} height={24} />
-                        { directMessageIndicator }
-                    </div>
+        return <AccessibleButton tabIndex="0"
+                                 className={classes}
+                                 onClick={this.onClick}
+                                 onMouseEnter={this.onMouseEnter}
+                                 onMouseLeave={this.onMouseLeave}
+                                 onContextMenu={this.onContextMenu}
+        >
+            <div className={avatarClasses}>
+                <div className="mx_RoomTile_avatar_container">
+                    <RoomAvatar room={this.props.room} width={24} height={24} />
+                    { dmIndicator }
                 </div>
-                <div className="mx_RoomTile_nameContainer">
-                    { label }
-                    { badge }
-                </div>
-                { /* { incomingCallBox } */ }
-                { tooltip }
-            </AccessibleButton>
             </div>
-        );
-
-        if (connectDropTarget) ret = connectDropTarget(ret);
-        if (connectDragSource) ret = connectDragSource(ret);
-
-        return ret;
+            <div className="mx_RoomTile_nameContainer">
+                { label }
+                { badge }
+            </div>
+            { /* { incomingCallBox } */ }
+            { tooltip }
+        </AccessibleButton>;
     },
 });

@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2018 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,13 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
 const React = require('react');
+import PropTypes from 'prop-types';
 const MatrixClientPeg = require("../../../MatrixClientPeg");
 const Modal = require("../../../Modal");
 const sdk = require("../../../index");
 
+import dis from "../../../dispatcher";
 import Promise from 'bluebird';
 import AccessibleButton from '../elements/AccessibleButton';
 import { _t } from '../../../languageHandler';
@@ -30,16 +31,16 @@ import sessionStore from '../../../stores/SessionStore';
 module.exports = React.createClass({
     displayName: 'ChangePassword',
     propTypes: {
-        onFinished: React.PropTypes.func,
-        onError: React.PropTypes.func,
-        onCheckPassword: React.PropTypes.func,
-        rowClassName: React.PropTypes.string,
-        rowLabelClassName: React.PropTypes.string,
-        rowInputClassName: React.PropTypes.string,
-        buttonClassName: React.PropTypes.string,
-        confirm: React.PropTypes.bool,
+        onFinished: PropTypes.func,
+        onError: PropTypes.func,
+        onCheckPassword: PropTypes.func,
+        rowClassName: PropTypes.string,
+        rowLabelClassName: PropTypes.string,
+        rowInputClassName: PropTypes.string,
+        buttonClassName: PropTypes.string,
+        confirm: PropTypes.bool,
         // Whether to autoFocus the new password input
-        autoFocusNewPasswordInput: React.PropTypes.bool,
+        autoFocusNewPasswordInput: PropTypes.bool,
     },
 
     Phases: {
@@ -142,6 +143,9 @@ module.exports = React.createClass({
         });
 
         cli.setPassword(authDict, newPassword).then(() => {
+            // Notify SessionStore that the user's password was changed
+            dis.dispatch({action: 'password_changed'});
+
             if (this.props.shouldAskForEmail) {
                 return this._optionallySetEmail().then((confirmed) => {
                     this.props.onFinished({

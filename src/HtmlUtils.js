@@ -1,6 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017 New Vector Ltd
+Copyright 2017, 2018 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@ limitations under the License.
 
 'use strict';
 
+import ReplyThread from "./components/views/elements/ReplyThread";
+
 const React = require('react');
 const sanitizeHtml = require('sanitize-html');
 const highlight = require('highlight.js');
@@ -25,6 +27,7 @@ import escape from 'lodash/escape';
 import emojione from 'emojione';
 import classNames from 'classnames';
 import MatrixClientPeg from './MatrixClientPeg';
+import url from 'url';
 
 emojione.imagePathSVG = 'emojione/svg/';
 // Store PNG path for displaying many flags at once (for increased performance over SVG)
@@ -43,6 +46,8 @@ const SYMBOL_PATTERN = /([\u2100-\u2bff])/;
 // And this is emojione's complete regex
 const EMOJI_REGEX = new RegExp(emojione.unicodeRegexp+"+", "gi");
 const COLOR_REGEX = /^#[0-9a-fA-F]{6}$/;
+
+const PERMITTED_URL_SCHEMES = ['http', 'https', 'ftp', 'mailto', 'magnet'];
 
 /*
  * Return true if the given string contains emoji
@@ -107,7 +112,6 @@ export function charactersToImageNode(alt, useSvg, ...unicode) {
     />;
 }
 
-
 export function processHtmlForSending(html: string): string {
     const contentDiv = document.createElement('div');
     contentDiv.innerHTML = html;
@@ -125,13 +129,6 @@ export function processHtmlForSending(html: string): string {
             if (i !== contentDiv.children.length - 1) {
                 contentHTML += '<br />';
             }
-        } else if (element.tagName.toLowerCase() === 'pre') {
-            // Replace "<br>\n" with "\n" within `<pre>` tags because the <br> is
-            // redundant. This is a workaround for a bug in draft-js-export-html:
-            //   https://github.com/sstur/draft-js-export-html/issues/62
-            contentHTML += '<pre>' +
-                element.innerHTML.replace(/<br>\n/g, '\n').trim() +
-                '</pre>';
         } else {
             const temp = document.createElement('div');
             temp.appendChild(element.cloneNode(true));
@@ -151,6 +148,118 @@ export function sanitizedHtmlNode(insaneHtml) {
 
     return <div dangerouslySetInnerHTML={{ __html: saneHtml }} dir="auto" />;
 }
+
+/**
+ * Tests if a URL from an untrusted source may be safely put into the DOM
+ * The biggest threat here is javascript: URIs.
+ * Note that the HTML sanitiser library has its own internal logic for
+ * doing this, to which we pass the same list of schemes. This is used in
+ * other places we need to sanitise URLs.
+ * @return true if permitted, otherwise false
+ */
+export function isUrlPermitted(inputUrl) {
+    try {
+        const parsed = url.parse(inputUrl);
+        if (!parsed.protocol) return false;
+        // URL parser protocol includes the trailing colon
+        return PERMITTED_URL_SCHEMES.includes(parsed.protocol.slice(0, -1));
+    } catch (e) {
+        return false;
+    }
+}
+
+const transformTags = { // custom to matrix
+    // add blank targets to all hyperlinks except vector URLs
+    'a': function(tagName, attribs) {
+        if (attribs.href) {
+            attribs.target = '_blank'; // by default
+
+            let m;
+            // FIXME: horrible duplication with linkify-matrix
+            m = attribs.href.match(linkifyMatrix.VECTOR_URL_PATTERN);
+            if (m) {
+                attribs.href = m[1];
+                delete attribs.target;
+            } else {
+                m = attribs.href.match(linkifyMatrix.MATRIXTO_URL_PATTERN);
+                if (m) {
+                    const entity = m[1];
+                    switch (entity[0]) {
+                        case '@':
+                            attribs.href = '#/user/' + entity;
+                            break;
+                        case '+':
+                            attribs.href = '#/group/' + entity;
+                            break;
+                        case '#':
+                        case '!':
+                            attribs.href = '#/room/' + entity;
+                            break;
+                    }
+                    delete attribs.target;
+                }
+            }
+        }
+        attribs.rel = 'noopener'; // https://mathiasbynens.github.io/rel-noopener/
+        return { tagName, attribs };
+    },
+    'img': function(tagName, attribs) {
+        // Strip out imgs that aren't `mxc` here instead of using allowedSchemesByTag
+        // because transformTags is used _before_ we filter by allowedSchemesByTag and
+        // we don't want to allow images with `https?` `src`s.
+        if (!attribs.src || !attribs.src.startsWith('mxc://')) {
+            return { tagName, attribs: {}};
+        }
+        attribs.src = MatrixClientPeg.get().mxcUrlToHttp(
+            attribs.src,
+            attribs.width || 800,
+            attribs.height || 600,
+        );
+        return { tagName, attribs };
+    },
+    'code': function(tagName, attribs) {
+        if (typeof attribs.class !== 'undefined') {
+            // Filter out all classes other than ones starting with language- for syntax highlighting.
+            const classes = attribs.class.split(/\s+/).filter(function(cl) {
+                return cl.startsWith('language-');
+            });
+            attribs.class = classes.join(' ');
+        }
+        return { tagName, attribs };
+    },
+    '*': function(tagName, attribs) {
+        // Delete any style previously assigned, style is an allowedTag for font and span
+        // because attributes are stripped after transforming
+        delete attribs.style;
+
+        // Sanitise and transform data-mx-color and data-mx-bg-color to their CSS
+        // equivalents
+        const customCSSMapper = {
+            'data-mx-color': 'color',
+            'data-mx-bg-color': 'background-color',
+            // $customAttributeKey: $cssAttributeKey
+        };
+
+        let style = "";
+        Object.keys(customCSSMapper).forEach((customAttributeKey) => {
+            const cssAttributeKey = customCSSMapper[customAttributeKey];
+            const customAttributeValue = attribs[customAttributeKey];
+            if (customAttributeValue &&
+                typeof customAttributeValue === 'string' &&
+                COLOR_REGEX.test(customAttributeValue)
+            ) {
+                style += cssAttributeKey + ":" + customAttributeValue + ";";
+                delete attribs[customAttributeKey];
+            }
+        });
+
+        if (style) {
+            attribs.style = style;
+        }
+
+        return { tagName, attribs };
+    },
+};
 
 const sanitizeHtmlParams = {
     allowedTags: [
@@ -172,98 +281,17 @@ const sanitizeHtmlParams = {
     // Lots of these won't come up by default because we don't allow them
     selfClosing: ['img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta'],
     // URL schemes we permit
-    allowedSchemes: ['http', 'https', 'ftp', 'mailto', 'magnet'],
+    allowedSchemes: PERMITTED_URL_SCHEMES,
 
     allowProtocolRelative: false,
+    transformTags,
+};
 
-    transformTags: { // custom to matrix
-        // add blank targets to all hyperlinks except vector URLs
-        'a': function(tagName, attribs) {
-            if (attribs.href) {
-                attribs.target = '_blank'; // by default
-
-                let m;
-                // FIXME: horrible duplication with linkify-matrix
-                m = attribs.href.match(linkifyMatrix.VECTOR_URL_PATTERN);
-                if (m) {
-                    attribs.href = m[1];
-                    delete attribs.target;
-                } else {
-                    m = attribs.href.match(linkifyMatrix.MATRIXTO_URL_PATTERN);
-                    if (m) {
-                        const entity = m[1];
-                        if (entity[0] === '@') {
-                            attribs.href = '#/user/' + entity;
-                        } else if (entity[0] === '#' || entity[0] === '!') {
-                            attribs.href = '#/room/' + entity;
-                        }
-                        delete attribs.target;
-                    }
-                }
-            }
-            attribs.rel = 'noopener'; // https://mathiasbynens.github.io/rel-noopener/
-            return { tagName: tagName, attribs: attribs };
-        },
-        'img': function(tagName, attribs) {
-            // Strip out imgs that aren't `mxc` here instead of using allowedSchemesByTag
-            // because transformTags is used _before_ we filter by allowedSchemesByTag and
-            // we don't want to allow images with `https?` `src`s.
-            if (!attribs.src || !attribs.src.startsWith('mxc://')) {
-                return { tagName, attribs: {}};
-            }
-            attribs.src = MatrixClientPeg.get().mxcUrlToHttp(
-                attribs.src,
-                attribs.width || 800,
-                attribs.height || 600,
-            );
-            return { tagName: tagName, attribs: attribs };
-        },
-        'code': function(tagName, attribs) {
-            if (typeof attribs.class !== 'undefined') {
-                // Filter out all classes other than ones starting with language- for syntax highlighting.
-                const classes = attribs.class.split(/\s+/).filter(function(cl) {
-                    return cl.startsWith('language-');
-                });
-                attribs.class = classes.join(' ');
-            }
-            return {
-                tagName: tagName,
-                attribs: attribs,
-            };
-        },
-        '*': function(tagName, attribs) {
-            // Delete any style previously assigned, style is an allowedTag for font and span
-            // because attributes are stripped after transforming
-            delete attribs.style;
-
-            // Sanitise and transform data-mx-color and data-mx-bg-color to their CSS
-            // equivalents
-            const customCSSMapper = {
-                'data-mx-color': 'color',
-                'data-mx-bg-color': 'background-color',
-                // $customAttributeKey: $cssAttributeKey
-            };
-
-            let style = "";
-            Object.keys(customCSSMapper).forEach((customAttributeKey) => {
-                const cssAttributeKey = customCSSMapper[customAttributeKey];
-                const customAttributeValue = attribs[customAttributeKey];
-                if (customAttributeValue &&
-                    typeof customAttributeValue === 'string' &&
-                    COLOR_REGEX.test(customAttributeValue)
-                ) {
-                    style += cssAttributeKey + ":" + customAttributeValue + ";";
-                    delete attribs[customAttributeKey];
-                }
-            });
-
-            if (style) {
-                attribs.style = style;
-            }
-
-            return { tagName: tagName, attribs: attribs };
-        },
-    },
+// this is the same as the above except with less rewriting
+const composerSanitizeHtmlParams = Object.assign({}, sanitizeHtmlParams);
+composerSanitizeHtmlParams.transformTags = {
+    'code': transformTags['code'],
+    '*': transformTags['*'],
 };
 
 class BaseHighlighter {
@@ -378,22 +406,33 @@ class TextHighlighter extends BaseHighlighter {
 }
 
 
-    /* turn a matrix event body into html
-     *
-     * content: 'content' of the MatrixEvent
-     *
-     * highlights: optional list of words to highlight, ordered by longest word first
-     *
-     * opts.highlightLink: optional href to add to highlighted words
-     * opts.disableBigEmoji: optional argument to disable the big emoji class.
-     */
+/* turn a matrix event body into html
+ *
+ * content: 'content' of the MatrixEvent
+ *
+ * highlights: optional list of words to highlight, ordered by longest word first
+ *
+ * opts.highlightLink: optional href to add to highlighted words
+ * opts.disableBigEmoji: optional argument to disable the big emoji class.
+ * opts.stripReplyFallback: optional argument specifying the event is a reply and so fallback needs removing
+ * opts.returnString: return an HTML string rather than JSX elements
+ * opts.emojiOne: optional param to do emojiOne (default true)
+ * opts.forComposerQuote: optional param to lessen the url rewriting done by sanitization, for quoting into composer
+ */
 export function bodyToHtml(content, highlights, opts={}) {
-    const isHtml = (content.format === "org.matrix.custom.html");
-    const body = isHtml ? content.formatted_body : escape(content.body);
+    const isHtmlMessage = content.format === "org.matrix.custom.html" && content.formatted_body;
 
+    const doEmojiOne = opts.emojiOne === undefined ? true : opts.emojiOne;
     let bodyHasEmoji = false;
 
+    let sanitizeParams = sanitizeHtmlParams;
+    if (opts.forComposerQuote) {
+        sanitizeParams = composerSanitizeHtmlParams;
+    }
+
+    let strippedBody;
     let safeBody;
+    let isDisplayedWithHtml;
     // XXX: We sanitize the HTML whilst also highlighting its text nodes, to avoid accidentally trying
     // to highlight HTML tags themselves.  However, this does mean that we don't highlight textnodes which
     // are interrupted by HTML tags (not that we did before) - e.g. foo<span/>bar won't get highlighted
@@ -402,24 +441,53 @@ export function bodyToHtml(content, highlights, opts={}) {
         if (highlights && highlights.length > 0) {
             const highlighter = new HtmlHighlighter("mx_EventTile_searchHighlight", opts.highlightLink);
             const safeHighlights = highlights.map(function(highlight) {
-                return sanitizeHtml(highlight, sanitizeHtmlParams);
+                return sanitizeHtml(highlight, sanitizeParams);
             });
-            // XXX: hacky bodge to temporarily apply a textFilter to the sanitizeHtmlParams structure.
-            sanitizeHtmlParams.textFilter = function(safeText) {
+            // XXX: hacky bodge to temporarily apply a textFilter to the sanitizeParams structure.
+            sanitizeParams.textFilter = function(safeText) {
                 return highlighter.applyHighlights(safeText, safeHighlights).join('');
             };
         }
-        safeBody = sanitizeHtml(body, sanitizeHtmlParams);
-        bodyHasEmoji = containsEmoji(body);
-        if (bodyHasEmoji) safeBody = unicodeToImage(safeBody);
+
+        let formattedBody = content.formatted_body;
+        if (opts.stripReplyFallback && formattedBody) formattedBody = ReplyThread.stripHTMLReply(formattedBody);
+        strippedBody = opts.stripReplyFallback ? ReplyThread.stripPlainReply(content.body) : content.body;
+
+        if (doEmojiOne) {
+            bodyHasEmoji = containsEmoji(isHtmlMessage ? formattedBody : content.body);
+        }
+
+        // Only generate safeBody if the message was sent as org.matrix.custom.html
+        if (isHtmlMessage) {
+            isDisplayedWithHtml = true;
+            safeBody = sanitizeHtml(formattedBody, sanitizeParams);
+        } else {
+            // ... or if there are emoji, which we insert as HTML alongside the
+            // escaped plaintext body.
+            if (bodyHasEmoji) {
+                isDisplayedWithHtml = true;
+                safeBody = sanitizeHtml(escape(strippedBody), sanitizeParams);
+            }
+        }
+
+        // An HTML message with emoji
+        //  or a plaintext message with emoji that was escaped and sanitized into
+        //  HTML.
+        if (bodyHasEmoji) {
+            safeBody = unicodeToImage(safeBody);
+        }
     } finally {
-        delete sanitizeHtmlParams.textFilter;
+        delete sanitizeParams.textFilter;
+    }
+
+    if (opts.returnString) {
+        return isDisplayedWithHtml ? safeBody : strippedBody;
     }
 
     let emojiBody = false;
     if (!opts.disableBigEmoji && bodyHasEmoji) {
         EMOJI_REGEX.lastIndex = 0;
-        const contentBodyTrimmed = content.body !== undefined ? content.body.trim() : '';
+        const contentBodyTrimmed = strippedBody !== undefined ? strippedBody.trim() : '';
         const match = EMOJI_REGEX.exec(contentBodyTrimmed);
         emojiBody = match && match[0] && match[0].length === contentBodyTrimmed.length;
     }
@@ -427,9 +495,12 @@ export function bodyToHtml(content, highlights, opts={}) {
     const className = classNames({
         'mx_EventTile_body': true,
         'mx_EventTile_bigEmoji': emojiBody,
-        'markdown-body': isHtml,
+        'markdown-body': isHtmlMessage,
     });
-    return <span className={className} dangerouslySetInnerHTML={{ __html: safeBody }} dir="auto" />;
+
+    return isDisplayedWithHtml ?
+        <span className={className} dangerouslySetInnerHTML={{ __html: safeBody }} dir="auto" /> :
+        <span className={className} dir="auto">{ strippedBody }</span>;
 }
 
 export function emojifyText(text) {

@@ -1,6 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017 New Vector Ltd
+Copyright 2017, 2018 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,13 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
 import React from 'react';
+import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import sdk from '../../../index';
 import Modal from "../../../Modal";
 import MatrixClientPeg from "../../../MatrixClientPeg";
+import SdkConfig from "../../../SdkConfig";
 
 import PasswordReset from "../../../PasswordReset";
 
@@ -29,13 +29,13 @@ module.exports = React.createClass({
     displayName: 'ForgotPassword',
 
     propTypes: {
-        defaultHsUrl: React.PropTypes.string,
-        defaultIsUrl: React.PropTypes.string,
-        customHsUrl: React.PropTypes.string,
-        customIsUrl: React.PropTypes.string,
-        onLoginClick: React.PropTypes.func,
-        onRegisterClick: React.PropTypes.func,
-        onComplete: React.PropTypes.func.isRequired,
+        defaultHsUrl: PropTypes.string,
+        defaultIsUrl: PropTypes.string,
+        customHsUrl: PropTypes.string,
+        customIsUrl: PropTypes.string,
+        onLoginClick: PropTypes.func,
+        onRegisterClick: PropTypes.func,
+        onComplete: PropTypes.func.isRequired,
     },
 
     getInitialState: function() {
@@ -43,6 +43,8 @@ module.exports = React.createClass({
             enteredHomeserverUrl: this.props.customHsUrl || this.props.defaultHsUrl,
             enteredIdentityServerUrl: this.props.customIsUrl || this.props.defaultIsUrl,
             progress: null,
+            password: null,
+            password2: null,
         };
     },
 
@@ -101,7 +103,7 @@ module.exports = React.createClass({
                     </div>,
                 button: _t('Continue'),
                 extraButtons: [
-                    <button className="mx_Dialog_primary"
+                    <button key="export_keys" className="mx_Dialog_primary"
                             onClick={this._onExportE2eKeysClicked}>
                         { _t('Export E2E room keys') }
                     </button>,
@@ -167,7 +169,8 @@ module.exports = React.createClass({
         } else if (this.state.progress === "sent_email") {
             resetPasswordJsx = (
                 <div className="mx_Login_prompt">
-                    { _t("An email has been sent to %(emailAddress)s. Once you've followed the link it contains, click below.", { emailAddress: this.state.email }) }
+                    { _t("An email has been sent to %(emailAddress)s. Once you've followed the link it contains, " +
+                        "click below.", { emailAddress: this.state.email }) }
                     <br />
                     <input className="mx_Login_submit" type="button" onClick={this.onVerify}
                         value={_t('I have verified my email address')} />
@@ -177,14 +180,15 @@ module.exports = React.createClass({
             resetPasswordJsx = (
                 <div className="mx_Login_prompt">
                     <p>{ _t('Your password has been reset') }.</p>
-                    <p>{ _t('You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device') }.</p>
+                    <p>{ _t('You have been logged out of all devices and will no longer receive push notifications. ' +
+                        'To re-enable notifications, sign in again on each device') }.</p>
                     <input className="mx_Login_submit" type="button" onClick={this.props.onComplete}
                         value={_t('Return to login screen')} />
                 </div>
             );
         } else {
             let serverConfigSection;
-            if (!config.disable_custom_urls) {
+            if (!SdkConfig.get()['disable_custom_urls']) {
                 serverConfigSection = (
                     <ServerConfig ref="serverConfig"
                         withToggleButton={true}
@@ -196,6 +200,8 @@ module.exports = React.createClass({
                         delayTimeMs={0} />
                 );
             }
+
+            const LanguageSelector = sdk.getComponent('structures.login.LanguageSelector');
 
             resetPasswordJsx = (
             <div>
@@ -231,6 +237,7 @@ module.exports = React.createClass({
                     <a className="mx_Login_create" onClick={this.props.onRegisterClick} href="#">
                         { _t('Create an account') }
                     </a>
+                    <LanguageSelector />
                     <LoginFooter />
                 </div>
             </div>

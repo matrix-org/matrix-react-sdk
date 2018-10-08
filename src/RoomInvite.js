@@ -57,6 +57,7 @@ export function showStartChatInviteDialog() {
         title: _t('Start a chat'),
         description: _t("Who would you like to communicate with?"),
         placeholder: _t("Email, name or matrix ID"),
+        validAddressTypes: ['mx-user-id', 'email'],
         button: _t("Start Chat"),
         onFinished: _onStartChatFinished,
     });
@@ -85,9 +86,7 @@ function _onStartChatFinished(shouldInvite, addrs) {
         if (rooms.length > 0) {
             // A Direct Message room already exists for this user, so select a
             // room from a list that is similar to the one in MemberInfo panel
-            const ChatCreateOrReuseDialog = sdk.getComponent(
-                "views.dialogs.ChatCreateOrReuseDialog",
-            );
+            const ChatCreateOrReuseDialog = sdk.getComponent("views.dialogs.ChatCreateOrReuseDialog");
             const close = Modal.createTrackedDialog('Create or Reuse', '', ChatCreateOrReuseDialog, {
                 userId: addrTexts[0],
                 onNewDMClick: () => {
@@ -115,6 +114,15 @@ function _onStartChatFinished(shouldInvite, addrs) {
                 });
             });
         }
+    } else if (addrTexts.length === 1) {
+        // Start a new DM chat
+        createRoom({dmUserId: addrTexts[0]}).catch((err) => {
+            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+            Modal.createTrackedDialog('Failed to invite user', '', ErrorDialog, {
+                title: _t("Failed to invite user"),
+                description: ((err && err.message) ? err.message : _t("Operation failed")),
+            });
+        });
     } else {
         // Start multi user chat
         let room;
@@ -183,14 +191,10 @@ function _showAnyInviteErrors(addrs, room) {
 function _getDirectMessageRooms(addr) {
     const dmRoomMap = new DMRoomMap(MatrixClientPeg.get());
     const dmRooms = dmRoomMap.getDMRoomsForUserId(addr);
-    const rooms = [];
-    dmRooms.forEach((dmRoom) => {
+    const rooms = dmRooms.filter((dmRoom) => {
         const room = MatrixClientPeg.get().getRoom(dmRoom);
         if (room) {
-            const me = room.getMember(MatrixClientPeg.get().credentials.userId);
-            if (me.membership == 'join') {
-                rooms.push(room);
-            }
+            return room.getMyMembership() === 'join';
         }
     });
     return rooms;

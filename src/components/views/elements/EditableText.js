@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2018 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,30 +15,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
-const React = require('react');
-
-const KEY_TAB = 9;
-const KEY_SHIFT = 16;
-const KEY_WINDOWS = 91;
+import React from 'react';
+import PropTypes from 'prop-types';
 
 module.exports = React.createClass({
     displayName: 'EditableText',
 
     propTypes: {
-        onValueChanged: React.PropTypes.func,
-        initialValue: React.PropTypes.string,
-        label: React.PropTypes.string,
-        placeholder: React.PropTypes.string,
-        className: React.PropTypes.string,
-        labelClassName: React.PropTypes.string,
-        placeholderClassName: React.PropTypes.string,
+        onValueChanged: PropTypes.func,
+        initialValue: PropTypes.string,
+        label: PropTypes.string,
+        placeholder: PropTypes.string,
+        className: PropTypes.string,
+        labelClassName: PropTypes.string,
+        placeholderClassName: PropTypes.string,
         // Overrides blurToSubmit if true
-        blurToCancel: React.PropTypes.bool,
+        blurToCancel: PropTypes.bool,
         // Will cause onValueChanged(value, true) to fire on blur
-        blurToSubmit: React.PropTypes.bool,
-        editable: React.PropTypes.bool,
+        blurToSubmit: PropTypes.bool,
+        editable: PropTypes.bool,
     },
 
     Phases: {
@@ -65,9 +61,7 @@ module.exports = React.createClass({
     },
 
     componentWillReceiveProps: function(nextProps) {
-        if (nextProps.initialValue !== this.props.initialValue ||
-            nextProps.initialValue !== this.value
-        ) {
+        if (nextProps.initialValue !== this.props.initialValue) {
             this.value = nextProps.initialValue;
             if (this.refs.editable_div) {
                 this.showPlaceholder(!this.value);
@@ -138,7 +132,7 @@ module.exports = React.createClass({
             this.showPlaceholder(false);
         }
 
-        if (ev.key == "Enter") {
+        if (ev.key === "Enter") {
             ev.stopPropagation();
             ev.preventDefault();
         }
@@ -155,9 +149,9 @@ module.exports = React.createClass({
             this.value = ev.target.textContent;
         }
 
-        if (ev.key == "Enter") {
+        if (ev.key === "Enter") {
             this.onFinish(ev);
-        } else if (ev.key == "Escape") {
+        } else if (ev.key === "Escape") {
             this.cancelEdit();
         }
 
@@ -192,7 +186,7 @@ module.exports = React.createClass({
         const submit = (ev.key === "Enter") || shouldSubmit;
         this.setState({
             phase: this.Phases.Display,
-        }, function() {
+        }, () => {
             if (this.value !== this.props.initialValue) {
                 self.onValueChanged(submit);
             }
@@ -203,23 +197,35 @@ module.exports = React.createClass({
         const sel = window.getSelection();
         sel.removeAllRanges();
 
-        if (this.props.blurToCancel) {this.cancelEdit();} else {this.onFinish(ev, this.props.blurToSubmit);}
+        if (this.props.blurToCancel) {
+            this.cancelEdit();
+        } else {
+            this.onFinish(ev, this.props.blurToSubmit);
+        }
 
         this.showPlaceholder(!this.value);
     },
 
     render: function() {
-        let editable_el;
+        const {className, editable, initialValue, label, labelClassName} = this.props;
+        let editableEl;
 
-        if (!this.props.editable || (this.state.phase == this.Phases.Display && (this.props.label || this.props.labelClassName) && !this.value)) {
+        if (!editable || (this.state.phase === this.Phases.Display && (label || labelClassName) && !this.value)) {
             // show the label
-            editable_el = <div className={this.props.className + " " + this.props.labelClassName} onClick={this.onClickDiv}>{ this.props.label || this.props.initialValue }</div>;
+            editableEl = <div className={className + " " + labelClassName} onClick={this.onClickDiv}>
+                { label || initialValue }
+            </div>;
         } else {
             // show the content editable div, but manually manage its contents as react and contentEditable don't play nice together
-            editable_el = <div ref="editable_div" contentEditable="true" className={this.props.className}
-                               onKeyDown={this.onKeyDown} onKeyUp={this.onKeyUp} onFocus={this.onFocus} onBlur={this.onBlur}></div>;
+            editableEl = <div ref="editable_div"
+                              contentEditable={true}
+                              className={className}
+                              onKeyDown={this.onKeyDown}
+                              onKeyUp={this.onKeyUp}
+                              onFocus={this.onFocus}
+                              onBlur={this.onBlur} />;
         }
 
-        return editable_el;
+        return editableEl;
     },
 });

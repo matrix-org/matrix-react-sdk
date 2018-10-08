@@ -1,7 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
-Copyright 2017 New Vector Ltd
+Copyright 2017, 2018 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,9 +18,9 @@ limitations under the License.
 
 import React from 'react';
 import { _t } from '../../../languageHandler';
+import SdkConfig from '../../../SdkConfig';
 const MatrixClientPeg = require("../../../MatrixClientPeg");
 const sdk = require('../../../index');
-const GeminiScrollbar = require('react-gemini-scrollbar');
 const rate_limited_func = require('../../../ratelimitedfunc');
 const CallHandler = require("../../../CallHandler");
 
@@ -32,10 +32,93 @@ module.exports = React.createClass({
     displayName: 'MemberList',
 
     getInitialState: function() {
-        this.memberDict = this.getMemberDict();
-        const members = this.roomMembers();
+        const cli = MatrixClientPeg.get();
+        if (cli.hasLazyLoadMembersEnabled()) {
+            // show an empty list
+            return this._getMembersState([]);
+        } else {
+            return this._getMembersState(this.roomMembers());
+        }
+    },
 
+    componentWillMount: function() {
+        this._mounted = true;
+        const cli = MatrixClientPeg.get();
+        if (cli.hasLazyLoadMembersEnabled()) {
+            this._showMembersAccordingToMembershipWithLL();
+            cli.on("Room.myMembership", this.onMyMembership);
+        } else {
+            this._listenForMembersChanges();
+        }
+        cli.on("Room", this.onRoom); // invites & joining after peek
+        const enablePresenceByHsUrl = SdkConfig.get()["enable_presence_by_hs_url"];
+        const hsUrl = MatrixClientPeg.get().baseUrl;
+        this._showPresence = true;
+        if (enablePresenceByHsUrl && enablePresenceByHsUrl[hsUrl] !== undefined) {
+            this._showPresence = enablePresenceByHsUrl[hsUrl];
+        }
+    },
+
+    _listenForMembersChanges: function() {
+        const cli = MatrixClientPeg.get();
+        cli.on("RoomState.members", this.onRoomStateMember);
+        cli.on("RoomMember.name", this.onRoomMemberName);
+        cli.on("RoomState.events", this.onRoomStateEvent);
+        // We listen for changes to the lastPresenceTs which is essentially
+        // listening for all presence events (we display most of not all of
+        // the information contained in presence events).
+        cli.on("User.lastPresenceTs", this.onUserLastPresenceTs);
+        // cli.on("Room.timeline", this.onRoomTimeline);
+    },
+
+    componentWillUnmount: function() {
+        this._mounted = false;
+        const cli = MatrixClientPeg.get();
+        if (cli) {
+            cli.removeListener("RoomState.members", this.onRoomStateMember);
+            cli.removeListener("RoomMember.name", this.onRoomMemberName);
+            cli.removeListener("Room.myMembership", this.onMyMembership);
+            cli.removeListener("RoomState.events", this.onRoomStateEvent);
+            cli.removeListener("Room", this.onRoom);
+            cli.removeListener("User.lastPresenceTs", this.onUserLastPresenceTs);
+        }
+
+        // cancel any pending calls to the rate_limited_funcs
+        this._updateList.cancelPendingCall();
+    },
+
+    /**
+     * If lazy loading is enabled, either:
+     * show a spinner and load the members if the user is joined,
+     * or show the members available so far if the user is invited
+     */
+    _showMembersAccordingToMembershipWithLL: async function() {
+        const cli = MatrixClientPeg.get();
+        if (cli.hasLazyLoadMembersEnabled()) {
+            const cli = MatrixClientPeg.get();
+            const room = cli.getRoom(this.props.roomId);
+            const membership = room && room.getMyMembership();
+            if (membership === "join") {
+                this.setState({loading: true});
+                try {
+                    await room.loadMembersIfNeeded();
+                } catch (ex) {/* already logged in RoomView */}
+                if (this._mounted) {
+                    this.setState(this._getMembersState(this.roomMembers()));
+                    this._listenForMembersChanges();
+                }
+            } else if (membership === "invite") {
+                // show the members we've got when invited
+                this.setState(this._getMembersState(this.roomMembers()));
+            }
+        }
+    },
+
+    _getMembersState: function(members) {
+        // set the state after determining _showPresence to make sure it's
+        // taken into account while rerendering
         return {
+            loading: false,
             members: members,
             filteredJoinedMembers: this._filterMembers(members, 'join'),
             filteredInvitedMembers: this._filterMembers(members, 'invite'),
@@ -47,62 +130,6 @@ module.exports = React.createClass({
             searchQuery: "",
         };
     },
-
-    componentWillMount: function() {
-        const cli = MatrixClientPeg.get();
-        cli.on("RoomState.members", this.onRoomStateMember);
-        cli.on("RoomMember.name", this.onRoomMemberName);
-        cli.on("RoomState.events", this.onRoomStateEvent);
-        cli.on("Room", this.onRoom); // invites
-        // We listen for changes to the lastPresenceTs which is essentially
-        // listening for all presence events (we display most of not all of
-        // the information contained in presence events).
-        cli.on("User.lastPresenceTs", this.onUserLastPresenceTs);
-        // cli.on("Room.timeline", this.onRoomTimeline);
-    },
-
-    componentWillUnmount: function() {
-        const cli = MatrixClientPeg.get();
-        if (cli) {
-            cli.removeListener("RoomState.members", this.onRoomStateMember);
-            cli.removeListener("RoomMember.name", this.onRoomMemberName);
-            cli.removeListener("RoomState.events", this.onRoomStateEvent);
-            cli.removeListener("Room", this.onRoom);
-            cli.removeListener("User.lastPresenceTs", this.onUserLastPresenceTs);
-            // cli.removeListener("Room.timeline", this.onRoomTimeline);
-        }
-
-        // cancel any pending calls to the rate_limited_funcs
-        this._updateList.cancelPendingCall();
-    },
-
-/*
-    onRoomTimeline: function(ev, room, toStartOfTimeline, removed, data) {
-        // ignore anything but real-time updates at the end of the room:
-        // updates from pagination will happen when the paginate completes.
-        if (toStartOfTimeline || !data || !data.liveEvent) return;
-
-        // treat any activity from a user as implicit presence to update the
-        // ordering of the list whenever someone says something.
-        // Except right now we're not tiebreaking "active now" users in this way
-        // so don't bother for now.
-        if (ev.getSender()) {
-            // console.log("implicit presence from " + ev.getSender());
-
-            var tile = this.refs[ev.getSender()];
-            if (tile) {
-                // work around a race where you might have a room member object
-                // before the user object exists.  XXX: why does this ever happen?
-                var all_members = room.currentState.members;
-                var userId = ev.getSender();
-                if (all_members[userId].user === null) {
-                    all_members[userId].user = MatrixClientPeg.get().getUser(userId);
-                }
-                this._updateList(); // reorder the membership list
-            }
-        }
-    },
-*/
 
     onUserLastPresenceTs(event, user) {
         // Attach a SINGLE listener for global presence changes then locate the
@@ -122,28 +149,40 @@ module.exports = React.createClass({
         // We listen for room events because when we accept an invite
         // we need to wait till the room is fully populated with state
         // before refreshing the member list else we get a stale list.
-        this._updateList();
+        this._showMembersAccordingToMembershipWithLL();
+    },
+
+    onMyMembership: function(room, membership, oldMembership) {
+        if (room.roomId === this.props.roomId && membership === "join") {
+            this._showMembersAccordingToMembershipWithLL();
+        }
     },
 
     onRoomStateMember: function(ev, state, member) {
+        if (member.roomId !== this.props.roomId) {
+            return;
+        }
         this._updateList();
     },
 
     onRoomMemberName: function(ev, member) {
+        if (member.roomId !== this.props.roomId) {
+            return;
+        }
         this._updateList();
     },
 
     onRoomStateEvent: function(event, state) {
-        if (event.getType() === "m.room.third_party_invite") {
+        if (event.getRoomId() === this.props.roomId &&
+            event.getType() === "m.room.third_party_invite") {
             this._updateList();
         }
     },
 
     _updateList: new rate_limited_func(function() {
         // console.log("Updating memberlist");
-        this.memberDict = this.getMemberDict();
-
         const newState = {
+            loading: false,
             members: this.roomMembers(),
         };
         newState.filteredJoinedMembers = this._filterMembers(newState.members, 'join', this.state.searchQuery);
@@ -151,50 +190,43 @@ module.exports = React.createClass({
         this.setState(newState);
     }, 500),
 
-    getMemberDict: function() {
-        if (!this.props.roomId) return {};
+    getMembersWithUser: function() {
+        if (!this.props.roomId) return [];
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(this.props.roomId);
-        if (!room) return {};
+        if (!room) return [];
 
-        const all_members = room.currentState.members;
+        const allMembers = Object.values(room.currentState.members);
 
-        Object.keys(all_members).map(function(userId) {
+        allMembers.forEach(function(member) {
             // work around a race where you might have a room member object
             // before the user object exists.  This may or may not cause
             // https://github.com/vector-im/vector-web/issues/186
-            if (all_members[userId].user === null) {
-                all_members[userId].user = MatrixClientPeg.get().getUser(userId);
+            if (member.user === null) {
+                member.user = cli.getUser(member.userId);
             }
 
             // XXX: this user may have no lastPresenceTs value!
             // the right solution here is to fix the race rather than leave it as 0
         });
 
-        return all_members;
+        return allMembers;
     },
 
     roomMembers: function() {
-        const all_members = this.memberDict || {};
-        const all_user_ids = Object.keys(all_members);
         const ConferenceHandler = CallHandler.getConferenceHandler();
 
-        all_user_ids.sort(this.memberSort);
-
-        const to_display = [];
-        let count = 0;
-        for (let i = 0; i < all_user_ids.length; ++i) {
-            const user_id = all_user_ids[i];
-            const m = all_members[user_id];
-
-            if (m.membership === 'join' || m.membership === 'invite') {
-                if ((ConferenceHandler && !ConferenceHandler.isConferenceUser(user_id)) || !ConferenceHandler) {
-                    to_display.push(user_id);
-                    ++count;
-                }
-            }
-        }
-        return to_display;
+        const allMembers = this.getMembersWithUser();
+        const filteredAndSortedMembers = allMembers.filter((m) => {
+            return (
+                m.membership === 'join' || m.membership === 'invite'
+            ) && (
+                !ConferenceHandler ||
+                (ConferenceHandler && !ConferenceHandler.isConferenceUser(m.userId))
+            );
+        });
+        filteredAndSortedMembers.sort(this.memberSort);
+        return filteredAndSortedMembers;
     },
 
     _createOverflowTileJoined: function(overflowCount, totalCount) {
@@ -241,14 +273,12 @@ module.exports = React.createClass({
     // returns negative if a comes before b,
     // returns 0 if a and b are equivalent in ordering
     // returns positive if a comes after b.
-    memberSort: function(userIdA, userIdB) {
+    memberSort: function(memberA, memberB) {
             // order by last active, with "active now" first.
             // ...and then by power
             // ...and then alphabetically.
             // We could tiebreak instead by "last recently spoken in this room" if we wanted to.
 
-            const memberA = this.memberDict[userIdA];
-            const memberB = this.memberDict[userIdB];
             const userA = memberA.user;
             const userB = memberB.user;
 
@@ -262,7 +292,7 @@ module.exports = React.createClass({
 
             // console.log("comparing " + this.memberString(memberA) + " and " + this.memberString(memberB));
 
-            if (userA.currentlyActive && userB.currentlyActive) {
+            if ((userA.currentlyActive && userB.currentlyActive) || !this._showPresence) {
                 // console.log(memberA.name + " and " + memberB.name + " are both active");
                 if (memberA.powerLevel === memberB.powerLevel) {
                     // console.log(memberA + " and " + memberB + " have same power level");
@@ -298,9 +328,7 @@ module.exports = React.createClass({
     },
 
     _filterMembers: function(members, membership, query) {
-        return members.filter((userId) => {
-            const m = this.memberDict[userId];
-
+        return members.filter((m) => {
             if (query) {
                 query = query.toLowerCase();
                 const matchesName = m.name.toLowerCase().indexOf(query) !== -1;
@@ -315,13 +343,36 @@ module.exports = React.createClass({
         });
     },
 
+    _getPending3PidInvites: function() {
+        // include 3pid invites (m.room.third_party_invite) state events.
+        // The HS may have already converted these into m.room.member invites so
+        // we shouldn't add them if the 3pid invite state key (token) is in the
+        // member invite (content.third_party_invite.signed.token)
+        const room = MatrixClientPeg.get().getRoom(this.props.roomId);
+
+        if (room) {
+            return room.currentState.getStateEvents("m.room.third_party_invite").filter(function(e) {
+                // any events without these keys are not valid 3pid invites, so we ignore them
+                const requiredKeys = ['key_validity_url', 'public_key', 'display_name'];
+                for (let i = 0; i < requiredKeys.length; ++i) {
+                    if (e.getContent()[requiredKeys[i]] === undefined) return false;
+                }
+
+                // discard all invites which have a m.room.member event since we've
+                // already added them.
+                const memberEvent = room.currentState.getInviteForThreePidToken(e.getStateKey());
+                if (memberEvent) return false;
+                return true;
+            });
+        }
+    },
+
     _makeMemberTiles: function(members, membership) {
         const MemberTile = sdk.getComponent("rooms.MemberTile");
 
-        const memberList = members.map((userId) => {
-            const m = this.memberDict[userId];
+        const memberList = members.map((m) => {
             return (
-                <MemberTile key={userId} member={m} ref={userId} />
+                <MemberTile key={m.userId} member={m} ref={m.userId} showPresence={this._showPresence} />
             );
         });
 
@@ -329,33 +380,16 @@ module.exports = React.createClass({
         // Double XXX: Now it's really, really not the right home for this logic:
         // we shouldn't even be passing in the 'membership' param to this function.
         // Ew, ew, and ew.
+        // Triple XXX: This violates the size constraint, the output is expected/desired
+        // to be the same length as the members input array.
         if (membership === "invite") {
-            // include 3pid invites (m.room.third_party_invite) state events.
-            // The HS may have already converted these into m.room.member invites so
-            // we shouldn't add them if the 3pid invite state key (token) is in the
-            // member invite (content.third_party_invite.signed.token)
-            const room = MatrixClientPeg.get().getRoom(this.props.roomId);
             const EntityTile = sdk.getComponent("rooms.EntityTile");
-            if (room) {
-                room.currentState.getStateEvents("m.room.third_party_invite").forEach(
-                function(e) {
-                    // any events without these keys are not valid 3pid invites, so we ignore them
-                    const required_keys = ['key_validity_url', 'public_key', 'display_name'];
-                    for (let i = 0; i < required_keys.length; ++i) {
-                        if (e.getContent()[required_keys[i]] === undefined) return;
-                    }
-
-                    // discard all invites which have a m.room.member event since we've
-                    // already added them.
-                    const memberEvent = room.currentState.getInviteForThreePidToken(e.getStateKey());
-                    if (memberEvent) {
-                        return;
-                    }
-                    memberList.push(
-                        <EntityTile key={e.getStateKey()} name={e.getContent().display_name} suppressOnHover={true} />,
-                    );
-                });
-            }
+            memberList.push(...this._getPending3PidInvites().map((e) => {
+                return <EntityTile key={e.getStateKey()}
+                    name={e.getContent().display_name}
+                    suppressOnHover={true}
+                />;
+            }));
         }
 
         return memberList;
@@ -374,11 +408,17 @@ module.exports = React.createClass({
     },
 
     _getChildCountInvited: function() {
-        return this.state.filteredInvitedMembers.length;
+        return this.state.filteredInvitedMembers.length + (this._getPending3PidInvites() || []).length;
     },
 
     render: function() {
+        if (this.state.loading) {
+            const Spinner = sdk.getComponent("elements.Spinner");
+            return <div className="mx_MemberList"><Spinner /></div>;
+        }
+
         const TruncatedList = sdk.getComponent("elements.TruncatedList");
+        const GeminiScrollbarWrapper = sdk.getComponent("elements.GeminiScrollbarWrapper");
 
         let invitedSection = null;
         if (this._getChildCountInvited() > 0) {
@@ -407,14 +447,14 @@ module.exports = React.createClass({
         return (
             <div className="mx_MemberList">
                 { inputBox }
-                <GeminiScrollbar autoshow={true} className="mx_MemberList_joined mx_MemberList_outerWrapper">
+                <GeminiScrollbarWrapper autoshow={true} className="mx_MemberList_joined mx_MemberList_outerWrapper">
                     <TruncatedList className="mx_MemberList_wrapper" truncateAt={this.state.truncateAtJoined}
                             createOverflowElement={this._createOverflowTileJoined}
                             getChildren={this._getChildrenJoined}
                             getChildCount={this._getChildCountJoined}
                     />
                     { invitedSection }
-                </GeminiScrollbar>
+                </GeminiScrollbarWrapper>
             </div>
         );
     },

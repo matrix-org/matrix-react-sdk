@@ -1,6 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
+Copyright 2018 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,16 +19,16 @@ limitations under the License.
 'use strict';
 
 import React from 'react';
-import { _t } from '../../../languageHandler';
-import * as languageHandler from '../../../languageHandler';
+import PropTypes from 'prop-types';
+import { _t, _td } from '../../../languageHandler';
 import sdk from '../../../index';
 import Login from '../../../Login';
-import PlatformPeg from '../../../PlatformPeg';
 import SdkConfig from '../../../SdkConfig';
-import SettingsStore, {SettingLevel} from "../../../settings/SettingsStore";
+import SettingsStore from "../../../settings/SettingsStore";
+import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
 
 // For validating phone numbers without country codes
-const PHONE_NUMBER_REGEX = /^[0-9\(\)\-\s]*$/;
+const PHONE_NUMBER_REGEX = /^[0-9()\-\s]*$/;
 
 /**
  * A wire component which glues together login UI components and Login logic
@@ -36,27 +37,28 @@ module.exports = React.createClass({
     displayName: 'Login',
 
     propTypes: {
-        onLoggedIn: React.PropTypes.func.isRequired,
+        onLoggedIn: PropTypes.func.isRequired,
 
-        enableGuest: React.PropTypes.bool,
+        enableGuest: PropTypes.bool,
 
-        customHsUrl: React.PropTypes.string,
-        customIsUrl: React.PropTypes.string,
-        defaultHsUrl: React.PropTypes.string,
-        defaultIsUrl: React.PropTypes.string,
+        customHsUrl: PropTypes.string,
+        customIsUrl: PropTypes.string,
+        defaultHsUrl: PropTypes.string,
+        defaultIsUrl: PropTypes.string,
         // Secondary HS which we try to log into if the user is using
         // the default HS but login fails. Useful for migrating to a
         // different home server without confusing users.
-        fallbackHsUrl: React.PropTypes.string,
+        fallbackHsUrl: PropTypes.string,
 
-        defaultDeviceDisplayName: React.PropTypes.string,
+        defaultDeviceDisplayName: PropTypes.string,
 
         // login shouldn't know or care how registration is done.
-        onRegisterClick: React.PropTypes.func.isRequired,
+        onRegisterClick: PropTypes.func.isRequired,
 
         // login shouldn't care how password recovery is done.
-        onForgotPasswordClick: React.PropTypes.func,
-        onCancelClick: React.PropTypes.func,
+        onForgotPasswordClick: PropTypes.func,
+        onCancelClick: PropTypes.func,
+        onServerConfigChange: PropTypes.func.isRequired,
     },
 
     getInitialState: function() {
@@ -92,6 +94,13 @@ module.exports = React.createClass({
         this._unmounted = true;
     },
 
+    onPasswordLoginError: function(errorText) {
+        this.setState({
+            errorText,
+            loginIncorrect: Boolean(errorText),
+        });
+    },
+
     onPasswordLogin: function(username, phoneCountry, phoneNumber, password) {
         this.setState({
             busy: true,
@@ -111,10 +120,34 @@ module.exports = React.createClass({
 
             // Some error strings only apply for logging in
             const usingEmail = username.indexOf("@") > 0;
-            if (error.httpStatus == 400 && usingEmail) {
+            if (error.httpStatus === 400 && usingEmail) {
                 errorText = _t('This Home Server does not support login using email address.');
+            } else if (error.errcode == 'M_RESOURCE_LIMIT_EXCEEDED') {
+                const errorTop = messageForResourceLimitError(
+                    error.data.limit_type,
+                    error.data.admin_contact, {
+                    'monthly_active_user': _td(
+                        "This homeserver has hit its Monthly Active User limit.",
+                    ),
+                    '': _td(
+                        "This homeserver has exceeded one of its resource limits.",
+                    ),
+                });
+                const errorDetail = messageForResourceLimitError(
+                    error.data.limit_type,
+                    error.data.admin_contact, {
+                    '': _td(
+                        "Please <a>contact your service administrator</a> to continue using this service.",
+                    ),
+                });
+                errorText = (
+                    <div>
+                        <div>{errorTop}</div>
+                        <div className="mx_Login_smallError">{errorDetail}</div>
+                    </div>
+                );
             } else if (error.httpStatus === 401 || error.httpStatus === 403) {
-                if (SdkConfig.get().disable_custom_urls) {
+                if (SdkConfig.get()['disable_custom_urls']) {
                     errorText = (
                         <div>
                             <div>{ _t('Incorrect username and/or password.') }</div>
@@ -141,7 +174,7 @@ module.exports = React.createClass({
                 // but the login API gives a 403 https://matrix.org/jira/browse/SYN-744
                 // mentions this (although the bug is for UI auth which is not this)
                 // We treat both as an incorrect password
-                loginIncorrect: error.httpStatus === 401 || error.httpStatus == 403,
+                loginIncorrect: error.httpStatus === 401 || error.httpStatus === 403,
             });
         }).finally(() => {
             if (this._unmounted) {
@@ -217,6 +250,8 @@ module.exports = React.createClass({
         if (config.isUrl !== undefined) {
             newState.enteredIdentityServerUrl = config.isUrl;
         }
+
+        this.props.onServerConfigChange(config);
         this.setState(newState, function() {
             self._initLoginLogic(config.hsUrl || null, config.isUrl);
         });
@@ -227,7 +262,7 @@ module.exports = React.createClass({
         hsUrl = hsUrl || this.state.enteredHomeserverUrl;
         isUrl = isUrl || this.state.enteredIdentityServerUrl;
 
-        const fallbackHsUrl = hsUrl == this.props.defaultHsUrl ? this.props.fallbackHsUrl : null;
+        const fallbackHsUrl = hsUrl === this.props.defaultHsUrl ? this.props.fallbackHsUrl : null;
 
         const loginLogic = new Login(hsUrl, isUrl, fallbackHsUrl, {
             defaultDeviceDisplayName: this.props.defaultDeviceDisplayName,
@@ -306,19 +341,27 @@ module.exports = React.createClass({
                  !this.state.enteredHomeserverUrl.startsWith("http"))
             ) {
                 errorText = <span>
-                    {
-                        _t("Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. " +
-                            "Either use HTTPS or <a>enable unsafe scripts</a>.",
-                            {},
-                            { 'a': (sub) => { return <a href="https://www.google.com/search?&q=enable%20unsafe%20scripts">{ sub }</a>; } },
+                    { _t("Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. " +
+                        "Either use HTTPS or <a>enable unsafe scripts</a>.", {},
+                        {
+                            'a': (sub) => {
+                                return <a href="https://www.google.com/search?&q=enable%20unsafe%20scripts">
+                                    { sub }
+                                </a>;
+                            },
+                        },
                     ) }
                 </span>;
             } else {
                 errorText = <span>
-                    {
-                        _t("Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.",
-                            {},
-                            { 'a': (sub) => { return <a href={this.state.enteredHomeserverUrl}>{ sub }</a>; } },
+                    { _t("Can't connect to homeserver - please check your connectivity, ensure your " +
+                        "<a>homeserver's SSL certificate</a> is trusted, and that a browser extension " +
+                        "is not blocking requests.", {},
+                        {
+                            'a': (sub) => {
+                                return <a href={this.state.enteredHomeserverUrl}>{ sub }</a>;
+                            },
+                        },
                     ) }
                 </span>;
             }
@@ -346,6 +389,7 @@ module.exports = React.createClass({
         return (
             <PasswordLogin
                onSubmit={this.onPasswordLogin}
+               onError={this.onPasswordLoginError}
                initialUsername={this.state.username}
                initialPhoneCountry={this.state.phoneCountry}
                initialPhoneNumber={this.state.phoneNumber}
@@ -366,23 +410,6 @@ module.exports = React.createClass({
         );
     },
 
-    _onLanguageChange: function(newLang) {
-        if (languageHandler.getCurrentLanguage() !== newLang) {
-            SettingsStore.setValue("language", null, SettingLevel.DEVICE, newLang);
-            PlatformPeg.get().reload();
-        }
-    },
-
-    _renderLanguageSetting: function() {
-        const LanguageDropdown = sdk.getComponent('views.elements.LanguageDropdown');
-        return <div className="mx_Login_language_div">
-            <LanguageDropdown onOptionChange={this._onLanguageChange}
-                          className="mx_Login_language"
-                          value={languageHandler.getCurrentLanguage()}
-            />
-        </div>;
-    },
-
     render: function() {
         const Loader = sdk.getComponent("elements.Spinner");
         const LoginPage = sdk.getComponent("login.LoginPage");
@@ -395,25 +422,14 @@ module.exports = React.createClass({
         if (this.props.enableGuest) {
             loginAsGuestJsx =
                 <a className="mx_Login_create" onClick={this._onLoginAsGuestClick} href="#">
-                    { _t('Login as guest') }
+                    { _t('Try the app first') }
                 </a>;
         }
-
-        let returnToAppJsx;
-        /*
-        // with the advent of ILAG I don't think we need this any more
-        if (this.props.onCancelClick) {
-            returnToAppJsx =
-                <a className="mx_Login_create" onClick={this.props.onCancelClick} href="#">
-                    { _t('Return to app') }
-                </a>;
-        }
-        */
 
         let serverConfig;
         let header;
 
-        if (!SdkConfig.get().disable_custom_urls) {
+        if (!SdkConfig.get()['disable_custom_urls']) {
             serverConfig = <ServerConfig ref="serverConfig"
                 withToggleButton={true}
                 customHsUrl={this.props.customHsUrl}
@@ -427,10 +443,10 @@ module.exports = React.createClass({
         // FIXME: remove status.im theme tweaks
         const theme = SettingsStore.getValue("theme");
         if (theme !== "status") {
-            header = <h2>{ _t('Sign in') }</h2>;
+            header = <h2>{ _t('Sign in') } { loader }</h2>;
         } else {
             if (!this.state.errorText) {
-                header = <h2>{ _t('Sign in to get started') }</h2>;
+                header = <h2>{ _t('Sign in to get started') } { loader }</h2>;
             }
         }
 
@@ -442,6 +458,8 @@ module.exports = React.createClass({
                 </div>
             );
         }
+
+        const LanguageSelector = sdk.getComponent('structures.login.LanguageSelector');
 
         return (
             <LoginPage>
@@ -456,8 +474,7 @@ module.exports = React.createClass({
                             { _t('Create an account') }
                         </a>
                         { loginAsGuestJsx }
-                        { returnToAppJsx }
-                        { !SdkConfig.get().disable_login_language_selector ? this._renderLanguageSetting() : '' }
+                        <LanguageSelector />
                         <LoginFooter />
                     </div>
                 </div>
