@@ -85,13 +85,14 @@ export async function loadSession(opts) {
             fragmentQueryParams.guest_access_token
            ) {
             console.log("Using guest access credentials");
-            return _doSetLoggedIn({
+            await _doSetLoggedIn({
                 userId: fragmentQueryParams.guest_user_id,
                 accessToken: fragmentQueryParams.guest_access_token,
                 homeserverUrl: guestHsUrl,
                 identityServerUrl: guestIsUrl,
                 guest: true,
-            }, true).then(() => true);
+            }, true);
+            return true;
         }
         const success = await _restoreFromLocalStorage();
         if (success) {
@@ -159,7 +160,7 @@ export function attemptTokenLogin(queryParams, defaultDeviceDisplayName) {
     });
 }
 
-function _registerAsGuest(hsUrl, isUrl, defaultDeviceDisplayName) {
+async function _registerAsGuest(hsUrl, isUrl, defaultDeviceDisplayName) {
     console.log(`Doing guest login on ${hsUrl}`);
 
     // TODO: we should probably de-duplicate this and Login.loginAsGuest.
@@ -170,24 +171,26 @@ function _registerAsGuest(hsUrl, isUrl, defaultDeviceDisplayName) {
         baseUrl: hsUrl,
     });
 
-    return client.registerGuest({
-        body: {
-            initial_device_display_name: defaultDeviceDisplayName,
-        },
-    }).then((creds) => {
+    try {
+        const creds = await client.registerGuest({
+            body: {
+                initial_device_display_name: defaultDeviceDisplayName,
+            },
+        });
         console.log(`Registered as guest: ${creds.user_id}`);
-        return _doSetLoggedIn({
+        await _doSetLoggedIn({
             userId: creds.user_id,
             deviceId: creds.device_id,
             accessToken: creds.access_token,
             homeserverUrl: hsUrl,
             identityServerUrl: isUrl,
             guest: true,
-        }, true).then(() => true);
-    }, (err) => {
+        }, true);
+        return true;
+    } catch (err) {
         console.error("Failed to register as guest: " + err + " " + err.data);
         return false;
-    });
+    }
 }
 
 // returns a promise which resolves to true if a session is found in
@@ -235,43 +238,75 @@ async function _restoreFromLocalStorage() {
     }
 }
 
-function _handleLoadSessionFailure(e) {
-    console.log("Unable to load session", e);
-
-    if (e instanceof Matrix.InvalidStoreError) {
-        if (e.reason === Matrix.InvalidStoreError.TOGGLED_LAZY_LOADING) {
-            return Promise.resolve().then(() => {
-                const lazyLoadEnabled = e.value;
-                if (lazyLoadEnabled) {
-                    const LazyLoadingResyncDialog =
-                        sdk.getComponent("views.dialogs.LazyLoadingResyncDialog");
-                    return new Promise((resolve) => {
-                        Modal.createDialog(LazyLoadingResyncDialog, {
-                            onFinished: resolve,
-                        });
-                    });
-                } else {
-                    // show warning about simultaneous use
-                    // between LL/non-LL version on same host.
-                    // as disabling LL when previously enabled
-                    // is a strong indicator of this (/develop & /app)
-                    const LazyLoadingDisabledDialog =
-                        sdk.getComponent("views.dialogs.LazyLoadingDisabledDialog");
-                    return new Promise((resolve) => {
-                        Modal.createDialog(LazyLoadingDisabledDialog, {
-                            onFinished: resolve,
-                            host: window.location.host,
-                        });
-                    });
-                }
-            }).then(() => {
-                return MatrixClientPeg.get().store.deleteAllData();
-            }).then(() => {
-                PlatformPeg.get().reload();
-            });
-        }
+async function _handleInvalidStore(e) {
+    async function deleteAllDataAndTriggerRefresh() {
+        await MatrixClientPeg.get().store.deleteAllData();
+        e.causedRefresh = true;
+        PlatformPeg.get().reload();
+        // don't retry with memory store
+        return false;
     }
 
+    const needsDowngrade = e.reason === Matrix.InvalidStoreError.NEEDS_DOWNGRADE;
+    const wasLLToggled = e.reason === Matrix.InvalidStoreError.TOGGLED_LAZY_LOADING;
+
+    if (needsDowngrade) {
+        const DatabaseDowngradeDialog =
+            sdk.getComponent("views.dialogs.DatabaseDowngradeDialog");
+        const clearCache = await new Promise((resolve) => {
+            Modal.createDialog(DatabaseDowngradeDialog, {
+                onFinished: resolve,
+            });
+        });
+        if (clearCache) {
+            return deleteAllDataAndTriggerRefresh();
+        }
+    } else if (wasLLToggled) {
+        const lazyLoadingEnabled = e.value;
+        if (lazyLoadingEnabled) {
+            const LazyLoadingResyncDialog =
+                sdk.getComponent("views.dialogs.LazyLoadingResyncDialog");
+            await new Promise((resolve) => {
+                Modal.createDialog(LazyLoadingResyncDialog, {
+                    onFinished: resolve,
+                });
+            });
+        } else {
+            // show warning about simultaneous use
+            // between LL/non-LL version on same host.
+            // as disabling LL when previously enabled
+            // is a strong indicator of this (/develop & /app)
+            const LazyLoadingDisabledDialog =
+                sdk.getComponent("views.dialogs.LazyLoadingDisabledDialog");
+            await new Promise((resolve) => {
+                Modal.createDialog(LazyLoadingDisabledDialog, {
+                    onFinished: resolve,
+                    host: window.location.host,
+                });
+            });
+        }
+        // note that returning true here for
+        // falling back to memory store will break
+        // things (infinite spinner),
+        // as the TOGGLED_LAZY_LOADING error is generated
+        // in MatrixClient::startClient, at which point,
+        // the bootstrapping process is apparently too far
+        // to retry with a different store.
+        // so don't change this line unless certain
+        // the above is not a problem anymore
+        return deleteAllDataAndTriggerRefresh();
+    }
+    // retry with memory store
+    return true;
+}
+
+function _handleLoadSessionFailure(e) {
+    // the page is refreshing, no need to show a dialog
+    if (e.causedRefresh) {
+        return Promise.resolve(false);
+    }
+
+    console.log("Unable to load session", e);
     const def = Promise.defer();
     const SessionRestoreErrorDialog =
           sdk.getComponent('views.dialogs.SessionRestoreErrorDialog');
@@ -398,7 +433,25 @@ async function _doSetLoggedIn(credentials, clearStorage) {
         dis.dispatch({action: 'on_logged_in', teamToken: teamToken});
     });
 
-    await startMatrixClient();
+    try {
+        await startMatrixClient();
+    } catch (err) {
+        let retryWithMemoryStore = true;
+        if (err instanceof Matrix.InvalidStoreError) {
+            retryWithMemoryStore = await _handleInvalidStore(err);
+        }
+        if (retryWithMemoryStore) {
+            // replace store on existing client instead of creating
+            // new client because once will_start_client has been dispatched,
+            // we can't easily replace the client anymore
+            MatrixClientPeg.get().store = new Matrix.MatrixInMemoryStore({
+                localStorage: window.localStorage,
+            });
+            await startMatrixClient();
+        } else {
+            throw err;
+        }
+    }
     return MatrixClientPeg.get();
 }
 

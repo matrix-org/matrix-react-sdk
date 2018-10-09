@@ -18,8 +18,6 @@ limitations under the License.
 
 'use strict';
 
-import Matrix from 'matrix-js-sdk';
-
 import utils from 'matrix-js-sdk/lib/utils';
 import EventTimeline from 'matrix-js-sdk/lib/models/event-timeline';
 import EventTimelineSet from 'matrix-js-sdk/lib/models/event-timeline-set';
@@ -53,9 +51,6 @@ class MatrixClientPeg {
         this.opts = {
             initialSyncLimit: 20,
         };
-        // the credentials used to init the current client object.
-        // used if we tear it down & recreate it with a different store
-        this._currentClientCreds = null;
     }
 
     /**
@@ -84,28 +79,18 @@ class MatrixClientPeg {
      * Home Server / Identity Server URLs and active credentials
      */
     replaceUsingCreds(creds: MatrixClientCreds) {
-        this._currentClientCreds = creds;
         this._createClient(creds);
     }
 
     async start() {
-        for (const dbType of ['indexeddb', 'memory']) {
-            try {
-                const promise = this.matrixClient.store.startup();
-                console.log("MatrixClientPeg: waiting for MatrixClient store to initialise");
-                await promise;
-                break;
-            } catch (err) {
-                if (dbType === 'indexeddb') {
-                    console.error('Error starting matrixclient store - falling back to memory store', err);
-                    this.matrixClient.store = new Matrix.MatrixInMemoryStore({
-                      localStorage: global.localStorage,
-                    });
-                } else {
-                    console.error('Failed to start memory store!', err);
-                    throw err;
-                }
-            }
+        try {
+            const promise = this.matrixClient.store.startup();
+            console.log(`MatrixClientPeg: waiting for MatrixClient store to initialise`);
+            await promise;
+        } catch (err) {
+            // log any errors when starting up the database (if one exists)
+            console.error('Error starting matrixclient store', err);
+            throw err;
         }
 
         // try to initialise e2e on the new client
@@ -160,7 +145,7 @@ class MatrixClientPeg {
         return matches[1];
     }
 
-    _createClient(creds: MatrixClientCreds, useIndexedDb) {
+    _createClient(creds: MatrixClientCreds) {
         const opts = {
             baseUrl: creds.homeserverUrl,
             idBaseUrl: creds.identityServerUrl,
@@ -170,8 +155,8 @@ class MatrixClientPeg {
             timelineSupport: true,
             forceTURN: SettingsStore.getValue('webRtcForceTURN', false),
         };
-
-        this.matrixClient = createMatrixClient(opts, useIndexedDb);
+        // true to prefer indexedDB
+        this.matrixClient = createMatrixClient(opts, true);
 
         // we're going to add eventlisteners for each matrix event tile, so the
         // potential number of event listeners is quite high.
