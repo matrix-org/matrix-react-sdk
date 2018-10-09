@@ -441,6 +441,7 @@ async function _doSetLoggedIn(credentials, clearStorage) {
             retryWithMemoryStore = await _handleInvalidStore(err);
         }
         if (retryWithMemoryStore) {
+            console.log("retryWithMemoryStore!!!");
             // replace store on existing client instead of creating
             // new client because once will_start_client has been dispatched,
             // we can't easily replace the client anymore

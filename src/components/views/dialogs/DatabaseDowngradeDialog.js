@@ -20,7 +20,7 @@ import { _t } from '../../../languageHandler';
 
 export default (props) => {
     const description =
-        _t("You have used a more recent version of Riot on this domain that upgraded your local cache to a newer format I can't read. Would you like me to either ignore the cache (which might make Riot slower) or remove the cache and sync with the server again?");
+        _t("You have used a more recent version of Riot on this domain that upgraded your local cache to a newer format this version of Riot can't read. Would you like me to either ignore the cache (which might make Riot slower) or remove the cache and sync with the server again?");
 
     return (<QuestionDialog
         hasCancelButton={false}
