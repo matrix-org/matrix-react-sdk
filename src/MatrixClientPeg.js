@@ -123,10 +123,7 @@ class MatrixClientPeg {
         const opts = utils.deepCopy(this.opts);
         // the react sdk doesn't work without this, so don't allow
         opts.pendingEventOrdering = "detached";
-
-        if (SettingsStore.isFeatureEnabled('feature_lazyloading')) {
-            opts.lazyLoadMembers = true;
-        }
+        opts.lazyLoadMembers = true;
 
         // Connect the matrix client to the dispatcher
         MatrixActionCreators.start(this.matrixClient);
