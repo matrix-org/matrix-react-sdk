@@ -897,8 +897,10 @@ module.exports = React.createClass({
         ev.stopPropagation();
         ev.preventDefault();
 
-        this.setState({ draggingFile: true })
-        ev.dataTransfer.dropEffect = 'copy';
+        if (ev.dataTransfer.types.indexOf('Files') >= 0) {
+            this.setState({ draggingFile: true })
+            ev.dataTransfer.dropEffect = 'copy';
+        }
     },
 
     onDrop: function(ev) {
