@@ -1,6 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
+Copyright 2018 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -571,6 +572,11 @@ module.exports = React.createClass({
         });
     },
 
+    _onRoomUpgradeClick: function() {
+        const RoomUpgradeDialog = sdk.getComponent('dialogs.RoomUpgradeDialog');
+        Modal.createTrackedDialog('Upgrade Room Version', '', RoomUpgradeDialog, {room: this.props.room});
+    },
+
     _onRoomMemberMembership: function() {
         // Update, since our banned user list may have changed
         this.forceUpdate();
@@ -582,6 +588,11 @@ module.exports = React.createClass({
                 eventsSection[desiredEvent] = (plEventsToShow[desiredEvent].isState ? stateLevel : eventsLevel);
             }
         }
+    },
+
+    _openDevtools: function() {
+        const DevtoolsDialog = sdk.getComponent('dialogs.DevtoolsDialog');
+        Modal.createDialog(DevtoolsDialog, {roomId: this.props.room.roomId});
     },
 
     _renderEncryptionSection: function() {
@@ -646,31 +657,31 @@ module.exports = React.createClass({
         const userLevels = powerLevels.users || {};
 
         const powerLevelDescriptors = {
-            users_default: {
+            "users_default": {
                 desc: _t('The default role for new room members is'),
                 defaultValue: 0,
             },
-            events_default: {
+            "events_default": {
                 desc: _t('To send messages, you must be a'),
                 defaultValue: 0,
             },
-            invite: {
+            "invite": {
                 desc: _t('To invite users into the room, you must be a'),
                 defaultValue: 50,
             },
-            state_default: {
+            "state_default": {
                 desc: _t('To configure the room, you must be a'),
                 defaultValue: 50,
             },
-            kick: {
+            "kick": {
                 desc: _t('To kick users, you must be a'),
                 defaultValue: 50,
             },
-            ban: {
+            "ban": {
                 desc: _t('To ban users, you must be a'),
                 defaultValue: 50,
             },
-            redact: {
+            "redact": {
                 desc: _t('To remove other users\' messages, you must be a'),
                 defaultValue: 50,
             },
@@ -793,15 +804,15 @@ module.exports = React.createClass({
         }
 
         let leaveButton = null;
-        const myMember = this.props.room.getMember(myUserId);
-        if (myMember) {
-            if (myMember.membership === "join") {
+        const myMemberShip = this.props.room.getMyMembership();
+        if (myMemberShip) {
+            if (myMemberShip === "join") {
                 leaveButton = (
                     <AccessibleButton className="mx_RoomSettings_leaveButton" onClick={this.onLeaveClick}>
                         { _t('Leave room') }
                     </AccessibleButton>
                 );
-            } else if (myMember.membership === "leave") {
+            } else if (myMemberShip === "leave") {
                 leaveButton = (
                     <AccessibleButton className="mx_RoomSettings_leaveButton" onClick={this.onForgetClick}>
                         { _t('Forget room') }
@@ -929,6 +940,18 @@ module.exports = React.createClass({
             );
         });
 
+        let roomUpgradeButton = null;
+        if (this.props.room.shouldUpgradeToVersion() && this.props.room.userMayUpgradeRoom(myUserId)) {
+            roomUpgradeButton = <AccessibleButton className="mx_RoomSettings_upgradeButton danger" onClick={this._onRoomUpgradeClick}>
+                { _t("Upgrade room to version %(ver)s", {ver: this.props.room.shouldUpgradeToVersion()}) }
+            </AccessibleButton>;
+        }
+
+        const devtoolsButton = SettingsStore.getValue("showDeveloperTools") ?
+        (<AccessibleButton className="mx_RoomSettings_devtoolsButton" onClick={this._openDevtools}>
+            { _t("Open Devtools") }
+        </AccessibleButton>) : null;
+
         return (
             <div className="mx_RoomSettings">
 
@@ -1039,7 +1062,10 @@ module.exports = React.createClass({
 
                 <h3>{ _t('Advanced') }</h3>
                 <div className="mx_RoomSettings_settings">
-                    { _t('This room\'s internal ID is') } <code>{ this.props.room.roomId }</code>
+                    { _t('Internal room ID: ') } <code>{ this.props.room.roomId }</code><br />
+                    { _t('Room version number: ') } <code>{ this.props.room.getVersion() }</code><br />
+                    { roomUpgradeButton }
+                    { devtoolsButton }
                 </div>
             </div>
         );

@@ -203,7 +203,7 @@ module.exports = React.createClass({
                     // update the current node with one that's now taken its place
                     node = pillContainer;
                 }
-            } else if (node.nodeType == Node.TEXT_NODE) {
+            } else if (node.nodeType === Node.TEXT_NODE) {
                 const Pill = sdk.getComponent('elements.Pill');
 
                 let currentTextNode = node;
@@ -232,6 +232,12 @@ module.exports = React.createClass({
                     if (atRoomRule && pushProcessor.ruleMatchesEvent(atRoomRule, this.props.mxEvent)) {
                         // Now replace all those nodes with Pills
                         for (const roomNotifTextNode of roomNotifTextNodes) {
+                            // Set the next node to be processed to the one after the node
+                            // we're adding now, since we've just inserted nodes into the structure
+                            // we're iterating over.
+                            // Note we've checked roomNotifTextNodes.length > 0 so we'll do this at least once
+                            node = roomNotifTextNode.nextSibling;
+
                             const pillContainer = document.createElement('span');
                             const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
                             const pill = <Pill
@@ -243,12 +249,6 @@ module.exports = React.createClass({
 
                             ReactDOM.render(pill, pillContainer);
                             roomNotifTextNode.parentNode.replaceChild(pillContainer, roomNotifTextNode);
-
-                            // Set the next node to be processed to the one after the node
-                            // we're adding now, since we've just inserted nodes into the structure
-                            // we're iterating over.
-                            // Note we've checked roomNotifTextNodes.length > 0 so we'll do this at least once
-                            node = roomNotifTextNode.nextSibling;
                         }
                         // Nothing else to do for a text node (and we don't need to advance
                         // the loop pointer because we did it above)
@@ -340,7 +340,18 @@ module.exports = React.createClass({
                 }, false);
                 e.target.onmouseleave = close;
             };
-            p.appendChild(button);
+
+            // Wrap a div around <pre> so that the copy button can be correctly positioned
+            // when the <pre> overflows and is scrolled horizontally.
+            const div = document.createElement("div");
+            div.className = "mx_EventTile_pre_container";
+
+            // Insert containing div in place of <pre> block
+            p.parentNode.replaceChild(div, p);
+
+            // Append <pre> block and copy button to container
+            div.appendChild(p);
+            div.appendChild(button);
         });
     },
 
@@ -423,8 +434,7 @@ module.exports = React.createClass({
         const mxEvent = this.props.mxEvent;
         const content = mxEvent.getContent();
 
-        const stripReply = SettingsStore.isFeatureEnabled("feature_rich_quoting") &&
-            ReplyThread.getParentEventId(mxEvent);
+        const stripReply = ReplyThread.getParentEventId(mxEvent);
         let body = HtmlUtils.bodyToHtml(content, this.props.highlights, {
             disableBigEmoji: SettingsStore.getValue('TextualBody.disableBigEmoji'),
             // Part of Replies fallback support

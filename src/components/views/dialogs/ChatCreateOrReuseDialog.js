@@ -1,5 +1,6 @@
 /*
 Copyright 2017 Vector Creations Ltd
+Copyright 2018 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,9 +26,9 @@ import Unread from '../../../Unread';
 import classNames from 'classnames';
 
 export default class ChatCreateOrReuseDialog extends React.Component {
-
     constructor(props) {
         super(props);
+        this.onFinished = this.onFinished.bind(this);
         this.onRoomTileClick = this.onRoomTileClick.bind(this);
 
         this.state = {
@@ -52,11 +53,8 @@ export default class ChatCreateOrReuseDialog extends React.Component {
         for (const roomId of dmRooms) {
             const room = client.getRoom(roomId);
             if (room) {
-                const me = room.getMember(client.credentials.userId);
-                const highlight = (
-                    room.getUnreadNotificationCount('highlight') > 0 ||
-                    me.membership == "invite"
-                );
+                const isInvite = room.getMyMembership() === "invite";
+                const highlight = room.getUnreadNotificationCount('highlight') > 0 || isInvite;
                 tiles.push(
                     <RoomTile key={room.roomId} room={room}
                         transparent={true}
@@ -64,7 +62,7 @@ export default class ChatCreateOrReuseDialog extends React.Component {
                         selected={false}
                         unread={Unread.doesRoomHaveUnreadMessages(room)}
                         highlight={highlight}
-                        isInvite={me.membership == "invite"}
+                        isInvite={isInvite}
                         onClick={this.onRoomTileClick}
                     />,
                 );
@@ -108,6 +106,10 @@ export default class ChatCreateOrReuseDialog extends React.Component {
 
     onRoomTileClick(roomId) {
         this.props.onExistingRoomSelected(roomId);
+    }
+
+    onFinished() {
+        this.props.onFinished(false);
     }
 
     render() {
@@ -177,7 +179,7 @@ export default class ChatCreateOrReuseDialog extends React.Component {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         return (
             <BaseDialog className='mx_ChatCreateOrReuseDialog'
-                onFinished={this.props.onFinished.bind(false)}
+                onFinished={this.onFinished}
                 title={title}
                 contentId='mx_Dialog_content'
             >

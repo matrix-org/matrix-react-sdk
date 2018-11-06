@@ -480,7 +480,7 @@ export default React.createClass({
                         group_id: groupId,
                     },
                 });
-                dis.dispatch({action: 'view_set_mxid'});
+                dis.dispatch({action: 'require_registration'});
                 willDoOnboarding = true;
             }
             this.setState({
@@ -723,6 +723,11 @@ export default React.createClass({
     },
 
     _onJoinClick: async function() {
+        if (this._matrixClient.isGuest()) {
+            dis.dispatch({action: 'require_registration'});
+            return;
+        }
+
         this.setState({membershipBusy: true});
 
         // Wait 500ms to prevent flashing. Do this before sending a request otherwise we risk the
@@ -741,14 +746,38 @@ export default React.createClass({
         });
     },
 
+    _leaveGroupWarnings: function() {
+        const warnings = [];
+
+        if (this.state.isUserPrivileged) {
+            warnings.push((
+                <span className="warning">
+                    { " " /* Whitespace, otherwise the sentences get smashed together */ }
+                    { _t("You are an administrator of this community. You will not be " +
+                         "able to rejoin without an invite from another administrator.") }
+                </span>
+            ));
+        }
+
+        return warnings;
+    },
+
+
     _onLeaveClick: function() {
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+        const warnings = this._leaveGroupWarnings();
+
         Modal.createTrackedDialog('Leave Group', '', QuestionDialog, {
             title: _t("Leave Community"),
-            description: _t("Leave %(groupName)s?", {groupName: this.props.groupId}),
+            description: (
+                <span>
+                { _t("Leave %(groupName)s?", {groupName: this.props.groupId}) }
+                { warnings }
+                </span>
+            ),
             button: _t("Leave"),
-            danger: true,
-            onFinished: async (confirmed) => {
+            danger: this.state.isUserPrivileged,
+            onFinished: async(confirmed) => {
                 if (!confirmed) return;
 
                 this.setState({membershipBusy: true});

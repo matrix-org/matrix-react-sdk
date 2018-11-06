@@ -125,9 +125,7 @@ export default React.createClass({
 
         const av = <BaseAvatar name={groupName} width={24} height={24} url={httpAvatarUrl} />;
 
-        const nameClasses = classNames({
-            'mx_RoomTile_name': true,
-            'mx_RoomTile_invite': this.props.isInvite,
+        const nameClasses = classNames('mx_RoomTile_name mx_RoomTile_invite mx_RoomTile_badgeShown', {
             'mx_RoomTile_badgeShown': this.state.badgeHover || this.state.menuDisplayed,
         });
 
@@ -136,7 +134,7 @@ export default React.createClass({
         </EmojiText>;
 
         const badgeEllipsis = this.state.badgeHover || this.state.menuDisplayed;
-        const badgeClasses = classNames('mx_RoomSubList_badge mx_RoomSubList_badgeHighlight', {
+        const badgeClasses = classNames('mx_RoomTile_badge mx_RoomTile_highlight', {
             'mx_RoomTile_badgeButton': badgeEllipsis,
         });
 

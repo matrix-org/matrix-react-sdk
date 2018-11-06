@@ -20,6 +20,7 @@ limitations under the License.
     margin-bottom: 20px;
 }
 
+.mx_RoomSettings_upgradeButton,
 .mx_RoomSettings_leaveButton,
 .mx_RoomSettings_unbanButton {
     @mixin mx_DialogButton;
@@ -27,9 +28,21 @@ limitations under the License.
     margin-right: 8px;
 }
 
+.mx_RoomSettings_devtoolsButton {
+    @mixin mx_DialogButton;
+    position: relative;
+    padding: 4px 1.5em;
+    margin-top: 8px;
+}
+
+.mx_RoomSettings_upgradeButton,
 .mx_RoomSettings_leaveButton:hover,
 .mx_RoomSettings_unbanButton:hover {
     @mixin mx_DialogButton_hover;
+}
+
+.mx_RoomSettings_upgradeButton.danger {
+    @mixin mx_DialogButton_danger;
 }
 
 .mx_RoomSettings_integrationsButton_error {

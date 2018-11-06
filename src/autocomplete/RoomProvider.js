@@ -1,7 +1,8 @@
 /*
 Copyright 2016 Aviral Dasgupta
 Copyright 2017 Vector Creations Ltd
-Copyright 2017 New Vector Ltd
+Copyright 2017, 2018 New Vector Ltd
+Copyright 2018 Michael Telatynski <7t3chguy@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,14 +21,15 @@ import React from 'react';
 import { _t } from '../languageHandler';
 import AutocompleteProvider from './AutocompleteProvider';
 import MatrixClientPeg from '../MatrixClientPeg';
-import FuzzyMatcher from './FuzzyMatcher';
+import QueryMatcher from './QueryMatcher';
 import {PillCompletion} from './Components';
 import {getDisplayAliasForRoom} from '../Rooms';
 import sdk from '../index';
 import _sortBy from 'lodash/sortBy';
 import {makeRoomPermalink} from "../matrix-to";
+import type {Completion, SelectionRange} from "./Autocompleter";
 
-const ROOM_REGEX = /(?=#)(\S*)/g;
+const ROOM_REGEX = /\B#\S*/g;
 
 function score(query, space) {
     const index = space.indexOf(query);
@@ -41,19 +43,13 @@ function score(query, space) {
 export default class RoomProvider extends AutocompleteProvider {
     constructor() {
         super(ROOM_REGEX);
-        this.matcher = new FuzzyMatcher([], {
+        this.matcher = new QueryMatcher([], {
             keys: ['displayedAlias', 'name'],
         });
     }
 
-    async getCompletions(query: string, selection: {start: number, end: number}, force = false) {
+    async getCompletions(query: string, selection: SelectionRange, force?: boolean = false): Array<Completion> {
         const RoomAvatar = sdk.getComponent('views.avatars.RoomAvatar');
-
-        // Disable autocompletions when composing commands because of various issues
-        // (see https://github.com/vector-im/riot-web/issues/4762)
-        if (/^(\/join|\/leave)/.test(query)) {
-            return [];
-        }
 
         const client = MatrixClientPeg.get();
         let completions = [];
@@ -78,6 +74,7 @@ export default class RoomProvider extends AutocompleteProvider {
                 const displayAlias = getDisplayAliasForRoom(room.room) || room.roomId;
                 return {
                     completion: displayAlias,
+                    completionId: displayAlias,
                     suffix: ' ',
                     href: makeRoomPermalink(displayAlias),
                     component: (

@@ -81,6 +81,10 @@ const SIMPLE_SETTINGS = [
     { id: "VideoView.flipVideoHorizontally" },
     { id: "TagPanel.disableTagPanel" },
     { id: "enableWidgetScreenshots" },
+    { id: "RoomSubList.showEmpty" },
+    { id: "pinMentionedRooms" },
+    { id: "pinUnreadRooms" },
+    { id: "showDeveloperTools" },
 ];
 
 // These settings must be defined in SettingsStore
@@ -429,7 +433,6 @@ module.exports = React.createClass({
                 "push notifications on other devices until you log back in to them",
             ) + ".",
         });
-        dis.dispatch({action: 'password_changed'});
     },
 
     _onAddEmailEditFinished: function(value, shouldSubmit) {
@@ -803,7 +806,7 @@ module.exports = React.createClass({
         }
         return (
             <div>
-                <h3>{ _t("Debug Logs Submission") }</h3>
+                <h3>{ _t("Submit Debug Logs") }</h3>
                 <div className="mx_UserSettings_section">
                     <p>{
                         _t( "If you've submitted a bug via GitHub, debug logs can help " +
@@ -831,9 +834,9 @@ module.exports = React.createClass({
                 <br />
                 { _t('Privacy is important to us, so we don\'t collect any personal'
                     + ' or identifiable data for our analytics.') }
-                <div className="mx_UserSettings_advanced_spoiler" onClick={Analytics.showDetailsModal}>
+                <AccessibleButton className="mx_UserSettings_advanced_spoiler" onClick={Analytics.showDetailsModal}>
                     { _t('Learn more about how we use analytics.') }
-                </div>
+                </AccessibleButton>
                 { ANALYTICS_SETTINGS.map( this._renderDeviceSetting ) }
             </div>
         </div>;
@@ -844,8 +847,16 @@ module.exports = React.createClass({
         SettingsStore.getLabsFeatures().forEach((featureId) => {
             // TODO: this ought to be a separate component so that we don't need
             // to rebind the onChange each time we render
-            const onChange = (e) => {
-                SettingsStore.setFeatureEnabled(featureId, e.target.checked);
+            const onChange = async(e) => {
+                const checked = e.target.checked;
+                if (featureId === "feature_lazyloading") {
+                    const confirmed = await this._onLazyLoadChanging(checked);
+                    if (!confirmed) {
+                        e.preventDefault();
+                        return;
+                    }
+                }
+                await SettingsStore.setFeatureEnabled(featureId, checked);
                 this.forceUpdate();
             };
 
@@ -855,7 +866,7 @@ module.exports = React.createClass({
                         type="checkbox"
                         id={featureId}
                         name={featureId}
-                        defaultChecked={SettingsStore.isFeatureEnabled(featureId)}
+                        checked={SettingsStore.isFeatureEnabled(featureId)}
                         onChange={onChange}
                     />
                     <label htmlFor={featureId}>{ SettingsStore.getDisplayName(featureId) }</label>
@@ -878,6 +889,30 @@ module.exports = React.createClass({
         );
     },
 
+    _onLazyLoadChanging: async function(enabling) {
+        // don't prevent turning LL off when not supported
+        if (enabling) {
+            const supported = await MatrixClientPeg.get().doesServerSupportLazyLoading();
+            if (!supported) {
+                await new Promise((resolve) => {
+                    const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+                    Modal.createDialog(QuestionDialog, {
+                        title: _t("Lazy loading members not supported"),
+                        description:
+                            <div>
+                         { _t("Lazy loading is not supported by your " +
+                            "current homeserver.") }
+                            </div>,
+                        button: _t("OK"),
+                        onFinished: resolve,
+                    });
+                });
+                return false;
+            }
+        }
+        return true;
+    },
+
     _renderDeactivateAccount: function() {
         return <div>
             <h3>{ _t("Deactivate Account") }</h3>
@@ -887,6 +922,25 @@ module.exports = React.createClass({
                     </AccessibleButton>
                 </div>
         </div>;
+    },
+
+    _renderTermsAndConditionsLinks: function() {
+        if (SdkConfig.get().terms_and_conditions_links) {
+            const tncLinks = [];
+            for (const tncEntry of SdkConfig.get().terms_and_conditions_links) {
+                tncLinks.push(<div key={tncEntry.url}>
+                    <a href={tncEntry.url} rel="noopener" target="_blank">{tncEntry.text}</a>
+                </div>);
+            }
+            return <div>
+                <h3>{ _t("Legal") }</h3>
+                <div className="mx_UserSettings_section">
+                    {tncLinks}
+                </div>
+            </div>;
+        } else {
+            return null;
+        }
     },
 
     _renderClearCache: function() {
@@ -1014,9 +1068,9 @@ module.exports = React.createClass({
     _renderWebRtcDeviceSettings: function() {
         if (this.state.mediaDevices === false) {
             return (
-                <p className="mx_UserSettings_link" onClick={this._requestMediaPermissions}>
+                <AccessibleButton element="p" className="mx_UserSettings_link" onClick={this._requestMediaPermissions}>
                     { _t('Missing Media Permissions, click here to request.') }
-                </p>
+                </AccessibleButton>
             );
         } else if (!this.state.mediaDevices) return;
 
@@ -1183,7 +1237,7 @@ module.exports = React.createClass({
                         />
                     </div>
                     <div className="mx_UserSettings_threepidButton mx_filterFlipColor">
-                        <img src="img/cancel-small.svg" width="14" height="14" alt={_t("Remove")}
+                        <AccessibleButton element="img" src="img/cancel-small.svg" width="14" height="14" alt={_t("Remove")}
                             onClick={onRemoveClick} />
                     </div>
                 </div>
@@ -1208,7 +1262,7 @@ module.exports = React.createClass({
                             onValueChanged={this._onAddEmailEditFinished} />
                     </div>
                     <div className="mx_UserSettings_threepidButton mx_filterFlipColor">
-                         <img src="img/plus.svg" width="14" height="14" alt={_t("Add")} onClick={this._addEmail} />
+                         <AccessibleButton element="img" src="img/plus.svg" width="14" height="14" alt={_t("Add")} onClick={this._addEmail} />
                     </div>
                 </div>
             );
@@ -1246,7 +1300,7 @@ module.exports = React.createClass({
         // If the olmVersion is not defined then either crypto is disabled, or
         // we are using a version old version of olm. We assume the former.
         let olmVersionString = "<not-enabled>";
-        if (olmVersion !== undefined) {
+        if (olmVersion) {
             olmVersionString = `${olmVersion[0]}.${olmVersion[1]}.${olmVersion[2]}`;
         }
 
@@ -1277,13 +1331,13 @@ module.exports = React.createClass({
                     </div>
 
                     <div className="mx_UserSettings_avatarPicker">
-                        <div className="mx_UserSettings_avatarPicker_remove" onClick={this.onAvatarRemoveClick}>
+                        <AccessibleButton className="mx_UserSettings_avatarPicker_remove" onClick={this.onAvatarRemoveClick}>
                             <img src="img/cancel.svg"
                                 width="15" height="15"
                                 className="mx_filterFlipColor"
                                 alt={_t("Remove avatar")}
                                 title={_t("Remove avatar")} />
-                        </div>
+                        </AccessibleButton>
                         <div onClick={this.onAvatarPickerClick} className="mx_UserSettings_avatarPicker_imgContainer">
                             <ChangeAvatar ref="changeAvatar" initialAvatarUrl={avatarUrl}
                                 showUploadSection={false} className="mx_UserSettings_avatarPicker_img" />
@@ -1344,11 +1398,11 @@ module.exports = React.createClass({
                     </div>
                     <div className="mx_UserSettings_advanced">
                         { _t('Access Token:') + ' ' }
-                        <span className="mx_UserSettings_advanced_spoiler"
+                        <AccessibleButton element="span" className="mx_UserSettings_advanced_spoiler"
                                 onClick={this._showSpoiler}
                                 data-spoiler={MatrixClientPeg.get().getAccessToken()}>
                             &lt;{ _t("click to reveal") }&gt;
-                        </span>
+                        </AccessibleButton>
                     </div>
                     <div className="mx_UserSettings_advanced">
                         { _t("Homeserver is") } { MatrixClientPeg.get().getHomeserverUrl() }
@@ -1374,6 +1428,8 @@ module.exports = React.createClass({
                 { this._renderClearCache() }
 
                 { this._renderDeactivateAccount() }
+
+                { this._renderTermsAndConditionsLinks() }
 
                 </GeminiScrollbarWrapper>
             </div>
