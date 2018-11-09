@@ -1482,7 +1482,7 @@ module.exports = React.createClass({
         const TintableSvg = sdk.getComponent("elements.TintableSvg");
         const RoomPreviewBar = sdk.getComponent("rooms.RoomPreviewBar");
         const Loader = sdk.getComponent("elements.Spinner");
-        const TimelinePanel = sdk.getComponent("structures.TimelinePanel");
+        const TimelineNavigationPanel = sdk.getComponent("structures.TimelineNavigationPanel");
         const RoomUpgradeWarningBar = sdk.getComponent("rooms.RoomUpgradeWarningBar");
 
         if (!this.state.room) {
@@ -1775,7 +1775,7 @@ module.exports = React.createClass({
 
         // console.log("ShowUrlPreview for %s is %s", this.state.room.roomId, this.state.showUrlPreview);
         const messagePanel = (
-            <TimelinePanel ref={this._gatherTimelinePanelRef}
+            <TimelineNavigationPanel ref={this._gatherTimelinePanelRef}
                 timelineSet={this.state.room.getUnfilteredTimelineSet()}
                 showReadReceipts={!SettingsStore.getValue('hideReadReceipts')}
                 manageReadReceipts={!this.state.isPeeking}

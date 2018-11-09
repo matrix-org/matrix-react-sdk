@@ -35,9 +35,6 @@ module.exports = React.createClass({
     displayName: 'MessagePanel',
 
     propTypes: {
-        // true to give the component a 'display: none' style.
-        hidden: PropTypes.bool,
-
         // true to show a spinner at the top of the timeline to indicate
         // back-pagination in progress
         backPaginating: PropTypes.bool,
@@ -55,12 +52,6 @@ module.exports = React.createClass({
         // Should we show URL Previews
         showUrlPreview: PropTypes.bool,
 
-        // event after which we should show a read marker
-        readMarkerEventId: PropTypes.string,
-
-        // whether the read marker should be visible
-        readMarkerVisible: PropTypes.bool,
-
         // the userid of our user. This is used to suppress the read marker
         // for pending messages.
         ourUserId: PropTypes.string,
@@ -70,17 +61,6 @@ module.exports = React.createClass({
 
         // whether to show read receipts
         showReadReceipts: PropTypes.bool,
-
-        // true if updates to the event list should cause the scroll panel to
-        // scroll down when we are at the bottom of the window. See ScrollPanel
-        // for more details.
-        stickyBottom: PropTypes.bool,
-
-        // callback which is called when the panel is scrolled.
-        onScroll: PropTypes.func,
-
-        // callback which is called when more content is needed.
-        onFillRequest: PropTypes.func,
 
         // className for the panel
         className: PropTypes.string.isRequired,
@@ -127,113 +107,6 @@ module.exports = React.createClass({
         }
 
         return this.eventNodes[eventId];
-    },
-
-    /* return true if the content is fully scrolled down right now; else false.
-     */
-    isAtBottom: function() {
-        return this.refs.scrollPanel
-            && this.refs.scrollPanel.isAtBottom();
-    },
-
-    /* get the current scroll state. See ScrollPanel.getScrollState for
-     * details.
-     *
-     * returns null if we are not mounted.
-     */
-    getScrollState: function() {
-        if (!this.refs.scrollPanel) { return null; }
-        return this.refs.scrollPanel.getScrollState();
-    },
-
-    // returns one of:
-    //
-    //  null: there is no read marker
-    //  -1: read marker is above the window
-    //   0: read marker is within the window
-    //  +1: read marker is below the window
-    getReadMarkerPosition: function() {
-        const readMarker = this.refs.readMarkerNode;
-        const messageWrapper = this.refs.scrollPanel;
-
-        if (!readMarker || !messageWrapper) {
-            return null;
-        }
-
-        const wrapperRect = ReactDOM.findDOMNode(messageWrapper).getBoundingClientRect();
-        const readMarkerRect = readMarker.getBoundingClientRect();
-
-        // the read-marker pretends to have zero height when it is actually
-        // two pixels high; +2 here to account for that.
-        if (readMarkerRect.bottom + 2 < wrapperRect.top) {
-            return -1;
-        } else if (readMarkerRect.top < wrapperRect.bottom) {
-            return 0;
-        } else {
-            return 1;
-        }
-    },
-
-    /* jump to the top of the content.
-     */
-    scrollToTop: function() {
-        if (this.refs.scrollPanel) {
-            this.refs.scrollPanel.scrollToTop();
-        }
-    },
-
-    /* jump to the bottom of the content.
-     */
-    scrollToBottom: function() {
-        if (this.refs.scrollPanel) {
-            this.refs.scrollPanel.scrollToBottom();
-        }
-    },
-
-    /**
-     * Page up/down.
-     *
-     * @param {number} mult: -1 to page up, +1 to page down
-     */
-    scrollRelative: function(mult) {
-        if (this.refs.scrollPanel) {
-            this.refs.scrollPanel.scrollRelative(mult);
-        }
-    },
-
-    /**
-     * Scroll up/down in response to a scroll key
-     *
-     * @param {KeyboardEvent} ev: the keyboard event to handle
-     */
-    handleScrollKey: function(ev) {
-        if (this.refs.scrollPanel) {
-            this.refs.scrollPanel.handleScrollKey(ev);
-        }
-    },
-
-    /* jump to the given event id.
-     *
-     * offsetBase gives the reference point for the pixelOffset. 0 means the
-     * top of the container, 1 means the bottom, and fractional values mean
-     * somewhere in the middle. If omitted, it defaults to 0.
-     *
-     * pixelOffset gives the number of pixels *above* the offsetBase that the
-     * node (specifically, the bottom of it) will be positioned. If omitted, it
-     * defaults to 0.
-     */
-    scrollToEvent: function(eventId, pixelOffset, offsetBase) {
-        if (this.refs.scrollPanel) {
-            this.refs.scrollPanel.scrollToToken(eventId, pixelOffset, offsetBase);
-        }
-    },
-
-    /* check the scroll state and send out pagination requests if necessary.
-     */
-    checkFillState: function() {
-        if (this.refs.scrollPanel) {
-            this.refs.scrollPanel.checkFillState();
-        }
     },
 
     _isUnmounting: function() {
@@ -622,19 +495,6 @@ module.exports = React.createClass({
         this.eventNodes[eventId] = node;
     },
 
-    // once dynamic content in the events load, make the scrollPanel check the
-    // scroll offsets.
-    _onWidgetLoad: function() {
-        const scrollPanel = this.refs.scrollPanel;
-        if (scrollPanel) {
-            scrollPanel.forceUpdate();
-        }
-    },
-
-    onResize: function() {
-        dis.dispatch({ action: 'timeline_resize' }, true);
-    },
-
     render: function() {
         const ScrollPanel = sdk.getComponent("structures.ScrollPanel");
         const Spinner = sdk.getComponent("elements.Spinner");
@@ -657,17 +517,12 @@ module.exports = React.createClass({
         );
 
         return (
-            <ScrollPanel ref="scrollPanel" className={className}
-                    onScroll={this.props.onScroll}
-                    onResize={this.onResize}
-                    onFillRequest={this.props.onFillRequest}
-                    onUnfillRequest={this.props.onUnfillRequest}
-                    style={style}
-                    stickyBottom={this.props.stickyBottom}>
+            <div className={this.props.className}
+                    style={style}>
                 { topSpinner }
                 { this._getEventTiles() }
                 { bottomSpinner }
-            </ScrollPanel>
+            </div>
         );
     },
 });
