@@ -34,13 +34,15 @@ const Modal = require("../../Modal");
 const UserActivity = require("../../UserActivity");
 import { KeyCode } from '../../Keyboard';
 
+const INITIAL_SIZE = 20;
+
 /*
  * Component which shows the event timeline in a room view.
  *
  * Also responsible for handling and sending read receipts.
  */
-var NonThreadedSection = React.createClass({
-    displayName: 'NonThreadedSection',
+var ThreadedSection = React.createClass({
+    displayName: 'ThreadedSection',
 
     propTypes: {
         // The js-sdk EventTimelineSet object for the timeline sequence we are
@@ -89,38 +91,69 @@ var NonThreadedSection = React.createClass({
         empty: PropTypes.string,
     },
 
+    getInitialState() {
+        return {
+            threadWindow: null,
+        };
+    },
+
+    componentDidMount() {
+        this.componentDidUpdate();
+    },
+
+    componentDidUpdate() {
+        // thread id is part of the key so won't ever update
+        if (!this.state.threadWindow && this.props.thread) {
+            const room = this.props.timelineWindow._timelineSet.room;
+            const threadTimelineSet = room.getThreadTimelineSet(this.props.thread);
+            const opts = {thread: this.props.thread};
+            const threadWindow = new Matrix.TimelineWindow(MatrixClientPeg.get(), threadTimelineSet, opts);
+            this.setState({threadWindow});
+        }
+    },
+
     onFillRequest(backwards) {
-        if (this.refs.timelinePanel) {
-            return this.refs.timelinePanel.onFillRequest(backwards);
+        if (this.refs.mainPanel && this.refs.threadPanel) {
+            this.refs.threadPanel.onFillRequest(backwards);
+            return this.refs.mainPanel.onFillRequest(backwards);
         }
         else {
-            return Promise.reject(new Error("timelinePanel not loaded yet"));
+            return Promise.reject(new Error("mainPanel or threadPanel not loaded yet"));
         }
     },
 
     onUnfillRequest(backwards) {
-        if (this.refs.timelinePanel) {
-            return this.refs.timelinePanel.onUnfillRequest(backwards);
+        if (this.refs.mainPanel) {
+            return this.refs.mainPanel.onUnfillRequest(backwards);
         }
         else {
-            return Promise.reject(new Error("timelinePanel not loaded yet"));
+            return Promise.reject(new Error("mainPanel not loaded yet"));
         }
     },
 
     canPaginate(backwards) {
-        return this.refs.timelinePanel.canPaginate(backwards);
+        return this.refs.mainPanel.canPaginate(backwards) ||
+            this.refs.threadPanel.canPaginate(backwards);
     },
 
     render: function() {
         const TimelinePanel = sdk.getComponent("structures.TimelinePanel");
 
         return (
-            <TimelinePanel
-                ref="timelinePanel"
-                {... this.props}
-            />
+            <div className="mx_ThreadSection">
+                <TimelinePanel
+                    ref="mainPanel"
+                    timelineWindow={this.props.timelineWindow}
+                    {... this.props}
+                />
+                <TimelinePanel
+                    ref="threadPanel"
+                    timelineWindow={this.state.threadWindow}
+                    {... this.props}
+                />
+            </div>
         );
     },
 });
 
-module.exports = NonThreadedSection;
+module.exports = ThreadedSection;

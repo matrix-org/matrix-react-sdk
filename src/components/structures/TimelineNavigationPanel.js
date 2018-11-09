@@ -21,12 +21,15 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import dis from "../../dispatcher";
 import sdk from '../../index';
+import { _t } from '../../languageHandler';
+const Modal = require("../../Modal");
 
 import MatrixClientPeg from '../../MatrixClientPeg';
 
 const Matrix = require("matrix-js-sdk");
 const EventTimeline = Matrix.EventTimeline;
 
+const INITIAL_SIZE = 20;
 
 /* (almost) stateless UI component which builds the event tiles in the room timeline.
  */
@@ -84,7 +87,7 @@ module.exports = React.createClass({
     },
 
     componentWillMount: function() {
-        this._loadTimeline();
+        this._initialLoadPromise = this._initTimeline();
         // the event after which we put a visible unread marker on the last
         // render cycle; null if readMarkerVisible was false or the RM was
         // suppressed (eg because it was at the end of the timeline)
@@ -102,8 +105,9 @@ module.exports = React.createClass({
     },
 
     getInitialState() {
+        this._clearSectionRefs();
         return {
-            section: {}
+            sections: []
         };
     },
 
@@ -232,34 +236,114 @@ module.exports = React.createClass({
         dis.dispatch({ action: 'timeline_resize' }, true);
     },
 
-    _onFillRequest(backwards) {
-        if (this.refs.section) {
-            return this.refs.section.onFillRequest(backwards);
+    async _onFillRequest(backwards) {
+        await this._initialLoadPromise;
+        if (this._sectionRefs.length) {
+            const section = backwards ?
+                this._firstSectionComponent() :
+                this._lastSectionComponent();
+            const result = await section.onFillRequest(backwards);
+            if (typeof result === "object") {
+                // start new section
+                let newSections;
+                if (backwards) {
+                    // prepend section
+                    newSections = [result].concat(this.state.sections);
+                } else {
+                    // append section
+                    newSections = this.state.sections.concat(result);
+                }
+                await new Promise((resolve) => {
+                    this.setState({sections: newSections}, resolve);
+                });
+                return true;
+            } else {
+                return result;
+            }
         } else {
-            return Promise.reject(new Error("section not loaded yet"));
+            throw new Error("sections not loaded yet");
         }
     },
 
     _onUnfillRequest(backwards, scrollToken) {
-        if (this.refs.section) {
-            return this.refs.section.onUnfillRequest(backwards, scrollToken);
+        if (this._sectionRefs.length) {
+            const section = backwards ?
+                this._firstSectionComponent() :
+                this._lastSectionComponent();
+            return section.onUnfillRequest(backwards, scrollToken);
         } else {
-            return Promise.reject(new Error("section not loaded yet"));
+            return Promise.reject(new Error("sections not loaded yet"));
         }
     },
 
     isAtEndOfLiveTimeline() {
-        return this.isAtBottom() && this.refs.section.canPaginate(EventTimeline.FORWARDS);
+        return this.isAtBottom() && this._lastSectionComponent().canPaginate(EventTimeline.FORWARDS);
     },
 
     canJumpToReadMarker() {
         return false;
     },
 
-    _loadTimeline(eventId, pixelOffset, offsetBase) {
-        this.setState({
-            section: {eventId, pixelOffset, offsetBase}
-        });
+    _initTimeline: async function() {
+        const initialEvent = this.props.eventId;
+        const pixelOffset = this.props.eventPixelOffset;
+
+        // if a pixelOffset is given, it is relative to the bottom of the
+        // container. If not, put the event in the middle of the container.
+        let offsetBase = 1;
+        if (pixelOffset == null) {
+            offsetBase = 0.5;
+        }
+
+        const result = await this._loadTimeline(initialEvent, pixelOffset, offsetBase);
+        this._initialLoadPromise = Promise.resolve();
+        return result;
+    },
+
+    async _loadTimeline(eventId, pixelOffset, offsetBase) {
+        const timelineWindow = new Matrix.TimelineWindow(
+            MatrixClientPeg.get(), this.props.timelineSet,
+            {windowLimit: this.props.timelineCap});
+
+        try {
+            await timelineWindow.load(eventId, INITIAL_SIZE);
+
+            this._clearSectionRefs();
+            this.setState({
+                sections: [{timelineWindow}]
+            });
+        } catch(error) {
+            this.setState({timelineLoading: false});
+            console.error(
+                `Error loading timeline panel at ${eventId}: ${error}`,
+            );
+            const msg = error.message ? error.message : JSON.stringify(error);
+            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+
+            let onFinished;
+
+            // if we were given an event ID, then when the user closes the
+            // dialog, let's jump to the end of the timeline. If we weren't,
+            // something has gone badly wrong and rather than causing a loop of
+            // undismissable dialogs, let's just give up.
+            if (eventId) {
+                onFinished = () => {
+                    // go via the dispatcher so that the URL is updated
+                    dis.dispatch({
+                        action: 'view_room',
+                        room_id: this.props.timelineSet.room.roomId,
+                    });
+                };
+            }
+            const message = (error.errcode == 'M_FORBIDDEN')
+                ? _t("Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.")
+                : _t("Tried to load a specific point in this room's timeline, but was unable to find it.");
+            Modal.createTrackedDialog('Failed to load timeline position', '', ErrorDialog, {
+                title: _t("Failed to load timeline position"),
+                description: message,
+                onFinished: onFinished,
+            });
+        }
     },
 
     /**
@@ -288,7 +372,7 @@ module.exports = React.createClass({
         //
         // Otherwise, reload the timeline rather than trying to paginate
         // through all of space-time.
-        if (this.refs.section.canPaginate(EventTimeline.FORWARDS)) {
+        if (this._lastSectionComponent() && this._lastSectionComponent().canPaginate(EventTimeline.FORWARDS)) {
             this._loadTimeline();
         } else {
             if (this.refs.scrollPanel) {
@@ -326,8 +410,25 @@ module.exports = React.createClass({
         this._loadTimeline(this.state.readMarkerEventId, 0, 1/3);
     },
 
+    _collectSection: function(section) {
+        this._sectionRefs[section.props.index] = section;
+    },
+
+    _lastSectionComponent: function() {
+        return this._sectionRefs[this._sectionRefs.length - 1];
+    },
+
+    _firstSectionComponent: function() {
+        return this._sectionRefs[0];
+    },
+
+    _clearSectionRefs: function() {
+        this._sectionRefs = [];
+    },
+
     render: function() {
         const ScrollPanel = sdk.getComponent("structures.ScrollPanel");
+        const ThreadedSection = sdk.getComponent("structures.ThreadedSection");
         const NonThreadedSection = sdk.getComponent("structures.NonThreadedSection");
         const {className, hidden, onScroll, stickyBottom, ... sectionProps} = this.props;
         const style = {};
@@ -346,6 +447,29 @@ module.exports = React.createClass({
         // of paginating our way through the entire history of the room.
         const stickyBottom = !this._timelineWindow.canPaginate(EventTimeline.FORWARDS);
         */
+
+        this.sectionComponents = [];
+        const sectionComponents = this.state.sections.map((s, i) => {
+            let component;
+            if (s.thread) {
+                component = (<ThreadedSection
+                    thread={s.thread}
+                    timelineWindow={s.timelineWindow}
+                    key={`thread/${s.thread}`}
+                    index={i}
+                    ref={this._collectSection}
+                />);
+            } else {
+                component = (<NonThreadedSection
+                    timelineWindow={s.timelineWindow}
+                    key={`mainline/${s.timelineWindow.key}`}
+                    index={i}
+                    ref={this._collectSection}
+                />);
+            }
+            return component;
+        });
+
         return (
             <ScrollPanel ref="scrollPanel" className={className}
                     onScroll={onScroll}
@@ -354,11 +478,7 @@ module.exports = React.createClass({
                     onUnfillRequest={this._onUnfillRequest}
                     style={style}
                     stickyBottom={stickyBottom}>
-                <NonThreadedSection
-                    ref="section"
-                    {... this.state.section}
-                    {... sectionProps}
-                />
+                { sectionComponents }
             </ScrollPanel>
         );
     },
