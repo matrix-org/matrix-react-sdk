@@ -97,17 +97,14 @@ var ThreadedSection = React.createClass({
         };
     },
 
-    componentDidMount() {
-        this.componentDidUpdate();
-    },
-
-    componentDidUpdate() {
+    componentWillMount() {
         // thread id is part of the key so won't ever update
         if (!this.state.threadWindow && this.props.thread) {
             const room = this.props.timelineWindow._timelineSet.room;
             const threadTimelineSet = room.getThreadTimelineSet(this.props.thread);
             const opts = {thread: this.props.thread};
             const threadWindow = new Matrix.TimelineWindow(MatrixClientPeg.get(), threadTimelineSet, opts);
+            threadWindow.loadAsThread();
             this.setState({threadWindow});
         }
     },
