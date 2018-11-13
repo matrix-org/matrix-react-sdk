@@ -102,6 +102,7 @@ var ThreadedSection = React.createClass({
         if (!this.state.threadWindow && this.props.thread) {
             const room = this.props.timelineWindow._timelineSet.room;
             const threadTimelineSet = room.getThreadTimelineSet(this.props.thread);
+            console.log("threadTimelineSet", threadTimelineSet);
             const opts = {thread: this.props.thread};
             const threadWindow = new Matrix.TimelineWindow(MatrixClientPeg.get(), threadTimelineSet, opts);
             threadWindow.loadAsThread();
@@ -137,17 +138,21 @@ var ThreadedSection = React.createClass({
         const TimelinePanel = sdk.getComponent("structures.TimelinePanel");
 
         return (
-            <div className="mx_ThreadSection">
-                <TimelinePanel
-                    ref="mainPanel"
-                    timelineWindow={this.props.timelineWindow}
-                    {... this.props}
-                />
-                <TimelinePanel
-                    ref="threadPanel"
-                    timelineWindow={this.state.threadWindow}
-                    {... this.props}
-                />
+            <div className="mx_ThreadedSection">
+                <div className="mx_ThreadedSection_mainline">
+                    <TimelinePanel
+                        ref="mainPanel"
+                        timelineWindow={this.props.timelineWindow}
+                        className={this.props.className}
+                    />
+                </div>
+                <div className="mx_ThreadedSection_thread">
+                    <TimelinePanel
+                        ref="threadPanel"
+                        timelineWindow={this.state.threadWindow}
+                        className={this.props.className}
+                    />
+                </div>
             </div>
         );
     },
