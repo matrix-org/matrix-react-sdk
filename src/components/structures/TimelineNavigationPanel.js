@@ -105,7 +105,6 @@ module.exports = React.createClass({
     },
 
     getInitialState() {
-        this._clearSectionRefs();
         return {
             sections: []
         };
@@ -238,20 +237,22 @@ module.exports = React.createClass({
 
     async _onFillRequest(backwards) {
         await this._initialLoadPromise;
-        if (this._sectionRefs.length) {
+        if (this.state.sections.length) {
             const section = backwards ?
-                this._firstSectionComponent() :
-                this._lastSectionComponent();
-            const result = await section.onFillRequest(backwards);
+                this._firstSection() :
+                this._lastSection();
+            const result = await section.ref.onFillRequest(backwards);
             if (typeof result === "object") {
+                console.log(`starting a new section after calling child section onFillRequest`, result);
                 // start new section
                 let newSections;
+                const newSection = {model: result};
                 if (backwards) {
                     // prepend section
-                    newSections = [result].concat(this.state.sections);
+                    newSections = [newSection].concat(this.state.sections);
                 } else {
                     // append section
-                    newSections = this.state.sections.concat(result);
+                    newSections = this.state.sections.concat(newSection);
                 }
                 await new Promise((resolve) => {
                     this.setState({sections: newSections}, resolve);
@@ -261,23 +262,23 @@ module.exports = React.createClass({
                 return result;
             }
         } else {
-            throw new Error("sections not loaded yet");
+            return false;
         }
     },
 
     _onUnfillRequest(backwards, scrollToken) {
-        if (this._sectionRefs.length) {
+        if (this.state.sections.length) {
             const section = backwards ?
-                this._firstSectionComponent() :
-                this._lastSectionComponent();
-            return section.onUnfillRequest(backwards, scrollToken);
+                this._firstSection() :
+                this._lastSection();
+            return section.ref.onUnfillRequest(backwards, scrollToken);
         } else {
-            return Promise.reject(new Error("sections not loaded yet"));
+            return Promise.resolve(false);
         }
     },
 
     isAtEndOfLiveTimeline() {
-        return this.isAtBottom() && this._lastSectionComponent().canPaginate(EventTimeline.FORWARDS);
+        return this.isAtBottom() && this._lastSection().model.timelineWindow.canPaginate(EventTimeline.FORWARDS);
     },
 
     canJumpToReadMarker() {
@@ -308,9 +309,8 @@ module.exports = React.createClass({
         try {
             await timelineWindow.load(eventId, INITIAL_SIZE);
 
-            this._clearSectionRefs();
             this.setState({
-                sections: [{timelineWindow}]
+                sections: [{model: {timelineWindow}}]
             });
         } catch(error) {
             this.setState({timelineLoading: false});
@@ -372,7 +372,7 @@ module.exports = React.createClass({
         //
         // Otherwise, reload the timeline rather than trying to paginate
         // through all of space-time.
-        if (this._lastSectionComponent() && this._lastSectionComponent().canPaginate(EventTimeline.FORWARDS)) {
+        if (this._lastSection() && this._lastSection().model.timelineWindow.canPaginate(EventTimeline.FORWARDS)) {
             this._loadTimeline();
         } else {
             if (this.refs.scrollPanel) {
@@ -411,19 +411,18 @@ module.exports = React.createClass({
     },
 
     _collectSection: function(section) {
-        this._sectionRefs[section.props.index] = section;
+        if (section) {
+            this.state.sections[section.props.index].ref = section;
+        }
     },
 
-    _lastSectionComponent: function() {
-        return this._sectionRefs[this._sectionRefs.length - 1];
+    _lastSection: function() {
+        const sections = this.state.sections;
+        return sections[sections.length - 1];
     },
 
-    _firstSectionComponent: function() {
-        return this._sectionRefs[0];
-    },
-
-    _clearSectionRefs: function() {
-        this._sectionRefs = [];
+    _firstSection: function() {
+        return this.state.sections[0];
     },
 
     render: function() {
@@ -449,20 +448,20 @@ module.exports = React.createClass({
         */
 
         this.sectionComponents = [];
-        const sectionComponents = this.state.sections.map((s, i) => {
+        const sectionComponents = this.state.sections.map(({model}, i) => {
             let component;
-            if (s.thread) {
+            if (model.thread) {
                 component = (<ThreadedSection
-                    thread={s.thread}
-                    timelineWindow={s.timelineWindow}
-                    key={`thread/${s.thread}`}
+                    thread={model.thread}
+                    timelineWindow={model.timelineWindow}
+                    key={`thread/${model.thread}`}
                     index={i}
                     ref={this._collectSection}
                 />);
             } else {
                 component = (<NonThreadedSection
-                    timelineWindow={s.timelineWindow}
-                    key={`mainline/${s.timelineWindow.key}`}
+                    timelineWindow={model.timelineWindow}
+                    key={`mainline/${model.timelineWindow.key}`}
                     index={i}
                     ref={this._collectSection}
                 />);
