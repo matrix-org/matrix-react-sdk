@@ -204,20 +204,6 @@ var TimelinePanel = React.createClass({
     },
 
     componentDidUpdate: function(prevProps) {
-        if (prevProps.timelineSet !== this._getTimelineSet()) {
-            // throw new Error("changing timelineSet on a TimelinePanel is not supported");
-
-            // regrettably, this does happen; in particular, when joining a
-            // room with /join. In that case, there are two Rooms in
-            // circulation - one which is created by the MatrixClient.joinRoom
-            // call and used to create the RoomView, and a second which is
-            // created by the sync loop once the room comes back down the /sync
-            // pipe. Once the latter happens, our room is replaced with the new one.
-            //
-            // for now, just warn about this. But we're going to end up paginating
-            // both rooms separately, and it's all bad.
-            console.warn("Replacing timelineSet on a TimelinePanel - confusion may ensue");
-        }
         console.log("TimelinePanel::componentDidUpdate");
         const timelineWindow = this.props.timelineWindow;
         if (prevProps.timelineWindow !== timelineWindow) {
@@ -340,18 +326,18 @@ var TimelinePanel = React.createClass({
         });
 
         if (backwards) {
-            const prevWindow = this.props.timelineWindow.precedingThreadWindow();
+            const prevWindow = await this.props.timelineWindow.precedingThreadWindow();
             if (prevWindow) {
                 return {
-                    thread: prevWindow._start.adjacentThreadId,
+                    thread: this.props.timelineWindow._start.adjacentThreadId, // might be undefined
                     timelineWindow: prevWindow,
                 };
             }
         } else {
-            const nextWindow = this.props.timelineWindow.succeedingThreadWindow();
+            const nextWindow = await this.props.timelineWindow.succeedingThreadWindow();
             if (nextWindow) {
                 return {
-                    thread: nextWindow._end.adjacentThreadId,
+                    thread: this.props.timelineWindow._end.adjacentThreadId, // might be undefined
                     timelineWindow: nextWindow,
                 };
             }
