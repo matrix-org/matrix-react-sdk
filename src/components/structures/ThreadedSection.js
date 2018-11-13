@@ -143,13 +143,16 @@ var ThreadedSection = React.createClass({
                     <TimelinePanel
                         ref="mainPanel"
                         timelineWindow={this.props.timelineWindow}
+                        isLive={this.props.isLive}
                         className={this.props.className}
+                        onNewSection={this.props.onNewSection}
                     />
                 </div>
                 <div className="mx_ThreadedSection_thread">
                     <TimelinePanel
                         ref="threadPanel"
                         timelineWindow={this.state.threadWindow}
+                        isLive={true}
                         className={this.props.className}
                     />
                 </div>

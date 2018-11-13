@@ -425,6 +425,10 @@ module.exports = React.createClass({
         return this.state.sections[0];
     },
 
+    _onNewLiveSection: function(model) {
+        this.setState(this.state.sections.concat({model}));
+    },
+
     render: function() {
         const ScrollPanel = sdk.getComponent("structures.ScrollPanel");
         const ThreadedSection = sdk.getComponent("structures.ThreadedSection");
@@ -450,6 +454,8 @@ module.exports = React.createClass({
         this.sectionComponents = [];
         const sectionComponents = this.state.sections.map(({model}, i) => {
             let component;
+            const isLast = i === (this.state.sections.length - 1);
+            const newLiveSectionCallback = isLast ? this._onNewLiveSection : undefined;
             if (model.thread) {
                 component = (<ThreadedSection
                     thread={model.thread}
@@ -457,6 +463,8 @@ module.exports = React.createClass({
                     key={`thread/${model.thread}`}
                     index={i}
                     ref={this._collectSection}
+                    isLive={isLast}
+                    onNewSection={newLiveSectionCallback}
                 />);
             } else {
                 component = (<NonThreadedSection
@@ -464,6 +472,8 @@ module.exports = React.createClass({
                     key={`mainline/${model.timelineWindow.key}`}
                     index={i}
                     ref={this._collectSection}
+                    isLive={isLast}
+                    onNewSection={newLiveSectionCallback}
                 />);
             }
             return component;

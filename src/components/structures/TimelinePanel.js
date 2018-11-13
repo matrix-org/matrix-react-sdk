@@ -376,7 +376,7 @@ var TimelinePanel = React.createClass({
         }
     },
 
-    onRoomTimeline: function(ev, room, toStartOfTimeline, removed, data) {
+    onRoomTimeline: async function(ev, room, toStartOfTimeline, removed, data) {
         // ignore events for other timeline sets
         if (data.timeline.getTimelineSet() !== this._getTimelineSet()) return;
 
@@ -406,46 +406,53 @@ var TimelinePanel = React.createClass({
         // timeline window.
         //
         // see https://github.com/vector-im/vector-web/issues/1035
-        this.props.timelineWindow.paginate(EventTimeline.FORWARDS, 1, false).done(() => {
-            if (this.unmounted) { return; }
+        await this.props.timelineWindow.paginate(EventTimeline.FORWARDS, 1, false);
 
-            const events = this.props.timelineWindow.getEvents();
-            const lastEv = events[events.length-1];
+        if (this.unmounted) { return; }
 
-            // if we're at the end of the live timeline, append the pending events
-            if (this._getTimelineSet().room && !this.props.timelineWindow.canPaginate(EventTimeline.FORWARDS)) {
-                events.push(...this._getTimelineSet().room.getPendingEvents());
+        const events = this.props.timelineWindow.getEvents();
+        const lastEv = events[events.length-1];
+
+        // if we're at the end of the live timeline, append the pending events
+        if (this._getTimelineSet().room && !this.props.timelineWindow.canPaginate(EventTimeline.FORWARDS)) {
+            events.push(...this._getTimelineSet().room.getPendingEvents());
+        }
+
+        const updatedState = {events: events};
+
+        if (this.props.manageReadMarkers) {
+            // when a new event arrives when the user is not watching the
+            // window, but the window is in its auto-scroll mode, make sure the
+            // read marker is visible.
+            //
+            // We ignore events we have sent ourselves; we don't want to see the
+            // read-marker when a remote echo of an event we have just sent takes
+            // more than the timeout on userCurrentlyActive.
+            //
+            const myUserId = MatrixClientPeg.get().credentials.userId;
+            const sender = ev.sender ? ev.sender.userId : null;
+            var callback = null;
+            if (sender != myUserId && !UserActivity.userCurrentlyActive()) {
+                updatedState.readMarkerVisible = true;
+            } else if (lastEv && this.getReadMarkerPosition() === 0) {
+                // we know we're stuckAtBottom, so we can advance the RM
+                // immediately, to save a later render cycle
+
+                this._setReadMarker(lastEv.getId(), lastEv.getTs(), true);
+                updatedState.readMarkerVisible = false;
+                updatedState.readMarkerEventId = lastEv.getId();
+                callback = this.props.onReadMarkerUpdated;
             }
+        }
 
-            const updatedState = {events: events};
+        this.setState(updatedState, callback);
 
-            if (this.props.manageReadMarkers) {
-                // when a new event arrives when the user is not watching the
-                // window, but the window is in its auto-scroll mode, make sure the
-                // read marker is visible.
-                //
-                // We ignore events we have sent ourselves; we don't want to see the
-                // read-marker when a remote echo of an event we have just sent takes
-                // more than the timeout on userCurrentlyActive.
-                //
-                const myUserId = MatrixClientPeg.get().credentials.userId;
-                const sender = ev.sender ? ev.sender.userId : null;
-                var callback = null;
-                if (sender != myUserId && !UserActivity.userCurrentlyActive()) {
-                    updatedState.readMarkerVisible = true;
-                } else if (lastEv && this.getReadMarkerPosition() === 0) {
-                    // we know we're stuckAtBottom, so we can advance the RM
-                    // immediately, to save a later render cycle
-
-                    this._setReadMarker(lastEv.getId(), lastEv.getTs(), true);
-                    updatedState.readMarkerVisible = false;
-                    updatedState.readMarkerEventId = lastEv.getId();
-                    callback = this.props.onReadMarkerUpdated;
-                }
+        if (this.props.onNewSection) {
+            const nextWindow = await this.props.timelineWindow.succeedingThreadWindow();
+            if (nextWindow) {
+                this.props.onNewSection(nextWindow);
             }
-
-            this.setState(updatedState, callback);
-        });
+        }
     },
 
     onRoomTimelineReset: function(room, timelineSet) {
