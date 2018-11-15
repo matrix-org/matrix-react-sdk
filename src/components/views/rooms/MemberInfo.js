@@ -43,6 +43,7 @@ import RoomViewStore from '../../../stores/RoomViewStore';
 import SdkConfig from '../../../SdkConfig';
 import MergedUsers from "../../../MergedUsers";
 import {User} from 'matrix-js-sdk';
+import * as Avatar from "../../../Avatar";
 
 module.exports = withMatrixClient(React.createClass({
     displayName: 'MemberInfo',
@@ -916,7 +917,8 @@ module.exports = withMatrixClient(React.createClass({
                 </div>;
         }
 
-        const memberName = this.props.member.name;
+        const profile = MergedUsers.getProfileFast(this.props.member.userId, this.props.member.roomId);
+        const memberName = profile.displayname || this.props.member.name;
 
         let presenceState;
         let presenceLastActiveAgo;
@@ -967,12 +969,11 @@ module.exports = withMatrixClient(React.createClass({
             </div>;
         }
 
-        const avatarUrl = this.props.member.getMxcAvatarUrl();
+        const avatarUrl = Avatar.avatarUrlForMember(this.props.member, 800, 800);
         let avatarElement;
         if (avatarUrl) {
-            const httpUrl = this.props.matrixClient.mxcUrlToHttp(avatarUrl, 800, 800);
             avatarElement = <div className="mx_MemberInfo_avatar">
-                <img src={httpUrl} />
+                <img src={avatarUrl} />
             </div>
         }
 
@@ -992,7 +993,7 @@ module.exports = withMatrixClient(React.createClass({
 
                         <div className="mx_MemberInfo_profile">
                             <div className="mx_MemberInfo_profileField">
-                                { this.props.member.userId }
+                                { MergedUsers.getParent(this.props.member.userId) }
                             </div>
                             { roomMemberDetails }
                         </div>
