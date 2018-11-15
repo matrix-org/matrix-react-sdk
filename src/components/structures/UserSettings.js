@@ -685,7 +685,6 @@ module.exports = React.createClass({
         // Used for displaying ascii-representation of current keys
         // in the UI
         listenKeydown = function(event) {
-            // TODO: Show RightShift and things
             const key = self._translateKeybinding(event.code);
             const index = keyAscii.indexOf(key);
             if (index === -1) {
@@ -804,7 +803,6 @@ module.exports = React.createClass({
             PushToTalk.enable(currentPTTState.keybinding);
         } else {
             // Disable push to talk
-            console.log("Disabling push to talk...")
 
             this.setState({pushToTalkEnabled: false});
             currentPTTState.enabled = false;

@@ -35,7 +35,6 @@ const OUTBOUND_API_NAME = 'toWidget';
 
 export default class WidgetMessaging {
     constructor(widgetId, widgetUrl, target) {
-        console.log("I'm alive! My URL is:", widgetUrl)
         this.widgetId = widgetId;
         this.widgetUrl = widgetUrl;
         this.target = target;

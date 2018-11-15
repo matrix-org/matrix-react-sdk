@@ -182,5 +182,4 @@ export default class PersistedElement extends React.Component {
 
         return <div ref={this.collectChildContainer}></div>;
     }
-
 }
