@@ -21,6 +21,7 @@ import { _t } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
 import dis from '../../../dispatcher';
 const MatrixClientPeg = require("../../../MatrixClientPeg");
+const MergedUsers = require("../../../MergedUsers");
 const sdk = require('../../../index');
 const rate_limited_func = require('../../../ratelimitedfunc');
 const CallHandler = require("../../../CallHandler");
@@ -58,6 +59,7 @@ module.exports = React.createClass({
         if (enablePresenceByHsUrl && enablePresenceByHsUrl[hsUrl] !== undefined) {
             this._showPresence = enablePresenceByHsUrl[hsUrl];
         }
+        this.dispatcherRef = dis.register(this.onAction);
     },
 
     _listenForMembersChanges: function() {
@@ -86,6 +88,8 @@ module.exports = React.createClass({
 
         // cancel any pending calls to the rate_limited_funcs
         this._updateList.cancelPendingCall();
+
+        dis.unregister(this.dispatcherRef);
     },
 
     /**
@@ -180,6 +184,11 @@ module.exports = React.createClass({
         }
     },
 
+    onAction(payload) {
+        if (payload.action !== "merged_user_updated") return;
+        this._updateList();
+    },
+
     _updateList: new rate_limited_func(function() {
         // console.log("Updating memberlist");
         const newState = {
@@ -224,7 +233,7 @@ module.exports = React.createClass({
             ) && (
                 !ConferenceHandler ||
                 (ConferenceHandler && !ConferenceHandler.isConferenceUser(m.userId))
-            );
+            ) && !MergedUsers.isChild(m.userId);
         });
         filteredAndSortedMembers.sort(this.memberSort);
         return filteredAndSortedMembers;

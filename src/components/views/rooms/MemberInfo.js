@@ -41,6 +41,8 @@ import withMatrixClient from '../../../wrappers/withMatrixClient';
 import AccessibleButton from '../elements/AccessibleButton';
 import RoomViewStore from '../../../stores/RoomViewStore';
 import SdkConfig from '../../../SdkConfig';
+import MergedUsers from "../../../MergedUsers";
+import {User} from 'matrix-js-sdk';
 
 module.exports = withMatrixClient(React.createClass({
     displayName: 'MemberInfo',
@@ -89,6 +91,7 @@ module.exports = withMatrixClient(React.createClass({
     },
 
     componentDidMount: function() {
+        this.dispatcherRef = dis.register(this.onAction);
         this._updateStateForNewMember(this.props.member);
     },
 
@@ -115,6 +118,7 @@ module.exports = withMatrixClient(React.createClass({
         if (this._cancelDeviceList) {
             this._cancelDeviceList();
         }
+        dis.unregister(this.dispatcherRef);
     },
 
     _checkIgnoreState: function() {
@@ -197,6 +201,13 @@ module.exports = withMatrixClient(React.createClass({
         if (ev.getType() === 'm.direct') {
             this.forceUpdate();
         }
+    },
+
+    onAction: function(payload) {
+        if (payload.action !== "merged_user_updated" || payload.parentUserId !== this.props.member.userId) {
+            return; // not interested
+        }
+        this.forceUpdate();
     },
 
     _updateStateForNewMember: function(member) {
@@ -659,6 +670,34 @@ module.exports = withMatrixClient(React.createClass({
         });
     },
 
+    onUserAliasClick: function(aliasUserId) {
+        const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
+        Modal.createTrackedDialog('share room member dialog', '', ShareDialog, {
+            target: new User(aliasUserId),
+        });
+    },
+
+    _renderChildAccounts: function() {
+        const children = MergedUsers.getChildren(this.props.member.userId);
+        const childLinks = children.map((c) => {
+            return (
+                <div className="mx_MemberInfo_field mx_AccessibleButton" role="button"
+                    onClick={() => this.onUserAliasClick(c)} key={c}>
+                    { c }
+                </div>
+            );
+        });
+
+        return (
+            <div>
+                <h3>{ _t("Aliases") }</h3>
+                <div className="mx_MemberInfo_buttons">
+                    { childLinks }
+                </div>
+            </div>
+        );
+    },
+
     _renderUserOptions: function() {
         const cli = this.props.matrixClient;
         const member = this.props.member;
@@ -960,6 +999,8 @@ module.exports = withMatrixClient(React.createClass({
                     </div>
                     <GeminiScrollbarWrapper autoshow={true} className="mx_MemberInfo_scrollContainer">
                         <div className="mx_MemberInfo_container">
+                            { this._renderChildAccounts() }
+
                             { this._renderUserOptions() }
 
                             { adminTools }
