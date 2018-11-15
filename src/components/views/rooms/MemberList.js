@@ -227,14 +227,16 @@ module.exports = React.createClass({
         const ConferenceHandler = CallHandler.getConferenceHandler();
 
         const allMembers = this.getMembersWithUser();
-        const filteredAndSortedMembers = allMembers.filter((m) => {
+        const parentMembers = MergedUsers.getEffectiveParents(allMembers.map((m) => [m.userId, m]));
+        const filteredAndSortedMembers = parentMembers.filter((m) => {
             return (
                 m.membership === 'join' || m.membership === 'invite'
             ) && (
                 !ConferenceHandler ||
                 (ConferenceHandler && !ConferenceHandler.isConferenceUser(m.userId))
-            ) && !MergedUsers.isChild(m.userId);
+            );
         });
+
         filteredAndSortedMembers.sort(this.memberSort);
         return filteredAndSortedMembers;
     },

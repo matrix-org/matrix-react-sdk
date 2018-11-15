@@ -66,6 +66,48 @@ class MergedUsers {
         return !this.isChild(userId);
     }
 
+    /**
+     * Determines the users that should be considered the parent in a
+     * given set of objects. This is useful for cases like the member
+     * list where the parent user may not be a member however a child
+     * account is. This will return the first child account found if
+     * there is no parent in the list.
+     * @param {[[string,object]]} tuples An array of [userId, object]
+     * where the object can be anything you like. The userId (index 0)
+     * will be used to determine which object to consider the parent.
+     * @return {[object]} The objects from the tuples for which the
+     * accompanying user is considered a parent.
+     */
+    getEffectiveParents(tuples) {
+        const parentIds = [];
+        const parentObjects = [];
+
+        // First pass: identify parents
+        for (const tuple of tuples) {
+            const userId = tuple[0];
+            const obj = tuple[1];
+
+            if (this.isParent(userId)) {
+                parentIds.push(userId);
+                parentObjects.push(obj);
+            }
+        }
+
+        // Second pass: find all the children we missed
+        for (const tuple of tuples) {
+            const userId = tuple[0];
+            const obj = tuple[1];
+
+            if (this.isChildOf(userId, parentIds)) continue;
+
+            parentIds.push(userId);
+            parentObjects.push(obj);
+        }
+
+        // Return just the objects
+        return parentObjects;
+    }
+
     getChildren(userId) {
         if (!this.isParent(userId)) return [];
         return this._localpartCache[this._getLocalpart(userId)].childrenUserIds;
