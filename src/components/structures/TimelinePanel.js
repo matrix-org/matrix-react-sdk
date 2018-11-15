@@ -450,7 +450,10 @@ var TimelinePanel = React.createClass({
         if (this.props.onNewSection) {
             const nextWindow = await this.props.timelineWindow.succeedingThreadWindow();
             if (nextWindow) {
-                this.props.onNewSection(nextWindow);
+                this.props.onNewSection({
+                    thread: this.props.timelineWindow._end.adjacentThreadId, // might be undefined
+                    timelineWindow: nextWindow,
+                });
             }
         }
     },

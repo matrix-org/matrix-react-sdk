@@ -35,9 +35,16 @@ module.exports = React.createClass({
     render: function() {
         const id = this.props.mxEvent.getContent().thread_id;
         const text = this.props.mxEvent.getType() === "m.thread.start" ?
-            `Start of thread ${id}` :
+            `Connection lost, starting thread ${id}...` :
             `End of thread ${id}`;
-        const style = {border: "1px solid red", padding: "10px"};
+        const style = {
+            "marginLeft": "-78px",
+            "border": "1px solid #fae4e7",
+            "color": "#e66e7a",
+            "padding": "10px",
+            "background": "#fffbfc",
+            "borderRadius": "8px",
+        };
         return <div style={style}>{text}</div>
     },
 });

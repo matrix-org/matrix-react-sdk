@@ -407,6 +407,7 @@ module.exports = {
      * @return {Promise} Resolves when set up.
      */
     init: function() {
+        return Promise.resolve();
         if (global.mx_rage_initPromise) {
             return global.mx_rage_initPromise;
         }
