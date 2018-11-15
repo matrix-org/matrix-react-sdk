@@ -153,6 +153,8 @@ class MergedUsers {
         if (roomId) {
             this._profileCache[userId].rooms[roomId] = profile;
         } else this._profileCache[userId].global = profile;
+
+        dis.dispatch({action: "merged_user_profile_updated", userId: userId});
     }
 
     getProfileFast(userId, roomId) {

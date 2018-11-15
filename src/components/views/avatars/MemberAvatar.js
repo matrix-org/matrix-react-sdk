@@ -20,6 +20,7 @@ import MergedUsers from "../../../MergedUsers";
 
 const React = require('react');
 import PropTypes from 'prop-types';
+import dis from "../../../dispatcher";
 const Avatar = require('../../../Avatar');
 const sdk = require("../../../index");
 const dispatcher = require("../../../dispatcher");
@@ -53,8 +54,28 @@ module.exports = React.createClass({
         return this._getState(this.props);
     },
 
+    componentWillMount: function() {
+        this.dispatcherRef = dis.register(this.onAction);
+    },
+
+    componentWillUnmount: function() {
+        dis.unregister(this.dispatcherRef);
+    },
+
     componentWillReceiveProps: function(nextProps) {
         this.setState(this._getState(nextProps));
+    },
+
+    onAction: function(payload) {
+        if (payload.action === "merged_user_updated") {
+            if (MergedUsers.isChildOf(this.props.member.userId, payload.children)) {
+                this.setState(this._getState(this.props))
+            }
+        } else if (payload.action === "merged_user_profile_updated") {
+            if (MergedUsers.isChildOf(this.props.member.userId, [payload.userId])) {
+                this.setState(this._getState(this.props))
+            }
+        }
     },
 
     _getState: function(props) {
