@@ -16,6 +16,8 @@ limitations under the License.
 
 'use strict';
 
+import MergedUsers from "../../../MergedUsers";
+
 const React = require('react');
 import PropTypes from 'prop-types';
 const Avatar = require('../../../Avatar');
@@ -59,16 +61,17 @@ module.exports = React.createClass({
         if (props.member) {
             return {
                 name: props.member.name,
-                title: props.title || props.member.userId,
+                title: props.title || MergedUsers.getParent(props.member.userId),
                 imageUrl: Avatar.avatarUrlForMember(props.member,
                                              props.width,
                                              props.height,
                                              props.resizeMethod),
             };
         } else if (props.fallbackUserId) {
+            const userId = MergedUsers.getParent(props.fallbackUserId);
             return {
-                name: props.fallbackUserId,
-                title: props.fallbackUserId,
+                name: userId,
+                title: userId,
             };
         } else {
             console.error("MemberAvatar called somehow with null member or fallbackUserId");
@@ -79,7 +82,7 @@ module.exports = React.createClass({
         const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
 
         let {member, fallbackUserId, onClick, viewUserOnClick, ...otherProps} = this.props;
-        const userId = member ? member.userId : fallbackUserId;
+        const userId = MergedUsers.getParent(member ? member.userId : fallbackUserId);
 
         if (viewUserOnClick) {
             onClick = () => {
