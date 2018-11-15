@@ -80,8 +80,9 @@ module.exports = React.createClass({
 
     _getState: function(props) {
         if (props.member) {
+            const profile = MergedUsers.getProfileOf(props.member);
             return {
-                name: props.member.name,
+                name: profile.displayname,
                 title: props.title || MergedUsers.getParent(props.member.userId),
                 imageUrl: Avatar.avatarUrlForMember(props.member,
                                              props.width,

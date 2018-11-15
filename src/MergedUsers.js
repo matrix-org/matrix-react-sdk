@@ -157,6 +157,23 @@ class MergedUsers {
         dis.dispatch({action: "merged_user_profile_updated", userId: userId});
     }
 
+    getProfileOf(roomMember) {
+        const userId = this.getParent(roomMember.userId);
+        const fastProfile = this.getProfileFast(userId, roomMember.roomId);
+        if (fastProfile && (fastProfile.displayname || fastProfile.avatar_url)) return fastProfile;
+
+        const room = MatrixClientPeg.get().getRoom(roomMember.roomId);
+        const membership = room.currentState.getStateEvents("m.room.member", userId);
+        if (membership && membership.getContent()) {
+            return membership.getContent();
+        }
+
+        return {
+            displayname: roomMember.name,
+            avatar_url: roomMember.getMxcAvatarUrl(),
+        };
+    }
+
     getProfileFast(userId, roomId) {
         this.trackUser(userId);
 

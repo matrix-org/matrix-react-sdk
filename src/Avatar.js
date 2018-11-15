@@ -21,7 +21,7 @@ import MergedUsers from "./MergedUsers";
 
 module.exports = {
     avatarUrlForMember: function(member, width, height, resizeMethod) {
-        const profile = MergedUsers.getProfileFast(member.userId, member.roomId);
+        const profile = MergedUsers.getProfileOf(member);
 
         const rawUrl = profile.avatar_url || member.getMxcAvatarUrl();
         const baseUrl = MatrixClientPeg.get().getHomeserverUrl();
