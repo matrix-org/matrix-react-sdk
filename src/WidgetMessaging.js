@@ -35,6 +35,7 @@ const OUTBOUND_API_NAME = 'toWidget';
 
 export default class WidgetMessaging {
     constructor(widgetId, widgetUrl, target) {
+        console.log("I'm alive! My URL is:", widgetUrl)
         this.widgetId = widgetId;
         this.widgetUrl = widgetUrl;
         this.target = target;
@@ -94,6 +95,45 @@ export default class WidgetMessaging {
                 console.warn('Got capabilities for', this.widgetId, response.capabilities);
                 return response.capabilities;
             });
+    }
+
+    /**
+     * Toggle Jitsi Audio Mute
+     * @return {Promise} To be resolved when action completed
+     */
+    toggleJitsiAudio() {
+        return this.messageToWidget({
+            api: OUTBOUND_API_NAME,
+            action: "audioMuteToggle",
+        }).then((response) => {
+            return response.success;
+        });
+    }
+
+    /**
+     * Jitsi Audio Mute
+     * @return {Promise} To be resolved when action completed
+     */
+    muteJitsiAudio() {
+        return this.messageToWidget({
+            api: OUTBOUND_API_NAME,
+            action: "audioMute",
+        }).then((response) => {
+            return response.success;
+        });
+    }
+
+    /**
+     * Jitsi Audio Unmute
+     * @return {Promise} To be resolved when action completed
+     */
+    unmuteJitsiAudio() {
+        return this.messageToWidget({
+            api: OUTBOUND_API_NAME,
+            action: "audioUnmute",
+        }).then((response) => {
+            return response.success;
+        });
     }
 
     sendVisibility(visible) {

@@ -17,8 +17,10 @@ limitations under the License.
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-
 import ResizeObserver from 'resize-observer-polyfill';
+import SettingsStore from '../../../settings/SettingsStore';
+
+import * as PushToTalk from '../../../PushToTalk';
 
 import dis from '../../../dispatcher';
 
@@ -112,6 +114,13 @@ export default class PersistedElement extends React.Component {
     }
 
     componentDidMount() {
+        // Start Push-To-Talk service when Jitsi widget is mounted
+        // TODO: This seems quite hacky - is there a better way to
+        // check if this is a Jitsi vs. StickerPicker widget?
+        if (this.props.persistKey.includes('jitsi') && SettingsStore.getValue('pushToTalk').enabled) {
+            PushToTalk.enable(SettingsStore.getValue('pushToTalk').keybinding);
+        }
+
         this.updateChild();
     }
 
@@ -124,6 +133,11 @@ export default class PersistedElement extends React.Component {
         this.resizeObserver.disconnect();
         window.removeEventListener('resize', this._repositionChild);
         dis.unregister(this._dispatcherRef);
+
+        // Stop Push-To-Talk service when Jitsi widget is unmounted
+        if (this.props.persistKey.includes('jitsi') && SettingsStore.getValue('pushToTalk').enabled) {
+            PushToTalk.disable();
+        }
     }
 
     _onAction(payload) {
@@ -168,4 +182,5 @@ export default class PersistedElement extends React.Component {
 
         return <div ref={this.collectChildContainer}></div>;
     }
+
 }
