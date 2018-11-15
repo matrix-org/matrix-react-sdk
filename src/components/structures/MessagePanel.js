@@ -25,6 +25,7 @@ import dis from "../../dispatcher";
 import sdk from '../../index';
 
 import MatrixClientPeg from '../../MatrixClientPeg';
+import MergeUsers from "../../MergedUsers";
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = ['m.sticker', 'm.room.message'];
@@ -464,7 +465,8 @@ module.exports = React.createClass({
 
         // if there is a previous event and it has the same sender as this event
         // and the types are the same/is in continuedTypes and the time between them is <= CONTINUATION_MAX_INTERVAL
-        if (prevEvent !== null && prevEvent.sender && mxEv.sender && mxEv.sender.userId === prevEvent.sender.userId &&
+        if (prevEvent !== null && prevEvent.sender && mxEv.sender &&
+            MergeUsers.getParent(mxEv.sender.userId) === MergeUsers.getParent(prevEvent.sender.userId) &&
             (mxEv.getType() === prevEvent.getType() || eventTypeContinues) &&
             (mxEv.getTs() - prevEvent.getTs() <= CONTINUATION_MAX_INTERVAL)) {
             continuation = true;
