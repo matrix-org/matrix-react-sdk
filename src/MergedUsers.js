@@ -42,6 +42,7 @@ class MergedUsers {
                 console.log("Adding " + userId + " as a child for " + parent);
                 children.push(userId);
                 dis.dispatch({action: "merged_user_updated", parentUserId: parent, children: children});
+                dis.dispatch({action: "merged_user_general_update", namespaceUserId: userId});
             }
             return;
         }
@@ -64,6 +65,7 @@ class MergedUsers {
                 childrenUserIds: children,
             };
             dis.dispatch({action: "merged_user_updated", parentUserId: parent, children: children});
+            dis.dispatch({action: "merged_user_general_update", namespaceUserId: userId});
         } catch (e) {
             console.error("Non-fatal error getting linked accounts for " + userId);
             console.error(e);
@@ -155,6 +157,7 @@ class MergedUsers {
         } else this._profileCache[userId].global = profile;
 
         dis.dispatch({action: "merged_user_profile_updated", userId: userId});
+        dis.dispatch({action: "merged_user_general_update", namespaceUserId: userId});
     }
 
     getProfileOf(roomMember) {
