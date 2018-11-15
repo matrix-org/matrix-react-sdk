@@ -17,29 +17,47 @@ limitations under the License.
 'use strict';
 import {ContentRepo} from 'matrix-js-sdk';
 import MatrixClientPeg from './MatrixClientPeg';
+import MergedUsers from "./MergedUsers";
 
 module.exports = {
     avatarUrlForMember: function(member, width, height, resizeMethod) {
-        let url = member.getAvatarUrl(
-            MatrixClientPeg.get().getHomeserverUrl(),
-            Math.floor(width * window.devicePixelRatio),
-            Math.floor(height * window.devicePixelRatio),
-            resizeMethod,
-            false,
-            false,
+        const profile = MergedUsers.getProfileFast(member.userId, member.roomId);
+
+        const rawUrl = profile.avatar_url || member.getMxcAvatarUrl();
+        const baseUrl = MatrixClientPeg.get().getHomeserverUrl();
+        width = Math.floor(width * window.devicePixelRatio);
+        height = Math.floor(height * window.devicePixelRatio);
+
+        let url = !rawUrl ? null : ContentRepo.getHttpUriForMxc(
+            baseUrl, rawUrl, width, height, resizeMethod, false,
         );
+
         if (!url) {
             // member can be null here currently since on invites, the JS SDK
             // does not have enough info to build a RoomMember object for
             // the inviter.
-            url = this.defaultAvatarUrlForString(member ? member.userId : '');
+            url = this.defaultAvatarUrlForString(member ? MergedUsers.getParent(member.userId) : '');
         }
         return url;
     },
 
     avatarUrlForUser: function(user, width, height, resizeMethod) {
+        console.trace(user);
         const url = ContentRepo.getHttpUriForMxc(
             MatrixClientPeg.get().getHomeserverUrl(), user.avatarUrl,
+            Math.floor(width * window.devicePixelRatio),
+            Math.floor(height * window.devicePixelRatio),
+            resizeMethod,
+        );
+        if (!url || url.length === 0) {
+            return null;
+        }
+        return url;
+    },
+
+    avatarUrlForMxc: function(mxc, width, height, resizeMethod) {
+        const url = ContentRepo.getHttpUriForMxc(
+            MatrixClientPeg.get().getHomeserverUrl(), mxc,
             Math.floor(width * window.devicePixelRatio),
             Math.floor(height * window.devicePixelRatio),
             resizeMethod,
