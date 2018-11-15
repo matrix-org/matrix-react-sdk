@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import SettingsStore from "./settings/SettingsStore";
+
 const MatrixClientPeg = require("./MatrixClientPeg");
 const dis = require("./dispatcher");
 
@@ -29,6 +31,8 @@ class MergedUsers {
     }
 
     async trackUser(userId) {
+        if (!SettingsStore.getValue("mergeUsersByLocalpart")) return;
+
         const localpart = this._getLocalpart(userId);
         if (this._localpartCache[localpart]) {
             // We already have a parent, so just append a child if we need to
@@ -170,7 +174,12 @@ class MergedUsers {
 
     async getProfile(userId, roomId) {
         const client = MatrixClientPeg.get();
-        if (!client) return null; // We're just not ready
+        if (!client) return {}; // We're just not ready
+
+        if (!SettingsStore.getValue("mergeUsersByLocalpart")) {
+            // HACK: We don't bother checking the roomId here
+            return client.getProfileInfo(userId);
+        }
 
         // Wait for the tracking to complete because we actually want this to be
         // accurate.

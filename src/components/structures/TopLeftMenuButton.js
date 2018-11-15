@@ -45,7 +45,8 @@ export default class TopLeftMenuButton extends React.Component {
 
     async _getProfileInfo() {
         const cli = MatrixClientPeg.get();
-        const profileInfo = await MergedUsers.getProfile(cli.getUserId());
+        const userId = cli.getUserId();
+        const profileInfo = await MergedUsers.getProfile(userId);
         const avatarUrl = Avatar.avatarUrlForMxc(
             profileInfo.avatar_url, AVATAR_SIZE, AVATAR_SIZE, "crop");
 
