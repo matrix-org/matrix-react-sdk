@@ -26,7 +26,6 @@ class MergedUsers {
 
     // We track which localparts we see and their associated parents.
     _localpartCache = {}; // [localpart] => {parentUserId, childrenUserIds}
-    _noProfileCache = []; // list of localparts without profiles
     _profileCache = {}; // [user] => {global: profile, rooms: [roomId] => profile}
 
     constructor() {
@@ -39,7 +38,6 @@ class MergedUsers {
         localStorage.setItem("mx_merged_users", JSON.stringify({
             localparts: this._localpartCache,
             profiles: this._profileCache,
-            noProfiles: this._noProfileCache,
         }));
     }
 
@@ -51,7 +49,6 @@ class MergedUsers {
                 const container = JSON.parse(containerStr);
                 if (container.localparts) this._localpartCache = container.localparts;
                 if (container.profiles) this._profileCache = container.profiles;
-                if (container.noProfiles) this._noProfileCache = container.noProfiles;
             }
         }catch (e) {
             console.error("Error loading MergedUsers caches");
@@ -88,14 +85,9 @@ class MergedUsers {
             return;
         }
 
-        if (this._noProfileCache.includes(localpart)) {
-            return; // skip the lookup because it already failed at least once.
-        }
-
         try {
             const state = await this._getLinkedState(userId);
             if (!state || !state["parent"]) {
-                if (!this._noProfileCache.includes(localpart)) this._noProfileCache.push(localpart);
                 return; // Nothing to do: the user is the parent
             }
 
@@ -110,7 +102,6 @@ class MergedUsers {
         } catch (e) {
             console.error("Non-fatal error getting linked accounts for " + userId);
             console.error(e);
-            if (!this._noProfileCache.includes(localpart)) this._noProfileCache.push(localpart);
         }
     }
 
