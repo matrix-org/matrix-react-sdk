@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import MatrixClientPeg from "./MatrixClientPeg";
+import MergedUsers from "./MergedUsers";
 
 export const host = "matrix.to";
 export const baseUrl = `https://${host}`;
@@ -35,7 +36,7 @@ export function makeEventPermalink(roomId, eventId) {
 }
 
 export function makeUserPermalink(userId) {
-    return `${baseUrl}/#/${userId}`;
+    return `${baseUrl}/#/${MergedUsers.getParent(userId)}`;
 }
 
 export function makeRoomPermalink(roomId) {
