@@ -727,6 +727,7 @@ module.exports = withMatrixClient(React.createClass({
                             { this._renderE2EPadlock() }
                             { ReplyThread.makeThread(this.props.mxEvent, this.props.onWidgetLoad, 'replyThread') }
                             <EventTileType ref="tile"
+                                           threadSet={this.props.threadSet}
                                            mxEvent={this.props.mxEvent}
                                            highlights={this.props.highlights}
                                            highlightLink={this.props.highlightLink}

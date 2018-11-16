@@ -46,6 +46,44 @@ if (DEBUG) {
     var debuglog = function() {};
 }
 
+
+
+class ThreadSet {
+    constructor() {
+        this._threadViews = [];
+    }
+
+    backPaginateFirst() {
+        if (this._threadViews.length) {
+            return this._threadViews[0].backPaginate();
+        }
+        return Promise.resolve();
+    }
+
+    add(threadEventView) {
+        if (this._threadViews.length) {
+            const first = this._threadViews[0];
+            const messagePanelContainer = first.layout.threadNode.parentElement;
+            let sibling = messagePanelContainer.firstElementChild;
+
+            const newThreadNode = threadEventView.layout.threadNode;
+            const currentFirstThreadNode = first.layout.threadNode;
+
+            while (sibling && sibling !== newThreadNode && sibling !== currentFirstThreadNode) {
+                sibling = sibling.nextElementSibling;
+            }
+            const isFirst = sibling === newThreadNode;
+            if (isFirst) {
+                this._threadViews.splice(0, 0, threadEventView);
+            } else {
+                this._threadViews.push(threadEventView);
+            }
+        } else {
+            this._threadViews.push(threadEventView);
+        }
+    }
+}
+
 /*
  * Component which shows the event timeline in a room view.
  *
@@ -102,7 +140,6 @@ var TimelinePanel = React.createClass({
 
         // placeholder text to use if the timeline is empty
         empty: PropTypes.string,
-        isThread: PropTypes.bool,
     },
 
     statics: {
@@ -123,6 +160,10 @@ var TimelinePanel = React.createClass({
         // XXX: we could track RM per TimelineSet rather than per Room.
         // but for now we just do it per room for simplicity.
         let initialReadMarker = null;
+        // root timeline?
+        if (!this.props.timelineSet.threadId) {
+            this._threadSet = new ThreadSet();
+        }
         if (this.props.manageReadMarkers) {
             const readmarker = this.props.timelineSet.room.getAccountData('m.fully_read');
             if (readmarker) {
@@ -354,6 +395,13 @@ var TimelinePanel = React.createClass({
                     resolve(r);
                 });
             });
+        }).then((result) => {
+            if (this._threadSet && backwards) {
+                setTimeout(() => {
+                    this._threadSet.backPaginateFirst();
+                }, 500);
+            }
+            return result;
         });
     },
 
@@ -886,7 +934,6 @@ var TimelinePanel = React.createClass({
         this._timelineWindow = new Matrix.TimelineWindow(
             MatrixClientPeg.get(), this.props.timelineSet,
             {windowLimit: this.props.timelineCap});
-
         const onLoaded = () => {
             this._reloadEvents();
 
@@ -1174,7 +1221,7 @@ var TimelinePanel = React.createClass({
                           alwaysShowTimestamps={this.state.alwaysShowTimestamps}
                           className={this.props.className}
                           tileShape={this.props.tileShape}
-                          isThread={this.props.isThread}
+                          threadSet={this._threadSet}
             />
         );
     },

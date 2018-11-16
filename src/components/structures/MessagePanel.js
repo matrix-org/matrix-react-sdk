@@ -527,7 +527,8 @@ module.exports = React.createClass({
                         eventSendStatus={mxEv.status}
                         tileShape={this.props.tileShape}
                         isTwelveHour={this.props.isTwelveHour}
-                        last={last} isSelectedEvent={highlight} />
+                        last={last} isSelectedEvent={highlight}
+                        threadSet={this.props.threadSet} />
                 </li>,
         );
 
@@ -657,8 +658,8 @@ module.exports = React.createClass({
                 "mx_MessagePanel_alwaysShowTimestamps": this.props.alwaysShowTimestamps,
             },
         );
-
-        if (this.props.isThread) {
+        // only the root message panel has access to the thread set
+        if (!this.props.threadSet) {
             const tiles = this._getEventTiles();
             // console.log(`rerendering thread message panel with ${tiles.length} event tiles`);
             return (

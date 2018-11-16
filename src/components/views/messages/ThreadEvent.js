@@ -55,8 +55,11 @@ class ThreadLayout {
 
         this.topResizedNode = sibling;
     }
-}
 
+    shouldBackPaginate() {
+        return this.timelineNode.offsetHeight < this.threadNode.offsetTop;
+    }
+}
 
 const ThreadEvent = React.createClass({
     displayName: 'ThreadEvent',
@@ -64,6 +67,16 @@ const ThreadEvent = React.createClass({
     propTypes: {
         /* the MatrixEvent to show */
         mxEvent: PropTypes.object.isRequired,
+    },
+
+    async backPaginate() {
+        console.log("back paginating thread " + ThreadEvent.getThreadId(this.props.mxEvent));
+        let mayHaveMoreEvents = true;
+        while(mayHaveMoreEvents && this.layout.shouldBackPaginate()) {
+            mayHaveMoreEvents = await this.refs.timeline.onMessageListFillRequest(true);
+        }
+        await new Promise(resolve => setTimeout(resolve, 500));
+        this.layout.update();
     },
 
     render() {
@@ -76,12 +89,12 @@ const ThreadEvent = React.createClass({
         return (<div className="mx_ThreadEvent" ref="root">
             <div className="mx_ThreadEvent_timelineContainer">
                 <TimelinePanel
+                    ref="timeline"
                     className="mx_ThreadEvent_timeline"
                     timelineSet={thread}
                     showReadReceipts={false}
                     manageReadReceipts={false}
                     manageReadMarkers={false}
-                    isThread={true}
                 />
             </div>
             <div className="mx_ThreadEvent_marker">
@@ -90,11 +103,14 @@ const ThreadEvent = React.createClass({
         </div>);
     },
 
-    componentDidMount() {
+    async componentDidMount() {
         const eventTileRoot = this.refs.root.parentElement.parentElement.parentElement;
         const threadTimeline = eventTileRoot.querySelector(".mx_ThreadEvent_timeline");
         this.layout = new ThreadLayout(eventTileRoot, threadTimeline);
-        this.layout.update();
+        await this.backPaginate();
+        if (this.props.threadSet) {
+            this.props.threadSet.add(this);
+        }
     },
 
     componentDidUpdate() {
