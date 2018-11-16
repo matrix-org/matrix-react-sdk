@@ -29,6 +29,36 @@ class MergedUsers {
     _noProfileCache = []; // list of localparts without profiles
     _profileCache = {}; // [user] => {global: profile, rooms: [roomId] => profile}
 
+    constructor() {
+        this._loadCaches();
+    }
+
+
+    _persistCaches() {
+        console.log("Persisting MergedUsers caches");
+        localStorage.setItem("mx_merged_users", JSON.stringify({
+            localparts: this._localpartCache,
+            profiles: this._profileCache,
+            noProfiles: this._noProfileCache,
+        }));
+    }
+
+    _loadCaches() {
+        try {
+            console.log("Loading MergedUsers caches");
+            const containerStr = localStorage.getItem("mx_merged_users");
+            if (containerStr) {
+                const container = JSON.parse(containerStr);
+                if (container.localparts) this._localpartCache = container.localparts;
+                if (container.profiles) this._profileCache = container.profiles;
+                if (container.noProfiles) this._noProfileCache = container.noProfiles;
+            }
+        }catch (e) {
+            console.error("Error loading MergedUsers caches");
+            console.error(e);
+        }
+    }
+
     _getLocalpart(userId) {
         return userId.substring(1).split(":")[0];
     }
@@ -51,6 +81,7 @@ class MergedUsers {
             if (userId !== parent && !children.includes(userId)) {
                 console.log("Adding " + userId + " as a child for " + parent);
                 children.push(userId);
+                this._persistCaches();
                 dis.dispatch({action: "merged_user_general_update", namespaceUserId: userId});
             }
             return;
@@ -73,6 +104,7 @@ class MergedUsers {
                 parentUserId: state["parent"],
                 childrenUserIds: children,
             };
+            this._persistCaches();
             dis.dispatch({action: "merged_user_general_update", namespaceUserId: userId});
         } catch (e) {
             console.error("Non-fatal error getting linked accounts for " + userId);
@@ -198,6 +230,7 @@ class MergedUsers {
         if (roomId) {
             this._profileCache[userId].rooms[roomId] = profile;
         } else this._profileCache[userId].global = profile;
+        this._persistCaches();
 
         dis.dispatch({action: "merged_user_general_update", namespaceUserId: userId});
     }
@@ -214,10 +247,8 @@ class MergedUsers {
         if (fastProfile && (fastProfile.displayname || fastProfile.avatar_url)) return fastProfile;
 
         const room = MatrixClientPeg.get().getRoom(roomMember.roomId);
-        const membership = room.currentState.getStateEvents("m.room.member", userId);
-        if (membership && membership.getContent()) {
-            return membership.getContent();
-        }
+        const parentMember = room.currentState.members[userId];
+        if (parentMember) roomMember = parentMember;
 
         return {
             displayname: roomMember.name,
