@@ -32,7 +32,6 @@ class MergedUsers {
         this._loadCaches();
     }
 
-
     _persistCaches() {
         console.log("Persisting MergedUsers caches");
         localStorage.setItem("mx_merged_users", JSON.stringify({
@@ -72,6 +71,8 @@ class MergedUsers {
         if (!SettingsStore.getValue("mergeUsersByLocalpart")) return;
 
         const localpart = this._getLocalpart(userId);
+        if (!localpart) return;
+
         if (this._localpartCache[localpart]) {
             // We already have a parent, so just append a child if we need to
             const children = this._localpartCache[localpart].childrenUserIds;
@@ -345,6 +346,113 @@ class MergedUsers {
         this._cacheProfile(parentUserId, roomId, profile);
         this._cacheProfile(parentUserId, null, profile);
         return profile;
+    }
+
+    /**
+     * Calculates the name for a room. This is intended to be used in place
+     * of the js-sdk's Room.name property and other calculation methods.
+     * @param {Room} room The room to calculate the name of.
+     * @returns {string} The calculated room name.
+     */
+    calculateRoomName(room) {
+        // Note: A lot of this is copy/pasted from the js-sdk. This is bad.
+
+        const mRoomName = room.currentState.getStateEvents("m.room.name", "");
+        if (mRoomName && mRoomName.getContent() && mRoomName.getContent().name) {
+            return mRoomName.getContent().name;
+        }
+
+        let alias = room.getCanonicalAlias();
+
+        if (!alias) {
+            const aliases = room.getAliases();
+
+            if (aliases.length) {
+                alias = aliases[0];
+            }
+        }
+        if (alias) {
+            return alias;
+        }
+
+        // This is where things get different: we need to only consider effective
+        // parents in the room, not everyone.
+        const members = this.getEffectiveParents(room.currentState.getMembers().map(m => [m.userId, m]));
+        const joinedCount = members.filter(m => m.membership === 'join' && !this.isSelf(m.userId)).length;
+        const inviteCount = members.filter(m => m.membership === 'invite' && !this.isSelf(m.userId)).length;
+        let otherNames = null;
+        if (room._summaryHeroes) { // HACK: Internal access
+            otherNames = this.getEffectiveParents(room._summaryHeroes.map(h => [h.userId, h])).map(h => {
+                const member = room.getMember(h);
+                const profile = this.getProfileOf(member) || {};
+                return profile.displayname || h;
+            });
+        } else {
+            let otherMembers = members.filter(m => ['join', 'invite'].includes(m.membership) && !this.isSelf(m.userId));
+            otherMembers.sort((a, b) => a.userId.localeCompare(b.userId));
+            otherMembers = this.getEffectiveParents(otherMembers.map(m => [m.userId, m])).splice(0, 5);
+            otherNames = otherMembers.map(m => {
+                const profile = this.getProfileOf(m) || {};
+                return profile.displayname || m.userId;
+            });
+        }
+
+        if (joinedCount + inviteCount > 0) {
+            return this._memberNamesToRoomName(otherNames, joinedCount + inviteCount);
+        }
+
+        const myMember = members.find(m => this.isSelf(m.userId));
+        if (!myMember) return "Unknown Room";
+        const myMembership = myMember.membership;
+
+        // if I have created a room and invited people through
+        // 3rd party invites
+        if (myMembership == 'join') {
+            const thirdPartyInvites =
+                room.currentState.getStateEvents("m.room.third_party_invite");
+
+            if (thirdPartyInvites && thirdPartyInvites.length) {
+                const thirdPartyNames = thirdPartyInvites.map((i) => {
+                    return i.getContent().display_name;
+                });
+
+                return `Inviting ${this._memberNamesToRoomName(thirdPartyNames, thirdPartyNames.length + 1)}`;
+            }
+        }
+        // let's try to figure out who was here before
+        let leftNames = otherNames;
+        // if we didn't have heroes, try finding them in the room state
+        if(!leftNames.length) {
+            leftNames = this.getEffectiveParents(members.filter(m => !['join', 'invite'].includes(m.membership) && !this.isSelf(m.userId)).map(m => [m.userId, m])).map(m => {
+                const profile = this.getProfileOf(m) || {};
+                return profile.displayname || m.userId;
+            });
+        }
+        if(leftNames.length) {
+            return `Empty room (was ${this._memberNamesToRoomName(leftNames, leftNames.length + 1)})`;
+        } else {
+            return "Empty room";
+        }
+    }
+
+    _memberNamesToRoomName(names, count) {
+        // This is a direct copy/paste from the js-sdk
+
+        const countWithoutMe = count - 1;
+        if (!names.length) {
+            return count <= 1 ? "Empty room" : null;
+        } else if (names.length === 1 && countWithoutMe <= 1) {
+            return names[0];
+        } else if (names.length === 2 && countWithoutMe <= 2) {
+            return `${names[0]} and ${names[1]}`;
+        } else {
+            const plural = countWithoutMe > 1;
+            if (plural) {
+                return `${names[0]} and ${countWithoutMe} others`;
+            } else {
+                return `${names[0]} and 1 other`;
+            }
+        }
     }
 
     async _getLinkedState(userId) {
