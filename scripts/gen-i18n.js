@@ -260,9 +260,10 @@ for (const tr of translatables) {
     }
 }
 
+const translatablesSorted = Array.from(translatables.values()).sort();
 fs.writeFileSync(
     OUTPUT_FILE,
-    JSON.stringify(trObj, translatables.values(), 4) + "\n"
+    JSON.stringify(trObj, translatablesSorted, 4) + "\n"
 );
 
 console.log();
