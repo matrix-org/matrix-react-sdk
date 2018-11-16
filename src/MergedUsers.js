@@ -19,6 +19,9 @@ import SettingsStore from "./settings/SettingsStore";
 const MatrixClientPeg = require("./MatrixClientPeg");
 const dis = require("./dispatcher");
 
+/**
+ * Tracks users that should be merged together and their profiles.
+ */
 class MergedUsers {
 
     // We track which localparts we see and their associated parents.
@@ -30,6 +33,13 @@ class MergedUsers {
         return userId.substring(1).split(":")[0];
     }
 
+    /**
+     * Tracks a user in the tree. This is implicitly called by several other operations
+     * on MergedUsers but may be invoked directly if needed. If a user is already tracked
+     * then this will be a no-op.
+     * @param {string} userId The user ID to track.
+     * @return {Promise<void>} Resolves when tracking has been completed.
+     */
     async trackUser(userId) {
         if (!SettingsStore.getValue("mergeUsersByLocalpart")) return;
 
@@ -71,6 +81,11 @@ class MergedUsers {
         }
     }
 
+    /**
+     * Determines if a given user ID is a child of another known user.
+     * @param {string} userId The user ID to check the status of.
+     * @return {boolean} True if the user ID is a child, false otherwise.
+     */
     isChild(userId) {
         // We can do this async as it doesn't matter all that much
         this.trackUser(userId);
@@ -81,10 +96,27 @@ class MergedUsers {
         else return false;
     }
 
+    /**
+     * Determines if a given user ID is a parent of zero or more users.
+     * @param {string} userId The user ID to check the status of.
+     * @return {boolean} True if the user ID is a parent, false otherwise.
+     */
     isParent(userId) {
         return !this.isChild(userId);
     }
 
+    /**
+     * Determines if a given user ID is logically a child of any of the
+     * given parent user IDs. Note that this is a *logical* check not a
+     * hierarchical one: asking if "@alice:example.org" is a child of
+     * ["@alice:example.org"] will return true. User IDs listed in the
+     * parent array which do not match the merge rules will be ignored.
+     * @param {string} userId The user ID to check the status of.
+     * @param {string[]} parentIds The user IDs to treat as potentially
+     * related parents.
+     * @return {boolean} True if the userId is logically a child of the
+     * parentIds, false otherwise.
+     */
     isChildOf(userId, parentIds) {
         return parentIds.map(i => this._getLocalpart(i)).includes(this._getLocalpart(userId));
     }
@@ -131,6 +163,13 @@ class MergedUsers {
         return parentObjects;
     }
 
+    /**
+     * Lists all the known children for a given user ID. If the user ID
+     * given is not a parent, this returns an empty collection.
+     * @param {string} userId The user ID to get the children of.
+     * @return {string[]} An array of user IDs which are children of the
+     * parent.
+     */
     getChildren(userId) {
         if (!this.isParent(userId)) return [];
         const record = this._localpartCache[this._getLocalpart(userId)];
@@ -138,6 +177,12 @@ class MergedUsers {
         else return record.childrenUserIds;
     }
 
+    /**
+     * Gets the parent for a given user ID. If the user ID is a parent,
+     * it will be returned as-is.
+     * @param {string} userId The user ID to get the parent of.
+     * @return {string} The parent user ID for the given user ID.
+     */
     getParent(userId) {
         const record = this._localpartCache[this._getLocalpart(userId)];
         if (!record) return userId;
@@ -157,6 +202,12 @@ class MergedUsers {
         dis.dispatch({action: "merged_user_general_update", namespaceUserId: userId});
     }
 
+    /**
+     * Gets the hierarchical profile for a given room member. This will return
+     * the parent's profile.
+     * @param {RoomMember} roomMember The room member to calculate the profile of.
+     * @return {{displayname?: String, avatar_url?: String}} The calculated profile.
+     */
     getProfileOf(roomMember) {
         const userId = this.getParent(roomMember.userId);
         const fastProfile = this.getProfileFast(userId, roomMember.roomId);
@@ -174,6 +225,13 @@ class MergedUsers {
         };
     }
 
+    /**
+     * Gets the hierarchical profile for a given user ID by only requesting the
+     * profile from the cache. This does not attempt to resolve the profile.
+     * @param {string} userId The user ID to look up the profile for.
+     * @param {String?} roomId The room ID to look up the profile in. Optional.
+     * @return {{displayname?: String, avatar_url?: String}} The cached profile.
+     */
     getProfileFast(userId, roomId) {
         this.trackUser(userId);
 
@@ -191,6 +249,14 @@ class MergedUsers {
         return {};
     }
 
+    /**
+     * Calculates the profile for a given user ID in a given room. This will return
+     * the parent's profile for hte given circumstances where possible.
+     * @param {string} userId The user ID to calculate the profile for.
+     * @param {String?} roomId The room ID to calculate the profile in. Optional.
+     * @return {Promise<{displayname?: String, avatar_url?: String}>} Resolves to
+     * the calculated profile.
+     */
     async getProfile(userId, roomId) {
         const client = MatrixClientPeg.get();
         if (!client) return {}; // We're just not ready
