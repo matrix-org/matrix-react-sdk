@@ -14,11 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
-.mx_EventTile_line:hover > .mx_ThreadEvent {
-    background-color: none !important;
-}
-
 .mx_ThreadEvent_timelineContainer {
     position: relative;
 }
@@ -27,6 +22,8 @@ limitations under the License.
     position: absolute;
     bottom: 0;
     right: 0;
-    width: calc(50% - 40px);
+    width: calc(50% + 52px); // 40 + 18 - 110
+    padding-left: 18px;
+    margin-right: -110px;
     border-left: 4px solid $blockquote-bar-color;
 }
