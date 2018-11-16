@@ -60,6 +60,7 @@ class MergedUsers {
     }
 
     _getLocalpart(userId) {
+        if (!userId) return "";
         return userId.substring(1).split(":")[0];
     }
 
@@ -114,6 +115,20 @@ class MergedUsers {
     }
 
     /**
+     * Determines if the given user ID equates to the currently logged in user.
+     * This is done through a logical check on the child eligibility of the
+     * user ID.
+     * @param {string} userId The user ID to match against the currently logged
+     * in user.
+     * @returns {boolean} True if the user ID matches the logged in user, false
+     * otherwise.
+     */
+    isSelf(userId) {
+        if (!MatrixClientPeg.get()) return false;
+        return this.isChildOf(userId, [MatrixClientPeg.get().getUserId()]);
+    }
+
+    /**
      * Determines if a given user ID is a child of another known user.
      * @param {string} userId The user ID to check the status of.
      * @return {boolean} True if the user ID is a child, false otherwise.
@@ -162,10 +177,12 @@ class MergedUsers {
      * @param {[[string,object]]} tuples An array of [userId, object]
      * where the object can be anything you like. The userId (index 0)
      * will be used to determine which object to consider the parent.
+     * @param {boolean} includeResultsWithNoUserId If true, tuples that
+     * do not have a user ID will have their objects returned as-is.
      * @return {[object]} The objects from the tuples for which the
      * accompanying user is considered a parent.
      */
-    getEffectiveParents(tuples) {
+    getEffectiveParents(tuples, includeResultsWithNoUserId) {
         const parentIds = [];
         const parentObjects = [];
 
@@ -174,7 +191,8 @@ class MergedUsers {
             const userId = tuple[0];
             const obj = tuple[1];
 
-            if (this.isParent(userId)) {
+            const includeAnyways = !userId && includeResultsWithNoUserId;
+            if (includeAnyways || this.isParent(userId)) {
                 parentIds.push(userId);
                 parentObjects.push(obj);
             }
@@ -185,6 +203,7 @@ class MergedUsers {
             const userId = tuple[0];
             const obj = tuple[1];
 
+            if (!userId) continue;
             if (this.isChildOf(userId, parentIds)) continue;
 
             parentIds.push(userId);
