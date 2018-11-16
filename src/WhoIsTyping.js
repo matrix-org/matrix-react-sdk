@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import MergeUsers from "./MergedUsers";
+
 const MatrixClientPeg = require("./MatrixClientPeg");
 import { _t } from './languageHandler';
 
@@ -46,13 +48,13 @@ module.exports = {
             const userId = memberKeys[i];
 
             if (room.currentState.members[userId].typing) {
-                if (exclude.indexOf(userId) == -1) {
+                if (!MergeUsers.isChildOf(userId, exclude)) {
                     whoIsTyping.push(room.currentState.members[userId]);
                 }
             }
         }
 
-        return whoIsTyping;
+        return MergeUsers.getEffectiveParents(whoIsTyping.map(u => [u.userId, u]));
     },
 
     whoIsTypingString: function(whoIsTyping, limit) {
@@ -63,10 +65,10 @@ module.exports = {
         if (whoIsTyping.length == 0) {
             return '';
         } else if (whoIsTyping.length == 1) {
-            return _t('%(displayName)s is typing', {displayName: whoIsTyping[0].name});
+            return _t('%(displayName)s is typing', {displayName: MergeUsers.getProfileOf(whoIsTyping[0]).displayname || whoIsTyping[0].userId});
         }
         const names = whoIsTyping.map(function(m) {
-            return m.name;
+            return MergeUsers.getProfileOf(m).displayname || m.userId;
         });
         if (othersCount>=1) {
             return _t('%(names)s and %(count)s others are typing', {names: names.slice(0, limit - 1).join(', '), count: othersCount});
