@@ -19,6 +19,7 @@ limitations under the License.
 
 
 import ReplyThread from "../elements/ReplyThread";
+import ThreadEvent from "../messages/ThreadEvent";
 
 const React = require('react');
 import PropTypes from 'prop-types';
@@ -65,6 +66,9 @@ const stateEventTileTypes = {
 };
 
 function getHandlerTile(ev) {
+    if (ThreadEvent.getThreadId(ev)) {
+        return 'messages.ThreadEvent';
+    }
     const type = ev.getType();
     return ev.isState() ? stateEventTileTypes[type] : eventTileTypes[type];
 }
