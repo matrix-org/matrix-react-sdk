@@ -185,8 +185,9 @@ module.exports = React.createClass({
     },
 
     onAction(payload) {
-        if (payload.action !== "merged_user_updated") return;
-        this._updateList();
+        if (payload.action === "merged_user_general_update") {
+            this._updateList();
+        }
     },
 
     _updateList: new rate_limited_func(function() {

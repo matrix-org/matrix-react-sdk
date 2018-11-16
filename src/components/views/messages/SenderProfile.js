@@ -72,12 +72,8 @@ export default React.createClass({
     },
 
     onAction(payload) {
-        if (payload.action === "merged_user_updated") {
-            if (MergedUsers.isChildOf(this.props.mxEvent.getSender(), payload.children)) {
-                this._updateProfile();
-            }
-        } else if (payload.action === "merged_user_profile_updated") {
-            if (MergedUsers.isChildOf(this.props.mxEvent.getSender(), [payload.userId])) {
+        if (payload.action === "merged_user_general_update") {
+            if (MergedUsers.isChildOf(this.props.mxEvent.getSender(), [payload.namespaceUserId])) {
                 this._updateProfile();
             }
         }

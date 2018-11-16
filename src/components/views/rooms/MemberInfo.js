@@ -205,10 +205,11 @@ module.exports = withMatrixClient(React.createClass({
     },
 
     onAction: function(payload) {
-        if (payload.action !== "merged_user_updated" || payload.parentUserId !== this.props.member.userId) {
-            return; // not interested
+        if (payload.action === "merged_user_general_update") {
+            if (MergedUsers.isChildOf(this.props.member.userId, [payload.namespaceUserId])) {
+                this.forceUpdate();
+            }
         }
-        this.forceUpdate();
     },
 
     _updateStateForNewMember: function(member) {
