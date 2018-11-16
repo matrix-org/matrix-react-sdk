@@ -93,6 +93,7 @@ module.exports = React.createClass({
 
         // show timestamps always
         alwaysShowTimestamps: PropTypes.bool,
+        isThread: PropTypes.bool,
     },
 
     componentWillMount: function() {
@@ -447,6 +448,7 @@ module.exports = React.createClass({
     },
 
     _getTilesForEvent: function(prevEvent, mxEv, last) {
+        const ThreadEvent = sdk.getComponent('messages.ThreadEvent');
         const EventTile = sdk.getComponent('rooms.EventTile');
         const DateSeparator = sdk.getComponent('messages.DateSeparator');
         const ret = [];
@@ -656,18 +658,30 @@ module.exports = React.createClass({
             },
         );
 
-        return (
-            <ScrollPanel ref="scrollPanel" className={className}
-                    onScroll={this.props.onScroll}
-                    onResize={this.onResize}
-                    onFillRequest={this.props.onFillRequest}
-                    onUnfillRequest={this.props.onUnfillRequest}
-                    style={style}
-                    stickyBottom={this.props.stickyBottom}>
-                { topSpinner }
-                { this._getEventTiles() }
-                { bottomSpinner }
-            </ScrollPanel>
-        );
+        if (this.props.isThread) {
+            const tiles = this._getEventTiles();
+            // console.log(`rerendering thread message panel with ${tiles.length} event tiles`);
+            return (
+                <div className={className}>
+                    { topSpinner }
+                    { tiles }
+                    { bottomSpinner }
+                </div>
+            );
+        } else {
+            return (
+                <ScrollPanel ref="scrollPanel" className={className}
+                        onScroll={this.props.onScroll}
+                        onResize={this.onResize}
+                        onFillRequest={this.props.onFillRequest}
+                        onUnfillRequest={this.props.onUnfillRequest}
+                        style={style}
+                        stickyBottom={this.props.stickyBottom}>
+                    { topSpinner }
+                    { this._getEventTiles() }
+                    { bottomSpinner }
+                </ScrollPanel>
+            );
+        }
     },
 });

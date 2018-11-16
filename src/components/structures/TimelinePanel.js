@@ -102,6 +102,7 @@ var TimelinePanel = React.createClass({
 
         // placeholder text to use if the timeline is empty
         empty: PropTypes.string,
+        isThread: PropTypes.bool,
     },
 
     statics: {
@@ -1173,6 +1174,7 @@ var TimelinePanel = React.createClass({
                           alwaysShowTimestamps={this.state.alwaysShowTimestamps}
                           className={this.props.className}
                           tileShape={this.props.tileShape}
+                          isThread={this.props.isThread}
             />
         );
     },
