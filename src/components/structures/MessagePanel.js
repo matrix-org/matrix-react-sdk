@@ -546,7 +546,7 @@ module.exports = React.createClass({
     // get a list of read receipts that should be shown next to this event
     // Receipts are objects which have a 'userId', 'roomMember' and 'ts'.
     _getReadReceiptsForEvent: function(event) {
-        const myUserId = MatrixClientPeg.get().credentials.userId;
+        const myUserId = MergeUsers.getParent(MatrixClientPeg.get().credentials.userId);
 
         // get list of read receipts, sorted most recent first
         const room = MatrixClientPeg.get().getRoom(event.getRoomId());
@@ -555,12 +555,16 @@ module.exports = React.createClass({
         }
         const receipts = [];
         room.getReceiptsForEvent(event).forEach((r) => {
-            if (!r.userId || r.type !== "m.read" || r.userId === myUserId) {
+            const receiptUserId = r.userId ? MergeUsers.getParent(r.userId) : null;
+            if (!receiptUserId || r.type !== "m.read" || receiptUserId === myUserId) {
                 return; // ignore non-read receipts and receipts from self.
             }
-            if (MatrixClientPeg.get().isUserIgnored(r.userId)) {
+            if (MatrixClientPeg.get().isUserIgnored(receiptUserId)) {
                 return; // ignore ignored users
             }
+            // We'll still use the room member of the original receipt because we
+            // want to have a reference to a valid room member (the parent may not
+            // be in the room for some reason).
             const member = room.getMember(r.userId);
             receipts.push({
                 userId: r.userId,
@@ -569,7 +573,10 @@ module.exports = React.createClass({
             });
         });
 
-        return receipts.sort((r1, r2) => {
+        // Filter out duplicates
+        const parentReceipts = MergeUsers.getEffectiveParents(receipts.map(r => [r.userId, r]));
+
+        return parentReceipts.sort((r1, r2) => {
             return r2.ts - r1.ts;
         });
     },
