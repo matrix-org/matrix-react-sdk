@@ -62,6 +62,7 @@ const stateEventTileTypes = {
     'm.room.pinned_events': 'messages.TextualEvent',
     'm.room.server_acl': 'messages.TextualEvent',
     'im.vector.modular.widgets': 'messages.TextualEvent',
+    'org.matrix.new_thread': 'messages.NewThreadBanner',
 };
 
 function getHandlerTile(ev) {
