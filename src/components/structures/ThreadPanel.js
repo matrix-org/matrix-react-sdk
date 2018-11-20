@@ -49,11 +49,10 @@ const ThreadPanel = React.createClass({
 
     render: function() {
         const TimelinePanel = sdk.getComponent("structures.TimelinePanel");
-        const MessageTimestamp = sdk.getComponent("messages.MessageTimestamp");
+
         return (
             <div className="mx_ThreadPanel">
-                <p>{_t("Received at")} <MessageTimestamp ts={this.props.mxEvent.getTs()} /> ({this.getThreadId()})</p>
-                <TimelinePanel key={`thread_${this.props.roomId}/${this.getThreadId()}`}
+                <TimelinePanel
                     className="mx_ThreadPanel_timeline"
                     timelineSet={this.state.timelineSet}
                 />
