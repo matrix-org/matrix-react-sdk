@@ -192,7 +192,8 @@ export default class RightPanel extends React.Component {
         } else if (this.state.phase === RightPanel.Phase.FilePanel) {
             panel = <FilePanel roomId={this.props.roomId} />;
         } else if (this.state.phase === RightPanel.Phase.ThreadPanel) {
-            panel = <ThreadPanel roomId={this.props.roomId} mxEvent={this.state.mxEvent} key={this.state.mxEvent.getContent().thread_id} />;
+            panel = <ThreadPanel roomId={this.props.roomId} mxEvent={this.state.mxEvent}
+                                 key={this.state.mxEvent.getContent().thread_id} />;
         }
 
         // TODO: either include this in the DOM again, or move it to other component

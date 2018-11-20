@@ -492,9 +492,10 @@ module.exports = withMatrixClient(React.createClass({
         const eventType = this.props.mxEvent.getType();
 
         // Info messages are basically information about commands processed on a room
+        const isFullWidthBanner = this.props.mxEvent.getType() === 'org.matrix.new_thread';
         const isInfoMessage = (
             eventType !== 'm.room.message' && eventType !== 'm.sticker' && eventType != 'm.room.create'
-        );
+        ) && !isFullWidthBanner;
 
         const tileHandler = getHandlerTile(this.props.mxEvent);
         // This shouldn't happen: the caller should check we support this type
@@ -516,6 +517,7 @@ module.exports = withMatrixClient(React.createClass({
 
         const classes = classNames({
             mx_EventTile: true,
+            mx_EventTile_banner: isFullWidthBanner,
             mx_EventTile_info: isInfoMessage,
             mx_EventTile_12hr: this.props.isTwelveHour,
             mx_EventTile_encrypting: this.props.eventSendStatus === 'encrypting',
@@ -546,7 +548,7 @@ module.exports = withMatrixClient(React.createClass({
         if (this.props.tileShape === "notif") {
             avatarSize = 24;
             needsSenderProfile = true;
-        } else if (tileHandler === 'messages.RoomCreate') {
+        } else if (tileHandler === 'messages.RoomCreate' || isFullWidthBanner) {
             avatarSize = 0;
             needsSenderProfile = false;
         } else if (isInfoMessage) {
@@ -718,9 +720,9 @@ module.exports = withMatrixClient(React.createClass({
                         </div>
                         { sender }
                         <div className="mx_EventTile_line">
-                            <a href={permalink} onClick={this.onPermalinkClicked}>
+                            { isFullWidthBanner ? undefined : (<a href={permalink} onClick={this.onPermalinkClicked}>
                                 { timestamp }
-                            </a>
+                            </a>) }
                             { this._renderE2EPadlock() }
                             { ReplyThread.makeThread(this.props.mxEvent, this.props.onWidgetLoad, 'replyThread') }
                             <EventTileType ref="tile"

@@ -19,6 +19,8 @@ import PropTypes from 'prop-types';
 import sdk from '../../../index';
 import dis from '../../../dispatcher';
 import { _t } from '../../../languageHandler';
+import {formatTime} from '../../../DateUtils';
+import SettingsStore from "../../../settings/SettingsStore";
 
 module.exports = React.createClass({
     displayName: 'NewThreadBanner',
@@ -37,14 +39,22 @@ module.exports = React.createClass({
         });
     },
 
+    getDefaultProps() {
+        return {
+            isTwelveHour: SettingsStore.getValue("showTwelveHourTimestamps"),
+        };
+    },
+
     render: function() {
         const MessageTimestamp = sdk.getComponent("messages.MessageTimestamp");
+        const date = new Date(this.props.mxEvent.getTs());
         return <div className="mx_NewThreadBanner">
-            <MessageTimestamp ts={this.props.mxEvent.getTs()} />
-            <p>
-                {_t("Received older messages:")}
-                <a onClick={this._onLinkClicked}>{_t("View messages")}</a>
-            </p>
+            <div className="mx_NewThreadBanner_timestamp">{formatTime(date, this.props.isTwelveHour)}</div>
+            <div className="mx_NewThreadBanner_message">
+                {_t("Received older messages: <link>View messages</link>", {}, {
+                    link: s => <a href="#" onClick={this._onLinkClicked}>{s}</a>,
+                })}
+            </div>
         </div>;
     },
 });
