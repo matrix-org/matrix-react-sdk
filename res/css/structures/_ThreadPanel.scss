@@ -23,3 +23,10 @@ limitations under the License.
 .mx_ThreadPanel_timeline {
     flex: 1;
 }
+
+.mx_ThreadPanel_timeline .mx_RoomView_MessageList {
+    background-color: white;
+    margin: 15px;
+    padding: 8px;
+    border-radius: 8px;
+}
