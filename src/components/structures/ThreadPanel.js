@@ -26,7 +26,7 @@ const ThreadPanel = React.createClass({
 
     propTypes: {
         roomId: PropTypes.string.isRequired,
-        mxEvent: PropTypes.string.isRequired,
+        mxEvent: PropTypes.object.isRequired,
     },
 
     getInitialState: function() {
