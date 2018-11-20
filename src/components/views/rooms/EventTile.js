@@ -39,6 +39,7 @@ import {EventStatus} from 'matrix-js-sdk';
 const ObjectUtils = require('../../../ObjectUtils');
 
 const eventTileTypes = {
+    'org.matrix.new_thread': 'messages.NewThreadBanner',
     'm.room.message': 'messages.MessageEvent',
     'm.sticker': 'messages.MessageEvent',
     'm.call.invite': 'messages.TextualEvent',
@@ -62,7 +63,6 @@ const stateEventTileTypes = {
     'm.room.pinned_events': 'messages.TextualEvent',
     'm.room.server_acl': 'messages.TextualEvent',
     'im.vector.modular.widgets': 'messages.TextualEvent',
-    'org.matrix.new_thread': 'messages.NewThreadBanner',
 };
 
 function getHandlerTile(ev) {
