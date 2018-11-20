@@ -1273,5 +1273,8 @@
     "Failed to remove tag %(tagName)s from room": "Failed to remove tag %(tagName)s from room",
     "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room",
     "Open Devtools": "Open Devtools",
-    "Show developer tools": "Show developer tools"
+    "Show developer tools": "Show developer tools",
+    "Received older messages:": "Received older messages:",
+    "View messages": "View messages",
+    "Received at": "Received at"
 }
