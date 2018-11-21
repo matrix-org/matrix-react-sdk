@@ -24,6 +24,7 @@ $input-lighter-bg-color: #330C0A;
 $roomtile-name-color: $primary-fg-color;
 $roomtile-selected-color: $primary-fg-color;
 $roomtile-selected-bg-color: $input-lighter-bg-color;
+$roomtile-focused-bg-color: $input-lighter-bg-color;
 
 $roomheader-addroom-color: $primary-fg-color;
 $roomtopic-color: $primary-fg-color;
@@ -43,15 +44,16 @@ $dialog-background-bg-color: $primary-bg-color;
 
 $input-border-color: $menu-border-color;
 
-$username-variant1-color: #1e7ddc;
-$username-variant2-color: #a756a8;
-$username-variant3-color: #7ac9a1;
-$username-variant4-color: #f2809d;
-$username-variant5-color: #ffc666;
-$username-variant6-color: #76ddd7;
-$username-variant7-color: #45529b;
-$username-variant8-color: #bfd251;
+$username-variant1-color: #FF5964;
+$username-variant2-color: #D4B694;
+$username-variant3-color: #FF9500;
+$username-variant4-color: #B08664;
+$username-variant5-color: #AF9980;
+$username-variant6-color: #B29AA6;
+$username-variant7-color: #F4ACA5;
+$username-variant8-color: #FF5230;
 
+$h3-color: $primary-fg-color;
 
 
 .mx_BaseAvatar_image {
@@ -99,6 +101,11 @@ a:link {
 
 .mx_ChatInviteDialog_input {
   color: $primary-fg-color !important;
+}
+
+.mx_MemberDeviceInfo_textButton {
+  color: $input-lighter-fg-color !important;
+  background-color: $input-lighter-bg-color !important;
 }
 
 // input[type=text].mx_textinput_icon.mx_textinput_search,

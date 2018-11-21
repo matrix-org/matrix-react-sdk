@@ -306,3 +306,9 @@ input[type=search]::-webkit-search-results-decoration {
     font-size: 15px;
     padding: 0px 1.5em 0px 1.5em;
 }
+
+.mx_EventTile_content .markdown-body code {
+    // deliberate constants as we're behind an invert filter
+    background-color: #333 !important;
+    color: #f8f8f8 !important;
+}
