@@ -815,33 +815,27 @@ module.exports = React.createClass({
 
     _renderPushToTalkSettings: function() {
         const id = "pushToTalk";
-        const buttonLabel = this.state.settingKeybinding ? 'Stop' : 'Set';
+        const buttonLabel = this.state.settingKeybinding ? _t('Stop') : _t('Set');
         const activated = SettingsStore.getValueAt(SettingLevel.DEVICE, id).enabled;
 
         return (
-            <div>
-            <table>
-            <tbody>
-                <tr>
-                    <td>
-                        <input type="checkbox"
-                            name={id}
-                            defaultChecked={activated}
-                            onChange={this._onTogglePushToTalkClicked}
-                        />
-                        <label htmlFor={id}>{SettingsStore.getDisplayName(id)}</label>
-                    </td>
-                    <td>{"Shortcut: " + this.state.pushToTalkAscii}</td>
-                    <td>
-                        <button key={id} className="mx_Dialog_primary"
-                                onClick={this._onSetPushToTalkClicked}
-                                disabled={!this.state.pushToTalkEnabled}>
-                        {buttonLabel}
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-            </table>
+            <div className="mx_UserSettings_toggle" key={id}>
+            <span>
+                <input type="checkbox"
+                    name={id}
+                    defaultChecked={activated}
+                    onChange={this._onTogglePushToTalkClicked}
+                />
+                <label htmlFor={id}>{SettingsStore.getDisplayName(id)}</label>
+            </span>
+            <span>{" | Shortcut: " + this.state.pushToTalkAscii + " "}</span>
+            <span>
+                <button key={id} className="mx_textButton"
+                        onClick={this._onSetPushToTalkClicked}
+                        disabled={!this.state.pushToTalkEnabled}>
+                {buttonLabel}
+                </button>
+            </span>
             </div>
         );
     },
