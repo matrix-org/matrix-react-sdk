@@ -1080,7 +1080,7 @@ export default React.createClass({
      */
     _onSetTheme: function(theme) {
         if (!theme) {
-            theme = SettingsStore.getValue("theme");
+            theme = "dharma-darkroom"; // SettingsStore.getValue("theme");
         }
 
         // look for the stylesheet elements.
