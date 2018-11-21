@@ -1,0 +1,107 @@
+@import "_fonts.scss";
+
+// typical text (dark-on-white in light skin)
+$primary-fg-color: #FE3B30;
+$primary-bg-color: #120403;
+$menu-border-color: #781813;
+
+$accent-color: $primary-fg-color;
+
+$panel-bg-color: $primary-bg-color;
+
+$tagpanel-bg-color: $primary-bg-color;
+
+$secondary-accent-color: $primary-bg-color;
+$tertiary-accent-color: $primary-bg-color;
+
+$panel-divider-color: $menu-border-color;
+
+$roomsublist-label-fg-color: $primary-fg-color;
+
+$input-lighter-fg-color: $primary-fg-color;
+$input-lighter-bg-color: #330C0A;
+
+$roomtile-name-color: $primary-fg-color;
+$roomtile-selected-color: $primary-fg-color;
+$roomtile-selected-bg-color: $input-lighter-bg-color;
+
+$roomheader-addroom-color: $primary-fg-color;
+$roomtopic-color: $primary-fg-color;
+$primary-hairline-color: $menu-border-color;
+
+$button-bg-color: $input-lighter-bg-color;
+$button-fg-color: $input-fg-color;
+
+$event-selected-color: $input-lighter-bg-color;
+
+$blockquote-bar-color: $primary-fg-color;
+$menu-bg-color: $input-lighter-bg-color;
+
+$widget-menu-bar-bg-color: $input-lighter-bg-color;
+
+$dialog-background-bg-color: $primary-bg-color;
+
+$input-border-color: $menu-border-color;
+
+$username-variant1-color: #1e7ddc;
+$username-variant2-color: #a756a8;
+$username-variant3-color: #7ac9a1;
+$username-variant4-color: #f2809d;
+$username-variant5-color: #ffc666;
+$username-variant6-color: #76ddd7;
+$username-variant7-color: #45529b;
+$username-variant8-color: #bfd251;
+
+
+
+.mx_BaseAvatar_image {
+  filter: blur(5px);
+  filter: saturate(60%);
+  opacity: 0.3;
+  background-color: $primary-fg-color;
+}
+
+.mx_LeftPanel {
+  background-color: $primary-bg-color;
+  border-left: 1px solid $menu-border-color;
+}
+
+.mx_SearchBox {
+  min-height: 40px;
+  background-color: $input-lighter-bg-color !important;
+  color: $input-lighter-fg-color !important;
+}
+
+.dark-panel {
+  background-color: $primary-bg-color !important;
+}
+
+a:link {
+  font-weight: 800;
+}
+
+.mx_Dialog {
+    color: $primary-fg-color !important;
+    border: 1px solid $primary-fg-color !important;
+    border-radius: 8px;
+}
+
+.mx_Dialog button, .mx_Dialog input[type="submit"] {
+    border: 1px solid $primary-bg-color !important;
+    color: $accent-color !important;
+    background-color: $primary-bg-color !important;
+}
+
+.mx_Dialog button.mx_Dialog_primary, .mx_Dialog  input[type="submit"].mx_Dialog_primary {
+    color: $input-lighter-fg-color !important;
+    background-color: $input-lighter-bg-color !important;
+}
+
+.mx_ChatInviteDialog_input {
+  color: $primary-fg-color !important;
+}
+
+// input[type=text].mx_textinput_icon.mx_textinput_search,
+// input[type=search].mx_textinput_icon.mx_textinput_search {
+//     // background-image: url('../../img/icons-search.svg');
+// }
