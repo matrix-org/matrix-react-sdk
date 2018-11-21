@@ -93,7 +93,7 @@ export const SETTINGS = {
     "mergeUsersByLocalpart": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Merge users by their localparts'),
-        default: false,
+        default: true,
     },
     "MessageComposerInput.dontSuggestEmoji": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
