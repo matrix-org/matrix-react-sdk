@@ -7,42 +7,130 @@
 
 /* the 'src' links are relative to the bundle.css, which is in a subdirectory.
  */
-@font-face {
-  font-family: 'Nunito';
-  font-style: italic;
-  font-weight: 400;
-  src: local('Nunito Italic'), local('Nunito-Italic'), url('../../fonts/Nunito/XRXX3I6Li01BKofIMNaDRss.ttf') format('truetype');
-}
-@font-face {
-  font-family: 'Nunito';
-  font-style: italic;
-  font-weight: 600;
-  src: local('Nunito SemiBold Italic'), local('Nunito-SemiBoldItalic'), url('../../fonts/Nunito/XRXQ3I6Li01BKofIMN5cYtvKUTo.ttf') format('truetype');
-}
-@font-face {
-  font-family: 'Nunito';
-  font-style: italic;
-  font-weight: 700;
-  src: local('Nunito Bold Italic'), local('Nunito-BoldItalic'), url('../../fonts/Nunito/XRXQ3I6Li01BKofIMN44Y9vKUTo.ttf') format('truetype');
-}
-@font-face {
-  font-family: 'Nunito';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Nunito Regular'), local('Nunito-Regular'), url('../../fonts/Nunito/XRXV3I6Li01BKofINeaE.ttf') format('truetype');
-}
-@font-face {
-  font-family: 'Nunito';
-  font-style: normal;
-  font-weight: 600;
-  src: local('Nunito SemiBold'), local('Nunito-SemiBold'), url('../../fonts/Nunito/XRXW3I6Li01BKofA6sKUYevN.ttf') format('truetype');
-}
-@font-face {
-  font-family: 'Nunito';
-  font-style: normal;
-  font-weight: 700;
-  src: local('Nunito Bold'), local('Nunito-Bold'), url('../../fonts/Nunito/XRXW3I6Li01BKofAjsOUYevN.ttf') format('truetype');
-}
+
+ @font-face {
+   font-family: 'Inter UI';
+   font-style:  normal;
+   font-weight: 400;
+   src: url('../../fonts/Inter_UI/Inter--UI.var.woff2') format("woff2-variations"),
+        url("../../fonts/Inter_UI/Inter--UI-Regular.woff2") format("woff2"),
+        url("../../fonts/Inter_UI/Inter--UI-Regular.woff") format("woff");
+ }
+ @font-face {
+   font-family: 'Inter UI';
+   font-style:  italic;
+   font-weight: 400;
+   src: url('../../fonts/Inter_UI/Inter--UI.var.woff2') format("woff2-variations"),
+        url("../../fonts/Inter_UI/Inter--UI-Italic.woff2") format("woff2"),
+        url("../../fonts/Inter_UI/Inter--UI-Italic.woff") format("woff");
+ }
+
+ @font-face {
+   font-family: 'Inter UI';
+   font-style:  normal;
+   font-weight: 500;
+   src: url('../../fonts/Inter_UI/Inter--UI.var.woff2') format("woff2-variations"),
+        url("../../fonts/Inter_UI/Inter--UI-Medium.woff2") format("woff2"),
+        url("../../fonts/Inter_UI/Inter--UI-Medium.woff") format("woff");
+ }
+ @font-face {
+   font-family: 'Inter UI';
+   font-style:  italic;
+   font-weight: 500;
+   src: url('../../fonts/Inter_UI/Inter--UI.var.woff2') format("woff2-variations"),
+        url("../../fonts/Inter_UI/Inter--UI-MediumItalic.woff2") format("woff2"),
+        url("../../fonts/Inter_UI/Inter--UI-MediumItalic.woff") format("woff");
+ }
+
+ @font-face {
+   font-family: 'Inter UI';
+   font-style:  normal;
+   font-weight: 600;
+   src: url('../../fonts/Inter_UI/Inter--UI.var.woff2') format("woff2-variations"),
+        url("../../fonts/Inter_UI/Inter--UI-SemiBold.woff2") format("woff2"),
+        url("../../fonts/Inter_UI/Inter--UI-SemiBold.woff") format("woff");
+ }
+ @font-face {
+   font-family: 'Inter UI';
+   font-style:  italic;
+   font-weight: 600;
+   src: url('../../fonts/Inter_UI/Inter--UI.var.woff2') format("woff2-variations"),
+        url("../../fonts/Inter_UI/Inter--UI-SemiBoldItalic.woff2") format("woff2"),
+        url("../../fonts/Inter_UI/Inter--UI-SemiBoldItalic.woff") format("woff");
+ }
+
+ @font-face {
+   font-family: 'Inter UI';
+   font-style:  normal;
+   font-weight: 700;
+   src: url('../../fonts/Inter_UI/Inter--UI.var.woff2') format("woff2-variations"),
+        url("../../fonts/Inter_UI/Inter--UI-Bold.woff2") format("woff2"),
+        url("../../fonts/Inter_UI/Inter--UI-Bold.woff") format("woff");
+ }
+ @font-face {
+   font-family: 'Inter UI';
+   font-style:  italic;
+   font-weight: 700;
+   src: url('../../fonts/Inter_UI/Inter--UI.var.woff2') format("woff2-variations"),
+        url("../../fonts/Inter_UI/Inter--UI-BoldItalic.woff2") format("woff2"),
+        url("../../fonts/Inter_UI/Inter--UI-BoldItalic.woff") format("woff");
+ }
+
+ @font-face {
+   font-family: 'Inter UI';
+   font-style:  normal;
+   font-weight: 800;
+   src: url('../../fonts/Inter_UI/Inter--UI.var.woff2') format("woff2-variations"),
+        url("../../fonts/Inter_UI/Inter--UI-ExtraBold.woff2") format("woff2"),
+        url("../../fonts/Inter_UI/Inter--UI-ExtraBold.woff") format("woff");
+ }
+ @font-face {
+   font-family: 'Inter UI';
+   font-style:  italic;
+   font-weight: 800;
+   src: url('../../fonts/Inter_UI/Inter--UI.var.woff2') format("woff2-variations"),
+        url("../../fonts/Inter_UI/Inter--UI-ExtraBoldItalic.woff2") format("woff2"),
+        url("../../fonts/Inter_UI/Inter--UI-ExtraBoldItalic.woff") format("woff");
+ }
+
+ @font-face {
+   font-family: 'Inter UI';
+   font-style:  normal;
+   font-weight: 900;
+   src: url('../../fonts/Inter_UI/Inter--UI.var.woff2') format("woff2-variations"),
+        url("../../fonts/Inter_UI/Inter--UI-Black.woff2") format("woff2"),
+        url("../../fonts/Inter_UI/Inter--UI-Black.woff") format("woff");
+ }
+ @font-face {
+   font-family: 'Inter UI';
+   font-style:  italic;
+   font-weight: 900;
+   src: url('../../fonts/Inter_UI/Inter--UI.var.woff2') format("woff2-variations"),
+        url("../../fonts/Inter_UI/Inter--UI-BlackItalic.woff2") format("woff2"),
+        url("../../fonts/Inter_UI/Inter--UI-BlackItalic.woff") format("woff");
+ }
+
+ /*
+ Single variable font.
+ Note that you may want to do something like this to make sure you're serving
+ constant fonts to older browsers:
+
+ html {
+   font-family: 'Inter UI', sans-serif;
+ }
+ @supports (font-variation-settings: normal) {
+   html {
+     font-family: 'Inter UI var', sans-serif;
+   }
+ }
+
+ */
+ @font-face {
+   font-family: 'Inter UI var';
+   font-weight: 400 900; /* safe weight range */
+   src: url('../../fonts/Inter_UI/Inter--UI.var.woff2') format("woff2-variations"),
+        url('../../fonts/Inter_UI/Inter--UI.var.woff2') format("woff2");
+ }
 
 /*
  * Fira Mono
