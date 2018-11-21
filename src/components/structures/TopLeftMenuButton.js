@@ -22,6 +22,7 @@ import AccessibleButton from '../views/elements/AccessibleButton';
 import BaseAvatar from '../views/avatars/BaseAvatar';
 import MatrixClientPeg from '../../MatrixClientPeg';
 import Avatar from '../../Avatar';
+import MergedUsers from "../../MergedUsers";
 
 const AVATAR_SIZE = 28;
 
@@ -45,13 +46,11 @@ export default class TopLeftMenuButton extends React.Component {
     async _getProfileInfo() {
         const cli = MatrixClientPeg.get();
         const userId = cli.getUserId();
-        const profileInfo = await cli.getProfileInfo(userId);
-        const avatarUrl = Avatar.avatarUrlForUser(
-            {avatarUrl: profileInfo.avatar_url},
-            AVATAR_SIZE, AVATAR_SIZE, "crop");
+        const profileInfo = await MergedUsers.getProfile(userId);
+        const avatarUrl = Avatar.avatarUrlForMxc(
+            profileInfo.avatar_url, AVATAR_SIZE, AVATAR_SIZE, "crop");
 
         return {
-            userId,
             name: profileInfo.displayname,
             avatarUrl,
         };
@@ -68,7 +67,7 @@ export default class TopLeftMenuButton extends React.Component {
     }
 
     render() {
-        const fallbackUserId = MatrixClientPeg.get().getUserId();
+        const fallbackUserId = MergedUsers.getParent(MatrixClientPeg.get().getUserId());
         const profileInfo = this.state.profileInfo;
         const name = profileInfo ? profileInfo.name : fallbackUserId;
         let nameElement;

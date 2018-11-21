@@ -30,6 +30,7 @@ import MatrixClientPeg from '../MatrixClientPeg';
 import type {MatrixEvent, Room, RoomMember, RoomState} from 'matrix-js-sdk';
 import {makeUserPermalink} from "../matrix-to";
 import type {Completion, SelectionRange} from "./Autocompleter";
+import MergedUsers from "../MergedUsers";
 
 const USER_REGEX = /\B@\S*/g;
 
@@ -108,11 +109,12 @@ export default class UserProvider extends AutocompleteProvider {
             // Don't include the '@' in our search query - it's only used as a way to trigger completion
             const query = fullMatch.startsWith('@') ? fullMatch.substring(1) : fullMatch;
             completions = this.matcher.match(query).map((user) => {
-                const displayName = (user.name || user.userId || '');
+                const profile = MergedUsers.getProfileOf(user);
+                const displayName = (profile.displayname || user.userId || '');
                 return {
                     // Length of completion should equal length of text in decorator. draft-js
                     // relies on the length of the entity === length of the text in the decoration.
-                    completion: user.rawDisplayName,
+                    completion: displayName,
                     completionId: user.userId,
                     suffix: (selection.beginning && range.start === 0) ? ': ' : ' ',
                     href: makeUserPermalink(user.userId),
@@ -125,6 +127,7 @@ export default class UserProvider extends AutocompleteProvider {
                     range,
                 };
             });
+            completions = MergedUsers.getEffectiveParents(completions.map(c => [c.completionId, c]));
         }
         return completions;
     }
@@ -141,9 +144,7 @@ export default class UserProvider extends AutocompleteProvider {
             lastSpoken[event.getSender()] = event.getTs();
         }
 
-        const currentUserId = MatrixClientPeg.get().credentials.userId;
-        this.users = this.room.getJoinedMembers().filter(({userId}) => userId !== currentUserId);
-
+        this.users = this.room.getJoinedMembers().filter(({userId}) => !MergedUsers.isSelf(userId));
         this.users = _sortBy(this.users, (member) => 1E20 - lastSpoken[member.userId] || 1E20);
 
         this.matcher.setObjects(this.users);
@@ -152,7 +153,7 @@ export default class UserProvider extends AutocompleteProvider {
     onUserSpoke(user: RoomMember) {
         if (this.users === null) return;
         if (!user) return;
-        if (user.userId === MatrixClientPeg.get().credentials.userId) return;
+        if (MergedUsers.isSelf(user.userId)) return;
 
         // Move the user that spoke to the front of the array
         this.users.splice(

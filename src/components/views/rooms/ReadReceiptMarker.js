@@ -16,6 +16,8 @@ limitations under the License.
 
 'use strict';
 
+import MergeUsers from "../../../MergedUsers";
+
 const React = require('react');
 const ReactDOM = require('react-dom');
 import PropTypes from 'prop-types';
@@ -188,17 +190,19 @@ module.exports = React.createClass({
         let title;
         if (this.props.timestamp) {
             const dateString = formatDate(new Date(this.props.timestamp), this.props.showTwelveHour);
-            if (!this.props.member || this.props.fallbackUserId === this.props.member.rawDisplayName) {
+            const displayName = this.props.member ? MergeUsers.getProfileOf(this.props.member).displayname : null;
+            const userId = MergeUsers.getParent(this.props.fallbackUserId);
+            if (!displayName) {
                 title = _t(
                     "Seen by %(userName)s at %(dateTime)s",
-                    {userName: this.props.fallbackUserId,
+                    {userName: userId,
                     dateTime: dateString},
                 );
             } else {
                 title = _t(
                     "Seen by %(displayName)s (%(userName)s) at %(dateTime)s",
-                    {displayName: this.props.member.rawDisplayName,
-                    userName: this.props.fallbackUserId,
+                    {displayName: displayName,
+                    userName: userId,
                     dateTime: dateString},
                 );
             }
