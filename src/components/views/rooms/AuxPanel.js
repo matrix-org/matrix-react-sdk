@@ -144,7 +144,7 @@ module.exports = React.createClass({
         />;
 
         return (
-            <div className="mx_RoomView_auxPanel" style={{maxHeight: this.props.maxHeight}} >
+            <div className="mx_RoomView_auxPanel" >
                 { appsDrawer }
                 { fileDropTarget }
                 { callView }
