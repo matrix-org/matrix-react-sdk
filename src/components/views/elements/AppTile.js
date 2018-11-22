@@ -376,17 +376,26 @@ export default class AppTile extends React.Component {
 
             // Allow whitelisted capabilities
             let requestedWhitelistCapabilies = [];
+            let whitelistCapabilities = this.props.whitelistCapabilities || [];
+            // Add additional whitelisted capabilities for specific app types
+            if (this.props.type === 'controlBot') {
+                console.log('Adding additional whitelist capabilities for commandBot');
+                whitelistCapabilities = whitelistCapabilities.concat(['m.always_on_screen', 'mil.defcon']);
+            }
 
-            if (this.props.whitelistCapabilities && this.props.whitelistCapabilities.length > 0) {
-                requestedWhitelistCapabilies = requestedCapabilities.filter(function(e) {
-                    return this.indexOf(e)>=0;
-                }, this.props.whitelistCapabilities);
+            if (whitelistCapabilities && whitelistCapabilities.length > 0) {
+                requestedWhitelistCapabilies = requestedCapabilities.filter(cap => {
+                    return whitelistCapabilities.indexOf(cap)>=0;
+                });
+
 
                 if (requestedWhitelistCapabilies.length > 0 ) {
-                    console.warn(`Widget ${this.props.id} allowing requested, whitelisted properties: ` +
+                    console.warn(`Widget ${this.props.id} allowing requested, whitelisted capabilities: ` +
                         requestedWhitelistCapabilies,
                     );
                 }
+            } else {
+                console.warn('No capabilities to whitelist');
             }
 
             // TODO -- Add UI to warn about and optionally allow requested capabilities
