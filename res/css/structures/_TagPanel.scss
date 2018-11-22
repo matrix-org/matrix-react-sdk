@@ -134,3 +134,17 @@ limitations under the License.
 .mx_TagPanel_groupsButton object {
     pointer-events: none;
 }
+
+.mx_TagPanel_toggleTheme {
+  background-color: $primary-fg-color;
+  position: absolute;
+  bottom: 10px;
+  left:4px;
+  width: 32px;
+  height: 32px;
+}
+
+.mx_TagPanel_toggleTheme object {
+    pointer-events: none;
+}
+

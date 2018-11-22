@@ -28,6 +28,8 @@ import { _t } from '../../languageHandler';
 import { Droppable } from 'react-beautiful-dnd';
 import classNames from 'classnames';
 
+import Tinter from '../../Tinter';
+
 const TagPanel = React.createClass({
     displayName: 'TagPanel',
 
@@ -101,7 +103,8 @@ const TagPanel = React.createClass({
     },
 
     onToggleThemeClick(ev) {
-        dis.dispatch({action: 'set_theme', value: 'dharma'});
+        const newTheme = Tinter.theme === 'dharma' ? 'dharma-darkroom' : 'dharma';
+        dis.dispatch({action: 'set_theme', value: newTheme});
     },
 
     render() {
