@@ -243,20 +243,29 @@ a:link {
   height: 32px;
 }
 
-// // .mx_MessageComposer_videocall {
-// //   opacity: 0;
-// // }
-//
-// .mx_MessageComposer_videocall:before {
-// // [data~="img/icons-video.svg"] {
-//   mask: none, url('../../img/img/icons-video.svg');
-//   background-color: $primary-fg-color;
-//   content: '';
-//   mask-repeat: no-repeat;
-//   mask-position: center;
-//   display: block;
-//   height: 100%;
-// }
+.mx_MessageComposer_videocall {
+  position: relative;
+}
+
+.mx_MessageComposer_videocall > object {
+  opacity: 0;
+}
+
+.mx_MessageComposer_videocall:before {
+  mask: none, url('../../img/icons-video.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3000;
+}
 .markdown-body pre {
   background-color: $input-lighter-bg-color;
 }
