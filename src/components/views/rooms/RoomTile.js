@@ -29,6 +29,8 @@ import * as RoomNotifs from '../../../RoomNotifs';
 import * as FormattingUtils from '../../../utils/FormattingUtils';
 import AccessibleButton from '../elements/AccessibleButton';
 import ActiveRoomObserver from '../../../ActiveRoomObserver';
+import RoomViewStore from '../../../stores/RoomViewStore';
+import MergedUsers from "../../../MergedUsers";
 
 module.exports = React.createClass({
     displayName: 'RoomTile',
@@ -57,7 +59,7 @@ module.exports = React.createClass({
             hover: false,
             badgeHover: false,
             menuDisplayed: false,
-            roomName: this.props.room.name,
+            roomName: MergedUsers.calculateRoomName(this.props.room),
             notifState: RoomNotifs.getRoomNotifsState(this.props.room.roomId),
             notificationCount: this.props.room.getUnreadNotificationCount(),
             selected: this.props.room.roomId === ActiveRoomObserver.getActiveRoomId(),
@@ -88,7 +90,7 @@ module.exports = React.createClass({
     onRoomName: function(room) {
         if (room !== this.props.room) return;
         this.setState({
-            roomName: this.props.room.name,
+            roomName: MergedUsers.calculateRoomName(this.props.room),
         });
     },
 

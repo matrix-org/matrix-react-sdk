@@ -24,6 +24,8 @@ import Flair from '../elements/Flair.js';
 import FlairStore from '../../../stores/FlairStore';
 import { _t } from '../../../languageHandler';
 import {hashCode} from '../../../utils/FormattingUtils';
+import MergedUsers from "../../../MergedUsers";
+import dis from '../../../dispatcher';
 
 export default React.createClass({
     displayName: 'SenderProfile',
@@ -48,19 +50,33 @@ export default React.createClass({
         this.unmounted = false;
         this._updateRelatedGroups();
 
+        const userId = MergedUsers.getParent(this.props.mxEvent.getSender());
+
         FlairStore.getPublicisedGroupsCached(
-            this.context.matrixClient, this.props.mxEvent.getSender(),
+            this.context.matrixClient, userId,
         ).then((userGroups) => {
             if (this.unmounted) return;
             this.setState({userGroups});
         });
 
         this.context.matrixClient.on('RoomState.events', this.onRoomStateEvents);
+
+        this.dispatcherRef = dis.register(this.onAction);
+        this._updateProfile();
     },
 
     componentWillUnmount() {
         this.unmounted = true;
         this.context.matrixClient.removeListener('RoomState.events', this.onRoomStateEvents);
+        dis.unregister(this.dispatcherRef);
+    },
+
+    onAction(payload) {
+        if (payload.action === "merged_user_general_update") {
+            if (MergedUsers.isChildOf(this.props.mxEvent.getSender(), [payload.namespaceUserId])) {
+                this._updateProfile();
+            }
+        }
     },
 
     onRoomStateEvents(event) {
@@ -69,6 +85,16 @@ export default React.createClass({
         ) {
             this._updateRelatedGroups();
         }
+    },
+
+    _updateProfile() {
+        MergedUsers.getProfile(this.props.mxEvent.getSender(), this.props.mxEvent.getRoomId()).then(profile => {
+            if (this.unmounted) return;
+            this.setState({profile});
+        }).catch(err => {
+            console.error("Error fetching profile for " + this.props.mxEvent.getSender());
+            console.error(err);
+        });
     },
 
     _updateRelatedGroups() {
@@ -97,8 +123,10 @@ export default React.createClass({
     render() {
         const EmojiText = sdk.getComponent('elements.EmojiText');
         const {mxEvent} = this.props;
-        const colorNumber = hashCode(mxEvent.getSender()) % 8;
-        const name = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
+        const userId = MergedUsers.getParent(mxEvent.getSender());
+        const colorNumber = hashCode(userId) % 8;
+        const profileDisplayName = this.state.profile ? this.state.profile.displayname : null;
+        const name = profileDisplayName || userId;
         const {msgtype} = mxEvent.getContent();
 
         if (msgtype === 'm.emote') {
@@ -112,7 +140,7 @@ export default React.createClass({
             );
 
             flair = <Flair key='flair'
-                userId={mxEvent.getSender()}
+                userId={userId}
                 groups={displayedGroups}
             />;
         }

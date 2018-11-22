@@ -34,6 +34,7 @@ import ManageIntegsButton from '../elements/ManageIntegsButton';
 import {CancelButton} from './SimpleRoomHeader';
 import SettingsStore from "../../../settings/SettingsStore";
 import RoomHeaderButtons from '../right_panel/RoomHeaderButtons';
+import MergedUsers from "../../../MergedUsers";
 
 linkifyMatrix(linkify);
 
@@ -281,7 +282,7 @@ module.exports = React.createClass({
             if (this.props.oobData && this.props.oobData.name) {
                 roomName = this.props.oobData.name;
             } else if (this.props.room) {
-                roomName = this.props.room.name;
+                roomName = MergedUsers.calculateRoomName(this.props.room);
             }
 
             const emojiTextClasses = classNames('mx_RoomHeader_nametext', { mx_RoomHeader_settingsHint: settingsHint });

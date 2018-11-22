@@ -90,6 +90,11 @@ export const SETTINGS = {
         controller: new LazyLoadingController(),
         default: true,
     },
+    "mergeUsersByLocalpart": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Merge users by their localparts'),
+        default: true,
+    },
     "MessageComposerInput.dontSuggestEmoji": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Disable Emoji suggestions while typing'),

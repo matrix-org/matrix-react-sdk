@@ -23,6 +23,7 @@ import MatrixClientPeg from '../../../MatrixClientPeg';
 import Promise from 'bluebird';
 import { addressTypes, getAddressType } from '../../../UserAddress.js';
 import GroupStore from '../../../stores/GroupStore';
+import MergedUsers from "../../../MergedUsers";
 
 const TRUNCATE_QUERY_LIST = 40;
 const QUERY_USER_DIRECTORY_DEBOUNCE_MS = 200;
@@ -385,7 +386,8 @@ module.exports = React.createClass({
     },
 
     _processResults: function(results, query) {
-        const suggestedList = [];
+        let suggestedList = [];
+        let hasUsers = false;
         results.forEach((result) => {
             if (result.room_id) {
                 suggestedList.push({
@@ -397,9 +399,7 @@ module.exports = React.createClass({
                 });
                 return;
             }
-            if (!this.props.includeSelf &&
-                result.user_id === MatrixClientPeg.get().credentials.userId
-            ) {
+            if (!this.props.includeSelf && MergedUsers.isSelf(result.user_id)) {
                 return;
             }
 
@@ -412,7 +412,13 @@ module.exports = React.createClass({
                 avatarMxc: result.avatar_url,
                 isKnown: true,
             });
+            hasUsers = true;
         });
+
+        if (hasUsers) {
+            const tuples = suggestedList.map(i => [i.user_id, i]);
+            suggestedList = MergedUsers.getEffectiveParents(tuples, true);
+        }
 
         // If the query is a valid address, add an entry for that
         // This is important, otherwise there's no way to invite
@@ -493,7 +499,7 @@ module.exports = React.createClass({
             if (res === null || !res.mxid) return null;
             if (cancelled) return null;
 
-            return MatrixClientPeg.get().getProfileInfo(res.mxid);
+            return MergedUsers.getProfile(res.mxid);
         }).then((res) => {
             if (res === null) return null;
             if (cancelled) return null;

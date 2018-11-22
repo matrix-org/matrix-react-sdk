@@ -1614,7 +1614,6 @@ module.exports = React.createClass({
                 onResize={this.onChildResize}
                 onVisible={this.onStatusBarVisible}
                 onHidden={this.onStatusBarHidden}
-                whoIsTypingLimit={3}
             />;
         }
 
