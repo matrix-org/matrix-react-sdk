@@ -48,11 +48,13 @@ class ActiveWidgetStore extends EventEmitter {
 
     start() {
         MatrixClientPeg.get().on('RoomState.events', this.onRoomStateEvents);
+        MatrixClientPeg.get().on('Room.timeline', this.onRoomTimelineEvents);
     }
 
     stop() {
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener('RoomState.events', this.onRoomStateEvents);
+            MatrixClientPeg.get().removeListener('Room.timeline', this.onRoomTimelineEvents);
         }
         this._capsByWidgetId = {};
         this._widgetMessagingByWidgetId = {};
@@ -67,7 +69,19 @@ class ActiveWidgetStore extends EventEmitter {
         if (ev.getType() !== 'im.vector.modular.widgets') return;
 
         if (ev.getStateKey() === this._persistentWidgetId) {
-            this.destroyPersistentWidget();
+            // this.destroyPersistentWidget();
+        }
+    }
+
+    onRoomTimelineEvents(ev, state) {
+        if (!this._persistentWidgetId) {
+            console.warn('No persistent widget ID');
+        } else {
+            console.log(`current room ID ${ev.getRoomId()}, ` +
+                `persistent widget room ID: ${this._roomIdByWidgetId[this._persistentWidgetId]}`);
+            if (ev.getRoomId() === this._roomIdByWidgetId[this._persistentWidgetId]) {
+                console.log('Got timeline event', ev, state);
+            }
         }
     }
 

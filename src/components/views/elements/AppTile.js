@@ -362,6 +362,11 @@ export default class AppTile extends React.Component {
             this._setupWidgetMessaging();
         }
         ActiveWidgetStore.setRoomId(this.props.id, this.props.room.roomId);
+        if (this.props.type === 'controlBot') {
+            ActiveWidgetStore.setWidgetPersistence(this.props.id, true);
+        } else {
+            console.warn(`Widget type ${this.props.type} is not persistent by default`);
+        }
         this.setState({loading: false});
     }
 
@@ -380,7 +385,7 @@ export default class AppTile extends React.Component {
             // Add additional whitelisted capabilities for specific app types
             if (this.props.type === 'controlBot') {
                 console.log('Adding additional whitelist capabilities for commandBot');
-                whitelistCapabilities = whitelistCapabilities.concat(['m.always_on_screen', 'mil.defcon']);
+                whitelistCapabilities = whitelistCapabilities.concat(['m.always_on_screen', 'mil.defcon', 'm.text']);
             }
 
             if (whitelistCapabilities && whitelistCapabilities.length > 0) {
