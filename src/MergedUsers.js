@@ -19,6 +19,8 @@ import SettingsStore from "./settings/SettingsStore";
 const MatrixClientPeg = require("./MatrixClientPeg");
 const dis = require("./dispatcher");
 
+const FAILED_LOOKUP_CACHE_TIME = 60 * 1000; // ms
+
 /**
  * Tracks users that should be merged together and their profiles.
  */
@@ -27,6 +29,7 @@ class MergedUsers {
     // We track which localparts we see and their associated parents.
     _localpartCache = {}; // [localpart] => {parentUserId, childrenUserIds}
     _profileCache = {}; // [user] => {global: profile, rooms: [roomId] => profile}
+    _failureCache = {}; // [user] => timestamp  // used for caching profile lookup failures
 
     constructor() {
         this._loadCaches();
@@ -73,6 +76,13 @@ class MergedUsers {
         const localpart = this._getLocalpart(userId);
         if (!localpart) return;
 
+        const now = new Date().getTime();
+        if (this._failureCache[localpart]) {
+            if (now - this._failureCache[localpart] >= FAILED_LOOKUP_CACHE_TIME) {
+                delete this._failureCache[localpart];
+            } else return;
+        }
+
         if (this._localpartCache[localpart]) {
             // We already have a parent, so just append a child if we need to
             const children = this._localpartCache[localpart].childrenUserIds;
@@ -103,6 +113,7 @@ class MergedUsers {
         } catch (e) {
             console.error("Non-fatal error getting linked accounts for " + userId);
             console.error(e);
+            this._failureCache[localpart] = now;
         }
     }
 
