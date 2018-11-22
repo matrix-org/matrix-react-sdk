@@ -108,7 +108,161 @@ a:link {
   background-color: $input-lighter-bg-color !important;
 }
 
-// input[type=text].mx_textinput_icon.mx_textinput_search,
-// input[type=search].mx_textinput_icon.mx_textinput_search {
-//     // background-image: url('../../img/icons-search.svg');
+// Top right buttons
+
+[data~="img/icons-settings-room.svg"], [data~="img/icons-share.svg"], [data~="img/icons-apps.svg"],
+[data~="img/icons-search.svg"], [data~="img/icons-people.svg"], [data~="img/icons-files.svg"],
+[data~="img/icons-notifications.svg"] {
+  opacity: 0;
+}
+
+[title~="Settings"]  {
+  mask: none, url('../../img/icons-settings-room.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  display: block;
+  height: 100%;
+}
+
+[title~="Share"]  {
+  mask: none, url('../../img/icons-share.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  display: block;
+  height: 100%;
+}
+
+[title~="Manage"]  {
+  mask: none, url('../../img/icons-apps.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  display: block;
+  height: 100%;
+}
+
+[title~="Search"]  {
+  mask: none, url('../../img/icons-search.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  display: block;
+  height: 100%;
+}
+
+[aria-label~="Members"]:before  {
+  mask: none, url('../../img/icons-people.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  display: block;
+  height: 100%;
+}
+
+[aria-label~="Members"]:before  {
+  mask: none, url('../../img/icons-people.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  display: block;
+  height: 100%;
+}
+
+[aria-label~="Files"]:before  {
+  mask: none, url('../../img/icons-files.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  display: block;
+  height: 100%;
+}
+
+[aria-label~="Notifications"]:before  {
+  mask: none, url('../../img/icons-notifications.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  display: block;
+  height: 100%;
+}
+
+.mx_RightPanel_headerButton_highlight {
+  border-bottom: 2px solid;
+}
+
+.mx_MemberList_invite span {
+  color: $primary-fg-color !important;
+  font-weight: 400 !important;
+  background-image: none !important;
+}
+
+.mx_MemberList_invite span:before {
+  mask: none, url('../../img/icon-invite-people.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  position: absolute;
+  left: 24px;
+  top: 0px;
+  width: 32px;
+  height: 100%;
+}
+
+[placeholder~="Filter"] {
+  min-height: 40px;
+  background-image: none !important;
+  background-color: $input-lighter-bg-color !important;
+  color: $input-lighter-fg-color !important;
+}
+
+[placeholder~="Filter"]::placeholder {
+  color: $input-lighter-fg-color !important;
+}
+
+#mx_MemberList_query::before {
+  mask: none, url('../../img/icons-search.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 32px;
+  height: 32px;
+}
+
+.mx_TagPanel_toggleTheme {
+  background-color: $primary-fg-color;
+  position: absolute;
+  bottom: 10px;
+  left:4px;
+  width: 32px;
+  height: 32px;
+}
+
+// // .mx_MessageComposer_videocall {
+// //   opacity: 0;
+// // }
+//
+// .mx_MessageComposer_videocall:before {
+// // [data~="img/icons-video.svg"] {
+//   mask: none, url('../../img/img/icons-video.svg');
+//   background-color: $primary-fg-color;
+//   content: '';
+//   mask-repeat: no-repeat;
+//   mask-position: center;
+//   display: block;
+//   height: 100%;
 // }

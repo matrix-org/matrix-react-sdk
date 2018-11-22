@@ -100,6 +100,10 @@ const TagPanel = React.createClass({
         dis.dispatch({action: 'deselect_tags'});
     },
 
+    onToggleThemeClick(ev) {
+        dis.dispatch({action: 'set_theme', value: 'dharma'});
+    },
+
     render() {
         const GroupsButton = sdk.getComponent('elements.GroupsButton');
         const DNDTagTile = sdk.getComponent('elements.DNDTagTile');
@@ -164,6 +168,12 @@ const TagPanel = React.createClass({
             <div className="mx_TagPanel_groupsButton">
                 <GroupsButton tooltip={true} />
             </div>
+            <AccessibleButton className="mx_TagPanel_toggleTheme" onClick={this.onToggleThemeClick}>
+                <TintableSvg src="img/icons-close.svg" width="24" height="24"
+                             alt={_t("Clear filter")}
+                             title={_t("Clear filter")}
+                />
+            </AccessibleButton>
         </div>;
     },
 });
