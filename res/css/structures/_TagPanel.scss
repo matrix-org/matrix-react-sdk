@@ -136,15 +136,17 @@ limitations under the License.
 }
 
 .mx_TagPanel_toggleTheme {
-  background-color: $primary-fg-color;
+  background-color: $neutral-badge-color;
+  mask: none, url('../../img/icon-night.svg');
+  mask-repeat: no-repeat;
+  mask-position: center;
   position: absolute;
-  bottom: 10px;
-  left:4px;
-  width: 32px;
-  height: 32px;
+  bottom: 16px;
+  left: 20px;
+  width: 30px;
+  height: 30px;
 }
 
 .mx_TagPanel_toggleTheme object {
     pointer-events: none;
 }
-

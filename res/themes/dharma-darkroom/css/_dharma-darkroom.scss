@@ -4,6 +4,7 @@
 $primary-fg-color: #FE3B30;
 $primary-bg-color: #120403;
 $menu-border-color: #781813;
+$primary-fg-color-highlight: #FFA8A3;
 
 $accent-color: $primary-fg-color;
 
@@ -22,7 +23,7 @@ $input-lighter-fg-color: $primary-fg-color;
 $input-lighter-bg-color: #330C0A;
 
 $roomtile-name-color: $primary-fg-color;
-$roomtile-selected-color: $primary-fg-color;
+$roomtile-selected-color: $primary-fg-color-highlight;
 $roomtile-selected-bg-color: $input-lighter-bg-color;
 $roomtile-focused-bg-color: $input-lighter-bg-color;
 
@@ -55,9 +56,10 @@ $username-variant8-color: #FF5230;
 
 $h3-color: $primary-fg-color;
 
+$neutral-badge-color: $primary-fg-color;
+
 
 .mx_BaseAvatar_image {
-  filter: blur(5px);
   filter: saturate(60%);
   opacity: 0.3;
   background-color: $primary-fg-color;
@@ -69,7 +71,9 @@ $h3-color: $primary-fg-color;
 }
 
 .mx_SearchBox {
-  min-height: 40px;
+  height: 28px !important;
+  margin-top: 22px;
+  margin-bottom: 22px;
   background-color: $input-lighter-bg-color !important;
   color: $input-lighter-fg-color !important;
 }
@@ -220,7 +224,8 @@ a:link {
 }
 
 [placeholder~="Filter"] {
-  min-height: 40px;
+  min-height: 28px !important;
+  max-height: 36px !important;
   background-image: none !important;
   background-color: $input-lighter-bg-color !important;
   color: $input-lighter-fg-color !important;
@@ -243,8 +248,13 @@ a:link {
   height: 32px;
 }
 
+.markdown-body pre {
+  background-color: $input-lighter-bg-color;
+}
+
 .mx_MessageComposer_videocall {
   position: relative;
+  margin-right: 12px;
 }
 
 .mx_MessageComposer_videocall > object {
@@ -259,13 +269,90 @@ a:link {
   mask-position: center;
   position: absolute;
   height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
   z-index: 3000;
 }
-.markdown-body pre {
-  background-color: $input-lighter-bg-color;
+
+.mx_MessageComposer_voicecall {
+  position: relative;
+}
+
+.mx_MessageComposer_voicecall > object {
+  opacity: 0;
+}
+
+.mx_MessageComposer_voicecall:before {
+  mask: none, url('../../img/icon-call.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  position: absolute;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 3000;
+}
+
+.mx_MessageComposer_upload {
+  position: relative;
+}
+
+.mx_MessageComposer_upload > object {
+  opacity: 0;
+}
+
+.mx_MessageComposer_upload:before {
+  mask: none, url('../../img/icons-upload.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  position: absolute;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 3000;
+}
+
+.mx_MessageComposer_stickers {
+  position: relative;
+}
+
+.mx_MessageComposer_stickers > object {
+  opacity: 0;
+}
+
+.mx_MessageComposer_stickers:before {
+  mask: none, url('../../img/icons-stickers.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  position: absolute;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 3000;
+}
+
+.mx_MessageComposer_formatting {
+  opacity: 0.5;
+  filter: sepia(100%);
+  margin-right: 0px !important;
+  padding-right: 8px !important;
+}
+
+.mx_RoomHeader_nametext {
+    color: $primary-fg-color-highlight !important;
+}
 }

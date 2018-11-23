@@ -172,7 +172,7 @@ const TagPanel = React.createClass({
                 <GroupsButton tooltip={true} />
             </div>
             <AccessibleButton className="mx_TagPanel_toggleTheme" onClick={this.onToggleThemeClick}>
-                <TintableSvg src="img/icons-close.svg" width="24" height="24"
+                <TintableSvg src="img/icon-night.svg" width="0px" height="0px"
                              alt={_t("Clear filter")}
                              title={_t("Clear filter")}
                 />
