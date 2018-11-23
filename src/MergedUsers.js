@@ -136,9 +136,11 @@ class MergedUsers {
      * @param {string} userId The user ID to check the status of.
      * @return {boolean} True if the user ID is a child, false otherwise.
      */
-    isChild(userId) {
+    isChild(userId, dontTrack) {
         // We can do this async as it doesn't matter all that much
-        this.trackUser(userId);
+        if (!dontTrack) {
+            this.trackUser(userId);
+        }
 
         const localpart = this._getLocalpart(userId);
         const cached = this._localpartCache[localpart];
@@ -151,8 +153,8 @@ class MergedUsers {
      * @param {string} userId The user ID to check the status of.
      * @return {boolean} True if the user ID is a parent, false otherwise.
      */
-    isParent(userId) {
-        return !this.isChild(userId);
+    isParent(userId, dontTrack) {
+        return !this.isChild(userId, dontTrack);
     }
 
     /**
@@ -188,14 +190,17 @@ class MergedUsers {
     getEffectiveParents(tuples, includeResultsWithNoUserId) {
         const parentIds = [];
         const parentObjects = [];
-
+        const dontTrack = tuples.length > 50;
+        if (dontTrack) {
+            console.log(`disabling MergedUsers.trackUser during call of getEffectiveParents with ${tuples.length} tuples`);
+        }
         // First pass: identify parents
         for (const tuple of tuples) {
             const userId = tuple[0];
             const obj = tuple[1];
 
             const includeAnyways = !userId && includeResultsWithNoUserId;
-            if (includeAnyways || this.isParent(userId)) {
+            if (includeAnyways || this.isParent(userId, dontTrack)) {
                 parentIds.push(userId);
                 parentObjects.push(obj);
             }
