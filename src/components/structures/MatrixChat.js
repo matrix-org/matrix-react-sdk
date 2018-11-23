@@ -1080,7 +1080,7 @@ export default React.createClass({
      */
     _onSetTheme: function(theme) {
         if (!theme) {
-            theme = SettingsStore.getValue("theme");
+            theme = "dharma-darkroom"; // SettingsStore.getValue("theme");
         }
 
         // look for the stylesheet elements.
@@ -1331,16 +1331,16 @@ export default React.createClass({
             }, null, true);
         });
 
-        cli.on("accountData", function(ev) {
-            if (ev.getType() === 'im.vector.web.settings') {
-                if (ev.getContent() && ev.getContent().theme) {
-                    dis.dispatch({
-                        action: 'set_theme',
-                        value: ev.getContent().theme,
-                    });
-                }
-            }
-        });
+        // cli.on("accountData", function(ev) {
+        //     if (ev.getType() === 'im.vector.web.settings') {
+        //         if (ev.getContent() && ev.getContent().theme) {
+        //             dis.dispatch({
+        //                 action: 'set_theme',
+        //                 value: ev.getContent().theme,
+        //             });
+        //         }
+        //     }
+        // });
 
         const dft = new DecryptionFailureTracker((total, errorCode) => {
             Analytics.trackEvent('E2E', 'Decryption failure', errorCode, total);

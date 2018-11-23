@@ -29,9 +29,19 @@ limitations under the License.
     display: none;
     flex: 0 0 16px;
     height: 16px;
-    background-image: url('../../img/icon_context.svg');
+    // background-image: url('../../img/icon_context.svg');
     background-repeat: no-repeat;
     background-position: center;
+}
+
+.mx_RoomTile_menuButton:before{
+  mask: none, url('../../img/icon_context.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  display: block;
+  height: 100%;
 }
 
 // toggle menuButton and badge on hover/menu displayed
@@ -168,4 +178,3 @@ limitations under the License.
 .mx_RoomTile.mx_RoomTile_transparent:focus {
     background-color: $roomtile-transparent-focused-color;
 }
-

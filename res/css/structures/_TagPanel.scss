@@ -134,3 +134,19 @@ limitations under the License.
 .mx_TagPanel_groupsButton object {
     pointer-events: none;
 }
+
+.mx_TagPanel_toggleTheme {
+  background-color: $neutral-badge-color;
+  mask: none, url('../../img/icon-night.svg');
+  mask-repeat: no-repeat;
+  mask-position: center;
+  position: absolute;
+  bottom: 16px;
+  left: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.mx_TagPanel_toggleTheme object {
+    pointer-events: none;
+}
