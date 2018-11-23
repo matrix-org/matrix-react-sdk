@@ -15,14 +15,27 @@ limitations under the License.
 */
 
 .mx_NewThreadBanner {
-    color: #7AC9A1;
-    background: #F9FCFB;
-    border: 1px solid #E9F4EE;
+    color: $received-messages-alert-fg-color;
+    background: $received-messages-alert-bg-color;
+    border: 1px solid $received-messages-alert-fg-color;
     border-radius: 4px;
     padding: 8px 8px 8px 64px;
-    background-image: url('../../img/remote-messages.svg');
-    background-position: 14px center;
-    background-repeat: no-repeat;
+
+    position: relative; //for masked background image
+}
+
+.mx_NewThreadBanner:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    mask: url('../../img/remote-messages.svg');
+    mask-position: 14px center;
+    mask-repeat: no-repeat;
+    background-color: $received-messages-alert-fg-color;
+    pointer-events: none;
 }
 
 .mx_NewThreadBanner_timestamp {
@@ -38,3 +51,7 @@ limitations under the License.
 .mx_NewThreadBanner_message a {
     color: inherit !important;
 }
+
+
+$received-messages-alert-fg-color: #46C65C;
+$received-messages-alert-bg-color: #19361E;

@@ -58,6 +58,9 @@ $h3-color: $primary-fg-color;
 
 $neutral-badge-color: $primary-fg-color;
 
+// used by NewThreadBanner
+$received-messages-alert-fg-color: #46C65C;
+$received-messages-alert-bg-color: #19361E;
 
 .mx_BaseAvatar_image {
   filter: saturate(60%);
@@ -355,3 +358,4 @@ a:link {
 .mx_RoomHeader_nametext {
     color: $primary-fg-color-highlight !important;
 }
+
