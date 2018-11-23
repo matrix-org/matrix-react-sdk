@@ -147,6 +147,15 @@ class GroupStore extends EventEmitter {
                 return;
             }
 
+            // Requests to Synapse for group members may fail with an internal
+            // error in the presence of duplicate invites.
+            // https://github.com/matrix-org/synapse/issues/2633
+            if (stateKey === this.STATE_KEY.GroupMembers &&
+                err.httpStatus === 500 && err.message === "More than one row matched") {
+                console.error(`Ignoring known failure to get resource ${stateKey} for ${groupId}`, err);
+                return;
+            }
+
             console.error(`Failed to get resource ${stateKey} for ${groupId}`, err);
             this.emit('error', err, groupId);
         }).finally(() => {
