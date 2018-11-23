@@ -1,0 +1,358 @@
+@import "_fonts.scss";
+
+// typical text (dark-on-white in light skin)
+$primary-fg-color: #FE3B30;
+$primary-bg-color: #120403;
+$menu-border-color: #781813;
+$primary-fg-color-highlight: #FFA8A3;
+
+$accent-color: $primary-fg-color;
+
+$panel-bg-color: $primary-bg-color;
+
+$tagpanel-bg-color: $primary-bg-color;
+
+$secondary-accent-color: $primary-bg-color;
+$tertiary-accent-color: $primary-bg-color;
+
+$panel-divider-color: $menu-border-color;
+
+$roomsublist-label-fg-color: $primary-fg-color;
+
+$input-lighter-fg-color: $primary-fg-color;
+$input-lighter-bg-color: #330C0A;
+
+$roomtile-name-color: $primary-fg-color;
+$roomtile-selected-color: $primary-fg-color-highlight;
+$roomtile-selected-bg-color: $input-lighter-bg-color;
+$roomtile-focused-bg-color: $input-lighter-bg-color;
+
+$roomheader-addroom-color: $primary-fg-color;
+$roomtopic-color: $primary-fg-color;
+$primary-hairline-color: $menu-border-color;
+
+$button-bg-color: $input-lighter-bg-color;
+$button-fg-color: $input-fg-color;
+
+$event-selected-color: $input-lighter-bg-color;
+
+$blockquote-bar-color: $primary-fg-color;
+$menu-bg-color: $input-lighter-bg-color;
+
+$widget-menu-bar-bg-color: $input-lighter-bg-color;
+
+$dialog-background-bg-color: $primary-bg-color;
+
+$input-border-color: $menu-border-color;
+
+$username-variant1-color: #FF5964;
+$username-variant2-color: #D4B694;
+$username-variant3-color: #FF9500;
+$username-variant4-color: #B08664;
+$username-variant5-color: #AF9980;
+$username-variant6-color: #B29AA6;
+$username-variant7-color: #F4ACA5;
+$username-variant8-color: #FF5230;
+
+$h3-color: $primary-fg-color;
+
+$neutral-badge-color: $primary-fg-color;
+
+
+.mx_BaseAvatar_image {
+  filter: saturate(60%);
+  opacity: 0.3;
+  background-color: $primary-fg-color;
+}
+
+.mx_LeftPanel {
+  background-color: $primary-bg-color;
+  border-left: 1px solid $menu-border-color;
+}
+
+.mx_SearchBox {
+  height: 28px !important;
+  margin-top: 22px;
+  margin-bottom: 22px;
+  background-color: $input-lighter-bg-color !important;
+  color: $input-lighter-fg-color !important;
+}
+
+.dark-panel {
+  background-color: $primary-bg-color !important;
+}
+
+a:link {
+  font-weight: 800;
+}
+
+.mx_Dialog {
+    color: $primary-fg-color !important;
+    border: 1px solid $primary-fg-color !important;
+    border-radius: 8px;
+}
+
+.mx_Dialog button, .mx_Dialog input[type="submit"] {
+    border: 1px solid $primary-bg-color !important;
+    color: $accent-color !important;
+    background-color: $primary-bg-color !important;
+}
+
+.mx_Dialog button.mx_Dialog_primary, .mx_Dialog  input[type="submit"].mx_Dialog_primary {
+    color: $input-lighter-fg-color !important;
+    background-color: $input-lighter-bg-color !important;
+}
+
+.mx_ChatInviteDialog_input {
+  color: $primary-fg-color !important;
+}
+
+.mx_MemberDeviceInfo_textButton {
+  color: $input-lighter-fg-color !important;
+  background-color: $input-lighter-bg-color !important;
+}
+
+// Top right buttons
+
+[data~="img/icons-settings-room.svg"], [data~="img/icons-share.svg"], [data~="img/icons-apps.svg"],
+[data~="img/icons-search.svg"], [data~="img/icons-people.svg"], [data~="img/icons-files.svg"],
+[data~="img/icons-notifications.svg"] {
+  opacity: 0;
+}
+
+[title~="Settings"]  {
+  mask: none, url('../../img/icons-settings-room.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  display: block;
+  height: 100%;
+}
+
+[title~="Share"]  {
+  mask: none, url('../../img/icons-share.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  display: block;
+  height: 100%;
+}
+
+[title~="Manage"]  {
+  mask: none, url('../../img/icons-apps.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  display: block;
+  height: 100%;
+}
+
+[title~="Search"]  {
+  mask: none, url('../../img/icons-search.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  display: block;
+  height: 100%;
+}
+
+[aria-label~="Members"]:before  {
+  mask: none, url('../../img/icons-people.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  display: block;
+  height: 100%;
+}
+
+[aria-label~="Members"]:before  {
+  mask: none, url('../../img/icons-people.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  display: block;
+  height: 100%;
+}
+
+[aria-label~="Files"]:before  {
+  mask: none, url('../../img/icons-files.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  display: block;
+  height: 100%;
+}
+
+[aria-label~="Notifications"]:before  {
+  mask: none, url('../../img/icons-notifications.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  display: block;
+  height: 100%;
+}
+
+.mx_RightPanel_headerButton_highlight {
+  border-bottom: 2px solid;
+}
+
+.mx_MemberList_invite span {
+  color: $primary-fg-color !important;
+  font-weight: 400 !important;
+  background-image: none !important;
+}
+
+.mx_MemberList_invite span:before {
+  mask: none, url('../../img/icon-invite-people.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  position: absolute;
+  left: 24px;
+  top: 0px;
+  width: 32px;
+  height: 100%;
+}
+
+[placeholder~="Filter"] {
+  min-height: 28px !important;
+  max-height: 36px !important;
+  background-image: none !important;
+  background-color: $input-lighter-bg-color !important;
+  color: $input-lighter-fg-color !important;
+}
+
+[placeholder~="Filter"]::placeholder {
+  color: $input-lighter-fg-color !important;
+}
+
+#mx_MemberList_query::before {
+  mask: none, url('../../img/icons-search.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 32px;
+  height: 32px;
+}
+
+.markdown-body pre {
+  background-color: $input-lighter-bg-color;
+}
+
+.mx_MessageComposer_videocall {
+  position: relative;
+  margin-right: 12px;
+}
+
+.mx_MessageComposer_videocall > object {
+  opacity: 0;
+}
+
+.mx_MessageComposer_videocall:before {
+  mask: none, url('../../img/icons-video.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  position: absolute;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 3000;
+}
+
+.mx_MessageComposer_voicecall {
+  position: relative;
+}
+
+.mx_MessageComposer_voicecall > object {
+  opacity: 0;
+}
+
+.mx_MessageComposer_voicecall:before {
+  mask: none, url('../../img/icon-call.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  position: absolute;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 3000;
+}
+
+.mx_MessageComposer_upload {
+  position: relative;
+}
+
+.mx_MessageComposer_upload > object {
+  opacity: 0;
+}
+
+.mx_MessageComposer_upload:before {
+  mask: none, url('../../img/icons-upload.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  position: absolute;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 3000;
+}
+
+.mx_MessageComposer_stickers {
+  position: relative;
+}
+
+.mx_MessageComposer_stickers > object {
+  opacity: 0;
+}
+
+.mx_MessageComposer_stickers:before {
+  mask: none, url('../../img/icons-stickers.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  position: absolute;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 3000;
+}
+
+.mx_MessageComposer_formatting {
+  opacity: 0.5;
+  filter: sepia(100%);
+  margin-right: 0px !important;
+  padding-right: 8px !important;
+}
+
+.mx_RoomHeader_nametext {
+    color: $primary-fg-color-highlight !important;
+}
+}

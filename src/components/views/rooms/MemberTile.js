@@ -24,6 +24,7 @@ const sdk = require('../../../index');
 const dis = require('../../../dispatcher');
 const Modal = require("../../../Modal");
 import { _t } from '../../../languageHandler';
+import MergedUsers from "../../../MergedUsers";
 
 module.exports = React.createClass({
     displayName: 'MemberTile',
@@ -57,7 +58,29 @@ module.exports = React.createClass({
         ) {
             return true;
         }
+        if (this.member_display_name !== nextState.displayName) return true;
         return false;
+    },
+
+    componentDidMount: function() {
+        this._updateDisplayName();
+    },
+
+    componentDidUpdate: function() {
+        this._updateDisplayName();
+    },
+
+    _updateDisplayName: function() {
+        const member = this.props.member;
+        MergedUsers.getProfile(member.userId, member.roomId).then(profile => {
+            if (profile.displayname === this.state.displayName) return;
+            this.setState({displayName: profile.displayname});
+        }).catch(e => {
+            console.error("Error getting profile for user " + member.userId);
+            console.error(e);
+            if (member.name === this.state.displayName) return;
+            this.setState({displayName: member.name});
+        });
     },
 
     onClick: function(e) {
@@ -67,12 +90,9 @@ module.exports = React.createClass({
         });
     },
 
-    _getDisplayName: function() {
-        return this.props.member.name;
-    },
-
     getPowerLabel: function() {
-        return _t("%(userName)s (power %(powerLevelNumber)s)", {userName: this.props.member.userId, powerLevelNumber: this.props.member.powerLevel});
+        const userId = MergedUsers.getParent(this.props.member.userId);
+        return _t("%(userName)s (power %(powerLevelNumber)s)", {userName: userId, powerLevelNumber: this.props.member.powerLevel});
     },
 
     render: function() {
@@ -81,7 +101,7 @@ module.exports = React.createClass({
         const EntityTile = sdk.getComponent('rooms.EntityTile');
 
         const member = this.props.member;
-        const name = this._getDisplayName();
+        const name = this.member_display_name = this.state.displayName || this.props.member.name;
         const active = -1;
         const presenceState = member.user ? member.user.presence : null;
 

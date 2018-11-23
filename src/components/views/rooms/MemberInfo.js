@@ -39,8 +39,10 @@ import Unread from '../../../Unread';
 import { findReadReceiptFromUserId } from '../../../utils/Receipt';
 import withMatrixClient from '../../../wrappers/withMatrixClient';
 import AccessibleButton from '../elements/AccessibleButton';
-import RoomViewStore from '../../../stores/RoomViewStore';
 import SdkConfig from '../../../SdkConfig';
+import MergedUsers from "../../../MergedUsers";
+import {User} from 'matrix-js-sdk';
+import * as Avatar from "../../../Avatar";
 
 module.exports = withMatrixClient(React.createClass({
     displayName: 'MemberInfo',
@@ -48,6 +50,7 @@ module.exports = withMatrixClient(React.createClass({
     propTypes: {
         matrixClient: PropTypes.object.isRequired,
         member: PropTypes.object.isRequired,
+        roomId: PropTypes.string,
     },
 
     getInitialState: function() {
@@ -89,6 +92,7 @@ module.exports = withMatrixClient(React.createClass({
     },
 
     componentDidMount: function() {
+        this.dispatcherRef = dis.register(this.onAction);
         this._updateStateForNewMember(this.props.member);
     },
 
@@ -115,6 +119,7 @@ module.exports = withMatrixClient(React.createClass({
         if (this._cancelDeviceList) {
             this._cancelDeviceList();
         }
+        dis.unregister(this.dispatcherRef);
     },
 
     _checkIgnoreState: function() {
@@ -196,6 +201,14 @@ module.exports = withMatrixClient(React.createClass({
     onAccountData: function(ev) {
         if (ev.getType() === 'm.direct') {
             this.forceUpdate();
+        }
+    },
+
+    onAction: function(payload) {
+        if (payload.action === "merged_user_general_update") {
+            if (MergedUsers.isChildOf(this.props.member.userId, [payload.namespaceUserId])) {
+                this.forceUpdate();
+            }
         }
     },
 
@@ -659,6 +672,34 @@ module.exports = withMatrixClient(React.createClass({
         });
     },
 
+    onUserAliasClick: function(aliasUserId) {
+        const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
+        Modal.createTrackedDialog('share room member dialog', '', ShareDialog, {
+            target: new User(aliasUserId),
+        });
+    },
+
+    _renderChildAccounts: function() {
+        const children = MergedUsers.getChildren(this.props.member.userId);
+        const childLinks = children.map((c) => {
+            return (
+                <div className="mx_MemberInfo_field mx_AccessibleButton" role="button"
+                    onClick={() => this.onUserAliasClick(c)} key={c}>
+                    { c }
+                </div>
+            );
+        });
+
+        return (
+            <div>
+                <h3>{ _t("Aliases") }</h3>
+                <div className="mx_MemberInfo_buttons">
+                    { childLinks }
+                </div>
+            </div>
+        );
+    },
+
     _renderUserOptions: function() {
         const cli = this.props.matrixClient;
         const member = this.props.member;
@@ -711,7 +752,7 @@ module.exports = withMatrixClient(React.createClass({
             }
 
             if (!member || !member.membership || member.membership === 'leave') {
-                const roomId = member && member.roomId ? member.roomId : RoomViewStore.getRoomId();
+                const roomId = member && member.roomId ? member.roomId : this.props.roomId;
                 const onInviteUserButton = async() => {
                     try {
                         await cli.invite(roomId, member.userId);
@@ -877,7 +918,8 @@ module.exports = withMatrixClient(React.createClass({
                 </div>;
         }
 
-        const memberName = this.props.member.name;
+        const profile = MergedUsers.getProfileFast(this.props.member.userId, this.props.member.roomId);
+        const memberName = profile.displayname || this.props.member.name;
 
         let presenceState;
         let presenceLastActiveAgo;
@@ -928,12 +970,11 @@ module.exports = withMatrixClient(React.createClass({
             </div>;
         }
 
-        const avatarUrl = this.props.member.getMxcAvatarUrl();
+        const avatarUrl = Avatar.avatarUrlForMember(this.props.member, 800, 800);
         let avatarElement;
         if (avatarUrl) {
-            const httpUrl = this.props.matrixClient.mxcUrlToHttp(avatarUrl, 800, 800);
             avatarElement = <div className="mx_MemberInfo_avatar">
-                <img src={httpUrl} />
+                <img src={avatarUrl} />
             </div>
         }
 
@@ -953,13 +994,15 @@ module.exports = withMatrixClient(React.createClass({
 
                         <div className="mx_MemberInfo_profile">
                             <div className="mx_MemberInfo_profileField">
-                                { this.props.member.userId }
+                                { MergedUsers.getParent(this.props.member.userId) }
                             </div>
                             { roomMemberDetails }
                         </div>
                     </div>
                     <GeminiScrollbarWrapper autoshow={true} className="mx_MemberInfo_scrollContainer">
                         <div className="mx_MemberInfo_container">
+                            { this._renderChildAccounts() }
+
                             { this._renderUserOptions() }
 
                             { adminTools }

@@ -223,6 +223,7 @@
     "Failed to join room": "Failed to join room",
     "Message Pinning": "Message Pinning",
     "Increase performance by only loading room members on first view": "Increase performance by only loading room members on first view",
+    "Merge users by their localparts": "Merge users by their localparts",
     "Disable Emoji suggestions while typing": "Disable Emoji suggestions while typing",
     "Use compact timeline layout": "Use compact timeline layout",
     "Hide removed messages": "Hide removed messages",
@@ -382,6 +383,7 @@
     "Are you sure?": "Are you sure?",
     "No devices with registered encryption keys": "No devices with registered encryption keys",
     "Devices": "Devices",
+    "Aliases": "Aliases",
     "Unignore": "Unignore",
     "Ignore": "Ignore",
     "Jump to read receipt": "Jump to read receipt",
@@ -1275,5 +1277,6 @@
     "Open Devtools": "Open Devtools",
     "Show developer tools": "Show developer tools",
     "Received older messages: <link>View messages</link>": "Received older messages: <link>View messages</link>",
-    "Received at %(time)": "Received at %(time)"
+    "Received at %(time)": "Received at %(time)",
+    "View as grid": "View as grid"
 }

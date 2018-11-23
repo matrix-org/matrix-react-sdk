@@ -21,6 +21,7 @@ import { _t } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
 import dis from '../../../dispatcher';
 const MatrixClientPeg = require("../../../MatrixClientPeg");
+const MergedUsers = require("../../../MergedUsers");
 const sdk = require('../../../index');
 const rate_limited_func = require('../../../ratelimitedfunc');
 const CallHandler = require("../../../CallHandler");
@@ -58,6 +59,7 @@ module.exports = React.createClass({
         if (enablePresenceByHsUrl && enablePresenceByHsUrl[hsUrl] !== undefined) {
             this._showPresence = enablePresenceByHsUrl[hsUrl];
         }
+        this.dispatcherRef = dis.register(this.onAction);
     },
 
     _listenForMembersChanges: function() {
@@ -86,6 +88,8 @@ module.exports = React.createClass({
 
         // cancel any pending calls to the rate_limited_funcs
         this._updateList.cancelPendingCall();
+
+        dis.unregister(this.dispatcherRef);
     },
 
     /**
@@ -180,6 +184,12 @@ module.exports = React.createClass({
         }
     },
 
+    onAction(payload) {
+        if (payload.action === "merged_user_general_update") {
+            this._updateList();
+        }
+    },
+
     _updateList: new rate_limited_func(function() {
         // console.log("Updating memberlist");
         const newState = {
@@ -218,7 +228,8 @@ module.exports = React.createClass({
         const ConferenceHandler = CallHandler.getConferenceHandler();
 
         const allMembers = this.getMembersWithUser();
-        const filteredAndSortedMembers = allMembers.filter((m) => {
+        const parentMembers = MergedUsers.getEffectiveParents(allMembers.map((m) => [m.userId, m]));
+        const filteredAndSortedMembers = parentMembers.filter((m) => {
             return (
                 m.membership === 'join' || m.membership === 'invite'
             ) && (
@@ -226,6 +237,7 @@ module.exports = React.createClass({
                 (ConferenceHandler && !ConferenceHandler.isConferenceUser(m.userId))
             );
         });
+
         filteredAndSortedMembers.sort(this.memberSort);
         return filteredAndSortedMembers;
     },

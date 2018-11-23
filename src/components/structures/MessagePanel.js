@@ -25,6 +25,7 @@ import dis from "../../dispatcher";
 import sdk from '../../index';
 
 import MatrixClientPeg from '../../MatrixClientPeg';
+import MergedUsers from "../../MergedUsers";
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = ['m.sticker', 'm.room.message'];
@@ -242,6 +243,18 @@ module.exports = React.createClass({
 
     // TODO: Implement granular (per-room) hide options
     _shouldShowEvent: function(mxEv) {
+        const event = mxEv.event;
+        if (event && event.type === "m.room.member") {
+            // We hide membership events that do not belong to the primary account. We can
+            // do this because child accounts *should* be synchronized in the room anyways,
+            // making these events redundant. We also hide invites sent by the child account
+            // to the parent account.
+            if (MergedUsers.getParent(event.state_key) !== event.state_key) return false;
+            if (MergedUsers.getParent(event.state_key) === MergedUsers.getParent(event.sender) && event.content.membership === "invite") {
+                return false;
+            }
+        }
+
         if (mxEv.sender && MatrixClientPeg.get().isUserIgnored(mxEv.sender.userId)) {
             return false; // ignored = no show (only happens if the ignore happens after an event was received)
         }
@@ -464,7 +477,8 @@ module.exports = React.createClass({
 
         // if there is a previous event and it has the same sender as this event
         // and the types are the same/is in continuedTypes and the time between them is <= CONTINUATION_MAX_INTERVAL
-        if (prevEvent !== null && prevEvent.sender && mxEv.sender && mxEv.sender.userId === prevEvent.sender.userId &&
+        if (prevEvent !== null && prevEvent.sender && mxEv.sender &&
+            MergedUsers.getParent(mxEv.sender.userId) === MergedUsers.getParent(prevEvent.sender.userId) &&
             (mxEv.getType() === prevEvent.getType() || eventTypeContinues) &&
             (mxEv.getTs() - prevEvent.getTs() <= CONTINUATION_MAX_INTERVAL)) {
             continuation = true;
@@ -544,7 +558,7 @@ module.exports = React.createClass({
     // get a list of read receipts that should be shown next to this event
     // Receipts are objects which have a 'userId', 'roomMember' and 'ts'.
     _getReadReceiptsForEvent: function(event) {
-        const myUserId = MatrixClientPeg.get().credentials.userId;
+        const myUserId = MergedUsers.getParent(MatrixClientPeg.get().credentials.userId);
 
         // get list of read receipts, sorted most recent first
         const room = MatrixClientPeg.get().getRoom(event.getRoomId());
@@ -553,12 +567,16 @@ module.exports = React.createClass({
         }
         const receipts = [];
         room.getReceiptsForEvent(event).forEach((r) => {
-            if (!r.userId || r.type !== "m.read" || r.userId === myUserId) {
+            const receiptUserId = r.userId ? MergedUsers.getParent(r.userId) : null;
+            if (!receiptUserId || r.type !== "m.read" || receiptUserId === myUserId) {
                 return; // ignore non-read receipts and receipts from self.
             }
-            if (MatrixClientPeg.get().isUserIgnored(r.userId)) {
+            if (MatrixClientPeg.get().isUserIgnored(receiptUserId)) {
                 return; // ignore ignored users
             }
+            // We'll still use the room member of the original receipt because we
+            // want to have a reference to a valid room member (the parent may not
+            // be in the room for some reason).
             const member = room.getMember(r.userId);
             receipts.push({
                 userId: r.userId,
@@ -567,7 +585,10 @@ module.exports = React.createClass({
             });
         });
 
-        return receipts.sort((r1, r2) => {
+        // Filter out duplicates
+        const parentReceipts = MergedUsers.getEffectiveParents(receipts.map(r => [r.userId, r]));
+
+        return parentReceipts.sort((r1, r2) => {
             return r2.ts - r1.ts;
         });
     },
