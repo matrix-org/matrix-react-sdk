@@ -24,6 +24,7 @@ import MatrixClientPeg from '../../../MatrixClientPeg';
 import { MATRIXTO_URL_PATTERN } from '../../../linkify-matrix';
 import { getDisplayAliasForRoom } from '../../../Rooms';
 import FlairStore from "../../../stores/FlairStore";
+import MergedUsers from "../../../MergedUsers";
 
 const REGEX_MATRIXTO = new RegExp(MATRIXTO_URL_PATTERN);
 
@@ -122,6 +123,7 @@ const Pill = React.createClass({
         let member;
         let group;
         let room;
+        let memberProfile;
         switch (pillType) {
             case Pill.TYPE_AT_ROOM_MENTION: {
                 room = nextProps.room;
@@ -134,6 +136,7 @@ const Pill = React.createClass({
                     member = new RoomMember(null, resourceId);
                     this.doProfileLookup(resourceId, member);
                 }
+                memberProfile = MergedUsers.getProfileOf(member);
             }
                 break;
             case Pill.TYPE_ROOM_MENTION: {
@@ -163,26 +166,38 @@ const Pill = React.createClass({
                 }
             }
         }
-        this.setState({resourceId, pillType, member, group, room});
+        this.setState({resourceId, pillType, member, group, room, memberProfile});
     },
 
     componentWillMount() {
         this._unmounted = false;
         this._matrixClient = MatrixClientPeg.get();
         this.componentWillReceiveProps(this.props);
+        this.dispatcherRef = dis.register(this.onAction);
     },
 
     componentWillUnmount() {
         this._unmounted = true;
+        dis.unregister(this.dispatcherRef);
+    },
+
+    onAction(payload) {
+        if (!this.state.member) return;
+        if (payload.action === "merged_user_general_update") {
+            if (MergedUsers.isChildOf(this.state.member.userId, [payload.namespaceUserId])) {
+                this.setState({memberProfile: MergedUsers.getProfileOf(this.state.member)});
+            }
+        }
     },
 
     doProfileLookup: function(userId, member) {
-        MatrixClientPeg.get().getProfileInfo(userId).then((resp) => {
+        MergedUsers.getProfile(userId).then((resp) => {
             if (this._unmounted) {
                 return;
             }
             member.name = resp.displayname;
             member.rawDisplayName = resp.displayname;
+            console.log(resp);
             member.events.member = {
                 getContent: () => {
                     return {avatar_url: resp.avatar_url};
@@ -191,7 +206,7 @@ const Pill = React.createClass({
                     return this.getContent();
                 },
             };
-            this.setState({member});
+            this.setState({member, memberProfile: null});
         }).catch((err) => {
             console.error('Could not retrieve profile data for ' + userId + ':', err);
         });
@@ -208,7 +223,7 @@ const Pill = React.createClass({
         const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
         const RoomAvatar = sdk.getComponent('avatars.RoomAvatar');
 
-        const resource = this.state.resourceId;
+        let resource = this.state.resourceId;
 
         let avatar = null;
         let linkText = resource;
@@ -231,10 +246,12 @@ const Pill = React.createClass({
             case Pill.TYPE_USER_MENTION: {
                     // If this user is not a member of this room, default to the empty member
                     const member = this.state.member;
+                    const profile = this.state.memberProfile || {};
                     if (member) {
-                        userId = member.userId;
+                        userId = MergedUsers.getParent(member.userId);
+                        resource = userId;
                         member.rawDisplayName = member.rawDisplayName || '';
-                        linkText = member.rawDisplayName;
+                        linkText = profile.displayname || member.rawDisplayName;
                         if (this.props.shouldShowPillAvatar) {
                             avatar = <MemberAvatar member={member} width={16} height={16} />;
                         }
@@ -271,8 +288,11 @@ const Pill = React.createClass({
                 break;
         }
 
+        userId = userId ? MergedUsers.getParent(userId) : null;
+        const myUserId = MergedUsers.getParent(MatrixClientPeg.get().credentials.userId);
+
         const classes = classNames(pillClass, {
-            "mx_UserPill_me": userId === MatrixClientPeg.get().credentials.userId,
+            "mx_UserPill_me": userId === myUserId,
             "mx_UserPill_selected": this.props.isSelected,
         });
 

@@ -85,6 +85,7 @@ const SIMPLE_SETTINGS = [
     { id: "pinMentionedRooms" },
     { id: "pinUnreadRooms" },
     { id: "showDeveloperTools" },
+    { id: "mergeUsersByLocalpart" },
 ];
 
 // These settings must be defined in SettingsStore

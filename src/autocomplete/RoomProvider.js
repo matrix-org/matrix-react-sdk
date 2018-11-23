@@ -28,6 +28,7 @@ import sdk from '../index';
 import _sortBy from 'lodash/sortBy';
 import {makeRoomPermalink} from "../matrix-to";
 import type {Completion, SelectionRange} from "./Autocompleter";
+import MergedUsers from "../MergedUsers";
 
 const ROOM_REGEX = /\B#\S*/g;
 
@@ -61,7 +62,7 @@ export default class RoomProvider extends AutocompleteProvider {
             ).map((room) => {
                 return {
                     room: room,
-                    name: room.name,
+                    name: MergedUsers.calculateRoomName(room),
                     displayedAlias: getDisplayAliasForRoom(room),
                 };
             }));
@@ -71,6 +72,7 @@ export default class RoomProvider extends AutocompleteProvider {
                 (c) => score(matchedString, c.displayedAlias),
                 (c) => c.displayedAlias.length,
             ]).map((room) => {
+                const roomName = MergedUsers.calculateRoomName(room);
                 const displayAlias = getDisplayAliasForRoom(room.room) || room.roomId;
                 return {
                     completion: displayAlias,
@@ -78,7 +80,7 @@ export default class RoomProvider extends AutocompleteProvider {
                     suffix: ' ',
                     href: makeRoomPermalink(displayAlias),
                     component: (
-                        <PillCompletion initialComponent={<RoomAvatar width={24} height={24} room={room.room} />} title={room.name} description={displayAlias} />
+                        <PillCompletion initialComponent={<RoomAvatar width={24} height={24} room={room.room} />} title={roomName} description={displayAlias} />
                     ),
                     range,
                 };

@@ -16,8 +16,11 @@ limitations under the License.
 
 'use strict';
 
+import MergedUsers from "../../../MergedUsers";
+
 const React = require('react');
 import PropTypes from 'prop-types';
+import dis from "../../../dispatcher";
 const Avatar = require('../../../Avatar');
 const sdk = require("../../../index");
 const dispatcher = require("../../../dispatcher");
@@ -51,24 +54,42 @@ module.exports = React.createClass({
         return this._getState(this.props);
     },
 
+    componentWillMount: function() {
+        this.dispatcherRef = dis.register(this.onAction);
+    },
+
+    componentWillUnmount: function() {
+        dis.unregister(this.dispatcherRef);
+    },
+
     componentWillReceiveProps: function(nextProps) {
         this.setState(this._getState(nextProps));
     },
 
+    onAction: function(payload) {
+        if (payload.action === "merged_user_general_update") {
+            if (MergedUsers.isChildOf(this.props.member.userId, [payload.namespaceUserId])) {
+                this.setState(this._getState(this.props))
+            }
+        }
+    },
+
     _getState: function(props) {
         if (props.member) {
+            const profile = MergedUsers.getProfileOf(props.member);
             return {
-                name: props.member.name,
-                title: props.title || props.member.userId,
+                name: profile.displayname,
+                title: props.title || MergedUsers.getParent(props.member.userId),
                 imageUrl: Avatar.avatarUrlForMember(props.member,
                                              props.width,
                                              props.height,
                                              props.resizeMethod),
             };
         } else if (props.fallbackUserId) {
+            const userId = MergedUsers.getParent(props.fallbackUserId);
             return {
-                name: props.fallbackUserId,
-                title: props.fallbackUserId,
+                name: userId,
+                title: userId,
             };
         } else {
             console.error("MemberAvatar called somehow with null member or fallbackUserId");
@@ -79,7 +100,7 @@ module.exports = React.createClass({
         const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
 
         let {member, fallbackUserId, onClick, viewUserOnClick, ...otherProps} = this.props;
-        const userId = member ? member.userId : fallbackUserId;
+        const userId = MergedUsers.getParent(member ? member.userId : fallbackUserId);
 
         if (viewUserOnClick) {
             onClick = () => {
