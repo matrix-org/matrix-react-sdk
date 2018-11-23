@@ -50,6 +50,7 @@ export default class RightPanel extends React.Component {
         GroupRoomList: 'GroupRoomList',
         GroupRoomInfo: 'GroupRoomInfo',
         FilePanel: 'FilePanel',
+        ThreadPanel: 'ThreadPanel',
         NotificationPanel: 'NotificationPanel',
         RoomMemberInfo: 'RoomMemberInfo',
         GroupMemberInfo: 'GroupMemberInfo',
@@ -142,6 +143,7 @@ export default class RightPanel extends React.Component {
             this.setState({
                 phase: payload.phase,
                 member: payload.member,
+                mxEvent: payload.mxEvent,
             });
         }
     }
@@ -151,6 +153,7 @@ export default class RightPanel extends React.Component {
         const MemberInfo = sdk.getComponent('rooms.MemberInfo');
         const NotificationPanel = sdk.getComponent('structures.NotificationPanel');
         const FilePanel = sdk.getComponent('structures.FilePanel');
+        const ThreadPanel = sdk.getComponent('structures.ThreadPanel');
 
         const GroupMemberList = sdk.getComponent('groups.GroupMemberList');
         const GroupMemberInfo = sdk.getComponent('groups.GroupMemberInfo');
@@ -188,6 +191,9 @@ export default class RightPanel extends React.Component {
             panel = <NotificationPanel />;
         } else if (this.state.phase === RightPanel.Phase.FilePanel) {
             panel = <FilePanel roomId={this.props.roomId} />;
+        } else if (this.state.phase === RightPanel.Phase.ThreadPanel) {
+            panel = <ThreadPanel roomId={this.props.roomId} mxEvent={this.state.mxEvent}
+                                 key={this.state.mxEvent.getContent().thread_id} />;
         }
 
         // TODO: either include this in the DOM again, or move it to other component

@@ -1276,5 +1276,7 @@
     "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room",
     "Open Devtools": "Open Devtools",
     "Show developer tools": "Show developer tools",
+    "Received older messages: <link>View messages</link>": "Received older messages: <link>View messages</link>",
+    "Received at %(time)": "Received at %(time)",
     "View as grid": "View as grid"
 }
