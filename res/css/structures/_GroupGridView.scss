@@ -65,6 +65,8 @@ limitations under the License.
 .mx_GroupGridView_tile {
     border-right: 1px solid $panel-divider-color;
     border-bottom: 1px solid $panel-divider-color;
+    min-width: 0;
+    min-height: 0;
 }
 
 .mx_GroupGridView_activeTile {
