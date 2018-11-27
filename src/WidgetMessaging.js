@@ -107,6 +107,26 @@ export default class WidgetMessaging {
         });
     }
 
+    sendEvent(event, state) {
+        if (event.getContent) {
+            event = event.getContent();
+        } else {
+            console.warn('Assuming event to post is already event content.');
+        }
+        console.warn('Posting event', event);
+
+        return this.messageToWidget({
+            api: OUTBOUND_API_NAME,
+            action: "event",
+            event,
+            // TODO / FIXME -- State can not be cloned for posting (as it contains native code). Needs sanitising.
+            // state,
+        })
+        .catch((error) => {
+            console.error("Failed to send event: ", error);
+        });
+    }
+
     start() {
         this.fromWidget.addEndpoint(this.widgetId, this.widgetUrl);
     }

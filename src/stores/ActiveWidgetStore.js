@@ -61,28 +61,38 @@ class ActiveWidgetStore extends EventEmitter {
         this._roomIdByWidgetId = {};
     }
 
+    sendEventsToWidgets(ev, state) {
+        const eventType = ev.getType();
+        for(let widgetId in this._capsByWidgetId) {
+            if(this._capsByWidgetId.hasOwnProperty(widgetId)){
+                const caps = this._capsByWidgetId[widgetId];
+                const roomId = ev.getRoomId();
+                if (caps.includes(eventType) && (
+                    !roomId || roomId === this._roomIdByWidgetId[widgetId])) {
+                    console.log(`Event type ${eventType} should be sent to widget ${widgetId}`);
+                    this._widgetMessagingByWidgetId[widgetId].sendEvent(ev, state);
+                }
+            }
+        }
+    }
+
     onRoomStateEvents(ev, state) {
         // XXX: This listens for state events in order to remove the active widget.
         // Everything else relies on views listening for events and calling setters
         // on this class which is terrible. This store should just listen for events
         // and keep itself up to date.
+
+        this.sendEventsToWidgets(ev, state)
+
         if (ev.getType() !== 'im.vector.modular.widgets') return;
 
         if (ev.getStateKey() === this._persistentWidgetId) {
-            // this.destroyPersistentWidget();
+            this.destroyPersistentWidget();
         }
     }
 
     onRoomTimelineEvents(ev, state) {
-        if (!this._persistentWidgetId) {
-            console.warn('No persistent widget ID');
-        } else {
-            console.log(`current room ID ${ev.getRoomId()}, ` +
-                `persistent widget room ID: ${this._roomIdByWidgetId[this._persistentWidgetId]}`);
-            if (ev.getRoomId() === this._roomIdByWidgetId[this._persistentWidgetId]) {
-                console.log('Got timeline event', ev, state);
-            }
-        }
+        this.sendEventsToWidgets(ev, state);
     }
 
     destroyPersistentWidget() {
