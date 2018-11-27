@@ -851,8 +851,8 @@ var TimelinePanel = React.createClass({
         }
     },
 
-    _initTimeline: function(props) {
-        const initialEvent = props.eventId;
+    _initTimeline: async function(props) {
+        let initialEvent = props.eventId;
         const pixelOffset = props.eventPixelOffset;
 
         // if a pixelOffset is given, it is relative to the bottom of the
@@ -860,6 +860,12 @@ var TimelinePanel = React.createClass({
         let offsetBase = 1;
         if (pixelOffset == null) {
             offsetBase = 0.5;
+        }
+
+        if (initialEvent && initialEvent[0] === 't') {
+            const scrollToTs = initialEvent.slice(1);
+            const resp = await MatrixClientPeg.get().tsToEventId(this.props.timelineSet.room.roomId, scrollToTs);
+            initialEvent = resp.event_id;
         }
 
         return this._loadTimeline(initialEvent, pixelOffset, offsetBase);
