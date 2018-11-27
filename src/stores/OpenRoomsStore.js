@@ -164,8 +164,8 @@ class OpenRoomsStore extends Store {
             }
         }
         const currentRoom = this._getActiveOpenRoom();
-        if (currentRoom && payload["__forwarded_to_room_id"] !== currentRoom.roomId) {
-            payload["__forwarded_to_room_id"] = currentRoom.roomId;
+        if (currentRoom && payload["__forwarded_to_room_id"] !== currentRoom.store.getRoomId()) {
+            payload["__forwarded_to_room_id"] = currentRoom.store.getRoomId();
             currentRoom.dispatcher.dispatch(payload, true);
         }
     }
