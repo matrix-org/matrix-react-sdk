@@ -75,11 +75,6 @@ textarea {
     transition: opacity 0.2s ease-in-out;
 }
 
-.mx_fadable.mx_fadable_faded {
-    opacity: 0.3;
-    pointer-events: none;
-}
-
 /* XXX: critical hack to GeminiScrollbar to allow them to work in FF 42 and Chrome 48.
    Stop the scrollbar view from pushing out the container's overall sizing, which causes
    flexbox to adapt to the new size and cause the view to keep growing.
@@ -252,6 +247,11 @@ textarea {
     background-color: $light-fg-color;
     border: solid 1px $light-fg-color;
     opacity: 0.7;
+}
+
+.mx_linkButton {
+    cursor: pointer;
+    color: $accent-color;
 }
 
 .mx_Dialog_title {
