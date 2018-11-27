@@ -55,7 +55,7 @@ class MergedUsers {
                 if (container.localparts) this._localpartCache = container.localparts;
                 if (container.profiles) this._profileCache = container.profiles;
             }
-        }catch (e) {
+        } catch (e) {
             console.error("Error loading MergedUsers caches");
             console.error(e);
         }
@@ -187,7 +187,8 @@ class MergedUsers {
      * parentIds, false otherwise.
      */
     isChildOf(userId, parentIds) {
-        return parentIds.map(i => this._getLocalpart(i)).includes(this._getLocalpart(userId));
+        const localpart = this._getLocalpart(userId);
+        return parentIds.some(i => this._getLocalpart(i) === localpart);
     }
 
     /**
@@ -288,8 +289,10 @@ class MergedUsers {
         if (fastProfile && (fastProfile.displayname || fastProfile.avatar_url)) return fastProfile;
 
         const room = MatrixClientPeg.get().getRoom(roomMember.roomId);
-        const parentMember = room.currentState.members[userId];
-        if (parentMember) roomMember = parentMember;
+        if (room) {
+            const parentMember = room.currentState.members[userId];
+            if (parentMember) roomMember = parentMember;
+        }
 
         return {
             displayname: roomMember.name,
@@ -437,7 +440,7 @@ class MergedUsers {
 
         // if I have created a room and invited people through
         // 3rd party invites
-        if (myMembership == 'join') {
+        if (myMembership === 'join') {
             const thirdPartyInvites =
                 room.currentState.getStateEvents("m.room.third_party_invite");
 
