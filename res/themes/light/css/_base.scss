@@ -181,7 +181,13 @@ $imagebody-giflabel-border: rgba(0, 0, 0, 0.2);
 $progressbar-color: #000;
 
 $input-lighter-bg-color: #ff0000;
-// used by NewThreadBanner
+// used by NewThreadBanner & ServerPresenceBanner
+$lost-alert-fg-color: #F56679;
+$lost-alert-bg-color: #FFF8FA;
+
+$reconnected-alert-fg-color: #8A6E3A;
+$reconnected-alert-bg-color: #FFFBE6;
+
 $received-messages-alert-fg-color: #7AC9A1;
 $received-messages-alert-bg-color: #F9FCFB;
 

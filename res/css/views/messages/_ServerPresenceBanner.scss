@@ -1,0 +1,74 @@
+/*
+Copyright 2015, 2016 OpenMarket Ltd
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+
+.mx_ServerPresenceBanner {
+    border-radius: 4px;
+    padding: 8px 8px 8px 64px;
+
+    position: relative; //for masked background image
+}
+
+.mx_ServerPresenceBanner.mx_ServerPresenceBanner_hidden {
+    display: none;
+}
+
+.mx_ServerPresenceBanner.mx_ServerPresenceBanner_connected {
+    color: $reconnected-alert-fg-color;
+    background: $reconnected-alert-bg-color;
+    border: 1px solid $reconnected-alert-fg-color;
+
+    &:before {
+        background-color: $reconnected-alert-fg-color;
+    }
+}
+
+.mx_ServerPresenceBanner.mx_ServerPresenceBanner_disconnected {
+    color: $lost-alert-fg-color;
+    background: $lost-alert-bg-color;
+    border: 1px solid $lost-alert-fg-color;
+
+    &:before {
+        background-color: $lost-alert-fg-color;
+    }
+}
+
+.mx_ServerPresenceBanner:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    mask: url('../../img/server-presence-warning-icon.svg');
+    mask-position: 14px center;
+    mask-repeat: no-repeat;
+    pointer-events: none;
+}
+
+.mx_ServerPresenceBanner_timestamp {
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+.mx_ServerPresenceBanner_message {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.mx_ServerPresenceBanner_message a {
+    color: inherit !important;
+}
