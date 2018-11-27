@@ -61,8 +61,11 @@ $neutral-badge-color: $primary-fg-color;
 
 .mx_BaseAvatar_image {
   filter: saturate(60%);
-  opacity: 0.3;
-  background-color: $primary-fg-color;
+  opacity: 0.5;
+}
+
+.mx_BaseAvatar_tint {
+  background-color: rgba(120,24,19,0.5) !important;
 }
 
 .mx_LeftPanel {
