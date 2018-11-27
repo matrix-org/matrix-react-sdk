@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import SettingsStore from "./settings/SettingsStore";
+import SdkConfig from "./SdkConfig";
 
 const MatrixClientPeg = require("./MatrixClientPeg");
 const dis = require("./dispatcher");
@@ -34,6 +35,7 @@ class MergedUsers {
 
     constructor() {
         this._loadCaches();
+        this._mergableHosts = SdkConfig.get().mergable_hosts || [];
     }
 
     _persistCaches() {
@@ -72,7 +74,12 @@ class MergedUsers {
      * @return {Promise<void>} Resolves when tracking has been completed.
      */
     async trackUser(userId) {
+        if (!userId) return Promise.resolve();
         if (!SettingsStore.getValue("mergeUsersByLocalpart")) return Promise.resolve();
+
+        // Don't bother looking up profiles for people who aren't going to be merged
+        const domain = userId.split(":").slice(1).join(":"); // extract everything after the first colon
+        if (!this._mergableHosts.includes(domain)) return Promise.resolve();
 
         const localpart = this._getLocalpart(userId);
         if (!localpart) return Promise.resolve();
