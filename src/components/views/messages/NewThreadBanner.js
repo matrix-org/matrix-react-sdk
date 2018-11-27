@@ -46,7 +46,6 @@ module.exports = React.createClass({
     },
 
     render: function() {
-        const MessageTimestamp = sdk.getComponent("messages.MessageTimestamp");
         const date = new Date(this.props.mxEvent.getTs());
         return <div className="mx_NewThreadBanner">
             <div className="mx_NewThreadBanner_timestamp">{formatTime(date, this.props.isTwelveHour)}</div>
