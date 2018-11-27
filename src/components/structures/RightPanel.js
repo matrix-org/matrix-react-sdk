@@ -28,6 +28,7 @@ import RateLimitedFunc from '../../ratelimitedfunc';
 import AccessibleButton from '../../components/views/elements/AccessibleButton';
 import { showGroupInviteDialog, showGroupAddRoomDialog } from '../../GroupAddressPicker';
 import GroupStore from '../../stores/GroupStore';
+import ThreadViewStore from '../../stores/ThreadViewStore';
 
 export default class RightPanel extends React.Component {
 
@@ -86,6 +87,7 @@ export default class RightPanel extends React.Component {
             this.context.matrixClient.removeListener("RoomState.members", this.onRoomStateMember);
         }
         this._unregisterGroupStore(this.props.groupId);
+        ThreadViewStore.activeThreadEvent = null;
     }
 
     componentWillReceiveProps(newProps) {
@@ -115,6 +117,7 @@ export default class RightPanel extends React.Component {
             this.setState({
                 phase: RightPanel.Phase.GroupMemberList,
             });
+            ThreadViewStore.activeThreadEvent = null;
         });
     }
 
@@ -144,7 +147,13 @@ export default class RightPanel extends React.Component {
                 phase: payload.phase,
                 member: payload.member,
                 mxEvent: payload.mxEvent,
+                atEventId: payload.atEventId,
             });
+            if (payload.mxEvent) {
+                ThreadViewStore.activeThreadEvent = payload.mxEvent;
+            } else {
+                ThreadViewStore.activeThreadEvent = null;
+            }
         }
     }
 
@@ -193,6 +202,7 @@ export default class RightPanel extends React.Component {
             panel = <FilePanel roomId={this.props.roomId} />;
         } else if (this.state.phase === RightPanel.Phase.ThreadPanel) {
             panel = <ThreadPanel roomId={this.props.roomId} mxEvent={this.state.mxEvent}
+                                 atEventId={this.state.atEventId}
                                  key={this.state.mxEvent.getContent().thread_id} />;
         }
 

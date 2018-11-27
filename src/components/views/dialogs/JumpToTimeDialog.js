@@ -23,6 +23,7 @@ import SdkConfig from '../../../SdkConfig';
 import { fuzzyParseTime } from '../../../utils/TimeUtils';
 import OpenRoomsStore from "../../../stores/OpenRoomsStore";
 import { _t } from '../../../languageHandler';
+import ThreadViewStore from '../../../stores/ThreadViewStore';
 
 export default React.createClass({
     displayName: 'JumpToTimeDialog',
@@ -30,6 +31,7 @@ export default React.createClass({
     getInitialState: function() {
         return {
             timeStr: '',
+            remoteChecked: false,
         };
     },
 
@@ -47,11 +49,20 @@ export default React.createClass({
             return;
         }
 
-        dis.dispatch({
-            action: 'view_room',
-            room_id: OpenRoomsStore.getActiveRoomStore().getRoomId(),
-            event_id: 't'+ts,
-        });
+        if (ThreadViewStore.activeThreadEvent && this.state.remoteChecked) {
+            dis.dispatch({
+                action: 'view_right_panel_phase',
+                phase: 'ThreadPanel',
+                mxEvent: ThreadViewStore.activeThreadEvent,
+                atEventId: 't'+ts,
+            });
+        } else {
+            dis.dispatch({
+                action: 'view_room',
+                room_id: OpenRoomsStore.getActiveRoomStore().getRoomId(),
+                event_id: 't'+ts,
+            });
+        }
         this.props.onFinished(true);
     },
 
@@ -66,9 +77,27 @@ export default React.createClass({
         });
     },
 
+    _onRemoteCheckboxChange: function(ev) {
+        this.setState({
+            remoteChecked: ev.target.checked,
+        });
+    },
+
     render: function() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
+
+        let remoteCheckbox;
+        if (ThreadViewStore.activeThreadEvent) {
+            remoteCheckbox = <div>
+                <label htmlFor="mx_JumpToTimeDialog_remoteCheckBox">{_t("Jump to time in Remote Messages")}</label>
+                <input id="mx_JumpToTimeDialog_remoteCheckBox" type="checkbox"
+                    checked={this.state.remoteChecked}
+                    onChange={this._onRemoteCheckboxChange}
+                />
+            </div>;
+        }
+
         return (
             <BaseDialog className="mx_JumpToTimeDialog" onFinished={this.props.onFinished}
                 title={_t('Jump to Date Group')}
@@ -81,6 +110,7 @@ export default React.createClass({
                         />
                         <br />
                     </div>
+                    {remoteCheckbox}
                 </form>
                 <DialogButtons primaryButton={_t('Continue')}
                     onPrimaryButtonClick={this._onOk}
