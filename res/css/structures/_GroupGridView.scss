@@ -23,7 +23,7 @@ limitations under the License.
     display: grid;
     grid-template-columns: repeat(3, calc(100% / 3));
     grid-template-rows: repeat(2, calc(100% / 2));
-    flex: 1 1 0;
+    flex: 1;
 }
 
 
@@ -51,7 +51,7 @@ limitations under the License.
 
 
 .mx_GroupGridView > .mx_MainSplit {
-    flex: 1 1 0;
+    flex: 1;
     display: flex;
 }
 
@@ -65,6 +65,8 @@ limitations under the License.
 .mx_GroupGridView_tile {
     border-right: 1px solid $panel-divider-color;
     border-bottom: 1px solid $panel-divider-color;
+    min-width: 0;
+    min-height: 0;
 }
 
 .mx_GroupGridView_activeTile {

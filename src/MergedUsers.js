@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import SettingsStore from "./settings/SettingsStore";
+import SdkConfig from "./SdkConfig";
 
 const MatrixClientPeg = require("./MatrixClientPeg");
 const dis = require("./dispatcher");
@@ -30,9 +31,11 @@ class MergedUsers {
     _localpartCache = {}; // [localpart] => {parentUserId, childrenUserIds}
     _profileCache = {}; // [user] => {global: profile, rooms: [roomId] => profile}
     _failureCache = {}; // [user] => timestamp  // used for caching profile lookup failures
+    _pendingTrackers = {}; // [user] => Promise  // used to de-dupe tracking requests
 
     constructor() {
         this._loadCaches();
+        this._mergableHosts = SdkConfig.get().mergable_hosts || [];
     }
 
     _persistCaches() {
@@ -52,10 +55,19 @@ class MergedUsers {
                 if (container.localparts) this._localpartCache = container.localparts;
                 if (container.profiles) this._profileCache = container.profiles;
             }
-        }catch (e) {
+        } catch (e) {
             console.error("Error loading MergedUsers caches");
             console.error(e);
         }
+    }
+
+    _isMergable(userId) {
+        const domain = userId.split(":").slice(1).join(":"); // extract everything after the first colon
+        return this._mergableHosts.some(h => {
+            if (h.endsWith("*")) {
+                return domain.toLowerCase().startsWith(h.toLowerCase().substring(0, h.length - 1));
+            } else return domain.toLowerCase() === h.toLowerCase();
+        });
     }
 
     _getLocalpart(userId) {
@@ -71,50 +83,63 @@ class MergedUsers {
      * @return {Promise<void>} Resolves when tracking has been completed.
      */
     async trackUser(userId) {
-        if (!SettingsStore.getValue("mergeUsersByLocalpart")) return;
+        if (!userId) return Promise.resolve();
+        if (!SettingsStore.getValue("mergeUsersByLocalpart")) return Promise.resolve();
+        if (!this._isMergable(userId)) return Promise.resolve();
 
         const localpart = this._getLocalpart(userId);
-        if (!localpart) return;
+        if (!localpart) return Promise.resolve();
 
-        const now = new Date().getTime();
-        if (this._failureCache[localpart]) {
-            if (now - this._failureCache[localpart] >= FAILED_LOOKUP_CACHE_TIME) {
-                delete this._failureCache[localpart];
-            } else return;
+        if (this._pendingTrackers[localpart]) {
+            return this._pendingTrackers[localpart];
         }
 
-        if (this._localpartCache[localpart]) {
-            // We already have a parent, so just append a child if we need to
-            const children = this._localpartCache[localpart].childrenUserIds;
-            const parent = this._localpartCache[localpart].parentUserId;
-            if (userId !== parent && !children.includes(userId)) {
-                console.log("Adding " + userId + " as a child for " + parent);
-                children.push(userId);
+        const promise = new Promise(async (resolve, reject) => {
+            const now = new Date().getTime();
+            if (this._failureCache[localpart]) {
+                if (now - this._failureCache[localpart] >= FAILED_LOOKUP_CACHE_TIME) {
+                    delete this._failureCache[localpart];
+                } else return resolve();
+            }
+
+            if (this._localpartCache[localpart]) {
+                // We already have a parent, so just append a child if we need to
+                const children = this._localpartCache[localpart].childrenUserIds;
+                const parent = this._localpartCache[localpart].parentUserId;
+                if (userId !== parent && !children.includes(userId)) {
+                    console.log("Adding " + userId + " as a child for " + parent);
+                    children.push(userId);
+                    this._persistCaches();
+                    dis.dispatch({action: "merged_user_general_update", namespaceUserId: userId});
+                }
+                return resolve();
+            }
+
+            try {
+                const state = await this._getLinkedState(userId);
+                if (!state || !state["parent"]) {
+                    return resolve(); // Nothing to do: the user is the parent
+                }
+
+                console.log("Tracking " + state["parent"] + " as the parent for " + userId);
+                const children = state["parent"] === userId ? [] : [userId];
+                this._localpartCache[localpart] = {
+                    parentUserId: state["parent"],
+                    childrenUserIds: children,
+                };
                 this._persistCaches();
                 dis.dispatch({action: "merged_user_general_update", namespaceUserId: userId});
-            }
-            return;
-        }
-
-        try {
-            const state = await this._getLinkedState(userId);
-            if (!state || !state["parent"]) {
-                return; // Nothing to do: the user is the parent
+            } catch (e) {
+                console.error("Non-fatal error getting linked accounts for " + userId);
+                console.error(e);
+                this._failureCache[localpart] = now;
             }
 
-            console.log("Tracking " + state["parent"] + " as the parent for " + userId);
-            const children = state["parent"] === userId ? [] : [userId];
-            this._localpartCache[localpart] = {
-                parentUserId: state["parent"],
-                childrenUserIds: children,
-            };
-            this._persistCaches();
-            dis.dispatch({action: "merged_user_general_update", namespaceUserId: userId});
-        } catch (e) {
-            console.error("Non-fatal error getting linked accounts for " + userId);
-            console.error(e);
-            this._failureCache[localpart] = now;
-        }
+            return resolve();
+        });
+
+        this._pendingTrackers[localpart] = promise;
+        return promise;
     }
 
     /**
@@ -136,11 +161,11 @@ class MergedUsers {
      * @param {string} userId The user ID to check the status of.
      * @return {boolean} True if the user ID is a child, false otherwise.
      */
-    isChild(userId, dontTrack) {
+    isChild(userId) {
+        if (!this._isMergable(userId)) false;
+
         // We can do this async as it doesn't matter all that much
-        if (!dontTrack) {
-            this.trackUser(userId);
-        }
+        this.trackUser(userId);
 
         const localpart = this._getLocalpart(userId);
         const cached = this._localpartCache[localpart];
@@ -153,8 +178,8 @@ class MergedUsers {
      * @param {string} userId The user ID to check the status of.
      * @return {boolean} True if the user ID is a parent, false otherwise.
      */
-    isParent(userId, dontTrack) {
-        return !this.isChild(userId, dontTrack);
+    isParent(userId) {
+        return !this.isChild(userId);
     }
 
     /**
@@ -170,7 +195,8 @@ class MergedUsers {
      * parentIds, false otherwise.
      */
     isChildOf(userId, parentIds) {
-        return parentIds.map(i => this._getLocalpart(i)).includes(this._getLocalpart(userId));
+        const localpart = this._getLocalpart(userId);
+        return parentIds.some(i => this._getLocalpart(i) === localpart);
     }
 
     /**
@@ -190,17 +216,14 @@ class MergedUsers {
     getEffectiveParents(tuples, includeResultsWithNoUserId) {
         const parentIds = [];
         const parentObjects = [];
-        const dontTrack = tuples.length > 50;
-        if (dontTrack) {
-            console.log(`disabling MergedUsers.trackUser during call of getEffectiveParents with ${tuples.length} tuples`);
-        }
+
         // First pass: identify parents
         for (const tuple of tuples) {
             const userId = tuple[0];
             const obj = tuple[1];
 
             const includeAnyways = !userId && includeResultsWithNoUserId;
-            if (includeAnyways || this.isParent(userId, dontTrack)) {
+            if (includeAnyways || this.isParent(userId)) {
                 parentIds.push(userId);
                 parentObjects.push(obj);
             }
@@ -270,12 +293,21 @@ class MergedUsers {
      */
     getProfileOf(roomMember) {
         const userId = this.getParent(roomMember.userId);
+        if (!this._isMergable(userId)) {
+            return {
+                displayname: roomMember.name,
+                avatar_url: roomMember.getMxcAvatarUrl(),
+            };
+        }
+
         const fastProfile = this.getProfileFast(userId, roomMember.roomId);
         if (fastProfile && (fastProfile.displayname || fastProfile.avatar_url)) return fastProfile;
 
         const room = MatrixClientPeg.get().getRoom(roomMember.roomId);
-        const parentMember = room.currentState.members[userId];
-        if (parentMember) roomMember = parentMember;
+        if (room) {
+            const parentMember = room.currentState.members[userId];
+            if (parentMember) roomMember = parentMember;
+        }
 
         return {
             displayname: roomMember.name,
@@ -423,7 +455,7 @@ class MergedUsers {
 
         // if I have created a room and invited people through
         // 3rd party invites
-        if (myMembership == 'join') {
+        if (myMembership === 'join') {
             const thirdPartyInvites =
                 room.currentState.getStateEvents("m.room.third_party_invite");
 
