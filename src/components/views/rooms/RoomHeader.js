@@ -434,7 +434,7 @@ module.exports = React.createClass({
                     { saveButton }
                     { cancelButton }
                     { rightRow }
-                    <RoomHeaderButtons />
+                    { !this.props.isGrid ? <RoomHeaderButtons /> : undefined }
                 </div>
             </div>
         );

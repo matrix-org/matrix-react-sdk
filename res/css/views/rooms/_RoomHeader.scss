@@ -112,6 +112,7 @@ limitations under the License.
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    color: $primary-fg-color;
 }
 
 .mx_RoomHeader_settingsHint {

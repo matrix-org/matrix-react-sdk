@@ -49,7 +49,7 @@ export default class MainSplit extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.panel && !this.collapsedRhs) {
+        if (this.props.panel && !this.props.collapsedRhs) {
             this._createResizer();
         }
     }

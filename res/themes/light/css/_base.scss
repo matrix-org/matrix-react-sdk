@@ -176,6 +176,11 @@ $lightbox-border-color: #ffffff;
 // unused?
 $progressbar-color: #000;
 
+$input-lighter-bg-color: #ff0000;
+// used by NewThreadBanner
+$received-messages-alert-fg-color: #7AC9A1;
+$received-messages-alert-bg-color: #F9FCFB;
+
 // ***** Mixins! *****
 
 @define-mixin mx_DialogButton {

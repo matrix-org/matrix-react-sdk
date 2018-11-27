@@ -34,6 +34,7 @@ export default class TagTileContextMenu extends React.Component {
 
         this._onViewCommunityClick = this._onViewCommunityClick.bind(this);
         this._onRemoveClick = this._onRemoveClick.bind(this);
+        this._onViewAsGridClick = this._onViewAsGridClick.bind(this);
     }
 
     _onViewCommunityClick() {
@@ -53,6 +54,14 @@ export default class TagTileContextMenu extends React.Component {
         this.props.onFinished();
     }
 
+    _onViewAsGridClick() {
+        dis.dispatch({
+            action: 'group_grid_view',
+            group_id: this.props.tag,
+        });
+        this.props.onFinished();
+    }
+
     render() {
         const TintableSvg = sdk.getComponent("elements.TintableSvg");
         return <div>
@@ -64,6 +73,15 @@ export default class TagTileContextMenu extends React.Component {
                     height="15"
                 />
                 { _t('View Community') }
+            </div>
+            <div className="mx_TagTileContextMenu_item" onClick={this._onViewAsGridClick} >
+                <TintableSvg
+                    className="mx_TagTileContextMenu_item_icon"
+                    src="img/icons-gridview.svg"
+                    width="15"
+                    height="15"
+                />
+                { _t('View as grid') }
             </div>
             <hr className="mx_TagTileContextMenu_separator" />
             <div className="mx_TagTileContextMenu_item" onClick={this._onRemoveClick} >

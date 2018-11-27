@@ -28,6 +28,8 @@ import { _t } from '../../languageHandler';
 import { Droppable } from 'react-beautiful-dnd';
 import classNames from 'classnames';
 
+import Tinter from '../../Tinter';
+
 const TagPanel = React.createClass({
     displayName: 'TagPanel',
 
@@ -100,6 +102,11 @@ const TagPanel = React.createClass({
         dis.dispatch({action: 'deselect_tags'});
     },
 
+    onToggleThemeClick(ev) {
+        const newTheme = Tinter.theme === 'dharma' ? 'dharma-darkroom' : 'dharma';
+        dis.dispatch({action: 'set_theme', value: newTheme});
+    },
+
     render() {
         const GroupsButton = sdk.getComponent('elements.GroupsButton');
         const DNDTagTile = sdk.getComponent('elements.DNDTagTile');
@@ -164,6 +171,12 @@ const TagPanel = React.createClass({
             <div className="mx_TagPanel_groupsButton">
                 <GroupsButton tooltip={true} />
             </div>
+            <AccessibleButton className="mx_TagPanel_toggleTheme" onClick={this.onToggleThemeClick}>
+                <TintableSvg src="img/icon-night.svg" width="0px" height="0px"
+                             alt={_t("Clear filter")}
+                             title={_t("Clear filter")}
+                />
+            </AccessibleButton>
         </div>;
     },
 });
