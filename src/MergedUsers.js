@@ -61,6 +61,15 @@ class MergedUsers {
         }
     }
 
+    _isMergable(userId) {
+        const domain = userId.split(":").slice(1).join(":"); // extract everything after the first colon
+        return this._mergableHosts.some(h => {
+            if (h.endsWith("*")) {
+                return domain.toLowerCase().startsWith(h.toLowerCase().substring(0, h.length - 1));
+            } else return domain.toLowerCase() === h.toLowerCase();
+        });
+    }
+
     _getLocalpart(userId) {
         if (!userId) return "";
         return userId.substring(1).split(":")[0];
@@ -76,15 +85,7 @@ class MergedUsers {
     async trackUser(userId) {
         if (!userId) return Promise.resolve();
         if (!SettingsStore.getValue("mergeUsersByLocalpart")) return Promise.resolve();
-
-        // Don't bother looking up profiles for people who aren't going to be merged
-        const domain = userId.split(":").slice(1).join(":"); // extract everything after the first colon
-        const isMergableHost = this._mergableHosts.some(h => {
-            if (h.endsWith("*")) {
-                return domain.toLowerCase().startsWith(h.toLowerCase().substring(0, h.length - 1));
-            } else return domain.toLowerCase() === h.toLowerCase();
-        });
-        if (!isMergableHost) return Promise.resolve();
+        if (!this._isMergable(userId)) return Promise.resolve();
 
         const localpart = this._getLocalpart(userId);
         if (!localpart) return Promise.resolve();
@@ -161,6 +162,8 @@ class MergedUsers {
      * @return {boolean} True if the user ID is a child, false otherwise.
      */
     isChild(userId) {
+        if (!this._isMergable(userId)) false;
+
         // We can do this async as it doesn't matter all that much
         this.trackUser(userId);
 
@@ -290,6 +293,13 @@ class MergedUsers {
      */
     getProfileOf(roomMember) {
         const userId = this.getParent(roomMember.userId);
+        if (!this._isMergable(userId)) {
+            return {
+                displayname: roomMember.name,
+                avatar_url: roomMember.getMxcAvatarUrl(),
+            };
+        }
+
         const fastProfile = this.getProfileFast(userId, roomMember.roomId);
         if (fastProfile && (fastProfile.displayname || fastProfile.avatar_url)) return fastProfile;
 
