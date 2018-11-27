@@ -26,6 +26,8 @@ import Modal from './Modal';
 import SettingsStore, {SettingLevel} from './settings/SettingsStore';
 import {MATRIXTO_URL_PATTERN} from "./linkify-matrix";
 import * as querystring from "querystring";
+import { fuzzyParseTime } from './utils/TimeUtils';
+import OpenRoomsStore from "./stores/OpenRoomsStore";
 
 
 class Command {
@@ -461,6 +463,24 @@ export const CommandMap = {
         runFn: function(roomId) {
             const DevtoolsDialog = sdk.getComponent('dialogs.DevtoolsDialog');
             Modal.createDialog(DevtoolsDialog, {roomId});
+            return success();
+        },
+    }),
+
+    jump: new Command({
+        name: 'jump',
+        args: '<date>',
+        description: _td('Jumps to a given date'),
+        runFn: function(roomId, timeStr) {
+            const ts = fuzzyParseTime(timeStr);
+            if (!ts) {
+                return reject(_t("Unable to parse given text as a date"));
+            }
+            dis.dispatch({
+                action: 'view_room',
+                room_id: OpenRoomsStore.getActiveRoomStore().getRoomId(),
+                event_id: 't' + ts,
+            });
             return success();
         },
     }),
