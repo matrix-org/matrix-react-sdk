@@ -69,7 +69,6 @@ class ActiveWidgetStore extends EventEmitter {
                 const roomId = ev.getRoomId();
                 if (caps.includes(eventType) && (
                     !roomId || roomId === this._roomIdByWidgetId[widgetId])) {
-                    console.log(`Event type ${eventType} should be sent to widget ${widgetId}`);
                     this._widgetMessagingByWidgetId[widgetId].sendEvent(ev, state);
                 }
             }
