@@ -124,7 +124,7 @@ a:link {
 }
 
 [title~="Settings"]  {
-  mask: none, url('../../img/icons-settings-room.svg');
+  mask: url('../../img/icons-settings-room.svg');
   background-color: $primary-fg-color;
   content: '';
   mask-repeat: no-repeat;
@@ -134,7 +134,7 @@ a:link {
 }
 
 [title~="Share"]  {
-  mask: none, url('../../img/icons-share.svg');
+  mask: url('../../img/icons-share.svg');
   background-color: $primary-fg-color;
   content: '';
   mask-repeat: no-repeat;
@@ -144,7 +144,7 @@ a:link {
 }
 
 [title~="Manage"]  {
-  mask: none, url('../../img/icons-apps.svg');
+  mask: url('../../img/icons-apps.svg');
   background-color: $primary-fg-color;
   content: '';
   mask-repeat: no-repeat;
@@ -154,7 +154,7 @@ a:link {
 }
 
 [title~="Search"]  {
-  mask: none, url('../../img/icons-search.svg');
+  mask: url('../../img/icons-search.svg');
   background-color: $primary-fg-color;
   content: '';
   mask-repeat: no-repeat;
@@ -164,7 +164,7 @@ a:link {
 }
 
 [aria-label~="Members"]:before  {
-  mask: none, url('../../img/icons-people.svg');
+  mask: url('../../img/icons-people.svg');
   background-color: $primary-fg-color;
   content: '';
   mask-repeat: no-repeat;
@@ -174,7 +174,7 @@ a:link {
 }
 
 [aria-label~="Members"]:before  {
-  mask: none, url('../../img/icons-people.svg');
+  mask: url('../../img/icons-people.svg');
   background-color: $primary-fg-color;
   content: '';
   mask-repeat: no-repeat;
@@ -184,7 +184,7 @@ a:link {
 }
 
 [aria-label~="Files"]:before  {
-  mask: none, url('../../img/icons-files.svg');
+  mask: url('../../img/icons-files.svg');
   background-color: $primary-fg-color;
   content: '';
   mask-repeat: no-repeat;
@@ -194,7 +194,7 @@ a:link {
 }
 
 [aria-label~="Notifications"]:before  {
-  mask: none, url('../../img/icons-notifications.svg');
+  mask: url('../../img/icons-notifications.svg');
   background-color: $primary-fg-color;
   content: '';
   mask-repeat: no-repeat;
@@ -214,7 +214,7 @@ a:link {
 }
 
 .mx_MemberList_invite span:before {
-  mask: none, url('../../img/icon-invite-people.svg');
+  mask: url('../../img/icon-invite-people.svg');
   background-color: $primary-fg-color;
   content: '';
   mask-repeat: no-repeat;
@@ -237,7 +237,7 @@ a:link {
 }
 
 #mx_MemberList_query::before {
-  mask: none, url('../../img/icons-search.svg');
+  mask: url('../../img/icons-search.svg');
   background-color: $primary-fg-color;
   content: '';
   mask-repeat: no-repeat;
@@ -263,7 +263,7 @@ a:link {
 }
 
 .mx_MessageComposer_videocall:before {
-  mask: none, url('../../img/icons-video.svg');
+  mask: url('../../img/icons-video.svg');
   background-color: $primary-fg-color;
   content: '';
   mask-repeat: no-repeat;
@@ -286,7 +286,7 @@ a:link {
 }
 
 .mx_MessageComposer_voicecall:before {
-  mask: none, url('../../img/icon-call.svg');
+  mask: url('../../img/icon-call.svg');
   background-color: $primary-fg-color;
   content: '';
   mask-repeat: no-repeat;
@@ -309,7 +309,7 @@ a:link {
 }
 
 .mx_MessageComposer_upload:before {
-  mask: none, url('../../img/icons-upload.svg');
+  mask: url('../../img/icons-upload.svg');
   background-color: $primary-fg-color;
   content: '';
   mask-repeat: no-repeat;
@@ -332,7 +332,7 @@ a:link {
 }
 
 .mx_MessageComposer_stickers:before {
-  mask: none, url('../../img/icons-stickers.svg');
+  mask: url('../../img/icons-stickers.svg');
   background-color: $primary-fg-color;
   content: '';
   mask-repeat: no-repeat;
@@ -354,7 +354,7 @@ a:link {
 }
 
 .mx_RoomHeader_nametext {
-    color: $primary-fg-color-highlight !important;
+  color: $primary-fg-color-highlight !important;
 }
 
 .mx_EventTile_editButton {
