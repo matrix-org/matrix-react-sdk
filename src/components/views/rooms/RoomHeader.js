@@ -157,6 +157,11 @@ module.exports = React.createClass({
         });
     },
 
+    _onJumpToTimeClick: function() {
+        const JumpToTimeDialog = sdk.getComponent("dialogs.JumpToTimeDialog");
+        Modal.createTrackedDialog('jump to time dialog', '', JumpToTimeDialog, {});
+    },
+
     _hasUnreadPins: function() {
         const currentPinEvent = this.props.room.currentState.getStateEvents("m.room.pinned_events", '');
         if (!currentPinEvent) return false;
@@ -339,6 +344,12 @@ module.exports = React.createClass({
             );
         }
 
+        const jumpToTimeButton = <AccessibleButton className="mx_RoomHeader_button"
+            onClick={this._onJumpToTimeClick} title={_t("History")}
+        >
+            <TintableSvg src="img/icons-settings-jumpToTime.svg" width="16" height="16" />
+        </AccessibleButton>;
+
         if (this.props.onSettingsClick) {
             settingsButton =
                 <AccessibleButton className="mx_RoomHeader_button" onClick={this.props.onSettingsClick} title={_t("Settings")}>
@@ -413,6 +424,7 @@ module.exports = React.createClass({
         if (!this.props.editing) {
             rightRow =
                 <div className="mx_RoomHeader_buttons">
+                    { jumpToTimeButton }
                     { settingsButton }
                     { pinnedEventsButton }
                     { shareRoomButton }
