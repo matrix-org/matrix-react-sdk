@@ -114,8 +114,8 @@ export default React.createClass({
                 title: _t('Invalid DTG'),
                 description: _t("Unable to parse input as a valid date-time group."),
             });
-            return;
             this.props.onFinished(false);
+            return;
         }
 
         dis.dispatch({
