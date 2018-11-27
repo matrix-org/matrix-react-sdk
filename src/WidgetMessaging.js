@@ -110,10 +110,7 @@ export default class WidgetMessaging {
     sendEvent(event, state) {
         if (event.getContent) {
             event = event.getContent();
-        } else {
-            console.warn('Assuming event to post is already event content.');
         }
-        console.warn('Posting event', event);
 
         return this.messageToWidget({
             api: OUTBOUND_API_NAME,
