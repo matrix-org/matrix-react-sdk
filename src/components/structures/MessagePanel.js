@@ -269,6 +269,21 @@ module.exports = React.createClass({
 
         return !shouldHideEvent(mxEv);
     },
+    // Server Presence Event Aggregation
+    // Assumes first event is a SP event
+    _doSPEA(events) {
+        const isSPEvent = (e) => e.getType() === "org.matrix.server_presence";
+        const firstState = events[0].getContent().state;
+        const nonSPEAIndex = events.findIndex((e) => {
+            // separate connected and disconnected events
+            return !isSPEvent(e) || e.getContent().state !== firstState;
+        });
+        if (nonSPEAIndex <= 1) {
+            return; //don't aggregate
+        }
+        const speaEvents = events.slice(0, nonSPEAIndex);
+        return speaEvents;
+    },
 
     _getEventTiles: function() {
         const DateSeparator = sdk.getComponent('messages.DateSeparator');
@@ -322,6 +337,7 @@ module.exports = React.createClass({
         }
 
         const isMembershipChange = (e) => e.getType() === 'm.room.member';
+        const isSPEvent = (e) => e.getType() === "org.matrix.server_presence";
 
         for (i = 0; i < this.props.events.length; i++) {
             const mxEv = this.props.events[i];
@@ -414,6 +430,19 @@ module.exports = React.createClass({
                 continue;
             }
 
+            /*
+            if (isSPEvent(mxEv) && wantTile) {
+                const remainingEvents = this.props.events.slice(i);
+                const speaEvents = this._doSPEA(remainingEvents);
+                if (speaEvents) {
+                    ret.push(...this._getTilesForEvent(prevEvent, null, false, speaEvents));
+                    i += speaEvents.length;
+                    prevEvent = speaEvents[speaEvents.length - 1];
+                    continue;
+                }
+            }
+            */
+
             if (wantTile) {
                 // make sure we unpack the array returned by _getTilesForEvent,
                 // otherwise react will auto-generate keys and we will end up
@@ -459,10 +488,14 @@ module.exports = React.createClass({
         return ret;
     },
 
-    _getTilesForEvent: function(prevEvent, mxEv, last) {
+    _getTilesForEvent: function(prevEvent, mxEv, last, events) {
         const EventTile = sdk.getComponent('rooms.EventTile');
         const DateSeparator = sdk.getComponent('messages.DateSeparator');
         const ret = [];
+
+        if (!mxEv && events) {
+            mxEv = events[0];
+        }
 
         // is this a continuation of the previous message?
         let continuation = false;
@@ -539,6 +572,7 @@ module.exports = React.createClass({
                         eventSendStatus={mxEv.status}
                         tileShape={this.props.tileShape}
                         isTwelveHour={this.props.isTwelveHour}
+                        events={events}
                         last={last} isSelectedEvent={highlight} />
                 </li>,
         );

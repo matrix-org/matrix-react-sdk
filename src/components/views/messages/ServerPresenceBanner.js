@@ -28,7 +28,9 @@ module.exports = React.createClass({
 
     propTypes: {
         /* the MatrixEvent to show */
-        mxEvent: PropTypes.object.isRequired,
+        mxEvent: PropTypes.object,
+        /* the aggregated events, see SPEA */
+        events: PropTypes.array,
     },
 
     getDefaultProps() {
@@ -38,7 +40,7 @@ module.exports = React.createClass({
     },
 
     render: function() {
-        const e = this.props.mxEvent;
+        const e = this.props.mxEvent;// || this.props.events[0];
         const state = e.getContent().state;
         const disconnected = state === "disconnected";
         const connected = state === "connected";

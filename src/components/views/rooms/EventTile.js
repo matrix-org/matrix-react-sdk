@@ -652,6 +652,7 @@ module.exports = withMatrixClient(React.createClass({
                         </div>
                         <div className="mx_EventTile_line" >
                             <EventTileType ref="tile"
+                                           events={this.props.events}
                                            mxEvent={this.props.mxEvent}
                                            highlights={this.props.highlights}
                                            highlightLink={this.props.highlightLink}
@@ -666,6 +667,7 @@ module.exports = withMatrixClient(React.createClass({
                     <div className={classes}>
                         <div className="mx_EventTile_line" >
                             <EventTileType ref="tile"
+                                           events={this.props.events}
                                            mxEvent={this.props.mxEvent}
                                            highlights={this.props.highlights}
                                            highlightLink={this.props.highlightLink}
@@ -703,6 +705,7 @@ module.exports = withMatrixClient(React.createClass({
                                 && ReplyThread.makeThread(this.props.mxEvent, this.props.onWidgetLoad, 'replyThread')
                             }
                             <EventTileType ref="tile"
+                                           events={this.props.events}
                                            mxEvent={this.props.mxEvent}
                                            highlights={this.props.highlights}
                                            highlightLink={this.props.highlightLink}
@@ -726,6 +729,7 @@ module.exports = withMatrixClient(React.createClass({
                             { this._renderE2EPadlock() }
                             { ReplyThread.makeThread(this.props.mxEvent, this.props.onWidgetLoad, 'replyThread') }
                             <EventTileType ref="tile"
+                                           events={this.props.events}
                                            mxEvent={this.props.mxEvent}
                                            highlights={this.props.highlights}
                                            highlightLink={this.props.highlightLink}
