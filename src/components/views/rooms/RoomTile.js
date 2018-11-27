@@ -62,7 +62,7 @@ module.exports = React.createClass({
             roomName: MergedUsers.calculateRoomName(this.props.room),
             notifState: RoomNotifs.getRoomNotifsState(this.props.room.roomId),
             notificationCount: this.props.room.getUnreadNotificationCount(),
-            selected: this.props.room.roomId === RoomViewStore.getRoomId(),
+            selected: this.props.room.roomId === ActiveRoomObserver.getActiveRoomId(),
         });
     },
 
@@ -117,9 +117,9 @@ module.exports = React.createClass({
         }
     },
 
-    _onActiveRoomChange: function() {
+    _onActiveRoomChange: function(activeRoomId) {
         this.setState({
-            selected: this.props.room.roomId === RoomViewStore.getRoomId(),
+            selected: this.props.room.roomId === activeRoomId,
         });
     },
 

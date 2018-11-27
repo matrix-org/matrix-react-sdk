@@ -5,6 +5,7 @@
 @import "./structures/_ContextualMenu.scss";
 @import "./structures/_CreateRoom.scss";
 @import "./structures/_FilePanel.scss";
+@import "./structures/_GroupGridView.scss";
 @import "./structures/_GroupView.scss";
 @import "./structures/_HomePage.scss";
 @import "./structures/_LeftPanel.scss";
@@ -19,6 +20,7 @@
 @import "./structures/_RoomView.scss";
 @import "./structures/_SearchBox.scss";
 @import "./structures/_TagPanel.scss";
+@import "./structures/_ThreadPanel.scss";
 @import "./structures/_TopLeftMenuButton.scss";
 @import "./structures/_UploadBar.scss";
 @import "./structures/_UserSettings.scss";
@@ -35,17 +37,21 @@
 @import "./views/dialogs/_ChatInviteDialog.scss";
 @import "./views/dialogs/_ConfirmUserActionDialog.scss";
 @import "./views/dialogs/_CreateGroupDialog.scss";
+@import "./views/dialogs/_CreateKeyBackupDialog.scss";
 @import "./views/dialogs/_CreateRoomDialog.scss";
 @import "./views/dialogs/_DeactivateAccountDialog.scss";
 @import "./views/dialogs/_DevtoolsDialog.scss";
 @import "./views/dialogs/_EncryptedEventDialog.scss";
 @import "./views/dialogs/_GroupAddressPicker.scss";
+@import "./views/dialogs/_RestoreKeyBackupDialog.scss";
 @import "./views/dialogs/_RoomUpgradeDialog.scss";
 @import "./views/dialogs/_SetEmailDialog.scss";
 @import "./views/dialogs/_SetMxIdDialog.scss";
 @import "./views/dialogs/_SetPasswordDialog.scss";
 @import "./views/dialogs/_ShareDialog.scss";
 @import "./views/dialogs/_UnknownDeviceDialog.scss";
+@import "./views/dialogs/keybackup/_CreateKeyBackupDialog.scss";
+@import "./views/dialogs/keybackup/_RestoreKeyBackupDialog.scss";
 @import "./views/directory/_NetworkDropdown.scss";
 @import "./views/elements/_AccessibleButton.scss";
 @import "./views/elements/_AddressSelector.scss";
@@ -79,6 +85,7 @@
 @import "./views/messages/_MStickerBody.scss";
 @import "./views/messages/_MTextBody.scss";
 @import "./views/messages/_MessageTimestamp.scss";
+@import "./views/messages/_NewThreadBanner.scss";
 @import "./views/messages/_RoomAvatarEvent.scss";
 @import "./views/messages/_SenderProfile.scss";
 @import "./views/messages/_TextualEvent.scss";
@@ -111,6 +118,7 @@
 @import "./views/rooms/_WhoIsTypingTile.scss";
 @import "./views/settings/_DevicesPanel.scss";
 @import "./views/settings/_IntegrationsManager.scss";
+@import "./views/settings/_KeyBackupPanel.scss";
 @import "./views/settings/_Notifications.scss";
 @import "./views/voip/_CallView.scss";
 @import "./views/voip/_IncomingCallbox.scss";

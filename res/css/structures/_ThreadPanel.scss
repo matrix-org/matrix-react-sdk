@@ -1,5 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2018 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,25 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
+.mx_ThreadPanel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { _t } from '../../../languageHandler';
+.mx_ThreadPanel_timeline {
+    flex: 1;
+}
 
-module.exports = React.createClass({
-    displayName: 'CasLogin',
-
-    propTypes: {
-      onSubmit: PropTypes.func, // fn()
-    },
-
-    render: function() {
-        return (
-            <div>
-                <button onClick={this.props.onSubmit}>{ _t("Sign in with CAS") }</button>
-            </div>
-        );
-    },
-
-});
+.mx_ThreadPanel_timeline .mx_RoomView_MessageList {
+    background-color: $input-lighter-bg-color;
+    margin: 15px;
+    padding: 8px;
+    border-radius: 8px;
+}
