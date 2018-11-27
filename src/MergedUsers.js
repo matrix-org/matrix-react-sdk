@@ -79,7 +79,12 @@ class MergedUsers {
 
         // Don't bother looking up profiles for people who aren't going to be merged
         const domain = userId.split(":").slice(1).join(":"); // extract everything after the first colon
-        if (!this._mergableHosts.includes(domain)) return Promise.resolve();
+        const isMergableHost = this._mergableHosts.some(h => {
+            if (h.endsWith("*")) {
+                return domain.toLowerCase().startsWith(h.toLowerCase().substring(0, h.length - 1));
+            } else return domain.toLowerCase() === h.toLowerCase();
+        });
+        if (!isMergableHost) return Promise.resolve();
 
         const localpart = this._getLocalpart(userId);
         if (!localpart) return Promise.resolve();
