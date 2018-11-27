@@ -62,6 +62,7 @@ class MergedUsers {
     }
 
     _isMergable(userId) {
+        if (typeof userId !== "string") return false;
         const domain = userId.split(":").slice(1).join(":"); // extract everything after the first colon
         return this._mergableHosts.some(h => {
             if (h.endsWith("*")) {
