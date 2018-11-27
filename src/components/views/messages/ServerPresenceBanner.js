@@ -39,24 +39,20 @@ module.exports = React.createClass({
 
     render: function() {
         const e = this.props.mxEvent;
-        const firstDisconnect = e.getContent().first_disconnected;
-        const lastConnect = e.getContent().last_connected;
-        const hide = !firstDisconnect && !lastConnect;
-
-        if (hide) {
-            return (<div className="mx_ServerPresenceBanner_hidden" />);
-        }
+        const state = e.getContent().state;
+        const disconnected = state === "disconnected";
+        const connected = state === "connected";
+        const server = e.getStateKey();
 
         const classes = classNames({
             "mx_ServerPresenceBanner": true,
-            "mx_ServerPresenceBanner_connected": lastConnect,
-            "mx_ServerPresenceBanner_disconnected": firstDisconnect,
+            "mx_ServerPresenceBanner_connected": connected,
+            "mx_ServerPresenceBanner_disconnected": disconnected,
         });
-        const label = firstDisconnect ?
-            _t("Lost connection to remote servers") :
-            _t("Reconnected to remote servers");
-        const date = new Date(this.props.mxEvent.getTs());
-
+        const label = disconnected ?
+            _t("Lost connection to server %(server)s", {server}) :
+            _t("Reconnected to server %(server)s", {server});
+        const date = new Date(e.getTs());
         return <div className={classes}>
             <div className="mx_ServerPresenceBanner_timestamp">{formatTime(date, this.props.isTwelveHour)}</div>
             <div className="mx_ServerPresenceBanner_message">{label}</div>
