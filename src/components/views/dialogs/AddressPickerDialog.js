@@ -385,10 +385,10 @@ module.exports = React.createClass({
         this._processResults(results, query);
     },
 
-    _processResults: function(results, query) {
+    _processResults: async function(results, query) {
         let suggestedList = [];
         let hasUsers = false;
-        results.forEach((result) => {
+        await Promise.all(results.map((result) => {
             if (result.room_id) {
                 suggestedList.push({
                     addressType: 'mx-room-id',
@@ -397,10 +397,10 @@ module.exports = React.createClass({
                     avatarMxc: result.avatar_url,
                     isKnown: true,
                 });
-                return;
+                return Promise.resolve();
             }
             if (!this.props.includeSelf && MergedUsers.isSelf(result.user_id)) {
-                return;
+                return Promise.resolve();
             }
 
             // Return objects, structure of which is defined
@@ -413,10 +413,14 @@ module.exports = React.createClass({
                 isKnown: true,
             });
             hasUsers = true;
-        });
+
+            // We want to make sure that the user is correctly tracked before we continue
+            // to ensure that we get a stable result from getEffectiveParents lower down.
+            return MergedUsers.trackUser(result.user_id).catch(e => console.error(e));
+        }));
 
         if (hasUsers) {
-            const tuples = suggestedList.map(i => [i.user_id, i]);
+            const tuples = suggestedList.map(i => [i.addressType === "mx-user-id" ? i.address : null, i]);
             suggestedList = MergedUsers.getEffectiveParents(tuples, true);
         }
 
