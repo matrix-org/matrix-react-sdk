@@ -91,7 +91,7 @@ class ActiveWidgetStore extends EventEmitter {
     }
 
     onRoomTimelineEvents(ev, state) {
-        this.sendEventsToWidgets(ev, state);
+        // this.sendEventsToWidgets(ev, state);
     }
 
     destroyPersistentWidget() {
