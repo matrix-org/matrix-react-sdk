@@ -108,10 +108,6 @@ export default class WidgetMessaging {
     }
 
     sendEvent(event, state) {
-        if (event.getContent) {
-            event = event.getContent();
-        }
-
         return this.messageToWidget({
             api: OUTBOUND_API_NAME,
             action: "event",
