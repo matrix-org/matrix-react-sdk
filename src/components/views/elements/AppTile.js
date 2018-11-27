@@ -380,24 +380,22 @@ export default class AppTile extends React.Component {
             requestedCapabilities = requestedCapabilities || [];
 
             // Allow whitelisted capabilities
-            let requestedWhitelistCapabilies = [];
+            let requestedWhitelistedCapabilies = [];
             let whitelistCapabilities = this.props.whitelistCapabilities || [];
             // Add additional whitelisted capabilities for specific app types
             if (this.props.type === 'controlBot') {
                 console.log('Adding additional whitelist capabilities for commandBot');
-                whitelistCapabilities = whitelistCapabilities.concat(['m.always_on_screen', 'mil.defcon', 'm.text']);
+                whitelistCapabilities = whitelistCapabilities.concat(['m.always_on_screen', 'mil.defcon', 'm.geo']);
             }
 
             if (whitelistCapabilities && whitelistCapabilities.length > 0) {
-                requestedWhitelistCapabilies = requestedCapabilities.filter(cap => {
+                requestedWhitelistedCapabilies = requestedCapabilities.filter(cap => {
                     return whitelistCapabilities.indexOf(cap)>=0;
                 });
 
 
-                if (requestedWhitelistCapabilies.length > 0 ) {
-                    console.warn(`Widget ${this.props.id} allowing requested, whitelisted capabilities: ` +
-                        requestedWhitelistCapabilies,
-                    );
+                if (requestedWhitelistedCapabilies.length > 0 ) {
+                    console.warn(`Widget ${this.props.id} allowing requested, whitelisted capabilities: ${requestedWhitelistedCapabilies} of ${requestedCapabilities}`);
                 }
             } else {
                 console.warn('No capabilities to whitelist');
@@ -405,7 +403,7 @@ export default class AppTile extends React.Component {
 
             // TODO -- Add UI to warn about and optionally allow requested capabilities
 
-            ActiveWidgetStore.setWidgetCapabilities(this.props.id, requestedWhitelistCapabilies);
+            ActiveWidgetStore.setWidgetCapabilities(this.props.id, requestedWhitelistedCapabilies);
 
             if (this.props.onCapabilityRequest) {
                 this.props.onCapabilityRequest(requestedCapabilities);
