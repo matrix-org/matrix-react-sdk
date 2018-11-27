@@ -225,11 +225,8 @@
     "Failed to join room": "Failed to join room",
     "Message Pinning": "Message Pinning",
     "Increase performance by only loading room members on first view": "Increase performance by only loading room members on first view",
-<<<<<<< HEAD
     "Merge users by their localparts": "Merge users by their localparts",
-=======
     "Backup of encryption keys to server": "Backup of encryption keys to server",
->>>>>>> experimental
     "Disable Emoji suggestions while typing": "Disable Emoji suggestions while typing",
     "Use compact timeline layout": "Use compact timeline layout",
     "Hide removed messages": "Hide removed messages",
