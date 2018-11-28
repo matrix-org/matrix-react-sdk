@@ -198,6 +198,7 @@ $progressbar-color: #000;
 
 :not(.mx_textinput) > input[type=text],
 :not(.mx_textinput) > input[type=search],
+:not(.mx_textinput) > input[type=password],
 .mx_textinput {
     display: block;
     margin: 9px;

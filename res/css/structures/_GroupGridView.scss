@@ -87,8 +87,9 @@ limitations under the License.
 
 .mx_GroupGridView_activeTile:before {
     border-radius: 14px;
-    border: 8px solid rgba(134, 193, 165, 0.5);
+    border: 8px solid rgba(134, 193, 165, 1);
     margin: -8px;
+    opacity: 0.5;
 }
 
 .mx_GroupGridView_activeTile:after {

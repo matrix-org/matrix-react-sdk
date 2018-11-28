@@ -222,11 +222,14 @@ module.exports = React.createClass({
             );
         } else {
             return (
-                <img className="mx_BaseAvatar mx_BaseAvatar_image" src={imageUrl}
-                    onError={this.onError}
-                    width={width} height={height}
-                    title={title} alt=""
-                    {...otherProps} />
+                <div className="mx_BaseAvatar_wrapper">
+                  <img className="mx_BaseAvatar mx_BaseAvatar_image" src={imageUrl}
+                      onError={this.onError}
+                      width={width} height={height}
+                      title={title} alt=""
+                      {...otherProps} />
+                  <div className="mx_BaseAvatar_tint" />
+                </div>
             );
         }
     },
