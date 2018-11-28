@@ -553,7 +553,8 @@ export default class AppTile extends React.Component {
         // (see - https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-permissions-in-cross-origin-iframes and https://wicg.github.io/feature-policy/)
         const iframeFeatures = "microphone; camera; encrypted-media;";
 
-        const appTileBodyClass = 'mx_AppTileBody' + (this.props.miniMode ? '_mini  ' : ' ');
+        const appTileBodyClass = 'mx_AppTileBody' + (this.props.miniMode ? '_mini  ' :
+            (this.props.tallMode ? '_tall' : ''));
 
         if (this.props.show) {
             const loadingElement = (
@@ -734,6 +735,8 @@ AppTile.propTypes = {
     fullWidth: PropTypes.bool,
     // Optional. If set, renders a smaller view of the widget
     miniMode: PropTypes.bool,
+    // Optional. If set, renders a tall view of the widget
+    tallMode: PropTypes.bool,
     // UserId of the current user
     userId: PropTypes.string.isRequired,
     // UserId of the entity that added / modified the widget
@@ -787,4 +790,5 @@ AppTile.defaultProps = {
     whitelistCapabilities: [],
     userWidget: false,
     miniMode: false,
+    tallMode: false,
 };

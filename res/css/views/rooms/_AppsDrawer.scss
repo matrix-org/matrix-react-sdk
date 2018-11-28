@@ -154,6 +154,19 @@ limitations under the License.
     height: 100%;
 }
 
+.mx_AppTileBody_tall {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.mx_AppTileBody_tall iframe {
+    border: none;
+    width: 100%;
+    height: 100vh;
+}
+
+
 .mx_AppTileBody iframe {
     width: 100%;
     height: 385px;
