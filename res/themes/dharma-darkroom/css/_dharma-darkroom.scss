@@ -368,3 +368,11 @@ a:link {
 .mx_EventTile_editButton {
   opacity: 0.7;
 }
+
+.mx_GroupGridView_activeTile:before {
+    border: 8px solid $primary-fg-color !important;
+}
+
+.mx_GroupGridView_activeTile:after {
+    border: 2px solid $primary-fg-color !important;
+}
