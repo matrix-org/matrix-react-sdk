@@ -63,8 +63,8 @@ class ActiveWidgetStore extends EventEmitter {
 
     sendEventsToWidgets(ev, state) {
         const eventType = ev.getType();
-        for(let widgetId in this._capsByWidgetId) {
-            if(this._capsByWidgetId.hasOwnProperty(widgetId)){
+        for (const widgetId in this._capsByWidgetId) {
+            if (this._capsByWidgetId.hasOwnProperty(widgetId)) {
                 const caps = this._capsByWidgetId[widgetId];
                 const roomId = ev.getRoomId();
                 if (caps.includes(eventType) && (
