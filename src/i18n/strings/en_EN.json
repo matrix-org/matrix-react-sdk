@@ -916,6 +916,7 @@
     "An error has occurred.": "An error has occurred.",
     "Invalid DTG": "Invalid DTG",
     "Unable to parse input as a valid date-time group.": "Unable to parse input as a valid date-time group.",
+    "Jump to time in Remote Messages": "Jump to time in Remote Messages",
     "Jump to Date Group": "Jump to Date Group",
     "You added a new device '%(displayName)s', which is requesting encryption keys.": "You added a new device '%(displayName)s', which is requesting encryption keys.",
     "Your unverified device '%(displayName)s' is requesting encryption keys.": "Your unverified device '%(displayName)s' is requesting encryption keys.",
