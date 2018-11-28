@@ -455,7 +455,7 @@ class MergedUsers {
         const inviteCount = members.filter(m => m.membership === 'invite' && !this.isSelf(m.userId)).length;
         let otherNames = null;
         if (room._summaryHeroes) { // HACK: Internal access
-            otherNames = this.getEffectiveParents(room._summaryHeroes.map(h => [h.userId, h])).map(h => {
+            otherNames = this.getEffectiveParents(room._summaryHeroes.map(h => [h, h])).map(h => {
                 const member = room.getMember(h);
                 const profile = this.getProfileOf(member) || {};
                 return profile.displayname || h;
