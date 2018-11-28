@@ -35,6 +35,7 @@ import {CancelButton} from './SimpleRoomHeader';
 import SettingsStore from "../../../settings/SettingsStore";
 import RoomHeaderButtons from '../right_panel/RoomHeaderButtons';
 import MergedUsers from "../../../MergedUsers";
+import RoomViewStore from "../../../stores/RoomViewStore";
 
 linkifyMatrix(linkify);
 
@@ -156,6 +157,11 @@ module.exports = React.createClass({
         Modal.createTrackedDialog('share room dialog', '', ShareDialog, {
             target: this.props.room,
         });
+    },
+
+    _onJumpToTimeClick: function() {
+        const JumpToTimeDialog = sdk.getComponent("dialogs.JumpToTimeDialog");
+        Modal.createTrackedDialog('jump to time dialog', '', JumpToTimeDialog, {});
     },
 
     _hasUnreadPins: function() {
@@ -340,6 +346,12 @@ module.exports = React.createClass({
             );
         }
 
+        const jumpToTimeButton = <AccessibleButton className="mx_RoomHeader_button"
+            onClick={this._onJumpToTimeClick} title={_t("History")}
+        >
+            <TintableSvg src="img/icons-settings-jumpToTime.svg" width="16" height="16" />
+        </AccessibleButton>;
+
         if (this.props.onSettingsClick) {
             settingsButton =
                 <AccessibleButton className="mx_RoomHeader_button" onClick={this.props.onSettingsClick} title={_t("Settings")}>
@@ -414,6 +426,7 @@ module.exports = React.createClass({
         if (!this.props.editing) {
             rightRow =
                 <div className="mx_RoomHeader_buttons">
+                    { jumpToTimeButton }
                     { settingsButton }
                     { pinnedEventsButton }
                     { shareRoomButton }
