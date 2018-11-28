@@ -681,6 +681,8 @@ module.exports = withMatrixClient(React.createClass({
 
     _renderChildAccounts: function() {
         const children = MergedUsers.getChildren(this.props.member.userId);
+        if (!children || children.length === 0) return null;
+
         const childLinks = children.map((c) => {
             return (
                 <div className="mx_MemberInfo_field mx_AccessibleButton" role="button"
