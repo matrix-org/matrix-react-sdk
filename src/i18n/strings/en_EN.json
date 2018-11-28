@@ -104,6 +104,7 @@
     "Failed to invite user": "Failed to invite user",
     "Operation failed": "Operation failed",
     "Failed to invite": "Failed to invite",
+    "Guide": "Guide",
     "Failed to invite the following users to the %(roomName)s room:": "Failed to invite the following users to the %(roomName)s room:",
     "You need to be logged in.": "You need to be logged in.",
     "You need to be able to invite users to do that.": "You need to be able to invite users to do that.",

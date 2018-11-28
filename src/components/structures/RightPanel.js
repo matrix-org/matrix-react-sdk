@@ -51,6 +51,7 @@ export default class RightPanel extends React.Component {
         GroupRoomInfo: 'GroupRoomInfo',
         FilePanel: 'FilePanel',
         ThreadPanel: 'ThreadPanel',
+        GuidePanel: 'GuidePanel',
         NotificationPanel: 'NotificationPanel',
         RoomMemberInfo: 'RoomMemberInfo',
         GroupMemberInfo: 'GroupMemberInfo',
@@ -154,6 +155,7 @@ export default class RightPanel extends React.Component {
         const NotificationPanel = sdk.getComponent('structures.NotificationPanel');
         const FilePanel = sdk.getComponent('structures.FilePanel');
         const ThreadPanel = sdk.getComponent('structures.ThreadPanel');
+        const GuidePanel = sdk.getComponent('structures.GuidePanel');
 
         const GroupMemberList = sdk.getComponent('groups.GroupMemberList');
         const GroupMemberInfo = sdk.getComponent('groups.GroupMemberInfo');
@@ -193,7 +195,10 @@ export default class RightPanel extends React.Component {
             panel = <FilePanel roomId={this.props.roomId} />;
         } else if (this.state.phase === RightPanel.Phase.ThreadPanel) {
             panel = <ThreadPanel roomId={this.props.roomId} mxEvent={this.state.mxEvent}
-                                 key={this.state.mxEvent.getContent().thread_id} />;
+                key={this.state.mxEvent.getContent().thread_id} />;
+       } else if (this.state.phase === RightPanel.Phase.GuidePanel) {
+             panel = <GuidePanel roomId={this.props.roomId}
+                key={`${this.props.roomId}_guidePanel`} />;
         }
 
         // TODO: either include this in the DOM again, or move it to other component

@@ -52,7 +52,7 @@ export default class RoomHeaderButtons extends HeaderButtons {
             RightPanel.Phase.RoomMemberInfo,
         ].includes(this.state.phase);
 
-        return [
+        const buttons = [
             <HeaderButton key="_membersButton" title={_t('Members')} iconSrc="img/icons-people.svg"
                 isHighlighted={isMembersPhase}
                 clickPhase={RightPanel.Phase.RoomMemberList}
@@ -69,5 +69,18 @@ export default class RoomHeaderButtons extends HeaderButtons {
                 analytics={['Right Panel', 'Notification List Button', 'click']}
             />,
         ];
+
+        // TODO -- Selectively show button if guide widget present in room state
+        if (true) {
+            buttons.push(
+                <HeaderButton key="_guideButton" title={_t('Guide')} iconSrc="img/icons-kraken.svg"
+                    isHighlighted={this.state.phase === RightPanel.Phase.GuidePanel}
+                    clickPhase={RightPanel.Phase.GuidePanel}
+                    analytics={['Right Panel', 'Guide Widget Button', 'click']}
+                />
+            );
+        }
+
+        return buttons;
     }
 }
