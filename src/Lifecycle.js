@@ -32,6 +32,7 @@ import Modal from './Modal';
 import sdk from './index';
 import ActiveWidgetStore from './stores/ActiveWidgetStore';
 import PlatformPeg from "./PlatformPeg";
+import SettingsStore from "./settings/SettingsStore";
 
 /**
  * Called at startup, to attempt to build a logged-in Matrix session. It tries
@@ -477,7 +478,9 @@ async function startMatrixClient() {
 
     Notifier.start();
     UserActivity.start();
-    Presence.start();
+    if (!SettingsStore.getValue("lowBandwidth")) {
+        Presence.start();
+    }
     DMRoomMap.makeShared().start();
     ActiveWidgetStore.start();
 
