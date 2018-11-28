@@ -362,11 +362,6 @@ export default class AppTile extends React.Component {
             this._setupWidgetMessaging();
         }
         ActiveWidgetStore.setRoomId(this.props.id, this.props.room.roomId);
-        if (this.props.type === 'krakenGuideBot') {
-            ActiveWidgetStore.setWidgetPersistence(this.props.id, true);
-        } else {
-            console.warn(`Widget type ${this.props.type} is not persistent by default`);
-        }
         this.setState({loading: false});
     }
 

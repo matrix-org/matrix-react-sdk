@@ -222,6 +222,7 @@ export default class RightPanel extends React.Component {
         }
 
         const classes = classNames("mx_RightPanel", "mx_fadable", {
+            "mx_RightPanel_wide": this.state.phase === RightPanel.Phase.GuidePanel,
             "collapsed": this.props.collapsed,
             "mx_fadable_faded": this.props.disabled,
             "dark-panel": true,
