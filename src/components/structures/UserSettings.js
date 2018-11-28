@@ -86,6 +86,13 @@ const SIMPLE_SETTINGS = [
     { id: "pinUnreadRooms" },
     { id: "showDeveloperTools" },
     { id: "mergeUsersByLocalpart" },
+    {
+        id: "lowBandwidth",
+        fn: () => {
+            PlatformPeg.get().reload();
+        },
+        level: SettingLevel.DEVICE,
+    },
 ];
 
 // These settings must be defined in SettingsStore
@@ -692,7 +699,7 @@ module.exports = React.createClass({
             <div className="mx_UserSettings_toggle" key={setting.id}>
                 <SettingsFlag name={setting.id}
                                   label={setting.label}
-                                  level={SettingLevel.ACCOUNT}
+                                  level={setting.level ? setting.level : SettingLevel.ACCOUNT}
                                   onChange={setting.fn} />
             </div>
         );
