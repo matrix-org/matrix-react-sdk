@@ -1667,6 +1667,7 @@ module.exports = React.createClass({
 
         const auxPanel = (
             <AuxPanel ref="auxPanel" room={this.state.room}
+              fullHeight={this.state.editingRoomSettings}
               userId={MatrixClientPeg.get().credentials.userId}
               conferenceHandler={this.props.ConferenceHandler}
               draggingFile={this.state.draggingFile}

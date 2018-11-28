@@ -62,6 +62,16 @@ limitations under the License.
     height: 440px;
 }
 
+.mx_RoomView_auxPanel_fullHeight {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 3000;
+    background-color: $primary-bg-color;
+}
+
 .mx_RoomView_auxPanel_apps {
     max-width: 1920px ! important;
 }
@@ -73,6 +83,7 @@ limitations under the License.
 }
 
 .mx_RoomView_body {
+    position: relative; //for .mx_RoomView_auxPanel_fullHeight
     display: flex;
     flex-direction: column;
     flex: 1;
