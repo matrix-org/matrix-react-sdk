@@ -81,7 +81,7 @@ class ActiveWidgetStore extends EventEmitter {
         // on this class which is terrible. This store should just listen for events
         // and keep itself up to date.
 
-        this.sendEventsToWidgets(ev, state)
+        this.sendEventsToWidgets(ev, state);
 
         if (ev.getType() !== 'im.vector.modular.widgets') return;
 
