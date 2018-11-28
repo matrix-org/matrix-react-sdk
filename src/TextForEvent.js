@@ -336,7 +336,7 @@ function textForEncryptionEvent(event) {
 
 // Currently will only display a change if a user's power level is changed
 function textForPowerEvent(event) {
-    const senderName = event.sender ? event.sender.name : event.getSender();
+    const senderName = event.sender ? event.sender.userId : event.getSender();
     if (!event.getPrevContent() || !event.getPrevContent().users) {
         return '';
     }
