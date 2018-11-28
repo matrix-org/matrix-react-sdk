@@ -48,6 +48,7 @@ const eventTileTypes = {
 };
 
 const stateEventTileTypes = {
+    'org.matrix.server_presence': 'messages.ServerPresenceBanner',
     'm.room.aliases': 'messages.TextualEvent',
     // 'm.room.aliases': 'messages.RoomAliasesEvent', // too complex
     'm.room.canonical_alias': 'messages.TextualEvent',
@@ -491,7 +492,7 @@ module.exports = withMatrixClient(React.createClass({
         const eventType = this.props.mxEvent.getType();
 
         // Info messages are basically information about commands processed on a room
-        const isFullWidthBanner = this.props.mxEvent.getType() === 'org.matrix.new_thread';
+        const isFullWidthBanner = eventType === 'org.matrix.new_thread' || eventType === 'org.matrix.server_presence';
         const isInfoMessage = (
             eventType !== 'm.room.message' && eventType !== 'm.sticker' && eventType != 'm.room.create'
         ) && !isFullWidthBanner;

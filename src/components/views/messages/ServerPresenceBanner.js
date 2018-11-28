@@ -21,22 +21,14 @@ import dis from '../../../dispatcher';
 import { _t } from '../../../languageHandler';
 import {formatTime} from '../../../DateUtils';
 import SettingsStore from "../../../settings/SettingsStore";
+import classNames from "classnames";
 
 module.exports = React.createClass({
-    displayName: 'NewThreadBanner',
+    displayName: 'ServerPresenceBanner',
 
     propTypes: {
         /* the MatrixEvent to show */
         mxEvent: PropTypes.object.isRequired,
-    },
-
-    _onLinkClicked: function(e) {
-        e.preventDefault();
-        dis.dispatch({
-            action: 'view_right_panel_phase',
-            phase: 'ThreadPanel',
-            mxEvent: this.props.mxEvent,
-        });
     },
 
     getDefaultProps() {
@@ -46,14 +38,24 @@ module.exports = React.createClass({
     },
 
     render: function() {
-        const date = new Date(this.props.mxEvent.getTs());
-        return <div className="mx_NewThreadBanner">
-            <div className="mx_NewThreadBanner_timestamp">{formatTime(date, this.props.isTwelveHour)}</div>
-            <div className="mx_NewThreadBanner_message">
-                {_t("Received older messages: <link>View messages</link>", {}, {
-                    link: s => <a href="#" onClick={this._onLinkClicked}>{s}</a>,
-                })}
-            </div>
+        const e = this.props.mxEvent;
+        const state = e.getContent().state;
+        const disconnected = state === "disconnected";
+        const connected = state === "connected";
+        const server = e.getStateKey();
+
+        const classes = classNames({
+            "mx_ServerPresenceBanner": true,
+            "mx_ServerPresenceBanner_connected": connected,
+            "mx_ServerPresenceBanner_disconnected": disconnected,
+        });
+        const label = disconnected ?
+            _t("Lost connection to server %(server)s", {server}) :
+            _t("Reconnected to server %(server)s", {server});
+        const date = new Date(e.getTs());
+        return <div className={classes}>
+            <div className="mx_ServerPresenceBanner_timestamp">{formatTime(date, this.props.isTwelveHour)}</div>
+            <div className="mx_ServerPresenceBanner_message">{label}</div>
         </div>;
     },
 });

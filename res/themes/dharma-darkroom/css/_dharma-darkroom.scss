@@ -59,7 +59,14 @@ $h3-color: $primary-fg-color;
 
 $neutral-badge-color: $primary-fg-color;
 
-// used by NewThreadBanner
+// used by NewThreadBanner & ServerPresenceBanner
+
+$lost-alert-fg-color: #FE3B30;
+$lost-alert-bg-color: #330C0A;
+
+$reconnected-alert-fg-color: #CF7B02;
+$reconnected-alert-bg-color: #3D280A;
+
 $received-messages-alert-fg-color: #46C65C;
 $received-messages-alert-bg-color: #19361E;
 

@@ -1347,5 +1347,7 @@
     "Retry": "Retry",
     "Failed to set direct chat tag": "Failed to set direct chat tag",
     "Failed to remove tag %(tagName)s from room": "Failed to remove tag %(tagName)s from room",
-    "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room"
+    "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room",
+    "Lost connection to server %(server)s": "Lost connection to server %(server)s",
+    "Reconnected to server %(server)s": "Reconnected to server %(server)s"
 }
