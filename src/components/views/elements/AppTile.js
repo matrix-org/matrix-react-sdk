@@ -35,6 +35,8 @@ import MessageSpinner from './MessageSpinner';
 import WidgetUtils from '../../../utils/WidgetUtils';
 import dis from '../../../dispatcher';
 import ActiveWidgetStore from '../../../stores/ActiveWidgetStore';
+import SettingsStore from '../../../settings/SettingsStore';
+import Tinter from '../../../Tinter';
 
 const ALLOWED_APP_URL_SCHEMES = ['https:', 'http:'];
 const ENABLE_REACT_PERF = false;
@@ -122,6 +124,8 @@ export default class AppTile extends React.Component {
         params.parentUrl = window.location.href.split('#', 2)[0];
         // Append matrix user ID
         params.matrixUserId = MatrixClientPeg.get().credentials.userId;
+        // Append current theme
+        params.theme = Tinter.theme ? Tinter.theme : SettingsStore.getValue("theme");
         u.search = undefined;
         u.query = params;
 
@@ -796,7 +800,7 @@ AppTile.defaultProps = {
     showReload: false,
     handleMinimisePointerEvents: false,
     whitelistCapabilities: [],
-    nonRequestedCapabilities: ['theme_update'],
+    nonRequestedCapabilities: ['theme'],
     userWidget: false,
     miniMode: false,
     tallMode: false,

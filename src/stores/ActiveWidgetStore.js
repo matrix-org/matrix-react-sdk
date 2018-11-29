@@ -18,7 +18,8 @@ import EventEmitter from 'events';
 
 import MatrixClientPeg from '../MatrixClientPeg';
 import dis from '../dispatcher';
-
+import SettingsStore from '../settings/SettingsStore';
+import Tinter from '../Tinter';
 
 /**
  * Stores information about the widgets active in the app right now:
@@ -84,10 +85,17 @@ class ActiveWidgetStore extends EventEmitter {
     }
 
     sendThemeToWidgets(theme) {
+        if (!theme) {
+            if (Tinter.theme) {
+                theme = Tinter.theme;
+            } else {
+                theme = SettingsStore.getValue("theme");
+            }
+        }
         for (const widgetId in this._capsByWidgetId) {
             if (this._capsByWidgetId.hasOwnProperty(widgetId)) {
                 const caps = this._capsByWidgetId[widgetId];
-                if (caps.includes('theme_update')) {
+                if (caps.includes('theme')) {
                     this._widgetMessagingByWidgetId[widgetId].sendThemeUpdate(theme);
                 }
             }
