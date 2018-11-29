@@ -35,7 +35,7 @@ limitations under the License.
 }
 
 .mx_RoomTile_menuButton:before{
-  mask: none, url('../../img/icon_context.svg');
+  mask: url('../../img/icon_context.svg');
   background-color: $primary-fg-color;
   content: '';
   mask-repeat: no-repeat;

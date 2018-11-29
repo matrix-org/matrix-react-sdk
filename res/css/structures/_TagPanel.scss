@@ -137,7 +137,7 @@ limitations under the License.
 
 .mx_TagPanel_toggleTheme {
   background-color: $neutral-badge-color;
-  mask: none, url('../../img/icon-night.svg');
+  mask: url('../../img/icon-night.svg');
   mask-repeat: no-repeat;
   mask-position: center;
   position: absolute;
