@@ -80,7 +80,7 @@ const GuidePanel = React.createClass({
             <div className="mx_GuidePanel">
             {this.state.busy && <InlineSpinner />}
             {!this.state.busy && this.state.guideWidget && (
-                <PersistedElement persistKey="guideBot" style={{zIndex: 5001}}>
+                <PersistedElement persistKey="guideBot">
                     <AppTile
                         id={this.state.guideWidget.id}
                         url={this.state.guideWidget.content.url}
