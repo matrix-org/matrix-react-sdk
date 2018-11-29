@@ -120,6 +120,8 @@ export default class AppTile extends React.Component {
         // Append current / parent URL, minus the hash because that will change when
         // we view a different room (ie. may change for persistent widgets)
         params.parentUrl = window.location.href.split('#', 2)[0];
+        // Append matrix user ID
+        params.matrixUserId = MatrixClientPeg.get().credentials.userId;
         u.search = undefined;
         u.query = params;
 
