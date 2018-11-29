@@ -17,6 +17,8 @@ limitations under the License.
 import EventEmitter from 'events';
 
 import MatrixClientPeg from '../MatrixClientPeg';
+import dis from '../dispatcher';
+
 
 /**
  * Stores information about the widgets active in the app right now:
@@ -42,6 +44,7 @@ class ActiveWidgetStore extends EventEmitter {
         this._roomIdByWidgetId = {};
 
         this.onRoomStateEvents = this.onRoomStateEvents.bind(this);
+        this.onAction = this.onAction.bind(this);
 
         this.dispatcherRef = null;
     }
@@ -49,6 +52,7 @@ class ActiveWidgetStore extends EventEmitter {
     start() {
         MatrixClientPeg.get().on('RoomState.events', this.onRoomStateEvents);
         MatrixClientPeg.get().on('Room.timeline', this.onRoomTimelineEvents);
+        this.dispatcherRef = dis.register(this.onAction);
     }
 
     stop() {
@@ -63,13 +67,28 @@ class ActiveWidgetStore extends EventEmitter {
 
     sendEventsToWidgets(ev, state) {
         const eventType = ev.getType();
-        for(let widgetId in this._capsByWidgetId) {
-            if(this._capsByWidgetId.hasOwnProperty(widgetId)){
+        for (const widgetId in this._capsByWidgetId) {
+            if (this._capsByWidgetId.hasOwnProperty(widgetId)) {
                 const caps = this._capsByWidgetId[widgetId];
                 const roomId = ev.getRoomId();
+
+                // NOTE -- If the widget has no associated room ID (e.g. is a user widget)
+                // Send all requested events of type, regardless of room!
+                // WARNING - This could be a lot of events
                 if (caps.includes(eventType) && (
-                    !roomId || roomId === this._roomIdByWidgetId[widgetId])) {
-                    this._widgetMessagingByWidgetId[widgetId].sendEvent(ev, state);
+                    !this._roomIdByWidgetId[widgetId] || roomId === this._roomIdByWidgetId[widgetId])) {
+                        this._widgetMessagingByWidgetId[widgetId].sendEvent(ev, state, roomId);
+                }
+            }
+        }
+    }
+
+    sendThemeToWidgets(theme) {
+        for (const widgetId in this._capsByWidgetId) {
+            if (this._capsByWidgetId.hasOwnProperty(widgetId)) {
+                const caps = this._capsByWidgetId[widgetId];
+                if (caps.includes('theme_update')) {
+                    this._widgetMessagingByWidgetId[widgetId].sendThemeUpdate(theme);
                 }
             }
         }
@@ -92,6 +111,14 @@ class ActiveWidgetStore extends EventEmitter {
 
     onRoomTimelineEvents(ev, state) {
         // this.sendEventsToWidgets(ev, state);
+    }
+
+    onAction(payload) {
+        switch (payload.action) {
+            case 'set_theme':
+            this.sendThemeToWidgets(payload.value);
+            break;
+        }
     }
 
     destroyPersistentWidget() {

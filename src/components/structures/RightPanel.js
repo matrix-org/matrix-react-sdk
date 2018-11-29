@@ -30,7 +30,6 @@ import { showGroupInviteDialog, showGroupAddRoomDialog } from '../../GroupAddres
 import GroupStore from '../../stores/GroupStore';
 
 export default class RightPanel extends React.Component {
-
     static get propTypes() {
         return {
             roomId: React.PropTypes.string, // if showing panels for a given room, this is set
@@ -178,7 +177,8 @@ export default class RightPanel extends React.Component {
         } else if (this.state.phase === RightPanel.Phase.GroupRoomList) {
             panel = <GroupRoomList groupId={this.props.groupId} key={this.props.groupId} />;
         } else if (this.state.phase === RightPanel.Phase.RoomMemberInfo) {
-            panel = <MemberInfo roomId={this.props.roomId} member={this.state.member} key={this.props.roomId || this.state.member.userId} />;
+            panel = <MemberInfo roomId={this.props.roomId} member={this.state.member}
+                key={this.props.roomId || this.state.member.userId} />;
         } else if (this.state.phase === RightPanel.Phase.GroupMemberInfo) {
             panel = <GroupMemberInfo
                 groupMember={this.state.member}
@@ -222,6 +222,7 @@ export default class RightPanel extends React.Component {
         }
 
         const classes = classNames("mx_RightPanel", "mx_fadable", {
+            "mx_RightPanel_wide": this.state.phase === RightPanel.Phase.GuidePanel,
             "collapsed": this.props.collapsed,
             "mx_fadable_faded": this.props.disabled,
             "dark-panel": true,

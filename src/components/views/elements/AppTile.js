@@ -120,6 +120,8 @@ export default class AppTile extends React.Component {
         // Append current / parent URL, minus the hash because that will change when
         // we view a different room (ie. may change for persistent widgets)
         params.parentUrl = window.location.href.split('#', 2)[0];
+        // Append matrix user ID
+        params.matrixUserId = MatrixClientPeg.get().credentials.userId;
         u.search = undefined;
         u.query = params;
 
@@ -361,12 +363,6 @@ export default class AppTile extends React.Component {
         if (!ActiveWidgetStore.getWidgetMessaging(this.props.id)) {
             this._setupWidgetMessaging();
         }
-        ActiveWidgetStore.setRoomId(this.props.id, this.props.room.roomId);
-        if (this.props.type === 'controlBot') {
-            ActiveWidgetStore.setWidgetPersistence(this.props.id, true);
-        } else {
-            console.warn(`Widget type ${this.props.type} is not persistent by default`);
-        }
         this.setState({loading: false});
     }
 
@@ -381,12 +377,7 @@ export default class AppTile extends React.Component {
 
             // Allow whitelisted capabilities
             let requestedWhitelistedCapabilies = [];
-            let whitelistCapabilities = this.props.whitelistCapabilities || [];
-            // Add additional whitelisted capabilities for specific app types
-            if (this.props.type === 'controlBot') {
-                console.log('Adding additional whitelist capabilities for commandBot');
-                whitelistCapabilities = whitelistCapabilities.concat(['m.always_on_screen', 'mil.defcon', 'm.geo']);
-            }
+            const whitelistCapabilities = this.props.whitelistCapabilities || [];
 
             if (whitelistCapabilities && whitelistCapabilities.length > 0) {
                 requestedWhitelistedCapabilies = requestedCapabilities.filter(cap => {
@@ -395,15 +386,18 @@ export default class AppTile extends React.Component {
 
 
                 if (requestedWhitelistedCapabilies.length > 0 ) {
-                    console.warn(`Widget ${this.props.id} allowing requested, whitelisted capabilities: ${requestedWhitelistedCapabilies} of ${requestedCapabilities}`);
+                    console.warn(
+                        `Widget ${this.props.id} allowing requested, whitelisted capabilities: ` +
+                        `${requestedWhitelistedCapabilies} of ${requestedCapabilities}`);
                 }
             } else {
                 console.warn('No capabilities to whitelist');
             }
 
             // TODO -- Add UI to warn about and optionally allow requested capabilities
-
-            ActiveWidgetStore.setWidgetCapabilities(this.props.id, requestedWhitelistedCapabilies);
+            const capabilities = requestedWhitelistedCapabilies.concat(this.props.nonRequestedCapabilities) || [];
+            console.log(`Widget ${this.props.id} has capabilities`, capabilities);
+            ActiveWidgetStore.setWidgetCapabilities(this.props.id, capabilities);
 
             if (this.props.onCapabilityRequest) {
                 this.props.onCapabilityRequest(requestedCapabilities);
@@ -558,7 +552,8 @@ export default class AppTile extends React.Component {
         // (see - https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-permissions-in-cross-origin-iframes and https://wicg.github.io/feature-policy/)
         const iframeFeatures = "microphone; camera; encrypted-media;";
 
-        const appTileBodyClass = 'mx_AppTileBody' + (this.props.miniMode ? '_mini  ' : ' ');
+        const appTileBodyClass = 'mx_AppTileBody' + (this.props.miniMode ? '_mini  ' :
+            (this.props.tallMode ? '_tall' : ''));
 
         if (this.props.show) {
             const loadingElement = (
@@ -651,6 +646,9 @@ export default class AppTile extends React.Component {
         } else {
             appTileClass = 'mx_AppTile';
         }
+        if (this.props.borderless) {
+            appTileClass = [appTileClass, 'mx_AppTile_borderless'].join(' ');
+        }
 
         return (
             <div className={appTileClass} id={this.props.id}>
@@ -739,6 +737,8 @@ AppTile.propTypes = {
     fullWidth: PropTypes.bool,
     // Optional. If set, renders a smaller view of the widget
     miniMode: PropTypes.bool,
+    // Optional. If set, renders a tall view of the widget
+    tallMode: PropTypes.bool,
     // UserId of the current user
     userId: PropTypes.string.isRequired,
     // UserId of the entity that added / modified the widget
@@ -769,14 +769,20 @@ AppTile.propTypes = {
     // having to reload all of riot to get new widget content.
     showReload: PropTypes.bool,
     // Widget capabilities to allow by default (without user confirmation)
+    // These capabilities still have to be requested from the widget
     // NOTE -- Use with caution. This is intended to aid better integration / UX
     // basic widget capabilities, e.g. injecting sticker message events.
     whitelistCapabilities: PropTypes.array,
+    // These capabilities will be enabled withough needing to be requested by the widget
+    // NOTE -- Use with caution. This is intended to aid better integration / UX
+    // basic widget capabilities, e.g. injecting sticker message events.
+    nonRequestedCapabilities: PropTypes.array,
     // Optional function to be called on widget capability request
     // Called with an array of the requested capabilities
     onCapabilityRequest: PropTypes.func,
     // Is this an instance of a user widget
     userWidget: PropTypes.bool,
+    borderless: PropTypes.bool,
 };
 
 AppTile.defaultProps = {
@@ -790,6 +796,9 @@ AppTile.defaultProps = {
     showReload: false,
     handleMinimisePointerEvents: false,
     whitelistCapabilities: [],
+    nonRequestedCapabilities: ['theme_update'],
     userWidget: false,
     miniMode: false,
+    tallMode: false,
+    borderless: false,
 };

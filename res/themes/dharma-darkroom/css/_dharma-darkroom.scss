@@ -158,6 +158,16 @@ a:link {
   height: 100%;
 }
 
+[title~="Guide"]  {
+  mask: none, url('../../img/icons-kraken.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  display: block;
+  height: 100%;
+}
+
 [title~="Search"]  {
   mask: none, url('../../img/icons-search.svg');
   background-color: $primary-fg-color;
