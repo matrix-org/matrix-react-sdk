@@ -71,9 +71,13 @@ class ActiveWidgetStore extends EventEmitter {
             if (this._capsByWidgetId.hasOwnProperty(widgetId)) {
                 const caps = this._capsByWidgetId[widgetId];
                 const roomId = ev.getRoomId();
+
+                // NOTE -- If the widget has no associated room ID (e.g. is a user widget)
+                // Send all requested events of type, regardless of room!
+                // WARNING - This could be a lot of events
                 if (caps.includes(eventType) && (
-                    !roomId || roomId === this._roomIdByWidgetId[widgetId])) {
-                    this._widgetMessagingByWidgetId[widgetId].sendEvent(ev, state);
+                    !this._roomIdByWidgetId[widgetId] || roomId === this._roomIdByWidgetId[widgetId])) {
+                        this._widgetMessagingByWidgetId[widgetId].sendEvent(ev, state, roomId);
                 }
             }
         }

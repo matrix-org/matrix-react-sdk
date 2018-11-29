@@ -363,7 +363,6 @@ export default class AppTile extends React.Component {
         if (!ActiveWidgetStore.getWidgetMessaging(this.props.id)) {
             this._setupWidgetMessaging();
         }
-        ActiveWidgetStore.setRoomId(this.props.id, this.props.room.roomId);
         this.setState({loading: false});
     }
 
