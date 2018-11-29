@@ -21,7 +21,6 @@ import AppTile from '../views/elements/AppTile';
 import MatrixClientPeg from '../../MatrixClientPeg';
 import PersistedElement from '../views/elements/PersistedElement';
 import InlineSpinner from '../views/elements/InlineSpinner';
-import { _t } from '../../languageHandler';
 
 // FIXME / TODO -- This should not be hard-coded
 const widgetUrl = 'https://localhost:6698';
