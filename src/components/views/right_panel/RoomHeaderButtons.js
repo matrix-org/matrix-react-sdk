@@ -77,7 +77,7 @@ export default class RoomHeaderButtons extends HeaderButtons {
                     isHighlighted={this.state.phase === RightPanel.Phase.GuidePanel}
                     clickPhase={RightPanel.Phase.GuidePanel}
                     analytics={['Right Panel', 'Guide Widget Button', 'click']}
-                />
+                />,
             );
         }
 
