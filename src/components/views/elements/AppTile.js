@@ -377,7 +377,6 @@ export default class AppTile extends React.Component {
             // Allow whitelisted capabilities
             let requestedWhitelistedCapabilies = [];
             const whitelistCapabilities = this.props.whitelistCapabilities || [];
-            // Add additional whitelisted capabilities for specific app types
 
             if (whitelistCapabilities && whitelistCapabilities.length > 0) {
                 requestedWhitelistedCapabilies = requestedCapabilities.filter(cap => {
@@ -395,8 +394,9 @@ export default class AppTile extends React.Component {
             }
 
             // TODO -- Add UI to warn about and optionally allow requested capabilities
-
-            ActiveWidgetStore.setWidgetCapabilities(this.props.id, requestedWhitelistedCapabilies);
+            const capabilities = requestedWhitelistedCapabilies.concat(this.props.nonRequestedCapabilities) || [];
+            console.log(`Widget ${this.props.id} has capabilities`, capabilities);
+            ActiveWidgetStore.setWidgetCapabilities(this.props.id, capabilities);
 
             if (this.props.onCapabilityRequest) {
                 this.props.onCapabilityRequest(requestedCapabilities);
@@ -765,9 +765,14 @@ AppTile.propTypes = {
     // having to reload all of riot to get new widget content.
     showReload: PropTypes.bool,
     // Widget capabilities to allow by default (without user confirmation)
+    // These capabilities still have to be requested from the widget
     // NOTE -- Use with caution. This is intended to aid better integration / UX
     // basic widget capabilities, e.g. injecting sticker message events.
     whitelistCapabilities: PropTypes.array,
+    // These capabilities will be enabled withough needing to be requested by the widget
+    // NOTE -- Use with caution. This is intended to aid better integration / UX
+    // basic widget capabilities, e.g. injecting sticker message events.
+    nonRequestedCapabilities: PropTypes.array,
     // Optional function to be called on widget capability request
     // Called with an array of the requested capabilities
     onCapabilityRequest: PropTypes.func,
@@ -786,6 +791,7 @@ AppTile.defaultProps = {
     showReload: false,
     handleMinimisePointerEvents: false,
     whitelistCapabilities: [],
+    nonRequestedCapabilities: ['theme_update'],
     userWidget: false,
     miniMode: false,
     tallMode: false,

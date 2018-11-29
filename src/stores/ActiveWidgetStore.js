@@ -17,6 +17,8 @@ limitations under the License.
 import EventEmitter from 'events';
 
 import MatrixClientPeg from '../MatrixClientPeg';
+import dis from '../dispatcher';
+
 
 /**
  * Stores information about the widgets active in the app right now:
@@ -42,6 +44,7 @@ class ActiveWidgetStore extends EventEmitter {
         this._roomIdByWidgetId = {};
 
         this.onRoomStateEvents = this.onRoomStateEvents.bind(this);
+        this.onAction = this.onAction.bind(this);
 
         this.dispatcherRef = null;
     }
@@ -49,6 +52,7 @@ class ActiveWidgetStore extends EventEmitter {
     start() {
         MatrixClientPeg.get().on('RoomState.events', this.onRoomStateEvents);
         MatrixClientPeg.get().on('Room.timeline', this.onRoomTimelineEvents);
+        this.dispatcherRef = dis.register(this.onAction);
     }
 
     stop() {
@@ -75,6 +79,17 @@ class ActiveWidgetStore extends EventEmitter {
         }
     }
 
+    sendThemeToWidgets(theme) {
+        for (const widgetId in this._capsByWidgetId) {
+            if (this._capsByWidgetId.hasOwnProperty(widgetId)) {
+                const caps = this._capsByWidgetId[widgetId];
+                if (caps.includes('theme_update')) {
+                    this._widgetMessagingByWidgetId[widgetId].sendThemeUpdate(theme);
+                }
+            }
+        }
+    }
+
     onRoomStateEvents(ev, state) {
         // XXX: This listens for state events in order to remove the active widget.
         // Everything else relies on views listening for events and calling setters
@@ -92,6 +107,14 @@ class ActiveWidgetStore extends EventEmitter {
 
     onRoomTimelineEvents(ev, state) {
         // this.sendEventsToWidgets(ev, state);
+    }
+
+    onAction(payload) {
+        switch (payload.action) {
+            case 'set_theme':
+            this.sendThemeToWidgets(payload.value);
+            break;
+        }
     }
 
     destroyPersistentWidget() {
