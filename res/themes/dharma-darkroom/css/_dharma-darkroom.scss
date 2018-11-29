@@ -123,7 +123,7 @@ a:link {
 // Top right buttons
 
 [data~="img/icons-settings-room.svg"], [data~="img/icons-share.svg"], [data~="img/icons-apps.svg"],
-[data~="img/icons-search.svg"], [data~="img/icons-people.svg"], [data~="img/icons-files.svg"],
+[data~="img/icons-search.svg"], [data~="img/icons-kraken.svg"], [data~="img/icons-people.svg"], [data~="img/icons-files.svg"],
 [data~="img/icons-notifications.svg"] {
   opacity: 0;
 }
@@ -150,6 +150,16 @@ a:link {
 
 [title~="Manage"]  {
   mask: none, url('../../img/icons-apps.svg');
+  background-color: $primary-fg-color;
+  content: '';
+  mask-repeat: no-repeat;
+  mask-position: center;
+  display: block;
+  height: 100%;
+}
+
+[title~="Guide"]  {
+  mask: none, url('../../img/icons-kraken.svg');
   background-color: $primary-fg-color;
   content: '';
   mask-repeat: no-repeat;
@@ -363,4 +373,3 @@ a:link {
 .mx_RoomHeader_nametext {
     color: $primary-fg-color-highlight !important;
 }
-
