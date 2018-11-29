@@ -97,7 +97,13 @@ const GuidePanel = React.createClass({
                         showMinimise={false}
                         showDelete={false}
                         showPopout={false}
-                        whitelistCapabilities={['m.always_on_screen', 'mil.defcon', 'm.geo', 'mil.instructions']}
+                        whitelistCapabilities={[
+                            'm.always_on_screen',
+                            'mil.defcon',
+                            'm.geo',
+                            'mil.instructions',
+                            'personal.alert',
+                        ]}
                         userWidget={true}
                         tallMode={true}
                         borderless={true}
