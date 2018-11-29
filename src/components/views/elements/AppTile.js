@@ -645,6 +645,9 @@ export default class AppTile extends React.Component {
         } else {
             appTileClass = 'mx_AppTile';
         }
+        if (this.props.borderless) {
+            appTileClass = [appTileClass, 'mx_AppTile_borderless'].join(' ');
+        }
 
         return (
             <div className={appTileClass} id={this.props.id}>
@@ -778,6 +781,7 @@ AppTile.propTypes = {
     onCapabilityRequest: PropTypes.func,
     // Is this an instance of a user widget
     userWidget: PropTypes.bool,
+    borderless: PropTypes.bool,
 };
 
 AppTile.defaultProps = {
@@ -795,4 +799,5 @@ AppTile.defaultProps = {
     userWidget: false,
     miniMode: false,
     tallMode: false,
+    borderless: false,
 };

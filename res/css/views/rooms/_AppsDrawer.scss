@@ -75,6 +75,10 @@ limitations under the License.
     border-radius: 2px;
 }
 
+.mx_AppTile.mx_AppTile_borderless, .mx_AppTileFullWidth.mx_AppTile_borderless{
+    border: none;
+}
+
 .mx_AppTile_mini {
     max-width: 960px;
     width: 100%;
