@@ -376,12 +376,8 @@ export default class AppTile extends React.Component {
 
             // Allow whitelisted capabilities
             let requestedWhitelistedCapabilies = [];
-            let whitelistCapabilities = this.props.whitelistCapabilities || [];
+            const whitelistCapabilities = this.props.whitelistCapabilities || [];
             // Add additional whitelisted capabilities for specific app types
-            if (this.props.type === 'krakenGuideBot') {
-                console.log('Adding additional whitelist capabilities for commandBot');
-                whitelistCapabilities = whitelistCapabilities.concat(['m.always_on_screen', 'mil.defcon', 'm.geo']);
-            }
 
             if (whitelistCapabilities && whitelistCapabilities.length > 0) {
                 requestedWhitelistedCapabilies = requestedCapabilities.filter(cap => {
@@ -390,7 +386,9 @@ export default class AppTile extends React.Component {
 
 
                 if (requestedWhitelistedCapabilies.length > 0 ) {
-                    console.warn(`Widget ${this.props.id} allowing requested, whitelisted capabilities: ${requestedWhitelistedCapabilies} of ${requestedCapabilities}`);
+                    console.warn(
+                        `Widget ${this.props.id} allowing requested, whitelisted capabilities: ` +
+                        `${requestedWhitelistedCapabilies} of ${requestedCapabilities}`);
                 }
             } else {
                 console.warn('No capabilities to whitelist');
