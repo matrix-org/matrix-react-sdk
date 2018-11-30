@@ -685,6 +685,11 @@ module.exports = React.createClass({
             },
         );
 
+        let whoIsTyping;
+        if (this.props.room) {
+            whoIsTyping = (<WhoIsTypingTile room={this.props.room} onVisible={this._scrollDownIfAtBottom} />);
+        }
+
         return (
             <ScrollPanel ref="scrollPanel" className={className}
                     onScroll={this.props.onScroll}
@@ -695,7 +700,7 @@ module.exports = React.createClass({
                     stickyBottom={this.props.stickyBottom}>
                 { topSpinner }
                 { this._getEventTiles() }
-                <WhoIsTypingTile room={this.props.room} onVisible={this._scrollDownIfAtBottom} />
+                { whoIsTyping }
                 { bottomSpinner }
             </ScrollPanel>
         );
