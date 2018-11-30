@@ -166,6 +166,7 @@ class MergedUsers {
     isSelf(userId) {
         if (VERBOSE_LOGGING) console.log("MergedUsers#isSelf on entity: " + userId);
         if (!MatrixClientPeg.get()) return false;
+        if (!this._isMergable(userId)) return MatrixClientPeg.get().getUserId() === userId;
         return this.isChildOf(userId, [MatrixClientPeg.get().getUserId()]);
     }
 
