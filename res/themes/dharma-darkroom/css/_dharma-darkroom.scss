@@ -393,3 +393,8 @@ a:link {
 .mx_GroupGridView_activeTile:after {
     border: 2px solid $primary-fg-color !important;
 }
+
+.mx_Dialog_cancelButton {
+  -webkit-filter: hue-rotate(235deg) !important;
+  filter: hue-rotate(235deg) !important;
+}

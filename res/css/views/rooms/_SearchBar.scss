@@ -23,8 +23,10 @@ limitations under the License.
 
 .mx_SearchBar_input {
     display: inline block;
+    background-color: $primary-bg-color;
     border-radius: 3px 0px 0px 3px;
     border: 1px solid $input-border-color;
+    color: $primary-fg-color;
     font-size: 15px;
     padding: 9px;
     padding-left: 11px;
