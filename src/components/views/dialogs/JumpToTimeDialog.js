@@ -105,6 +105,7 @@ export default React.createClass({
                 <form onSubmit={this._onOk}>
                     <div className="mx_Dialog_content">
                         <input placeholder="9 Jul 2011…" autoFocus={true}
+                            className="mx_SearchBar_input"
                             onChange={this._onDateInputChange}
                             value={this.state.timeStr}
                         />
