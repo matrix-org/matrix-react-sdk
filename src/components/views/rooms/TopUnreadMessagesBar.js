@@ -21,6 +21,8 @@ const React = require('react');
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import AccessibleButton from '../elements/AccessibleButton';
+import {formatCount} from '../../../utils/FormattingUtils';
+
 const sdk = require('../../../index');
 
 module.exports = React.createClass({
@@ -28,17 +30,25 @@ module.exports = React.createClass({
 
     propTypes: {
         onScrollUpClick: PropTypes.func,
-        onCloseClick: PropTypes.func,
     },
 
     render: function() {
+        let badgeLabel = "?";
+        const count = this.props.messageCount;
+        if (count) {
+            if (count.exact) {
+                badgeLabel = formatCount(this.props.messageCount.exact);
+            } else if (count.atLeast) {
+                badgeLabel = `+${formatCount(this.props.messageCount.atLeast)}`;
+            }
+        }
         return (
             <div className="mx_TopUnreadMessagesBar">
                 <AccessibleButton className="mx_TopUnreadMessagesBar_scrollUp"
                     title={_t('Jump to first unread message.')}
                     onClick={this.props.onScrollUpClick}>
                     <div className="mx_TopUnreadMessagesBar_badgeContainer">
-                        <div className="mx_TopUnreadMessagesBar_badge">x</div>
+                        <div className="mx_TopUnreadMessagesBar_badge">{badgeLabel}</div>
                     </div>
                 </AccessibleButton>
             </div>
