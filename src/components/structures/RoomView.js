@@ -1795,7 +1795,6 @@ module.exports = React.createClass({
         if (this.state.showTopUnreadMessagesBar) {
             const TopUnreadMessagesBar = sdk.getComponent('rooms.TopUnreadMessagesBar');
             topUnreadMessagesBar = (<TopUnreadMessagesBar
-                                       messageCount={this.refs.messagePanel ? this.refs.messagePanel.getMessageCountToReadMarker() : undefined}
                                        onScrollUpClick={this.jumpToReadMarker}
                                        onCloseClick={this.forgetReadMarker}
                                     />);

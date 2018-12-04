@@ -38,22 +38,6 @@ limitations under the License.
     height: 38px;
     mask: url('../../img/icon-jump-to-first-unread.svg');
     mask-repeat: no-repeat;
-    mask-position: 9px 16px;
+    mask-position: 9px 13px;
     background: $roomtile-name-color;
-}
-
-.mx_TopUnreadMessagesBar_badgeContainer {
-    position: relative;
-    top: -8px;
-    text-align: center;
-}
-
-.mx_TopUnreadMessagesBar_badge {
-    display: inline-block;
-    border-radius: 0.8em;
-    padding: 0 0.4em;
-    color: $accent-fg-color;
-    background-color: $accent-color;
-    font-weight: 600;
-    font-size: 12px;
 }
