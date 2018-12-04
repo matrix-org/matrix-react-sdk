@@ -36,10 +36,9 @@ module.exports = React.createClass({
         let badgeLabel = "?";
         const count = this.props.messageCount;
         if (count) {
-            if (count.exact) {
-                badgeLabel = formatCount(this.props.messageCount.exact);
-            } else if (count.atLeast) {
-                badgeLabel = `+${formatCount(this.props.messageCount.atLeast)}`;
+            badgeLabel = formatCount(count.count);
+            if (!count.isExact) {
+                badgeLabel = `+${badgeLabel}`;
             }
         }
         return (

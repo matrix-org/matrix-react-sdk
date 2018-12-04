@@ -179,6 +179,45 @@ module.exports = React.createClass({
         this.unmounted = true;
     },
 
+    getFirstElementInView: function() {
+        const sn = this._getScrollNode();
+        const height = sn.offsetHeight;
+        const offset = sn.scrollTop;
+        const children = Array.from(this.refs.itemlist.children);
+
+        function positionRelativeToViewport(el) {
+            const top = el.offsetTop;
+            if (top < offset) {
+                return -1;  // before viewport
+            } else if (top > (offset + height)) {
+                return 1; // after viewport
+            } else {
+                return 0;   // in viewport
+            }
+        }
+        // binary search for a child that is in view
+        let pos;
+        let index = Math.floor(children.length / 2);
+        let searchLen = Math.ceil(children.length / 2);
+
+        while (pos !== 0 && searchLen > 1) {
+            pos = positionRelativeToViewport(children[index]);
+            if (pos !== 0) {
+                searchLen = Math.ceil(searchLen / 2);
+                if (pos === -1) {
+                    index = index + searchLen;
+                } else if (pos === 1) {
+                    index = index - searchLen;
+                }
+            }
+        }
+        // look for first in view
+        while(index > 0 && positionRelativeToViewport(children[index - 1])) {
+            index -= 1;
+        }
+        return {element: children[index], index};
+    },
+
     onScroll: function(ev) {
         const sn = this._getScrollNode();
         debuglog("Scroll event: offset now:", sn.scrollTop,

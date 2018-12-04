@@ -749,15 +749,9 @@ var TimelinePanel = React.createClass({
         this._loadTimeline(this.state.readMarkerEventId, 0, 1/3);
     },
 
-    getMessageCountToReadMarker: function() {
-        const events = this._timelineWindow.getEvents();
-        const markerId = this.state.readMarkerEventId;
-        const markerIndex = events.findIndex((e) => e.getId() === markerId);
-        if (markerIndex === -1) {
-            return {atLeast: events.length};
-        } else {
-            return {exact: events.length - markerIndex - 1};
-        }
+    getEventCountToReadMarker: function() {
+        const firstEventIdInView = this.refs.messagePanel.getFirstEventIdInView();
+        return this.timelineSet.getEventCountBetween(this.state.readMarkerEventId, firstEventIdInView);
     },
 
     /* update the read-up-to marker to match the read receipt

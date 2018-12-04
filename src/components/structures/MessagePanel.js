@@ -146,6 +146,14 @@ module.exports = React.createClass({
         return this.refs.scrollPanel.getScrollState();
     },
 
+    getFirstEventIdInView: function() {
+        const {element} = this.refs.scrollPanel.getFirstElementInView();
+        const tokens = element.getAttribute("data-scroll-tokens");
+        if (tokens) {
+            return tokens.split(",")[0];    //first token
+        }
+    },
+
     // returns one of:
     //
     //  null: there is no read marker

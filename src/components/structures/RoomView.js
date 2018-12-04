@@ -570,6 +570,8 @@ module.exports = React.createClass({
                     return {numUnreadMessages: state.numUnreadMessages + 1};
                 });
             }
+
+            // update unread message to
         }
     },
 
@@ -1321,6 +1323,8 @@ module.exports = React.createClass({
             this.setState({showTopUnreadMessagesBar: showBar},
                           this.onChildResize);
         }
+        const unreadMessageCount = this.refs.messagePanel.getEventCountToReadMarker();
+        this.setState({unreadMessageCount: unreadMessageCount});
     },
 
     // get the current scroll position of the room, so that it can be
@@ -1795,7 +1799,7 @@ module.exports = React.createClass({
         if (this.state.showTopUnreadMessagesBar) {
             const TopUnreadMessagesBar = sdk.getComponent('rooms.TopUnreadMessagesBar');
             topUnreadMessagesBar = (<TopUnreadMessagesBar
-                                       messageCount={this.refs.messagePanel ? this.refs.messagePanel.getMessageCountToReadMarker() : undefined}
+                                       messageCount={this.state.unreadMessageCount}
                                        onScrollUpClick={this.jumpToReadMarker}
                                        onCloseClick={this.forgetReadMarker}
                                     />);
