@@ -380,8 +380,10 @@ var TimelinePanel = React.createClass({
                 // the actual user activity and the time they stopped
                 // being active, but let's see if this is actually
                 // necessary.
-                this.sendReadReceipt();
-                this.updateReadMarker();
+                if (!SettingsStore.getValue("lowBandwidth")) {
+                    this.sendReadReceipt();
+                    this.updateReadMarker();
+                }
                 break;
             case 'ignore_state_changed':
                 this.forceUpdate();
@@ -864,7 +866,9 @@ var TimelinePanel = React.createClass({
 
         if (initialEvent && initialEvent[0] === 't') {
             const scrollToTs = initialEvent.slice(1);
-            const resp = await MatrixClientPeg.get().tsToEventId(this.props.timelineSet.room.roomId, scrollToTs);
+            const resp = await MatrixClientPeg.get().tsToEventId(
+                this.props.timelineSet.room.roomId, scrollToTs, this.props.timelineSet.threadId,
+            );
             initialEvent = resp.event_id;
         }
 

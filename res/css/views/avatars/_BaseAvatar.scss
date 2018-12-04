@@ -33,3 +33,21 @@ limitations under the License.
     vertical-align: top;
     background-color: $avatar-bg-color;
 }
+
+.mx_BaseAvatar_tint {
+    background: rgba(0,0,0,0);
+    mask: url('../../../img/icon-oval.svg');
+    mask-repeat: no-repeat;
+    mask-position: center;
+    position: absolute;
+    height: 100%;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    right: 0px;
+}
+
+.mx_BaseAvatar_wrapper {
+    display: inline-block;
+    position: relative;
+}

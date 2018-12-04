@@ -21,6 +21,7 @@ const MatrixClientPeg = require("./MatrixClientPeg");
 const dis = require("./dispatcher");
 
 const FAILED_LOOKUP_CACHE_TIME = 60 * 1000; // ms
+const VERBOSE_LOGGING = false;
 
 /**
  * Tracks users that should be merged together and their profiles.
@@ -34,8 +35,15 @@ class MergedUsers {
     _pendingTrackers = {}; // [user] => Promise  // used to de-dupe tracking requests
 
     constructor() {
+        console.log("Starting up MergedUsers");
+
         this._loadCaches();
-        this._mergableHosts = SdkConfig.get().mergable_hosts || [];
+
+        console.log("Mergable hosts:", this._mergableHosts);
+    }
+
+    get _mergableHosts() {
+        return SdkConfig.get().mergable_hosts || [];
     }
 
     _persistCaches() {
@@ -62,7 +70,8 @@ class MergedUsers {
     }
 
     _isMergable(userId) {
-        if (typeof userId !== "string") return false;
+        if (VERBOSE_LOGGING) console.log("MergedUsers#_isMergable on entity: " + userId);
+        if (!userId) return false;
         const domain = userId.split(":").slice(1).join(":"); // extract everything after the first colon
         return this._mergableHosts.some(h => {
             if (h.endsWith("*")) {
@@ -72,6 +81,7 @@ class MergedUsers {
     }
 
     _getLocalpart(userId) {
+        if (VERBOSE_LOGGING) console.log("MergedUsers#_getLocalpart on entity: " + userId);
         if (!userId) return "";
         return userId.substring(1).split(":")[0];
     }
@@ -84,6 +94,7 @@ class MergedUsers {
      * @return {Promise<void>} Resolves when tracking has been completed.
      */
     async trackUser(userId) {
+        if (VERBOSE_LOGGING) console.log("MergedUsers#trackUser on entity: " + userId);
         if (!userId) return Promise.resolve();
         if (!SettingsStore.getValue("mergeUsersByLocalpart")) return Promise.resolve();
         if (!this._isMergable(userId)) return Promise.resolve();
@@ -153,7 +164,9 @@ class MergedUsers {
      * otherwise.
      */
     isSelf(userId) {
+        if (VERBOSE_LOGGING) console.log("MergedUsers#isSelf on entity: " + userId);
         if (!MatrixClientPeg.get()) return false;
+        if (!this._isMergable(userId)) return MatrixClientPeg.get().getUserId() === userId;
         return this.isChildOf(userId, [MatrixClientPeg.get().getUserId()]);
     }
 
@@ -163,7 +176,8 @@ class MergedUsers {
      * @return {boolean} True if the user ID is a child, false otherwise.
      */
     isChild(userId) {
-        if (!this._isMergable(userId)) false;
+        if (VERBOSE_LOGGING) console.log("MergedUsers#isChild on entity: " + userId);
+        if (!this._isMergable(userId)) return false;
 
         // We can do this async as it doesn't matter all that much
         this.trackUser(userId);
@@ -180,6 +194,7 @@ class MergedUsers {
      * @return {boolean} True if the user ID is a parent, false otherwise.
      */
     isParent(userId) {
+        if (VERBOSE_LOGGING) console.log("MergedUsers#isParent on entity: " + userId);
         return !this.isChild(userId);
     }
 
@@ -196,6 +211,7 @@ class MergedUsers {
      * parentIds, false otherwise.
      */
     isChildOf(userId, parentIds) {
+        if (VERBOSE_LOGGING) console.log("MergedUsers#isChildOf on entity " + userId + " with parents", parentIds);
         const localpart = this._getLocalpart(userId);
         return parentIds.some(i => this._getLocalpart(i) === localpart);
     }
@@ -215,6 +231,7 @@ class MergedUsers {
      * accompanying user is considered a parent.
      */
     getEffectiveParents(tuples, includeResultsWithNoUserId) {
+        if (VERBOSE_LOGGING) console.log("MergedUsers#getEffectiveParents | includeResultsWithNoUserId=" + includeResultsWithNoUserId);
         const parentIds = [];
         const parentObjects = [];
 
@@ -254,6 +271,7 @@ class MergedUsers {
      * parent.
      */
     getChildren(userId) {
+        if (VERBOSE_LOGGING) console.log("MergedUsers#getChildren on entity: " + userId);
         if (!this.isParent(userId)) return [];
         const record = this._localpartCache[this._getLocalpart(userId)];
         if (!record) return [];
@@ -267,6 +285,8 @@ class MergedUsers {
      * @return {string} The parent user ID for the given user ID.
      */
     getParent(userId) {
+        if (VERBOSE_LOGGING) console.log("MergedUsers#getParent on entity: " + userId);
+        if (!this._isMergable(userId)) return userId;
         const record = this._localpartCache[this._getLocalpart(userId)];
         if (!record) return userId;
         else return record.parentUserId;
@@ -293,6 +313,7 @@ class MergedUsers {
      * @return {{displayname?: String, avatar_url?: String}} The calculated profile.
      */
     getProfileOf(roomMember) {
+        if (VERBOSE_LOGGING) console.log("MergedUsers#getProfileOf on entity: " + roomMember);
         const userId = this.getParent(roomMember.userId);
         if (!this._isMergable(userId)) {
             return {
@@ -324,6 +345,9 @@ class MergedUsers {
      * @return {{displayname?: String, avatar_url?: String}} The cached profile.
      */
     getProfileFast(userId, roomId) {
+        if (VERBOSE_LOGGING) console.log("MergedUsers#getProfileFast on entity " + userId + " in " + roomId);
+        if (!this._isMergable(userId)) return {};
+
         this.trackUser(userId);
 
         const localpart = this._getLocalpart(userId);
@@ -349,10 +373,11 @@ class MergedUsers {
      * the calculated profile.
      */
     async getProfile(userId, roomId) {
+        if (VERBOSE_LOGGING) console.log("MergedUsers#getProfile on entity " + userId + " in " + roomId);
         const client = MatrixClientPeg.get();
         if (!client) return {}; // We're just not ready
 
-        if (!SettingsStore.getValue("mergeUsersByLocalpart")) {
+        if (!SettingsStore.getValue("mergeUsersByLocalpart") || !this._isMergable(userId)) {
             // HACK: We don't bother checking the roomId here
             return client.getProfileInfo(userId);
         }
@@ -431,7 +456,7 @@ class MergedUsers {
         const inviteCount = members.filter(m => m.membership === 'invite' && !this.isSelf(m.userId)).length;
         let otherNames = null;
         if (room._summaryHeroes) { // HACK: Internal access
-            otherNames = this.getEffectiveParents(room._summaryHeroes.map(h => [h.userId, h])).map(h => {
+            otherNames = this.getEffectiveParents(room._summaryHeroes.map(h => [h, h])).map(h => {
                 const member = room.getMember(h);
                 const profile = this.getProfileOf(member) || {};
                 return profile.displayname || h;

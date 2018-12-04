@@ -68,7 +68,7 @@ module.exports = React.createClass({
 
     onAction: function(payload) {
         if (payload.action === "merged_user_general_update") {
-            if (MergedUsers.isChildOf(this.props.member.userId, [payload.namespaceUserId])) {
+            if (this.props.member && MergedUsers.isChildOf(this.props.member.userId, [payload.namespaceUserId])) {
                 this.setState(this._getState(this.props))
             }
         }

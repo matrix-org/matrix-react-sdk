@@ -14,17 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {Sizer, FlexSizer} from "./sizer";
-import {FixedDistributor, CollapseDistributor} from "./distributors";
-import {Resizer} from "./resizer";
-import {RoomSizer, RoomDistributor} from "./room";
-
-module.exports = {
-    Resizer,
-    Sizer,
-    FlexSizer,
-    FixedDistributor,
-    CollapseDistributor,
-    RoomSizer,
-    RoomDistributor,
+class ThreadViewStore {
+    constructor() {
+        this.activeThreadEvent = null;
+    }
 };
+
+if (global.mx_threadViewStore === undefined) global.mx_threadViewStore = new ThreadViewStore();
+export default global.mx_threadViewStore;

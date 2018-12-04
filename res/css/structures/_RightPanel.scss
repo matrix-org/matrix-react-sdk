@@ -49,11 +49,16 @@ limitations under the License.
     cursor: pointer;
     flex: 0 0 auto;
     vertical-align: top;
+    padding-top: 7px;
     padding-left: 4px;
     padding-right: 5px;
     text-align: center;
     position: relative;
     border-bottom: 2px solid transparent;
+}
+
+.mx_RightPanel_headerButton:first-child {
+    margin-left: 12px;
 }
 
 .mx_RightPanel_headerButton object {

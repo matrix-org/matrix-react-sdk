@@ -83,7 +83,13 @@ $strong-input-border-color: #c7c7c7;
 $input-underline-color: rgba(151, 151, 151, 0.5);
 $input-fg-color: rgba(74, 74, 74, 0.9);
 
-// used by NewThreadBanner
+// used by NewThreadBanner & ServerPresenceBanner
+$lost-alert-fg-color: #F56679;
+$lost-alert-bg-color: #FFF8FA;
+
+$reconnected-alert-fg-color: #8A6E3A;
+$reconnected-alert-bg-color: #FFFBE6;
+
 $received-messages-alert-fg-color: #7AC9A1;
 $received-messages-alert-bg-color: #F9FCFB;
 
@@ -198,6 +204,7 @@ $progressbar-color: #000;
 
 :not(.mx_textinput) > input[type=text],
 :not(.mx_textinput) > input[type=search],
+:not(.mx_textinput) > input[type=password],
 .mx_textinput {
     display: block;
     margin: 9px;

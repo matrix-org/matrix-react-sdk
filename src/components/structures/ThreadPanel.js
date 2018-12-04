@@ -27,6 +27,7 @@ const ThreadPanel = React.createClass({
     propTypes: {
         roomId: PropTypes.string.isRequired,
         mxEvent: PropTypes.object.isRequired,
+        atEventId: PropTypes.string,
     },
 
     getInitialState: function() {
@@ -55,6 +56,7 @@ const ThreadPanel = React.createClass({
                 <TimelinePanel
                     className="mx_ThreadPanel_timeline"
                     timelineSet={this.state.timelineSet}
+                    eventId={this.props.atEventId}
                 />
             </div>
         );
