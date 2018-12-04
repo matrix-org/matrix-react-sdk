@@ -143,7 +143,7 @@ class RoomListStore extends Store {
             }
             break;
             case 'MatrixActions.Room.accountData': {
-                if (payload.event_type === 'm.fully_read') {
+                if (payload.event_type === 'm.read') {
                     this._clearCachedRoomState(payload.room.roomId);
                     this._generateRoomLists();
                 }

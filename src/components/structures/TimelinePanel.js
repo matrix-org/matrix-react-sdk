@@ -123,7 +123,7 @@ var TimelinePanel = React.createClass({
         // but for now we just do it per room for simplicity.
         let initialReadMarker = null;
         if (this.props.manageReadMarkers) {
-            const readmarker = this.props.timelineSet.room.getAccountData('m.fully_read');
+            const readmarker = this.props.timelineSet.room.getAccountData('m.read');
             if (readmarker) {
                 initialReadMarker = readmarker.getContent().event_id;
             } else {
@@ -505,7 +505,7 @@ var TimelinePanel = React.createClass({
         // ignore events for other rooms
         if (room !== this.props.timelineSet.room) return;
 
-        if (ev.getType() !== "m.fully_read") return;
+        if (ev.getType() !== "m.read") return;
 
         // XXX: roomReadMarkerTsMap not updated here so it is now inconsistent. Replace
         // this mechanism of determining where the RM is relative to the view-port with

@@ -16,8 +16,8 @@ limitations under the License.
 
 import dis from './dispatcher';
 
-const MIN_DISPATCH_INTERVAL_MS = 500;
-const CURRENTLY_ACTIVE_THRESHOLD_MS = 2000;
+const MIN_DISPATCH_INTERVAL_MS = 3000;
+const CURRENTLY_ACTIVE_THRESHOLD_MS = 5000;
 
 /**
  * This class watches for user activity (moving the mouse or pressing a key)
