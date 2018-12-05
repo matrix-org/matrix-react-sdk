@@ -33,6 +33,7 @@ const ObjectUtils = require('../../ObjectUtils');
 const Modal = require("../../Modal");
 const UserActivity = require("../../UserActivity");
 import { KeyCode } from '../../Keyboard';
+import Timer from '../../utils/Timer';
 
 const PAGINATE_SIZE = 20;
 const INITIAL_SIZE = 20;
@@ -188,6 +189,13 @@ var TimelinePanel = React.createClass({
         this.lastRRSentEventId = undefined;
         this.lastRMSentEventId = undefined;
 
+        if (this.props.manageReadReceipts) {
+            this.updateReadReceiptOnActivity();
+        }
+        if (this.props.manageReadMarkers) {
+            this.updateReadMarkerOnActivity();
+        }
+
         this.dispatcherRef = dis.register(this.onAction);
         MatrixClientPeg.get().on("Room.timeline", this.onRoomTimeline);
         MatrixClientPeg.get().on("Room.timelineReset", this.onRoomTimelineReset);
@@ -254,6 +262,12 @@ var TimelinePanel = React.createClass({
         //
         // (We could use isMounted, but facebook have deprecated that.)
         this.unmounted = true;
+
+        // stop updating
+        this._readReceiptActivityTimer.abort();
+        this._readReceiptActivityTimer = null;
+        this._readMarkerActivityTimer.abort();
+        this._readMarkerActivityTimer = null;
 
         dis.unregister(this.dispatcherRef);
 
@@ -372,20 +386,8 @@ var TimelinePanel = React.createClass({
     },
 
     onAction: function(payload) {
-        switch (payload.action) {
-            case 'user_activity':
-            case 'user_activity_end':
-                // we could treat user_activity_end differently and not
-                // send receipts for messages that have arrived between
-                // the actual user activity and the time they stopped
-                // being active, but let's see if this is actually
-                // necessary.
-                this.sendReadReceipt();
-                this.updateReadMarker();
-                break;
-            case 'ignore_state_changed':
-                this.forceUpdate();
-                break;
+        if (payload.action === 'ignore_state_changed') {
+            this.forceUpdate();
         }
     },
 
@@ -531,6 +533,30 @@ var TimelinePanel = React.createClass({
         this.setState({clientSyncState: state});
     },
 
+    updateReadMarkerOnActivity: async function() {
+        this._readMarkerActivityTimer = new Timer(10000);
+        while (this._readMarkerActivityTimer) { //unset on unmount
+            this._readMarkerActivityTimer =
+                UserActivity.timeWhileActive(this._readMarkerActivityTimer);
+            try {
+                await this._readMarkerActivityTimer.promise();
+            } catch(e) { continue; /* aborted */ }
+            this.updateReadMarker();
+        }
+    },
+
+    updateReadReceiptOnActivity: async function() {
+        this._readReceiptActivityTimer = new Timer(500);
+        while (this._readReceiptActivityTimer) { //unset on unmount
+            this._readReceiptActivityTimer =
+                UserActivity.timeWhileActive(this._readReceiptActivityTimer);
+            try {
+                await this._readReceiptActivityTimer.promise();
+            } catch(e) { continue; /* aborted */ }
+            this.sendReadReceipt();
+        }
+    },
+
     sendReadReceipt: function() {
         if (!this.refs.messagePanel) return;
         if (!this.props.manageReadReceipts) return;
@@ -540,6 +566,8 @@ var TimelinePanel = React.createClass({
         const cli = MatrixClientPeg.get();
         // if no client or client is guest don't send RR or RM
         if (!cli || cli.isGuest()) return;
+
+        console.log("Checking if we should send a RR");
 
         let shouldSendRR = true;
 
@@ -633,8 +661,9 @@ var TimelinePanel = React.createClass({
     // if the read marker is on the screen, we can now assume we've caught up to the end
     // of the screen, so move the marker down to the bottom of the screen.
     updateReadMarker: function() {
+        console.log("Checking if we should update the RM");
         if (!this.props.manageReadMarkers) return;
-        if (this.getReadMarkerPosition() !== 0) {
+        if (this.getReadMarkerPosition() === 1) {
             return;
         }
 
@@ -654,7 +683,6 @@ var TimelinePanel = React.createClass({
         if (lastDisplayedIndex === null) {
             return;
         }
-
         const lastDisplayedEvent = this.state.events[lastDisplayedIndex];
         this._setReadMarker(lastDisplayedEvent.getId(),
                             lastDisplayedEvent.getTs());
