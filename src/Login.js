@@ -189,24 +189,24 @@ export default class Login {
  * Send a login request to the given server, and format the response
  * as a MatrixClientCreds
  *
- * @param {string} hs   the base url of the Homeserver used to log in.
- * @param {string} is   the default identity server
+ * @param {string} hsUrl   the base url of the Homeserver used to log in.
+ * @param {string} isUrl   the base url of the default identity server
  * @param {string} loginType the type of login to do
  * @param {object} loginParams the parameters for the login
  *
  * @returns {MatrixClientCreds}
  */
-export async function sendLoginRequest(hs, is, loginType, loginParams) {
+export async function sendLoginRequest(hsUrl, isUrl, loginType, loginParams) {
     const client = Matrix.createClient({
-        baseUrl: hs,
-        idBaseUrl: is,
+        baseUrl: hsUrl,
+        idBaseUrl: isUrl,
     });
 
     const data = await client.login(loginType, loginParams);
 
     return {
-        homeserverUrl: hs,
-        identityServerUrl: is,
+        homeserverUrl: hsUrl,
+        identityServerUrl: isUrl,
         userId: data.user_id,
         deviceId: data.device_id,
         accessToken: data.access_token,
