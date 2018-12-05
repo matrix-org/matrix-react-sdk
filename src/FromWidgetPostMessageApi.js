@@ -142,6 +142,10 @@ export default class FromWidgetPostMessageApi {
                 api: INBOUND_API_NAME,
                 version: WIDGET_API_VERSION,
             });
+        } else if (action === 'theme') {
+            if (ActiveWidgetStore.widgetHasCapability(widgetId, 'theme')) {
+                ActiveWidgetStore.sendThemeToWidgets();
+            }
         } else if (action === 'm.sticker') {
             // console.warn('Got sticker message from widget', widgetId);
             // NOTE -- The widgetData field is deprecated (in favour of the 'data' field) and will be removed eventually

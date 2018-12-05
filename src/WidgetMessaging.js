@@ -107,6 +107,30 @@ export default class WidgetMessaging {
         });
     }
 
+    sendThemeUpdate(theme) {
+        return this.messageToWidget({
+            api: OUTBOUND_API_NAME,
+            action: "set_theme",
+            theme,
+        })
+        .catch((error) => {
+            console.error("Failed to send theme update: ", error);
+        });
+    }
+
+    sendEvent(event, state) {
+        return this.messageToWidget({
+            api: OUTBOUND_API_NAME,
+            action: "event",
+            event,
+            // TODO / FIXME -- State can not be cloned for posting (as it contains native code). Needs sanitising.
+            // state,
+        })
+        .catch((error) => {
+            console.error("Failed to send event: ", error);
+        });
+    }
+
     start() {
         this.fromWidget.addEndpoint(this.widgetId, this.widgetUrl);
     }

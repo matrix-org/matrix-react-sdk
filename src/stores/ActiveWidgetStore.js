@@ -17,6 +17,9 @@ limitations under the License.
 import EventEmitter from 'events';
 
 import MatrixClientPeg from '../MatrixClientPeg';
+import dis from '../dispatcher';
+import SettingsStore from '../settings/SettingsStore';
+import Tinter from '../Tinter';
 
 /**
  * Stores information about the widgets active in the app right now:
@@ -42,21 +45,61 @@ class ActiveWidgetStore extends EventEmitter {
         this._roomIdByWidgetId = {};
 
         this.onRoomStateEvents = this.onRoomStateEvents.bind(this);
+        this.onAction = this.onAction.bind(this);
 
         this.dispatcherRef = null;
     }
 
     start() {
         MatrixClientPeg.get().on('RoomState.events', this.onRoomStateEvents);
+        MatrixClientPeg.get().on('Room.timeline', this.onRoomTimelineEvents);
+        this.dispatcherRef = dis.register(this.onAction);
     }
 
     stop() {
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener('RoomState.events', this.onRoomStateEvents);
+            MatrixClientPeg.get().removeListener('Room.timeline', this.onRoomTimelineEvents);
         }
         this._capsByWidgetId = {};
         this._widgetMessagingByWidgetId = {};
         this._roomIdByWidgetId = {};
+    }
+
+    sendEventsToWidgets(ev, state) {
+        const eventType = ev.getType();
+        for (const widgetId in this._capsByWidgetId) {
+            if (this._capsByWidgetId.hasOwnProperty(widgetId)) {
+                const caps = this._capsByWidgetId[widgetId];
+                const roomId = ev.getRoomId();
+
+                // NOTE -- If the widget has no associated room ID (e.g. is a user widget)
+                // Send all requested events of type, regardless of room!
+                // WARNING - This could be a lot of events
+                if (caps.includes(eventType) && (
+                    !this._roomIdByWidgetId[widgetId] || roomId === this._roomIdByWidgetId[widgetId])) {
+                        this._widgetMessagingByWidgetId[widgetId].sendEvent(ev, state, roomId);
+                }
+            }
+        }
+    }
+
+    sendThemeToWidgets(theme) {
+        if (!theme) {
+            if (Tinter.theme) {
+                theme = Tinter.theme;
+            } else {
+                theme = SettingsStore.getValue("theme");
+            }
+        }
+        for (const widgetId in this._capsByWidgetId) {
+            if (this._capsByWidgetId.hasOwnProperty(widgetId)) {
+                const caps = this._capsByWidgetId[widgetId];
+                if (caps.includes('theme')) {
+                    this._widgetMessagingByWidgetId[widgetId].sendThemeUpdate(theme);
+                }
+            }
+        }
     }
 
     onRoomStateEvents(ev, state) {
@@ -64,10 +107,25 @@ class ActiveWidgetStore extends EventEmitter {
         // Everything else relies on views listening for events and calling setters
         // on this class which is terrible. This store should just listen for events
         // and keep itself up to date.
+
+        this.sendEventsToWidgets(ev, state);
+
         if (ev.getType() !== 'im.vector.modular.widgets') return;
 
         if (ev.getStateKey() === this._persistentWidgetId) {
             this.destroyPersistentWidget();
+        }
+    }
+
+    onRoomTimelineEvents(ev, state) {
+        // this.sendEventsToWidgets(ev, state);
+    }
+
+    onAction(payload) {
+        switch (payload.action) {
+            case 'set_theme':
+            this.sendThemeToWidgets(payload.value);
+            break;
         }
     }
 

@@ -31,7 +31,6 @@ import GroupStore from '../../stores/GroupStore';
 import ThreadViewStore from '../../stores/ThreadViewStore';
 
 export default class RightPanel extends React.Component {
-
     static get propTypes() {
         return {
             roomId: React.PropTypes.string, // if showing panels for a given room, this is set
@@ -52,6 +51,7 @@ export default class RightPanel extends React.Component {
         GroupRoomInfo: 'GroupRoomInfo',
         FilePanel: 'FilePanel',
         ThreadPanel: 'ThreadPanel',
+        GuidePanel: 'GuidePanel',
         NotificationPanel: 'NotificationPanel',
         RoomMemberInfo: 'RoomMemberInfo',
         GroupMemberInfo: 'GroupMemberInfo',
@@ -163,6 +163,7 @@ export default class RightPanel extends React.Component {
         const NotificationPanel = sdk.getComponent('structures.NotificationPanel');
         const FilePanel = sdk.getComponent('structures.FilePanel');
         const ThreadPanel = sdk.getComponent('structures.ThreadPanel');
+        const GuidePanel = sdk.getComponent('structures.GuidePanel');
 
         const GroupMemberList = sdk.getComponent('groups.GroupMemberList');
         const GroupMemberInfo = sdk.getComponent('groups.GroupMemberInfo');
@@ -185,7 +186,8 @@ export default class RightPanel extends React.Component {
         } else if (this.state.phase === RightPanel.Phase.GroupRoomList) {
             panel = <GroupRoomList groupId={this.props.groupId} key={this.props.groupId} />;
         } else if (this.state.phase === RightPanel.Phase.RoomMemberInfo) {
-            panel = <MemberInfo roomId={this.props.roomId} member={this.state.member} key={this.props.roomId || this.state.member.userId} />;
+            panel = <MemberInfo roomId={this.props.roomId} member={this.state.member}
+                key={this.props.roomId || this.state.member.userId} />;
         } else if (this.state.phase === RightPanel.Phase.GroupMemberInfo) {
             panel = <GroupMemberInfo
                 groupMember={this.state.member}
@@ -202,8 +204,11 @@ export default class RightPanel extends React.Component {
             panel = <FilePanel roomId={this.props.roomId} />;
         } else if (this.state.phase === RightPanel.Phase.ThreadPanel) {
             panel = <ThreadPanel roomId={this.props.roomId} mxEvent={this.state.mxEvent}
-                                 atEventId={this.state.atEventId}
-                                 key={this.state.mxEvent.getContent().thread_id} />;
+                atEventId={this.state.atEventId}
+                key={this.state.mxEvent.getContent().thread_id} />;
+        } else if (this.state.phase === RightPanel.Phase.GuidePanel) {
+            panel = <GuidePanel roomId={this.props.roomId}
+                key={`${this.props.roomId}_guidePanel`} />;
         }
 
         // TODO: either include this in the DOM again, or move it to other component
@@ -227,6 +232,7 @@ export default class RightPanel extends React.Component {
         }
 
         const classes = classNames("mx_RightPanel", "mx_fadable", {
+            "mx_RightPanel_wide": this.state.phase === RightPanel.Phase.GuidePanel,
             "collapsed": this.props.collapsed,
             "mx_fadable_faded": this.props.disabled,
             "dark-panel": true,

@@ -319,6 +319,11 @@ export default class WidgetUtils {
         return {};
     }
 
+    static getUserWidgetOfType(type) {
+        const userWidgets = WidgetUtils.getUserWidgetsArray();
+        return userWidgets.find(widget => widget.content.type === type);
+    }
+
     /**
      * Get user specific widgets (not linked to a specific room) as an array
      * @return {[object]} Array containing current / active user widgets

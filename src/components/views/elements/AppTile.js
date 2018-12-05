@@ -35,6 +35,8 @@ import MessageSpinner from './MessageSpinner';
 import WidgetUtils from '../../../utils/WidgetUtils';
 import dis from '../../../dispatcher';
 import ActiveWidgetStore from '../../../stores/ActiveWidgetStore';
+import SettingsStore from '../../../settings/SettingsStore';
+import Tinter from '../../../Tinter';
 
 const ALLOWED_APP_URL_SCHEMES = ['https:', 'http:'];
 const ENABLE_REACT_PERF = false;
@@ -120,6 +122,10 @@ export default class AppTile extends React.Component {
         // Append current / parent URL, minus the hash because that will change when
         // we view a different room (ie. may change for persistent widgets)
         params.parentUrl = window.location.href.split('#', 2)[0];
+        // Append matrix user ID
+        params.matrixUserId = MatrixClientPeg.get().credentials.userId;
+        // Append current theme
+        params.theme = Tinter.theme ? Tinter.theme : SettingsStore.getValue("theme");
         u.search = undefined;
         u.query = params;
 
@@ -361,7 +367,6 @@ export default class AppTile extends React.Component {
         if (!ActiveWidgetStore.getWidgetMessaging(this.props.id)) {
             this._setupWidgetMessaging();
         }
-        ActiveWidgetStore.setRoomId(this.props.id, this.props.room.roomId);
         this.setState({loading: false});
     }
 
@@ -375,23 +380,28 @@ export default class AppTile extends React.Component {
             requestedCapabilities = requestedCapabilities || [];
 
             // Allow whitelisted capabilities
-            let requestedWhitelistCapabilies = [];
+            let requestedWhitelistedCapabilies = [];
+            const whitelistCapabilities = this.props.whitelistCapabilities || [];
 
-            if (this.props.whitelistCapabilities && this.props.whitelistCapabilities.length > 0) {
-                requestedWhitelistCapabilies = requestedCapabilities.filter(function(e) {
-                    return this.indexOf(e)>=0;
-                }, this.props.whitelistCapabilities);
+            if (whitelistCapabilities && whitelistCapabilities.length > 0) {
+                requestedWhitelistedCapabilies = requestedCapabilities.filter(cap => {
+                    return whitelistCapabilities.indexOf(cap)>=0;
+                });
 
-                if (requestedWhitelistCapabilies.length > 0 ) {
-                    console.warn(`Widget ${this.props.id} allowing requested, whitelisted properties: ` +
-                        requestedWhitelistCapabilies,
-                    );
+
+                if (requestedWhitelistedCapabilies.length > 0 ) {
+                    console.warn(
+                        `Widget ${this.props.id} allowing requested, whitelisted capabilities: ` +
+                        `${requestedWhitelistedCapabilies} of ${requestedCapabilities}`);
                 }
+            } else {
+                console.warn('No capabilities to whitelist');
             }
 
             // TODO -- Add UI to warn about and optionally allow requested capabilities
-
-            ActiveWidgetStore.setWidgetCapabilities(this.props.id, requestedWhitelistCapabilies);
+            const capabilities = requestedWhitelistedCapabilies.concat(this.props.nonRequestedCapabilities) || [];
+            console.log(`Widget ${this.props.id} has capabilities`, capabilities);
+            ActiveWidgetStore.setWidgetCapabilities(this.props.id, capabilities);
 
             if (this.props.onCapabilityRequest) {
                 this.props.onCapabilityRequest(requestedCapabilities);
@@ -546,7 +556,8 @@ export default class AppTile extends React.Component {
         // (see - https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-permissions-in-cross-origin-iframes and https://wicg.github.io/feature-policy/)
         const iframeFeatures = "microphone; camera; encrypted-media;";
 
-        const appTileBodyClass = 'mx_AppTileBody' + (this.props.miniMode ? '_mini  ' : ' ');
+        const appTileBodyClass = 'mx_AppTileBody' + (this.props.miniMode ? '_mini  ' :
+            (this.props.tallMode ? '_tall' : ''));
 
         if (this.props.show) {
             const loadingElement = (
@@ -639,6 +650,9 @@ export default class AppTile extends React.Component {
         } else {
             appTileClass = 'mx_AppTile';
         }
+        if (this.props.borderless) {
+            appTileClass = [appTileClass, 'mx_AppTile_borderless'].join(' ');
+        }
 
         return (
             <div className={appTileClass} id={this.props.id}>
@@ -727,6 +741,8 @@ AppTile.propTypes = {
     fullWidth: PropTypes.bool,
     // Optional. If set, renders a smaller view of the widget
     miniMode: PropTypes.bool,
+    // Optional. If set, renders a tall view of the widget
+    tallMode: PropTypes.bool,
     // UserId of the current user
     userId: PropTypes.string.isRequired,
     // UserId of the entity that added / modified the widget
@@ -757,14 +773,20 @@ AppTile.propTypes = {
     // having to reload all of riot to get new widget content.
     showReload: PropTypes.bool,
     // Widget capabilities to allow by default (without user confirmation)
+    // These capabilities still have to be requested from the widget
     // NOTE -- Use with caution. This is intended to aid better integration / UX
     // basic widget capabilities, e.g. injecting sticker message events.
     whitelistCapabilities: PropTypes.array,
+    // These capabilities will be enabled withough needing to be requested by the widget
+    // NOTE -- Use with caution. This is intended to aid better integration / UX
+    // basic widget capabilities, e.g. injecting sticker message events.
+    nonRequestedCapabilities: PropTypes.array,
     // Optional function to be called on widget capability request
     // Called with an array of the requested capabilities
     onCapabilityRequest: PropTypes.func,
     // Is this an instance of a user widget
     userWidget: PropTypes.bool,
+    borderless: PropTypes.bool,
 };
 
 AppTile.defaultProps = {
@@ -778,6 +800,9 @@ AppTile.defaultProps = {
     showReload: false,
     handleMinimisePointerEvents: false,
     whitelistCapabilities: [],
+    nonRequestedCapabilities: ['theme'],
     userWidget: false,
     miniMode: false,
+    tallMode: false,
+    borderless: false,
 };

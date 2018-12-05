@@ -23,6 +23,10 @@ limitations under the License.
     flex-direction: column;
 }
 
+.mx_RightPanel_wide {
+    min-width: 450px;
+}
+
 .mx_RightPanel_header {
     order: 1;
 
