@@ -43,12 +43,11 @@ class UserActivity {
      */
     timeWhileActive(timer) {
         // important this happens first
-        timer = timer.cloneIfRun();
         const index = this._attachedTimers.indexOf(timer);
         if (index === -1) {
             this._attachedTimers.push(timer);
             // remove when done or aborted
-            timer.promise().finally(() => {
+            timer.finished().finally(() => {
                 const index = this._attachedTimers.indexOf(timer);
                 if (index !== -1) { // should not happen
                     this._attachedTimers.splice(index, 1);
@@ -59,7 +58,6 @@ class UserActivity {
         if (this.userCurrentlyActive()) {
             timer.start();
         }
-        return timer;
     }
 
     /**
@@ -108,12 +106,11 @@ class UserActivity {
         }
 
         if (!this._activityTimeout.isRunning()) {
-            this._activityTimeout = this._activityTimeout.clone();
             this._activityTimeout.start();
             console.log("user is active now");
             dis.dispatch({action: 'user_activity_start'});
             this._attachedTimers.forEach((t) => t.start());
-            await this._activityTimeout.promise();
+            await this._activityTimeout.finished();
             this._attachedTimers.forEach((t) => t.abort());
             console.log("user is inactive now");
         } else {

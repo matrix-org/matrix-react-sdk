@@ -40,7 +40,7 @@ class Presence {
         this._dispatcherRef = dis.register(this._onAction);
         while (this._unavailableTimer) {
             try {
-                await this._unavailableTimer.promise(); // won't resolve until started
+                await this._unavailableTimer.finished();
                 this.setState("unavailable");
             } catch(e) { /* aborted, stop got called */ }
         }
@@ -69,8 +69,7 @@ class Presence {
     _onAction(payload) {
         if (payload.action === 'user_activity_start') {
             this.setState("online");
-            this._unavailableTimer =
-                this._unavailableTimer.cloneIfRun().restart();
+            this._unavailableTimer.restart();
         }
     }
 
@@ -80,6 +79,7 @@ class Presence {
      * @param {string} newState the new presence state (see PRESENCE enum)
      */
     async setState(newState) {
+        console.log("setting Presence state!!", newState);
         if (newState === this.state) {
             return;
         }

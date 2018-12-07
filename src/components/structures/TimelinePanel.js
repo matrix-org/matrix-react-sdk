@@ -536,11 +536,12 @@ var TimelinePanel = React.createClass({
     updateReadMarkerOnUserActivity: async function() {
         this._readMarkerActivityTimer = new Timer(10000);
         while (this._readMarkerActivityTimer) { //unset on unmount
-            this._readMarkerActivityTimer =
-                UserActivity.timeWhileActive(this._readMarkerActivityTimer);
+            console.log("updateReadMarkerOnUserActivity iteration")
+            UserActivity.timeWhileActive(this._readMarkerActivityTimer);
             try {
-                await this._readMarkerActivityTimer.promise();
+                await this._readMarkerActivityTimer.finished();
             } catch(e) { continue; /* aborted */ }
+            // outside of try/catch to not swallow errors
             this.updateReadMarker();
         }
     },
@@ -548,11 +549,12 @@ var TimelinePanel = React.createClass({
     updateReadReceiptOnUserActivity: async function() {
         this._readReceiptActivityTimer = new Timer(500);
         while (this._readReceiptActivityTimer) { //unset on unmount
-            this._readReceiptActivityTimer =
-                UserActivity.timeWhileActive(this._readReceiptActivityTimer);
+            console.log("updateReadReceiptOnUserActivity iteration")
+            UserActivity.timeWhileActive(this._readReceiptActivityTimer);
             try {
-                await this._readReceiptActivityTimer.promise();
+                await this._readReceiptActivityTimer.finished();
             } catch(e) { continue; /* aborted */ }
+            // outside of try/catch to not swallow errors
             this.sendReadReceipt();
         }
     },

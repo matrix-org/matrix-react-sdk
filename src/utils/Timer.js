@@ -29,8 +29,12 @@ export default class Timer {
 
     constructor(timeout) {
         this._timeout = timeout;
-        this._timerHandle = null;
         this._onTimeout = this._onTimeout.bind(this);
+        this._setNotStarted();
+    }
+
+    _setNotStarted() {
+        this._timerHandle = null;
         this._startTs = null;
         this._promise = new Promise((resolve, reject) => {
             this._resolve = resolve;
@@ -45,6 +49,7 @@ export default class Timer {
         const elapsed = now - this._startTs;
         if (elapsed >= this._timeout) {
             this._resolve();
+            this._setNotStarted();
         } else {
             const delta = this._timeout - elapsed;
             this._timerHandle = setTimeout(this._onTimeout, delta);
@@ -55,7 +60,7 @@ export default class Timer {
      * if not started before, starts the timer.
      */
     start() {
-        if (!this._wasStarted() && !this.isRunning()) {
+        if (!this.isRunning()) {
             this._startTs = Date.now();
             this._timerHandle = setTimeout(this._onTimeout, this._timeout);
         }
@@ -87,29 +92,9 @@ export default class Timer {
             console.log("clearTimeout in abort");
             clearTimeout(this._timerHandle);
             this._reject(new Error("Timer was aborted."));
+            this._setNotStarted();
         }
         return this;
-    }
-
-    /**
-     * creates a new timer with the same timeout
-     * @return {Timer} a new timer
-     */
-    clone() {
-        return new Timer(this._timeout);
-    }
-
-    /**
-     * Clones the timer if its promise resolved already,
-     * otherwise returns the same instance
-     * @return {Timer} a new or the same timer
-     */
-    cloneIfRun() {
-        if (this._wasStarted() && !this.isRunning()) {
-            return this.clone();
-        } else {
-            return this;
-        }
     }
 
     /**
@@ -117,15 +102,11 @@ export default class Timer {
      *or is rejected when abort is called
      *@return {Promise}
      */
-    promise() {
+    finished() {
         return this._promise;
     }
 
     isRunning() {
         return this._timerHandle !== null;
-    }
-
-    _wasStarted() {
-        return this._startTs !== null;
     }
 }
