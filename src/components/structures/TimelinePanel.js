@@ -196,6 +196,7 @@ var TimelinePanel = React.createClass({
         }
         if (this.props.manageReadMarkers) {
             this.updateReadMarkerOnUserActivity();
+            document.addEventListener("visibilitychange", this._onPageVisibilityChanged);
         }
 
         this.dispatcherRef = dis.register(this.onAction);
@@ -266,6 +267,7 @@ var TimelinePanel = React.createClass({
         this.unmounted = true;
 
         // stop updating
+        document.removeEventListener("visibilitychange", this._onPageVisibilityChanged);
         this._readReceiptActivityTimer.abort();
         this._readReceiptActivityTimer = null;
         this._readMarkerActivityTimer.abort();
@@ -543,15 +545,28 @@ var TimelinePanel = React.createClass({
         this.setState({clientSyncState: state});
     },
 
+    _onPageVisibilityChanged: function() {
+        const state = document.visibilityState;
+        if (state === "visible") {
+            console.log("visibilityState changed, _readMarkerActivityTimer.start();");
+            this._readMarkerActivityTimer.start();
+        } else {
+            console.log("visibilityState changed, _readMarkerActivityTimer.abort();");
+            this._readMarkerActivityTimer.abort();
+        }
+    },
+
     updateReadMarkerOnUserActivity: async function() {
         const initialTimeout = this.getReadMarkerPosition() === 0 ?
             READ_MARKER_INVIEW_THRESHOLD_MS :
             READ_MARKER_OUTOFVIEW_THRESHOLD_MS;
 
         this._readMarkerActivityTimer = new Timer(initialTimeout);
+
         while (this._readMarkerActivityTimer) { //unset on unmount
-            console.log("updateReadMarkerOnUserActivity iteration")
-            UserActivity.timeWhileActive(this._readMarkerActivityTimer);
+            if (document.visibilityState === "visible") {
+                this._readMarkerActivityTimer.start();
+            }
             try {
                 await this._readMarkerActivityTimer.finished();
             } catch(e) { continue; /* aborted */ }
