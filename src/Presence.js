@@ -27,7 +27,7 @@ class Presence {
 
     constructor() {
         this._activitySignal = null;
-        this._unavailableTimer = new Timer(UNAVAILABLE_TIME_MS);
+        this._unavailableTimer = null;
         this._onAction = this._onAction.bind(this);
         this._dispatcherRef = null;
     }
@@ -36,6 +36,7 @@ class Presence {
      * Any state change will be sent to the Home Server.
      */
     async start() {
+        this._unavailableTimer = new Timer(UNAVAILABLE_TIME_MS);
         // the user_activity_start action starts the timer
         this._dispatcherRef = dis.register(this._onAction);
         while (this._unavailableTimer) {
