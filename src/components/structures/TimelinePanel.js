@@ -190,10 +190,10 @@ var TimelinePanel = React.createClass({
         this.lastRMSentEventId = undefined;
 
         if (this.props.manageReadReceipts) {
-            this.updateReadReceiptOnActivity();
+            this.updateReadReceiptOnUserActivity();
         }
         if (this.props.manageReadMarkers) {
-            this.updateReadMarkerOnActivity();
+            this.updateReadMarkerOnUserActivity();
         }
 
         this.dispatcherRef = dis.register(this.onAction);
@@ -533,7 +533,7 @@ var TimelinePanel = React.createClass({
         this.setState({clientSyncState: state});
     },
 
-    updateReadMarkerOnActivity: async function() {
+    updateReadMarkerOnUserActivity: async function() {
         this._readMarkerActivityTimer = new Timer(10000);
         while (this._readMarkerActivityTimer) { //unset on unmount
             this._readMarkerActivityTimer =
@@ -545,7 +545,7 @@ var TimelinePanel = React.createClass({
         }
     },
 
-    updateReadReceiptOnActivity: async function() {
+    updateReadReceiptOnUserActivity: async function() {
         this._readReceiptActivityTimer = new Timer(500);
         while (this._readReceiptActivityTimer) { //unset on unmount
             this._readReceiptActivityTimer =
