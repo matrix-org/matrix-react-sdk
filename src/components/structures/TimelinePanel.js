@@ -971,7 +971,6 @@ var TimelinePanel = React.createClass({
                 }
 
                 this.sendReadReceipt();
-                this.updateReadMarker();
             });
         };
 
