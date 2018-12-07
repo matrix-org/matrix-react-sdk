@@ -56,6 +56,19 @@ export default class Timer {
         }
     }
 
+    changeTimeout(timeout) {
+        if (timeout === this._timeout) {
+            return;
+        }
+        console.log(`changing timer timeout from ${this._timeout} to ${timeout}`);
+        const isSmallerTimeout = timeout < this._timeout;
+        this._timeout = timeout;
+        if (this.isRunning() && isSmallerTimeout) {
+            clearTimeout(this._timerHandle);
+            this._onTimeout();
+        }
+    }
+
     /**
      * if not started before, starts the timer.
      */
@@ -89,7 +102,6 @@ export default class Timer {
      */
     abort() {
         if (this.isRunning()) {
-            console.log("clearTimeout in abort");
             clearTimeout(this._timerHandle);
             this._reject(new Error("Timer was aborted."));
             this._setNotStarted();

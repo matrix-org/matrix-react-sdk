@@ -37,6 +37,8 @@ import Timer from '../../utils/Timer';
 
 const PAGINATE_SIZE = 20;
 const INITIAL_SIZE = 20;
+const READ_MARKER_INVIEW_THRESHOLD_MS = 10 * 1000;
+const READ_MARKER_OUTOFVIEW_THRESHOLD_MS = 30 * 1000;
 
 const DEBUG = false;
 
@@ -376,11 +378,19 @@ var TimelinePanel = React.createClass({
         }
 
         if (this.props.manageReadMarkers) {
+            const rmPosition = this.getReadMarkerPosition();
             // we hide the read marker when it first comes onto the screen, but if
             // it goes back off the top of the screen (presumably because the user
             // clicks on the 'jump to bottom' button), we need to re-enable it.
-            if (this.getReadMarkerPosition() < 0) {
+            if (rmPosition < 0) {
                 this.setState({readMarkerVisible: true});
+            }
+
+            // if read marker position goes between 0 and -1/1, (and user is active), switch timeout
+            if (rmPosition === 0) {
+                this._readMarkerActivityTimer.changeTimeout(READ_MARKER_INVIEW_THRESHOLD_MS);
+            } else {
+                this._readMarkerActivityTimer.changeTimeout(READ_MARKER_OUTOFVIEW_THRESHOLD_MS);
             }
         }
     },
@@ -534,7 +544,11 @@ var TimelinePanel = React.createClass({
     },
 
     updateReadMarkerOnUserActivity: async function() {
-        this._readMarkerActivityTimer = new Timer(10000);
+        const initialTimeout = this.getReadMarkerPosition() === 0 ?
+            READ_MARKER_INVIEW_THRESHOLD_MS :
+            READ_MARKER_OUTOFVIEW_THRESHOLD_MS;
+
+        this._readMarkerActivityTimer = new Timer(initialTimeout);
         while (this._readMarkerActivityTimer) { //unset on unmount
             console.log("updateReadMarkerOnUserActivity iteration")
             UserActivity.timeWhileActive(this._readMarkerActivityTimer);
