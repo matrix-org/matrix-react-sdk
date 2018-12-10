@@ -17,7 +17,12 @@ limitations under the License.
 import dis from './dispatcher';
 import Timer from './utils/Timer';
 
-const CURRENTLY_ACTIVE_THRESHOLD_MS = 2000;
+// important this is larger than the timeouts of timers
+// used with UserActivity.timeWhileActive,
+// such as READ_MARKER_INVIEW_THRESHOLD_MS,
+// READ_MARKER_OUTOFVIEW_THRESHOLD_MS,
+// READ_RECEIPT_INTERVAL_MS in TimelinePanel
+const CURRENTLY_ACTIVE_THRESHOLD_MS = 2 * 60 * 1000;
 
 /**
  * This class watches for user activity (moving the mouse or pressing a key)
@@ -29,6 +34,8 @@ class UserActivity {
         this._attachedTimers = [];
         this._activityTimeout = new Timer(CURRENTLY_ACTIVE_THRESHOLD_MS);
         this._onUserActivity = this._onUserActivity.bind(this);
+        this._onDocumentBlurred = this._onDocumentBlurred.bind(this);
+        this._onPageVisibilityChanged = this._onPageVisibilityChanged.bind(this);
         this.lastScreenX = 0;
         this.lastScreenY = 0;
     }
@@ -49,7 +56,7 @@ class UserActivity {
             // remove when done or aborted
             timer.finished().finally(() => {
                 const index = this._attachedTimers.indexOf(timer);
-                if (index !== -1) { // should not happen
+                if (index !== -1) { // should never be -1
                     this._attachedTimers.splice(index, 1);
                 }
             }).catch((err) => {});  // as we fork the promise here,
@@ -67,6 +74,9 @@ class UserActivity {
         document.onmousedown = this._onUserActivity;
         document.onmousemove = this._onUserActivity;
         document.onkeydown = this._onUserActivity;
+        document.addEventListener("visibilitychange", this._onPageVisibilityChanged);
+        document.addEventListener("blur", this._onDocumentBlurred);
+        document.addEventListener("focus", this._onUserActivity);
         // can't use document.scroll here because that's only the document
         // itself being scrolled. Need to use addEventListener's useCapture.
         // also this needs to be the wheel event, not scroll, as scroll is
@@ -84,6 +94,10 @@ class UserActivity {
         document.onkeydown = undefined;
         window.removeEventListener('wheel', this._onUserActivity,
                                    { passive: true, capture: true });
+
+        document.removeEventListener("visibilitychange", this._onPageVisibilityChanged);
+        document.removeEventListener("blur", this._onDocumentBlurred);
+        document.removeEventListener("focus", this._onUserActivity);
     }
 
     /**
@@ -93,6 +107,18 @@ class UserActivity {
      */
     userCurrentlyActive() {
         return this._activityTimeout.isRunning();
+    }
+
+    _onPageVisibilityChanged(e) {
+        if (document.visibilityState === "hidden") {
+            this._activityTimeout.abort();
+        } else {
+            this._onUserActivity(e);
+        }
+    }
+
+    _onDocumentBlurred() {
+        this._activityTimeout.abort();
     }
 
     async _onUserActivity(event) {
@@ -107,12 +133,14 @@ class UserActivity {
 
         if (!this._activityTimeout.isRunning()) {
             this._activityTimeout.start();
-            console.log("user is active now");
             dis.dispatch({action: 'user_activity_start'});
+            console.log("user is active now");
             this._attachedTimers.forEach((t) => t.start());
-            await this._activityTimeout.finished();
-            this._attachedTimers.forEach((t) => t.abort());
+            try {
+                await this._activityTimeout.finished();
+            } catch(_e) { /* aborted */ }
             console.log("user is inactive now");
+            this._attachedTimers.forEach((t) => t.abort());
         } else {
             this._activityTimeout.restart();
         }

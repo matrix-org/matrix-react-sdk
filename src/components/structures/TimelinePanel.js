@@ -39,6 +39,7 @@ const PAGINATE_SIZE = 20;
 const INITIAL_SIZE = 20;
 const READ_MARKER_INVIEW_THRESHOLD_MS = 10 * 1000;
 const READ_MARKER_OUTOFVIEW_THRESHOLD_MS = 30 * 1000;
+const READ_RECEIPT_INTERVAL_MS = 500;
 
 const DEBUG = false;
 
@@ -196,8 +197,8 @@ var TimelinePanel = React.createClass({
         }
         if (this.props.manageReadMarkers) {
             this.updateReadMarkerOnUserActivity();
-            document.addEventListener("visibilitychange", this._onPageVisibilityChanged);
         }
+
 
         this.dispatcherRef = dis.register(this.onAction);
         MatrixClientPeg.get().on("Room.timeline", this.onRoomTimeline);
@@ -266,8 +267,6 @@ var TimelinePanel = React.createClass({
         // (We could use isMounted, but facebook have deprecated that.)
         this.unmounted = true;
 
-        // stop updating
-        document.removeEventListener("visibilitychange", this._onPageVisibilityChanged);
         this._readReceiptActivityTimer.abort();
         this._readReceiptActivityTimer = null;
         this._readMarkerActivityTimer.abort();
@@ -545,17 +544,6 @@ var TimelinePanel = React.createClass({
         this.setState({clientSyncState: state});
     },
 
-    _onPageVisibilityChanged: function() {
-        const state = document.visibilityState;
-        if (state === "visible") {
-            console.log("visibilityState changed, _readMarkerActivityTimer.start();");
-            this._readMarkerActivityTimer.start();
-        } else {
-            console.log("visibilityState changed, _readMarkerActivityTimer.abort();");
-            this._readMarkerActivityTimer.abort();
-        }
-    },
-
     updateReadMarkerOnUserActivity: async function() {
         const initialTimeout = this.getReadMarkerPosition() === 0 ?
             READ_MARKER_INVIEW_THRESHOLD_MS :
@@ -564,9 +552,7 @@ var TimelinePanel = React.createClass({
         this._readMarkerActivityTimer = new Timer(initialTimeout);
 
         while (this._readMarkerActivityTimer) { //unset on unmount
-            if (document.visibilityState === "visible") {
-                this._readMarkerActivityTimer.start();
-            }
+            UserActivity.timeWhileActive(this._readMarkerActivityTimer);
             try {
                 await this._readMarkerActivityTimer.finished();
             } catch(e) { continue; /* aborted */ }
@@ -576,9 +562,8 @@ var TimelinePanel = React.createClass({
     },
 
     updateReadReceiptOnUserActivity: async function() {
-        this._readReceiptActivityTimer = new Timer(500);
+        this._readReceiptActivityTimer = new Timer(READ_RECEIPT_INTERVAL_MS);
         while (this._readReceiptActivityTimer) { //unset on unmount
-            console.log("updateReadReceiptOnUserActivity iteration")
             UserActivity.timeWhileActive(this._readReceiptActivityTimer);
             try {
                 await this._readReceiptActivityTimer.finished();
@@ -597,8 +582,6 @@ var TimelinePanel = React.createClass({
         const cli = MatrixClientPeg.get();
         // if no client or client is guest don't send RR or RM
         if (!cli || cli.isGuest()) return;
-
-        console.log("Checking if we should send a RR");
 
         let shouldSendRR = true;
 
@@ -692,12 +675,14 @@ var TimelinePanel = React.createClass({
     // if the read marker is on the screen, we can now assume we've caught up to the end
     // of the screen, so move the marker down to the bottom of the screen.
     updateReadMarker: function() {
-        console.log("Checking if we should update the RM");
         if (!this.props.manageReadMarkers) return;
         if (this.getReadMarkerPosition() === 1) {
+            // the read marker is at an event below the viewport,
+            // we don't want to rewind it.
             return;
         }
 
+        console.log("Updating the RM!!");
         // move the RM to *after* the message at the bottom of the screen. This
         // avoids a problem whereby we never advance the RM if there is a huge
         // message which doesn't fit on the screen.
@@ -883,8 +868,10 @@ var TimelinePanel = React.createClass({
         // 3. We want to show the bar if the read-marker is off the top of the screen.
         // 4. Also, if pos === null, the event might not be paginated - show the unread bar
         const pos = this.getReadMarkerPosition();
-        return this.state.readMarkerEventId !== null && // 1.
+        const ret = this.state.readMarkerEventId !== null && // 1.
             (pos < 0 || pos === null); // 3., 4.
+        console.log("canJumpToReadMarker? ", ret);
+        return ret;
     },
 
     /**
