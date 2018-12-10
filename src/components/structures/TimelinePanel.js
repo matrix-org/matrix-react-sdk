@@ -266,11 +266,14 @@ var TimelinePanel = React.createClass({
         //
         // (We could use isMounted, but facebook have deprecated that.)
         this.unmounted = true;
-
-        this._readReceiptActivityTimer.abort();
-        this._readReceiptActivityTimer = null;
-        this._readMarkerActivityTimer.abort();
-        this._readMarkerActivityTimer = null;
+        if (this._readReceiptActivityTimer) {
+            this._readReceiptActivityTimer.abort();
+            this._readReceiptActivityTimer = null;
+        }
+        if (this._readMarkerActivityTimer) {
+            this._readMarkerActivityTimer.abort();
+            this._readMarkerActivityTimer = null;
+        }
 
         dis.unregister(this.dispatcherRef);
 
