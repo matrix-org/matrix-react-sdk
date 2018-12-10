@@ -29,7 +29,6 @@ const CURRENTLY_ACTIVE_THRESHOLD_MS = 2 * 60 * 1000;
  * and starts/stops attached timers while the user is active.
  */
 class UserActivity {
-
     constructor() {
         this._attachedTimers = [];
         this._activityTimeout = new Timer(CURRENTLY_ACTIVE_THRESHOLD_MS);
@@ -41,12 +40,10 @@ class UserActivity {
     }
 
     /**
-     * Runs the given timer (or the returned copy if it ran already)
-     * while the user is active, aborting when the user becomes inactive.
+     * Runs the given timer while the user is active, aborting when the user becomes inactive.
      * Can be called multiple times with the same already running timer, which is a NO-OP.
-     * Can be called before the user becomes active,
-     * in which case it is only started later on when the user does become active.
-     * @return {Timer} the timer, or a clone
+     * Can be called before the user becomes active, in which case it is only started
+     * later on when the user does become active.
      */
     timeWhileActive(timer) {
         // important this happens first
@@ -59,8 +56,9 @@ class UserActivity {
                 if (index !== -1) { // should never be -1
                     this._attachedTimers.splice(index, 1);
                 }
-            }).catch((err) => {});  // as we fork the promise here,
-                                    // avoid unhandled rejection warnings
+            // as we fork the promise here,
+            // avoid unhandled rejection warnings
+            }).catch((err) => {});
         }
         if (this.userCurrentlyActive()) {
             timer.start();
@@ -137,7 +135,7 @@ class UserActivity {
             this._attachedTimers.forEach((t) => t.start());
             try {
                 await this._activityTimeout.finished();
-            } catch(_e) { /* aborted */ }
+            } catch (_e) { /* aborted */ }
             this._attachedTimers.forEach((t) => t.abort());
         } else {
             this._activityTimeout.restart();
