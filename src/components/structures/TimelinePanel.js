@@ -387,12 +387,11 @@ var TimelinePanel = React.createClass({
                 this.setState({readMarkerVisible: true});
             }
 
-            // if read marker position goes between 0 and -1/1, (and user is active), switch timeout
-            if (rmPosition === 0) {
-                this._readMarkerActivityTimer.changeTimeout(READ_MARKER_INVIEW_THRESHOLD_MS);
-            } else {
-                this._readMarkerActivityTimer.changeTimeout(READ_MARKER_OUTOFVIEW_THRESHOLD_MS);
-            }
+            // if read marker position goes between 0 and -1/1,
+            // (and user is active), switch timeout
+            const timeout = this._readMarkerTimeout(rmPosition);
+            // NO-OP when timeout already has set to the given value
+            this._readMarkerActivityTimer.changeTimeout(timeout);
         }
     },
 
@@ -544,11 +543,14 @@ var TimelinePanel = React.createClass({
         this.setState({clientSyncState: state});
     },
 
-    updateReadMarkerOnUserActivity: async function() {
-        const initialTimeout = this.getReadMarkerPosition() === 0 ?
+    _readMarkerTimeout(readMarkerPosition) {
+        return readMarkerPosition === 0 ?
             READ_MARKER_INVIEW_THRESHOLD_MS :
             READ_MARKER_OUTOFVIEW_THRESHOLD_MS;
+    },
 
+    updateReadMarkerOnUserActivity: async function() {
+        const initialTimeout = this._readMarkerTimeout(this.getReadMarkerPosition());
         this._readMarkerActivityTimer = new Timer(initialTimeout);
 
         while (this._readMarkerActivityTimer) { //unset on unmount
