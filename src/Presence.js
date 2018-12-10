@@ -55,8 +55,10 @@ class Presence {
             dis.unregister(this._dispatcherRef);
             this._dispatcherRef = null;
         }
-        this._unavailableTimer.abort();
-        this._unavailableTimer = null;
+        if (this._unavailableTimer) {
+            this._unavailableTimer.abort();
+            this._unavailableTimer = null;
+        }
     }
 
     /**
