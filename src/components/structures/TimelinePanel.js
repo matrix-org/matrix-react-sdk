@@ -681,8 +681,6 @@ var TimelinePanel = React.createClass({
             // we don't want to rewind it.
             return;
         }
-
-        console.log("Updating the RM!!");
         // move the RM to *after* the message at the bottom of the screen. This
         // avoids a problem whereby we never advance the RM if there is a huge
         // message which doesn't fit on the screen.
@@ -870,7 +868,6 @@ var TimelinePanel = React.createClass({
         const pos = this.getReadMarkerPosition();
         const ret = this.state.readMarkerEventId !== null && // 1.
             (pos < 0 || pos === null); // 3., 4.
-        console.log("canJumpToReadMarker? ", ret);
         return ret;
     },
 

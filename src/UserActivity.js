@@ -134,12 +134,10 @@ class UserActivity {
         if (!this._activityTimeout.isRunning()) {
             this._activityTimeout.start();
             dis.dispatch({action: 'user_activity_start'});
-            console.log("user is active now");
             this._attachedTimers.forEach((t) => t.start());
             try {
                 await this._activityTimeout.finished();
             } catch(_e) { /* aborted */ }
-            console.log("user is inactive now");
             this._attachedTimers.forEach((t) => t.abort());
         } else {
             this._activityTimeout.restart();
