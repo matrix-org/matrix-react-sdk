@@ -23,6 +23,7 @@ import Timer from './utils/Timer';
 // READ_MARKER_OUTOFVIEW_THRESHOLD_MS,
 // READ_RECEIPT_INTERVAL_MS in TimelinePanel
 const CURRENTLY_ACTIVE_THRESHOLD_MS = 2 * 60 * 1000;
+const PAGE_VISIBILITY_ACTIVITY_DELAY = 3 * 1000;
 
 /**
  * This class watches for user activity (moving the mouse or pressing a key)
@@ -32,8 +33,10 @@ class UserActivity {
     constructor() {
         this._attachedTimers = [];
         this._activityTimeout = new Timer(CURRENTLY_ACTIVE_THRESHOLD_MS);
+        this._pageVisibleActivityDelay = new Timer(PAGE_VISIBILITY_ACTIVITY_DELAY);
         this._onUserActivity = this._onUserActivity.bind(this);
         this._onDocumentBlurred = this._onDocumentBlurred.bind(this);
+        this._onDocumentFocused = this._onDocumentFocused.bind(this);
         this._onPageVisibilityChanged = this._onPageVisibilityChanged.bind(this);
         this.lastScreenX = 0;
         this.lastScreenY = 0;
@@ -95,7 +98,14 @@ class UserActivity {
 
         document.removeEventListener("visibilitychange", this._onPageVisibilityChanged);
         document.removeEventListener("blur", this._onDocumentBlurred);
-        document.removeEventListener("focus", this._onUserActivity);
+        document.removeEventListener("focus", this._onDocumentFocused);
+
+        if (this._activityTimeout) {
+            this._activityTimeout.abort();
+        }
+        if (this._pageVisibleActivityDelay) {
+            this._pageVisibleActivityDelay.abort();
+        }
     }
 
     /**
@@ -109,14 +119,32 @@ class UserActivity {
 
     _onPageVisibilityChanged(e) {
         if (document.visibilityState === "hidden") {
-            this._activityTimeout.abort();
+            this._onDocumentBlurred();
         } else {
-            this._onUserActivity(e);
+            this._startPageVisibleActivityDelay(e);
         }
     }
 
+    _onDocumentFocused(e) {
+        this._startPageVisibleActivityDelay(e);
+    }
+
     _onDocumentBlurred() {
+        this._pageVisibleActivityDelay.abort();
         this._activityTimeout.abort();
+    }
+
+    async _startPageVisibleActivityDelay(e) {
+        this._pageVisibleActivityDelay.start();
+        try {
+            console.log("waiting 3s before considering user activity");
+            await this._pageVisibleActivityDelay.finished();
+        } catch(e) {
+            console.log("didn't make it till 3s");
+            return;
+        }
+        console.log("made it till 3s, starting user activity");
+        this._onUserActivity(e);
     }
 
     async _onUserActivity(event) {

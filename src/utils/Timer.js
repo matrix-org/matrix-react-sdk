@@ -84,14 +84,23 @@ export default class Timer {
      */
     restart() {
         if (this.isRunning()) {
+            return this.rewind();
+        } else {
+            return this.start();
+        }
+    }
+
+    /**
+     * rewind the timer if it's running.
+     */
+    rewind() {
+        if (this.isRunning()) {
             // don't clearTimeout here as this method
             // can be called in fast succession,
             // instead just take note and compare
             // when the already running timeout expires
             this._startTs = Date.now();
             return this;
-        } else {
-            return this.start();
         }
     }
 
