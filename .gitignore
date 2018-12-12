@@ -9,3 +9,11 @@ npm-debug.log
 
 # test reports created by karma
 /karma-reports
+
+/.idea
+/src/component-index.js
+
+.DS_Store
+
+# https://github.com/vector-im/riot-web/issues/7083
+package-lock.json

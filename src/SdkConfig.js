@@ -14,22 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-var DEFAULTS = {
+const DEFAULTS = {
     // URL to a page we show in an iframe to configure integrations
     integrations_ui_url: "https://scalar.vector.im/",
     // Base URL to the REST interface of the integrations server
     integrations_rest_url: "https://scalar.vector.im/api",
+    // Where to send bug reports. If not specified, bugs cannot be sent.
+    bug_report_endpoint_url: null,
 };
 
 class SdkConfig {
-
     static get() {
-        return global.mxReactSdkConfig;
+        return global.mxReactSdkConfig || {};
     }
 
     static put(cfg) {
-        var defaultKeys = Object.keys(DEFAULTS);
-        for (var i = 0; i < defaultKeys.length; ++i) {
+        const defaultKeys = Object.keys(DEFAULTS);
+        for (let i = 0; i < defaultKeys.length; ++i) {
             if (cfg[defaultKeys[i]] === undefined) {
                 cfg[defaultKeys[i]] = DEFAULTS[defaultKeys[i]];
             }

@@ -20,30 +20,91 @@ import React from 'react';
 import MFileBody from './MFileBody';
 
 import MatrixClientPeg from '../../../MatrixClientPeg';
-import sdk from '../../../index';
+import { decryptFile } from '../../../utils/DecryptFile';
+import { _t } from '../../../languageHandler';
 
 export default class MAudioBody extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            playing: false
-        }
+            playing: false,
+            decryptedUrl: null,
+            decryptedBlob: null,
+            error: null,
+        };
     }
-
     onPlayToggle() {
         this.setState({
-            playing: !this.state.playing
+            playing: !this.state.playing,
         });
     }
 
+    _getContentUrl() {
+        const content = this.props.mxEvent.getContent();
+        if (content.file !== undefined) {
+            return this.state.decryptedUrl;
+        } else {
+            return MatrixClientPeg.get().mxcUrlToHttp(content.url);
+        }
+    }
+
+    componentDidMount() {
+        const content = this.props.mxEvent.getContent();
+        if (content.file !== undefined && this.state.decryptedUrl === null) {
+            let decryptedBlob;
+            decryptFile(content.file).then(function(blob) {
+                decryptedBlob = blob;
+                return URL.createObjectURL(decryptedBlob);
+            }).done((url) => {
+                this.setState({
+                    decryptedUrl: url,
+                    decryptedBlob: decryptedBlob,
+                });
+            }, (err) => {
+                console.warn("Unable to decrypt attachment: ", err);
+                this.setState({
+                    error: err,
+                });
+            });
+        }
+    }
+
+    componentWillUnmount() {
+        if (this.state.decryptedUrl) {
+            URL.revokeObjectURL(this.state.decryptedUrl);
+        }
+    }
+
     render() {
-        var content = this.props.mxEvent.getContent();
-        var cli = MatrixClientPeg.get();
+        const content = this.props.mxEvent.getContent();
+
+        if (this.state.error !== null) {
+            return (
+                <span className="mx_MAudioBody" ref="body">
+                    <img src="img/warning.svg" width="16" height="16" />
+                    { _t("Error decrypting audio") }
+                </span>
+            );
+        }
+
+        if (content.file !== undefined && this.state.decryptedUrl === null) {
+            // Need to decrypt the attachment
+            // The attachment is decrypted in componentDidMount.
+            // For now add an img tag with a 16x16 spinner.
+            // Not sure how tall the audio player is so not sure how tall it should actually be.
+            return (
+                <span className="mx_MAudioBody">
+                    <img src="img/spinner.gif" alt={content.body} width="16" height="16" />
+                </span>
+            );
+        }
+
+        const contentUrl = this._getContentUrl();
 
         return (
             <span className="mx_MAudioBody">
-                <audio src={cli.mxcUrlToHttp(content.url)} controls />
-                <MFileBody {...this.props} />
+                <audio src={contentUrl} controls />
+                <MFileBody {...this.props} decryptedBlob={this.state.decryptedBlob} />
             </span>
         );
     }

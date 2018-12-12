@@ -16,10 +16,11 @@ limitations under the License.
 
 'use strict';
 
-var React = require('react');
+import React from 'react';
+import PropTypes from 'prop-types';
 
-var MatrixClientPeg = require('../../../MatrixClientPeg');
-var sdk = require('../../../index');
+import { _t } from '../../../languageHandler';
+
 
 module.exports = React.createClass({
     displayName: 'PresenceLabel',
@@ -27,79 +28,72 @@ module.exports = React.createClass({
     propTypes: {
         // number of milliseconds ago this user was last active.
         // zero = unknown
-        activeAgo: React.PropTypes.number,
+        activeAgo: PropTypes.number,
 
         // if true, activeAgo is an approximation and "Now" should
         // be shown instead
-        currentlyActive: React.PropTypes.bool,
+        currentlyActive: PropTypes.bool,
 
         // offline, online, etc
-        presenceState: React.PropTypes.string,
-
+        presenceState: PropTypes.string,
         // status_msg
-        presenceStatus: React.PropTypes.string,
+        presenceStatus: PropTypes.string,
     },
 
     getDefaultProps: function() {
         return {
             ago: -1,
-            presenceState: null
+            presenceState: null,
         };
     },
 
+    // Return duration as a string using appropriate time units
+    // XXX: This would be better handled using a culture-aware library, but we don't use one yet.
     getDuration: function(time) {
         if (!time) return;
-        var t = parseInt(time / 1000);
-        var s = t % 60;
-        var m = parseInt(t / 60) % 60;
-        var h = parseInt(t / (60 * 60)) % 24;
-        var d = parseInt(t / (60 * 60 * 24));
+        const t = parseInt(time / 1000);
+        const s = t % 60;
+        const m = parseInt(t / 60) % 60;
+        const h = parseInt(t / (60 * 60)) % 24;
+        const d = parseInt(t / (60 * 60 * 24));
         if (t < 60) {
             if (t < 0) {
-                return "0s";
+                return _t("%(duration)ss", {duration: 0});
             }
-            return s + "s";
+            return _t("%(duration)ss", {duration: s});
         }
         if (t < 60 * 60) {
-            return m + "m";
+            return _t("%(duration)sm", {duration: m});
         }
         if (t < 24 * 60 * 60) {
-            return h + "h";
+            return _t("%(duration)sh", {duration: h});
         }
-        return d + "d ";
+        return _t("%(duration)sd", {duration: d});
     },
 
-    getPrettyPresence: function(presence, presenceStatus) {
-        let presenceStr = "Unknown";
-
-        if (presence === "online") presenceStr = "Online";
-        if (presence === "unavailable") presenceStr = "Idle"; // XXX: is this actually right?
-        if (presence === "offline") presenceStr = "Offline";
-
-        if (presenceStatus) {
-          presenceStr = presenceStatus + " (" + presenceStr + ")";
+    getPrettyPresence: function(presence, activeAgo, currentlyActive, status) {
+        if (!status) {
+          status = "";
         }
-
-        return presenceStr;
+        if (!currentlyActive && activeAgo !== undefined && activeAgo > 0) {
+            const duration = this.getDuration(activeAgo);
+            if (presence === "online") return _t("Online for %(duration)s (%(status)s)", { duration, status });
+            if (presence === "unavailable") return _t("Idle for %(duration)s (%(status)s)", { duration, status }); // XXX: is this actually right?
+            if (presence === "offline") return _t("Offline for %(duration)s (%(status)s)", { duration, status});
+            return _t("Unknown for %(duration)s", { duration: duration });
+        } else {
+            if (presence === "online") return _t("Online (%(status)s)", {status});
+            if (presence === "unavailable") return _t("Idle (%(status)s)", {status}); // XXX: is this actually right?
+            if (presence === "offline") return _t("Offline (%(status)s)", {status});
+            return _t("Unknown");
+        }
     },
 
     render: function() {
-        if (this.props.activeAgo >= 0) {
-            var ago = this.props.currentlyActive ? "now" : (this.getDuration(this.props.activeAgo) + " ago");
-            // var ago = this.getDuration(this.props.activeAgo) + " ago";
-            // if (this.props.currentlyActive) ago += " (now?)";
-            return (
-                <div className="mx_PresenceLabel">
-                    { this.getPrettyPresence(this.props.presenceState, this.props.presenceStatus) } { ago }
-                </div>
-            );
-        }
-        else {
-            return (
-                <div className="mx_PresenceLabel">
-                    { this.getPrettyPresence(this.props.presenceState, this.props.presenceStatus) }
-                </div>
-            );
-        }
-    }
+        return (
+            <div className="mx_PresenceLabel">
+                { this.getPrettyPresence(this.props.presenceState, this.props.activeAgo, this.props.currentlyActive, this.props.presenceStatus) }
+            </div>
+        );
+    },
 });

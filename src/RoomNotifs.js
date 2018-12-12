@@ -16,7 +16,7 @@ limitations under the License.
 
 import MatrixClientPeg from './MatrixClientPeg';
 import PushProcessor from 'matrix-js-sdk/lib/pushprocessor';
-import q from 'q';
+import Promise from 'bluebird';
 
 export const ALL_MESSAGES_LOUD = 'all_messages_loud';
 export const ALL_MESSAGES = 'all_messages';
@@ -24,7 +24,7 @@ export const MENTIONS_ONLY = 'mentions_only';
 export const MUTE = 'mute';
 
 export function getRoomNotifsState(roomId) {
-    if (MatrixClientPeg.get().isGuest()) return RoomNotifs.ALL_MESSAGES;
+    if (MatrixClientPeg.get().isGuest()) return ALL_MESSAGES;
 
     // look through the override rules for a rule affecting this room:
     // if one exists, it will take precedence.
@@ -34,7 +34,14 @@ export function getRoomNotifsState(roomId) {
     }
 
     // for everything else, look at the room rule.
-    const roomRule = MatrixClientPeg.get().getRoomPushRule('global', roomId);
+    let roomRule = null;
+    try {
+        roomRule = MatrixClientPeg.get().getRoomPushRule('global', roomId);
+    } catch (err) {
+        // Possible that the client doesn't have pushRules yet. If so, it
+        // hasn't started eiher, so indicate that this room is not notifying.
+        return null;
+    }
 
     // XXX: We have to assume the default is to notify for all messages
     // (in particular this will be 'wrong' for one to one rooms because
@@ -52,7 +59,7 @@ export function getRoomNotifsState(roomId) {
 }
 
 export function setRoomNotifsState(roomId, newState) {
-    if (newState == MUTE) {
+    if (newState === MUTE) {
         return setRoomNotifsStateMuted(roomId);
     } else {
         return setRoomNotifsStateUnmuted(roomId, newState);
@@ -80,14 +87,14 @@ function setRoomNotifsStateMuted(roomId) {
                 kind: 'event_match',
                 key: 'room_id',
                 pattern: roomId,
-            }
+            },
         ],
         actions: [
             'dont_notify',
-        ]
+        ],
     }));
 
-    return q.all(promises);
+    return Promise.all(promises);
 }
 
 function setRoomNotifsStateUnmuted(roomId, newState) {
@@ -99,16 +106,16 @@ function setRoomNotifsStateUnmuted(roomId, newState) {
         promises.push(cli.deletePushRule('global', 'override', overrideMuteRule.rule_id));
     }
 
-    if (newState == 'all_messages') {
+    if (newState === 'all_messages') {
         const roomRule = cli.getRoomPushRule('global', roomId);
         if (roomRule) {
             promises.push(cli.deletePushRule('global', 'room', roomRule.rule_id));
         }
-    } else if (newState == 'mentions_only') {
+    } else if (newState === 'mentions_only') {
         promises.push(cli.addPushRule('global', 'room', roomId, {
             actions: [
                 'dont_notify',
-            ]
+            ],
         }));
         // https://matrix.org/jira/browse/SPEC-400
         promises.push(cli.setPushRuleEnabled('global', 'room', roomId, true));
@@ -119,17 +126,22 @@ function setRoomNotifsStateUnmuted(roomId, newState) {
                 {
                     set_tweak: 'sound',
                     value: 'default',
-                }
-            ]
+                },
+            ],
         }));
         // https://matrix.org/jira/browse/SPEC-400
         promises.push(cli.setPushRuleEnabled('global', 'room', roomId, true));
     }
 
-    return q.all(promises);
+    return Promise.all(promises);
 }
 
 function findOverrideMuteRule(roomId) {
+    if (!MatrixClientPeg.get().pushRules ||
+        !MatrixClientPeg.get().pushRules['global'] ||
+        !MatrixClientPeg.get().pushRules['global'].override) {
+        return null;
+    }
     for (const rule of MatrixClientPeg.get().pushRules['global'].override) {
         if (isRuleForRoom(roomId, rule)) {
             if (isMuteRule(rule) && rule.enabled) {
@@ -145,20 +157,10 @@ function isRuleForRoom(roomId, rule) {
         return false;
     }
     const cond = rule.conditions[0];
-    if (
-        cond.kind == 'event_match'  &&
-        cond.key == 'room_id' &&
-        cond.pattern == roomId
-    ) {
-        return true;
-    }
-    return false;
+    return (cond.kind === 'event_match' && cond.key === 'room_id' && cond.pattern === roomId);
 }
 
 function isMuteRule(rule) {
-    return (
-        rule.actions.length == 1 &&
-        rule.actions[0] == 'dont_notify'
-    );
+    return (rule.actions.length === 1 && rule.actions[0] === 'dont_notify');
 }
 

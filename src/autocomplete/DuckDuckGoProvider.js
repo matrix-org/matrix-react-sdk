@@ -1,90 +1,104 @@
+/*
+Copyright 2016 Aviral Dasgupta
+Copyright 2017 Vector Creations Ltd
+Copyright 2017, 2018 New Vector Ltd
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 import React from 'react';
+import { _t } from '../languageHandler';
 import AutocompleteProvider from './AutocompleteProvider';
-import Q from 'q';
 import 'whatwg-fetch';
 
 import {TextualCompletion} from './Components';
+import type {SelectionRange} from "./Autocompleter";
 
 const DDG_REGEX = /\/ddg\s+(.+)$/g;
 const REFERRER = 'vector';
-
-let instance = null;
 
 export default class DuckDuckGoProvider extends AutocompleteProvider {
     constructor() {
         super(DDG_REGEX);
     }
-    
+
     static getQueryUri(query: String) {
         return `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}`
          + `&format=json&no_redirect=1&no_html=1&t=${encodeURIComponent(REFERRER)}`;
     }
 
-    getCompletions(query: string, selection: {start: number, end: number}) {
-        let {command, range} = this.getCurrentCommand(query, selection);
+    async getCompletions(query: string, selection: SelectionRange, force?: boolean = false) {
+        const {command, range} = this.getCurrentCommand(query, selection);
         if (!query || !command) {
-            return Q.when([]);
+            return [];
         }
 
-        return fetch(DuckDuckGoProvider.getQueryUri(command[1]), {
+        const response = await fetch(DuckDuckGoProvider.getQueryUri(command[1]), {
             method: 'GET',
-        })
-            .then(response => response.json())
-            .then(json => {
-                let results = json.Results.map(result => {
-                    return {
-                        completion: result.Text,
-                        component: (
-                            <TextualCompletion
-                                title={result.Text}
-                                description={result.Result} />
-                        ),
-                        range,
-                    };
-                });
-                if (json.Answer) {
-                    results.unshift({
-                        completion: json.Answer,
-                        component: (
-                            <TextualCompletion
-                                title={json.Answer}
-                                description={json.AnswerType} />
-                        ),
-                        range,
-                    });
-                }
-                if (json.RelatedTopics && json.RelatedTopics.length > 0) {
-                    results.unshift({
-                        completion: json.RelatedTopics[0].Text,
-                        component: (
-                            <TextualCompletion
-                                title={json.RelatedTopics[0].Text} />
-                        ),
-                        range,
-                    });
-                }
-                if (json.AbstractText) {
-                    results.unshift({
-                        completion: json.AbstractText,
-                        component: (
-                            <TextualCompletion
-                                title={json.AbstractText} />
-                        ),
-                        range,
-                    });
-                }
-                return results;
+        });
+        const json = await response.json();
+        const results = json.Results.map((result) => {
+            return {
+                completion: result.Text,
+                component: (
+                    <TextualCompletion
+                        title={result.Text}
+                        description={result.Result} />
+                ),
+                range,
+            };
+        });
+        if (json.Answer) {
+            results.unshift({
+                completion: json.Answer,
+                component: (
+                    <TextualCompletion
+                        title={json.Answer}
+                        description={json.AnswerType} />
+                ),
+                range,
             });
+        }
+        if (json.RelatedTopics && json.RelatedTopics.length > 0) {
+            results.unshift({
+                completion: json.RelatedTopics[0].Text,
+                component: (
+                    <TextualCompletion
+                        title={json.RelatedTopics[0].Text} />
+                ),
+                range,
+            });
+        }
+        if (json.AbstractText) {
+            results.unshift({
+                completion: json.AbstractText,
+                component: (
+                    <TextualCompletion
+                        title={json.AbstractText} />
+                ),
+                range,
+            });
+        }
+        return results;
     }
 
     getName() {
-        return 'Results from DuckDuckGo';
+        return '🔍 ' + _t('Results from DuckDuckGo');
     }
 
-    static getInstance(): DuckDuckGoProvider {
-        if (instance == null) {
-            instance = new DuckDuckGoProvider();
-        }
-        return instance;
+    renderCompletions(completions: [React.Component]): ?React.Component {
+        return <div className="mx_Autocomplete_Completion_container_block">
+            { completions }
+        </div>;
     }
 }

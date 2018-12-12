@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2018 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,27 +15,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
-var React = require('react');
-
-const KEY_TAB = 9;
-const KEY_SHIFT = 16;
-const KEY_WINDOWS = 91;
+import React from 'react';
+import PropTypes from 'prop-types';
 
 module.exports = React.createClass({
     displayName: 'EditableText',
 
     propTypes: {
-        onValueChanged: React.PropTypes.func,
-        initialValue: React.PropTypes.string,
-        label: React.PropTypes.string,
-        placeholder: React.PropTypes.string,
-        className: React.PropTypes.string,
-        labelClassName: React.PropTypes.string,
-        placeholderClassName: React.PropTypes.string,
-        blurToCancel: React.PropTypes.bool,
-        editable: React.PropTypes.bool,
+        onValueChanged: PropTypes.func,
+        initialValue: PropTypes.string,
+        label: PropTypes.string,
+        placeholder: PropTypes.string,
+        className: PropTypes.string,
+        labelClassName: PropTypes.string,
+        placeholderClassName: PropTypes.string,
+        // Overrides blurToSubmit if true
+        blurToCancel: PropTypes.bool,
+        // Will cause onValueChanged(value, true) to fire on blur
+        blurToSubmit: PropTypes.bool,
+        editable: PropTypes.bool,
     },
 
     Phases: {
@@ -51,13 +50,14 @@ module.exports = React.createClass({
             editable: true,
             className: "mx_EditableText",
             placeholderClassName: "mx_EditableText_placeholder",
+            blurToSubmit: false,
         };
     },
 
     getInitialState: function() {
         return {
             phase: this.Phases.Display,
-        }
+        };
     },
 
     componentWillReceiveProps: function(nextProps) {
@@ -89,8 +89,7 @@ module.exports = React.createClass({
             this.refs.editable_div.setAttribute("class", this.props.className + " " + this.props.placeholderClassName);
             this.placeholder = true;
             this.value = '';
-        }
-        else {
+        } else {
             this.refs.editable_div.textContent = this.value;
             this.refs.editable_div.setAttribute("class", this.props.className);
             this.placeholder = false;
@@ -119,6 +118,7 @@ module.exports = React.createClass({
         this.value = this.props.initialValue;
         this.showPlaceholder(!this.value);
         this.onValueChanged(false);
+        this.refs.editable_div.blur();
     },
 
     onValueChanged: function(shouldSubmit) {
@@ -132,7 +132,7 @@ module.exports = React.createClass({
             this.showPlaceholder(false);
         }
 
-        if (ev.key == "Enter") {
+        if (ev.key === "Enter") {
             ev.stopPropagation();
             ev.preventDefault();
         }
@@ -145,14 +145,13 @@ module.exports = React.createClass({
 
         if (!ev.target.textContent) {
             this.showPlaceholder(true);
-        }
-        else if (!this.placeholder) {
+        } else if (!this.placeholder) {
             this.value = ev.target.textContent;
         }
 
-        if (ev.key == "Enter") {
+        if (ev.key === "Enter") {
             this.onFinish(ev);
-        } else if (ev.key == "Escape") {
+        } else if (ev.key === "Escape") {
             this.cancelEdit();
         }
 
@@ -164,58 +163,69 @@ module.exports = React.createClass({
 
         this.setState({
             phase: this.Phases.Edit,
-        })
+        });
     },
 
     onFocus: function(ev) {
         //ev.target.setSelectionRange(0, ev.target.textContent.length);
 
-        var node = ev.target.childNodes[0];
+        const node = ev.target.childNodes[0];
         if (node) {
-            var range = document.createRange();
+            const range = document.createRange();
             range.setStart(node, 0);
             range.setEnd(node, node.length);
 
-            var sel = window.getSelection();
+            const sel = window.getSelection();
             sel.removeAllRanges();
             sel.addRange(range);
         }
     },
 
-    onFinish: function(ev) {
-        var self = this;
-        var submit = (ev.key === "Enter");
+    onFinish: function(ev, shouldSubmit) {
+        const self = this;
+        const submit = (ev.key === "Enter") || shouldSubmit;
         this.setState({
             phase: this.Phases.Display,
-        }, function() {
-            self.onValueChanged(submit);
+        }, () => {
+            if (this.value !== this.props.initialValue) {
+                self.onValueChanged(submit);
+            }
         });
     },
 
     onBlur: function(ev) {
-        var sel = window.getSelection();
+        const sel = window.getSelection();
         sel.removeAllRanges();
 
-        if (this.props.blurToCancel)
+        if (this.props.blurToCancel) {
             this.cancelEdit();
-        else
-            this.onFinish(ev);
+        } else {
+            this.onFinish(ev, this.props.blurToSubmit);
+        }
 
         this.showPlaceholder(!this.value);
     },
 
     render: function() {
-        var editable_el;
+        const {className, editable, initialValue, label, labelClassName} = this.props;
+        let editableEl;
 
-        if (!this.props.editable || (this.state.phase == this.Phases.Display && (this.props.label || this.props.labelClassName) && !this.value)) {
+        if (!editable || (this.state.phase === this.Phases.Display && (label || labelClassName) && !this.value)) {
             // show the label
-            editable_el = <div className={this.props.className + " " + this.props.labelClassName} onClick={this.onClickDiv}>{ this.props.label || this.props.initialValue }</div>;
+            editableEl = <div className={className + " " + labelClassName} onClick={this.onClickDiv}>
+                { label || initialValue }
+            </div>;
         } else {
             // show the content editable div, but manually manage its contents as react and contentEditable don't play nice together
-            editable_el = <div ref="editable_div" contentEditable="true" className={this.props.className}
-                               onKeyDown={this.onKeyDown} onKeyUp={this.onKeyUp} onFocus={this.onFocus} onBlur={this.onBlur}></div>;
+            editableEl = <div ref="editable_div"
+                              contentEditable={true}
+                              className={className}
+                              onKeyDown={this.onKeyDown}
+                              onKeyUp={this.onKeyUp}
+                              onFocus={this.onFocus}
+                              onBlur={this.onBlur} />;
         }
 
-        return editable_el;
-    }
+        return editableEl;
+    },
 });

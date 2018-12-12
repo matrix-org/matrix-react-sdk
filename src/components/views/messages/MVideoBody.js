@@ -16,15 +16,34 @@ limitations under the License.
 
 'use strict';
 
-var React = require('react');
-var filesize = require('filesize');
-
-var MatrixClientPeg = require('../../../MatrixClientPeg');
-var Modal = require('../../../Modal');
-var sdk = require('../../../index');
+import React from 'react';
+import PropTypes from 'prop-types';
+import MFileBody from './MFileBody';
+import MatrixClientPeg from '../../../MatrixClientPeg';
+import { decryptFile } from '../../../utils/DecryptFile';
+import Promise from 'bluebird';
+import { _t } from '../../../languageHandler';
+import SettingsStore from "../../../settings/SettingsStore";
 
 module.exports = React.createClass({
     displayName: 'MVideoBody',
+
+    propTypes: {
+        /* the MatrixEvent to show */
+        mxEvent: PropTypes.object.isRequired,
+
+        /* called when the video has loaded */
+        onWidgetLoad: PropTypes.func.isRequired,
+    },
+
+    getInitialState: function() {
+        return {
+            decryptedUrl: null,
+            decryptedThumbnailUrl: null,
+            decryptedBlob: null,
+            error: null,
+        };
+    },
 
     thumbScale: function(fullWidth, fullHeight, thumbWidth, thumbHeight) {
         if (!fullWidth || !fullHeight) {
@@ -36,45 +55,131 @@ module.exports = React.createClass({
             // no scaling needs to be applied
             return 1;
         }
-        var widthMulti = thumbWidth / fullWidth;
-        var heightMulti = thumbHeight / fullHeight;
+        const widthMulti = thumbWidth / fullWidth;
+        const heightMulti = thumbHeight / fullHeight;
         if (widthMulti < heightMulti) {
             // width is the dominant dimension so scaling will be fixed on that
             return widthMulti;
-        }
-        else {
+        } else {
             // height is the dominant dimension so scaling will be fixed on that
             return heightMulti;
         }
     },
 
-    render: function() {
-        var content = this.props.mxEvent.getContent();
-        var cli = MatrixClientPeg.get();
+    _getContentUrl: function() {
+        const content = this.props.mxEvent.getContent();
+        if (content.file !== undefined) {
+            return this.state.decryptedUrl;
+        } else {
+            return MatrixClientPeg.get().mxcUrlToHttp(content.url);
+        }
+    },
 
-        var height = null;
-        var width = null;
-        var poster = null;
-        var preload = "metadata";
+    _getThumbUrl: function() {
+        const content = this.props.mxEvent.getContent();
+        if (content.file !== undefined) {
+            return this.state.decryptedThumbnailUrl;
+        } else if (content.info && content.info.thumbnail_url) {
+            return MatrixClientPeg.get().mxcUrlToHttp(content.info.thumbnail_url);
+        } else {
+            return null;
+        }
+    },
+
+    componentDidMount: function() {
+        const content = this.props.mxEvent.getContent();
+        if (content.file !== undefined && this.state.decryptedUrl === null) {
+            let thumbnailPromise = Promise.resolve(null);
+            if (content.info.thumbnail_file) {
+                thumbnailPromise = decryptFile(
+                    content.info.thumbnail_file,
+                ).then(function(blob) {
+                    return URL.createObjectURL(blob);
+                });
+            }
+            let decryptedBlob;
+            thumbnailPromise.then((thumbnailUrl) => {
+                return decryptFile(content.file).then(function(blob) {
+                    decryptedBlob = blob;
+                    return URL.createObjectURL(blob);
+                }).then((contentUrl) => {
+                    this.setState({
+                        decryptedUrl: contentUrl,
+                        decryptedThumbnailUrl: thumbnailUrl,
+                        decryptedBlob: decryptedBlob,
+                    });
+                    this.props.onWidgetLoad();
+                });
+            }).catch((err) => {
+                console.warn("Unable to decrypt attachment: ", err);
+                // Set a placeholder image when we can't decrypt the image.
+                this.setState({
+                    error: err,
+                });
+            }).done();
+        }
+    },
+
+    componentWillUnmount: function() {
+        if (this.state.decryptedUrl) {
+            URL.revokeObjectURL(this.state.decryptedUrl);
+        }
+        if (this.state.decryptedThumbnailUrl) {
+            URL.revokeObjectURL(this.state.decryptedThumbnailUrl);
+        }
+    },
+
+    render: function() {
+        const content = this.props.mxEvent.getContent();
+
+        if (this.state.error !== null) {
+            return (
+                <span className="mx_MVideoBody" ref="body">
+                    <img src="img/warning.svg" width="16" height="16" />
+                    { _t("Error decrypting video") }
+                </span>
+            );
+        }
+
+        if (content.file !== undefined && this.state.decryptedUrl === null) {
+            // Need to decrypt the attachment
+            // The attachment is decrypted in componentDidMount.
+            // For now add an img tag with a spinner.
+            return (
+                <span className="mx_MVideoBody" ref="body">
+                    <div className="mx_MImageBody_thumbnail mx_MImageBody_thumbnail_spinner" ref="image">
+                        <img src="img/spinner.gif" alt={content.body} width="16" height="16" />
+                    </div>
+                </span>
+            );
+        }
+
+        const contentUrl = this._getContentUrl();
+        const thumbUrl = this._getThumbUrl();
+        const autoplay = SettingsStore.getValue("autoplayGifsAndVideos");
+        let height = null;
+        let width = null;
+        let poster = null;
+        let preload = "metadata";
         if (content.info) {
-            var scale = this.thumbScale(content.info.w, content.info.h, 480, 360);
+            const scale = this.thumbScale(content.info.w, content.info.h, 480, 360);
             if (scale) {
                 width = Math.floor(content.info.w * scale);
                 height = Math.floor(content.info.h * scale);
             }
 
-            if (content.info.thumbnail_url) {
-                poster = cli.mxcUrlToHttp(content.info.thumbnail_url);
+            if (thumbUrl) {
+                poster = thumbUrl;
                 preload = "none";
             }
         }
-
         return (
             <span className="mx_MVideoBody">
-                <video className="mx_MVideoBody" src={cli.mxcUrlToHttp(content.url)} alt={content.body}
-                    controls preload={preload} autoPlay={false}
+                <video className="mx_MVideoBody" src={contentUrl} alt={content.body}
+                    controls preload={preload} muted={autoplay} autoPlay={autoplay}
                     height={height} width={width} poster={poster}>
                 </video>
+                <MFileBody {...this.props} decryptedBlob={this.state.decryptedBlob} />
             </span>
         );
     },

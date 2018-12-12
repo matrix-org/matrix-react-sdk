@@ -1,36 +1,70 @@
-import Q from 'q';
+/*
+Copyright 2016 Aviral Dasgupta
+Copyright 2017 Vector Creations Ltd
+Copyright 2017, 2018 New Vector Ltd
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+import React from 'react';
+import type {Completion, SelectionRange} from './Autocompleter';
 
 export default class AutocompleteProvider {
-    constructor(commandRegex?: RegExp, fuseOpts?: any) {
-        if(commandRegex) {
-            if(!commandRegex.global) {
+    constructor(commandRegex?: RegExp, forcedCommandRegex?: RegExp) {
+        if (commandRegex) {
+            if (!commandRegex.global) {
                 throw new Error('commandRegex must have global flag set');
             }
             this.commandRegex = commandRegex;
         }
+        if (forcedCommandRegex) {
+            if (!forcedCommandRegex.global) {
+                throw new Error('forcedCommandRegex must have global flag set');
+            }
+            this.forcedCommandRegex = forcedCommandRegex;
+        }
+    }
+
+    destroy() {
+        // stub
     }
 
     /**
      * Of the matched commands in the query, returns the first that contains or is contained by the selection, or null.
      */
-    getCurrentCommand(query: string, selection: {start: number, end: number}): ?Array<string> {
-        if (this.commandRegex == null) {
+    getCurrentCommand(query: string, selection: SelectionRange, force: boolean = false): ?string {
+        let commandRegex = this.commandRegex;
+
+        if (force && this.shouldForceComplete()) {
+            commandRegex = this.forcedCommandRegex || /\S+/g;
+        }
+
+        if (commandRegex == null) {
             return null;
         }
 
-        this.commandRegex.lastIndex = 0;
-        
+        commandRegex.lastIndex = 0;
+
         let match;
-        while ((match = this.commandRegex.exec(query)) != null) {
-            let matchStart = match.index,
-                matchEnd = matchStart + match[0].length;
-            
-            if (selection.start <= matchEnd && selection.end >= matchStart) {
+        while ((match = commandRegex.exec(query)) != null) {
+            const start = match.index;
+            const end = start + match[0].length;
+            if (selection.start <= end && selection.end >= start) {
                 return {
                     command: match,
                     range: {
-                        start: matchStart,
-                        end: matchEnd,
+                        start,
+                        end,
                     },
                 };
             }
@@ -44,11 +78,21 @@ export default class AutocompleteProvider {
         };
     }
 
-    getCompletions(query: string, selection: {start: number, end: number}) {
-        return Q.when([]);
+    async getCompletions(query: string, selection: SelectionRange, force: boolean = false): Array<Completion> {
+        return [];
     }
 
     getName(): string {
         return 'Default Provider';
+    }
+
+    renderCompletions(completions: [React.Component]): ?React.Component {
+        console.error('stub; should be implemented in subclasses');
+        return null;
+    }
+
+    // Whether we should provide completions even if triggered forcefully, without a sigil.
+    shouldForceComplete(): boolean {
+        return false;
     }
 }

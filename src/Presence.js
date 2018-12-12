@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2018 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,15 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-var MatrixClientPeg = require("./MatrixClientPeg");
-var dis = require("./dispatcher");
+const MatrixClientPeg = require("./MatrixClientPeg");
+const dis = require("./dispatcher");
 
  // Time in ms after that a user is considered as unavailable/away
-var UNAVAILABLE_TIME_MS = 3 * 60 * 1000; // 3 mins
-var PRESENCE_STATES = ["online", "offline", "unavailable"];
+const UNAVAILABLE_TIME_MS = 3 * 60 * 1000; // 3 mins
+const PRESENCE_STATES = ["online", "offline", "unavailable"];
 
 class Presence {
-
     /**
      * Start listening the user activity to evaluate his presence state.
      * Any state change will be sent to the Home Server.
@@ -31,7 +31,7 @@ class Presence {
         this.running = true;
         if (undefined === this.state) {
             this._resetTimer();
-            this.dispatcherRef = dis.register(this._onUserActivity.bind(this));
+            this.dispatcherRef = dis.register(this._onAction.bind(this));
         }
     }
 
@@ -71,14 +71,14 @@ class Presence {
         if (!this.running) {
             return;
         }
-        var old_state = this.state;
+        const old_state = this.state;
         this.state = newState;
 
         if (MatrixClientPeg.get().isGuest()) {
             return; // don't try to set presence when a guest; it won't work.
         }
 
-        var self = this;
+        const self = this;
         MatrixClientPeg.get().setPresence(this.state).done(function() {
             console.log("Presence: %s", newState);
         }, function(err) {
@@ -95,8 +95,10 @@ class Presence {
         this.setState("unavailable");
     }
 
-    _onUserActivity() {
-        this._resetTimer();
+    _onAction(payload) {
+        if (payload.action === "user_activity") {
+            this._resetTimer();
+        }
     }
 
     /**
@@ -104,14 +106,14 @@ class Presence {
      * @private
      */
     _resetTimer() {
-        var self = this;
+        const self = this;
         this.setState("online");
         // Re-arm the timer
         clearTimeout(this.timer);
         this.timer = setTimeout(function() {
             self._onUnavailableTimerFire();
         }, UNAVAILABLE_TIME_MS);
-    } 
+    }
 }
 
 module.exports = new Presence();
