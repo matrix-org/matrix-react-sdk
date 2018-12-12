@@ -79,12 +79,12 @@ module.exports = React.createClass({
             const duration = this.getDuration(activeAgo);
             if (presence === "online") return _t("Online for %(duration)s (%(status)s)", { duration, status });
             if (presence === "unavailable") return _t("Idle for %(duration)s (%(status)s)", { duration, status }); // XXX: is this actually right?
-            if (presence === "offline") return _t("Offline for %(duration)s (%(status)s)", { duration, status});
+            if (presence === "offline") return _t("Offline for %(duration)s", { duration });
             return _t("Unknown for %(duration)s", { duration: duration });
         } else {
             if (presence === "online") return _t("Online (%(status)s)", {status});
             if (presence === "unavailable") return _t("Idle (%(status)s)", {status}); // XXX: is this actually right?
-            if (presence === "offline") return _t("Offline (%(status)s)", {status});
+            if (presence === "offline") return _t("Offline");
             return _t("Unknown");
         }
     },
