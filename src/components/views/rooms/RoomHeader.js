@@ -159,7 +159,7 @@ module.exports = React.createClass({
 
     _onJumpToTimeClick: function() {
         const JumpToTimeDialog = sdk.getComponent("dialogs.JumpToTimeDialog");
-        Modal.createTrackedDialog('jump to time dialog', '', JumpToTimeDialog, {});
+        Modal.createTrackedDialog('jump to time dialog', '', JumpToTimeDialog, {room_id: this.props.room.roomId});
     },
 
     _hasUnreadPins: function() {

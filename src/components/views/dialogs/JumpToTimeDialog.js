@@ -20,7 +20,6 @@ import sdk from '../../../index';
 import dis from '../../../dispatcher';
 import Modal from '../../..//Modal';
 import SdkConfig from '../../../SdkConfig';
-import OpenRoomsStore from "../../../stores/OpenRoomsStore";
 import { _t } from '../../../languageHandler';
 
 function dtgTzToGmtOffset(tz) {
@@ -120,7 +119,7 @@ export default React.createClass({
 
         dis.dispatch({
             action: 'view_room',
-            room_id: OpenRoomsStore.getActiveRoomStore().getRoomId(),
+            room_id: this.props.room_id,
             event_id: 't'+ts,
         });
         this.props.onFinished(true);
