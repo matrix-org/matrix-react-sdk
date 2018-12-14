@@ -15,11 +15,9 @@ limitations under the License.
 */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import sdk from '../../../index';
 import dis from '../../../dispatcher';
 import Modal from '../../..//Modal';
-import SdkConfig from '../../../SdkConfig';
 import { _t } from '../../../languageHandler';
 
 function dtgTzToGmtOffset(tz) {
