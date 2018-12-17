@@ -51,7 +51,7 @@ class PasswordLogin extends React.Component {
             password: this.props.initialPassword,
             phoneCountry: this.props.initialPhoneCountry,
             phoneNumber: this.props.initialPhoneNumber,
-            loginType: PasswordLogin.LOGIN_FIELD_MXID,
+            loginType: "login_field_"+(SdkConfig.get().default_login_type ? SdkConfig.get().default_login_type : PasswordLogin.LOGIN_FIELD_MXID)
         };
 
         this.onSubmitForm = this.onSubmitForm.bind(this);
@@ -276,6 +276,31 @@ class PasswordLogin extends React.Component {
 
         let loginType;
         if (!SdkConfig.get().disable_3pid_login) {
+
+            let loginTypes;
+
+            if (typeof (loginTypes = SdkConfig.get().login_types) != "object")
+                loginTypes = {
+                    maxid: 1,
+                    email: 1,
+                    phone: 1,
+                }
+
+            // check
+            let idLoginHTML = "";
+            if (loginTypes.maxid)
+                idLoginHTML = <span key={PasswordLogin.LOGIN_FIELD_MXID}>{ matrixIdText }</span>;
+
+            // check
+            let emailLoginHTML = "";
+            if (loginTypes.email)
+                emailLoginHTML = <span key={PasswordLogin.LOGIN_FIELD_EMAIL}>{ _t('Email address') }</span>;
+
+            // check
+            let phoneLoginHTML = "";
+            if (loginTypes.phone)
+                phoneLoginHTML = <span key={PasswordLogin.LOGIN_FIELD_PHONE}>{ _t('Phone') }</span>;
+
             loginType = (
                 <div className="mx_Login_type_container">
                     <label className="mx_Login_type_label">{ _t('Sign in with') }</label>
@@ -284,9 +309,9 @@ class PasswordLogin extends React.Component {
                         value={this.state.loginType}
                         disabled={matrixIdText === ''}
                         onOptionChange={this.onLoginTypeChange}>
-                            <span key={PasswordLogin.LOGIN_FIELD_MXID}>{ matrixIdText }</span>
-                            <span key={PasswordLogin.LOGIN_FIELD_EMAIL}>{ _t('Email address') }</span>
-                            <span key={PasswordLogin.LOGIN_FIELD_PHONE}>{ _t('Phone') }</span>
+                        {idLoginHTML}
+                        {emailLoginHTML}
+                        {phoneLoginHTML}
                     </Dropdown>
                 </div>
             );
