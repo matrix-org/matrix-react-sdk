@@ -281,9 +281,9 @@ class PasswordLogin extends React.Component {
 
             if (typeof (loginTypes = SdkConfig.get().login_types) != "object")
                 loginTypes = {
-                    maxid: 1,
-                    email: 1,
-                    phone: 1,
+                    maxid: true,
+                    email: true,
+                    phone: true,
                 }
 
             // check
