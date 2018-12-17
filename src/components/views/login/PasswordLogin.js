@@ -279,7 +279,7 @@ class PasswordLogin extends React.Component {
 
             let loginTypes;
 
-            if (typeof (loginTypes = SdkConfig.get().login_types) != "object")
+            if (typeof (loginTypes = SdkConfig.get().login_types) != "object" || (!loginTypes.maxid && !loginTypes.email && !loginTypes.phone))
                 loginTypes = {
                     maxid: true,
                     email: true,
