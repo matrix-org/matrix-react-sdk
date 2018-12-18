@@ -288,18 +288,21 @@ class PasswordLogin extends React.Component {
 
             // check
             let idLoginHTML = "";
-            if (loginTypes.maxid)
+            if (loginTypes.maxid) {
                 idLoginHTML = <span key={PasswordLogin.LOGIN_FIELD_MXID}>{ matrixIdText }</span>;
+            }
 
             // check
             let emailLoginHTML = "";
-            if (loginTypes.email)
+            if (loginTypes.email) {
                 emailLoginHTML = <span key={PasswordLogin.LOGIN_FIELD_EMAIL}>{ _t('Email address') }</span>;
+            }
 
             // check
             let phoneLoginHTML = "";
-            if (loginTypes.phone)
+            if (loginTypes.phone) {
                 phoneLoginHTML = <span key={PasswordLogin.LOGIN_FIELD_PHONE}>{ _t('Phone') }</span>;
+            }
 
             loginType = (
                 <div className="mx_Login_type_container">
