@@ -372,10 +372,9 @@ export default React.createClass({
 
             // if access_token, user_id & device_id provided in query params, attempt login, else start login
             if (typeof this.props.realQueryParams == "object" && this.props.realQueryParams.access_token && this.props.realQueryParams.user_id && this.props.realQueryParams.device_id) {
-
                 let doAccessTokenLogin = async() => {
 
-                    let credentials = {
+                    const credentials = {
                         accessToken: this.props.realQueryParams.access_token,
                         guest: false,
                         userId: this.props.realQueryParams.user_id,
@@ -388,25 +387,19 @@ export default React.createClass({
                         history.replaceState({}, document.title, window.location.href.split('?')[0]);
                     }
 
-                    if (await Lifecycle.attemptAccessTokenLogin(credentials, true))
-                    {
-
+                    if (await Lifecycle.attemptAccessTokenLogin(credentials, true)) {
                         this._showScreenAfterLogin();
                         return;
-
                     }
                     else {
-
                         dis.dispatch({action: "start_login"});
                         return;
-
                     }
 
                 };
 
                 doAccessTokenLogin();
                 return;
-
             }
 
             // if the user has followed a login or register link, don't reanimate

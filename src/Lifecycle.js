@@ -118,9 +118,7 @@ export async function loadSession(opts) {
  *    login, else false
  */
 export async function attemptAccessTokenLogin(creds) {
-
     try {
-
         if (typeof creds != 'object' || !creds.userId || !creds.deviceId|| !creds.accessToken || !creds.homeServerUrl || !creds.identityServerUrl) {
             return;
         }
