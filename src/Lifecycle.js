@@ -114,8 +114,6 @@ export async function loadSession(opts) {
  * @param {Object} creds    authentication credentials containing accessToken
  *     userId, deviceId, homeServerUrl, and identityServerUrl
  *
- * @param {String} defaultDeviceDisplayName
- *
  * @returns {Boolean} true if successflly set
  *    login, else false
  */
