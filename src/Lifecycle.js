@@ -111,6 +111,37 @@ export async function loadSession(opts) {
 }
 
 /**
+ * @param {Object} creds    authentication credentials containing accessToken
+ *     userId, deviceId, homeServerUrl, and identityServerUrl
+ *
+ * @param {String} defaultDeviceDisplayName
+ *
+ * @returns {Boolean} true if successflly set
+ *    login, else false
+ */
+export async function attemptAccessTokenLogin(creds) {
+
+    try {
+
+        if (typeof creds != 'object' || !creds.userId || !creds.deviceId|| !creds.accessToken || !creds.homeServerUrl || !creds.identityServerUrl)
+            return;
+
+        return await _doSetLoggedIn({
+            userId: creds.userId,
+            deviceId: creds.deviceId,
+            accessToken: creds.accessToken,
+            homeserverUrl: creds.homeserverUrl,
+            identityServerUrl: creds.identityServerUrl,
+            guest: creds.guest || false,
+        }, true).then(() => true);
+
+    } catch (e) {
+        console.warn('Error invoking access token login', e.message);
+        return;
+    }
+}
+
+/**
  * @param {Object} queryParams    string->string map of the
  *     query-parameters extracted from the real query-string of the starting
  *     URI.
