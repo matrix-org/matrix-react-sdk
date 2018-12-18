@@ -121,8 +121,9 @@ export async function attemptAccessTokenLogin(creds) {
 
     try {
 
-        if (typeof creds != 'object' || !creds.userId || !creds.deviceId|| !creds.accessToken || !creds.homeServerUrl || !creds.identityServerUrl)
+        if (typeof creds != 'object' || !creds.userId || !creds.deviceId|| !creds.accessToken || !creds.homeServerUrl || !creds.identityServerUrl) {
             return;
+        }
 
         return await _doSetLoggedIn({
             userId: creds.userId,

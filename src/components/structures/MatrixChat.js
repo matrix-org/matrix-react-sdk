@@ -381,11 +381,12 @@ export default React.createClass({
                         userId: this.props.realQueryParams.user_id,
                         deviceId: this.props.realQueryParams.device_id,
                         homeServerUrl: this.props.realQueryParams.home_server_url || this.getCurrentHsUrl(),
-                        identityServerUrl: this.props.realQueryParams.identity_server_url || this.getCurrentIsUrl()
+                        identityServerUrl: this.props.realQueryParams.identity_server_url || this.getCurrentIsUrl(),
                     };
 
-                    if (history)
+                    if (history) {
                         history.replaceState({}, document.title, window.location.href.split('?')[0]);
+                    }
 
                     if (await Lifecycle.attemptAccessTokenLogin(credentials, true))
                     {
