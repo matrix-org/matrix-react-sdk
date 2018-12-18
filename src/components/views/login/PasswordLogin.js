@@ -51,7 +51,7 @@ class PasswordLogin extends React.Component {
             password: this.props.initialPassword,
             phoneCountry: this.props.initialPhoneCountry,
             phoneNumber: this.props.initialPhoneNumber,
-            loginType: "login_field_"+(SdkConfig.get().default_login_type ? SdkConfig.get().default_login_type : PasswordLogin.LOGIN_FIELD_MXID)
+            loginType: 'login_field_'+(SdkConfig.get().default_login_type ? SdkConfig.get().default_login_type : PasswordLogin.LOGIN_FIELD_MXID)
         };
 
         this.onSubmitForm = this.onSubmitForm.bind(this);
