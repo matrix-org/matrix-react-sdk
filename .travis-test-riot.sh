@@ -36,6 +36,7 @@ then
     # PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true ./install.sh
     # CHROME_PATH=$(which google-chrome-stable) ./run.sh
     ./install.sh
+    cat installations/consent/homeserver.yaml
     ./run.sh --travis
     popd
 fi
