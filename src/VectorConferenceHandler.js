@@ -83,8 +83,8 @@ ConferenceCall.prototype._getConferenceUserRoom = function() {
     return this.client.createRoom({
         preset: "private_chat",
         invite: [this.confUserId],
-    }).then(function(res) {
-        return new Room(res.room_id, null, client.getUserId());
+    }).then((res) => {
+        return new Room(res.room_id, null, this.client.getUserId());
     });
 };
 

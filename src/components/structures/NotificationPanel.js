@@ -15,12 +15,9 @@ limitations under the License.
 */
 
 const React = require('react');
-const ReactDOM = require("react-dom");
 import { _t } from '../../languageHandler';
-const Matrix = require("matrix-js-sdk");
 const sdk = require('../../index');
 const MatrixClientPeg = require("../../MatrixClientPeg");
-const dis = require("../../dispatcher");
 
 /*
  * Component which shows the global notification list using a TimelinePanel

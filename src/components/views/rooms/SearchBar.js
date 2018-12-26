@@ -17,8 +17,6 @@ limitations under the License.
 'use strict';
 
 const React = require('react');
-const MatrixClientPeg = require('../../../MatrixClientPeg');
-const sdk = require('../../../index');
 const classNames = require('classnames');
 const AccessibleButton = require('../../../components/views/elements/AccessibleButton');
 import { _t } from '../../../languageHandler';

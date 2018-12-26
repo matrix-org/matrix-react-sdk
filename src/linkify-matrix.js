@@ -179,14 +179,14 @@ const escapeRegExp = function(string) {
 
 // Recognise URLs from both our local vector and official vector as vector.
 // anyone else really should be using matrix.to.
-matrixLinkify.VECTOR_URL_PATTERN = "^(?:https?:\/\/)?(?:"
+matrixLinkify.VECTOR_URL_PATTERN = "^(?:https?://)?(?:"
     + escapeRegExp(window.location.host + window.location.pathname) + "|"
     + "(?:www\\.)?(?:riot|vector)\\.im/(?:app|beta|staging|develop)/"
     + ")(#.*)";
 
-matrixLinkify.MATRIXTO_URL_PATTERN = "^(?:https?:\/\/)?(?:www\\.)?matrix\\.to/#/(([#@!+]).*)";
+matrixLinkify.MATRIXTO_URL_PATTERN = "^(?:https?://)?(?:www\\.)?matrix\\.to/#/(([#@!+]).*)";
 matrixLinkify.MATRIXTO_MD_LINK_PATTERN =
-    '\\[([^\\]]*)\\]\\((?:https?:\/\/)?(?:www\\.)?matrix\\.to/#/([#@!+][^\\)]*)\\)';
+    '\\[([^\\]]*)\\]\\((?:https?://)?(?:www\\.)?matrix\\.to/#/([#@!+][^\\)]*)\\)';
 matrixLinkify.MATRIXTO_BASE_URL= baseUrl;
 
 const matrixToEntityMap = {

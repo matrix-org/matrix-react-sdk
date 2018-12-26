@@ -440,7 +440,6 @@ export const MsisdnAuthEntry = React.createClass({
         clientSecret: PropTypes.func,
         submitAuthDict: PropTypes.func.isRequired,
         matrixClient: PropTypes.object,
-        submitAuthDict: PropTypes.func,
     },
 
     getInitialState: function() {

@@ -20,13 +20,11 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import flatMap from 'lodash/flatMap';
-import isEqual from 'lodash/isEqual';
 import sdk from '../../../index';
 import type {Completion} from '../../../autocomplete/Autocompleter';
 import Promise from 'bluebird';
 import { Room } from 'matrix-js-sdk';
 
-import {getCompletions} from '../../../autocomplete/Autocompleter';
 import SettingsStore from "../../../settings/SettingsStore";
 import Autocompleter from '../../../autocomplete/Autocompleter';
 

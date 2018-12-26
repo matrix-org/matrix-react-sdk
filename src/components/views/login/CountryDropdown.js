@@ -21,6 +21,7 @@ import sdk from '../../../index';
 
 import { COUNTRIES } from '../../../phonenumber';
 
+// eslint-disable-next-line no-new-object
 const COUNTRIES_BY_ISO2 = new Object(null);
 for (const c of COUNTRIES) {
     COUNTRIES_BY_ISO2[c.iso2] = c;

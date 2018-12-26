@@ -57,7 +57,6 @@ export default React.createClass({
 
     render: function() {
         const message = this.getStatusText();
-        const warning = _t('Warning');
 
         if (!('getUpdateCheckStatusEnum' in PlatformPeg.get())) {
             return <div></div>;

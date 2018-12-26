@@ -17,7 +17,6 @@ limitations under the License.
 'use strict';
 
 const React = require('react');
-const ReactDOM = require("react-dom");
 import PropTypes from 'prop-types';
 const Tinter = require("../../../Tinter");
 

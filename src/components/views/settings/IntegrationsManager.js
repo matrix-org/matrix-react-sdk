@@ -17,8 +17,6 @@ limitations under the License.
 'use strict';
 
 const React = require('react');
-const sdk = require('../../../index');
-const MatrixClientPeg = require('../../../MatrixClientPeg');
 const dis = require('../../../dispatcher');
 
 module.exports = React.createClass({

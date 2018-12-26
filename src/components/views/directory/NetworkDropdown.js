@@ -181,18 +181,15 @@ export default class NetworkDropdown extends React.Component {
 
         let icon;
         let name;
-        let span_class;
         let key;
 
         if (!instance && includeAll) {
             key = server;
             name = server;
-            span_class = 'mx_NetworkDropdown_menu_all';
         } else if (!instance) {
             key = server + '_all';
             name = 'Matrix';
             icon = <img src="img/network-matrix.svg" />;
-            span_class = 'mx_NetworkDropdown_menu_network';
         } else {
             key = server + '_inst_' + instance.instance_id;
             const imgUrl = instance.icon ?
@@ -200,7 +197,6 @@ export default class NetworkDropdown extends React.Component {
                 DEFAULT_ICON_URL;
             icon = <img src={imgUrl} />;
             name = instance.desc;
-            span_class = 'mx_NetworkDropdown_menu_network';
         }
 
         const click_handler = handleClicks ? this.onMenuOptionClick.bind(this, server, instance, includeAll) : null;

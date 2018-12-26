@@ -21,7 +21,6 @@ import ReplyThread from "./components/views/elements/ReplyThread";
 
 const React = require('react');
 const sanitizeHtml = require('sanitize-html');
-const highlight = require('highlight.js');
 const linkifyMatrix = require('./linkify-matrix');
 import escape from 'lodash/escape';
 import emojione from 'emojione';
@@ -375,36 +374,6 @@ class HtmlHighlighter extends BaseHighlighter {
         return span;
     }
 }
-
-class TextHighlighter extends BaseHighlighter {
-    constructor(highlightClass, highlightLink) {
-        super(highlightClass, highlightLink);
-        this._key = 0;
-    }
-
-    /* create a <span> node to hold the given content
-     *
-     * snippet: content of the span
-     * highlight: true to highlight as a search match
-     *
-     * returns a React node
-     */
-    _processSnippet(snippet, highlight) {
-        const key = this._key++;
-
-        let node =
-            <span key={key} className={highlight ? this.highlightClass : null}>
-                { snippet }
-            </span>;
-
-        if (highlight && this.highlightLink) {
-            node = <a key={key} href={this.highlightLink}>{ node }</a>;
-        }
-
-        return node;
-    }
-}
-
 
 /* turn a matrix event body into html
  *

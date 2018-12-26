@@ -201,7 +201,6 @@ describe('TimelinePanel', function() {
     it('should not paginate forever if there are no events', function(done) {
         // start with a handful of events in the timeline, as would happen when
         // joining a room
-        const d = Date.now();
         for (let i = 0; i < 3; i++) {
             timeline.addEvent(mkMessage(i));
         }

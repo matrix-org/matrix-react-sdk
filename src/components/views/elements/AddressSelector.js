@@ -120,7 +120,6 @@ export default React.createClass({
     },
 
     createAddressListTiles: function() {
-        const self = this;
         const AddressTile = sdk.getComponent("elements.AddressTile");
         const maxSelected = this._maxSelected(this.props.addressList);
         const addressList = [];

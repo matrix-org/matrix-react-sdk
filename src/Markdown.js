@@ -155,7 +155,6 @@ export default class Markdown {
      */
     toPlaintext() {
         const renderer = new commonmark.HtmlRenderer({safe: false});
-        const real_paragraph = renderer.paragraph;
 
         // The default `out` function only sends the input through an XML
         // escaping function, which causes messages to be entity encoded,

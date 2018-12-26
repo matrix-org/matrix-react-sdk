@@ -39,11 +39,12 @@ const INITIAL_SIZE = 20;
 
 const DEBUG = false;
 
+let debuglog;
 if (DEBUG) {
     // using bind means that we get to keep useful line numbers in the console
-    var debuglog = console.log.bind(console);
+    debuglog = console.log.bind(console);
 } else {
-    var debuglog = function() {};
+    debuglog = function() {};
 }
 
 /*
@@ -689,9 +690,10 @@ var TimelinePanel = React.createClass({
         }
 
         // now think about advancing it
+        let ev;
         const myUserId = MatrixClientPeg.get().credentials.userId;
         for (i++; i < events.length; i++) {
-            var ev = events[i];
+            ev = events[i];
             if (!ev.sender || ev.sender.userId != myUserId) {
                 break;
             }
@@ -699,7 +701,7 @@ var TimelinePanel = React.createClass({
         // i is now the first unread message which we didn't send ourselves.
         i--;
 
-        var ev = events[i];
+        ev = events[i];
         this._setReadMarker(ev.getId(), ev.getTs());
     },
 
@@ -926,7 +928,6 @@ var TimelinePanel = React.createClass({
             console.error(
                 `Error loading timeline panel at ${eventId}: ${error}`,
             );
-            const msg = error.message ? error.message : JSON.stringify(error);
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
 
             let onFinished;
@@ -945,7 +946,8 @@ var TimelinePanel = React.createClass({
                 };
             }
             const message = (error.errcode == 'M_FORBIDDEN')
-            	? _t("Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.")
+            // eslint-disable-next-line max-len
+                ? _t("Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.")
                 : _t("Tried to load a specific point in this room's timeline, but was unable to find it.");
             Modal.createTrackedDialog('Failed to load timeline position', '', ErrorDialog, {
                 title: _t("Failed to load timeline position"),

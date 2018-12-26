@@ -21,7 +21,6 @@ const React = require('react');
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import AccessibleButton from '../elements/AccessibleButton';
-const sdk = require('../../../index');
 
 module.exports = React.createClass({
     displayName: 'TopUnreadMessagesBar',

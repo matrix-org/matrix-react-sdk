@@ -150,7 +150,6 @@ module.exports = React.createClass({
                 ];
         }
 
-        const self = this;
         return (
             <div className="mx_SearchBox">
                 { searchControls }

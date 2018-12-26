@@ -118,6 +118,7 @@ module.exports = React.createClass({
                 </div>,
             button: _t("Continue"),
             extraButtons: [
+                // eslint-disable-next-line react/jsx-key
                 <button className="mx_Dialog_primary"
                         onClick={this._onExportE2eKeysClicked}>
                     { _t('Export E2E room keys') }
@@ -219,10 +220,10 @@ module.exports = React.createClass({
                 </div>
             </div>;
         }
-
+        let passwordLabel;
         switch (this.state.phase) {
             case this.Phases.Edit:
-                const passwordLabel = this.state.cachedPassword ?
+                passwordLabel = this.state.cachedPassword ?
                     _t('Password') : _t('New Password');
                 return (
                     <form className={this.props.className} onSubmit={this.onClickChange}>

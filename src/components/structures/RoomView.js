@@ -529,6 +529,7 @@ module.exports = React.createClass({
                 if (payload.error.http_status === 413) {
                     this._fetchMediaConfig(true);
                 }
+            // eslint-disable-next-line no-fallthrough
             case 'upload_started':
             case 'upload_finished':
                 this.forceUpdate();
@@ -1545,11 +1546,11 @@ module.exports = React.createClass({
                     </div>
                 );
             } else {
-                var inviterName = undefined;
+                let inviterName = undefined;
                 if (this.props.oobData) {
                     inviterName = this.props.oobData.inviterName;
                 }
-                var invitedEmail = undefined;
+                let invitedEmail = undefined;
                 if (this.props.thirdPartyInvite) {
                     invitedEmail = this.props.thirdPartyInvite.invitedEmail;
                 }
@@ -1595,7 +1596,7 @@ module.exports = React.createClass({
                 const myUserId = MatrixClientPeg.get().credentials.userId;
                 const myMember = this.state.room.getMember(myUserId);
                 const inviteEvent = myMember.events.member;
-                var inviterName = inviteEvent.sender ? inviteEvent.sender.name : inviteEvent.getSender();
+                const inviterName = inviteEvent.sender ? inviteEvent.sender.name : inviteEvent.getSender();
 
                 // We deliberately don't try to peek into invites, even if we have permission to peek
                 // as they could be a spam vector.
@@ -1700,11 +1701,11 @@ module.exports = React.createClass({
         } else if (myMembership !== "join") {
             // We do have a room object for this room, but we're not currently in it.
             // We may have a 3rd party invite to it.
-            var inviterName = undefined;
+            let inviterName = undefined;
             if (this.props.oobData) {
                 inviterName = this.props.oobData.inviterName;
             }
-            var invitedEmail = undefined;
+            let invitedEmail = undefined;
             if (this.props.thirdPartyInvite) {
                 invitedEmail = this.props.thirdPartyInvite.invitedEmail;
             }

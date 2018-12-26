@@ -28,7 +28,6 @@ import SdkConfig from '../../../SdkConfig';
 import { SAFE_LOCALPART_REGEX } from '../../../Registration';
 
 const FIELD_EMAIL = 'field_email';
-const FIELD_PHONE_COUNTRY = 'field_phone_country';
 const FIELD_PHONE_NUMBER = 'field_phone_number';
 const FIELD_USERNAME = 'field_username';
 const FIELD_PASSWORD = 'field_password';
@@ -159,10 +158,14 @@ module.exports = React.createClass({
     validateField: function(field_id) {
         const pwd1 = this.refs.password.value.trim();
         const pwd2 = this.refs.passwordConfirm.value.trim();
-
+        let email;
+        let emailValid;
+        let phoneNumber;
+        let phoneNumberValid;
+        let username;
         switch (field_id) {
             case FIELD_EMAIL:
-                const email = this.refs.email.value;
+                email = this.refs.email.value;
                 if (this.props.teamsConfig && this._isUniEmail(email)) {
                     const matchingTeam = this.props.teamsConfig.teams.find(
                         (team) => {
@@ -181,20 +184,20 @@ module.exports = React.createClass({
                         showSupportEmail: false,
                     });
                 }
-                const emailValid = email === '' || Email.looksValid(email);
+                emailValid = email === '' || Email.looksValid(email);
                 if (this._authStepIsRequired('m.login.email.identity') && (!emailValid || email === '')) {
                     this.markFieldValid(field_id, false, "RegistrationForm.ERR_MISSING_EMAIL");
                 } else this.markFieldValid(field_id, emailValid, "RegistrationForm.ERR_EMAIL_INVALID");
                 break;
             case FIELD_PHONE_NUMBER:
-                const phoneNumber = this.refs.phoneNumber ? this.refs.phoneNumber.value : '';
-                const phoneNumberValid = phoneNumber === '' || phoneNumberLooksValid(phoneNumber);
+                phoneNumber = this.refs.phoneNumber ? this.refs.phoneNumber.value : '';
+                phoneNumberValid = phoneNumber === '' || phoneNumberLooksValid(phoneNumber);
                 if (this._authStepIsRequired('m.login.msisdn') && (!phoneNumberValid || phoneNumber === '')) {
                     this.markFieldValid(field_id, false, "RegistrationForm.ERR_MISSING_PHONE_NUMBER");
                 } else this.markFieldValid(field_id, phoneNumberValid, "RegistrationForm.ERR_PHONE_NUMBER_INVALID");
                 break;
             case FIELD_USERNAME:
-                const username = this.refs.username.value.trim();
+                username = this.refs.username.value.trim();
                 if (!SAFE_LOCALPART_REGEX.test(username)) {
                     this.markFieldValid(
                         field_id,

@@ -19,8 +19,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import sdk from '../../../index';
 import MatrixClientPeg from '../../../MatrixClientPeg';
-import GeminiScrollbar from 'react-gemini-scrollbar';
-import Resend from '../../../Resend';
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
 import { markAllDevicesKnown } from '../../../cryptodevices';

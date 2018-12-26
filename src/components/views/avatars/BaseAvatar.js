@@ -170,8 +170,7 @@ module.exports = React.createClass({
         const imageUrl = this.state.imageUrls[this.state.urlsIndex];
 
         const {
-            name, idName, title, url, urls, width, height, resizeMethod,
-            defaultToInitialLetter, onClick,
+            name, title, width, height, onClick,
             ...otherProps
         } = this.props;
 

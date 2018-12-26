@@ -20,7 +20,6 @@ limitations under the License.
 const React = require('react');
 import PropTypes from 'prop-types';
 
-const MatrixClientPeg = require('../../../MatrixClientPeg');
 const sdk = require('../../../index');
 import AccessibleButton from '../elements/AccessibleButton';
 import { _t } from '../../../languageHandler';

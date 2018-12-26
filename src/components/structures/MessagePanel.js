@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/* global Velocity */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';

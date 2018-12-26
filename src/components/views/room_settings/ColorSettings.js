@@ -17,10 +17,7 @@ import Promise from 'bluebird';
 const React = require('react');
 import PropTypes from 'prop-types';
 
-const sdk = require('../../../index');
 const Tinter = require('../../../Tinter');
-const MatrixClientPeg = require("../../../MatrixClientPeg");
-const Modal = require("../../../Modal");
 
 import dis from '../../../dispatcher';
 import SettingsStore, {SettingLevel} from "../../../settings/SettingsStore";

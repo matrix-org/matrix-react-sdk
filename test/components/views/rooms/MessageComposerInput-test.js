@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 import ReactDOM from 'react-dom';
-import expect, {createSpy} from 'expect';
+import expect from 'expect';
 import sinon from 'sinon';
 import Promise from 'bluebird';
 import * as testUtils from '../../../test-utils';
 import sdk from 'matrix-react-sdk';
 const MessageComposerInput = sdk.getComponent('views.rooms.MessageComposerInput');
 import MatrixClientPeg from '../../../../src/MatrixClientPeg';
-import RoomMember from 'matrix-js-sdk';
 
 function addTextToDraft(text) {
     const components = document.getElementsByClassName('public-DraftEditor-content');

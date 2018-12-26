@@ -72,7 +72,7 @@ class MatrixClientPeg {
         createMatrixClient.indexedDbWorkerScript = script;
     }
 
-    get(): MatrixClient {
+    get(): Matrix.MatrixClient {
         return this.matrixClient;
     }
 

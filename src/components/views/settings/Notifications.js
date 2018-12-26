@@ -403,8 +403,8 @@ module.exports = React.createClass({
 
                 if (vectorContentRulesPatterns.indexOf(keyword) < 0) {
                     if (self.state.vectorContentRules.vectorState !== PushRuleVectorState.OFF) {
-                        deferreds.push(cli.addPushRule
-                        ('global', 'content', keyword, {
+                        deferreds.push(cli.addPushRule(
+                            'global', 'content', keyword, {
                            actions: PushRuleVectorState.actionsFor(pushRuleVectorStateKind),
                            pattern: keyword,
                         }));
@@ -434,7 +434,6 @@ module.exports = React.createClass({
     // Check if any legacy im.vector rules need to be ported to the new API
     // for overriding the actions of default rules.
     _portRulesToNewAPI: function(rulesets) {
-        const self = this;
         const needsUpdate = [];
         const cli = MatrixClientPeg.get();
 
@@ -710,8 +709,6 @@ module.exports = React.createClass({
     },
 
     render: function() {
-        const self = this;
-
         let spinner;
         if (this.state.phase === this.phases.LOADING) {
             const Loader = sdk.getComponent("elements.Spinner");

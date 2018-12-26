@@ -69,7 +69,6 @@ module.exports = React.createClass({
         Modal.createTrackedDialog('Confirm Redact Dialog', 'Image View', ConfirmRedactDialog, {
             onFinished: (proceed) => {
                 if (!proceed) return;
-                const self = this;
                 MatrixClientPeg.get().redactEvent(
                     this.props.mxEvent.getRoomId(), this.props.mxEvent.getId(),
                 ).catch(function(e) {

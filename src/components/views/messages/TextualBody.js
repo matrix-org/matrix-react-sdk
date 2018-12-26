@@ -459,10 +459,10 @@ module.exports = React.createClass({
                             onWidgetLoad={this.props.onWidgetLoad} />;
             });
         }
-
+        let name;
         switch (content.msgtype) {
             case "m.emote":
-                const name = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
+                name = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
                 return (
                     <span ref="content" className="mx_MEmoteBody mx_EventTile_content">
                         *&nbsp;

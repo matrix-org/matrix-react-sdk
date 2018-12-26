@@ -31,11 +31,12 @@ const UNPAGINATION_PADDING = 6000;
 // many scroll events causing many unfilling requests.
 const UNFILL_REQUEST_DEBOUNCE_MS = 200;
 
+let debuglog;
 if (DEBUG_SCROLL) {
     // using bind means that we get to keep useful line numbers in the console
-    var debuglog = console.log.bind(console);
+    debuglog = console.log.bind(console);
 } else {
-    var debuglog = function() {};
+    debuglog = function() {};
 }
 
 /* This component implements an intelligent scrolling list.
@@ -621,7 +622,6 @@ module.exports = React.createClass({
 
     _restoreSavedScrollState: function() {
         const scrollState = this.scrollState;
-        const scrollNode = this._getScrollNode();
 
         if (scrollState.stuckAtBottom) {
             this._setScrollTop(Number.MAX_VALUE);

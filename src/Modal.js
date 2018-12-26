@@ -74,7 +74,7 @@ const AsyncWrapper = React.createClass({
     },
 
     render: function() {
-        const {loader, ...otherProps} = this.props;
+        const otherProps = this.props;
         if (this.state.component) {
             const Component = this.state.component;
             return <Component {...otherProps} />;
