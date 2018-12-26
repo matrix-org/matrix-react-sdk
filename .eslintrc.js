@@ -27,7 +27,7 @@ module.exports = {
         // eslint's built in no-invalid-this rule breaks with class properties
         "no-invalid-this": "off",
         // so we replace it with a version that is class property aware
-        "babel/no-invalid-this": "error",
+        "babel/no-invalid-this": "warn",
 
         // We appear to follow this most of the time, so let's enforce it instead
         // of occasionally following it (or catching it in review)
@@ -99,6 +99,8 @@ module.exports = {
         "key-spacing": ["warn"],
         "prefer-const": ["warn"],
         "arrow-parens": "off",
+
+        "guard-for-in": "warn", // todo many violations turn back on one day
 
         // crashes currently: https://github.com/eslint/eslint/issues/6274
         "generator-star-spacing": "off",
