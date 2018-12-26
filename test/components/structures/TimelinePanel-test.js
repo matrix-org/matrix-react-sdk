@@ -144,7 +144,7 @@ describe('TimelinePanel', function() {
         // helper function which will return a promise which resolves when the
         // panel isn't paginating
         var awaitPaginationCompletion = function() {
-            if(!panel.state.forwardPaginating) {return Promise.resolve();} else {return Promise.delay(0).then(awaitPaginationCompletion);}
+            if (!panel.state.forwardPaginating) {return Promise.resolve();} else {return Promise.delay(0).then(awaitPaginationCompletion);}
         };
 
         // helper function which will return a promise which resolves when
@@ -303,7 +303,7 @@ describe('TimelinePanel', function() {
                             " events; first is " +
                             firstEvent.getContent().body);
 
-                if(scrollingDiv.scrollTop > 0) {
+                if (scrollingDiv.scrollTop > 0) {
                     // need to go further
                     return backPaginate();
                 }
@@ -323,7 +323,7 @@ describe('TimelinePanel', function() {
                 const lastEventInTimeline = events[events.length - 1];
 
                 // Scroll until the last event in the panel = the last event in the timeline
-                if(lastEventInPanel.getId() !== lastEventInTimeline.getId()) {
+                if (lastEventInPanel.getId() !== lastEventInTimeline.getId()) {
                     // need to go further
                     return scrollDown();
                 }

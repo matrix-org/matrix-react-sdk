@@ -294,7 +294,7 @@ export const TermsAuthEntry = React.createClass({
     _trySubmit: function() {
         let allChecked = true;
         for (const policy of this.state.policies) {
-            let checked = this.state.toggledPolicies[policy.id];
+            const checked = this.state.toggledPolicies[policy.id];
             allChecked = allChecked && checked;
         }
 

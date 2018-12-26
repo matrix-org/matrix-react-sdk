@@ -23,11 +23,19 @@ function addTextToDraft(text) {
 // FIXME: These tests need to be updated from Draft to Slate.
 
 xdescribe('MessageComposerInput', () => {
-    let parentDiv = null,
-        sandbox = null,
-        client = null,
-        mci = null,
-        room = testUtils.mkStubRoom('!DdJkzRliezrwpNebLk:matrix.org');
+    let parentDiv = null;
+
+
+let sandbox = null;
+
+
+let client = null;
+
+
+let mci = null;
+
+
+const room = testUtils.mkStubRoom('!DdJkzRliezrwpNebLk:matrix.org');
 
     beforeEach(function() {
         testUtils.beforeEach(this);

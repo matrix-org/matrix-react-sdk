@@ -172,7 +172,7 @@ module.exports = React.createClass({
     _fetchMediaConfig: function(invalidateCache: boolean = false) {
         /// NOTE: Using global here so we don't make repeated requests for the
         /// config every time we swap room.
-        if(global.mediaConfig !== undefined && !invalidateCache) {
+        if (global.mediaConfig !== undefined && !invalidateCache) {
             this.setState({mediaConfig: global.mediaConfig});
             return;
         }
@@ -526,7 +526,7 @@ module.exports = React.createClass({
             case 'notifier_enabled':
             case 'upload_failed':
                 // 413: File was too big or upset the server in some way.
-                if(payload.error.http_status === 413) {
+                if (payload.error.http_status === 413) {
                     this._fetchMediaConfig(true);
                 }
             case 'upload_started':

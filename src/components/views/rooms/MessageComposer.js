@@ -192,9 +192,9 @@ export default class MessageComposer extends React.Component {
         );
         let buttonText;
         if (acceptedFiles.length > 0 && failedFiles.length > 0) {
-            buttonText = "Upload selected"
+            buttonText = "Upload selected";
         } else if (failedFiles.length > 0) {
-            buttonText = "Close"
+            buttonText = "Close";
         }
 
         Modal.createTrackedDialog('Upload Files confirmation', '', QuestionDialog, {
@@ -499,5 +499,5 @@ MessageComposer.propTypes = {
     uploadAllowed: PropTypes.func.isRequired,
 
     // string representing the current room app drawer state
-    showApps: PropTypes.bool
+    showApps: PropTypes.bool,
 };

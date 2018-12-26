@@ -47,26 +47,36 @@ const j$ = {};
 
 j$.Clock = function() {
   function Clock(global, delayedFunctionSchedulerFactory, mockDate) {
-    let self = this,
-      realTimingFunctions = {
+    const self = this;
+
+
+const realTimingFunctions = {
         setTimeout: global.setTimeout,
         clearTimeout: global.clearTimeout,
         setInterval: global.setInterval,
         clearInterval: global.clearInterval,
-      },
-      fakeTimingFunctions = {
+      };
+
+
+const fakeTimingFunctions = {
         setTimeout: setTimeout,
         clearTimeout: clearTimeout,
         setInterval: setInterval,
         clearInterval: clearInterval,
-      },
-      installed = false,
-      delayedFunctionScheduler,
-      timer;
+      };
+
+
+let installed = false;
+
+
+let delayedFunctionScheduler;
+
+
+let timer;
 
 
     self.install = function() {
-      if(!originalTimingFunctionsIntact()) {
+      if (!originalTimingFunctionsIntact()) {
         throw new Error('Jasmine Clock was unable to install over custom global timer functions. Is the clock already installed?');
       }
       replace(global, fakeTimingFunctions);
@@ -367,7 +377,7 @@ j$.MockDate = function() {
     return self;
 
     function FakeDate() {
-      switch(arguments.length) {
+      switch (arguments.length) {
         case 0:
           return new GlobalDate(currentTime);
         case 1:

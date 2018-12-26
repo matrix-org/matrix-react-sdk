@@ -161,7 +161,7 @@ export default class MultiInviter {
                     this._inviteMore(nextIndex);
                 }, 5000);
                 return;
-            } else if(err.errcode === "M_NOT_FOUND") {
+            } else if (err.errcode === "M_NOT_FOUND") {
                 errorText = _t("User %(user_id)s does not exist", {user_id: addr});
             } else {
                 errorText = _t('Unknown server error');
