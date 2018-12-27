@@ -8,7 +8,7 @@
     "url": "https://github.com/matrix-org/matrix-react-sdk"
   },
   "license": "Apache-2.0",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "files": [
     ".babelrc",
     ".eslintrc.js",

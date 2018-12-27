@@ -35,9 +35,18 @@ function reskindex() {
     strm.write(" * You are not a salmon.\n");
     strm.write(" */\n\n");
 
-    if (packageJson['matrix-react-parent']) {
+    if (packageJson['matrix-react-parent'] && (!packageJson.hasOwnProperty('matrix-react-build-type') || packageJson['matrix-react-build-type'] !== 'webpack') ) {
         const parentIndex = packageJson['matrix-react-parent'] +
-              '/src/component-index';
+              '/lib/component-index';
+        strm.write(
+`let components = require('${parentIndex}').components;
+if (!components) {
+    throw new Error("'${parentIndex}' didn't export components");
+}
+`);
+    } else if (packageJson['matrix-react-parent'] && packageJson.hasOwnProperty('matrix-react-build-type') && packageJson['matrix-react-build-type'] === 'webpack') {
+        const parentIndex = packageJson['matrix-react-parent'] +
+            '/src/component-index';
         strm.write(
 `let components = require('${parentIndex}').components;
 if (!components) {
