@@ -74,6 +74,7 @@ module.exports = React.createClass({
             incomingCallTag: null,
             incomingCall: null,
             selectedTags: [],
+            hover: false,
         };
     },
 
@@ -255,6 +256,14 @@ module.exports = React.createClass({
         }
     },
 
+    onMouseEnter: function(ev) {
+        this.setState({hover: true});
+    },
+
+    onMouseLeave: function(ev) {
+        this.setState({hover: false});
+    },
+
     _onGroupMyMembership: function(group) {
         this.forceUpdate();
     },
@@ -311,6 +320,11 @@ module.exports = React.createClass({
     },
 
     refreshRoomList: function() {
+        if (this.state.hover) {
+            // Don't re-sort the list if we're hovering over the list
+            return;
+        }
+
         // TODO: ideally we'd calculate this once at start, and then maintain
         // any changes to it incrementally, updating the appropriate sublists
         // as needed.
@@ -654,7 +668,7 @@ module.exports = React.createClass({
         return (
             <GeminiScrollbarWrapper className="mx_RoomList_scrollbar"
                 autoshow={true} onScroll={self._whenScrolling} onResize={self._whenScrolling} wrappedRef={this._collectGemini}>
-            <div className="mx_RoomList">
+            <div className="mx_RoomList" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                 <RoomSubList list={[]}
                              extraTiles={this._makeGroupInviteTiles(self.props.searchFilter)}
                              label={_t('Community Invites')}
