@@ -503,7 +503,7 @@ export default React.createClass({
             <BaseDialog className='mx_CreateKeyBackupDialog'
                 onFinished={this.props.onFinished}
                 title={this._titleForPhase(this.state.phase)}
-                hasCancel={[PHASE_DONE].includes(this.state.phase)}
+                hasCancel={false}
             >
             <div>
                 {content}
