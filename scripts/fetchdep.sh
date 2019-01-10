@@ -9,13 +9,17 @@ defbranch="$3"
 rm -r "$repo" || true
 
 git clone https://github.com/$org/$repo.git $repo
+pushd $repo
 
 checkout() {
     branch=$1
     if [ -n "$branch" ]
     then
         echo "Trying to use the branch $branch"
-        git checkout "$branch" && exit 0
+        if git checkout "$branch"; then
+            popd
+            exit 0
+        fi
     fi
 }
 
