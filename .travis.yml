@@ -13,6 +13,7 @@ node_js:
     - node # Latest stable version of nodejs.
 install:
     - ./scripts/travis/install-deps.sh
+    - npm install
 
 cache: npm
 
@@ -28,6 +29,7 @@ matrix:
         - name: Riot-web Unit Tests
           install:
             - ./scripts/travis/install-deps.sh
+            - npm install
             - ./scripts/travis/build-riot-web.sh
           script:
             - ./scripts/travis/riot-unit-tests.sh
