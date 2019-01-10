@@ -23,4 +23,6 @@ pushd "$REACT_SDK_DIR"
 npm install
 popd
 
+npm install
+
 popd
