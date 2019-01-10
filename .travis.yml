@@ -18,7 +18,10 @@ install:
 addons:
   chrome: stable
 
-cache: npm
+cache:
+  npm: true
+  directories:
+    - "$HOME/.npm"
 
 matrix:
     include:
