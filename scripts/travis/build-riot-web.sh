@@ -15,4 +15,12 @@ pushd "$RIOT_WEB_DIR"
 npm install "$REACT_SDK_DIR/matrix-js-sdk"
 npm install "$REACT_SDK_DIR"
 
+pushd "$REACT_SDK_DIR/matrix-js-sdk"
+npm install
+popd
+
+pushd "$REACT_SDK_DIR"
+npm install
+popd
+
 popd
