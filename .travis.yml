@@ -15,6 +15,9 @@ install:
     - ./scripts/travis/install-deps.sh
     - npm install
 
+addons:
+  chrome: stable
+
 cache: npm
 
 matrix:
@@ -35,8 +38,6 @@ matrix:
             - ./scripts/travis/riot-unit-tests.sh
         - name: End-to-End Tests
           if: branch = develop
-          addons:
-            chrome: stable
           install:
             - sudo apt-get install build-essential python2.7-dev libffi-dev python-pip python-setuptools sqlite3 libssl-dev python-virtualenv libjpeg-dev libxslt1-dev
           script:
