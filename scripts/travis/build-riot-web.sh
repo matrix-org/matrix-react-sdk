@@ -7,7 +7,12 @@
 set -ev
 
 RIOT_WEB_DIR=riot-web
+REACT_SDK_DIR=`pwd`
 
+scripts/fetchdep.sh vector-im riot-web
 pushd "$RIOT_WEB_DIR"
-npm run test
+
+npm install "$REACT_SDK_DIR/matrix-js-sdk"
+npm install "$REACT_SDK_DIR"
+
 popd
