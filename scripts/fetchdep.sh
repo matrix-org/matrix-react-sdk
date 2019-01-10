@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 org="$1"
 repo="$2"
