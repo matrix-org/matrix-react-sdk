@@ -8,20 +8,22 @@ defbranch="$3"
 
 rm -r "$repo" || true
 
-clone() {
+git clone https://github.com/$org/$repo.git $repo
+
+checkout() {
     branch=$1
     if [ -n "$branch" ]
     then
         echo "Trying to use the branch $branch"
-        git clone https://github.com/$org/$repo.git $repo --branch "$branch" && exit 0
+        git checkout "$branch" && exit 0
     fi
 }
 
 # Try the PR author's branch in case it exists on the deps as well.
-clone $TRAVIS_PULL_REQUEST_BRANCH
+checkout $TRAVIS_PULL_REQUEST_BRANCH
 # Try the target branch of the push or PR.
-clone $TRAVIS_BRANCH
+checkout $TRAVIS_BRANCH
 # Try the current branch from Jenkins.
-clone `"echo $GIT_BRANCH" | sed -e 's/^origin\///'`
+checkout `"echo $GIT_BRANCH" | sed -e 's/^origin\///'`
 # Use the default branch as the last resort.
-clone $defbranch
+checkout $defbranch
