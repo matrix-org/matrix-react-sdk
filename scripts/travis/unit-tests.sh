@@ -6,5 +6,4 @@
 
 set -ev
 
-scripts/travis/build.sh
 npm run test

@@ -12,7 +12,7 @@ language: node_js
 node_js:
     - node # Latest stable version of nodejs.
 install:
-    - ./scripts/travis/install-deps.sh
+    - ./scripts/travis/install-js-sdk.sh
     - npm install
 
 addons:
@@ -34,9 +34,9 @@ matrix:
             - npm run test
         - name: Riot-web Unit Tests
           install:
-            - ./scripts/travis/install-deps.sh
+            - ./scripts/travis/install-js-sdk.sh
             - npm install
-            - ./scripts/travis/build-riot-web.sh
+            - ./scripts/travis/install-riot-web.sh
           script:
             - ./scripts/travis/riot-unit-tests.sh
         - name: End-to-End Tests

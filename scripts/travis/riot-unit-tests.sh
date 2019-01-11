@@ -6,8 +6,6 @@
 
 set -ev
 
-RIOT_WEB_DIR=riot-web
-
-pushd "$RIOT_WEB_DIR"
+pushd "$HOME/riot-web"
 npm run test
 popd
