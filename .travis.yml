@@ -13,7 +13,7 @@ node_js:
     - node # Latest stable version of nodejs.
 install:
     - ./scripts/travis/install-js-sdk.sh
-    - npm install
+    - ./scripts/travis/install-react-sdk.sh
 
 addons:
   chrome: stable
@@ -35,7 +35,7 @@ matrix:
         - name: Riot-web Unit Tests
           install:
             - ./scripts/travis/install-js-sdk.sh
-            - npm install
+            - ./scripts/travis/install-react-sdk.sh
             - ./scripts/travis/install-riot-web.sh
           script:
             - ./scripts/travis/riot-unit-tests.sh
