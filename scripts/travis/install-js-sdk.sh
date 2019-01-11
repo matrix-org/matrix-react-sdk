@@ -2,8 +2,10 @@
 
 set -ev
 
+reactsdk=$(pwd)
+
 pushd "$HOME"
-scripts/fetchdep.sh matrix-org matrix-js-sdk
+$reactsdk/scripts/fetchdep.sh matrix-org matrix-js-sdk
 cd matrix-js-sdk
 npm install
 popd
