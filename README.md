@@ -108,7 +108,7 @@ practices that anyone working with the SDK needs to be be aware of and uphold:
     .mx_RoomTile {} in RoomList.css - only RoomTile.css is allowed to define its
     own CSS.  Instead, say .mx_RoomList .mx_RoomTile {} to scope the override
     only to the context of RoomList views.  N.B. overrides should be relatively
-    rare as in general CSS inheritence should be enough.
+    rare as in general CSS inheritance should be enough.
 
   * Components should render only within the bounding box of their outermost DOM
     element. Page-absolute positioning and negative CSS margins and similar are
@@ -184,4 +184,4 @@ Alternative instructions:
     packaging that you might do.
   * Create an index.html file pulling in your compiled javascript and the
     CSS bundle from the skin you use. For now, you'll also need to manually
-    import CSS from any skins that your skin inherts from.
+    import CSS from any skins that your skin inherits from.
