@@ -22,6 +22,7 @@ cache:
   npm: true
   directories:
     - "$HOME/.npm"
+    - "$HOME/nm-cache"
 
 matrix:
     include:
