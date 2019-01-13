@@ -14,7 +14,7 @@ if [ -d "$HOME/nm-cache/js-sdk" ]; then
     rsync "$HOME/nm-cache/js-sdk" node_modules
 fi
 
-npm install
+npm install --no-audit
 
 mkdir -p "$HOME/nm-cache"
 rsync node_modules "$HOME/nm-cache/js-sdk"
