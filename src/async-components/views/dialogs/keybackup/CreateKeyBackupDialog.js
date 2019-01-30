@@ -23,13 +23,15 @@ import FileSaver from 'file-saver';
 
 import { _t } from '../../../../languageHandler';
 
-const PHASE_PASSPHRASE = 0;
-const PHASE_PASSPHRASE_CONFIRM = 1;
-const PHASE_SHOWKEY = 2;
-const PHASE_KEEPITSAFE = 3;
-const PHASE_BACKINGUP = 4;
-const PHASE_DONE = 5;
-const PHASE_OPTOUT_CONFIRM = 6;
+const PHASE_FETCHMYKEYS = 0;
+const PHASE_PASSPHRASE = 1;
+const PHASE_PASSPHRASE_CONFIRM = 2;
+const PHASE_SHOWKEY = 3;
+const PHASE_KEEPITSAFE = 4;
+const PHASE_INTERACTIVEAUTH = 5;
+const PHASE_BACKINGUP = 6;
+const PHASE_DONE = 7;
+const PHASE_OPTOUT_CONFIRM = 8;
 
 const PASSWORD_MIN_SCORE = 4; // So secure, many characters, much complex, wow, etc, etc.
 const PASSPHRASE_FEEDBACK_DELAY = 500; // How long after keystroke to offer passphrase feedback, ms.
@@ -51,7 +53,7 @@ function selectText(target) {
 export default React.createClass({
     getInitialState: function() {
         return {
-            phase: PHASE_PASSPHRASE,
+            phase: PHASE_FETCHMYKEYS,
             passPhrase: '',
             passPhraseConfirm: '',
             copied: false,
@@ -61,10 +63,22 @@ export default React.createClass({
         };
     },
 
-    componentWillMount: function() {
+    componentWillMount: async function() {
         this._recoveryKeyNode = null;
         this._keyBackupInfo = null;
         this._setZxcvbnResultTimeout = null;
+        this._myKeys = null;
+
+        try {
+            this._myKeys = await MatrixClientPeg.get().downloadKeysForUsers([
+                MatrixClientPeg.get().credentials.userId,
+            ]);
+        } catch (e) {
+            // don't die if we can't get our own keys - it's not necessarily critical
+        }
+        this.setState({
+            phase: PHASE_PASSPHRASE,
+        });
     },
 
     componentWillUnmount: function() {
@@ -102,14 +116,41 @@ export default React.createClass({
 
     _createBackup: async function() {
         this.setState({
-            phase: PHASE_BACKINGUP,
+            phase: PHASE_INTERACTIVEAUTH,
             error: null,
         });
-        let info;
-        try {
-            info = await MatrixClientPeg.get().createKeyBackupVersion(
-                this._keyBackupInfo,
-            );
+    },
+
+    _makeCreateBackupRequest: function(auth) {
+        // XXX: We'll have to think about this 'replaces' flag: replacing your SSK with a new
+        // one is obviously a big deal, but we're storing the private part in a key backup, so
+        // if we delete that key backup version it's useless anyway: we really need to warn at
+        // the point of backup deletion. For now, we always replace any self-signing key that
+        // exists (which is obviously terrible).
+        let replacesSsk;
+        if (
+            this._myKeys &&
+            this._myKeys.self_signing_keys &&
+            this._myKeys.self_signing_keys[MatrixClientPeg.get().credentials.userId]
+        ) {
+            const mySsks = this._myKeys.self_signing_keys[MatrixClientPeg.get().credentials.userId];
+            replacesSsk = Object.values(mySsks.keys)[0];
+        }
+
+        return MatrixClientPeg.get().createKeyBackupVersion(
+            this._keyBackupInfo, auth, replacesSsk,
+        );
+    },
+
+    _onCreateBackupAuthFinished: async function(success, result) {
+        if (!success) {
+            this.setState({
+                error: result,
+            });
+            return;
+        }
+
+        try{
             await MatrixClientPeg.get().scheduleAllGroupSessionsForBackup();
             this.setState({
                 phase: PHASE_DONE,
@@ -120,7 +161,7 @@ export default React.createClass({
             // delete the version, disable backup, or do nothing?  If we just
             // disable without deleting, we'll enable on next app reload since
             // it is trusted.
-            if (info) {
+            if (result) {
                 MatrixClientPeg.get().deleteKeyBackupVersion(info.version);
             }
             this.setState({
@@ -444,7 +485,29 @@ export default React.createClass({
         </div>;
     },
 
-    _renderBusyPhase: function(text) {
+    _renderPhaseInteractiveAuth: function() {
+        const InteractiveAuth = sdk.getComponent("structures.InteractiveAuth");
+
+        return <div>
+            <InteractiveAuth
+                matrixClient={MatrixClientPeg.get()}
+                makeRequest={this._makeCreateBackupRequest}
+                onAuthFinished={this._onCreateBackupAuthFinished}
+            />
+        </div>
+        Modal.createTrackedDialog('Delete Device Dialog', '', InteractiveAuthDialog, {
+            title: _t("Authentication Required"),
+            matrixClient: MatrixClientPeg.get(),
+            authData: null,
+            makeRequest: async (auth) => {
+                info = await MatrixClientPeg.get().createKeyBackupVersion(
+                    this._keyBackupInfo,
+                );
+            },
+        });
+    },
+
+    _renderBusyPhase: function() {
         const Spinner = sdk.getComponent('views.elements.Spinner');
         return <div>
             <Spinner />
@@ -483,6 +546,8 @@ export default React.createClass({
 
     _titleForPhase: function(phase) {
         switch (phase) {
+            case PHASE_FETCHMYKEYS:
+                return '';
             case PHASE_PASSPHRASE:
                 return _t('Create a Recovery Passphrase');
             case PHASE_PASSPHRASE_CONFIRM:
@@ -493,6 +558,8 @@ export default React.createClass({
                 return _t('Recovery Key');
             case PHASE_KEEPITSAFE:
                 return _t('Keep it safe');
+            case PHASE_INTERACTIVEAUTH:
+                return _t('Authentication Required');
             case PHASE_BACKINGUP:
                 return _t('Starting backup...');
             case PHASE_DONE:
@@ -520,6 +587,9 @@ export default React.createClass({
             </div>;
         } else {
             switch (this.state.phase) {
+                case PHASE_FETCHMYKEYS:
+                    content = this._renderBusyPhase();
+                    break;
                 case PHASE_PASSPHRASE:
                     content = this._renderPhasePassPhrase();
                     break;
@@ -531,6 +601,9 @@ export default React.createClass({
                     break;
                 case PHASE_KEEPITSAFE:
                     content = this._renderPhaseKeepItSafe();
+                    break;
+                case PHASE_INTERACTIVEAUTH:
+                    content = this._renderPhaseInteractiveAuth();
                     break;
                 case PHASE_BACKINGUP:
                     content = this._renderBusyPhase();
