@@ -639,7 +639,7 @@ module.exports = React.createClass({
             const {count, filteredFlags} = this._applySearchFilter(props.list, this.props.searchFilter);
             props.filteredFlags = filteredFlags;
             const len = count + (props.extraTiles ? props.extraTiles.length : 0);
-            props.isFiltered = len !== 0 || props.onAddRoom;
+            props.isFiltered = !(len !== 0 || props.onAddRoom);
             const chosenKey = props.key || props.label;
             this._layoutSections.push({
                 id: chosenKey,
