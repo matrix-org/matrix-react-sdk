@@ -291,9 +291,8 @@ const RoomSubList = React.createClass({
             );
         }
 
-        const len = this.props.list.length + this.props.extraTiles.length;
         let chevron;
-        if (len) {
+        if (this.props.visibleCount) {
             const chevronClasses = classNames({
                 'mx_RoomSubList_chevron': true,
                 'mx_RoomSubList_chevronRight': isCollapsed,

@@ -635,16 +635,23 @@ module.exports = React.createClass({
             incomingCall: this.state.incomingCall,
         };
 
+        function visibleCount(props, count) {
+            return count + (props.extraTiles ? props.extraTiles.length : 0);
+        }
+
+        function isSubListVisible(props, count = props.list.length) {
+            return visibleCount(props, count) !== 0 || props.onAddRoom;
+        }
         subListsProps.forEach((props) => {
             const {count, filteredFlags} = this._applySearchFilter(props.list, this.props.searchFilter);
             props.filteredFlags = filteredFlags;
-            const len = count + (props.extraTiles ? props.extraTiles.length : 0);
-            props.isFiltered = !(len !== 0 || props.onAddRoom);
+            props.isFiltered = !isSubListVisible(props, count);
+            props.visibleCount = visibleCount(props, count);
             const chosenKey = props.key || props.label;
             if (!props.isFiltered) {
                 this._layoutSections.push({
                     id: chosenKey,
-                    count: len,
+                    count: props.visibleCount,
                 });
             }
         });
