@@ -574,12 +574,29 @@ module.exports = React.createClass({
     },
 
     _applySearchFilter: function(list, filter) {
-        if (filter === "") return list;
+        if (filter === "") return {count: list.length};
         const lcFilter = filter.toLowerCase();
         // case insensitive if room name includes filter,
         // or if starts with `#` and one of room's aliases starts with filter
-        return list.filter((room) => (room.name && room.name.toLowerCase().includes(lcFilter)) ||
-            (filter[0] === '#' && room.getAliases().some((alias) => alias.toLowerCase().startsWith(lcFilter))));
+        let count = 0;
+        const filteredFlags = list.map((room) => {
+            const matches = (
+                    room.name &&
+                    room.name.toLowerCase().includes(lcFilter)
+                ) || (
+                    filter[0] === '#' &&
+                    room.getAliases().some((alias) => {
+                        return alias.toLowerCase().startsWith(lcFilter);
+                    })
+                );
+            if (matches) {
+                ++count;
+            }
+            // filtered means a room
+            // that DOESN'T match
+            return !matches;
+        });
+        return {count, filteredFlags};
     },
 
     _handleCollapsedState: function(key, collapsed) {
@@ -614,23 +631,25 @@ module.exports = React.createClass({
         this._layoutSections = [];
         const defaultProps = {
             collapsed: this.props.collapsed,
-            isFiltered: !!this.props.searchFilter,
+            isFiltering: !!this.props.searchFilter,
             incomingCall: this.state.incomingCall,
         };
 
-        subListsProps.forEach((p) => {
-            p.list = this._applySearchFilter(p.list, this.props.searchFilter);
+        subListsProps.forEach((props) => {
+            const {count, filteredFlags} = this._applySearchFilter(props.list, this.props.searchFilter);
+            props.filteredFlags = filteredFlags;
+            const len = count + (props.extraTiles ? props.extraTiles.length : 0);
+            props.isFiltered = len !== 0 || props.onAddRoom;
+            const chosenKey = props.key || props.label;
+            this._layoutSections.push({
+                id: chosenKey,
+                count: count,
+            });
         });
-
-        subListsProps = subListsProps.filter((props => {
-            const len = props.list.length + (props.extraTiles ? props.extraTiles.length : 0);
-            return len !== 0 || props.onAddRoom;
-        }));
 
         return subListsProps.reduce((components, props, i) => {
             props = Object.assign({}, defaultProps, props);
             const isLast = i === subListsProps.length - 1;
-            const len = props.list.length + (props.extraTiles ? props.extraTiles.length : 0);
             const {key, label, onHeaderClick, ... otherProps} = props;
             const chosenKey = key || label;
             const onSubListHeaderClick = (collapsed) => {
@@ -640,10 +659,6 @@ module.exports = React.createClass({
                 }
             };
             let startAsHidden = props.startAsHidden || this.collapsedState[chosenKey];
-            this._layoutSections.push({
-                id: chosenKey,
-                count: len,
-            });
             let subList = (<RoomSubList
                 ref={this._subListRef.bind(this, chosenKey)}
                 startAsHidden={startAsHidden}

@@ -36,6 +36,9 @@ limitations under the License.
     flex-direction: column;
 }
 
+.mx_RoomSubList_filtered {
+    display: none;
+}
 
 .mx_RoomSubList_nonEmpty .mx_AutoHideScrollbar_offset {
     padding-bottom: 4px;

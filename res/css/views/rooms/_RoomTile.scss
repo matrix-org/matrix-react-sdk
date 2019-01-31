@@ -25,6 +25,10 @@ limitations under the License.
     position: relative;
 }
 
+.mx_RoomTile_filtered {
+    display: none;
+}
+
 .mx_RoomTile_menuButton {
     display: none;
     flex: 0 0 16px;

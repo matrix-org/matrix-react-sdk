@@ -52,7 +52,13 @@ const RoomSubList = React.createClass({
         collapsed: PropTypes.bool.isRequired, // is LeftPanel collapsed?
         onHeaderClick: PropTypes.func,
         incomingCall: PropTypes.object,
+        // is filtering currently going on?
+        isFiltering: PropTypes.bool,
+        // is this sublist filtered out by the current search query
         isFiltered: PropTypes.bool,
+        // list of the same size as list prop, with boolean
+        // whether the corresponding room should be filtered out
+        filteredFlags: PropTypes.array,
         headerItems: PropTypes.node, // content shown in the sublist header
         extraTiles: PropTypes.arrayOf(PropTypes.node), // extra elements added beneath tiles
     },
@@ -176,8 +182,11 @@ const RoomSubList = React.createClass({
 
     makeRoomTiles: function() {
         const RoomTile = sdk.getComponent("rooms.RoomTile");
+        const filteredFlags = this.props.filteredFlags;
         return this.props.list.map((room, index) => {
+            const isFiltered = filteredFlags ? filteredFlags[index] : false;
             return <RoomTile
+                isFiltered={isFiltered}
                 room={room}
                 roomSubList={this}
                 tagName={this.props.tagName}
@@ -293,7 +302,7 @@ const RoomSubList = React.createClass({
             chevron = (<div className={chevronClasses}></div>);
         }
 
-        const tabindex = this.props.isFiltered ? "0" : "-1";
+        const tabindex = this.props.isFiltering ? "0" : "-1";
         return (
             <div className="mx_RoomSubList_labelContainer" title={ title } ref="header">
                 <AccessibleButton onClick={ this.onClick } className="mx_RoomSubList_label" tabIndex={tabindex}>
@@ -325,6 +334,7 @@ const RoomSubList = React.createClass({
         if (len) {
             const subListClasses = classNames({
                 "mx_RoomSubList": true,
+                "mx_RoomSubList_filtered": this.props.isFiltered,
                 "mx_RoomSubList_hidden": isCollapsed,
                 "mx_RoomSubList_nonEmpty": len && !isCollapsed,
             });

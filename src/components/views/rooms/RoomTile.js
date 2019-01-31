@@ -46,6 +46,8 @@ module.exports = React.createClass({
         transparent: PropTypes.bool,
         isInvite: PropTypes.bool.isRequired,
         incomingCall: PropTypes.object,
+        // is this room filtered out by the current search query
+        isFiltered: PropTypes.bool,
     },
 
     getDefaultProps: function() {
@@ -320,6 +322,7 @@ module.exports = React.createClass({
 
         const classes = classNames({
             'mx_RoomTile': true,
+            'mx_RoomTile_filtered': this.props.isFiltered,
             'mx_RoomTile_selected': this.state.selected,
             'mx_RoomTile_unread': this.props.unread,
             'mx_RoomTile_unreadNotify': notifBadges,
