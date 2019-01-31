@@ -83,7 +83,7 @@ export default React.createClass({
         });
         try {
             const recoverInfo = await MatrixClientPeg.get().restoreKeyBackupWithPassword(
-                this.state.passPhrase, undefined, undefined, this.state.backupInfo.version,
+                this.state.passPhrase, undefined, undefined, this.state.backupInfo,
             );
             this.setState({
                 loading: false,
@@ -105,7 +105,7 @@ export default React.createClass({
         });
         try {
             const recoverInfo = await MatrixClientPeg.get().restoreKeyBackupWithRecoveryKey(
-                this.state.recoveryKey, undefined, undefined, this.state.backupInfo.version,
+                this.state.recoveryKey, undefined, undefined, this.state.backupInfo,
             );
             this.setState({
                 loading: false,
@@ -184,7 +184,10 @@ export default React.createClass({
         } else if (this.state.backupInfo === null) {
             title = _t("Error");
             content = _t("No backup found!");
-        } else if (this.state.recoverInfo && this.state.recoverInfo.imported === 0) {
+        } else if (this.state.recoverInfo &&
+            this.state.recoverInfo.imported === 0 &&
+            this.state.recoverInfo.total > 0
+        ) {
             title = _t("Error Restoring Backup");
             content = <div>
                 <p>{_t(
