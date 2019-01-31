@@ -642,6 +642,9 @@ module.exports = React.createClass({
         function isSubListVisible(props, count = props.list.length) {
             return visibleCount(props, count) !== 0 || props.onAddRoom;
         }
+
+        subListsProps = subListsProps.filter((props) => isSubListVisible(props));
+
         subListsProps.forEach((props) => {
             const {count, filteredFlags} = this._applySearchFilter(props.list, this.props.searchFilter);
             props.filteredFlags = filteredFlags;
