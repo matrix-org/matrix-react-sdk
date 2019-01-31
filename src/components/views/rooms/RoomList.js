@@ -641,10 +641,12 @@ module.exports = React.createClass({
             const len = count + (props.extraTiles ? props.extraTiles.length : 0);
             props.isFiltered = !(len !== 0 || props.onAddRoom);
             const chosenKey = props.key || props.label;
-            this._layoutSections.push({
-                id: chosenKey,
-                count: count,
-            });
+            if (!props.isFiltered) {
+                this._layoutSections.push({
+                    id: chosenKey,
+                    count: len,
+                });
+            }
         });
 
         return subListsProps.reduce((components, props, i) => {
