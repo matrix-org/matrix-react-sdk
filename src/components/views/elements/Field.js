@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import sdk from '../../../index';
 
 export default class Field extends React.PureComponent {
     static propTypes = {
@@ -30,8 +31,21 @@ export default class Field extends React.PureComponent {
         // The type of field to create. Defaults to "input". Should be "input" or "select".
         // To define options for a select, use <Field><option ... /></Field>
         element: PropTypes.string,
+        // The callback called whenever the contents of the field
+        // changes.  Returns an object with `valid` boolean field
+        // and a `feedback` react component field to provide feedback
+        // to the user.
+        onValidate: PropTypes.function,
         // All other props pass through to the <input>.
     };
+
+    constructor() {
+        super();
+        this.state = {
+            valid: undefined,
+            feedback: undefined,
+        };
+    }
 
     get value() {
         if (!this.refs.fieldInput) return null;
@@ -45,24 +59,46 @@ export default class Field extends React.PureComponent {
         this.refs.fieldInput.value = newValue;
     }
 
+    onChange = (ev) => {
+        if (this.props.onValidate) {
+            const result = this.props.onValidate(this.value);
+            this.setState({
+                valid: result.valid,
+                feedback: result.feedback
+            });
+        }
+    };
+
     render() {
         const extraProps = Object.assign({}, this.props);
 
         // Remove explicit properties that shouldn't be copied
         delete extraProps.element;
         delete extraProps.children;
+        delete extraProps.onValidate;
 
         // Set some defaults for the element
         extraProps.type = extraProps.type || "text";
         extraProps.ref = "fieldInput";
         extraProps.placeholder = extraProps.placeholder || extraProps.label;
-
+        extraProps.onChange = this.onChange;
+        // make sure we use the current `value` for the field and not the original one
+        if (this.value != undefined) {
+            extraProps.value = this.value;
+        }
         const element = this.props.element || "input";
         const fieldInput = React.createElement(element, extraProps, this.props.children);
 
-        return <div className={`mx_Field mx_Field_${element}`}>
+        // handle displaying feedback on validity
+        const validClass = this.state.valid === true ? "mx_Field_valid" :
+                           this.state.valid === false ? "mx_Field_invalid" : "";
+        const Tooltip = sdk.getComponent("elements.Tooltip");
+        const feedback = this.state.feedback ? <Tooltip tooltipClassName={`mx_Field_tooltip ${validClass}`} label={ this.state.feedback }/> : "";
+
+        return <div className={`mx_Field mx_Field_${element} ${validClass}`}>
             {fieldInput}
             <label htmlFor={this.props.id}>{this.props.label}</label>
+            {feedback}
         </div>;
     }
 }

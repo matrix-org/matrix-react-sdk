@@ -75,7 +75,8 @@ $button-fg-color: white;
 // apart from login forms, which have stronger border
 $strong-input-border-color: #c7c7c7;
 $input-focused-border-color: #238cf5;
-$input-valid-border-color: #7ac9a1;
+$input-valid-border-color: $accent-color;
+$input-invalid-border-color: $warning-color;
 
 $field-focused-label-bg-color: #ffffff;
 
