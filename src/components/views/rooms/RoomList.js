@@ -670,7 +670,7 @@ module.exports = React.createClass({
                 label={label}
                 {...otherProps} />);
 
-            if (!isLast) {
+            if (!isLast && !props.isFiltered) {
                 return components.concat(
                     subList,
                     <ResizeHandle key={chosenKey+"-resizer"} vertical={true} id={chosenKey} />
