@@ -161,7 +161,7 @@ export default React.createClass({
 
             // If we're trying to just view a user ID (i.e. /user URL), this is it
             viewUserId: null,
-
+            // this is persisted as mx_lhs_size, loaded in LoggedInView
             collapseLhs: false,
             collapsedRhs: window.localStorage.getItem("mx_rhs_collapsed") === "true",
             leftDisabled: false,
@@ -1892,7 +1892,6 @@ export default React.createClass({
                     idSid={this.state.register_id_sid}
                     email={this.props.startingFragmentQueryParams.email}
                     referrer={this.props.startingFragmentQueryParams.referrer}
-                    defaultServerName={this.getDefaultServerName()}
                     defaultServerDiscoveryError={this.state.defaultServerDiscoveryError}
                     defaultHsUrl={this.getDefaultHsUrl()}
                     defaultIsUrl={this.getDefaultIsUrl()}
@@ -1932,7 +1931,6 @@ export default React.createClass({
                 <Login
                     onLoggedIn={Lifecycle.setLoggedIn}
                     onRegisterClick={this.onRegisterClick}
-                    defaultServerName={this.getDefaultServerName()}
                     defaultServerDiscoveryError={this.state.defaultServerDiscoveryError}
                     defaultHsUrl={this.getDefaultHsUrl()}
                     defaultIsUrl={this.getDefaultIsUrl()}

@@ -63,12 +63,8 @@ module.exports = React.createClass({
         defaultIsUrl: PropTypes.string,
         // Secondary HS which we try to log into if the user is using
         // the default HS but login fails. Useful for migrating to a
-        // different home server without confusing users.
+        // different homeserver without confusing users.
         fallbackHsUrl: PropTypes.string,
-
-        // The default server name to use when the user hasn't specified
-        // one. This is used when displaying the defaultHsUrl in the UI.
-        defaultServerName: PropTypes.string,
 
         // An error passed along from higher up explaining that something
         // went wrong when finding the defaultHsUrl.
@@ -92,8 +88,8 @@ module.exports = React.createClass({
             loginIncorrect: false,
 
             serverType: null,
-            enteredHomeserverUrl: this.props.customHsUrl || this.props.defaultHsUrl,
-            enteredIdentityServerUrl: this.props.customIsUrl || this.props.defaultIsUrl,
+            enteredHsUrl: this.props.customHsUrl || this.props.defaultHsUrl,
+            enteredIsUrl: this.props.customIsUrl || this.props.defaultIsUrl,
 
             // used for preserving form values when changing homeserver
             username: "",
@@ -106,8 +102,6 @@ module.exports = React.createClass({
             currentFlow: "m.login.password",
 
             // .well-known discovery
-            discoveredHsUrl: "",
-            discoveredIsUrl: "",
             discoveryError: "",
             findingHomeserver: false,
         };
@@ -164,7 +158,7 @@ module.exports = React.createClass({
             // Some error strings only apply for logging in
             const usingEmail = username.indexOf("@") > 0;
             if (error.httpStatus === 400 && usingEmail) {
-                errorText = _t('This Home Server does not support login using email address.');
+                errorText = _t('This homeserver does not support login using email address.');
             } else if (error.errcode == 'M_RESOURCE_LIMIT_EXCEEDED') {
                 const errorTop = messageForResourceLimitError(
                     error.data.limit_type,
@@ -245,7 +239,7 @@ module.exports = React.createClass({
         }, function(error) {
             let errorText;
             if (error.httpStatus === 403) {
-                errorText = _t("Guest access is disabled on this Home Server.");
+                errorText = _t("Guest access is disabled on this homeserver.");
             } else {
                 errorText = self._errorTextFromError(error);
             }
@@ -265,7 +259,15 @@ module.exports = React.createClass({
     },
 
     onUsernameBlur: function(username) {
-        this.setState({ username: username });
+        this.setState({
+            username: username,
+            discoveryError: null,
+        });
+        // If the free server type is selected, we don't show server details at all,
+        // so it doesn't make sense to try .well-known discovery.
+        if (this.state.serverType === ServerType.FREE) {
+            return;
+        }
         if (username[0] === "@") {
             const serverName = username.split(':').slice(1).join(':');
             try {
@@ -285,16 +287,22 @@ module.exports = React.createClass({
     },
 
     onPhoneNumberChanged: function(phoneNumber) {
-        // Validate the phone number entered
-        if (!PHONE_NUMBER_REGEX.test(phoneNumber)) {
-            this.setState({ errorText: _t('The phone number entered looks invalid') });
-            return;
-        }
-
         this.setState({
             phoneNumber: phoneNumber,
+        });
+    },
+
+    onPhoneNumberBlur: function(phoneNumber) {
+        this.setState({
             errorText: null,
         });
+
+        // Validate the phone number entered
+        if (!PHONE_NUMBER_REGEX.test(phoneNumber)) {
+            this.setState({
+                errorText: _t('The phone number entered looks invalid'),
+            });
+        }
     },
 
     onServerConfigChange: function(config) {
@@ -303,10 +311,10 @@ module.exports = React.createClass({
             errorText: null, // reset err messages
         };
         if (config.hsUrl !== undefined) {
-            newState.enteredHomeserverUrl = config.hsUrl;
+            newState.enteredHsUrl = config.hsUrl;
         }
         if (config.isUrl !== undefined) {
-            newState.enteredIdentityServerUrl = config.isUrl;
+            newState.enteredIsUrl = config.isUrl;
         }
 
         this.props.onServerConfigChange(config);
@@ -372,43 +380,50 @@ module.exports = React.createClass({
     _tryWellKnownDiscovery: async function(serverName) {
         if (!serverName.trim()) {
             // Nothing to discover
-            this.setState({discoveryError: "", discoveredHsUrl: "", discoveredIsUrl: "", findingHomeserver: false});
+            this.setState({
+                discoveryError: "",
+                findingHomeserver: false,
+            });
             return;
         }
 
         this.setState({findingHomeserver: true});
         try {
             const discovery = await AutoDiscovery.findClientConfig(serverName);
+
+            // The server type may have changed while discovery began in the background.
+            // If it has become the free server type which doesn't show server details,
+            // ignore discovery results.
+            if (this.state.serverType === ServerType.FREE) {
+                this.setState({findingHomeserver: false});
+                return;
+            }
+
             const state = discovery["m.homeserver"].state;
             if (state !== AutoDiscovery.SUCCESS && state !== AutoDiscovery.PROMPT) {
                 this.setState({
-                    discoveredHsUrl: "",
-                    discoveredIsUrl: "",
                     discoveryError: discovery["m.homeserver"].error,
                     findingHomeserver: false,
                 });
             } else if (state === AutoDiscovery.PROMPT) {
                 this.setState({
-                    discoveredHsUrl: "",
-                    discoveredIsUrl: "",
                     discoveryError: "",
                     findingHomeserver: false,
                 });
             } else if (state === AutoDiscovery.SUCCESS) {
                 this.setState({
-                    discoveredHsUrl: discovery["m.homeserver"].base_url,
-                    discoveredIsUrl:
-                        discovery["m.identity_server"].state === AutoDiscovery.SUCCESS
-                            ? discovery["m.identity_server"].base_url
-                            : "",
                     discoveryError: "",
                     findingHomeserver: false,
+                });
+                this.onServerConfigChange({
+                    hsUrl: discovery["m.homeserver"].base_url,
+                    isUrl: discovery["m.identity_server"].state === AutoDiscovery.SUCCESS
+                        ? discovery["m.identity_server"].base_url
+                        : "",
                 });
             } else {
                 console.warn("Unknown state for m.homeserver in discovery response: ", discovery);
                 this.setState({
-                    discoveredHsUrl: "",
-                    discoveredIsUrl: "",
                     discoveryError: _t("Unknown failure discovering homeserver"),
                     findingHomeserver: false,
                 });
@@ -424,8 +439,8 @@ module.exports = React.createClass({
 
     _initLoginLogic: function(hsUrl, isUrl) {
         const self = this;
-        hsUrl = hsUrl || this.state.enteredHomeserverUrl;
-        isUrl = isUrl || this.state.enteredIdentityServerUrl;
+        hsUrl = hsUrl || this.state.enteredHsUrl;
+        isUrl = isUrl || this.state.enteredIsUrl;
 
         const fallbackHsUrl = hsUrl === this.props.defaultHsUrl ? this.props.fallbackHsUrl : null;
 
@@ -435,8 +450,8 @@ module.exports = React.createClass({
         this._loginLogic = loginLogic;
 
         this.setState({
-            enteredHomeserverUrl: hsUrl,
-            enteredIdentityServerUrl: isUrl,
+            enteredHsUrl: hsUrl,
+            enteredIsUrl: isUrl,
             busy: true,
             loginIncorrect: false,
         });
@@ -502,8 +517,8 @@ module.exports = React.createClass({
 
         if (err.cors === 'rejected') {
             if (window.location.protocol === 'https:' &&
-                (this.state.enteredHomeserverUrl.startsWith("http:") ||
-                 !this.state.enteredHomeserverUrl.startsWith("http"))
+                (this.state.enteredHsUrl.startsWith("http:") ||
+                 !this.state.enteredHsUrl.startsWith("http"))
             ) {
                 errorText = <span>
                     { _t("Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. " +
@@ -527,7 +542,7 @@ module.exports = React.createClass({
                         {
                             'a': (sub) => {
                                 return <a target="_blank" rel="noopener"
-                                    href={this.state.enteredHomeserverUrl}
+                                    href={this.state.enteredHsUrl}
                                 >{ sub }</a>;
                             },
                         },
@@ -567,21 +582,21 @@ module.exports = React.createClass({
                 break;
             case ServerType.PREMIUM:
                 serverDetails = <ModularServerConfig
-                    customHsUrl={this.state.discoveredHsUrl || this.props.customHsUrl}
+                    customHsUrl={this.state.enteredHsUrl}
                     defaultHsUrl={this.props.defaultHsUrl}
                     defaultIsUrl={this.props.defaultIsUrl}
                     onServerConfigChange={this.onServerConfigChange}
-                    delayTimeMs={1000}
+                    delayTimeMs={250}
                 />;
                 break;
             case ServerType.ADVANCED:
                 serverDetails = <ServerConfig
-                    customHsUrl={this.state.discoveredHsUrl || this.props.customHsUrl}
-                    customIsUrl={this.state.discoveredIsUrl || this.props.customIsUrl}
+                    customHsUrl={this.state.enteredHsUrl}
+                    customIsUrl={this.state.enteredIsUrl}
                     defaultHsUrl={this.props.defaultHsUrl}
                     defaultIsUrl={this.props.defaultIsUrl}
                     onServerConfigChange={this.onServerConfigChange}
-                    delayTimeMs={1000}
+                    delayTimeMs={250}
                 />;
                 break;
         }
@@ -649,10 +664,10 @@ module.exports = React.createClass({
                onUsernameBlur={this.onUsernameBlur}
                onPhoneCountryChanged={this.onPhoneCountryChanged}
                onPhoneNumberChanged={this.onPhoneNumberChanged}
+               onPhoneNumberBlur={this.onPhoneNumberBlur}
                onForgotPasswordClick={this.props.onForgotPasswordClick}
                loginIncorrect={this.state.loginIncorrect}
-               hsUrl={this.state.enteredHomeserverUrl}
-               hsName={this.props.defaultServerName}
+               hsUrl={this.state.enteredHsUrl}
                disableSubmit={this.state.findingHomeserver}
                />
         );
@@ -684,7 +699,7 @@ module.exports = React.createClass({
         let loginAsGuestJsx;
         if (this.props.enableGuest) {
             loginAsGuestJsx =
-                <a className="mx_Auth_changeFlow" onClick={this._onLoginAsGuestClick} href="#">
+                <a className="mx_AuthBody_changeFlow" onClick={this._onLoginAsGuestClick} href="#">
                     { _t('Try the app first') }
                 </a>;
         }
@@ -709,7 +724,7 @@ module.exports = React.createClass({
                     { errorTextSection }
                     { this.renderServerComponentForStep() }
                     { this.renderLoginComponentForStep() }
-                    <a className="mx_Auth_changeFlow" onClick={this.onRegisterClick} href="#">
+                    <a className="mx_AuthBody_changeFlow" onClick={this.onRegisterClick} href="#">
                         { _t('Create account') }
                     </a>
                     { loginAsGuestJsx }
