@@ -193,7 +193,7 @@ export default class KeyBackupPanel extends React.PureComponent {
                     </span>;
                 const verify = sub => {
                     const isVerified = (sig.device && sig.device.isVerified()) || (sig.self_signing_key && sig.self_signing_key.isVerified());
-                    <span className={isVerified ? 'mx_KeyBackupPanel_deviceVerified' : 'mx_KeyBackupPanel_deviceNotVerified'}>
+                    return <span className={isVerified ? 'mx_KeyBackupPanel_deviceVerified' : 'mx_KeyBackupPanel_deviceNotVerified'}>
                         {sub}
                     </span>;
                 };
