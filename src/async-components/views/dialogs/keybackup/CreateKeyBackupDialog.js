@@ -150,7 +150,7 @@ export default React.createClass({
             return;
         }
 
-        try{
+        try {
             await MatrixClientPeg.get().scheduleAllGroupSessionsForBackup();
             this.setState({
                 phase: PHASE_DONE,
@@ -162,7 +162,7 @@ export default React.createClass({
             // disable without deleting, we'll enable on next app reload since
             // it is trusted.
             if (result) {
-                MatrixClientPeg.get().deleteKeyBackupVersion(info.version);
+                MatrixClientPeg.get().deleteKeyBackupVersion(result.version);
             }
             this.setState({
                 error: e,
@@ -494,17 +494,7 @@ export default React.createClass({
                 makeRequest={this._makeCreateBackupRequest}
                 onAuthFinished={this._onCreateBackupAuthFinished}
             />
-        </div>
-        Modal.createTrackedDialog('Delete Device Dialog', '', InteractiveAuthDialog, {
-            title: _t("Authentication Required"),
-            matrixClient: MatrixClientPeg.get(),
-            authData: null,
-            makeRequest: async (auth) => {
-                info = await MatrixClientPeg.get().createKeyBackupVersion(
-                    this._keyBackupInfo,
-                );
-            },
-        });
+        </div>;
     },
 
     _renderBusyPhase: function() {

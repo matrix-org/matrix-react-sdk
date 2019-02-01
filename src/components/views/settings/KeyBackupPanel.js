@@ -192,8 +192,12 @@ export default class KeyBackupPanel extends React.PureComponent {
                         {sub}
                     </span>;
                 const verify = sub => {
-                    const isVerified = (sig.device && sig.device.isVerified()) || (sig.self_signing_key && sig.self_signing_key.isVerified());
-                    return <span className={isVerified ? 'mx_KeyBackupPanel_deviceVerified' : 'mx_KeyBackupPanel_deviceNotVerified'}>
+                    const isVerified = (
+                        (sig.device && sig.device.isVerified()) ||
+                        (sig.self_signing_key && sig.self_signing_key.isVerified())
+                    );
+                    const cls = 'mx_KeyBackupPanel_' + (isVerified ? 'deviceVerified' : 'deviceNotVerified');
+                    return <span className={cls}>
                         {sub}
                     </span>;
                 };
@@ -201,22 +205,26 @@ export default class KeyBackupPanel extends React.PureComponent {
                 let sigStatus;
                 if (sig.self_signing_key && sig.valid && sig.self_signing_key.isVerified()) {
                     sigStatus = _t(
-                        "Backup has a <validity>valid</validity> signature from your <verify>verified</verify> Self-Signing Key",
+                        "Backup has a <validity>valid</validity> signature from your " +
+                        "<verify>verified</verify> Self-Signing Key",
                         { }, { validity, verify },
                     );
                 } else if (sig.self_signing_key && sig.valid && !sig.self_signing_key.isVerified()) {
                     sigStatus = _t(
-                        "Backup has a <validity>valid</validity> signature from your <verify>unverified</verify> Self-Signing Key",
+                        "Backup has a <validity>valid</validity> signature from your " +
+                        "<verify>unverified</verify> Self-Signing Key",
                         { }, { validity, verify },
                     );
                 } else if (sig.self_signing_key && !sig.valid && sig.self_signing_key.isVerified()) {
                     sigStatus = _t(
-                        "Backup has an <validity>invalid</validity> signature from your <verify>verified</verify> Self-Signing Key",
+                        "Backup has an <validity>invalid</validity> signature from your " +
+                        "<verify>verified</verify> Self-Signing Key",
                         { }, { validity, verify },
                     );
                 } else if (sig.self_signing_key && !sig.valid && !sig.self_signing_key.isVerified()) {
                     sigStatus = _t(
-                        "Backup has an <validity>invalid</validity> signature from your <verify>unverified</verify> Self-Signing Key",
+                        "Backup has an <validity>invalid</validity> signature from your " +
+                        "<verify>unverified</verify> Self-Signing Key",
                         { }, { validity, verify },
                     );
                 } else if (!sig.device) {
