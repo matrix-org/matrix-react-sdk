@@ -273,7 +273,7 @@ export default class KeyBackupPanel extends React.PureComponent {
                     verifyButton = <div><br /><AccessibleButton className="mx_UserSettings_button"
                             onClick={this._verifyDevice} data-sigindex={i}>
                         { _t("Verify...") }
-                    </AccessibleButton></div>;
+                    </AccessibleButton><br /><br /></div>;
                 }
 
                 return <div key={i}>
