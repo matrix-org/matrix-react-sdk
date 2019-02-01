@@ -1,6 +1,5 @@
 /*
-Copyright 2016 OpenMarket Ltd
-Copyright 2017 Vector Creations Ltd
+Copyright 2019 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,17 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_HomePage {
-    max-width: 960px;
-    width: 100%;
-    height: 100%;
-    margin-left: auto;
-    margin-right: auto;
+.mx_E2EIcon {
+    width: 25px;
+    height: 25px;
+    mask-repeat: no-repeat;
+    mask-position: center 0;
+    margin: 0 9px;
 }
 
-.mx_HomePage iframe {
-    display: block;
-	width: 100%;
-	height: 100%;
-	border: 0px;
+.mx_E2EIcon_verified {
+    mask-image: url('$(res)/img/feather-icons/e2e/lock-verified.svg');
+    background-color: $accent-color;
+}
+
+.mx_E2EIcon_warning {
+    mask-image: url('$(res)/img/feather-icons/e2e/lock-warning.svg');
+    background-color: $warning-color;
 }
