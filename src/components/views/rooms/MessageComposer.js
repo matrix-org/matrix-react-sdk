@@ -58,6 +58,7 @@ export default class MessageComposer extends React.Component {
         this._onRoomStateEvents = this._onRoomStateEvents.bind(this);
         this._onRoomViewStoreUpdate = this._onRoomViewStoreUpdate.bind(this);
         this._onTombstoneClick = this._onTombstoneClick.bind(this);
+        this._sendThumbsup = this._sendThumbsup.bind(this);
 
         this.state = {
             inputState: {
@@ -303,6 +304,19 @@ export default class MessageComposer extends React.Component {
         });
     }
 
+    async _sendThumbsup() {
+        try {
+            const msg = {
+                body: "👍",
+                msgtype: "m.text",
+            };
+            await MatrixClientPeg.get().sendMessage(this.props.room.roomId, msg);
+            dis.dispatch({
+                action: 'message_sent',
+            });
+        } catch(err) {console.error(err);}
+    }
+
     render() {
         const uploadInputStyle = {display: 'none'};
         const MemberStatusMessageAvatar = sdk.getComponent('avatars.MemberStatusMessageAvatar');
@@ -422,6 +436,7 @@ export default class MessageComposer extends React.Component {
             }
 
             const stickerpickerButton = <Stickerpicker key='stickerpicker_controls_button' room={this.props.room} />;
+            const thumbsUpButton = (<AccessibleButton key="thumbsup_button" title="Send thumbs up" onClick={this._sendThumbsup}>👍</AccessibleButton>);
 
             controls.push(
                 <MessageComposerInput
@@ -433,6 +448,7 @@ export default class MessageComposer extends React.Component {
                     onFilesPasted={this.uploadFiles}
                     onInputStateChanged={this.onInputStateChanged} />,
                 formattingButton,
+                thumbsUpButton,
                 stickerpickerButton,
                 uploadButton,
                 hangupButton,
