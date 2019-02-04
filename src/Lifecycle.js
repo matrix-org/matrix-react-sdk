@@ -68,45 +68,49 @@ import {sendLoginRequest} from "./Login";
  *     failed.
  */
 export async function loadSession(opts) {
-    try {
-        let enableGuest = opts.enableGuest || false;
-        const guestHsUrl = opts.guestHsUrl;
-        const guestIsUrl = opts.guestIsUrl;
-        const fragmentQueryParams = opts.fragmentQueryParams || {};
-        const defaultDeviceDisplayName = opts.defaultDeviceDisplayName;
-
-        if (!guestHsUrl) {
-            console.warn("Cannot enable guest access: can't determine HS URL to use");
-            enableGuest = false;
-        }
-
-        if (enableGuest &&
-            fragmentQueryParams.guest_user_id &&
-            fragmentQueryParams.guest_access_token
-           ) {
-            console.log("Using guest access credentials");
-            return _doSetLoggedIn({
-                userId: fragmentQueryParams.guest_user_id,
-                accessToken: fragmentQueryParams.guest_access_token,
-                homeserverUrl: guestHsUrl,
-                identityServerUrl: guestIsUrl,
-                guest: true,
-            }, true).then(() => true);
-        }
-        const success = await _restoreFromLocalStorage();
-        if (success) {
-            return true;
-        }
-
-        if (enableGuest) {
-            return _registerAsGuest(guestHsUrl, guestIsUrl, defaultDeviceDisplayName);
-        }
-
-        // fall back to login screen
-        return false;
-    } catch (e) {
-        return _handleLoadSessionFailure(e);
-    }
+    const ExperimentalOutdatedDialog =
+        sdk.getComponent("views.dialogs.ExperimentalOutdatedDialog");
+    return Modal.createDialog(ExperimentalOutdatedDialog);
+    // HACK: Commented out to avoid warnings about unreachable code.
+    // try {
+    //     let enableGuest = opts.enableGuest || false;
+    //     const guestHsUrl = opts.guestHsUrl;
+    //     const guestIsUrl = opts.guestIsUrl;
+    //     const fragmentQueryParams = opts.fragmentQueryParams || {};
+    //     const defaultDeviceDisplayName = opts.defaultDeviceDisplayName;
+    //
+    //     if (!guestHsUrl) {
+    //         console.warn("Cannot enable guest access: can't determine HS URL to use");
+    //         enableGuest = false;
+    //     }
+    //
+    //     if (enableGuest &&
+    //         fragmentQueryParams.guest_user_id &&
+    //         fragmentQueryParams.guest_access_token
+    //        ) {
+    //         console.log("Using guest access credentials");
+    //         return _doSetLoggedIn({
+    //             userId: fragmentQueryParams.guest_user_id,
+    //             accessToken: fragmentQueryParams.guest_access_token,
+    //             homeserverUrl: guestHsUrl,
+    //             identityServerUrl: guestIsUrl,
+    //             guest: true,
+    //         }, true).then(() => true);
+    //     }
+    //     const success = await _restoreFromLocalStorage();
+    //     if (success) {
+    //         return true;
+    //     }
+    //
+    //     if (enableGuest) {
+    //         return _registerAsGuest(guestHsUrl, guestIsUrl, defaultDeviceDisplayName);
+    //     }
+    //
+    //     // fall back to login screen
+    //     return false;
+    // } catch (e) {
+    //     return _handleLoadSessionFailure(e);
+    // }
 }
 
 /**
