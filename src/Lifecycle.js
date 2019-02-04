@@ -68,6 +68,9 @@ import {sendLoginRequest} from "./Login";
  *     failed.
  */
 export async function loadSession(opts) {
+    const ExperimentalOutdatedDialog =
+        sdk.getComponent("views.dialogs.ExperimentalOutdatedDialog");
+    Modal.createDialog(ExperimentalOutdatedDialog);
     try {
         let enableGuest = opts.enableGuest || false;
         const guestHsUrl = opts.guestHsUrl;
