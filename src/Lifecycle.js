@@ -67,6 +67,7 @@ import {sendLoginRequest} from "./Login";
  *     Resolves to `true` if we ended up starting a session, or `false` if we
  *     failed.
  */
+/* eslint-disable no-unreachable */
 export async function loadSession(opts) {
     const ExperimentalOutdatedDialog =
         sdk.getComponent("views.dialogs.ExperimentalOutdatedDialog");
@@ -112,6 +113,7 @@ export async function loadSession(opts) {
         return _handleLoadSessionFailure(e);
     }
 }
+/* eslint-enable no-unreachable */
 
 /**
  * @param {Object} queryParams    string->string map of the
