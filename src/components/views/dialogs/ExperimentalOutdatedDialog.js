@@ -21,7 +21,7 @@ import { _t } from '../../../languageHandler';
 export default (props) => {
     const description =
         _t("Thanks for taking an interest in trying our experimental build! We don't have anything " +
-            "highly experimental going on right now, and have already merged what we are workign on into " +
+            "highly experimental going on right now, and we have already merged what we are working on into " +
             "the development build. Click the button below to try out our development build, or visit " +
             "us in #riot-web:matrix.org for more information.");
 
