@@ -518,6 +518,7 @@ module.exports = withMatrixClient(React.createClass({
         const isSending = (['sending', 'queued', 'encrypting'].indexOf(this.props.eventSendStatus) !== -1);
         const isRedacted = isMessageEvent(this.props.mxEvent) && this.props.isRedacted;
         const isEncryptionFailure = this.props.mxEvent.isDecryptionFailure();
+        const isSender = this.props.mxEvent.getSender() === this.props.matrixClient.credentials.userId;
 
         const classes = classNames({
             mx_EventTile: true,
@@ -537,6 +538,7 @@ module.exports = withMatrixClient(React.createClass({
             mx_EventTile_bad: isEncryptionFailure,
             mx_EventTile_emote: msgtype === 'm.emote',
             mx_EventTile_redacted: isRedacted,
+            mx_EventTile_sender: isSender
         });
 
         const permalink = makeEventPermalink(this.props.mxEvent.getRoomId(), this.props.mxEvent.getId());
