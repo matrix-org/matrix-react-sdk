@@ -538,7 +538,7 @@ module.exports = withMatrixClient(React.createClass({
             mx_EventTile_bad: isEncryptionFailure,
             mx_EventTile_emote: msgtype === 'm.emote',
             mx_EventTile_redacted: isRedacted,
-            mx_EventTile_sender: isSender
+            mx_EventTile_sender: isSender,
         });
 
         const permalink = makeEventPermalink(this.props.mxEvent.getRoomId(), this.props.mxEvent.getId());
