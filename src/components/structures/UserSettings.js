@@ -673,6 +673,15 @@ module.exports = React.createClass({
             key = key.substring(3);
         }
 
+        const replacements = {
+            'ShiftLeft': 'Shift',
+        };
+
+        // Custom redefinitions of key names
+        if (replacements[key]) {
+            key = replacements[key];
+        }
+
         return key;
     },
 
