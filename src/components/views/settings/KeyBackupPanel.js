@@ -151,13 +151,21 @@ export default class KeyBackupPanel extends React.PureComponent {
         } else if (this.state.backupInfo) {
             const EmojiText = sdk.getComponent('elements.EmojiText');
             let clientBackupStatus;
-            let restoreButtonCaption = _t("Restore from Backup");
+            let buttons;
 
             if (MatrixClientPeg.get().getKeyBackupEnabled()) {
                 clientBackupStatus = <div>
                     <p>{encryptedMessageAreEncrypted}</p>
                     <p>{_t("This device is backing up your keys. ")}<EmojiText>✅</EmojiText></p>
                 </div>;
+                buttons = <p>
+                    <AccessibleButton kind="primary" onClick={this._restoreBackup}>
+                        {_t("Restore from Backup")}
+                    </AccessibleButton>&nbsp;&nbsp;&nbsp;
+                    <AccessibleButton kind="danger" onClick={this._deleteBackup}>
+                        { _t("Delete Backup") }
+                    </AccessibleButton>
+                </p>;
             } else {
                 clientBackupStatus = <div>
                     <p>{encryptedMessageAreEncrypted}</p>
@@ -167,7 +175,11 @@ export default class KeyBackupPanel extends React.PureComponent {
                     )}</p>
                     <p>{_t("Back up your keys before signing out to avoid losing them.")}</p>
                 </div>;
-                restoreButtonCaption = _t("Use key backup");
+                buttons = <p>
+                    <AccessibleButton kind="primary" onClick={this._restoreBackup}>
+                        {_t("Use key backup")}
+                    </AccessibleButton>&nbsp;&nbsp;&nbsp;
+                </p>;
             }
 
             let uploadStatus;
@@ -256,14 +268,7 @@ export default class KeyBackupPanel extends React.PureComponent {
                     <div>{backupSigStatuses}</div>
                     <div>{trustedLocally}</div>
                 </details>
-                <p>
-                    <AccessibleButton kind="primary" onClick={this._restoreBackup}>
-                        {restoreButtonCaption}
-                    </AccessibleButton>&nbsp;&nbsp;&nbsp;
-                    <AccessibleButton kind="danger" onClick={this._deleteBackup}>
-                        { _t("Delete Backup") }
-                    </AccessibleButton>
-                </p>
+                {buttons}
             </div>;
         } else {
             return <div>
