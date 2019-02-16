@@ -51,7 +51,7 @@ module.exports = React.createClass({
         e2eStatus: PropTypes.string,
     },
 
-    getDefaultProps: function () {
+    getDefaultProps: function() {
         return {
             editing: false,
             inRoom: false,
@@ -59,7 +59,7 @@ module.exports = React.createClass({
         };
     },
 
-    componentDidMount: function () {
+    componentDidMount: function() {
         const cli = MatrixClientPeg.get();
         cli.on("RoomState.events", this._onRoomStateEvents);
         cli.on("Room.accountData", this._onRoomAccountData);
@@ -72,13 +72,13 @@ module.exports = React.createClass({
         }
     },
 
-    componentDidUpdate: function () {
+    componentDidUpdate: function() {
         if (this.refs.topic) {
             linkifyElement(this.refs.topic);
         }
     },
 
-    componentWillUnmount: function () {
+    componentWillUnmount: function() {
         if (this.props.room) {
             this.props.room.removeListener("Room.name", this._onRoomNameChange);
         }
@@ -89,7 +89,7 @@ module.exports = React.createClass({
         }
     },
 
-    _onRoomStateEvents: function (event, state) {
+    _onRoomStateEvents: function(event, state) {
         if (!this.props.room || event.getRoomId() !== this.props.room.roomId) {
             return;
         }
@@ -98,30 +98,30 @@ module.exports = React.createClass({
         this._rateLimitedUpdate();
     },
 
-    _onRoomAccountData: function (event, room) {
+    _onRoomAccountData: function(event, room) {
         if (!this.props.room || room.roomId !== this.props.room.roomId) return;
         if (event.getType() !== "im.vector.room.read_pins") return;
 
         this._rateLimitedUpdate();
     },
 
-    _rateLimitedUpdate: new RateLimitedFunc(function () {
+    _rateLimitedUpdate: new RateLimitedFunc(function() {
         /* eslint-disable babel/no-invalid-this */
         this.forceUpdate();
     }, 500),
 
-    _onRoomNameChange: function (room) {
+    _onRoomNameChange: function(room) {
         this.forceUpdate();
     },
 
-    onShareRoomClick: function (ev) {
+    onShareRoomClick: function(ev) {
         const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
         Modal.createTrackedDialog('share room dialog', '', ShareDialog, {
             target: this.props.room,
         });
     },
 
-    _hasUnreadPins: function () {
+    _hasUnreadPins: function() {
         const currentPinEvent = this.props.room.currentState.getStateEvents("m.room.pinned_events", '');
         if (!currentPinEvent) return false;
         if (currentPinEvent.getContent().pinned && currentPinEvent.getContent().pinned.length <= 0) {
@@ -140,20 +140,20 @@ module.exports = React.createClass({
         return true;
     },
 
-    _hasPins: function () {
+    _hasPins: function() {
         const currentPinEvent = this.props.room.currentState.getStateEvents("m.room.pinned_events", '');
         if (!currentPinEvent) return false;
 
         return !(currentPinEvent.getContent().pinned && currentPinEvent.getContent().pinned.length <= 0);
     },
 
-    _onShowDevicesClick: function () {
+    _onShowDevicesClick: function() {
         if (this.props.e2eStatus === "warning") {
             cryptodevices.showUnknownDeviceDialogForMessages(MatrixClientPeg.get(), this.props.room);
         }
     },
 
-    render: function () {
+    render: function() {
         const RoomAvatar = sdk.getComponent("avatars.RoomAvatar");
         const EmojiText = sdk.getComponent('elements.EmojiText');
 
