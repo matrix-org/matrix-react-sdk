@@ -58,7 +58,7 @@ export default class RightPanel extends React.Component {
         super(props, context);
         const dmRoomMap = new DMRoomMap(MatrixClientPeg.get());
         const isDirectChat = Boolean(
-            dmRoomMap.getUserIdForRoomId(this.props.roomId)
+            dmRoomMap.getUserIdForRoomId(this.props.roomId),
         );
         let direct = null;
         if (isDirectChat === true) {

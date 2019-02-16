@@ -307,7 +307,7 @@ module.exports = React.createClass({
 
         const dmRoomMap = new DMRoomMap(MatrixClientPeg.get());
         const isDirectChat = Boolean(
-            dmRoomMap.getUserIdForRoomId(this.props.room.roomId)
+            dmRoomMap.getUserIdForRoomId(this.props.room.roomId),
         );
 
         return (
