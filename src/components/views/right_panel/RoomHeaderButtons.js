@@ -26,7 +26,11 @@ import RightPanel from '../../structures/RightPanel';
 
 export default class RoomHeaderButtons extends HeaderButtons {
     constructor(props) {
-        super(props, RightPanel.Phase.RoomMemberList);
+        if (props.directChat === true) {
+            super(props, RightPanel.Phase.FilePanel);
+        } else {
+            super(props, RightPanel.Phase.RoomMemberList);
+        }
     }
 
     onAction(payload) {
@@ -36,12 +40,10 @@ export default class RoomHeaderButtons extends HeaderButtons {
                 action: 'show_right_panel',
             });
             if (payload.member) {
-                this.setPhase(RightPanel.Phase.RoomMemberInfo, {member: payload.member});
+                this.setPhase(RightPanel.Phase.RoomMemberInfo, { member: payload.member });
             } else {
                 this.setPhase(RightPanel.Phase.RoomMemberList);
             }
-        } else if (payload.action === "view_room") {
-            this.setPhase(RightPanel.Phase.RoomMemberList);
         }
     }
 

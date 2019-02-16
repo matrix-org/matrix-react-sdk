@@ -28,11 +28,12 @@ import RateLimitedFunc from '../../../ratelimitedfunc';
 import { linkifyElement } from '../../../HtmlUtils';
 import AccessibleButton from '../elements/AccessibleButton';
 import ManageIntegsButton from '../elements/ManageIntegsButton';
-import {CancelButton} from './SimpleRoomHeader';
+import { CancelButton } from './SimpleRoomHeader';
 import SettingsStore from "../../../settings/SettingsStore";
 import RoomHeaderButtons from '../right_panel/RoomHeaderButtons';
 import E2EIcon from './E2EIcon';
 import * as cryptodevices from '../../../cryptodevices';
+import DMRoomMap from "../../../utils/DMRoomMap";
 
 module.exports = React.createClass({
     displayName: 'RoomHeader',
@@ -50,7 +51,7 @@ module.exports = React.createClass({
         e2eStatus: PropTypes.string,
     },
 
-    getDefaultProps: function() {
+    getDefaultProps: function () {
         return {
             editing: false,
             inRoom: false,
@@ -58,7 +59,7 @@ module.exports = React.createClass({
         };
     },
 
-    componentDidMount: function() {
+    componentDidMount: function () {
         const cli = MatrixClientPeg.get();
         cli.on("RoomState.events", this._onRoomStateEvents);
         cli.on("Room.accountData", this._onRoomAccountData);
@@ -71,13 +72,13 @@ module.exports = React.createClass({
         }
     },
 
-    componentDidUpdate: function() {
+    componentDidUpdate: function () {
         if (this.refs.topic) {
             linkifyElement(this.refs.topic);
         }
     },
 
-    componentWillUnmount: function() {
+    componentWillUnmount: function () {
         if (this.props.room) {
             this.props.room.removeListener("Room.name", this._onRoomNameChange);
         }
@@ -88,7 +89,7 @@ module.exports = React.createClass({
         }
     },
 
-    _onRoomStateEvents: function(event, state) {
+    _onRoomStateEvents: function (event, state) {
         if (!this.props.room || event.getRoomId() !== this.props.room.roomId) {
             return;
         }
@@ -97,30 +98,30 @@ module.exports = React.createClass({
         this._rateLimitedUpdate();
     },
 
-    _onRoomAccountData: function(event, room) {
+    _onRoomAccountData: function (event, room) {
         if (!this.props.room || room.roomId !== this.props.room.roomId) return;
         if (event.getType() !== "im.vector.room.read_pins") return;
 
         this._rateLimitedUpdate();
     },
 
-    _rateLimitedUpdate: new RateLimitedFunc(function() {
+    _rateLimitedUpdate: new RateLimitedFunc(function () {
         /* eslint-disable babel/no-invalid-this */
         this.forceUpdate();
     }, 500),
 
-    _onRoomNameChange: function(room) {
+    _onRoomNameChange: function (room) {
         this.forceUpdate();
     },
 
-    onShareRoomClick: function(ev) {
+    onShareRoomClick: function (ev) {
         const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
         Modal.createTrackedDialog('share room dialog', '', ShareDialog, {
             target: this.props.room,
         });
     },
 
-    _hasUnreadPins: function() {
+    _hasUnreadPins: function () {
         const currentPinEvent = this.props.room.currentState.getStateEvents("m.room.pinned_events", '');
         if (!currentPinEvent) return false;
         if (currentPinEvent.getContent().pinned && currentPinEvent.getContent().pinned.length <= 0) {
@@ -139,20 +140,20 @@ module.exports = React.createClass({
         return true;
     },
 
-    _hasPins: function() {
+    _hasPins: function () {
         const currentPinEvent = this.props.room.currentState.getStateEvents("m.room.pinned_events", '');
         if (!currentPinEvent) return false;
 
         return !(currentPinEvent.getContent().pinned && currentPinEvent.getContent().pinned.length <= 0);
     },
 
-    _onShowDevicesClick: function() {
+    _onShowDevicesClick: function () {
         if (this.props.e2eStatus === "warning") {
             cryptodevices.showUnknownDeviceDialogForMessages(MatrixClientPeg.get(), this.props.room);
         }
     },
 
-    render: function() {
+    render: function () {
         const RoomAvatar = sdk.getComponent("avatars.RoomAvatar");
         const EmojiText = sdk.getComponent('elements.EmojiText');
 
@@ -175,7 +176,7 @@ module.exports = React.createClass({
             this.props.searchInfo.searchCount !== undefined &&
             this.props.searchInfo.searchCount !== null) {
             searchStatus = <div className="mx_RoomHeader_searchStatus">&nbsp;
-                { _t("(~%(count)s results)", { count: this.props.searchInfo.searchCount }) }
+                {_t("(~%(count)s results)", { count: this.props.searchInfo.searchCount })}
             </div>;
         }
 
@@ -201,8 +202,8 @@ module.exports = React.createClass({
         const emojiTextClasses = classNames('mx_RoomHeader_nametext', { mx_RoomHeader_settingsHint: settingsHint });
         const name =
             <div className="mx_RoomHeader_name" onClick={this.props.onSettingsClick}>
-                <EmojiText dir="auto" element="div" className={emojiTextClasses} title={roomName}>{ roomName }</EmojiText>
-                { searchStatus }
+                <EmojiText dir="auto" element="div" className={emojiTextClasses} title={roomName}>{roomName}</EmojiText>
+                {searchStatus}
             </div>;
 
         let topic;
@@ -213,7 +214,7 @@ module.exports = React.createClass({
             }
         }
         const topicElement =
-            <div className="mx_RoomHeader_topic" ref="topic" title={topic} dir="auto">{ topic }</div>;
+            <div className="mx_RoomHeader_topic" ref="topic" title={topic} dir="auto">{topic}</div>;
         const avatarSize = 28;
         let roomAvatar;
         if (this.props.room) {
@@ -244,18 +245,18 @@ module.exports = React.createClass({
 
             pinnedEventsButton =
                 <AccessibleButton className="mx_RoomHeader_button mx_RoomHeader_pinnedButton"
-                                  onClick={this.props.onPinnedClick} title={_t("Pinned Messages")}>
-                    { pinsIndicator }
+                    onClick={this.props.onPinnedClick} title={_t("Pinned Messages")}>
+                    {pinsIndicator}
                 </AccessibleButton>;
         }
 
-//        var leave_button;
-//        if (this.props.onLeaveClick) {
-//            leave_button =
-//                <div className="mx_RoomHeader_button" onClick={this.props.onLeaveClick} title="Leave room">
-//                    <TintableSvg src={require("../../../../res/img/leave.svg")} width="26" height="20"/>
-//                </div>;
-//        }
+        //        var leave_button;
+        //        if (this.props.onLeaveClick) {
+        //            leave_button =
+        //                <div className="mx_RoomHeader_button" onClick={this.props.onLeaveClick} title="Leave room">
+        //                    <TintableSvg src={require("../../../../res/img/leave.svg")} width="26" height="20"/>
+        //                </div>;
+        //        }
 
         let forgetButton;
         if (this.props.onForgetClick) {
@@ -296,24 +297,29 @@ module.exports = React.createClass({
 
         const rightRow =
             <div className="mx_RoomHeader_buttons">
-                { settingsButton }
-                { pinnedEventsButton }
-                { shareRoomButton }
-                { manageIntegsButton }
-                { forgetButton }
-                { searchButton }
+                {settingsButton}
+                {pinnedEventsButton}
+                {shareRoomButton}
+                {manageIntegsButton}
+                {forgetButton}
+                {searchButton}
             </div>;
+
+        const dmRoomMap = new DMRoomMap(MatrixClientPeg.get());
+        const isDirectChat = Boolean(
+            dmRoomMap.getUserIdForRoomId(this.props.room.roomId)
+        );
 
         return (
             <div className="mx_RoomHeader light-panel">
                 <div className="mx_RoomHeader_wrapper">
-                    <div className="mx_RoomHeader_avatar">{ roomAvatar }</div>
-                    { e2eIcon }
-                    { name }
-                    { topicElement }
-                    { cancelButton }
-                    { rightRow }
-                    <RoomHeaderButtons collapsedRhs={this.props.collapsedRhs} />
+                    <div className="mx_RoomHeader_avatar">{roomAvatar}</div>
+                    {e2eIcon}
+                    {name}
+                    {topicElement}
+                    {cancelButton}
+                    {rightRow}
+                    <RoomHeaderButtons collapsedRhs={this.props.collapsedRhs} directChat={isDirectChat} />
                 </div>
             </div>
         );

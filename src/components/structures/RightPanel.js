@@ -26,6 +26,8 @@ import { MatrixClient } from 'matrix-js-sdk';
 import RateLimitedFunc from '../../ratelimitedfunc';
 import { showGroupInviteDialog, showGroupAddRoomDialog } from '../../GroupAddressPicker';
 import GroupStore from '../../stores/GroupStore';
+import DMRoomMap from "../../utils/DMRoomMap";
+import MatrixClientPeg from "../../MatrixClientPeg";
 
 export default class RightPanel extends React.Component {
     static get propTypes() {
@@ -54,8 +56,20 @@ export default class RightPanel extends React.Component {
 
     constructor(props, context) {
         super(props, context);
+        const dmRoomMap = new DMRoomMap(MatrixClientPeg.get());
+        const isDirectChat = Boolean(
+            dmRoomMap.getUserIdForRoomId(this.props.roomId)
+        );
+        let direct = null;
+        if (isDirectChat === true) {
+            direct = RightPanel.Phase.FilePanel;
+        } else {
+            direct = RightPanel.Phase.RoomMemberList;
+        }
         this.state = {
-            phase: this.props.groupId ? RightPanel.Phase.GroupMemberList : RightPanel.Phase.RoomMemberList,
+            phase: this.props.groupId
+                ? RightPanel.Phase.GroupMemberList
+                : direct,
             isUserPrivilegedInGroup: null,
         };
         this.onAction = this.onAction.bind(this);
@@ -128,7 +142,7 @@ export default class RightPanel extends React.Component {
         if (this.state.phase === RightPanel.Phase.RoomMemberList && member.roomId === this.props.roomId) {
             this._delayedUpdate();
         } else if (this.state.phase === RightPanel.Phase.RoomMemberInfo && member.roomId === this.props.roomId &&
-                member.userId === this.state.member.userId) {
+            member.userId === this.state.member.userId) {
             // refresh the member info (e.g. new power level)
             this._delayedUpdate();
         }
@@ -190,7 +204,7 @@ export default class RightPanel extends React.Component {
 
         return (
             <aside className={classes}>
-                { panel }
+                {panel}
             </aside>
         );
     }
