@@ -23,10 +23,16 @@ import dis from '../../../dispatcher';
 import HeaderButton from './HeaderButton';
 import HeaderButtons from './HeaderButtons';
 import RightPanel from '../../structures/RightPanel';
+import PropTypes from 'prop-types';
 
 export default class RoomHeaderButtons extends HeaderButtons {
+
+    static propTypes = {
+        isDirectChat: PropTypes.string.isRequired,
+    }
+
     constructor(props) {
-        if (props.directChat === true) {
+        if (props.isDirectChat === true) {
             super(props, RightPanel.Phase.FilePanel);
         } else {
             super(props, RightPanel.Phase.RoomMemberList);
