@@ -319,7 +319,7 @@ module.exports = React.createClass({
                     {topicElement}
                     {cancelButton}
                     {rightRow}
-                    <RoomHeaderButtons collapsedRhs={this.props.collapsedRhs} directChat={isDirectChat} />
+                    <RoomHeaderButtons collapsedRhs={this.props.collapsedRhs} isDirectChat={isDirectChat} />
                 </div>
             </div>
         );

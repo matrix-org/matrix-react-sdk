@@ -26,7 +26,6 @@ import RightPanel from '../../structures/RightPanel';
 import PropTypes from 'prop-types';
 
 export default class RoomHeaderButtons extends HeaderButtons {
-
     static propTypes = {
         isDirectChat: PropTypes.string.isRequired,
     }
