@@ -45,7 +45,7 @@ export default class RoomHeaderButtons extends HeaderButtons {
                 action: 'show_right_panel',
             });
             if (payload.member) {
-                this.setPhase(RightPanel.Phase.RoomMemberInfo, { member: payload.member });
+                this.setPhase(RightPanel.Phase.RoomMemberInfo, {member: payload.member});
             } else {
                 this.setPhase(RightPanel.Phase.RoomMemberList);
             }
