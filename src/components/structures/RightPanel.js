@@ -60,16 +60,14 @@ export default class RightPanel extends React.Component {
         const isDirectChat = Boolean(
             dmRoomMap.getUserIdForRoomId(this.props.roomId),
         );
-        let direct = null;
+        let phase = null;
         if (isDirectChat === true) {
-            direct = RightPanel.Phase.FilePanel;
+            phase = RightPanel.Phase.FilePanel;
         } else {
-            direct = RightPanel.Phase.RoomMemberList;
+            phase = RightPanel.Phase.RoomMemberList;
         }
         this.state = {
-            phase: this.props.groupId
-                ? RightPanel.Phase.GroupMemberList
-                : direct,
+            phase: this.props.groupId ? RightPanel.Phase.GroupMemberList : phase,
             isUserPrivilegedInGroup: null,
         };
         this.onAction = this.onAction.bind(this);
@@ -142,7 +140,7 @@ export default class RightPanel extends React.Component {
         if (this.state.phase === RightPanel.Phase.RoomMemberList && member.roomId === this.props.roomId) {
             this._delayedUpdate();
         } else if (this.state.phase === RightPanel.Phase.RoomMemberInfo && member.roomId === this.props.roomId &&
-            member.userId === this.state.member.userId) {
+                member.userId === this.state.member.userId) {
             // refresh the member info (e.g. new power level)
             this._delayedUpdate();
         }
