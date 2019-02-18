@@ -28,7 +28,7 @@ import RateLimitedFunc from '../../../ratelimitedfunc';
 import { linkifyElement } from '../../../HtmlUtils';
 import AccessibleButton from '../elements/AccessibleButton';
 import ManageIntegsButton from '../elements/ManageIntegsButton';
-import { CancelButton } from './SimpleRoomHeader';
+import {CancelButton} from './SimpleRoomHeader';
 import SettingsStore from "../../../settings/SettingsStore";
 import RoomHeaderButtons from '../right_panel/RoomHeaderButtons';
 import E2EIcon from './E2EIcon';
@@ -176,7 +176,7 @@ module.exports = React.createClass({
             this.props.searchInfo.searchCount !== undefined &&
             this.props.searchInfo.searchCount !== null) {
             searchStatus = <div className="mx_RoomHeader_searchStatus">&nbsp;
-                {_t("(~%(count)s results)", { count: this.props.searchInfo.searchCount })}
+                { _t("(~%(count)s results)", { count: this.props.searchInfo.searchCount }) }
             </div>;
         }
 
@@ -214,7 +214,7 @@ module.exports = React.createClass({
             }
         }
         const topicElement =
-            <div className="mx_RoomHeader_topic" ref="topic" title={ topic } dir="auto">{topic}</div>;
+            <div className="mx_RoomHeader_topic" ref="topic" title={topic} dir="auto">{ topic }</div>;
         const avatarSize = 28;
         let roomAvatar;
         if (this.props.room) {
@@ -249,14 +249,13 @@ module.exports = React.createClass({
                     { pinsIndicator }
                 </AccessibleButton>;
         }
-
-        //        var leave_button;
-        //        if (this.props.onLeaveClick) {
-        //            leave_button =
-        //                <div className="mx_RoomHeader_button" onClick={this.props.onLeaveClick} title="Leave room">
-        //                    <TintableSvg src={require("../../../../res/img/leave.svg")} width="26" height="20"/>
-        //                </div>;
-        //        }
+//        var leave_button;
+//        if (this.props.onLeaveClick) {
+//            leave_button =
+//                <div className="mx_RoomHeader_button" onClick={this.props.onLeaveClick} title="Leave room">
+//                    <TintableSvg src={require("../../../../res/img/leave.svg")} width="26" height="20"/>
+//                </div>;
+//        }
 
         let forgetButton;
         if (this.props.onForgetClick) {
@@ -313,7 +312,7 @@ module.exports = React.createClass({
         return (
             <div className="mx_RoomHeader light-panel">
                 <div className="mx_RoomHeader_wrapper">
-                    <div className="mx_RoomHeader_avatar">{roomAvatar}</div>
+                    <div className="mx_RoomHeader_avatar">{ roomAvatar }</div>
                     { e2eIcon }
                     { name }
                     { topicElement }
