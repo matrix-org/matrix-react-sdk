@@ -202,8 +202,8 @@ module.exports = React.createClass({
         const emojiTextClasses = classNames('mx_RoomHeader_nametext', { mx_RoomHeader_settingsHint: settingsHint });
         const name =
             <div className="mx_RoomHeader_name" onClick={this.props.onSettingsClick}>
-                <EmojiText dir="auto" element="div" className={emojiTextClasses} title={roomName}>{roomName}</EmojiText>
-                {searchStatus}
+                <EmojiText dir="auto" element="div" className={emojiTextClasses} title={roomName}>{ roomName }</EmojiText>
+                { searchStatus }
             </div>;
 
         let topic;
@@ -214,7 +214,7 @@ module.exports = React.createClass({
             }
         }
         const topicElement =
-            <div className="mx_RoomHeader_topic" ref="topic" title={topic} dir="auto">{topic}</div>;
+            <div className="mx_RoomHeader_topic" ref="topic" title={ topic } dir="auto">{topic}</div>;
         const avatarSize = 28;
         let roomAvatar;
         if (this.props.room) {
@@ -245,8 +245,8 @@ module.exports = React.createClass({
 
             pinnedEventsButton =
                 <AccessibleButton className="mx_RoomHeader_button mx_RoomHeader_pinnedButton"
-                    onClick={this.props.onPinnedClick} title={_t("Pinned Messages")}>
-                    {pinsIndicator}
+                                  onClick={this.props.onPinnedClick} title={_t("Pinned Messages")}>
+                    { pinsIndicator }
                 </AccessibleButton>;
         }
 
@@ -297,12 +297,12 @@ module.exports = React.createClass({
 
         const rightRow =
             <div className="mx_RoomHeader_buttons">
-                {settingsButton}
-                {pinnedEventsButton}
-                {shareRoomButton}
-                {manageIntegsButton}
-                {forgetButton}
-                {searchButton}
+                { settingsButton }
+                { pinnedEventsButton }
+                { shareRoomButton }
+                { manageIntegsButton }
+                { forgetButton }
+                { searchButton }
             </div>;
 
         const dmRoomMap = new DMRoomMap(MatrixClientPeg.get());
@@ -314,11 +314,11 @@ module.exports = React.createClass({
             <div className="mx_RoomHeader light-panel">
                 <div className="mx_RoomHeader_wrapper">
                     <div className="mx_RoomHeader_avatar">{roomAvatar}</div>
-                    {e2eIcon}
-                    {name}
-                    {topicElement}
-                    {cancelButton}
-                    {rightRow}
+                    { e2eIcon }
+                    { name }
+                    { topicElement }
+                    { cancelButton }
+                    { rightRow }
                     <RoomHeaderButtons collapsedRhs={this.props.collapsedRhs} isDirectChat={isDirectChat} />
                 </div>
             </div>
