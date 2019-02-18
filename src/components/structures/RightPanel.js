@@ -204,7 +204,7 @@ export default class RightPanel extends React.Component {
 
         return (
             <aside className={classes}>
-                {panel}
+                { panel }
             </aside>
         );
     }
