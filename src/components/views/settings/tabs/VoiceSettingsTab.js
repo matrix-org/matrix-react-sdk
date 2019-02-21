@@ -19,12 +19,15 @@ import {_t} from "../../../../languageHandler";
 import CallMediaHandler from "../../../../CallMediaHandler";
 import Field from "../../elements/Field";
 import AccessibleButton from "../../elements/AccessibleButton";
-import {SettingLevel, getValue, getValueAt, setValue, getDisplayName} from "../../../../settings/SettingsStore";
-import PushToTalk from "../../../../PushToTalk";
+import ToggleSwitch from "../../elements/ToggleSwitch";
+import SettingsStore, {SettingLevel} from "../../../../settings/SettingsStore";
 const Modal = require("../../../../Modal");
 const sdk = require("../../../../index");
 const MatrixClientPeg = require("../../../../MatrixClientPeg");
 const PlatformPeg = require("../../../../PlatformPeg");
+
+let listenKeydown = null;
+let listenKeyup = null;
 
 export default class VoiceSettingsTab extends React.Component {
     constructor() {
@@ -35,11 +38,9 @@ export default class VoiceSettingsTab extends React.Component {
             activeAudioOutput: null,
             activeAudioInput: null,
             activeVideoInput: null,
-            listenKeydown: null,
-            listenKeyup: null,
-            pushToTalkAscii: getValue('pushToTalk').ascii,
-            pushToTalkKeybinding: getValue('pushToTalk').keybinding,
-            pushToTalkEnabled: getValue('pushToTalk').enabled,
+            pushToTalkAscii: SettingsStore.getValue('pushToTalk').ascii,
+            pushToTalkKeybinding: SettingsStore.getValue('pushToTalk').keybinding,
+            pushToTalkEnabled: SettingsStore.getValue('pushToTalk').enabled,
         };
     }
 
@@ -48,16 +49,15 @@ export default class VoiceSettingsTab extends React.Component {
     }
 
     componentWillUnmount(): void {
-        if (PlatformPeg.get().isElectron()) {
-            const {ipcRenderer} = require('electron');
-            ipcRenderer.removeListener('settings', this._electronSettings);
+        if (PlatformPeg.get().supportsAutoLaunch()) {
+            //ipcRenderer.get().removeListener('settings', this._electronSettings);
 
-            // Stop recording push-to-talk shortcut if tab is closed
+            // Stop recording push-to-talk shortcut if Settings or tab is closed
             this._stopRecordingGlobalShortcut();
         }
     }
 
-    _translateKeybinding(key) {
+    _translateKeybinding = (key) => {
         // Custom translations to make keycodes look nicer
 
         // KeyA -> A
@@ -68,7 +68,7 @@ export default class VoiceSettingsTab extends React.Component {
         return key;
     }
 
-    _startRecordingGlobalShortcut(asciiStateKey, codeStateKey) {
+    _startRecordingGlobalShortcut = (asciiStateKey, codeStateKey) => {
         const keyAscii = [];
         const keyCodes = [];
         const self = this;
@@ -76,7 +76,7 @@ export default class VoiceSettingsTab extends React.Component {
         // Record keypresses using KeyboardEvent
         // Used for displaying ascii-representation of current keys
         // in the UI
-        this.setState({listenKeydown: function(event) {
+        listenKeydown = (event) => {
             // TODO: Show RightShift and things
             const key = self._translateKeybinding(event.code);
             const index = keyAscii.indexOf(key);
@@ -85,23 +85,23 @@ export default class VoiceSettingsTab extends React.Component {
                 self.setState({pushToTalkAscii: keyAscii.join(' + ')});
             }
             event.preventDefault();
-        }});
-        this.setState({listenKeyup: function(event) {
+        };
+
+        listenKeyup = (event) => {
             const index = keyAscii.indexOf(self._translateKeybinding(event.code));
             if (index !== -1) {
                 keyAscii.splice(index, 1);
             }
             event.preventDefault();
-        }});
+        };
 
-        window.addEventListener("keydown", this.state.listenKeydown);
-        window.addEventListener("keyup", this.state.listenKeyup);
+        window.addEventListener("keydown", listenKeydown);
+        window.addEventListener("keyup", listenKeyup);
 
         // Record keypresses using iohook
         // Used for getting keycode-representation of current keys
         // for later global shortcut registration
-        const {ipcRenderer} = require('electron');
-        ipcRenderer.send('start-listening-keys');
+        PlatformPeg.get().startListeningKeys();
 
         // When a key is pressed, add all current pressed keys to the shortcut
         // When a key is lifted, don't remove it from the shortcut
@@ -109,7 +109,7 @@ export default class VoiceSettingsTab extends React.Component {
         // This enables a nicer shortcut-recording experience, as the user can
         // press down their desired keys, release them, and then save the
         // shortcut without all the keys disappearing
-        ipcRenderer.on('keypress', function(ev, event) {
+        PlatformPeg.get().onKeypress(this, (ev, event) => {
             if (event.keydown) {
                 const index = keyCodes.indexOf(event.keycode);
                 if (index === -1) {
@@ -117,7 +117,7 @@ export default class VoiceSettingsTab extends React.Component {
                     // slice is needed here to save a new copy of the keycodes
                     // array to the state, else if we update keycodes later, it
                     // still updates the state since the state has a ref to this array
-                    self.setState({pushToTalkKeybinding: keyCodes.slice()});
+                    this.setState({pushToTalkKeybinding: keyCodes.slice()});
                 }
             } else {
                 const index = keyCodes.indexOf(event.keycode);
@@ -128,29 +128,30 @@ export default class VoiceSettingsTab extends React.Component {
         });
 
         // Stop recording shortcut if window loses focus
-        ipcRenderer.on('window-blurred', () => {
+        PlatformPeg.get().onWindowBlurred(() => {
             if (this.state.settingKeybinding) {
-                this._stopRecordingGlobalShortcut();
+                // TODO: Figure out why listener is not a function
+                //this._stopRecordingGlobalShortcut();
             }
         });
     }
 
-    _stopRecordingGlobalShortcut() {
+    _stopRecordingGlobalShortcut = () => {
         // Stop recording KeyboardEvent keypresses
-        window.removeEventListener("keydown", this.state.listenKeydown);
-        window.removeEventListener("keyup", this.state.listenKeyup);
+        window.removeEventListener("keydown", listenKeydown);
+        window.removeEventListener("keyup", listenKeyup);
 
         // Stop recording iohook keypresses
-        const {ipcRenderer} = require('electron');
-        ipcRenderer.send('stop-listening-keys');
+        PlatformPeg.get().stopListeningKeys();
 
         this.setState({settingKeybinding: false});
     }
 
-    _onSetPushToTalkClicked() {
+    _onSetPushToTalkClicked = () => {
         // Either record or save a new shortcut
+        const PushToTalk = require('../../../../PushToTalk');
         const id = 'pushToTalk';
-        const currentPTTState = getValue(id);
+        const currentPTTState = SettingsStore.getValue(id);
 
         // Determine if we're reading shortcuts or setting them
         if (!this.state.settingKeybinding) {
@@ -171,7 +172,7 @@ export default class VoiceSettingsTab extends React.Component {
             currentPTTState.ascii = this.state.pushToTalkAscii;
 
             // Update push to talk keybinding
-            setValue(id, null, SettingLevel.DEVICE, currentPTTState);
+            SettingsStore.setValue(id, null, SettingLevel.DEVICE, currentPTTState);
 
             // Enable and register new shortcut
             PushToTalk.enable(currentPTTState.keybinding);
@@ -181,36 +182,36 @@ export default class VoiceSettingsTab extends React.Component {
         this.setState({settingKeybinding: !this.state.settingKeybinding});
     }
 
-    _onTogglePushToTalkClicked(e) {
+    _onTogglePushToTalkClicked = (e) => {
         // Enable or disable push to talk functionality
+        const PushToTalk = require('../../../../PushToTalk');
         const id = 'pushToTalk';
-        const currentPTTState = getValueAt(SettingLevel.DEVICE, id);
+        const currentPTTState = SettingsStore.getValueAt(SettingLevel.DEVICE, id);
 
         if (e.target.checked) {
             // Enable push to talk
 
             this.setState({pushToTalkEnabled: true});
             currentPTTState.enabled = true;
-            setValue(id, null, SettingLevel.DEVICE, currentPTTState);
+            SettingsStore.setValue(id, null, SettingLevel.DEVICE, currentPTTState);
 
             PushToTalk.enable(currentPTTState.keybinding);
         } else {
             // Disable push to talk
-            console.log("Disabling push to talk...");
 
             this.setState({pushToTalkEnabled: false});
             currentPTTState.enabled = false;
-            setValue(id, null, SettingLevel.DEVICE, currentPTTState);
+            SettingsStore.setValue(id, null, SettingLevel.DEVICE, currentPTTState);
             this.setState({pushToTalkKeybinding: []});
 
             PushToTalk.disable();
         }
     }
 
-    _renderPushToTalkSettings() {
+    _renderPushToTalkSettings = () => {
         const id = "pushToTalk";
         const buttonLabel = this.state.settingKeybinding ? 'Stop' : 'Set';
-        const activated = getValueAt(SettingLevel.DEVICE, id).enabled;
+        const activated = SettingsStore.getValueAt(SettingLevel.DEVICE, id).enabled;
 
         return (
             <div>
@@ -223,7 +224,7 @@ export default class VoiceSettingsTab extends React.Component {
                             defaultChecked={activated}
                             onChange={this._onTogglePushToTalkClicked}
                         />
-                        <label htmlFor={id}>{getDisplayName(id)}</label>
+                        <label htmlFor={id}>{SettingsStore.getDisplayName(id)}</label>
                     </td>
                     <td>{"Shortcut: " + this.state.pushToTalkAscii}</td>
                     <td>
@@ -366,10 +367,10 @@ export default class VoiceSettingsTab extends React.Component {
             }
         }
 
-        if (PlatformPeg.get().isElectron()) {
+        if (PlatformPeg.get().supportsAutoLaunch()) {
             const id = "pushToTalk";
             const buttonLabel = this.state.settingKeybinding ? _t('Stop') : _t('Set');
-            const activated = getValueAt(SettingLevel.DEVICE, id).enabled;
+            const activated = SettingsStore.getValueAt(SettingLevel.DEVICE, id).enabled;
 
             pushToTalk = (
                 <div className="mx_UserSettings_toggle" key={id}>
@@ -379,7 +380,7 @@ export default class VoiceSettingsTab extends React.Component {
                             defaultChecked={activated}
                             onChange={this._onTogglePushToTalkClicked}
                         />
-                        <label htmlFor={id}>{getDisplayName(id)}</label>
+                        <label htmlFor={id}>{SettingsStore.getDisplayName(id)}</label>
                     </span>
                     <span>{" | Shortcut: " + this.state.pushToTalkAscii + " "}</span>
                     <span>
