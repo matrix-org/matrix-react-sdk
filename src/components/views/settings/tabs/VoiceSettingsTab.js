@@ -59,19 +59,18 @@ export default class VoiceSettingsTab extends React.Component {
     }
 
     _translateKeybinding = (key) => {
-        // Custom translations to make keycodes look nicer
-
         // KeyA -> A
         if (key.startsWith('Key')) {
             key = key.substring(3);
         }
 
-        // Direct translations
-        // TODO: Just use a map
-        if (key == "ShiftLeft") {
-            key = "Shift";
-        } else if (key == "AltLeft") {
-            key = "Alt";
+        // Custom translations to make keycodes look nicer
+        const translations = {
+            "ShiftLeft": "Shift",
+            "AltLeft": "Shift",
+        };
+        if (key in translations) {
+            key = translations[key];
         }
 
         return key;
@@ -117,8 +116,7 @@ export default class VoiceSettingsTab extends React.Component {
         // This enables a nicer shortcut-recording experience, as the user can
         // press down their desired keys, release them, and then save the
         // shortcut without all the keys disappearing
-        PlatformPeg.get().onKeypress((ev, event) => {
-            console.log("GOT KEYPRESS!")
+        PlatformPeg.get().onKeypress(this, (ev, event) => {
             if (event.keydown) {
                 const index = keyCodes.indexOf(event.keycode);
                 if (index === -1) {
@@ -138,7 +136,6 @@ export default class VoiceSettingsTab extends React.Component {
 
         // Stop recording shortcut if window loses focus
         PlatformPeg.get().onWindowBlurred(() => {
-            console.log("Setting keybinding:", this.state.settingKeybinding)
             if (this.state.settingKeybinding) {
                 // TODO: Stop this from killing PTT on blur
                 //this._stopRecordingGlobalShortcut();
@@ -152,7 +149,7 @@ export default class VoiceSettingsTab extends React.Component {
         window.removeEventListener("keyup", listenKeyup);
 
         // Stop recording iohook keypresses
-        PushToTalk.stopListening();
+        PlatformPeg.get().stopListeningKeys();
 
         this.setState({settingKeybinding: false});
     }
@@ -171,7 +168,8 @@ export default class VoiceSettingsTab extends React.Component {
         } else {
             this._stopRecordingGlobalShortcut();
 
-            // TODO: Combine the below into setKeybinding
+            // Disable and unregister old shortcut
+            PushToTalk.disable();
 
             // Set the keybinding they've currently selected
             currentPTTState.keybinding = this.state.pushToTalkKeybinding;
@@ -180,8 +178,8 @@ export default class VoiceSettingsTab extends React.Component {
             // Update push to talk keybinding
             SettingsStore.setValue(PushToTalk.id, null, SettingLevel.DEVICE, currentPTTState);
 
-            // Register new shortcut
-            PushToTalk.setKeybinding(currentPTTState.keybinding);
+            // Enable and register new shortcut
+            PushToTalk.enable(currentPTTState.keybinding);
         }
 
         // Toggle setting state
@@ -190,19 +188,24 @@ export default class VoiceSettingsTab extends React.Component {
 
     _onTogglePushToTalkClicked = (enabled) => {
         // Enable or disable push to talk functionality
+        const currentPTTState = SettingsStore.getValue(PushToTalk.id);
 
         if (enabled) {
             // Enable push to talk
             PlatformPeg.get().setupPTT();
 
             this.setState({pushToTalkEnabled: true});
+            SettingsStore.setValue(PushToTalk.id, null, SettingLevel.DEVICE, currentPTTState);
+            currentPTTState.enabled = true;
 
-            PushToTalk.enable();
+            PushToTalk.enable(currentPTTState.keybinding);
             PushToTalk.setKeybinding(SettingsStore.getValue(PushToTalk.id).keybinding);
         } else {
             // Disable push to talk
 
             this.setState({pushToTalkEnabled: false});
+            currentPTTState.enabled = false;
+            SettingsStore.setValue(PushToTalk.id, null, SettingLevel.DEVICE, currentPTTState);
             this.setState({pushToTalkKeybinding: []});
 
             PushToTalk.disable();
@@ -217,18 +220,14 @@ export default class VoiceSettingsTab extends React.Component {
         if (this.state.pushToTalkEnabled) {
             setShortcut = (
                 <div>
-                    <table>
-                    <tr>
-                    <td><span>{"Shortcut: " + this.state.pushToTalkAscii + " "}</span></td>
-                    <td style={{textAlign: "right"}}><span>
+                    <span>{"Shortcut: " + this.state.pushToTalkAscii + " "}</span>
+                    <span>
                         <button key={PushToTalk.id} className="mx_textButton"
                                 onClick={this._onSetPushToTalkClicked}
                                 disabled={!this.state.pushToTalkEnabled}>
                         {buttonLabel}
                         </button>
-                    </span></td>
-                    </tr>
-                    </table>
+                    </span>
                 </div>
             );
         }
