@@ -42,6 +42,7 @@ export default class VoiceSettingsTab extends React.Component {
             pushToTalkAscii: SettingsStore.getValue(PushToTalk.id).ascii,
             pushToTalkKeybinding: SettingsStore.getValue(PushToTalk.id).keybinding,
             pushToTalkEnabled: SettingsStore.getValue(PushToTalk.id).enabled,
+            pushToTalkToggleModeEnabled: SettingsStore.getValue(PushToTalk.id).toggle,
         };
     }
 
@@ -186,13 +187,20 @@ export default class VoiceSettingsTab extends React.Component {
         this.setState({settingKeybinding: !this.state.settingKeybinding});
     }
 
+    _onTogglePushToTalkToggleModeClicked = (enabled) => {
+        // Turns on/off toggle mode, which toggles the mic when the shortcut is pressed
+        const currentPTTState = SettingsStore.getValue(PushToTalk.id);
+
+        this.setState({pushToTalkToggleModeEnabled: enabled});
+        currentPTTState.toggle = enabled;
+    }
+
     _onTogglePushToTalkClicked = (enabled) => {
         // Enable or disable push to talk functionality
         const currentPTTState = SettingsStore.getValue(PushToTalk.id);
 
         if (enabled) {
             // Enable push to talk
-            PlatformPeg.get().setupPTT();
 
             this.setState({pushToTalkEnabled: true});
             SettingsStore.setValue(PushToTalk.id, null, SettingLevel.DEVICE, currentPTTState);
@@ -215,11 +223,15 @@ export default class VoiceSettingsTab extends React.Component {
     _renderPushToTalkSettings = () => {
         const buttonLabel = this.state.settingKeybinding ? _t('Stop') : _t('Set');
 
-        let setShortcut = null;
+        let setToggleShortcut = null;
 
         if (this.state.pushToTalkEnabled) {
-            setShortcut = (
+            setToggleShortcut = (
                 <div>
+                    <div className="mx_SettingsFlag">
+                        <span className="mx_SettingsFlag_label">{_t("Push-to-talk shortcut toggles microphone")}</span>
+                        <ToggleSwitch checked={this.state.pushToTalkToggleModeEnabled} onChange={this._onTogglePushToTalkToggleModeClicked} />
+                    </div>
                     <span>{"Shortcut: " + this.state.pushToTalkAscii + " "}</span>
                     <span>
                         <button key={PushToTalk.id} className="mx_textButton"
@@ -238,7 +250,7 @@ export default class VoiceSettingsTab extends React.Component {
                     <span className="mx_SettingsFlag_label">{SettingsStore.getDisplayName(PushToTalk.id)}</span>
                     <ToggleSwitch checked={this.state.pushToTalkEnabled} onChange={this._onTogglePushToTalkClicked} />
                 </div>
-                {setShortcut}
+                {setToggleShortcut}
             </div>
         );
     }

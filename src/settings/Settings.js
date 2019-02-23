@@ -105,6 +105,7 @@ export const SETTINGS = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: {
             enabled: false,
+            toggle: false,
             keybinding: [],
             ascii: 'Not set',
         },

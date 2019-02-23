@@ -30,8 +30,19 @@ export function enable(keybinding) {
         }
 
         const widgetMessaging = ActiveWidgetStore.getWidgetMessaging(widgetId);
-        widgetMessaging.unmuteJitsiAudio();
+
+        // Toggle mic if in toggle mode, else just activate mic
+        if (SettingsStore.getValue(id).toggle) {
+            widgetMessaging.toggleJitsiAudio();
+        } else {
+            widgetMessaging.unmuteJitsiAudio();
+        }
     }, () => {
+        // No release functionality if toggle mode is enabled
+        if (!SettingsStore.getValue(id).toggle) {
+            return;
+        }
+
         const widgetId = ActiveWidgetStore.getPersistentWidgetId();
 
         // Only try to un/mute if jitsi is onscreen
