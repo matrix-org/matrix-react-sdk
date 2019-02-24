@@ -86,6 +86,7 @@ export default class VoiceSettingsTab extends React.Component {
         // Used for displaying ascii-representation of current keys
         // in the UI
         listenKeydown = (event) => {
+            console.log("listenKeydown")
             const key = self._translateKeybinding(event.code);
             const index = keyAscii.indexOf(key);
             if (index === -1) {
@@ -96,6 +97,7 @@ export default class VoiceSettingsTab extends React.Component {
         };
 
         listenKeyup = (event) => {
+            console.log("listenKeyup")
             const index = keyAscii.indexOf(self._translateKeybinding(event.code));
             if (index !== -1) {
                 keyAscii.splice(index, 1);
@@ -199,23 +201,16 @@ export default class VoiceSettingsTab extends React.Component {
         // Enable or disable push to talk functionality
         const currentPTTState = SettingsStore.getValue(PushToTalk.id);
 
+        // Set push to talk state in SettingsStore
+        currentPTTState.enabled = enabled;
+        SettingsStore.setValue(PushToTalk.id, null, SettingLevel.DEVICE, currentPTTState);
+
+        this.setState({pushToTalkEnabled: enabled});
+
+        // Enable/disable push to talk
         if (enabled) {
-            // Enable push to talk
-
-            this.setState({pushToTalkEnabled: true});
-            SettingsStore.setValue(PushToTalk.id, null, SettingLevel.DEVICE, currentPTTState);
-            currentPTTState.enabled = true;
-
             PushToTalk.enable(currentPTTState.keybinding);
-            PushToTalk.setKeybinding(SettingsStore.getValue(PushToTalk.id).keybinding);
         } else {
-            // Disable push to talk
-
-            this.setState({pushToTalkEnabled: false});
-            currentPTTState.enabled = false;
-            SettingsStore.setValue(PushToTalk.id, null, SettingLevel.DEVICE, currentPTTState);
-            this.setState({pushToTalkKeybinding: []});
-
             PushToTalk.disable();
         }
     }
@@ -232,14 +227,18 @@ export default class VoiceSettingsTab extends React.Component {
                         <span className="mx_SettingsFlag_label">{_t("Push-to-talk shortcut toggles microphone")}</span>
                         <ToggleSwitch checked={this.state.pushToTalkToggleModeEnabled} onChange={this._onTogglePushToTalkToggleModeClicked} />
                     </div>
-                    <span>{"Shortcut: " + this.state.pushToTalkAscii + " "}</span>
-                    <span>
-                        <button key={PushToTalk.id} className="mx_textButton"
-                                onClick={this._onSetPushToTalkClicked}
-                                disabled={!this.state.pushToTalkEnabled}>
-                        {buttonLabel}
-                        </button>
-                    </span>
+                    <div>
+                        <span className="mx_Shortcut">
+                            <span>{_t("Shortcut:") + " " + this.state.pushToTalkAscii + " "}</span>
+                        </span>
+                        <span className="mx_ShortcutSet">
+                            <button key={PushToTalk.id} className="mx_textButton"
+                                    onClick={this._onSetPushToTalkClicked}
+                                    disabled={!this.state.pushToTalkEnabled}>
+                            {buttonLabel}
+                            </button>
+                        </span>
+                    </div>
                 </div>
             );
         }

@@ -20,6 +20,10 @@ import SettingsStore from './settings/SettingsStore';
 
 export const id = "pushToTalk";
 
+export function startListeningKeys() {
+    PlatformPeg.get().startListeningKeys();
+}
+
 export function enable(keybinding) {
     PlatformPeg.get().addGlobalKeybinding(id, keybinding, () => {
         const widgetId = ActiveWidgetStore.getPersistentWidgetId();
@@ -39,7 +43,7 @@ export function enable(keybinding) {
         }
     }, () => {
         // No release functionality if toggle mode is enabled
-        if (!SettingsStore.getValue(id).toggle) {
+        if (SettingsStore.getValue(id).toggle === false) {
             return;
         }
 
