@@ -21,7 +21,7 @@ import SettingsStore, { SettingLevel } from './settings/SettingsStore';
 export const id = "pushToTalk";
 
 export function start(keybinding) {
-    // In a call, start listening for keys
+    // Call starting, start listening for keys
     const currentPTTState = SettingsStore.getValue(id);
     currentPTTState.isInCall = true;
     SettingsStore.setValue(id, null, SettingLevel.DEVICE, currentPTTState);
@@ -29,6 +29,7 @@ export function start(keybinding) {
 }
 
 export function stop() {
+    // Call finished, stop listening for keys
     const currentPTTState = SettingsStore.getValue(id);
     currentPTTState.isInCall = false;
     SettingsStore.setValue(id, null, SettingLevel.DEVICE, currentPTTState);
@@ -36,8 +37,8 @@ export function stop() {
 }
 
 export function setKeybinding(keybinding) {
+    // Add keybinding listener
     PlatformPeg.get().addGlobalKeybinding(id, keybinding, () => {
-        console.warn("Keybinding pressed")
         const widgetId = ActiveWidgetStore.getPersistentWidgetId();
 
         // Only try to un/mute if jitsi is onscreen
@@ -49,10 +50,8 @@ export function setKeybinding(keybinding) {
 
         // Toggle mic if in toggle mode, else just activate mic
         if (SettingsStore.getValue(id).toggle) {
-            console.warn("Toggling")
             widgetMessaging.toggleJitsiAudio();
         } else {
-            console.warn("normal")
             widgetMessaging.unmuteJitsiAudio();
         }
     }, () => {
@@ -75,6 +74,7 @@ export function setKeybinding(keybinding) {
 }
 
 export function removeKeybinding() {
+    // Remove keybinding listener
     const keybinding = SettingsStore.getValue(id).keybinding;
     PlatformPeg.get().removeGlobalKeybinding(id, keybinding);
     PlatformPeg.get().stopListeningKeys();
