@@ -265,7 +265,9 @@ export default class VoiceSettingsTab extends React.Component {
 
     _requestMediaPermissions = () => {
         const getUserMedia = (
-            window.navigator.getUserMedia || window.navigator.webkitGetUserMedia || window.navigator.mediaDevices.mozGetUserMedia
+            window.navigator.getUserMedia ||
+            window.navigator.webkitGetUserMedia ||
+            window.navigator.mediaDevices.mozGetUserMedia
         );
         if (getUserMedia) {
             return getUserMedia.apply(window.navigator, [
