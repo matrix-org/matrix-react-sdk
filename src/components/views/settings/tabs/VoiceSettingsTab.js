@@ -55,6 +55,7 @@ export default class VoiceSettingsTab extends React.Component {
             //ipcRenderer.get().removeListener('settings', this._electronSettings);
 
             // Stop recording push-to-talk shortcut if Settings or tab is closed
+            console.log("Stop recording!")
             this._stopRecordingGlobalShortcut();
         }
     }
@@ -166,13 +167,17 @@ export default class VoiceSettingsTab extends React.Component {
             // Start listening for keypresses and show current held shortcut on
             // screen
 
+            PushToTalk.removeKeybinding();
+
             this.state.pushToTalkAscii = 'Press Keys';
             this._startRecordingGlobalShortcut('pushToTalkAscii', 'pushToTalkKeybinding');
         } else {
             this._stopRecordingGlobalShortcut();
 
-            // Disable and unregister old shortcut
-            PushToTalk.disable();
+            if (currentPTTState.isInCall) {
+                // Switch shortcut while in a call
+                PushToTalk.setKeybinding(this.state.pushToTalkKeybinding);
+            }
 
             // Set the keybinding they've currently selected
             currentPTTState.keybinding = this.state.pushToTalkKeybinding;
@@ -180,9 +185,6 @@ export default class VoiceSettingsTab extends React.Component {
 
             // Update push to talk keybinding
             SettingsStore.setValue(PushToTalk.id, null, SettingLevel.DEVICE, currentPTTState);
-
-            // Enable and register new shortcut
-            PushToTalk.enable(currentPTTState.keybinding);
         }
 
         // Toggle setting state
@@ -191,10 +193,12 @@ export default class VoiceSettingsTab extends React.Component {
 
     _onTogglePushToTalkToggleModeClicked = (enabled) => {
         // Turns on/off toggle mode, which toggles the mic when the shortcut is pressed
+
         const currentPTTState = SettingsStore.getValue(PushToTalk.id);
+        currentPTTState.toggle = enabled;
+        SettingsStore.setValue(PushToTalk.id, null, SettingLevel.DEVICE, currentPTTState);
 
         this.setState({pushToTalkToggleModeEnabled: enabled});
-        currentPTTState.toggle = enabled;
     }
 
     _onTogglePushToTalkClicked = (enabled) => {
@@ -206,13 +210,6 @@ export default class VoiceSettingsTab extends React.Component {
         SettingsStore.setValue(PushToTalk.id, null, SettingLevel.DEVICE, currentPTTState);
 
         this.setState({pushToTalkEnabled: enabled});
-
-        // Enable/disable push to talk
-        if (enabled) {
-            PushToTalk.enable(currentPTTState.keybinding);
-        } else {
-            PushToTalk.disable();
-        }
     }
 
     _renderPushToTalkSettings = () => {

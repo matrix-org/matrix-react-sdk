@@ -118,8 +118,8 @@ export default class PersistedElement extends React.Component {
         // TODO: This seems quite hacky - is there a better way to
         // check if this is a Jitsi vs. StickerPicker widget?
         if (this.props.persistKey.includes('jitsi') && SettingsStore.getValue(PushToTalk.id).enabled) {
-            PushToTalk.startListeningKeys();
-            PushToTalk.enable(SettingsStore.getValue(PushToTalk.id).keybinding);
+            console.warn("JITSI MOUNTING")
+            PushToTalk.start(SettingsStore.getValue(PushToTalk.id).keybinding);
         }
 
         this.updateChild();
@@ -137,7 +137,8 @@ export default class PersistedElement extends React.Component {
 
         // Stop Push-To-Talk service when Jitsi widget is unmounted
         if (this.props.persistKey.includes('jitsi') && SettingsStore.getValue(PushToTalk.id).enabled) {
-            PushToTalk.disable();
+            console.warn("JITSI UNMOUNTING")
+            PushToTalk.stop();
         }
     }
 

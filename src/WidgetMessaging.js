@@ -103,7 +103,7 @@ export default class WidgetMessaging {
     toggleJitsiAudio() {
         return this.messageToWidget({
             api: OUTBOUND_API_NAME,
-            action: "audioMuteToggle",
+            action: "audioToggle",
         }).then((response) => {
             return response.success;
         });

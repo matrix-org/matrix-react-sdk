@@ -16,16 +16,28 @@ limitations under the License.
 
 import PlatformPeg from './PlatformPeg';
 import ActiveWidgetStore from './stores/ActiveWidgetStore';
-import SettingsStore from './settings/SettingsStore';
+import SettingsStore, { SettingLevel } from './settings/SettingsStore';
 
 export const id = "pushToTalk";
 
-export function startListeningKeys() {
-    PlatformPeg.get().startListeningKeys();
+export function start(keybinding) {
+    // In a call, start listening for keys
+    const currentPTTState = SettingsStore.getValue(id);
+    currentPTTState.isInCall = true;
+    SettingsStore.setValue(id, null, SettingLevel.DEVICE, currentPTTState);
+    setKeybinding(keybinding);
 }
 
-export function enable(keybinding) {
+export function stop() {
+    const currentPTTState = SettingsStore.getValue(id);
+    currentPTTState.isInCall = false;
+    SettingsStore.setValue(id, null, SettingLevel.DEVICE, currentPTTState);
+    removeKeybinding();
+}
+
+export function setKeybinding(keybinding) {
     PlatformPeg.get().addGlobalKeybinding(id, keybinding, () => {
+        console.warn("Keybinding pressed")
         const widgetId = ActiveWidgetStore.getPersistentWidgetId();
 
         // Only try to un/mute if jitsi is onscreen
@@ -37,13 +49,15 @@ export function enable(keybinding) {
 
         // Toggle mic if in toggle mode, else just activate mic
         if (SettingsStore.getValue(id).toggle) {
+            console.warn("Toggling")
             widgetMessaging.toggleJitsiAudio();
         } else {
+            console.warn("normal")
             widgetMessaging.unmuteJitsiAudio();
         }
     }, () => {
         // No release functionality if toggle mode is enabled
-        if (SettingsStore.getValue(id).toggle === false) {
+        if (SettingsStore.getValue(id).toggle === true) {
             return;
         }
 
@@ -57,9 +71,11 @@ export function enable(keybinding) {
         const widgetMessaging = ActiveWidgetStore.getWidgetMessaging(widgetId);
         widgetMessaging.muteJitsiAudio();
     });
+    PlatformPeg.get().startListeningKeys();
 }
 
-export function disable() {
+export function removeKeybinding() {
     const keybinding = SettingsStore.getValue(id).keybinding;
     PlatformPeg.get().removeGlobalKeybinding(id, keybinding);
+    PlatformPeg.get().stopListeningKeys();
 }
