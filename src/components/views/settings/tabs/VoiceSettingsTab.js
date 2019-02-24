@@ -55,7 +55,6 @@ export default class VoiceSettingsTab extends React.Component {
             //ipcRenderer.get().removeListener('settings', this._electronSettings);
 
             // Stop recording push-to-talk shortcut if Settings or tab is closed
-            console.log("Stop recording!")
             this._stopRecordingGlobalShortcut();
         }
     }
@@ -87,7 +86,6 @@ export default class VoiceSettingsTab extends React.Component {
         // Used for displaying ascii-representation of current keys
         // in the UI
         listenKeydown = (event) => {
-            console.log("listenKeydown")
             const key = self._translateKeybinding(event.code);
             const index = keyAscii.indexOf(key);
             if (index === -1) {
@@ -98,7 +96,6 @@ export default class VoiceSettingsTab extends React.Component {
         };
 
         listenKeyup = (event) => {
-            console.log("listenKeyup")
             const index = keyAscii.indexOf(self._translateKeybinding(event.code));
             if (index !== -1) {
                 keyAscii.splice(index, 1);
