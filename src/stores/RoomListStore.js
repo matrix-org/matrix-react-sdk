@@ -75,6 +75,11 @@ class RoomListStore extends Store {
         }
     }
 
+    // For unit tests
+    reset() {
+        this._init();
+    }
+
     _init() {
         // Initialise state
         const defaultLists = {

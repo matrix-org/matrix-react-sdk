@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import peg from '../src/MatrixClientPeg';
 import dis from '../src/dispatcher';
 import jssdk from 'matrix-js-sdk';
+import SettingsStore from "../src/settings/SettingsStore";
 const MatrixEvent = jssdk.MatrixEvent;
 
 /**
@@ -27,6 +28,45 @@ export function beforeEach(context) {
 
     console.log(desc);
     console.log(new Array(1 + desc.length).join("="));
+}
+
+/**
+ * Stubs out the SettingsStore with a fresh instance of a test SettingsStore.
+ * Using the SettingsStore after this is called will result in the test fixture
+ * being used. Call `reset()` on the returned object to reset to using the normal
+ * SettingsStore as it was intended.
+ *
+ * @returns {object} an object with a single function, reset, to return the SettingsStore
+ * to normal.
+ */
+export function stubSettings() {
+    SettingsStore.testFixture = createTestSettingsStore();
+    return {reset: () => SettingsStore.testFixture = null};
+}
+
+/**
+ * Creates a SettingsStore which doesn't respect levels but does track which settings
+ * are configured.
+ *
+ * @returns {object} A mostly-stubbed SettingsStore implementation.
+ */
+export function createTestSettingsStore() {
+    const settings = {};
+    return {
+        watchSetting: sinon.stub().returns("fake_ref"),
+        unwatchSetting: sinon.stub(),
+        monitorSetting: sinon.stub(),
+        getDisplayName: (settingName) => settings[settingName] ? settingName : null,
+        getLabsFeatures: sinon.stub().returns([]),
+        isFeature: (settingName) => !!settings[settingName],
+        isFeatureEnabled: (settingName) => settings[settingName],
+        setFeatureEnabled: (settingName, val) => settings[settingName] = val,
+        getValue: (settingName) => settings[settingName],
+        getValueAt: (settingName) => settings[settingName],
+        setValue: (settingName, val) => settings[settingName] = val,
+        canSetValue: sinon.stub().returns(true),
+        isLevelSupported: sinon.stub().returns(true),
+    };
 }
 
 

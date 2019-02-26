@@ -100,6 +100,22 @@ const LEVEL_ORDER = [
  * be enabled).
  */
 export default class SettingsStore {
+    // *********************
+    //  FOR UNIT TESTS ONLY
+    // *********************
+    static _testFixture;
+
+    static set testFixture(val) {
+        if (val) {
+            console.warn("!! Using test fixture for settings !!");
+            console.warn("Values, watchers, etc are now the responsibility of the fixture.");
+            SettingsStore._testFixture = val;
+        } else {
+            console.warn("Test fixture for settings disabled.");
+            SettingsStore._testFixture = null;
+        }
+    }
+
     // We support watching settings for changes, and do so only at the levels which are
     // relevant to the setting. We pass the watcher on to the handlers and aggregate it
     // before sending it off to the caller. We need to track which callback functions we
@@ -129,6 +145,10 @@ export default class SettingsStore {
      * @returns {string} A reference to the watcher that was employed.
      */
     static watchSetting(settingName, roomId, callbackFn) {
+        if (SettingsStore._testFixture) {
+            return SettingsStore._testFixture.watchSetting(settingName, roomId, callbackFn);
+        }
+
         const setting = SETTINGS[settingName];
         const originalSettingName = settingName;
         if (!setting) throw new Error(`${settingName} is not a setting`);
@@ -164,6 +184,10 @@ export default class SettingsStore {
      * to cancel.
      */
     static unwatchSetting(watcherReference) {
+        if (SettingsStore._testFixture) {
+            return SettingsStore._testFixture.unwatchSetting(watcherReference);
+        }
+
         if (!SettingsStore._watchers[watcherReference]) return;
 
         for (const handlerName of Object.keys(SettingsStore._watchers[watcherReference])) {
@@ -184,6 +208,10 @@ export default class SettingsStore {
      * @param {String} roomId The room ID to monitor for changes in. Use null for all rooms.
      */
     static monitorSetting(settingName, roomId) {
+        if (SettingsStore._testFixture) {
+            return SettingsStore._testFixture.monitorSetting(settingName, roomId);
+        }
+
         if (!this._monitors[settingName]) this._monitors[settingName] = {};
 
         const registerWatcher = () => {
@@ -223,6 +251,10 @@ export default class SettingsStore {
      * @return {String} The display name for the setting, or null if not found.
      */
     static getDisplayName(settingName, atLevel = "default") {
+        if (SettingsStore._testFixture) {
+            return SettingsStore._testFixture.getDisplayName(settingName, atLevel);
+        }
+
         if (!SETTINGS[settingName] || !SETTINGS[settingName].displayName) return null;
 
         let displayName = SETTINGS[settingName].displayName;
@@ -239,6 +271,10 @@ export default class SettingsStore {
      * @returns {string[]} The list of available feature names
      */
     static getLabsFeatures() {
+        if (SettingsStore._testFixture) {
+            return SettingsStore._testFixture.getLabsFeatures();
+        }
+
         const possibleFeatures = Object.keys(SETTINGS).filter((s) => SettingsStore.isFeature(s));
 
         const enableLabs = SdkConfig.get()["enableLabs"];
@@ -253,6 +289,10 @@ export default class SettingsStore {
      * @return {boolean} True if the setting is a feature.
      */
     static isFeature(settingName) {
+        if (SettingsStore._testFixture) {
+            return SettingsStore._testFixture.isFeature(settingName);
+        }
+
         if (!SETTINGS[settingName]) return false;
         return SETTINGS[settingName].isFeature;
     }
@@ -265,6 +305,10 @@ export default class SettingsStore {
      * @return {boolean} True if the feature is enabled, false otherwise
      */
     static isFeatureEnabled(settingName, roomId = null) {
+        if (SettingsStore._testFixture) {
+            return SettingsStore._testFixture.isFeatureEnabled(settingName, roomId);
+        }
+
         if (!SettingsStore.isFeature(settingName)) {
             throw new Error("Setting " + settingName + " is not a feature");
         }
@@ -279,6 +323,10 @@ export default class SettingsStore {
      * @returns {Promise} Resolves when the setting has been set.
      */
     static setFeatureEnabled(settingName, value) {
+        if (SettingsStore._testFixture) {
+            return SettingsStore._testFixture.setFeatureEnabled(settingName, value);
+        }
+
         // Verify that the setting is actually a setting
         if (!SETTINGS[settingName]) {
             throw new Error("Setting '" + settingName + "' does not appear to be a setting.");
@@ -299,6 +347,10 @@ export default class SettingsStore {
      * @return {*} The value, or null if not found
      */
     static getValue(settingName, roomId = null, excludeDefault = false) {
+        if (SettingsStore._testFixture) {
+            return SettingsStore._testFixture.getValue(settingName, roomId, excludeDefault);
+        }
+
         // Verify that the setting is actually a setting
         if (!SETTINGS[settingName]) {
             throw new Error("Setting '" + settingName + "' does not appear to be a setting.");
@@ -322,6 +374,10 @@ export default class SettingsStore {
      * @return {*} The value, or null if not found.
      */
     static getValueAt(level, settingName, roomId = null, explicit = false, excludeDefault = false) {
+        if (SettingsStore._testFixture) {
+            return SettingsStore._testFixture.getValueAt(settingName, roomId, explicit, excludeDefault);
+        }
+
         // Verify that the setting is actually a setting
         const setting = SETTINGS[settingName];
         if (!setting) {
@@ -398,6 +454,10 @@ export default class SettingsStore {
      */
     /* eslint-enable valid-jsdoc */
     static async setValue(settingName, roomId, level, value) {
+        if (SettingsStore._testFixture) {
+            return SettingsStore._testFixture.setValue(settingName, roomId, level, value);
+        }
+
         // Verify that the setting is actually a setting
         const setting = SETTINGS[settingName];
         if (!setting) {
@@ -441,6 +501,10 @@ export default class SettingsStore {
      * @return {boolean} True if the user may set the setting, false otherwise.
      */
     static canSetValue(settingName, roomId, level) {
+        if (SettingsStore._testFixture) {
+            return SettingsStore._testFixture.canSetValue(settingName, roomId, level);
+        }
+
         // Verify that the setting is actually a setting
         if (!SETTINGS[settingName]) {
             throw new Error("Setting '" + settingName + "' does not appear to be a setting.");
@@ -458,6 +522,10 @@ export default class SettingsStore {
      * @return {boolean} True if the level is supported, false otherwise.
      */
     static isLevelSupported(level) {
+        if (SettingsStore._testFixture) {
+            return SettingsStore._testFixture.isLevelSupported(level);
+        }
+
         if (!LEVEL_HANDLERS[level]) return false;
         return LEVEL_HANDLERS[level].isSupported();
     }
