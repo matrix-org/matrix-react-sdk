@@ -23,12 +23,18 @@ limitations under the License.
     margin-right: 100px; // align with the rest of the fields
 }
 
-.mx_VoiceSettingsTab .mx_Shortcut {
-    margin-left: 130px;
+.mx_Shortcut {
+    height: 30px;
+}
+
+.mx_Shortcut_label {
+    margin-left: 30px;
 }
 
 .mx_VoiceSettingsTab .mx_ShortcutSet {
-    margin-right: 130px;
+    float: right;
+    width: 48px;
+    margin-right: 17px;
 }
 
 .mx_VoiceSettingsTab_missingMediaPermissions {

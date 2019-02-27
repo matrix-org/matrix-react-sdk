@@ -329,9 +329,7 @@ export default class AppTile extends React.Component {
      * Called when widget iframe has finished loading
      */
     _onLoaded() {
-        if (!ActiveWidgetStore.getWidgetMessaging(this.props.id)) {
-            this._setupWidgetMessaging();
-        }
+        this._setupWidgetMessaging();
         ActiveWidgetStore.setRoomId(this.props.id, this.props.room.roomId);
         this.setState({loading: false});
     }

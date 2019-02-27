@@ -222,16 +222,18 @@ export default class VoiceSettingsTab extends React.Component {
                         <ToggleSwitch checked={this.state.pushToTalkToggleModeEnabled} onChange={this._onTogglePushToTalkToggleModeClicked} />
                     </div>
                     <div>
-                        <span className="mx_Shortcut">
-                            <span>{_t("Shortcut:") + " " + this.state.pushToTalkAscii + " "}</span>
-                        </span>
-                        <span className="mx_ShortcutSet">
-                            <button key={PushToTalk.id} className="mx_textButton"
-                                    onClick={this._onSetPushToTalkClicked}
-                                    disabled={!this.state.pushToTalkEnabled}>
-                            {buttonLabel}
-                            </button>
-                        </span>
+                        <div className="mx_SettingsFlag mx_Shortcut">
+                            <span className="mx_SettingsFlag_label mx_Shortcut_label">
+                                {_t("Shortcut:") + " " + this.state.pushToTalkAscii + " "}
+                            </span>
+                            <span className="mx_ShortcutSet">
+                                <button key={PushToTalk.id} className="mx_textButton_small"
+                                        onClick={this._onSetPushToTalkClicked}
+                                        disabled={!this.state.pushToTalkEnabled}>
+                                {buttonLabel}
+                                </button>
+                            </span>
+                        </div>
                     </div>
                 </div>
             );
