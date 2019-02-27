@@ -308,7 +308,19 @@ module.exports = React.createClass({
         });
     },
 
-    onFormValidationFailed: function(errCode) {
+    onFormValidationChange: function(fieldErrors) {
+        // `fieldErrors` is an object mapping field IDs to error codes when there is an
+        // error or `null` for no error, so the values array will be something like:
+        // `[ null, "RegistrationForm.ERR_PASSWORD_MISSING", null]`
+        // Find the first non-null error code and show that.
+        const errCode = Object.values(fieldErrors).find(value => !!value);
+        if (!errCode) {
+            this.setState({
+                errorText: null,
+            });
+            return;
+        }
+
         let errMsg;
         switch (errCode) {
             case "RegistrationForm.ERR_PASSWORD_MISSING":
@@ -483,7 +495,9 @@ module.exports = React.createClass({
                 poll={true}
             />;
         } else if (this.state.busy || !this.state.flows) {
-            return <Spinner />;
+            return <div className="mx_AuthBody_spinner">
+                <Spinner />
+            </div>;
         } else {
             let onEditServerDetailsClick = null;
             // If custom URLs are allowed and we haven't selected the Free server type, wire
@@ -510,7 +524,7 @@ module.exports = React.createClass({
                 defaultPhoneNumber={this.state.formVals.phoneNumber}
                 defaultPassword={this.state.formVals.password}
                 minPasswordLength={MIN_PASSWORD_LENGTH}
-                onError={this.onFormValidationFailed}
+                onValidationChange={this.onFormValidationChange}
                 onRegisterClick={this.onFormSubmit}
                 onEditServerDetailsClick={onEditServerDetailsClick}
                 flows={this.state.flows}

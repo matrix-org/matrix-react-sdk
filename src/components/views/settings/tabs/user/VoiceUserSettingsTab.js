@@ -15,22 +15,23 @@ limitations under the License.
 */
 
 import React from 'react';
-import {_t} from "../../../../languageHandler";
-import CallMediaHandler from "../../../../CallMediaHandler";
-import Field from "../../elements/Field";
-import AccessibleButton from "../../elements/AccessibleButton";
+import {_t} from "../../../../../languageHandler";
+import CallMediaHandler from "../../../../../CallMediaHandler";
+import Field from "../../../elements/Field";
+import AccessibleButton from "../../../elements/AccessibleButton";
 import ToggleSwitch from "../../elements/ToggleSwitch";
-import SettingsStore, {SettingLevel} from "../../../../settings/SettingsStore";
-const PushToTalk = require('../../../../PushToTalk');
-const Modal = require("../../../../Modal");
-const sdk = require("../../../../index");
-const MatrixClientPeg = require("../../../../MatrixClientPeg");
+import SettingsStore, {SettingLevel} from "../../../../../settings/SettingsStore";
+import PushToTalk from "../../../../PushToTalk";
+const Modal = require("../../../../../Modal");
+const sdk = require("../../../../..");
+const MatrixClientPeg = require("../../../../../MatrixClientPeg");
 const PlatformPeg = require("../../../../PlatformPeg");
 
 let listenKeydown = null;
 let listenKeyup = null;
 
-export default class VoiceSettingsTab extends React.Component {
+.mx_VoiceUserSettingsTab_missingMediaPermissions {
+export default class VoiceUserSettingsTab extends React.Component {
     constructor() {
         super();
 
@@ -316,7 +317,7 @@ export default class VoiceSettingsTab extends React.Component {
         let pushToTalk = null;
         if (this.state.mediaDevices === false) {
             requestButton = (
-                <div className='mx_VoiceSettingsTab_missingMediaPermissions'>
+                <div className='mx_VoiceUserSettingsTab_missingMediaPermissions'>
                     <p>{_t("Missing media permissions, click the button below to request.")}</p>
                     <AccessibleButton onClick={this._requestMediaPermissions} kind="primary">
                         {_t("Request media permissions")}
@@ -383,7 +384,7 @@ export default class VoiceSettingsTab extends React.Component {
         }
 
         return (
-            <div className="mx_SettingsTab mx_VoiceSettingsTab">
+            <div className="mx_SettingsTab mx_VoiceUserSettingsTab">
                 <div className="mx_SettingsTab_heading">{_t("Voice & Video")}</div>
                 <div className="mx_SettingsTab_section">
                     {requestButton}

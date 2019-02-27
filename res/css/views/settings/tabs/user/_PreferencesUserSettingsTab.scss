@@ -14,6 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_NotificationSettingsTab .mx_SettingsTab_heading {
-    margin-bottom: 10px; // Give some spacing between the title and the first elements
+.mx_PreferencesUserSettingsTab .mx_Field {
+    margin-right: 100px; // Align with the rest of the controls
+}
+
+.mx_PreferencesUserSettingsTab .mx_Field input {
+    display: block;
+
+    // Subtract 10px padding on left and right
+    // This is to keep the input aligned with the rest of the tab's controls.
+    width: calc(100% - 20px);
 }

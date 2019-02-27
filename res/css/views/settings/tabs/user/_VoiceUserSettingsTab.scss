@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_VoiceSettingsTab .mx_Field select {
+.mx_VoiceUserSettingsTab .mx_Field select {
     width: 100%;
     max-width: 100%;
 }
 
-.mx_VoiceSettingsTab .mx_Field {
+.mx_VoiceUserSettingsTab .mx_Field {
     margin-right: 100px; // align with the rest of the fields
 }
 
@@ -37,6 +37,6 @@ limitations under the License.
     margin-right: 17px;
 }
 
-.mx_VoiceSettingsTab_missingMediaPermissions {
+.mx_VoiceUserSettingsTab_missingMediaPermissions {
     margin-bottom: 15px;
 }
