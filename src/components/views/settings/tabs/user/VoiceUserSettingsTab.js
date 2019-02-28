@@ -19,18 +19,17 @@ import {_t} from "../../../../../languageHandler";
 import CallMediaHandler from "../../../../../CallMediaHandler";
 import Field from "../../../elements/Field";
 import AccessibleButton from "../../../elements/AccessibleButton";
-import ToggleSwitch from "../../elements/ToggleSwitch";
+import ToggleSwitch from "../../../elements/ToggleSwitch";
 import SettingsStore, {SettingLevel} from "../../../../../settings/SettingsStore";
-import PushToTalk from "../../../../PushToTalk";
+import PushToTalk from "../../../../../PushToTalk";
 const Modal = require("../../../../../Modal");
 const sdk = require("../../../../..");
 const MatrixClientPeg = require("../../../../../MatrixClientPeg");
-const PlatformPeg = require("../../../../PlatformPeg");
+const PlatformPeg = require("../../../../../PlatformPeg");
 
 let listenKeydown = null;
 let listenKeyup = null;
 
-.mx_VoiceUserSettingsTab_missingMediaPermissions {
 export default class VoiceUserSettingsTab extends React.Component {
     constructor() {
         super();

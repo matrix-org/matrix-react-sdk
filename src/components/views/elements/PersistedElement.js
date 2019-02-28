@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 import ResizeObserver from 'resize-observer-polyfill';
 import SettingsStore from '../../../settings/SettingsStore';
 
-import * as PushToTalk from '../../../PushToTalk';
+import PushToTalk from '../../../PushToTalk';
 
 import dis from '../../../dispatcher';
 
