@@ -261,6 +261,15 @@ const Notifier = {
         if (ev.isDecryptionFailure()) return;
 
         const idx = this.pendingEncryptedEventIds.indexOf(ev.getId());
+        if (idx === -1 && ev.isEncrypted()) {
+            // Just recalculate the push actions on the event so that when the user
+            // refreshes, the message turns red for mentions. We should not be sending
+            // off popups or audio cues though.
+            //
+            // This ultimately sets new push actions, and we don't care about the returned
+            // value.
+            MatrixClientPeg.get().getPushActionsForEvent(ev, true);
+        }
         if (idx === -1) return;
 
         this.pendingEncryptedEventIds.splice(idx, 1);
