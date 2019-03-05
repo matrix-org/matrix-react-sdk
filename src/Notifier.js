@@ -287,7 +287,7 @@ const Notifier = {
 
     _evaluateEvent: function(ev) {
         const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
-        const actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
+        const actions = MatrixClientPeg.get().getPushActionsForEvent(ev, ev.isEncrypted());
         if (actions && actions.notify) {
             if (this.isEnabled()) {
                 this._displayPopupNotification(ev, room);
