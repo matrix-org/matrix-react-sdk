@@ -27,8 +27,12 @@ const sdk = require("../../../../..");
 const MatrixClientPeg = require("../../../../../MatrixClientPeg");
 const PlatformPeg = require("../../../../../PlatformPeg");
 
+// When removing a listener, you must specify the same function as when you added it
+// Thus we save the listener functions in a global variable to access later when
+// decommissioning them
 let listenKeydown = null;
 let listenKeyup = null;
+let globalListenKeydown = null;
 
 export default class VoiceUserSettingsTab extends React.Component {
     constructor() {
@@ -117,7 +121,7 @@ export default class VoiceUserSettingsTab extends React.Component {
         // This enables a nicer shortcut-recording experience, as the user can
         // press down their desired keys, release them, and then save the
         // shortcut without all the keys disappearing
-        PlatformPeg.get().onKeypress(this, (ev, event) => {
+        globalListenKeydown = (ev, event) => {
             if (event.keydown) {
                 const index = keyCodes.indexOf(event.keycode);
                 if (index === -1) {
@@ -133,7 +137,8 @@ export default class VoiceUserSettingsTab extends React.Component {
                     keyCodes.splice(index, 1);
                 }
             }
-        });
+        };
+        PlatformPeg.get().onKeypress(this, globalListenKeydown);
 
         // Stop recording shortcut if window loses focus
         PlatformPeg.get().onWindowBlurred(() => {
@@ -151,6 +156,7 @@ export default class VoiceUserSettingsTab extends React.Component {
 
         // Stop recording iohook keypresses
         PlatformPeg.get().stopListeningKeys();
+        PlatformPeg.get().removeOnKeypress(this, globalListenKeydown);
 
         this.setState({settingKeybinding: false});
     }
