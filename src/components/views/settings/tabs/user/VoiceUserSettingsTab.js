@@ -56,8 +56,6 @@ export default class VoiceUserSettingsTab extends React.Component {
 
     componentWillUnmount(): void {
         if (PlatformPeg.get().supportsAutoLaunch()) {
-            //ipcRenderer.get().removeListener('settings', this._electronSettings);
-
             // Stop recording push-to-talk shortcut if Settings or tab is closed
             this._stopRecordingGlobalShortcut();
         }
@@ -230,7 +228,7 @@ export default class VoiceUserSettingsTab extends React.Component {
                     <div>
                         <div className="mx_SettingsFlag mx_Shortcut">
                             <span className="mx_SettingsFlag_label mx_Shortcut_label">
-                                {_t("Shortcut:") + " " + this.state.pushToTalkAscii + " "}
+                                {_t("Shortcut") + ": " + this.state.pushToTalkAscii + " "}
                             </span>
                             <span className="mx_ShortcutSet">
                                 <button key={PushToTalk.id} className="mx_textButton_small"
