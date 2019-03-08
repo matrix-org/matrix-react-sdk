@@ -107,7 +107,7 @@ export const SETTINGS = {
             enabled: false,
             toggle: false,
             keybinding: [],
-            ascii: 'Not set',
+            ascii: _td('Not set'),
         },
     },
     "feature_room_breadcrumbs": {

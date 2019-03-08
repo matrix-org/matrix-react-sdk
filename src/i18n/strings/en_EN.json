@@ -275,6 +275,7 @@
     "Message Pinning": "Message Pinning",
     "Custom user status messages": "Custom user status messages",
     "Push-to-Talk": "Push-to-Talk",
+    "Not set": "Not set",
     "Show recent room avatars above the room list (refresh to apply changes)": "Show recent room avatars above the room list (refresh to apply changes)",
     "Group & filter rooms by custom tags (refresh to apply changes)": "Group & filter rooms by custom tags (refresh to apply changes)",
     "Render simple counters in room header": "Render simple counters in room header",
