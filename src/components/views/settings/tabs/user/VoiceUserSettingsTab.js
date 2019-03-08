@@ -72,7 +72,7 @@ export default class VoiceUserSettingsTab extends React.Component {
         // Custom translations to make keycodes look nicer
         const translations = {
             "ShiftLeft": "Shift",
-            "AltLeft": "Shift",
+            "AltLeft": "Alt",
         };
         if (key in translations) {
             key = translations[key];
