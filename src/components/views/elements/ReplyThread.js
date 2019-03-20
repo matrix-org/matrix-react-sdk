@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 import dis from '../../../dispatcher';
 import {wantsDateSeparator} from '../../../DateUtils';
 import {MatrixEvent, MatrixClient} from 'matrix-js-sdk';
-import {makeUserPermalink} from "../../../matrix-to";
+import {makeUserPermalink, RoomPermalinkCreator} from "../../../matrix-to";
 import SettingsStore from "../../../settings/SettingsStore";
 
 // This component does no cycle detection, simply because the only way to make such a cycle would be to
@@ -31,8 +31,8 @@ export default class ReplyThread extends React.Component {
         // the latest event in this chain of replies
         parentEv: PropTypes.instanceOf(MatrixEvent),
         // called when the ReplyThread contents has changed, including EventTiles thereof
-        onWidgetLoad: PropTypes.func.isRequired,
-        permalinkCreator: PropTypes.object.isRequired,
+        onHeightChanged: PropTypes.func.isRequired,
+        permalinkCreator: PropTypes.instanceOf(RoomPermalinkCreator).isRequired,
     };
 
     static contextTypes = {
@@ -160,11 +160,11 @@ export default class ReplyThread extends React.Component {
         };
     }
 
-    static makeThread(parentEv, onWidgetLoad, permalinkCreator, ref) {
+    static makeThread(parentEv, onHeightChanged, permalinkCreator, ref) {
         if (!ReplyThread.getParentEventId(parentEv)) {
             return <div />;
         }
-        return <ReplyThread parentEv={parentEv} onWidgetLoad={onWidgetLoad}
+        return <ReplyThread parentEv={parentEv} onHeightChanged={onHeightChanged}
             ref={ref} permalinkCreator={permalinkCreator} />;
     }
 
@@ -175,7 +175,7 @@ export default class ReplyThread extends React.Component {
     }
 
     componentDidUpdate() {
-        this.props.onWidgetLoad();
+        this.props.onHeightChanged();
     }
 
     componentWillUnmount() {
@@ -295,7 +295,7 @@ export default class ReplyThread extends React.Component {
                 { dateSep }
                 <EventTile mxEvent={ev}
                            tileShape="reply"
-                           onWidgetLoad={this.props.onWidgetLoad}
+                           onHeightChanged={this.props.onHeightChanged}
                            permalinkCreator={this.props.permalinkCreator}
                            isTwelveHour={SettingsStore.getValue("showTwelveHourTimestamps")} />
             </blockquote>;

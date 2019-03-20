@@ -241,11 +241,18 @@ export default class AppTile extends React.Component {
             this.props.onEditClick();
         } else {
             const IntegrationsManager = sdk.getComponent("views.settings.IntegrationsManager");
-            const src = this._scalarClient.getScalarInterfaceUrlForRoom(
-                this.props.room, 'type_' + this.props.type, this.props.id);
-            Modal.createTrackedDialog('Integrations Manager', '', IntegrationsManager, {
-                src: src,
-            }, "mx_IntegrationsManager");
+            this._scalarClient.connect().done(() => {
+                const src = this._scalarClient.getScalarInterfaceUrlForRoom(
+                    this.props.room, 'type_' + this.props.type, this.props.id);
+                Modal.createTrackedDialog('Integrations Manager', '', IntegrationsManager, {
+                    src: src,
+                }, "mx_IntegrationsManager");
+            }, (err) => {
+                this.setState({
+                    error: err.message,
+                });
+                console.error('Error ensuring a valid scalar_token exists', err);
+            });
         }
     }
 
@@ -329,7 +336,14 @@ export default class AppTile extends React.Component {
      * Called when widget iframe has finished loading
      */
     _onLoaded() {
+        // Destroy the old widget messaging before starting it back up again. Some widgets
+        // have startup routines that run when they are loaded, so we just need to reinitialize
+        // the messaging for them.
+        if (ActiveWidgetStore.getWidgetMessaging(this.props.id)) {
+            ActiveWidgetStore.delWidgetMessaging(this.props.id);
+        }
         this._setupWidgetMessaging();
+
         ActiveWidgetStore.setRoomId(this.props.id, this.props.room.roomId);
         this.setState({loading: false});
     }

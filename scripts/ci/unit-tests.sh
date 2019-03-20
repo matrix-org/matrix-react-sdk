@@ -1,10 +1,10 @@
 #!/bin/bash
 #
-# script which is run by the travis build (after `npm run test`).
+# script which is run by the CI build (after `yarn test`).
 #
 # clones riot-web develop and runs the tests against our version of react-sdk.
 
 set -ev
 
-scripts/travis/build.sh
-npm run test
+scripts/ci/build.sh
+yarn test
