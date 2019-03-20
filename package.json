@@ -9,6 +9,7 @@
   },
   "license": "Apache-2.0",
   "main": "lib/index.js",
+  "module": "src/index.js",
   "files": [
     ".babelrc",
     ".eslintrc.js",
