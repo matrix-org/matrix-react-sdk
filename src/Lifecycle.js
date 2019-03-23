@@ -406,6 +406,7 @@ let _isLoggingOut = false;
 
 /**
  * Logs the current session out and transitions to the logged-out state
+ * @returns {Promise} a promise which resolves when the logout has finished.
  */
 export function logout() {
     if (!MatrixClientPeg.get()) return;
