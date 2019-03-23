@@ -1839,6 +1839,12 @@ export default React.createClass({
                     defaultIsUrl: isUrl,
                     loadingDefaultHomeserver: false,
                 });
+
+                // Change over the guest account, if one exists
+                if (MatrixClientPeg.get() && MatrixClientPeg.get().isGuest()) {
+                    console.log("Discovered homeserver URLs - logging out current guest to use the homeserver");
+                    Lifecycle.logout().then(() => this._loadSession());
+                }
             }
         } catch (e) {
             console.error(e);
