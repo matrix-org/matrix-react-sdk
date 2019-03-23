@@ -502,15 +502,26 @@ export default React.createClass({
                 startAnyRegistrationFlow(payload);
                 break;
             case 'start_registration':
-                // This starts the full registration flow
-                this._startRegistration(payload.params || {});
-                break;
-            case 'start_login':
-                this.setStateForNewView({
-                    view: VIEWS.LOGIN,
+            case 'start_login': {
+                let logoutPromise = Promise.resolve();
+                if (payload.params && payload.params.logoutFirst) {
+                    logoutPromise = Lifecycle.logout();
+                }
+                logoutPromise.then(() => {
+                    if (payload.action === "start_login") {
+                        this.setStateForNewView({
+                            view: VIEWS.LOGIN,
+                        });
+                        this.notifyNewScreen('login');
+                    } else if (payload.action === "start_registration") {
+                        // This starts the full registration flow
+                        this._startRegistration(payload.params || {});
+                    } else {
+                        throw new Error("Unknown action for post-logout");
+                    }
                 });
-                this.notifyNewScreen('login');
                 break;
+            }
             case 'start_post_registration':
                 this.setState({
                     view: VIEWS.POST_REGISTRATION,

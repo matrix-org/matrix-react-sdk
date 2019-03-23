@@ -415,16 +415,18 @@ export function logout() {
         // Also we sometimes want to re-log in a guest session
         // if we abort the login
 
-        // use settimeout to avoid racing with react unmounting components
-        // which need a valid matrixclientpeg
-        setTimeout(()=>{
-            onLoggedOut();
-        }, 0);
-        return;
+        return new Promise((resolve, _reject) => {
+            // use settimeout to avoid racing with react unmounting components
+            // which need a valid matrixclientpeg
+            setTimeout(()=>{
+                onLoggedOut();
+                resolve();
+            }, 0);
+        });
     }
 
     _isLoggingOut = true;
-    MatrixClientPeg.get().logout().then(onLoggedOut,
+    return MatrixClientPeg.get().logout().then(onLoggedOut,
         (err) => {
             // Just throwing an error here is going to be very unhelpful
             // if you're trying to log out because your server's down and
