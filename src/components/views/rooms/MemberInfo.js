@@ -41,6 +41,9 @@ import withMatrixClient from '../../../wrappers/withMatrixClient';
 import AccessibleButton from '../elements/AccessibleButton';
 import RoomViewStore from '../../../stores/RoomViewStore';
 import SdkConfig from '../../../SdkConfig';
+import MultiInviter from "../../../utils/MultiInviter";
+import SettingsStore from "../../../settings/SettingsStore";
+import E2EIcon from "./E2EIcon";
 
 module.exports = withMatrixClient(React.createClass({
     displayName: 'MemberInfo',
@@ -151,9 +154,17 @@ module.exports = withMatrixClient(React.createClass({
             // Promise.resolve to handle transition from static result to promise; can be removed
             // in future
             Promise.resolve(this.props.matrixClient.getStoredDevicesForUser(userId)).then((devices) => {
-                this.setState({devices: devices});
+                this.setState({
+                    devices: devices,
+                    e2eStatus: this._getE2EStatus(devices),
+                });
             });
         }
+    },
+
+    _getE2EStatus: function(devices) {
+        const hasUnverifiedDevice = devices.some((device) => device.isUnverified());
+        return hasUnverifiedDevice ? "warning" : "verified";
     },
 
     onRoom: function(room) {
@@ -232,8 +243,13 @@ module.exports = withMatrixClient(React.createClass({
                 // we got cancelled - presumably a different user now
                 return;
             }
+
             self._disambiguateDevices(devices);
-            self.setState({devicesLoading: false, devices: devices});
+            self.setState({
+                devicesLoading: false,
+                devices: devices,
+                e2eStatus: self._getE2EStatus(devices),
+            });
         }, function(err) {
             console.log("Error downloading devices", err);
             self.setState({devicesLoading: false});
@@ -712,14 +728,20 @@ module.exports = withMatrixClient(React.createClass({
 
             if (!member || !member.membership || member.membership === 'leave') {
                 const roomId = member && member.roomId ? member.roomId : RoomViewStore.getRoomId();
-                const onInviteUserButton = async() => {
+                const onInviteUserButton = async () => {
                     try {
-                        await cli.invite(roomId, member.userId);
+                        // We use a MultiInviter to re-use the invite logic, even though
+                        // we're only inviting one user.
+                        const inviter = new MultiInviter(roomId);
+                        await inviter.invite([member.userId]).then(() => {
+                            if (inviter.getCompletionState(userId) !== "invited")
+                                throw new Error(inviter.getErrorText(userId));
+                        });
                     } catch (err) {
                         const ErrorDialog = sdk.getComponent('dialogs.ErrorDialog');
                         Modal.createTrackedDialog('Failed to invite', '', ErrorDialog, {
                             title: _t('Failed to invite'),
-                            description: ((err && err.message) ? err.message : "Operation failed"),
+                            description: ((err && err.message) ? err.message : _t("Operation failed")),
                         });
                     }
                 };
@@ -807,7 +829,7 @@ module.exports = withMatrixClient(React.createClass({
                 onClick={this.onNewDMClick}
             >
                 <div className="mx_RoomTile_avatar">
-                    <img src="img/create-big.svg" width="26" height="26" />
+                    <img src={require("../../../../res/img/create-big.svg")} width="26" height="26" />
                 </div>
                 <div className={labelClasses}><i>{ _t("Start a chat") }</i></div>
             </AccessibleButton>;
@@ -882,11 +904,16 @@ module.exports = withMatrixClient(React.createClass({
         let presenceState;
         let presenceLastActiveAgo;
         let presenceCurrentlyActive;
+        let statusMessage;
 
         if (this.props.member.user) {
             presenceState = this.props.member.user.presence;
             presenceLastActiveAgo = this.props.member.user.lastActiveAgo;
             presenceCurrentlyActive = this.props.member.user.currentlyActive;
+
+            if (SettingsStore.isFeatureEnabled("feature_custom_status")) {
+                statusMessage = this.props.member.user._unstable_statusMessage;
+            }
         }
 
         const room = this.props.matrixClient.getRoom(this.props.member.roomId);
@@ -908,58 +935,87 @@ module.exports = withMatrixClient(React.createClass({
                 presenceState={presenceState} />;
         }
 
+        let statusLabel = null;
+        if (statusMessage) {
+            statusLabel = <span className="mx_MemberInfo_statusMessage">{ statusMessage }</span>;
+        }
+
         let roomMemberDetails = null;
+        let e2eIconElement;
+
         if (this.props.member.roomId) { // is in room
             const PowerSelector = sdk.getComponent('elements.PowerSelector');
             roomMemberDetails = <div>
                 <div className="mx_MemberInfo_profileField">
-                    { _t("Level:") } <b>
-                        <PowerSelector controlled={true}
-                            value={parseInt(this.props.member.powerLevel)}
-                            maxValue={this.state.can.modifyLevelMax}
-                            disabled={!this.state.can.modifyLevel}
-                            usersDefault={powerLevelUsersDefault}
-                            onChange={this.onPowerChange} />
-                    </b>
+                    <PowerSelector
+                        value={parseInt(this.props.member.powerLevel)}
+                        maxValue={this.state.can.modifyLevelMax}
+                        disabled={!this.state.can.modifyLevel}
+                        usersDefault={powerLevelUsersDefault}
+                        onChange={this.onPowerChange} />
                 </div>
                 <div className="mx_MemberInfo_profileField">
                     {presenceLabel}
+                    {statusLabel}
                 </div>
+            </div>;
+
+            const isEncrypted = this.props.matrixClient.isRoomEncrypted(this.props.member.roomId);
+            if (this.state.e2eStatus && isEncrypted) {
+                e2eIconElement = (<E2EIcon status={this.state.e2eStatus} isUser={true} />);
+            }
+        }
+
+        const avatarUrl = this.props.member.getMxcAvatarUrl();
+        let avatarElement;
+        if (avatarUrl) {
+            const httpUrl = this.props.matrixClient.mxcUrlToHttp(avatarUrl, 800, 800);
+            avatarElement = <div className="mx_MemberInfo_avatar">
+                <img src={httpUrl} />
             </div>;
         }
 
         const GeminiScrollbarWrapper = sdk.getComponent("elements.GeminiScrollbarWrapper");
-        const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
         const EmojiText = sdk.getComponent('elements.EmojiText');
+
+        let backButton;
+        if (this.props.member.roomId) {
+            backButton = (<AccessibleButton className="mx_MemberInfo_cancel"
+                onClick={this.onCancel}
+                title={_t('Close')}
+            />);
+        }
+
         return (
             <div className="mx_MemberInfo">
-                <GeminiScrollbarWrapper autoshow={true}>
-                    <AccessibleButton className="mx_MemberInfo_cancel" onClick={this.onCancel}>
-                        <img src="img/cancel.svg" width="18" height="18" className="mx_filterFlipColor" alt={_t('Close')} />
-                    </AccessibleButton>
-                    <div className="mx_MemberInfo_avatar">
-                        <MemberAvatar onClick={this.onMemberAvatarClick} member={this.props.member} width={48} height={48} />
+                    <div className="mx_MemberInfo_name">
+                        { backButton }
+                        { e2eIconElement }
+                        <EmojiText element="h2">{ memberName }</EmojiText>
                     </div>
+                    { avatarElement }
+                    <div className="mx_MemberInfo_container">
 
-                    <EmojiText element="h2">{ memberName }</EmojiText>
-
-                    <div className="mx_MemberInfo_profile">
-                        <div className="mx_MemberInfo_profileField">
-                            { this.props.member.userId }
+                        <div className="mx_MemberInfo_profile">
+                            <div className="mx_MemberInfo_profileField">
+                                { this.props.member.userId }
+                            </div>
+                            { roomMemberDetails }
                         </div>
-                        { roomMemberDetails }
                     </div>
+                    <GeminiScrollbarWrapper autoshow={true} className="mx_MemberInfo_scrollContainer">
+                        <div className="mx_MemberInfo_container">
+                            { this._renderUserOptions() }
 
-                    { this._renderUserOptions() }
+                            { adminTools }
 
-                    { adminTools }
+                            { startChat }
 
-                    { startChat }
+                            { this._renderDevices() }
 
-                    { this._renderDevices() }
-
-                    { spinner }
-                </GeminiScrollbarWrapper>
+                            { spinner }
+                        </div>
+                    </GeminiScrollbarWrapper>
             </div>
         );
     },

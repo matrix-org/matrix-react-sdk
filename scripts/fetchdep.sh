@@ -1,22 +1,40 @@
-#!/bin/sh
+#!/bin/bash
 
-set -e
+set -x
 
-org="$1"
-repo="$2"
+deforg="$1"
+defrepo="$2"
+defbranch="$3"
 
-rm -r "$repo" || true
+[ -z "$defbranch" ] && defbranch="develop"
 
-curbranch="$TRAVIS_PULL_REQUEST_BRANCH"
-[ -z "$curbranch" ] && curbranch="$TRAVIS_BRANCH"
-[ -z "$curbranch" ] && curbranch=`"echo $GIT_BRANCH" | sed -e 's/^origin\///'` # jenkins
+rm -r "$defrepo" || true
 
-if [ -n "$curbranch" ]
-then
-    echo "Determined branch to be $curbranch"
+clone() {
+    org=$1
+    repo=$2
+    branch=$3
+    if [ -n "$branch" ]
+    then
+        echo "Trying to use $org/$repo#$branch"
+        git clone git://github.com/$org/$repo.git $repo --branch "$branch" && exit 0
+    fi
+}
 
-    git clone https://github.com/$org/$repo.git $repo --branch "$curbranch" && exit 0
+# Try the PR author's branch in case it exists on the deps as well.
+# If BUILDKITE_BRANCH is set, it will contain either:
+#   * "branch" when the author's branch and target branch are in the same repo
+#   * "author:branch" when the author's branch is in their fork
+# We can split on `:` into an array to check.
+BUILDKITE_BRANCH_ARRAY=(${BUILDKITE_BRANCH//:/ })
+if [[ "${#BUILDKITE_BRANCH_ARRAY[@]}" == "1" ]]; then
+    clone $deforg $defrepo $BUILDKITE_BRANCH
+elif [[ "${#BUILDKITE_BRANCH_ARRAY[@]}" == "2" ]]; then
+    clone ${BUILDKITE_BRANCH_ARRAY[0]} $defrepo ${BUILDKITE_BRANCH_ARRAY[1]}
 fi
-
-echo "Checking out develop branch"
-git clone https://github.com/$org/$repo.git $repo --branch develop
+# Try the target branch of the push or PR.
+clone $deforg $defrepo $BUILDKITE_PULL_REQUEST_BASE_BRANCH
+# Try the current branch from Jenkins.
+clone $deforg $defrepo `"echo $GIT_BRANCH" | sed -e 's/^origin\///'`
+# Use the default branch as the last resort.
+clone $deforg $defrepo $defbranch

@@ -30,6 +30,7 @@ import * as FormattingUtils from '../../../utils/FormattingUtils';
 import AccessibleButton from '../elements/AccessibleButton';
 import ActiveRoomObserver from '../../../ActiveRoomObserver';
 import RoomViewStore from '../../../stores/RoomViewStore';
+import SettingsStore from "../../../settings/SettingsStore";
 
 module.exports = React.createClass({
     displayName: 'RoomTile',
@@ -62,6 +63,7 @@ module.exports = React.createClass({
             notifState: RoomNotifs.getRoomNotifsState(this.props.room.roomId),
             notificationCount: this.props.room.getUnreadNotificationCount(),
             selected: this.props.room.roomId === RoomViewStore.getRoomId(),
+            statusMessage: this._getStatusMessage(),
         });
     },
 
@@ -79,11 +81,31 @@ module.exports = React.createClass({
         return Boolean(dmRooms);
     },
 
-    onRoomTimeline: function(ev, room) {
-        if (room !== this.props.room) return;
-        this.setState({
-            notificationCount: this.props.room.getUnreadNotificationCount(),
-        });
+    _shouldShowStatusMessage() {
+        if (!SettingsStore.isFeatureEnabled("feature_custom_status")) {
+            return false;
+        }
+        const isInvite = this.props.room.getMyMembership() === "invite";
+        const isJoined = this.props.room.getMyMembership() === "join";
+        const looksLikeDm = this.props.room.getInvitedAndJoinedMemberCount() === 2;
+        return !isInvite && isJoined && looksLikeDm;
+    },
+
+    _getStatusMessageUser() {
+        const selfId = MatrixClientPeg.get().getUserId();
+        const otherMember = this.props.room.currentState.getMembersExcept([selfId])[0];
+        if (!otherMember) {
+            return null;
+        }
+        return otherMember.user;
+    },
+
+    _getStatusMessage() {
+        const statusUser = this._getStatusMessageUser();
+        if (!statusUser) {
+            return "";
+        }
+        return statusUser._unstable_statusMessage;
     },
 
     onRoomName: function(room) {
@@ -112,7 +134,13 @@ module.exports = React.createClass({
                 this.setState({
                     notificationCount: this.props.room.getUnreadNotificationCount(),
                 });
-            break;
+                break;
+            // RoomTiles are one of the few components that may show custom status and
+            // also remain on screen while in Settings toggling the feature.  This ensures
+            // you can clearly see the status hide and show when toggling the feature.
+            case 'feature_custom_status_changed':
+                this.forceUpdate();
+                break;
         }
     },
 
@@ -124,21 +152,39 @@ module.exports = React.createClass({
 
     componentWillMount: function() {
         MatrixClientPeg.get().on("accountData", this.onAccountData);
-        MatrixClientPeg.get().on("Room.timeline", this.onRoomTimeline);
         MatrixClientPeg.get().on("Room.name", this.onRoomName);
         ActiveRoomObserver.addListener(this.props.room.roomId, this._onActiveRoomChange);
         this.dispatcherRef = dis.register(this.onAction);
+
+        if (this._shouldShowStatusMessage()) {
+            const statusUser = this._getStatusMessageUser();
+            if (statusUser) {
+                statusUser.on(
+                    "User._unstable_statusMessage",
+                    this._onStatusMessageCommitted,
+                );
+            }
+        }
     },
 
     componentWillUnmount: function() {
         const cli = MatrixClientPeg.get();
         if (cli) {
             MatrixClientPeg.get().removeListener("accountData", this.onAccountData);
-            MatrixClientPeg.get().removeListener("Room.timeline", this.onRoomTimeline);
             MatrixClientPeg.get().removeListener("Room.name", this.onRoomName);
         }
         ActiveRoomObserver.removeListener(this.props.room.roomId, this._onActiveRoomChange);
         dis.unregister(this.dispatcherRef);
+
+        if (this._shouldShowStatusMessage()) {
+            const statusUser = this._getStatusMessageUser();
+            if (statusUser) {
+                statusUser.removeListener(
+                    "User._unstable_statusMessage",
+                    this._onStatusMessageCommitted,
+                );
+            }
+        }
     },
 
     componentWillReceiveProps: function(props) {
@@ -164,6 +210,13 @@ module.exports = React.createClass({
             return true;
         }
         return false;
+    },
+
+    _onStatusMessageCommitted() {
+        // The status message `User` object has observed a message change.
+        this.setState({
+            statusMessage: this._getStatusMessage(),
+        });
     },
 
     onClick: function(ev) {
@@ -220,7 +273,7 @@ module.exports = React.createClass({
         this.setState( { badgeHover: false } );
     },
 
-    onBadgeClicked: function(e) {
+    onOpenMenu: function(e) {
         // Prevent the RoomTile onClick event firing as well
         e.stopPropagation();
         // Only allow non-guests to access the context menu
@@ -244,12 +297,17 @@ module.exports = React.createClass({
 
     render: function() {
         const isInvite = this.props.room.getMyMembership() === "invite";
-        const notificationCount = this.state.notificationCount;
+        const notificationCount = this.props.notificationCount;
         // var highlightCount = this.props.room.getUnreadNotificationCount("highlight");
 
         const notifBadges = notificationCount > 0 && this._shouldShowNotifBadge();
         const mentionBadges = this.props.highlight && this._shouldShowMentionBadge();
         const badges = notifBadges || mentionBadges;
+
+        let subtext = null;
+        if (this._shouldShowStatusMessage()) {
+            subtext = this.state.statusMessage;
+        }
 
         const classes = classNames({
             'mx_RoomTile': true,
@@ -261,6 +319,7 @@ module.exports = React.createClass({
             'mx_RoomTile_menuDisplayed': this.state.menuDisplayed,
             'mx_RoomTile_noBadges': !badges,
             'mx_RoomTile_transparent': this.props.transparent,
+            'mx_RoomTile_hasSubtext': subtext && !this.props.collapsed,
         });
 
         const avatarClasses = classNames({
@@ -276,21 +335,17 @@ module.exports = React.createClass({
         if (name == undefined || name == null) name = '';
         name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
 
-        let badgeContent;
 
-        if (this.state.badgeHover || this.state.menuDisplayed) {
-            badgeContent = "\u00B7\u00B7\u00B7";
-        } else if (badges) {
+        let badge;
+        if (badges) {
             const limitedCount = FormattingUtils.formatCount(notificationCount);
-            badgeContent = notificationCount ? limitedCount : '!';
-        } else {
-            badgeContent = '\u200B';
+            const badgeContent = notificationCount ? limitedCount : '!';
+            badge = <div className={badgeClasses}>{ badgeContent }</div>;
         }
-
-        const badge = <div className={badgeClasses} onClick={this.onBadgeClicked}>{ badgeContent }</div>;
 
         const EmojiText = sdk.getComponent('elements.EmojiText');
         let label;
+        let subtextLabel;
         let tooltip;
         if (!this.props.collapsed) {
             const nameClasses = classNames({
@@ -298,6 +353,8 @@ module.exports = React.createClass({
                 'mx_RoomTile_invite': this.props.isInvite,
                 'mx_RoomTile_badgeShown': badges || this.state.badgeHover || this.state.menuDisplayed,
             });
+
+            subtextLabel = subtext ? <span className="mx_RoomTile_subtext">{ subtext }</span> : null;
 
             if (this.state.selected) {
                 const nameSelected = <EmojiText>{ name }</EmojiText>;
@@ -307,8 +364,8 @@ module.exports = React.createClass({
                 label = <EmojiText element="div" title={name} className={nameClasses} dir="auto">{ name }</EmojiText>;
             }
         } else if (this.state.hover) {
-            const RoomTooltip = sdk.getComponent("rooms.RoomTooltip");
-            tooltip = <RoomTooltip className="mx_RoomTile_tooltip" label={this.props.room.name} dir="auto" />;
+            const Tooltip = sdk.getComponent("elements.Tooltip");
+            tooltip = <Tooltip className="mx_RoomTile_tooltip" label={this.props.room.name} dir="auto" />;
         }
 
         //var incomingCallBox;
@@ -317,11 +374,22 @@ module.exports = React.createClass({
         //    incomingCallBox = <IncomingCallBox incomingCall={ this.props.incomingCall }/>;
         //}
 
+        let contextMenuButton;
+        if (!MatrixClientPeg.get().isGuest()) {
+            contextMenuButton = <AccessibleButton className="mx_RoomTile_menuButton" onClick={this.onOpenMenu} />;
+        }
+
         const RoomAvatar = sdk.getComponent('avatars.RoomAvatar');
 
         let dmIndicator;
         if (this._isDirectMessageRoom(this.props.room.roomId)) {
-            dmIndicator = <img src="img/icon_person.svg" className="mx_RoomTile_dm" width="11" height="13" alt="dm" />;
+            dmIndicator = <img
+                src={require("../../../../res/img/icon_person.svg")}
+                className="mx_RoomTile_dm"
+                width="11"
+                height="13"
+                alt="dm"
+            />;
         }
 
         return <AccessibleButton tabIndex="0"
@@ -338,7 +406,11 @@ module.exports = React.createClass({
                 </div>
             </div>
             <div className="mx_RoomTile_nameContainer">
-                { label }
+                <div className="mx_RoomTile_labelContainer">
+                    { label }
+                    { subtextLabel }
+                </div>
+                { contextMenuButton }
                 { badge }
             </div>
             { /* { incomingCallBox } */ }

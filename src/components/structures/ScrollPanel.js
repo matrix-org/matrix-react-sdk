@@ -78,6 +78,7 @@ if (DEBUG_SCROLL) {
  * scroll down further. If stickyBottom is disabled, we just save the scroll
  * offset as normal.
  */
+
 module.exports = React.createClass({
     displayName: 'ScrollPanel',
 
@@ -210,7 +211,6 @@ module.exports = React.createClass({
             this._saveScrollState();
         } else {
             debuglog("Ignoring scroll echo");
-
             // only ignore the echo once, otherwise we'll get confused when the
             // user scrolls away from, and back to, the autoscroll point.
             this._lastSetScroll = undefined;
@@ -222,6 +222,7 @@ module.exports = React.createClass({
     },
 
     onResize: function() {
+        this.clearBlockShrinking();
         this.props.onResize();
         this.checkScroll();
         if (this._gemScroll) this._gemScroll.forceUpdate();
@@ -567,15 +568,17 @@ module.exports = React.createClass({
         }
 
         const scrollNode = this._getScrollNode();
-        const wrapperRect = ReactDOM.findDOMNode(this).getBoundingClientRect();
-        const boundingRect = node.getBoundingClientRect();
-        const scrollDelta = boundingRect.bottom + pixelOffset - wrapperRect.bottom;
+        const scrollTop = scrollNode.scrollTop;
+        const viewportBottom = scrollTop + scrollNode.clientHeight;
+        const nodeBottom = node.offsetTop + node.clientHeight;
+        const intendedViewportBottom = nodeBottom + pixelOffset;
+        const scrollDelta = intendedViewportBottom - viewportBottom;
 
         debuglog("ScrollPanel: scrolling to token '" + scrollToken + "'+" +
                  pixelOffset + " (delta: "+scrollDelta+")");
 
-        if (scrollDelta != 0) {
-            this._setScrollTop(scrollNode.scrollTop + scrollDelta);
+        if (scrollDelta !== 0) {
+            this._setScrollTop(scrollTop + scrollDelta);
         }
     },
 
@@ -586,42 +589,43 @@ module.exports = React.createClass({
             return;
         }
 
+        const scrollNode = this._getScrollNode();
+        const viewportBottom = scrollNode.scrollTop + scrollNode.clientHeight;
+
         const itemlist = this.refs.itemlist;
-        const wrapperRect = ReactDOM.findDOMNode(this).getBoundingClientRect();
         const messages = itemlist.children;
-        let newScrollState = null;
+        let node = null;
 
+        // loop backwards, from bottom-most message (as that is the most common case)
         for (let i = messages.length-1; i >= 0; --i) {
-            const node = messages[i];
-            if (!node.dataset.scrollTokens) continue;
-
-            const boundingRect = node.getBoundingClientRect();
-            newScrollState = {
-                stuckAtBottom: false,
-                trackedScrollToken: node.dataset.scrollTokens.split(',')[0],
-                pixelOffset: wrapperRect.bottom - boundingRect.bottom,
-            };
-            // If the bottom of the panel intersects the ClientRect of node, use this node
-            // as the scrollToken.
-            // If this is false for the entire for-loop, we default to the last node
-            // (which is why newScrollState is set on every iteration).
-            if (boundingRect.top < wrapperRect.bottom) {
+            if (!messages[i].dataset.scrollTokens) {
+                continue;
+            }
+            node = messages[i];
+            // break at the first message (coming from the bottom)
+            // that has it's offsetTop above the bottom of the viewport.
+            if (node.offsetTop < viewportBottom) {
                 // Use this node as the scrollToken
                 break;
             }
         }
-        // This is only false if there were no nodes with `node.dataset.scrollTokens` set.
-        if (newScrollState) {
-            this.scrollState = newScrollState;
-            debuglog("ScrollPanel: saved scroll state", this.scrollState);
-        } else {
+
+        if (!node) {
             debuglog("ScrollPanel: unable to save scroll state: found no children in the viewport");
+            return;
         }
+
+        const nodeBottom = node.offsetTop + node.clientHeight;
+        debuglog("ScrollPanel: saved scroll state", this.scrollState);
+        this.scrollState = {
+            stuckAtBottom: false,
+            trackedScrollToken: node.dataset.scrollTokens.split(',')[0],
+            pixelOffset: viewportBottom - nodeBottom,
+        };
     },
 
     _restoreSavedScrollState: function() {
         const scrollState = this.scrollState;
-        const scrollNode = this._getScrollNode();
 
         if (scrollState.stuckAtBottom) {
             this._setScrollTop(Number.MAX_VALUE);
@@ -676,6 +680,22 @@ module.exports = React.createClass({
 
     _collectGeminiScroll: function(gemScroll) {
         this._gemScroll = gemScroll;
+    },
+
+    /**
+     * Set the current height as the min height for the message list
+     * so the timeline cannot shrink. This is used to avoid
+     * jumping when the typing indicator gets replaced by a smaller message.
+     */
+    blockShrinking: function() {
+        // Disabled for now because of https://github.com/vector-im/riot-web/issues/9205
+    },
+
+    /**
+     * Clear the previously set min height
+     */
+    clearBlockShrinking: function() {
+        // Disabled for now because of https://github.com/vector-im/riot-web/issues/9205
     },
 
     render: function() {

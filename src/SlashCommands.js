@@ -24,7 +24,11 @@ import sdk from './index';
 import {_t, _td} from './languageHandler';
 import Modal from './Modal';
 import SettingsStore, {SettingLevel} from './settings/SettingsStore';
-
+import {MATRIXTO_URL_PATTERN} from "./linkify-matrix";
+import * as querystring from "querystring";
+import MultiInviter from './utils/MultiInviter';
+import { linkifyAndSanitizeHtml } from './HtmlUtils';
+import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 
 class Command {
     constructor({name, args='', description, runFn, hideCompletionAfterSpace=false}) {
@@ -67,6 +71,19 @@ function success(promise) {
 /* eslint-disable babel/no-invalid-this */
 
 export const CommandMap = {
+    shrug: new Command({
+        name: 'shrug',
+        args: '<message>',
+        description: _td('Prepends ¯\\_(ツ)_/¯ to a plain-text message'),
+        runFn: function(roomId, args) {
+            let message = '¯\\_(ツ)_/¯';
+            if (args) {
+                message = message + ' ' + args;
+            }
+            return success(MatrixClientPeg.get().sendTextMessage(roomId, message));
+        },
+    }),
+
     ddg: new Command({
         name: 'ddg',
         args: '<query>',
@@ -83,6 +100,83 @@ export const CommandMap = {
         hideCompletionAfterSpace: true,
     }),
 
+    upgraderoom: new Command({
+        name: 'upgraderoom',
+        args: '<new_version>',
+        description: _td('Upgrades a room to a new version'),
+        runFn: function(roomId, args) {
+            if (args) {
+                const room = MatrixClientPeg.get().getRoom(roomId);
+                Modal.createTrackedDialog('Slash Commands', 'upgrade room confirmation',
+                    QuestionDialog, {
+                    title: _t('Room upgrade confirmation'),
+                    description: (
+                        <div>
+                            <p>{_t("Upgrading a room can be destructive and isn't always necessary.")}</p>
+                            <p>
+                                {_t(
+                                    "Room upgrades are usually recommended when a room version is considered " +
+                                    "<i>unstable</i>. Unstable room versions might have bugs, missing features, or " +
+                                    "security vulnerabilities.",
+                                    {}, {
+                                        "i": (sub) => <i>{sub}</i>,
+                                    },
+                                )}
+                            </p>
+                            <p>
+                                {_t(
+                                    "Room upgrades usually only affect <i>server-side</i> processing of the " +
+                                    "room. If you're having problems with your Riot client, please file an issue " +
+                                    "with <issueLink />.",
+                                    {}, {
+                                        "i": (sub) => <i>{sub}</i>,
+                                        "issueLink": () => {
+                                            return <a href="https://github.com/vector-im/riot-web/issues/new/choose"
+                                                      target="_blank" rel="noopener">
+                                                https://github.com/vector-im/riot-web/issues/new/choose
+                                            </a>;
+                                        },
+                                    },
+                                )}
+                            </p>
+                            <p>
+                                {_t(
+                                    "<b>Warning</b>: Upgrading a room will <i>not automatically migrate room " +
+                                    "members to the new version of the room.</i> We'll post a link to the new room " +
+                                    "in the old version of the room - room members will have to click this link to " +
+                                    "join the new room.",
+                                    {}, {
+                                        "b": (sub) => <b>{sub}</b>,
+                                        "i": (sub) => <i>{sub}</i>,
+                                    },
+                                )}
+                            </p>
+                            <p>
+                                {_t(
+                                    "Please confirm that you'd like to go forward with upgrading this room " +
+                                    "from <oldVersion /> to <newVersion />",
+                                    {},
+                                    {
+                                        oldVersion: () => <code>{room ? room.getVersion() : "1"}</code>,
+                                        newVersion: () => <code>{args}</code>,
+                                    },
+                                )}
+                            </p>
+                        </div>
+                    ),
+                    button: _t("Upgrade"),
+                    onFinished: (confirm) => {
+                        if (!confirm) return;
+
+                        MatrixClientPeg.get().upgradeRoom(roomId, args);
+                    },
+                });
+                return success();
+            }
+            return reject(this.getUsage());
+        },
+    }),
+
     nick: new Command({
         name: 'nick',
         args: '<display_name>',
@@ -90,6 +184,24 @@ export const CommandMap = {
         runFn: function(roomId, args) {
             if (args) {
                 return success(MatrixClientPeg.get().setDisplayName(args));
+            }
+            return reject(this.getUsage());
+        },
+    }),
+
+    roomnick: new Command({
+        name: 'roomnick',
+        args: '<display_name>',
+        description: _td('Changes your display nickname in the current room only'),
+        runFn: function(roomId, args) {
+            if (args) {
+                const cli = MatrixClientPeg.get();
+                const ev = cli.getRoom(roomId).currentState.getStateEvents('m.room.member', cli.getUserId());
+                const content = {
+                    ...ev ? ev.getContent() : { membership: 'join' },
+                    displayname: args,
+                };
+                return success(cli.sendStateEvent(roomId, 'm.room.member', content, cli.getUserId()));
             }
             return reject(this.getUsage());
         },
@@ -122,11 +234,36 @@ export const CommandMap = {
 
     topic: new Command({
         name: 'topic',
-        args: '<topic>',
-        description: _td('Sets the room topic'),
+        args: '[<topic>]',
+        description: _td('Gets or sets the room topic'),
+        runFn: function(roomId, args) {
+            const cli = MatrixClientPeg.get();
+            if (args) {
+                return success(cli.setRoomTopic(roomId, args));
+            }
+            const room = cli.getRoom(roomId);
+            if (!room) return reject('Bad room ID: ' + roomId);
+
+            const topicEvents = room.currentState.getStateEvents('m.room.topic', '');
+            const topic = topicEvents && topicEvents.getContent().topic;
+            const topicHtml = topic ? linkifyAndSanitizeHtml(topic) : _t('This room has no topic.');
+
+            const InfoDialog = sdk.getComponent('dialogs.InfoDialog');
+            Modal.createTrackedDialog('Slash Commands', 'Topic', InfoDialog, {
+                title: room.name,
+                description: <div dangerouslySetInnerHTML={{ __html: topicHtml }} />,
+            });
+            return success();
+        },
+    }),
+
+    roomname: new Command({
+        name: 'roomname',
+        args: '<name>',
+        description: _td('Sets the room name'),
         runFn: function(roomId, args) {
             if (args) {
-                return success(MatrixClientPeg.get().setRoomTopic(roomId, args));
+                return success(MatrixClientPeg.get().setRoomName(roomId, args));
             }
             return reject(this.getUsage());
         },
@@ -140,7 +277,15 @@ export const CommandMap = {
             if (args) {
                 const matches = args.match(/^(\S+)$/);
                 if (matches) {
-                    return success(MatrixClientPeg.get().invite(roomId, matches[1]));
+                    // We use a MultiInviter to re-use the invite logic, even though
+                    // we're only inviting one user.
+                    const userId = matches[1];
+                    const inviter = new MultiInviter(roomId);
+                    return success(inviter.invite([userId]).then(() => {
+                        if (inviter.getCompletionState(userId) !== "invited") {
+                            throw new Error(inviter.getErrorText(userId));
+                        }
+                    }));
                 }
             }
             return reject(this.getUsage());
@@ -153,11 +298,24 @@ export const CommandMap = {
         description: _td('Joins room with given alias'),
         runFn: function(roomId, args) {
             if (args) {
-                const matches = args.match(/^(\S+)$/);
-                if (matches) {
-                    let roomAlias = matches[1];
-                    if (roomAlias[0] !== '#') return reject(this.getUsage());
+                // Note: we support 2 versions of this command. The first is
+                // the public-facing one for most users and the other is a
+                // power-user edition where someone may join via permalink or
+                // room ID with optional servers. Practically, this results
+                // in the following variations:
+                //   /join #example:example.org
+                //   /join !example:example.org
+                //   /join !example:example.org altserver.com elsewhere.ca
+                //   /join https://matrix.to/#/!example:example.org?via=altserver.com
+                // The command also supports event permalinks transparently:
+                //   /join https://matrix.to/#/!example:example.org/$something:example.org
+                //   /join https://matrix.to/#/!example:example.org/$something:example.org?via=altserver.com
+                const params = args.split(' ');
+                if (params.length < 1) return reject(this.getUsage());
 
+                const matrixToMatches = params[0].match(MATRIXTO_URL_PATTERN);
+                if (params[0][0] === '#') {
+                    let roomAlias = params[0];
                     if (!roomAlias.includes(':')) {
                         roomAlias += ':' + MatrixClientPeg.get().getDomain();
                     }
@@ -167,7 +325,65 @@ export const CommandMap = {
                         room_alias: roomAlias,
                         auto_join: true,
                     });
+                    return success();
+                } else if (params[0][0] === '!') {
+                    const roomId = params[0];
+                    const viaServers = params.splice(0);
 
+                    dis.dispatch({
+                        action: 'view_room',
+                        room_id: roomId,
+                        opts: {
+                            // These are passed down to the js-sdk's /join call
+                            server_name: viaServers,
+                        },
+                        auto_join: true,
+                    });
+                    return success();
+                } else if (matrixToMatches) {
+                    let entity = matrixToMatches[1];
+                    let eventId = null;
+                    let viaServers = [];
+
+                    if (entity[0] !== '!' && entity[0] !== '#') return reject(this.getUsage());
+
+                    if (entity.indexOf('?') !== -1) {
+                        const parts = entity.split('?');
+                        entity = parts[0];
+
+                        const parsed = querystring.parse(parts[1]);
+                        viaServers = parsed["via"];
+                        if (typeof viaServers === 'string') viaServers = [viaServers];
+                    }
+
+                    // We quietly support event ID permalinks too
+                    if (entity.indexOf('/$') !== -1) {
+                        const parts = entity.split("/$");
+                        entity = parts[0];
+                        eventId = `$${parts[1]}`;
+                    }
+
+                    const dispatch = {
+                        action: 'view_room',
+                        auto_join: true,
+                    };
+
+                    if (entity[0] === '!') dispatch["room_id"] = entity;
+                    else dispatch["room_alias"] = entity;
+
+                    if (eventId) {
+                        dispatch["event_id"] = eventId;
+                        dispatch["highlighted"] = true;
+                    }
+
+                    if (viaServers) {
+                        dispatch["opts"] = {
+                            // These are passed down to the js-sdk's /join call
+                            server_name: viaServers,
+                        };
+                    }
+
+                    dis.dispatch(dispatch);
                     return success();
                 }
             }
@@ -285,13 +501,12 @@ export const CommandMap = {
                     ignoredUsers.push(userId); // de-duped internally in the js-sdk
                     return success(
                         cli.setIgnoredUsers(ignoredUsers).then(() => {
-                            const QuestionDialog = sdk.getComponent('dialogs.QuestionDialog');
-                            Modal.createTrackedDialog('Slash Commands', 'User ignored', QuestionDialog, {
+                            const InfoDialog = sdk.getComponent('dialogs.InfoDialog');
+                            Modal.createTrackedDialog('Slash Commands', 'User ignored', InfoDialog, {
                                 title: _t('Ignored user'),
                                 description: <div>
                                     <p>{ _t('You are now ignoring %(userId)s', {userId}) }</p>
                                 </div>,
-                                hasCancelButton: false,
                             });
                         }),
                     );
@@ -317,13 +532,12 @@ export const CommandMap = {
                     if (index !== -1) ignoredUsers.splice(index, 1);
                     return success(
                         cli.setIgnoredUsers(ignoredUsers).then(() => {
-                            const QuestionDialog = sdk.getComponent('dialogs.QuestionDialog');
-                            Modal.createTrackedDialog('Slash Commands', 'User unignored', QuestionDialog, {
+                            const InfoDialog = sdk.getComponent('dialogs.InfoDialog');
+                            Modal.createTrackedDialog('Slash Commands', 'User unignored', InfoDialog, {
                                 title: _t('Unignored user'),
                                 description: <div>
                                     <p>{ _t('You are no longer ignoring %(userId)s', {userId}) }</p>
                                 </div>,
-                                hasCancelButton: false,
                             });
                         }),
                     );
@@ -440,8 +654,8 @@ export const CommandMap = {
                             return cli.setDeviceVerified(userId, deviceId, true);
                         }).then(() => {
                             // Tell the user we verified everything
-                            const QuestionDialog = sdk.getComponent('dialogs.QuestionDialog');
-                            Modal.createTrackedDialog('Slash Commands', 'Verified key', QuestionDialog, {
+                            const InfoDialog = sdk.getComponent('dialogs.InfoDialog');
+                            Modal.createTrackedDialog('Slash Commands', 'Verified key', InfoDialog, {
                                 title: _t('Verified key'),
                                 description: <div>
                                     <p>
@@ -452,7 +666,6 @@ export const CommandMap = {
                                         }
                                     </p>
                                 </div>,
-                                hasCancelButton: false,
                             });
                         }),
                     );
@@ -492,6 +705,7 @@ export const CommandMap = {
 const aliases = {
     j: "join",
     newballsplease: "discardsession",
+    goto: "join", // because it handles event permalinks magically
 };
 
 

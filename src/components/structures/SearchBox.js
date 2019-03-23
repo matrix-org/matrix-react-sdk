@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,22 +15,32 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
 import React from 'react';
-import { _t } from '../../languageHandler';
+import PropTypes from 'prop-types';
 import { KeyCode } from '../../Keyboard';
-import sdk from '../../index';
 import dis from '../../dispatcher';
-import rate_limited_func from '../../ratelimitedfunc';
+import { throttle } from 'lodash';
 import AccessibleButton from '../../components/views/elements/AccessibleButton';
 
 module.exports = React.createClass({
     displayName: 'SearchBox',
 
     propTypes: {
-        collapsed: React.PropTypes.bool,
-        onSearch: React.PropTypes.func,
+        onSearch: PropTypes.func,
+        onCleared: PropTypes.func,
+        className: PropTypes.string,
+        placeholder: PropTypes.string.isRequired,
+
+        // If true, the search box will focus and clear itself
+        // on room search focus action (it would be nicer to take
+        // this functionality out, but not obvious how that would work)
+        enableRoomSearchFocus: PropTypes.bool,
+    },
+
+    getDefaultProps: function() {
+        return {
+            enableRoomSearchFocus: false,
+        };
     },
 
     getInitialState: function() {
@@ -47,6 +58,8 @@ module.exports = React.createClass({
     },
 
     onAction: function(payload) {
+        if (!this.props.enableRoomSearchFocus) return;
+
         switch (payload.action) {
             case 'view_room':
                 if (this.refs.search && payload.clear_search) {
@@ -56,7 +69,6 @@ module.exports = React.createClass({
             case 'focus_room_filter':
                 if (this.refs.search) {
                     this.refs.search.focus();
-                    this.refs.search.select();
                 }
                 break;
         }
@@ -68,93 +80,59 @@ module.exports = React.createClass({
         this.onSearch();
     },
 
-    onSearch: new rate_limited_func(
-        function() {
-            this.props.onSearch(this.refs.search.value);
-        },
-        100,
-    ),
-
-    onToggleCollapse: function(show) {
-        if (show) {
-            dis.dispatch({
-                action: 'show_left_panel',
-            });
-        } else {
-            dis.dispatch({
-                action: 'hide_left_panel',
-            });
-        }
-    },
+    onSearch: throttle(function() {
+        this.props.onSearch(this.refs.search.value);
+    }, 200, {trailing: true, leading: true}),
 
     _onKeyDown: function(ev) {
         switch (ev.keyCode) {
             case KeyCode.ESCAPE:
-                this._clearSearch();
-                dis.dispatch({action: 'focus_composer'});
+                this._clearSearch("keyboard");
                 break;
         }
     },
 
-    _clearSearch: function() {
+    _onFocus: function(ev) {
+        ev.target.select();
+    },
+
+    _clearSearch: function(source) {
         this.refs.search.value = "";
         this.onChange();
+        if (this.props.onCleared) {
+            this.props.onCleared(source);
+        }
     },
 
     render: function() {
-        const TintableSvg = sdk.getComponent('elements.TintableSvg');
-
-        const collapseTabIndex = this.refs.search && this.refs.search.value !== "" ? "-1" : "0";
-
-        let toggleCollapse;
+        // check for collapsed here and
+        // not at parent so we keep
+        // searchTerm in our state
+        // when collapsing and expanding
         if (this.props.collapsed) {
-            toggleCollapse =
-                <AccessibleButton className="mx_SearchBox_maximise" tabIndex={collapseTabIndex} onClick={ this.onToggleCollapse.bind(this, true) }>
-                    <TintableSvg src="img/maximise.svg" width="10" height="16" alt={ _t("Expand panel") } />
-                </AccessibleButton>;
-        } else {
-            toggleCollapse =
-                <AccessibleButton className="mx_SearchBox_minimise" tabIndex={collapseTabIndex} onClick={ this.onToggleCollapse.bind(this, false) }>
-                    <TintableSvg src="img/minimise.svg" width="10" height="16" alt={ _t("Collapse panel") } />
-                </AccessibleButton>;
+            return null;
         }
+        const clearButton = this.state.searchTerm.length > 0 ?
+            (<AccessibleButton key="button"
+                    className="mx_SearchBox_closeButton"
+                    onClick={ () => {this._clearSearch("button"); } }>
+            </AccessibleButton>) : undefined;
 
-        let searchControls;
-        if (!this.props.collapsed) {
-            searchControls = [
-                    this.state.searchTerm.length > 0 ?
-                    <AccessibleButton key="button"
-                            className="mx_SearchBox_closeButton"
-                            onClick={ ()=>{ this._clearSearch(); } }>
-                        <TintableSvg
-                            className="mx_SearchBox_searchButton"
-                            src="img/icons-close.svg" width="24" height="24"
-                        />
-                    </AccessibleButton>
-                    :
-                    <TintableSvg
-                        key="button"
-                        className="mx_SearchBox_searchButton"
-                        src="img/icons-search-copy.svg" width="13" height="13"
-                    />,
-                    <input
-                        key="searchfield"
-                        type="text"
-                        ref="search"
-                        className="mx_SearchBox_search"
-                        value={ this.state.searchTerm }
-                        onChange={ this.onChange }
-                        onKeyDown={ this._onKeyDown }
-                        placeholder={ _t('Filter room names') }
-                    />,
-                ];
-        }
-
-        const self = this;
+        const className = this.props.className || "";
         return (
-            <div className="mx_SearchBox">
-                { searchControls }
-                { toggleCollapse }
+            <div className="mx_SearchBox mx_textinput">
+                <input
+                    key="searchfield"
+                    type="text"
+                    ref="search"
+                    className={"mx_textinput_icon mx_textinput_search " + className}
+                    value={ this.state.searchTerm }
+                    onFocus={ this._onFocus }
+                    onChange={ this.onChange }
+                    onKeyDown={ this._onKeyDown }
+                    placeholder={ this.props.placeholder }
+                />
+                { clearButton }
             </div>
         );
     },

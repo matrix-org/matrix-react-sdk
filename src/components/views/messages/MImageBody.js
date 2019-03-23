@@ -34,7 +34,7 @@ export default class MImageBody extends React.Component {
         mxEvent: PropTypes.object.isRequired,
 
         /* called when the image has loaded */
-        onWidgetLoad: PropTypes.func.isRequired,
+        onHeightChanged: PropTypes.func.isRequired,
 
         /* the maximum image height to use */
         maxImageHeight: PropTypes.number,
@@ -144,7 +144,7 @@ export default class MImageBody extends React.Component {
     }
 
     onImageLoad() {
-        this.props.onWidgetLoad();
+        this.props.onHeightChanged();
 
         let loadedImageDimensions;
 
@@ -278,10 +278,16 @@ export default class MImageBody extends React.Component {
 
         let img = null;
         let placeholder = null;
+        let gifLabel = null;
 
         // e2e image hasn't been decrypted yet
         if (content.file !== undefined && this.state.decryptedUrl === null) {
-            placeholder = <img src="img/spinner.gif" alt={content.body} width="32" height="32" />;
+            placeholder = <img
+                src={require("../../../../res/img/spinner.gif")}
+                alt={content.body}
+                width="32"
+                height="32"
+            />;
         } else if (!this.state.imgLoaded) {
             // Deliberately, getSpinner is left unimplemented here, MStickerBody overides
             placeholder = this.getPlaceholder();
@@ -302,11 +308,14 @@ export default class MImageBody extends React.Component {
                 onMouseLeave={this.onImageLeave} />;
         }
 
+        if (this._isGif() && !SettingsStore.getValue("autoplayGifsAndVideos") && !this.state.hover) {
+            gifLabel = <p className="mx_MImageBody_gifLabel">GIF</p>;
+        }
+
         const thumbnail = (
             <div className="mx_MImageBody_thumbnail_container" style={{ maxHeight: maxHeight + "px" }} >
                 { /* Calculate aspect ratio, using %padding will size _container correctly */ }
                 <div style={{ paddingBottom: (100 * infoHeight / infoWidth) + '%' }} />
-
                 { showPlaceholder &&
                     <div className="mx_MImageBody_thumbnail" style={{
                         // Constrain width here so that spinner appears central to the loaded thumbnail
@@ -320,6 +329,7 @@ export default class MImageBody extends React.Component {
 
                 <div style={{display: !showPlaceholder ? undefined : 'none'}}>
                     { img }
+                    { gifLabel }
                 </div>
 
                 { this.state.hover && this.getTooltip() }
@@ -358,7 +368,7 @@ export default class MImageBody extends React.Component {
         if (this.state.error !== null) {
             return (
                 <span className="mx_MImageBody" ref="body">
-                    <img src="img/warning.svg" width="16" height="16" />
+                    <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
                     { _t("Error decrypting image") }
                 </span>
             );

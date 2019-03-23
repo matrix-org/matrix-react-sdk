@@ -22,12 +22,11 @@ import qs from 'querystring';
 import React from 'react';
 import PropTypes from 'prop-types';
 import MatrixClientPeg from '../../../MatrixClientPeg';
-import PlatformPeg from '../../../PlatformPeg';
 import ScalarAuthClient from '../../../ScalarAuthClient';
 import WidgetMessaging from '../../../WidgetMessaging';
-import TintableSvgButton from './TintableSvgButton';
+import AccessibleButton from './AccessibleButton';
 import Modal from '../../../Modal';
-import { _t, _td } from '../../../languageHandler';
+import { _t } from '../../../languageHandler';
 import sdk from '../../../index';
 import AppPermission from './AppPermission';
 import AppWarning from './AppWarning';
@@ -35,6 +34,7 @@ import MessageSpinner from './MessageSpinner';
 import WidgetUtils from '../../../utils/WidgetUtils';
 import dis from '../../../dispatcher';
 import ActiveWidgetStore from '../../../stores/ActiveWidgetStore';
+import classNames from 'classnames';
 
 const ALLOWED_APP_URL_SCHEMES = ['https:', 'http:'];
 const ENABLE_REACT_PERF = false;
@@ -49,10 +49,10 @@ export default class AppTile extends React.Component {
         this.state = this._getNewState(props);
 
         this._onAction = this._onAction.bind(this);
-        this._onMessage = this._onMessage.bind(this);
         this._onLoaded = this._onLoaded.bind(this);
         this._onEditClick = this._onEditClick.bind(this);
         this._onDeleteClick = this._onDeleteClick.bind(this);
+        this._onCancelClick = this._onCancelClick.bind(this);
         this._onSnapshotClick = this._onSnapshotClick.bind(this);
         this.onClickMenuBar = this.onClickMenuBar.bind(this);
         this._onMinimiseClick = this._onMinimiseClick.bind(this);
@@ -143,10 +143,6 @@ export default class AppTile extends React.Component {
     }
 
     componentDidMount() {
-        // Legacy Jitsi widget messaging -- TODO replace this with standard widget
-        // postMessaging API
-        window.addEventListener('message', this._onMessage, false);
-
         // Widget action listeners
         this.dispatcherRef = dis.register(this._onAction);
     }
@@ -154,9 +150,6 @@ export default class AppTile extends React.Component {
     componentWillUnmount() {
         // Widget action listeners
         dis.unregister(this.dispatcherRef);
-
-        // Jitsi listener
-        window.removeEventListener('message', this._onMessage);
 
         // if it's not remaining on screen, get rid of the PersistedElement container
         if (!ActiveWidgetStore.getWidgetPersistence(this.props.id)) {
@@ -233,32 +226,6 @@ export default class AppTile extends React.Component {
         }
     }
 
-    // Legacy Jitsi widget messaging
-    // TODO -- This should be replaced with the new widget postMessaging API
-    _onMessage(event) {
-        if (this.props.type !== 'jitsi') {
-            return;
-        }
-        if (!event.origin) {
-            event.origin = event.originalEvent.origin;
-        }
-
-        const widgetUrlObj = url.parse(this.state.widgetUrl);
-        const eventOrigin = url.parse(event.origin);
-        if (
-            eventOrigin.protocol !== widgetUrlObj.protocol ||
-            eventOrigin.host !== widgetUrlObj.host
-        ) {
-            return;
-        }
-
-        if (event.data.widgetAction === 'jitsi_iframe_loaded') {
-            const iframe = this.refs.appFrame.contentWindow
-                .document.querySelector('iframe[id^="jitsiConferenceFrame"]');
-            PlatformPeg.get().setupScreenSharingForIframe(iframe);
-        }
-    }
-
     _canUserModify() {
         // User widgets should always be modifiable by their creator
         if (this.props.userWidget && MatrixClientPeg.get().credentials.userId === this.props.creatorUserId) {
@@ -274,11 +241,18 @@ export default class AppTile extends React.Component {
             this.props.onEditClick();
         } else {
             const IntegrationsManager = sdk.getComponent("views.settings.IntegrationsManager");
-            const src = this._scalarClient.getScalarInterfaceUrlForRoom(
-                this.props.room, 'type_' + this.props.type, this.props.id);
-            Modal.createTrackedDialog('Integrations Manager', '', IntegrationsManager, {
-                src: src,
-            }, "mx_IntegrationsManager");
+            this._scalarClient.connect().done(() => {
+                const src = this._scalarClient.getScalarInterfaceUrlForRoom(
+                    this.props.room, 'type_' + this.props.type, this.props.id);
+                Modal.createTrackedDialog('Integrations Manager', '', IntegrationsManager, {
+                    src: src,
+                }, "mx_IntegrationsManager");
+            }, (err) => {
+                this.setState({
+                    error: err.message,
+                });
+                console.error('Error ensuring a valid scalar_token exists', err);
+            });
         }
     }
 
@@ -302,55 +276,59 @@ export default class AppTile extends React.Component {
     _onDeleteClick() {
         if (this.props.onDeleteClick) {
             this.props.onDeleteClick();
-        } else {
-            if (this._canUserModify()) {
-                // Show delete confirmation dialog
-                const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-                Modal.createTrackedDialog('Delete Widget', '', QuestionDialog, {
-                    title: _t("Delete Widget"),
-                    description: _t(
-                        "Deleting a widget removes it for all users in this room." +
-                        " Are you sure you want to delete this widget?"),
-                    button: _t("Delete widget"),
-                    onFinished: (confirmed) => {
-                        if (!confirmed) {
-                            return;
-                        }
-                        this.setState({deleting: true});
+        } else if (this._canUserModify()) {
+            // Show delete confirmation dialog
+            const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+            Modal.createTrackedDialog('Delete Widget', '', QuestionDialog, {
+                title: _t("Delete Widget"),
+                description: _t(
+                    "Deleting a widget removes it for all users in this room." +
+                    " Are you sure you want to delete this widget?"),
+                button: _t("Delete widget"),
+                onFinished: (confirmed) => {
+                    if (!confirmed) {
+                        return;
+                    }
+                    this.setState({deleting: true});
 
-                        // HACK: This is a really dirty way to ensure that Jitsi cleans up
-                        // its hold on the webcam. Without this, the widget holds a media
-                        // stream open, even after death. See https://github.com/vector-im/riot-web/issues/7351
-                        if (this.refs.appFrame) {
-                            // In practice we could just do `+= ''` to trick the browser
-                            // into thinking the URL changed, however I can foresee this
-                            // being optimized out by a browser. Instead, we'll just point
-                            // the iframe at a page that is reasonably safe to use in the
-                            // event the iframe doesn't wink away.
-                            // This is relative to where the Riot instance is located.
-                            this.refs.appFrame.src = 'about:blank';
-                        }
+                    // HACK: This is a really dirty way to ensure that Jitsi cleans up
+                    // its hold on the webcam. Without this, the widget holds a media
+                    // stream open, even after death. See https://github.com/vector-im/riot-web/issues/7351
+                    if (this.refs.appFrame) {
+                        // In practice we could just do `+= ''` to trick the browser
+                        // into thinking the URL changed, however I can foresee this
+                        // being optimized out by a browser. Instead, we'll just point
+                        // the iframe at a page that is reasonably safe to use in the
+                        // event the iframe doesn't wink away.
+                        // This is relative to where the Riot instance is located.
+                        this.refs.appFrame.src = 'about:blank';
+                    }
 
-                        WidgetUtils.setRoomWidget(
-                            this.props.room.roomId,
-                            this.props.id,
-                        ).catch((e) => {
-                            console.error('Failed to delete widget', e);
-                            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+                    WidgetUtils.setRoomWidget(
+                        this.props.room.roomId,
+                        this.props.id,
+                    ).catch((e) => {
+                        console.error('Failed to delete widget', e);
+                        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
 
-                            Modal.createTrackedDialog('Failed to remove widget', '', ErrorDialog, {
-                                title: _t('Failed to remove widget'),
-                                description: _t('An error ocurred whilst trying to remove the widget from the room'),
-                            });
-                        }).finally(() => {
-                            this.setState({deleting: false});
+                        Modal.createTrackedDialog('Failed to remove widget', '', ErrorDialog, {
+                            title: _t('Failed to remove widget'),
+                            description: _t('An error ocurred whilst trying to remove the widget from the room'),
                         });
-                    },
-                });
-            } else {
-                console.log("Revoke widget permissions - %s", this.props.id);
-                this._revokeWidgetPermission();
-            }
+                    }).finally(() => {
+                        this.setState({deleting: false});
+                    });
+                },
+            });
+        }
+    }
+
+    _onCancelClick() {
+        if (this.props.onDeleteClick) {
+            this.props.onDeleteClick();
+        } else {
+            console.log("Revoke widget permissions - %s", this.props.id);
+            this._revokeWidgetPermission();
         }
     }
 
@@ -358,9 +336,14 @@ export default class AppTile extends React.Component {
      * Called when widget iframe has finished loading
      */
     _onLoaded() {
-        if (!ActiveWidgetStore.getWidgetMessaging(this.props.id)) {
-            this._setupWidgetMessaging();
+        // Destroy the old widget messaging before starting it back up again. Some widgets
+        // have startup routines that run when they are loaded, so we just need to reinitialize
+        // the messaging for them.
+        if (ActiveWidgetStore.getWidgetMessaging(this.props.id)) {
+            ActiveWidgetStore.delWidgetMessaging(this.props.id);
         }
+        this._setupWidgetMessaging();
+
         ActiveWidgetStore.setRoomId(this.props.id, this.props.room.roomId);
         this.setState({loading: false});
     }
@@ -427,15 +410,6 @@ export default class AppTile extends React.Component {
         }, (err) =>{
             console.error("Failed to get page title", err);
         });
-    }
-
-    // Widget labels to render, depending upon user permissions
-    // These strings are translated at the point that they are inserted in to the DOM, in the render method
-    _deleteWidgetLabel() {
-        if (this._canUserModify()) {
-            return _td('Delete widget');
-        }
-        return _td('Revoke widget access');
     }
 
     /* TODO -- Store permission in account data so that it is persisted across multiple devices */
@@ -544,7 +518,7 @@ export default class AppTile extends React.Component {
 
         // Additional iframe feature pemissions
         // (see - https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-permissions-in-cross-origin-iframes and https://wicg.github.io/feature-policy/)
-        const iframeFeatures = "microphone; camera; encrypted-media;";
+        const iframeFeatures = "microphone; camera; encrypted-media; autoplay;";
 
         const appTileBodyClass = 'mx_AppTileBody' + (this.props.miniMode ? '_mini  ' : ' ');
 
@@ -615,21 +589,14 @@ export default class AppTile extends React.Component {
         }
 
         // editing is done in scalar
-        const showEditButton = Boolean(this._scalarClient && this._canUserModify());
-        const deleteWidgetLabel = this._deleteWidgetLabel();
-        let deleteIcon = 'img/cancel_green.svg';
-        let deleteClasses = 'mx_AppTileMenuBarWidget';
-        if (this._canUserModify()) {
-            deleteIcon = 'img/icon-delete-pink.svg';
-            deleteClasses += ' mx_AppTileMenuBarWidgetDelete';
-        }
-
+        const canUserModify = this._canUserModify();
+        const showEditButton = Boolean(this._scalarClient && canUserModify);
+        const showDeleteButton = (this.props.showDelete === undefined || this.props.showDelete) && canUserModify;
+        const showCancelButton = (this.props.showCancel === undefined || this.props.showCancel) && !showDeleteButton;
         // Picture snapshot - only show button when apps are maximised.
         const showPictureSnapshotButton = this._hasCapability('m.capability.screenshot') && this.props.show;
-        const showPictureSnapshotIcon = 'img/camera_green.svg';
-        const popoutWidgetIcon = 'img/button-new-window.svg';
-        const reloadWidgetIcon = 'img/button-refresh.svg';
-        const windowStateIcon = (this.props.show ? 'img/minimize.svg' : 'img/maximize.svg');
+        const showMinimiseButton = this.props.showMinimise && this.props.show;
+        const showMaximiseButton = this.props.showMinimise && !this.props.show;
 
         let appTileClass;
         if (this.props.miniMode) {
@@ -640,71 +607,67 @@ export default class AppTile extends React.Component {
             appTileClass = 'mx_AppTile';
         }
 
+        const menuBarClasses = classNames({
+            mx_AppTileMenuBar: true,
+            mx_AppTileMenuBar_expanded: this.props.show,
+        });
+
         return (
             <div className={appTileClass} id={this.props.id}>
                 { this.props.showMenubar &&
-                <div ref="menu_bar" className="mx_AppTileMenuBar" onClick={this.onClickMenuBar}>
+                <div ref="menu_bar" className={menuBarClasses} onClick={this.onClickMenuBar}>
                     <span className="mx_AppTileMenuBarTitle" style={{pointerEvents: (this.props.handleMinimisePointerEvents ? 'all' : false)}}>
-                        { this.props.showMinimise && <TintableSvgButton
-                            src={windowStateIcon}
-                            className="mx_AppTileMenuBarWidget mx_AppTileMenuBarWidgetPadding"
+                        { /* Minimise widget */ }
+                        { showMinimiseButton && <AccessibleButton
+                            className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_minimise"
                             title={_t('Minimize apps')}
-                            width="10"
-                            height="10"
                             onClick={this._onMinimiseClick}
                         /> }
+                        { /* Maximise widget */ }
+                        { showMaximiseButton && <AccessibleButton
+                            className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_maximise"
+                            title={_t('Minimize apps')}
+                            onClick={this._onMinimiseClick}
+                        /> }
+                        { /* Title */ }
                         { this.props.showTitle && this._getTileTitle() }
                     </span>
                     <span className="mx_AppTileMenuBarWidgets">
                         { /* Reload widget */ }
-                        { this.props.showReload && <TintableSvgButton
-                            src={reloadWidgetIcon}
-                            className="mx_AppTileMenuBarWidget mx_AppTileMenuBarWidgetPadding"
+                        { this.props.showReload && <AccessibleButton
+                            className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_reload"
                             title={_t('Reload widget')}
                             onClick={this._onReloadWidgetClick}
-                            width="10"
-                            height="10"
                         /> }
-
                         { /* Popout widget */ }
-                        { this.props.showPopout && <TintableSvgButton
-                            src={popoutWidgetIcon}
-                            className="mx_AppTileMenuBarWidget mx_AppTileMenuBarWidgetPadding"
+                        { this.props.showPopout && <AccessibleButton
+                            className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_popout"
                             title={_t('Popout widget')}
                             onClick={this._onPopoutWidgetClick}
-                            width="10"
-                            height="10"
                         /> }
-
                         { /* Snapshot widget */ }
-                        { showPictureSnapshotButton && <TintableSvgButton
-                            src={showPictureSnapshotIcon}
-                            className="mx_AppTileMenuBarWidget mx_AppTileMenuBarWidgetPadding"
+                        { showPictureSnapshotButton && <AccessibleButton
+                            className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_snapshot"
                             title={_t('Picture')}
                             onClick={this._onSnapshotClick}
-                            width="10"
-                            height="10"
                         /> }
-
                         { /* Edit widget */ }
-                        { showEditButton && <TintableSvgButton
-                            src="img/edit_green.svg"
-                            className={"mx_AppTileMenuBarWidget " +
-                              (this.props.showDelete ? "mx_AppTileMenuBarWidgetPadding" : "")}
+                        { showEditButton && <AccessibleButton
+                            className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_edit"
                             title={_t('Edit')}
                             onClick={this._onEditClick}
-                            width="10"
-                            height="10"
                         /> }
-
                         { /* Delete widget */ }
-                        { this.props.showDelete && <TintableSvgButton
-                            src={deleteIcon}
-                            className={deleteClasses}
-                            title={_t(deleteWidgetLabel)}
+                        { showDeleteButton && <AccessibleButton
+                            className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_delete"
+                            title={_t('Delete widget')}
                             onClick={this._onDeleteClick}
-                            width="10"
-                            height="10"
+                        /> }
+                        { /* Cancel widget */ }
+                        { showCancelButton && <AccessibleButton
+                            className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_cancel"
+                            title={_t('Revoke widget access')}
+                            onClick={this._onCancelClick}
                         /> }
                     </span>
                 </div> }

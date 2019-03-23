@@ -38,18 +38,20 @@ function memberEventDiff(ev) {
 }
 
 export default function shouldHideEvent(ev) {
-    // Wrap getValue() for readability
+    // Wrap getValue() for readability. Calling the SettingsStore can be
+    // fairly resource heavy, so the checks below should avoid hitting it
+    // where possible.
     const isEnabled = (name) => SettingsStore.getValue(name, ev.getRoomId());
 
     // Hide redacted events
-    if (isEnabled('hideRedactions') && ev.isRedacted()) return true;
+    if (ev.isRedacted() && !isEnabled('showRedactions')) return true;
 
     const eventDiff = memberEventDiff(ev);
 
     if (eventDiff.isMemberEvent) {
-        if (isEnabled('hideJoinLeaves') && (eventDiff.isJoin || eventDiff.isPart)) return true;
-        if (isEnabled('hideAvatarChanges') && eventDiff.isAvatarChange) return true;
-        if (isEnabled('hideDisplaynameChanges') && eventDiff.isDisplaynameChange) return true;
+        if ((eventDiff.isJoin || eventDiff.isPart) && !isEnabled('showJoinLeaves')) return true;
+        if (eventDiff.isAvatarChange && !isEnabled('showAvatarChanges')) return true;
+        if (eventDiff.isDisplaynameChange && !isEnabled('showDisplaynameChanges')) return true;
     }
 
     return false;

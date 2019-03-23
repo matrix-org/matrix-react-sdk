@@ -15,10 +15,35 @@ limitations under the License.
 */
 
 .mx_EntityTile {
-    display: table-row;
-    position: relative;
+    display: flex;
+    align-items: center;
     color: $primary-fg-color;
     cursor: pointer;
+}
+
+.mx_EntityTile:hover {
+    padding-right: 30px;
+    position: relative; // to keep the chevron aligned
+}
+
+.mx_EntityTile:hover::before {
+    content: "";
+    position: absolute;
+    top: calc(50% - 8px); // center
+    right: 10px;
+    mask: url('$(res)/img/member_chevron.png');
+    mask-repeat: no-repeat;
+    width: 16px;
+    height: 16px;
+    background-color: $rightpanel-button-color;
+}
+
+.mx_EntityTile .mx_PresenceLabel {
+    display: none;
+}
+
+.mx_EntityTile:not(.mx_EntityTile_noHover):hover .mx_PresenceLabel {
+    display: block;
 }
 
 .mx_EntityTile_invite {
@@ -30,12 +55,10 @@ limitations under the License.
 
 .mx_EntityTile_avatar,
 .mx_GroupRoomTile_avatar {
-    display: table-cell;
     padding-left: 3px;
     padding-right: 12px;
     padding-top: 4px;
     padding-bottom: 4px;
-    vertical-align: middle;
     width: 36px;
     height: 36px;
     position: relative;
@@ -51,30 +74,19 @@ limitations under the License.
 
 .mx_EntityTile_name,
 .mx_GroupRoomTile_name {
-    display: table-cell;
-    vertical-align: middle;
+    flex: 1 1 0;
     overflow: hidden;
     font-size: 14px;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 155px;
 }
 
 .mx_EntityTile_details {
-    display: table-cell;
-    padding-right: 14px;
-    vertical-align: middle;
+    overflow: hidden;
 }
 
-.mx_EntityTile_name_hover {
+.mx_EntityTile:not(.mx_EntityTile_noHover):hover .mx_EntityTile_name {
     font-size: 13px;
-}
-
-.mx_EntityTile_chevron {
-    margin-top: 8px;
-    margin-right: -4px;
-    margin-left: 6px;
-    float: right;
 }
 
 .mx_EntityTile_ellipsis .mx_EntityTile_name {
@@ -89,26 +101,28 @@ limitations under the License.
 
 .mx_EntityTile_unavailable .mx_EntityTile_avatar,
 .mx_EntityTile_unavailable .mx_EntityTile_name,
-.mx_EntityTile_unavailable .mx_EntityTile_name_hover,
 .mx_EntityTile_offline_beenactive .mx_EntityTile_avatar,
-.mx_EntityTile_offline_beenactive .mx_EntityTile_name,
-.mx_EntityTile_offline_beenactive .mx_EntityTile_name_hover
+.mx_EntityTile_offline_beenactive .mx_EntityTile_name
 {
-    opacity: 0.66;
+    opacity: 0.5;
 }
 
 .mx_EntityTile_offline_neveractive .mx_EntityTile_avatar,
-.mx_EntityTile_offline_neveractive .mx_EntityTile_name,
-.mx_EntityTile_offline_neveractive .mx_EntityTile_name_hover
+.mx_EntityTile_offline_neveractive .mx_EntityTile_name
 {
     opacity: 0.25;
 }
 
 .mx_EntityTile_unknown .mx_EntityTile_avatar,
-.mx_EntityTile_unknown .mx_EntityTile_name,
-.mx_EntityTile_unknown .mx_EntityTile_name_hover
+.mx_EntityTile_unknown .mx_EntityTile_name
 {
     opacity: 0.25;
 }
 
-
+.mx_EntityTile_subtext {
+    font-size: 11px;
+    opacity: 0.5;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: clip;
+}

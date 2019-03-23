@@ -101,12 +101,10 @@ const TagPanel = React.createClass({
     },
 
     render() {
-        const GroupsButton = sdk.getComponent('elements.GroupsButton');
         const DNDTagTile = sdk.getComponent('elements.DNDTagTile');
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         const TintableSvg = sdk.getComponent('elements.TintableSvg');
         const GeminiScrollbarWrapper = sdk.getComponent("elements.GeminiScrollbarWrapper");
-
 
         const tags = this.state.orderedTags.map((tag, index) => {
             return <DNDTagTile
@@ -122,7 +120,7 @@ const TagPanel = React.createClass({
         let clearButton;
         if (itemsSelected) {
             clearButton = <AccessibleButton className="mx_TagPanel_clearButton" onClick={this.onClearFilterClick}>
-                <TintableSvg src="img/icons-close.svg" width="24" height="24"
+                <TintableSvg src={require("../../../res/img/icons-close.svg")} width="24" height="24"
                              alt={_t("Clear filter")}
                              title={_t("Clear filter")}
                 />
@@ -160,10 +158,6 @@ const TagPanel = React.createClass({
                     ) }
                 </Droppable>
             </GeminiScrollbarWrapper>
-            <div className="mx_TagPanel_divider" />
-            <div className="mx_TagPanel_groupsButton">
-                <GroupsButton tooltip={true} />
-            </div>
         </div>;
     },
 });

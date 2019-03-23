@@ -122,10 +122,6 @@ class GroupStore extends EventEmitter {
                 );
             },
         };
-
-        this.on('error', (err, groupId) => {
-            console.error(`GroupStore encountered error whilst fetching data for ${groupId}`, err);
-        });
     }
 
     _fetchResource(stateKey, groupId) {
@@ -148,7 +144,7 @@ class GroupStore extends EventEmitter {
             }
 
             console.error(`Failed to get resource ${stateKey} for ${groupId}`, err);
-            this.emit('error', err, groupId);
+            this.emit('error', err, groupId, stateKey);
         }).finally(() => {
             // Indicate finished request, allow for future fetches
             delete this._fetchResourcePromise[stateKey][groupId];
@@ -205,6 +201,14 @@ class GroupStore extends EventEmitter {
 
     isStateReady(groupId, id) {
         return this._ready[id][groupId];
+    }
+
+    getGroupIdsForRoomId(roomId) {
+        const groupIds = Object.keys(this._state[this.STATE_KEY.GroupRooms]);
+        return groupIds.filter(groupId => {
+            const rooms = this._state[this.STATE_KEY.GroupRooms][groupId] || [];
+            return rooms.some(room => room.roomId === roomId);
+        });
     }
 
     getSummary(groupId) {

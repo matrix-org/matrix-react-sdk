@@ -3,6 +3,7 @@
 /*
 Copyright 2016 Aviral Dasgupta
 Copyright 2016 OpenMarket Ltd
+Copyright 2018 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -105,16 +106,36 @@ export default class BasePlatform {
         return "Not implemented";
     }
 
-    isElectron(): boolean { return false; }
-
-    setupScreenSharingForIframe() {
-    }
-
     /**
      * Restarts the application, without neccessarily reloading
      * any application code
      */
     reload() {
         throw new Error("reload not implemented!");
+    }
+
+    supportsAutoLaunch(): boolean {
+        return false;
+    }
+
+    // XXX: Surely this should be a setting like any other?
+    async getAutoLaunchEnabled(): boolean {
+        return false;
+    }
+
+    async setAutoLaunchEnabled(enabled: boolean): void {
+        throw new Error("Unimplemented");
+    }
+
+    supportsMinimizeToTray(): boolean {
+        return false;
+    }
+
+    async getMinimizeToTrayEnabled(): boolean {
+        return false;
+    }
+
+    async setMinimizeToTrayEnabled(enabled: boolean): void {
+        throw new Error("Unimplemented");
     }
 }

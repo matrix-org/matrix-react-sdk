@@ -29,15 +29,15 @@ import request from 'browser-request';
 import Modal from '../../../Modal';
 
 
-// A cached tinted copy of "img/download.svg"
+// A cached tinted copy of require("../../../../res/img/download.svg")
 let tintedDownloadImageURL;
 // Track a list of mounted MFileBody instances so that we can update
-// the "img/download.svg" when the tint changes.
+// the require("../../../../res/img/download.svg") when the tint changes.
 let nextMountId = 0;
 const mounts = {};
 
 /**
- * Updates the tinted copy of "img/download.svg" when the tint changes.
+ * Updates the tinted copy of require("../../../../res/img/download.svg") when the tint changes.
  */
 function updateTintedDownloadImage() {
     // Download the svg as an XML document.
@@ -46,7 +46,7 @@ function updateTintedDownloadImage() {
     // Also note that we can't use fetch here because fetch doesn't support
     // file URLs, which the download image will be if we're running from
     // the filesystem (like in an Electron wrapper).
-    request({uri: "img/download.svg"}, (err, response, body) => {
+    request({uri: require("../../../../res/img/download.svg")}, (err, response, body) => {
         if (err) return;
 
         const svg = new DOMParser().parseFromString(body, "image/svg+xml");
@@ -203,6 +203,17 @@ module.exports = React.createClass({
         };
     },
 
+    propTypes: {
+        /* the MatrixEvent to show */
+        mxEvent: PropTypes.object.isRequired,
+        /* already decrypted blob */
+        decryptedBlob: PropTypes.object,
+        /* called when the download link iframe is shown */
+        onHeightChanged: PropTypes.func,
+        /* the shape of the tile, used */
+        tileShape: PropTypes.string,
+    },
+
     contextTypes: {
         appConfig: PropTypes.object,
     },
@@ -248,13 +259,19 @@ module.exports = React.createClass({
         this.tint();
     },
 
+    componentDidUpdate: function(prevProps, prevState) {
+        if (this.props.onHeightChanged && !prevState.decryptedBlob && this.state.decryptedBlob) {
+            this.props.onHeightChanged();
+        }
+    },
+
     componentWillUnmount: function() {
         // Remove this from the list of mounted components
         delete mounts[this.id];
     },
 
     tint: function() {
-        // Update our tinted copy of "img/download.svg"
+        // Update our tinted copy of require("../../../../res/img/download.svg")
         if (this.refs.downloadImage) {
             this.refs.downloadImage.src = tintedDownloadImageURL;
         }

@@ -1,6 +1,6 @@
 /*
 Copyright 2017 Travis Ralston
-Copyright 2018 New Vector Ltd
+Copyright 2018, 2019 New Vector Ltd.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,7 +21,8 @@ import {
     NotificationBodyEnabledController,
     NotificationsEnabledController,
 } from "./controllers/NotificationControllers";
-import LazyLoadingController from "./controllers/LazyLoadingController";
+import CustomStatusController from "./controllers/CustomStatusController";
+import ThemeController from './controllers/ThemeController';
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
 const LEVELS_ROOM_SETTINGS = ['device', 'room-device', 'room-account', 'account', 'config'];
@@ -76,6 +77,15 @@ export const SETTINGS = {
     //     // settings. The first element is treated as "most preferred". The "default"
     //     // level is always appended to the end.
     //     supportedLevelsAreOrdered: false,
+    //
+    //     // Optional value to invert a boolean setting's value. The string given will
+    //     // be read as the setting's ID instead of the one provided as the key for the
+    //     // setting definition. By setting this, the returned value will automatically
+    //     // be inverted, except for when the default value is returned. Inversion will
+    //     // occur after the controller is asked for an override. This should be used by
+    //     // historical settings which we don't want existing user's values be wiped. Do
+    //     // not use this for new settings.
+    //     invertedSettingName: "my-negative-setting",
     // },
     "feature_pinning": {
         isFeature: true,
@@ -83,47 +93,71 @@ export const SETTINGS = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_lazyloading": {
+    "feature_custom_status": {
         isFeature: true,
-        displayName: _td("Increase performance by only loading room members on first view"),
+        displayName: _td("Custom user status messages"),
         supportedLevels: LEVELS_FEATURE,
-        controller: new LazyLoadingController(),
-        default: true,
-    },
-    "MessageComposerInput.dontSuggestEmoji": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Disable Emoji suggestions while typing'),
         default: false,
+        controller: new CustomStatusController(),
+    },
+    "feature_room_breadcrumbs": {
+        isFeature: true,
+        displayName: _td("Show recent room avatars above the room list (refresh to apply changes)"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
+    "feature_custom_tags": {
+        isFeature: true,
+        displayName: _td("Group & filter rooms by custom tags (refresh to apply changes)"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
+    "feature_state_counters": {
+        isFeature: true,
+        displayName: _td("Render simple counters in room header"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
+    "MessageComposerInput.suggestEmoji": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Enable Emoji suggestions while typing'),
+        default: true,
+        invertedSettingName: 'MessageComposerInput.dontSuggestEmoji',
     },
     "useCompactLayout": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Use compact timeline layout'),
         default: false,
     },
-    "hideRedactions": {
+    "showRedactions": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td('Hide removed messages'),
-        default: false,
+        displayName: _td('Show a placeholder for removed messages'),
+        default: true,
+        invertedSettingName: 'hideRedactions',
     },
-    "hideJoinLeaves": {
+    "showJoinLeaves": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td('Hide join/leave messages (invites/kicks/bans unaffected)'),
-        default: false,
+        displayName: _td('Show join/leave messages (invites/kicks/bans unaffected)'),
+        default: true,
+        invertedSettingName: 'hideJoinLeaves',
     },
-    "hideAvatarChanges": {
+    "showAvatarChanges": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td('Hide avatar changes'),
-        default: false,
+        displayName: _td('Show avatar changes'),
+        default: true,
+        invertedSettingName: 'hideAvatarChanges',
     },
-    "hideDisplaynameChanges": {
+    "showDisplaynameChanges": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td('Hide display name changes'),
-        default: false,
+        displayName: _td('Show display name changes'),
+        default: true,
+        invertedSettingName: 'hideDisplaynameChanges',
     },
-    "hideReadReceipts": {
+    "showReadReceipts": {
         supportedLevels: LEVELS_ROOM_SETTINGS,
-        displayName: _td('Hide read receipts'),
-        default: false,
+        displayName: _td('Show read receipts sent by other users'),
+        default: true,
+        invertedSettingName: 'hideReadReceipts',
     },
     "showTwelveHourTimestamps": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -145,20 +179,27 @@ export const SETTINGS = {
         displayName: _td('Always show encryption icons'),
         default: true,
     },
+    "showRoomRecoveryReminder": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Show a reminder to enable Secure Message Recovery in encrypted rooms'),
+        default: true,
+    },
     "enableSyntaxHighlightLanguageDetection": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Enable automatic language detection for syntax highlighting'),
         default: false,
     },
-    "Pill.shouldHidePillAvatar": {
+    "Pill.shouldShowPillAvatar": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Hide avatars in user and room mentions'),
-        default: false,
+        displayName: _td('Show avatars in user and room mentions'),
+        default: true,
+        invertedSettingName: 'Pill.shouldHidePillAvatar',
     },
-    "TextualBody.disableBigEmoji": {
+    "TextualBody.enableBigEmoji": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Disable big emoji in chat'),
-        default: false,
+        displayName: _td('Enable big emoji in chat'),
+        default: true,
+        invertedSettingName: 'TextualBody.disableBigEmoji',
     },
     "MessageComposerInput.isRichTextEnabled": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -168,10 +209,11 @@ export const SETTINGS = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: false,
     },
-    "dontSendTypingNotifications": {
+    "sendTypingNotifications": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Don't send typing notifications"),
-        default: false,
+        displayName: _td("Send typing notifications"),
+        default: true,
+        invertedSettingName: 'dontSendTypingNotifications',
     },
     "MessageComposerInput.autoReplaceEmoji": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -183,19 +225,22 @@ export const SETTINGS = {
         displayName: _td('Mirror local video feed'),
         default: false,
     },
-    "TagPanel.disableTagPanel": {
+    "TagPanel.enableTagPanel": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Disable Community Filter Panel'),
-        default: false,
+        displayName: _td('Enable Community Filter Panel'),
+        default: true,
+        invertedSettingName: 'TagPanel.disableTagPanel',
     },
     "theme": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: "light",
+        controller: new ThemeController(),
     },
-    "webRtcForceTURN": {
+    "webRtcAllowPeerToPeer": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td('Disable Peer-to-Peer for 1:1 calls'),
-        default: false,
+        displayName: _td('Allow Peer-to-Peer for 1:1 calls'),
+        default: true,
+        invertedSettingName: 'webRtcForceTURN',
     },
     "webrtc_audiooutput": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
@@ -276,16 +321,6 @@ export const SETTINGS = {
         default: true,
         controller: new AudioNotificationsEnabledController(),
     },
-    "pinMentionedRooms": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Pin rooms I'm mentioned in to the top of the room list"),
-        default: false,
-    },
-    "pinUnreadRooms": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Pin unread rooms to the top of the room list"),
-        default: false,
-    },
     "enableWidgetScreenshots": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Enable widget screenshots on supported widgets'),
@@ -295,14 +330,19 @@ export const SETTINGS = {
         supportedLevels: ['room-device'],
         default: false,
     },
-    "RoomSubList.showEmpty": {
+    "promptBeforeInviteUnknownUsers": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Show empty room list headings'),
+        displayName: _td('Prompt before sending invites to potentially invalid matrix IDs'),
         default: true,
     },
     "showDeveloperTools": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Show developer tools'),
         default: false,
+    },
+    "RoomList.orderByImportance": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Order rooms in the room list by most important first instead of most recent'),
+        default: true,
     },
 };

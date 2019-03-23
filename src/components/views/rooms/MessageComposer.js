@@ -26,6 +26,9 @@ import RoomViewStore from '../../../stores/RoomViewStore';
 import SettingsStore, {SettingLevel} from "../../../settings/SettingsStore";
 import Stickerpicker from './Stickerpicker';
 import { makeRoomPermalink } from '../../../matrix-to';
+import classNames from 'classnames';
+
+import E2EIcon from './E2EIcon';
 
 const formatButtonList = [
     _td("bold"),
@@ -65,6 +68,7 @@ export default class MessageComposer extends React.Component {
             showFormatting: SettingsStore.getValue('MessageComposer.showFormatting'),
             isQuoting: Boolean(RoomViewStore.getQuotingEvent()),
             tombstone: this._getRoomTombstone(),
+            canSendMessages: this.props.room.maySendMessage(),
         };
     }
 
@@ -117,6 +121,9 @@ export default class MessageComposer extends React.Component {
         if (ev.getType() === 'm.room.tombstone') {
             this.setState({tombstone: this._getRoomTombstone()});
         }
+        if (ev.getType() === 'm.room.power_levels') {
+            this.setState({canSendMessages: this.props.room.maySendMessage()});
+        }
     }
 
     _getRoomTombstone() {
@@ -139,7 +146,8 @@ export default class MessageComposer extends React.Component {
     }
 
     onUploadFileSelected(files) {
-        this.uploadFiles(files.target.files);
+        const tfiles = files.target.files;
+        this.uploadFiles(tfiles);
     }
 
     uploadFiles(files) {
@@ -147,10 +155,21 @@ export default class MessageComposer extends React.Component {
         const TintableSvg = sdk.getComponent("elements.TintableSvg");
 
         const fileList = [];
+        const acceptedFiles = [];
+        const failedFiles = [];
+
         for (let i=0; i<files.length; i++) {
-            fileList.push(<li key={i}>
-                <TintableSvg key={i} src="img/files.svg" width="16" height="16" /> { files[i].name || _t('Attachment') }
-            </li>);
+            const fileAcceptedOrError = this.props.uploadAllowed(files[i]);
+            if (fileAcceptedOrError === true) {
+                acceptedFiles.push(<li key={i}>
+                    <TintableSvg key={i} src={require("../../../../res/img/files.svg")} width="16" height="16" /> { files[i].name || _t('Attachment') }
+                </li>);
+                fileList.push(files[i]);
+            } else {
+                failedFiles.push(<li key={i}>
+                    <TintableSvg key={i} src={require("../../../../res/img/files.svg")} width="16" height="16" /> { files[i].name || _t('Attachment') } <p>{ _t('Reason') + ": " + fileAcceptedOrError}</p>
+                </li>);
+            }
         }
 
         const isQuoting = Boolean(RoomViewStore.getQuotingEvent());
@@ -161,23 +180,47 @@ export default class MessageComposer extends React.Component {
             }</p>;
         }
 
+        const acceptedFilesPart = acceptedFiles.length === 0 ? null : (
+            <div>
+                <p>{ _t('Are you sure you want to upload the following files?') }</p>
+                <ul style={{listStyle: 'none', textAlign: 'left'}}>
+                    { acceptedFiles }
+                </ul>
+            </div>
+        );
+
+        const failedFilesPart = failedFiles.length === 0 ? null : (
+            <div>
+                <p>{ _t('The following files cannot be uploaded:') }</p>
+                <ul style={{listStyle: 'none', textAlign: 'left'}}>
+                    { failedFiles }
+                </ul>
+            </div>
+        );
+        let buttonText;
+        if (acceptedFiles.length > 0 && failedFiles.length > 0) {
+            buttonText = "Upload selected"
+        } else if (failedFiles.length > 0) {
+            buttonText = "Close"
+        }
+
         Modal.createTrackedDialog('Upload Files confirmation', '', QuestionDialog, {
             title: _t('Upload Files'),
             description: (
                 <div>
-                    <p>{ _t('Are you sure you want to upload the following files?') }</p>
-                    <ul style={{listStyle: 'none', textAlign: 'left'}}>
-                        { fileList }
-                    </ul>
+                    { acceptedFilesPart }
+                    { failedFilesPart }
                     { replyToWarning }
                 </div>
             ),
+            hasCancelButton: acceptedFiles.length > 0,
+            button: buttonText,
             onFinished: (shouldUpload) => {
                 if (shouldUpload) {
                     // MessageComposer shouldn't have to rely on its parent passing in a callback to upload a file
-                    if (files) {
-                        for (let i=0; i<files.length; i++) {
-                            this.props.uploadFile(files[i]);
+                    if (fileList) {
+                        for (let i=0; i<fileList.length; i++) {
+                            this.props.uploadFile(fileList[i]);
                         }
                     }
                 }
@@ -218,6 +261,8 @@ export default class MessageComposer extends React.Component {
     }
 
     onInputStateChanged(inputState) {
+        // Merge the new input state with old to support partial updates
+        inputState = Object.assign({}, this.state.inputState, inputState);
         this.setState({inputState});
     }
 
@@ -246,17 +291,27 @@ export default class MessageComposer extends React.Component {
         ev.preventDefault();
 
         const replacementRoomId = this.state.tombstone.getContent()['replacement_room'];
+        const replacementRoom = MatrixClientPeg.get().getRoom(replacementRoomId);
+        let createEventId = null;
+        if (replacementRoom) {
+            const createEvent = replacementRoom.currentState.getStateEvents('m.room.create', '');
+            if (createEvent && createEvent.getId()) createEventId = createEvent.getId();
+        }
         dis.dispatch({
             action: 'view_room',
             highlighted: true,
+            event_id: createEventId,
             room_id: replacementRoomId,
+
+            // Try to join via the server that sent the event. This converts $something:example.org
+            // into a server domain by splitting on colons and ignoring the first entry ("$something").
+            via_servers: [this.state.tombstone.getId().split(':').splice(1).join(':')],
         });
     }
 
     render() {
         const uploadInputStyle = {display: 'none'};
-        const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
-        const TintableSvg = sdk.getComponent("elements.TintableSvg");
+        const MemberStatusMessageAvatar = sdk.getComponent('avatars.MemberStatusMessageAvatar');
         const MessageComposerInput = sdk.getComponent("rooms.MessageComposerInput");
 
         const controls = [];
@@ -264,29 +319,18 @@ export default class MessageComposer extends React.Component {
         if (this.state.me) {
             controls.push(
                 <div key="controls_avatar" className="mx_MessageComposer_avatar">
-                    <MemberAvatar member={this.state.me} width={24} height={24} />
+                    <MemberStatusMessageAvatar member={this.state.me} width={24} height={24} />
                 </div>,
             );
         }
 
-        let e2eImg; let e2eTitle; let e2eClass;
-        const roomIsEncrypted = MatrixClientPeg.get().isRoomEncrypted(this.props.room.roomId);
-        if (roomIsEncrypted) {
-            // FIXME: show a /!\ if there are untrusted devices in the room...
-            e2eImg = 'img/e2e-verified.svg';
-            e2eTitle = _t('Encrypted room');
-            e2eClass = 'mx_MessageComposer_e2eIcon';
-        } else {
-            e2eImg = 'img/e2e-unencrypted.svg';
-            e2eTitle = _t('Unencrypted room');
-            e2eClass = 'mx_MessageComposer_e2eIcon mx_filterFlipColor';
+        if (this.props.e2eStatus) {
+            controls.push(<E2EIcon
+                status={this.props.e2eStatus}
+                key="e2eIcon"
+                className="mx_MessageComposer_e2eIcon" />
+            );
         }
-
-        controls.push(
-            <img key="e2eIcon" className={e2eClass} src={e2eImg} width="12" height="12"
-                alt={e2eTitle} title={e2eTitle}
-            />,
-        );
 
         let callButton;
         let videoCallButton;
@@ -296,31 +340,39 @@ export default class MessageComposer extends React.Component {
         // Call buttons
         if (this.props.callState && this.props.callState !== 'ended') {
             hangupButton =
-                <AccessibleButton key="controls_hangup" className="mx_MessageComposer_hangup" onClick={this.onHangupClick}>
-                    <img src="img/hangup.svg" alt={_t('Hangup')} title={_t('Hangup')} width="25" height="26" />
+                <AccessibleButton className="mx_MessageComposer_button mx_MessageComposer_hangup"
+                    key="controls_hangup"
+                    onClick={this.onHangupClick}
+                    title={_t('Hangup')}
+                >
                 </AccessibleButton>;
         } else {
             callButton =
-                <AccessibleButton key="controls_call" className="mx_MessageComposer_voicecall" onClick={this.onVoiceCallClick} title={_t('Voice call')}>
-                    <TintableSvg src="img/icon-call.svg" width="35" height="35" />
+                <AccessibleButton className="mx_MessageComposer_button mx_MessageComposer_voicecall"
+                    key="controls_call"
+                    onClick={this.onVoiceCallClick}
+                    title={_t('Voice call')}
+                >
                 </AccessibleButton>;
             videoCallButton =
-                <AccessibleButton key="controls_videocall" className="mx_MessageComposer_videocall" onClick={this.onCallClick} title={_t('Video call')}>
-                    <TintableSvg src="img/icons-video.svg" width="35" height="35" />
+                <AccessibleButton className="mx_MessageComposer_button mx_MessageComposer_videocall"
+                    key="controls_videocall"
+                    onClick={this.onCallClick}
+                    title={_t('Video call')}
+                >
                 </AccessibleButton>;
         }
 
-        const canSendMessages = !this.state.tombstone &&
-            this.props.room.maySendMessage();
-
-        if (canSendMessages) {
+        if (!this.state.tombstone && this.state.canSendMessages) {
             // This also currently includes the call buttons. Really we should
             // check separately for whether we can call, but this is slightly
             // complex because of conference calls.
             const uploadButton = (
-                <AccessibleButton key="controls_upload" className="mx_MessageComposer_upload"
-                        onClick={this.onUploadClick} title={_t('Upload file')}>
-                    <TintableSvg src="img/icons-upload.svg" width="35" height="35" />
+                <AccessibleButton className="mx_MessageComposer_button mx_MessageComposer_upload"
+                    key="controls_upload"
+                    onClick={this.onUploadClick}
+                    title={_t('Upload file')}
+                >
                     <input ref="uploadInput" type="file"
                         style={uploadInputStyle}
                         multiple
@@ -332,12 +384,13 @@ export default class MessageComposer extends React.Component {
                 <AccessibleButton element="img" className="mx_MessageComposer_formatting"
                      alt={_t("Show Text Formatting Toolbar")}
                      title={_t("Show Text Formatting Toolbar")}
-                     src="img/button-text-formatting.svg"
+                     src={require("../../../../res/img/button-text-formatting.svg")}
                      onClick={this.onToggleFormattingClicked}
                      style={{visibility: this.state.showFormatting ? 'hidden' : 'visible'}}
                      key="controls_formatting" />
             ) : null;
 
+            const roomIsEncrypted = MatrixClientPeg.get().isRoomEncrypted(this.props.room.roomId);
             let placeholderText;
             if (this.state.isQuoting) {
                 if (roomIsEncrypted) {
@@ -363,7 +416,8 @@ export default class MessageComposer extends React.Component {
                     room={this.props.room}
                     placeholder={placeholderText}
                     onFilesPasted={this.uploadFiles}
-                    onInputStateChanged={this.onInputStateChanged} />,
+                    onInputStateChanged={this.onInputStateChanged}
+                    permalinkCreator={this.props.permalinkCreator} />,
                 formattingButton,
                 stickerpickerButton,
                 uploadButton,
@@ -376,7 +430,7 @@ export default class MessageComposer extends React.Component {
 
             controls.push(<div className="mx_MessageComposer_replaced_wrapper">
                 <div className="mx_MessageComposer_replaced_valign">
-                    <img className="mx_MessageComposer_roomReplaced_icon" src="img/room_replaced.svg" />
+                    <img className="mx_MessageComposer_roomReplaced_icon" src={require("../../../../res/img/room_replaced.svg")} />
                     <span className="mx_MessageComposer_roomReplaced_header">
                         {_t("This room has been replaced and is no longer active.")}
                     </span><br />
@@ -410,7 +464,7 @@ export default class MessageComposer extends React.Component {
                             title={_t(name)}
                             onMouseDown={onFormatButtonClicked}
                             key={name}
-                            src={`img/button-text-${name}${suffix}.svg`}
+                            src={require(`../../../../res/img/button-text-${name}${suffix}.svg`)}
                             height="17" />;
                 },
             );
@@ -419,22 +473,27 @@ export default class MessageComposer extends React.Component {
                 <div className="mx_MessageComposer_formatbar_wrapper">
                     <div className="mx_MessageComposer_formatbar">
                         { formatButtons }
-                        <div style={{flex: 1}}></div>
-                        <img title={this.state.inputState.isRichTextEnabled ? _t("Turn Markdown on") : _t("Turn Markdown off")}
-                             onMouseDown={this.onToggleMarkdownClicked}
-                            className="mx_MessageComposer_formatbar_markdown mx_filterFlipColor"
-                            src={`img/button-md-${!this.state.inputState.isRichTextEnabled}.png`} />
+                        <div style={{ flex: 1 }}></div>
+                        <AccessibleButton className="mx_MessageComposer_formatbar_markdown mx_MessageComposer_markdownDisabled"
+                            onClick={this.onToggleMarkdownClicked}
+                            title={_t("Markdown is disabled")}
+                        />
                         <AccessibleButton element="img" title={_t("Hide Text Formatting Toolbar")}
-                             onClick={this.onToggleFormattingClicked}
-                             className="mx_MessageComposer_formatbar_cancel mx_filterFlipColor"
-                             src="img/icon-text-cancel.svg" />
+                            onClick={this.onToggleFormattingClicked}
+                            className="mx_MessageComposer_formatbar_cancel mx_filterFlipColor"
+                            src={require("../../../../res/img/icon-text-cancel.svg")}
+                        />
                     </div>
                 </div>;
         }
 
+        const wrapperClasses = classNames({
+            mx_MessageComposer_wrapper: true,
+            mx_MessageComposer_hasE2EIcon: !!this.props.e2eStatus,
+        });
         return (
             <div className="mx_MessageComposer">
-                <div className="mx_MessageComposer_wrapper">
+                <div className={wrapperClasses}>
                     <div className="mx_MessageComposer_row">
                         { controls }
                     </div>
@@ -459,6 +518,9 @@ MessageComposer.propTypes = {
     // callback when a file to upload is chosen
     uploadFile: PropTypes.func.isRequired,
 
+    // function to test whether a file should be allowed to be uploaded.
+    uploadAllowed: PropTypes.func.isRequired,
+
     // string representing the current room app drawer state
-    showApps: PropTypes.bool,
+    showApps: PropTypes.bool
 };

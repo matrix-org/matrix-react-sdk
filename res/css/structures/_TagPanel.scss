@@ -15,8 +15,9 @@ limitations under the License.
 */
 
 .mx_TagPanel {
-    flex: 0 0 60px;
-    background-color: $tertiary-accent-color;
+    flex: 1;
+    background-color: $tagpanel-bg-color;
+    cursor: pointer;
 
     display: flex;
     flex-direction: column;
@@ -38,6 +39,8 @@ limitations under the License.
     display: flex;
     justify-content: center;
     align-items: flex-start;
+
+    display: none;
 }
 
 .mx_TagPanel .mx_TagPanel_clearButton object {
@@ -50,6 +53,7 @@ limitations under the License.
     height: 0px;
     width: 42px;
     border-bottom: 1px solid $panel-divider-color;
+    display: none;
 }
 
 .mx_TagPanel .mx_TagPanel_scroller {
@@ -60,35 +64,41 @@ limitations under the License.
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 5px;
 
     height: 100%;
 }
+.mx_TagPanel .mx_TagPanel_tagTileContainer > div {
+    height: 40px;
+    padding: 5px 0 4px 0;
+}
 
 .mx_TagPanel .mx_TagTile {
-    padding: 6px 3px;
-    opacity: 0.5;
+    margin: 9px 0;
+//  opacity: 0.5;
     position: relative;
 }
 .mx_TagPanel .mx_TagTile:focus,
 .mx_TagPanel .mx_TagTile:hover,
 .mx_TagPanel .mx_TagTile.mx_TagTile_selected {
-    opacity: 1;
-}
-
-.mx_TagPanel .mx_TagTile.mx_TagTile_selected {
-    /* To offset border of mx_TagTile_avatar */
-    padding: 3px 0px;
+//    opacity: 1;
 }
 
 .mx_TagPanel .mx_TagTile.mx_TagTile_selected .mx_TagTile_avatar .mx_BaseAvatar {
-    border: 3px solid $accent-color;
     background-color: $accent-color;
-    border-radius: 60px;
+    border-radius: 40px;
 
     /* In case this is a "initial" avatar */
     display: block;
-    height: 35px;
-    width: 35px;
+    height: 40px;
+    width: 40px;
+}
+
+.mx_TagPanel .mx_TagTile_selected .mx_BaseAvatar_image {
+    border: 3px solid $accent-color;
+    height: 40px;
+    width: 40px;
+    box-sizing: border-box;
 }
 
 .mx_TagPanel .mx_TagTile.mx_AccessibleButton:focus {
@@ -106,7 +116,7 @@ limitations under the License.
     height: 15px;
     position: absolute;
     right: -5px;
-    top: 1px;
+    top: -8px;
     border-radius: 8px;
     background-color: $neutral-badge-color;
     color: #ffffff;
@@ -118,12 +128,22 @@ limitations under the License.
     padding-right: 4px;
 }
 
-.mx_TagPanel_groupsButton {
-    margin-bottom: 17px;
-    margin-top: 18px;
-    height: 25px;
+.mx_TagTile_avatar {
+    position: relative;
 }
 
-.mx_TagPanel_groupsButton object {
-    pointer-events: none;
+.mx_TagTile_badge {
+    position: absolute;
+    right: -4px;
+    top: -2px;
+    border-radius: 8px;
+    color: $accent-fg-color;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 0 5px;
+    background-color: $roomtile-name-color;
+}
+
+.mx_TagTile_badgeHighlight {
+    background-color: $warning-color;
 }

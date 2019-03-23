@@ -387,7 +387,7 @@ module.exports = React.createClass({
 
                 ret.push(<MemberEventListSummary key={key}
                     events={summarisedEvents}
-                    onToggle={this._onWidgetLoad} // Update scroll state
+                    onToggle={this._onHeightChanged} // Update scroll state
                     startExpanded={highlightInMels}
                 >
                         { eventTiles }
@@ -517,7 +517,7 @@ module.exports = React.createClass({
                         data-scroll-tokens={scrollToken}>
                     <EventTile mxEvent={mxEv} continuation={continuation}
                         isRedacted={mxEv.isRedacted()}
-                        onWidgetLoad={this._onWidgetLoad}
+                        onHeightChanged={this._onHeightChanged}
                         readReceipts={readReceipts}
                         readReceiptMap={this._readReceiptMap}
                         showUrlPreview={this.props.showUrlPreview}
@@ -525,6 +525,7 @@ module.exports = React.createClass({
                         eventSendStatus={mxEv.status}
                         tileShape={this.props.tileShape}
                         isTwelveHour={this.props.isTwelveHour}
+                        permalinkCreator={this.props.permalinkCreator}
                         last={last} isSelectedEvent={highlight} />
                 </li>,
         );
@@ -624,10 +625,43 @@ module.exports = React.createClass({
 
     // once dynamic content in the events load, make the scrollPanel check the
     // scroll offsets.
-    _onWidgetLoad: function() {
+    _onHeightChanged: function() {
         const scrollPanel = this.refs.scrollPanel;
         if (scrollPanel) {
             scrollPanel.forceUpdate();
+        }
+    },
+
+    _onTypingVisible: function() {
+        const scrollPanel = this.refs.scrollPanel;
+        if (scrollPanel && scrollPanel.getScrollState().stuckAtBottom) {
+            // scroll down if at bottom
+            scrollPanel.checkScroll();
+            scrollPanel.blockShrinking();
+        }
+    },
+
+    updateTimelineMinHeight: function() {
+        const scrollPanel = this.refs.scrollPanel;
+
+        if (scrollPanel) {
+            const isAtBottom = scrollPanel.isAtBottom();
+            const whoIsTyping = this.refs.whoIsTyping;
+            const isTypingVisible = whoIsTyping && whoIsTyping.isVisible();
+            // when messages get added to the timeline,
+            // but somebody else is still typing,
+            // update the min-height, so once the last
+            // person stops typing, no jumping occurs
+            if (isAtBottom && isTypingVisible) {
+                scrollPanel.blockShrinking();
+            }
+        }
+    },
+
+    clearTimelineHeight: function() {
+        const scrollPanel = this.refs.scrollPanel;
+        if (scrollPanel) {
+            scrollPanel.clearBlockShrinking();
         }
     },
 
@@ -637,6 +671,7 @@ module.exports = React.createClass({
 
     render: function() {
         const ScrollPanel = sdk.getComponent("structures.ScrollPanel");
+        const WhoIsTypingTile = sdk.getComponent("rooms.WhoIsTypingTile");
         const Spinner = sdk.getComponent("elements.Spinner");
         let topSpinner;
         let bottomSpinner;
@@ -656,6 +691,11 @@ module.exports = React.createClass({
             },
         );
 
+        let whoIsTyping;
+        if (this.props.room) {
+            whoIsTyping = (<WhoIsTypingTile room={this.props.room} onVisible={this._onTypingVisible} ref="whoIsTyping" />);
+        }
+
         return (
             <ScrollPanel ref="scrollPanel" className={className}
                     onScroll={this.props.onScroll}
@@ -666,6 +706,7 @@ module.exports = React.createClass({
                     stickyBottom={this.props.stickyBottom}>
                 { topSpinner }
                 { this._getEventTiles() }
+                { whoIsTyping }
                 { bottomSpinner }
             </ScrollPanel>
         );
