@@ -245,9 +245,9 @@ class PasswordLogin extends React.Component {
     render() {
         const Field = sdk.getComponent('elements.Field');
 
-        let forgotPasswordJsx;
+        let forgotPasswordJsx = null;
 
-        if (this.props.onForgotPasswordClick) {
+        if (!SdkConfig.get().disable_password_change && this.props.onForgotPasswordClick) {
             forgotPasswordJsx = <span>
                 {_t('Not sure of your password? <a>Set a new one</a>', {}, {
                     a: sub => <a className="mx_Login_forgot"
