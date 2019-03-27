@@ -193,7 +193,9 @@ class PasswordLogin extends React.Component {
                     name="username" // make it a little easier for browser's remember-password
                     key="username_input"
                     type="text"
-                    label={SdkConfig.get().disable_custom_urls ?
+                    label={SdkConfig.get().username_description ?
+                        SdkConfig.get().username_description :
+                        SdkConfig.get().disable_custom_urls ?
                         _t("Username on %(hs)s", {
                             hs: this.props.hsUrl.replace(/^https?:\/\//, ''),
                         }) : _t("Username")}
