@@ -1867,5 +1867,6 @@
     "Riot failed to get the public room list.": "Riot n’a pas pu récupérer la liste des salons publics.",
     "The homeserver may be unavailable or overloaded.": "Le serveur d’accueil est peut-être indisponible ou surchargé.",
     "You have %(count)s unread notifications in a prior version of this room.|other": "Vous avez %(count)s notifications non lues dans une version précédente de ce salon.",
-    "You have %(count)s unread notifications in a prior version of this room.|one": "Vous avez %(count)s notification non lue dans une version précédente de ce salon."
+    "You have %(count)s unread notifications in a prior version of this room.|one": "Vous avez %(count)s notification non lue dans une version précédente de ce salon.",
+    "Unauthorized email": "Cette adresse e-mail n'est pas autorisée"
 }

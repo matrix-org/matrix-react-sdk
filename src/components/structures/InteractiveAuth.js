@@ -117,20 +117,11 @@ export default React.createClass({
             });
         }).done();
 
-        this._intervalId = null;
-        if (this.props.poll) {
-            this._intervalId = setInterval(() => {
-                this._authLogic.poll();
-            }, 2000);
-        }
+        this._authLogic.poll();
     },
 
     componentWillUnmount: function() {
         this._unmounted = true;
-
-        if (this._intervalId !== null) {
-            clearInterval(this._intervalId);
-        }
     },
 
     tryContinue: function() {

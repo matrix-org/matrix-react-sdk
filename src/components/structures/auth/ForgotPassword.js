@@ -20,13 +20,11 @@ import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import sdk from '../../../index';
 import Modal from "../../../Modal";
-import SdkConfig from "../../../SdkConfig";
+import * as Tchap from '../../../Tchap';
 
 import PasswordReset from "../../../PasswordReset";
 
 // Phases
-// Show controls to configure server details
-const PHASE_SERVER_DETAILS = 0;
 // Show the forgot password inputs
 const PHASE_FORGOT = 1;
 // Email is in the process of being sent
@@ -132,10 +130,12 @@ module.exports = React.createClass({
                 button: _t('Continue'),
                 onFinished: (confirmed) => {
                     if (confirmed) {
-                        this.submitPasswordReset(
-                            this.state.enteredHsUrl, this.state.enteredIsUrl,
-                            this.state.email, this.state.password,
-                        );
+                        Tchap.discoverPlatform(this.state.email).then(hs => {
+                            this.submitPasswordReset(
+                                hs, hs,
+                                this.state.email, this.state.password,
+                            );
+                        });
                     }
                 },
             });
@@ -145,32 +145,6 @@ module.exports = React.createClass({
     onInputChanged: function(stateKey, ev) {
         this.setState({
             [stateKey]: ev.target.value,
-        });
-    },
-
-    onServerConfigChange: function(config) {
-        const newState = {};
-        if (config.hsUrl !== undefined) {
-            newState.enteredHsUrl = config.hsUrl;
-        }
-        if (config.isUrl !== undefined) {
-            newState.enteredIsUrl = config.isUrl;
-        }
-        this.setState(newState);
-    },
-
-    onServerDetailsNextPhaseClick(ev) {
-        ev.stopPropagation();
-        this.setState({
-            phase: PHASE_FORGOT,
-        });
-    },
-
-    onEditServerDetailsClick(ev) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        this.setState({
-            phase: PHASE_SERVER_DETAILS,
         });
     },
 
@@ -188,30 +162,6 @@ module.exports = React.createClass({
         });
     },
 
-    renderServerDetails() {
-        const ServerConfig = sdk.getComponent("auth.ServerConfig");
-        const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
-
-        if (SdkConfig.get()['disable_custom_urls']) {
-            return null;
-        }
-
-        return <div>
-            <ServerConfig
-                defaultHsUrl={this.props.defaultHsUrl}
-                defaultIsUrl={this.props.defaultIsUrl}
-                customHsUrl={this.state.enteredHsUrl}
-                customIsUrl={this.state.enteredIsUrl}
-                onServerConfigChange={this.onServerConfigChange}
-                delayTimeMs={0} />
-            <AccessibleButton className="mx_Login_submit"
-                onClick={this.onServerDetailsNextPhaseClick}
-            >
-                {_t("Next")}
-            </AccessibleButton>
-        </div>;
-    },
-
     renderForgot() {
         const Field = sdk.getComponent('elements.Field');
 
@@ -221,42 +171,7 @@ module.exports = React.createClass({
             errorText = <div className="mx_Login_error">{ err }</div>;
         }
 
-        let yourMatrixAccountText = _t('Your Matrix account');
-        if (this.state.enteredHsUrl === this.props.defaultHsUrl) {
-            yourMatrixAccountText = _t('Your Matrix account on %(serverName)s', {
-                serverName: this.props.defaultServerName,
-            });
-        } else {
-            try {
-                const parsedHsUrl = new URL(this.state.enteredHsUrl);
-                yourMatrixAccountText = _t('Your Matrix account on %(serverName)s', {
-                    serverName: parsedHsUrl.hostname,
-                });
-            } catch (e) {
-                errorText = <div className="mx_Login_error">{_t(
-                    "The homeserver URL %(hsUrl)s doesn't seem to be valid URL. Please " +
-                    "enter a valid URL including the protocol prefix.",
-                {
-                    hsUrl: this.state.enteredHsUrl,
-                })}</div>;
-            }
-        }
-
-        // If custom URLs are allowed, wire up the server details edit link.
-        let editLink = null;
-        if (!SdkConfig.get()['disable_custom_urls']) {
-            editLink = <a className="mx_AuthBody_editServerDetails"
-                href="#" onClick={this.onEditServerDetailsClick}
-            >
-                {_t('Change')}
-            </a>;
-        }
-
         return <div>
-            <h3>
-                {yourMatrixAccountText}
-                {editLink}
-            </h3>
             {errorText}
             <form onSubmit={this.onSubmitForm}>
                 <div className="mx_AuthBody_fieldRow">
@@ -335,9 +250,6 @@ module.exports = React.createClass({
 
         let resetPasswordJsx;
         switch (this.state.phase) {
-            case PHASE_SERVER_DETAILS:
-                resetPasswordJsx = this.renderServerDetails();
-                break;
             case PHASE_FORGOT:
                 resetPasswordJsx = this.renderForgot();
                 break;
