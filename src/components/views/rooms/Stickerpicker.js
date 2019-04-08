@@ -29,14 +29,16 @@ import PersistedElement from "../elements/PersistedElement";
 
 const widgetType = 'm.stickerpicker';
 
-// We sit in a context menu, so the persisted element container needs to float
-// above it, so it needs a greater z-index than the ContextMenu
-const STICKERPICKER_Z_INDEX = 5000;
+// This should be below the dialog level (4000), but above the rest of the UI (1000-2000).
+// We sit in a context menu, so this should be given to the context menu.
+const STICKERPICKER_Z_INDEX = 3500;
 
 // Key to store the widget's AppTile under in PersistedElement
 const PERSISTED_ELEMENT_KEY = "stickerPicker";
 
 export default class Stickerpicker extends React.Component {
+    static currentWidget;
+
     constructor(props) {
         super(props);
         this._onShowStickersClick = this._onShowStickersClick.bind(this);
@@ -130,8 +132,13 @@ export default class Stickerpicker extends React.Component {
 
     _updateWidget() {
         const stickerpickerWidget = WidgetUtils.getStickerpickerWidgets()[0];
+        if (!stickerpickerWidget) {
+            Stickerpicker.currentWidget = null;
+            this.setState({stickerpickerWidget: null, widgetId: null});
+            return;
+        }
 
-        const currentWidget = this.state.stickerpickerWidget;
+        const currentWidget = Stickerpicker.currentWidget;
         let currentUrl = null;
         if (currentWidget && currentWidget.content && currentWidget.content.url) {
             currentUrl = currentWidget.content.url;
@@ -147,6 +154,7 @@ export default class Stickerpicker extends React.Component {
             PersistedElement.destroyElement(PERSISTED_ELEMENT_KEY);
         }
 
+        Stickerpicker.currentWidget = stickerpickerWidget;
         this.setState({
             stickerpickerWidget,
             widgetId: stickerpickerWidget ? stickerpickerWidget.id : null,
@@ -367,6 +375,7 @@ export default class Stickerpicker extends React.Component {
             menuPaddingTop={0}
             menuPaddingLeft={0}
             menuPaddingRight={0}
+            zIndex={STICKERPICKER_Z_INDEX}
         />;
 
         if (this.state.showStickers) {

@@ -339,9 +339,7 @@ export default class AppTile extends React.Component {
         // Destroy the old widget messaging before starting it back up again. Some widgets
         // have startup routines that run when they are loaded, so we just need to reinitialize
         // the messaging for them.
-        if (ActiveWidgetStore.getWidgetMessaging(this.props.id)) {
-            ActiveWidgetStore.delWidgetMessaging(this.props.id);
-        }
+        ActiveWidgetStore.delWidgetMessaging(this.props.id);
         this._setupWidgetMessaging();
 
         ActiveWidgetStore.setRoomId(this.props.id, this.props.room.roomId);
@@ -351,7 +349,8 @@ export default class AppTile extends React.Component {
     _setupWidgetMessaging() {
         // FIXME: There's probably no reason to do this here: it should probably be done entirely
         // in ActiveWidgetStore.
-        const widgetMessaging = new WidgetMessaging(this.props.id, this.props.url, this.refs.appFrame.contentWindow);
+        const widgetMessaging = new WidgetMessaging(
+            this.props.id, this.props.url, this.props.userWidget, this.refs.appFrame.contentWindow);
         ActiveWidgetStore.setWidgetMessaging(this.props.id, widgetMessaging);
         widgetMessaging.getCapabilities().then((requestedCapabilities) => {
             console.log(`Widget ${this.props.id} requested capabilities: ` + requestedCapabilities);
@@ -447,10 +446,14 @@ export default class AppTile extends React.Component {
         }
 
         // Toggle the view state of the apps drawer
-        dis.dispatch({
-            action: 'appsDrawer',
-            show: !this.props.show,
-        });
+        if (this.props.userWidget) {
+            this._onMinimiseClick();
+        } else {
+            dis.dispatch({
+                action: 'appsDrawer',
+                show: !this.props.show,
+            });
+        }
     }
 
     _getSafeUrl() {
@@ -490,9 +493,9 @@ export default class AppTile extends React.Component {
 
     _onPopoutWidgetClick(e) {
         // Using Object.assign workaround as the following opens in a new window instead of a new tab.
-        // window.open(this._getSafeUrl(), '_blank', 'noopener=yes,noreferrer=yes');
+        // window.open(this._getSafeUrl(), '_blank', 'noopener=yes');
         Object.assign(document.createElement('a'),
-            { target: '_blank', href: this._getSafeUrl(), rel: 'noopener noreferrer'}).click();
+            { target: '_blank', href: this._getSafeUrl(), rel: 'noopener'}).click();
     }
 
     _onReloadWidgetClick(e) {
@@ -626,7 +629,7 @@ export default class AppTile extends React.Component {
                         { /* Maximise widget */ }
                         { showMaximiseButton && <AccessibleButton
                             className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_maximise"
-                            title={_t('Minimize apps')}
+                            title={_t('Maximize apps')}
                             onClick={this._onMinimiseClick}
                         /> }
                         { /* Title */ }

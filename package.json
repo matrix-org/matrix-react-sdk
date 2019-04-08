@@ -1,6 +1,6 @@
 {
   "name": "matrix-react-sdk",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "SDK for matrix.org using React",
   "author": "matrix.org",
   "repository": {
@@ -79,7 +79,7 @@
     "linkifyjs": "^2.1.6",
     "lodash": "^4.13.1",
     "lolex": "2.3.2",
-    "matrix-js-sdk": "1.0.2",
+    "matrix-js-sdk": "1.0.3",
     "optimist": "^0.6.1",
     "pako": "^1.0.5",
     "prop-types": "^15.5.8",
@@ -99,7 +99,7 @@
     "slate-react": "^0.18.10",
     "text-encoding-utf-8": "^1.0.1",
     "url": "^0.11.0",
-    "velocity-vector": "github:vector-im/velocity#059e3b2",
+    "velocity-animate": "^1.5.2",
     "whatwg-fetch": "^1.1.1",
     "zxcvbn": "^4.4.2"
   },
@@ -110,6 +110,7 @@
     "babel-loader": "^7.1.5",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-async-to-bluebird": "^1.1.1",
+    "babel-plugin-transform-builtin-extend": "^1.1.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
@@ -140,7 +141,7 @@
     "karma-spec-reporter": "^0.0.31",
     "karma-summary-reporter": "^1.5.1",
     "karma-webpack": "^4.0.0-beta.0",
-    "matrix-mock-request": "^1.2.1",
+    "matrix-mock-request": "^1.2.3",
     "matrix-react-test-utils": "^0.1.1",
     "mocha": "^5.0.5",
     "react-addons-test-utils": "^15.4.0",

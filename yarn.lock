@@ -902,6 +902,14 @@ babel-plugin-transform-async-to-generator@^6.24.1:
     babel-plugin-syntax-async-functions "^6.8.0"
     babel-runtime "^6.22.0"
 
+babel-plugin-transform-builtin-extend@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-builtin-extend/-/babel-plugin-transform-builtin-extend-1.1.2.tgz#5e96fecf58b8fa1ed74efcad88475b2af3c9116e"
+  integrity sha1-Xpb+z1i4+h7XTvytiEdbKvPJEW4=
+  dependencies:
+    babel-runtime "^6.2.0"
+    babel-template "^6.3.0"
+
 babel-plugin-transform-class-properties@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-class-properties/-/babel-plugin-transform-class-properties-6.24.1.tgz#6a79763ea61d33d36f37b611aa9def81a81b46ac"
@@ -1267,7 +1275,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
+babel-runtime@^6.18.0, babel-runtime@^6.2.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   integrity sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
@@ -1275,7 +1283,7 @@ babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
     core-js "^2.4.0"
     regenerator-runtime "^0.11.0"
 
-babel-template@^6.24.1, babel-template@^6.26.0, babel-template@^6.9.0:
+babel-template@^6.24.1, babel-template@^6.26.0, babel-template@^6.3.0, babel-template@^6.9.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-template/-/babel-template-6.26.0.tgz#de03e2d16396b069f46dd9fff8521fb1a0e35e02"
   integrity sha1-3gPi0WOWsGn0bdn/+FIfsaDjXgI=
@@ -3956,7 +3964,7 @@ jest-regex-util@^24.3.0:
   resolved "https://registry.yarnpkg.com/jest-regex-util/-/jest-regex-util-24.3.0.tgz#d5a65f60be1ae3e310d5214a0307581995227b36"
   integrity sha512-tXQR1NEOyGlfylyEjg1ImtScwMq8Oh3iJbGTjN7p0J23EuVX1MA8rwU69K4sLbCmwzgCUbVkm0FkSF9TdzOhtg==
 
-"jquery@>= 1.4.3", jquery@^3.3.1:
+jquery@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
   integrity sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg==
@@ -4371,10 +4379,10 @@ math-random@^1.0.1:
   resolved "https://registry.yarnpkg.com/math-random/-/math-random-1.0.4.tgz#5dd6943c938548267016d4e34f057583080c514c"
   integrity sha512-rUxjysqif/BZQH2yhd5Aaq7vXMSx9NdEsQcyA07uEzIvxgI7zIr33gGsh+RU0/XjmQpCW7RsVof1vlkvQVCK5A==
 
-matrix-js-sdk@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/matrix-js-sdk/-/matrix-js-sdk-1.0.2.tgz#482d8d2076c7565cf7354722e96c9971e372182a"
-  integrity sha512-4WCBJFSoOLelHi7IUAcVxPQF+gTc/i9NUKZ77qwUfcZVED8VKTIyWZnwpeLgocK5gAOJV9fkAyO5mny9SkZaGg==
+matrix-js-sdk@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/matrix-js-sdk/-/matrix-js-sdk-1.0.3.tgz#d4cc46c4dc80278b78f8e0664741b08fcc395c79"
+  integrity sha512-YpF4NvnG2cttRmTPJ9yqs/KwlBXW15O7+nNMs1FKj1CqdW1Phwb0fcqvahjPgmfXyn5DFzU3Deiv9aNgDIlIog==
   dependencies:
     another-json "^0.2.0"
     babel-runtime "^6.26.0"
@@ -4388,10 +4396,10 @@ matrix-js-sdk@1.0.2:
     request "^2.88.0"
     unhomoglyph "^1.0.2"
 
-matrix-mock-request@^1.2.1:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/matrix-mock-request/-/matrix-mock-request-1.2.2.tgz#2710bec0e009bb1562d92cdd7f0b77d5946b2ebd"
-  integrity sha512-9u86m6rOsKekNkqUUkStWXNULrY9G+9ibwolfrmgqTmgR76EGCr9fovM+JPWn4U+TbrewvHMALpPw8OxRg0ExA==
+matrix-mock-request@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/matrix-mock-request/-/matrix-mock-request-1.2.3.tgz#56b15d86e2601a9b48a854844396d18caab649c8"
+  integrity sha512-Tr7LDHweTW8Ql4C8XhGQFGMzuh+HmPjOcQqrHH1qfSesq0cwdPWanvdnllNjeHoAMcZ43HpMFMzFZfNW1/6HYg==
   dependencies:
     bluebird "^3.5.0"
     expect "^1.20.2"
@@ -6851,11 +6859,10 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-"velocity-vector@github:vector-im/velocity#059e3b2":
-  version "1.2.3"
-  resolved "https://codeload.github.com/vector-im/velocity/tar.gz/059e3b2348f1110888d033974d3109fd5a3af00f"
-  dependencies:
-    jquery ">= 1.4.3"
+velocity-animate@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/velocity-animate/-/velocity-animate-1.5.2.tgz#5a351d75fca2a92756f5c3867548b873f6c32105"
+  integrity sha512-m6EXlCAMetKztO1ppBhGU1/1MR3IiEevO6ESq6rcrSQ3Q77xYSW13jkfXW88o4xMrkXJhy/U7j4wFR/twMB0Eg==
 
 verror@1.10.0:
   version "1.10.0"
