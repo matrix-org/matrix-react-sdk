@@ -175,7 +175,7 @@ limitations under the License.
 .mx_EventTile_highlight,
 .mx_EventTile_highlight .markdown-body
  {
-    color: $warning-color;
+    color: $primary-fg-color; //Only the user's mention (name) would be highlighted in red and not the message itself to avoid confusion
 }
 
 .mx_EventTile_contextual {
