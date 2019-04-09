@@ -118,7 +118,7 @@ textarea {
         background-color: transparent;
         color: $input-darker-fg-color;
         border-radius: 4px;
-        border: 1px solid $dialog-close-fg-color;
+        border: 1px solid $border-color;
         // these things should probably not be defined
         // globally
         margin: 9px;
