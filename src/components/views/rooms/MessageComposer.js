@@ -24,7 +24,6 @@ import sdk from '../../../index';
 import dis from '../../../dispatcher';
 import RoomViewStore from '../../../stores/RoomViewStore';
 import SettingsStore, {SettingLevel} from "../../../settings/SettingsStore";
-import Stickerpicker from './Stickerpicker';
 import { makeRoomPermalink } from '../../../matrix-to';
 import ContentMessages from '../../../ContentMessages';
 import classNames from 'classnames';
@@ -342,8 +341,6 @@ export default class MessageComposer extends React.Component {
                 }
             }
 
-            const stickerpickerButton = <Stickerpicker key='stickerpicker_controls_button' room={this.props.room} />;
-
             controls.push(
                 <MessageComposerInput
                     ref={(c) => this.messageComposerInput = c}
@@ -353,7 +350,6 @@ export default class MessageComposer extends React.Component {
                     onInputStateChanged={this.onInputStateChanged}
                     permalinkCreator={this.props.permalinkCreator} />,
                 formattingButton,
-                stickerpickerButton,
                 uploadButton,
                 hangupButton,
                 callButton,

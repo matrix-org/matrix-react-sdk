@@ -191,16 +191,6 @@ module.exports = React.createClass({
         this.closeMenu();
     },
 
-    onPermalinkClick: function(e: Event) {
-        e.preventDefault();
-        const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
-        Modal.createTrackedDialog('share room message dialog', '', ShareDialog, {
-            target: this.props.mxEvent,
-            permalinkCreator: this.props.permalinkCreator,
-        });
-        this.closeMenu();
-    },
-
     onReplyClick: function() {
         dis.dispatch({
             action: 'reply_to_event',
@@ -305,21 +295,6 @@ module.exports = React.createClass({
             }
         }
 
-        let permalink;
-        if (this.props.permalinkCreator) {
-            permalink = this.props.permalinkCreator.forEvent(this.props.mxEvent.getId());
-        }
-        // XXX: if we use room ID, we should also include a server where the event can be found (other than in the domain of the event ID)
-        const permalinkButton = (
-            <div className="mx_MessageContextMenu_field">
-                <a href={permalink}
-                  target="_blank" rel="noopener" onClick={this.onPermalinkClick}>
-                    { mxEvent.isRedacted() || mxEvent.getType() !== 'm.room.message'
-                        ? _t('Share Permalink') : _t('Share Message') }
-                </a>
-            </div>
-        );
-
         if (this.props.eventTileOps && this.props.eventTileOps.getInnerText) {
             quoteButton = (
                 <div className="mx_MessageContextMenu_field" onClick={this.onQuoteClick}>
@@ -366,7 +341,6 @@ module.exports = React.createClass({
                 { viewSourceButton }
                 { viewClearSourceButton }
                 { unhidePreviewButton }
-                { permalinkButton }
                 { quoteButton }
                 { replyButton }
                 { externalURLButton }

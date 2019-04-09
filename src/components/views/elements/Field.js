@@ -30,6 +30,8 @@ export default class Field extends React.PureComponent {
         type: PropTypes.string,
         // The field's label string.
         label: PropTypes.string,
+        // The field's label string.
+        disabled: PropTypes.bool,
         // The field's placeholder string. Defaults to the label.
         placeholder: PropTypes.string,
         // The field's value.
@@ -76,7 +78,7 @@ export default class Field extends React.PureComponent {
         inputProps.type = inputProps.type || "text";
         inputProps.ref = "fieldInput";
         inputProps.placeholder = inputProps.placeholder || inputProps.label;
-
+        inputProps.disabled = inputProps.disabled || false;
         inputProps.onChange = this.onChange;
 
         const fieldInput = React.createElement(inputElement, inputProps, children);

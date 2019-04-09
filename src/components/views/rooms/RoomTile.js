@@ -380,17 +380,6 @@ module.exports = React.createClass({
 
         const RoomAvatar = sdk.getComponent('avatars.RoomAvatar');
 
-        let dmIndicator;
-        if (this._isDirectMessageRoom(this.props.room.roomId)) {
-            dmIndicator = <img
-                src={require("../../../../res/img/icon_person.svg")}
-                className="mx_RoomTile_dm"
-                width="11"
-                height="13"
-                alt="dm"
-            />;
-        }
-
         return <AccessibleButton tabIndex="0"
                                  className={classes}
                                  onClick={this.onClick}
@@ -401,7 +390,6 @@ module.exports = React.createClass({
             <div className={avatarClasses}>
                 <div className="mx_RoomTile_avatar_container">
                     <RoomAvatar room={this.props.room} width={24} height={24} />
-                    { dmIndicator }
                 </div>
             </div>
             <div className="mx_RoomTile_nameContainer">

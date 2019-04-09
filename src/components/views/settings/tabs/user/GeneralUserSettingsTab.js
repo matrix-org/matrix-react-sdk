@@ -17,8 +17,7 @@ limitations under the License.
 import React from 'react';
 import {_t} from "../../../../../languageHandler";
 import ProfileSettings from "../../ProfileSettings";
-import EmailAddresses from "../../EmailAddresses";
-import PhoneNumbers from "../../PhoneNumbers";
+import {ShowEmailAddresses} from "../../EmailAddresses";
 import Field from "../../../elements/Field";
 import * as languageHandler from "../../../../../languageHandler";
 import {SettingLevel} from "../../../../../settings/SettingsStore";
@@ -119,10 +118,9 @@ export default class GeneralUserSettingsTab extends React.Component {
                 {passwordChangeForm}
 
                 <span className="mx_SettingsTab_subheading">{_t("Email addresses")}</span>
-                <EmailAddresses />
 
-                <span className="mx_SettingsTab_subheading">{_t("Phone numbers")}</span>
-                <PhoneNumbers />
+                <ShowEmailAddresses />
+
             </div>
         );
     }

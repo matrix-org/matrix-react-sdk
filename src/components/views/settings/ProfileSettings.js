@@ -21,7 +21,6 @@ import Field from "../elements/Field";
 import AccessibleButton from "../elements/AccessibleButton";
 import classNames from 'classnames';
 import {User} from "matrix-js-sdk";
-import { getHostingLink } from '../../../utils/HostingLink';
 
 export default class ProfileSettings extends React.Component {
     constructor() {
@@ -138,22 +137,6 @@ export default class ProfileSettings extends React.Component {
             </div>
         );
 
-        const hostingSignupLink = getHostingLink('user-settings');
-        let hostingSignup = null;
-        if (hostingSignupLink) {
-            hostingSignup = <span className="mx_ProfileSettings_hostingSignup">
-                {_t(
-                    "<a>Upgrade</a> to your own domain", {},
-                    {
-                        a: sub => <a href={hostingSignupLink} target="_blank" rel="noopener">{sub}</a>,
-                    },
-                )}
-                <a href={hostingSignupLink} target="_blank" rel="noopener">
-                    <img src={require("../../../../res/img/external-link.svg")} width="11" height="10" alt='' />
-                </a>
-            </span>;
-        }
-
         return (
             <form onSubmit={this._saveProfile} autoComplete={false} noValidate={true}>
                 <input type="file" ref="avatarUpload" className="mx_ProfileSettings_avatarUpload"
@@ -161,12 +144,8 @@ export default class ProfileSettings extends React.Component {
                 <div className="mx_ProfileSettings_profile">
                     <div className="mx_ProfileSettings_controls">
                         <p>
-                            {this.state.userId}
-                            {hostingSignup}
+                            {this.state.displayName}
                         </p>
-                        <Field id="profileDisplayName" label={_t("Display Name")}
-                               type="text" value={this.state.displayName} autoComplete="off"
-                               onChange={this._onDisplayNameChanged} />
                     </div>
                     <div className="mx_ProfileSettings_avatar">
                         {avatarElement}
