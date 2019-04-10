@@ -30,6 +30,8 @@ import { _t } from '../../languageHandler';
 import { instanceForInstanceId, protocolNameForInstanceId } from '../../utils/DirectoryUtils';
 import Analytics from '../../Analytics';
 
+import Tchap from "../../Tchap";
+
 const MAX_NAME_LENGTH = 80;
 const MAX_TOPIC_LENGTH = 160;
 
@@ -416,31 +418,14 @@ module.exports = React.createClass({
         const rooms = this.state.publicRooms;
         const rows = [];
         const self = this;
-        let guestRead; let guestJoin; let perms;
         for (let i = 0; i < rooms.length; i++) {
-            guestRead = null;
-            guestJoin = null;
-
-            if (rooms[i].world_readable) {
-                guestRead = (
-                    <div className="mx_RoomDirectory_perm">{ _t('World readable') }</div>
-                );
-            }
-            if (rooms[i].guest_can_join) {
-                guestJoin = (
-                    <div className="mx_RoomDirectory_perm">{ _t('Guests can join') }</div>
-                );
-            }
-
-            perms = null;
-            if (guestRead || guestJoin) {
-                perms = <div className="mx_RoomDirectory_perms">{guestRead}{guestJoin}</div>;
-            }
 
             let name = rooms[i].name || get_display_alias_for_room(rooms[i]) || _t('Unnamed room');
             if (name.length > MAX_NAME_LENGTH) {
                 name = `${name.substring(0, MAX_NAME_LENGTH)}...`;
             }
+
+            const domain = Tchap.getDomainFromAlias(get_display_alias_for_room(rooms[i]));
 
             let topic = rooms[i].topic || '';
             if (topic.length > MAX_TOPIC_LENGTH) {
@@ -463,11 +448,10 @@ module.exports = React.createClass({
                     </td>
                     <td className="mx_RoomDirectory_roomDescription">
                         <div className="mx_RoomDirectory_name">{ name }</div>&nbsp;
-                        { perms }
                         <div className="mx_RoomDirectory_topic"
                              onClick={ function(e) { e.stopPropagation(); } }
                              dangerouslySetInnerHTML={{ __html: topic }} />
-                        <div className="mx_RoomDirectory_alias">{ get_display_alias_for_room(rooms[i]) }</div>
+                        <div className="mx_RoomDirectory_alias">{ domain }</div>
                     </td>
                     <td className="mx_RoomDirectory_roomMemberCount">
                         { rooms[i].num_joined_members }

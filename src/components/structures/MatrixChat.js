@@ -965,11 +965,13 @@ export default React.createClass({
     _createRoom: function() {
         const CreateRoomDialog = sdk.getComponent('dialogs.CreateRoomDialog');
         Modal.createTrackedDialog('Create Room', '', CreateRoomDialog, {
-            onFinished: (shouldCreate, name, noFederate) => {
+            onFinished: (shouldCreate, name, opts) => {
                 if (shouldCreate) {
                     const createOpts = {};
                     if (name) createOpts.name = name;
-                    if (noFederate) createOpts.creation_content = {'m.federate': false};
+                    if (opts.noFederate) createOpts.creation_content = {'m.federate': false};
+                    if (opts.visibility) createOpts.visibility = opts.visibility;
+                    if (opts.preset) createOpts.preset = opts.preset;
                     createRoom({createOpts}).done();
                 }
             },

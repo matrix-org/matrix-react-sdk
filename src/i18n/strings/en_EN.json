@@ -1070,6 +1070,8 @@
     "Create": "Create",
     "Create Room": "Create Room",
     "Room name (optional)": "Room name (optional)",
+    "Room name (required)": "Room name (required)",
+    "Room name is required": "Room name is required",
     "Advanced options": "Advanced options",
     "Block users on other matrix homeservers from joining this room": "Block users on other matrix homeservers from joining this room",
     "This setting cannot be changed later!": "This setting cannot be changed later!",
@@ -1591,5 +1593,9 @@
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.",
     "Failed to set direct chat tag": "Failed to set direct chat tag",
     "Failed to remove tag %(tagName)s from room": "Failed to remove tag %(tagName)s from room",
-    "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room"
+    "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room",
+    "Limit access to this room to domain members \"%(domain)s\"": "Limit access to this room to domain members \"%(domain)s\"",
+    "Private": "Private",
+    "Public": "Public",
+    "Room type": "Room type"
 }

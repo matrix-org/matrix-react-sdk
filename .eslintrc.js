@@ -95,7 +95,7 @@ module.exports = {
             ignorePattern: '^\\s*<',
             ignoreComments: true,
             ignoreRegExpLiterals: true,
-            code: 120,
+            code: 240,
         }],
         "valid-jsdoc": ["warn"],
         "new-cap": ["warn"],

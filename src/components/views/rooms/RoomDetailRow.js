@@ -80,18 +80,6 @@ export default React.createClass({
         const room = this.props.room;
         const name = room.name || getDisplayAliasForRoom(room) || _t('Unnamed room');
 
-        const guestRead = room.worldReadable ? (
-                <div className="mx_RoomDirectory_perm">{ _t('World readable') }</div>
-            ) : <div />;
-        const guestJoin = room.guestCanJoin ? (
-                <div className="mx_RoomDirectory_perm">{ _t('Guests can join') }</div>
-            ) : <div />;
-
-        const perms = (guestRead || guestJoin) ? (<div className="mx_RoomDirectory_perms">
-            { guestRead }&nbsp;
-            { guestJoin }
-        </div>) : <div />;
-
         return <tr key={room.roomId} onClick={this.onClick} onMouseDown={this.props.onMouseDown}>
             <td className="mx_RoomDirectory_roomAvatar">
                 <BaseAvatar width={24} height={24} resizeMethod='crop'
@@ -102,7 +90,6 @@ export default React.createClass({
             </td>
             <td className="mx_RoomDirectory_roomDescription">
                 <div className="mx_RoomDirectory_name">{ name }</div>&nbsp;
-                { perms }
                 <div className="mx_RoomDirectory_topic" ref="topic" onClick={this.onTopicClick}>
                     { room.topic }
                 </div>
