@@ -26,7 +26,7 @@ import sdk from '../../../index';
 import { _t, _td } from '../../../languageHandler';
 import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
 import * as ServerType from '../../views/auth/ServerTypeSelector';
-import * as Tchap from '../../../Tchap';
+import Tchap from '../../../Tchap';
 
 const MIN_PASSWORD_LENGTH = 8;
 

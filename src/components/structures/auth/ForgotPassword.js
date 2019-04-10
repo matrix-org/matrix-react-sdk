@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import sdk from '../../../index';
 import Modal from "../../../Modal";
-import * as Tchap from '../../../Tchap';
+import Tchap from '../../../Tchap';
 
 import PasswordReset from "../../../PasswordReset";
 

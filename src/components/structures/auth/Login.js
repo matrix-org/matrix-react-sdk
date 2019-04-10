@@ -25,7 +25,7 @@ import sdk from '../../../index';
 import Login from '../../../Login';
 import SdkConfig from '../../../SdkConfig';
 import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
-import * as Tchap from '../../../Tchap';
+import Tchap from '../../../Tchap';
 
 // Phases
 // Show the appropriate login flow(s) for the server
