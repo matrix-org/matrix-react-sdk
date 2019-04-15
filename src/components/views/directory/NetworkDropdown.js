@@ -147,7 +147,7 @@ export default class NetworkDropdown extends React.Component {
         // We can't get thirdparty protocols for remote server yet though, so for those
         // we can only show the default room list.
         for (const server of servers) {
-            options.push(this._makeMenuOption(server, null, true));
+            options.push(this._makeMenuOption(server, null, false, undefined, true));
             if (server === MatrixClientPeg.getHomeServerName()) {
                 options.push(this._makeMenuOption(server, null, false));
                 if (this.props.protocols) {
@@ -179,14 +179,14 @@ export default class NetworkDropdown extends React.Component {
         return options;
     }
 
-    _makeMenuOption(server, instance, includeAll, handleClicks) {
+    _makeMenuOption(server, instance, includeAll, handleClicks, isParent) {
         if (handleClicks === undefined) handleClicks = true;
 
         let icon;
         let name;
         let key;
 
-        if (!instance && includeAll) {
+        if ((!instance && includeAll) || isParent) {
             key = server;
             name = server;
         } else if (!instance) {
