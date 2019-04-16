@@ -18,7 +18,7 @@ limitations under the License.
 
 const React = require('react');
 
-const MatrixClientPeg = require('../../MatrixClientPeg');
+import MatrixClientPeg from '../../MatrixClientPeg';
 const ContentRepo = require("matrix-js-sdk").ContentRepo;
 const Modal = require('../../Modal');
 const sdk = require('../../index');
@@ -29,6 +29,7 @@ import Promise from 'bluebird';
 import { _t } from '../../languageHandler';
 import { instanceForInstanceId, protocolNameForInstanceId } from '../../utils/DirectoryUtils';
 import Analytics from '../../Analytics';
+import SdkConfig from '../../SdkConfig';
 
 const MAX_NAME_LENGTH = 80;
 const MAX_TOPIC_LENGTH = 160;
@@ -52,15 +53,17 @@ module.exports = React.createClass({
     },
 
     getInitialState: function() {
+        const homeserverList = SdkConfig.get()['hs_url_list'];
         return {
             publicRooms: [],
             loading: true,
             protocolsLoading: true,
             error: null,
             instanceId: null,
-            includeAll: false,
+            includeAll: true,
             roomServer: null,
             filterString: null,
+            serverList: homeserverList || [],
         };
     },
 
@@ -108,6 +111,8 @@ module.exports = React.createClass({
             });
         });
 
+        this._populateRoomList();
+
         // dis.dispatch({
         //     action: 'panel_disable',
         //     sideDisabled: true,
@@ -133,18 +138,22 @@ module.exports = React.createClass({
             publicRooms: [],
             loading: true,
         });
-        this.getMoreRooms().done();
+        this._populateRoomList();
     },
 
-    getMoreRooms: function() {
+    _populateRoomList: function() {
+        const homeserverList = this.state.serverList;
+        for (let i = 0; i < homeserverList.length; i++) {
+            this.getMoreRooms(homeserverList[i]).done();
+        }
+    },
+
+    getMoreRooms: function(homeServer) {
         if (!MatrixClientPeg.get()) return Promise.resolve();
 
         const my_filter_string = this.state.filterString;
-        const my_server = this.state.roomServer;
-        // remember the next batch token when we sent the request
-        // too. If it's changed, appending to the list will corrupt it.
-        const my_next_batch = this.nextBatch;
-        const opts = {limit: 20};
+        const my_server = homeServer || this.state.roomServer;
+        const opts = {};
         if (my_server != MatrixClientPeg.getHomeServerName()) {
             opts.server = my_server;
         }
@@ -153,13 +162,9 @@ module.exports = React.createClass({
         } else if (this.state.includeAll) {
             opts.include_all_networks = true;
         }
-        if (this.nextBatch) opts.since = this.nextBatch;
         if (my_filter_string) opts.filter = { generic_search_term: my_filter_string };
         return MatrixClientPeg.get().publicRooms(opts).then((data) => {
-            if (
-                my_filter_string != this.state.filterString ||
-                my_server != this.state.roomServer ||
-                my_next_batch != this.nextBatch) {
+            if (my_filter_string != this.state.filterString) {
                 // if the filter or server has changed since this request was sent,
                 // throw away the result (don't even clear the busy flag
                 // since we must still have a request in flight)
@@ -171,7 +176,6 @@ module.exports = React.createClass({
                 return;
             }
 
-            this.nextBatch = data.next_batch;
             this.setState((s) => {
                 s.publicRooms.push(...data.chunk);
                 s.loading = false;
@@ -181,8 +185,7 @@ module.exports = React.createClass({
         }, (err) => {
             if (
                 my_filter_string != this.state.filterString ||
-                my_server != this.state.roomServer ||
-                my_next_batch != this.nextBatch) {
+                my_server != this.state.roomServer) {
                 // as above: we don't care about errors for old
                 // requests either
                 return;
@@ -263,26 +266,6 @@ module.exports = React.createClass({
         } else {
             this.showRoom(room);
         }
-    },
-
-    onOptionChange: function(server, instanceId, includeAll) {
-        // clear next batch so we don't try to load more rooms
-        this.nextBatch = null;
-        this.setState({
-            // Clear the public rooms out here otherwise we needlessly
-            // spend time filtering lots of rooms when we're about to
-            // to clear the list anyway.
-            publicRooms: [],
-            roomServer: server,
-            instanceId: instanceId,
-            includeAll: includeAll,
-        }, this.refreshRoomList);
-        // We also refresh the room list each time even though this
-        // filtering is client-side. It hopefully won't be client side
-        // for very long, and we may have fetched a thousand rooms to
-        // find the five gitter ones, at which point we do not want
-        // to render all those rooms when switching back to 'all networks'.
-        // Easiest to just blow away the state & re-fetch.
     },
 
     onFillRequest: function(backwards) {
@@ -417,6 +400,9 @@ module.exports = React.createClass({
         const rows = [];
         const self = this;
         let guestRead; let guestJoin; let perms;
+        rooms.sort((a, b) => {
+            return b.num_joined_members - a.num_joined_members;
+        });
         for (let i = 0; i < rooms.length; i++) {
             guestRead = null;
             guestJoin = null;
@@ -556,7 +542,6 @@ module.exports = React.createClass({
 
         let listHeader;
         if (!this.state.protocolsLoading) {
-            const NetworkDropdown = sdk.getComponent('directory.NetworkDropdown');
             const DirectorySearchBox = sdk.getComponent('elements.DirectorySearchBox');
 
             const protocolName = protocolNameForInstanceId(this.protocols, this.state.instanceId);
@@ -574,11 +559,6 @@ module.exports = React.createClass({
 
 
             let placeholder = _t('Search for a room');
-            if (!this.state.instanceId) {
-                placeholder = _t('Search for a room like #example') + ':' + this.state.roomServer;
-            } else if (instance_expected_field_type) {
-                placeholder = instance_expected_field_type.placeholder;
-            }
 
             let showJoinButton = this._stringLooksLikeId(this.state.filterString, instance_expected_field_type);
             if (protocolName) {
@@ -594,7 +574,6 @@ module.exports = React.createClass({
                     onChange={this.onFilterChange} onClear={this.onFilterClear} onJoinClick={this.onJoinClick}
                     placeholder={placeholder} showJoinButton={showJoinButton}
                 />
-                <NetworkDropdown config={this.props.config} protocols={this.protocols} onOptionChange={this.onOptionChange} />
             </div>;
         }
 

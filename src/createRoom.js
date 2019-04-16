@@ -74,6 +74,14 @@ function createRoom(opts) {
         opts.andView = true;
     }
 
+    let alias;
+    if (createOpts.name) {
+        const tmpAlias = createOpts.name.replace(/[^a-z0-9]/gi, "");
+        alias = tmpAlias + _generateRandomString(7);
+    } else {
+        alias = _generateRandomString(7);
+    }
+
     // Allow guests by default since the room is private and they'd
     // need an invite. This means clicking on a 3pid invite email can
     // actually drop you right in to a chat.
@@ -86,6 +94,10 @@ function createRoom(opts) {
             state_key: '',
         },
     ];
+
+    if (createOpts.visibility !== 'private') {
+        createOpts.room_alias_name = alias;
+    }
 
     const modal = Modal.createDialog(Loader, null, 'mx_Dialog_spinner');
 
@@ -128,6 +140,16 @@ function createRoom(opts) {
         });
         return null;
     });
+}
+
+function _generateRandomString(len) {
+    const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let str = '';
+    for (let i = 0; i < len; i++) {
+        let r = Math.floor(Math.random() * charset.length);
+        str += charset.substring(r, r + 1);
+    }
+    return str;
 }
 
 module.exports = createRoom;
