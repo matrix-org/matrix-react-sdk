@@ -1503,7 +1503,8 @@ module.exports = React.createClass({
 
     render: function() {
         const RoomHeader = sdk.getComponent('rooms.RoomHeader');
-        const MessageComposer = sdk.getComponent('rooms.MessageComposer');
+        // const MessageComposer = sdk.getComponent('rooms.MessageComposer');
+        const MessageComposer = sdk.getComponent('rooms.SimpleMessageComposer');
         const ForwardMessage = sdk.getComponent("rooms.ForwardMessage");
         const AuxPanel = sdk.getComponent("rooms.AuxPanel");
         const SearchBar = sdk.getComponent("rooms.SearchBar");

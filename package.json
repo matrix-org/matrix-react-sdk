@@ -100,6 +100,7 @@
     "slate-md-serializer": "github:matrix-org/slate-md-serializer#f7c4ad3",
     "slate-react": "^0.18.10",
     "text-encoding-utf-8": "^1.0.1",
+    "textarea-caret": "^3.1.0",
     "url": "^0.11.0",
     "velocity-animate": "^1.5.2",
     "whatwg-fetch": "^1.1.1",
