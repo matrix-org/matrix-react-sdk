@@ -26,6 +26,7 @@ import Login from '../../../Login';
 import SdkConfig from '../../../SdkConfig';
 import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
 import { AutoDiscovery } from "matrix-js-sdk";
+import {ValidatedDiscoveryConfig} from "../../../utils/AutoDiscoveryUtils";
 
 // For validating phone numbers without country codes
 const PHONE_NUMBER_REGEX = /^[0-9()\-\s]*$/;
@@ -63,15 +64,11 @@ module.exports = React.createClass({
         // one. If set, `defaultHsUrl` and `defaultHsUrl` were derived for this
         // via `.well-known` discovery. The server name is used instead of the
         // HS URL when talking about where to "sign in to".
-        defaultServerName: PropTypes.string,
+        defaultServerName: PropTypes.string, // TODO: TravisR - remove / upgrade
         // An error passed along from higher up explaining that something
         // went wrong when finding the defaultHsUrl.
-        defaultServerDiscoveryError: PropTypes.string,
+        defaultServerDiscoveryError: PropTypes.string, // TODO: TravisR - remove / upgrade
 
-        customHsUrl: PropTypes.string,
-        customIsUrl: PropTypes.string,
-        defaultHsUrl: PropTypes.string,
-        defaultIsUrl: PropTypes.string,
         // Secondary HS which we try to log into if the user is using
         // the default HS but login fails. Useful for migrating to a
         // different homeserver without confusing users.
@@ -85,6 +82,8 @@ module.exports = React.createClass({
         // login shouldn't care how password recovery is done.
         onForgotPasswordClick: PropTypes.func,
         onServerConfigChange: PropTypes.func.isRequired,
+
+        serverConfig: PropTypes.instanceOf(ValidatedDiscoveryConfig).isRequired,
     },
 
     getInitialState: function() {
@@ -92,9 +91,6 @@ module.exports = React.createClass({
             busy: false,
             errorText: null,
             loginIncorrect: false,
-
-            enteredHsUrl: this.props.customHsUrl || this.props.defaultHsUrl,
-            enteredIsUrl: this.props.customIsUrl || this.props.defaultIsUrl,
 
             // used for preserving form values when changing homeserver
             username: "",
@@ -107,6 +103,7 @@ module.exports = React.createClass({
             currentFlow: "m.login.password",
 
             // .well-known discovery
+            // TODO: TravisR - Remove / replace
             discoveryError: "",
             findingHomeserver: false,
         };
@@ -142,6 +139,7 @@ module.exports = React.createClass({
     onPasswordLogin: function(username, phoneCountry, phoneNumber, password) {
         // Prevent people from submitting their password when homeserver
         // discovery went wrong
+        // TODO: TravisR - remove / upgrade
         if (this.state.discoveryError || this.props.defaultServerDiscoveryError) return;
 
         this.setState({
@@ -164,7 +162,7 @@ module.exports = React.createClass({
             const usingEmail = username.indexOf("@") > 0;
             if (error.httpStatus === 400 && usingEmail) {
                 errorText = _t('This homeserver does not support login using email address.');
-            } else if (error.errcode == 'M_RESOURCE_LIMIT_EXCEEDED') {
+            } else if (error.errcode === 'M_RESOURCE_LIMIT_EXCEEDED') {
                 const errorTop = messageForResourceLimitError(
                     error.data.limit_type,
                     error.data.admin_contact, {
@@ -194,11 +192,10 @@ module.exports = React.createClass({
                         <div>
                             <div>{ _t('Incorrect username and/or password.') }</div>
                             <div className="mx_Login_smallError">
-                                { _t('Please note you are logging into the %(hs)s server, not matrix.org.',
-                                    {
-                                        hs: this.props.defaultHsUrl.replace(/^https?:\/\//, ''),
-                                    })
-                                }
+                                {_t(
+                                    'Please note you are logging into the %(hs)s server, not matrix.org.',
+                                    {hs: this.props.serverConfig.hsName},
+                                )}
                             </div>
                         </div>
                     );
@@ -237,7 +234,7 @@ module.exports = React.createClass({
             username: username,
             discoveryError: null,
         });
-        if (username[0] === "@") {
+        if (username[0] === "@" && false) { // TODO: TravisR - Restore this
             const serverName = username.split(':').slice(1).join(':');
             try {
                 // we have to append 'https://' to make the URL constructor happy
@@ -274,6 +271,7 @@ module.exports = React.createClass({
         }
     },
 
+    // TODO: TravisR - Remove/replace with better .well-known support
     onServerConfigChange: function(config) {
         const self = this;
         const newState = {
@@ -314,6 +312,7 @@ module.exports = React.createClass({
     },
 
     _tryWellKnownDiscovery: async function(serverName) {
+        // TODO: TravisR - Move this to a shared location that can be reused
         if (!serverName.trim()) {
             // Nothing to discover
             this.setState({
@@ -367,10 +366,11 @@ module.exports = React.createClass({
 
     _initLoginLogic: function(hsUrl, isUrl) {
         const self = this;
-        hsUrl = hsUrl || this.state.enteredHsUrl;
-        isUrl = isUrl || this.state.enteredIsUrl;
+        hsUrl = hsUrl || this.props.serverConfig.hsUrl;
+        isUrl = isUrl || this.props.serverConfig.isUrl;
 
-        const fallbackHsUrl = hsUrl === this.props.defaultHsUrl ? this.props.fallbackHsUrl : null;
+        // TODO: TravisR - Only use this if the homeserver is the default homeserver
+        const fallbackHsUrl = this.props.fallbackHsUrl;
 
         const loginLogic = new Login(hsUrl, isUrl, fallbackHsUrl, {
             defaultDeviceDisplayName: this.props.defaultDeviceDisplayName,
@@ -378,8 +378,6 @@ module.exports = React.createClass({
         this._loginLogic = loginLogic;
 
         this.setState({
-            enteredHsUrl: hsUrl,
-            enteredIsUrl: isUrl,
             busy: true,
             loginIncorrect: false,
         });
@@ -445,8 +443,8 @@ module.exports = React.createClass({
 
         if (err.cors === 'rejected') {
             if (window.location.protocol === 'https:' &&
-                (this.state.enteredHsUrl.startsWith("http:") ||
-                 !this.state.enteredHsUrl.startsWith("http"))
+                (this.props.serverConfig.hsUrl.startsWith("http:") ||
+                 !this.props.serverConfig.hsUrl.startsWith("http"))
             ) {
                 errorText = <span>
                     { _t("Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. " +
@@ -469,9 +467,9 @@ module.exports = React.createClass({
                         "is not blocking requests.", {},
                         {
                             'a': (sub) => {
-                                return <a target="_blank" rel="noopener"
-                                    href={this.state.enteredHsUrl}
-                                >{ sub }</a>;
+                                return <a target="_blank" rel="noopener" href={this.props.serverConfig.hsUrl}>
+                                    { sub }
+                                </a>;
                             },
                         },
                     ) }
@@ -494,11 +492,9 @@ module.exports = React.createClass({
             return null;
         }
 
+        // TODO: TravisR - Fix this to actually work with new options
         const serverDetails = <ServerConfig
-            customHsUrl={this.state.enteredHsUrl}
-            customIsUrl={this.state.enteredIsUrl}
-            defaultHsUrl={this.props.defaultHsUrl}
-            defaultIsUrl={this.props.defaultIsUrl}
+            serverConfig={this.props.serverInfo}
             onServerConfigChange={this.onServerConfigChange}
             delayTimeMs={250}
         />;
@@ -506,8 +502,7 @@ module.exports = React.createClass({
         let nextButton = null;
         if (PHASES_ENABLED) {
             nextButton = <AccessibleButton className="mx_Login_submit"
-                onClick={this.onServerDetailsNextPhaseClick}
-            >
+                onClick={this.onServerDetailsNextPhaseClick}>
                 {_t("Next")}
             </AccessibleButton>;
         }
@@ -547,13 +542,6 @@ module.exports = React.createClass({
             onEditServerDetailsClick = this.onEditServerDetailsClick;
         }
 
-        // If the current HS URL is the default HS URL, then we can label it
-        // with the default HS name (if it exists).
-        let hsName;
-        if (this.state.enteredHsUrl === this.props.defaultHsUrl) {
-            hsName = this.props.defaultServerName;
-        }
-
         return (
             <PasswordLogin
                onSubmit={this.onPasswordLogin}
@@ -569,10 +557,9 @@ module.exports = React.createClass({
                onPhoneNumberBlur={this.onPhoneNumberBlur}
                onForgotPasswordClick={this.props.onForgotPasswordClick}
                loginIncorrect={this.state.loginIncorrect}
-               hsName={hsName}
-               hsUrl={this.state.enteredHsUrl}
+               serverConfig={this.props.serverConfig}
                disableSubmit={this.state.findingHomeserver}
-               />
+            />
         );
     },
 
@@ -597,7 +584,7 @@ module.exports = React.createClass({
         const AuthBody = sdk.getComponent("auth.AuthBody");
         const loader = this.state.busy ? <div className="mx_Login_loader"><Loader /></div> : null;
 
-        const errorText = this.props.defaultServerDiscoveryError || this.state.discoveryError || this.state.errorText;
+        const errorText = this.state.discoveryError || this.state.errorText;
 
         let errorTextSection;
         if (errorText) {

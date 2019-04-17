@@ -138,6 +138,7 @@ export function substitute(text, variables, tags) {
             regexpMapping[`(<${tag}>(.*?)<\\/${tag}>|<${tag}>|<${tag}\\s*\\/>)`] = tags[tag];
         }
     }
+
     return replaceByRegexes(text, regexpMapping);
 }
 
