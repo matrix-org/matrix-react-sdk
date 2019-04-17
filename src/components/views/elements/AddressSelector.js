@@ -148,7 +148,7 @@ export default React.createClass({
                         <AddressTile
                             address={this.props.addressList[i]}
                             showAddress={this.props.showAddress}
-                            justified={true}
+                            justified={false}
                             networkName="vector"
                             networkUrl={require("../../../../res/img/search-icon-vector.svg")}
                         />
