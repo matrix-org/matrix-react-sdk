@@ -17,6 +17,7 @@ limitations under the License.
 import React from "react";
 import PropTypes from 'prop-types';
 import getCaretCoordinates from "textarea-caret";
+import * as ContextualMenu from '../../structures/ContextualMenu';
 
 function firstDiff(a, b) {
     const compareLen = Math.min(a.length, b.length);
@@ -47,6 +48,26 @@ function diffStringsAtEnd(oldStr, newStr) {
     }
 }
 
+function diffAtCaret(oldValue, newValue, caretPosition) {
+    const diffLen = newValue.length - oldValue.length;
+    const caretPositionBeforeInput = caretPosition - diffLen;
+    const oldValueBeforeCaret = oldValue.substr(0, caretPositionBeforeInput);
+    const newValueBeforeCaret = newValue.substr(0, caretPosition);
+    return diffStringsAtEnd(oldValueBeforeCaret, newValueBeforeCaret);
+}
+
+
+class PeoplePopup extends React.Component {
+    render() {
+        const style = {
+            backgroundColor: "red",
+            height: "200px",
+            width: "100px",
+        };
+        return <div style={style}>{this.props.msg}</div>;
+    }
+}
+
 export default class SimpleMessageComposer extends React.Component {
 
     static propTypes = {
@@ -58,26 +79,32 @@ export default class SimpleMessageComposer extends React.Component {
     }
 
     _onInput = (evt) => {
+        if (this._popupHandle) {
+            this._popupHandle.close();
+        }
         const target = evt.target;
         // need to diff input values because InputEvent.data is not supported on FF
         // also, need to find out about deletions, and pasting, ...
         // also, we probably need the position to update our model
-        const oldValue = this.oldValue || "";
-        const caretPosition = target.selectionEnd;
         const newValue = target.value;
-        const diffLen = newValue.length - oldValue.length;
-        const caretPositionBeforeInput = caretPosition - diffLen;
-        const oldValueBeforeCaret = oldValue.substr(0, caretPositionBeforeInput);
-        const newValueBeforeCaret = newValue.substr(0, caretPosition);
-        const diff = diffStringsAtEnd(oldValueBeforeCaret, newValueBeforeCaret);
+        const diff = diffAtCaret(this.oldValue || "", newValue, target.selectionEnd);
+        this.oldValue = newValue;
         console.log(diff);
         if (diff.added || diff.replaced) {
             const added = diff.added || diff.replaced[1];
             if (added.indexOf("@") !== -1) {
-                // const pxPos = getCaretCoordinates(target);
-                alert("You typed @!");
+                const pxPos = getCaretCoordinates(target, target.selectionEnd);
+                const bounds = target.getBoundingClientRect();
+                const left = bounds.left + pxPos.left;
+                const top = bounds.top + pxPos.top - 200;
+                this._popupHandle = ContextualMenu.createMenu(PeoplePopup, {
+                    onFinished: () => this._popupHandle = null,
+                    chevronFace: "none",
+                    left,
+                    top,
+                    msg: `${left} = ${bounds.left} + ${pxPos.left}`,
+                });
             }
         }
-        this.oldValue = newValue;
     }
 }
