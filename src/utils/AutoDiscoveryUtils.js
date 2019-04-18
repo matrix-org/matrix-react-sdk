@@ -14,6 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import {AutoDiscovery} from "matrix-js-sdk";
+import {_td, newTranslatableError} from "../languageHandler";
+import {makeType} from "./TypeUtils";
+import SdkConfig from "../SdkConfig";
+
 export class ValidatedDiscoveryConfig {
     hsUrl: string;
     hsName: string;
@@ -21,4 +26,62 @@ export class ValidatedDiscoveryConfig {
 
     isUrl: string;
     identityEnabled: boolean;
+}
+
+export default class AutoDiscoveryUtils {
+    static async validateServerName(serverName: string): ValidatedDiscoveryConfig {
+        const result = await AutoDiscovery.findClientConfig(serverName);
+        return AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, result);
+    }
+
+    static buildValidatedConfigFromDiscovery(serverName: string, discoveryResult): ValidatedDiscoveryConfig {
+        if (!discoveryResult || !discoveryResult["m.homeserver"]) {
+            // This shouldn't happen without major misconfiguration, so we'll log a bit of information
+            // in the log so we can find this bit of codee but otherwise tell teh user "it broke".
+            console.error("Ended up in a state of not knowing which homeserver to connect to.");
+            throw newTranslatableError(_td("Unexpected error resolving homeserver configuration"));
+        }
+
+        const hsResult = discoveryResult['m.homeserver'];
+        if (hsResult.state !== AutoDiscovery.SUCCESS) {
+            if (AutoDiscovery.ALL_ERRORS.indexOf(hsResult.error) !== -1) {
+                throw newTranslatableError(hsResult.error);
+            }
+            throw newTranslatableError(_td("Unexpected error resolving homeserver configuration"));
+        }
+
+        const isResult = discoveryResult['m.identity_server'];
+        let preferredIdentityUrl = "https://vector.im";
+        if (isResult && isResult.state === AutoDiscovery.SUCCESS) {
+            preferredIdentityUrl = isResult["base_url"];
+        } else if (isResult && isResult.state !== AutoDiscovery.PROMPT) {
+            console.error("Error determining preferred identity server URL:", isResult);
+            throw newTranslatableError(_td("Unexpected error resolving homeserver configuration"));
+        }
+
+        const preferredHomeserverUrl = hsResult["base_url"];
+        let preferredHomeserverName = serverName ? serverName : hsResult["server_name"];
+
+        const url = new URL(preferredHomeserverUrl);
+        if (!preferredHomeserverName) preferredHomeserverName = url.hostname;
+
+        // It should have been set by now, so check it
+        if (!preferredHomeserverName) {
+            console.error("Failed to parse homeserver name from homeserver URL");
+            throw newTranslatableError(_td("Unexpected error resolving homeserver configuration"));
+        }
+
+        return makeType(ValidatedDiscoveryConfig, {
+            hsUrl: preferredHomeserverUrl,
+            hsName: preferredHomeserverName,
+            hsNameIsDifferent: url.hostname !== preferredHomeserverName,
+            isUrl: preferredIdentityUrl,
+            identityEnabled: !SdkConfig.get()['disable_identity_server'],
+        });
+    }
+}
+
+export async function validateServerName(serverName: string): ValidatedDiscoveryConfig {
+    const result = await AutoDiscovery.findClientConfig(serverName);
+
 }

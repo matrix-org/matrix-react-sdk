@@ -246,6 +246,7 @@
     "%(names)s and %(count)s others are typing …|other": "%(names)s and %(count)s others are typing …",
     "%(names)s and %(count)s others are typing …|one": "%(names)s and one other is typing …",
     "%(names)s and %(lastPerson)s are typing …": "%(names)s and %(lastPerson)s are typing …",
+    "Unexpected error resolving homeserver configuration": "Unexpected error resolving homeserver configuration",
     "This homeserver has hit its Monthly Active User limit.": "This homeserver has hit its Monthly Active User limit.",
     "This homeserver has exceeded one of its resource limits.": "This homeserver has exceeded one of its resource limits.",
     "Please <a>contact your service administrator</a> to continue using the service.": "Please <a>contact your service administrator</a> to continue using the service.",
