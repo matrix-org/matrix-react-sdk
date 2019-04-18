@@ -143,8 +143,9 @@ export default class GeneralUserSettingsTab extends React.Component {
         return (
             <div className="mx_SettingsTab_section mx_GeneralUserSettingsTab_themeSection">
                 <span className="mx_SettingsTab_subheading">{_t("Theme")}</span>
-                <Field id="theme" label={_t("Theme")} element="select"
+                <Field id="theme" label={_t("Theme")} element="select" disabled={true}
                        value={this.state.theme} onChange={this._onThemeChange}>
+                    <option value="tchap">{_t("Tchap theme")}</option>
                     <option value="light">{_t("Light theme")}</option>
                     <option value="dark">{_t("Dark theme")}</option>
                 </Field>

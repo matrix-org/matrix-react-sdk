@@ -233,7 +233,7 @@ export const SETTINGS = {
     },
     "theme": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        default: "light",
+        default: "tchap",
         controller: new ThemeController(),
     },
     "webRtcAllowPeerToPeer": {
