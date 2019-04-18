@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from "react";
 import PropTypes from 'prop-types';
-import getCaretCoordinates from "textarea-caret";
 
 function firstDiff(a, b) {
     const compareLen = Math.min(a.length, b.length);
@@ -59,9 +58,12 @@ export default class SimpleMessageComposer extends React.Component {
 
     _onInput = (evt) => {
         const target = evt.target;
-        // need to diff input values because InputEvent.data is not supported on FF
-        // also, need to find out about deletions, and pasting, ...
-        // also, we probably need the position to update our model
+        // the input event is the most reliable way of detecting input,
+        // whereas keydown doesn't always correspond to how the input
+        // will change and keypress isn't fired for all kinds of input.
+        // firefox doesn't support InputEvent.data though, so we diff
+        // target.value at the caret position to find out what changed
+        // between input events.
         const oldValue = this.oldValue || "";
         const caretPosition = target.selectionEnd;
         const newValue = target.value;
