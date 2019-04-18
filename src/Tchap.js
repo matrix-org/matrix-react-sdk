@@ -1,7 +1,5 @@
 import SdkConfig from "./SdkConfig";
-
-const TCHAP_API_URL = '/_matrix/identity/api/v1/info?medium=email&address=';
-const TCHAP_HOSTS_BASE = 'https://matrix.';
+import TchapApi from './TchapApi';
 
 /**
  * Tchap utils.
@@ -14,10 +12,12 @@ class Tchap {
      * @returns {Promise}
      */
     static discoverPlatform(email) {
+        const hostBase = TchapApi.hostBase;
+        const infoUrl = TchapApi.info;
         return new Promise((resolve, reject) => {
             const tchapHostsList = SdkConfig.get()['hs_url_list'];
             if (tchapHostsList) {
-                const promises = tchapHostsList.map(url => this._httpRequest(TCHAP_HOSTS_BASE + url + TCHAP_API_URL + email));
+                const promises = tchapHostsList.map(url => this._httpRequest(hostBase + url + infoUrl + email, {}));
                 Promise.all(promises).then(data => {
                     let hs = null;
                     let err = null;
@@ -32,7 +32,7 @@ class Tchap {
                         console.error(err);
                     }
                     if (hs !== null) {
-                        resolve(TCHAP_HOSTS_BASE + hs);
+                        resolve(hostBase + hs);
                     } else {
                         reject(err);
                     }
