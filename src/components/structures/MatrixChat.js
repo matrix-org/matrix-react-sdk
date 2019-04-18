@@ -50,8 +50,8 @@ import SettingsStore, {SettingLevel} from "../../settings/SettingsStore";
 import { startAnyRegistrationFlow } from "../../Registration.js";
 import { messageForSyncError } from '../../utils/ErrorUtils';
 import ResizeNotifier from "../../utils/ResizeNotifier";
-import {ValidatedDiscoveryConfig} from "../../utils/AutoDiscoveryUtils";
 import {makeType} from "../../utils/TypeUtils";
+import {ValidatedDiscoveryConfig} from "../../utils/AutoDiscoveryUtils";
 import TimelineExplosionDialog from "../views/dialogs/TimelineExplosionDialog";
 
 // Disable warnings for now: we use deprecated bluebird functions
@@ -210,19 +210,8 @@ export default React.createClass({
     },
 
     getServerProperties() {
-        const discoveryConfig = SdkConfig.get()["validated_discovery_config"];
-        const hsConfig = discoveryConfig["m.homeserver"];
-        const isConfig = discoveryConfig["m.identity_server"];
-        const props = makeType(ValidatedDiscoveryConfig, {
-            hsUrl: hsConfig["base_url"],
-            hsName: hsConfig["server_name"],
-            hsNameIsDifferent: hsConfig["server_name_different"],
-            isUrl: isConfig["base_url"],
-            identityEnabled: isConfig["enabled"],
-        });
-
         // TODO: Support custom URLs
-        return {serverConfig: props};
+        return {serverConfig: SdkConfig.get()["validated_discovery_config"]};
     },
 
     componentWillMount: function() {
