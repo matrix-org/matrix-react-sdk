@@ -21,7 +21,7 @@ import classNames from 'classnames';
 import sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
-import {ValidatedDiscoveryConfig} from "../../../utils/AutoDiscoveryUtils";
+import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
 
 /**
  * A pure UI component which displays a username/password form.
@@ -41,7 +41,7 @@ export default class PasswordLogin extends React.Component {
         onPasswordChanged: PropTypes.func,
         loginIncorrect: PropTypes.bool,
         disableSubmit: PropTypes.bool,
-        serverConfig: PropTypes.instanceOf(ValidatedDiscoveryConfig).isRequired,
+        serverConfig: PropTypes.instanceOf(ValidatedServerConfig).isRequired,
     };
 
     static defaultProps = {

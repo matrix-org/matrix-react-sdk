@@ -211,7 +211,7 @@ export default React.createClass({
 
     getServerProperties() {
         // TODO: Support custom URLs
-        return {serverConfig: SdkConfig.get()["validated_discovery_config"]};
+        return {serverConfig: SdkConfig.get()["validated_server_config"]};
     },
 
     componentWillMount: function() {

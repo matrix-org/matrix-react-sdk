@@ -26,7 +26,7 @@ import Login from '../../../Login';
 import SdkConfig from '../../../SdkConfig';
 import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
 import { AutoDiscovery } from "matrix-js-sdk";
-import {ValidatedDiscoveryConfig} from "../../../utils/AutoDiscoveryUtils";
+import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
 
 // For validating phone numbers without country codes
 const PHONE_NUMBER_REGEX = /^[0-9()\-\s]*$/;
@@ -83,7 +83,7 @@ module.exports = React.createClass({
         onForgotPasswordClick: PropTypes.func,
         onServerConfigChange: PropTypes.func.isRequired,
 
-        serverConfig: PropTypes.instanceOf(ValidatedDiscoveryConfig).isRequired,
+        serverConfig: PropTypes.instanceOf(ValidatedServerConfig).isRequired,
     },
 
     getInitialState: function() {

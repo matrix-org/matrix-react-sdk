@@ -19,7 +19,7 @@ import {_td, newTranslatableError} from "../languageHandler";
 import {makeType} from "./TypeUtils";
 import SdkConfig from "../SdkConfig";
 
-export class ValidatedDiscoveryConfig {
+export class ValidatedServerConfig {
     hsUrl: string;
     hsName: string;
     hsNameIsDifferent: string;
@@ -29,12 +29,12 @@ export class ValidatedDiscoveryConfig {
 }
 
 export default class AutoDiscoveryUtils {
-    static async validateServerName(serverName: string): ValidatedDiscoveryConfig {
+    static async validateServerName(serverName: string): ValidatedServerConfig {
         const result = await AutoDiscovery.findClientConfig(serverName);
         return AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, result);
     }
 
-    static buildValidatedConfigFromDiscovery(serverName: string, discoveryResult): ValidatedDiscoveryConfig {
+    static buildValidatedConfigFromDiscovery(serverName: string, discoveryResult): ValidatedServerConfig {
         if (!discoveryResult || !discoveryResult["m.homeserver"]) {
             // This shouldn't happen without major misconfiguration, so we'll log a bit of information
             // in the log so we can find this bit of codee but otherwise tell teh user "it broke".
@@ -71,7 +71,7 @@ export default class AutoDiscoveryUtils {
             throw newTranslatableError(_td("Unexpected error resolving homeserver configuration"));
         }
 
-        return makeType(ValidatedDiscoveryConfig, {
+        return makeType(ValidatedServerConfig, {
             hsUrl: preferredHomeserverUrl,
             hsName: preferredHomeserverName,
             hsNameIsDifferent: url.hostname !== preferredHomeserverName,
@@ -81,7 +81,7 @@ export default class AutoDiscoveryUtils {
     }
 }
 
-export async function validateServerName(serverName: string): ValidatedDiscoveryConfig {
+export async function validateServerName(serverName: string): ValidatedServerConfig {
     const result = await AutoDiscovery.findClientConfig(serverName);
 
 }
