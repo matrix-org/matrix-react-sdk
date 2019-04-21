@@ -29,6 +29,28 @@ export class ValidatedServerConfig {
 }
 
 export default class AutoDiscoveryUtils {
+    static async validateServerConfigWithStaticUrls(homeserverUrl: string, identityUrl: string): ValidatedServerConfig {
+        if (!homeserverUrl) {
+            throw newTranslatableError(_td("No homeserver URL provided"));
+        }
+
+        const wellknownConfig = {
+            "m.homeserver": {
+                base_url: homeserverUrl,
+            },
+            "m.identity_server": {
+                base_url: identityUrl,
+            },
+        };
+
+        const result = await AutoDiscovery.fromDiscoveryConfig(wellknownConfig);
+
+        const url = new URL(homeserverUrl);
+        const serverName = url.hostname;
+
+        return AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, result);
+    }
+
     static async validateServerName(serverName: string): ValidatedServerConfig {
         const result = await AutoDiscovery.findClientConfig(serverName);
         return AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, result);

@@ -210,8 +210,9 @@ export default React.createClass({
     },
 
     getServerProperties() {
-        // TODO: Support custom URLs
-        return {serverConfig: SdkConfig.get()["validated_server_config"]};
+        let props = this.state.serverConfig;
+        if (!props) props = SdkConfig.get()["validated_server_config"];
+        return {serverConfig: props};
     },
 
     componentWillMount: function() {
@@ -1754,14 +1755,7 @@ export default React.createClass({
     },
 
     onServerConfigChange(config) {
-        const newState = {};
-        if (config.hsUrl) {
-            newState.register_hs_url = config.hsUrl;
-        }
-        if (config.isUrl) {
-            newState.register_is_url = config.isUrl;
-        }
-        this.setState(newState);
+        this.setState({serverConfig: config});
     },
 
     _makeRegistrationUrl: function(params) {

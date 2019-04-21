@@ -281,8 +281,12 @@ module.exports = React.createClass({
         this.props.onRegisterClick();
     },
 
-    onServerDetailsNextPhaseClick(ev) {
+    async onServerDetailsNextPhaseClick(ev) {
         ev.stopPropagation();
+        if (this._serverConfigRef) {
+            // Just to make sure the user's input gets captured
+            await this._serverConfigRef.validateServer();
+        }
         this.setState({
             phase: PHASE_LOGIN,
         });
@@ -424,8 +428,8 @@ module.exports = React.createClass({
             return null;
         }
 
-        // TODO: TravisR - Fix this to actually work with new options
         const serverDetails = <ServerConfig
+            ref={r => this._serverConfigRef = r}
             serverConfig={this.props.serverConfig}
             onServerConfigChange={this.onServerConfigChange}
             delayTimeMs={250}
@@ -433,6 +437,7 @@ module.exports = React.createClass({
 
         let nextButton = null;
         if (PHASES_ENABLED) {
+            // TODO: Pull out server discovery from ServerConfig to disable the next button?
             nextButton = <AccessibleButton className="mx_Login_submit"
                 onClick={this.onServerDetailsNextPhaseClick}>
                 {_t("Next")}
