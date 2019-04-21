@@ -306,8 +306,8 @@ export default React.createClass({
             return Lifecycle.loadSession({
                 fragmentQueryParams: this.props.startingFragmentQueryParams,
                 enableGuest: this.props.enableGuest,
-                guestHsUrl: this.getCurrentHsUrl(),
-                guestIsUrl: this.getCurrentIsUrl(),
+                guestHsUrl: this.getServerProperties().serverConfig.hsUrl,
+                guestIsUrl: this.getServerProperties().serverConfig.isUrl,
                 defaultDeviceDisplayName: this.props.defaultDeviceDisplayName,
             });
         }).then((loadedSession) => {
