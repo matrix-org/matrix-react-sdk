@@ -19,12 +19,12 @@ import React from 'react';
 import MatrixClientPeg from './MatrixClientPeg';
 import MultiInviter from './utils/MultiInviter';
 import Modal from './Modal';
-import { getAddressType } from './UserAddress';
+import {getAddressType} from './UserAddress';
 import createRoom from './createRoom';
 import sdk from './';
 import dis from './dispatcher';
 import DMRoomMap from './utils/DMRoomMap';
-import { _t } from './languageHandler';
+import {_t} from './languageHandler';
 
 /**
  * Invites multiple addresses to a room
@@ -38,6 +38,18 @@ import { _t } from './languageHandler';
 function inviteMultipleToRoom(roomId, addrs) {
     const inviter = new MultiInviter(roomId);
     return inviter.invite(addrs).then(states => Promise.resolve({states, inviter}));
+}
+
+function _inviteToRoom(roomId, addr) {
+    const addrType = getAddressType(addr);
+
+    if (addrType === 'email') {
+        return MatrixClientPeg.get().inviteByEmail(roomId, addr);
+    } else if (addrType === 'mx-user-id') {
+        return MatrixClientPeg.get().invite(roomId, addr);
+    } else {
+        throw new Error('Unsupported address');
+    }
 }
 
 export function showStartChatInviteDialog() {
@@ -86,65 +98,81 @@ export function isValid3pidInvite(event) {
 function _onStartChatFinished(shouldInvite, addrs) {
     if (!shouldInvite) return;
 
-    const addrTexts = addrs.map((addr) => addr.address);
+    const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+    const matrixClient = MatrixClientPeg.get();
+    const addrTexts = addrs.map((addr) => addr.address)[0];
+    const addrType = addrs.map((addr) => addr.addressType)[0];
+    const addrKnown = addrs.map((addr) => addr.isKnown)[0];
 
-    if (_isDmChat(addrTexts)) {
-        const rooms = _getDirectMessageRooms(addrTexts[0]);
-        if (rooms.length > 0) {
-            // A Direct Message room already exists for this user, so select a
-            // room from a list that is similar to the one in MemberInfo panel
-            const ChatCreateOrReuseDialog = sdk.getComponent("views.dialogs.ChatCreateOrReuseDialog");
-            const close = Modal.createTrackedDialog('Create or Reuse', '', ChatCreateOrReuseDialog, {
-                userId: addrTexts[0],
-                onNewDMClick: () => {
-                    dis.dispatch({
-                        action: 'start_chat',
-                        user_id: addrTexts[0],
-                    });
-                    close(true);
-                },
-                onExistingRoomSelected: (roomId) => {
+    if (addrKnown === true) {
+        matrixClient.lookupThreePid(addrType, addrTexts).then(res => {
+            const invitedUserId = Object.entries(res).length === 0 ? addrTexts : res.mxid;
+            const selectedRoom = _selectDirectChat(invitedUserId);
+            const roomStatus = selectedRoom ? selectedRoom.status : null;
+            switch (roomStatus) {
+                case "join-join":
+                    // Redirect to the existing room.
                     dis.dispatch({
                         action: 'view_room',
-                        room_id: roomId,
+                        room_id: selectedRoom.room.roomId,
                     });
-                    close(true);
-                },
-            }).close;
-        } else {
-            // Start a new DM chat
-            createRoom({dmUserId: addrTexts[0]}).catch((err) => {
-                const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-                Modal.createTrackedDialog('Failed to invite user', '', ErrorDialog, {
-                    title: _t("Failed to invite user"),
-                    description: ((err && err.message) ? err.message : _t("Operation failed")),
-                });
-            });
-        }
-    } else if (addrTexts.length === 1) {
-        // Start a new DM chat
-        createRoom({dmUserId: addrTexts[0]}).catch((err) => {
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+                    break;
+
+                case "invite-join":
+                    // Join room then redirect to this room.
+                    matrixClient.joinRoom(selectedRoom.room.roomId).done(() => {
+                        dis.dispatch({
+                            action: 'view_room',
+                            room_id: selectedRoom.room.roomId,
+                        });
+                    }, err => {
+                        Modal.createTrackedDialog('Failed to join room', '', ErrorDialog, {
+                            title: _t("Failed to join room"),
+                            description: ((err && err.message) ? err.message : _t("Operation failed")),
+                        });
+                    });
+                    break;
+
+                case "join-invite":
+                    // Redirect to the existing room.
+                    dis.dispatch({
+                        action: 'view_room',
+                        room_id: selectedRoom.room.roomId,
+                    });
+                    break;
+
+                case "join-leave":
+                    // Send an invitation then redirect to the existing room.
+                    _inviteToRoom(selectedRoom.room.roomId, addrTexts);
+                    dis.dispatch({
+                        action: 'view_room',
+                        room_id: selectedRoom.room.roomId,
+                    });
+                    break;
+
+                default:
+                    // Create a new room.
+                    createRoom({dmUserId: addrTexts}).catch((err) => {
+                        Modal.createTrackedDialog('Failed to invite user', '', ErrorDialog, {
+                            title: _t("Failed to invite user"),
+                            description: ((err && err.message) ? err.message : _t("Operation failed")),
+                        });
+                    });
+                    break;
+            }
+        }).catch(err => {
             Modal.createTrackedDialog('Failed to invite user', '', ErrorDialog, {
                 title: _t("Failed to invite user"),
                 description: ((err && err.message) ? err.message : _t("Operation failed")),
             });
         });
+    } else if (addrKnown === false && addrType === "email") {
+        // Case where a non-Tchap user is invited by email
     } else {
-        // Start multi user chat
-        let room;
-        createRoom().then((roomId) => {
-            room = MatrixClientPeg.get().getRoom(roomId);
-            return inviteMultipleToRoom(roomId, addrTexts);
-        }).then((result) => {
-            return _showAnyInviteErrors(result.states, room, result.inviter);
-        }).catch((err) => {
-            console.error(err.stack);
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-            Modal.createTrackedDialog('Failed to invite', '', ErrorDialog, {
-                title: _t("Failed to invite"),
-                description: ((err && err.message) ? err.message : _t("Operation failed")),
-            });
+        // Error case (no email nor mxid).
+        Modal.createTrackedDialog('Failed to invite user', '', ErrorDialog, {
+            title: _t("Failed to invite user"),
+            description: _t("Operation failed"),
         });
     }
 }
@@ -168,12 +196,69 @@ function _onRoomInviteFinished(roomId, shouldInvite, addrs) {
     });
 }
 
-function _isDmChat(addrTexts) {
-    if (addrTexts.length === 1 && getAddressType(addrTexts[0]) === 'mx-user-id') {
-        return true;
-    } else {
-        return false;
-    }
+function _selectDirectChat(userId) {
+    const roomList = _getDirectMessageRooms(userId);
+
+    let selectedRoom = {
+        room: null,
+        status: null,
+        date: null,
+        weight: 0,
+    };
+
+    roomList.forEach(room => {
+        const members = room.currentState.members;
+        const him = members[userId];
+        const myMembership = room.getMyMembership();
+        const hisMembership = him.membership;
+
+        const roomCreateEvent = room.currentState.getStateEvents("m.room.create");
+        const roomCreateEventDate = roomCreateEvent[0] ? roomCreateEvent[0].event.origin_server_ts : 0;
+
+        // Colliding all the "myMembership" and "hisMembership" possibilities.
+
+        // "join" <=> "join" state.
+        if (myMembership === "join" && hisMembership === "join") {
+            if (selectedRoom === null || selectedRoom.weight < 4 ||
+                (selectedRoom.weight === 4 && roomCreateEventDate < selectedRoom.date)) {
+                selectedRoom = {room: room, status: "join-join", date: roomCreateEventDate, weight: 4};
+            }
+
+            // "invite" <=> "join" state.
+            // I have received an invitation from the other member.
+        } else if (myMembership === "invite" && hisMembership === "join") {
+            if (selectedRoom === null || selectedRoom.weight < 3 ||
+                (selectedRoom.weight === 3 && roomCreateEventDate < selectedRoom.date)) {
+                selectedRoom = {room: room, status: "invite-join", date: roomCreateEventDate, weight: 3};
+            }
+
+            // "join" <=> "invite" state.
+            // The other member already have an invitation.
+        } else if (myMembership === "join" && hisMembership === "invite") {
+            if (selectedRoom === null || selectedRoom.weight < 2 ||
+                (selectedRoom.weight === 2 && roomCreateEventDate < selectedRoom.date)) {
+                selectedRoom = {room: room, status: "join-invite", date: roomCreateEventDate, weight: 2};
+            }
+
+            // "join" <=> "leave" state.
+            // The other member have left/reject my invitation.
+        } else if (myMembership === "join" && hisMembership === "leave") {
+            if (selectedRoom === null || selectedRoom.weight < 1 ||
+                (selectedRoom.weight === 1 && roomCreateEventDate < selectedRoom.date)) {
+                selectedRoom = {room: room, status: "join-leave", date: roomCreateEventDate, weight: 1};
+            }
+        } else {
+            selectedRoom = {
+                room: null,
+                status: null,
+                date: null,
+                weight: 0,
+            };
+        }
+    });
+    selectedRoom = selectedRoom.room !== null && selectedRoom.status !== null && selectedRoom.date !== null ? selectedRoom : null;
+
+    return selectedRoom;
 }
 
 function _showAnyInviteErrors(addrs, room, inviter) {
@@ -210,14 +295,13 @@ function _showAnyInviteErrors(addrs, room, inviter) {
 }
 
 function _getDirectMessageRooms(addr) {
-    const dmRoomMap = new DMRoomMap(MatrixClientPeg.get());
-    const dmRooms = dmRoomMap.getDMRoomsForUserId(addr);
-    const rooms = dmRooms.filter((dmRoom) => {
-        const room = MatrixClientPeg.get().getRoom(dmRoom);
-        if (room) {
-            return room.getMyMembership() === 'join';
+    const matrixClient = MatrixClientPeg.get();
+    const currentUserId = matrixClient.getUserId();
+    const rooms = matrixClient.getRooms();
+    return rooms.filter((r) => {
+        const users = Object.keys(r.currentState.members);
+        if (users.length === 2 && users.includes(addr) && users.includes(currentUserId)) {
+            return true;
         }
     });
-    return rooms;
 }
-
