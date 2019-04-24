@@ -77,12 +77,21 @@ export class RoomPermalinkCreator {
         this._bannedHostsRegexps = null;
         this._allowedHostsRegexps = null;
         this._serverCandidates = null;
+        this._started = false;
 
         this.onMembership = this.onMembership.bind(this);
         this.onRoomState = this.onRoomState.bind(this);
     }
 
     load() {
+        if (!this._room || !this._room.currentState) {
+            // Under rare and unknown circumstances it is possible to have a room with no
+            // currentState, at least potentially at the early stages of joining a room.
+            // To avoid breaking everything, we'll just warn rather than throw as well as
+            // not bother updating the various aspects of the share link.
+            console.warn("Tried to load a permalink creator with no room state");
+            return;
+        }
         this._updateAllowedServers();
         this._updateHighestPlUser();
         this._updatePopulationMap();
@@ -93,11 +102,17 @@ export class RoomPermalinkCreator {
         this.load();
         this._room.on("RoomMember.membership", this.onMembership);
         this._room.on("RoomState.events", this.onRoomState);
+        this._started = true;
     }
 
     stop() {
         this._room.removeListener("RoomMember.membership", this.onMembership);
         this._room.removeListener("RoomState.events", this.onRoomState);
+        this._started = false;
+    }
+
+    isStarted() {
+        return this._started;
     }
 
     forEvent(eventId) {

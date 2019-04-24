@@ -1,6 +1,6 @@
 {
   "name": "matrix-react-sdk",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "SDK for matrix.org using React",
   "author": "matrix.org",
   "repository": {
@@ -49,6 +49,7 @@
     "lint": "eslint src/",
     "lintall": "eslint src/ test/",
     "lintwithexclusions": "eslint --max-warnings 0 --ignore-path .eslintignore.errorfiles src test",
+    "stylelint": "stylelint res/css/**/*.scss",
     "clean": "rimraf lib",
     "prepare": "yarn clean && yarn build && git rev-parse HEAD > git-revision.txt",
     "test": "karma start --single-run=true --browsers VectorChromeHeadless",
@@ -79,9 +80,10 @@
     "linkifyjs": "^2.1.6",
     "lodash": "^4.13.1",
     "lolex": "2.3.2",
-    "matrix-js-sdk": "1.0.3",
+    "matrix-js-sdk": "1.0.4",
     "optimist": "^0.6.1",
     "pako": "^1.0.5",
+    "png-chunks-extract": "^1.0.0",
     "prop-types": "^15.5.8",
     "qrcode-react": "^0.1.16",
     "qs": "^6.6.0",
@@ -149,6 +151,8 @@
     "rimraf": "^2.4.3",
     "sinon": "^5.0.7",
     "source-map-loader": "^0.2.3",
+    "stylelint": "^9.10.1",
+    "stylelint-config-standard": "^18.2.0",
     "walk": "^2.3.9",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.1"

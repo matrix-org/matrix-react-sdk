@@ -36,6 +36,12 @@ body {
     color: $warning-color;
 }
 
+b {
+    // On Firefox, the default weight for `<b>` is `bolder` which results in no bold
+    // effect since we only have specific weights of our fonts available.
+    font-weight: bold;
+}
+
 h2 {
     color: $primary-fg-color;
     font-weight: 400;
@@ -268,7 +274,6 @@ textarea {
     font-size: 15px;
     position: relative;
     padding: 25px 30px 30px 30px;
-    max-width: 704px;
     max-height: 80%;
     box-shadow: 2px 15px 30px 0 $dialog-shadow-color;
     border-radius: 4px;
@@ -277,6 +282,7 @@ textarea {
 
 .mx_Dialog_fixedWidth {
     width: 60vw;
+    max-width: 704px;
 }
 
 .mx_Dialog_staticWrapper .mx_Dialog {
@@ -517,3 +523,38 @@ textarea {
     opacity: 0;
     cursor: pointer;
 }
+
+// username colors
+// used by SenderProfile & RoomPreviewBar
+.mx_Username_color1 {
+    color: $username-variant1-color;
+}
+
+.mx_Username_color2 {
+    color: $username-variant2-color;
+}
+
+.mx_Username_color3 {
+    color: $username-variant3-color;
+}
+
+.mx_Username_color4 {
+    color: $username-variant4-color;
+}
+
+.mx_Username_color5 {
+    color: $username-variant5-color;
+}
+
+.mx_Username_color6 {
+    color: $username-variant6-color;
+}
+
+.mx_Username_color7 {
+    color: $username-variant7-color;
+}
+
+.mx_Username_color8 {
+    color: $username-variant8-color;
+}
+
