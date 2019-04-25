@@ -205,6 +205,7 @@ module.exports = React.createClass({
     },
 
     markFieldValid: function(fieldID, valid) {
+        console.log("mark", fieldID, valid)
         const { fieldValid } = this.state;
         fieldValid[fieldID] = valid;
         this.setState({
@@ -278,6 +279,7 @@ module.exports = React.createClass({
                     }
                     const { scorePassword } = await import('../../../utils/PasswordScorer');
                     const complexity = scorePassword(value);
+                    console.log("Complexity", complexity.score)
                     this.setState({
                         passwordComplexity: complexity,
                     });
