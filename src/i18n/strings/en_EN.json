@@ -1605,5 +1605,7 @@
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.",
     "Failed to set direct chat tag": "Failed to set direct chat tag",
     "Failed to remove tag %(tagName)s from room": "Failed to remove tag %(tagName)s from room",
-    "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room"
+    "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room",
+    "You have already sent an invitation to %(email)s.": "You have already sent an invitation to %(email)s.",
+    "An invitation has been sent to %(email)s. You will receive a notification when your guest joins the Tchap community.": "An invitation has been sent to %(email)s. You will receive a notification when your guest joins the Tchap community."
 }

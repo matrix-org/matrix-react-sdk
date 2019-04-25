@@ -168,6 +168,35 @@ function _onStartChatFinished(shouldInvite, addrs) {
         });
     } else if (addrKnown === false && addrType === "email") {
         // Case where a non-Tchap user is invited by email
+        const dmRoomMap = new DMRoomMap(matrixClient);
+        const dmRoomList = dmRoomMap.getDMRoomsForUserId(addrTexts);
+        const InfoDialog = sdk.getComponent("dialogs.InfoDialog");
+        let existingRoom = false;
+
+        dmRoomList.forEach(roomId => {
+            const room = matrixClient.getRoom(roomId);
+            if (room && room.getMyMembership() === "join") {
+                existingRoom = true;
+            }
+        });
+
+        if (existingRoom) {
+            Modal.createTrackedDialog('New user by email : Invitation already sent', '', InfoDialog, {
+                title: _t("Start a chat"),
+                description: _t("You have already sent an invitation to %(email)s.", {email: addrTexts} ),
+            });
+        } else {
+            Modal.createTrackedDialog('New user by email : Invitation sent', '', InfoDialog, {
+                title: _t("Start a chat"),
+                description: _t("An invitation has been sent to %(email)s. You will receive a notification when your guest joins the Tchap community.", {email: addrTexts} ),
+            });
+            createRoom({dmUserId: addrTexts, andView: false}).catch((err) => {
+                Modal.createTrackedDialog('Failed to invite user', '', ErrorDialog, {
+                    title: _t("Failed to invite user"),
+                    description: ((err && err.message) ? err.message : _t("Operation failed")),
+                });
+            });
+        }
     } else {
         // Error case (no email nor mxid).
         Modal.createTrackedDialog('Failed to invite user', '', ErrorDialog, {
