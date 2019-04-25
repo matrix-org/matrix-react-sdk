@@ -80,6 +80,7 @@ module.exports = React.createClass({
     },
 
     onSubmit: async function(ev) {
+        console.log("Submit pressed")
         ev.preventDefault();
 
         const allFieldsValid = await this.verifyFieldsBeforeSubmit();
@@ -128,6 +129,7 @@ module.exports = React.createClass({
     },
 
     async verifyFieldsBeforeSubmit() {
+        console.log("Blur")
         // Blur the active element if any, so we first run its blur validation,
         // which is less strict than the pass we're about to do below for all fields.
         const activeElement = document.activeElement;
@@ -150,18 +152,23 @@ module.exports = React.createClass({
             if (!field) {
                 continue;
             }
+            console.log("Validate", fieldID)
             field.validate({ allowEmpty: false });
         }
 
         // Validation and state updates are async, so we need to wait for them to complete
         // first. Queue a `setState` callback and wait for it to resolve.
+        console.log("Wait for setState")
         await new Promise(resolve => this.setState({}, resolve));
+        console.log("setState done")
 
         if (this.allFieldsValid()) {
+            console.log("Fields valid")
             return true;
         }
 
         const invalidField = this.findFirstInvalidField(fieldIDsInDisplayOrder);
+        console.log("Invalid field?", !!invalidField)
 
         if (!invalidField) {
             return true;
@@ -190,6 +197,7 @@ module.exports = React.createClass({
     findFirstInvalidField(fieldIDs) {
         for (const fieldID of fieldIDs) {
             if (!this.state.fieldValid[fieldID] && this[fieldID]) {
+                console.log("Found invalid field", fieldID)
                 return this[fieldID];
             }
         }
