@@ -15,7 +15,7 @@ class Tchap {
         const hostBase = TchapApi.hostBase;
         const infoUrl = TchapApi.info;
         return new Promise((resolve, reject) => {
-            const tchapHostsList = SdkConfig.get()['hs_url_list'];
+            const tchapHostsList = this._shuffle(SdkConfig.get()['hs_url_list']);
             if (tchapHostsList) {
                 const promises = tchapHostsList.map(url => this._httpRequest(hostBase + url + infoUrl + email, {}));
                 Promise.all(promises).then(data => {
@@ -65,6 +65,22 @@ class Tchap {
                     resolve({err});
                 });
         });
+    }
+
+    /**
+     * A statis function shuffeling an array.
+     * @param {array} arr The array to shuffle.
+     * @returns {array} The array shuffeled.
+     * @private
+     */
+    static _shuffle(arr) {
+        for (let index = 0; index < arr.length; index++) {
+            const r = Math.floor(Math.random() * arr.length);
+            const tmp = arr[index];
+            arr[index] = arr[r];
+            arr[r] = tmp;
+        }
+        return arr.slice(0, arr.length);
     }
 }
 
