@@ -117,6 +117,8 @@ export default React.createClass({
             });
         }).done();
 
+        // The poll method is triggered here only once in order to finalize the registration session configuration.
+        // As the finalization of the registration is done using a server-side rendered page, we do not use the timer polling.
         this._authLogic.poll();
     },
 
