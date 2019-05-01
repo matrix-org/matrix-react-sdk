@@ -62,6 +62,9 @@ export default class ServerConfig extends React.PureComponent {
     }
 
     async validateServer() {
+        // TODO: Do we want to support .well-known lookups here?
+        // If for some reason someone enters "matrix.org" for a URL, we could do a lookup to
+        // find their homeserver without demanding they use "https://matrix.org"
         return this.validateAndApplyServer(this.state.hsUrl, this.state.isUrl);
     }
 
