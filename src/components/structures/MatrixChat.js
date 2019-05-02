@@ -1870,6 +1870,7 @@ export default React.createClass({
                 <ForgotPassword
                     onComplete={this.onLoginClick}
                     onLoginClick={this.onLoginClick}
+                    onServerConfigChange={this.onServerConfigChange}
                     {...this.getServerProperties()}
                 />
             );

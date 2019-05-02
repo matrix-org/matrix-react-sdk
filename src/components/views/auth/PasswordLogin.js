@@ -279,6 +279,7 @@ export default class PasswordLogin extends React.Component {
             serverName: this.props.serverConfig.hsName,
         });
         if (this.props.serverConfig.hsNameIsDifferent) {
+            // TODO: TravisR - Use tooltip to underline
             signInToText = _t('Sign in to your Matrix account on <underlinedServerName />', {}, {
                 'underlinedServerName': () => <u>{this.props.serverConfig.hsName}</u>,
             });

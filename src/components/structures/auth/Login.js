@@ -270,11 +270,6 @@ module.exports = React.createClass({
         }
     },
 
-    // TODO: TravisR - remove
-    onServerConfigChange: function(config) {
-        this.props.onServerConfigChange(config);
-    },
-
     onRegisterClick: function(ev) {
         ev.preventDefault();
         ev.stopPropagation();
@@ -431,13 +426,13 @@ module.exports = React.createClass({
         const serverDetails = <ServerConfig
             ref={r => this._serverConfigRef = r}
             serverConfig={this.props.serverConfig}
-            onServerConfigChange={this.onServerConfigChange}
+            onServerConfigChange={this.props.onServerConfigChange}
             delayTimeMs={250}
         />;
 
         let nextButton = null;
         if (PHASES_ENABLED) {
-            // TODO: Pull out server discovery from ServerConfig to disable the next button?
+            // TODO: TravisR - Pull out server discovery from ServerConfig to disable the next button?
             nextButton = <AccessibleButton className="mx_Login_submit"
                 onClick={this.onServerDetailsNextPhaseClick}>
                 {_t("Next")}
