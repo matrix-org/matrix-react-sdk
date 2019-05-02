@@ -868,6 +868,7 @@
     "Mirror local video feed": "Inverser horizontalement la vidéo locale (effet miroir)",
     "Light theme": "Thème clair",
     "Dark theme": "Thème sombre",
+    "Tchap theme": "Thème Tchap",
     "Ignored Users": "Utilisateurs ignorés",
     "An email has been sent to %(emailAddress)s. Once you've followed the link it contains, click below.": "Un e-mail a été envoyé à %(emailAddress)s. Après avoir suivi le lien présent dans celui-ci, cliquez ci-dessous.",
     "Ignores a user, hiding their messages from you": "Ignore un utilisateur, en masquant ses messages",
