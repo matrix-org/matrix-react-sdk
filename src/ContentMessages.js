@@ -25,8 +25,8 @@ import sdk from './index';
 import { _t } from './languageHandler';
 import Modal from './Modal';
 import RoomViewStore from './stores/RoomViewStore';
-
 import encrypt from "browser-encrypt-attachment";
+import extractPngChunks from "png-chunks-extract";
 
 // Polyfill for Canvas.toBlob API using Canvas.toDataURL
 import "blueimp-canvas-to-blob";
@@ -34,6 +34,11 @@ import "blueimp-canvas-to-blob";
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 600;
 
+// scraped out of a macOS hidpi (5660ppm) screenshot png
+//                  5669 px (x-axis)      , 5669 px (y-axis)      , per metre
+const PHYS_HIDPI = [0x00, 0x00, 0x16, 0x25, 0x00, 0x00, 0x16, 0x25, 0x01];
+
+export class UploadCanceledError extends Error {}
 
 /**
  * Create a thumbnail for a image DOM element.
@@ -96,24 +101,48 @@ function createThumbnail(element, inputWidth, inputHeight, mimeType) {
  * @param {File} imageFile The file to load in an image element.
  * @return {Promise} A promise that resolves with the html image element.
  */
-function loadImageElement(imageFile) {
-    const deferred = Promise.defer();
-
+async function loadImageElement(imageFile) {
     // Load the file into an html element
     const img = document.createElement("img");
     const objectUrl = URL.createObjectURL(imageFile);
+    const imgPromise = new Promise((resolve, reject) => {
+        img.onload = function() {
+            URL.revokeObjectURL(objectUrl);
+            resolve(img);
+        };
+        img.onerror = function(e) {
+            reject(e);
+        };
+    });
     img.src = objectUrl;
 
-    // Once ready, create a thumbnail
-    img.onload = function() {
-        URL.revokeObjectURL(objectUrl);
-        deferred.resolve(img);
-    };
-    img.onerror = function(e) {
-        deferred.reject(e);
-    };
+    // check for hi-dpi PNGs and fudge display resolution as needed.
+    // this is mainly needed for macOS screencaps
+    let parsePromise;
+    if (imageFile.type === "image/png") {
+        // in practice macOS happens to order the chunks so they fall in
+        // the first 0x1000 bytes (thanks to a massive ICC header).
+        // Thus we could slice the file down to only sniff the first 0x1000
+        // bytes (but this makes extractPngChunks choke on the corrupt file)
+        const headers = imageFile; //.slice(0, 0x1000);
+        parsePromise = readFileAsArrayBuffer(headers).then(arrayBuffer => {
+            const buffer = new Uint8Array(arrayBuffer);
+            const chunks = extractPngChunks(buffer);
+            for (const chunk of chunks) {
+                if (chunk.name === 'pHYs') {
+                    if (chunk.data.byteLength !== PHYS_HIDPI.length) return;
+                    const hidpi = chunk.data.every((val, i) => val === PHYS_HIDPI[i]);
+                    return hidpi;
+                }
+            }
+            return false;
+        });
+    }
 
-    return deferred.promise;
+    const [hidpi] = await Promise.all([parsePromise, imgPromise]);
+    const width = hidpi ? (img.width >> 1) : img.width;
+    const height = hidpi ? (img.height >> 1) : img.height;
+    return {width, height, img};
 }
 
 /**
@@ -131,8 +160,8 @@ function infoForImageFile(matrixClient, roomId, imageFile) {
     }
 
     let imageInfo;
-    return loadImageElement(imageFile).then(function(img) {
-        return createThumbnail(img, img.width, img.height, thumbnailType);
+    return loadImageElement(imageFile).then(function(r) {
+        return createThumbnail(r.img, r.width, r.height, thumbnailType);
     }).then(function(result) {
         imageInfo = result.info;
         return uploadFile(matrixClient, roomId, result.thumbnail);
@@ -236,28 +265,40 @@ function uploadFile(matrixClient, roomId, file, progressHandler) {
     if (matrixClient.isRoomEncrypted(roomId)) {
         // If the room is encrypted then encrypt the file before uploading it.
         // First read the file into memory.
-        return readFileAsArrayBuffer(file).then(function(data) {
+        let canceled = false;
+        let uploadPromise;
+        let encryptInfo;
+        const prom = readFileAsArrayBuffer(file).then(function(data) {
+            if (canceled) throw new UploadCanceledError();
             // Then encrypt the file.
             return encrypt.encryptAttachment(data);
         }).then(function(encryptResult) {
+            if (canceled) throw new UploadCanceledError();
             // Record the information needed to decrypt the attachment.
-            const encryptInfo = encryptResult.info;
+            encryptInfo = encryptResult.info;
             // Pass the encrypted data as a Blob to the uploader.
             const blob = new Blob([encryptResult.data]);
-            return matrixClient.uploadContent(blob, {
+            uploadPromise = matrixClient.uploadContent(blob, {
                 progressHandler: progressHandler,
                 includeFilename: false,
-            }).then(function(url) {
-                // If the attachment is encrypted then bundle the URL along
-                // with the information needed to decrypt the attachment and
-                // add it under a file key.
-                encryptInfo.url = url;
-                if (file.type) {
-                    encryptInfo.mimetype = file.type;
-                }
-                return {"file": encryptInfo};
             });
+
+            return uploadPromise;
+        }).then(function(url) {
+            // If the attachment is encrypted then bundle the URL along
+            // with the information needed to decrypt the attachment and
+            // add it under a file key.
+            encryptInfo.url = url;
+            if (file.type) {
+                encryptInfo.mimetype = file.type;
+            }
+            return {"file": encryptInfo};
         });
+        prom.abort = () => {
+            canceled = true;
+            if (uploadPromise) MatrixClientPeg.get().cancelUpload(uploadPromise);
+        };
+        return prom;
     } else {
         const basePromise = matrixClient.uploadContent(file, {
             progressHandler: progressHandler,
@@ -451,6 +492,9 @@ export default class ContentMessages {
         this.inprogress.push(upload);
         dis.dispatch({action: 'upload_started'});
 
+        // Focus the composer view
+        dis.dispatch({action: 'focus_composer'});
+
         let error;
 
         function onProgress(ev) {
@@ -513,7 +557,7 @@ export default class ContentMessages {
     }
 
     getCurrentUploads() {
-        return this.inprogress;
+        return this.inprogress.filter(u => !u.canceled);
     }
 
     cancelUpload(promise) {
@@ -529,6 +573,7 @@ export default class ContentMessages {
         if (upload) {
             upload.canceled = true;
             MatrixClientPeg.get().cancelUpload(upload.promise);
+            dis.dispatch({action: 'upload_canceled', upload});
         }
     }
 }

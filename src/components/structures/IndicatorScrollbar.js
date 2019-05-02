@@ -120,8 +120,19 @@ export default class IndicatorScrollbar extends React.Component {
 
     onMouseWheel = (e) => {
         if (this.props.verticalScrollsHorizontally && this._scrollElement) {
-            // noinspection JSSuspiciousNameCombination
-            this._scrollElement.scrollLeft += e.deltaY / 2; // divide by 2 to reduce harshness
+            // xyThreshold is the amount of horizontal motion required for the component to
+            // ignore the vertical delta in a scroll. Used to stop trackpads from acting in
+            // strange ways. Should be positive.
+            const xyThreshold = 0;
+
+            // yRetention is the factor multiplied by the vertical delta to try and reduce
+            // the harshness of the scroll behaviour. Should be a value between 0 and 1.
+            const yRetention = 1.0;
+
+            if (Math.abs(e.deltaX) < xyThreshold) {
+                // noinspection JSSuspiciousNameCombination
+                this._scrollElement.scrollLeft += e.deltaY * yRetention;
+            }
         }
     };
 
