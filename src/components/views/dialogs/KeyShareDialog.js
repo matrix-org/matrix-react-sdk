@@ -125,19 +125,19 @@ export default React.createClass({
         }
         text = _t(text, {displayName: displayName});
 
+        // Some translations are changed here :
+        // 'Share without verifying' by 'Accept'
+        // 'Ignore request' by 'Decline'
         return (
             <div id='mx_Dialog_content'>
                 <p>{ text }</p>
 
                 <div className="mx_Dialog_buttons">
-                    <button onClick={this._onVerifyClicked} autoFocus="true">
-                        { _t('Start verification') }
-                    </button>
-                    <button onClick={this._onShareClicked}>
-                        { _t('Share without verifying') }
+                    <button onClick={this._onShareClicked} autoFocus="true">
+                        { _t('Accept') }
                     </button>
                     <button onClick={this._onIgnoreClicked}>
-                        { _t('Ignore request') }
+                        { _t('Decline') }
                     </button>
                 </div>
             </div>
