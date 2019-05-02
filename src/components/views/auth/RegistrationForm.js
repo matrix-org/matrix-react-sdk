@@ -20,15 +20,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import sdk from '../../../index';
 import Email from '../../../email';
-import { looksValid as phoneNumberLooksValid } from '../../../phonenumber';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
-import SdkConfig from '../../../SdkConfig';
-import { SAFE_LOCALPART_REGEX } from '../../../Registration';
 
 const FIELD_EMAIL = 'field_email';
-const FIELD_PHONE_NUMBER = 'field_phone_number';
-const FIELD_USERNAME = 'field_username';
 const FIELD_PASSWORD = 'field_password';
 const FIELD_PASSWORD_CONFIRM = 'field_password_confirm';
 
@@ -41,9 +36,6 @@ module.exports = React.createClass({
     propTypes: {
         // Values pre-filled in the input boxes when the component loads
         defaultEmail: PropTypes.string,
-        defaultPhoneCountry: PropTypes.string,
-        defaultPhoneNumber: PropTypes.string,
-        defaultUsername: PropTypes.string,
         defaultPassword: PropTypes.string,
         minPasswordLength: PropTypes.number,
         onValidationChange: PropTypes.func,
@@ -68,11 +60,8 @@ module.exports = React.createClass({
         return {
             // Field error codes by field ID
             fieldErrors: {},
-            // The ISO2 country code selected in the phone number entry
-            phoneCountry: this.props.defaultPhoneCountry,
             username: "",
             email: "",
-            phoneNumber: "",
             password: "",
             passwordConfirm: "",
         };
@@ -86,11 +75,9 @@ module.exports = React.createClass({
         // is the one from the first invalid field.
         // It's not super ideal that this just calls
         // onValidationChange once for each invalid field.
-        this.validateField(FIELD_PHONE_NUMBER, ev.type);
         this.validateField(FIELD_EMAIL, ev.type);
         this.validateField(FIELD_PASSWORD_CONFIRM, ev.type);
         this.validateField(FIELD_PASSWORD, ev.type);
-        this.validateField(FIELD_USERNAME, ev.type);
 
         const self = this;
         if (this.allFieldsValid()) {
@@ -119,11 +106,8 @@ module.exports = React.createClass({
     _doSubmit: function(ev) {
         const email = this.state.email.trim();
         const promise = this.props.onRegisterClick({
-            username: this.state.username.trim(),
             password: this.state.password.trim(),
             email: email,
-            phoneCountry: this.state.phoneCountry,
-            phoneNumber: this.state.phoneNumber,
         });
 
         if (promise) {
@@ -156,35 +140,10 @@ module.exports = React.createClass({
             case FIELD_EMAIL: {
                 const email = this.state.email;
                 const emailValid = email === '' || Email.looksValid(email);
-                if (this._authStepIsRequired('m.login.email.identity') && (!emailValid || email === '')) {
+                if (email === '') {
                     this.markFieldValid(fieldID, false, "RegistrationForm.ERR_MISSING_EMAIL");
-                } else this.markFieldValid(fieldID, emailValid, "RegistrationForm.ERR_EMAIL_INVALID");
-                break;
-            }
-            case FIELD_PHONE_NUMBER: {
-                const phoneNumber = this.state.phoneNumber;
-                const phoneNumberValid = phoneNumber === '' || phoneNumberLooksValid(phoneNumber);
-                if (this._authStepIsRequired('m.login.msisdn') && (!phoneNumberValid || phoneNumber === '')) {
-                    this.markFieldValid(fieldID, false, "RegistrationForm.ERR_MISSING_PHONE_NUMBER");
-                } else this.markFieldValid(fieldID, phoneNumberValid, "RegistrationForm.ERR_PHONE_NUMBER_INVALID");
-                break;
-            }
-            case FIELD_USERNAME: {
-                const username = this.state.username;
-                if (allowEmpty && username === '') {
-                    this.markFieldValid(fieldID, true);
-                } else if (!SAFE_LOCALPART_REGEX.test(username)) {
-                    this.markFieldValid(
-                        fieldID,
-                        false,
-                        "RegistrationForm.ERR_USERNAME_INVALID",
-                    );
-                } else if (username == '') {
-                    this.markFieldValid(
-                        fieldID,
-                        false,
-                        "RegistrationForm.ERR_USERNAME_BLANK",
-                    );
+                } else if (!emailValid) {
+                    this.markFieldValid(fieldID, emailValid, "RegistrationForm.ERR_EMAIL_INVALID");
                 } else {
                     this.markFieldValid(fieldID, true);
                 }
@@ -274,154 +233,25 @@ module.exports = React.createClass({
         });
     },
 
-    onPhoneCountryChange(newVal) {
-        this.setState({
-            phoneCountry: newVal.iso2,
-            phonePrefix: newVal.prefix,
-        });
-    },
-
-    onPhoneNumberBlur(ev) {
-        this.validateField(FIELD_PHONE_NUMBER, ev.type);
-    },
-
-    onPhoneNumberChange(ev) {
-        this.setState({
-            phoneNumber: ev.target.value,
-        });
-    },
-
-    onUsernameBlur(ev) {
-        this.validateField(FIELD_USERNAME, ev.type);
-    },
-
-    onUsernameChange(ev) {
-        this.setState({
-            username: ev.target.value,
-        });
-    },
-
-    /**
-     * A step is required if all flows include that step.
-     *
-     * @param {string} step A stage name to check
-     * @returns {boolean} Whether it is required
-     */
-    _authStepIsRequired(step) {
-        return this.props.flows.every((flow) => {
-            return flow.stages.includes(step);
-        });
-    },
-
-    /**
-     * A step is used if any flows include that step.
-     *
-     * @param {string} step A stage name to check
-     * @returns {boolean} Whether it is used
-     */
-    _authStepIsUsed(step) {
-        return this.props.flows.some((flow) => {
-            return flow.stages.includes(step);
-        });
-    },
-
     render: function() {
         const Field = sdk.getComponent('elements.Field');
-
-        let yourMatrixAccountText = _t('Create your Matrix account');
-        if (this.props.hsName) {
-            yourMatrixAccountText = _t('Create your Matrix account on %(serverName)s', {
-                serverName: this.props.hsName,
-            });
-        } else {
-            try {
-                const parsedHsUrl = new URL(this.props.hsUrl);
-                yourMatrixAccountText = _t('Create your Matrix account on %(serverName)s', {
-                    serverName: parsedHsUrl.hostname,
-                });
-            } catch (e) {
-                // ignore
-            }
-        }
-
-        let editLink = null;
-        if (this.props.onEditServerDetailsClick) {
-            editLink = <a className="mx_AuthBody_editServerDetails"
-                href="#" onClick={this.props.onEditServerDetailsClick}
-            >
-                {_t('Change')}
-            </a>;
-        }
-
-        let emailSection;
-        if (this._authStepIsUsed('m.login.email.identity')) {
-            const emailPlaceholder = this._authStepIsRequired('m.login.email.identity') ?
-                _t("Email") :
-                _t("Email (optional)");
-
-            emailSection = (
-                <Field
-                    className={this._classForField(FIELD_EMAIL)}
-                    id="mx_RegistrationForm_email"
-                    type="text"
-                    label={emailPlaceholder}
-                    defaultValue={this.props.defaultEmail}
-                    value={this.state.email}
-                    onBlur={this.onEmailBlur}
-                    onChange={this.onEmailChange}
-                />
-            );
-        }
-
-        const threePidLogin = !SdkConfig.get().disable_3pid_login;
-        const CountryDropdown = sdk.getComponent('views.auth.CountryDropdown');
-        let phoneSection;
-        if (threePidLogin && this._authStepIsUsed('m.login.msisdn')) {
-            const phoneLabel = this._authStepIsRequired('m.login.msisdn') ?
-                _t("Phone") :
-                _t("Phone (optional)");
-            const phoneCountry = <CountryDropdown
-                value={this.state.phoneCountry}
-                isSmall={true}
-                showPrefix={true}
-                onOptionChange={this.onPhoneCountryChange}
-            />;
-
-            phoneSection = <Field
-                className={this._classForField(FIELD_PHONE_NUMBER)}
-                id="mx_RegistrationForm_phoneNumber"
-                type="text"
-                label={phoneLabel}
-                defaultValue={this.props.defaultPhoneNumber}
-                value={this.state.phoneNumber}
-                prefix={phoneCountry}
-                onBlur={this.onPhoneNumberBlur}
-                onChange={this.onPhoneNumberChange}
-            />;
-        }
-
         const registerButton = (
             <input className="mx_Login_submit" type="submit" value={_t("Register")} />
         );
 
         return (
             <div>
-                <h3>
-                    {yourMatrixAccountText}
-                    {editLink}
-                </h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="mx_AuthBody_fieldRow">
                         <Field
-                            className={this._classForField(FIELD_USERNAME)}
-                            id="mx_RegistrationForm_username"
+                            className={this._classForField(FIELD_EMAIL)}
+                            id="mx_RegistrationForm_email"
                             type="text"
-                            autoFocus={true}
-                            label={_t("Username")}
-                            defaultValue={this.props.defaultUsername}
-                            value={this.state.username}
-                            onBlur={this.onUsernameBlur}
-                            onChange={this.onUsernameChange}
+                            label={_t("Email")}
+                            defaultValue={this.props.defaultEmail}
+                            value={this.state.email}
+                            onBlur={this.onEmailBlur}
+                            onChange={this.onEmailChange}
                         />
                     </div>
                     <div className="mx_AuthBody_fieldRow">
@@ -446,14 +276,6 @@ module.exports = React.createClass({
                             onChange={this.onPasswordConfirmChange}
                         />
                     </div>
-                    <div className="mx_AuthBody_fieldRow">
-                        { emailSection }
-                        { phoneSection }
-                    </div>
-                    {_t(
-                        "Use an email address to recover your account. Other users " +
-                        "can invite you to rooms using your contact details.",
-                    )}
                     { registerButton }
                 </form>
             </div>
