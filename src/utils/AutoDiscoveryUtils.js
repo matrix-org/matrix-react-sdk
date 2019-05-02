@@ -102,8 +102,3 @@ export default class AutoDiscoveryUtils {
         });
     }
 }
-
-export async function validateServerName(serverName: string): ValidatedServerConfig {
-    const result = await AutoDiscovery.findClientConfig(serverName);
-
-}

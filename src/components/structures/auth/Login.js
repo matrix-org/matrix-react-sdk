@@ -25,7 +25,6 @@ import sdk from '../../../index';
 import Login from '../../../Login';
 import SdkConfig from '../../../SdkConfig';
 import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
-import { AutoDiscovery } from "matrix-js-sdk";
 import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
 
 // For validating phone numbers without country codes

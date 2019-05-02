@@ -19,12 +19,12 @@ limitations under the License.
  * is a stopgap function while we don't have TypeScript interfaces.
  * In future, we'd define the `type` as an interface and just cast
  * it instead of cheating like we are here.
- * @param {Type} type The type of class to construct.
+ * @param {Type} Type The type of class to construct.
  * @param {*} opts The options (properties) to set on the object.
  * @returns {*} The created object.
  */
-export function makeType(type: type, opts: any) {
-    const c = new type();
+export function makeType(Type: type, opts: any) {
+    const c = new Type();
     Object.assign(c, opts);
     return c;
 }
