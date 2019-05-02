@@ -1,3 +1,4 @@
+import MatrixClientPeg from './MatrixClientPeg';
 import SdkConfig from "./SdkConfig";
 import TchapApi from './TchapApi';
 
@@ -5,6 +6,29 @@ import TchapApi from './TchapApi';
  * Tchap utils.
  */
 class Tchap {
+
+    /**
+     * Return a short value for getDomain().
+     * @returns {string} The shortened value of getDomain().
+     */
+    static getShortDomain() {
+        const cli = MatrixClientPeg.get();
+        const baseDomain = cli.getDomain();
+        const domain = baseDomain.split('.tchap.gouv.fr')[0].split('.').reverse().filter(Boolean)[0];
+
+        return this._capitalize(domain) || 'Tchap';
+    }
+
+    /**
+     * Return a short value from a room alias.
+     * @param {string} alias The alias to shorten.
+     * @returns {string} The shortened alias.
+     */
+    static getDomainFromAlias(alias) {
+        const domain = alias.split(':').reverse()[0].split('.tchap.gouv.fr')[0].split('.').filter(Boolean).reverse()[0];
+
+        return this._capitalize(domain) || 'Tchap';
+    }
 
     /**
      * Given an email, return the homeserver associated with this email.
@@ -68,7 +92,7 @@ class Tchap {
     }
 
     /**
-     * A statis function shuffeling an array.
+     * A static function shuffeling an array.
      * @param {array} arr The array to shuffle.
      * @returns {array} The array shuffeled.
      * @private
@@ -81,6 +105,16 @@ class Tchap {
             arr[r] = tmp;
         }
         return arr.slice(0, arr.length);
+    }
+
+    /**
+     * Capitalize a string.
+     * @param {string} s The sting to capitalize.
+     * @returns {string} The capitalized string.
+     * @private
+     */
+    static _capitalize(s) {
+        return s.charAt(0).toUpperCase() + s.slice(1);
     }
 }
 

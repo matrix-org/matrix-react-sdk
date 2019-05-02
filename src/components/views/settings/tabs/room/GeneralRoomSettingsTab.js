@@ -76,49 +76,16 @@ export default class GeneralRoomSettingsTab extends React.Component {
     };
 
     render() {
-        const AliasSettings = sdk.getComponent("room_settings.AliasSettings");
-        const RelatedGroupSettings = sdk.getComponent("room_settings.RelatedGroupSettings");
         const UrlPreviewSettings = sdk.getComponent("room_settings.UrlPreviewSettings");
 
         const client = MatrixClientPeg.get();
         const room = client.getRoom(this.props.roomId);
-
-        const canSetAliases = true; // Previously, we arbitrarily only allowed admins to do this
-        const canActuallySetAliases = room.currentState.mayClientSendStateEvent("m.room.aliases", client);
-        const canSetCanonical = room.currentState.mayClientSendStateEvent("m.room.canonical_alias", client);
-        const canonicalAliasEv = room.currentState.getStateEvents("m.room.canonical_alias", '');
-        const aliasEvents = room.currentState.getStateEvents("m.room.aliases");
-
-        const canChangeGroups = room.currentState.mayClientSendStateEvent("m.room.related_groups", client);
-        const groupsEvent = room.currentState.getStateEvents("m.room.related_groups", "");
 
         return (
             <div className="mx_SettingsTab mx_GeneralRoomSettingsTab">
                 <div className="mx_SettingsTab_heading">{_t("General")}</div>
                 <div className='mx_SettingsTab_section mx_GeneralRoomSettingsTab_profileSection'>
                     <RoomProfileSettings roomId={this.props.roomId} />
-                </div>
-
-                <span className='mx_SettingsTab_subheading'>{_t("Room Addresses")}</span>
-                <div className='mx_SettingsTab_section mx_SettingsTab_subsectionText'>
-                    <AliasSettings roomId={this.props.roomId}
-                                   canSetCanonicalAlias={canSetCanonical} canSetAliases={canSetAliases}
-                                   canonicalAliasEvent={canonicalAliasEv} aliasEvents={aliasEvents} />
-                </div>
-                <div className='mx_SettingsTab_section'>
-                    <LabelledToggleSwitch value={this.state.isRoomPublished}
-                                          onChange={this.onRoomPublishChange}
-                                          disabled={!canActuallySetAliases}
-                                          label={_t("Publish this room to the public in %(domain)s's room directory?", {
-                                              domain: client.getDomain(),
-                                          })} />
-                </div>
-
-                <span className='mx_SettingsTab_subheading'>{_t("Flair")}</span>
-                <div className='mx_SettingsTab_section mx_SettingsTab_subsectionText'>
-                    <RelatedGroupSettings roomId={room.roomId}
-                                          canSetRelatedGroups={canChangeGroups}
-                                          relatedGroupsEvent={groupsEvent} />
                 </div>
 
                 <span className='mx_SettingsTab_subheading'>{_t("URL Previews")}</span>

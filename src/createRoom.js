@@ -80,12 +80,23 @@ function createRoom(opts) {
     createOpts.initial_state = createOpts.initial_state || [
         {
             content: {
-                guest_access: 'can_join',
+                guest_access: 'forbidden',
             },
             type: 'm.room.guest_access',
             state_key: '',
         },
+        {
+            content: {
+                history_visibility: createOpts.visibility === "private" ? 'invited' : 'world_readable',
+            },
+            type: 'm.room.history_visibility',
+            state_key: '',
+        },
     ];
+
+    createOpts.power_level_content_override = {
+        invite: 50,
+    };
 
     const modal = Modal.createDialog(Loader, null, 'mx_Dialog_spinner');
 

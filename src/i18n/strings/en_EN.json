@@ -1087,6 +1087,8 @@
     "Create": "Create",
     "Create Room": "Create Room",
     "Room name (optional)": "Room name (optional)",
+    "Room name (required)": "Room name (required)",
+    "Room name is required": "Room name is required",
     "Advanced options": "Advanced options",
     "Block users on other matrix homeservers from joining this room": "Block users on other matrix homeservers from joining this room",
     "This setting cannot be changed later!": "This setting cannot be changed later!",
@@ -1615,5 +1617,9 @@
     "Failed to set direct chat tag": "Failed to set direct chat tag",
     "Failed to remove tag %(tagName)s from room": "Failed to remove tag %(tagName)s from room",
     "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room",
+    "Limit access to this room to domain members \"%(domain)s\"": "Limit access to this room to domain members \"%(domain)s\"",
+    "Private": "Private",
+    "Public": "Public",
+    "Room type": "Room type",
     "Unauthorized email": "Unauthorized email"
 }

@@ -138,19 +138,19 @@ export const SETTINGS = {
     "showJoinLeaves": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
         displayName: _td('Show join/leave messages (invites/kicks/bans unaffected)'),
-        default: true,
+        default: false,
         invertedSettingName: 'hideJoinLeaves',
     },
     "showAvatarChanges": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
         displayName: _td('Show avatar changes'),
-        default: true,
+        default: false,
         invertedSettingName: 'hideAvatarChanges',
     },
     "showDisplaynameChanges": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
         displayName: _td('Show display name changes'),
-        default: true,
+        default: false,
         invertedSettingName: 'hideDisplaynameChanges',
     },
     "showReadReceipts": {
@@ -228,7 +228,7 @@ export const SETTINGS = {
     "TagPanel.enableTagPanel": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Enable Community Filter Panel'),
-        default: true,
+        default: false,
         invertedSettingName: 'TagPanel.disableTagPanel',
     },
     "theme": {
