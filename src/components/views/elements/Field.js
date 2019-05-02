@@ -30,7 +30,7 @@ export default class Field extends React.PureComponent {
         type: PropTypes.string,
         // The field's label string.
         label: PropTypes.string,
-        // The field's label string.
+        // The active state of the field.
         disabled: PropTypes.bool,
         // The field's placeholder string. Defaults to the label.
         placeholder: PropTypes.string,
