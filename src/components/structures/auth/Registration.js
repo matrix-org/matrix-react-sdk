@@ -57,26 +57,6 @@ module.exports = React.createClass({
     getInitialState: function() {
         const serverType = ServerType.getTypeFromServerConfig(this.props.serverConfig);
 
-        const customURLsAllowed = !SdkConfig.get()['disable_custom_urls'];
-        let initialPhase = this.getDefaultPhaseForServerType(serverType);
-        if (
-            // if we have these two, skip to the good bit
-            // (they could come in from the URL params in a
-            // registration email link)
-            (this.props.clientSecret && this.props.sessionId) ||
-            // if custom URLs aren't allowed, skip to form
-            !customURLsAllowed ||
-            // if other logic says to, skip to form
-            this.props.skipServerDetails
-        ) {
-            // TODO: It would seem we've now added enough conditions here that the initial
-            // phase will _always_ be the form. It's tempting to remove the complexity and
-            // just do that, but we keep tweaking and changing auth, so let's wait until
-            // things settle a bit.
-            // Filed https://github.com/vector-im/riot-web/issues/8886 to track this.
-            initialPhase = PHASE_REGISTRATION;
-        }
-
         return {
             busy: false,
             errorText: null,
@@ -97,7 +77,7 @@ module.exports = React.createClass({
             doingUIAuth: Boolean(this.props.sessionId),
             serverType,
             // Phase of the overall registration dialog.
-            phase: initialPhase,
+            phase: PHASE_REGISTRATION,
             flows: null,
         };
     },
@@ -107,9 +87,11 @@ module.exports = React.createClass({
         this._replaceClient();
     },
 
-    onServerConfigChange: function(config) {
-        this.props.onServerConfigChange(config);
-        this._replaceClient(); // TODO: TravisR - Do this in prop change
+    componentWillReceiveProps(newProps) {
+        if (newProps.serverConfig.hsUrl === this.props.serverConfig.hsUrl &&
+            newProps.serverConfig.isUrl === this.props.serverConfig.isUrl) return;
+
+        this._replaceClient(newProps.serverConfig);
     },
 
     getDefaultPhaseForServerType(type) {
@@ -135,13 +117,16 @@ module.exports = React.createClass({
         switch (type) {
             case ServerType.FREE: {
                 const { serverConfig } = ServerType.TYPES.FREE;
-                this.onServerConfigChange(serverConfig);
+                this.props.onServerConfigChange(serverConfig);
                 break;
             }
             case ServerType.PREMIUM:
+                // We can accept whatever server config was the default here as this essentially
+                // acts as a slightly different "custom server"/ADVANCED option.
+                break;
             case ServerType.ADVANCED:
-                // TODO: TravisR - Do something
-                console.log("ADVANCED SELECTED");
+                // Use the default config from the config
+                this.props.onServerConfigChange(SdkConfig.get()["validated_server_config"]);
                 break;
         }
 
@@ -151,11 +136,12 @@ module.exports = React.createClass({
         });
     },
 
-    _replaceClient: async function() {
+    _replaceClient: async function(serverConfig) {
         this.setState({
             errorText: null,
         });
-        const {hsUrl, isUrl} = this.props.serverConfig;
+        if (!serverConfig) serverConfig = this.props.serverConfig;
+        const {hsUrl, isUrl} = serverConfig;
         this._matrixClient = Matrix.createClient({
             baseUrl: hsUrl,
             idBaseUrl: isUrl,
@@ -195,7 +181,7 @@ module.exports = React.createClass({
         if (!success) {
             let msg = response.message || response.toString();
             // can we give a better error message?
-            if (response.errcode == 'M_RESOURCE_LIMIT_EXCEEDED') {
+            if (response.errcode === 'M_RESOURCE_LIMIT_EXCEEDED') {
                 const errorTop = messageForResourceLimitError(
                     response.data.limit_type,
                     response.data.admin_contact, {
@@ -362,11 +348,10 @@ module.exports = React.createClass({
             case ServerType.FREE:
                 break;
             case ServerType.PREMIUM:
-                // TODO: TravisR - Fix modular config
                 serverDetails = <ModularServerConfig
                     ref={r => this._serverConfigRef = r}
                     serverConfig={this.props.serverConfig}
-                    onServerConfigChange={this.onServerConfigChange}
+                    onServerConfigChange={this.props.onServerConfigChange}
                     delayTimeMs={250}
                 />;
                 break;
@@ -374,7 +359,7 @@ module.exports = React.createClass({
                 serverDetails = <ServerConfig
                     ref={r => this._serverConfigRef = r}
                     serverConfig={this.props.serverConfig}
-                    onServerConfigChange={this.onServerConfigChange}
+                    onServerConfigChange={this.props.onServerConfigChange}
                     delayTimeMs={250}
                 />;
                 break;
