@@ -18,7 +18,7 @@ limitations under the License.
 
 const React = require('react');
 
-import MatrixClientPeg from '../../MatrixClientPeg';
+const MatrixClientPeg = require('../../MatrixClientPeg');
 const ContentRepo = require("matrix-js-sdk").ContentRepo;
 const Modal = require('../../Modal');
 const sdk = require('../../index');
@@ -152,7 +152,7 @@ module.exports = React.createClass({
         if (!MatrixClientPeg.get()) return Promise.resolve();
 
         const my_filter_string = this.state.filterString;
-        const my_server = homeServer || this.state.roomServer;
+        const my_server = homeServer;
         const opts = {};
         if (my_server != MatrixClientPeg.getHomeServerName()) {
             opts.server = my_server;
@@ -184,8 +184,7 @@ module.exports = React.createClass({
             return Boolean(data.next_batch);
         }, (err) => {
             if (
-                my_filter_string != this.state.filterString ||
-                my_server != this.state.roomServer) {
+                my_filter_string != this.state.filterString) {
                 // as above: we don't care about errors for old
                 // requests either
                 return;
