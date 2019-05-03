@@ -169,8 +169,7 @@ module.exports = React.createClass({
     // indicate other sizes.
     _getSize: function() {
         if (this._shouldShowConnectionError() ||
-            this.props.hasActiveCall ||
-            this.props.sentMessageAndIsAlone
+            this.props.hasActiveCall
         ) {
             return STATUS_BAR_EXPANDED;
         } else if (this.state.unsentMessages.length > 0) {
@@ -324,24 +323,6 @@ module.exports = React.createClass({
             return (
                 <div className="mx_RoomStatusBar_callBar">
                     <b>{ _t('Active call') }</b>
-                </div>
-            );
-        }
-
-        // If you're alone in the room, and have sent a message, suggest to invite someone
-        if (this.props.sentMessageAndIsAlone && !this.props.isPeeking) {
-            return (
-                <div className="mx_RoomStatusBar_isAlone">
-                    { _t("There's no one else here! Would you like to <inviteText>invite others</inviteText> " +
-                            "or <nowarnText>stop warning about the empty room</nowarnText>?",
-                        {},
-                        {
-                            'inviteText': (sub) =>
-                                <a className="mx_RoomStatusBar_resend_link" key="invite" onClick={this.props.onInviteClick}>{ sub }</a>,
-                            'nowarnText': (sub) =>
-                                <a className="mx_RoomStatusBar_resend_link" key="nowarn" onClick={this.props.onStopWarningClick}>{ sub }</a>,
-                        },
-                    ) }
                 </div>
             );
         }

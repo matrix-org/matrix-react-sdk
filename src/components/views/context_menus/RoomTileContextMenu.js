@@ -90,47 +90,6 @@ module.exports = React.createClass({
         }
     },
 
-    _onClickLowPriority: function() {
-        // Tag room as 'Low Priority'
-        if (!this.state.isLowPriority && this.state.isFavourite) {
-            this.setState({
-                isFavourite: false,
-                isLowPriority: true,
-            });
-            this._toggleTag("m.lowpriority", "m.favourite");
-        } else if (this.state.isLowPriority) {
-            this.setState({isLowPriority: false});
-            this._toggleTag(null, "m.lowpriority");
-        } else if (!this.state.isLowPriority) {
-            this.setState({isLowPriority: true});
-            this._toggleTag("m.lowpriority");
-        }
-    },
-
-    _onClickDM: function() {
-        if (MatrixClientPeg.get().isGuest()) return;
-
-        const newIsDirectMessage = !this.state.isDirectMessage;
-        this.setState({
-            isDirectMessage: newIsDirectMessage,
-        });
-
-        Rooms.guessAndSetDMRoom(
-            this.props.room, newIsDirectMessage,
-        ).delay(500).finally(() => {
-            // Close the context menu
-            if (this.props.onFinished) {
-                this.props.onFinished();
-            }
-        }, (err) => {
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-            Modal.createTrackedDialog('Failed to set Direct Message status of room', '', ErrorDialog, {
-                title: _t('Failed to set Direct Message status of room'),
-                description: ((err && err.message) ? err.message : _t('Operation failed')),
-            });
-        });
-    },
-
     _onClickLeave: function() {
         // Leave room
         dis.dispatch({
@@ -333,34 +292,12 @@ module.exports = React.createClass({
             'mx_RoomTileContextMenu_tag_fieldDisabled': false,
         });
 
-        const lowPriorityClasses = classNames({
-            'mx_RoomTileContextMenu_tag_field': true,
-            'mx_RoomTileContextMenu_tag_fieldSet': this.state.isLowPriority,
-            'mx_RoomTileContextMenu_tag_fieldDisabled': false,
-        });
-
-        const dmClasses = classNames({
-            'mx_RoomTileContextMenu_tag_field': true,
-            'mx_RoomTileContextMenu_tag_fieldSet': this.state.isDirectMessage,
-            'mx_RoomTileContextMenu_tag_fieldDisabled': false,
-        });
-
         return (
             <div>
                 <div className={favouriteClasses} onClick={this._onClickFavourite} >
                     <img className="mx_RoomTileContextMenu_tag_icon" src={require("../../../../res/img/icon_context_fave.svg")} width="15" height="15" />
                     <img className="mx_RoomTileContextMenu_tag_icon_set" src={require("../../../../res/img/icon_context_fave_on.svg")} width="15" height="15" />
                     { _t('Favourite') }
-                </div>
-                <div className={lowPriorityClasses} onClick={this._onClickLowPriority} >
-                    <img className="mx_RoomTileContextMenu_tag_icon" src={require("../../../../res/img/icon_context_low.svg")} width="15" height="15" />
-                    <img className="mx_RoomTileContextMenu_tag_icon_set" src={require("../../../../res/img/icon_context_low_on.svg")} width="15" height="15" />
-                    { _t('Low Priority') }
-                </div>
-                <div className={dmClasses} onClick={this._onClickDM} >
-                    <img className="mx_RoomTileContextMenu_tag_icon" src={require("../../../../res/img/icon_context_person.svg")} width="15" height="15" />
-                    <img className="mx_RoomTileContextMenu_tag_icon_set" src={require("../../../../res/img/icon_context_person_on.svg")} width="15" height="15" />
-                    { _t('Direct Chat') }
                 </div>
             </div>
         );

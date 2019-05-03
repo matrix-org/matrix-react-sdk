@@ -24,7 +24,6 @@ import sdk from '../../../index';
 import dis from '../../../dispatcher';
 import RoomViewStore from '../../../stores/RoomViewStore';
 import SettingsStore, {SettingLevel} from "../../../settings/SettingsStore";
-import Stickerpicker from './Stickerpicker';
 import { makeRoomPermalink } from '../../../matrix-to';
 import ContentMessages from '../../../ContentMessages';
 import classNames from 'classnames';
@@ -416,7 +415,6 @@ export default class MessageComposer extends React.Component {
                     permalinkCreator={this.props.permalinkCreator} />,
                 showFormattingButton ? <FormattingButton key="controls_formatting"
                     showFormatting={this.state.showFormatting} onClickHandler={this.onToggleFormattingClicked} /> : null,
-                <Stickerpicker key='stickerpicker_controls_button' room={this.props.room} />,
                 <UploadButton key="controls_upload" roomId={this.props.room.roomId} />,
                 callInProgress ? <HangupButton key="controls_hangup" roomId={this.props.room.roomId} /> : null,
                 callInProgress ? null : <CallButton key="controls_call" roomId={this.props.room.roomId} />,

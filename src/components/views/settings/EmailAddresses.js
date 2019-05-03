@@ -242,3 +242,31 @@ export default class EmailAddresses extends React.Component {
         );
     }
 }
+
+
+export class ShowEmailAddresses extends React.Component {
+    constructor() {
+        super();
+
+        this.state = {
+            email: null,
+        };
+    }
+
+    componentWillMount() {
+        const client = MatrixClientPeg.get();
+
+        client.getThreePids().then((addresses) => {
+            const email = addresses.threepids.filter((a) => a.medium === 'email');
+            this.setState({email: email[0].address});
+        });
+    }
+
+    render() {
+        return (
+            <div className="mx_EmailAddresses">
+                <p>{this.state.email}</p>
+            </div>
+        );
+    }
+}
