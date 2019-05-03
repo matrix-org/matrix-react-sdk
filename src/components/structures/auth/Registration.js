@@ -92,6 +92,17 @@ module.exports = React.createClass({
             newProps.serverConfig.isUrl === this.props.serverConfig.isUrl) return;
 
         this._replaceClient(newProps.serverConfig);
+
+        // Handle cases where the user enters "https://matrix.org" for their server
+        // from the advanced option - we should default to FREE at that point.
+        const serverType = ServerType.getTypeFromServerConfig(newProps.serverConfig);
+        if (serverType !== this.state.serverType) {
+            // Reset the phase to default phase for the server type.
+            this.setState({
+                serverType,
+                phase: this.getDefaultPhaseForServerType(serverType),
+            });
+        }
     },
 
     getDefaultPhaseForServerType(type) {
