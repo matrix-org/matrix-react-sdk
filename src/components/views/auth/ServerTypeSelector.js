@@ -51,6 +51,7 @@ export const TYPES = {
                 {sub}
             </a>,
         }),
+        identityServerUrl: "https://vector.im",
     },
     ADVANCED: {
         id: ADVANCED,

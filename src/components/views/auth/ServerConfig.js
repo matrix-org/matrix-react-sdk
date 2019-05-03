@@ -155,7 +155,7 @@ export default class ServerConfig extends React.PureComponent {
                 <div className="mx_ServerConfig_fields">
                     <Field id="mx_ServerConfig_hsUrl"
                         label={_t("Homeserver URL")}
-                        placeholder={this.props.defaultHsUrl}
+                        placeholder={this.props.serverConfig.hsUrl}
                         value={this.state.hsUrl}
                         onBlur={this.onHomeserverBlur}
                         onChange={this.onHomeserverChange}
@@ -163,7 +163,7 @@ export default class ServerConfig extends React.PureComponent {
                     />
                     <Field id="mx_ServerConfig_isUrl"
                         label={_t("Identity Server URL")}
-                        placeholder={this.props.defaultIsUrl}
+                        placeholder={this.props.serverConfig.isUrl}
                         value={this.state.isUrl}
                         onBlur={this.onIdentityServerBlur}
                         onChange={this.onIdentityServerChange}
