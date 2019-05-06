@@ -61,7 +61,6 @@ module.exports = React.createClass({
             error: null,
             instanceId: null,
             includeAll: true,
-            roomServer: null,
             filterString: null,
             serverList: homeserverList || [],
         };
@@ -307,48 +306,6 @@ module.exports = React.createClass({
         dis.dispatch({action: 'view_create_room'});
     },
 
-    onJoinClick: function(alias) {
-        // If we don't have a particular instance id selected, just show that rooms alias
-        if (!this.state.instanceId) {
-            // If the user specified an alias without a domain, add on whichever server is selected
-            // in the dropdown
-            if (alias.indexOf(':') == -1) {
-                alias = alias + ':' + this.state.roomServer;
-            }
-            this.showRoomAlias(alias);
-        } else {
-            // This is a 3rd party protocol. Let's see if we can join it
-            const protocolName = protocolNameForInstanceId(this.protocols, this.state.instanceId);
-            const instance = instanceForInstanceId(this.protocols, this.state.instanceId);
-            const fields = protocolName ? this._getFieldsForThirdPartyLocation(alias, this.protocols[protocolName], instance) : null;
-            if (!fields) {
-                const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-                Modal.createTrackedDialog('Unable to join network', '', ErrorDialog, {
-                    title: _t('Unable to join network'),
-                    description: _t('Riot does not know how to join a room on this network'),
-                });
-                return;
-            }
-            MatrixClientPeg.get().getThirdpartyLocation(protocolName, fields).done((resp) => {
-                if (resp.length > 0 && resp[0].alias) {
-                    this.showRoomAlias(resp[0].alias);
-                } else {
-                    const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-                    Modal.createTrackedDialog('Room not found', '', ErrorDialog, {
-                        title: _t('Room not found'),
-                        description: _t('Couldn\'t find a matching Matrix room'),
-                    });
-                }
-            }, (e) => {
-                const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-                Modal.createTrackedDialog('Fetching third party location failed', '', ErrorDialog, {
-                    title: _t('Fetching third party location failed'),
-                    description: _t('Unable to look up room ID from server'),
-                });
-            });
-        }
-    },
-
     showRoomAlias: function(alias) {
         this.showRoom(null, alias);
     },
@@ -570,7 +527,7 @@ module.exports = React.createClass({
             listHeader = <div className="mx_RoomDirectory_listheader">
                 <DirectorySearchBox
                     className="mx_RoomDirectory_searchbox"
-                    onChange={this.onFilterChange} onClear={this.onFilterClear} onJoinClick={this.onJoinClick}
+                    onChange={this.onFilterChange} onClear={this.onFilterClear}
                     placeholder={placeholder} showJoinButton={showJoinButton}
                 />
             </div>;
