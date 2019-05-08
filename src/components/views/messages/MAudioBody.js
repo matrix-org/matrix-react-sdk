@@ -20,7 +20,7 @@ import React from 'react';
 import MFileBody from './MFileBody';
 
 import MatrixClientPeg from '../../../MatrixClientPeg';
-import { decryptFile } from '../../../utils/DecryptFile';
+import ContentScanner from "../../../utils/ContentScanner";
 import { _t } from '../../../languageHandler';
 
 export default class MAudioBody extends React.Component {
@@ -31,6 +31,8 @@ export default class MAudioBody extends React.Component {
             decryptedUrl: null,
             decryptedBlob: null,
             error: null,
+            isClean: null,
+            contentUrl: null,
         };
     }
     onPlayToggle() {
@@ -44,27 +46,47 @@ export default class MAudioBody extends React.Component {
         if (content.file !== undefined) {
             return this.state.decryptedUrl;
         } else {
-            return MatrixClientPeg.get().mxcUrlToHttp(content.url);
+            return this.state.contentUrl;
         }
     }
 
     componentDidMount() {
         const content = this.props.mxEvent.getContent();
         if (content.file !== undefined && this.state.decryptedUrl === null) {
+            ContentScanner.scanContent(content).then(result => {
+                if (result.clean === true) {
+                    this.setState({
+                        isClean: true,
+                    });
+                }
+            });
             let decryptedBlob;
-            decryptFile(content.file).then(function(blob) {
+            Promise.resolve(ContentScanner.downloadContentEncrypted(content)).then(function(blob) {
                 decryptedBlob = blob;
-                return URL.createObjectURL(decryptedBlob);
-            }).done((url) => {
+                return URL.createObjectURL(blob);
+            }).then((contentUrl) => {
                 this.setState({
-                    decryptedUrl: url,
+                    decryptedUrl: contentUrl,
                     decryptedBlob: decryptedBlob,
                 });
-            }, (err) => {
+            }).catch(err => {
                 console.warn("Unable to decrypt attachment: ", err);
                 this.setState({
                     error: err,
                 });
+            });
+        } else if (content.url !== undefined && this.state.contentUrl === null) {
+            ContentScanner.scanContent(content).then(result => {
+                if (result.clean === true) {
+                    this.setState({
+                        contentUrl: ContentScanner.downloadContent(content),
+                        isClean: true,
+                    });
+                } else {
+                    this.setState({
+                        isClean: false,
+                    });
+                }
             });
         }
     }
@@ -77,6 +99,16 @@ export default class MAudioBody extends React.Component {
 
     render() {
         const content = this.props.mxEvent.getContent();
+        const isClean = this.state.isClean;
+
+        if (!isClean) {
+            return (
+                <span className="mx_MFileBody" ref="body">
+                    <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
+                    { _t("The file %(file)s was rejected by the security policy", {file: content.body}) }
+                </span>
+            );
+        }
 
         if (this.state.error !== null) {
             return (

@@ -23,10 +23,10 @@ import filesize from 'filesize';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import sdk from '../../../index';
 import { _t } from '../../../languageHandler';
-import {decryptFile} from '../../../utils/DecryptFile';
 import Tinter from '../../../Tinter';
 import request from 'browser-request';
 import Modal from '../../../Modal';
+import ContentScanner from '../../../utils/ContentScanner';
 
 
 // A cached tinted copy of require("../../../../res/img/download.svg")
@@ -126,7 +126,6 @@ Tinter.registerTintable(updateTintedDownloadImage);
 // ordinary javascript function which then is turned into a string using
 // toString().
 //
-const DEFAULT_CROSS_ORIGIN_RENDERER = "https://usercontent.riot.im/v1.html";
 
 /**
  * Render the attachment inside the iframe.
@@ -200,6 +199,9 @@ module.exports = React.createClass({
     getInitialState: function() {
         return {
             decryptedBlob: (this.props.decryptedBlob ? this.props.decryptedBlob : null),
+            contentUrl: null,
+            isClean: null,
+            isEncrypted: false,
         };
     },
 
@@ -247,8 +249,7 @@ module.exports = React.createClass({
     },
 
     _getContentUrl: function() {
-        const content = this.props.mxEvent.getContent();
-        return MatrixClientPeg.get().mxcUrlToHttp(content.url);
+        return this.state.contentUrl;
     },
 
     componentDidMount: function() {
@@ -257,6 +258,37 @@ module.exports = React.createClass({
         this.id = nextMountId++;
         mounts[this.id] = this;
         this.tint();
+        const content = this.props.mxEvent.getContent();
+        if (content.url !== undefined && this.state.contentUrl === null) {
+            ContentScanner.scanContent(content).then(result => {
+                if (result.clean === true) {
+                    this.setState({
+                        contentUrl: ContentScanner.downloadContent(content),
+                        isClean: true,
+                        isEncrypted: false,
+                    });
+                } else {
+                    this.setState({
+                        isClean: false,
+                        isEncrypted: false,
+                    });
+                }
+            });
+        } else if (content.file !== undefined) {
+            ContentScanner.scanContent(content).then(result => {
+                if (result.clean === true) {
+                    this.setState({
+                        isClean: true,
+                        isEncrypted: true,
+                    });
+                } else {
+                    this.setState({
+                        isClean: false,
+                        isEncrypted: true,
+                    });
+                }
+            });
+        }
     },
 
     componentDidUpdate: function(prevProps, prevState) {
@@ -290,7 +322,8 @@ module.exports = React.createClass({
     render: function() {
         const content = this.props.mxEvent.getContent();
         const text = this.presentableTextForFile(content);
-        const isEncrypted = content.file !== undefined;
+        const isEncrypted = this.state.isEncrypted;
+        const isClean = this.state.isClean;
         const fileName = content.body && content.body.length > 0 ? content.body : _t("Attachment");
         const contentUrl = this._getContentUrl();
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
@@ -308,10 +341,18 @@ module.exports = React.createClass({
                         return false;
                     }
                     decrypting = true;
-                    decryptFile(content.file).then((blob) => {
-                        this.setState({
-                            decryptedBlob: blob,
-                        });
+                    Promise.resolve(ContentScanner.downloadContentEncrypted(content )).then((blob) => {
+                        if (blob.size > 0) {
+                            this.setState({
+                                decryptedBlob: blob,
+                                isClean: true,
+                            });
+                        } else {
+                            this.setState({
+                                decryptedBlob: null,
+                                isClean: false,
+                            });
+                        }
                     }).catch((err) => {
                         console.warn("Unable to decrypt attachment: ", err);
                         Modal.createTrackedDialog('Error decrypting attachment', '', ErrorDialog, {
@@ -320,19 +361,27 @@ module.exports = React.createClass({
                         });
                     }).finally(() => {
                         decrypting = false;
-                        return;
                     });
                 };
 
-                return (
-                    <span className="mx_MFileBody" ref="body">
+                if (isClean) {
+                    return (
+                        <span className="mx_MFileBody" ref="body">
                         <div className="mx_MFileBody_download">
                             <a href="javascript:void(0)" onClick={decrypt}>
                                 { _t("Decrypt %(text)s", { text: text }) }
                             </a>
                         </div>
                     </span>
-                );
+                    );
+                } else {
+                    return (
+                        <span className="mx_MFileBody" ref="body">
+                            <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
+                            { _t("The file %(file)s was rejected by the security policy", {file: content.body}) }
+                        </span>
+                    );
+                }
             }
 
             // When the iframe loads we tell it to render a download link
@@ -353,10 +402,7 @@ module.exports = React.createClass({
             };
 
             // If the attachment is encryped then put the link inside an iframe.
-            let renderer_url = DEFAULT_CROSS_ORIGIN_RENDERER;
-            if (this.context.appConfig && this.context.appConfig.cross_origin_renderer_url) {
-                renderer_url = this.context.appConfig.cross_origin_renderer_url;
-            }
+            let renderer_url = MatrixClientPeg.get().getHomeserverUrl() + "/v1.html";
             renderer_url += "?origin=" + encodeURIComponent(window.location.origin);
             return (
                 <span className="mx_MFileBody">
@@ -373,76 +419,85 @@ module.exports = React.createClass({
                     </div>
                 </span>
             );
-        } else if (contentUrl) {
-            const downloadProps = {
-                target: "_blank",
-                rel: "noopener",
+        } else if (contentUrl !== null) {
+            if (isClean) {
+                const downloadProps = {
+                    target: "_blank",
+                    rel: "noreferrer nofollow noopener",
 
-                // We set the href regardless of whether or not we intercept the download
-                // because we don't really want to convert the file to a blob eagerly, and
-                // still want "open in new tab" and "save link as" to work.
-                href: contentUrl,
-            };
-
-            // Blobs can only have up to 500mb, so if the file reports as being too large then
-            // we won't try and convert it. Likewise, if the file size is unknown then we'll assume
-            // it is too big. There is the risk of the reported file size and the actual file size
-            // being different, however the user shouldn't normally run into this problem.
-            const fileTooBig = typeof(fileSize) === 'number' ? fileSize > 524288000 : true;
-
-            if (["application/pdf"].includes(fileType) && !fileTooBig) {
-                // We want to force a download on this type, so use an onClick handler.
-                downloadProps["onClick"] = (e) => {
-                    console.log(`Downloading ${fileType} as blob (unencrypted)`);
-
-                    // Avoid letting the <a> do its thing
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    // Start a fetch for the download
-                    // Based upon https://stackoverflow.com/a/49500465
-                    fetch(contentUrl).then((response) => response.blob()).then((blob) => {
-                        const blobUrl = URL.createObjectURL(blob);
-
-                        // We have to create an anchor to download the file
-                        const tempAnchor = document.createElement('a');
-                        tempAnchor.download = fileName;
-                        tempAnchor.href = blobUrl;
-                        document.body.appendChild(tempAnchor); // for firefox: https://stackoverflow.com/a/32226068
-                        tempAnchor.click();
-                        tempAnchor.remove();
-                    });
+                    // We set the href regardless of whether or not we intercept the download
+                    // because we don't really want to convert the file to a blob eagerly, and
+                    // still want "open in new tab" and "save link as" to work.
+                    href: contentUrl,
                 };
-            } else {
-                // Else we are hoping the browser will do the right thing
-                downloadProps["download"] = fileName;
-            }
 
-            // If the attachment is not encrypted then we check whether we
-            // are being displayed in the room timeline or in a list of
-            // files in the right hand side of the screen.
-            if (this.props.tileShape === "file_grid") {
-                return (
-                    <span className="mx_MFileBody">
+                // Blobs can only have up to 500mb, so if the file reports as being too large then
+                // we won't try and convert it. Likewise, if the file size is unknown then we'll assume
+                // it is too big. There is the risk of the reported file size and the actual file size
+                // being different, however the user shouldn't normally run into this problem.
+                const fileTooBig = typeof (fileSize) === 'number' ? fileSize > 524288000 : true;
+
+                if (["application/pdf"].includes(fileType) && !fileTooBig) {
+                    // We want to force a download on this type, so use an onClick handler.
+                    downloadProps["onClick"] = (e) => {
+                        console.log(`Downloading ${fileType} as blob (unencrypted)`);
+
+                        // Avoid letting the <a> do its thing
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        // Start a fetch for the download
+                        // Based upon https://stackoverflow.com/a/49500465
+                        fetch(contentUrl).then((response) => response.blob()).then((blob) => {
+                            const blobUrl = URL.createObjectURL(blob);
+
+                            // We have to create an anchor to download the file
+                            const tempAnchor = document.createElement('a');
+                            tempAnchor.download = fileName;
+                            tempAnchor.href = blobUrl;
+                            document.body.appendChild(tempAnchor); // for firefox: https://stackoverflow.com/a/32226068
+                            tempAnchor.click();
+                            tempAnchor.remove();
+                        });
+                    };
+                } else {
+                    // Else we are hoping the browser will do the right thing
+                    downloadProps["download"] = fileName;
+                }
+
+                // If the attachment is not encrypted then we check whether we
+                // are being displayed in the room timeline or in a list of
+                // files in the right hand side of the screen.
+                if (this.props.tileShape === "file_grid") {
+                    return (
+                        <span className="mx_MFileBody">
                         <div className="mx_MFileBody_download">
                             <a className="mx_MFileBody_downloadLink" {...downloadProps}>
-                                { fileName }
+                                {fileName}
                             </a>
                             <div className="mx_MImageBody_size">
-                                { content.info && content.info.size ? filesize(content.info.size) : "" }
+                                {content.info && content.info.size ? filesize(content.info.size) : ""}
                             </div>
                         </div>
                     </span>
-                );
-            } else {
-                return (
-                    <span className="mx_MFileBody">
+                    );
+                } else {
+                    return (
+                        <span className="mx_MFileBody">
                         <div className="mx_MFileBody_download">
                             <a {...downloadProps}>
-                                <img src={tintedDownloadImageURL} width="12" height="14" ref="downloadImage" />
-                                { _t("Download %(text)s", { text: text }) }
+                                <img src={tintedDownloadImageURL} width="12" height="14" ref="downloadImage"/>
+                                {_t("Download %(text)s", {text: text})}
                             </a>
                         </div>
+                    </span>
+                    );
+                }
+            } else {
+                return (
+                    <span className="mx_MFileBody" ref="body">
+                        <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
+                        { _t("The file %(file)s was rejected by the security policy", {file: content.body}) }
                     </span>
                 );
             }
