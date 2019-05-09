@@ -25,6 +25,8 @@ import SettingsStore from "../../../../../settings/SettingsStore";
 import LanguageDropdown from "../../../elements/LanguageDropdown";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import DeactivateAccountDialog from "../../../dialogs/DeactivateAccountDialog";
+import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
+import MatrixClientPeg from "../../../../../MatrixClientPeg";
 const PlatformPeg = require("../../../../../PlatformPeg");
 const sdk = require('../../../../..');
 const Modal = require("../../../../../Modal");
@@ -34,9 +36,12 @@ export default class GeneralUserSettingsTab extends React.Component {
     constructor() {
         super();
 
+        const accountData = MatrixClientPeg.get().getAccountData('im.vector.hide_profile');
+        const redList = accountData ? accountData.event.content.hide_profile : false;
         this.state = {
             language: languageHandler.getCurrentLanguage(),
             theme: SettingsStore.getValueAt(SettingLevel.ACCOUNT, "theme"),
+            redList: redList,
         };
     }
 
@@ -85,6 +90,16 @@ export default class GeneralUserSettingsTab extends React.Component {
         });
     };
 
+    _onRedlistOptionChange = async () => {
+        try {
+            const redlistChecked = this.state.redList;
+            await MatrixClientPeg.get().setAccountData('im.vector.hide_profile', {hide_profile: !redlistChecked});
+            this.setState({redList: !redlistChecked});
+        } catch (err) {
+            console.error("Error setting AccountData 'im.vector.hide_profile': " + err);
+        }
+    };
+
     _onDeactivateClicked = () => {
         Modal.createTrackedDialog('Deactivate Account', '', DeactivateAccountDialog, {});
     };
@@ -112,6 +127,13 @@ export default class GeneralUserSettingsTab extends React.Component {
         return (
             <div className="mx_SettingsTab_section mx_GeneralUserSettingsTab_accountSection">
                 <span className="mx_SettingsTab_subheading">{_t("Account")}</span>
+                    <LabelledToggleSwitch value={this.state.redList}
+                                      onChange={this._onRedlistOptionChange}
+                                      label={_t('Register my account on the red list')} />
+                <p className="mx_SettingsTab_subsectionText">
+                    ({_t("Other users will not be able to discover my account on their searches")})
+                </p>
+                <br />
                 <p className="mx_SettingsTab_subsectionText">
                     {_t("Set a new account password...")}
                 </p>
