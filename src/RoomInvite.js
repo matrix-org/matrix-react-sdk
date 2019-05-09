@@ -100,15 +100,16 @@ function _onStartChatFinished(shouldInvite, addrs) {
 
     const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
     const matrixClient = MatrixClientPeg.get();
-    const addrTexts = addrs.map((addr) => addr.address)[0];
+    const addrText = addrs.map((addr) => addr.address)[0];
     const addrType = addrs.map((addr) => addr.addressType)[0];
     const addrKnown = addrs.map((addr) => addr.isKnown)[0];
 
     if (addrKnown === true) {
-        matrixClient.lookupThreePid(addrType, addrTexts).then(res => {
-            const invitedUserId = Object.entries(res).length === 0 ? addrTexts : res.mxid;
+        matrixClient.lookupThreePid(addrType, addrText).then(res => {
+            const invitedUserId = Object.entries(res).length === 0 ? addrText : res.mxid;
             const selectedRoom = _selectDirectChat(invitedUserId);
             const roomStatus = selectedRoom ? selectedRoom.status : null;
+
             switch (roomStatus) {
                 case "join-join":
                     // Redirect to the existing room.
@@ -143,7 +144,7 @@ function _onStartChatFinished(shouldInvite, addrs) {
 
                 case "join-leave":
                     // Send an invitation then redirect to the existing room.
-                    _inviteToRoom(selectedRoom.room.roomId, addrTexts);
+                    _inviteToRoom(selectedRoom.room.roomId, addrText);
                     dis.dispatch({
                         action: 'view_room',
                         room_id: selectedRoom.room.roomId,
@@ -152,7 +153,7 @@ function _onStartChatFinished(shouldInvite, addrs) {
 
                 default:
                     // Create a new room.
-                    createRoom({dmUserId: addrTexts}).catch((err) => {
+                    createRoom({dmUserId: addrText}).catch((err) => {
                         Modal.createTrackedDialog('Failed to invite user', '', ErrorDialog, {
                             title: _t("Failed to invite user"),
                             description: ((err && err.message) ? err.message : _t("Operation failed")),
@@ -169,7 +170,7 @@ function _onStartChatFinished(shouldInvite, addrs) {
     } else if (addrKnown === false && addrType === "email") {
         // Case where a non-Tchap user is invited by email
         const dmRoomMap = new DMRoomMap(matrixClient);
-        const dmRoomList = dmRoomMap.getDMRoomsForUserId(addrTexts);
+        const dmRoomList = dmRoomMap.getDMRoomsForUserId(addrText);
         const InfoDialog = sdk.getComponent("dialogs.InfoDialog");
         let existingRoom = false;
 
@@ -183,14 +184,14 @@ function _onStartChatFinished(shouldInvite, addrs) {
         if (existingRoom) {
             Modal.createTrackedDialog('New user by email : Invitation already sent', '', InfoDialog, {
                 title: _t("Start a chat"),
-                description: _t("You have already sent an invitation to %(email)s.", {email: addrTexts} ),
+                description: _t("You have already sent an invitation to %(email)s.", {email: addrText} ),
             });
         } else {
             Modal.createTrackedDialog('New user by email : Invitation sent', '', InfoDialog, {
                 title: _t("Start a chat"),
-                description: _t("An invitation has been sent to %(email)s. You will receive a notification when your guest joins the Tchap community.", {email: addrTexts} ),
+                description: _t("An invitation has been sent to %(email)s. You will receive a notification when your guest joins the Tchap community.", {email: addrText} ),
             });
-            createRoom({dmUserId: addrTexts, andView: false}).catch((err) => {
+            createRoom({dmUserId: addrText, andView: false}).catch((err) => {
                 Modal.createTrackedDialog('Failed to invite user', '', ErrorDialog, {
                     title: _t("Failed to invite user"),
                     description: ((err && err.message) ? err.message : _t("Operation failed")),
@@ -248,7 +249,7 @@ function _selectDirectChat(userId) {
 
         // "join" <=> "join" state.
         if (myMembership === "join" && hisMembership === "join") {
-            if (selectedRoom === null || selectedRoom.weight < 4 ||
+            if (selectedRoom.weight < 4 ||
                 (selectedRoom.weight === 4 && roomCreateEventDate < selectedRoom.date)) {
                 selectedRoom = {room: room, status: "join-join", date: roomCreateEventDate, weight: 4};
             }
@@ -256,7 +257,7 @@ function _selectDirectChat(userId) {
             // "invite" <=> "join" state.
             // I have received an invitation from the other member.
         } else if (myMembership === "invite" && hisMembership === "join") {
-            if (selectedRoom === null || selectedRoom.weight < 3 ||
+            if (selectedRoom.weight < 3 ||
                 (selectedRoom.weight === 3 && roomCreateEventDate < selectedRoom.date)) {
                 selectedRoom = {room: room, status: "invite-join", date: roomCreateEventDate, weight: 3};
             }
@@ -264,7 +265,7 @@ function _selectDirectChat(userId) {
             // "join" <=> "invite" state.
             // The other member already have an invitation.
         } else if (myMembership === "join" && hisMembership === "invite") {
-            if (selectedRoom === null || selectedRoom.weight < 2 ||
+            if (selectedRoom.weight < 2 ||
                 (selectedRoom.weight === 2 && roomCreateEventDate < selectedRoom.date)) {
                 selectedRoom = {room: room, status: "join-invite", date: roomCreateEventDate, weight: 2};
             }
@@ -272,20 +273,13 @@ function _selectDirectChat(userId) {
             // "join" <=> "leave" state.
             // The other member have left/reject my invitation.
         } else if (myMembership === "join" && hisMembership === "leave") {
-            if (selectedRoom === null || selectedRoom.weight < 1 ||
+            if (selectedRoom.weight < 1 ||
                 (selectedRoom.weight === 1 && roomCreateEventDate < selectedRoom.date)) {
                 selectedRoom = {room: room, status: "join-leave", date: roomCreateEventDate, weight: 1};
             }
-        } else {
-            selectedRoom = {
-                room: null,
-                status: null,
-                date: null,
-                weight: 0,
-            };
         }
     });
-    selectedRoom = selectedRoom.room !== null && selectedRoom.status !== null && selectedRoom.date !== null ? selectedRoom : null;
+    selectedRoom = selectedRoom.room !== null ? selectedRoom : null;
 
     return selectedRoom;
 }
@@ -326,11 +320,29 @@ function _showAnyInviteErrors(addrs, room, inviter) {
 function _getDirectMessageRooms(addr) {
     const matrixClient = MatrixClientPeg.get();
     const currentUserId = matrixClient.getUserId();
+    const roomMap = new DMRoomMap(matrixClient);
+    const dmRoomMap = roomMap.getDMRoomsForUserId(addr);
     const rooms = matrixClient.getRooms();
-    return rooms.filter((r) => {
-        const users = Object.keys(r.currentState.members);
-        if (users.length === 2 && users.includes(addr) && users.includes(currentUserId)) {
-            return true;
+    const dmRooms = [];
+
+    dmRoomMap.forEach(roomId => {
+        const room = matrixClient.getRoom(roomId);
+        if (room) {
+            dmRooms.push(room);
         }
     });
+
+    rooms.forEach(r => {
+        const users = Object.keys(r.currentState.members);
+        if (users.includes(addr)) {
+            const memberEvent = r.currentState.events["m.room.member"];
+            if (memberEvent[currentUserId].event.content.is_direct === true) {
+                if (!dmRooms.includes(r)) {
+                    dmRooms.push(r);
+                }
+            }
+        }
+    });
+
+    return dmRooms;
 }
