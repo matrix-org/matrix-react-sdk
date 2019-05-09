@@ -43,11 +43,6 @@ export default class UserSettingsDialog extends React.Component {
             <GeneralUserSettingsTab />,
         ));
         tabs.push(new Tab(
-            _td("Flair"),
-            "mx_UserSettingsDialog_flairIcon",
-            <FlairUserSettingsTab />,
-        ));
-        tabs.push(new Tab(
             _td("Notifications"),
             "mx_UserSettingsDialog_bellIcon",
             <NotificationUserSettingsTab />,
