@@ -25,14 +25,9 @@ import sdk from '../../../index';
 import Login from '../../../Login';
 import SdkConfig from '../../../SdkConfig';
 import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
-import { AutoDiscovery } from "matrix-js-sdk";
-
-// For validating phone numbers without country codes
-const PHONE_NUMBER_REGEX = /^[0-9()\-\s]*$/;
+import Tchap from '../../../Tchap';
 
 // Phases
-// Show controls to configure server details
-const PHASE_SERVER_DETAILS = 0;
 // Show the appropriate login flow(s) for the server
 const PHASE_LOGIN = 1;
 
@@ -42,7 +37,12 @@ const PHASES_ENABLED = true;
 // These are used in several places, and come from the js-sdk's autodiscovery
 // stuff. We define them here so that they'll be picked up by i18n.
 _td("Invalid homeserver discovery response");
+_td("Failed to get autodiscovery configuration from server");
+_td("Invalid base_url for m.homeserver");
+_td("Homeserver URL does not appear to be a valid Matrix homeserver");
 _td("Invalid identity server discovery response");
+_td("Invalid base_url for m.identity_server");
+_td("Identity server URL does not appear to be a valid identity server");
 _td("General failure");
 
 /**
@@ -114,10 +114,6 @@ module.exports = React.createClass({
         // letting you do that login type
         this._stepRendererMap = {
             'm.login.password': this._renderPasswordStep,
-
-            // CAS and SSO are the same thing, modulo the url we link to
-            'm.login.cas': () => this._renderSsoStep(this._loginLogic.getSsoLoginUrl("cas")),
-            'm.login.sso': () => this._renderSsoStep(this._loginLogic.getSsoLoginUrl("sso")),
         };
 
         this._initLoginLogic();
@@ -145,82 +141,102 @@ module.exports = React.createClass({
             loginIncorrect: false,
         });
 
-        this._loginLogic.loginViaPassword(
-            username, phoneCountry, phoneNumber, password,
-        ).then((data) => {
-            this.props.onLoggedIn(data);
-        }, (error) => {
-            if (this._unmounted) {
-                return;
-            }
-            let errorText;
+        Tchap.discoverPlatform(username).then(hs => {
+            this.setState({
+                enteredHsUrl: hs,
+                enteredIsUrl: hs,
+            });
+            this._initLoginLogic(hs, hs);
+        }).then(() => {
+            this._loginLogic.loginViaPassword(
+                username, phoneCountry, phoneNumber, password,
+            ).then((data) => {
+                this.props.onLoggedIn(data);
+            }, (error) => {
+                if (this._unmounted) {
+                    return;
+                }
+                let errorText;
 
-            // Some error strings only apply for logging in
-            const usingEmail = username.indexOf("@") > 0;
-            if (error.httpStatus === 400 && usingEmail) {
-                errorText = _t('This homeserver does not support login using email address.');
-            } else if (error.errcode == 'M_RESOURCE_LIMIT_EXCEEDED') {
-                const errorTop = messageForResourceLimitError(
-                    error.data.limit_type,
-                    error.data.admin_contact, {
-                    'monthly_active_user': _td(
-                        "This homeserver has hit its Monthly Active User limit.",
-                    ),
-                    '': _td(
-                        "This homeserver has exceeded one of its resource limits.",
-                    ),
-                });
-                const errorDetail = messageForResourceLimitError(
-                    error.data.limit_type,
-                    error.data.admin_contact, {
-                    '': _td(
-                        "Please <a>contact your service administrator</a> to continue using this service.",
-                    ),
-                });
-                errorText = (
-                    <div>
-                        <div>{errorTop}</div>
-                        <div className="mx_Login_smallError">{errorDetail}</div>
-                    </div>
-                );
-            } else if (error.httpStatus === 401 || error.httpStatus === 403) {
-                if (SdkConfig.get()['disable_custom_urls']) {
+                // Some error strings only apply for logging in
+                const usingEmail = username.indexOf("@") > 0;
+                if (error.httpStatus === 400 && usingEmail) {
+                    errorText = _t('This homeserver does not support login using email address.');
+                } else if (error.errcode == 'M_RESOURCE_LIMIT_EXCEEDED') {
+                    const errorTop = messageForResourceLimitError(
+                        error.data.limit_type,
+                        error.data.admin_contact, {
+                            'monthly_active_user': _td(
+                                "This homeserver has hit its Monthly Active User limit.",
+                            ),
+                            '': _td(
+                                "This homeserver has exceeded one of its resource limits.",
+                            ),
+                        });
+                    const errorDetail = messageForResourceLimitError(
+                        error.data.limit_type,
+                        error.data.admin_contact, {
+                            '': _td(
+                                "Please <a>contact your service administrator</a> to continue using this service.",
+                            ),
+                        });
                     errorText = (
                         <div>
-                            <div>{ _t('Incorrect username and/or password.') }</div>
-                            <div className="mx_Login_smallError">
-                                { _t('Please note you are logging into the %(hs)s server, not matrix.org.',
-                                    {
-                                        hs: this.props.defaultHsUrl.replace(/^https?:\/\//, ''),
-                                    })
-                                }
-                            </div>
+                            <div>{errorTop}</div>
+                            <div className="mx_Login_smallError">{errorDetail}</div>
                         </div>
                     );
+                } else if (error.httpStatus === 401 || error.httpStatus === 403) {
+                    if (SdkConfig.get()['disable_custom_urls']) {
+                        errorText = (
+                            <div>
+                                <div>{ _t('Incorrect username and/or password.') }</div>
+                                <div className="mx_Login_smallError">
+                                    { _t('Please note you are logging into the %(hs)s server, not matrix.org.',
+                                        {
+                                            hs: this.props.defaultHsUrl.replace(/^https?:\/\//, ''),
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        );
+                    } else {
+                        errorText = _t('Incorrect username and/or password.');
+                    }
                 } else {
-                    errorText = _t('Incorrect username and/or password.');
+                    // other errors, not specific to doing a password login
+                    errorText = this._errorTextFromError(error);
                 }
-            } else {
-                // other errors, not specific to doing a password login
-                errorText = this._errorTextFromError(error);
-            }
 
+                this.setState({
+                    errorText: errorText,
+                    // 401 would be the sensible status code for 'incorrect password'
+                    // but the login API gives a 403 https://matrix.org/jira/browse/SYN-744
+                    // mentions this (although the bug is for UI auth which is not this)
+                    // We treat both as an incorrect password
+                    loginIncorrect: error.httpStatus === 401 || error.httpStatus === 403,
+                });
+            }).finally(() => {
+                if (this._unmounted) {
+                    return;
+                }
+                this.setState({
+                    busy: false,
+                });
+            }).done();
+        }).catch(err => {
+            console.error(err);
+            const errorValue = err === "ERR_UNAUTHORIZED_EMAIL" ? _t("Unauthorized email") : err;
+            const errorText = (
+                <div>
+                    <div className="mx_Login_smallError">{errorValue}</div>
+                </div>
+            );
             this.setState({
                 errorText: errorText,
-                // 401 would be the sensible status code for 'incorrect password'
-                // but the login API gives a 403 https://matrix.org/jira/browse/SYN-744
-                // mentions this (although the bug is for UI auth which is not this)
-                // We treat both as an incorrect password
-                loginIncorrect: error.httpStatus === 401 || error.httpStatus === 403,
-            });
-        }).finally(() => {
-            if (this._unmounted) {
-                return;
-            }
-            this.setState({
                 busy: false,
             });
-        }).done();
+        });
     },
 
     onUsernameChanged: function(username) {
@@ -232,132 +248,12 @@ module.exports = React.createClass({
             username: username,
             discoveryError: null,
         });
-        if (username[0] === "@") {
-            const serverName = username.split(':').slice(1).join(':');
-            try {
-                // we have to append 'https://' to make the URL constructor happy
-                // otherwise we get things like 'protocol: matrix.org, pathname: 8448'
-                const url = new URL("https://" + serverName);
-                this._tryWellKnownDiscovery(url.hostname);
-            } catch (e) {
-                console.error("Problem parsing URL or unhandled error doing .well-known discovery:", e);
-                this.setState({discoveryError: _t("Failed to perform homeserver discovery")});
-            }
-        }
-    },
-
-    onPhoneCountryChanged: function(phoneCountry) {
-        this.setState({ phoneCountry: phoneCountry });
-    },
-
-    onPhoneNumberChanged: function(phoneNumber) {
-        this.setState({
-            phoneNumber: phoneNumber,
-        });
-    },
-
-    onPhoneNumberBlur: function(phoneNumber) {
-        this.setState({
-            errorText: null,
-        });
-
-        // Validate the phone number entered
-        if (!PHONE_NUMBER_REGEX.test(phoneNumber)) {
-            this.setState({
-                errorText: _t('The phone number entered looks invalid'),
-            });
-        }
-    },
-
-    onServerConfigChange: function(config) {
-        const self = this;
-        const newState = {
-            errorText: null, // reset err messages
-        };
-        if (config.hsUrl !== undefined) {
-            newState.enteredHsUrl = config.hsUrl;
-        }
-        if (config.isUrl !== undefined) {
-            newState.enteredIsUrl = config.isUrl;
-        }
-
-        this.props.onServerConfigChange(config);
-        this.setState(newState, function() {
-            self._initLoginLogic(config.hsUrl || null, config.isUrl);
-        });
     },
 
     onRegisterClick: function(ev) {
         ev.preventDefault();
         ev.stopPropagation();
         this.props.onRegisterClick();
-    },
-
-    onServerDetailsNextPhaseClick(ev) {
-        ev.stopPropagation();
-        this.setState({
-            phase: PHASE_LOGIN,
-        });
-    },
-
-    onEditServerDetailsClick(ev) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        this.setState({
-            phase: PHASE_SERVER_DETAILS,
-        });
-    },
-
-    _tryWellKnownDiscovery: async function(serverName) {
-        if (!serverName.trim()) {
-            // Nothing to discover
-            this.setState({
-                discoveryError: "",
-                findingHomeserver: false,
-            });
-            return;
-        }
-
-        this.setState({findingHomeserver: true});
-        try {
-            const discovery = await AutoDiscovery.findClientConfig(serverName);
-
-            const state = discovery["m.homeserver"].state;
-            if (state !== AutoDiscovery.SUCCESS && state !== AutoDiscovery.PROMPT) {
-                this.setState({
-                    discoveryError: discovery["m.homeserver"].error,
-                    findingHomeserver: false,
-                });
-            } else if (state === AutoDiscovery.PROMPT) {
-                this.setState({
-                    discoveryError: "",
-                    findingHomeserver: false,
-                });
-            } else if (state === AutoDiscovery.SUCCESS) {
-                this.setState({
-                    discoveryError: "",
-                    findingHomeserver: false,
-                });
-                this.onServerConfigChange({
-                    hsUrl: discovery["m.homeserver"].base_url,
-                    isUrl: discovery["m.identity_server"].state === AutoDiscovery.SUCCESS
-                        ? discovery["m.identity_server"].base_url
-                        : "",
-                });
-            } else {
-                console.warn("Unknown state for m.homeserver in discovery response: ", discovery);
-                this.setState({
-                    discoveryError: _t("Unknown failure discovering homeserver"),
-                    findingHomeserver: false,
-                });
-            }
-        } catch (e) {
-            console.error(e);
-            this.setState({
-                findingHomeserver: false,
-                discoveryError: _t("Unknown error discovering homeserver"),
-            });
-        }
     },
 
     _initLoginLogic: function(hsUrl, isUrl) {
@@ -477,42 +373,6 @@ module.exports = React.createClass({
         return errorText;
     },
 
-    renderServerComponent() {
-        const ServerConfig = sdk.getComponent("auth.ServerConfig");
-        const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
-
-        if (SdkConfig.get()['disable_custom_urls']) {
-            return null;
-        }
-
-        if (PHASES_ENABLED && this.state.phase !== PHASE_SERVER_DETAILS) {
-            return null;
-        }
-
-        const serverDetails = <ServerConfig
-            customHsUrl={this.state.enteredHsUrl}
-            customIsUrl={this.state.enteredIsUrl}
-            defaultHsUrl={this.props.defaultHsUrl}
-            defaultIsUrl={this.props.defaultIsUrl}
-            onServerConfigChange={this.onServerConfigChange}
-            delayTimeMs={250}
-        />;
-
-        let nextButton = null;
-        if (PHASES_ENABLED) {
-            nextButton = <AccessibleButton className="mx_Login_submit"
-                onClick={this.onServerDetailsNextPhaseClick}
-            >
-                {_t("Next")}
-            </AccessibleButton>;
-        }
-
-        return <div>
-            {serverDetails}
-            {nextButton}
-        </div>;
-    },
-
     renderLoginComponentForStep() {
         if (PHASES_ENABLED && this.state.phase !== PHASE_LOGIN) {
             return null;
@@ -536,52 +396,19 @@ module.exports = React.createClass({
     _renderPasswordStep: function() {
         const PasswordLogin = sdk.getComponent('auth.PasswordLogin');
 
-        let onEditServerDetailsClick = null;
-        // If custom URLs are allowed, wire up the server details edit link.
-        if (PHASES_ENABLED && !SdkConfig.get()['disable_custom_urls']) {
-            onEditServerDetailsClick = this.onEditServerDetailsClick;
-        }
-
-        // If the current HS URL is the default HS URL, then we can label it
-        // with the default HS name (if it exists).
-        let hsName;
-        if (this.state.enteredHsUrl === this.props.defaultHsUrl) {
-            hsName = this.props.defaultServerName;
-        }
-
         return (
             <PasswordLogin
                onSubmit={this.onPasswordLogin}
                onError={this.onPasswordLoginError}
-               onEditServerDetailsClick={onEditServerDetailsClick}
                initialUsername={this.state.username}
-               initialPhoneCountry={this.state.phoneCountry}
-               initialPhoneNumber={this.state.phoneNumber}
                onUsernameChanged={this.onUsernameChanged}
                onUsernameBlur={this.onUsernameBlur}
-               onPhoneCountryChanged={this.onPhoneCountryChanged}
-               onPhoneNumberChanged={this.onPhoneNumberChanged}
-               onPhoneNumberBlur={this.onPhoneNumberBlur}
                onForgotPasswordClick={this.props.onForgotPasswordClick}
                loginIncorrect={this.state.loginIncorrect}
-               hsName={hsName}
+               hsName={null}
                hsUrl={this.state.enteredHsUrl}
                disableSubmit={this.state.findingHomeserver}
                />
-        );
-    },
-
-    _renderSsoStep: function(url) {
-        // XXX: This link does *not* have a target="_blank" because single sign-on relies on
-        // redirecting the user back to a URI once they're logged in. On the web, this means
-        // we use the same window and redirect back to riot. On electron, this actually
-        // opens the SSO page in the electron app itself due to
-        // https://github.com/electron/electron/issues/8841 and so happens to work.
-        // If this bug gets fixed, it will break SSO since it will open the SSO page in the
-        // user's browser, let them log into their SSO provider, then redirect their browser
-        // to vector://vector which, of course, will not work.
-        return (
-            <a href={url} className="mx_Login_sso_link mx_Login_submit">{ _t('Sign in with single sign-on') }</a>
         );
     },
 
@@ -612,7 +439,6 @@ module.exports = React.createClass({
                         {loader}
                     </h2>
                     { errorTextSection }
-                    { this.renderServerComponent() }
                     { this.renderLoginComponentForStep() }
                     <a className="mx_AuthBody_changeFlow" onClick={this.onRegisterClick} href="#">
                         { _t('Create account') }

@@ -755,18 +755,11 @@ module.exports = withMatrixClient(React.createClass({
             }
         }
 
-        const shareUserButton = (
-            <AccessibleButton onClick={this.onShareUserClick} className="mx_MemberInfo_field">
-                { _t('Share Link to User') }
-            </AccessibleButton>
-        );
-
         return (
             <div>
                 <h3>{ _t("User Options") }</h3>
                 <div className="mx_MemberInfo_buttons">
                     { readReceiptButton }
-                    { shareUserButton }
                     { insertPillButton }
                     { ignoreButton }
                     { inviteUserButton }
