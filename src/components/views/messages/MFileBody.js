@@ -395,7 +395,7 @@ module.exports = React.createClass({
                     // will have the correct name when the user tries to download it.
                     // We can't provide a Content-Disposition header like we would for HTTP.
                     download: fileName,
-                    rel: "noopener",
+                    rel: "noreferrer nofollow noopener",
                     target: "_blank",
                     textContent: _t("Download %(text)s", { text: text }),
                 }, "*");
