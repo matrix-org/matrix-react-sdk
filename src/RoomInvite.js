@@ -54,12 +54,22 @@ export function showStartChatInviteDialog() {
 }
 
 export function showRoomInviteDialog(roomId) {
+    const room = MatrixClientPeg.get().getRoom(roomId);
+    const validAddressTypes = ['mx-user-id'];
+    let placeholder = "Name or matrix ID";
+
+    if (room.currentState.getStateEvents('m.room.history_visibility')[0].event.content.history_visibility === "invited") {
+        validAddressTypes.push('email');
+        placeholder = "Email, name or matrix ID";
+    }
+
     const AddressPickerDialog = sdk.getComponent("dialogs.AddressPickerDialog");
     Modal.createTrackedDialog('Chat Invite', '', AddressPickerDialog, {
         title: _t('Invite new room members'),
         description: _t('Who would you like to add to this room?'),
         button: _t('Send Invites'),
-        placeholder: _t("Email, name or matrix ID"),
+        placeholder: _t(placeholder),
+        validAddressTypes: validAddressTypes,
         invitationType: 'room',
         onFinished: (shouldInvite, addrs) => {
             _onRoomInviteFinished(roomId, shouldInvite, addrs);
