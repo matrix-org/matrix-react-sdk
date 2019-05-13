@@ -333,12 +333,14 @@ function _getDirectMessageRooms(addr) {
     });
 
     rooms.forEach(r => {
-        const users = Object.keys(r.currentState.members);
-        if (users.includes(addr)) {
-            const memberEvent = r.currentState.events["m.room.member"];
-            if (memberEvent[currentUserId].event.content.is_direct === true) {
-                if (!dmRooms.includes(r)) {
-                    dmRooms.push(r);
+        if (r.getMyMembership() === "invite") {
+            const users = Object.keys(r.currentState.members);
+            if (users.includes(addr)) {
+                const memberEvent = r.currentState.events["m.room.member"];
+                if (memberEvent[currentUserId].event.content.is_direct === true) {
+                    if (!dmRooms.includes(r)) {
+                        dmRooms.push(r);
+                    }
                 }
             }
         }
