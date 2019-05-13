@@ -358,7 +358,6 @@ module.exports = React.createClass({
         const rows = [];
         const self = this;
 
-        let guestRead; let guestJoin; let perms;
         rooms.sort((a, b) => {
             return b.num_joined_members - a.num_joined_members;
         });
@@ -370,7 +369,7 @@ module.exports = React.createClass({
                 name = `${name.substring(0, MAX_NAME_LENGTH)}...`;
             }
 
-            const domain = Tchap.getDomainFromAlias(get_display_alias_for_room(rooms[i]));
+            const domain = Tchap.getDomainFromId(rooms[i].room_id);
 
             let topic = rooms[i].topic || '';
             if (topic.length > MAX_TOPIC_LENGTH) {

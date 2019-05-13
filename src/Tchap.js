@@ -20,12 +20,12 @@ class Tchap {
     }
 
     /**
-     * Return a short value from a room alias.
-     * @param {string} alias The alias to shorten.
-     * @returns {string} The shortened alias.
+     * Return a domain name from a room_id.
+     * @param {string} id The room_id to analyse.
+     * @returns {string} The extracted domain name.
      */
-    static getDomainFromAlias(alias) {
-        const domain = alias.split(':').reverse()[0].split('.tchap.gouv.fr')[0].split('.').filter(Boolean).reverse()[0];
+    static getDomainFromId(id) {
+        const domain = id.split(':').reverse()[0].split('.tchap.gouv.fr')[0].split('.').filter(Boolean).reverse()[0];
 
         return this._capitalize(domain) || 'Tchap';
     }
