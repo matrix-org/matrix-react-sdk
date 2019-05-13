@@ -1875,5 +1875,7 @@
     "Public": "Public",
     "Room type": "Type de salon",
     "Limit access to this room to domain members \"%(domain)s\"": "Limiter l'accès à ce salon aux membres du domaine \"%(domain)s\"",
-    "Unauthorized email": "Cette adresse e-mail n'est pas autorisée"
+    "Unauthorized email": "Cette adresse e-mail n'est pas autorisée",
+    "Register my account on the red list": "Inscrire mon compte sur liste rouge",
+    "Other users will not be able to discover my account on their searches": "Les autres utilisateurs ne pourrons pas découvrir mon compte lors de leurs recherches"
 }

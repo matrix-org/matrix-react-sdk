@@ -1622,5 +1622,7 @@
     "Private": "Private",
     "Public": "Public",
     "Room type": "Room type",
-    "Unauthorized email": "Unauthorized email"
+    "Unauthorized email": "Unauthorized email",
+    "Register my account on the red list": "Register my account on the red list",
+    "Other users will not be able to discover my account on their searches": "Other users will not be able to discover my account on their searches"
 }
