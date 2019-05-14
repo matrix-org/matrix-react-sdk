@@ -68,11 +68,6 @@ export default class AdvancedRoomSettingsTab extends React.Component {
         Modal.createTrackedDialog('Upgrade Room Version', '', RoomUpgradeDialog, {room: room});
     };
 
-    _openDevtools = (e) => {
-        const DevtoolsDialog = sdk.getComponent('dialogs.DevtoolsDialog');
-        Modal.createDialog(DevtoolsDialog, {roomId: this.props.roomId});
-    };
-
     _onOldRoomClicked = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -148,12 +143,6 @@ export default class AdvancedRoomSettingsTab extends React.Component {
                     </div>
                     {oldRoomLink}
                     {roomUpgradeButton}
-                </div>
-                <div className='mx_SettingsTab_section mx_SettingsTab_subsectionText'>
-                    <span className='mx_SettingsTab_subheading'>{_t("Developer options")}</span>
-                    <AccessibleButton onClick={this._openDevtools} kind='primary'>
-                        {_t("Open Devtools")}
-                    </AccessibleButton>
                 </div>
             </div>
         );
