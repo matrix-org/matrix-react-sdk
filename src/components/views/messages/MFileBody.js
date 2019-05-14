@@ -346,7 +346,7 @@ module.exports = React.createClass({
                     // will have the correct name when the user tries to download it.
                     // We can't provide a Content-Disposition header like we would for HTTP.
                     download: fileName,
-                    rel: "noopener",
+                    rel: "noreferrer nofollow noopener",
                     target: "_blank",
                     textContent: _t("Download %(text)s", { text: text }),
                 }, "*");
@@ -376,7 +376,7 @@ module.exports = React.createClass({
         } else if (contentUrl) {
             const downloadProps = {
                 target: "_blank",
-                rel: "noopener",
+                rel: "noreferrer nofollow noopener",
 
                 // We set the href regardless of whether or not we intercept the download
                 // because we don't really want to convert the file to a blob eagerly, and
