@@ -263,7 +263,7 @@ module.exports = React.createClass({
             ContentScanner.scanContent(content).then(result => {
                 if (result.clean === true) {
                     this.setState({
-                        contentUrl: ContentScanner.downloadContent(content),
+                        contentUrl: ContentScanner.getUnencryptedContentUrl(content),
                         isClean: true,
                         isEncrypted: false,
                     });
@@ -341,7 +341,7 @@ module.exports = React.createClass({
                         return false;
                     }
                     decrypting = true;
-                    Promise.resolve(ContentScanner.downloadContentEncrypted(content )).then((blob) => {
+                    Promise.resolve(ContentScanner.downloadEncryptedContent(content )).then((blob) => {
                         if (blob.size > 0) {
                             this.setState({
                                 decryptedBlob: blob,

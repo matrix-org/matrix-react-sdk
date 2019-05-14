@@ -24,8 +24,8 @@ class ContentScanner {
      * Scan a Matrix Event content.
      * If the content is a file or an encrypted file, a promise containing the scan result is returned.
      * Thumbnails for image files are not processed because a scan is ran every time a download is called.
-     * @param content A Mtrix Event content.
-     * @returns {Promise<*>}
+     * @param {object} content A Mtrix Event content.
+     * @returns {Promise<*>|object}
      */
     static async scanContent(content) {
         const baseUrl = MatrixClientPeg.get()['baseUrl'];
@@ -58,7 +58,9 @@ class ContentScanner {
                 method: "POST",
                 body: JSON.stringify(body),
             })
-                .then(res => { return res.json(); })
+                .then(res => {
+                    return res.json();
+                })
                 .then(data => {
                     return data;
                 }).catch(err => {
@@ -69,7 +71,9 @@ class ContentScanner {
             const fileUrl = content.url.split('//')[1];
 
             return Promise.resolve(fetch(`${baseUrl + TchapApi.scanUnencryptedUrl}${fileUrl}`)
-                .then(res => { return res.json(); })
+                .then(res => {
+                    return res.json();
+                })
                 .then(data => {
                     return data;
                 }).catch(err => {
@@ -82,20 +86,26 @@ class ContentScanner {
     }
 
     /**
-     * Download an unencrypted content.
-     * @param content A Mtrix Event content.
-     * @param isThumb If the requested data will be a thumbnail.
-     * @returns {*} A string or an error object.
+     * Returns an url for an unencrypted content.
+     * @param {object} content A Mtrix Event content.
+     * @param {boolean} isThumb If the requested data will be a thumbnail.
+     * @returns {string|object} A string or an error object.
      */
-    static downloadContent(content, isThumb = false) {
+    static getUnencryptedContentUrl(content, isThumb = false) {
         const baseUrl = MatrixClientPeg.get()['baseUrl'];
+        let url;
 
-        if (content.url !== undefined) {
-            const fileUrl = content.url.split('//')[1];
-            let url;
+        if (content.url !== undefined || content.info.thumbnail_url !== undefined) {
             if (isThumb) {
-                url = `${baseUrl + TchapApi.downloadUnencryptedThumnailUrl}${fileUrl}${TchapApi.thumbnailParams}`;
+                if (content.info.thumbnail_url) {
+                    const fileUrl = content.info.thumbnail_url.split('//')[1];
+                    url = `${baseUrl + TchapApi.downloadUnencryptedUrl}${fileUrl}`;
+                } else {
+                    const fileUrl = content.url.split('//')[1];
+                    url = `${baseUrl + TchapApi.downloadUnencryptedThumbnailUrl}${fileUrl}${TchapApi.thumbnailParams}`;
+                }
             } else {
+                const fileUrl = content.url.split('//')[1];
                 url = `${baseUrl + TchapApi.downloadUnencryptedUrl}${fileUrl}`;
             }
             return url;
@@ -106,21 +116,29 @@ class ContentScanner {
 
     /**
      * Download an encrypted content.
-     * @param content A Mtrix Event content.
-     * @param isThumb If the requested data will be a thumbnail.
-     * @returns {Promise<*>} A Promise or an error object.
+     * @param {object} content A Mtrix Event content.
+     * @param {boolean} isThumb If the requested data will be a thumbnail.
+     * @returns {Promise<*>|blob} A Promise or an error object.
      */
-    static async downloadContentEncrypted(content, isThumb = false) {
-        if (content.file !== undefined || content.info.thumbnail_file !== undefined) {
-            let file = isThumb ? content.info.thumbnail_file : content.file;
-            let blob = await decryptFile(file);
+    static async downloadEncryptedContent(content, isThumb = false) {
+        // check if is thumb prev
+        let file;
 
+        if (isThumb && content.info.thumbnail_file !== undefined) {
+            file = content.info.thumbnail_file;
+        } else if (content.file !== undefined) {
+            file = content.file;
+        } else {
+            return this.generateError(false, 'Error: This is not a matrix content');
+        }
+
+        if (file) {
+            const blob = await decryptFile(file);
             if (blob) {
                 return blob;
             } else {
                 return new Blob([], {type: 'application/octet-stream'});
             }
-
         } else {
             return this.generateError(false, 'Error: This is not a matrix content');
         }

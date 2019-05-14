@@ -61,7 +61,7 @@ export default class MAudioBody extends React.Component {
                 }
             });
             let decryptedBlob;
-            Promise.resolve(ContentScanner.downloadContentEncrypted(content)).then(function(blob) {
+            Promise.resolve(ContentScanner.downloadEncryptedContent(content)).then(function(blob) {
                 decryptedBlob = blob;
                 return URL.createObjectURL(blob);
             }).then((contentUrl) => {
@@ -79,7 +79,7 @@ export default class MAudioBody extends React.Component {
             ContentScanner.scanContent(content).then(result => {
                 if (result.clean === true) {
                     this.setState({
-                        contentUrl: ContentScanner.downloadContent(content),
+                        contentUrl: ContentScanner.getUnencryptedContentUrl(content),
                         isClean: true,
                     });
                 } else {

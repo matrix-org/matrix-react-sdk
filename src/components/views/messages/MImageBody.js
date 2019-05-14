@@ -180,9 +180,9 @@ export default class MImageBody extends React.Component {
             // special case to return clientside sender-generated thumbnails for SVGs, if any,
             // given we deliberately don't thumbnail them serverside to prevent
             // billion lol attacks and similar
-            return ContentScanner.downloadContent(content, true);
+            return ContentScanner.getUnencryptedContentUrl(content, true);
         } else {
-            return ContentScanner.downloadContent(content, true);
+            return ContentScanner.getUnencryptedContentUrl(content, true);
         }
     }
 
@@ -196,7 +196,7 @@ export default class MImageBody extends React.Component {
                     });
                     let thumbnailPromise = Promise.resolve(null);
                     if (content.info && content.info.thumbnail_file) {
-                        thumbnailPromise = ContentScanner.downloadContentEncrypted(
+                        thumbnailPromise = ContentScanner.downloadEncryptedContent(
                             content, true,
                         ).then(function(blob) {
                             return URL.createObjectURL(blob);
@@ -204,7 +204,7 @@ export default class MImageBody extends React.Component {
                     }
                     let decryptedBlob;
                     thumbnailPromise.then((thumbnailUrl) => {
-                        return Promise.resolve(ContentScanner.downloadContentEncrypted(content)).then(function(blob) {
+                        return Promise.resolve(ContentScanner.downloadEncryptedContent(content)).then(function(blob) {
                             decryptedBlob = blob;
                             return URL.createObjectURL(blob);
                         }).then((contentUrl) => {
@@ -231,7 +231,7 @@ export default class MImageBody extends React.Component {
             ContentScanner.scanContent(content).then(result => {
                 if (result.clean === true) {
                     this.setState({
-                        contentUrl: ContentScanner.downloadContent(content),
+                        contentUrl: ContentScanner.getUnencryptedContentUrl(content),
                         isClean: true,
                     });
                 } else {

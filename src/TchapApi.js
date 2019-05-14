@@ -6,6 +6,6 @@ export default {
     scanUnencryptedUrl: "/_matrix/media_proxy/unstable/scan/",
     downloadUnencryptedUrl: "/_matrix/media_proxy/unstable/download/",
     downloadEncryptedUrl: "/_matrix/media_proxy/unstable/download_encrypted",
-    downloadUnencryptedThumnailUrl: "/_matrix/media_proxy/unstable/thumbnail/",
+    downloadUnencryptedThumbnailUrl: "/_matrix/media_proxy/unstable/thumbnail/",
     thumbnailParams: "?width=800&height=600&method=scale",
 };

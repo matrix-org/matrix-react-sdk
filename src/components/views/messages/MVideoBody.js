@@ -82,7 +82,7 @@ module.exports = React.createClass({
         if (content.file !== undefined) {
             return this.state.decryptedThumbnailUrl;
         } else if (content.info && content.info.thumbnail_url) {
-            return ContentScanner.downloadContent(content, true);
+            return ContentScanner.getUnencryptedContentUrl(content, true);
         } else {
             return null;
         }
@@ -98,7 +98,7 @@ module.exports = React.createClass({
                     });
                     let thumbnailPromise = Promise.resolve(null);
                     if (content.info && content.info.thumbnail_file) {
-                        thumbnailPromise = ContentScanner.downloadContentEncrypted(
+                        thumbnailPromise = ContentScanner.downloadEncryptedContent(
                             content, true,
                         ).then(function(blob) {
                             return URL.createObjectURL(blob);
@@ -106,7 +106,7 @@ module.exports = React.createClass({
                     }
                     let decryptedBlob;
                     thumbnailPromise.then((thumbnailUrl) => {
-                        return Promise.resolve(ContentScanner.downloadContentEncrypted(content)).then(function(blob) {
+                        return Promise.resolve(ContentScanner.downloadEncryptedContent(content)).then(function(blob) {
                             decryptedBlob = blob;
                             return URL.createObjectURL(blob);
                         }).then((contentUrl) => {
@@ -133,7 +133,7 @@ module.exports = React.createClass({
             ContentScanner.scanContent(content).then(result => {
                 if (result.clean === true) {
                     this.setState({
-                        contentUrl: ContentScanner.downloadContent(content),
+                        contentUrl: ContentScanner.getUnencryptedContentUrl(content),
                         isClean: true,
                     });
                 } else {
