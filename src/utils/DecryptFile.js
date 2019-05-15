@@ -22,7 +22,6 @@ import 'isomorphic-fetch';
 // Grab the client so that we can turn mxc:// URLs into https:// URLS.
 import MatrixClientPeg from '../MatrixClientPeg';
 import Promise from 'bluebird';
-import {PkEncryption} from "olm";
 import TchapApi from '../TchapApi';
 
 // WARNING: We have to be very careful about what mime-types we allow into blobs,
@@ -103,7 +102,7 @@ export async function decryptFile(file) {
     let body;
     if (publicKey) {
         // Setting up the encryption
-        const encryption = new PkEncryption();
+        const encryption = new global.Olm.PkEncryption();
         encryption.set_recipient_key(publicKey);
         body = {encrypted_body: encryption.encrypt(JSON.stringify({file: file}))};
     } else {
