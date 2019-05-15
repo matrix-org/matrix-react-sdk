@@ -399,7 +399,19 @@ export default class MImageBody extends React.Component {
             );
         }
 
-        if (!isClean) {
+        if (isClean === null) {
+            return (
+                <span className="mx_MFileBody" ref="body">
+                    <img
+                        src={require("../../../../res/img/spinner.gif")}
+                        alt={ _t("Analysis in progress") }
+                        width="32"
+                        height="32"
+                    />
+                    { _t("Analysis in progress") }
+                </span>
+            );
+        } else if (isClean === false) {
             return (
                 <span className="mx_MFileBody" ref="body">
                     <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />

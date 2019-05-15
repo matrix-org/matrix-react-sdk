@@ -1623,5 +1623,6 @@
     "Public": "Public",
     "Room type": "Room type",
     "Unauthorized email": "Unauthorized email",
-    "The file %(file)s was rejected by the security policy": "The file %(file)s was rejected by the security policy"
+    "The file %(file)s was rejected by the security policy": "The file %(file)s was rejected by the security policy",
+    "Analysis in progress": "Analysis in progress"
 }

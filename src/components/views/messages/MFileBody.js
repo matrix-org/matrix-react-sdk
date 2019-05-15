@@ -364,7 +364,19 @@ module.exports = React.createClass({
                     });
                 };
 
-                if (isClean) {
+                if (isClean === null) {
+                    return (
+                        <span className="mx_MFileBody" ref="body">
+                            <img
+                                src={require("../../../../res/img/spinner.gif")}
+                                alt={ _t("Analysis in progress") }
+                                width="32"
+                                height="32"
+                            />
+                            { _t("Analysis in progress") }
+                        </span>
+                    );
+                } else if (isClean === true) {
                     return (
                         <span className="mx_MFileBody" ref="body">
                         <div className="mx_MFileBody_download">
