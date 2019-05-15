@@ -95,7 +95,7 @@ class ContentScanner {
         const baseUrl = MatrixClientPeg.get()['baseUrl'];
         let url;
 
-        if (content.url !== undefined || content.info.thumbnail_url !== undefined) {
+        if (content.url !== undefined) {
             if (isThumb) {
                 if (content.info.thumbnail_url) {
                     const fileUrl = content.info.thumbnail_url.split('//')[1];
@@ -121,7 +121,6 @@ class ContentScanner {
      * @returns {Promise<*>|blob} A Promise or an error object.
      */
     static async downloadEncryptedContent(content, isThumb = false) {
-        // check if is thumb prev
         let file;
 
         if (isThumb && content.info.thumbnail_file !== undefined) {
