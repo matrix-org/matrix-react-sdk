@@ -20,7 +20,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MFileBody from './MFileBody';
 import MatrixClientPeg from '../../../MatrixClientPeg';
-import { decryptFile } from '../../../utils/DecryptFile';
+import ContentScanner from "../../../utils/ContentScanner";
 import Promise from 'bluebird';
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
@@ -42,6 +42,8 @@ module.exports = React.createClass({
             decryptedThumbnailUrl: null,
             decryptedBlob: null,
             error: null,
+            contentUrl: null,
+            isClean: null,
         };
     },
 
@@ -71,7 +73,7 @@ module.exports = React.createClass({
         if (content.file !== undefined) {
             return this.state.decryptedUrl;
         } else {
-            return MatrixClientPeg.get().mxcUrlToHttp(content.url);
+            return this.state.contentUrl;
         }
     },
 
@@ -80,7 +82,7 @@ module.exports = React.createClass({
         if (content.file !== undefined) {
             return this.state.decryptedThumbnailUrl;
         } else if (content.info && content.info.thumbnail_url) {
-            return MatrixClientPeg.get().mxcUrlToHttp(content.info.thumbnail_url);
+            return ContentScanner.getUnencryptedContentUrl(content, true);
         } else {
             return null;
         }
@@ -89,34 +91,57 @@ module.exports = React.createClass({
     componentDidMount: function() {
         const content = this.props.mxEvent.getContent();
         if (content.file !== undefined && this.state.decryptedUrl === null) {
-            let thumbnailPromise = Promise.resolve(null);
-            if (content.info.thumbnail_file) {
-                thumbnailPromise = decryptFile(
-                    content.info.thumbnail_file,
-                ).then(function(blob) {
-                    return URL.createObjectURL(blob);
-                });
-            }
-            let decryptedBlob;
-            thumbnailPromise.then((thumbnailUrl) => {
-                return decryptFile(content.file).then(function(blob) {
-                    decryptedBlob = blob;
-                    return URL.createObjectURL(blob);
-                }).then((contentUrl) => {
+            ContentScanner.scanContent(content).then(result => {
+                if (result.clean === true) {
                     this.setState({
-                        decryptedUrl: contentUrl,
-                        decryptedThumbnailUrl: thumbnailUrl,
-                        decryptedBlob: decryptedBlob,
+                        isClean: true,
                     });
-                    this.props.onHeightChanged();
-                });
-            }).catch((err) => {
-                console.warn("Unable to decrypt attachment: ", err);
-                // Set a placeholder image when we can't decrypt the image.
-                this.setState({
-                    error: err,
-                });
-            }).done();
+                    let thumbnailPromise = Promise.resolve(null);
+                    if (content.info && content.info.thumbnail_file) {
+                        thumbnailPromise = ContentScanner.downloadEncryptedContent(
+                            content, true,
+                        ).then(function(blob) {
+                            return URL.createObjectURL(blob);
+                        });
+                    }
+                    let decryptedBlob;
+                    thumbnailPromise.then((thumbnailUrl) => {
+                        return Promise.resolve(ContentScanner.downloadEncryptedContent(content)).then(function(blob) {
+                            decryptedBlob = blob;
+                            return URL.createObjectURL(blob);
+                        }).then((contentUrl) => {
+                            this.setState({
+                                decryptedUrl: contentUrl,
+                                decryptedThumbnailUrl: thumbnailUrl,
+                                decryptedBlob: decryptedBlob,
+                            });
+                        });
+                    }).catch((err) => {
+                        console.warn("Unable to decrypt attachment: ", err);
+                        // Set a placeholder image when we can't decrypt the image.
+                        this.setState({
+                            error: err,
+                        });
+                    }).done();
+                } else {
+                    this.setState({
+                        isClean: false,
+                    });
+                }
+            });
+        } else if (content.url !== undefined && this.state.contentUrl === null) {
+            ContentScanner.scanContent(content).then(result => {
+                if (result.clean === true) {
+                    this.setState({
+                        contentUrl: ContentScanner.getUnencryptedContentUrl(content),
+                        isClean: true,
+                    });
+                } else {
+                    this.setState({
+                        isClean: false,
+                    });
+                }
+            });
         }
     },
 
@@ -131,6 +156,28 @@ module.exports = React.createClass({
 
     render: function() {
         const content = this.props.mxEvent.getContent();
+        const isClean = this.state.isClean;
+
+        if (isClean === null) {
+            return (
+                <span className="mx_MFileBody" ref="body">
+                    <img
+                        src={require("../../../../res/img/spinner.gif")}
+                        alt={ _t("Analysis in progress") }
+                        width="32"
+                        height="32"
+                    />
+                    { _t("Analysis in progress") }
+                </span>
+            );
+        } else if (isClean === false) {
+            return (
+                <span className="mx_MFileBody" ref="body">
+                    <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
+                    { _t("The file %(file)s was rejected by the security policy", {file: content.body}) }
+                </span>
+            );
+        }
 
         if (this.state.error !== null) {
             return (

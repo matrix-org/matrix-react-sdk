@@ -77,13 +77,15 @@ function createThumbnail(element, inputWidth, inputHeight, mimeType) {
     canvas.height = targetHeight;
     canvas.getContext("2d").drawImage(element, 0, 0, targetWidth, targetHeight);
     canvas.toBlob(function(thumbnail) {
+        let type = thumbnail === null ? null : thumbnail.type;
+        let size = thumbnail === null ? null : thumbnail.size;
         deferred.resolve({
             info: {
                 thumbnail_info: {
                     w: targetWidth,
                     h: targetHeight,
-                    mimetype: thumbnail.type,
-                    size: thumbnail.size,
+                    mimetype: type,
+                    size: size,
                 },
                 w: inputWidth,
                 h: inputHeight,

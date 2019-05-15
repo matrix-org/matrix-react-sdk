@@ -1623,6 +1623,8 @@
     "Public": "Public",
     "Room type": "Room type",
     "Unauthorized email": "Unauthorized email",
+    "The file %(file)s was rejected by the security policy": "The file %(file)s was rejected by the security policy",
+    "Analysis in progress": "Analysis in progress",
     "Register my account on the red list": "Register my account on the red list",
     "Other users will not be able to discover my account on their searches": "Other users will not be able to discover my account on their searches"
 }
