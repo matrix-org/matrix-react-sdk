@@ -1877,5 +1877,7 @@
     "Limit access to this room to domain members \"%(domain)s\"": "Limiter l'accès à ce salon aux membres du domaine \"%(domain)s\"",
     "Unauthorized email": "Cette adresse e-mail n'est pas autorisée",
     "The file %(file)s was rejected by the security policy": "Le fichier %(file)s a été filtré par la politique de sécurité",
-    "Analysis in progress": "Analyse en cours"
+    "Analysis in progress": "Analyse en cours",
+    "Register my account on the red list": "Inscrire mon compte sur liste rouge",
+    "Other users will not be able to discover my account on their searches": "Les autres utilisateurs ne pourrons pas découvrir mon compte lors de leurs recherches"
 }
