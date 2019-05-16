@@ -1871,6 +1871,8 @@
     "The homeserver may be unavailable or overloaded.": "Le serveur d’accueil est peut-être indisponible ou surchargé.",
     "You have %(count)s unread notifications in a prior version of this room.|other": "Vous avez %(count)s notifications non lues dans une version précédente de ce salon.",
     "You have %(count)s unread notifications in a prior version of this room.|one": "Vous avez %(count)s notification non lue dans une version précédente de ce salon.",
+    "You have already sent an invitation to %(email)s.": "Vous avez déjà envoyé une invitation à %(email)s.",
+    "An invitation has been sent to %(email)s. You will receive a notification when your guest joins the Tchap community.": "Une invitation a été envoyée à %(email)s. Vous recevrez une notification lorsque votre invité rejoindra la communauté Tchap.",
     "Private": "Privée",
     "Public": "Public",
     "Room type": "Type de salon",
