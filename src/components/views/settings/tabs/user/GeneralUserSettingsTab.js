@@ -17,8 +17,7 @@ limitations under the License.
 import React from 'react';
 import {_t} from "../../../../../languageHandler";
 import ProfileSettings from "../../ProfileSettings";
-import EmailAddresses from "../../EmailAddresses";
-import PhoneNumbers from "../../PhoneNumbers";
+import {ShowEmailAddresses} from "../../EmailAddresses";
 import Field from "../../../elements/Field";
 import * as languageHandler from "../../../../../languageHandler";
 import {SettingLevel} from "../../../../../settings/SettingsStore";
@@ -26,6 +25,8 @@ import SettingsStore from "../../../../../settings/SettingsStore";
 import LanguageDropdown from "../../../elements/LanguageDropdown";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import DeactivateAccountDialog from "../../../dialogs/DeactivateAccountDialog";
+import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
+import MatrixClientPeg from "../../../../../MatrixClientPeg";
 const PlatformPeg = require("../../../../../PlatformPeg");
 const sdk = require('../../../../..');
 const Modal = require("../../../../../Modal");
@@ -35,9 +36,12 @@ export default class GeneralUserSettingsTab extends React.Component {
     constructor() {
         super();
 
+        const accountData = MatrixClientPeg.get().getAccountData('im.vector.hide_profile');
+        const redList = accountData ? accountData.event.content.hide_profile : false;
         this.state = {
             language: languageHandler.getCurrentLanguage(),
             theme: SettingsStore.getValueAt(SettingLevel.ACCOUNT, "theme"),
+            redList: redList,
         };
     }
 
@@ -86,6 +90,16 @@ export default class GeneralUserSettingsTab extends React.Component {
         });
     };
 
+    _onRedlistOptionChange = async () => {
+        try {
+            const redlistChecked = this.state.redList;
+            await MatrixClientPeg.get().setAccountData('im.vector.hide_profile', {hide_profile: !redlistChecked});
+            this.setState({redList: !redlistChecked});
+        } catch (err) {
+            console.error("Error setting AccountData 'im.vector.hide_profile': " + err);
+        }
+    };
+
     _onDeactivateClicked = () => {
         Modal.createTrackedDialog('Deactivate Account', '', DeactivateAccountDialog, {});
     };
@@ -113,16 +127,22 @@ export default class GeneralUserSettingsTab extends React.Component {
         return (
             <div className="mx_SettingsTab_section mx_GeneralUserSettingsTab_accountSection">
                 <span className="mx_SettingsTab_subheading">{_t("Account")}</span>
+                    <LabelledToggleSwitch value={this.state.redList}
+                                      onChange={this._onRedlistOptionChange}
+                                      label={_t('Register my account on the red list')} />
+                <p className="mx_SettingsTab_subsectionText">
+                    ({_t("Other users will not be able to discover my account on their searches")})
+                </p>
+                <br />
                 <p className="mx_SettingsTab_subsectionText">
                     {_t("Set a new account password...")}
                 </p>
                 {passwordChangeForm}
 
                 <span className="mx_SettingsTab_subheading">{_t("Email addresses")}</span>
-                <EmailAddresses />
 
-                <span className="mx_SettingsTab_subheading">{_t("Phone numbers")}</span>
-                <PhoneNumbers />
+                <ShowEmailAddresses />
+
             </div>
         );
     }
@@ -143,8 +163,9 @@ export default class GeneralUserSettingsTab extends React.Component {
         return (
             <div className="mx_SettingsTab_section mx_GeneralUserSettingsTab_themeSection">
                 <span className="mx_SettingsTab_subheading">{_t("Theme")}</span>
-                <Field id="theme" label={_t("Theme")} element="select"
+                <Field id="theme" label={_t("Theme")} element="select" disabled={true}
                        value={this.state.theme} onChange={this._onThemeChange}>
+                    <option value="tchap">{_t("Tchap theme")}</option>
                     <option value="light">{_t("Light theme")}</option>
                     <option value="dark">{_t("Dark theme")}</option>
                 </Field>

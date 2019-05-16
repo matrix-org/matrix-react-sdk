@@ -32,6 +32,7 @@ import {CancelButton} from './SimpleRoomHeader';
 import SettingsStore from "../../../settings/SettingsStore";
 import RoomHeaderButtons from '../right_panel/RoomHeaderButtons';
 import E2EIcon from './E2EIcon';
+import DMRoomMap from '../../../utils/DMRoomMap';
 
 module.exports = React.createClass({
     displayName: 'RoomHeader',
@@ -110,13 +111,6 @@ module.exports = React.createClass({
 
     _onRoomNameChange: function(room) {
         this.forceUpdate();
-    },
-
-    onShareRoomClick: function(ev) {
-        const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
-        Modal.createTrackedDialog('share room dialog', '', ShareDialog, {
-            target: this.props.room,
-        });
     },
 
     _hasUnreadPins: function() {
@@ -218,7 +212,9 @@ module.exports = React.createClass({
                 viewAvatarOnClick={true} />);
         }
 
-        if (this.props.onSettingsClick) {
+        const dmRoomMap = new DMRoomMap(MatrixClientPeg.get());
+        const isDMRoom = Boolean(dmRoomMap.getUserIdForRoomId(this.props.room.roomId));
+        if (this.props.onSettingsClick && !isDMRoom) {
             settingsButton =
                 <AccessibleButton className="mx_RoomHeader_button mx_RoomHeader_settingsButton"
                     onClick={this.props.onSettingsClick}
@@ -261,21 +257,12 @@ module.exports = React.createClass({
         }
 
         let searchButton;
-        if (this.props.onSearchClick && this.props.inRoom) {
+        const encryptedState = this.props.room.currentState.getStateEvents("m.room.encryption").length > 0;
+        if (this.props.onSearchClick && this.props.inRoom && !encryptedState) {
             searchButton =
                 <AccessibleButton className="mx_RoomHeader_button mx_RoomHeader_searchButton"
                     onClick={this.props.onSearchClick}
                     title={_t("Search")}
-                >
-                </AccessibleButton>;
-        }
-
-        let shareRoomButton;
-        if (this.props.inRoom) {
-            shareRoomButton =
-                <AccessibleButton className="mx_RoomHeader_button mx_RoomHeader_shareButton"
-                    onClick={this.onShareRoomClick}
-                    title={_t('Share room')}
                 >
                 </AccessibleButton>;
         }
@@ -291,7 +278,6 @@ module.exports = React.createClass({
             <div className="mx_RoomHeader_buttons">
                 { settingsButton }
                 { pinnedEventsButton }
-                { shareRoomButton }
                 { manageIntegsButton }
                 { forgetButton }
                 { searchButton }

@@ -117,20 +117,13 @@ export default React.createClass({
             });
         }).done();
 
-        this._intervalId = null;
-        if (this.props.poll) {
-            this._intervalId = setInterval(() => {
-                this._authLogic.poll();
-            }, 2000);
-        }
+        // The poll method is triggered here only once in order to finalize the registration session configuration.
+        // As the finalization of the registration is done using a server-side rendered page, we do not use the timer polling.
+        this._authLogic.poll();
     },
 
     componentWillUnmount: function() {
         this._unmounted = true;
-
-        if (this._intervalId !== null) {
-            clearInterval(this._intervalId);
-        }
     },
 
     tryContinue: function() {

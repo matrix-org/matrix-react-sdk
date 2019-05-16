@@ -169,8 +169,7 @@ module.exports = React.createClass({
     // indicate other sizes.
     _getSize: function() {
         if (this._shouldShowConnectionError() ||
-            this.props.hasActiveCall ||
-            this.props.sentMessageAndIsAlone
+            this.props.hasActiveCall
         ) {
             return STATUS_BAR_EXPANDED;
         } else if (this.state.unsentMessages.length > 0) {
@@ -220,16 +219,10 @@ module.exports = React.createClass({
         });
 
         if (hasUDE) {
-            title = _t("Message not sent due to unknown devices being present");
-            content = _t(
-                "<showDevicesText>Show devices</showDevicesText>, <sendAnywayText>send anyway</sendAnywayText> or <cancelText>cancel</cancelText>.",
-                {},
-                {
-                    'showDevicesText': (sub) => <a className="mx_RoomStatusBar_resend_link" key="resend" onClick={this._onShowDevicesClick}>{ sub }</a>,
-                    'sendAnywayText': (sub) => <a className="mx_RoomStatusBar_resend_link" key="sendAnyway" onClick={this._onSendWithoutVerifyingClick}>{ sub }</a>,
-                    'cancelText': (sub) => <a className="mx_RoomStatusBar_resend_link" key="cancel" onClick={this._onCancelAllClick}>{ sub }</a>,
-                },
-            );
+            // The dialog box asking about what to do if there is an unknown device
+            // in the room have been disabled for the moment.
+            // We consider "Send Anyway" as the default choice.
+            this._onSendWithoutVerifyingClick();
         } else {
             let consentError = null;
             let resourceLimitError = null;
@@ -330,24 +323,6 @@ module.exports = React.createClass({
             return (
                 <div className="mx_RoomStatusBar_callBar">
                     <b>{ _t('Active call') }</b>
-                </div>
-            );
-        }
-
-        // If you're alone in the room, and have sent a message, suggest to invite someone
-        if (this.props.sentMessageAndIsAlone && !this.props.isPeeking) {
-            return (
-                <div className="mx_RoomStatusBar_isAlone">
-                    { _t("There's no one else here! Would you like to <inviteText>invite others</inviteText> " +
-                            "or <nowarnText>stop warning about the empty room</nowarnText>?",
-                        {},
-                        {
-                            'inviteText': (sub) =>
-                                <a className="mx_RoomStatusBar_resend_link" key="invite" onClick={this.props.onInviteClick}>{ sub }</a>,
-                            'nowarnText': (sub) =>
-                                <a className="mx_RoomStatusBar_resend_link" key="nowarn" onClick={this.props.onStopWarningClick}>{ sub }</a>,
-                        },
-                    ) }
                 </div>
             );
         }

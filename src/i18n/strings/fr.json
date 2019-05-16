@@ -244,6 +244,8 @@
     "Room %(roomId)s not visible": "Le salon %(roomId)s n'est pas visible",
     "Room Colour": "Couleur du salon",
     "Room name (optional)": "Nom du salon (facultatif)",
+    "Room name (required)": "Nom du salon (obligatoire)",
+    "Room name is required": "Le nom du sallon est obligatoire",
     "Rooms": "Salons",
     "Scroll to bottom of page": "Aller en bas de la page",
     "Scroll to unread messages": "Aller aux messages non lus",
@@ -866,6 +868,7 @@
     "Mirror local video feed": "Inverser horizontalement la vidéo locale (effet miroir)",
     "Light theme": "Thème clair",
     "Dark theme": "Thème sombre",
+    "Tchap theme": "Thème Tchap",
     "Ignored Users": "Utilisateurs ignorés",
     "An email has been sent to %(emailAddress)s. Once you've followed the link it contains, click below.": "Un e-mail a été envoyé à %(emailAddress)s. Après avoir suivi le lien présent dans celui-ci, cliquez ci-dessous.",
     "Ignores a user, hiding their messages from you": "Ignore un utilisateur, en masquant ses messages",
@@ -1869,5 +1872,14 @@
     "You have %(count)s unread notifications in a prior version of this room.|other": "Vous avez %(count)s notifications non lues dans une version précédente de ce salon.",
     "You have %(count)s unread notifications in a prior version of this room.|one": "Vous avez %(count)s notification non lue dans une version précédente de ce salon.",
     "You have already sent an invitation to %(email)s.": "Vous avez déjà envoyé une invitation à %(email)s.",
-    "An invitation has been sent to %(email)s. You will receive a notification when your guest joins the Tchap community.": "Une invitation a été envoyée à %(email)s. Vous recevrez une notification lorsque votre invité rejoindra la communauté Tchap."
+    "An invitation has been sent to %(email)s. You will receive a notification when your guest joins the Tchap community.": "Une invitation a été envoyée à %(email)s. Vous recevrez une notification lorsque votre invité rejoindra la communauté Tchap.",
+    "Private": "Privée",
+    "Public": "Public",
+    "Room type": "Type de salon",
+    "Limit access to this room to domain members \"%(domain)s\"": "Limiter l'accès à ce salon aux membres du domaine \"%(domain)s\"",
+    "Unauthorized email": "Cette adresse e-mail n'est pas autorisée",
+    "The file %(file)s was rejected by the security policy": "Le fichier %(file)s a été filtré par la politique de sécurité",
+    "Analysis in progress": "Analyse en cours",
+    "Register my account on the red list": "Inscrire mon compte sur liste rouge",
+    "Other users will not be able to discover my account on their searches": "Les autres utilisateurs ne pourrons pas découvrir mon compte lors de leurs recherches"
 }

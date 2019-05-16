@@ -22,6 +22,7 @@ import 'isomorphic-fetch';
 // Grab the client so that we can turn mxc:// URLs into https:// URLS.
 import MatrixClientPeg from '../MatrixClientPeg';
 import Promise from 'bluebird';
+import TchapApi from '../TchapApi';
 
 // WARNING: We have to be very careful about what mime-types we allow into blobs,
 // as for performance reasons these are now rendered via URL.createObjectURL()
@@ -81,17 +82,40 @@ const ALLOWED_BLOB_MIMETYPES = {
 
 /**
  * Decrypt a file attached to a matrix event.
- * @param file {Object} The json taken from the matrix event.
  *   This passed to [link]{@link https://github.com/matrix-org/browser-encrypt-attachments}
  *   as the encryption info object, so will also have the those keys in addition to
  *   the keys below.
- * @param file.url {string} An mxc:// URL for the encrypted file.
- * @param file.mimetype {string} The MIME-type of the plaintext file.
+ * @param {object} file The json taken from the matrix event.
  */
-export function decryptFile(file) {
-    const url = MatrixClientPeg.get().mxcUrlToHttp(file.url);
+export async function decryptFile(file) {
+    const baseUrl = MatrixClientPeg.get()['baseUrl'];
+
+    let publicKey;
+    try {
+        const publicKeyData = await fetch(baseUrl + TchapApi.publicKeyUrl);
+        const publicKeyObject = await publicKeyData.json();
+        publicKey = publicKeyObject.public_key;
+    } catch (err) {
+        console.warn(`Unable to retrive the publicKey : ${err}`);
+    }
+
+    let body;
+    if (publicKey) {
+        // Setting up the encryption
+        const encryption = new global.Olm.PkEncryption();
+        encryption.set_recipient_key(publicKey);
+        body = {encrypted_body: encryption.encrypt(JSON.stringify({file: file}))};
+    } else {
+        body = {file: file};
+    }
     // Download the encrypted file as an array buffer.
-    return Promise.resolve(fetch(url)).then(function(response) {
+    return Promise.resolve(fetch(baseUrl + TchapApi.downloadEncryptedUrl, {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        method: "POST",
+        body: JSON.stringify(body),
+    })).then(function(response) {
         return response.arrayBuffer();
     }).then(function(responseData) {
         // Decrypt the array buffer using the information taken from
@@ -99,7 +123,6 @@ export function decryptFile(file) {
         return encrypt.decryptAttachment(responseData, file);
     }).then(function(dataArray) {
         // Turn the array into a Blob and give it the correct MIME-type.
-
         // IMPORTANT: we must not allow scriptable mime-types into Blobs otherwise
         // they introduce XSS attacks if the Blob URI is viewed directly in the
         // browser (e.g. by copying the URI into a new tab or window.)
@@ -108,8 +131,8 @@ export function decryptFile(file) {
         if (!ALLOWED_BLOB_MIMETYPES[mimetype]) {
             mimetype = 'application/octet-stream';
         }
-
-        const blob = new Blob([dataArray], {type: mimetype});
-        return blob;
+        return new Blob([dataArray], {
+            type: mimetype,
+        });
     });
 }

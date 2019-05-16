@@ -40,11 +40,6 @@ export default class RoomSettingsDialog extends React.Component {
             <GeneralRoomSettingsTab roomId={this.props.roomId} />,
         ));
         tabs.push(new Tab(
-            _td("Security & Privacy"),
-            "mx_RoomSettingsDialog_securityIcon",
-            <SecurityRoomSettingsTab roomId={this.props.roomId} />,
-        ));
-        tabs.push(new Tab(
             _td("Roles & Permissions"),
             "mx_RoomSettingsDialog_rolesIcon",
             <RolesRoomSettingsTab roomId={this.props.roomId} />,
