@@ -91,6 +91,26 @@ class Tchap {
         });
     }
 
+    static lookupThreePid(medium, address) {
+        const homeserverUrl = MatrixClientPeg.get().getHomeserverUrl();
+        const homeserverName = MatrixClientPeg.get().getIdentityServerUrl().split(TchapApi.hostBase)[1];
+        const accessToken = MatrixClientPeg.get().getAccessToken();
+        const url = `${homeserverUrl}${TchapApi.lookup}?medium=${medium}&address=${address}&id_server=${homeserverName}`;
+        const options = {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        };
+
+        return fetch(url, options).then(res => res.json())
+            .catch(err => {
+                if (err) {
+                    return MatrixClientPeg.get().lookupThreePid(medium, address);
+                }
+            });
+    }
+
     /**
      * A static function shuffeling an array.
      * @param {array} arr The array to shuffle.
