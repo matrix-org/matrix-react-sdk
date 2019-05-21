@@ -91,9 +91,15 @@ class Tchap {
         });
     }
 
+    /**
+     * Lookup using the proxied API.
+     * @param {string} medium
+     * @param {string} address
+     * @returns {object} A promise
+     */
     static lookupThreePid(medium, address) {
         const homeserverUrl = MatrixClientPeg.get().getHomeserverUrl();
-        const homeserverName = MatrixClientPeg.get().getIdentityServerUrl().split(TchapApi.hostBase)[1];
+        const homeserverName = MatrixClientPeg.get().getIdentityServerUrl().split("https://")[1];
         const accessToken = MatrixClientPeg.get().getAccessToken();
         const url = `${homeserverUrl}${TchapApi.lookup}?medium=${medium}&address=${address}&id_server=${homeserverName}`;
         const options = {
@@ -103,12 +109,17 @@ class Tchap {
             },
         };
 
-        return fetch(url, options).then(res => res.json())
-            .catch(err => {
-                if (err) {
-                    return MatrixClientPeg.get().lookupThreePid(medium, address);
-                }
-            });
+        return fetch(url, options).then(res => {
+            if (res.status && res.status !== 200) {
+                console.log("Lookup : Use the MatrixClientPeg lookup");
+                return MatrixClientPeg.get().lookupThreePid(medium, address);
+            } else {
+                return res.json();
+            }
+        }).catch(err => {
+            console.log("Lookup : Use the MatrixClientPeg lookup");
+            return MatrixClientPeg.get().lookupThreePid(medium, address);
+        });
     }
 
     /**

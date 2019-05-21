@@ -25,6 +25,7 @@ import dis from '../../../dispatcher';
 import classNames from 'classnames';
 import { _t } from '../../../languageHandler';
 import {getUserNameColorClass} from '../../../utils/FormattingUtils';
+import Tchap from '../../../Tchap';
 
 const MessageCase = Object.freeze({
     NotLoggedIn: "NotLoggedIn",
@@ -93,7 +94,7 @@ module.exports = React.createClass({
         // so we can check them against the one that was invited
         if (this.props.inviterName && this.props.invitedEmail) {
             this.setState({busy: true});
-            MatrixClientPeg.get().lookupThreePid(
+            Tchap.lookupThreePid(
                 'email', this.props.invitedEmail,
             ).finally(() => {
                 this.setState({busy: false});

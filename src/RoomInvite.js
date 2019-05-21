@@ -25,6 +25,7 @@ import sdk from './';
 import dis from './dispatcher';
 import DMRoomMap from './utils/DMRoomMap';
 import {_t} from './languageHandler';
+import Tchap from './Tchap';
 
 /**
  * Invites multiple addresses to a room
@@ -118,7 +119,7 @@ function _onStartChatFinished(shouldInvite, addrs) {
     const addrKnown = addrs.map((addr) => addr.isKnown)[0];
 
     if (addrKnown === true) {
-        matrixClient.lookupThreePid(addrType, addrText).then(res => {
+        Tchap.lookupThreePid(addrType, addrText).then(res => {
             const invitedUserId = Object.entries(res).length === 0 ? addrText : res.mxid;
             const selectedRoom = _selectDirectChat(invitedUserId);
             const roomStatus = selectedRoom ? selectedRoom.status : null;
