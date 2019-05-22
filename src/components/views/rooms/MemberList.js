@@ -23,7 +23,6 @@ import dis from '../../../dispatcher';
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import {isValid3pidInvite} from "../../../RoomInvite";
 import DMRoomMap from "../../../utils/DMRoomMap";
-import Tchap from '../../../Tchap';
 const MatrixClientPeg = require("../../../MatrixClientPeg");
 const sdk = require('../../../index');
 const rate_limited_func = require('../../../ratelimitedfunc');
@@ -452,9 +451,8 @@ module.exports = React.createClass({
         const room = cli.getRoom(this.props.roomId);
         const dmRoomMap = new DMRoomMap(MatrixClientPeg.get());
         const isDMRoom = Boolean(dmRoomMap.getUserIdForRoomId(this.props.roomId));
-        const isUserExtern = Tchap.isCurrentUserExtern();
         let inviteButton;
-        if (room && room.getMyMembership() === 'join' && !isDMRoom && !isUserExtern) {
+        if (room && room.getMyMembership() === 'join' && !isDMRoom) {
             const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
             inviteButton =
                 <AccessibleButton className="mx_MemberList_invite" onClick={this.onInviteButtonClick}>
