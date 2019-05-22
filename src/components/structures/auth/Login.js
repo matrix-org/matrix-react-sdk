@@ -187,22 +187,7 @@ module.exports = React.createClass({
                         </div>
                     );
                 } else if (error.httpStatus === 401 || error.httpStatus === 403) {
-                    if (SdkConfig.get()['disable_custom_urls']) {
-                        errorText = (
-                            <div>
-                                <div>{ _t('Incorrect username and/or password.') }</div>
-                                <div className="mx_Login_smallError">
-                                    { _t('Please note you are logging into the %(hs)s server, not matrix.org.',
-                                        {
-                                            hs: this.props.defaultHsUrl.replace(/^https?:\/\//, ''),
-                                        })
-                                    }
-                                </div>
-                            </div>
-                        );
-                    } else {
-                        errorText = _t('Incorrect username and/or password.');
-                    }
+                    errorText = _t('Incorrect username and/or password.');
                 } else {
                     // other errors, not specific to doing a password login
                     errorText = this._errorTextFromError(error);
