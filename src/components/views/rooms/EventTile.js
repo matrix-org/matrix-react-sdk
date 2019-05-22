@@ -469,7 +469,9 @@ module.exports = withMatrixClient(React.createClass({
             if (this.state.verified) {
                 return; // no icon for verified
             } else {
-                return (<E2ePadlockUnverified {...props} />);
+                // "Unverified" status is hidden until another solution is found in order to make
+                // users understand that their messages are encrypted regardless of the icon used.
+                return;
             }
         }
 

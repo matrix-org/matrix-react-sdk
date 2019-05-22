@@ -766,7 +766,7 @@
     "Offline": "Offline",
     "Unknown": "Unknown",
     "Seen by %(userName)s at %(dateTime)s": "Seen by %(userName)s at %(dateTime)s",
-    "Seen by %(displayName)s (%(userName)s) at %(dateTime)s": "Seen by %(displayName)s (%(userName)s) at %(dateTime)s",
+    "Seen by %(displayName)s at %(dateTime)s": "Seen by %(displayName)s at %(dateTime)s",
     "Replying": "Replying",
     "Direct Chat": "Direct Chat",
     "No rooms to show": "No rooms to show",
