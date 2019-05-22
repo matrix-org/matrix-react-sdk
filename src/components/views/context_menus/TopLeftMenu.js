@@ -91,7 +91,6 @@ export class TopLeftMenu extends React.Component {
         return <div className="mx_TopLeftMenu">
             <div className="mx_TopLeftMenu_section_noIcon">
                 <div>{this.props.displayName}</div>
-                <div className="mx_TopLeftMenu_greyedText">{this.props.userId}</div>
                 {hostingSignup}
             </div>
             {homePageSection}

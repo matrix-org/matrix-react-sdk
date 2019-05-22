@@ -188,20 +188,11 @@ module.exports = React.createClass({
         let title;
         if (this.props.timestamp) {
             const dateString = formatDate(new Date(this.props.timestamp), this.props.showTwelveHour);
-            if (!this.props.member || this.props.fallbackUserId === this.props.member.rawDisplayName) {
-                title = _t(
-                    "Seen by %(userName)s at %(dateTime)s",
-                    {userName: this.props.fallbackUserId,
-                    dateTime: dateString},
-                );
-            } else {
-                title = _t(
-                    "Seen by %(displayName)s (%(userName)s) at %(dateTime)s",
-                    {displayName: this.props.member.rawDisplayName,
-                    userName: this.props.fallbackUserId,
-                    dateTime: dateString},
-                );
-            }
+            title = _t(
+                "Seen by %(displayName)s at %(dateTime)s",
+                {displayName: this.props.member.rawDisplayName,
+                dateTime: dateString},
+            );
         }
 
         return (

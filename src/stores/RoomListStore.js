@@ -18,6 +18,7 @@ import dis from '../dispatcher';
 import DMRoomMap from '../utils/DMRoomMap';
 import Unread from '../Unread';
 import SettingsStore from "../settings/SettingsStore";
+import Email from '../email';
 
 /*
 Room sorting algorithm:
@@ -563,6 +564,8 @@ class RoomListStore extends Store {
                     return lists[t] !== undefined || (!t.startsWith('m.') && this._state.tagsEnabled);
                 });
 
+                const dmUserId = dmRoomMap.getUserIdForRoomId(room.roomId);
+
                 if (tagNames.length) {
                     for (let i = 0; i < tagNames.length; i++) {
                         const tagName = tagNames[i];
@@ -573,9 +576,11 @@ class RoomListStore extends Store {
                         if (LIST_ORDERS[tagName] === 'recent') category = this._calculateCategory(room);
                         lists[tagName].push({room, category: category});
                     }
-                } else if (dmRoomMap.getUserIdForRoomId(room.roomId)) {
-                    // "Direct Message" rooms (that we're still in and that aren't otherwise tagged)
-                    lists["im.vector.fake.direct"].push({room, category: this._calculateCategory(room)});
+                } else if (dmUserId) {
+                    // Hiding direct rooms created with an email invite.
+                    if (!Email.looksValid(dmUserId)) {
+                        lists["im.vector.fake.direct"].push({room, category: this._calculateCategory(room)});
+                    }
                 } else {
                     lists["im.vector.fake.recent"].push({room, category: this._calculateCategory(room)});
                 }
