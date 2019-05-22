@@ -1618,11 +1618,15 @@
     "Failed to set direct chat tag": "Failed to set direct chat tag",
     "Failed to remove tag %(tagName)s from room": "Failed to remove tag %(tagName)s from room",
     "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room",
+    "You have already sent an invitation to %(email)s.": "You have already sent an invitation to %(email)s.",
+    "An invitation has been sent to %(email)s. You will receive a notification when your guest joins the Tchap community.": "An invitation has been sent to %(email)s. You will receive a notification when your guest joins the Tchap community.",
     "Limit access to this room to domain members \"%(domain)s\"": "Limit access to this room to domain members \"%(domain)s\"",
     "Private": "Private",
     "Public": "Public",
     "Room type": "Room type",
     "Unauthorized email": "Unauthorized email",
+    "The file %(file)s was rejected by the security policy": "The file %(file)s was rejected by the security policy",
+    "Analysis in progress": "Analysis in progress",
     "Register my account on the red list": "Register my account on the red list",
     "Other users will not be able to discover my account on their searches": "Other users will not be able to discover my account on their searches"
 }

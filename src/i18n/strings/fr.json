@@ -1871,11 +1871,15 @@
     "The homeserver may be unavailable or overloaded.": "Le serveur d’accueil est peut-être indisponible ou surchargé.",
     "You have %(count)s unread notifications in a prior version of this room.|other": "Vous avez %(count)s notifications non lues dans une version précédente de ce salon.",
     "You have %(count)s unread notifications in a prior version of this room.|one": "Vous avez %(count)s notification non lue dans une version précédente de ce salon.",
+    "You have already sent an invitation to %(email)s.": "Vous avez déjà envoyé une invitation à %(email)s.",
+    "An invitation has been sent to %(email)s. You will receive a notification when your guest joins the Tchap community.": "Une invitation a été envoyée à %(email)s. Vous recevrez une notification lorsque votre invité rejoindra la communauté Tchap.",
     "Private": "Privée",
     "Public": "Public",
     "Room type": "Type de salon",
     "Limit access to this room to domain members \"%(domain)s\"": "Limiter l'accès à ce salon aux membres du domaine \"%(domain)s\"",
     "Unauthorized email": "Cette adresse e-mail n'est pas autorisée",
+    "The file %(file)s was rejected by the security policy": "Le fichier %(file)s a été filtré par la politique de sécurité",
+    "Analysis in progress": "Analyse en cours",
     "Register my account on the red list": "Inscrire mon compte sur liste rouge",
     "Other users will not be able to discover my account on their searches": "Les autres utilisateurs ne pourrons pas découvrir mon compte lors de leurs recherches"
 }
