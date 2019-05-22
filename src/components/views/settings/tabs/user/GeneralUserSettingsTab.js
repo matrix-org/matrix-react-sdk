@@ -27,6 +27,7 @@ import AccessibleButton from "../../../elements/AccessibleButton";
 import DeactivateAccountDialog from "../../../dialogs/DeactivateAccountDialog";
 import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import MatrixClientPeg from "../../../../../MatrixClientPeg";
+import Tchap from '../../../../../Tchap';
 const PlatformPeg = require("../../../../../PlatformPeg");
 const sdk = require('../../../../..');
 const Modal = require("../../../../../Modal");
@@ -115,6 +116,23 @@ export default class GeneralUserSettingsTab extends React.Component {
 
     _renderAccountSection() {
         const ChangePassword = sdk.getComponent("views.settings.ChangePassword");
+        const isUserExtern = Tchap.isCurrentUserExtern();
+        let redListOption;
+
+        if (!isUserExtern) {
+            redListOption = (
+                <span>
+                    <LabelledToggleSwitch value={this.state.redList}
+                        onChange={this._onRedlistOptionChange}
+                        label={_t('Register my account on the red list')} />
+                    <p className="mx_SettingsTab_subsectionText">
+                    ({_t("Other users will not be able to discover my account on their searches")})
+                    </p>
+                    <br />
+                </span>
+            );
+        }
+
         const passwordChangeForm = (
             <ChangePassword
                 className="mx_GeneralUserSettingsTab_changePassword"
@@ -127,13 +145,7 @@ export default class GeneralUserSettingsTab extends React.Component {
         return (
             <div className="mx_SettingsTab_section mx_GeneralUserSettingsTab_accountSection">
                 <span className="mx_SettingsTab_subheading">{_t("Account")}</span>
-                    <LabelledToggleSwitch value={this.state.redList}
-                                      onChange={this._onRedlistOptionChange}
-                                      label={_t('Register my account on the red list')} />
-                <p className="mx_SettingsTab_subsectionText">
-                    ({_t("Other users will not be able to discover my account on their searches")})
-                </p>
-                <br />
+                {redListOption}
                 <p className="mx_SettingsTab_subsectionText">
                     {_t("Set a new account password...")}
                 </p>
