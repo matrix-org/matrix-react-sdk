@@ -29,7 +29,6 @@ import { Group } from 'matrix-js-sdk';
 import PropTypes from 'prop-types';
 import RoomTile from "../views/rooms/RoomTile";
 import LazyRenderList from "../views/elements/LazyRenderList";
-import Tchap from '../../Tchap';
 
 // turn this on for drop & drag console debugging galore
 const debug = false;
@@ -198,7 +197,6 @@ const RoomSubList = React.createClass({
             {count: 0, highlight: true};
         const subListNotifCount = subListNotifications.count;
         const subListNotifHighlight = subListNotifications.highlight;
-        const isUserExtern = Tchap.isCurrentUserExtern();
 
         let badge;
         if (!this.props.collapsed) {
@@ -232,7 +230,7 @@ const RoomSubList = React.createClass({
         }
 
         let addRoomButton;
-        if (this.props.onAddRoom && !isUserExtern) {
+        if (this.props.onAddRoom) {
             addRoomButton = (
                 <AccessibleButton onClick={ this.props.onAddRoom } className="mx_RoomSubList_addRoom" />
             );
