@@ -92,6 +92,37 @@ class Tchap {
     }
 
     /**
+     * Lookup using the proxied API.
+     * @param {string} medium
+     * @param {string} address
+     * @returns {object} A promise
+     */
+    static lookupThreePid(medium, address) {
+        const homeserverUrl = MatrixClientPeg.get().getHomeserverUrl();
+        const homeserverName = MatrixClientPeg.get().getIdentityServerUrl().split("https://")[1];
+        const accessToken = MatrixClientPeg.get().getAccessToken();
+        const url = `${homeserverUrl}${TchapApi.lookup}?medium=${medium}&address=${address}&id_server=${homeserverName}`;
+        const options = {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        };
+
+        return fetch(url, options).then(res => {
+            if (res.status && res.status !== 200) {
+                console.log("Lookup : Use the MatrixClientPeg lookup");
+                return MatrixClientPeg.get().lookupThreePid(medium, address);
+            } else {
+                return res.json();
+            }
+        }).catch(err => {
+            console.log("Lookup : Use the MatrixClientPeg lookup");
+            return MatrixClientPeg.get().lookupThreePid(medium, address);
+        });
+    }
+
+    /**
      * A static function shuffeling an array.
      * @param {array} arr The array to shuffle.
      * @returns {array} The array shuffeled.

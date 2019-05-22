@@ -8,4 +8,5 @@ export default {
     downloadEncryptedUrl: "/_matrix/media_proxy/unstable/download_encrypted",
     downloadUnencryptedThumbnailUrl: "/_matrix/media_proxy/unstable/thumbnail/",
     thumbnailParams: "?width=800&height=600&method=scale",
+    lookup: "/_matrix/client/unstable/account/3pid/lookup",
 };
