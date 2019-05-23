@@ -62,7 +62,7 @@ export function showStartChatInviteDialog() {
         validAddressTypes: ['mx-user-id', 'email'],
         button: _t("Start Chat"),
         invitationType: 'direct',
-        onFinished: _onStartChatFinished,
+        onFinished: onStartChatFinished,
     });
 }
 
@@ -109,7 +109,7 @@ export function isValid3pidInvite(event) {
     return true;
 }
 
-function _onStartChatFinished(shouldInvite, addrs) {
+export function onStartChatFinished(shouldInvite, addrs) {
     if (!shouldInvite) return;
 
     const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");

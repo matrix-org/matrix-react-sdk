@@ -28,14 +28,13 @@ limitations under the License.
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import dis from '../../../dispatcher';
 import Modal from '../../../Modal';
 import sdk from '../../../index';
 import { _t } from '../../../languageHandler';
-import createRoom from '../../../createRoom';
+import {onStartChatFinished} from "../../../RoomInvite";
 import DMRoomMap from '../../../utils/DMRoomMap';
-import Unread from '../../../Unread';
+import Tchap from '../../../Tchap';
 import { findReadReceiptFromUserId } from '../../../utils/Receipt';
 import withMatrixClient from '../../../wrappers/withMatrixClient';
 import AccessibleButton from '../elements/AccessibleButton';
@@ -530,11 +529,20 @@ module.exports = withMatrixClient(React.createClass({
         this._applyPowerChange(roomId, target, powerLevel, powerLevelEvent);
     },
 
+    _buildAddrObject: function() {
+        const addrObject = {};
+        const user = this.props.member.user;
+        addrObject.address = user.userId;
+        addrObject.avatarMxc = user.avatarUrl;
+        addrObject.displayName = user.displayName;
+        addrObject.addressType = "mx-user-id";
+        addrObject.isKnown = true;
+
+        return [addrObject];
+    },
+
     onNewDMClick: function() {
-        this.setState({ updating: this.state.updating + 1 });
-        createRoom({dmUserId: this.props.member.userId}).finally(() => {
-            this.setState({ updating: this.state.updating - 1 });
-        }).done();
+        onStartChatFinished(true, this._buildAddrObject());
     },
 
     onLeaveClick: function() {
@@ -669,21 +677,19 @@ module.exports = withMatrixClient(React.createClass({
         );
     },
 
-    onShareUserClick: function() {
-        const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
-        Modal.createTrackedDialog('share room member dialog', '', ShareDialog, {
-            target: this.props.member,
-        });
-    },
-
     _renderUserOptions: function() {
         const cli = this.props.matrixClient;
         const member = this.props.member;
+        const dmRoomMap = new DMRoomMap(cli);
+        const dmRooms = dmRoomMap.getDMRoomsForUserId(member.userId);
+        const isDirect = dmRooms.includes(member.roomId);
+        const userExtern = Tchap.isCurrentUserExtern();
+        const otherUserExtern = Tchap.isUserExtern(member.userId);
 
         let ignoreButton = null;
         let insertPillButton = null;
-        let inviteUserButton = null;
         let readReceiptButton = null;
+        let sendMessage = null;
 
         // Only allow the user to ignore the user if its not ourselves
         // same goes for jumping to read receipt
@@ -727,29 +733,10 @@ module.exports = withMatrixClient(React.createClass({
                 );
             }
 
-            if (!member || !member.membership || member.membership === 'leave') {
-                const roomId = member && member.roomId ? member.roomId : RoomViewStore.getRoomId();
-                const onInviteUserButton = async () => {
-                    try {
-                        // We use a MultiInviter to re-use the invite logic, even though
-                        // we're only inviting one user.
-                        const inviter = new MultiInviter(roomId);
-                        await inviter.invite([member.userId]).then(() => {
-                            if (inviter.getCompletionState(userId) !== "invited")
-                                throw new Error(inviter.getErrorText(userId));
-                        });
-                    } catch (err) {
-                        const ErrorDialog = sdk.getComponent('dialogs.ErrorDialog');
-                        Modal.createTrackedDialog('Failed to invite', '', ErrorDialog, {
-                            title: _t('Failed to invite'),
-                            description: ((err && err.message) ? err.message : _t("Operation failed")),
-                        });
-                    }
-                };
-
-                inviteUserButton = (
-                    <AccessibleButton onClick={onInviteUserButton} className="mx_MemberInfo_field">
-                        { _t('Invite') }
+            if (!isDirect && !(userExtern && otherUserExtern)) {
+                sendMessage = (
+                    <AccessibleButton onClick={this.onNewDMClick} className={"mx_MemberInfo_field"}>
+                        { _t('Send a message') }
                     </AccessibleButton>
                 );
             }
@@ -762,7 +749,7 @@ module.exports = withMatrixClient(React.createClass({
                     { readReceiptButton }
                     { insertPillButton }
                     { ignoreButton }
-                    { inviteUserButton }
+                    { sendMessage }
                 </div>
             </div>
         );
@@ -775,65 +762,6 @@ module.exports = withMatrixClient(React.createClass({
         let muteButton;
         let giveModButton;
         let spinner;
-
-        if (this.props.member.userId !== this.props.matrixClient.credentials.userId) {
-            const dmRoomMap = new DMRoomMap(this.props.matrixClient);
-            // dmRooms will not include dmRooms that we have been invited into but did not join.
-            // Because DMRoomMap runs off account_data[m.direct] which is only set on join of dm room.
-            // XXX: we potentially want DMs we have been invited to, to also show up here :L
-            // especially as logic below concerns specially if we haven't joined but have been invited
-            const dmRooms = dmRoomMap.getDMRoomsForUserId(this.props.member.userId);
-
-            const RoomTile = sdk.getComponent("rooms.RoomTile");
-
-            const tiles = [];
-            for (const roomId of dmRooms) {
-                const room = this.props.matrixClient.getRoom(roomId);
-                if (room) {
-                    const myMembership = room.getMyMembership();
-                    // not a DM room if we have are not joined
-                    if (myMembership !== 'join') continue;
-
-                    const them = this.props.member;
-                    // not a DM room if they are not joined
-                    if (!them.membership || them.membership !== 'join') continue;
-
-                    const highlight = room.getUnreadNotificationCount('highlight') > 0;
-
-                    tiles.push(
-                        <RoomTile key={room.roomId} room={room}
-                            transparent={true}
-                            collapsed={false}
-                            selected={false}
-                            unread={Unread.doesRoomHaveUnreadMessages(room)}
-                            highlight={highlight}
-                            isInvite={false}
-                            onClick={this.onRoomTileClick}
-                        />,
-                    );
-                }
-            }
-
-            const labelClasses = classNames({
-                mx_MemberInfo_createRoom_label: true,
-                mx_RoomTile_name: true,
-            });
-            const startNewChat = <AccessibleButton
-                className="mx_MemberInfo_createRoom"
-                onClick={this.onNewDMClick}
-            >
-                <div className="mx_RoomTile_avatar">
-                    <img src={require("../../../../res/img/create-big.svg")} width="26" height="26" />
-                </div>
-                <div className={labelClasses}><i>{ _t("Start a chat") }</i></div>
-            </AccessibleButton>;
-
-            startChat = <div>
-                <h3>{ _t("Direct chats") }</h3>
-                { tiles }
-                { startNewChat }
-            </div>;
-        }
 
         if (this.state.updating) {
             const Loader = sdk.getComponent("elements.Spinner");
