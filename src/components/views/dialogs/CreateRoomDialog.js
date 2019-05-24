@@ -38,12 +38,6 @@ export default React.createClass({
         };
     },
 
-    componentWillMount: function() {
-        const config = SdkConfig.get();
-        // Dialog shows inverse of m.federate (noFederate) strict false check to skip undefined check (default = true)
-        this.defaultNoFederate = config.default_federate === false;
-    },
-
     onOk: function() {
         if (this.refs.textinput.value.trim().length < 1) {
             this.setState({
