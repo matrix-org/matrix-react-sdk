@@ -101,113 +101,6 @@ export const CommandMap = {
         hideCompletionAfterSpace: true,
     }),
 
-    upgraderoom: new Command({
-        name: 'upgraderoom',
-        args: '<new_version>',
-        description: _td('Upgrades a room to a new version'),
-        runFn: function(roomId, args) {
-            if (args) {
-                const room = MatrixClientPeg.get().getRoom(roomId);
-                Modal.createTrackedDialog('Slash Commands', 'upgrade room confirmation',
-                    QuestionDialog, {
-                    title: _t('Room upgrade confirmation'),
-                    description: (
-                        <div>
-                            <p>{_t("Upgrading a room can be destructive and isn't always necessary.")}</p>
-                            <p>
-                                {_t(
-                                    "Room upgrades are usually recommended when a room version is considered " +
-                                    "<i>unstable</i>. Unstable room versions might have bugs, missing features, or " +
-                                    "security vulnerabilities.",
-                                    {}, {
-                                        "i": (sub) => <i>{sub}</i>,
-                                    },
-                                )}
-                            </p>
-                            <p>
-                                {_t(
-                                    "Room upgrades usually only affect <i>server-side</i> processing of the " +
-                                    "room. If you're having problems with your Riot client, please file an issue " +
-                                    "with <issueLink />.",
-                                    {}, {
-                                        "i": (sub) => <i>{sub}</i>,
-                                        "issueLink": () => {
-                                            return <a href="https://github.com/vector-im/riot-web/issues/new/choose"
-                                                      target="_blank" rel="noopener">
-                                                https://github.com/vector-im/riot-web/issues/new/choose
-                                            </a>;
-                                        },
-                                    },
-                                )}
-                            </p>
-                            <p>
-                                {_t(
-                                    "<b>Warning</b>: Upgrading a room will <i>not automatically migrate room " +
-                                    "members to the new version of the room.</i> We'll post a link to the new room " +
-                                    "in the old version of the room - room members will have to click this link to " +
-                                    "join the new room.",
-                                    {}, {
-                                        "b": (sub) => <b>{sub}</b>,
-                                        "i": (sub) => <i>{sub}</i>,
-                                    },
-                                )}
-                            </p>
-                            <p>
-                                {_t(
-                                    "Please confirm that you'd like to go forward with upgrading this room " +
-                                    "from <oldVersion /> to <newVersion />.",
-                                    {},
-                                    {
-                                        oldVersion: () => <code>{room ? room.getVersion() : "1"}</code>,
-                                        newVersion: () => <code>{args}</code>,
-                                    },
-                                )}
-                            </p>
-                        </div>
-                    ),
-                    button: _t("Upgrade"),
-                    onFinished: (confirm) => {
-                        if (!confirm) return;
-
-                        MatrixClientPeg.get().upgradeRoom(roomId, args);
-                    },
-                });
-                return success();
-            }
-            return reject(this.getUsage());
-        },
-    }),
-
-    nick: new Command({
-        name: 'nick',
-        args: '<display_name>',
-        description: _td('Changes your display nickname'),
-        runFn: function(roomId, args) {
-            if (args) {
-                return success(MatrixClientPeg.get().setDisplayName(args));
-            }
-            return reject(this.getUsage());
-        },
-    }),
-
-    roomnick: new Command({
-        name: 'roomnick',
-        args: '<display_name>',
-        description: _td('Changes your display nickname in the current room only'),
-        runFn: function(roomId, args) {
-            if (args) {
-                const cli = MatrixClientPeg.get();
-                const ev = cli.getRoom(roomId).currentState.getStateEvents('m.room.member', cli.getUserId());
-                const content = {
-                    ...ev ? ev.getContent() : { membership: 'join' },
-                    displayname: args,
-                };
-                return success(cli.sendStateEvent(roomId, 'm.room.member', content, cli.getUserId()));
-            }
-            return reject(this.getUsage());
-        },
-    }),
-
     tint: new Command({
         name: 'tint',
         args: '<color1> [<color2>]',
@@ -265,29 +158,6 @@ export const CommandMap = {
         runFn: function(roomId, args) {
             if (args) {
                 return success(MatrixClientPeg.get().setRoomName(roomId, args));
-            }
-            return reject(this.getUsage());
-        },
-    }),
-
-    invite: new Command({
-        name: 'invite',
-        args: '<user-id>',
-        description: _td('Invites user with given id to current room'),
-        runFn: function(roomId, args) {
-            if (args) {
-                const matches = args.match(/^(\S+)$/);
-                if (matches) {
-                    // We use a MultiInviter to re-use the invite logic, even though
-                    // we're only inviting one user.
-                    const userId = matches[1];
-                    const inviter = new MultiInviter(roomId);
-                    return success(inviter.invite([userId]).then(() => {
-                        if (inviter.getCompletionState(userId) !== "invited") {
-                            throw new Error(inviter.getErrorText(userId));
-                        }
-                    }));
-                }
             }
             return reject(this.getUsage());
         },
@@ -597,36 +467,6 @@ export const CommandMap = {
         },
     }),
 
-    devtools: new Command({
-        name: 'devtools',
-        description: _td('Opens the Developer Tools dialog'),
-        runFn: function(roomId) {
-            const DevtoolsDialog = sdk.getComponent('dialogs.DevtoolsDialog');
-            Modal.createDialog(DevtoolsDialog, {roomId});
-            return success();
-        },
-    }),
-
-    addwidget: new Command({
-        name: 'addwidget',
-        args: '<url>',
-        description: _td('Adds a custom widget by URL to the room'),
-        runFn: function(roomId, args) {
-            if (!args || (!args.startsWith("https://") && !args.startsWith("http://"))) {
-                return reject(_t("Please supply a https:// or http:// widget URL"));
-            }
-            if (WidgetUtils.canUserModifyWidgets(roomId)) {
-                const userId = MatrixClientPeg.get().getUserId();
-                const nowMs = (new Date()).getTime();
-                const widgetId = encodeURIComponent(`${roomId}_${userId}_${nowMs}`);
-                return success(WidgetUtils.setRoomWidget(
-                    roomId, widgetId, "m.custom", args, "Custom Widget", {}));
-            } else {
-                return reject(_t("You cannot modify widgets in this room."));
-            }
-        },
-    }),
-
     // Verify a user, device, and pubkey tuple
     verify: new Command({
         name: 'verify',
@@ -705,19 +545,6 @@ export const CommandMap = {
         description: _td('Displays action'),
         hideCompletionAfterSpace: true,
     }),
-
-    discardsession: new Command({
-        name: 'discardsession',
-        description: _td('Forces the current outbound group session in an encrypted room to be discarded'),
-        runFn: function(roomId) {
-            try {
-                MatrixClientPeg.get().forceDiscardSession(roomId);
-            } catch (e) {
-                return reject(e.message);
-            }
-            return success();
-        },
-    }),
 };
 /* eslint-enable babel/no-invalid-this */
 
@@ -725,7 +552,6 @@ export const CommandMap = {
 // helpful aliases
 const aliases = {
     j: "join",
-    newballsplease: "discardsession",
     goto: "join", // because it handles event permalinks magically
 };
 
