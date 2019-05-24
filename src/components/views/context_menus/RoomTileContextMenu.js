@@ -310,8 +310,6 @@ module.exports = React.createClass({
         if (myMembership !== 'join') {
             return <div>
                 { this._renderLeaveMenu(myMembership) }
-                <hr className="mx_RoomTileContextMenu_separator" />
-                { this._renderSettingsMenu() }
             </div>;
         }
 
@@ -322,8 +320,6 @@ module.exports = React.createClass({
                 { this._renderLeaveMenu(myMembership) }
                 <hr className="mx_RoomTileContextMenu_separator" />
                 { this._renderRoomTagMenu() }
-                <hr className="mx_RoomTileContextMenu_separator" />
-                { this._renderSettingsMenu() }
             </div>
         );
     },

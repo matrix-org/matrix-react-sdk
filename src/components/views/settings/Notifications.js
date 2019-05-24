@@ -131,55 +131,6 @@ module.exports = React.createClass({
         });
     },
 
-    /*
-     * Returns the email pusher (pusher of type 'email') for a given
-     * email address. Email pushers all have the same app ID, so since
-     * pushers are unique over (app ID, pushkey), there will be at most
-     * one such pusher.
-     */
-    getEmailPusher: function(pushers, address) {
-        if (pushers === undefined) {
-            return undefined;
-        }
-        for (let i = 0; i < pushers.length; ++i) {
-            if (pushers[i].kind === 'email' && pushers[i].pushkey === address) {
-                return pushers[i];
-            }
-        }
-        return undefined;
-    },
-
-    onEnableEmailNotificationsChange: function(address, checked) {
-        let emailPusherPromise;
-        if (checked) {
-            const data = {};
-            data['brand'] = SdkConfig.get().brand || 'Riot';
-            emailPusherPromise = MatrixClientPeg.get().setPusher({
-                kind: 'email',
-                app_id: 'm.email',
-                pushkey: address,
-                app_display_name: 'Email Notifications',
-                device_display_name: address,
-                lang: navigator.language,
-                data: data,
-                append: true, // We always append for email pushers since we don't want to stop other accounts notifying to the same email address
-            });
-        } else {
-            const emailPusher = this.getEmailPusher(this.state.pushers, address);
-            emailPusher.kind = null;
-            emailPusherPromise = MatrixClientPeg.get().setPusher(emailPusher);
-        }
-        emailPusherPromise.done(() => {
-            this._refreshFromServer();
-        }, (error) => {
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-            Modal.createTrackedDialog('Error saving email notification preferences', '', ErrorDialog, {
-                title: _t('Error saving email notification preferences'),
-                description: _t('An error occurred whilst saving your email notification preferences.'),
-            });
-        });
-    },
-
     onNotifStateButtonClicked: function(event) {
         // FIXME: use .bind() rather than className metadata here surely
         const vectorRuleId = event.target.className.split("-")[0];
@@ -708,24 +659,6 @@ module.exports = React.createClass({
         return rows;
     },
 
-    hasEmailPusher: function(pushers, address) {
-        if (pushers === undefined) {
-            return false;
-        }
-        for (let i = 0; i < pushers.length; ++i) {
-            if (pushers[i].kind === 'email' && pushers[i].pushkey === address) {
-                return true;
-            }
-        }
-        return false;
-    },
-
-    emailNotificationsRow: function(address, label) {
-        return <LabelledToggleSwitch value={this.hasEmailPusher(this.state.pushers, address)}
-                                     onChange={this.onEnableEmailNotificationsChange.bind(this, address)}
-                                     label={label} key={`emailNotif_${label}`} />;
-    },
-
     render: function() {
         let spinner;
         if (this.state.phase === this.phases.LOADING) {
@@ -752,18 +685,6 @@ module.exports = React.createClass({
                     </div>
                 </div>
             );
-        }
-
-        const emailThreepids = this.state.threepids.filter((tp) => tp.medium === "email");
-        let emailNotificationsRows;
-        if (emailThreepids.length === 0) {
-            emailNotificationsRows = <div>
-                { _t('Add an email address to configure email notifications') }
-            </div>;
-        } else {
-            emailNotificationsRows = emailThreepids.map((threePid) => this.emailNotificationsRow(
-                threePid.address, `${_t('Enable email notifications')} (${threePid.address})`,
-            ));
         }
 
         // Build external push rules
@@ -846,8 +767,6 @@ module.exports = React.createClass({
                     <LabelledToggleSwitch value={SettingsStore.getValue("audioNotificationsEnabled")}
                                           onChange={this.onEnableAudioNotificationsChange}
                                           label={_t('Enable audible notifications for this device')} />
-
-                    { emailNotificationsRows }
 
                     <div className="mx_UserNotifSettings_pushRulesTableWrapper">
                         <table className="mx_UserNotifSettings_pushRulesTable">
