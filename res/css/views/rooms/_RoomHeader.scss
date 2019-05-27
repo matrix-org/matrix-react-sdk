@@ -17,6 +17,7 @@ limitations under the License.
 .mx_RoomHeader {
     flex: 0 0 52px;
     border-bottom: 1px solid $primary-hairline-color;
+    background-color: $secondary-accent-color;
 }
 
 .mx_RoomHeader_wrapper {
@@ -58,7 +59,7 @@ limitations under the License.
 
 .mx_RoomHeader_buttons {
     display: flex;
-    background-color: $primary-bg-color;
+    background-color: $secondary-accent-color;
     padding-right: 5px;
 }
 

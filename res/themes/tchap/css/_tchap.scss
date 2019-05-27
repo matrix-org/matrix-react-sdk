@@ -8,7 +8,7 @@ $font-family: 'Nunito', Arial, Helvetica, Sans-Serif;
 
 // unified palette
 // try to use these colors when possible
-$accent-color: #03b381;
+$accent-color: #374c72;
 $notice-primary-color: #ff4b55;
 $notice-secondary-color: #61708b;
 $header-panel-bg-color: #f2f5f8;
@@ -24,7 +24,7 @@ $light-fg-color: #747474;
 $focus-bg-color: #dddddd;
 
 // button UI (white-on-green in light skin)
-$accent-fg-color: #ffffff;
+$accent-fg-color: #f2f5f8;
 $accent-color-50pct: #92caad;
 $accent-color-alt: #238CF5;
 
@@ -51,7 +51,7 @@ $info-plinth-fg-color: #888;
 $preview-bar-bg-color: #f7f7f7;
 
 // left-panel style muted accent color
-$secondary-accent-color: #f2f5f8;
+$secondary-accent-color: #162d58;
 $tertiary-accent-color: #d3efe1;
 
 $tagpanel-bg-color: #27303a;
@@ -63,13 +63,13 @@ $plinth-bg-color: $secondary-accent-color;
 $droptarget-bg-color: rgba(255,255,255,0.5);
 
 // used by AddressSelector
-$selected-color: $secondary-accent-color;
+$selected-color: $accent-color;
 
 // selected for hoverover & selected event tiles
 $event-selected-color: #f7f7f7;
 
 // used for the hairline dividers in RoomView
-$primary-hairline-color: #e5e5e5;
+$primary-hairline-color: #374c72;
 
 // used for the border of input text fields
 $input-border-color: #e7e7e7;
@@ -144,8 +144,8 @@ $rte-code-bg-color: rgba(0, 0, 0, 0.04);
 $rte-room-pill-color: #aaa;
 $rte-group-pill-color: #aaa;
 
-$topleftmenu-color: #212121;
-$roomheader-color: #45474a;
+$topleftmenu-color: #fff;
+$roomheader-color: #fff;
 $roomheader-addroom-bg-color: #91A1C0;
 $roomheader-addroom-fg-color: $accent-fg-color;
 $tagpanel-button-color: #91A1C0;
@@ -161,11 +161,11 @@ $header-divider-color: #91A1C0;
 
 // ********************
 
-$roomtile-name-color: #61708b;
+$roomtile-name-color: #fff;
 $roomtile-selected-color: #212121;
 $roomtile-notified-color: #212121;
-$roomtile-selected-bg-color: #fff;
-$roomtile-focused-bg-color: #fff;
+$roomtile-selected-bg-color: #374c72;
+$roomtile-focused-bg-color: #374c72;
 
 $username-variant1-color: #368bd6;
 $username-variant2-color: #ac3ba8;
@@ -183,7 +183,7 @@ $roomsublist-label-fg-color: $roomtile-name-color;
 $roomsublist-label-bg-color: $tertiary-accent-color;
 $roomsublist-chevron-color: $accent-color;
 
-$panel-divider-color: #dee1f3;
+$panel-divider-color: #374c72;
 
 // ********************
 
