@@ -85,9 +85,6 @@ export default class ReactionDimension extends React.PureComponent {
         let selectedReactionEvent = null;
         for (const option of options) {
             const reactionForOption = myReactions.find(mxEvent => {
-                if (mxEvent.isRedacted()) {
-                    return false;
-                }
                 return mxEvent.getRelation().key === option;
             });
             if (!reactionForOption) {
