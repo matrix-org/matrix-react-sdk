@@ -16,7 +16,10 @@ limitations under the License.
 
 const React = require('react');
 import PropTypes from 'prop-types';
+import sdk from "../../../index";
+import AppTile from "../elements/AppTile";
 const TextForEvent = require('../../../TextForEvent');
+import MatrixClientPeg from "../../../MatrixClientPeg";
 
 export default class MWidgetBody extends React.Component {
     static propTypes: {
@@ -32,11 +35,37 @@ export default class MWidgetBody extends React.Component {
     }
 
     render() {
-        const widgetUrl = this.props.mxEvent.getContent()['widget_url'];
+        const widgetInfo = this.props.mxEvent.getContent();
+
+        const widgetUrl = widgetInfo['widget_url'];
         if (!widgetUrl) {
             return this.renderAsText();
         }
 
-        return <iframe src={widgetUrl} width={300} height={240} frameBorder={0} allowFullScreen={true}></iframe>;
+        // TODO: Handle widget_html
+
+        const AppTile = sdk.getComponent("elements.AppTile");
+
+        // XXX: Is this a secure enough widget ID?
+        return <AppTile
+            id={this.props.mxEvent.getRoomId()+ "_" + this.props.mxEvent.getId()}
+            url={widgetUrl}
+            name={widgetInfo['name']}
+            room={MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId())}
+            type={widgetInfo['type']}
+            fullWidth={true}
+            userId={MatrixClientPeg.get().credentials.userId}
+            creatorUserId={this.props.mxEvent.getSender()}
+            waitForIframeLoad={true}
+            show={true}
+            showMenubar={false}
+            showTitle={false}
+            showMinimise={false}
+            showDelete={false}
+            showCancel={false}
+            showPopout={false}
+            handleMinimisePointerEvents={false}
+            whitelistCapabilities={[]}
+        />;
     };
 }
