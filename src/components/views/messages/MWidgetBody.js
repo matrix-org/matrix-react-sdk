@@ -24,14 +24,25 @@ import MatrixClientPeg from "../../../MatrixClientPeg";
 export default class MWidgetBody extends React.Component {
     static propTypes: {
         mxEvent: PropTypes.object.isRequired, // MatrixEvent
+
+        // Passthroughs for TextualBody
+        highlights: PropTypes.array,
+        highlightLink: PropTypes.string,
+        showUrlPreview: PropTypes.bool,
+        onHeightChanged: PropTypes.func,
+        tileShape: PropTypes.string,
     };
 
     renderAsText() {
-        const text = TextForEvent.textForEvent(this.props.mxEvent);
-        if (text == null || text.length === 0) return null;
-        return (
-            <div className="mx_TextualEvent">{ text }</div>
-        );
+        const TextualBody = sdk.getComponent("messages.TextualBody");
+        return <TextualBody
+            mxEvent={this.props.mxEvent}
+            highlights={this.props.highlights}
+            highlightLink={this.props.highlightLink}
+            showUrlPreview={this.props.showUrlPreview}
+            onHeightChanged={this.props.onHeightChanged}
+            tileShapse={this.props.tileShape}
+        />;
     }
 
     render() {
