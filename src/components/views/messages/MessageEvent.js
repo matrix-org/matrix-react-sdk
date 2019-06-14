@@ -16,6 +16,8 @@ limitations under the License.
 
 'use strict';
 
+import SettingsStore from "../../../settings/SettingsStore";
+
 const React = require('react');
 import PropTypes from 'prop-types';
 const sdk = require('../../../index');
@@ -61,6 +63,9 @@ module.exports = React.createClass({
             'm.file': sdk.getComponent('messages.MFileBody'),
             'm.audio': sdk.getComponent('messages.MAudioBody'),
             'm.video': sdk.getComponent('messages.MVideoBody'),
+            'm.widget': SettingsStore.isFeatureEnabled("feature_inline_widgets")
+                ? sdk.getComponent('messages.MWidgetBody')
+                : sdk.getComponent('messages.TextualBody'),
         };
         const evTypes = {
             'm.sticker': sdk.getComponent('messages.MStickerBody'),

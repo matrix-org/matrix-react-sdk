@@ -126,6 +126,12 @@ export const SETTINGS = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
+    "feature_inline_widgets": {
+        isFeature: true,
+        displayName: _td("Widgets in the timeline"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "MessageComposerInput.suggestEmoji": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Enable Emoji suggestions while typing'),

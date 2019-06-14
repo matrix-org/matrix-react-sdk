@@ -60,6 +60,7 @@ import ReplyThread from "../elements/ReplyThread";
 import {ContentHelpers} from 'matrix-js-sdk';
 import AccessibleButton from '../elements/AccessibleButton';
 import {findEditableEvent} from '../../../utils/EventUtils';
+import WidgetUtils from "../../../utils/WidgetUtils";
 
 const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s$');
 
@@ -1053,9 +1054,9 @@ export default class MessageComposerInput extends React.Component {
         let cmd; let commandText;
         const firstChild = editorState.document.nodes.get(0);
         const firstGrandChild = firstChild && firstChild.nodes.get(0);
-        if (firstChild && firstGrandChild &&
-            firstChild.object === 'block' && firstGrandChild.object === 'text' &&
-            firstGrandChild.text[0] === '/') {
+        const isSimpleText = firstChild && firstGrandChild
+            && firstChild.object === 'block' && firstGrandChild.object === 'text';
+        if (isSimpleText && firstGrandChild.text[0] === '/') {
             commandText = this.plainWithIdPills.serialize(editorState);
             cmd = processCommandInput(this.props.room.roomId, commandText);
         }
@@ -1090,6 +1091,28 @@ export default class MessageComposerInput extends React.Component {
                     description: cmd.error,
                 });
             }
+            return true;
+        }
+
+        // If not a command, try and convert the message to an inline widget if possible.
+        // HACK: This is a proof of concept and probably shouldn't be done here.
+        const inlineWidget = isSimpleText
+            ? WidgetUtils.tryConvertInputToInlineWidget(this.plainWithIdPills.serialize(editorState))
+            : null;
+        if (inlineWidget && SettingsStore.isFeatureEnabled("feature_inline_widgets")) {
+            console.log("Message can be an inline widget - sending widget");
+            this.client.sendMessage(this.props.room.roomId, inlineWidget).then((res) => {
+                dis.dispatch({
+                    action: 'message_sent',
+                });
+            }).catch((e) => {
+                onSendMessageFailed(e, this.props.room);
+            });
+
+            this.setState({
+                editorState: this.createEditorState(),
+            }, ()=>{ this._editor.focus(); });
+
             return true;
         }
 
