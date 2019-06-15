@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import WidgetUtils from "../../../utils/WidgetUtils";
+
 const React = require('react');
 import PropTypes from 'prop-types';
 import sdk from "../../../index";
@@ -48,12 +50,21 @@ export default class MWidgetBody extends React.Component {
     render() {
         const widgetInfo = this.props.mxEvent.getContent();
 
-        const widgetUrl = widgetInfo['widget_url'];
+        let widgetUrl = widgetInfo['widget_url'];
+        let wantedCapabilities = [];
+        let showTitle = false;
+        let strictFrame = false;
         if (!widgetUrl) {
-            return this.renderAsText();
-        }
+            const widgetHtml = widgetInfo['widget_html'];
+            if (!widgetHtml) return this.renderAsText();
 
-        // TODO: Handle widget_html
+            const info = WidgetUtils.wrapWidgetHtml(widgetHtml);
+            widgetUrl = info.url;
+            wantedCapabilities = info.wantedCapabilities;
+            showTitle = true;
+            strictFrame = true;
+        }
+        if (!widgetUrl) return this.renderAsText();
 
         const AppTile = sdk.getComponent("elements.AppTile");
 
@@ -61,22 +72,24 @@ export default class MWidgetBody extends React.Component {
         return <AppTile
             id={this.props.mxEvent.getRoomId()+ "_" + this.props.mxEvent.getId()}
             url={widgetUrl}
-            name={widgetInfo['name']}
+            name={widgetInfo['name'] || "Widget"}
             room={MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId())}
-            type={widgetInfo['type']}
+            type={widgetInfo['type'] || "m.custom"}
             fullWidth={true}
             userId={MatrixClientPeg.get().credentials.userId}
             creatorUserId={this.props.mxEvent.getSender()}
             waitForIframeLoad={true}
             show={true}
-            showMenubar={false}
-            showTitle={false}
+            showMenubar={showTitle}
+            showTitle={showTitle}
             showMinimise={false}
             showDelete={false}
             showCancel={false}
             showPopout={false}
+            widgetPageTitle={(widgetInfo['data'] && widgetInfo['data']['title']) ? widgetInfo['data']['title'] : null}
             handleMinimisePointerEvents={false}
-            whitelistCapabilities={[]}
+            whitelistCapabilities={wantedCapabilities}
+            strictSandbox={strictFrame}
         />;
     };
 }

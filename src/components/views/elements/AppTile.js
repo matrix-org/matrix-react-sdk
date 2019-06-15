@@ -387,12 +387,21 @@ export default class AppTile extends React.Component {
         if (payload.widgetId === this.props.id) {
             switch (payload.action) {
                 case 'm.sticker':
-                if (this._hasCapability('m.sticker')) {
-                    dis.dispatch({action: 'post_sticker_message', data: payload.data});
-                } else {
-                    console.warn('Ignoring sticker message. Invalid capability');
+                    if (this._hasCapability('m.sticker')) {
+                        dis.dispatch({action: 'post_sticker_message', data: payload.data});
+                    } else {
+                        console.warn('Ignoring sticker message. Invalid capability');
+                    }
+                    break;
+                case 'from_widget_send_event': {
+                    const eventType = payload.eventType;
+                    const eventContent = payload.eventContent;
+                    if (this._hasCapability('m.send.' + eventType)) {
+                        MatrixClientPeg.get().sendEvent(this.props.room.roomId, eventType, eventContent);
+                    } else {
+                        console.warn("Ignoring send_event: lacking capability for event type");
+                    }
                 }
-                break;
             }
         }
     }
@@ -516,8 +525,15 @@ export default class AppTile extends React.Component {
         // this would only be for content hosted on the same origin as the riot client: anything
         // hosted on the same origin as the client will get the same access as if you clicked
         // a link to it.
-        const sandboxFlags = "allow-forms allow-popups allow-popups-to-escape-sandbox "+
+        let sandboxFlags = "allow-forms allow-popups allow-popups-to-escape-sandbox "+
             "allow-same-origin allow-scripts allow-presentation";
+        if (this.props.strictSandbox)  {
+            // XXX: A compromised wrapped HTML widget can access localStorage with allow-same-origin.
+            // We already filter down the HTML though, so this should be fine. Just scary.
+            // Note: Removing allow-same-origin means that postMessage requests from the frame get
+            // an `origin` with the literal string "null" and no way to deduce it.
+            sandboxFlags = "allow-forms allow-scripts allow-presentation allow-same-origin";
+        }
 
         // Additional iframe feature pemissions
         // (see - https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-permissions-in-cross-origin-iframes and https://wicg.github.io/feature-policy/)
@@ -731,6 +747,9 @@ AppTile.propTypes = {
     onCapabilityRequest: PropTypes.func,
     // Is this an instance of a user widget
     userWidget: PropTypes.bool,
+    // If true, the sandbox prevents most things. Intended for inline widgets
+    // with untrusted HTML.
+    strictSandbox: PropTypes.bool,
 };
 
 AppTile.defaultProps = {

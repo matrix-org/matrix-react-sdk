@@ -20,6 +20,7 @@ import dis from './dispatcher';
 import IntegrationManager from './IntegrationManager';
 import WidgetMessagingEndpoint from './WidgetMessagingEndpoint';
 import ActiveWidgetStore from './stores/ActiveWidgetStore';
+import MatrixClientPeg from "./MatrixClientPeg";
 
 const WIDGET_API_VERSION = '0.0.2'; // Current API version
 const SUPPORTED_WIDGET_API_VERSIONS = [
@@ -130,14 +131,15 @@ export default class FromWidgetPostMessageApi {
      * @return {undefined}
      */
     onPostMessage(event) {
-        if (!event.origin) { // Handle chrome
-            event.origin = event.originalEvent.origin;
+        let origin = event.origin;
+        if (!origin) { // Handle chrome
+            origin = event.originalEvent.origin;
         }
 
         // Event origin is empty string if undefined
         if (
-            event.origin.length === 0 ||
-            !this.trustedEndpoint(event.origin) ||
+            origin.length === 0 ||
+            !this.trustedEndpoint(origin) ||
             event.data.api !== INBOUND_API_NAME ||
             !event.data.widgetId
         ) {
@@ -181,6 +183,10 @@ export default class FromWidgetPostMessageApi {
             // NOTE -- The widgetData field is deprecated (in favour of the 'data' field) and will be removed eventually
             const data = event.data.data || event.data.widgetData;
             dis.dispatch({action: 'm.sticker', data: data, widgetId: event.data.widgetId});
+        } else if (action === 'send_event') {
+            const eventType = event.data.data.type;
+            const eventContent = event.data.data.content;
+            dis.dispatch({action: 'from_widget_send_event', widgetId: event.data.widgetId, eventType, eventContent});
         } else if (action === 'integration_manager_open') {
             // Close the stickerpicker
             dis.dispatch({action: 'stickerpicker_close'});

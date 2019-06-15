@@ -75,6 +75,41 @@ export default class WidgetUtils {
         };
     }
 
+    /**
+     * Sanitizes and wraps a block of HTML for a local widget.
+     * @param {string} html The widget's HTML.
+     * @returns {{wantedCapabilities: string[], url: string}} An object containing
+     * the URL for the wrapped HTML and the capabilities the widget wants.
+     */
+    static wrapWidgetHtml(html) {
+        const wantedCapabilities = [];
+
+        // TODO: Sanitize HTML
+        // TODO: Parse capabilities, etc from sanitized HTML
+
+        // HACK: Temporary measure
+        wantedCapabilities.push("m.send.m.room.message");
+        wantedCapabilities.push("m.send.m.room.hidden");
+
+        const wrapperOpts = {
+            html: html,
+            capabilities: wantedCapabilities,
+        };
+
+        const base64WrapperOpts = btoa(JSON.stringify(wrapperOpts))
+            .replace(/\+/g, '-')
+            .replace(/\//g, '_');
+
+        const loc = window.location;
+        let urlBase = `${loc.protocol}//${loc.host}${loc.pathname}`;
+        if (!urlBase.endsWith("/")) urlBase = `${urlBase}/`;
+
+        return {
+            url: `${urlBase}inline_widget_wrapper/index.html#${base64WrapperOpts}`,
+            wantedCapabilities: wantedCapabilities,
+        };
+    }
+
     /* Returns true if user is able to send state events to modify widgets in this room
      * (Does not apply to non-room-based / user widgets)
      * @param roomId -- The ID of the room to check
