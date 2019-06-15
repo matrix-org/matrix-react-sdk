@@ -1096,7 +1096,7 @@ export default class MessageComposerInput extends React.Component {
 
         // If not a command, try and convert the message to an inline widget if possible.
         // HACK: This is a proof of concept and probably shouldn't be done here.
-        const inlineWidget = isSimpleText
+        const inlineWidget = isSimpleText && firstGrandChild.text.startsWith("https://")
             ? WidgetUtils.tryConvertInputToInlineWidget(this.plainWithIdPills.serialize(editorState))
             : null;
         if (inlineWidget && SettingsStore.isFeatureEnabled("feature_inline_widgets")) {
