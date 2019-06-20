@@ -276,13 +276,16 @@ const Pill = React.createClass({
             "mx_UserPill_selected": this.props.isSelected,
         });
 
+        const member = this.state.member
+        const displayName = member.rawDisplayName || '';
+
         if (this.state.pillType) {
             return this.props.inMessage ?
-                <a className={classes} href={href} onClick={onClick} title={resource} data-offset-key={this.props.offsetKey}>
+                <a className={classes} href={href} onClick={onClick} title={displayName} data-offset-key={this.props.offsetKey}>
                     { avatar }
                     { linkText }
                 </a> :
-                <span className={classes} title={resource} data-offset-key={this.props.offsetKey}>
+                <span className={classes} title={displayName} data-offset-key={this.props.offsetKey}>
                     { avatar }
                     { linkText }
                 </span>;

@@ -185,12 +185,17 @@ module.exports = React.createClass({
             visibility: this.props.hidden ? 'hidden' : 'visible',
         };
 
+        let displayName = "";
+        if (this.props.member) {
+            displayName = this.props.member.rawDisplayName;
+        }
+
         let title;
         if (this.props.timestamp) {
             const dateString = formatDate(new Date(this.props.timestamp), this.props.showTwelveHour);
             title = _t(
                 "Seen by %(displayName)s at %(dateTime)s",
-                {displayName: this.props.member.rawDisplayName,
+                {displayName: displayName,
                 dateTime: dateString},
             );
         }
