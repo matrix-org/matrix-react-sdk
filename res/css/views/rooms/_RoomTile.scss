@@ -139,8 +139,8 @@ limitations under the License.
     flex: 0 1 content;
     border-radius: 0.8em;
     padding: 0 0.4em;
-    color: $accent-fg-color;
-    font-weight: 600;
+    color: $accent-color;
+    font-weight: 800;
     font-size: 12px;
 }
 
@@ -157,8 +157,7 @@ limitations under the License.
 
 .mx_RoomTile_unread, .mx_RoomTile_highlight {
     .mx_RoomTile_name {
-        font-weight: 600;
-        color: $roomtile-selected-color;
+        font-weight: 900;
     }
 }
 
