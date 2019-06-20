@@ -193,6 +193,13 @@ limitations under the License.
     display: none;
 }
 
+.mx_RoomHeader_avatar_room .mx_BaseAvatar .mx_BaseAvatar_image,
+.mx_RoomHeader_avatar_room .mx_BaseAvatar_image {
+    -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    border-radius: 0;
+}
+
 .mx_RoomHeader_button {
     margin-left: 10px;
     cursor: pointer;

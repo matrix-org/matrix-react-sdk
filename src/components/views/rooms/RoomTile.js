@@ -385,6 +385,11 @@ module.exports = React.createClass({
             encryptedIndicator = <img src={require("../../../../res/img/tchap/padlock-encrypted_room.svg")} className="mx_RoomTile_dm" width="10" height="12" alt="encrypted" />;
         }
 
+        let mainAvatarClass = avatarClasses;
+        if (!this._isDirectMessageRoom(this.props.room.roomId)) {
+            mainAvatarClass += " mx_RoomTile_avatar_room";
+        }
+
         return <AccessibleButton tabIndex="0"
                                  className={classes}
                                  onClick={this.onClick}
@@ -392,7 +397,7 @@ module.exports = React.createClass({
                                  onMouseLeave={this.onMouseLeave}
                                  onContextMenu={this.onContextMenu}
         >
-            <div className={avatarClasses}>
+            <div className={mainAvatarClass}>
                 <div className="mx_RoomTile_avatar_container">
                     <RoomAvatar room={this.props.room} width={24} height={24} />
                     { encryptedIndicator }
