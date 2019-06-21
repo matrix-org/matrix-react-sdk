@@ -56,7 +56,6 @@ module.exports = React.createClass({
         flows: PropTypes.arrayOf(PropTypes.object).isRequired,
         serverConfig: PropTypes.instanceOf(ValidatedServerConfig).isRequired,
         canSubmit: PropTypes.bool,
-        idServerUrl: PropTypes.string.isRequired,
     },
 
     getDefaultProps: function() {
@@ -531,7 +530,7 @@ module.exports = React.createClass({
             return null;
         }
 
-        const parsedIdServerUrl = url.parse(this.props.idServerUrl);
+        const parsedIdServerUrl = url.parse(this.props.serverConfig.isUrl);
 
         return <div>
             <input type="checkbox"

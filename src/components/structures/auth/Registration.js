@@ -555,7 +555,6 @@ module.exports = React.createClass({
                 flows={this.state.flows}
                 serverConfig={this.props.serverConfig}
                 canSubmit={!this.state.serverErrorIsFatal}
-                idServerUrl={this.props.serverConfig.isUrl}
             />;
         }
     },
