@@ -358,6 +358,9 @@ export const CommandMap = {
                 const params = args.split(' ');
                 if (params.length < 1) return reject(this.getUsage());
 
+                // Only auto-join if the command is not /goto
+                const autoJoin = this.command !== "/goto";
+
                 const matrixToMatches = params[0].match(MATRIXTO_URL_PATTERN);
                 if (params[0][0] === '#') {
                     let roomAlias = params[0];
@@ -368,7 +371,7 @@ export const CommandMap = {
                     dis.dispatch({
                         action: 'view_room',
                         room_alias: roomAlias,
-                        auto_join: true,
+                        auto_join: autoJoin,
                     });
                     return success();
                 } else if (params[0][0] === '!') {
@@ -382,7 +385,7 @@ export const CommandMap = {
                             // These are passed down to the js-sdk's /join call
                             server_name: viaServers,
                         },
-                        auto_join: true,
+                        auto_join: autoJoin,
                     });
                     return success();
                 } else if (matrixToMatches) {
@@ -410,7 +413,7 @@ export const CommandMap = {
 
                     const dispatch = {
                         action: 'view_room',
-                        auto_join: true,
+                        auto_join: autoJoin,
                     };
 
                     if (entity[0] === '!') dispatch["room_id"] = entity;
@@ -790,7 +793,7 @@ export const CommandMap = {
 const aliases = {
     j: "join",
     newballsplease: "discardsession",
-    goto: "join", // because it handles event permalinks magically
+    goto: "join", // because it handles event permalinks magically, works just like /join but with auto-join=false
     roomnick: "myroomnick",
 };
 
