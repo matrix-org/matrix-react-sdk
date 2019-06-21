@@ -407,7 +407,7 @@ module.exports = React.createClass({
         // (Since we need to send no params at all to use the ones saved in the
         // session).
         const bindThreepids = this.state.formVals.password ? {
-            email: true,
+            email: this.state.formVals.bindEmail,
             msisdn: true,
         } : {};
         // Likewise inhibitLogin
@@ -555,6 +555,7 @@ module.exports = React.createClass({
                 flows={this.state.flows}
                 serverConfig={this.props.serverConfig}
                 canSubmit={!this.state.serverErrorIsFatal}
+                idServerUrl={this.props.serverConfig.isUrl}
             />;
         }
     },

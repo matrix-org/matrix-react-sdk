@@ -2,6 +2,7 @@
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
 Copyright 2018, 2019 New Vector Ltd
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,6 +18,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import url from 'url';
 import PropTypes from 'prop-types';
 import sdk from '../../../index';
 import Email from '../../../email';
@@ -54,6 +56,7 @@ module.exports = React.createClass({
         flows: PropTypes.arrayOf(PropTypes.object).isRequired,
         serverConfig: PropTypes.instanceOf(ValidatedServerConfig).isRequired,
         canSubmit: PropTypes.bool,
+        idServerUrl: PropTypes.string.isRequired,
     },
 
     getDefaultProps: function() {
@@ -76,6 +79,7 @@ module.exports = React.createClass({
             passwordConfirm: "",
             passwordComplexity: null,
             passwordSafe: false,
+            bindEmail: true,
         };
     },
 
@@ -119,6 +123,7 @@ module.exports = React.createClass({
             email: email,
             phoneCountry: this.state.phoneCountry,
             phoneNumber: this.state.phoneNumber,
+            bindEmail: this.state.bindEmail,
         });
 
         if (promise) {
@@ -399,6 +404,10 @@ module.exports = React.createClass({
         ],
     }),
 
+    onBindEmailChange(ev) {
+        this.setState({bindEmail: ev.target.checked});
+    },
+
     /**
      * A step is required if all flows include that step.
      *
@@ -515,7 +524,40 @@ module.exports = React.createClass({
         />;
     },
 
+    renderBindEmail() {
+        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
+
+        if (!this._authStepIsUsed('m.login.email.identity')) {
+            return null;
+        }
+
+        const parsedIdServerUrl = url.parse(this.props.idServerUrl);
+
+        return <div>
+            <input type="checkbox"
+                id="mx_RegistrationForm_bindEmail"
+                checked={this.state.bindEmail}
+                onChange={this.onBindEmailChange}
+            />
+            <div>
+                <label htmlFor="mx_RegistrationForm_bindEmail">{_t(
+                    "Let other users invite you to rooms using your email address by " +
+                    "sharing it with the identity server at <idServer></idServer>  ", {},
+                    {
+                        idServer: <b>{parsedIdServerUrl.host}</b>,
+                    }
+                )}</label>
+                <AccessibleButton element="span"
+                    className="mx_AuthBody_editServerDetails mx_linkButton"
+                    onClick={this.props.onEditServerDetailsClick}
+                >{_t("Change")}</AccessibleButton>
+            </div>
+        </div>;
+    },
+
     render: function() {
+        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
+
         let yourMatrixAccountText = _t('Create your Matrix account on %(serverName)s', {
             serverName: this.props.serverConfig.hsName,
         });
@@ -536,11 +578,12 @@ module.exports = React.createClass({
 
         let editLink = null;
         if (this.props.onEditServerDetailsClick) {
-            editLink = <a className="mx_AuthBody_editServerDetails"
-                href="#" onClick={this.props.onEditServerDetailsClick}
+            editLink = <AccessibleButton element="span"
+                className="mx_AuthBody_editServerDetails mx_linkButton"
+                onClick={this.props.onEditServerDetailsClick}
             >
                 {_t('Change')}
-            </a>;
+            </AccessibleButton>;
         }
 
         const registerButton = (
@@ -565,8 +608,8 @@ module.exports = React.createClass({
                         {this.renderEmail()}
                         {this.renderPhoneNumber()}
                     </div>
-                    {_t("Use an email address to recover your account.") + " "}
-                    {_t("Other users can invite you to rooms using your contact details.")}
+                    <p>{_t("Use an email address to recover your account.")}</p>
+                    { this.renderBindEmail() }
                     { registerButton }
                 </form>
             </div>
