@@ -54,6 +54,7 @@ import ResizeNotifier from "../../utils/ResizeNotifier";
 import { ValidatedServerConfig } from "../../utils/AutoDiscoveryUtils";
 import AutoDiscoveryUtils from "../../utils/AutoDiscoveryUtils";
 import DMRoomMap from '../../utils/DMRoomMap';
+import { countRoomsWithNotif } from '../../RoomNotifs';
 
 // Disable warnings for now: we use deprecated bluebird functions
 // and need to migrate, but they spam the console with warnings.
@@ -1159,6 +1160,7 @@ export default React.createClass({
                 dmUserId: this.props.config.welcomeUserId,
                 // Only view the welcome user if we're NOT looking at a room
                 andView: !this.state.currentRoomId,
+                spinner: false, // we're already showing one: we don't need another one
             });
             // This is a bit of a hack, but since the deduplication relies
             // on m.direct being up to date, we need to force a sync
@@ -1708,45 +1710,6 @@ export default React.createClass({
 
     // returns a promise which resolves to the new MatrixClient
     onRegistered: function(credentials) {
-        if (this.state.register_session_id) {
-            // The user came in through an email validation link. To avoid overwriting
-            // their session, check to make sure the session isn't someone else, and
-            // isn't a guest user since we'll usually have set a guest user session before
-            // starting the registration process. This isn't perfect since it's possible
-            // the user had a separate guest session they didn't actually mean to replace.
-            const sessionOwner = Lifecycle.getStoredSessionOwner();
-            const sessionIsGuest = Lifecycle.getStoredSessionIsGuest();
-            if (sessionOwner && !sessionIsGuest && sessionOwner !== credentials.userId) {
-                console.log(
-                    `Found a session for ${sessionOwner} but ${credentials.userId} is trying to verify their ` +
-                    `email address. Restoring the session for ${sessionOwner} with warning.`,
-                );
-                this._loadSession();
-
-                const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-                // N.B. first param is passed to piwik and so doesn't want i18n
-                Modal.createTrackedDialog('Existing session on register', '',
-                    QuestionDialog, {
-                    title: _t('You are logged in to another account'),
-                    description: _t(
-                        "Thank you for verifying your email! The account you're logged into here " +
-                        "(%(sessionUserId)s) appears to be different from the account you've verified an " +
-                        "email for (%(verifiedUserId)s). If you would like to log in to %(verifiedUserId2)s, " +
-                        "please log out first.", {
-                            sessionUserId: sessionOwner,
-                            verifiedUserId: credentials.userId,
-
-                            // TODO: Fix translations to support reusing variables.
-                            // https://github.com/vector-im/riot-web/issues/9086
-                            verifiedUserId2: credentials.userId,
-                        },
-                    ),
-                    hasCancelButton: false,
-                });
-
-                return MatrixClientPeg.get();
-            }
-        }
         return Lifecycle.setLoggedIn(credentials);
     },
 
@@ -1787,19 +1750,7 @@ export default React.createClass({
     },
 
     updateStatusIndicator: function(state, prevState) {
-        let notifCount = 0;
-
-        const rooms = MatrixClientPeg.get().getRooms();
-        for (let i = 0; i < rooms.length; ++i) {
-            if (rooms[i].hasMembershipState(MatrixClientPeg.get().credentials.userId, 'invite')) {
-                notifCount++;
-            } else if (rooms[i].getUnreadNotificationCount()) {
-                // if we were summing unread notifs:
-                // notifCount += rooms[i].getUnreadNotificationCount();
-                // instead, we just count the number of rooms with notifs.
-                notifCount++;
-            }
-        }
+        const notifCount = countRoomsWithNotif(MatrixClientPeg.get().getRooms()).count;
 
         if (PlatformPeg.get()) {
             PlatformPeg.get().setErrorStatus(state === 'ERROR');
