@@ -28,7 +28,7 @@ const PlatformPeg = require("../../../../../PlatformPeg");
 
 // if this looks like a release, use the 'version' from package.json; else use
 // the git sha. Prepend version with v, to look like riot-web version
-const REACT_SDK_VERSION = 'dist' in packageJson ? packageJson.version : packageJson.gitHead || '<local>';
+const REACT_SDK_VERSION = packageJson.version;
 
 // Simple method to help prettify GH Release Tags and Commit Hashes.
 const semVerRegex = /^v?(\d+\.\d+\.\d+(?:-rc.+)?)(?:-(?:\d+-g)?([0-9a-fA-F]+))?(?:-dirty)?$/i;
