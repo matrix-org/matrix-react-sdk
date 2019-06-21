@@ -545,7 +545,7 @@ module.exports = React.createClass({
                     "sharing it with the identity server at <idServer></idServer>  ", {},
                     {
                         idServer: <b>{parsedIdServerUrl.host}</b>,
-                    }
+                    },
                 )}</label>
                 <AccessibleButton element="span"
                     className="mx_AuthBody_editServerDetails mx_linkButton"
