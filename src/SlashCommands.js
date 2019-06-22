@@ -39,7 +39,7 @@ class Command {
         this.command = '/' + name;
         this.args = args;
         this.description = description;
-        this.runFn = runFn;
+        this.runFn = runFn ? runFn.bind(this) : null;
         this.hideCompletionAfterSpace = hideCompletionAfterSpace;
     }
 
@@ -51,8 +51,12 @@ class Command {
         return this.getCommand() + " " + this.args;
     }
 
-    run(roomId, args) {
-        return this.runFn.bind(this)(roomId, args);
+    run(roomId, args, cmd) {
+        const canonicalCommand = this.command;
+        this.command = "/" + cmd;
+        const result = this.runFn(roomId, args);
+        this.command = canonicalCommand;
+        return result;
     }
 
     getUsage() {
@@ -822,6 +826,7 @@ export function processCommandInput(roomId, input) {
         cmd = input;
     }
 
+    const originalCommand = cmd;
     if (aliases[cmd]) {
         cmd = aliases[cmd];
     }
@@ -829,7 +834,7 @@ export function processCommandInput(roomId, input) {
         // if it has no runFn then its an ignored/nop command (autocomplete only) e.g `/me`
         if (!CommandMap[cmd].runFn) return null;
 
-        return CommandMap[cmd].run(roomId, args);
+        return CommandMap[cmd].run(roomId, args, originalCommand);
     } else {
         return reject(_t('Unrecognised command:') + ' ' + input);
     }
