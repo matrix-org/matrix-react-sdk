@@ -188,7 +188,7 @@ module.exports = React.createClass({
             );
             const imgNode = (
                 <img className="mx_BaseAvatar_image" src={imageUrl}
-                    alt="" title={title} onError={this.onError}
+                    alt="" title={name} onError={this.onError}
                     width={width} height={height} />
             );
             if (onClick != null) {
@@ -217,7 +217,7 @@ module.exports = React.createClass({
                     onClick={onClick}
                     onError={this.onError}
                     width={width} height={height}
-                    title={title} alt=""
+                    title={name} alt=""
                     {...otherProps} />
             );
         } else {
@@ -225,7 +225,7 @@ module.exports = React.createClass({
                 <img className="mx_BaseAvatar mx_BaseAvatar_image" src={imageUrl}
                     onError={this.onError}
                     width={width} height={height}
-                    title={title} alt=""
+                    title={name} alt=""
                     {...otherProps} />
             );
         }

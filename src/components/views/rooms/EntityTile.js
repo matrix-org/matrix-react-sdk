@@ -179,7 +179,7 @@ const EntityTile = React.createClass({
         // The wrapping div is required to make the magic mouse listener work, for some reason.
         return (
             <div ref={(c) => this.container = c} >
-                <AccessibleButton className={classNames(mainClassNames)} title={this.props.title}
+                <AccessibleButton className={classNames(mainClassNames)} title={this.props.name}
                                   onClick={this.props.onClick}>
                     <div className="mx_EntityTile_avatar">
                         { av }
