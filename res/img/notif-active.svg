@@ -9,7 +9,7 @@
             <g id="notification-shortcuts" transform="translate(206.000000, 119.000000)">
                 <g id="slider" transform="translate(16.000000, 16.000000)">
                     <g id="notif_active" transform="translate(0.000000, 31.000000)">
-                        <circle id="Oval-190" stroke="#62A887" fill="#76CFA6" cx="5.5" cy="5.5" r="5.5"></circle>
+                        <circle id="Oval-190" stroke="#162d58" fill="#374c72" cx="5.5" cy="5.5" r="5.5"></circle>
                         <path d="M2.5,6.5 L4,8" id="Line" stroke="#FFFFFF" stroke-linecap="round"></path>
                         <path d="M4,2.97753906 L8.30664062,8" id="Line-Copy" stroke="#FFFFFF" stroke-linecap="round" transform="translate(6.153320, 5.488770) scale(-1, 1) translate(-6.153320, -5.488770) "></path>
                     </g>

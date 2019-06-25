@@ -37,10 +37,20 @@ limitations under the License.
     speak: none;
     pointer-events: none;
     font-weight: normal;
+    z-index: 1;
 }
 
 .mx_BaseAvatar_image {
     border-radius: 40px;
     vertical-align: top;
     background-color: $avatar-bg-color;
+}
+
+.mx_RoomTile_avatar_room .mx_RoomTile_avatar_container .mx_BaseAvatar .mx_BaseAvatar_image,
+.mx_RoomTile_avatar_room .mx_RoomTile_avatar_container .mx_BaseAvatar_image {
+    -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    vertical-align: top;
+    background-color: $avatar-bg-color;
+    border-radius: 0;
 }

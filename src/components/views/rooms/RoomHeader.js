@@ -283,10 +283,15 @@ module.exports = React.createClass({
                 { searchButton }
             </div>;
 
+        let mainAvatarClass = "mx_RoomHeader_avatar";
+        if (!isDMRoom) {
+            mainAvatarClass += " mx_RoomHeader_avatar_room"
+        }
+
         return (
             <div className="mx_RoomHeader light-panel">
                 <div className="mx_RoomHeader_wrapper">
-                    <div className="mx_RoomHeader_avatar">{ roomAvatar }</div>
+                    <div className={mainAvatarClass}>{ roomAvatar }</div>
                     { e2eIcon }
                     { name }
                     { topicElement }

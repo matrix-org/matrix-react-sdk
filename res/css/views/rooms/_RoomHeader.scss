@@ -17,6 +17,7 @@ limitations under the License.
 .mx_RoomHeader {
     flex: 0 0 52px;
     border-bottom: 1px solid $primary-hairline-color;
+    background-color: $secondary-accent-color;
 }
 
 .mx_RoomHeader_wrapper {
@@ -58,7 +59,7 @@ limitations under the License.
 
 .mx_RoomHeader_buttons {
     display: flex;
-    background-color: $primary-bg-color;
+    background-color: $secondary-accent-color;
     padding-right: 5px;
 }
 
@@ -190,6 +191,13 @@ limitations under the License.
 
 .mx_RoomHeader_avatarPicker_edit > input {
     display: none;
+}
+
+.mx_RoomHeader_avatar_room .mx_BaseAvatar .mx_BaseAvatar_image,
+.mx_RoomHeader_avatar_room .mx_BaseAvatar_image {
+    -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    border-radius: 0;
 }
 
 .mx_RoomHeader_button {

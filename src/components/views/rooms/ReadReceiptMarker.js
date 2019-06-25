@@ -195,7 +195,7 @@ module.exports = React.createClass({
             const dateString = formatDate(new Date(this.props.timestamp), this.props.showTwelveHour);
             title = _t(
                 "Seen by %(displayName)s at %(dateTime)s",
-                {displayName: displayName,
+                {displayName: this.props.member ? this.props.member.rawDisplayName : "",
                 dateTime: dateString},
             );
         }

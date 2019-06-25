@@ -37,9 +37,11 @@ limitations under the License.
 
 .mx_AddressSelector_addressListElement.mx_AddressSelector_selected {
     background-color: $selected-color;
+    color: $accent-fg-color;
 }
 
 .mx_AddressSelector_addressListElement.mx_AddressSelector_selected .mx_AddressTile {
     background-color: $selected-color;
     border: solid 1px $selected-color;
+    color: $accent-fg-color;
 }

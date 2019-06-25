@@ -73,6 +73,7 @@
 .mx_Autocomplete_Completion:hover {
     background: $selected-color;
     outline: none;
+    color: $selection-fg-color;
 }
 
 .mx_Autocomplete_provider_name {

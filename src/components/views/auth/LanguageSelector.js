@@ -30,8 +30,12 @@ function onChange(newLang) {
 
 export default function LanguageSelector() {
     const LanguageDropdown = sdk.getComponent('views.elements.LanguageDropdown');
-    return <LanguageDropdown className="mx_AuthBody_language"
-        onOptionChange={onChange}
-        value={getCurrentLanguage()}
-    />;
+    return (
+        <div>
+            <img src={require('../../../../res/img/tchap/logo_rep_fr_black.svg')} alt="logo_rep_fr" className={"tc_RepFr_welcome_logo"} />
+            <LanguageDropdown className="mx_AuthBody_language"
+                onOptionChange={onChange}
+                value={getCurrentLanguage()}
+            />
+        </div>);
 }
