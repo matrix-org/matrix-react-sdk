@@ -1286,6 +1286,7 @@ export default React.createClass({
         this.firstSyncPromise = Promise.defer();
         const cli = MatrixClientPeg.get();
         const IncomingSasDialog = sdk.getComponent('views.dialogs.IncomingSasDialog');
+        let expiredAccount = false;
 
         // Allow the JS SDK to reap timeline events. This reduces the amount of
         // memory consumed as the JS SDK stores multiple distinct copies of room
@@ -1326,32 +1327,50 @@ export default React.createClass({
             // So dispatch directly from here. Ideally we'd use a SyncStateStore that
             // would do this dispatch and expose the sync state itself (by listening to
             // its own dispatch).
-            dis.dispatch({action: 'sync_state', prevState, state});
 
-            if (state === "ERROR" || state === "RECONNECTING") {
-                if (data.error instanceof Matrix.InvalidStoreError) {
-                    Lifecycle.handleInvalidStoreError(data.error);
+            if (!expiredAccount) {
+                if (data.error && data.error.errcode === "ORG_MATRIX_EXPIRED_ACCOUNT") {
+                    expiredAccount = true;
+                    MatrixClientPeg.get().stopClient();
+                    MatrixClientPeg.get().store.deleteAllData().done();
+                    const ExpiredAccountDialog = sdk.getComponent("dialogs.ExpiredAccountDialog");
+                    Modal.createTrackedDialog('Expired Account Dialog', '', ExpiredAccountDialog, {
+                        onFinished: () => {
+                            expiredAccount = false;
+                            MatrixClientPeg.start();
+                        },
+                    });
                 }
-                self.setState({syncError: data.error || true});
-            } else if (self.state.syncError) {
-                self.setState({syncError: null});
+
+                dis.dispatch({action: 'sync_state', prevState, state});
+
+                if (state === "ERROR" || state === "RECONNECTING") {
+                    if (data.error instanceof Matrix.InvalidStoreError) {
+                        Lifecycle.handleInvalidStoreError(data.error);
+                    }
+                    self.setState({syncError: data.error || true});
+                } else if (self.state.syncError) {
+                    self.setState({syncError: null});
+                }
+
+                self.updateStatusIndicator(state, prevState);
+                if (state === "SYNCING" && prevState === "SYNCING") {
+                    return;
+                }
+                console.log("MatrixClient sync state => %s", state);
+                if (state !== "PREPARED") {
+                    return;
+                }
+
+                self.firstSyncComplete = true;
+                self.firstSyncPromise.resolve();
+
+                dis.dispatch({action: 'focus_composer'});
+                self.setState({
+                    ready: true,
+                    showNotifierToolbar: Notifier.shouldShowToolbar(),
+                });
             }
-
-            self.updateStatusIndicator(state, prevState);
-            if (state === "SYNCING" && prevState === "SYNCING") {
-                return;
-            }
-            console.log("MatrixClient sync state => %s", state);
-            if (state !== "PREPARED") { return; }
-
-            self.firstSyncComplete = true;
-            self.firstSyncPromise.resolve();
-
-            dis.dispatch({action: 'focus_composer'});
-            self.setState({
-                ready: true,
-                showNotifierToolbar: Notifier.shouldShowToolbar(),
-            });
         });
         cli.on('Call.incoming', function(call) {
             // we dispatch this synchronously to make sure that the event
