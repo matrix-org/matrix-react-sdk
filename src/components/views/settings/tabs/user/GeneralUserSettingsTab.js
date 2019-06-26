@@ -94,7 +94,7 @@ export default class GeneralUserSettingsTab extends React.Component {
     _onRedlistOptionChange = async () => {
         try {
             const redlistChecked = this.state.redList;
-            if (!Tchap.isCurrentUserExtern() && redlistChecked) {
+            if (Tchap.isCurrentUserExtern() && redlistChecked) {
                 const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
                 Modal.createTrackedDialog('Redlist disabled', '', QuestionDialog, {
                     title: _t("Redlist option change"),
