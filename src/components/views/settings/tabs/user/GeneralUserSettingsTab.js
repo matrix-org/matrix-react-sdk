@@ -94,8 +94,25 @@ export default class GeneralUserSettingsTab extends React.Component {
     _onRedlistOptionChange = async () => {
         try {
             const redlistChecked = this.state.redList;
-            await MatrixClientPeg.get().setAccountData('im.vector.hide_profile', {hide_profile: !redlistChecked});
-            this.setState({redList: !redlistChecked});
+            if (!Tchap.isCurrentUserExtern() && redlistChecked) {
+                const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+                Modal.createTrackedDialog('Redlist disabled', '', QuestionDialog, {
+                    title: _t("Redlist option change"),
+                    description: _t("If you do that, your email adress will be exposed to all users"),
+                    button: _t("Ok"),
+                    onFinished: async (proceed) => {
+                        if (proceed) {
+                            await MatrixClientPeg.get().setAccountData('im.vector.hide_profile', {hide_profile: !redlistChecked});
+                            this.setState({redList: !redlistChecked});
+                        } else {
+                            this.setState({redList: redlistChecked});
+                        }
+                    },
+                });
+            } else {
+                await MatrixClientPeg.get().setAccountData('im.vector.hide_profile', {hide_profile: !redlistChecked});
+                this.setState({redList: !redlistChecked});
+            }
         } catch (err) {
             console.error("Error setting AccountData 'im.vector.hide_profile': " + err);
         }
