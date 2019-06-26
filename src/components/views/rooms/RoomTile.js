@@ -360,8 +360,10 @@ module.exports = React.createClass({
         //    incomingCallBox = <IncomingCallBox incomingCall={ this.props.incomingCall }/>;
         //}
 
+        const cli = MatrixClientPeg.get();
+
         let contextMenuButton;
-        if (!MatrixClientPeg.get().isGuest()) {
+        if (!cli.isGuest()) {
             contextMenuButton = <AccessibleButton className="mx_RoomTile_menuButton" onClick={this.onOpenMenu} />;
         }
 
@@ -377,6 +379,16 @@ module.exports = React.createClass({
                 alt="dm"
             />;
         }
+        let e2eIndicator;
+        if (cli.isRoomEncrypted(this.props.room.roomId)) {
+            e2eIndicator = <img
+                src={require("../../../../res/img/e2e/verified.svg")}
+                className="mx_RoomTile_e2e"
+                width="11"
+                height="13"
+                alt="e2e"
+            />;
+        }
 
         return <AccessibleButton tabIndex="0"
                                  className={classes}
@@ -388,6 +400,7 @@ module.exports = React.createClass({
             <div className={avatarClasses}>
                 <div className="mx_RoomTile_avatar_container">
                     <RoomAvatar room={this.props.room} width={24} height={24} />
+                    { e2eIndicator }
                     { dmIndicator }
                 </div>
             </div>

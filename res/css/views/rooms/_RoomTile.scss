@@ -100,6 +100,14 @@ limitations under the License.
     z-index: 2;
 }
 
+.mx_RoomTile_e2e {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: -5px;
+    z-index: 2;
+}
+
 .mx_RoomTile_name {
     font-size: 14px;
     padding: 0 6px;
