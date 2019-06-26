@@ -106,7 +106,7 @@ module.exports = React.createClass({
             track('Failed to get protocol list from homeserver');
             this.setState({
                 error: _t(
-                    'Riot failed to get the protocol list from the homeserver. ' +
+                    'Tchap failed to get the protocol list from the homeserver. ' +
                     'The homeserver may be too old to support third party networks.',
                 ),
             });
@@ -201,7 +201,7 @@ module.exports = React.createClass({
             this.setState({
                 loading: false,
                 error:
-                    `${_t('Riot failed to get the public room list.')} ` +
+                    `${_t('Tchap failed to get the public room list.')} ` +
                     `${(err && err.message) ? err.message : _t('The homeserver may be unavailable or overloaded.')}`
                 ,
             });

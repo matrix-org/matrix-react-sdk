@@ -88,7 +88,7 @@ export default class TimelineExplosionDialog extends React.Component {
                 <div className="mx_Dialog_content" id='mx_Dialog_content'>
                     <p>
                         {_t(
-                            "Riot has run into a problem which makes it difficult to show you " +
+                            "Tchap has run into a problem which makes it difficult to show you " +
                             "your messages right now. Nothing has been lost and reloading the app " +
                             "should fix this for you. In order to assist us in troubleshooting the " +
                             "problem, we'd like to take a look at your debug logs. You do not need " +
@@ -116,9 +116,9 @@ export default class TimelineExplosionDialog extends React.Component {
                     </p>
                     {progress}
                 </div>
-                <DialogButtons primaryButton={_t("Send debug logs and reload Riot")}
+                <DialogButtons primaryButton={_t("Send debug logs and reload Tchap")}
                                onPrimaryButtonClick={this._onSubmit}
-                               cancelButton={_t("Reload Riot without sending logs")}
+                               cancelButton={_t("Reload Tchap without sending logs")}
                                focus={true}
                                onCancel={this._onCancel}
                                disabled={this.state.busy}

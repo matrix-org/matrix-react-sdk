@@ -39,10 +39,10 @@ module.exports = React.createClass({
         return (
         <div className="mx_CompatibilityPage">
             <div className="mx_CompatibilityPage_box">
-                <p>{ _t("Sorry, your browser is <b>not</b> able to run Riot.", {}, { 'b': (sub) => <b>{sub}</b> }) } </p>
+                <p>{ _t("Sorry, your browser is <b>not</b> able to run Tchap.", {}, { 'b': (sub) => <b>{sub}</b> }) } </p>
                 <p>
                 { _t(
-                    "Riot uses many advanced browser features, some of which are not available " +
+                    "Tchap uses many advanced browser features, some of which are not available " +
                     "or experimental in your current browser.",
                 ) }
                 </p>

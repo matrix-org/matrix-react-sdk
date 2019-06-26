@@ -65,19 +65,19 @@ export async function decryptMegolmKeyFile(data, password) {
     // check we have a version byte
     if (body.length < 1) {
         throw friendlyError('Invalid file: too short',
-            _t('Not a valid Riot keyfile'));
+            _t('Not a valid Tchap keyfile'));
     }
 
     const version = body[0];
     if (version !== 1) {
         throw friendlyError('Unsupported version',
-            _t('Not a valid Riot keyfile'));
+            _t('Not a valid Tchap keyfile'));
     }
 
     const ciphertextLength = body.length-(1+16+16+4+32);
     if (ciphertextLength < 0) {
         throw friendlyError('Invalid file: too short',
-            _t('Not a valid Riot keyfile'));
+            _t('Not a valid Tchap keyfile'));
     }
 
     const salt = body.subarray(1, 1+16);

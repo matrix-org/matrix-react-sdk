@@ -93,7 +93,7 @@ export default React.createClass({
                     <p>{ _t("We encountered an error trying to restore your previous session.") }</p>
 
                     <p>{ _t(
-                        "If you have previously used a more recent version of Riot, your session " +
+                        "If you have previously used a more recent version of Tchap, your session " +
                         "may be incompatible with this version. Close this window and return " +
                         "to the more recent version.",
                      ) }</p>

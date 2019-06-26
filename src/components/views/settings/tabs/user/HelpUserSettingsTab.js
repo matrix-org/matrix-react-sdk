@@ -147,14 +147,14 @@ export default class HelpUserSettingsTab extends React.Component {
     }
 
     render() {
-        let faqText = _t('For help with using Riot, click <a>here</a>.', {}, {
+        let faqText = _t('For help with using Tchap, click <a>here</a>.', {}, {
             'a': (sub) => <a href="https://about.riot.im/need-help/" rel='noopener' target='_blank'>{sub}</a>,
         });
         if (SdkConfig.get().welcomeUserId && getCurrentLanguage().startsWith('en')) {
             faqText = (
                 <div>
                     {
-                        _t('For help with using Riot, click <a>here</a> or start a chat with our ' +
+                        _t('For help with using Tchap, click <a>here</a> or start a chat with our ' +
                             'bot using the button below.', {}, {
                             'a': (sub) => <a href="https://about.riot.im/need-help/" rel='noopener'
                                              target='_blank'>{sub}</a>,
@@ -162,7 +162,7 @@ export default class HelpUserSettingsTab extends React.Component {
                     }
                     <div>
                         <AccessibleButton onClick={this._onStartBotChat} kind='primary'>
-                            {_t("Chat with Riot Bot")}
+                            {_t("Chat with Tchap Bot")}
                         </AccessibleButton>
                     </div>
                 </div>
@@ -225,7 +225,7 @@ export default class HelpUserSettingsTab extends React.Component {
                     <span className='mx_SettingsTab_subheading'>{_t("Versions")}</span>
                     <div className='mx_SettingsTab_subsectionText'>
                         {_t("matrix-react-sdk version:")} {reactSdkVersion}<br />
-                        {_t("riot-web version:")} {vectorVersion}<br />
+                        {_t("tchap-web version:")} {vectorVersion}<br />
                         {_t("olm version:")} {olmVersion}<br />
                         {updateButton}
                     </div>

@@ -739,7 +739,7 @@ module.exports = React.createClass({
                 <div>
                     <h3>{ _t('Advanced notification settings') }</h3>
                     { _t('There are advanced notifications which are not shown here') }.<br />
-                    { _t('You might have configured them in a client other than Riot. You cannot tune them in Riot but they still apply') }.
+                    { _t('You might have configured them in a client other than Tchap. You cannot tune them in Tchap but they still apply') }.
                     <ul>
                         { externalRules }
                     </ul>

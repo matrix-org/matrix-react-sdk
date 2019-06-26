@@ -1458,7 +1458,7 @@ export default React.createClass({
                     Modal.createTrackedDialog('Crypto migrated', '', ErrorDialog, {
                         title: _t('Old cryptography data detected'),
                         description: _t(
-                            "Data from an older version of Riot has been detected. "+
+                            "Data from an older version of Tchap has been detected. "+
                             "This will have caused end-to-end cryptography to malfunction "+
                             "in the older version. End-to-end encrypted messages exchanged "+
                             "recently whilst using the older version may not be decryptable "+
