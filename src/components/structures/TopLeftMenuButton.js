@@ -62,8 +62,30 @@ export default class TopLeftMenuButton extends React.Component {
         };
     }
 
+    _onAvatarUrlChanged = (ev, user) => {
+        this.setState({
+            profileInfo: {
+                ...this.state.profileInfo,
+                avatarUrl: user.avatarUrl,
+            },
+        });
+    };
+
+    _onDisplayNameChanged = (ev, user) => {
+        this.setState({
+            profileInfo: {
+                ...this.state.profileInfo,
+                name: user.displayName,
+            },
+        });
+    };
+
     async componentDidMount() {
         this._dispatcherRef = dis.register(this.onAction);
+
+        const cli = MatrixClientPeg.get();
+        cli.on("User.avatarUrl", this._onAvatarUrlChanged);
+        cli.on("User.displayName", this._onDisplayNameChanged);
 
         try {
             const profileInfo = await this._getProfileInfo();
@@ -76,6 +98,12 @@ export default class TopLeftMenuButton extends React.Component {
 
     componentWillUnmount() {
         dis.unregister(this._dispatcherRef);
+
+        const cli = MatrixClientPeg.get();
+        if (cli) {
+            cli.removeListener("User.avatarUrl", this._onAvatarUrlChanged);
+            cli.removeListener("User.displayName", this._onDisplayNameChanged);
+        }
     }
 
     onAction = (payload) => {
