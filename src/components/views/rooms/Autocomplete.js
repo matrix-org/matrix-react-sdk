@@ -83,6 +83,15 @@ export default class Autocomplete extends React.Component {
     }
 
     complete(query, selection) {
+        const currentCompletion = this._getSelectedCompletion();
+        if (currentCompletion) {
+            const selectionRange = currentCompletion.range;
+            const selectedQueryPart = query.substr(selectionRange.start, selectionRange.end);
+            if (currentCompletion.completion === selectedQueryPart) {
+                console.log("ignoring query that equals current completion, this is slate echoing");
+                return;
+            }
+        }
         this.queryRequested = query;
         if (this.debounceCompletionsRequest) {
             clearTimeout(this.debounceCompletionsRequest);
@@ -136,8 +145,8 @@ export default class Autocomplete extends React.Component {
             /* If the currently selected completion is still in the completion list,
              try to find it and jump to it. If not, select composer.
              */
-            const currentSelection = this.state.selectionOffset === 0 ? null :
-                this.state.completionList[this.state.selectionOffset - 1].completion;
+            const currentCompletion = this._getSelectedCompletion();
+            const currentSelection = currentCompletion && currentCompletion.completion;
             selectionOffset = completionList.findIndex(
                 (completion) => completion.completion === currentSelection);
             if (selectionOffset === -1) {
@@ -226,6 +235,11 @@ export default class Autocomplete extends React.Component {
         if (this.props.onSelectionChange) {
             this.props.onSelectionChange(this.state.completionList[selectionOffset - 1]);
         }
+    }
+
+    _getSelectedCompletion() {
+        return this.state.selectionOffset === 0 ? null :
+                this.state.completionList[this.state.selectionOffset - 1];
     }
 
     componentDidUpdate(prevProps) {
