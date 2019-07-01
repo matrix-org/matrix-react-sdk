@@ -1882,5 +1882,6 @@
     "Analysis in progress": "Analyse en cours",
     "Register my account on the red list": "Inscrire mon compte sur liste rouge",
     "Other users will not be able to discover my account on their searches": "Les autres utilisateurs ne pourrons pas découvrir mon compte lors de leurs recherches",
-    "Send a message": "Envoyer un message"
+    "Send a message": "Envoyer un message",
+    "To disable this option, you must accept that your email address is visible to the other users.": "Pour désactiver cette option, vous devez accepter que votre adresse email soit visible des autres utilisateurs lors de leurs recherches."
 }
