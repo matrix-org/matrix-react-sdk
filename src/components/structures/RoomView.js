@@ -1269,7 +1269,15 @@ module.exports = React.createClass({
         this.setState({
             rejecting: true,
         });
-        MatrixClientPeg.get().leave(this.state.roomId).done(function() {
+        MatrixClientPeg.get().leave(this.state.roomId).catch((error) => {
+            // if rejecting invite fails, perform a local-rejection because Synapse does not send it down sync-stream
+            // TODO improve this condition once 404 on /leave is actually specced
+            if (error.httpStatus === 404 && this.state.room && this.state.room.getMyMembership() === "invite") {
+                this.state.room.updateMyMembership("leave");
+                return Promise.resolve();
+            }
+            return Promise.reject(error);
+        }).done(function() {
             dis.dispatch({ action: 'view_next_room' });
             self.setState({
                 rejecting: false,

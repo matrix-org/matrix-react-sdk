@@ -482,7 +482,16 @@ export default React.createClass({
                             const Loader = sdk.getComponent("elements.Spinner");
                             const modal = Modal.createDialog(Loader, null, 'mx_Dialog_spinner');
 
-                            MatrixClientPeg.get().leave(payload.room_id).done(() => {
+                            MatrixClientPeg.get().leave(payload.room_id).catch((error) => {
+                                // if rejecting invite fails, perform a local-rejection because Synapse does not send it down sync-stream
+                                // TODO improve this condition once 404 on /leave is actually specced
+                                if (error.httpStatus === 404 && this.state.room &&
+                                    this.state.room.getMyMembership() === "invite") {
+                                    this.state.room.updateMyMembership("leave");
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject(error);
+                            }).done(() => {
                                 modal.close();
                                 if (this.state.currentRoomId === payload.room_id) {
                                     dis.dispatch({action: 'view_next_room'});
