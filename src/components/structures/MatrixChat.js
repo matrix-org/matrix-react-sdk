@@ -489,13 +489,13 @@ export default React.createClass({
                                 if (error.httpStatus === 404) {
                                     const room = cli.getRoom(payload.room_id);
                                     if (room && room.getMyMembership() === "invite") {
-                                        return cli.store.getSavedSync().then((data) => {
+                                        return cli.store.getNextBatchToken().then((nextBatch) => {
                                             this.state.room.updateMyMembership("leave");
                                             cli.store.setSyncData({
                                                 rooms: {
                                                     leave: {[payload.room_id]: {}},
                                                 },
-                                                next_batch: data.nextBatch,
+                                                next_batch: nextBatch,
                                             });
                                             return Promise.resolve();
                                         });

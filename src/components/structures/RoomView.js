@@ -1274,13 +1274,13 @@ module.exports = React.createClass({
             // if rejecting invite fails, perform a local-rejection because Synapse does not send it down sync-stream
             // TODO improve this condition once 404 on /leave is actually specced
             if (error.httpStatus === 404 && this.state.room && this.state.room.getMyMembership() === "invite") {
-                return cli.store.getSavedSync().then((data) => {
+                return cli.store.getNextBatchToken().then((nextBatch) => {
                     this.state.room.updateMyMembership("leave");
                     cli.store.setSyncData({
                         rooms: {
                             leave: {[this.state.roomId]: {}},
                         },
-                        next_batch: data.nextBatch,
+                        next_batch: nextBatch,
                     });
                     return Promise.resolve();
                 });
