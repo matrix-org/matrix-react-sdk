@@ -977,6 +977,7 @@ export default React.createClass({
                     if (opts.noFederate) createOpts.creation_content = {'m.federate': false};
                     if (opts.visibility) createOpts.visibility = opts.visibility;
                     if (opts.preset) createOpts.preset = opts.preset;
+                    if (opts.access_rules) createOpts.access_rules = opts.access_rules;
                     createRoom({createOpts}).done();
                 }
             },
