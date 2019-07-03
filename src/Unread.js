@@ -42,11 +42,6 @@ module.exports = {
     doesRoomHaveUnreadMessages: function(room) {
         const myUserId = MatrixClientPeg.get().credentials.userId;
 
-        // get the most recent read receipt sent by our account.
-        // N.B. this is NOT a read marker (RM, aka "read up to marker"),
-        // despite the name of the method :((
-        const readUpToId = room.getEventReadUpTo(myUserId);
-
         // as we don't send RRs for our own messages, make sure we special case that
         // if *we* sent the last message into the room, we consider it not unread!
         // Should fix: https://github.com/vector-im/riot-web/issues/3263
@@ -58,6 +53,11 @@ module.exports = {
             room.timeline[room.timeline.length - 1].sender.userId === myUserId) {
             return false;
         }
+
+        // get the most recent read receipt sent by our account.
+        // N.B. this is NOT a read marker (RM, aka "read up to marker"),
+        // despite the name of the method :((
+        const readUpToId = room.getEventReadUpTo(myUserId);
 
         // this just looks at whatever history we have, which if we've only just started
         // up probably won't be very much, so if the last couple of events are ones that
