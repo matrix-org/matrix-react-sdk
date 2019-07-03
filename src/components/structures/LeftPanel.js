@@ -268,7 +268,7 @@ const LeftPanel = React.createClass({
                         searchFilter={this.state.searchFilter}
                         ConferenceHandler={VectorConferenceHandler} />
                     <div className={"tc_RepFr_logo"}>
-                        <img src={require('../../../res/img/tchap/logo_rep_fr.svg')} alt="logo_rep_fr" />
+                        <img src={require('../../../res/img/tchap/logo_rep_fr_black.svg')} alt="logo_rep_fr" />
                     </div>
                 </aside>
             </div>

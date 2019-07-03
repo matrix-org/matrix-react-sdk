@@ -22,17 +22,4 @@ limitations under the License.
 .mx_PowerSelector .mx_Field input {
     width: 100%;
     box-sizing: border-box;
-    background-color: $accent-color;
-    color: $accent-fg-color;
-}
-
-.mx_PowerSelector .mx_Field select option {
-    background-color: $accent-color;
-    color: $accent-fg-color;
-}
-
-.mx_PowerSelector .mx_Field label {
-    background-color: $accent-color;
-    color: $accent-fg-color;
-    border-radius: 2px;
 }

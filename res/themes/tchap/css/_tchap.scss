@@ -69,7 +69,7 @@ $selected-color: $accent-color;
 $event-selected-color: #f7f7f7;
 
 // used for the hairline dividers in RoomView
-$primary-hairline-color: #374c72;
+$primary-hairline-color: #e5e5e5;
 
 // used for the border of input text fields
 $input-border-color: #e7e7e7;
@@ -161,11 +161,11 @@ $header-divider-color: #91A1C0;
 
 // ********************
 
-$roomtile-name-color: #fff;
+$roomtile-name-color: #61708b;
 $roomtile-selected-color: #212121;
 $roomtile-notified-color: #212121;
-$roomtile-selected-bg-color: #374c72;
-$roomtile-focused-bg-color: #374c72;
+$roomtile-selected-bg-color: #fff;
+$roomtile-focused-bg-color: #fff;
 
 $username-variant1-color: #368bd6;
 $username-variant2-color: #ac3ba8;
@@ -183,7 +183,7 @@ $roomsublist-label-fg-color: $roomtile-name-color;
 $roomsublist-label-bg-color: $tertiary-accent-color;
 $roomsublist-chevron-color: $accent-color;
 
-$panel-divider-color: #374c72;
+$panel-divider-color: #e5e5e5;
 
 // ********************
 
@@ -252,7 +252,7 @@ $authpage-lang-color: #4e5054;
 $authpage-primary-color: #232f32;
 $authpage-secondary-color: #61708b;
 
-$dark-panel-bg-color: $secondary-accent-color;
+$dark-panel-bg-color: #f2f5f8;
 $panel-gradient: rgba(242, 245, 248, 0), rgba(242, 245, 248, 1);
 
 // ***** Mixins! *****
