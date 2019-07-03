@@ -406,6 +406,7 @@ module.exports = React.createClass({
     },
 
     _processResults: function(results, query) {
+        const self = this;
         const suggestedList = [];
         results.forEach((result) => {
             if (this.props.roomId) {
@@ -461,14 +462,29 @@ module.exports = React.createClass({
                 this.setState({searchError: _t("That doesn't look like a valid email address")});
                 return;
             }
-            suggestedList.unshift({
+/*            suggestedList.unshift({
                 addressType: addrType,
                 address: query,
                 isKnown: false,
-            });
+            });*/
             if (this._cancelThreepidLookup) this._cancelThreepidLookup();
             if (addrType === 'email') {
-                this._lookupThreepid(addrType, query).done();
+                //this._lookupThreepid(addrType, query).done();
+                this._lookupThreepid(addrType, query).then(val => {
+                    if (val !== false) {
+                        suggestedList.unshift({
+                            addressType: addrType,
+                            address: query,
+                            isKnown: false,
+                        });
+                    }
+                    self.setState({
+                        suggestedList,
+                        error: false,
+                    }, () => {
+                        if (self.addressSelector) self.addressSelector.moveSelectionTop();
+                    });
+                });
             }
         }
         this.setState({
@@ -518,6 +534,7 @@ module.exports = React.createClass({
     },
 
     _lookupThreepid: function(medium, address) {
+        const access_rules = this._getAccessRules(this.props.roomId);
         let cancelled = false;
         // Note that we can't safely remove this after we're done
         // because we don't know that it's the same one, so we just
@@ -532,12 +549,18 @@ module.exports = React.createClass({
             if (cancelled) return null;
             return Tchap.lookupThreePid(medium, address);
         }).then((res) => {
+            if (access_rules !== "unrestricted") {
+                if (Object.keys(res).length === 0 || Tchap.isUserExtern(res.mxid)) {
+                    return false;
+                }
+            }
             if (res === null || !res.mxid) return null;
             if (cancelled) return null;
 
-            return MatrixClientPeg.get().getProfileInfo(res.mxid);
+            return MatrixClientPeg.get().getProfileInfo(res.mxid).catch(err => {return null});
         }).then((res) => {
             if (res === null) return null;
+            if (res === false) return false;
             if (cancelled) return null;
             this.setState({
                 suggestedList: [{
