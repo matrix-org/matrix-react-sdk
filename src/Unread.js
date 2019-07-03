@@ -42,6 +42,14 @@ module.exports = {
     doesRoomHaveUnreadMessages: function(room) {
         const myUserId = MatrixClientPeg.get().credentials.userId;
 
+        // If the room has pending events, assume that means you are active in
+        // the room, and so it should be treated as read. This also ensures that
+        // local echoes of pending events do not cause rooms to temporarily
+        // appear unread as in https://github.com/vector-im/riot-web/issues/9952.
+        if (room.getPendingEvents().length > 0) {
+            return false;
+        }
+
         // as we don't send RRs for our own messages, make sure we special case that
         // if *we* sent the last message into the room, we consider it not unread!
         // Should fix: https://github.com/vector-im/riot-web/issues/3263
