@@ -40,14 +40,11 @@ export default class StorageEvictedDialog extends React.Component {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
 
-        let logRequest;
-        if (SdkConfig.get().bug_report_endpoint_url) {
-            logRequest = _t(
-                "To help us prevent this in future, please <a>send us logs</a>.", {},
-            {
-                a: text => <a href="#" onClick={this._sendBugReport}>{text}</a>,
-            });
-        }
+        let logRequest = _t(
+            "To help us prevent this in future, please <a>send us logs</a>.", {},
+        {
+            a: text => <a href="#" onClick={this._sendBugReport}>{text}</a>,
+        });
 
         return (
             <BaseDialog className="mx_ErrorDialog" onFinished={this.props.onFinished}

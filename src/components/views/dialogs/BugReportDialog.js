@@ -20,6 +20,7 @@ import sdk from '../../../index';
 import SdkConfig from '../../../SdkConfig';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
+import MatrixClientPeg from "../../../MatrixClientPeg";
 
 export default class BugReportDialog extends React.Component {
     constructor(props, context) {
@@ -53,12 +54,13 @@ export default class BugReportDialog extends React.Component {
         const userText =
             (this.state.text.length > 0 ? this.state.text + '\n\n': '') + 'Issue: ' +
             (this.state.issueUrl.length > 0 ? this.state.issueUrl : 'No issue link given');
+        const bugReportEndpointUrl = MatrixClientPeg.get().baseUrl + SdkConfig.get().bug_report_endpoint_url;
 
         this.setState({ busy: true, progress: null, err: null });
         this._sendProgressCallback(_t("Preparing to send logs"));
 
         require(['../../../rageshake/submit-rageshake'], (s) => {
-            s(SdkConfig.get().bug_report_endpoint_url, {
+            s(bugReportEndpointUrl, {
                 userText,
                 sendLogs: true,
                 progressCallback: this._sendProgressCallback,
@@ -148,7 +150,7 @@ export default class BugReportDialog extends React.Component {
                             {
                                 a: (sub) => <a
                                     target="_blank"
-                                    href="https://github.com/vector-im/riot-web/issues/new"
+                                    href="https://github.com/dinsic-pim/tchap-web/issues/new"
                                 >
                                     { sub }
                                 </a>,
@@ -162,7 +164,7 @@ export default class BugReportDialog extends React.Component {
                         label={_t("GitHub issue")}
                         onChange={this._onIssueUrlChange}
                         value={this.state.issueUrl}
-                        placeholder="https://github.com/vector-im/riot-web/issues/..."
+                        placeholder="https://github.com/dinsic-pim/tchap-web/issues/..."
                     />
                     <Field
                         className="mx_BugReportDialog_field_input"

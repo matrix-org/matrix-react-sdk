@@ -64,24 +64,13 @@ export default React.createClass({
             </button>
         );
 
-        let dialogButtons;
-        if (SdkConfig.get().bug_report_endpoint_url) {
-            dialogButtons = <DialogButtons primaryButton={_t("Send Logs")}
-                onPrimaryButtonClick={this._sendBugReport}
-                focus={true}
-                hasCancel={false}
-            >
-                { clearStorageButton }
-            </DialogButtons>;
-        } else {
-            dialogButtons = <DialogButtons primaryButton={_t("Refresh")}
-                onPrimaryButtonClick={this._onRefreshClick}
-                focus={true}
-                hasCancel={false}
-            >
-                { clearStorageButton }
-            </DialogButtons>;
-        }
+        let dialogButtons = <DialogButtons primaryButton={_t("Send Logs")}
+            onPrimaryButtonClick={this._sendBugReport}
+            focus={true}
+            hasCancel={false}
+        >
+            { clearStorageButton }
+        </DialogButtons>;
 
         return (
             <BaseDialog className="mx_ErrorDialog" onFinished={this.props.onFinished}

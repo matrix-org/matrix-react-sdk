@@ -18,6 +18,7 @@ import React from 'react';
 import sdk from '../../../index';
 import SdkConfig from '../../../SdkConfig';
 import { _t } from '../../../languageHandler';
+import MatrixClientPeg from '../../../MatrixClientPeg';
 
 // Dev note: this should be a temporary dialog while we work out what is
 // actually going on. See https://github.com/vector-im/riot-web/issues/8593
@@ -43,12 +44,13 @@ export default class TimelineExplosionDialog extends React.Component {
 
     _onSubmit = () => {
         const userText = "Caught timeline explosion\n\nhttps://github.com/vector-im/riot-web/issues/8593";
+        const bugReportEndpointUrl = MatrixClientPeg.get().baseUrl + SdkConfig.get().bug_report_endpoint_url;
 
         this.setState({busy: true, progress: null});
         this._sendProgressCallback(_t("Preparing to send logs"));
 
         require(['../../../rageshake/submit-rageshake'], (s) => {
-            s(SdkConfig.get().bug_report_endpoint_url, {
+            s(bugReportEndpointUrl, {
                 userText,
                 sendLogs: true,
                 progressCallback: this._sendProgressCallback,
