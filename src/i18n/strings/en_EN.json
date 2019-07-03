@@ -1636,5 +1636,7 @@
     "I renewed the validity of my account": "I renewed the validity of my account",
     "Request a renewal email": "Request a renewal email",
     "To disable this option, you must accept that your email address is visible to the other users.": "To disable this option, you must accept that your email address is visible to the other users.",
-    "Allow the externals to join this room": "Allow the externals to join this room"
+    "Allow the externals to join this room": "Allow the externals to join this room",
+    "This action is irreversible.": "This action is irreversible.",
+    "Are you sure you want to allow the externals to join this room ?": "Are you sure you want to allow the externals to join this room ?"
 }
