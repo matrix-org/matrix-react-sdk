@@ -462,14 +462,8 @@ module.exports = React.createClass({
                 this.setState({searchError: _t("That doesn't look like a valid email address")});
                 return;
             }
-/*            suggestedList.unshift({
-                addressType: addrType,
-                address: query,
-                isKnown: false,
-            });*/
             if (this._cancelThreepidLookup) this._cancelThreepidLookup();
             if (addrType === 'email') {
-                //this._lookupThreepid(addrType, query).done();
                 this._lookupThreepid(addrType, query).then(val => {
                     if (val !== false) {
                         suggestedList.unshift({

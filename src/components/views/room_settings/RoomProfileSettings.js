@@ -61,6 +61,7 @@ export default class RoomProfileSettings extends React.Component {
             canSetTopic: room.currentState.maySendStateEvent('m.room.topic', client.getUserId()),
             canSetAvatar: room.currentState.maySendStateEvent('m.room.avatar', client.getUserId()),
             access_rules: this._getAccessRules(props.roomId),
+            join_rules: this._getJoinRules(props.roomId),
             externAllowed: false,
         };
     }
@@ -154,6 +155,19 @@ export default class RoomProfileSettings extends React.Component {
         return keyName in content ? content[keyName] : defaultValue;
     };
 
+    _getJoinRules = (roomId) => {
+        const stateEventType = "m.room.join_rules";
+        const keyName = "join_rule";
+        const defaultValue = "public";
+        const room = MatrixClientPeg.get().getRoom(roomId);
+        const event = room.currentState.getStateEvents(stateEventType, '');
+        if (!event) {
+            return defaultValue;
+        }
+        const content = event.getContent();
+        return keyName in content ? content[keyName] : defaultValue;
+    };
+
     _onExternAllowedSwitchChange = () => {
         const self = this;
         const access_rules = this.state.access_rules;
@@ -219,12 +233,15 @@ export default class RoomProfileSettings extends React.Component {
                 );
             }
         }
-        let accessRule = (
-            <LabelledToggleSwitch value={this.state.access_rules === "unrestricted"}
-                                  onChange={ this._onExternAllowedSwitchChange }
-                                  label={ _t('Allow the externals to join this room') }
-                                  disabled={ this.state.access_rules === "unrestricted" } />
-        );
+        let accessRule = null;
+        if (this.state.join_rules !== "public") {
+            accessRule = (
+                <LabelledToggleSwitch value={this.state.access_rules === "unrestricted"}
+                                      onChange={ this._onExternAllowedSwitchChange }
+                                      label={ _t('Allow the externals to join this room') }
+                                      disabled={ this.state.access_rules === "unrestricted" } />
+            );
+        }
 
         return (
             <form onSubmit={this._saveProfile} autoComplete={false} noValidate={true}>
