@@ -221,6 +221,19 @@ module.exports = React.createClass({
         if (this._cancelThreepidLookup) this._cancelThreepidLookup();
     },
 
+    _getAccessRules: function(roomId) {
+        const stateEventType = "im.vector.room.access_rules";
+        const keyName = "rule";
+        const defaultValue = "restricted";
+        const room = MatrixClientPeg.get().getRoom(roomId);
+        const event = room.currentState.getStateEvents(stateEventType, '');
+        if (!event) {
+            return defaultValue;
+        }
+        const content = event.getContent();
+        return keyName in content ? content[keyName] : defaultValue;
+    },
+
     _doNaiveGroupSearch: function(query) {
         const lowerCaseQuery = query.toLowerCase();
         this.setState({
@@ -395,6 +408,12 @@ module.exports = React.createClass({
     _processResults: function(results, query) {
         const suggestedList = [];
         results.forEach((result) => {
+            if (this.props.roomId) {
+                const access_rules = this._getAccessRules(this.props.roomId);
+                if (access_rules === "restricted" && Tchap.isUserExtern(result.user_id)) {
+                    return;
+                }
+            }
             if (result.room_id) {
                 const client = MatrixClientPeg.get();
                 const room = client.getRoom(result.room_id);
