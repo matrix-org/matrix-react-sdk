@@ -67,7 +67,7 @@ export default class VoiceUserSettingsTab extends React.Component {
                     const ErrorDialog = sdk.getComponent('dialogs.ErrorDialog');
                     Modal.createTrackedDialog('No media permissions', '', ErrorDialog, {
                         title: _t('No media permissions'),
-                        description: _t('You may need to manually permit Riot to access your microphone/webcam'),
+                        description: _t('You may need to manually permit Tchap to access your microphone/webcam'),
                     });
                 },
             ]);

@@ -77,7 +77,7 @@ export default withMatrixClient(React.createClass({
                     <div className="mx_MyGroups_microcopy">
                         <p>
                             { _t(
-                                "Did you know: you can use communities to filter your Riot.im experience!",
+                                "Did you know: you can use communities to filter your Tchap experience!",
                             ) }
                         </p>
                         <p>

@@ -54,7 +54,7 @@ export default class CookieBar extends React.Component {
                 <img className="mx_MatrixToolbar_warning" src={require("../../../../res/img/warning.svg")} width="24" height="23" alt="" />
                 <div className="mx_MatrixToolbar_content">
                     { this.props.policyUrl ? _t(
-                        "Please help improve Riot.im by sending <UsageDataLink>anonymous usage data</UsageDataLink>. " +
+                        "Please help improve Tchap by sending <UsageDataLink>anonymous usage data</UsageDataLink>. " +
                         "This will use a cookie " +
                         "(please see our <PolicyLink>Cookie Policy</PolicyLink>).",
                         {},
@@ -77,7 +77,7 @@ export default class CookieBar extends React.Component {
                             ,
                         },
                     ) : _t(
-                        "Please help improve Riot.im by sending <UsageDataLink>anonymous usage data</UsageDataLink>. " +
+                        "Please help improve Tchap by sending <UsageDataLink>anonymous usage data</UsageDataLink>. " +
                         "This will use a cookie.",
                         {},
                         {

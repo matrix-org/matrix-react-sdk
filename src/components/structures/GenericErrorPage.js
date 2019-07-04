@@ -26,7 +26,7 @@ export default class GenericErrorPage extends React.PureComponent {
     render() {
         return <div className='mx_GenericErrorPage'>
             <div className='mx_GenericErrorPage_box'>
-                <h1>{_t("Error loading Riot")}</h1>
+                <h1>{_t("Error loading Tchap")}</h1>
                 <p>{this.props.message}</p>
                 <p>{_t(
                     "If this is unexpected, please contact your system administrator " +

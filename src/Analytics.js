@@ -61,7 +61,7 @@ const customVariables = {
     },
     'App Version': {
         id: 2,
-        expl: _td('The version of Riot.im'),
+        expl: _td('The version of Tchap'),
         example: '15.0.0',
     },
     'User Type': {
@@ -280,7 +280,7 @@ class Analytics {
             title: _t('Analytics'),
             description: <div className="mx_AnalyticsModal">
                 <div>
-                    { _t('The information being sent to us to help make Riot.im better includes:') }
+                    { _t('The information being sent to us to help make Tchap better includes:') }
                 </div>
                 <table>
                     { rows.map((row) => <tr key={row[0]}>

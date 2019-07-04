@@ -20,12 +20,12 @@ import { _t } from '../../../languageHandler';
 
 export default (props) => {
     const description =
-        _t("Riot now uses 3-5x less memory, by only loading information about other users"
+        _t("Tchap now uses 3-5x less memory, by only loading information about other users"
         + " when needed. Please wait whilst we resynchronise with the server!");
 
     return (<QuestionDialog
         hasCancelButton={false}
-        title={_t("Updating Riot")}
+        title={_t("Updating Tchap")}
         description={<div>{description}</div>}
         button={_t("OK")}
         onFinished={props.onFinished}

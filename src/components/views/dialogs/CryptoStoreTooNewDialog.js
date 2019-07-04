@@ -28,7 +28,7 @@ export default (props) => {
             description: _t(
                 "To avoid losing your chat history, you must export your room keys " +
                 "before logging out. You will need to go back to the newer version of " +
-                "Riot to do this",
+                "Tchap to do this",
             ),
             button: _t("Sign out"),
             focus: false,
@@ -42,7 +42,7 @@ export default (props) => {
     };
 
     const description =
-        _t("You've previously used a newer version of Riot on %(host)s. " +
+        _t("You've previously used a newer version of Tchap on %(host)s. " +
             "To use this version again with end to end encryption, you will " +
             "need to sign out and back in again. ",
             {host: props.host},

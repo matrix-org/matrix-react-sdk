@@ -20,13 +20,13 @@ import { _t } from '../../../languageHandler';
 
 export default (props) => {
     const description1 =
-        _t("You've previously used Riot on %(host)s with lazy loading of members enabled. " +
+        _t("You've previously used Tchap on %(host)s with lazy loading of members enabled. " +
             "In this version lazy loading is disabled. " +
             "As the local cache is not compatible between these two settings, " +
-            "Riot needs to resync your account.",
+            "Tchap needs to resync your account.",
             {host: props.host});
-    const description2 = _t("If the other version of Riot is still open in another tab, " +
-            "please close it as using Riot on the same host with both " +
+    const description2 = _t("If the other version of Tchap is still open in another tab, " +
+            "please close it as using Tchap on the same host with both " +
             "lazy loading enabled and disabled simultaneously will cause issues.");
 
     return (<QuestionDialog
