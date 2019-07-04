@@ -115,6 +115,13 @@ export default React.createClass({
             );
         }
 
+        let inputAvatarContainerClass = "mx_CreateRoomDialog_input_avatar_container";
+        if (this.state.externAllowed) {
+            inputAvatarContainerClass += " mx_CreateRoomDialog_input_avatar_container_unrestricted";
+        } else {
+            inputAvatarContainerClass += " mx_CreateRoomDialog_input_avatar_container_restricted";
+        }
+
         return (
             <BaseDialog className="mx_CreateRoomDialog" onFinished={this.props.onFinished}
                 title={_t('Create Room')}
@@ -125,6 +132,9 @@ export default React.createClass({
                             <label htmlFor="textinput"> { _t('Room name (required)') } </label>
                         </div>
                         <div className="mx_CreateRoomDialog_input_container">
+                            <div className={inputAvatarContainerClass}>
+                                <img src={require("../../../../res/img/8b8999.png")} alt="Avatar"/>
+                            </div>
                             <input id="textinput" ref="textinput" className="mx_CreateRoomDialog_input" autoFocus={true} />
                         </div>
                         {errorTextSection}
@@ -147,7 +157,7 @@ export default React.createClass({
                         <br />
                         <LabelledToggleSwitch value={this.state.externAllowed}
                                               onChange={ this._onExternAllowedSwitchChange }
-                                              label={ _t('Allow the externals to join this room') }
+                                              label={ _t("Allow the externals to join this room") }
                                               disabled={ this.state.externAllowedSwitchDisabled } />
                         { federationOption }
                     </div>
