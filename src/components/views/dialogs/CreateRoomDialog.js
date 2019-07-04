@@ -77,19 +77,15 @@ export default React.createClass({
     },
 
     _onFederateSwitchChange: function(ev) {
-        console.error("_onFederateSwitchChange !!");
         this.setState({
             federate: ev
         });
-        console.error(this.state);
     },
 
     _onExternAllowedSwitchChange: function(ev) {
-        console.error("_onExternAllowedSwitchChange !!");
         this.setState({
             externAllowed: ev
         });
-        console.error(this.state);
     },
 
     render: function() {

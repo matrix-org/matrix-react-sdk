@@ -415,9 +415,9 @@ module.exports = React.createClass({
             <div className={mainAvatarClass}>
                 <div className="mx_RoomTile_avatar_container">
                     <RoomAvatar room={this.props.room} width={24} height={24} />
-                    { encryptedIndicator }
                 </div>
             </div>
+            { encryptedIndicator }
             <div className="mx_RoomTile_nameContainer">
                 <div className="mx_RoomTile_labelContainer">
                     { label }
