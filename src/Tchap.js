@@ -147,6 +147,23 @@ class Tchap {
     }
 
     /**
+     * Request a new validation email for expired account.
+     */
+    static requestNewExpiredAccountEmail() {
+        const homeserverUrl = MatrixClientPeg.get().getHomeserverUrl();
+        const accessToken = MatrixClientPeg.get().getAccessToken();
+        const url = `${homeserverUrl}${TchapApi.accountValidityResendEmailUrl}`;
+        const options = {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        };
+
+        fetch(url, options);
+    }
+
+    /**
      * A static function shuffeling an array.
      * @param {array} arr The array to shuffle.
      * @returns {array} The array shuffeled.

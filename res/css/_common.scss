@@ -139,7 +139,7 @@ textarea {
         > input[type=search] {
             border: none;
             flex: 1;
-            color: $accent-fg-color;
+            color: $primary-fg-color;
         }
     }
 
@@ -153,7 +153,6 @@ textarea {
 /*** panels ***/
 .dark-panel {
     background-color: $dark-panel-bg-color;
-    color: $accent-fg-color;
 }
 
 .dark-panel {
@@ -567,7 +566,7 @@ textarea {
 .tc_RepFr_logo {
     width: 100%;
     height: 80px;
-    border-top: 1px solid #374c72;
+    border-top: 1px solid $panel-divider-color;
 }
 
 .tc_RepFr_logo img {
