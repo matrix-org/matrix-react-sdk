@@ -85,14 +85,6 @@ export default class HelpUserSettingsTab extends React.Component {
         Modal.createTrackedDialog('Bug Report Dialog', '', BugReportDialog, {});
     };
 
-    _onStartBotChat = (e) => {
-        this.props.closeSettingsFn();
-        createRoom({
-            dmUserId: SdkConfig.get().welcomeUserId,
-            andView: true,
-        });
-    };
-
     _showSpoiler = (event) => {
         const target = event.target;
         target.innerHTML = target.getAttribute('data-spoiler');
@@ -112,7 +104,7 @@ export default class HelpUserSettingsTab extends React.Component {
         const legalLinks = [];
         for (const tocEntry of SdkConfig.get().terms_and_conditions_links) {
             legalLinks.push(<div key={tocEntry.url}>
-                <a href={tocEntry.url} rel="noopener" target="_blank">{tocEntry.text}</a>
+                <a href={tocEntry.url} rel="noreferrer nofollow noopener" target="_blank">{tocEntry.text}</a>
             </div>);
         }
 
@@ -148,26 +140,8 @@ export default class HelpUserSettingsTab extends React.Component {
 
     render() {
         let faqText = _t('For help with using Tchap, click <a>here</a>.', {}, {
-            'a': (sub) => <a href="https://about.riot.im/need-help/" rel='noopener' target='_blank'>{sub}</a>,
+            'a': (sub) => <a href="https://www.tchap.gouv.fr/faq/" rel='noreferrer nofollow noopener' target='_blank'>{sub}</a>,
         });
-        if (SdkConfig.get().welcomeUserId && getCurrentLanguage().startsWith('en')) {
-            faqText = (
-                <div>
-                    {
-                        _t('For help with using Tchap, click <a>here</a> or start a chat with our ' +
-                            'bot using the button below.', {}, {
-                            'a': (sub) => <a href="https://about.riot.im/need-help/" rel='noopener'
-                                             target='_blank'>{sub}</a>,
-                        })
-                    }
-                    <div>
-                        <AccessibleButton onClick={this._onStartBotChat} kind='primary'>
-                            {_t("Chat with Tchap Bot")}
-                        </AccessibleButton>
-                    </div>
-                </div>
-            );
-        }
 
         const reactSdkVersion = REACT_SDK_VERSION !== '<local>'
             ? ghVersionLabel('matrix-org/matrix-react-sdk', REACT_SDK_VERSION)

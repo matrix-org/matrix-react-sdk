@@ -1889,5 +1889,7 @@
     "I renewed the validity of my account": "J’ai renouvelé mon compte",
     "Request a renewal email": "Demander l’envoi d’un nouvel email",
     "Error loading Tchap": "Erreur lors du chargement de Tchap",
-    "To disable this option, you must accept that your email address is visible to the other users.": "Pour désactiver cette option, vous devez accepter que votre adresse email soit visible des autres utilisateurs lors de leurs recherches."
+    "To disable this option, you must accept that your email address is visible to the other users.": "Pour désactiver cette option, vous devez accepter que votre adresse email soit visible des autres utilisateurs lors de leurs recherches.",
+    "TAC": "GCU",
+    "User Guide": "Guide Utilisateur"
 }
