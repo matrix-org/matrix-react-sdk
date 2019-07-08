@@ -22,7 +22,7 @@ export default function(props) {
     const isWarning = props.status === "warning";
     const isVerified = props.status === "verified";
     const e2eIconClasses = classNames({
-        mx_E2EIcon: true,
+        mx_E2EIcon: false,
         mx_E2EIcon_warning: isWarning,
         mx_E2EIcon_verified: isVerified,
     }, props.className);
