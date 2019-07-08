@@ -416,9 +416,10 @@ export default class MessageComposer extends React.Component {
                 showFormattingButton ? <FormattingButton key="controls_formatting"
                     showFormatting={this.state.showFormatting} onClickHandler={this.onToggleFormattingClicked} /> : null,
                 <UploadButton key="controls_upload" roomId={this.props.room.roomId} />,
-                callInProgress ? <HangupButton key="controls_hangup" roomId={this.props.room.roomId} /> : null,
+                // Disable VideoCall and Call for the moment.
+/*                callInProgress ? <HangupButton key="controls_hangup" roomId={this.props.room.roomId} /> : null,
                 callInProgress ? null : <CallButton key="controls_call" roomId={this.props.room.roomId} />,
-                callInProgress ? null : <VideoCallButton key="controls_videocall" roomId={this.props.room.roomId} />,
+                callInProgress ? null : <VideoCallButton key="controls_videocall" roomId={this.props.room.roomId} />,*/
             );
         } else if (this.state.tombstone) {
             const replacementRoomId = this.state.tombstone.getContent()['replacement_room'];
