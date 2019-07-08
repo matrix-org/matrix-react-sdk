@@ -31,3 +31,8 @@ limitations under the License.
     mask-image: url('$(res)/img/e2e/lock-warning.svg');
     background-color: $warning-color;
 }
+
+.mx_E2EIcon_encrypted {
+    mask-image: url('$(res)/img/e2e/lock-verified.svg');
+    background-color: #374c72;
+}
