@@ -79,7 +79,6 @@ export default class GeneralRoomSettingsTab extends React.Component {
                 description: _t("You are the last administrator of this room, are you sure that you want to leave ?"),
                 button: _t("Leave"),
                 onFinished: (proceed) => {
-                    console.error(proceed);
                     if (proceed) {
                         // Leave rooms
                         dis.dispatch({
