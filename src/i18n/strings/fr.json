@@ -1893,5 +1893,10 @@
     "TAC": "CGU",
     "User Guide": "Guide Utilisateur",
     "Are you sure you want to leave the room? The room will no longer be administered, and you may not be able to join it again.": "Voulez-vous vraiment quitter cette conversation ? Elle ne sera plus administrée, et vous risquez de ne plus pouvoir la joindre de nouveau.",
-    "You are the last administrator": "Vous êtes le dernier administrateur"
+    "You are the last administrator": "Vous êtes le dernier administrateur",
+    "%(roomName)s can't be previewed. Do you want to join it?": "Vous ne pouvez pas avoir d’aperçu de %(roomName)s. Voulez-vous rejoindre le salon ?",
+    "You're previewing this room. Want to join it?": "Ceci est un aperçu. Voulez-vous rejoindre le salon ?",
+    "Join the discussion": "Rejoindre la discussion",
+    "Do you want to join this room?": "Voulez-vous rejoindre ce salon ?",
+    "<userName/> invited you": "<userName/> vous a invité"
 }
