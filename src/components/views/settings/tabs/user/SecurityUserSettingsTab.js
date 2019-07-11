@@ -255,14 +255,16 @@ export default class SecurityUserSettingsTab extends React.Component {
         return (
             <div className="mx_SettingsTab mx_SecurityUserSettingsTab">
                 <div className="mx_SettingsTab_heading">{_t("Security & Privacy")}</div>
+                {keyBackup}
+                {this._renderCurrentDeviceInfo()}
+                {this._renderIgnoredUsers()}
+                {this._renderManageInvites()}
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{_t("Devices")}</span>
                     <div className='mx_SettingsTab_subsectionText'>
                         <DevicesPanel />
                     </div>
                 </div>
-                {keyBackup}
-                {this._renderCurrentDeviceInfo()}
                 <div className='mx_SettingsTab_section'>
                     <span className="mx_SettingsTab_subheading">{_t("Analytics")}</span>
                     <div className='mx_SettingsTab_subsectionText'>
@@ -277,8 +279,6 @@ export default class SecurityUserSettingsTab extends React.Component {
                     <SettingsFlag name='analyticsOptIn' level={SettingLevel.DEVICE}
                                   onChange={this._updateAnalytics} />
                 </div>
-                {this._renderIgnoredUsers()}
-                {this._renderManageInvites()}
             </div>
         );
     }
