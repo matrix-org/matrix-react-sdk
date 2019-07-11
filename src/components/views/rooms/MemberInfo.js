@@ -89,6 +89,17 @@ module.exports = withMatrixClient(React.createClass({
         cli.on("RoomMember.membership", this.onRoomMemberMembership);
         cli.on("accountData", this.onAccountData);
 
+        const enablePresenceByHsUrl = SdkConfig.get()["enable_presence_by_hs_url"];
+        this._showPresence = true;
+        if (enablePresenceByHsUrl && enablePresenceByHsUrl[cli.baseUrl] !== undefined) {
+            this._showPresence = enablePresenceByHsUrl[cli.baseUrl];
+        }
+        cli.getCapabilities().then((caps) => {
+            if (!caps["m.presence"]) {
+                return;
+            }
+            this._showPresence = caps["m.presence"]["receive_enabled"];
+        });
         this._checkIgnoreState();
     },
 
@@ -922,15 +933,8 @@ module.exports = withMatrixClient(React.createClass({
         const powerLevelEvent = room ? room.currentState.getStateEvents("m.room.power_levels", "") : null;
         const powerLevelUsersDefault = powerLevelEvent ? powerLevelEvent.getContent().users_default : 0;
 
-        const enablePresenceByHsUrl = SdkConfig.get()["enable_presence_by_hs_url"];
-        const hsUrl = this.props.matrixClient.baseUrl;
-        let showPresence = true;
-        if (enablePresenceByHsUrl && enablePresenceByHsUrl[hsUrl] !== undefined) {
-            showPresence = enablePresenceByHsUrl[hsUrl];
-        }
-
         let presenceLabel = null;
-        if (showPresence) {
+        if (this._showPresence) {
             const PresenceLabel = sdk.getComponent('rooms.PresenceLabel');
             presenceLabel = <PresenceLabel activeAgo={presenceLastActiveAgo}
                 currentlyActive={presenceCurrentlyActive}
