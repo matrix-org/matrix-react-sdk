@@ -163,6 +163,22 @@ class Tchap {
         fetch(url, options);
     }
 
+    static isUserLastAdmin(room) {
+        const userId = MatrixClientPeg.get().getUserId();
+        const members = room.currentState.getMembers();
+        let adminNumber = 0;
+        let isUserAdmin = false;
+        members.forEach(m => {
+            if (m.powerLevelNorm === 100) {
+                if (m.userId === userId) {
+                    isUserAdmin = true;
+                }
+                adminNumber++;
+            }
+        });
+        return isUserAdmin && adminNumber <= 1;
+    }
+
     /**
      * A static function shuffeling an array.
      * @param {array} arr The array to shuffle.
