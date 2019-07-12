@@ -344,7 +344,7 @@ function _onAction(payload) {
 }
 
 async function _startCallApp(roomId, type) {
-    // check for a working intgrations manager. Technically we could put
+    // check for a working integrations manager. Technically we could put
     // the state event in anyway, but the resulting widget would then not
     // work for us. Better that the user knows before everyone else in the
     // room sees it.
@@ -361,7 +361,7 @@ async function _startCallApp(roomId, type) {
 
         Modal.createTrackedDialog('Could not connect to the integration server', '', ErrorDialog, {
             title: _t('Could not connect to the integration server'),
-            description: _t('A conference call could not be started because the intgrations server is not available'),
+            description: _t('A conference call could not be started because the integrations server is not available'),
         });
         return;
     }

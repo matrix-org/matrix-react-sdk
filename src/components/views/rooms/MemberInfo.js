@@ -589,6 +589,7 @@ module.exports = withMatrixClient(React.createClass({
 
         can.kick = me.powerLevel >= powerLevels.kick;
         can.ban = me.powerLevel >= powerLevels.ban;
+        can.invite = me.powerLevel >= powerLevels.invite;
         can.mute = me.powerLevel >= editPowerLevel;
         can.modifyLevel = me.powerLevel >= editPowerLevel && (isMe || me.powerLevel > them.powerLevel);
         can.modifyLevelMax = me.powerLevel;
@@ -727,7 +728,7 @@ module.exports = withMatrixClient(React.createClass({
                 );
             }
 
-            if (!member || !member.membership || member.membership === 'leave') {
+            if (this.state.can.invite && (!member || !member.membership || member.membership === 'leave')) {
                 const roomId = member && member.roomId ? member.roomId : RoomViewStore.getRoomId();
                 const onInviteUserButton = async () => {
                     try {
@@ -735,8 +736,8 @@ module.exports = withMatrixClient(React.createClass({
                         // we're only inviting one user.
                         const inviter = new MultiInviter(roomId);
                         await inviter.invite([member.userId]).then(() => {
-                            if (inviter.getCompletionState(userId) !== "invited")
-                                throw new Error(inviter.getErrorText(userId));
+                            if (inviter.getCompletionState(member.userId) !== "invited")
+                                throw new Error(inviter.getErrorText(member.userId));
                         });
                     } catch (err) {
                         const ErrorDialog = sdk.getComponent('dialogs.ErrorDialog');
@@ -977,7 +978,6 @@ module.exports = withMatrixClient(React.createClass({
         }
 
         const GeminiScrollbarWrapper = sdk.getComponent("elements.GeminiScrollbarWrapper");
-        const EmojiText = sdk.getComponent('elements.EmojiText');
 
         let backButton;
         if (this.props.member.roomId) {
@@ -992,7 +992,7 @@ module.exports = withMatrixClient(React.createClass({
                     <div className="mx_MemberInfo_name">
                         { backButton }
                         { e2eIconElement }
-                        <EmojiText element="h2">{ memberName }</EmojiText>
+                        <h2>{ memberName }</h2>
                     </div>
                     { avatarElement }
                     <div className="mx_MemberInfo_container">

@@ -89,6 +89,8 @@ module.exports = React.createClass({
             showUrlPreview={this.props.showUrlPreview}
             tileShape={this.props.tileShape}
             maxImageHeight={this.props.maxImageHeight}
+            replacingEventId={this.props.replacingEventId}
+            editState={this.props.editState}
             onHeightChanged={this.props.onHeightChanged} />;
     },
 });

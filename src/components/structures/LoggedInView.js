@@ -24,6 +24,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { KeyCode, isOnlyCtrlOrCmdKeyEvent } from '../../Keyboard';
 import PageTypes from '../../PageTypes';
 import CallMediaHandler from '../../CallMediaHandler';
+import { fixupColorFonts } from '../../utils/FontManager';
 import sdk from '../../index';
 import dis from '../../dispatcher';
 import sessionStore from '../../stores/SessionStore';
@@ -118,6 +119,8 @@ const LoggedInView = React.createClass({
         this._matrixClient.on("accountData", this.onAccountData);
         this._matrixClient.on("sync", this.onSync);
         this._matrixClient.on("RoomState.events", this.onRoomStateEvents);
+
+        fixupColorFonts();
     },
 
     componentDidUpdate(prevProps) {
@@ -289,16 +292,6 @@ const LoggedInView = React.createClass({
         const ctrlCmdOnly = isOnlyCtrlOrCmdKeyEvent(ev);
 
         switch (ev.keyCode) {
-            case KeyCode.UP:
-            case KeyCode.DOWN:
-                if (ev.altKey && !ev.shiftKey && !ev.ctrlKey && !ev.metaKey) {
-                    const action = ev.keyCode == KeyCode.UP ?
-                        'view_prev_room' : 'view_next_room';
-                    dis.dispatch({action: action});
-                    handled = true;
-                }
-                break;
-
             case KeyCode.PAGE_UP:
             case KeyCode.PAGE_DOWN:
                 if (!ev.ctrlKey && !ev.shiftKey && !ev.altKey && !ev.metaKey) {
@@ -318,6 +311,19 @@ const LoggedInView = React.createClass({
                 if (ctrlCmdOnly) {
                     dis.dispatch({
                         action: 'focus_room_filter',
+                    });
+                    handled = true;
+                }
+                break;
+            case KeyCode.KEY_BACKTICK:
+                // Ideally this would be CTRL+P for "Profile", but that's
+                // taken by the print dialog. CTRL+I for "Information"
+                // was previously chosen but conflicted with italics in
+                // composer, so CTRL+` it is
+
+                if (ctrlCmdOnly) {
+                    dis.dispatch({
+                        action: 'toggle_top_left_menu',
                     });
                     handled = true;
                 }

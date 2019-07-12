@@ -36,7 +36,6 @@ limitations under the License.
 
     flex: none;
 
-    display: flex;
     justify-content: center;
     align-items: flex-start;
 
@@ -64,7 +63,6 @@ limitations under the License.
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 5px;
 
     height: 100%;
 }
@@ -75,13 +73,13 @@ limitations under the License.
 
 .mx_TagPanel .mx_TagTile {
     margin: 9px 0;
-//  opacity: 0.5;
+    // opacity: 0.5;
     position: relative;
 }
 .mx_TagPanel .mx_TagTile:focus,
 .mx_TagPanel .mx_TagTile:hover,
 .mx_TagPanel .mx_TagTile.mx_TagTile_selected {
-//    opacity: 1;
+    // opacity: 1;
 }
 
 .mx_TagPanel .mx_TagTile.mx_TagTile_selected .mx_TagTile_avatar .mx_BaseAvatar {

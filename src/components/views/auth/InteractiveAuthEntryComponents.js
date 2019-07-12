@@ -1,6 +1,7 @@
 /*
 Copyright 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -57,7 +58,6 @@ import SettingsStore from "../../../settings/SettingsStore";
  *                         session to be failed and the process to go back to the start.
  * setEmailSid:            m.login.email.identity only: a function to be called with the
  *                         email sid after a token is requested.
- * makeRegistrationUrl     A function that makes a registration URL
  *
  * Each component may also provide the following functions (beyond the standard React ones):
  *    focus: set the input focus appropriately in the form.
@@ -81,14 +81,8 @@ export const PasswordAuthEntry = React.createClass({
 
     getInitialState: function() {
         return {
-            passwordValid: false,
+            password: "",
         };
-    },
-
-    focus: function() {
-        if (this.refs.passwordField) {
-            this.refs.passwordField.focus();
-        }
     },
 
     _onSubmit: function(e) {
@@ -97,24 +91,28 @@ export const PasswordAuthEntry = React.createClass({
 
         this.props.submitAuthDict({
             type: PasswordAuthEntry.LOGIN_TYPE,
+            // TODO: Remove `user` once servers support proper UIA
+            // See https://github.com/vector-im/riot-web/issues/10312
             user: this.props.matrixClient.credentials.userId,
-            password: this.refs.passwordField.value,
+            identifier: {
+                type: "m.id.user",
+                user: this.props.matrixClient.credentials.userId,
+            },
+            password: this.state.password,
         });
     },
 
     _onPasswordFieldChange: function(ev) {
         // enable the submit button iff the password is non-empty
         this.setState({
-            passwordValid: Boolean(this.refs.passwordField.value),
+            password: ev.target.value,
         });
     },
 
     render: function() {
-        let passwordBoxClass = null;
-
-        if (this.props.errorText) {
-            passwordBoxClass = 'error';
-        }
+        const passwordBoxClass = classnames({
+            "error": this.props.errorText,
+        });
 
         let submitButtonOrSpinner;
         if (this.props.busy) {
@@ -124,7 +122,7 @@ export const PasswordAuthEntry = React.createClass({
             submitButtonOrSpinner = (
                 <input type="submit"
                     className="mx_Dialog_primary"
-                    disabled={!this.state.passwordValid}
+                    disabled={!this.state.password}
                 />
             );
         }
@@ -138,17 +136,21 @@ export const PasswordAuthEntry = React.createClass({
             );
         }
 
+        const Field = sdk.getComponent('elements.Field');
+
         return (
             <div>
                 <p>{ _t("To continue, please enter your password.") }</p>
-                <form onSubmit={this._onSubmit}>
-                    <label htmlFor="passwordField">{ _t("Password:") }</label>
-                    <input
-                        name="passwordField"
-                        ref="passwordField"
+                <form onSubmit={this._onSubmit} className="mx_InteractiveAuthEntryComponents_passwordSection">
+                    <Field
+                        id="mx_InteractiveAuthEntryComponents_password"
                         className={passwordBoxClass}
-                        onChange={this._onPasswordFieldChange}
                         type="password"
+                        name="passwordField"
+                        label={_t('Password')}
+                        autoFocus={true}
+                        value={this.state.password}
+                        onChange={this._onPasswordFieldChange}
                     />
                     <div className="mx_button_row">
                         { submitButtonOrSpinner }
@@ -365,45 +367,12 @@ export const EmailIdentityAuthEntry = React.createClass({
         stageState: PropTypes.object.isRequired,
         fail: PropTypes.func.isRequired,
         setEmailSid: PropTypes.func.isRequired,
-        makeRegistrationUrl: PropTypes.func.isRequired,
     },
 
     getInitialState: function() {
         return {
             requestingToken: false,
         };
-    },
-
-    componentWillMount: function() {
-        if (this.props.stageState.emailSid === null) {
-            this.setState({requestingToken: true});
-            this._requestEmailToken().catch((e) => {
-                this.props.fail(e);
-            }).finally(() => {
-                this.setState({requestingToken: false});
-            }).done();
-        }
-    },
-
-    /*
-     * Requests a verification token by email.
-     */
-    _requestEmailToken: function() {
-        const nextLink = this.props.makeRegistrationUrl({
-            client_secret: this.props.clientSecret,
-            hs_url: this.props.matrixClient.getHomeserverUrl(),
-            is_url: this.props.matrixClient.getIdentityServerUrl(),
-            session_id: this.props.authSessionId,
-        });
-
-        return this.props.matrixClient.requestRegisterEmailToken(
-            this.props.inputs.emailAddress,
-            this.props.clientSecret,
-            1, // TODO: Multiple send attempts?
-            nextLink,
-        ).then((result) => {
-            this.props.setEmailSid(result.sid);
-        });
     },
 
     render: function() {
@@ -500,7 +469,14 @@ export const MsisdnAuthEntry = React.createClass({
                 );
                 this.props.submitAuthDict({
                     type: MsisdnAuthEntry.LOGIN_TYPE,
+                    // TODO: Remove `threepid_creds` once servers support proper UIA
+                    // See https://github.com/vector-im/riot-web/issues/10312
                     threepid_creds: {
+                        sid: this._sid,
+                        client_secret: this.props.clientSecret,
+                        id_server: idServerParsedUrl.host,
+                    },
+                    threepidCreds: {
                         sid: this._sid,
                         client_secret: this.props.clientSecret,
                         id_server: idServerParsedUrl.host,

@@ -2,6 +2,7 @@
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 New Vector Ltd
 Copyright 2018 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -67,14 +68,6 @@ module.exports = React.createClass({
         });
     },
 
-    _shouldShowNotifBadge: function() {
-        return RoomNotifs.BADGE_STATES.includes(this.state.notifState);
-    },
-
-    _shouldShowMentionBadge: function() {
-        return RoomNotifs.MENTION_BADGE_STATES.includes(this.state.notifState);
-    },
-
     _isDirectMessageRoom: function(roomId) {
         const dmRooms = DMRoomMap.shared().getUserIdForRoomId(roomId);
         return Boolean(dmRooms);
@@ -91,6 +84,8 @@ module.exports = React.createClass({
     },
 
     _getStatusMessageUser() {
+        if (!MatrixClientPeg.get()) return null; // We've probably been logged out
+
         const selfId = MatrixClientPeg.get().getUserId();
         const otherMember = this.props.room.currentState.getMembersExcept([selfId])[0];
         if (!otherMember) {
@@ -299,8 +294,8 @@ module.exports = React.createClass({
         const notificationCount = this.props.notificationCount;
         // var highlightCount = this.props.room.getUnreadNotificationCount("highlight");
 
-        const notifBadges = notificationCount > 0 && this._shouldShowNotifBadge();
-        const mentionBadges = this.props.highlight && this._shouldShowMentionBadge();
+        const notifBadges = notificationCount > 0 && RoomNotifs.shouldShowNotifBadge(this.state.notifState);
+        const mentionBadges = this.props.highlight && RoomNotifs.shouldShowMentionBadge(this.state.notifState);
         const badges = notifBadges || mentionBadges;
 
         let subtext = null;
@@ -342,7 +337,6 @@ module.exports = React.createClass({
             badge = <div className={badgeClasses}>{ badgeContent }</div>;
         }
 
-        const EmojiText = sdk.getComponent('elements.EmojiText');
         let label;
         let subtextLabel;
         let tooltip;
@@ -354,14 +348,7 @@ module.exports = React.createClass({
             });
 
             subtextLabel = subtext ? <span className="mx_RoomTile_subtext">{ subtext }</span> : null;
-
-            if (this.state.selected) {
-                const nameSelected = <EmojiText>{ name }</EmojiText>;
-
-                label = <div title={name} className={nameClasses} dir="auto">{ nameSelected }</div>;
-            } else {
-                label = <EmojiText element="div" title={name} className={nameClasses} dir="auto">{ name }</EmojiText>;
-            }
+            label = <div title={name} className={nameClasses} dir="auto">{ name }</div>;
         } else if (this.state.hover) {
             const Tooltip = sdk.getComponent("elements.Tooltip");
             tooltip = <Tooltip className="mx_RoomTile_tooltip" label={this.props.room.name} dir="auto" />;

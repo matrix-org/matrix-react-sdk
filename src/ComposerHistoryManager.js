@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Value } from 'slate';
+import {Value} from 'slate';
 
 import _clamp from 'lodash/clamp';
 

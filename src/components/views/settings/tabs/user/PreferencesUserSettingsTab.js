@@ -46,6 +46,7 @@ export default class PreferencesUserSettingsTab extends React.Component {
 
     static ROOM_LIST_SETTINGS = [
         'RoomList.orderByImportance',
+        'breadcrumbs',
     ];
 
     static ADVANCED_SETTINGS = [
@@ -138,7 +139,7 @@ export default class PreferencesUserSettingsTab extends React.Component {
                     {minimizeToTrayOption}
                     {autoLaunchOption}
                     <Field id={"autocompleteDelay"} label={_t('Autocomplete delay (ms)')} type='number'
-                           value={SettingsStore.getValueAt(SettingLevel.DEVICE, 'autocompleteDelay')}
+                           value={SettingsStore.getValueAt(SettingLevel.DEVICE, 'autocompleteDelay').toString(10)}
                            onChange={this._onAutocompleteDelayChange} />
                 </div>
             </div>

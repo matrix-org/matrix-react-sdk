@@ -29,6 +29,14 @@ class ScalarAuthClient {
         this.scalarToken = null;
     }
 
+    /**
+     * Determines if setting up a ScalarAuthClient is even possible
+     * @returns {boolean} true if possible, false otherwise.
+     */
+    static isPossible() {
+        return SdkConfig.get()['integrations_rest_url'] && SdkConfig.get()['integrations_ui_url'];
+    }
+
     connect() {
         return this.getScalarToken().then((tok) => {
             this.scalarToken = tok;
@@ -41,7 +49,8 @@ class ScalarAuthClient {
 
     // Returns a scalar_token string
     getScalarToken() {
-        const token = window.localStorage.getItem("mx_scalar_token");
+        let token = this.scalarToken;
+        if (!token) token = window.localStorage.getItem("mx_scalar_token");
 
         if (!token) {
             return this.registerForToken();
@@ -87,24 +96,24 @@ class ScalarAuthClient {
 
     registerForToken() {
         // Get openid bearer token from the HS as the first part of our dance
-        return MatrixClientPeg.get().getOpenIdToken().then((token_object) => {
+        return MatrixClientPeg.get().getOpenIdToken().then((tokenObject) => {
             // Now we can send that to scalar and exchange it for a scalar token
-            return this.exchangeForScalarToken(token_object);
-        }).then((token_object) => {
-            window.localStorage.setItem("mx_scalar_token", token_object);
-            return token_object;
+            return this.exchangeForScalarToken(tokenObject);
+        }).then((tokenObject) => {
+            window.localStorage.setItem("mx_scalar_token", tokenObject);
+            return tokenObject;
         });
     }
 
-    exchangeForScalarToken(openid_token_object) {
-        const scalar_rest_url = SdkConfig.get().integrations_rest_url;
+    exchangeForScalarToken(openidTokenObject) {
+        const scalarRestUrl = SdkConfig.get().integrations_rest_url;
 
         return new Promise(function(resolve, reject) {
             request({
                 method: 'POST',
-                uri: scalar_rest_url+'/register',
+                uri: scalarRestUrl + '/register',
                 qs: {v: imApiVersion},
-                body: openid_token_object,
+                body: openidTokenObject,
                 json: true,
             }, (err, response, body) => {
                 if (err) {

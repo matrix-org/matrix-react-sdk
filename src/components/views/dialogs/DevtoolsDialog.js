@@ -128,8 +128,10 @@ class SendCustomEvent extends GenericEditor {
 
         return <div>
             <div className="mx_DevTools_content">
-                { this.textInput('eventType', _t('Event Type')) }
-                { this.state.isStateEvent && this.textInput('stateKey', _t('State Key')) }
+                <div className="mx_DevTools_eventTypeStateKeyGroup">
+                    { this.textInput('eventType', _t('Event Type')) }
+                    { this.state.isStateEvent && this.textInput('stateKey', _t('State Key')) }
+                </div>
 
                 <br />
 
@@ -551,11 +553,53 @@ class AccountDataExplorer extends DevtoolsComponent {
     }
 }
 
+class ServersInRoomList extends DevtoolsComponent {
+    static getLabel() { return _t('View Servers in Room'); }
+
+    static propTypes = {
+        onBack: PropTypes.func.isRequired,
+    };
+
+    constructor(props, context) {
+        super(props, context);
+
+        const room = MatrixClientPeg.get().getRoom(this.context.roomId);
+        const servers = new Set();
+        room.currentState.getStateEvents("m.room.member").forEach(ev => servers.add(ev.getSender().split(":")[1]));
+        this.servers = Array.from(servers).map(s =>
+            <button key={s} className="mx_DevTools_ServersInRoomList_button">
+                { s }
+            </button>);
+
+        this.state = {
+            query: '',
+        };
+    }
+
+    onQuery = (query) => {
+        this.setState({ query });
+    }
+
+    render() {
+        return <div>
+            <div className="mx_Dialog_content">
+                <FilteredList query={this.state.query} onChange={this.onQuery}>
+                    { this.servers }
+                </FilteredList>
+            </div>
+            <div className="mx_Dialog_buttons">
+                <button onClick={this.props.onBack}>{ _t('Back') }</button>
+            </div>
+        </div>;
+    }
+}
+
 const Entries = [
     SendCustomEvent,
     RoomStateExplorer,
     SendAccountData,
     AccountDataExplorer,
+    ServersInRoomList,
 ];
 
 export default class DevtoolsDialog extends React.Component {

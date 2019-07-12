@@ -1,5 +1,7 @@
 /*
 Copyright 2016 OpenMarket Ltd
+Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,11 +15,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 import React from 'react';
 import PropTypes from 'prop-types';
-import sdk from '../../../index';
-const MemberAvatar = require('../avatars/MemberAvatar.js');
+import MemberAvatar from '../avatars/MemberAvatar';
 import { _t } from '../../../languageHandler';
+import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
 
 module.exports = React.createClass({
     displayName: 'MemberEventListSummary',
@@ -105,7 +108,7 @@ module.exports = React.createClass({
                 );
             });
 
-            const desc = this._renderCommaSeparatedList(descs);
+            const desc = formatCommaSeparatedList(descs);
 
             return _t('%(nameList)s %(transitionList)s', { nameList: nameList, transitionList: desc });
         });
@@ -114,13 +117,9 @@ module.exports = React.createClass({
             return null;
         }
 
-        const EmojiText = sdk.getComponent('elements.EmojiText');
-
         return (
             <span className="mx_TextualEvent mx_MemberEventListSummary_summary">
-                <EmojiText>
-                    { summaries.join(", ") }
-                </EmojiText>
+                { summaries.join(", ") }
             </span>
         );
     },
@@ -132,7 +131,7 @@ module.exports = React.createClass({
      * included before "and [n] others".
      */
     _renderNameList: function(users) {
-        return this._renderCommaSeparatedList(users, this.props.summaryLength);
+        return formatCommaSeparatedList(users, this.props.summaryLength);
     },
 
     /**
@@ -278,38 +277,14 @@ module.exports = React.createClass({
                     ? _t("%(severalUsers)schanged their avatar %(count)s times", { severalUsers: "", count: repeats })
                     : _t("%(oneUser)schanged their avatar %(count)s times", { oneUser: "", count: repeats });
                 break;
+            case "no_change":
+                res = (userCount > 1)
+                    ? _t("%(severalUsers)smade no changes %(count)s times", { severalUsers: "", count: repeats })
+                    : _t("%(oneUser)smade no changes %(count)s times", { oneUser: "", count: repeats });
+                break;
         }
 
         return res;
-    },
-
-    /**
-     * Constructs a written English string representing `items`, with an optional limit on
-     * the number of items included in the result. If specified and if the length of
-     *`items` is greater than the limit, the string "and n others" will be appended onto
-     * the result.
-     * If `items` is empty, returns the empty string. If there is only one item, return
-     * it.
-     * @param {string[]} items the items to construct a string from.
-     * @param {number?} itemLimit the number by which to limit the list.
-     * @returns {string} a string constructed by joining `items` with a comma between each
-     * item, but with the last item appended as " and [lastItem]".
-     */
-    _renderCommaSeparatedList(items, itemLimit) {
-        const remaining = itemLimit === undefined ? 0 : Math.max(
-            items.length - itemLimit, 0,
-        );
-        if (items.length === 0) {
-            return "";
-        } else if (items.length === 1) {
-            return items[0];
-        } else if (remaining > 0) {
-            items = items.slice(0, itemLimit);
-            return _t("%(items)s and %(count)s others", { items: items.join(', '), count: remaining } );
-        } else {
-            const lastItem = items.pop();
-            return _t("%(items)s and %(lastItem)s", { items: items.join(', '), lastItem: lastItem });
-        }
     },
 
     _renderAvatars: function(roomMembers) {
@@ -338,6 +313,11 @@ module.exports = React.createClass({
      * if a transition is not recognised.
      */
     _getTransition: function(e) {
+        if (e.mxEvent.getType() === 'm.room.third_party_invite') {
+            // Handle 3pid invites the same as invites so they get bundled together
+            return 'invited';
+        }
+
         switch (e.mxEvent.getContent().membership) {
             case 'invite': return 'invited';
             case 'ban': return 'banned';
@@ -351,7 +331,7 @@ module.exports = React.createClass({
                         return 'changed_avatar';
                     }
                     // console.log("MELS ignoring duplicate membership join event");
-                    return null;
+                    return 'no_change';
                 } else {
                     return 'joined';
                 }
@@ -365,8 +345,8 @@ module.exports = React.createClass({
                 switch (e.mxEvent.getPrevContent().membership) {
                     case 'invite': return 'invite_withdrawal';
                     case 'ban': return 'unbanned';
-                    case 'join': return 'kicked';
-                    default: return 'left';
+                    // sender is not target and made the target leave, if not from invite/ban then this is a kick
+                    default: return 'kicked';
                 }
             default: return null;
         }
@@ -452,9 +432,17 @@ module.exports = React.createClass({
                 userEvents[userId] = [];
                 if (e.target) avatarMembers.push(e.target);
             }
+
+            let displayName = userId;
+            if (e.getType() === 'm.room.third_party_invite') {
+                displayName = e.getContent().display_name;
+            } else if (e.target) {
+                displayName = e.target.name;
+            }
+
             userEvents[userId].push({
                 mxEvent: e,
-                displayName: (e.target ? e.target.name : null) || userId,
+                displayName,
                 index: index,
             });
         });

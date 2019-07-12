@@ -1,6 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017, 2018 New Vector Ltd
+Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,23 +27,18 @@ import * as linkify from 'linkifyjs';
 import linkifyMatrix from './linkify-matrix';
 import _linkifyElement from 'linkifyjs/element';
 import _linkifyString from 'linkifyjs/string';
-import escape from 'lodash/escape';
-import emojione from 'emojione';
 import classNames from 'classnames';
 import MatrixClientPeg from './MatrixClientPeg';
 import url from 'url';
 
-linkifyMatrix(linkify);
+import EMOJIBASE from 'emojibase-data/en/compact.json';
+import EMOJIBASE_REGEX from 'emojibase-regex';
 
-emojione.imagePathSVG = 'emojione/svg/';
-// Store PNG path for displaying many flags at once (for increased performance over SVG)
-emojione.imagePathPNG = 'emojione/png/';
-// Use SVGs for emojis
-emojione.imageType = 'svg';
+linkifyMatrix(linkify);
 
 // Anything outside the basic multilingual plane will be a surrogate pair
 const SURROGATE_PAIR_PATTERN = /([\ud800-\udbff])([\udc00-\udfff])/;
-// And there a bunch more symbol characters that emojione has within the
+// And there a bunch more symbol characters that emojibase has within the
 // BMP, so this includes the ranges from 'letterlike symbols' to
 // 'miscellaneous symbols and arrows' which should catch all of them
 // (with plenty of false positives, but that's OK)
@@ -54,79 +50,50 @@ const ZWJ_REGEX = new RegExp("\u200D|\u2003", "g");
 // Regex pattern for whitespace characters
 const WHITESPACE_REGEX = new RegExp("\\s", "g");
 
-// And this is emojione's complete regex
-const EMOJI_REGEX = new RegExp(emojione.unicodeRegexp+"+", "gi");
+const BIGEMOJI_REGEX = new RegExp(`^(${EMOJIBASE_REGEX.source})+$`, 'i');
+const SINGLE_EMOJI_REGEX = new RegExp(`^(${EMOJIBASE_REGEX.source})$`, 'i');
+
 const COLOR_REGEX = /^#[0-9a-fA-F]{6}$/;
 
 const PERMITTED_URL_SCHEMES = ['http', 'https', 'ftp', 'mailto', 'magnet'];
 
+const VARIATION_SELECTOR = String.fromCharCode(0xFE0F);
+
 /*
  * Return true if the given string contains emoji
- * Uses a much, much simpler regex than emojione's so will give false
+ * Uses a much, much simpler regex than emojibase's so will give false
  * positives, but useful for fast-path testing strings to see if they
  * need emojification.
  * unicodeToImage uses this function.
  */
-export function containsEmoji(str) {
+function mightContainEmoji(str) {
     return SURROGATE_PAIR_PATTERN.test(str) || SYMBOL_PATTERN.test(str);
 }
 
-/* modified from https://github.com/Ranks/emojione/blob/master/lib/js/emojione.js
- * because we want to include emoji shortnames in title text
+/**
+ * Returns the shortcode for an emoji character.
+ *
+ * @param {String} char The emoji character
+ * @return {String} The shortcode (such as :thumbup:)
  */
-function unicodeToImage(str, addAlt) {
-    if (addAlt === undefined) addAlt = true;
-
-    let replaceWith; let unicode; let short; let fname;
-    const mappedUnicode = emojione.mapUnicodeToShort();
-
-    str = str.replace(emojione.regUnicode, function(unicodeChar) {
-        if ( (typeof unicodeChar === 'undefined') || (unicodeChar === '') || (!(unicodeChar in emojione.jsEscapeMap)) ) {
-            // if the unicodeChar doesnt exist just return the entire match
-            return unicodeChar;
-        } else {
-            // get the unicode codepoint from the actual char
-            unicode = emojione.jsEscapeMap[unicodeChar];
-
-            short = mappedUnicode[unicode];
-            fname = emojione.emojioneList[short].fname;
-
-            // depending on the settings, we'll either add the native unicode as the alt tag, otherwise the shortname
-            const title = mappedUnicode[unicode];
-
-            if (addAlt) {
-                const alt = (emojione.unicodeAlt) ? emojione.convert(unicode.toUpperCase()) : mappedUnicode[unicode];
-                replaceWith = `<img class="mx_emojione" title="${title}" alt="${alt}" src="${emojione.imagePathSVG}${fname}.svg${emojione.cacheBustParam}"/>`;
-            } else {
-                replaceWith = `<img class="mx_emojione" src="${emojione.imagePathSVG}${fname}.svg${emojione.cacheBustParam}"/>`;
-            }
-            return replaceWith;
-        }
-    });
-
-    return str;
+export function unicodeToShortcode(char) {
+    // Check against both the char and the char with an empty variation selector appended because that's how
+    // emoji-base stores its base emojis which have variations. https://github.com/vector-im/riot-web/issues/9785
+    const emptyVariation = char + VARIATION_SELECTOR;
+    const data = EMOJIBASE.find(e => e.unicode === char || e.unicode === emptyVariation);
+    return (data && data.shortcodes ? `:${data.shortcodes[0]}:` : '');
 }
 
 /**
- * Given one or more unicode characters (represented by unicode
- * character number), return an image node with the corresponding
- * emoji.
+ * Returns the unicode character for an emoji shortcode
  *
- * @param alt {string} String to use for the image alt text
- * @param useSvg {boolean} Whether to use SVG image src. If False, PNG will be used.
- * @param unicode {integer} One or more integers representing unicode characters
- * @returns A img node with the corresponding emoji
+ * @param {String} shortcode The shortcode (such as :thumbup:)
+ * @return {String} The emoji character; null if none exists
  */
-export function charactersToImageNode(alt, useSvg, ...unicode) {
-    const fileName = unicode.map((u) => {
-        return u.toString(16);
-    }).join('-');
-    const path = useSvg ? emojione.imagePathSVG : emojione.imagePathPNG;
-    const fileType = useSvg ? 'svg' : 'png';
-    return <img
-        alt={alt}
-        src={`${path}${fileName}.${fileType}${emojione.cacheBustParam}`}
-    />;
+export function shortcodeToUnicode(shortcode) {
+    shortcode = shortcode.slice(1, shortcode.length - 1);
+    const data = EMOJIBASE.find(e => e.shortcodes && e.shortcodes.includes(shortcode));
+    return data ? data.unicode : null;
 }
 
 export function processHtmlForSending(html: string): string {
@@ -433,13 +400,10 @@ class TextHighlighter extends BaseHighlighter {
  * opts.disableBigEmoji: optional argument to disable the big emoji class.
  * opts.stripReplyFallback: optional argument specifying the event is a reply and so fallback needs removing
  * opts.returnString: return an HTML string rather than JSX elements
- * opts.emojiOne: optional param to do emojiOne (default true)
  * opts.forComposerQuote: optional param to lessen the url rewriting done by sanitization, for quoting into composer
  */
 export function bodyToHtml(content, highlights, opts={}) {
     const isHtmlMessage = content.format === "org.matrix.custom.html" && content.formatted_body;
-
-    const doEmojiOne = opts.emojiOne === undefined ? true : opts.emojiOne;
     let bodyHasEmoji = false;
 
     let sanitizeParams = sanitizeHtmlParams;
@@ -470,28 +434,12 @@ export function bodyToHtml(content, highlights, opts={}) {
         if (opts.stripReplyFallback && formattedBody) formattedBody = ReplyThread.stripHTMLReply(formattedBody);
         strippedBody = opts.stripReplyFallback ? ReplyThread.stripPlainReply(content.body) : content.body;
 
-        if (doEmojiOne) {
-            bodyHasEmoji = containsEmoji(isHtmlMessage ? formattedBody : content.body);
-        }
+        bodyHasEmoji = mightContainEmoji(isHtmlMessage ? formattedBody : content.body);
 
         // Only generate safeBody if the message was sent as org.matrix.custom.html
         if (isHtmlMessage) {
             isDisplayedWithHtml = true;
             safeBody = sanitizeHtml(formattedBody, sanitizeParams);
-        } else {
-            // ... or if there are emoji, which we insert as HTML alongside the
-            // escaped plaintext body.
-            if (bodyHasEmoji) {
-                isDisplayedWithHtml = true;
-                safeBody = sanitizeHtml(escape(strippedBody), sanitizeParams);
-            }
-        }
-
-        // An HTML message with emoji
-        //  or a plaintext message with emoji that was escaped and sanitized into
-        //  HTML.
-        if (bodyHasEmoji) {
-            safeBody = unicodeToImage(safeBody);
         }
     } finally {
         delete sanitizeParams.textFilter;
@@ -503,7 +451,6 @@ export function bodyToHtml(content, highlights, opts={}) {
 
     let emojiBody = false;
     if (!opts.disableBigEmoji && bodyHasEmoji) {
-        EMOJI_REGEX.lastIndex = 0;
         let contentBodyTrimmed = strippedBody !== undefined ? strippedBody.trim() : '';
 
         // Ignore spaces in body text. Emojis with spaces in between should
@@ -515,25 +462,25 @@ export function bodyToHtml(content, highlights, opts={}) {
         // presented as large.
         contentBodyTrimmed = contentBodyTrimmed.replace(ZWJ_REGEX, '');
 
-        const match = EMOJI_REGEX.exec(contentBodyTrimmed);
-        emojiBody = match && match[0] && match[0].length === contentBodyTrimmed.length;
+        const match = BIGEMOJI_REGEX.exec(contentBodyTrimmed);
+        emojiBody = match && match[0] && match[0].length === contentBodyTrimmed.length &&
+                    // Prevent user pills expanding for users with only emoji in
+                    // their username
+                    (
+                        content.formatted_body == undefined ||
+		                !content.formatted_body.includes("https://matrix.to/")
+                    );
     }
 
     const className = classNames({
         'mx_EventTile_body': true,
         'mx_EventTile_bigEmoji': emojiBody,
-        'markdown-body': isHtmlMessage,
+        'markdown-body': isHtmlMessage && !emojiBody,
     });
 
     return isDisplayedWithHtml ?
-        <span className={className} dangerouslySetInnerHTML={{ __html: safeBody }} dir="auto" /> :
-        <span className={className} dir="auto">{ strippedBody }</span>;
-}
-
-export function emojifyText(text, addAlt) {
-    return {
-        __html: unicodeToImage(escape(text), addAlt),
-    };
+        <span key="body" className={className} dangerouslySetInnerHTML={{ __html: safeBody }} dir="auto" /> :
+        <span key="body" className={className} dir="auto">{ strippedBody }</span>;
 }
 
 /**

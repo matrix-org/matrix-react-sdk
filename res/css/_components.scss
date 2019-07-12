@@ -6,6 +6,7 @@
 @import "./structures/_CreateRoom.scss";
 @import "./structures/_CustomRoomTagPanel.scss";
 @import "./structures/_FilePanel.scss";
+@import "./structures/_GenericErrorPage.scss";
 @import "./structures/_GroupView.scss";
 @import "./structures/_HeaderButtons.scss";
 @import "./structures/_HomePage.scss";
@@ -49,7 +50,6 @@
 @import "./views/context_menus/_TopLeftMenu.scss";
 @import "./views/dialogs/_AddressPickerDialog.scss";
 @import "./views/dialogs/_Analytics.scss";
-@import "./views/dialogs/_BugReportDialog.scss";
 @import "./views/dialogs/_ChangelogDialog.scss";
 @import "./views/dialogs/_ChatCreateOrReuseChatDialog.scss";
 @import "./views/dialogs/_ConfirmUserActionDialog.scss";
@@ -61,6 +61,7 @@
 @import "./views/dialogs/_EncryptedEventDialog.scss";
 @import "./views/dialogs/_GroupAddressPicker.scss";
 @import "./views/dialogs/_IncomingSasDialog.scss";
+@import "./views/dialogs/_MessageEditHistoryDialog.scss";
 @import "./views/dialogs/_RestoreKeyBackupDialog.scss";
 @import "./views/dialogs/_RoomSettingsDialog.scss";
 @import "./views/dialogs/_RoomUpgradeDialog.scss";
@@ -86,8 +87,10 @@
 @import "./views/elements/_Field.scss";
 @import "./views/elements/_ImageView.scss";
 @import "./views/elements/_InlineSpinner.scss";
+@import "./views/elements/_InteractiveTooltip.scss";
 @import "./views/elements/_ManageIntegsButton.scss";
 @import "./views/elements/_MemberEventListSummary.scss";
+@import "./views/elements/_MessageEditor.scss";
 @import "./views/elements/_PowerSelector.scss";
 @import "./views/elements/_ProgressBar.scss";
 @import "./views/elements/_ReplyThread.scss";
@@ -96,9 +99,11 @@
 @import "./views/elements/_RoleButton.scss";
 @import "./views/elements/_Spinner.scss";
 @import "./views/elements/_SyntaxHighlight.scss";
+@import "./views/elements/_TextWithTooltip.scss";
 @import "./views/elements/_ToggleSwitch.scss";
-@import "./views/elements/_ToolTipButton.scss";
 @import "./views/elements/_Tooltip.scss";
+@import "./views/elements/_TooltipButton.scss";
+@import "./views/elements/_Validation.scss";
 @import "./views/globals/_MatrixToolbar.scss";
 @import "./views/groups/_GroupPublicityToggle.scss";
 @import "./views/groups/_GroupRoomList.scss";
@@ -111,11 +116,18 @@
 @import "./views/messages/_MNoticeBody.scss";
 @import "./views/messages/_MStickerBody.scss";
 @import "./views/messages/_MTextBody.scss";
+@import "./views/messages/_MessageActionBar.scss";
 @import "./views/messages/_MessageTimestamp.scss";
+@import "./views/messages/_ReactionQuickTooltip.scss";
+@import "./views/messages/_ReactionTooltipButton.scss";
+@import "./views/messages/_ReactionsRow.scss";
+@import "./views/messages/_ReactionsRowButton.scss";
+@import "./views/messages/_ReactionsRowButtonTooltip.scss";
 @import "./views/messages/_RoomAvatarEvent.scss";
 @import "./views/messages/_SenderProfile.scss";
 @import "./views/messages/_TextualEvent.scss";
 @import "./views/messages/_UnknownBody.scss";
+@import "./views/messages/_ViewSourceEvent.scss";
 @import "./views/room_settings/_AliasSettings.scss";
 @import "./views/room_settings/_ColorSettings.scss";
 @import "./views/rooms/_AppsDrawer.scss";

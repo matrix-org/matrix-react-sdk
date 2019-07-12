@@ -1,6 +1,7 @@
 /*
 Copyright 2017 Vector Creations Ltd.
 Copyright 2017, 2018 New Vector Ltd.
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -265,7 +266,7 @@ const RoleUserList = React.createClass({
         Modal.createTrackedDialog('Add Users to Group Summary', '', AddressPickerDialog, {
             title: _t('Add users to the community summary'),
             description: _t("Who would you like to add to this summary?"),
-            placeholder: _t("Name or matrix ID"),
+            placeholder: _t("Name or Matrix ID"),
             button: _t("Add to summary"),
             validAddressTypes: ['mx-user-id'],
             groupId: this.props.groupId,
@@ -861,9 +862,9 @@ export default React.createClass({
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         const TintableSvg = sdk.getComponent('elements.TintableSvg');
         const Spinner = sdk.getComponent('elements.Spinner');
-        const ToolTipButton = sdk.getComponent('elements.ToolTipButton');
+        const TooltipButton = sdk.getComponent('elements.TooltipButton');
 
-        const roomsHelpNode = this.state.editing ? <ToolTipButton helpText={
+        const roomsHelpNode = this.state.editing ? <TooltipButton helpText={
             _t(
                 'These rooms are displayed to community members on the community page. '+
                 'Community members can join the rooms by clicking on them.',

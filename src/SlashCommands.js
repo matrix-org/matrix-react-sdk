@@ -1,6 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2018 New Vector Ltd
+Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -30,6 +31,28 @@ import MultiInviter from './utils/MultiInviter';
 import { linkifyAndSanitizeHtml } from './HtmlUtils';
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 import WidgetUtils from "./utils/WidgetUtils";
+import {textToHtmlRainbow} from "./utils/colour";
+import Promise from "bluebird";
+
+const singleMxcUpload = async () => {
+    return new Promise((resolve) => {
+        const fileSelector = document.createElement('input');
+        fileSelector.setAttribute('type', 'file');
+        fileSelector.onchange = (ev) => {
+            const file = ev.target.files[0];
+
+            const UploadConfirmDialog = sdk.getComponent("dialogs.UploadConfirmDialog");
+            Modal.createTrackedDialog('Upload Files confirmation', '', UploadConfirmDialog, {
+                file,
+                onFinished: (shouldContinue) => {
+                    resolve(shouldContinue ? MatrixClientPeg.get().uploadContent(file) : null);
+                },
+            });
+        };
+
+        fileSelector.click();
+    });
+};
 
 class Command {
     constructor({name, args='', description, runFn, hideCompletionAfterSpace=false}) {
@@ -155,7 +178,7 @@ export const CommandMap = {
                             <p>
                                 {_t(
                                     "Please confirm that you'd like to go forward with upgrading this room " +
-                                    "from <oldVersion /> to <newVersion />",
+                                    "from <oldVersion /> to <newVersion />.",
                                     {},
                                     {
                                         oldVersion: () => <code>{room ? room.getVersion() : "1"}</code>,
@@ -190,8 +213,8 @@ export const CommandMap = {
         },
     }),
 
-    roomnick: new Command({
-        name: 'roomnick',
+    myroomnick: new Command({
+        name: 'myroomnick',
         args: '<display_name>',
         description: _td('Changes your display nickname in the current room only'),
         runFn: function(roomId, args) {
@@ -205,6 +228,49 @@ export const CommandMap = {
                 return success(cli.sendStateEvent(roomId, 'm.room.member', content, cli.getUserId()));
             }
             return reject(this.getUsage());
+        },
+    }),
+
+    myroomavatar: new Command({
+        name: 'myroomavatar',
+        args: '[<mxc_url>]',
+        description: _td('Changes your avatar in this current room only'),
+        runFn: function(roomId, args) {
+            const cli = MatrixClientPeg.get();
+            const room = cli.getRoom(roomId);
+            const userId = cli.getUserId();
+
+            let promise = Promise.resolve(args);
+            if (!args) {
+                promise = singleMxcUpload();
+            }
+
+            return success(promise.then((url) => {
+                if (!url) return;
+                const ev = room.currentState.getStateEvents('m.room.member', userId);
+                const content = {
+                    ...ev ? ev.getContent() : { membership: 'join' },
+                    avatar_url: url,
+                };
+                return cli.sendStateEvent(roomId, 'm.room.member', content, userId);
+            }));
+        },
+    }),
+
+    myavatar: new Command({
+        name: 'myavatar',
+        args: '[<mxc_url>]',
+        description: _td('Changes your avatar in all rooms'),
+        runFn: function(roomId, args) {
+            let promise = Promise.resolve(args);
+            if (!args) {
+                promise = singleMxcUpload();
+            }
+
+            return success(promise.then((url) => {
+                if (!url) return;
+                return MatrixClientPeg.get().setAvatarUrl(url);
+            }));
         },
     }),
 
@@ -336,8 +402,9 @@ export const CommandMap = {
                         room_id: roomId,
                         opts: {
                             // These are passed down to the js-sdk's /join call
-                            server_name: viaServers,
+                            viaServers: viaServers,
                         },
+                        via_servers: viaServers, // for the rejoin button
                         auto_join: true,
                     });
                     return success();
@@ -378,10 +445,14 @@ export const CommandMap = {
                     }
 
                     if (viaServers) {
+                        // For the join
                         dispatch["opts"] = {
                             // These are passed down to the js-sdk's /join call
-                            server_name: viaServers,
+                            viaServers: viaServers,
                         };
+
+                        // For if the join fails (rejoin button)
+                        dispatch['via_servers'] = viaServers;
                     }
 
                     dis.dispatch(dispatch);
@@ -474,7 +545,7 @@ export const CommandMap = {
     unban: new Command({
         name: 'unban',
         args: '<user-id>',
-        description: _td('Unbans user with given id'),
+        description: _td('Unbans user with given ID'),
         runFn: function(roomId, args) {
             if (args) {
                 const matches = args.match(/^(\S+)$/);
@@ -718,6 +789,26 @@ export const CommandMap = {
             return success();
         },
     }),
+
+    rainbow: new Command({
+        name: "rainbow",
+        description: _td("Sends the given message coloured as a rainbow"),
+        args: '<message>',
+        runFn: function(roomId, args) {
+            if (!args) return reject(this.getUserId());
+            return success(MatrixClientPeg.get().sendHtmlMessage(roomId, args, textToHtmlRainbow(args)));
+        },
+    }),
+
+    rainbowme: new Command({
+        name: "rainbowme",
+        description: _td("Sends the given emote coloured as a rainbow"),
+        args: '<message>',
+        runFn: function(roomId, args) {
+            if (!args) return reject(this.getUserId());
+            return success(MatrixClientPeg.get().sendHtmlEmote(roomId, args, textToHtmlRainbow(args)));
+        },
+    }),
 };
 /* eslint-enable babel/no-invalid-this */
 
@@ -727,6 +818,7 @@ const aliases = {
     j: "join",
     newballsplease: "discardsession",
     goto: "join", // because it handles event permalinks magically
+    roomnick: "myroomnick",
 };
 
 

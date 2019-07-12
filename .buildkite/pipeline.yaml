@@ -1,23 +1,35 @@
 steps:
   - label: ":eslint: Lint"
     command:
-      - "yarn install"
+      # TODO: Remove hacky chmod for BuildKite
+      - "echo '--- Setup'"
+      - "chmod +x ./scripts/ci/*.sh"
+      - "chmod +x ./scripts/*"
+      - "echo '--- Install js-sdk'"
+      - "./scripts/ci/install-deps.sh"
       - "yarn lintwithexclusions"
+      - "yarn stylelint"
     plugins:
       - docker#v3.0.1:
           image: "node:10"
 
-#  - label: ":chains: End-to-End Tests"
-#    command:
-#      # TODO: Remove hacky chmod for BuildKite
-#      - "chmod +x ./scripts/ci/*.sh"
-#      - "chmod +x ./scripts/*"
-#      - "sudo apt-get install build-essential python2.7-dev libffi-dev python-pip python-setuptools sqlite3 libssl-dev python-virtualenv libjpeg-dev libxslt1-dev"
-#      - "./scripts/ci/install-deps.sh"
-#      - "./scripts/ci/end-to-end-tests.sh"
-#    plugins:
-#      - docker#v3.0.1:
-#          image: "node:10"
+  - label: ":chains: End-to-End Tests"
+    agents:
+      # We use a medium sized instance instead of the normal small ones because
+      # e2e tests otherwise take +-8min
+      queue: "medium"
+    command:
+      # TODO: Remove hacky chmod for BuildKite
+      - "echo '--- Setup'"
+      - "chmod +x ./scripts/ci/*.sh"
+      - "chmod +x ./scripts/*"
+      - "echo '--- Install js-sdk'"
+      - "./scripts/ci/install-deps.sh"
+      - "./scripts/ci/end-to-end-tests.sh"
+    plugins:
+      - docker#v3.0.1:
+          image: "matrixdotorg/riotweb-ci-e2etests-env:latest"
+          propagate-environment: true
 
   - label: ":karma: Tests"
     agents:
@@ -72,3 +84,23 @@ steps:
       - docker#v3.0.1:
           image: "node:10"
           propagate-environment: true
+
+  - label: "🌐 i18n"
+    command:
+      - "echo '--- Fetching Dependencies'"
+      - "yarn install"
+      - "echo '+++ Testing i18n output'"
+      - "yarn diff-i18n"
+    plugins:
+      - docker#v3.0.1:
+          image: "node:10"
+
+  - wait
+ 
+  - label: "🐴 Trigger riot-web"
+    trigger: "riot-web"
+    branches: "develop"
+    build:
+        branch: "develop"
+        message: "[react-sdk] ${BUILDKITE_MESSAGE}"
+    async: true

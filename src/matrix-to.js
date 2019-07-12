@@ -70,13 +70,22 @@ const MAX_SERVER_CANDIDATES = 3;
 // the list and magically have the link work.
 
 export class RoomPermalinkCreator {
-    constructor(room) {
+    // We support being given a roomId as a fallback in the event the `room` object
+    // doesn't exist or is not healthy for us to rely on. For example, loading a
+    // permalink to a room which the MatrixClient doesn't know about.
+    constructor(room, roomId=null) {
         this._room = room;
+        this._roomId = room ? room.roomId : roomId;
         this._highestPlUserId = null;
         this._populationMap = null;
         this._bannedHostsRegexps = null;
         this._allowedHostsRegexps = null;
         this._serverCandidates = null;
+        this._started = false;
+
+        if (!this._roomId) {
+            throw new Error("Failed to resolve a roomId for the permalink creator to use");
+        }
 
         this.onMembership = this.onMembership.bind(this);
         this.onRoomState = this.onRoomState.bind(this);
@@ -101,21 +110,27 @@ export class RoomPermalinkCreator {
         this.load();
         this._room.on("RoomMember.membership", this.onMembership);
         this._room.on("RoomState.events", this.onRoomState);
+        this._started = true;
     }
 
     stop() {
         this._room.removeListener("RoomMember.membership", this.onMembership);
         this._room.removeListener("RoomState.events", this.onRoomState);
+        this._started = false;
+    }
+
+    isStarted() {
+        return this._started;
     }
 
     forEvent(eventId) {
-        const roomId = this._room.roomId;
+        const roomId = this._roomId;
         const permalinkBase = `${baseUrl}/#/${roomId}/${eventId}`;
         return `${permalinkBase}${encodeServerCandidates(this._serverCandidates)}`;
     }
 
     forRoom() {
-        const roomId = this._room.roomId;
+        const roomId = this._roomId;
         const permalinkBase = `${baseUrl}/#/${roomId}`;
         return `${permalinkBase}${encodeServerCandidates(this._serverCandidates)}`;
     }
@@ -238,7 +253,6 @@ export class RoomPermalinkCreator {
         this._serverCandidates = candidates;
     }
 }
-
 
 export function makeUserPermalink(userId) {
     return `${baseUrl}/#/${userId}`;

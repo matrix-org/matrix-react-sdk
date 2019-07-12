@@ -32,8 +32,19 @@ body {
     margin: 0px;
 }
 
+pre, code {
+    font-family: $monospace-font-family;
+    font-size: 100% !important;
+}
+
 .error, .warning {
     color: $warning-color;
+}
+
+b {
+    // On Firefox, the default weight for `<b>` is `bolder` which results in no bold
+    // effect since we only have specific weights of our fonts available.
+    font-weight: bold;
 }
 
 h2 {
@@ -93,15 +104,23 @@ input[type=text], input[type=password], textarea {
     color: $primary-fg-color;
 }
 
+/* Required by Firefox */
+textarea {
+    font-family: $font-family;
+    color: $primary-fg-color;
+}
+
 input[type=text]:focus, input[type=password]:focus, textarea:focus {
     outline: none;
     box-shadow: none;
 }
 
-/* Required by Firefox */
-textarea {
-    font-family: $font-family;
-    color: $primary-fg-color;
+// This is used to hide the standard outline added by browsers for
+// accessible (focusable) components. Not intended for buttons, but
+// should be used on things like focusable containers where the outline
+// is usually not helping anyone.
+.mx_HiddenFocusable {
+    outline: none;
 }
 
 // .mx_textinput is a container for a text input
@@ -110,6 +129,13 @@ textarea {
 // appear to be part of the input
 
 .mx_Dialog, .mx_MatrixChat {
+    .mx_textinput > input[type=text],
+    .mx_textinput > input[type=search] {
+        border: none;
+        flex: 1;
+        color: $primary-fg-color;
+    }
+
     :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type=text],
     :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type=search],
     .mx_textinput {
@@ -128,13 +154,6 @@ textarea {
     .mx_textinput {
         display: flex;
         align-items: center;
-
-        > input[type=text],
-        > input[type=search] {
-            border: none;
-            flex: 1;
-            color: $primary-fg-color;
-        }
     }
 
     :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type=text]::placeholder,
@@ -147,9 +166,7 @@ textarea {
 /*** panels ***/
 .dark-panel {
     background-color: $dark-panel-bg-color;
-}
 
-.dark-panel {
     :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type=text],
     :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type=search],
     .mx_textinput {
@@ -190,25 +207,25 @@ textarea {
 
 /* Expand thumbs on hoverover */
 .gm-scrollbar {
-    border-radius: 5px ! important;
+    border-radius: 5px !important;
 }
 .gm-scrollbar.-vertical {
     width: 6px;
-    transition: width 120ms ease-out ! important;
+    transition: width 120ms ease-out !important;
 }
 .gm-scrollbar.-vertical:hover,
 .gm-scrollbar.-vertical:active {
     width: 8px;
-    transition: width 120ms ease-out ! important;
+    transition: width 120ms ease-out !important;
 }
 .gm-scrollbar.-horizontal {
     height: 6px;
-    transition: height 120ms ease-out ! important;
+    transition: height 120ms ease-out !important;
 }
 .gm-scrollbar.-horizontal:hover,
 .gm-scrollbar.-horizontal:active {
     height: 8px;
-    transition: height 120ms ease-out ! important;
+    transition: height 120ms ease-out !important;
 }
 
 // These are magic constants which are excluded from tinting, to let themes
@@ -250,14 +267,6 @@ textarea {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-/* Spinner Dialog overide */
-.mx_Dialog_wrapper.mx_Dialog_spinner .mx_Dialog {
-    width: auto;
-    border-radius: 8px;
-    padding: 0px;
-    box-shadow: none;
 }
 
 .mx_Dialog {
@@ -371,7 +380,7 @@ textarea {
 
     // flip colours for the secondary ones
     font-weight: 600;
-    border: 1px solid $accent-color ! important;
+    border: 1px solid $accent-color !important;
     color: $accent-color;
     background-color: $button-secondary-bg-color;
 }
@@ -388,7 +397,7 @@ textarea {
     filter: brightness($focus-brightness);
 }
 
-.mx_Dialog button.mx_Dialog_primary, .mx_Dialog  input[type="submit"].mx_Dialog_primary {
+.mx_Dialog button.mx_Dialog_primary, .mx_Dialog input[type="submit"].mx_Dialog_primary {
     color: $accent-fg-color;
     background-color: $accent-color;
     min-width: 156px;
@@ -404,6 +413,14 @@ textarea {
     background-color: $light-fg-color;
     border: solid 1px $light-fg-color;
     opacity: 0.7;
+}
+
+/* Spinner Dialog overide */
+.mx_Dialog_wrapper.mx_Dialog_spinner .mx_Dialog {
+    width: auto;
+    border-radius: 8px;
+    padding: 0px;
+    box-shadow: none;
 }
 
 // TODO: Review mx_GeneralButton usage to see if it can use a different class
@@ -437,15 +454,6 @@ textarea {
     padding: 9px;
     color: $primary-fg-color;
     background-color: $primary-bg-color;
-}
-
-.mx_emojione {
-    height: 1em;
-    vertical-align: middle;
-}
-
-.mx_emojione_selected {
-    background-color: $accent-color;
 }
 
 ::-moz-selection {
@@ -516,4 +524,38 @@ textarea {
     left: 0;
     opacity: 0;
     cursor: pointer;
+}
+
+// username colors
+// used by SenderProfile & RoomPreviewBar
+.mx_Username_color1 {
+    color: $username-variant1-color;
+}
+
+.mx_Username_color2 {
+    color: $username-variant2-color;
+}
+
+.mx_Username_color3 {
+    color: $username-variant3-color;
+}
+
+.mx_Username_color4 {
+    color: $username-variant4-color;
+}
+
+.mx_Username_color5 {
+    color: $username-variant5-color;
+}
+
+.mx_Username_color6 {
+    color: $username-variant6-color;
+}
+
+.mx_Username_color7 {
+    color: $username-variant7-color;
+}
+
+.mx_Username_color8 {
+    color: $username-variant8-color;
 }

@@ -30,12 +30,15 @@ import {getAddressType} from "./UserAddress";
  * @param {object=} opts parameters for creating the room
  * @param {string=} opts.dmUserId If specified, make this a DM room for this user and invite them
  * @param {object=} opts.createOpts set of options to pass to createRoom call.
+ * @param {bool=} opts.spinner True to show a modal spinner while the room is created.
+ *     Default: True
  *
  * @returns {Promise} which resolves to the room id, or null if the
  * action was aborted or failed.
  */
 function createRoom(opts) {
     opts = opts || {};
+    if (opts.spinner === undefined) opts.spinner = true;
 
     const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
     const Loader = sdk.getComponent("elements.Spinner");
@@ -87,11 +90,12 @@ function createRoom(opts) {
         },
     ];
 
-    const modal = Modal.createDialog(Loader, null, 'mx_Dialog_spinner');
+    let modal;
+    if (opts.spinner) modal = Modal.createDialog(Loader, null, 'mx_Dialog_spinner');
 
     let roomId;
     return client.createRoom(createOpts).finally(function() {
-        modal.close();
+        if (modal) modal.close();
     }).then(function(res) {
         roomId = res.room_id;
         if (opts.dmUserId) {
@@ -122,9 +126,16 @@ function createRoom(opts) {
             action: 'join_room_error',
         });
         console.error("Failed to create room " + roomId + " " + err);
+        let description = _t("Server may be unavailable, overloaded, or you hit a bug.");
+        if (err.errcode === "M_UNSUPPORTED_ROOM_VERSION") {
+            // Technically not possible with the UI as of April 2019 because there's no
+            // options for the user to change this. However, it's not a bad thing to report
+            // the error to the user for if/when the UI is available.
+            description = _t("The server does not support the room version specified.");
+        }
         Modal.createTrackedDialog('Failure to create room', '', ErrorDialog, {
             title: _t("Failure to create room"),
-            description: _t("Server may be unavailable, overloaded, or you hit a bug."),
+            description,
         });
         return null;
     });

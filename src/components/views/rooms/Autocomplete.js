@@ -60,18 +60,22 @@ export default class Autocomplete extends React.Component {
         };
     }
 
-    componentWillReceiveProps(newProps, state) {
-        if (this.props.room.roomId !== newProps.room.roomId) {
+    componentDidMount() {
+        this._applyNewProps();
+    }
+
+    _applyNewProps(oldQuery, oldRoom) {
+        if (oldRoom && this.props.room.roomId !== oldRoom.roomId) {
             this.autocompleter.destroy();
-            this.autocompleter = new Autocompleter(newProps.room);
+            this.autocompleter = new Autocompleter(this.props.room);
         }
 
         // Query hasn't changed so don't try to complete it
-        if (newProps.query === this.props.query) {
+        if (oldQuery === this.props.query) {
             return;
         }
 
-        this.complete(newProps.query, newProps.selection);
+        this.complete(this.props.query, this.props.selection);
     }
 
     componentWillUnmount() {
@@ -158,31 +162,22 @@ export default class Autocomplete extends React.Component {
         });
     }
 
+    hasSelection(): bool {
+        return this.countCompletions() > 0 && this.state.selectionOffset !== 0;
+    }
+
     countCompletions(): number {
         return this.state.completionList.length;
     }
 
     // called from MessageComposerInput
-    onUpArrow(): ?Completion {
+    moveSelection(delta): ?Completion {
         const completionCount = this.countCompletions();
-        // completionCount + 1, since 0 means composer is selected
-        const selectionOffset = (completionCount + 1 + this.state.selectionOffset - 1)
-            % (completionCount + 1);
-        if (!completionCount) {
-            return null;
-        }
-        this.setSelection(selectionOffset);
-    }
+        if (completionCount === 0) return; // there are no items to move the selection through
 
-    // called from MessageComposerInput
-    onDownArrow(): ?Completion {
-        const completionCount = this.countCompletions();
-        // completionCount + 1, since 0 means composer is selected
-        const selectionOffset = (this.state.selectionOffset + 1) % (completionCount + 1);
-        if (!completionCount) {
-            return null;
-        }
-        this.setSelection(selectionOffset);
+        // Note: selectionOffset 0 represents the unsubstituted text, while 1 means first pill selected
+        const index = (this.state.selectionOffset + delta + completionCount + 1) % (completionCount + 1);
+        this.setSelection(index);
     }
 
     onEscape(e): boolean {
@@ -233,7 +228,8 @@ export default class Autocomplete extends React.Component {
         }
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
+        this._applyNewProps(prevProps.query, prevProps.room);
         // this is the selected completion, so scroll it into view if needed
         const selectedCompletion = this.refs[`completion${this.state.selectionOffset}`];
         if (selectedCompletion && this.container) {
@@ -251,8 +247,6 @@ export default class Autocomplete extends React.Component {
     }
 
     render() {
-        const EmojiText = sdk.getComponent('views.elements.EmojiText');
-
         let position = 1;
         const renderedCompletions = this.state.completions.map((completionResult, i) => {
             const completions = completionResult.completions.map((completion, i) => {
@@ -277,7 +271,7 @@ export default class Autocomplete extends React.Component {
 
             return completions.length > 0 ? (
                 <div key={i} className="mx_Autocomplete_ProviderSection">
-                    <EmojiText element="div" className="mx_Autocomplete_provider_name">{ completionResult.provider.getName() }</EmojiText>
+                    <div className="mx_Autocomplete_provider_name">{ completionResult.provider.getName() }</div>
                     { completionResult.provider.renderCompletions(completions) }
                 </div>
             ) : null;
@@ -297,6 +291,9 @@ Autocomplete.propTypes = {
 
     // method invoked with range and text content when completion is confirmed
     onConfirm: PropTypes.func.isRequired,
+
+    // method invoked when selected (if any) completion changes
+    onSelectionChange: PropTypes.func,
 
     // The room in which we're autocompleting
     room: PropTypes.instanceOf(Room),

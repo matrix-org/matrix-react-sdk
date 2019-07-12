@@ -103,6 +103,7 @@ class RoomViewStore extends Store {
             case 'join_room_error':
                 this._joinRoomError(payload);
                 break;
+            case 'on_client_not_viable':
             case 'on_logged_out':
                 this.reset();
                 break;
@@ -120,7 +121,7 @@ class RoomViewStore extends Store {
                 const RoomSettingsDialog = sdk.getComponent("dialogs.RoomSettingsDialog");
                 Modal.createTrackedDialog('Room settings', '', RoomSettingsDialog, {
                     roomId: payload.room_id || this._state.roomId,
-                }, 'mx_SettingsDialog', /*isPriority=*/false, /*isStatic=*/true);
+                }, /*className=*/null, /*isPriority=*/false, /*isStatic=*/true);
                 break;
             }
         }
