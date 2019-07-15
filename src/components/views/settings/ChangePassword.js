@@ -27,6 +27,7 @@ import dis from "../../../dispatcher";
 import Promise from 'bluebird';
 import AccessibleButton from '../elements/AccessibleButton';
 import { _t } from '../../../languageHandler';
+import TchapStrongPassword from '../../../TchapStrongPassword';
 
 import sessionStore from '../../../stores/SessionStore';
 
@@ -219,6 +220,7 @@ module.exports = React.createClass({
 
     onClickChange: function(ev) {
         ev.preventDefault();
+        const self = this;
         const oldPassword = this.state.cachedPassword || this.state.oldPassword;
         const newPassword = this.state.newPassword;
         const confirmPassword = this.state.newPasswordConfirm;
@@ -228,7 +230,19 @@ module.exports = React.createClass({
         if (err) {
             this.props.onError(err);
         } else {
-            this.changePassword(oldPassword, newPassword);
+            TchapStrongPassword.validatePassword(MatrixClientPeg.get().getHomeserverUrl(), newPassword).then(isValidPassword => {
+                if (!isValidPassword) {
+                    const InfoDialog = sdk.getComponent('dialogs.InfoDialog');
+                    Modal.createTrackedDialog('Password too weak ', 'Password too weak', InfoDialog, {
+                        title: _t('Password too weak !'),
+                        description: <div>
+                            <p>{ _t('This password is too weak. It must include a lower-case letter, an upper-case letter, a number and a symbol and be at a minimum 8 characters in length.') }</p>
+                        </div>,
+                    });
+                } else {
+                    self.changePassword(oldPassword, newPassword);
+                }
+            });
         }
     },
 

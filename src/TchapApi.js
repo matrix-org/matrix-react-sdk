@@ -10,4 +10,5 @@ export default {
     thumbnailParams: "?width=800&height=600&method=scale",
     lookup: "/_matrix/client/unstable/account/3pid/lookup",
     accountValidityResendEmailUrl: "/_matrix/client/unstable/account_validity/send_mail",
+    passwordRulesUrl: "/_matrix/client/r0/password_policy",
 };
