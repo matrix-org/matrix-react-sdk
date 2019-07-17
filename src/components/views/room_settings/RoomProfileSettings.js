@@ -24,6 +24,7 @@ import classNames from 'classnames';
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 const sdk = require("../../../index");
 import Modal from '../../../Modal';
+import Tchap from '../../../Tchap';
 
 // TODO: Merge with ProfileSettings?
 export default class RoomProfileSettings extends React.Component {
@@ -60,7 +61,7 @@ export default class RoomProfileSettings extends React.Component {
             canSetName: room.currentState.maySendStateEvent('m.room.name', client.getUserId()),
             canSetTopic: room.currentState.maySendStateEvent('m.room.topic', client.getUserId()),
             canSetAvatar: room.currentState.maySendStateEvent('m.room.avatar', client.getUserId()),
-            access_rules: this._getAccessRules(props.roomId),
+            access_rules: Tchap.getAccessRules(props.roomId),
             join_rules: this._getJoinRules(props.roomId),
             externAllowed: false,
         };
@@ -140,19 +141,6 @@ export default class RoomProfileSettings extends React.Component {
             });
         };
         reader.readAsDataURL(file);
-    };
-
-    _getAccessRules = (roomId) => {
-        const stateEventType = "im.vector.room.access_rules";
-        const keyName = "rule";
-        const defaultValue = "restricted";
-        const room = MatrixClientPeg.get().getRoom(roomId);
-        const event = room.currentState.getStateEvents(stateEventType, '');
-        if (!event) {
-            return defaultValue;
-        }
-        const content = event.getContent();
-        return keyName in content ? content[keyName] : defaultValue;
     };
 
     _getJoinRules = (roomId) => {

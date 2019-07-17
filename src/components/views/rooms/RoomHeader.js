@@ -22,9 +22,7 @@ import classNames from 'classnames';
 import sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import MatrixClientPeg from '../../../MatrixClientPeg';
-import Modal from "../../../Modal";
 import RateLimitedFunc from '../../../ratelimitedfunc';
-
 import { linkifyElement } from '../../../HtmlUtils';
 import AccessibleButton from '../elements/AccessibleButton';
 import ManageIntegsButton from '../elements/ManageIntegsButton';
@@ -33,6 +31,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import RoomHeaderButtons from '../right_panel/RoomHeaderButtons';
 import E2EIcon from './E2EIcon';
 import DMRoomMap from '../../../utils/DMRoomMap';
+import Tchap from '../../../Tchap';
 
 module.exports = React.createClass({
     displayName: 'RoomHeader',
@@ -137,19 +136,6 @@ module.exports = React.createClass({
         if (!currentPinEvent) return false;
 
         return !(currentPinEvent.getContent().pinned && currentPinEvent.getContent().pinned.length <= 0);
-    },
-
-    _getAccessRules: function(roomId) {
-        const stateEventType = "im.vector.room.access_rules";
-        const keyName = "rule";
-        const defaultValue = "restricted";
-        const room = MatrixClientPeg.get().getRoom(roomId);
-        const event = room.currentState.getStateEvents(stateEventType, '');
-        if (!event) {
-            return defaultValue;
-        }
-        const content = event.getContent();
-        return keyName in content ? content[keyName] : defaultValue;
     },
 
     render: function() {
@@ -298,7 +284,7 @@ module.exports = React.createClass({
 
         let mainAvatarClass = "mx_RoomHeader_avatar";
         if (!isDMRoom) {
-            mainAvatarClass += ` mx_RoomHeader_avatar_room mx_RoomHeader_avatar_${this._getAccessRules(this.props.room.roomId)}`
+            mainAvatarClass += ` mx_RoomHeader_avatar_room mx_RoomHeader_avatar_${Tchap.getAccessRules(this.props.room.roomId)}`
         }
 
         return (

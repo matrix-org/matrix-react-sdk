@@ -31,6 +31,7 @@ import AccessibleButton from '../elements/AccessibleButton';
 import ActiveRoomObserver from '../../../ActiveRoomObserver';
 import RoomViewStore from '../../../stores/RoomViewStore';
 import SettingsStore from "../../../settings/SettingsStore";
+import Tchap from '../../../Tchap';
 
 module.exports = React.createClass({
     displayName: 'RoomTile',
@@ -250,19 +251,6 @@ module.exports = React.createClass({
         this.setState({ menuDisplayed: true });
     },
 
-    _getAccessRules: function(roomId) {
-        const stateEventType = "im.vector.room.access_rules";
-        const keyName = "rule";
-        const defaultValue = "restricted";
-        const room = MatrixClientPeg.get().getRoom(roomId);
-        const event = room.currentState.getStateEvents(stateEventType, '');
-        if (!event) {
-            return defaultValue;
-        }
-        const content = event.getContent();
-        return keyName in content ? content[keyName] : defaultValue;
-    },
-
     onContextMenu: function(e) {
         // Prevent the RoomTile onClick event firing as well
         e.preventDefault();
@@ -403,7 +391,7 @@ module.exports = React.createClass({
             mainAvatarClass += " mx_RoomTile_avatar_room";
         }
 
-        mainAvatarClass += ` mx_RoomTile_avatar_${this._getAccessRules(this.props.room.roomId)}`;
+        mainAvatarClass += ` mx_RoomTile_avatar_${Tchap.getAccessRules(this.props.room.roomId)}`;
 
         return <AccessibleButton tabIndex="0"
                                  className={classes}
