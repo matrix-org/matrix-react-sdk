@@ -24,10 +24,11 @@ import Modal from "./Modal";
 import MatrixClientPeg from "./MatrixClientPeg";
 import RoomViewStore from "./stores/RoomViewStore";
 
-const WIDGET_API_VERSION = '0.0.2'; // Current API version
+const WIDGET_API_VERSION = '0.0.3'; // Current API version
 const SUPPORTED_WIDGET_API_VERSIONS = [
     '0.0.1',
     '0.0.2',
+    '0.0.3',
 ];
 const INBOUND_API_NAME = 'fromWidget';
 
