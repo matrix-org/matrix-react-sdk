@@ -30,6 +30,7 @@ import _linkifyString from 'linkifyjs/string';
 import classNames from 'classnames';
 import MatrixClientPeg from './MatrixClientPeg';
 import url from 'url';
+import katex from 'katex';
 
 import EMOJIBASE from 'emojibase-data/en/compact.json';
 import EMOJIBASE_REGEX from 'emojibase-regex';
@@ -243,6 +244,16 @@ const transformTags = { // custom to matrix
 
         return { tagName, attribs };
     },
+    'span': function(tagName, attribs) {
+        if (typeof attribs.class !== 'undefined') {
+            // Filter out all classes other than katex
+            const classes = attribs.class.split(/\s/).filter(function(cl) {
+                return (cl == 'katex');
+            });
+            attribs.class = classes.join(' ');
+        }
+        return { tagName, attribs };
+    },
 };
 
 const sanitizeHtmlParams = {
@@ -256,7 +267,7 @@ const sanitizeHtmlParams = {
     allowedAttributes: {
         // custom ones first:
         font: ['color', 'data-mx-bg-color', 'data-mx-color', 'style'], // custom to matrix
-        span: ['data-mx-bg-color', 'data-mx-color', 'style'], // custom to matrix
+        span: ['data-mx-bg-color', 'data-mx-color', 'style', 'class'], // custom to matrix
         a: ['href', 'name', 'target', 'rel'], // remote target: custom to matrix
         img: ['src', 'width', 'height', 'alt', 'title'],
         ol: ['start'],
@@ -477,6 +488,21 @@ export function bodyToHtml(content, highlights, opts={}) {
         'mx_EventTile_bigEmoji': emojiBody,
         'markdown-body': isHtmlMessage && !emojiBody,
     });
+
+    // const delimiters = [ 
+    //     { left: "\\$\\$", right: "\\$\\$", display: true },
+    //     { left: "\\$", right: "\\$", display: false }
+    // ];
+
+     // delimiters.forEach(function(d) {
+        // var reg = RegExp(d.left + "(.*?)" + d.right, "g");
+        // var renderedMath = katex.renderToString("c = \\pm\\sqrt{a^2 + b^2}", {
+        //     throwOnError: false
+        // });
+        // safeBody = renderedMath;
+        // safeBody = safeBody.replace(reg, function(match, p1) {
+        // });
+    // });
 
     return isDisplayedWithHtml ?
         <span key="body" className={className} dangerouslySetInnerHTML={{ __html: safeBody }} dir="auto" /> :
