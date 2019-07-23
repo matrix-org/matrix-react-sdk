@@ -402,7 +402,7 @@ class TextHighlighter extends BaseHighlighter {
  * opts.stripReplyFallback: optional argument specifying the event is a reply and so fallback needs removing
  * opts.returnString: return an HTML string rather than JSX elements
  * opts.forComposerQuote: optional param to lessen the url rewriting done by sanitization, for quoting into composer
- * opts.renderKaTeX: optional argument to render mathematics using KaTeX
+ * opts.renderKatex: optional argument to render mathematics using KaTeX
  */
 export function bodyToHtml(content, highlights, opts={}) {
     const isHtmlMessage = content.format === "org.matrix.custom.html" && content.formatted_body;
@@ -480,7 +480,9 @@ export function bodyToHtml(content, highlights, opts={}) {
         'markdown-body': isHtmlMessage && !emojiBody,
     });
 
-    if (opts.renderKaTeX) {
+    console.log(opts);
+
+    if (opts.renderKatex) {
         const katexDelimiters = [ 
             { symbol: "\\$\\$", display: true },
             { symbol: "\\$", display: false }

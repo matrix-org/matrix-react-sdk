@@ -396,7 +396,6 @@ module.exports = React.createClass({
             // Part of Replies fallback support
             stripReplyFallback: stripReply,
         });
-        console.log(SettingsStore.getValue("katexRendering"));
         if (this.props.replacingEventId) {
             body = [body, this._renderEditedMarker()];
         }
