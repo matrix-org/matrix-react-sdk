@@ -479,20 +479,21 @@ export function bodyToHtml(content, highlights, opts={}) {
         'markdown-body': isHtmlMessage && !emojiBody,
     });
 
-    console.log(safeBody);
+    const katexDelimiters = [ 
+        { symbol: "\\$\\$", display: true },
+        { symbol: "\\$", display: false }
+    ];
 
     if ("undefined" != typeof safeBody) {
-        safeBody = safeBody.replace(/\$\$(.*)\$\$/, function(match, p1) {
-            return katex.renderToString(p1, {
-                throwOnError: false,
-                displayMode: true
-            })
-        });
-        safeBody = safeBody.replace(/\$(.*)\$/, function(match, p1) {
-            return katex.renderToString(p1, {
-                throwOnError: false,
-                displayMode: false
-            })
+        katexDelimiters.forEach(function (d) {
+            var reg = RegExp(d.symbol + "([^" + d.symbol + "]*)" + d.symbol, "g");
+
+            safeBody = safeBody.replace(reg, function(match, p1) {
+                return katex.renderToString(p1, {
+                    throwOnError: false,
+                    displayMode: d.display
+                })
+            });
         });
     };
     
