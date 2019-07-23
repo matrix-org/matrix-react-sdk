@@ -24,11 +24,17 @@ import DiffMatchPatch from 'diff-match-patch';
 import {DiffDOM} from "diff-dom";
 import { checkBlockNode, sanitizeMessageHtml } from "../HtmlUtils";
 
-function getSanitizedBody(content) {
+function textToHtml(text) {
+    const container = document.createElement("div");
+    container.textContent = text;
+    return container.innerHTML;
+}
+
+function getSanitizedHtmlBody(content) {
     if (content.format === "org.matrix.custom.html") {
         return sanitizeMessageHtml(content.formatted_body);
     } else {
-        return sanitizeMessageHtml(content.body);
+        return textToHtml(content.body);
     }
 }
 
@@ -117,16 +123,22 @@ function adjustRoutes(diff, remainingDiffs) {
     }
 }
 
+// todo: html in text messages should not be rendered as html ...!!
+
+function parseHtml(html) {
+    // diff routes are relative to inside root element, so fish out div with children[0]
+    return new DOMParser().parseFromString(html, "text/html").body.children[0];
+}
+
 export function editBodyDiffToHtml(previousContent, newContent) {
-    const oldBody = `<div>${getSanitizedBody(previousContent)}</div>`;
-    const newBody = `<div>${getSanitizedBody(newContent)}</div>`;
+    const oldBody = `<div>${getSanitizedHtmlBody(previousContent)}</div>`;
+    const newBody = `<div>${getSanitizedHtmlBody(newContent)}</div>`;
+    console.log({oldBody, newBody});
     const dd = new DiffDOM();
     const diffActions = dd.diff(oldBody, newBody);
     // for diffing text fragments
     const dpm = new DiffMatchPatch();
-    // TODO: detect parse error here, it doesn't throw
-    // diff routes are relative to inside root element, so fish out div with children[0]
-    const oldRootNode = new DOMParser().parseFromString(oldBody, "text/html").body.children[0];
+    const oldRootNode = parseHtml(oldBody);
     console.info("editBodyDiffToHtml: before", oldRootNode.innerHTML, diffActions);
     for (let i = 0; i < diffActions.length; ++i) {
         const diff = diffActions[i];
@@ -155,6 +167,7 @@ export function editBodyDiffToHtml(previousContent, newContent) {
             case "modifyTextElement": {
                 const textDiffs = dpm.diff_main(diff.oldValue, diff.newValue);
                 dpm.diff_cleanupSemantic(textDiffs);
+                console.log("modifyTextElement", textDiffs);
                 const container = document.createElement("span");
                 for (const [modifier, text] of textDiffs) {
                     let textDiffNode = document.createTextNode(text);
@@ -174,18 +187,32 @@ export function editBodyDiffToHtml(previousContent, newContent) {
                 break;
             }
             case "addTextElement": {
-                // if (diff.value.trim().length !== 0) {
+                if (diff.value !== "\n") {
                     const insNode = wrapInsertion(document.createTextNode(diff.value));
                     insertBefore(refParentNode, refNode, insNode);
-                // }
+                }
+                break;
+            }
+            case "removeAttribute":
+            case "addAttribute":
+            case "modifyAttribute": {
+                const delNode = wrapDeletion(refNode.cloneNode(true));
+                const updatedNode = refNode.cloneNode(true);
+                if (diff.action === "addAttribute" || diff.action === "modifyAttribute") {
+                    updatedNode.setAttribute(diff.name, diff.newValue);
+                } else {
+                    updatedNode.removeAttribute(diff.name);
+                }
+                const insNode = wrapInsertion(updatedNode);
+                const container = document.createElement(checkBlockNode(refNode) ? "div" : "span");
+                container.appendChild(delNode);
+                container.appendChild(insNode);
+                refNode.parentNode.replaceChild(container, refNode);
                 break;
             }
             default:
                 /*
                     modifyComment
-                    removeAttribute
-                    modifyAttribute
-                    addAttribute
                     ...
                 */
                 console.warn("editBodyDiffToHtml: diff action not supported atm", diff);
@@ -193,7 +220,7 @@ export function editBodyDiffToHtml(previousContent, newContent) {
         adjustRoutes(diff, diffActions.slice(i + 1));
     }
     const safeBody = oldRootNode.innerHTML;
-    console.info("editBodyDiffToHtml: after", oldRootNode.innerHTML);
+    console.info("editBodyDiffToHtml: after", safeBody);
 
     const className = classNames({
         'mx_EventTile_body': true,
