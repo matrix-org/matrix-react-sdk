@@ -480,8 +480,6 @@ export function bodyToHtml(content, highlights, opts={}) {
         'markdown-body': isHtmlMessage && !emojiBody,
     });
 
-    console.log(opts);
-
     if (opts.renderKatex) {
         const katexDelimiters = [ 
             { symbol: "\\$\\$", display: true },
