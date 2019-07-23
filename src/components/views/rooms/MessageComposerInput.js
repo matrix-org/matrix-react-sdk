@@ -147,8 +147,10 @@ export default class MessageComposerInput extends React.Component {
         super(props, context);
 
         const isRichTextEnabled = SettingsStore.getValue('MessageComposerInput.isRichTextEnabled');
+        const isMathEnabled = SettingsStore.getValue('MessageComposerInput.isMathEnabled');
 
         Analytics.setRichtextMode(isRichTextEnabled);
+        Analytics.setMathMode(isMathEnabled);
 
         this.client = MatrixClientPeg.get();
 
@@ -511,6 +513,7 @@ export default class MessageComposerInput extends React.Component {
 
         // Record the editor state for this room so that it can be retrieved after switching to another room and back
         MessageComposerStore.setEditorState(this.props.room.roomId, editorState, this.state.isRichTextEnabled);
+        MessageComposerStore.setEditorState(this.props.room.roomId, editorState, this.state.isMathEnabled);
 
         this.setState({
             editorState,
@@ -580,6 +583,30 @@ export default class MessageComposerInput extends React.Component {
         });
 
         SettingsStore.setValue("MessageComposerInput.isRichTextEnabled", null, SettingLevel.ACCOUNT, enabled);
+    }
+
+    enableMath(enabled: boolean) {
+        if (enabled === this.state.isMathEnabled) return;
+
+        // Analytics.setRichtextMode(enabled);
+
+        this.setState({
+            editorState: this.createEditorState(
+                enabled,
+                this.state.editorState,
+                this.state.isMathEnabled,
+            ),
+            isMathEnabled: enabled,
+        }, () => {
+            this._editor.focus();
+            if (this.props.onInputStateChanged) {
+                this.props.onInputStateChanged({
+                    isMathEnabled: enabled,
+                });
+            }
+        });
+
+        SettingsStore.setValue("MessageComposerInput.isMathEnabled", null, SettingLevel.ACCOUNT, enabled);
     }
 
     /**
@@ -731,12 +758,20 @@ export default class MessageComposerInput extends React.Component {
                 }
             }
         }
+
+        // TODO: if this.state.isMathEnabled then we should insert/delete $ signs
+        // in pairs, as in most LaTeX editors
         return;
     };
 
     handleKeyCommand = (command: string): boolean => {
         if (command === 'toggle-mode') {
             this.enableRichtext(!this.state.isRichTextEnabled);
+            return true;
+        }
+
+        if (command === 'toggle-math') {
+            this.enableMath(!this.state.isMathEnabled);
             return true;
         }
 
@@ -1064,6 +1099,10 @@ export default class MessageComposerInput extends React.Component {
             }
         }
 
+        if (this.state.isMathEnabled) {
+            contentHTML = HtmlUtils.processHtmlForSending(this.html.serialize(editorState));
+        }
+
         let sendHtmlFn = ContentHelpers.makeHtmlMessage;
         let sendTextFn = ContentHelpers.makeTextMessage;
 
@@ -1196,6 +1235,8 @@ export default class MessageComposerInput extends React.Component {
         } else {
             editorState = historyItem.value;
         }
+
+        // TODO: something similar for isMathEnabled
 
         // Move selection to the end of the selected history
         const change = editorState.change().moveToEndOfNode(editorState.document);
@@ -1458,6 +1499,11 @@ export default class MessageComposerInput extends React.Component {
         this.handleKeyCommand('toggle-mode');
     };
 
+    onMathToggleClicked = (e) => {
+        e.preventDefault(); // don't steal focus from the editor!
+        this.handleKeyCommand('toggle-math');
+    };
+
     focusComposer = () => {
         this._editor.focus();
     };
@@ -1482,6 +1528,11 @@ export default class MessageComposerInput extends React.Component {
             mx_MessageComposer_markdownDisabled: this.state.isRichTextEnabled,
         });
 
+        const mathClasses = classNames({
+            mx_MessageComposer_input_mathIndicator: true,
+            mx_MessageComposer_mathDisabled: this.state.isMathEnabled,
+        });
+
         return (
             <div className="mx_MessageComposer_input_wrapper" onClick={this.focusComposer}>
                 <div className="mx_MessageComposer_autocomplete_wrapper">
@@ -1499,6 +1550,10 @@ export default class MessageComposerInput extends React.Component {
                     <AccessibleButton className={markdownClasses}
                         onClick={this.onMarkdownToggleClicked}
                         title={this.state.isRichTextEnabled ? _t("Markdown is disabled") : _t("Markdown is enabled")}
+                    />
+                    <AccessibleButton className={mathClasses}
+                        onClick={this.onMathToggleClicked}
+                        title={this.state.isMathEnabled ? _t("Math is disabled") : _t("Math is enabled")}
                     />
                     <Editor ref={this._collectEditor}
                             dir="auto"

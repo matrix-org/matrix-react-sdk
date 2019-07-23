@@ -265,6 +265,12 @@ limitations under the License.
     padding: 4px 4px 4px 0;
 }
 
+.mx_MessageComposer_input_mathIndicator {
+    height: 10px;
+    width: 12px;
+    padding: 4px 4px 4px 0;
+}
+
 .mx_MessageComposer_formatbar_markdown,
 .mx_MessageComposer_input_markdownIndicator {
     cursor: pointer;
@@ -275,6 +281,19 @@ limitations under the License.
     background-color: $composer-button-color;
 
     &.mx_MessageComposer_markdownDisabled {
+        opacity: 0.2;
+    }
+}
+
+.mx_MessageComposer_input_mathIndicator {
+    cursor: pointer;
+    mask-image: url('$(res)/img/math.svg');
+    mask-size: contain;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    background-color: $composer-button-color;
+
+    &.mx_MessageComposer_mathDisabled {
         opacity: 0.2;
     }
 }

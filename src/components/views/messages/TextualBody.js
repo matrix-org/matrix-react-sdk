@@ -392,9 +392,11 @@ module.exports = React.createClass({
         const stripReply = ReplyThread.getParentEventId(mxEvent);
         let body = HtmlUtils.bodyToHtml(content, this.props.highlights, {
             disableBigEmoji: content.msgtype === "m.emote" || !SettingsStore.getValue('TextualBody.enableBigEmoji'),
+            renderKatex: SettingsStore.getValue("katexRendering"),
             // Part of Replies fallback support
             stripReplyFallback: stripReply,
         });
+        console.log(SettingsStore.getValue("katexRendering"));
         if (this.props.replacingEventId) {
             body = [body, this._renderEditedMarker()];
         }

@@ -79,6 +79,7 @@ export default class GeneralRoomSettingsTab extends React.Component {
         const AliasSettings = sdk.getComponent("room_settings.AliasSettings");
         const RelatedGroupSettings = sdk.getComponent("room_settings.RelatedGroupSettings");
         const UrlPreviewSettings = sdk.getComponent("room_settings.UrlPreviewSettings");
+        const KatexRenderingSettings = sdk.getComponent("room_settings.KatexRenderingSettings");
 
         const client = MatrixClientPeg.get();
         const room = client.getRoom(this.props.roomId);
@@ -124,6 +125,11 @@ export default class GeneralRoomSettingsTab extends React.Component {
                 <span className='mx_SettingsTab_subheading'>{_t("URL Previews")}</span>
                 <div className='mx_SettingsTab_section'>
                     <UrlPreviewSettings room={room} />
+                </div>
+
+                <span className='mx_SettingsTab_subheading'>{_t("KaTeX Rendering")}</span>
+                <div className='mx_SettingsTab_section'>
+                    <KatexRenderingSettings room={room} />
                 </div>
 
                 <span className='mx_SettingsTab_subheading'>{_t("Leave room")}</span>

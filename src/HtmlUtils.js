@@ -402,6 +402,7 @@ class TextHighlighter extends BaseHighlighter {
  * opts.stripReplyFallback: optional argument specifying the event is a reply and so fallback needs removing
  * opts.returnString: return an HTML string rather than JSX elements
  * opts.forComposerQuote: optional param to lessen the url rewriting done by sanitization, for quoting into composer
+ * opts.renderKaTeX: optional argument to render mathematics using KaTeX
  */
 export function bodyToHtml(content, highlights, opts={}) {
     const isHtmlMessage = content.format === "org.matrix.custom.html" && content.formatted_body;
@@ -479,24 +480,25 @@ export function bodyToHtml(content, highlights, opts={}) {
         'markdown-body': isHtmlMessage && !emojiBody,
     });
 
-    const katexDelimiters = [ 
-        { symbol: "\\$\\$", display: true },
-        { symbol: "\\$", display: false }
-    ];
+    if (opts.renderKaTeX) {
+        const katexDelimiters = [ 
+            { symbol: "\\$\\$", display: true },
+            { symbol: "\\$", display: false }
+        ];
 
-    if ("undefined" != typeof safeBody) {
-        katexDelimiters.forEach(function (d) {
-            var reg = RegExp(d.symbol + "([^" + d.symbol + "]*)" + d.symbol, "g");
+        if ("undefined" != typeof safeBody) {
+            katexDelimiters.forEach(function (d) {
+                var reg = RegExp(d.symbol + "([^" + d.symbol + "]*)" + d.symbol, "g");
 
-            safeBody = safeBody.replace(reg, function(match, p1) {
-                return katex.renderToString(p1, {
-                    throwOnError: false,
-                    displayMode: d.display
-                })
+                safeBody = safeBody.replace(reg, function(match, p1) {
+                    return katex.renderToString(p1, {
+                        throwOnError: false,
+                        displayMode: d.display
+                    })
+                });
             });
-        });
+        };  
     };
-    
 
     return isDisplayedWithHtml ?
         <span key="body" className={className} dangerouslySetInnerHTML={{ __html: safeBody }} dir="auto" /> :

@@ -33,6 +33,7 @@ export default class PreferencesUserSettingsTab extends React.Component {
     static TIMELINE_SETTINGS = [
         'autoplayGifsAndVideos',
         'urlPreviewsEnabled',
+        'katexRendering',
         'TextualBody.enableBigEmoji',
         'showReadReceipts',
         'showTwelveHourTimestamps',

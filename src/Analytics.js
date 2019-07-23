@@ -239,6 +239,11 @@ class Analytics {
         this._setVisitVariable('RTE: Uses Richtext Mode', state ? 'on' : 'off');
     }
 
+    setMathMode(state) {
+        if (this.disabled) return;
+        this._setVisitVariable('Uses Math Mode', state ? 'on' : 'off');
+    }
+
     setBreadcrumbs(state) {
         if (this.disabled) return;
         this._setVisitVariable('Breadcrumbs', state ? 'enabled' : 'disabled');

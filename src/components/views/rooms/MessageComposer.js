@@ -211,6 +211,7 @@ export default class MessageComposer extends React.Component {
                 marks: [],
                 blockType: null,
                 isRichTextEnabled: SettingsStore.getValue('MessageComposerInput.isRichTextEnabled'),
+                isMathEnabled: SettingsStore.getValue('MessageComposerInput.isMathEnabled')
             },
             showFormatting: SettingsStore.getValue('MessageComposer.showFormatting'),
             isQuoting: Boolean(RoomViewStore.getQuotingEvent()),
@@ -309,6 +310,11 @@ export default class MessageComposer extends React.Component {
     onToggleMarkdownClicked(e) {
         e.preventDefault(); // don't steal focus from the editor!
         this.messageComposerInput.enableRichtext(!this.state.inputState.isRichTextEnabled);
+    }
+
+    onToggleMathClicked(e) {
+        e.preventDefault(); // don't steal focus from the editor!
+        this.messageComposerInput.enableMath(!this.state.inputState.isMathEnabled);
     }
 
     _onTombstoneClick(ev) {
