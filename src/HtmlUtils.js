@@ -540,13 +540,15 @@ function diffDel(child) {
     return span;
 }
 
-function findRefNode(root, route, isAddition) {
-    let node = root;
+function findRefNodes(root, route, isAddition) {
+    let refNode = root;
+    let refParentNode;
     const end = isAddition ? route.length - 1 : route.length;
     for (let i = 0; i < end; ++i) {
-        node = node.childNodes[route[i]];
+        refParentNode = refNode;
+        refNode = refNode.childNodes[route[i]];
     }
-    return node;
+    return {refNode, refParentNode};
 }
 
 function diffTreeToDOM(desc) {
@@ -568,14 +570,11 @@ function diffTreeToDOM(desc) {
     }
 }
 
-function insertAtRoute(parent, child, route) {
-    const insertionIdx = route[route.length - 1];
-    const isLast = insertionIdx === parent.childNodes.length;
-    if (isLast) {
-        parent.appendChild(child);
-    } else {
-        const nextSibling = parent.childNodes[insertionIdx];
+function insertBefore(parent, nextSibling, child) {
+    if (nextSibling) {
         parent.insertBefore(child, nextSibling);
+    } else {
+        parent.appendChild(child);
     }
 }
 
@@ -591,30 +590,32 @@ export function editBodyDiffToHtml(previousContent, newContent) {
     const oldRootNode = new DOMParser().parseFromString(oldBody, "text/html").body.children[0];
     console.info("editBodyDiffToHtml: before", oldRootNode.innerHTML, diffActions);
     for (const diff of diffActions) {
-        const isAddition = diff.action === "addTextElement" || diff.action === "addElement";
-        const refNode = findRefNode(oldRootNode, diff.route, isAddition);
+        const {refNode, refParentNode} = findRefNodes(oldRootNode, diff.route);
         console.log("editBodyDiffToHtml: processing diff part", diff.action, refNode);
         switch (diff.action) {
             case "replaceElement": {
-                const frag = document.createDocumentFragment();
+                const container = document.createElement("span");
                 const delNode = diffDel(diffTreeToDOM(diff.oldValue));
                 const insNode = diffIns(diffTreeToDOM(diff.newValue));
-                frag.appendChild(delNode);
-                frag.appendChild(insNode);
-                refNode.parentNode.replaceChild(frag, refNode);
+                container.appendChild(delNode);
+                container.appendChild(insNode);
+                refNode.parentNode.replaceChild(container, refNode);
                 break;
             }
-            case "removeTextElement":
-            case "removeElement": {
-                const delNode = diffDel(refNode.cloneNode(true));
+            case "removeTextElement": {
+                const delNode = diffDel(document.createTextNode(diff.value));
                 refNode.parentNode.replaceChild(delNode, refNode);
-                // wrap element in <del>
+                break;
+            }
+            case "removeElement": {
+                const delNode = diffDel(diffTreeToDOM(diff.element));
+                refNode.parentNode.replaceChild(delNode, refNode);
                 break;
             }
             case "modifyTextElement": {
                 const textDiffs = dpm.diff_main(diff.oldValue, diff.newValue);
                 dpm.diff_cleanupSemantic(textDiffs);
-                const frag = document.createDocumentFragment();
+                const container = document.createElement("span");
                 for (const [modifier, text] of textDiffs) {
                     let textDiffNode = document.createTextNode(text);
                     if (modifier < 0) {
@@ -622,19 +623,19 @@ export function editBodyDiffToHtml(previousContent, newContent) {
                     } else if (modifier > 0) {
                         textDiffNode = diffIns(textDiffNode);
                     }
-                    frag.appendChild(textDiffNode);
+                    container.appendChild(textDiffNode);
                 }
-                refNode.parentNode.replaceChild(frag, refNode);
+                refNode.parentNode.replaceChild(container, refNode);
                 break;
             }
             case "addElement": {
                 const insNode = diffIns(diffTreeToDOM(diff.element));
-                insertAtRoute(refNode, insNode, diff.route);
+                insertBefore(refParentNode, refNode, insNode);
                 break;
             }
             case "addTextElement": {
                 const insNode = diffIns(document.createTextNode(diff.value));
-                insertAtRoute(refNode, insNode, diff.route);
+                insertBefore(refParentNode, refNode, insNode);
                 break;
             }
             default:
