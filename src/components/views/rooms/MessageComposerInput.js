@@ -760,7 +760,8 @@ export default class MessageComposerInput extends React.Component {
         }
 
         // TODO: if this.state.isMathEnabled then we should insert/delete $ signs
-        // in pairs, as in most LaTeX editors
+        // in pairs, as in most LaTeX editors, as well as underline (or something similar)
+        // the content in between the delimiters
         return;
     };
 
