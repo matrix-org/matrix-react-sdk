@@ -153,8 +153,8 @@ export default class EditHistoryMessage extends React.PureComponent {
             contentContainer = <UnknownBody mxEvent={this.props.mxEvent} />;
         } else {
             let contentElements;
-            if (isPlainMessage(mxEvent) && this.props.previousEdit && isPlainMessage(this.props.previousEdit)) {
-                contentElements = this._renderBodyDiff(getReplacedContent(this.props.previousEdit).body, content.body);
+            if (this.props.previousEdit) {
+                contentElements = HtmlUtils.editBodyDiffToHtml(getReplacedContent(this.props.previousEdit), content);
             } else {
                 contentElements = HtmlUtils.bodyToHtml(content, null, {stripReplyFallback: true});
             }

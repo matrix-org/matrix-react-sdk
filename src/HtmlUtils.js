@@ -30,6 +30,8 @@ import _linkifyString from 'linkifyjs/string';
 import classNames from 'classnames';
 import MatrixClientPeg from './MatrixClientPeg';
 import url from 'url';
+import DiffMatchPatch from 'diff-match-patch';
+import {DiffDOM} from "diff-dom";
 
 import EMOJIBASE from 'emojibase-data/en/compact.json';
 import EMOJIBASE_REGEX from 'emojibase-regex';
@@ -512,4 +514,156 @@ export function linkifyElement(element, options = linkifyMatrix.options) {
  */
 export function linkifyAndSanitizeHtml(dirtyHtml) {
     return sanitizeHtml(linkifyString(dirtyHtml), sanitizeHtmlParams);
+}
+
+function getSanitizedBody(content) {
+    if (content.format === "org.matrix.custom.html") {
+        return sanitizeHtml(content.formatted_body, sanitizeHtmlParams);
+    } else {
+        return sanitizeHtml(content.body, sanitizeHtmlParams);
+    }
+}
+
+function diffIns(child) {
+    // TODO: should be block level element/applying class for block level element
+    const span = document.createElement("span");
+    span.setAttribute("class", "mx_EditHistoryMessage_insertion");
+    span.appendChild(child);
+    return span;
+}
+
+function diffDel(child) {
+    // TODO: should be block level element/applying class for block level element
+    const span = document.createElement("span");
+    span.setAttribute("class", "mx_EditHistoryMessage_deletion");
+    span.appendChild(child);
+    return span;
+}
+
+function findRefNodes(root, route) {
+    console.log("findRefNodes", root, route);
+    let node = root;
+    let parent;
+    for (let i = 0; i < route.length; ++i) {
+        parent = node;
+        node = node.childNodes[route[i]];
+    }
+    return {node, parent};
+}
+
+function diffTreeToDOM(desc) {
+    if (desc.nodeName === "#text") {
+        return document.createTextNode(desc.data);
+    } else {
+        const node = document.createElement(desc.nodeName);
+        if (desc.attributes) {
+            for (const [key, value] of Object.entries(desc.attributes)) {
+                node.setAttribute(key, value);
+            }
+        }
+        if (desc.childNodes) {
+            for (const childDesc of desc.childNodes) {
+                node.appendChild(diffTreeToDOM(childDesc));
+            }
+        }
+        return node;
+    }
+}
+
+function insertNewElement(parent, nextSibling, child) {
+    if (nextSibling) {
+        parent.insertBefore(child, nextSibling);
+    } else {
+        parent.appendChild(child);
+    }
+}
+
+export function editBodyDiffToHtml(previousContent, newContent) {
+    const oldBody = `<div>${getSanitizedBody(previousContent)}</div>`;
+    const newBody = `<div>${getSanitizedBody(newContent)}</div>`;
+    const dd = new DiffDOM();
+    const diffActions = dd.diff(oldBody, newBody);
+    // for diffing text fragments
+    const dpm = new DiffMatchPatch();
+    // TODO: detect parse error here, it doesn't throw
+    // diff routes are relative to inside root element, so fish out div with children[0]
+    const oldRootNode = new DOMParser().parseFromString(oldBody, "text/html").body.children[0];
+    console.info("editBodyDiffToHtml: before", oldRootNode.innerHTML, diffActions);
+    // resolve route to node before starting to modify the tree
+    // we also need the parentNode in the case an addElement action needs to appendChild
+    for (const diff of diffActions) {
+        const {node, parent} = findRefNodes(oldRootNode, diff.route);
+        diff.targetNode = node;
+        diff.targetParentNode = parent;
+        // keep the indices of routes to come correct
+        if (diff.action === "addElement" || diff.action === "addTextElement") {
+            insertNewElement(parent, node, document.createComment(""));
+        }
+    }
+    for (const diff of diffActions) {
+        console.log("editBodyDiffToHtml: processing diff part", diff.action, targetNode);
+        const {targetNode} = diff;
+        switch (diff.action) {
+            case "replaceElement": {
+                const frag = document.createDocumentFragment();
+                const delNode = diffDel(diffTreeToDOM(diff.oldValue));
+                const insNode = diffIns(diffTreeToDOM(diff.newValue));
+                frag.appendChild(delNode);
+                frag.appendChild(insNode);
+                targetNode.parentNode.replaceChild(frag, targetNode);
+                break;
+            }
+            case "removeTextElement":
+            case "removeElement": {
+                const delNode = diffDel(targetNode.cloneNode(true));
+                targetNode.parentNode.replaceChild(delNode, targetNode);
+                // wrap element in <del>
+                break;
+            }
+            case "modifyTextElement": {
+                const textDiffs = dpm.diff_main(diff.oldValue, diff.newValue);
+                dpm.diff_cleanupSemantic(textDiffs);
+                const frag = document.createDocumentFragment();
+                for (const [modifier, text] of textDiffs) {
+                    let textDiffNode = document.createTextNode(text);
+                    if (modifier < 0) {
+                        textDiffNode = diffDel(textDiffNode);
+                    } else if (modifier > 0) {
+                        textDiffNode = diffIns(textDiffNode);
+                    }
+                    frag.appendChild(textDiffNode);
+                }
+                targetNode.parentNode.replaceChild(frag, targetNode);
+                break;
+            }
+            case "addElement": {
+                const insNode = diffIns(diffTreeToDOM(diff.element));
+                insertNewElement(diff.targetParentNode, targetNode, insNode);
+                break;
+            }
+            case "addTextElement": {
+                const insNode = diffIns(document.createTextNode(diff.value));
+                insertNewElement(diff.targetParentNode, targetNode, insNode);
+                break;
+            }
+            default:
+                /*
+                    modifyComment
+                    removeAttribute
+                    modifyAttribute
+                    addAttribute
+                    ...
+                */
+                console.warn("editBodyDiffToHtml: diff action not supported atm", diff.action);
+        }
+    }
+    const safeBody = oldRootNode.innerHTML;
+    console.info("editBodyDiffToHtml: after", oldRootNode.innerHTML);
+
+    const className = classNames({
+        'mx_EventTile_body': true,
+        'markdown-body': true,
+    });
+
+    return <span key="body" className={className} dangerouslySetInnerHTML={{ __html: safeBody }} dir="auto" />;
 }
