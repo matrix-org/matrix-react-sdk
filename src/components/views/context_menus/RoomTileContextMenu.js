@@ -30,6 +30,7 @@ import * as Rooms from '../../../Rooms';
 import * as RoomNotifs from '../../../RoomNotifs';
 import Modal from '../../../Modal';
 import RoomListActions from '../../../actions/RoomListActions';
+import Tchap from '../../../Tchap';
 
 module.exports = React.createClass({
     displayName: 'RoomTileContextMenu',
@@ -91,11 +92,28 @@ module.exports = React.createClass({
     },
 
     _onClickLeave: function() {
-        // Leave room
-        dis.dispatch({
-            action: 'leave_room',
-            room_id: this.props.room.roomId,
-        });
+        const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+        if (Tchap.isUserLastAdmin(this.props.room)) {
+            Modal.createTrackedDialog('Last admin leave', '', QuestionDialog, {
+                title: _t("You are the last administrator"),
+                description: _t("Are you sure you want to leave the room? The room will no longer be administered, and you may not be able to join it again."),
+                button: _t("Leave"),
+                onFinished: (proceed) => {
+                    if (proceed) {
+                        // Leave rooms
+                        dis.dispatch({
+                            action: 'leave_room',
+                            room_id: this.props.room.roomId,
+                        });
+                    }
+                },
+            });
+        } else {
+            dis.dispatch({
+                action: 'leave_room',
+                room_id: this.props.room.roomId,
+            });
+        }
 
         // Close the context menu
         if (this.props.onFinished) {

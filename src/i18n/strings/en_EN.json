@@ -1637,5 +1637,7 @@
     "Request a renewal email": "Request a renewal email",
     "To disable this option, you must accept that your email address is visible to the other users.": "To disable this option, you must accept that your email address is visible to the other users.",
     "TAC": "TAC",
-    "User Guide": "User Guide"
+    "User Guide": "User Guide",
+    "Are you sure you want to leave the room? The room will no longer be administered, and you may not be able to join it again.": "Are you sure you want to leave the room? The room will no longer be administered, and you may not be able to join it again.",
+    "You are the last administrator": "You are the last administrator"
 }
