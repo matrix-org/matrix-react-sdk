@@ -1683,5 +1683,13 @@
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.",
     "Failed to set direct chat tag": "Failed to set direct chat tag",
     "Failed to remove tag %(tagName)s from room": "Failed to remove tag %(tagName)s from room",
-    "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room"
+    "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room",
+    "Enable KaTeX rendering by default for participants in this room": "Enable KaTeX rendering by default for participants in this room",
+    "Enable KaTeX rendering for this room (only affects you)": "Enable KaTeX rendering for this room (only affects you)",
+    "KaTeX rendering is disabled by default for participants in this room.": "KaTeX rendering is disabled by default for participants in this room.",
+    "When someone types mathematics using $ signs, KaTeX can render the contents.": "When someone types mathematics using $ signs, KaTeX can render the contents.",
+    "Enable KaTeX rendering by default": "Enable KaTeX rendering by default",
+    "You have <a>enabled</a> KaTeX rendering by default.": "You have <a>enabled</a> KaTeX rendering by default.",
+    "You have <a>disabled</a> KaTeX rendering by default.": "You have <a>disabled</a> KaTeX rendering by default.",
+    "KaTeX Rendering": "KaTeX Rendering"
 }

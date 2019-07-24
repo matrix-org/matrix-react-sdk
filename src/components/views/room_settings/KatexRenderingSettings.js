@@ -43,20 +43,20 @@ module.exports = React.createClass({
         const roomId = this.props.room.roomId;
         const isEncrypted = MatrixClientPeg.get().isRoomEncrypted(roomId);
 
-        let previewsForAccount = null;
-        let previewsForRoom = null;
+        let katexForAccount = null;
+        let katexForRoom = null;
 
         if (!isEncrypted) {
             // Only show account setting state and room state setting state in non-e2ee rooms where they apply
             const accountEnabled = SettingsStore.getValueAt(SettingLevel.ACCOUNT, "katexRendering");
             if (accountEnabled) {
-                previewsForAccount = (
+                katexForAccount = (
                     _t("You have <a>enabled</a> KaTeX rendering by default.", {}, {
                         'a': (sub)=><a onClick={this._onClickUserSettings} href=''>{ sub }</a>,
                     })
                 );
-            } else if (accountEnabled) {
-                previewsForAccount = (
+            } else if (!accountEnabled) {
+                katexForAccount = (
                     _t("You have <a>disabled</a> KaTeX rendering by default.", {}, {
                         'a': (sub)=><a onClick={this._onClickUserSettings} href=''>{ sub }</a>,
                     })
@@ -64,7 +64,7 @@ module.exports = React.createClass({
             }
 
             if (SettingsStore.canSetValue("katexRendering", roomId, "room")) {
-                previewsForRoom = (
+                katexForRoom = (
                     <label>
                         <SettingsFlag name="katexRendering"
                                       level={SettingLevel.ROOM}
@@ -77,15 +77,15 @@ module.exports = React.createClass({
                 if (!SettingsStore.getValueAt(SettingLevel.ROOM, "katexRendering", roomId, /*explicit=*/true)) {
                     str = _td("KaTeX rendering is disabled by default for participants in this room.");
                 }
-                previewsForRoom = (<label>{ _t(str) }</label>);
+                katexForRoom = (<label>{ _t(str) }</label>);
             }
         } else {
-            previewsForAccount = (
+            katexForAccount = (
                 _t("In encrypted rooms, like this one, KaTeX rendering is disabled by default.")
             );
         }
 
-        const previewsForRoomAccount = ( // in an e2ee room we use a special key to enforce per-room opt-in
+        const katexForRoomAccount = ( // in an e2ee room we use a special key to enforce per-room opt-in
             <SettingsFlag name={'katexRendering'}
                           level={SettingLevel.ROOM_ACCOUNT}
                           roomId={roomId} />
@@ -97,10 +97,10 @@ module.exports = React.createClass({
                     { _t('When someone types mathematics using \$ signs, KaTeX can render the contents.') }
                 </div>
                 <div className='mx_SettingsTab_subsectionText'>
-                    { previewsForAccount }
+                    { katexForAccount }
                 </div>
-                { previewsForRoom }
-                <label>{ previewsForRoomAccount }</label>
+                { katexForRoom }
+                <label>{ katexForRoomAccount }</label>
             </div>
         );
     },

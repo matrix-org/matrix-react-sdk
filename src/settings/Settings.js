@@ -379,7 +379,7 @@ export const SETTINGS = {
     "katexRendering" : {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
         displayName: {
-            "default": _td('Enable KaTeX rendering by default'),
+            "default": _td("Enable KaTeX rendering by default"),
             "room-account": _td("Enable KaTeX rendering for this room (only affects you)"),
             "room": _td("Enable KaTeX rendering by default for participants in this room"),
         },
