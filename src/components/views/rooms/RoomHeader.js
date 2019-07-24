@@ -267,6 +267,7 @@ module.exports = React.createClass({
                 </AccessibleButton>;
         }
 
+        // For the moment, Integs are disabled.
         let manageIntegsButton;
         if (this.props.room && this.props.room.roomId && this.props.inRoom) {
             manageIntegsButton = <ManageIntegsButton
@@ -278,7 +279,6 @@ module.exports = React.createClass({
             <div className="mx_RoomHeader_buttons">
                 { settingsButton }
                 { pinnedEventsButton }
-                { manageIntegsButton }
                 { forgetButton }
                 { searchButton }
             </div>;
