@@ -24,6 +24,14 @@ import DiffMatchPatch from 'diff-match-patch';
 import {DiffDOM} from "diff-dom";
 import { checkBlockNode, sanitizeMessageHtml } from "../HtmlUtils";
 
+const decodeEntities = (function() {
+    const textarea = document.createElement("textarea");
+    return function(string) {
+        textarea.innerHTML = string;
+        return textarea.value;
+    };
+})();
+
 function textToHtml(text) {
     const container = document.createElement("div");
     container.textContent = text;
@@ -65,7 +73,7 @@ function findRefNodes(root, route, isAddition) {
 
 function diffTreeToDOM(desc) {
     if (desc.nodeName === "#text") {
-        return document.createTextNode(desc.data);
+        return stringAsTextNode(desc.data);
     } else {
         const node = document.createElement(desc.nodeName);
         if (desc.attributes) {
@@ -90,47 +98,46 @@ function insertBefore(parent, nextSibling, child) {
     }
 }
 
-function isNextSibling(d1, d2) {
-    // compare up to parent element in route
-    for (let i = 0; i < d1.route.length - 1; ++i) {
-        if (d1.route[i] !== d2.route[i]) {
+function isRouteOfNextSibling(route1, route2) {
+    // routes are arrays with indices,
+    // to be interpreted as a path in the dom tree
+
+    // ensure same parent
+    for (let i = 0; i < route1.length - 1; ++i) {
+        if (route1[i] !== route2[i]) {
             return false;
         }
     }
-    const lastD1Idx = d1.route.length - 1;
-    return d2.route[lastD1Idx] >= d1.route[lastD1Idx];
+    // the route2 is only affected by the diff of route1
+    // inserting an element if the index at the level of the
+    // last element of route1 being larger
+    // (e.g. coming behind route1 at that level)
+    const lastD1Idx = route1.length - 1;
+    return route2[lastD1Idx] >= route1[lastD1Idx];
 }
 
-// as removed text is not removed from the html, but marked as deleted,
-// we need to readjust indices that assume the current node has been removed.
 function adjustRoutes(diff, remainingDiffs) {
-    let advance = 0;
-    switch (diff.action) {
-        case "removeTextElement":
-        case "removeElement":
-            advance = 1;
-            break;
-    }
-    if (advance === 0) {
-        return;
-    }
-    for (const rd of remainingDiffs) {
-        console.log(rd.action, diff.route, rd.route);
-        if (isNextSibling(diff, rd)) {
-            console.log(`adjustRoutes: advance(${advance}) ${rd.action} because of ${diff.action}`);
-            rd.route[diff.route.length - 1] += advance;
+    if (diff.action === "removeTextElement" || diff.action === "removeElement") {
+        // as removed text is not removed from the html, but marked as deleted,
+        // we need to readjust indices that assume the current node has been removed.
+        const advance = 1;
+        for (const rd of remainingDiffs) {
+            console.log(rd.action, diff.route, rd.route);
+            if (isRouteOfNextSibling(diff.route, rd.route)) {
+                console.log(`adjustRoutes: advance(${advance}) ${rd.action} because of ${diff.action}`);
+                rd.route[diff.route.length - 1] += advance;
+            }
         }
     }
 }
 
-// todo: html in text messages should not be rendered as html ...!!
-
-function parseHtml(html) {
-    // diff routes are relative to inside root element, so fish out div with children[0]
-    return new DOMParser().parseFromString(html, "text/html").body.children[0];
+function stringAsTextNode(string) {
+    console.log("stringAsTextNode", {string});
+    return document.createTextNode(decodeEntities(string));
 }
 
 export function editBodyDiffToHtml(previousContent, newContent) {
+    const domParser = new DOMParser();
     const oldBody = `<div>${getSanitizedHtmlBody(previousContent)}</div>`;
     const newBody = `<div>${getSanitizedHtmlBody(newContent)}</div>`;
     console.log({oldBody, newBody});
@@ -138,12 +145,14 @@ export function editBodyDiffToHtml(previousContent, newContent) {
     const diffActions = dd.diff(oldBody, newBody);
     // for diffing text fragments
     const dpm = new DiffMatchPatch();
-    const oldRootNode = parseHtml(oldBody);
+    // diff routes are relative to inside root element, so fish out div with children[0]
+    const oldRootNode = domParser.parseFromString(oldBody, "text/html").body.children[0];
     console.info("editBodyDiffToHtml: before", oldRootNode.innerHTML, diffActions);
     for (let i = 0; i < diffActions.length; ++i) {
         const diff = diffActions[i];
         const {refNode, refParentNode} = findRefNodes(oldRootNode, diff.route);
         console.log("editBodyDiffToHtml: processing diff part", diff.action, refNode);
+        let handled = false;
         switch (diff.action) {
             case "replaceElement": {
                 const container = document.createElement("span");
@@ -152,16 +161,19 @@ export function editBodyDiffToHtml(previousContent, newContent) {
                 container.appendChild(delNode);
                 container.appendChild(insNode);
                 refNode.parentNode.replaceChild(container, refNode);
+                handled = true;
                 break;
             }
             case "removeTextElement": {
-                const delNode = wrapDeletion(document.createTextNode(diff.value));
+                const delNode = wrapDeletion(stringAsTextNode(diff.value));
                 refNode.parentNode.replaceChild(delNode, refNode);
+                handled = true;
                 break;
             }
             case "removeElement": {
                 const delNode = wrapDeletion(diffTreeToDOM(diff.element));
                 refNode.parentNode.replaceChild(delNode, refNode);
+                handled = true;
                 break;
             }
             case "modifyTextElement": {
@@ -170,7 +182,7 @@ export function editBodyDiffToHtml(previousContent, newContent) {
                 console.log("modifyTextElement", textDiffs);
                 const container = document.createElement("span");
                 for (const [modifier, text] of textDiffs) {
-                    let textDiffNode = document.createTextNode(text);
+                    let textDiffNode = stringAsTextNode(text);
                     if (modifier < 0) {
                         textDiffNode = wrapDeletion(textDiffNode);
                     } else if (modifier > 0) {
@@ -179,20 +191,25 @@ export function editBodyDiffToHtml(previousContent, newContent) {
                     container.appendChild(textDiffNode);
                 }
                 refNode.parentNode.replaceChild(container, refNode);
+                handled = true;
                 break;
             }
             case "addElement": {
                 const insNode = wrapInsertion(diffTreeToDOM(diff.element));
                 insertBefore(refParentNode, refNode, insNode);
+                handled = true;
                 break;
             }
             case "addTextElement": {
                 if (diff.value !== "\n") {
-                    const insNode = wrapInsertion(document.createTextNode(diff.value));
+                    const insNode = wrapInsertion(stringAsTextNode(diff.value));
                     insertBefore(refParentNode, refNode, insNode);
+                    handled = true;
                 }
                 break;
             }
+            // e.g. when changing a the href of a link,
+            // show the link with old href as removed and with the new href as added
             case "removeAttribute":
             case "addAttribute":
             case "modifyAttribute": {
@@ -208,16 +225,16 @@ export function editBodyDiffToHtml(previousContent, newContent) {
                 container.appendChild(delNode);
                 container.appendChild(insNode);
                 refNode.parentNode.replaceChild(container, refNode);
+                handled = true;
                 break;
             }
             default:
-                /*
-                    modifyComment
-                    ...
-                */
+                /* modifyComment, ??? */
                 console.warn("editBodyDiffToHtml: diff action not supported atm", diff);
         }
-        adjustRoutes(diff, diffActions.slice(i + 1));
+        if (handled) {
+            adjustRoutes(diff, diffActions.slice(i + 1));
+        }
     }
     const safeBody = oldRootNode.innerHTML;
     console.info("editBodyDiffToHtml: after", safeBody);
