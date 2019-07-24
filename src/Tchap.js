@@ -169,7 +169,7 @@ class Tchap {
         let adminNumber = 0;
         let isUserAdmin = false;
         members.forEach(m => {
-            if (m.powerLevelNorm === 100) {
+            if (m.powerLevelNorm >= 100) {
                 if (m.userId === userId) {
                     isUserAdmin = true;
                 }

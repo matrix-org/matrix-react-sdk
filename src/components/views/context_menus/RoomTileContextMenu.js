@@ -95,8 +95,8 @@ module.exports = React.createClass({
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
         if (Tchap.isUserLastAdmin(this.props.room)) {
             Modal.createTrackedDialog('Last admin leave', '', QuestionDialog, {
-                title: _t("Last admin leave"),
-                description: _t("You are the last administrator of this room, are you sure that you want to leave ?"),
+                title: _t("You are the last administrator"),
+                description: _t("Are you sure you want to leave the room? The room will no longer be administered, and you may not be able to join it again."),
                 button: _t("Leave"),
                 onFinished: (proceed) => {
                     if (proceed) {
@@ -115,7 +115,7 @@ module.exports = React.createClass({
             });
         }
 
-        // Close the context menu*/
+        // Close the context menu
         if (this.props.onFinished) {
             this.props.onFinished();
         }

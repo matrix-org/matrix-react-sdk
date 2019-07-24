@@ -1889,5 +1889,7 @@
     "I renewed the validity of my account": "J’ai renouvelé mon compte",
     "Request a renewal email": "Demander l’envoi d’un nouvel email",
     "Error loading Tchap": "Erreur lors du chargement de Tchap",
-    "To disable this option, you must accept that your email address is visible to the other users.": "Pour désactiver cette option, vous devez accepter que votre adresse email soit visible des autres utilisateurs lors de leurs recherches."
+    "To disable this option, you must accept that your email address is visible to the other users.": "Pour désactiver cette option, vous devez accepter que votre adresse email soit visible des autres utilisateurs lors de leurs recherches.",
+    "Are you sure you want to leave the room? The room will no longer be administered, and you may not be able to join it again.": "Voulez-vous vraiment quitter cette conversation ? Elle ne sera plus administrée, et vous risquez de ne plus pouvoir la joindre de nouveau.",
+    "You are the last administrator": "Vous êtes le dernier administrateur"
 }

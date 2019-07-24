@@ -75,8 +75,8 @@ export default class GeneralRoomSettingsTab extends React.Component {
         const room = MatrixClientPeg.get().getRoom(this.props.roomId);
         if (Tchap.isUserLastAdmin(room)) {
             Modal.createTrackedDialog('Last admin leave', '', QuestionDialog, {
-                title: _t("Last admin leave"),
-                description: _t("You are the last administrator of this room, are you sure that you want to leave ?"),
+                title: _t("You are the last administrator"),
+                description: _t("Are you sure you want to leave the room? The room will no longer be administered, and you may not be able to join it again."),
                 button: _t("Leave"),
                 onFinished: (proceed) => {
                     if (proceed) {
