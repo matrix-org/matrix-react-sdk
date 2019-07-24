@@ -30,7 +30,7 @@ class MessageComposerStore {
         return this.prefix + roomId;
     }
 
-    setEditorState(roomId: string, editorState: Value, richText: boolean) {
+    setEditorState(roomId: string, editorState: Value, richText: boolean, math:boolean) {
         localStorage.setItem(this._getKey(roomId), JSON.stringify({
             editor_state: editorState.toJSON({
                 preserveSelection: true,
@@ -40,10 +40,11 @@ class MessageComposerStore {
                 preserveKeys: true,
             }),
             rich_text: richText,
+            math: math,
         }));
     }
 
-    getEditorState(roomId): {editor_state: Value, rich_text: boolean} {
+    getEditorState(roomId): {editor_state: Value, rich_text: boolean, math:boolean} {
         const stateStr = localStorage.getItem(this._getKey(roomId));
 
         let state;
@@ -51,7 +52,7 @@ class MessageComposerStore {
             state = JSON.parse(stateStr);
 
             // if it does not have the fields we expect then bail
-            if (!state || state.rich_text === undefined || state.editor_state === undefined) return;
+            if (!state || state.rich_text === undefined || state.math === undefined || state.editor_state === undefined) return;
             state.editor_state = Value.fromJSON(state.editor_state);
         }
 

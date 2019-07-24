@@ -289,10 +289,12 @@ export default class MessageComposerInput extends React.Component {
         this.state = {
             // whether we're in rich text or markdown mode
             isRichTextEnabled,
+            isMathEnabled,
 
             // the currently displayed editor state (note: this is always what is modified on input)
             editorState: this.createEditorState(
                 isRichTextEnabled,
+                isMathEnabled,
                 savedState ? savedState.editor_state : undefined,
                 savedState ? savedState.rich_text : undefined,
             ),
