@@ -43,6 +43,7 @@ module.exports = React.createClass({
         const roomId = this.props.room.roomId;
         const isEncrypted = MatrixClientPeg.get().isRoomEncrypted(roomId);
 
+        let katexForRoomAccount = null;
         let katexForAccount = null;
         let katexForRoom = null;
 
@@ -85,7 +86,7 @@ module.exports = React.createClass({
             );
         }
 
-        const katexForRoomAccount = ( // in an e2ee room we use a special key to enforce per-room opt-in
+        katexForRoomAccount = (
             <SettingsFlag name={'katexRendering'}
                           level={SettingLevel.ROOM_ACCOUNT}
                           roomId={roomId} />

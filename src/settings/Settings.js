@@ -385,4 +385,11 @@ export const SETTINGS = {
         },
         default: false,
     },
+    "katexRendering_e2ee": {
+        supportedLevels: ['room-device', 'room-account'],
+        displayName: {
+            "room-account": _td("Enable KaTeX rendering for this room (only affects you)"),
+        },
+        default: false,
+    },
 };
