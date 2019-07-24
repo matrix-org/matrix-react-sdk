@@ -133,9 +133,7 @@ function adjustRoutes(diff, remainingDiffs) {
         // we need to readjust indices that assume the current node has been removed.
         const advance = 1;
         for (const rd of remainingDiffs) {
-            console.log(rd.action, diff.route, rd.route);
             if (isRouteOfNextSibling(diff.route, rd.route)) {
-                console.log(`adjustRoutes: advance(${advance}) ${rd.action} because of ${diff.action}`);
                 rd.route[diff.route.length - 1] += advance;
             }
         }
@@ -171,7 +169,6 @@ function renderDifferenceInDOM(originalRootNode, diff, diffMathPatch) {
         case "modifyTextElement": {
             const textDiffs = diffMathPatch.diff_main(diff.oldValue, diff.newValue);
             diffMathPatch.diff_cleanupSemantic(textDiffs);
-            console.log("modifyTextElement", textDiffs);
             const container = document.createElement("span");
             for (const [modifier, text] of textDiffs) {
                 let textDiffNode = stringAsTextNode(text);
@@ -218,7 +215,7 @@ function renderDifferenceInDOM(originalRootNode, diff, diffMathPatch) {
         }
         default:
             // Should not happen (modifyComment, ???)
-            console.warn("editBodyDiffToHtml: diff action not supported atm", diff);
+            console.warn("MessageDiffUtils::editBodyDiffToHtml: diff action not supported atm", diff);
     }
 }
 
@@ -229,9 +226,9 @@ function renderDifferenceInDOM(originalRootNode, diff, diffMathPatch) {
  * @return {object} a react element similar to what `bodyToHtml` returns
  */
 export function editBodyDiffToHtml(originalContent, editContent) {
+    // wrap the body in a div, DiffDOM needs a root element
     const originalBody = `<div>${getSanitizedHtmlBody(originalContent)}</div>`;
     const editBody = `<div>${getSanitizedHtmlBody(editContent)}</div>`;
-    console.log({originalBody, editBody});
     const dd = new DiffDOM();
     // diffActions is an array of objects with at least a `action` and `route`
     // property. `action` tells us what the diff object changes, and `route` where.
@@ -242,7 +239,6 @@ export function editBodyDiffToHtml(originalContent, editContent) {
     // parse the base html message as a DOM tree, to which we'll apply the differences found.
     // fish out the div in which we wrapped the messages above with children[0].
     const originalRootNode = new DOMParser().parseFromString(originalBody, "text/html").body.children[0];
-    console.info("editBodyDiffToHtml: before", originalRootNode.innerHTML, diffActions);
     for (let i = 0; i < diffActions.length; ++i) {
         const diff = diffActions[i];
         renderDifferenceInDOM(originalRootNode, diff, diffMathPatch);
@@ -252,9 +248,8 @@ export function editBodyDiffToHtml(originalContent, editContent) {
         // So we need to adjust the routes of the remaining diffs to account for this.
         adjustRoutes(diff, diffActions.slice(i + 1));
     }
+    // take the html out of the modified DOM tree again
     const safeBody = originalRootNode.innerHTML;
-    console.info("editBodyDiffToHtml: after", safeBody);
-
     const className = classNames({
         'mx_EventTile_body': true,
         'markdown-body': true,
