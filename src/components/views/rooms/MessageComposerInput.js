@@ -1100,7 +1100,10 @@ export default class MessageComposerInput extends React.Component {
             }
         }
 
-        if (this.state.isMathEnabled) {
+        if (!this.state.isMathEnabled) {
+            // isMathEnabled should really be called isMathDisabled, with the way
+            // the boolean value is toggled, but this is the same as with isRichTextEnabled,
+            // so we're just being consistent
             contentHTML = HtmlUtils.processHtmlForSending(this.html.serialize(editorState));
         }
 
