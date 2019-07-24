@@ -1,7 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017, 2018 New Vector Ltd
-Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,17 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
 import React from 'react';
 import classNames from 'classnames';
 import DiffMatchPatch from 'diff-match-patch';
 import {DiffDOM} from "diff-dom";
-import { checkBlockNode, sanitizeMessageHtml } from "../HtmlUtils";
+import { checkBlockNode, bodyToHtml } from "../HtmlUtils";
 
 const decodeEntities = (function() {
-    const textarea = document.createElement("textarea");
+    let textarea = null;
     return function(string) {
+        if (!textarea) {
+            textarea = document.createElement("textarea");
+        }
         textarea.innerHTML = string;
         return textarea.value;
     };
@@ -39,10 +38,22 @@ function textToHtml(text) {
 }
 
 function getSanitizedHtmlBody(content) {
+    const opts = {
+        stripReplyFallback: true,
+        returnString: true,
+    };
     if (content.format === "org.matrix.custom.html") {
-        return sanitizeMessageHtml(content.formatted_body);
+        return bodyToHtml(content, null, opts);
     } else {
-        return textToHtml(content.body);
+        // convert the string to something that can be safely
+        // embedded in an html document, e.g. use html entities where needed
+        // This is also needed so that DiffDOM wouldn't interpret something
+        // as a tag when somebody types e.g. "</sarcasm>"
+
+        // as opposed to bodyToHtml, here we also render
+        // text messages with dangerouslySetInnerHTML, to unify
+        // the code paths and because we need html to show differences
+        return textToHtml(bodyToHtml(content, null, opts));
     }
 }
 
@@ -132,117 +143,121 @@ function adjustRoutes(diff, remainingDiffs) {
 }
 
 function stringAsTextNode(string) {
-    console.log("stringAsTextNode", {string});
     return document.createTextNode(decodeEntities(string));
 }
 
-export function editBodyDiffToHtml(previousContent, newContent) {
-    const domParser = new DOMParser();
-    const oldBody = `<div>${getSanitizedHtmlBody(previousContent)}</div>`;
-    const newBody = `<div>${getSanitizedHtmlBody(newContent)}</div>`;
-    console.log({oldBody, newBody});
+function renderDifferenceInDOM(originalRootNode, diff, diffMathPatch) {
+    const {refNode, refParentNode} = findRefNodes(originalRootNode, diff.route);
+    switch (diff.action) {
+        case "replaceElement": {
+            const container = document.createElement("span");
+            const delNode = wrapDeletion(diffTreeToDOM(diff.oldValue));
+            const insNode = wrapInsertion(diffTreeToDOM(diff.newValue));
+            container.appendChild(delNode);
+            container.appendChild(insNode);
+            refNode.parentNode.replaceChild(container, refNode);
+            break;
+        }
+        case "removeTextElement": {
+            const delNode = wrapDeletion(stringAsTextNode(diff.value));
+            refNode.parentNode.replaceChild(delNode, refNode);
+            break;
+        }
+        case "removeElement": {
+            const delNode = wrapDeletion(diffTreeToDOM(diff.element));
+            refNode.parentNode.replaceChild(delNode, refNode);
+            break;
+        }
+        case "modifyTextElement": {
+            const textDiffs = diffMathPatch.diff_main(diff.oldValue, diff.newValue);
+            diffMathPatch.diff_cleanupSemantic(textDiffs);
+            console.log("modifyTextElement", textDiffs);
+            const container = document.createElement("span");
+            for (const [modifier, text] of textDiffs) {
+                let textDiffNode = stringAsTextNode(text);
+                if (modifier < 0) {
+                    textDiffNode = wrapDeletion(textDiffNode);
+                } else if (modifier > 0) {
+                    textDiffNode = wrapInsertion(textDiffNode);
+                }
+                container.appendChild(textDiffNode);
+            }
+            refNode.parentNode.replaceChild(container, refNode);
+            break;
+        }
+        case "addElement": {
+            const insNode = wrapInsertion(diffTreeToDOM(diff.element));
+            insertBefore(refParentNode, refNode, insNode);
+            break;
+        }
+        case "addTextElement": {
+            if (diff.value !== "\n") {
+                const insNode = wrapInsertion(stringAsTextNode(diff.value));
+                insertBefore(refParentNode, refNode, insNode);
+            }
+            break;
+        }
+        // e.g. when changing a the href of a link,
+        // show the link with old href as removed and with the new href as added
+        case "removeAttribute":
+        case "addAttribute":
+        case "modifyAttribute": {
+            const delNode = wrapDeletion(refNode.cloneNode(true));
+            const updatedNode = refNode.cloneNode(true);
+            if (diff.action === "addAttribute" || diff.action === "modifyAttribute") {
+                updatedNode.setAttribute(diff.name, diff.newValue);
+            } else {
+                updatedNode.removeAttribute(diff.name);
+            }
+            const insNode = wrapInsertion(updatedNode);
+            const container = document.createElement(checkBlockNode(refNode) ? "div" : "span");
+            container.appendChild(delNode);
+            container.appendChild(insNode);
+            refNode.parentNode.replaceChild(container, refNode);
+            break;
+        }
+        default:
+            // Should not happen (modifyComment, ???)
+            console.warn("editBodyDiffToHtml: diff action not supported atm", diff);
+    }
+}
+
+/**
+ * Renders a message with the changes made in an edit shown visually.
+ * @param {object} originalContent the content for the base message
+ * @param {object} editContent the content for the edit message
+ * @return {object} a react element similar to what `bodyToHtml` returns
+ */
+export function editBodyDiffToHtml(originalContent, editContent) {
+    const originalBody = `<div>${getSanitizedHtmlBody(originalContent)}</div>`;
+    const editBody = `<div>${getSanitizedHtmlBody(editContent)}</div>`;
+    console.log({originalBody, editBody});
     const dd = new DiffDOM();
-    const diffActions = dd.diff(oldBody, newBody);
+    // diffActions is an array of objects with at least a `action` and `route`
+    // property. `action` tells us what the diff object changes, and `route` where.
+    // `route` is a path on the DOM tree expressed as an array of indices.
+    const diffActions = dd.diff(originalBody, editBody);
     // for diffing text fragments
-    const dpm = new DiffMatchPatch();
-    // diff routes are relative to inside root element, so fish out div with children[0]
-    const oldRootNode = domParser.parseFromString(oldBody, "text/html").body.children[0];
-    console.info("editBodyDiffToHtml: before", oldRootNode.innerHTML, diffActions);
+    const diffMathPatch = new DiffMatchPatch();
+    // parse the base html message as a DOM tree, to which we'll apply the differences found.
+    // fish out the div in which we wrapped the messages above with children[0].
+    const originalRootNode = new DOMParser().parseFromString(originalBody, "text/html").body.children[0];
+    console.info("editBodyDiffToHtml: before", originalRootNode.innerHTML, diffActions);
     for (let i = 0; i < diffActions.length; ++i) {
         const diff = diffActions[i];
-        const {refNode, refParentNode} = findRefNodes(oldRootNode, diff.route);
-        console.log("editBodyDiffToHtml: processing diff part", diff.action, refNode);
-        let handled = false;
-        switch (diff.action) {
-            case "replaceElement": {
-                const container = document.createElement("span");
-                const delNode = wrapDeletion(diffTreeToDOM(diff.oldValue));
-                const insNode = wrapInsertion(diffTreeToDOM(diff.newValue));
-                container.appendChild(delNode);
-                container.appendChild(insNode);
-                refNode.parentNode.replaceChild(container, refNode);
-                handled = true;
-                break;
-            }
-            case "removeTextElement": {
-                const delNode = wrapDeletion(stringAsTextNode(diff.value));
-                refNode.parentNode.replaceChild(delNode, refNode);
-                handled = true;
-                break;
-            }
-            case "removeElement": {
-                const delNode = wrapDeletion(diffTreeToDOM(diff.element));
-                refNode.parentNode.replaceChild(delNode, refNode);
-                handled = true;
-                break;
-            }
-            case "modifyTextElement": {
-                const textDiffs = dpm.diff_main(diff.oldValue, diff.newValue);
-                dpm.diff_cleanupSemantic(textDiffs);
-                console.log("modifyTextElement", textDiffs);
-                const container = document.createElement("span");
-                for (const [modifier, text] of textDiffs) {
-                    let textDiffNode = stringAsTextNode(text);
-                    if (modifier < 0) {
-                        textDiffNode = wrapDeletion(textDiffNode);
-                    } else if (modifier > 0) {
-                        textDiffNode = wrapInsertion(textDiffNode);
-                    }
-                    container.appendChild(textDiffNode);
-                }
-                refNode.parentNode.replaceChild(container, refNode);
-                handled = true;
-                break;
-            }
-            case "addElement": {
-                const insNode = wrapInsertion(diffTreeToDOM(diff.element));
-                insertBefore(refParentNode, refNode, insNode);
-                handled = true;
-                break;
-            }
-            case "addTextElement": {
-                if (diff.value !== "\n") {
-                    const insNode = wrapInsertion(stringAsTextNode(diff.value));
-                    insertBefore(refParentNode, refNode, insNode);
-                    handled = true;
-                }
-                break;
-            }
-            // e.g. when changing a the href of a link,
-            // show the link with old href as removed and with the new href as added
-            case "removeAttribute":
-            case "addAttribute":
-            case "modifyAttribute": {
-                const delNode = wrapDeletion(refNode.cloneNode(true));
-                const updatedNode = refNode.cloneNode(true);
-                if (diff.action === "addAttribute" || diff.action === "modifyAttribute") {
-                    updatedNode.setAttribute(diff.name, diff.newValue);
-                } else {
-                    updatedNode.removeAttribute(diff.name);
-                }
-                const insNode = wrapInsertion(updatedNode);
-                const container = document.createElement(checkBlockNode(refNode) ? "div" : "span");
-                container.appendChild(delNode);
-                container.appendChild(insNode);
-                refNode.parentNode.replaceChild(container, refNode);
-                handled = true;
-                break;
-            }
-            default:
-                /* modifyComment, ??? */
-                console.warn("editBodyDiffToHtml: diff action not supported atm", diff);
-        }
-        if (handled) {
-            adjustRoutes(diff, diffActions.slice(i + 1));
-        }
+        renderDifferenceInDOM(originalRootNode, diff, diffMathPatch);
+        // DiffDOM assumes in subsequent diffs route path that
+        // the action was applied (e.g. that a removeElement action removed the element).
+        // This is not the case for us. We render differences in the DOM tree, and don't apply them.
+        // So we need to adjust the routes of the remaining diffs to account for this.
+        adjustRoutes(diff, diffActions.slice(i + 1));
     }
-    const safeBody = oldRootNode.innerHTML;
+    const safeBody = originalRootNode.innerHTML;
     console.info("editBodyDiffToHtml: after", safeBody);
 
     const className = classNames({
         'mx_EventTile_body': true,
         'markdown-body': true,
     });
-
     return <span key="body" className={className} dangerouslySetInnerHTML={{ __html: safeBody }} dir="auto" />;
 }
