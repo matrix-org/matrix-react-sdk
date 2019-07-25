@@ -917,6 +917,8 @@
     "When someone puts a URL in their message, a URL preview can be shown to give more information about that link such as the title, description, and an image from the website.": "When someone puts a URL in their message, a URL preview can be shown to give more information about that link such as the title, description, and an image from the website.",
     "Members": "Members",
     "Files": "Files",
+    "%(networkName)s: %(affectedUsers)s": "%(networkName)s: %(affectedUsers)s",
+    "Affected users: %(affectedUsers)s": "Affected users: %(affectedUsers)s",
     "Event not delivered": "Event not delivered",
     "Sunday": "Sunday",
     "Monday": "Monday",
