@@ -648,7 +648,10 @@ module.exports = withMatrixClient(React.createClass({
         const room = this.props.matrixClient.getRoom(this.props.mxEvent.getRoomId());
 
         const BridgeError = sdk.getComponent('messages.BridgeError');
-        const bridgeError = <BridgeError mxEvent={this.props.mxEvent} room={room}/>
+        const bridgeError = (SettingsStore.isFeatureEnabled("feature_bridge_errors") ?
+            <BridgeError mxEvent={this.props.mxEvent} room={room} /> :
+            null
+        );
 
         const keyRequestHelpText =
             <div className="mx_EventTile_keyRequestInfo_tooltip_contents">
