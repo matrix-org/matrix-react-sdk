@@ -87,8 +87,8 @@ export default class BridgeError extends React.PureComponent {
             content.affected_users :
             []
         );
-        const affectedUsers = affectedUsersRegex.flatMap(
-            this._findMembersFromRegex.bind(this),
+        const affectedUsers = affectedUsersRegex.flatMap(u =>
+            this._findMembersFromRegex(u),
         );
 
         return { networkName, affectedUsers };
@@ -127,8 +127,8 @@ export default class BridgeError extends React.PureComponent {
             return null;
         }
 
-        const relationInfos = relations.map(this._getRelationInfo.bind(this));
-        const renderedInfos = relationInfos.map(this._renderInfo.bind(this));
+        const relationInfos = relations.map(r => this._getRelationInfo(r));
+        const renderedInfos = relationInfos.map(r => this._renderInfo(r));
 
         return (
             <div className="mx_BridgeError">
