@@ -64,6 +64,7 @@ export default class RoomProfileSettings extends React.Component {
             access_rules: Tchap.getAccessRules(props.roomId),
             join_rules: this._getJoinRules(props.roomId),
             externAllowed: false,
+            roomMembers: room.getJoinedMembers(),
         };
     }
 
@@ -184,6 +185,17 @@ export default class RoomProfileSettings extends React.Component {
 
     render() {
         // TODO: Why is rendering a box with an overlay so complicated? Can the DOM be reduced?
+        let isCurrentUserAdmin = false;
+        const client = MatrixClientPeg.get();
+        const members = this.state.roomMembers;
+        const currentUserId = client.getUserId();
+        members.forEach(m => {
+            if (m.userId === currentUserId) {
+                if (m.powerLevelNorm >= 100) {
+                    isCurrentUserAdmin = true;
+                }
+            }
+        });
 
         let showOverlayAnyways = true;
         let avatarElement = <div className="mx_ProfileSettings_avatarPlaceholder" />;
@@ -222,7 +234,7 @@ export default class RoomProfileSettings extends React.Component {
             }
         }
         let accessRule = null;
-        if (this.state.join_rules !== "public") {
+        if (isCurrentUserAdmin && this.state.join_rules !== "public") {
             accessRule = (
                 <LabelledToggleSwitch value={this.state.access_rules === "unrestricted"}
                                       onChange={ this._onExternAllowedSwitchChange }
