@@ -784,8 +784,6 @@ module.exports = withMatrixClient(React.createClass({
         let giveModButton;
         let spinner;
 
-        // TODO: TravisR - Replace with new DM logic
-
         if (this.props.member.userId !== this.props.matrixClient.credentials.userId) {
             let dmRoomIds = [];
             if (SettingsStore.isFeatureEnabled("feature_immutable_dms")) {

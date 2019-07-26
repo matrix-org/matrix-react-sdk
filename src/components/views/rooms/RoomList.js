@@ -140,7 +140,7 @@ module.exports = React.createClass({
         cli.on("RoomMember.name", this.onRoomMemberName);
         cli.on("Event.decrypted", this.onEventDecrypted);
         cli.on("accountData", this.onAccountData);
-        cli.on("DirectChats.changed", this.onDirectChatsChanged);
+        cli.on("DirectChats.change", this.onDirectChatsChanged);
         cli.on("Group.myMembership", this._onGroupMyMembership);
         cli.on("RoomState.events", this.onRoomStateEvents);
 
@@ -271,7 +271,7 @@ module.exports = React.createClass({
             MatrixClientPeg.get().removeListener("RoomMember.name", this.onRoomMemberName);
             MatrixClientPeg.get().removeListener("Event.decrypted", this.onEventDecrypted);
             MatrixClientPeg.get().removeListener("accountData", this.onAccountData);
-            MatrixClientPeg.get().removeListener("DirectChats.changed", this.onDirectChatsChanged);
+            MatrixClientPeg.get().removeListener("DirectChats.change", this.onDirectChatsChanged);
             MatrixClientPeg.get().removeListener("Group.myMembership", this._onGroupMyMembership);
             MatrixClientPeg.get().removeListener("RoomState.events", this.onRoomStateEvents);
         }

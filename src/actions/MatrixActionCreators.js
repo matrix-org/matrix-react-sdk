@@ -39,14 +39,14 @@ function createSyncAction(matrixClient, state, prevState) {
 /**
  * @typedef DirectChatsChangedAction
  * @type {Object}
- * @property {string} action 'MatrixActions.DirectChats.changed'.
+ * @property {string} action 'MatrixActions.DirectChats.change'.
  * @property {string[]} addedRoomIds The newly added room IDs.
  * @property {string[]} removedRoomIds The newly removed room IDs.
  */
 
 /**
- * Create a MatrixActions.DirectChats.changed action that represents a MatrixClient
- * `DirectChats.changed` client event.
+ * Create a MatrixActions.DirectChats.change action that represents a MatrixClient
+ * `DirectChats.change` client event.
  *
  * @param {MatrixClient} matrixClient the matrix client.
  * @param {string[]} addedRoomIds the newly added room IDs.
@@ -55,7 +55,7 @@ function createSyncAction(matrixClient, state, prevState) {
  */
 function createDirectChatsChangedAction(matrixClient, addedRoomIds, removedRoomIds) {
     return {
-        action: 'MatrixActions.DirectChats.changed',
+        action: 'MatrixActions.DirectChats.change',
         addedRoomIds,
         removedRoomIds,
     };
@@ -280,7 +280,7 @@ export default {
         this._addMatrixClientListener(matrixClient, 'Room.timeline', createRoomTimelineAction);
         this._addMatrixClientListener(matrixClient, 'Room.myMembership', createSelfMembershipAction);
         this._addMatrixClientListener(matrixClient, 'Event.decrypted', createEventDecryptedAction);
-        this._addMatrixClientListener(matrixClient, 'DirectChats.changed', createDirectChatsChangedAction);
+        this._addMatrixClientListener(matrixClient, 'DirectChats.change', createDirectChatsChangedAction);
     },
 
     /**

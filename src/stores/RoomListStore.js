@@ -224,7 +224,7 @@ class RoomListStore extends Store {
                 this._roomUpdateTriggered(roomId);
             }
             break;
-            case 'MatrixActions.DirectChats.changed': {
+            case 'MatrixActions.DirectChats.change': {
                 if (!logicallyReady) break;
                 // TODO: Figure out which rooms changed in the direct chat and only change those.
                 // This is very blunt and wipes out the sticky room stuff
