@@ -63,8 +63,6 @@ export default class RoomProfileSettings extends React.Component {
             canSetAvatar: room.currentState.maySendStateEvent('m.room.avatar', client.getUserId()),
             access_rules: Tchap.getAccessRules(props.roomId),
             join_rules: this._getJoinRules(props.roomId),
-            externAllowed: false,
-            roomMembers: room.getJoinedMembers(),
         };
     }
 
