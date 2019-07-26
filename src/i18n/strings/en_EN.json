@@ -314,6 +314,7 @@
     "Message Pinning": "Message Pinning",
     "Custom user status messages": "Custom user status messages",
     "Group & filter rooms by custom tags (refresh to apply changes)": "Group & filter rooms by custom tags (refresh to apply changes)",
+    "Immutable DMs": "Immutable DMs",
     "Render simple counters in room header": "Render simple counters in room header",
     "Enable Emoji suggestions while typing": "Enable Emoji suggestions while typing",
     "Use compact timeline layout": "Use compact timeline layout",
