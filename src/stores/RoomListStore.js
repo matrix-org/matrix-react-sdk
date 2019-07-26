@@ -318,6 +318,8 @@ class RoomListStore extends Store {
     _getRecommendedTagsForRoom(room) {
         const tags = [];
 
+        const useNewDirectChats = SettingsStore.isFeatureEnabled("feature_immutable_dms");
+
         const myMembership = room.getMyMembership();
         if (myMembership === 'join' || myMembership === 'invite') {
             // Stack the user's tags on top
@@ -326,11 +328,15 @@ class RoomListStore extends Store {
             // Order matters here: The DMRoomMap updates before invites
             // are accepted, so we check to see if the room is an invite
             // first, then if it is a direct chat, and finally default
-            // to the "recents" list.
+            // to the "recents" list. The same applies to new DMs.
             const dmRoomMap = DMRoomMap.shared();
             if (myMembership === 'invite') {
                 tags.push("im.vector.fake.invite");
-            } else if (dmRoomMap.getUserIdForRoomId(room.roomId) && tags.length === 0) {
+            } else if (!useNewDirectChats && dmRoomMap.getUserIdForRoomId(room.roomId) && tags.length === 0) {
+                // We intentionally don't duplicate rooms in other tags into the people list
+                // as a feature.
+                tags.push("im.vector.fake.direct");
+            } else if (useNewDirectChats && MatrixClientPeg.get().unstable_getDirectChats().isDirectChat(room.roomId)) {
                 // We intentionally don't duplicate rooms in other tags into the people list
                 // as a feature.
                 tags.push("im.vector.fake.direct");
