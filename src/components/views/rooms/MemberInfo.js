@@ -787,17 +787,23 @@ module.exports = withMatrixClient(React.createClass({
         // TODO: TravisR - Replace with new DM logic
 
         if (this.props.member.userId !== this.props.matrixClient.credentials.userId) {
-            const dmRoomMap = new DMRoomMap(this.props.matrixClient);
-            // dmRooms will not include dmRooms that we have been invited into but did not join.
-            // Because DMRoomMap runs off account_data[m.direct] which is only set on join of dm room.
-            // XXX: we potentially want DMs we have been invited to, to also show up here :L
-            // especially as logic below concerns specially if we haven't joined but have been invited
-            const dmRooms = dmRoomMap.getDMRoomsForUserId(this.props.member.userId);
+            let dmRoomIds = [];
+            if (SettingsStore.isFeatureEnabled("feature_immutable_dms")) {
+                const room = this.props.matrixClient.unstable_getDirectChats().getChatForUsers(this.props.member.userId);
+                if (room) dmRoomIds.push(room.roomId);
+            } else {
+                const dmRoomMap = new DMRoomMap(this.props.matrixClient);
+                // dmRooms will not include dmRooms that we have been invited into but did not join.
+                // Because DMRoomMap runs off account_data[m.direct] which is only set on join of dm room.
+                // XXX: we potentially want DMs we have been invited to, to also show up here :L
+                // especially as logic below concerns specially if we haven't joined but have been invited
+                dmRoomIds = dmRoomMap.getDMRoomsForUserId(this.props.member.userId);
+            }
 
             const RoomTile = sdk.getComponent("rooms.RoomTile");
 
             const tiles = [];
-            for (const roomId of dmRooms) {
+            for (const roomId of dmRoomIds) {
                 const room = this.props.matrixClient.getRoom(roomId);
                 if (room) {
                     const myMembership = room.getMyMembership();
@@ -805,8 +811,10 @@ module.exports = withMatrixClient(React.createClass({
                     if (myMembership !== 'join') continue;
 
                     const them = this.props.member;
-                    // not a DM room if they are not joined
-                    if (!them.membership || them.membership !== 'join') continue;
+
+                    // not a DM room if they are not joined or invited
+                    const desiredMemberships = ['join', 'invite'];
+                    if (!desiredMemberships.includes(them.membership)) continue;
 
                     const highlight = room.getUnreadNotificationCount('highlight') > 0;
 
@@ -828,7 +836,7 @@ module.exports = withMatrixClient(React.createClass({
                 mx_MemberInfo_createRoom_label: true,
                 mx_RoomTile_name: true,
             });
-            const startNewChat = <AccessibleButton
+            let startNewChat = <AccessibleButton
                 className="mx_MemberInfo_createRoom"
                 onClick={this.onNewDMClick}
             >
@@ -837,6 +845,7 @@ module.exports = withMatrixClient(React.createClass({
                 </div>
                 <div className={labelClasses}><i>{ _t("Start a chat") }</i></div>
             </AccessibleButton>;
+            if (tiles.length > 0) startNewChat = null;
 
             startChat = <div>
                 <h3>{ _t("Direct chats") }</h3>
