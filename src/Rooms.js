@@ -79,6 +79,9 @@ export function isConfCallRoom(room, myUserId, conferenceHandler) {
     return result;
 }
 
+/**
+ * @deprecated Use the new direct chats management in the js-sdk
+ */
 export function looksLikeDirectMessageRoom(room, myUserId) {
     const myMembership = room.getMyMembership();
     const me = room.getMember(myUserId);
@@ -98,6 +101,9 @@ export function looksLikeDirectMessageRoom(room, myUserId) {
     return false;
 }
 
+/**
+ * @deprecated Use the new direct chats management in the js-sdk
+ */
 export function guessAndSetDMRoom(room, isDirect) {
     let newTarget;
     if (isDirect) {
@@ -119,6 +125,7 @@ export function guessAndSetDMRoom(room, isDirect) {
                    room target user or null to un-mark
                    this room as a DM room
  * @returns {object} A promise
+ * @deprecated Use the new direct chats management in the js-sdk
  */
 export function setDMRoom(roomId, userId) {
     if (MatrixClientPeg.get().isGuest()) {

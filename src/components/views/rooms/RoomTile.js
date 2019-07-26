@@ -69,8 +69,12 @@ module.exports = React.createClass({
     },
 
     _isDirectMessageRoom: function(roomId) {
-        const dmRooms = DMRoomMap.shared().getUserIdForRoomId(roomId);
-        return Boolean(dmRooms);
+        if (SettingsStore.isFeatureEnabled("feature_immutable_dms")) {
+            return MatrixClientPeg.get().unstable_getDirectChats().isDirectChat(roomId);
+        } else {
+            const dmRooms = DMRoomMap.shared().getUserIdForRoomId(roomId);
+            return Boolean(dmRooms);
+        }
     },
 
     _shouldShowStatusMessage() {

@@ -24,6 +24,8 @@ import * as Rooms from "./Rooms";
 import Promise from 'bluebird';
 import {getAddressType} from "./UserAddress";
 
+// TODO: TravisR - Use new DMs stuff
+
 /**
  * Create a new room, and switch to it.
  *

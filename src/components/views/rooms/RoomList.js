@@ -140,6 +140,7 @@ module.exports = React.createClass({
         cli.on("RoomMember.name", this.onRoomMemberName);
         cli.on("Event.decrypted", this.onEventDecrypted);
         cli.on("accountData", this.onAccountData);
+        cli.on("DirectChats.changed", this.onDirectChatsChanged);
         cli.on("Group.myMembership", this._onGroupMyMembership);
         cli.on("RoomState.events", this.onRoomStateEvents);
 
@@ -270,6 +271,7 @@ module.exports = React.createClass({
             MatrixClientPeg.get().removeListener("RoomMember.name", this.onRoomMemberName);
             MatrixClientPeg.get().removeListener("Event.decrypted", this.onEventDecrypted);
             MatrixClientPeg.get().removeListener("accountData", this.onAccountData);
+            MatrixClientPeg.get().removeListener("DirectChats.changed", this.onDirectChatsChanged);
             MatrixClientPeg.get().removeListener("Group.myMembership", this._onGroupMyMembership);
             MatrixClientPeg.get().removeListener("RoomState.events", this.onRoomStateEvents);
         }
@@ -363,6 +365,10 @@ module.exports = React.createClass({
         }
     },
 
+    onDirectChatsChanged: function(addedRoomIds, removedRoomIds) {
+        this._delayedRefreshRoomList();
+    },
+
     _onGroupMyMembership: function(group) {
         this.forceUpdate();
     },
@@ -413,6 +419,7 @@ module.exports = React.createClass({
         GroupStore.getGroupRooms(tag).forEach((room) => this._visibleRoomsForGroup[tag].push(room.roomId));
         GroupStore.getGroupMembers(tag).forEach((member) => {
             if (member.userId === MatrixClientPeg.get().credentials.userId) return;
+            // TODO: TravisR - Figure out what we need here
             dmRoomMap.getDMRoomsForUserId(member.userId).forEach(
                 (roomId) => this._visibleRoomsForGroup[tag].push(roomId),
             );

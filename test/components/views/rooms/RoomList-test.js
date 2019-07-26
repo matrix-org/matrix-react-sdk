@@ -157,6 +157,7 @@ describe('RoomList', () => {
         // the section for oldTag
         if (['m.favourite', 'm.lowpriority'].includes(oldTag)) movingRoom.tags = {[oldTag]: {}};
         if (oldTag === 'im.vector.fake.direct') {
+            // TODO: TravisR - Mock new DMs
             // Mock inverse m.direct
             DMRoomMap.shared().roomToUser = {
                 [movingRoom.roomId]: '@someotheruser:domain',

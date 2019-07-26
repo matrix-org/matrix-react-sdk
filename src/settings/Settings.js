@@ -108,6 +108,12 @@ export const SETTINGS = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
+    "feature_immutable_dms": {
+        isFeature: true,
+        displayName: _td("Immutable DMs"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "feature_state_counters": {
         isFeature: true,
         displayName: _td("Render simple counters in room header"),

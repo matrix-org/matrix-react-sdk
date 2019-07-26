@@ -48,6 +48,7 @@ export function showStartChatInviteDialog() {
         placeholder: _t("Email, name or Matrix ID"),
         validAddressTypes: ['mx-user-id', 'email'],
         button: _t("Start Chat"),
+        // TODO: TravisR - Replace with new direct chat room creator
         onFinished: _onStartChatFinished,
     });
 }

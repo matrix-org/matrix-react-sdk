@@ -73,6 +73,8 @@ RoomListActions.tagRoom = function(matrixClient, room, oldTag, newTag, oldIndex,
         const promises = [];
         const roomId = room.roomId;
 
+        // TODO: TravisR - Use new DMs stuff
+
         // Evil hack to get DMs behaving
         if ((oldTag === undefined && newTag === 'im.vector.fake.direct') ||
             (oldTag === 'im.vector.fake.direct' && newTag === undefined)

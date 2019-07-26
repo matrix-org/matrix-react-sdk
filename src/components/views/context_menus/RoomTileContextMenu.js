@@ -30,6 +30,7 @@ import * as Rooms from '../../../Rooms';
 import * as RoomNotifs from '../../../RoomNotifs';
 import Modal from '../../../Modal';
 import RoomListActions from '../../../actions/RoomListActions';
+import SettingsStore from "../../../settings/SettingsStore";
 
 module.exports = React.createClass({
     displayName: 'RoomTileContextMenu',
@@ -41,12 +42,18 @@ module.exports = React.createClass({
     },
 
     getInitialState() {
-        const dmRoomMap = new DMRoomMap(MatrixClientPeg.get());
+        let isDirectMessage = false;
+        if (SettingsStore.isFeatureEnabled("feature_immutable_dms")) {
+            isDirectMessage = MatrixClientPeg.get().unstable_getDirectChats().isDirectChat(this.props.room.roomId);
+        } else {
+            const dmRoomMap = new DMRoomMap(MatrixClientPeg.get());
+            isDirectMessage = Boolean(dmRoomMap.getUserIdForRoomId(this.props.room.roomId));
+        }
         return {
             roomNotifState: RoomNotifs.getRoomNotifsState(this.props.room.roomId),
             isFavourite: this.props.room.tags.hasOwnProperty("m.favourite"),
             isLowPriority: this.props.room.tags.hasOwnProperty("m.lowpriority"),
-            isDirectMessage: Boolean(dmRoomMap.getUserIdForRoomId(this.props.room.roomId)),
+            isDirectMessage: isDirectMessage,
         };
     },
 
@@ -109,6 +116,8 @@ module.exports = React.createClass({
 
     _onClickDM: function() {
         if (MatrixClientPeg.get().isGuest()) return;
+
+        // TODO: TravisR - Support toggling DM state (or do we just remove this button?)
 
         const newIsDirectMessage = !this.state.isDirectMessage;
         this.setState({

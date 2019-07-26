@@ -879,6 +879,7 @@ module.exports = React.createClass({
         if (room.getMyMembership() != "join") {
             return;
         }
+        // TODO: TravisR - Figure out new DMs stuff here
         const dmInviter = room.getDMInviter();
         if (dmInviter) {
             Rooms.setDMRoom(room.roomId, dmInviter);

@@ -44,6 +44,8 @@ export default class ChatCreateOrReuseDialog extends React.Component {
     componentWillMount() {
         const client = MatrixClientPeg.get();
 
+        // TODO: TravisR - Remove this dialog for new immutable DMs
+
         const dmRoomMap = new DMRoomMap(client);
         const dmRooms = dmRoomMap.getDMRoomsForUserId(this.props.userId);
 

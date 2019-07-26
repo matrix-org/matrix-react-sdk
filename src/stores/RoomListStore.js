@@ -18,6 +18,7 @@ import dis from '../dispatcher';
 import DMRoomMap from '../utils/DMRoomMap';
 import Unread from '../Unread';
 import SettingsStore from "../settings/SettingsStore";
+import MatrixClientPeg from "../MatrixClientPeg";
 
 /*
 Room sorting algorithm:
@@ -223,6 +224,15 @@ class RoomListStore extends Store {
                 this._roomUpdateTriggered(roomId);
             }
             break;
+            case 'MatrixActions.DirectChats.changed': {
+                if (!logicallyReady) break;
+                // TODO: Figure out which rooms changed in the direct chat and only change those.
+                // This is very blunt and wipes out the sticky room stuff
+                // The information we need is already in the payload, we just need to expose functions
+                // to support it.
+                this._generateInitialRoomLists();
+            }
+                break;
             case 'MatrixActions.accountData': {
                 if (!logicallyReady) break;
                 if (payload.event_type !== 'm.direct') break;
@@ -230,7 +240,7 @@ class RoomListStore extends Store {
                 // This is very blunt and wipes out the sticky room stuff
                 this._generateInitialRoomLists();
             }
-            break;
+                break;
             case 'MatrixActions.Room.myMembership': {
                 if (!logicallyReady) break;
                 this._roomUpdateTriggered(payload.room.roomId, true);
@@ -545,6 +555,7 @@ class RoomListStore extends Store {
         };
 
         const dmRoomMap = DMRoomMap.shared();
+        const useNewDirectChats = SettingsStore.isFeatureEnabled("feature_immutable_dms");
 
         this._matrixClient.getRooms().forEach((room) => {
             const myUserId = this._matrixClient.getUserId();
@@ -574,7 +585,10 @@ class RoomListStore extends Store {
                         if (LIST_ORDERS[tagName] === 'recent') category = this._calculateCategory(room);
                         lists[tagName].push({room, category: category});
                     }
-                } else if (dmRoomMap.getUserIdForRoomId(room.roomId)) {
+                } else if (!useNewDirectChats && dmRoomMap.getUserIdForRoomId(room.roomId)) {
+                    // "Direct Message" rooms (that we're still in and that aren't otherwise tagged)
+                    lists["im.vector.fake.direct"].push({room, category: this._calculateCategory(room)});
+                } else if (useNewDirectChats && MatrixClientPeg.get().unstable_getDirectChats().isDirectChat(room.roomId)) {
                     // "Direct Message" rooms (that we're still in and that aren't otherwise tagged)
                     lists["im.vector.fake.direct"].push({room, category: this._calculateCategory(room)});
                 } else {

@@ -18,6 +18,7 @@ limitations under the License.
 import {ContentRepo} from 'matrix-js-sdk';
 import MatrixClientPeg from './MatrixClientPeg';
 import DMRoomMap from './utils/DMRoomMap';
+import SettingsStore from "./settings/SettingsStore";
 
 module.exports = {
     avatarUrlForMember: function(member, width, height, resizeMethod) {
@@ -95,6 +96,24 @@ module.exports = {
     },
 
     avatarUrlForRoom(room, width, height, resizeMethod) {
+        if (SettingsStore.isFeatureEnabled("feature_immutable_dms")) {
+            const dms = MatrixClientPeg.get().unstable_getDirectChats();
+            if (dms.isDirectChat(room.roomId)) {
+                const userIds = dms.getUsersInChat(room.roomId);
+                if (userIds.length === 1) {
+                    const member = room.getMember(userIds[0]);
+                    if (member) return member.getAvatarUrl(
+                        MatrixClientPeg.get().getHomeserverUrl(),
+                        width,
+                        height,
+                        resizeMethod,
+                        false,
+                    );
+                }
+                return null; // use calculated avatar
+            }
+        }
+
         const explicitRoomAvatar = room.getAvatarUrl(
             MatrixClientPeg.get().getHomeserverUrl(),
             width,

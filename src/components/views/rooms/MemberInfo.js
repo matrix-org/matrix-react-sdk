@@ -784,6 +784,8 @@ module.exports = withMatrixClient(React.createClass({
         let giveModButton;
         let spinner;
 
+        // TODO: TravisR - Replace with new DM logic
+
         if (this.props.member.userId !== this.props.matrixClient.credentials.userId) {
             const dmRoomMap = new DMRoomMap(this.props.matrixClient);
             // dmRooms will not include dmRooms that we have been invited into but did not join.

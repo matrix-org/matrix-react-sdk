@@ -1180,40 +1180,63 @@ export default React.createClass({
         }
         await waitFor;
 
-        const welcomeUserRooms = DMRoomMap.shared().getDMRoomsForUserId(
-            this.props.config.welcomeUserId,
-        );
-        if (welcomeUserRooms.length === 0) {
-            const roomId = await createRoom({
-                dmUserId: this.props.config.welcomeUserId,
-                // Only view the welcome user if we're NOT looking at a room
-                andView: !this.state.currentRoomId,
-                spinner: false, // we're already showing one: we don't need another one
-            });
-            // This is a bit of a hack, but since the deduplication relies
-            // on m.direct being up to date, we need to force a sync
-            // of the database, otherwise if the user goes to the other
-            // tab before the next save happens (a few minutes), the
-            // saved sync will be restored from the db and this code will
-            // run without the update to m.direct, making another welcome
-            // user room (it doesn't wait for new data from the server, just
-            // the saved sync to be loaded).
-            const saveWelcomeUser = (ev) => {
-                if (
-                    ev.getType() == 'm.direct' &&
-                    ev.getContent() &&
-                    ev.getContent()[this.props.config.welcomeUserId]
-                ) {
-                    MatrixClientPeg.get().store.save(true);
-                    MatrixClientPeg.get().removeListener(
-                        "accountData", saveWelcomeUser,
-                    );
-                }
-            };
-            MatrixClientPeg.get().on("accountData", saveWelcomeUser);
+        if (SettingsStore.isFeatureEnabled("feature_immutable_dms")) {
+            // Set up a room with the welcome user, but only if it seems viable.
+            // We definitely do not want to start a new direct chat with the welcome
+            // user if the user hasn't migrated their rooms yet.
+            const dms = MatrixClientPeg.get().unstable_getDirectChats();
+            if (!dms.canMigrate) {
+                const welcomeUserRoom = await dms.getOrCreateChatForUsers(this.props.config['welcomeUserId']);
 
-            return roomId;
+                // This is a bit of a hack, but since the deduplication relies
+                // on m.direct_chats being up to date, we need to force a sync
+                // of the database, otherwise if the user goes to the other
+                // tab before the next save happens (a few minutes), the
+                // saved sync will be restored from the db and this code will
+                // run without the update to m.direct_chats, making another welcome
+                // user room (it doesn't wait for new data from the server, just
+                // the saved sync to be loaded).
+                MatrixClientPeg.get().store.save(true);
+
+                return welcomeUserRoom.roomId;
+            }
+        } else {
+            const welcomeUserRooms = DMRoomMap.shared().getDMRoomsForUserId(
+                this.props.config.welcomeUserId,
+            );
+            if (welcomeUserRooms.length === 0) {
+                const roomId = await createRoom({
+                    dmUserId: this.props.config.welcomeUserId,
+                    // Only view the welcome user if we're NOT looking at a room
+                    andView: !this.state.currentRoomId,
+                    spinner: false, // we're already showing one: we don't need another one
+                });
+                // This is a bit of a hack, but since the deduplication relies
+                // on m.direct being up to date, we need to force a sync
+                // of the database, otherwise if the user goes to the other
+                // tab before the next save happens (a few minutes), the
+                // saved sync will be restored from the db and this code will
+                // run without the update to m.direct, making another welcome
+                // user room (it doesn't wait for new data from the server, just
+                // the saved sync to be loaded).
+                const saveWelcomeUser = (ev) => {
+                    if (
+                        ev.getType() == 'm.direct' &&
+                        ev.getContent() &&
+                        ev.getContent()[this.props.config.welcomeUserId]
+                    ) {
+                        MatrixClientPeg.get().store.save(true);
+                        MatrixClientPeg.get().removeListener(
+                            "accountData", saveWelcomeUser,
+                        );
+                    }
+                };
+                MatrixClientPeg.get().on("accountData", saveWelcomeUser);
+
+                return roomId;
+            }
         }
+
         return null;
     },
 
