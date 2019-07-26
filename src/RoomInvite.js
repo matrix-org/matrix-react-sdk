@@ -25,6 +25,7 @@ import sdk from './';
 import dis from './dispatcher';
 import DMRoomMap from './utils/DMRoomMap';
 import { _t } from './languageHandler';
+import SettingsStore from "./settings/SettingsStore";
 
 /**
  * Invites multiple addresses to a room
@@ -48,8 +49,7 @@ export function showStartChatInviteDialog() {
         placeholder: _t("Email, name or Matrix ID"),
         validAddressTypes: ['mx-user-id', 'email'],
         button: _t("Start Chat"),
-        // TODO: TravisR - Replace with new direct chat room creator
-        onFinished: _onStartChatFinished,
+        onFinished: _onStartDmFinished,
     });
 }
 
@@ -84,70 +84,72 @@ export function isValid3pidInvite(event) {
     return true;
 }
 
+function _onStartDmFinished(shouldInvite, addrs) {
+    const addrTexts = addrs.map((addr) => addr.address);
+
+    if (SettingsStore.isFeatureEnabled("feature_immutable_dms")) {
+        // TODO: TravisR - Handle 3pid invites
+        const dms = MatrixClientPeg.get().unstable_getDirectChats();
+        dms.getOrCreateChatForUsers(...addrTexts).then(room => {
+            dis.dispatch({
+                action: 'view_room',
+                room_id: room.roomId,
+                should_peek: false,
+                // Creating a room will have joined us to the room,
+                // so we are expecting the room to come down the sync
+                // stream, if it hasn't already.
+                joining: true,
+            });
+        }).catch(err => {
+            console.error(err);
+            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+            Modal.createTrackedDialog('Failed to start chat', '', ErrorDialog, {
+                title: _t("Failed to start chat"),
+                description: ((err && err.message) ? err.message : _t("Operation failed")),
+            });
+        });
+    } else {
+        const rooms = _getDirectMessageRooms(addrTexts[0]);
+        if (rooms.length > 0) {
+            dis.dispatch({
+                action: 'view_room',
+                room_id: rooms[0],
+                should_peek: false,
+                joining: false,
+            });
+        } else {
+            createRoom({dmUserId: addrTexts[0]}).catch(err => {
+                console.error(err);
+                const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+                Modal.createTrackedDialog('Failed to start chat', '', ErrorDialog, {
+                    title: _t("Failed to start chat"),
+                    description: ((err && err.message) ? err.message : _t("Operation failed")),
+                });
+            });
+        }
+    }
+}
+
 function _onStartChatFinished(shouldInvite, addrs) {
     if (!shouldInvite) return;
 
     const addrTexts = addrs.map((addr) => addr.address);
 
-    if (_isDmChat(addrTexts)) {
-        const rooms = _getDirectMessageRooms(addrTexts[0]);
-        if (rooms.length > 0) {
-            // A Direct Message room already exists for this user, so select a
-            // room from a list that is similar to the one in MemberInfo panel
-            const ChatCreateOrReuseDialog = sdk.getComponent("views.dialogs.ChatCreateOrReuseDialog");
-            const close = Modal.createTrackedDialog('Create or Reuse', '', ChatCreateOrReuseDialog, {
-                userId: addrTexts[0],
-                onNewDMClick: () => {
-                    dis.dispatch({
-                        action: 'start_chat',
-                        user_id: addrTexts[0],
-                    });
-                    close(true);
-                },
-                onExistingRoomSelected: (roomId) => {
-                    dis.dispatch({
-                        action: 'view_room',
-                        room_id: roomId,
-                    });
-                    close(true);
-                },
-            }).close;
-        } else {
-            // Start a new DM chat
-            createRoom({dmUserId: addrTexts[0]}).catch((err) => {
-                const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-                Modal.createTrackedDialog('Failed to invite user', '', ErrorDialog, {
-                    title: _t("Failed to invite user"),
-                    description: ((err && err.message) ? err.message : _t("Operation failed")),
-                });
-            });
-        }
-    } else if (addrTexts.length === 1) {
-        // Start a new DM chat
-        createRoom({dmUserId: addrTexts[0]}).catch((err) => {
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-            Modal.createTrackedDialog('Failed to invite user', '', ErrorDialog, {
-                title: _t("Failed to invite user"),
-                description: ((err && err.message) ? err.message : _t("Operation failed")),
-            });
+    // Start multi user chat
+    let room;
+    createRoom().then((roomId) => {
+        room = MatrixClientPeg.get().getRoom(roomId);
+        return inviteMultipleToRoom(roomId, addrTexts);
+    }).then((result) => {
+        return _showAnyInviteErrors(result.states, room, result.inviter);
+    }).catch((err) => {
+        console.error(err.stack);
+        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+        Modal.createTrackedDialog('Failed to invite', '', ErrorDialog, {
+            title: _t("Failed to invite"),
+            description: ((err && err.message) ? err.message : _t("Operation failed")),
         });
-    } else {
-        // Start multi user chat
-        let room;
-        createRoom().then((roomId) => {
-            room = MatrixClientPeg.get().getRoom(roomId);
-            return inviteMultipleToRoom(roomId, addrTexts);
-        }).then((result) => {
-            return _showAnyInviteErrors(result.states, room, result.inviter);
-        }).catch((err) => {
-            console.error(err.stack);
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-            Modal.createTrackedDialog('Failed to invite', '', ErrorDialog, {
-                title: _t("Failed to invite"),
-                description: ((err && err.message) ? err.message : _t("Operation failed")),
-            });
-        });
-    }
+    });
 }
 
 function _onRoomInviteFinished(roomId, shouldInvite, addrs) {
