@@ -112,6 +112,7 @@ class RoomListStore extends Store {
 
         SettingsStore.monitorSetting('RoomList.orderByImportance', null);
         SettingsStore.monitorSetting('feature_custom_tags', null);
+        SettingsStore.monitorSetting('feature_immutable_dms', null);
     }
 
     _setState(newState) {
@@ -141,6 +142,9 @@ class RoomListStore extends Store {
                 } else if (payload.settingName === 'feature_custom_tags') {
                     this._setState({tagsEnabled: payload.newValue});
                     this._generateInitialRoomLists(); // Tags means we have to start from scratch
+                } else if (payload.settingName === 'feature_immutable_dms') {
+                    // just redo it all - our DM backend changed
+                    this._generateInitialRoomLists();
                 }
             }
             break;
