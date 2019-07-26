@@ -30,6 +30,8 @@ import PropTypes from 'prop-types';
 import RoomTile from "../views/rooms/RoomTile";
 import LazyRenderList from "../views/elements/LazyRenderList";
 import {_t} from "../../languageHandler";
+import SettingsStore from "../../settings/SettingsStore";
+import MatrixClientPeg from "../../MatrixClientPeg";
 
 // turn this on for drop & drag console debugging galore
 const debug = false;
@@ -243,6 +245,19 @@ const RoomSubList = React.createClass({
             );
         }
 
+        let fixDmsButton = null;
+        if (this.props.tagName === 'im.vector.fake.direct'
+            && SettingsStore.isFeatureEnabled('feature_immutable_dms')
+        ) {
+            fixDmsButton = (
+                <AccessibleTooltipButton
+                    onClick={() => MatrixClientPeg.get().unstable_getDirectChats().migrateOldChatsByGuessing()}
+                    className="mx_RoomSubList_fixRooms"
+                    title={_t("Guess DMs")}
+                />
+            );
+        }
+
         const len = this.props.list.length + this.props.extraTiles.length;
         let chevron;
         if (len) {
@@ -264,6 +279,7 @@ const RoomSubList = React.createClass({
                 </AccessibleButton>
                 { badge }
                 { addRoomButton }
+                { fixDmsButton }
             </div>
         );
     },

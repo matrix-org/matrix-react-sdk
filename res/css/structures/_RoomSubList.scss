@@ -103,6 +103,28 @@ limitations under the License.
     }
 }
 
+.mx_RoomSubList_fixRooms {
+    background-color: $roomheader-addroom-bg-color;
+    border-radius: 10px; // 16/2 + 2 padding
+    height: 16px;
+    flex: 0 0 16px;
+    position: relative;
+    margin-left: 5px;
+
+    &::before {
+        background-color: $roomheader-addroom-fg-color;
+        mask: url('$(res)/img/feather-customised/users-sm.svg');
+        mask-repeat: no-repeat;
+        mask-position: center;
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+}
+
 .mx_RoomSubList_badgeHighlight {
     background-color: $warning-color;
 }
