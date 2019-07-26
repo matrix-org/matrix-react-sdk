@@ -488,6 +488,7 @@ export default React.createClass({
                 this.notifyNewScreen('forgot_password');
                 break;
             case 'start_chat':
+                // TODO: TravisR - Remove this (or use new DMs)
                 createRoom({
                     dmUserId: payload.user_id,
                 });
@@ -953,6 +954,7 @@ export default React.createClass({
         );
         // Use a deferred action to reshow the dialog once the user has registered
         if (MatrixClientPeg.get().isGuest()) {
+            // TODO: TravisR - Figure out if we need to do anything here
             // No point in making 2 DMs with welcome bot. This assumes view_set_mxid will
             // result in a new DM with the welcome user.
             if (userId !== this.props.config.welcomeUserId) {
