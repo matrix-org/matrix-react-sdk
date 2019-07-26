@@ -18,7 +18,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { EventTimeline } from 'matrix-js-sdk';
 
-import { _t } from '../../../languageHandler';
+import { _t, _td } from '../../../languageHandler';
+
+
+/**
+ * No-op if str is a string, else returns the empty string.
+ * @param {Any} str
+ * @returns {string}
+ */
+function assureString(str) {
+    return typeof str === 'string' ? str : "";
+}
+
+/**
+ * No-op if arr is an Array, else returns an empty Array.
+ * @param {Any} arr
+ * @returns {Array}
+ */
+function assureArray(arr) {
+    return Array.isArray(arr) ? arr : [];
+}
+
 
 export default class BridgeError extends React.PureComponent {
     static propTypes = {
@@ -68,10 +88,19 @@ export default class BridgeError extends React.PureComponent {
     }
 
     /**
+     * Sanitized infos from a relation.
+     * @typedef {Object} RelationInfo
+     * @property {RoomMember[]} affectedUsers
+     * @property {string} eventID
+     * @property {string} networkName
+     * @property {string} reason
+     */
+
+    /**
      * Returns the network name and the affected users for the given relation.
      *
      * @param {MatrixEvent} relation
-     * @returns {{networkName: string, affectedUsers: RoomMember[]}}
+     * @returns {RelationInfo}
      */
     _getRelationInfo(relation) {
         if (!relation.event || !relation.event.content) {
@@ -79,44 +108,77 @@ export default class BridgeError extends React.PureComponent {
         }
         const content = relation.event.content;
 
-        const networkName = (typeof content.network_name === 'string' ?
-            content.network_name :
-            ""
-        );
-        const affectedUsersRegex = (Array.isArray(content.affected_users) ?
-            content.affected_users :
-            []
-        );
+        const affectedUsersRegex = assureArray(content.affected_users);
         const affectedUsers = affectedUsersRegex.flatMap(u =>
             this._findMembersFromRegex(u),
         );
 
-        return { networkName, affectedUsers };
+        return {
+            affectedUsers: affectedUsers,
+            eventID: assureString(content.event_id),
+            networkName: assureString(content.network_name),
+            reason: assureString(content.reason),
+        };
+    }
+
+    _errorMessages = {
+        "m.event_not_handled": _td(
+            "⚠ Not delivered to people on %(networkName)s (%(affectedUsers)s)",
+        ),
+        "m.event_too_old": _td(
+            "⚠ It took so long. Gave up sending to people on %(networkName)s " +
+            "(%(affectedUsers)s)",
+        ),
+        "m.internal_error": _td(
+            "⚠ Unexpected error while sending to people on %(networkName)s " +
+            "(%(affectedUsers)s)",
+        ),
+        "m.foreign_network_error": _td(
+            "⚠ %(networkName)s did not deliver the message to the people " +
+            "there (%(affectedUsers)s)",
+        ),
+        "m.event_unknown": _td(
+            "⚠ Was not understood by %(networkName)s, so people there didn't " +
+            "get this message (%(affectedUsers)s)",
+        ),
     }
 
     /**
-     * Returns the rendered string for the given relation.
+     * Returns an error message for the given reason.
      *
-     * @param {{networkName: string, affectedUsers: RoomMember[]}} relationInfo
-     * @return {string}
+     * Defaults to a generic message if the reason is unknown.
+     * @param {string} reason
+     * @returns {string}
+     */
+    _getErrorMessage(reason) {
+        return (
+            this._errorMessages[reason] || this._errorMessages["m.event_not_handled"]
+        );
+    }
+
+    /**
+     * Returns the rendered element for the given relation.
+     *
+     * @param {RelationInfo} relationInfo
+     * @return {React.Element<'div'>}
      */
     _renderInfo(relationInfo) {
         const usernames = relationInfo.affectedUsers.map(u => u.name).join(", ");
+        const message = _t(
+            this._getErrorMessage(relationInfo.reason),
+            {
+                affectedUsers: usernames,
+                // count == 0 to add translations for when the network name is missing.
+                count: relationInfo.networkName ? 1 : 0,
+                networkName: relationInfo.networkName,
+            },
+        );
 
-        if (relationInfo.networkName) {
-            return _t(
-                "%(networkName)s: %(affectedUsers)s",
-                {
-                    networkName: relationInfo.networkName,
-                    affectedUsers: usernames,
-                },
-            );
-        } else {
-            return _t(
-                "Affected users: %(affectedUsers)s",
-                { affectedUsers: usernames },
-            );
-        }
+        return (
+            <div key={ relationInfo.eventID }>
+                { message }
+            </div>
+        );
     }
 
     render() {
@@ -132,7 +194,7 @@ export default class BridgeError extends React.PureComponent {
 
         return (
             <div className="mx_BridgeError">
-                ⚠ {_t("Event not delivered") + " (" + renderedInfos.join("; ") + ")" }
+                { renderedInfos }
             </div>
         );
     }
