@@ -123,22 +123,22 @@ export default class BridgeError extends React.PureComponent {
 
     _errorMessages = {
         "m.event_not_handled": _td(
-            "⚠ Not delivered to people on %(networkName)s (%(affectedUsers)s)",
+            "Not delivered to people on %(networkName)s (%(affectedUsers)s)",
         ),
         "m.event_too_old": _td(
-            "⚠ It took so long. Gave up sending to people on %(networkName)s " +
+            "It took so long. Gave up sending to people on %(networkName)s " +
             "(%(affectedUsers)s)",
         ),
         "m.internal_error": _td(
-            "⚠ Unexpected error while sending to people on %(networkName)s " +
+            "Unexpected error while sending to people on %(networkName)s " +
             "(%(affectedUsers)s)",
         ),
         "m.foreign_network_error": _td(
-            "⚠ %(networkName)s did not deliver the message to the people " +
+            "%(networkName)s did not deliver the message to the people " +
             "there (%(affectedUsers)s)",
         ),
         "m.event_unknown": _td(
-            "⚠ Was not understood by %(networkName)s, so people there didn't " +
+            "Was not understood by %(networkName)s, so people there didn't " +
             "get this message (%(affectedUsers)s)",
         ),
     }
@@ -175,7 +175,7 @@ export default class BridgeError extends React.PureComponent {
         );
 
         return (
-            <div key={ relationInfo.eventID }>
+            <div className="mx_BridgeError_message" key={ relationInfo.eventID }>
                 { message }
             </div>
         );
@@ -194,6 +194,7 @@ export default class BridgeError extends React.PureComponent {
 
         return (
             <div className="mx_BridgeError">
+                <div className="mx_BridgeError_icon" />
                 { renderedInfos }
             </div>
         );

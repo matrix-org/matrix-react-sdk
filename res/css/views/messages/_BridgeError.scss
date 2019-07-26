@@ -15,9 +15,19 @@ limitations under the License.
 */
 
 .mx_BridgeError {
-    background: gray;
-    color: white;
-    border-radius: 0.2em;
-    padding: 0 0.5em;
     font-size: 0.8em;
+    line-height: 1em;
+}
+
+.mx_BridgeError_message {
+	margin-left: 1.5em;
+	opacity: 0.5;
+}
+
+.mx_BridgeError_icon {
+	mask-image: url('$(res)/img/warning.svg');
+	background-color: $warning-color;
+	float: left;
+	width: 1em;
+	height: 1em;
 }
