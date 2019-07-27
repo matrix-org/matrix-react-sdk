@@ -649,7 +649,7 @@ module.exports = withMatrixClient(React.createClass({
 
         const BridgeError = sdk.getComponent('messages.BridgeError');
         const bridgeError = (SettingsStore.isFeatureEnabled("feature_bridge_errors") ?
-            <BridgeError mxEvent={this.props.mxEvent} room={room} /> :
+            <BridgeError mxEvent={this.props.mxEvent} room={room} key={this.props.mxEvent.getId()} /> :
             null
         );
 
