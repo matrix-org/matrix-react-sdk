@@ -1079,7 +1079,7 @@ export default class MessageComposerInput extends React.Component {
             contentText = this.plainWithPlainPills.serialize(editorState);
             if (contentText === '') return true;
 
-            if (shouldSendHTML) {
+            if (shouldSendHTML || this.state.isMathEnabled) {
                 contentHTML = HtmlUtils.processHtmlForSending(this.html.serialize(editorState));
             }
         } else {
