@@ -148,9 +148,6 @@ export default class MessageComposerInput extends React.Component {
 
         const isRichTextEnabled = SettingsStore.getValue('MessageComposerInput.isRichTextEnabled');
         const isMathEnabled = SettingsStore.getValue('MessageComposerInput.isMathEnabled');
-        // isMathEnabled should really be called isMathDisabled, with the way
-        // the boolean value is toggled, but this is the same as with isRichTextEnabled,
-        // so we're just being consistent
 
         Analytics.setRichtextMode(isRichTextEnabled);
         Analytics.setMathMode(isMathEnabled);
@@ -1092,7 +1089,7 @@ export default class MessageComposerInput extends React.Component {
             const mdWithPills = new Markdown(sourceWithPills);
 
             // if contains no HTML and we're not quoting (needing HTML)
-            if (mdWithPills.isPlainText() && !mustSendHTML &&this.state.isMathEnabled) {
+            if (mdWithPills.isPlainText() && !mustSendHTML) {
                 // N.B. toPlainText is only usable here because we know that the MD
                 // didn't contain any formatting in the first place...
                 contentText = mdWithPills.toPlaintext();
@@ -1104,7 +1101,7 @@ export default class MessageComposerInput extends React.Component {
             }
         }
 
-        if (!this.state.isMathEnabled) {
+        if (this.state.isMathEnabled) {
             const mathDelimiters = [ 
                 { symbol: "\\$\\$", display: true },
                 { symbol: "\\$", display: false }
@@ -1113,7 +1110,6 @@ export default class MessageComposerInput extends React.Component {
             if ("undefined" != typeof contentHTML) {
                 mathDelimiters.forEach(function (d) {
                     var reg = RegExp(d.symbol + "([^" + d.symbol + "]*)" + d.symbol, "g");
-
                     contentHTML = contentHTML.replace(reg, function(match, p1) {
                         if (d.display == true) {
                             return `<matrix-math-display>${p1}</matrix-math-display>`;
@@ -1552,7 +1548,7 @@ export default class MessageComposerInput extends React.Component {
 
         const mathClasses = classNames({
             mx_MessageComposer_input_mathIndicator: true,
-            mx_MessageComposer_mathDisabled: this.state.isMathEnabled,
+            mx_MessageComposer_mathDisabled: !this.state.isMathEnabled,
         });
 
         return (
@@ -1575,7 +1571,7 @@ export default class MessageComposerInput extends React.Component {
                     />
                     <AccessibleButton className={mathClasses}
                         onClick={this.onMathToggleClicked}
-                        title={this.state.isMathEnabled ? _t("Math is disabled") : _t("Math is enabled")}
+                        title={this.state.isMathEnabled ? _t("Math is enabled") : _t("Math is disabled")}
                     />
                     <Editor ref={this._collectEditor}
                             dir="auto"
