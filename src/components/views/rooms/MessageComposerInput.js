@@ -1105,7 +1105,23 @@ export default class MessageComposerInput extends React.Component {
             // isMathEnabled should really be called isMathDisabled, with the way
             // the boolean value is toggled, but this is the same as with isRichTextEnabled,
             // so we're just being consistent
-            contentHTML = HtmlUtils.processHtmlForSending(this.html.serialize(editorState));
+            const mathDelimiters = [ 
+                { symbol: "\\$\\$", display: true },
+                { symbol: "\\$", display: false }
+            ];
+            if ("undefined" != typeof contentHTML) {
+                mathDelimiters.forEach(function (d) {
+                    var reg = RegExp(d.symbol + "([^" + d.symbol + "]*)" + d.symbol, "g");
+
+                    contentHTML = contentHTML.replace(reg, function(match, p1) {
+                        if (d.display == true) {
+                            return `<matrix-math-display>${p1}</matrix-math-display>`;
+                        } else {
+                            return `<matrix-math>${p1}</matrix-math>`;
+                        }
+                    });
+                });
+            };
         }
 
         let sendHtmlFn = ContentHelpers.makeHtmlMessage;
