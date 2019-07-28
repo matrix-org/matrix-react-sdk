@@ -1089,7 +1089,7 @@ export default class MessageComposerInput extends React.Component {
             const mdWithPills = new Markdown(sourceWithPills);
 
             // if contains no HTML and we're not quoting (needing HTML)
-            if (mdWithPills.isPlainText() && !mustSendHTML) {
+            if (mdWithPills.isPlainText() && !mustSendHTML && !this.state.isMathEnabled) {
                 // N.B. toPlainText is only usable here because we know that the MD
                 // didn't contain any formatting in the first place...
                 contentText = mdWithPills.toPlaintext();

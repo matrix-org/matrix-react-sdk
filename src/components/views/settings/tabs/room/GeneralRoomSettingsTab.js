@@ -127,6 +127,11 @@ export default class GeneralRoomSettingsTab extends React.Component {
                     <UrlPreviewSettings room={room} />
                 </div>
 
+                <span className='mx_SettingsTab_subheading'>{_t("KaTeX Rendering")}</span>
+                <div className='mx_SettingsTab_section'>
+                    <KatexRenderingSettings room={room} />
+                </div>
+
                 <span className='mx_SettingsTab_subheading'>{_t("Leave room")}</span>
                 <div className='mx_SettingsTab_section'>
                     <AccessibleButton kind='danger' onClick={this._onLeaveClick}>
