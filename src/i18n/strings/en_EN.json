@@ -1691,5 +1691,6 @@
     "Enable KaTeX rendering by default": "Enable KaTeX rendering by default",
     "You have <a>enabled</a> KaTeX rendering by default.": "You have <a>enabled</a> KaTeX rendering by default.",
     "You have <a>disabled</a> KaTeX rendering by default.": "You have <a>disabled</a> KaTeX rendering by default.",
-    "KaTeX Rendering": "KaTeX Rendering"
+    "KaTeX Rendering": "KaTeX Rendering",
+    "Math is enabled": "Math is enabled"
 }

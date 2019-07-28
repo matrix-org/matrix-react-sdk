@@ -481,15 +481,14 @@ export function bodyToHtml(content, highlights, opts={}) {
     });
 
     if (opts.renderKatex) {
-        const katexDelimiters = [ 
-            { symbol: "\\$\\$", display: true },
-            { symbol: "\\$", display: false }
+        const mathDelimiters = [ 
+            { left: "<matrix-math-display>", right: "<\\/matrix-math-display>", display: true },
+            { left: "<matrix-math>", right: "<\\/matrix-math>", display: false }
         ];
 
         if ("undefined" != typeof safeBody) {
-            katexDelimiters.forEach(function (d) {
-                var reg = RegExp(d.symbol + "([^" + d.symbol + "]*)" + d.symbol, "g");
-
+            mathDelimiters.forEach(function (d) {
+                var reg = RegExp(d.left + "(.*)" + d.right, "g");
                 safeBody = safeBody.replace(reg, function(match, p1) {
                     return katex.renderToString(p1, {
                         throwOnError: false,

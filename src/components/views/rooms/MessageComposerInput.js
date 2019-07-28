@@ -148,6 +148,9 @@ export default class MessageComposerInput extends React.Component {
 
         const isRichTextEnabled = SettingsStore.getValue('MessageComposerInput.isRichTextEnabled');
         const isMathEnabled = SettingsStore.getValue('MessageComposerInput.isMathEnabled');
+        // isMathEnabled should really be called isMathDisabled, with the way
+        // the boolean value is toggled, but this is the same as with isRichTextEnabled,
+        // so we're just being consistent
 
         Analytics.setRichtextMode(isRichTextEnabled);
         Analytics.setMathMode(isMathEnabled);
@@ -1089,7 +1092,7 @@ export default class MessageComposerInput extends React.Component {
             const mdWithPills = new Markdown(sourceWithPills);
 
             // if contains no HTML and we're not quoting (needing HTML)
-            if (mdWithPills.isPlainText() && !mustSendHTML) {
+            if (mdWithPills.isPlainText() && !mustSendHTML &&this.state.isMathEnabled) {
                 // N.B. toPlainText is only usable here because we know that the MD
                 // didn't contain any formatting in the first place...
                 contentText = mdWithPills.toPlaintext();
@@ -1102,13 +1105,11 @@ export default class MessageComposerInput extends React.Component {
         }
 
         if (!this.state.isMathEnabled) {
-            // isMathEnabled should really be called isMathDisabled, with the way
-            // the boolean value is toggled, but this is the same as with isRichTextEnabled,
-            // so we're just being consistent
             const mathDelimiters = [ 
                 { symbol: "\\$\\$", display: true },
                 { symbol: "\\$", display: false }
             ];
+
             if ("undefined" != typeof contentHTML) {
                 mathDelimiters.forEach(function (d) {
                     var reg = RegExp(d.symbol + "([^" + d.symbol + "]*)" + d.symbol, "g");
