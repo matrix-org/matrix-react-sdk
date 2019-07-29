@@ -270,6 +270,11 @@ const LeftPanel = React.createClass({
                     <div className={"tc_RepFr_logo"}>
                         <img src={require('../../../res/img/tchap/logo_rep_fr_black.svg')} alt="logo_rep_fr" />
                     </div>
+                    <div className={"tc_Bottom_Links"}>
+                        <a href={"https://www.tchap.gouv.fr/faq/"} rel='noreferrer nofollow noopener' target='_blank'>{_t('FAQ')}</a>&nbsp;·&nbsp;
+                        <a href={"https://www.tchap.gouv.fr/cgu/"} rel='noreferrer nofollow noopener' target='_blank'>{_t('TAC')}</a>&nbsp;·&nbsp;
+                        <a href={"https://www.tchap.gouv.fr/tchap-prise-en-main.pdf"} rel='noreferrer nofollow noopener' target='_blank'>{_t('User Guide')}</a>
+                    </div>
                 </aside>
             </div>
         );

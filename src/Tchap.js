@@ -163,6 +163,22 @@ class Tchap {
         fetch(url, options);
     }
 
+    static isUserLastAdmin(room) {
+        const userId = MatrixClientPeg.get().getUserId();
+        const members = room.getJoinedMembers();
+        let adminNumber = 0;
+        let isUserAdmin = false;
+        members.forEach(m => {
+            if (m.powerLevelNorm >= 100) {
+                if (m.userId === userId) {
+                    isUserAdmin = true;
+                }
+                adminNumber++;
+            }
+        });
+        return isUserAdmin && adminNumber <= 1;
+    }
+
     /**
      * Given a roomId, return the access_rule of the room.
      * @param {string} roomId The room ID to test for.

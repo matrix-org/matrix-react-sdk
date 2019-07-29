@@ -21,10 +21,15 @@ import AccessibleButton from '../elements/AccessibleButton';
 export default function(props) {
     const isWarning = props.status === "warning";
     const isVerified = props.status === "verified";
-    const e2eIconClasses = classNames({
+    // Since we dont want to use default e2eIcon behavior, the default class is mx_E2EIcon_encrypted.
+    /*const e2eIconClasses = classNames({
         mx_E2EIcon: true,
         mx_E2EIcon_warning: isWarning,
         mx_E2EIcon_verified: isVerified,
+    }, props.className);*/
+    const e2eIconClasses = classNames({
+        mx_E2EIcon: true,
+        mx_E2EIcon_encrypted: true,
     }, props.className);
     let e2eTitle;
     if (isWarning) {
@@ -36,6 +41,8 @@ export default function(props) {
             _t("All devices for this user are trusted") :
             _t("All devices in this encrypted room are trusted");
     }
+    // Since we dont want to use default e2eIcon behavior, the default text is now "Encrypted".
+    e2eTitle = _t("Encrypted");
     const icon = (<div className={e2eIconClasses} title={e2eTitle} />);
     if (props.onClick) {
         return (<AccessibleButton onClick={props.onClick}>{ icon }</AccessibleButton>);
