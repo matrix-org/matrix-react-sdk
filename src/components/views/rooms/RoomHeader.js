@@ -22,9 +22,7 @@ import classNames from 'classnames';
 import sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import MatrixClientPeg from '../../../MatrixClientPeg';
-import Modal from "../../../Modal";
 import RateLimitedFunc from '../../../ratelimitedfunc';
-
 import { linkifyElement } from '../../../HtmlUtils';
 import AccessibleButton from '../elements/AccessibleButton';
 import ManageIntegsButton from '../elements/ManageIntegsButton';
@@ -33,6 +31,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import RoomHeaderButtons from '../right_panel/RoomHeaderButtons';
 import E2EIcon from './E2EIcon';
 import DMRoomMap from '../../../utils/DMRoomMap';
+import Tchap from '../../../Tchap';
 
 module.exports = React.createClass({
     displayName: 'RoomHeader',
@@ -201,7 +200,7 @@ module.exports = React.createClass({
         }
         const topicElement =
             <div className="mx_RoomHeader_topic" ref="topic" title={topic} dir="auto">{ topic }</div>;
-        const avatarSize = 28;
+        const avatarSize = 24;
         let roomAvatar;
         if (this.props.room) {
             roomAvatar = (<RoomAvatar
@@ -285,7 +284,7 @@ module.exports = React.createClass({
 
         let mainAvatarClass = "mx_RoomHeader_avatar";
         if (!isDMRoom) {
-            mainAvatarClass += " mx_RoomHeader_avatar_room"
+            mainAvatarClass += ` mx_RoomHeader_avatar_room mx_RoomHeader_avatar_${Tchap.getAccessRules(this.props.room.roomId)}`
         }
 
         return (

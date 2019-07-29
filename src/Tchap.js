@@ -180,6 +180,24 @@ class Tchap {
     }
 
     /**
+     * Given a roomId, return the access_rule of the room.
+     * @param {string} roomId The room ID to test for.
+     * @returns {string} The access_rules of the room.
+     */
+    static getAccessRules(roomId) {
+        const stateEventType = "im.vector.room.access_rules";
+        const keyName = "rule";
+        const defaultValue = "";
+        const room = MatrixClientPeg.get().getRoom(roomId);
+        const event = room.currentState.getStateEvents(stateEventType, '');
+        if (!event) {
+            return defaultValue;
+        }
+        const content = event.getContent();
+        return keyName in content ? content[keyName] : defaultValue;
+    }
+
+    /**
      * A static function shuffeling an array.
      * @param {array} arr The array to shuffle.
      * @returns {array} The array shuffeled.

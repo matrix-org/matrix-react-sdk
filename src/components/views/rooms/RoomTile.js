@@ -31,6 +31,7 @@ import AccessibleButton from '../elements/AccessibleButton';
 import ActiveRoomObserver from '../../../ActiveRoomObserver';
 import RoomViewStore from '../../../stores/RoomViewStore';
 import SettingsStore from "../../../settings/SettingsStore";
+import Tchap from '../../../Tchap';
 
 module.exports = React.createClass({
     displayName: 'RoomTile',
@@ -390,6 +391,8 @@ module.exports = React.createClass({
             mainAvatarClass += " mx_RoomTile_avatar_room";
         }
 
+        mainAvatarClass += ` mx_RoomTile_avatar_${Tchap.getAccessRules(this.props.room.roomId)}`;
+
         return <AccessibleButton tabIndex="0"
                                  className={classes}
                                  onClick={this.onClick}
@@ -400,9 +403,9 @@ module.exports = React.createClass({
             <div className={mainAvatarClass}>
                 <div className="mx_RoomTile_avatar_container">
                     <RoomAvatar room={this.props.room} width={24} height={24} />
-                    { encryptedIndicator }
                 </div>
             </div>
+            { encryptedIndicator }
             <div className="mx_RoomTile_nameContainer">
                 <div className="mx_RoomTile_labelContainer">
                     { label }
