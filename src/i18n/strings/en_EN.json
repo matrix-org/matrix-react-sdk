@@ -1639,5 +1639,6 @@
     "TAC": "TAC",
     "User Guide": "User Guide",
     "Are you sure you want to leave the room? The room will no longer be administered, and you may not be able to join it again.": "Are you sure you want to leave the room? The room will no longer be administered, and you may not be able to join it again.",
-    "You are the last administrator": "You are the last administrator"
+    "You are the last administrator": "You are the last administrator",
+    "Unable to decrypt: The sender's device has not sent us the keys for this message.": "Unable to decrypt: The sender's device has not sent us the keys for this message."
 }
