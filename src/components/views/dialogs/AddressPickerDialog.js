@@ -92,6 +92,8 @@ module.exports = React.createClass({
             // List of UserAddressType objects representing the set of
             // auto-completion results for the current search query.
             suggestedList: [],
+            isExternInList: false,
+            lastExternInList: "",
         };
     },
 
@@ -103,6 +105,7 @@ module.exports = React.createClass({
     },
 
     onButtonClick: function() {
+        const self = this;
         let selectedList = this.state.selectedList.slice();
         // Check the text input field to see if user has an unconverted address
         // If there is and it's valid add it to the local selectedList
@@ -113,27 +116,42 @@ module.exports = React.createClass({
         if (this.props.roomId) {
             const access_rules = Tchap.getAccessRules(this.props.roomId);
             if (access_rules !== "unrestricted") {
-                selectedList.forEach(u => {
-                    if (u.addressType === "email") {
-                        this._lookupThreepid("email", u.address).then(data => {
-                            if (data === null) {
-                                const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-                                Modal.createTrackedDialog(
-                                    "Externals aren't allowed to join this room",
-                                    '', ErrorDialog,
-                                    {
-                                        title: _t("Error"),
-                                        description: (_t("The user %(user)s is external.", {user: u.address}) + " "
-                                            + _t("Externals aren't allowed to join this room")),
+                Promise.delay(0).then(() => {
+                    selectedList.forEach(u => {
+                        if (u.addressType === "email") {
+                            Tchap.getInfo(u.address).then(a => {
+                                if (Tchap.isUserExternFromHs(a.hs)) {
+                                    self.setState({
+                                        isExternInList: true,
+                                        lastExternInList: u.address,
                                     });
-                            } else {
-                                this.props.onFinished(true, selectedList);
+                                }
+                            });
+                        } else if (u.addressType === "mx-user-id") {
+                            if (Tchap.isUserExtern(u.address)) {
+                                self.setState({
+                                    isExternInList: true,
+                                    lastExternInList: u.displayName,
+                                });
                             }
-                        }).catch(err => {
-                            this.props.onFinished(true, selectedList);
-                        });
+                        }
+                    });
+                }).delay(1000).then(() => {
+                    const isExternInList = self.state.isExternInList;
+                    if (isExternInList === true) {
+                        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+                        Modal.createTrackedDialog(
+                            "Externals aren't allowed to join this room",
+                            '', ErrorDialog,
+                            {
+                                title: _t("Error"),
+                                description: (_t("The user %(user)s is external.", {user: self.state.lastExternInList}) + " "
+                                    + _t("Externals aren't allowed to join this room")),
+                            });
+                    } else {
+                        this.props.onFinished(true, selectedList);
                     }
-                })
+                });
             } else {
                 this.props.onFinished(true, selectedList);
             }
