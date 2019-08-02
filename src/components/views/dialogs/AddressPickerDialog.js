@@ -126,6 +126,8 @@ module.exports = React.createClass({
                                         description: (_t("The user %(user)s is external.", {user: u.address}) + " "
                                             + _t("Externals aren't allowed to join this room")),
                                     });
+                            } else {
+                                this.props.onFinished(true, selectedList);
                             }
                         }).catch(err => {
                             this.props.onFinished(true, selectedList);
