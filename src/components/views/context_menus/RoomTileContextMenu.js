@@ -158,9 +158,7 @@ module.exports = React.createClass({
 
     _onClickForget: function() {
         // FIXME: duplicated with RoomSettings (and dead code in RoomView)
-        MatrixClientPeg.get().forget(this.props.room.roomId).done(function() {
-            dis.dispatch({ action: 'view_next_room' });
-        }, function(err) {
+        MatrixClientPeg.get().forget(this.props.room.roomId).done(null, function(err) {
             const errCode = err.errcode || _td("unknown error code");
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog('Failed to forget room', '', ErrorDialog, {
