@@ -1,5 +1,6 @@
 /*
 Copyright 2019 New Vector Ltd
+Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,8 +23,8 @@ import sdk from '../../../index';
 import dis from '../../../dispatcher';
 import Modal from '../../../Modal';
 import { createMenu } from '../../structures/ContextualMenu';
-import SettingsStore from '../../../settings/SettingsStore';
 import { isContentActionable, canEditContent } from '../../../utils/EventUtils';
+import {RoomContext} from "../../structures/RoomView";
 
 export default class MessageActionBar extends React.PureComponent {
     static propTypes = {
@@ -34,6 +35,10 @@ export default class MessageActionBar extends React.PureComponent {
         getTile: PropTypes.func,
         getReplyThread: PropTypes.func,
         onFocusChange: PropTypes.func,
+    };
+
+    static contextTypes = {
+        room: RoomContext,
     };
 
     componentDidMount() {
@@ -48,14 +53,14 @@ export default class MessageActionBar extends React.PureComponent {
         // When an event decrypts, it is likely to change the set of available
         // actions, so we force an update to check again.
         this.forceUpdate();
-    }
+    };
 
     onFocusChange = (focused) => {
         if (!this.props.onFocusChange) {
             return;
         }
         this.props.onFocusChange(focused);
-    }
+    };
 
     onCryptoClick = () => {
         const event = this.props.mxEvent;
@@ -63,21 +68,21 @@ export default class MessageActionBar extends React.PureComponent {
             import('../../../async-components/views/dialogs/EncryptedEventDialog'),
             {event},
         );
-    }
+    };
 
     onReplyClick = (ev) => {
         dis.dispatch({
             action: 'reply_to_event',
             event: this.props.mxEvent,
         });
-    }
+    };
 
     onEditClick = (ev) => {
         dis.dispatch({
             action: 'edit_event',
             event: this.props.mxEvent,
         });
-    }
+    };
 
     onOptionsClick = (ev) => {
         const MessageContextMenu = sdk.getComponent('context_menus.MessageContextMenu');
@@ -121,21 +126,9 @@ export default class MessageActionBar extends React.PureComponent {
         createMenu(MessageContextMenu, menuOptions);
 
         this.onFocusChange(true);
-    }
-
-    isReactionsEnabled() {
-        return SettingsStore.isFeatureEnabled("feature_reactions");
-    }
-
-    isEditingEnabled() {
-        return SettingsStore.isFeatureEnabled("feature_message_editing");
-    }
+    };
 
     renderReactButton() {
-        if (!this.isReactionsEnabled()) {
-            return null;
-        }
-
         const ReactMessageAction = sdk.getComponent('messages.ReactMessageAction');
         const { mxEvent, reactions } = this.props;
 
@@ -152,13 +145,17 @@ export default class MessageActionBar extends React.PureComponent {
         let editButton;
 
         if (isContentActionable(this.props.mxEvent)) {
-            reactButton = this.renderReactButton();
-            replyButton = <span className="mx_MessageActionBar_maskButton mx_MessageActionBar_replyButton"
-                title={_t("Reply")}
-                onClick={this.onReplyClick}
-            />;
+            if (this.context.room.canReact) {
+                reactButton = this.renderReactButton();
+            }
+            if (this.context.room.canReply) {
+                replyButton = <span className="mx_MessageActionBar_maskButton mx_MessageActionBar_replyButton"
+                    title={_t("Reply")}
+                    onClick={this.onReplyClick}
+                />;
+            }
         }
-        if (this.isEditingEnabled() && canEditContent(this.props.mxEvent)) {
+        if (canEditContent(this.props.mxEvent)) {
             editButton = <span className="mx_MessageActionBar_maskButton mx_MessageActionBar_editButton"
                 title={_t("Edit")}
                 onClick={this.onEditClick}

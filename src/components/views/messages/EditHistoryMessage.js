@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as HtmlUtils from '../../../HtmlUtils';
+import { editBodyDiffToHtml } from '../../../utils/MessageDiffUtils';
 import {formatTime} from '../../../DateUtils';
 import {MatrixEvent} from 'matrix-js-sdk';
 import {pillifyLinks} from '../../../utils/pillify';
@@ -26,10 +27,17 @@ import MatrixClientPeg from '../../../MatrixClientPeg';
 import Modal from '../../../Modal';
 import classNames from 'classnames';
 
+function getReplacedContent(event) {
+    const originalContent = event.getOriginalContent();
+    return originalContent["m.new_content"] || originalContent;
+}
+
 export default class EditHistoryMessage extends React.PureComponent {
     static propTypes = {
         // the message event being edited
         mxEvent: PropTypes.instanceOf(MatrixEvent).isRequired,
+        previousEdit: PropTypes.instanceOf(MatrixEvent),
+        isBaseEvent: PropTypes.bool,
     };
 
     constructor(props) {
@@ -94,7 +102,7 @@ export default class EditHistoryMessage extends React.PureComponent {
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         // hide the button when already redacted
         let redactButton;
-        if (!this.props.mxEvent.isRedacted()) {
+        if (!this.props.mxEvent.isRedacted() && !this.props.isBaseEvent) {
             redactButton = (
                 <AccessibleButton onClick={this._onRedactClick} disabled={!this.state.canRedact}>
                     {_t("Remove")}
@@ -117,14 +125,18 @@ export default class EditHistoryMessage extends React.PureComponent {
 
     render() {
         const {mxEvent} = this.props;
-        const originalContent = mxEvent.getOriginalContent();
-        const content = originalContent["m.new_content"] || originalContent;
+        const content = getReplacedContent(mxEvent);
         let contentContainer;
         if (mxEvent.isRedacted()) {
             const UnknownBody = sdk.getComponent('messages.UnknownBody');
             contentContainer = <UnknownBody mxEvent={this.props.mxEvent} />;
         } else {
-            const contentElements = HtmlUtils.bodyToHtml(content, null, {stripReplyFallback: true});
+            let contentElements;
+            if (this.props.previousEdit) {
+                contentElements = editBodyDiffToHtml(getReplacedContent(this.props.previousEdit), content);
+            } else {
+                contentElements = HtmlUtils.bodyToHtml(content, null, {stripReplyFallback: true});
+            }
             if (mxEvent.getContent().msgtype === "m.emote") {
                 const name = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
                 contentContainer = (

@@ -2,6 +2,7 @@
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 New Vector Ltd
 Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -131,7 +132,7 @@ module.exports = withMatrixClient(React.createClass({
         onHeightChanged: PropTypes.func,
 
         /* a list of read-receipts we should show. Each object has a 'roomMember' and 'ts'. */
-        readReceipts: PropTypes.arrayOf(React.PropTypes.object),
+        readReceipts: PropTypes.arrayOf(PropTypes.object),
 
         /* opaque readreceipt info for each userId; used by ReadReceiptMarker
          * to manage its animations. Should be an empty object when the room
@@ -202,7 +203,7 @@ module.exports = withMatrixClient(React.createClass({
         const client = this.props.matrixClient;
         client.on("deviceVerificationChanged", this.onDeviceVerificationChanged);
         this.props.mxEvent.on("Event.decrypted", this._onDecrypted);
-        if (this.props.showReactions && SettingsStore.isFeatureEnabled("feature_reactions")) {
+        if (this.props.showReactions) {
             this.props.mxEvent.on("Event.relationsCreated", this._onReactionsCreated);
         }
     },
@@ -227,7 +228,7 @@ module.exports = withMatrixClient(React.createClass({
         const client = this.props.matrixClient;
         client.removeListener("deviceVerificationChanged", this.onDeviceVerificationChanged);
         this.props.mxEvent.removeListener("Event.decrypted", this._onDecrypted);
-        if (this.props.showReactions && SettingsStore.isFeatureEnabled("feature_reactions")) {
+        if (this.props.showReactions) {
             this.props.mxEvent.removeListener("Event.relationsCreated", this._onReactionsCreated);
         }
     },
@@ -490,8 +491,7 @@ module.exports = withMatrixClient(React.createClass({
     getReactions() {
         if (
             !this.props.showReactions ||
-            !this.props.getRelationsForEvent ||
-            !SettingsStore.isFeatureEnabled("feature_reactions")
+            !this.props.getRelationsForEvent
         ) {
             return null;
         }
@@ -681,7 +681,7 @@ module.exports = withMatrixClient(React.createClass({
             </div> : null;
 
         let reactionsRow;
-        if (SettingsStore.isFeatureEnabled("feature_reactions") && !isRedacted) {
+        if (!isRedacted) {
             const ReactionsRow = sdk.getComponent('messages.ReactionsRow');
             reactionsRow = <ReactionsRow
                 mxEvent={this.props.mxEvent}
@@ -829,7 +829,7 @@ module.exports.haveTileForEvent = function(e) {
     if (e.isRedacted() && !isMessageEvent(e)) return false;
 
     // No tile for replacement events since they update the original tile
-    if (e.isRelation("m.replace") && SettingsStore.isFeatureEnabled("feature_message_editing")) return false;
+    if (e.isRelation("m.replace")) return false;
 
     const handler = getHandlerTile(e);
     if (handler === undefined) return false;

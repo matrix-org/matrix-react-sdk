@@ -107,11 +107,20 @@ export default class MessageEditHistoryDialog extends React.PureComponent {
         if (this.state.originalEvent && !this.state.nextBatch) {
             allEvents = allEvents.concat(this.state.originalEvent);
         }
-        allEvents.forEach(e => {
+        const baseEventId = this.props.mxEvent.getId();
+        allEvents.forEach((e, i) => {
             if (!lastEvent || wantsDateSeparator(lastEvent.getDate(), e.getDate())) {
                 nodes.push(<li key={e.getTs() + "~"}><DateSeparator ts={e.getTs()} /></li>);
             }
-            nodes.push(<EditHistoryMessage key={e.getId()} mxEvent={e} isTwelveHour={this.state.isTwelveHour} />);
+            const isBaseEvent = e.getId() === baseEventId;
+            nodes.push((
+                <EditHistoryMessage
+                    key={e.getId()}
+                    previousEdit={!isBaseEvent && allEvents[i + 1]}
+                    isBaseEvent={isBaseEvent}
+                    mxEvent={e}
+                    isTwelveHour={this.state.isTwelveHour}
+                />));
             lastEvent = e;
         });
         return nodes;
