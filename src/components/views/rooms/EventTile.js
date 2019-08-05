@@ -646,6 +646,14 @@ module.exports = withMatrixClient(React.createClass({
         const timestamp = this.props.mxEvent.getTs() ?
             <MessageTimestamp showTwelveHour={this.props.isTwelveHour} ts={this.props.mxEvent.getTs()} /> : null;
 
+        const room = this.props.matrixClient.getRoom(this.props.mxEvent.getRoomId());
+
+        const BridgeError = sdk.getComponent('messages.BridgeError');
+        const bridgeError = (SettingsStore.isFeatureEnabled("feature_bridge_errors") ?
+            <BridgeError mxEvent={this.props.mxEvent} room={room} key={this.props.mxEvent.getId()} /> :
+            null
+        );
+
         const keyRequestHelpText =
             <div className="mx_EventTile_keyRequestInfo_tooltip_contents">
                 <p>
@@ -691,7 +699,6 @@ module.exports = withMatrixClient(React.createClass({
 
         switch (this.props.tileShape) {
             case 'notif': {
-                const room = this.props.matrixClient.getRoom(this.props.mxEvent.getRoomId());
                 return (
                     <div className={classes}>
                         <div className="mx_EventTile_roomName">
@@ -801,6 +808,7 @@ module.exports = withMatrixClient(React.createClass({
                                            highlightLink={this.props.highlightLink}
                                            showUrlPreview={this.props.showUrlPreview}
                                            onHeightChanged={this.props.onHeightChanged} />
+                            { bridgeError }
                             { keyRequestInfo }
                             { reactionsRow }
                             { actionBar }
