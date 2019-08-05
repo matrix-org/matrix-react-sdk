@@ -158,12 +158,11 @@ module.exports = React.createClass({
     },
 
     _onClickForget: function() {
-        const self = this;
         // FIXME: duplicated with RoomSettings (and dead code in RoomView)
-        MatrixClientPeg.get().forget(this.props.room.roomId).done(function() {
+        MatrixClientPeg.get().forget(this.props.room.roomId).done(() => {
             // Switch to another room view if we're currently viewing the
             // historical room
-            if (RoomViewStore.getRoomId() == self.props.room.roomId) {
+            if (RoomViewStore.getRoomId() === this.props.room.roomId) {
                 dis.dispatch({ action: 'view_next_room' });
             }
         }, function(err) {
