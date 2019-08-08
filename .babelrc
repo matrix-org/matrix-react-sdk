@@ -13,7 +13,10 @@
         "@babel/plugin-proposal-class-properties",
         "@babel/plugin-proposal-object-rest-spread",
         "@babel/plugin-transform-flow-comments",
-        "@babel/plugin-transform-async-to-generator",
+        ["@babel/plugin-transform-async-to-generator", {
+            "module": "bluebird",
+            "method": "coroutine"
+        }],
         "@babel/plugin-transform-runtime",
         "@babel/plugin-syntax-dynamic-import"
     ]
