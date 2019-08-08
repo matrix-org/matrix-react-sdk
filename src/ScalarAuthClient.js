@@ -21,15 +21,15 @@ import SettingsStore from "./settings/SettingsStore";
 import { Service, startTermsFlow, TermsNotSignedError } from './Terms';
 const request = require('browser-request');
 
-const SdkConfig = require('./SdkConfig');
 const MatrixClientPeg = require('./MatrixClientPeg');
 
 import * as Matrix from 'matrix-js-sdk';
+import SdkConfig from "./SdkConfig";
 
 // The version of the integration manager API we're intending to work with
 const imApiVersion = "1.1";
 
-class ScalarAuthClient {
+export default class ScalarAuthClient {
     constructor() {
         this.scalarToken = null;
         // `undefined` to allow `startTermsFlow` to fallback to a default
@@ -265,4 +265,3 @@ class ScalarAuthClient {
     }
 }
 
-module.exports = ScalarAuthClient;
