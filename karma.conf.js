@@ -41,6 +41,9 @@ if (!fileExists(gsCss)) {
     gsCss = 'node_modules/react-gemini-scrollbar/'+gsCss;
 }
 
+const preprocessors = {};
+preprocessors[testFile] = ['webpack', 'sourcemap'];
+
 
 module.exports = function (config) {
     config.set({
@@ -87,9 +90,7 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors:
         // https://npmjs.org/browse/keyword/karma-preprocessor
-        preprocessors: {
-            'test/**/*.js': ['webpack', 'sourcemap']
-        },
+        preprocessors: preprocessors,
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
@@ -160,7 +161,7 @@ module.exports = function (config) {
             module: {
                 rules: [
                     {
-                        test: /\.js$/, loader: "babel-loader",
+                        test: /\.(js|ts)$/, loader: "babel-loader",
                         include: [path.resolve('./src'),
                                   path.resolve('./test'),
                                  ]
@@ -192,6 +193,7 @@ module.exports = function (config) {
                 ],
             },
             resolve: {
+                extensions: ['.js', '.ts', '.json'],
                 alias: {
                     // alias any requires to the react module to the one in our
                     // path, otherwise we tend to get the react source included
