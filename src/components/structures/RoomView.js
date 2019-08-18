@@ -777,7 +777,7 @@ module.exports = React.createClass({
         if ((type === "org.matrix.preview_urls" || type === "im.vector.web.settings") && this.state.room) {
             // non-e2ee url previews are stored in legacy event type `org.matrix.room.preview_urls`
             this._updatePreviewUrlVisibility(this.state.room);
-        };
+        }
     },
 
     onRoomAccountData: function(event, room) {

@@ -390,7 +390,6 @@ module.exports = React.createClass({
         const content = mxEvent.getContent();
 
         const stripReply = ReplyThread.getParentEventId(mxEvent);
-
         let body = HtmlUtils.bodyToHtml(content, this.props.highlights, {
             disableBigEmoji: content.msgtype === "m.emote" || !SettingsStore.getValue('TextualBody.enableBigEmoji'),
             renderKatex: SettingsStore.getValue("katexRendering"),
