@@ -489,7 +489,7 @@ export function bodyToHtml(content, highlights, opts={}) {
 
         if ("undefined" != typeof safeBody) {
             mathDelimiters.forEach(function (d) {
-                var reg = RegExp(d.left + "(.*)" + d.right, "g");
+                var reg = RegExp(d.left + "(.*?)" + d.right, "g");
                 safeBody = safeBody.replace(reg, function(match, p1) {
                     return katex.renderToString(p1, {
                         throwOnError: false,
