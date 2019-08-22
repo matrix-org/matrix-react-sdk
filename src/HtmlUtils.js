@@ -480,13 +480,13 @@ export function bodyToHtml(content, highlights, opts={}) {
         'mx_EventTile_bigEmoji': emojiBody,
         'markdown-body': isHtmlMessage && !emojiBody,
     });
+    
+    const mathDelimiters = [ 
+        { left: "<matrix-math-display>", right: "<\\/matrix-math-display>", display: true },
+        { left: "<matrix-math>", right: "<\\/matrix-math>", display: false }
+    ];
 
     if (opts.renderKatex) {
-        const mathDelimiters = [ 
-            { left: "<matrix-math-display>", right: "<\\/matrix-math-display>", display: true },
-            { left: "<matrix-math>", right: "<\\/matrix-math>", display: false }
-        ];
-
         if ("undefined" != typeof safeBody) {
             mathDelimiters.forEach(function (d) {
                 var reg = RegExp(d.left + "(.*?)" + d.right, "g");
@@ -495,6 +495,16 @@ export function bodyToHtml(content, highlights, opts={}) {
                         throwOnError: false,
                         displayMode: d.display
                     })
+                });
+            });
+        };
+    } else {
+        // TODO: if !renderKatex then replace tags with <code>
+        if ("undefined" != typeof safeBody) {
+            mathDelimiters.forEach(function (d) {
+                var reg = RegExp(d.left + "(.*?)" + d.right, "g");
+                safeBody = safeBody.replace(reg, function(match, p1) {
+                    return "<code>" + p1 + "</code>"
                 });
             });
         };
