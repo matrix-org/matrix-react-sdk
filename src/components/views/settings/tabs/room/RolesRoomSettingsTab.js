@@ -1,5 +1,6 @@
 /*
 Copyright 2019 New Vector Ltd
+Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,6 +22,7 @@ import MatrixClientPeg from "../../../../../MatrixClientPeg";
 import sdk from "../../../../..";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import Modal from "../../../../../Modal";
+import dis from "../../../../../dispatcher";
 
 const plEventsToLabels = {
     // These will be translated for us later.
@@ -60,6 +62,7 @@ export class BannedUser extends React.Component {
         by: PropTypes.string.isRequired,
         reason: PropTypes.string,
         onUnbanned: PropTypes.func.isRequired,
+        onFinished: PropTypes.func.isRequired,
     };
 
     _onUnbanClick = (e) => {
@@ -73,6 +76,14 @@ export class BannedUser extends React.Component {
                 description: _t('Failed to unban'),
             });
         });
+    };
+
+    _onUserClick = () => {
+        dis.dispatch({
+            action: 'view_user',
+            member: this.props.member,
+        });
+        this.props.onFinished();
     };
 
     render() {
@@ -92,7 +103,9 @@ export class BannedUser extends React.Component {
             <li>
                 {unbanButton}
                 <span title={_t("Banned by %(displayName)s", {displayName: this.props.by})}>
-                    <strong>{ this.props.member.name }</strong> {userId}
+                    <AccessibleButton onClick={this._onUserClick} className="mx_RolesRoomSettingsTab_unbanUserBtn">
+                        <strong>{ this.props.member.name }</strong> {userId}
+                    </AccessibleButton>
                     {this.props.reason ? " " + _t('Reason') + ": " + this.props.reason : ""}
                 </span>
             </li>
@@ -103,6 +116,7 @@ export class BannedUser extends React.Component {
 export default class RolesRoomSettingsTab extends React.Component {
     static propTypes = {
         roomId: PropTypes.string.isRequired,
+        closeSettingsFn: PropTypes.func.isRequired,
     };
 
     _populateDefaultPlEvents(eventsSection, stateLevel, eventsLevel) {
@@ -270,7 +284,8 @@ export default class RolesRoomSettingsTab extends React.Component {
                             return (
                                 <BannedUser key={member.userId} canUnban={canBanUsers}
                                             member={member} reason={banEvent.reason}
-                                            by={bannedBy} onUnbanned={this.forceUpdate} />
+                                            by={bannedBy} onUnbanned={this.forceUpdate}
+                                            onFinished={this.props.closeSettingsFn} />
                             );
                         })}
                     </ul>
