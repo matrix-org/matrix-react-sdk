@@ -65,8 +65,14 @@ function createRoom(opts) {
                 }];
         }
     }
+
+    if (opts.access_rules && (opts.access_rules === 'restricted' || opts.access_rules === 'unrestricted')) {
+        createOpts.access_rules = opts.access_rules;
+    }
+
     if (opts.dmUserId && createOpts.is_direct === undefined) {
         createOpts.is_direct = true;
+        createOpts.access_rules = 'direct';
     }
 
     // By default, view the room after creating it
@@ -98,6 +104,13 @@ function createRoom(opts) {
                 history_visibility: createOpts.visibility === "private" ? 'invited' : 'world_readable',
             },
             type: 'm.room.history_visibility',
+            state_key: '',
+        },
+        {
+            content: {
+                rule: createOpts.access_rules
+            },
+            type: 'im.vector.room.access_rules',
             state_key: '',
         },
     ];

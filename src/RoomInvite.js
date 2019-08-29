@@ -84,6 +84,7 @@ export function showRoomInviteDialog(roomId) {
             placeholder: _t(placeholder),
             validAddressTypes: validAddressTypes,
             invitationType: 'room',
+            roomId: roomId,
             onFinished: (shouldInvite, addrs) => {
                 _onRoomInviteFinished(roomId, shouldInvite, addrs);
             },

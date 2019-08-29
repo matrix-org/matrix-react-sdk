@@ -87,6 +87,22 @@ limitations under the License.
     vertical-align: middle;
 }
 
+.mx_RoomTile_avatar_restricted {
+    background-image: url('$(res)/img/162d58.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.mx_RoomTile_avatar_unrestricted {
+    background-image: url('$(res)/img/cccccc.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
 .mx_RoomTile_hasSubtext .mx_RoomTile_avatar {
     padding-top: 0;
     vertical-align: super;
@@ -96,7 +112,7 @@ limitations under the License.
     display: block;
     position: absolute;
     bottom: 0;
-    right: -5px;
+    left: 32px;
     z-index: 2;
 }
 
@@ -139,7 +155,7 @@ limitations under the License.
     flex: 0 1 content;
     border-radius: 0.8em;
     padding: 0 0.4em;
-    color: $accent-color;
+    color: $accent-fg-color;
     font-weight: 800;
     font-size: 12px;
 }

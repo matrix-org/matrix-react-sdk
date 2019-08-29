@@ -31,7 +31,14 @@ module.exports = React.createClass({
                 _t("Message removed");
         }
 
-        const text = this.props.mxEvent.getContent().body;
+        const event = this.props.mxEvent.getContent();
+        let text;
+        if (event && event.msgtype && event.msgtype === "m.bad.encrypted") {
+            text = _t("Unable to decrypt: The sender's device has not sent us the keys for this message.");
+        } else {
+            text = event.body;
+        }
+
         return (
             <span className="mx_UnknownBody" title={tooltip}>
                 { text }

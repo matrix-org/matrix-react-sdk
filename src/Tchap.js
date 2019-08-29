@@ -30,6 +30,15 @@ class Tchap {
         return this._capitalize(domain) || 'Tchap';
     }
 
+    static getInfo(email) {
+        const tchapHostsList = this._shuffle(SdkConfig.get()['hs_url_list']);
+        const hostBase = TchapApi.hostBase;
+        const infoUrl = TchapApi.info;
+        return fetch(hostBase + tchapHostsList[0] + infoUrl + email).then(res => {
+            return res.json();
+        });
+    }
+
     /**
      * Given an email, return the homeserver associated with this email.
      * @param {string} email The email from which we are looking for the server.
@@ -73,6 +82,10 @@ class Tchap {
     static isCurrentUserExtern() {
         const hsUrl = MatrixClientPeg.get().getHomeserverUrl();
         return hsUrl.includes('.e.') || hsUrl.includes('.externe.');
+    }
+
+    static isUserExternFromHs(hs) {
+        return hs.includes('.e.') || hs.includes('.externe.');
     }
 
     /**
@@ -177,6 +190,24 @@ class Tchap {
             }
         });
         return isUserAdmin && adminNumber <= 1;
+    }
+
+    /**
+     * Given a roomId, return the access_rule of the room.
+     * @param {string} roomId The room ID to test for.
+     * @returns {string} The access_rules of the room.
+     */
+    static getAccessRules(roomId) {
+        const stateEventType = "im.vector.room.access_rules";
+        const keyName = "rule";
+        const defaultValue = "";
+        const room = MatrixClientPeg.get().getRoom(roomId);
+        const event = room.currentState.getStateEvents(stateEventType, '');
+        if (!event) {
+            return defaultValue;
+        }
+        const content = event.getContent();
+        return keyName in content ? content[keyName] : defaultValue;
     }
 
     /**

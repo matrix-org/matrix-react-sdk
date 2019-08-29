@@ -25,6 +25,34 @@ limitations under the License.
 
 .mx_CreateRoomDialog_input_container {
     padding-right: 20px;
+    display: inline-flex;
+    width: 100%;
+}
+
+.mx_CreateRoomDialog_input_avatar_container {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.mx_CreateRoomDialog_input_avatar_container_restricted {
+    background-image: url('$(res)/img/162d58.png');
+}
+
+.mx_CreateRoomDialog_input_avatar_container_unrestricted {
+    background-image: url('$(res)/img/cccccc.png');
+}
+
+.mx_CreateRoomDialog_input_avatar_container img {
+    width: 28px;
+    height: 30px;
+    -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    position: relative;
+    top: 5px;
+    left: 4px;
 }
 
 .mx_CreateRoomDialog_input {

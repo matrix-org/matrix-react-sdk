@@ -1636,11 +1636,18 @@
     "I renewed the validity of my account": "I renewed the validity of my account",
     "Request a renewal email": "Request a renewal email",
     "To disable this option, you must accept that your email address is visible to the other users.": "To disable this option, you must accept that your email address is visible to the other users.",
+    "Allow the externals to join this room": "Allow the externals to join this room",
+    "Externals are allowed to join this room": "Externals are allowed to join this room",
+    "Externals aren't allowed to join this room": "Externals aren't allowed to join this room",
+    "The user %(user)s is external.": "The user %(user)s is external.",
+    "This action is irreversible.": "This action is irreversible.",
+    "Are you sure you want to allow the externals to join this room ?": "Are you sure you want to allow the externals to join this room ?",
     "TAC": "TAC",
     "User Guide": "User Guide",
     "Are you sure you want to leave the room? The room will no longer be administered, and you may not be able to join it again.": "Are you sure you want to leave the room? The room will no longer be administered, and you may not be able to join it again.",
     "You are the last administrator": "You are the last administrator",
     "Your password must include a lower-case letter, an upper-case letter, a number and a symbol and be at a minimum 8 characters in length.": "Your password must include a lower-case letter, an upper-case letter, a number and a symbol and be at a minimum 8 characters in length.",
     "This password is too weak. It must include a lower-case letter, an upper-case letter, a number and a symbol and be at a minimum 8 characters in length.": "This password is too weak. It must include a lower-case letter, an upper-case letter, a number and a symbol and be at a minimum 8 characters in length.",
-    "Password too weak !": "Password too weak !"
+    "Password too weak !": "Password too weak !",
+    "Unable to decrypt: The sender's device has not sent us the keys for this message.": "Unable to decrypt: The sender's device has not sent us the keys for this message."
 }

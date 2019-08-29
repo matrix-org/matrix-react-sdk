@@ -20,6 +20,7 @@ import sdk from '../../../index';
 import SdkConfig from '../../../SdkConfig';
 import { _t } from '../../../languageHandler';
 import Tchap from '../../../Tchap';
+import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 
 export default React.createClass({
     displayName: 'CreateRoomDialog',
@@ -35,6 +36,8 @@ export default React.createClass({
             isPublic: false,
             federate: false,
             domain: domain,
+            externAllowed: false,
+            externAllowedSwitchDisabled: false
         };
     },
 
@@ -47,7 +50,8 @@ export default React.createClass({
             const opts = {
                 visibility: this.state.visibility,
                 preset: this.state.visibility === 'public' ? 'public_chat' : 'private_chat',
-                noFederate: this.refs.checkbox ? this.refs.checkbox.checked : null,
+                noFederate: this.state.federate,
+                access_rules: this.state.externAllowed === true ? 'unrestricted' : 'restricted'
             };
             this.props.onFinished(true, this.refs.textinput.value, opts);
         }
@@ -58,8 +62,29 @@ export default React.createClass({
     },
 
     _onRoomVisibilityRadioToggle: function(ev) {
+        if (ev.target.value === "public") {
+            this.setState({
+                externAllowed: false,
+                externAllowedSwitchDisabled: true,
+                visibility: ev.target.value
+            });
+        } else {
+            this.setState({
+                externAllowedSwitchDisabled: false,
+                visibility: ev.target.value
+            });
+        }
+    },
+
+    _onFederateSwitchChange: function(ev) {
         this.setState({
-            visibility: ev.target.value,
+            federate: ev
+        });
+    },
+
+    _onExternAllowedSwitchChange: function(ev) {
+        this.setState({
+            externAllowed: ev
         });
     },
 
@@ -80,15 +105,17 @@ export default React.createClass({
         let federationOption;
         if (this.state.visibility === 'public') {
             federationOption = (
-                <div>
-                    <input type="checkbox" id="checkbox" ref="checkbox" defaultChecked={this.state.federate} />
-                    <label htmlFor="checkbox">
-                        { _t('Limit access to this room to domain members "%(domain)s"', {domain: this.state.domain}) }
-                        <br />
-                        ({ _t('This setting cannot be changed later!') })
-                    </label>
-                </div>
+                <LabelledToggleSwitch value={this.state.federate}
+                                      onChange={ this._onFederateSwitchChange }
+                                      label={ _t('Limit access to this room to domain members "%(domain)s"', {domain: this.state.domain}) } />
             );
+        }
+
+        let inputAvatarContainerClass = "mx_CreateRoomDialog_input_avatar_container";
+        if (this.state.externAllowed) {
+            inputAvatarContainerClass += " mx_CreateRoomDialog_input_avatar_container_unrestricted";
+        } else {
+            inputAvatarContainerClass += " mx_CreateRoomDialog_input_avatar_container_restricted";
         }
 
         return (
@@ -96,11 +123,14 @@ export default React.createClass({
                 title={_t('Create Room')}
             >
                 <form onSubmit={this.onOk}>
-                    <div className="mx_Dialog_content">
+                    <div className="mx_Dialog_content mx_SettingsTab_section">
                         <div className="mx_CreateRoomDialog_label">
                             <label htmlFor="textinput"> { _t('Room name (required)') } </label>
                         </div>
                         <div className="mx_CreateRoomDialog_input_container">
+                            <div className={inputAvatarContainerClass}>
+                                <img src={require("../../../../res/img/8b8999.png")} alt="Avatar"/>
+                            </div>
                             <input id="textinput" ref="textinput" className="mx_CreateRoomDialog_input" autoFocus={true} />
                         </div>
                         {errorTextSection}
@@ -121,7 +151,10 @@ export default React.createClass({
                         </label>
                         <br />
                         <br />
-
+                        <LabelledToggleSwitch value={this.state.externAllowed}
+                                              onChange={ this._onExternAllowedSwitchChange }
+                                              label={ _t("Allow the externals to join this room") }
+                                              disabled={ this.state.externAllowedSwitchDisabled } />
                         { federationOption }
                     </div>
                 </form>

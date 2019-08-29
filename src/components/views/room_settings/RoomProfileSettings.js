@@ -21,6 +21,10 @@ import MatrixClientPeg from "../../../MatrixClientPeg";
 import Field from "../elements/Field";
 import AccessibleButton from "../elements/AccessibleButton";
 import classNames from 'classnames';
+import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
+const sdk = require("../../../index");
+import Modal from '../../../Modal';
+import Tchap from '../../../Tchap';
 
 // TODO: Merge with ProfileSettings?
 export default class RoomProfileSettings extends React.Component {
@@ -57,6 +61,8 @@ export default class RoomProfileSettings extends React.Component {
             canSetName: room.currentState.maySendStateEvent('m.room.name', client.getUserId()),
             canSetTopic: room.currentState.maySendStateEvent('m.room.topic', client.getUserId()),
             canSetAvatar: room.currentState.maySendStateEvent('m.room.avatar', client.getUserId()),
+            access_rules: Tchap.getAccessRules(props.roomId),
+            join_rules: this._getJoinRules(props.roomId),
         };
     }
 
@@ -136,8 +142,50 @@ export default class RoomProfileSettings extends React.Component {
         reader.readAsDataURL(file);
     };
 
+    _getJoinRules = (roomId) => {
+        const stateEventType = "m.room.join_rules";
+        const keyName = "join_rule";
+        const defaultValue = "public";
+        const room = MatrixClientPeg.get().getRoom(roomId);
+        const event = room.currentState.getStateEvents(stateEventType, '');
+        if (!event) {
+            return defaultValue;
+        }
+        const content = event.getContent();
+        return keyName in content ? content[keyName] : defaultValue;
+    };
+
+    _onExternAllowedSwitchChange = () => {
+        const self = this;
+        const access_rules = this.state.access_rules;
+        const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+        Modal.createTrackedDialog('Allow the externals to join this room', '', QuestionDialog, {
+            title: _t('Allow the externals to join this room'),
+            description: ( _t('This action is irreversible.') + " " + _t('Are you sure you want to allow the externals to join this room ?')),
+            onFinished: (confirm) => {
+                if (confirm) {
+                    self.setState({
+                        access_rules: 'unrestricted'
+                    });
+                    MatrixClientPeg.get().sendStateEvent(
+                        self.props.roomId, "im.vector.room.access_rules",
+                        { rule: 'unrestricted' },
+                        "",
+                    )
+                } else {
+                    self.setState({
+                        access_rules
+                    });
+                }
+            },
+        });
+    };
+
     render() {
         // TODO: Why is rendering a box with an overlay so complicated? Can the DOM be reduced?
+        const client = MatrixClientPeg.get();
+        const room = client.getRoom(this.props.roomId);
+        const isCurrentUserAdmin = room.getMember(client.getUserId()).powerLevelNorm >= 100;
 
         let showOverlayAnyways = true;
         let avatarElement = <div className="mx_ProfileSettings_avatarPlaceholder" />;
@@ -175,6 +223,15 @@ export default class RoomProfileSettings extends React.Component {
                 );
             }
         }
+        let accessRule = null;
+        if (isCurrentUserAdmin && this.state.join_rules !== "public") {
+            accessRule = (
+                <LabelledToggleSwitch value={this.state.access_rules === "unrestricted"}
+                                      onChange={ this._onExternAllowedSwitchChange }
+                                      label={ _t('Allow the externals to join this room') }
+                                      disabled={ this.state.access_rules === "unrestricted" } />
+            );
+        }
 
         return (
             <form onSubmit={this._saveProfile} autoComplete={false} noValidate={true}>
@@ -194,6 +251,7 @@ export default class RoomProfileSettings extends React.Component {
                         {avatarHoverElement}
                     </div>
                 </div>
+                { accessRule }
                 <AccessibleButton onClick={this._saveProfile} kind="primary"
                                   disabled={!this.state.enableProfileSave}>
                     {_t("Save")}
