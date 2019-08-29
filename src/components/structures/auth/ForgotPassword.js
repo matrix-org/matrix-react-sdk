@@ -23,6 +23,7 @@ import Modal from "../../../Modal";
 import Tchap from '../../../Tchap';
 
 import PasswordReset from "../../../PasswordReset";
+import TchapStrongPassword from "../../../TchapStrongPassword";
 
 // Phases
 // Show the forgot password inputs
@@ -115,29 +116,36 @@ module.exports = React.createClass({
         } else if (this.state.password !== this.state.password2) {
             this.showErrorDialog(_t('New passwords must match each other.'));
         } else {
-            const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-            Modal.createTrackedDialog('Forgot Password Warning', '', QuestionDialog, {
-                title: _t('Warning!'),
-                description:
-                    <div>
-                        { _t(
-                            "Changing your password will reset any end-to-end encryption keys " +
-                            "on all of your devices, making encrypted chat history unreadable. Set up " +
-                            "Key Backup or export your room keys from another device before resetting your " +
-                            "password.",
-                        ) }
-                    </div>,
-                button: _t('Continue'),
-                onFinished: (confirmed) => {
-                    if (confirmed) {
-                        Tchap.discoverPlatform(this.state.email).then(hs => {
-                            this.submitPasswordReset(
-                                hs, hs,
-                                this.state.email, this.state.password,
-                            );
+
+            Tchap.discoverPlatform(this.state.email).then(hs => {
+                TchapStrongPassword.validatePassword(hs, this.state.password).then(isValidPassword => {
+                    if (!isValidPassword) {
+                        this.showErrorDialog(_t('This password is too weak. It must include a lower-case letter, an upper-case letter, a number and a symbol and be at a minimum 8 characters in length.'));
+                    } else {
+                        const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+                        Modal.createTrackedDialog('Forgot Password Warning', '', QuestionDialog, {
+                            title: _t('Warning!'),
+                            description:
+                                <div>
+                                    { _t(
+                                        "Changing your password will reset any end-to-end encryption keys " +
+                                        "on all of your devices, making encrypted chat history unreadable. Set up " +
+                                        "Key Backup or export your room keys from another device before resetting your " +
+                                        "password.",
+                                    ) }
+                                </div>,
+                            button: _t('Continue'),
+                            onFinished: (confirmed) => {
+                                if (confirmed) {
+                                    this.submitPasswordReset(
+                                        hs, hs,
+                                        this.state.email, this.state.password,
+                                    );
+                                }
+                            },
                         });
                     }
-                },
+                });
             });
         }
     },
@@ -202,6 +210,9 @@ module.exports = React.createClass({
                         value={this.state.password2}
                         onChange={this.onInputChanged.bind(this, "password2")}
                     />
+                    <img className="tc_PasswordHelper" src={require('../../../../res/img/question_mark.svg')}
+                         width={25} height={25}
+                         title={ _t('This password is too weak. It must include a lower-case letter, an upper-case letter, a number and a symbol and be at a minimum 8 characters in length.') } alt={""} />
                 </div>
                 <span>{_t(
                     'A verification email will be sent to your inbox to confirm ' +

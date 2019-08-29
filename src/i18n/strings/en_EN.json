@@ -1646,5 +1646,8 @@
     "User Guide": "User Guide",
     "Are you sure you want to leave the room? The room will no longer be administered, and you may not be able to join it again.": "Are you sure you want to leave the room? The room will no longer be administered, and you may not be able to join it again.",
     "You are the last administrator": "You are the last administrator",
+    "Your password must include a lower-case letter, an upper-case letter, a number and a symbol and be at a minimum 8 characters in length.": "Your password must include a lower-case letter, an upper-case letter, a number and a symbol and be at a minimum 8 characters in length.",
+    "This password is too weak. It must include a lower-case letter, an upper-case letter, a number and a symbol and be at a minimum 8 characters in length.": "This password is too weak. It must include a lower-case letter, an upper-case letter, a number and a symbol and be at a minimum 8 characters in length.",
+    "Password too weak !": "Password too weak !",
     "Unable to decrypt: The sender's device has not sent us the keys for this message.": "Unable to decrypt: The sender's device has not sent us the keys for this message."
 }

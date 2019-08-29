@@ -27,6 +27,7 @@ import { _t, _td } from '../../../languageHandler';
 import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
 import * as ServerType from '../../views/auth/ServerTypeSelector';
 import Tchap from '../../../Tchap';
+import TchapStrongPassword from '../../../TchapStrongPassword';
 
 const MIN_PASSWORD_LENGTH = 8;
 
@@ -134,15 +135,25 @@ module.exports = React.createClass({
     onFormSubmit: function(formVals) {
         Tchap.discoverPlatform(formVals.email)
             .then(hs => {
-                this.setState({
-                    hsUrl: hs,
-                    isUrl: hs,
-                    errorText: "",
-                    busy: true,
-                    formVals: formVals,
-                    doingUIAuth: true,
+                TchapStrongPassword.validatePassword(hs, formVals.password).then(isValidPassword => {
+                    if (!isValidPassword) {
+                        this.setState({
+                            hsUrl: hs,
+                            isUrl: hs,
+                            errorText: _t('This password is too weak. It must include a lower-case letter, an upper-case letter, a number and a symbol and be at a minimum 8 characters in length.'),
+                        });
+                    } else {
+                        this.setState({
+                            hsUrl: hs,
+                            isUrl: hs,
+                            errorText: "",
+                            busy: true,
+                            formVals: formVals,
+                            doingUIAuth: true,
+                        });
+                        this._replaceClient();
+                    }
                 });
-                this._replaceClient();
             });
     },
 
