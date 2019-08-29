@@ -25,6 +25,7 @@ import { addressTypes, getAddressType } from '../../../UserAddress.js';
 import GroupStore from '../../../stores/GroupStore';
 import * as Email from "../../../email";
 import Tchap from '../../../Tchap';
+import Modal from "../../../Modal";
 
 const TRUNCATE_QUERY_LIST = 40;
 const QUERY_USER_DIRECTORY_DEBOUNCE_MS = 200;
@@ -91,6 +92,8 @@ module.exports = React.createClass({
             // List of UserAddressType objects representing the set of
             // auto-completion results for the current search query.
             suggestedList: [],
+            isExternInList: false,
+            lastExternInList: "",
         };
     },
 
@@ -102,6 +105,7 @@ module.exports = React.createClass({
     },
 
     onButtonClick: function() {
+        const self = this;
         let selectedList = this.state.selectedList.slice();
         // Check the text input field to see if user has an unconverted address
         // If there is and it's valid add it to the local selectedList
@@ -109,7 +113,51 @@ module.exports = React.createClass({
             selectedList = this._addInputToList();
             if (selectedList === null) return;
         }
-        this.props.onFinished(true, selectedList);
+        if (this.props.roomId) {
+            const access_rules = Tchap.getAccessRules(this.props.roomId);
+            if (access_rules !== "unrestricted") {
+                Promise.delay(0).then(() => {
+                    selectedList.forEach(u => {
+                        if (u.addressType === "email") {
+                            Tchap.getInfo(u.address).then(a => {
+                                if (Tchap.isUserExternFromHs(a.hs)) {
+                                    self.setState({
+                                        isExternInList: true,
+                                        lastExternInList: u.address,
+                                    });
+                                }
+                            });
+                        } else if (u.addressType === "mx-user-id") {
+                            if (Tchap.isUserExtern(u.address)) {
+                                self.setState({
+                                    isExternInList: true,
+                                    lastExternInList: u.displayName,
+                                });
+                            }
+                        }
+                    });
+                }).delay(1000).then(() => {
+                    const isExternInList = self.state.isExternInList;
+                    if (isExternInList === true) {
+                        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+                        Modal.createTrackedDialog(
+                            "Externals aren't allowed to join this room",
+                            '', ErrorDialog,
+                            {
+                                title: _t("Error"),
+                                description: (_t("The user %(user)s is external.", {user: self.state.lastExternInList}) + " "
+                                    + _t("Externals aren't allowed to join this room")),
+                            });
+                    } else {
+                        this.props.onFinished(true, selectedList);
+                    }
+                });
+            } else {
+                this.props.onFinished(true, selectedList);
+            }
+        } else {
+            this.props.onFinished(true, selectedList);
+        }
     },
 
     onCancel: function() {
@@ -393,15 +441,8 @@ module.exports = React.createClass({
     },
 
     _processResults: function(results, query) {
-        const self = this;
         const suggestedList = [];
         results.forEach((result) => {
-            if (this.props.roomId) {
-                const access_rules = Tchap.getAccessRules(this.props.roomId);
-                if (access_rules === "restricted" && Tchap.isUserExtern(result.user_id)) {
-                    return;
-                }
-            }
             if (result.room_id) {
                 const client = MatrixClientPeg.get();
                 const room = client.getRoom(result.room_id);
@@ -449,21 +490,14 @@ module.exports = React.createClass({
                 this.setState({searchError: _t("That doesn't look like a valid email address")});
                 return;
             }
+            suggestedList.unshift({
+                addressType: addrType,
+                address: query,
+                isKnown: false,
+            });
             if (this._cancelThreepidLookup) this._cancelThreepidLookup();
             if (addrType === 'email') {
-                this._lookupThreepid(addrType, query).then(val => {
-                    if (val !== false) {
-                        suggestedList.unshift({
-                            addressType: addrType,
-                            address: query,
-                            isKnown: false,
-                        });
-                    }
-                    self.setState({
-                        suggestedList,
-                        error: false,
-                    });
-                });
+                this._lookupThreepid(addrType, query).done();
             }
         }
         this.setState({
@@ -513,7 +547,6 @@ module.exports = React.createClass({
     },
 
     _lookupThreepid: function(medium, address) {
-        const access_rules = Tchap.getAccessRules(this.props.roomId);
         let cancelled = false;
         // Note that we can't safely remove this after we're done
         // because we don't know that it's the same one, so we just
@@ -528,18 +561,12 @@ module.exports = React.createClass({
             if (cancelled) return null;
             return Tchap.lookupThreePid(medium, address);
         }).then((res) => {
-            if (access_rules !== "unrestricted") {
-                if (Object.keys(res).length === 0 || Tchap.isUserExtern(res.mxid)) {
-                    return false;
-                }
-            }
             if (res === null || !res.mxid) return null;
             if (cancelled) return null;
 
-            return MatrixClientPeg.get().getProfileInfo(res.mxid).catch(err => {return null});
+            return MatrixClientPeg.get().getProfileInfo(res.mxid);
         }).then((res) => {
             if (res === null) return null;
-            if (res === false) return false;
             if (cancelled) return null;
             this.setState({
                 suggestedList: [{
@@ -633,11 +660,21 @@ module.exports = React.createClass({
             );
         }
 
+        let roomParams = null;
+        if (this.props.roomId) {
+            const ar = Tchap.getAccessRules(this.props.roomId) !== "unrestricted"
+                ? _t("Externals aren't allowed to join this room")
+                : _t("Externals are allowed to join this room");
+            roomParams = (<label>{ar}</label>);
+        }
+
         return (
             <BaseDialog className="mx_AddressPickerDialog" onKeyDown={this.onKeyDown}
                 onFinished={this.props.onFinished} title={this.props.title}>
                 <div className="mx_AddressPickerDialog_label">
                     <label htmlFor="textinput">{ this.props.description }</label>
+                    <br />
+                    { roomParams }
                 </div>
                 <div className="mx_Dialog_content">
                     <div className="mx_AddressPickerDialog_inputContainer">{ query }</div>
