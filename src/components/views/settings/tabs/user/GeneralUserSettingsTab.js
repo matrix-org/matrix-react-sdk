@@ -49,6 +49,7 @@ export default class GeneralUserSettingsTab extends React.Component {
         this.state = {
             language: languageHandler.getCurrentLanguage(),
             theme: SettingsStore.getValueAt(SettingLevel.ACCOUNT, "theme"),
+            customCss: SettingsStore.getValueAt(SettingLevel.DEVICE, "customCss"),
             haveIdServer: Boolean(MatrixClientPeg.get().getIdentityServerUrl()),
             serverRequiresIdServer: null,
             idServerHasUnsignedTerms: false,
@@ -133,6 +134,16 @@ export default class GeneralUserSettingsTab extends React.Component {
         SettingsStore.setValue("theme", null, SettingLevel.ACCOUNT, newTheme);
         this.setState({theme: newTheme});
         dis.dispatch({action: 'set_theme', value: newTheme});
+    };
+
+    _onCustomCssChange = (e) => {
+        this.setState({customCss: e.target.value});
+    };
+
+    _saveCustomCss = (e) => {
+        SettingsStore.setValue("customCss", null, SettingLevel.DEVICE, this.state.customCss).then(() => {
+            PlatformPeg.get().reload();
+        });
     };
 
     _onPasswordChangeError = (err) => {
@@ -244,6 +255,18 @@ export default class GeneralUserSettingsTab extends React.Component {
                     })}
                 </Field>
                 <SettingsFlag name="useCompactLayout" level={SettingLevel.ACCOUNT} />
+
+                <span className="mx_SettingsTab_subheading">{_t("Custom CSS")}</span>
+                <Field
+                    element="textarea"
+                    id="customCss"
+                    value={this.state.customCss}
+                    onChange={this._onCustomCssChange.bind(this)}
+                    />
+
+                <AccessibleButton onClick={this._saveCustomCss} kind="primary">
+                    {_t("Save")}
+                </AccessibleButton>
             </div>
         );
     }
