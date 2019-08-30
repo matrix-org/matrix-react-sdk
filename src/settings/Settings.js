@@ -246,7 +246,7 @@ export const SETTINGS = {
         controller: new ThemeController(),
     },
     "customCss": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: null,
     },
     "webRtcAllowPeerToPeer": {
