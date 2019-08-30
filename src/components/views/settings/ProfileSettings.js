@@ -22,6 +22,8 @@ import AccessibleButton from "../elements/AccessibleButton";
 import classNames from 'classnames';
 import {User} from "matrix-js-sdk";
 import { getHostingLink } from '../../../utils/HostingLink';
+import sdk from "../../../index";
+import {createMenu} from "../../structures/ContextualMenu";
 
 export default class ProfileSettings extends React.Component {
     constructor() {
@@ -50,11 +52,16 @@ export default class ProfileSettings extends React.Component {
         };
     }
 
-    _uploadAvatar = (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-
+    _uploadAvatar = () => {
         this.refs.avatarUpload.click();
+    };
+
+    _removeAvatar = () => {
+        this.setState({
+            avatarUrl: null,
+            avatarFile: null,
+            enableProfileSave: true,
+        });
     };
 
     _saveProfile = async (e) => {
@@ -80,6 +87,9 @@ export default class ProfileSettings extends React.Component {
             newState.avatarUrl = client.mxcUrlToHttp(uri, 96, 96, 'crop', false);
             newState.originalAvatarUrl = newState.avatarUrl;
             newState.avatarFile = null;
+        } else if (!this.state.avatarUrl && this.state.originalAvatarUrl) {
+            await client.setAvatarUrl(null);
+            newState.originalAvatarUrl = this.state.avatarUrl;
         }
 
         this.setState(newState);
@@ -114,6 +124,36 @@ export default class ProfileSettings extends React.Component {
         reader.readAsDataURL(file);
     };
 
+    _onAvatarClick = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        if (this.state.avatarUrl) {
+            this._showAvatarContextMenu(e);
+        } else {
+            this._uploadAvatar();
+        }
+    };
+
+    _showAvatarContextMenu = (e) => {
+        const elementRect = e.target.getBoundingClientRect();
+
+        // The window X and Y offsets are to adjust position when zoomed in to page
+        const x = elementRect.right + window.pageXOffset + 3;
+        const chevronOffset = 12;
+        let y = (elementRect.top + (elementRect.height / 2) + window.pageYOffset);
+        y = y - (chevronOffset + 8); // where 8 is half the height of the chevron
+
+        const RoomTileContextMenu = sdk.getComponent('context_menus.AvatarContextMenu');
+
+        createMenu(RoomTileContextMenu, {
+            chevronOffset,
+            left: x,
+            top: y,
+            uploadAvatar: this._uploadAvatar,
+            removeAvatar: this._removeAvatar,
+        });
+    };
+
     render() {
         // TODO: Why is rendering a box with an overlay so complicated? Can the DOM be reduced?
 
@@ -129,9 +169,11 @@ export default class ProfileSettings extends React.Component {
             "mx_ProfileSettings_avatarOverlay": true,
             "mx_ProfileSettings_avatarOverlay_show": showOverlayAnyways,
         });
+
+        const uploadText = this.state.avatarUrl ? _t("Change profile picture") : _t("Upload profile picture");
         const avatarHoverElement = (
-            <div className={avatarOverlayClasses} onClick={this._uploadAvatar}>
-                <span className="mx_ProfileSettings_avatarOverlayText">{_t("Upload profile picture")}</span>
+            <div className={avatarOverlayClasses} onClick={this._onAvatarClick}>
+                <span className="mx_ProfileSettings_avatarOverlayText">{uploadText}</span>
                 <div className="mx_ProfileSettings_avatarOverlayImgContainer">
                     <div className="mx_ProfileSettings_avatarOverlayImg" />
                 </div>
