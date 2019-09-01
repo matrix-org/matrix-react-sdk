@@ -44,7 +44,7 @@ import ObjectUtils from '../../ObjectUtils';
 import * as Rooms from '../../Rooms';
 
 import { KeyCode, isOnlyCtrlOrCmdKeyEvent } from '../../Keyboard';
-import { formatFullDate } from '../../DateUtils';
+import { formatDate } from '../../DateUtils';
 
 import MainSplit from './MainSplit';
 import RightPanel from './RightPanel';
@@ -1451,8 +1451,11 @@ module.exports = React.createClass({
     },
 
     _findEventTileContent: (node) => {
-        while (node && !node.classList.contains("mx_RoomView_MessageList")) {
-            if (node.classList.contains("mx_Content")) {
+        while (node) {
+            if (node.classList && node.classList.contains("mx_RoomView_MessageList")) {
+                return null;
+            }
+            if (node.classList && node.classList.contains("mx_Content")) {
                 return node;
             }
             node = node.parentNode;
@@ -1472,14 +1475,14 @@ module.exports = React.createClass({
         return null;
     },
 
-    _pruneStart: (item, startNode, startOffset) {
+    _pruneStart: (node, startNode, startOffset) => {
         // todo
-        return item;
+        return node;
     },
 
-    _pruneEnd: (item, endNode, endOffset) {
+    _pruneEnd: (node, endNode, endOffset) => {
         // todo
-        return item;
+        return node;
     },
 
     onCopy: function(ev) {
@@ -1489,7 +1492,7 @@ module.exports = React.createClass({
 
         // if we're copying a fragment of content then don't do anything funky
         if (sel.anchorNode === sel.focusNode ||
-            this.findEventTileContent(sel.anchorNode) === this._findEventTileContent(sel.focusNode))
+            this._findEventTileContent(sel.anchorNode) === this._findEventTileContent(sel.focusNode))
         {
             return;
         }
@@ -1500,10 +1503,10 @@ module.exports = React.createClass({
         // rebuilding the metadata blocks but keeping the data blocks intact.
 
         const dir = sel.anchorNode.compareDocumentPosition(sel.focusNode);
-        const startNode   = dir & DOCUMENT_POSITION_PRECEDING ? sel.focusNode : sel.anchorNode;
-        const endNode     = dir & DOCUMENT_POSITION_PRECEDING ? sel.anchorNode : sel.focusNode;
-        const startOffset = dir & DOCUMENT_POSITION_PRECEDING ? sel.focusOffset : sel.anchorOffset;
-        const endOffset   = dir & DOCUMENT_POSITION_PRECEDING ? sel.anchorOffset : sel.focusOffset;
+        const startNode   = dir & Node.DOCUMENT_POSITION_PRECEDING ? sel.focusNode : sel.anchorNode;
+        const endNode     = dir & Node.DOCUMENT_POSITION_PRECEDING ? sel.anchorNode : sel.focusNode;
+        const startOffset = dir & Node.DOCUMENT_POSITION_PRECEDING ? sel.focusOffset : sel.anchorOffset;
+        const endOffset   = dir & Node.DOCUMENT_POSITION_PRECEDING ? sel.anchorOffset : sel.focusOffset;
 
         const startItem = this._findListItem(startNode);
         if (!startItem) {
@@ -1517,10 +1520,9 @@ module.exports = React.createClass({
             return;
         }
 
-        let item = startItem;
-        let html = "<ol>";
+        let html = "";
         let text = "";
-        while (item !== endItem) {
+        for (let item = startItem; item !== endItem; item = item.nextElementSibling) {
             let node = item;
 
             if (item === startItem) {
@@ -1533,27 +1535,33 @@ module.exports = React.createClass({
             const eventId = node.getAttribute("data-scroll-tokens");
             if (eventId && this.state.room.findEventById(eventId)) {
                 const mxEvent = this.state.room.findEventById(eventId);
-                const name = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
+                const sender = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
                 const showTwelveHour = SettingsStore.getValue("showTwelveHourTimestamps");
-                const ts = formatFullDate(mxEvent.getTs(), showTwelveHour);
-                const content = node.querySelector("mx_Content");
-                html += `<li>[${ts}] &lt;${mxEvent.getDisplayName()}&gt; ${content.innerHTML}</li>\n`;
-                text += `[${ts}] <${mxEvent.getDisplayName()}> ${content.innerText}\n`;
+                const ts = formatDate(new Date(mxEvent.getTs()), showTwelveHour);
+                const contents = node.querySelectorAll(".mx_Content");
+                const content = contents[contents.length - 1];
+                if (content) {
+                    // FIXME: replace this with rendering from EventTiles once we add the ability
+                    // to render out events in 'log' mode.
+                    html += `<div>[${ts}] &lt;${sender}&gt; ${content.innerHTML}</div>\n`;
+                    text += `[${ts}] <${sender}> ${content.innerText}\n`;
+                }
+                else {
+                    html += node.innerHTML;
+                    text += node.innerText;
+                }
             }
             else {
+                if (node.querySelector(".mx_DateSeparator")) continue;
                 // fall back for MELS etc
                 html += node.innerHTML;
                 text += node.innerText;
             }
-
-            item = item.nextElementSibling;
         }
-        html += "</ol>";
 
-
-        event.clipboardData.setData('text/plain', text);
-        event.clipboardData.setData('text/html', html);
-        event.preventDefault();
+        ev.clipboardData.setData('text/plain', text);
+        ev.clipboardData.setData('text/html', html);
+        ev.preventDefault();
     },
 
     onFullscreenClick: function() {
