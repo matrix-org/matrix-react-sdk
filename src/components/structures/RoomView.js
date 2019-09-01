@@ -1508,17 +1508,9 @@ module.exports = React.createClass({
         const startOffset = dir & Node.DOCUMENT_POSITION_PRECEDING ? sel.focusOffset : sel.anchorOffset;
         const endOffset   = dir & Node.DOCUMENT_POSITION_PRECEDING ? sel.anchorOffset : sel.focusOffset;
 
-        const startItem = this._findListItem(startNode);
-        if (!startItem) {
-            console.warn("Copy selection start isn't within mx_RoomView_MessageList; doing a plain copy instead")
-            return;
-        }
-
-        const endItem = this._findListItem(endNode);
-        if (!endItem) {
-            console.warn("Copy selection end isn't within mx_RoomView_MessageList; doing a plain copy instead")
-            return;
-        }
+        const messageList = ReactDOM.findDOMNode(this.refs.messagePanel).querySelector(".mx_RoomView_MessageList");
+        const startItem = this._findListItem(startNode) || messageList.firstChild;
+        const endItem = this._findListItem(endNode) || messageList.lastChild;
 
         let html = "";
         let text = "";
@@ -1538,7 +1530,8 @@ module.exports = React.createClass({
                 const sender = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
                 const showTwelveHour = SettingsStore.getValue("showTwelveHourTimestamps");
                 const ts = formatDate(new Date(mxEvent.getTs()), showTwelveHour);
-                const contents = node.querySelectorAll(".mx_Content");
+                // FIXME handle replies properly
+                const contents = node.querySelectorAll(".mx_EventTile_line > .mx_Content");
                 const content = contents[contents.length - 1];
                 if (content) {
                     // FIXME: replace this with rendering from EventTiles once we add the ability
@@ -1558,6 +1551,9 @@ module.exports = React.createClass({
                 text += node.innerText;
             }
         }
+
+        console.log("setting text clipboard to: ", text);
+        console.log("setting html clipboard to: ", html);
 
         ev.clipboardData.setData('text/plain', text);
         ev.clipboardData.setData('text/html', html);
