@@ -1554,8 +1554,8 @@ module.exports = React.createClass({
             }
         }
 
-        console.log("setting text clipboard to: ", text);
-        console.log("setting html clipboard to: ", html);
+        // console.log("setting text clipboard to: ", text);
+        // console.log("setting html clipboard to: ", html);
 
         ev.clipboardData.setData('text/plain', text);
         ev.clipboardData.setData('text/html', html);
