@@ -44,6 +44,7 @@ import ObjectUtils from '../../ObjectUtils';
 import * as Rooms from '../../Rooms';
 
 import { KeyCode, isOnlyCtrlOrCmdKeyEvent } from '../../Keyboard';
+import { formatFullDate } from '../../DateUtils';
 
 import MainSplit from './MainSplit';
 import RightPanel from './RightPanel';
@@ -1449,6 +1450,112 @@ module.exports = React.createClass({
         this.setState({auxPanelMaxHeight: auxPanelMaxHeight});
     },
 
+    _findEventTileContent: (node) => {
+        while (node && !node.classList.contains("mx_RoomView_MessageList")) {
+            if (node.classList.contains("mx_Content")) {
+                return node;
+            }
+            node = node.parentNode;
+        }
+        return null;
+    },
+
+    _findListItem: (node) => {
+        while (node.parentNode) {
+            if (node.parentNode.classList &&
+                node.parentNode.classList.contains("mx_RoomView_MessageList"))
+            {
+                return node;
+            }
+            node = node.parentNode;
+        }
+        return null;
+    },
+
+    _pruneStart: (item, startNode, startOffset) {
+        // todo
+        return item;
+    },
+
+    _pruneEnd: (item, endNode, endOffset) {
+        // todo
+        return item;
+    },
+
+    onCopy: function(ev) {
+        const sel = document.getSelection();
+        // iterate over all the selected events and build up pretty
+        // plaintext & HTML representations of them
+
+        // if we're copying a fragment of content then don't do anything funky
+        if (sel.anchorNode === sel.focusNode ||
+            this.findEventTileContent(sel.anchorNode) === this._findEventTileContent(sel.focusNode))
+        {
+            return;
+        }
+
+        // otherwise, we must be spanning multiple nodes, so let's prepend
+        // nice timestamp and sender info.  in order to respect the offsets of the anchor
+        // and focus end of the selection block, we do this by traversing the selection DOM,
+        // rebuilding the metadata blocks but keeping the data blocks intact.
+
+        const dir = sel.anchorNode.compareDocumentPosition(sel.focusNode);
+        const startNode   = dir & DOCUMENT_POSITION_PRECEDING ? sel.focusNode : sel.anchorNode;
+        const endNode     = dir & DOCUMENT_POSITION_PRECEDING ? sel.anchorNode : sel.focusNode;
+        const startOffset = dir & DOCUMENT_POSITION_PRECEDING ? sel.focusOffset : sel.anchorOffset;
+        const endOffset   = dir & DOCUMENT_POSITION_PRECEDING ? sel.anchorOffset : sel.focusOffset;
+
+        const startItem = this._findListItem(startNode);
+        if (!startItem) {
+            console.warn("Copy selection start isn't within mx_RoomView_MessageList; doing a plain copy instead")
+            return;
+        }
+
+        const endItem = this._findListItem(endNode);
+        if (!endItem) {
+            console.warn("Copy selection end isn't within mx_RoomView_MessageList; doing a plain copy instead")
+            return;
+        }
+
+        let item = startItem;
+        let html = "<ol>";
+        let text = "";
+        while (item !== endItem) {
+            let node = item;
+
+            if (item === startItem) {
+                node = this._pruneStart(item, startNode, startOffset);
+            }
+            else if (item === endItem) {
+                node = this._pruneEnd(item, endNode, endOffset);
+            }
+
+            const eventId = node.getAttribute("data-scroll-tokens");
+            if (eventId && this.state.room.findEventById(eventId)) {
+                const mxEvent = this.state.room.findEventById(eventId);
+                const name = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
+                const showTwelveHour = SettingsStore.getValue("showTwelveHourTimestamps");
+                const ts = formatFullDate(mxEvent.getTs(), showTwelveHour);
+                const content = node.querySelector("mx_Content");
+                html += `<li>[${ts}] &lt;${mxEvent.getDisplayName()}&gt; ${content.innerHTML}</li>\n`;
+                text += `[${ts}] <${mxEvent.getDisplayName()}> ${content.innerText}\n`;
+            }
+            else {
+                // fall back for MELS etc
+                html += node.innerHTML;
+                text += node.innerText;
+            }
+
+            item = item.nextElementSibling;
+        }
+        html += "</ol>";
+
+
+        event.clipboardData.setData('text/plain', text);
+        event.clipboardData.setData('text/html', html);
+        event.preventDefault();
+    },
+
     onFullscreenClick: function() {
         dis.dispatch({
             action: 'video_fullscreen',
@@ -1955,7 +2062,7 @@ module.exports = React.createClass({
                 >
                     <div className={fadableSectionClasses}>
                         { auxPanel }
-                        <div className="mx_RoomView_timeline">
+                        <div className="mx_RoomView_timeline" onCopy={ this.onCopy }>
                             { topUnreadMessagesBar }
                             { jumpToBottom }
                             { messagePanel }

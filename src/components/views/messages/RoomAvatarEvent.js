@@ -57,7 +57,7 @@ module.exports = React.createClass({
 
         if (!ev.getContent().url || ev.getContent().url.trim().length === 0) {
             return (
-                <div className="mx_TextualEvent">
+                <div className="mx_TextualEvent mx_Content">
                     { _t('%(senderDisplayName)s removed the room avatar.', {senderDisplayName}) }
                 </div>
             );
@@ -71,7 +71,7 @@ module.exports = React.createClass({
         };
 
         return (
-            <div className="mx_RoomAvatarEvent">
+            <div className="mx_RoomAvatarEvent mx_Content">
                 { _t('%(senderDisplayName)s changed the room avatar to <img/>',
                     { senderDisplayName: senderDisplayName },
                     {

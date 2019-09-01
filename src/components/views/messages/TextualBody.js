@@ -459,7 +459,7 @@ module.exports = React.createClass({
             case "m.emote":
                 const name = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
                 return (
-                    <span ref="content" className="mx_MEmoteBody mx_EventTile_content">
+                    <span ref="content" className="mx_MEmoteBody mx_EventTile_content mx_Content">
                         *&nbsp;
                         <span
                             className="mx_MEmoteBody_sender"
@@ -474,14 +474,14 @@ module.exports = React.createClass({
                 );
             case "m.notice":
                 return (
-                    <span ref="content" className="mx_MNoticeBody mx_EventTile_content">
+                    <span ref="content" className="mx_MNoticeBody mx_EventTile_content mx_Content">
                         { body }
                         { widgets }
                     </span>
                 );
             default: // including "m.text"
                 return (
-                    <span ref="content" className="mx_MTextBody mx_EventTile_content">
+                    <span ref="content" className="mx_MTextBody mx_EventTile_content mx_Content">
                         { body }
                         { widgets }
                     </span>
