@@ -1476,12 +1476,12 @@ module.exports = React.createClass({
     },
 
     _pruneStart: (node, startNode, startOffset) => {
-        // todo
+        // todo: prune contents before the selection start offset
         return node;
     },
 
     _pruneEnd: (node, endNode, endOffset) => {
-        // todo
+        // todo: prune contents after the selection end offset
         return node;
     },
 
@@ -1492,8 +1492,10 @@ module.exports = React.createClass({
 
         // if we're copying a fragment of content then don't do anything funky
         if (sel.anchorNode === sel.focusNode ||
-            this._findEventTileContent(sel.anchorNode) === this._findEventTileContent(sel.focusNode))
+            (this._findEventTileContent(sel.anchorNode) === this._findEventTileContent(sel.focusNode) &&
+             this._findEventTileContent(sel.anchorNode) != null))
         {
+            console.log("defaulting to normal copy as we think we're in the same content");
             return;
         }
 
