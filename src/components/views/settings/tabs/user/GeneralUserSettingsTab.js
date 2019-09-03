@@ -142,7 +142,7 @@ export default class GeneralUserSettingsTab extends React.Component {
 
     _saveCustomCss = (e) => {
         SettingsStore.setValue("customCss", null, SettingLevel.DEVICE, this.state.customCss).then(() => {
-            PlatformPeg.get().reload();
+            document.getElementById("customcss_container").innerHTML = this.state.customCss;
         });
     };
 
