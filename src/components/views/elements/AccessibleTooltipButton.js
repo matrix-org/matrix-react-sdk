@@ -27,37 +27,22 @@ export default class AccessibleTooltipButton extends React.PureComponent {
         title: PropTypes.string.isRequired,
     };
 
-    state = {
-        hover: false,
-    };
-
-    onMouseOver = () => {
-        this.setState({
-            hover: true,
-        });
-    };
-
-    onMouseOut = () => {
-        this.setState({
-            hover: false,
-        });
-    };
-
     render() {
-        const Tooltip = sdk.getComponent("elements.Tooltip");
-        const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
+        // const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
+        const InteractiveTooltip = sdk.getComponent('elements.InteractiveTooltip');
 
         const {title, ...props} = this.props;
 
-        const tip = this.state.hover ? <Tooltip
-            className="mx_AccessibleTooltipButton_container"
-            tooltipClassName="mx_AccessibleTooltipButton_tooltip"
-            label={title}
-        /> : <div />;
+        const tooltipContent = <div className="mx_AccessibleTooltipButton_container">{title}</div>;
         return (
-            <AccessibleButton {...props} onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut}>
-                { tip }
-            </AccessibleButton>
+            <InteractiveTooltip content={tooltipContent}>
+                <Buttun {...props} />
+            </InteractiveTooltip>
         );
     }
+}
+
+
+function Buttun(props) {
+    return React.createElement("button", {className: props.className, onClick: props.onClick, onMouseOver: props.onMouseOver});
 }

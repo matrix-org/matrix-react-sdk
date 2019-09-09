@@ -104,6 +104,7 @@ export default class InteractiveTooltip extends React.Component {
             contentRect: null,
             visible: false,
         };
+        this.id = Math.round(Math.random() * 10000);
     }
 
     componentDidUpdate() {
@@ -130,6 +131,10 @@ export default class InteractiveTooltip extends React.Component {
     }
 
     collectTarget = (element) => {
+        if (element === null) {
+            console.trace();
+            console.log(`InteractiveTooltip: ${this.id}: getting a ref`, element && element.className);
+        }
         this.target = element;
     }
 
@@ -246,6 +251,7 @@ export default class InteractiveTooltip extends React.Component {
     showTooltip() {
         // Don't enter visible state if we haven't collected the target yet
         if (!this.target) {
+            console.log(`InteractiveTooltip: ${this.id}: no target, bailing out :(`);
             return;
         }
         this.setState({
@@ -326,7 +332,8 @@ export default class InteractiveTooltip extends React.Component {
     render() {
         // We use `cloneElement` here to append some props to the child content
         // without using a wrapper element which could disrupt layout.
-        return React.cloneElement(this.props.children, {
+        const child = React.Children.only(this.props.children)
+        return React.cloneElement(child, {
             ref: this.collectTarget,
             onMouseOver: this.onTargetMouseOver,
         });

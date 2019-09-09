@@ -51,6 +51,7 @@ class ConsoleLogger {
     }
 
     monkeyPatch(consoleObj) {
+        return;
         // Monkey-patch console logging
         const consoleFunctionsToLevels = {
             log: "I",
