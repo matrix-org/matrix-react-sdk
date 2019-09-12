@@ -94,7 +94,7 @@ const Pill = createReactClass({
         };
     },
 
-    async componentWillReceiveProps(nextProps) {
+    async UNSAFE_componentWillReceiveProps(nextProps) {
         let regex = REGEX_MATRIXTO;
         if (nextProps.inMessage) {
             regex = REGEX_LOCAL_MATRIXTO;
@@ -167,10 +167,10 @@ const Pill = createReactClass({
         this.setState({resourceId, pillType, member, group, room});
     },
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this._unmounted = false;
         this._matrixClient = MatrixClientPeg.get();
-        this.componentWillReceiveProps(this.props);
+        this.UNSAFE_componentWillReceiveProps(this.props);
     },
 
     componentWillUnmount() {

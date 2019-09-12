@@ -55,7 +55,7 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         ScalarMessaging.startListening();
         MatrixClientPeg.get().on('RoomState.events', this.onRoomStateEvents);
         WidgetEchoStore.on('update', this._updateApps);
@@ -74,7 +74,7 @@ module.exports = createReactClass({
         dis.unregister(this.dispatcherRef);
     },
 
-    componentWillReceiveProps(newProps) {
+    UNSAFE_componentWillReceiveProps(newProps) {
         // Room has changed probably, update apps
         this._updateApps();
     },

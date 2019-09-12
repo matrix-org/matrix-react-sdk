@@ -55,11 +55,11 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         MatrixClientPeg.get().on("RoomState.events", this.onRoomStateEvents);
     },
 
-    componentWillReceiveProps: function(newProps) {
+    UNSAFE_componentWillReceiveProps: function(newProps) {
         if (this.avatarSet) {
             // don't clobber what the user has just set
             return;

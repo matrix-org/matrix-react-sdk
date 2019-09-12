@@ -40,7 +40,7 @@ export default class SecurityRoomSettingsTab extends React.Component {
         };
     }
 
-    componentWillMount(): void {
+    UNSAFE_componentWillMount(): void {
         MatrixClientPeg.get().on("RoomState.events", this._onStateEvent);
 
         const room = MatrixClientPeg.get().getRoom(this.props.roomId);

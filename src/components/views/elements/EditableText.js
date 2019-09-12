@@ -61,7 +61,7 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillReceiveProps: function(nextProps) {
+    UNSAFE_componentWillReceiveProps: function(nextProps) {
         if (nextProps.initialValue !== this.props.initialValue) {
             this.value = nextProps.initialValue;
             if (this.refs.editable_div) {
@@ -70,7 +70,7 @@ module.exports = createReactClass({
         }
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         // we track value as an JS object field rather than in React state
         // as React doesn't play nice with contentEditable.
         this.value = '';

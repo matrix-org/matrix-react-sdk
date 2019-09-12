@@ -39,7 +39,7 @@ export default class RoomBreadcrumbs extends React.Component {
         this._dispatcherRef = null;
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this._dispatcherRef = dis.register(this.onAction);
 
         const storedRooms = SettingsStore.getValue("breadcrumb_rooms");

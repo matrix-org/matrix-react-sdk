@@ -129,7 +129,7 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this.mounted = false;
 
         const cli = MatrixClientPeg.get();

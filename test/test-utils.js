@@ -297,7 +297,7 @@ export function wrapInMatrixClientContext(WrappedComponent) {
             };
         }
 
-        componentWillMount() {
+        UNSAFE_componentWillMount() {
             this._matrixClient = peg.get();
         }
 

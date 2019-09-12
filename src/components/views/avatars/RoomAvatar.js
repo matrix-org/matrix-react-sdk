@@ -52,7 +52,7 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         MatrixClientPeg.get().on("RoomState.events", this.onRoomStateEvents);
     },
 
@@ -63,7 +63,7 @@ module.exports = createReactClass({
         }
     },
 
-    componentWillReceiveProps: function(newProps) {
+    UNSAFE_componentWillReceiveProps: function(newProps) {
         this.setState({
             urls: this.getImageUrls(newProps),
         });

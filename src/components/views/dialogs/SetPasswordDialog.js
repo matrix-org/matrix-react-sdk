@@ -75,7 +75,7 @@ export default createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         console.info('SetPasswordDialog component will mount');
     },
 

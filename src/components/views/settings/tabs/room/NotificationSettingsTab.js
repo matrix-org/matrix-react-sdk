@@ -37,7 +37,7 @@ export default class NotificationsSettingsTab extends React.Component {
         };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         Notifier.getSoundForRoom(this.props.roomId).then((soundData) => {
             if (!soundData) {
                 return;

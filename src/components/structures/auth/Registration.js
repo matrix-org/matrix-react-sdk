@@ -111,12 +111,12 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this._unmounted = false;
         this._replaceClient();
     },
 
-    componentWillReceiveProps(newProps) {
+    UNSAFE_componentWillReceiveProps(newProps) {
         if (newProps.serverConfig.hsUrl === this.props.serverConfig.hsUrl &&
             newProps.serverConfig.isUrl === this.props.serverConfig.isUrl) return;
 

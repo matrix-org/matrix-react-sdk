@@ -92,7 +92,7 @@ export default createReactClass({
         };
     },
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this._matrixClient = MatrixClientPeg.get();
     },
 

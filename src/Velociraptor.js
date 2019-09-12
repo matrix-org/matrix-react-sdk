@@ -35,12 +35,12 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this.nodes = {};
         this._updateChildren(this.props.children);
     },
 
-    componentWillReceiveProps: function(nextProps) {
+    UNSAFE_componentWillReceiveProps: function(nextProps) {
         this._updateChildren(nextProps.children);
     },
 

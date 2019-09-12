@@ -33,7 +33,7 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         const room = this.props.room;
         const topic = room.currentState.getStateEvents('m.room.topic', '');
         this.setState({

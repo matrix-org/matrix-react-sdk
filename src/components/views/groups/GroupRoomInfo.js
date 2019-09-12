@@ -45,11 +45,11 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this._initGroupStore(this.props.groupId);
     },
 
-    componentWillReceiveProps(newProps) {
+    UNSAFE_componentWillReceiveProps(newProps) {
         if (newProps.groupId !== this.props.groupId) {
             this._unregisterGroupStore(this.props.groupId);
             this._initGroupStore(newProps.groupId);

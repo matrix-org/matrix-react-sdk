@@ -58,7 +58,7 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         MatrixClientPeg.get().on('RoomMember.powerLevel', this._checkPermissions);
         this._checkPermissions();
     },

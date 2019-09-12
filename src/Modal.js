@@ -46,7 +46,7 @@ const AsyncWrapper = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this._unmounted = false;
         // XXX: temporary logging to try to diagnose
         // https://github.com/vector-im/riot-web/issues/3148

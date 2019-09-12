@@ -61,11 +61,11 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this._initStateFromProps(this.props);
     },
 
-    componentWillReceiveProps: function(newProps) {
+    UNSAFE_componentWillReceiveProps: function(newProps) {
         this._initStateFromProps(newProps);
     },
 

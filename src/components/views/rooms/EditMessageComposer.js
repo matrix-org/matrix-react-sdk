@@ -211,7 +211,7 @@ export default class EditMessageComposer extends React.Component {
         this.props.editState.setEditorState(caret, parts);
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this._createEditorModel();
     }
 

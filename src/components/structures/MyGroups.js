@@ -38,7 +38,7 @@ export default createReactClass({
         matrixClient: PropTypes.instanceOf(MatrixClient).isRequired,
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this._fetch();
     },
 

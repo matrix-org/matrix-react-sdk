@@ -39,7 +39,7 @@ export default class LanguageDropdown extends React.Component {
         };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         languageHandler.getAllLanguagesFromJson().then((langs) => {
             langs.sort(function(a, b) {
                 if (a.label < b.label) return -1;

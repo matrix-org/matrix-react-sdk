@@ -30,7 +30,7 @@ module.exports = createReactClass({
         onCancelClick: PropTypes.func.isRequired,
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         dis.dispatch({
             action: 'panel_disable',
             rightDisabled: true,

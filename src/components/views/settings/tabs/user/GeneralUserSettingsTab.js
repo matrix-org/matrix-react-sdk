@@ -66,7 +66,7 @@ export default class GeneralUserSettingsTab extends React.Component {
         this.dispatcherRef = dis.register(this._onAction);
     }
 
-    async componentWillMount() {
+    async UNSAFE_componentWillMount() {
         const cli = MatrixClientPeg.get();
 
         const serverRequiresIdServer = await cli.doesServerRequireIdServerParam();

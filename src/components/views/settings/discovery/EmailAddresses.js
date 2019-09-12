@@ -58,7 +58,7 @@ export class EmailAddress extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         const { bound } = nextProps.email;
         this.setState({ bound });
     }

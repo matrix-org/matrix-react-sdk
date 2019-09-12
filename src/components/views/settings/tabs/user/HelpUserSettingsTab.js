@@ -59,7 +59,7 @@ export default class HelpUserSettingsTab extends React.Component {
         };
     }
 
-    componentWillMount(): void {
+    UNSAFE_componentWillMount(): void {
         PlatformPeg.get().getAppVersion().then((ver) => this.setState({vectorVersion: ver})).catch((e) => {
             console.error("Error getting vector version: ", e);
         });

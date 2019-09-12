@@ -35,7 +35,7 @@ const TintableSvg = createReactClass({
         idSequence: 0,
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this.fixups = [];
     },
 

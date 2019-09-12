@@ -53,7 +53,7 @@ const SearchableEntityList = createReactClass({
         };
     },
 
-    componentWillReceiveProps: function(newProps) {
+    UNSAFE_componentWillReceiveProps: function(newProps) {
         // recalculate the search results in case we got new entities
         this.setState({
             results: this.getSearchResults(this.state.query, newProps.entities),

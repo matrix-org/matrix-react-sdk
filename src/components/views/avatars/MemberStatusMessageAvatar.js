@@ -46,7 +46,7 @@ export default class MemberStatusMessageAvatar extends React.Component {
         };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         if (this.props.member.userId !== MatrixClientPeg.get().getUserId()) {
             throw new Error("Cannot use MemberStatusMessageAvatar on anyone but the logged in user");
         }

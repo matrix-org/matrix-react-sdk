@@ -184,7 +184,7 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this.dispatcherRef = dis.register(this.onAction);
         MatrixClientPeg.get().on("Room", this.onRoom);
         MatrixClientPeg.get().on("Room.timeline", this.onRoomTimeline);

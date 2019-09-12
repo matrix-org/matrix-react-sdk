@@ -76,7 +76,7 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this._unmounted = false;
         this.nextBatch = null;
         this.filterTimeout = null;

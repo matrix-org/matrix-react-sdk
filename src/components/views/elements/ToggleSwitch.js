@@ -38,7 +38,7 @@ export default class ToggleSwitch extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.checked !== this.state.checked) {
             this.setState({checked: nextProps.checked});
         }

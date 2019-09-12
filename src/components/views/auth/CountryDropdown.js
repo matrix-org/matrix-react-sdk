@@ -59,7 +59,7 @@ export default class CountryDropdown extends React.Component {
         };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         if (!this.props.value) {
             // If no value is given, we start with the default
             // country selected, but our parent component

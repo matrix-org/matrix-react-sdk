@@ -329,7 +329,7 @@ export default class MessageComposerInput extends React.Component {
         }
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.dispatcherRef = dis.register(this.onAction);
         this.historyManager = new SlateComposerHistoryManager(this.props.room.roomId, 'mx_slate_composer_history_');
     }

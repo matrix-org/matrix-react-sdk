@@ -79,7 +79,7 @@ const RoomSubList = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this.dispatcherRef = dis.register(this.onAction);
     },
 

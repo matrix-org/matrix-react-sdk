@@ -80,7 +80,7 @@ module.exports = createReactClass({
         matrixClient: PropTypes.instanceOf(MatrixClient).isRequired,
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this._cancelDeviceList = null;
         const cli = this.context.matrixClient;
 
@@ -105,7 +105,7 @@ module.exports = createReactClass({
         this._updateStateForNewMember(this.props.member);
     },
 
-    componentWillReceiveProps: function(newProps) {
+    UNSAFE_componentWillReceiveProps: function(newProps) {
         if (this.props.member.userId !== newProps.member.userId) {
             this._updateStateForNewMember(newProps.member);
         }

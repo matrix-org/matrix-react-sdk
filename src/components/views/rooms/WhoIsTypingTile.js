@@ -54,7 +54,7 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         MatrixClientPeg.get().on("RoomMember.typing", this.onRoomMemberTyping);
         MatrixClientPeg.get().on("Room.timeline", this.onRoomTimeline);
     },

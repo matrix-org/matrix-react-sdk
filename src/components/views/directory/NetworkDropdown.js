@@ -48,7 +48,7 @@ export default class NetworkDropdown extends React.Component {
         };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         // Listen for all clicks on the document so we can close the
         // menu when the user clicks somewhere else
         document.addEventListener('click', this.onDocumentClick, false);

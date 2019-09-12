@@ -82,7 +82,7 @@ export default class RightPanel extends React.Component {
         }
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.dispatcherRef = dis.register(this.onAction);
         const cli = this.context.matrixClient;
         cli.on("RoomState.members", this.onRoomStateMember);
@@ -100,7 +100,7 @@ export default class RightPanel extends React.Component {
         this._unregisterGroupStore(this.props.groupId);
     }
 
-    componentWillReceiveProps(newProps) {
+    UNSAFE_componentWillReceiveProps(newProps) {
         if (newProps.groupId !== this.props.groupId) {
             this._unregisterGroupStore(this.props.groupId);
             this._initGroupStore(newProps.groupId);

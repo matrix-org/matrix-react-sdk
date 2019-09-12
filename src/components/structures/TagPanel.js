@@ -43,7 +43,7 @@ const TagPanel = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this.unmounted = false;
         this.context.matrixClient.on("Group.myMembership", this._onGroupMyMembership);
         this.context.matrixClient.on("sync", this._onClientSync);

@@ -54,7 +54,7 @@ export default createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this._unmounted = false;
     },
 

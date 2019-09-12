@@ -45,7 +45,7 @@ module.exports = createReactClass({
         }
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this._mounted = true;
         const cli = MatrixClientPeg.get();
         if (cli.hasLazyLoadMembersEnabled()) {

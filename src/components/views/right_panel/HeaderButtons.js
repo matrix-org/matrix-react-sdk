@@ -32,7 +32,7 @@ export default class HeaderButtons extends React.Component {
         this.onAction = this.onAction.bind(this);
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.dispatcherRef = dis.register(this.onAction);
     }
 

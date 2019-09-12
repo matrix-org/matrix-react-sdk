@@ -35,7 +35,7 @@ export default createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this.context.matrixClient.getJoinedGroups().done((result) => {
             this.setState({groups: result.groups || [], error: null});
         }, (err) => {

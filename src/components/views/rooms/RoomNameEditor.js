@@ -34,7 +34,7 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         const room = this.props.room;
         const name = room.currentState.getStateEvents('m.room.name', '');
         const myId = MatrixClientPeg.get().credentials.userId;

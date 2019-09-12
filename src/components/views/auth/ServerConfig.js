@@ -72,7 +72,7 @@ export default class ServerConfig extends React.PureComponent {
         };
     }
 
-    componentWillReceiveProps(newProps) {
+    UNSAFE_componentWillReceiveProps(newProps) {
         if (newProps.serverConfig.hsUrl === this.state.hsUrl &&
             newProps.serverConfig.isUrl === this.state.isUrl) return;
 

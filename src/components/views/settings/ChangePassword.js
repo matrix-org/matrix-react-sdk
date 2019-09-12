@@ -81,7 +81,7 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this._sessionStore = sessionStore;
         this._sessionStoreToken = this._sessionStore.addListener(
             this._setStateFromSessionStore,

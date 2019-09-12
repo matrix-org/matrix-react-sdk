@@ -62,7 +62,7 @@ export default createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this._recoveryKeyNode = null;
         this._keyBackupInfo = null;
         this._setZxcvbnResultTimeout = null;

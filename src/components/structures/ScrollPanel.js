@@ -157,7 +157,7 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this._fillRequestWhileRunning = false;
         this._isFilling = false;
         this._pendingFillRequests = {b: null, f: null};

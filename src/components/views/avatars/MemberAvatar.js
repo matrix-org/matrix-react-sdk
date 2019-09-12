@@ -50,7 +50,7 @@ module.exports = createReactClass({
         return this._getState(this.props);
     },
 
-    componentWillReceiveProps: function(nextProps) {
+    UNSAFE_componentWillReceiveProps: function(nextProps) {
         this.setState(this._getState(nextProps));
     },
 

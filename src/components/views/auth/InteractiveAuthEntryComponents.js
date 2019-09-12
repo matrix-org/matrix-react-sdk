@@ -228,7 +228,7 @@ export const TermsAuthEntry = createReactClass({
         showContinue: PropTypes.bool,
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         // example stageParams:
         //
         // {
@@ -419,7 +419,7 @@ export const MsisdnAuthEntry = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this._sid = null;
         this._msisdn = null;
         this._tokenBox = null;
@@ -552,7 +552,7 @@ export const FallbackAuthEntry = createReactClass({
         errorText: PropTypes.string,
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         // we have to make the user click a button, as browsers will block
         // the popup if we open it immediately.
         this._popupWindow = null;

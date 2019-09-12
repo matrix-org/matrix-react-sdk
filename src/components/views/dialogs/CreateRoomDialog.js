@@ -27,7 +27,7 @@ export default createReactClass({
         onFinished: PropTypes.func.isRequired,
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         const config = SdkConfig.get();
         // Dialog shows inverse of m.federate (noFederate) strict false check to skip undefined check (default = true)
         this.defaultNoFederate = config.default_federate === false;

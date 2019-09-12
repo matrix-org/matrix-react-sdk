@@ -39,11 +39,11 @@ const FilePanel = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this.updateTimelineSet(this.props.roomId);
     },
 
-    componentWillReceiveProps: function(nextProps) {
+    UNSAFE_componentWillReceiveProps: function(nextProps) {
         if (nextProps.roomId !== this.props.roomId) {
             // otherwise we race between re-rendering the TimelinePanel and setting the new timelineSet.
             //

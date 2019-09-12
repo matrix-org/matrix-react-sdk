@@ -68,12 +68,12 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this.reset = null;
         this._checkServerLiveliness(this.props.serverConfig);
     },
 
-    componentWillReceiveProps: function(newProps) {
+    UNSAFE_componentWillReceiveProps: function(newProps) {
         if (newProps.serverConfig.hsUrl === this.props.serverConfig.hsUrl &&
             newProps.serverConfig.isUrl === this.props.serverConfig.isUrl) return;
 

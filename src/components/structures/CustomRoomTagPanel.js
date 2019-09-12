@@ -30,7 +30,7 @@ class CustomRoomTagPanel extends React.Component {
         };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this._tagStoreToken = CustomRoomTagStore.addListener(() => {
             this.setState({tags: CustomRoomTagStore.getSortedTags()});
         });

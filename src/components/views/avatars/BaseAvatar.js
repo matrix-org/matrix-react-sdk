@@ -57,7 +57,7 @@ module.exports = createReactClass({
         return this._getState(this.props);
     },
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.unmounted = false;
         this.context.matrixClient.on('sync', this.onClientSync);
     },
@@ -67,7 +67,7 @@ module.exports = createReactClass({
         this.context.matrixClient.removeListener('sync', this.onClientSync);
     },
 
-    componentWillReceiveProps: function(nextProps) {
+    UNSAFE_componentWillReceiveProps: function(nextProps) {
         // work out if we need to call setState (if the image URLs array has changed)
         const newState = this._getState(nextProps);
         const newImageUrls = newState.imageUrls;

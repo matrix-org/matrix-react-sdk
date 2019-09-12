@@ -89,7 +89,7 @@ export default createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this._unmounted = false;
         this._authLogic = new InteractiveAuth({
             authData: this.props.authData,

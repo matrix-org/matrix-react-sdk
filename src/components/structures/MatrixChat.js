@@ -227,7 +227,7 @@ export default createReactClass({
         return {serverConfig: props};
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         SdkConfig.put(this.props.config);
 
         // Used by _viewRoom before getting state from sync
@@ -352,7 +352,7 @@ export default createReactClass({
         this.state.resizeNotifier.removeListener("middlePanelResized", this._dispatchTimelineResize);
     },
 
-    componentWillUpdate: function(props, state) {
+    UNSAFE_componentWillUpdate: function(props, state) {
         if (this.shouldTrackPageChange(this.state, state)) {
             this.startPageChangeTimer();
         }

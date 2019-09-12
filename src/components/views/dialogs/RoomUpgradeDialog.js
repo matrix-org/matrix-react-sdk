@@ -30,7 +30,7 @@ export default createReactClass({
         onFinished: PropTypes.func.isRequired,
     },
 
-    componentWillMount: async function() {
+    UNSAFE_componentWillMount: async function() {
         const recommended = await this.props.room.getRecommendedVersion();
         this._targetVersion = recommended.version;
         this.setState({busy: false});

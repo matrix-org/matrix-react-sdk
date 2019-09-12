@@ -110,7 +110,7 @@ module.exports = createReactClass({
         showReactions: PropTypes.bool,
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         // the event after which we put a visible unread marker on the last
         // render cycle; null if readMarkerVisible was false or the RM was
         // suppressed (eg because it was at the end of the timeline)

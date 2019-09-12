@@ -95,7 +95,7 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         MatrixClientPeg.get().on("sync", this.onSyncStateChange);
         MatrixClientPeg.get().on("Room.localEchoUpdated", this._onRoomLocalEchoUpdated);
 

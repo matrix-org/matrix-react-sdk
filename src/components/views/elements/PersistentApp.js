@@ -32,7 +32,7 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this._roomStoreToken = RoomViewStore.addListener(this._onRoomViewStoreUpdate);
         ActiveWidgetStore.on('update', this._onActiveWidgetStoreUpdate);
     },

@@ -138,7 +138,7 @@ export default class AppTile extends React.Component {
         return false;
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         // Only fetch IM token on mount if we're showing and have permission to load
         if (this.props.show && this.state.hasPermissionToLoad) {
             this.setScalarToken();
@@ -225,7 +225,7 @@ export default class AppTile extends React.Component {
         });
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.url !== this.props.url) {
             this._getNewState(nextProps);
             // Fetch IM token for new URL if we're showing and have permission to load

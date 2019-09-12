@@ -41,7 +41,7 @@ export default class KeyBackupPanel extends React.PureComponent {
         };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this._checkKeyBackupStatus();
 
         MatrixClientPeg.get().on('crypto.keyBackupStatus', this._onKeyBackupStatus);

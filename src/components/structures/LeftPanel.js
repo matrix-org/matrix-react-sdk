@@ -49,7 +49,7 @@ const LeftPanel = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this.focusedElement = null;
 
         this._settingWatchRef = SettingsStore.watchSetting(

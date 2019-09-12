@@ -48,7 +48,7 @@ export default class GeneralRoomSettingsTab extends React.Component {
         };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         MatrixClientPeg.get().getRoomDirectoryVisibility(this.props.roomId).then((result => {
             this.setState({isRoomPublished: result.visibility === 'public'});
         }));

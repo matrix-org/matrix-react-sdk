@@ -110,7 +110,7 @@ export default class Dropdown extends React.Component {
         };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         // Listen for all clicks on the document so we can close the
         // menu when the user clicks somewhere else
         document.addEventListener('click', this._onDocumentClick, false);
@@ -120,7 +120,7 @@ export default class Dropdown extends React.Component {
         document.removeEventListener('click', this._onDocumentClick, false);
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (!nextProps.children || nextProps.children.length === 0) {
             return;
         }

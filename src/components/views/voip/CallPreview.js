@@ -39,7 +39,7 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this._roomStoreToken = RoomViewStore.addListener(this._onRoomViewStoreUpdate);
         this.dispatcherRef = dis.register(this._onAction);
     },

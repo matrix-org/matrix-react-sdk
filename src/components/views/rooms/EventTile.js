@@ -191,7 +191,7 @@ module.exports = createReactClass({
         matrixClient: PropTypes.instanceOf(MatrixClient).isRequired,
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         // don't do RR animations until we are mounted
         this._suppressReadReceiptAnimation = true;
         this._verifyEvent(this.props.mxEvent);
@@ -207,7 +207,7 @@ module.exports = createReactClass({
         }
     },
 
-    componentWillReceiveProps: function(nextProps) {
+    UNSAFE_componentWillReceiveProps: function(nextProps) {
         // re-check the sender verification as outgoing events progress through
         // the send process.
         if (nextProps.eventSendStatus !== this.props.eventSendStatus) {

@@ -108,7 +108,7 @@ const LoggedInView = createReactClass({
         this._loadResizerPreferences();
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         // stash the MatrixClient in case we log out before we are unmounted
         this._matrixClient = this.props.matrixClient;
 

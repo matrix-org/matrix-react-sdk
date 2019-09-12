@@ -36,8 +36,8 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
-        // There is some assymetry between ChangeDisplayName and ChangeAvatar,
+    UNSAFE_componentWillMount: function() {
+        // There is some asymmetry between ChangeDisplayName and ChangeAvatar,
         // as ChangeDisplayName will auto-get the name but ChangeAvatar expects
         // the URL to be passed to you (because it's also used for room avatars).
         const cli = MatrixClientPeg.get();

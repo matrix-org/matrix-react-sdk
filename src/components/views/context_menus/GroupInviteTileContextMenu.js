@@ -35,7 +35,7 @@ export default class GroupInviteTileContextMenu extends React.Component {
         this._onClickReject = this._onClickReject.bind(this);
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this._unmounted = false;
     }
 

@@ -33,7 +33,7 @@ module.exports = createReactClass({
         return { device: null };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this._unmounted = false;
         const client = MatrixClientPeg.get();
 

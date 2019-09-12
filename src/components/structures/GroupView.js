@@ -431,7 +431,7 @@ export default createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this._unmounted = false;
         this._matrixClient = MatrixClientPeg.get();
         this._matrixClient.on("Group.myMembership", this._onGroupMyMembership);
@@ -448,7 +448,7 @@ export default createReactClass({
         dis.unregister(this._dispatcherRef);
     },
 
-    componentWillReceiveProps: function(newProps) {
+    UNSAFE_componentWillReceiveProps: function(newProps) {
         if (this.props.groupId != newProps.groupId) {
             this.setState({
                 summary: null,

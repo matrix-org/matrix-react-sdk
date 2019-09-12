@@ -25,7 +25,7 @@ const TagPanelButtons = createReactClass({
     displayName: 'TagPanelButtons',
 
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this._dispatcherRef = dis.register(this._onAction);
     },
 

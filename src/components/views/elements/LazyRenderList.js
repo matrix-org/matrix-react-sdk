@@ -59,7 +59,7 @@ export default class LazyRenderList extends React.Component {
         return new ItemRange(topCount, renderCount, bottomCount);
     }
 
-    componentWillReceiveProps(props) {
+    UNSAFE_componentWillReceiveProps(props) {
         const state = this.state;
         const range = LazyRenderList.getVisibleRangeFromProps(props);
         const intersectRange = range.expand(OVERFLOW_MARGIN);

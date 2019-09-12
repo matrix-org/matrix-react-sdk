@@ -194,7 +194,7 @@ const TimelinePanel = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         debuglog("TimelinePanel: mounting");
 
         this.lastRRSentEventId = undefined;
@@ -224,7 +224,7 @@ const TimelinePanel = createReactClass({
         this._initTimeline(this.props);
     },
 
-    componentWillReceiveProps: function(newProps) {
+    UNSAFE_componentWillReceiveProps: function(newProps) {
         if (newProps.timelineSet !== this.props.timelineSet) {
             // throw new Error("changing timelineSet on a TimelinePanel is not supported");
 

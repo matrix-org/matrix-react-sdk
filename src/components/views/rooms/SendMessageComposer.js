@@ -243,7 +243,7 @@ export default class SendMessageComposer extends React.Component {
         this._editorRef.getEditableRootNode().removeEventListener("paste", this._onPaste, true);
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         const partCreator = new CommandPartCreator(this.props.room, this.context.matrixClient);
         const parts = this._restoreStoredEditorState(partCreator) || [];
         this.model = new EditorModel(parts, partCreator);

@@ -67,7 +67,7 @@ export default class MImageBody extends React.Component {
         };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.unmounted = false;
         this.context.matrixClient.on('sync', this.onClientSync);
     }

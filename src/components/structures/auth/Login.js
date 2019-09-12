@@ -105,7 +105,7 @@ module.exports = createReactClass({
         };
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         this._unmounted = false;
 
         // map from login step type to a function which will render a control
@@ -125,7 +125,7 @@ module.exports = createReactClass({
         this._unmounted = true;
     },
 
-    componentWillReceiveProps(newProps) {
+    UNSAFE_componentWillReceiveProps(newProps) {
         if (newProps.serverConfig.hsUrl === this.props.serverConfig.hsUrl &&
             newProps.serverConfig.isUrl === this.props.serverConfig.isUrl) return;
 

@@ -145,7 +145,7 @@ module.exports = createReactClass({
         });
     },
 
-    componentWillMount: function() {
+    UNSAFE_componentWillMount: function() {
         MatrixClientPeg.get().on("accountData", this.onAccountData);
         MatrixClientPeg.get().on("Room.name", this.onRoomName);
         ActiveRoomObserver.addListener(this.props.room.roomId, this._onActiveRoomChange);
@@ -182,7 +182,7 @@ module.exports = createReactClass({
         }
     },
 
-    componentWillReceiveProps: function(props) {
+    UNSAFE_componentWillReceiveProps: function(props) {
         // XXX: This could be a lot better - this makes the assumption that
         // the notification count may have changed when the properties of
         // the room tile change.

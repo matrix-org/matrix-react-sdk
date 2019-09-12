@@ -43,7 +43,7 @@ export default class EditableTextContainer extends React.Component {
         this._onValueChanged = this._onValueChanged.bind(this);
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         if (this.props.getInitialValue === undefined) {
             // use whatever was given in the initialValue property.
             return;
