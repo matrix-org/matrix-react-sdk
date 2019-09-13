@@ -20,7 +20,6 @@ import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher';
 import TagOrderActions from '../../../actions/TagOrderActions';
 import MatrixClientPeg from '../../../MatrixClientPeg';
-import sdk from '../../../index';
 
 export default class TagTileContextMenu extends React.Component {
     static propTypes = {
@@ -54,15 +53,9 @@ export default class TagTileContextMenu extends React.Component {
     }
 
     render() {
-        const TintableSvg = sdk.getComponent("elements.TintableSvg");
         return <div>
             <div className="mx_TagTileContextMenu_item" onClick={this._onViewCommunityClick} >
-                <TintableSvg
-                    className="mx_TagTileContextMenu_item_icon"
-                    src={require("../../../../res/img/icons-groups.svg")}
-                    width="15"
-                    height="15"
-                />
+                <img className="mx_TagTileContextMenu_item_icon" src={require("../../../../res/img/feather-customised/users.svg")} width="15" height="15" />
                 { _t('View Community') }
             </div>
             <hr className="mx_TagTileContextMenu_separator" />
