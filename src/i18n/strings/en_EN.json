@@ -1649,5 +1649,7 @@
     "Your password must include a lower-case letter, an upper-case letter, a number and a symbol and be at a minimum 8 characters in length.": "Your password must include a lower-case letter, an upper-case letter, a number and a symbol and be at a minimum 8 characters in length.",
     "This password is too weak. It must include a lower-case letter, an upper-case letter, a number and a symbol and be at a minimum 8 characters in length.": "This password is too weak. It must include a lower-case letter, an upper-case letter, a number and a symbol and be at a minimum 8 characters in length.",
     "Password too weak !": "Password too weak !",
-    "Unable to decrypt: The sender's device has not sent us the keys for this message.": "Unable to decrypt: The sender's device has not sent us the keys for this message."
+    "Unable to decrypt: The sender's device has not sent us the keys for this message.": "Unable to decrypt: The sender's device has not sent us the keys for this message.",
+    "Unreachable Homeserver": "Unreachable Homeserver",
+    "Error : Too many request": "Error : Too many request"
 }

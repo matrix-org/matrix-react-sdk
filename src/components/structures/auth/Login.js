@@ -210,8 +210,19 @@ module.exports = React.createClass({
                 });
             }).done();
         }).catch(err => {
+            console.error("err");
             console.error(err);
-            const errorValue = err === "ERR_UNAUTHORIZED_EMAIL" ? _t("Unauthorized email") : err;
+            let errorValue;
+            switch (err) {
+                case "ERR_UNAUTHORIZED_EMAIL":
+                    errorValue = _t("Unauthorized email");
+                    break;
+                case "ERR_UNREACHABLE_HOMESERVER":
+                    errorValue = _t("Unreachable Homeserver");
+                    break;
+                default:
+                    errorValue = err;
+            }
             const errorText = (
                 <div>
                     <div className="mx_Login_smallError">{errorValue}</div>
@@ -316,8 +327,14 @@ module.exports = React.createClass({
             errCode = "HTTP " + err.httpStatus;
         }
 
-        let errorText = _t("Error: Problem communicating with the given homeserver.") +
+        let errorText;
+
+        if (errCode === "M_LIMIT_EXCEEDED") {
+            errorText = _t("Error : Too many request");
+        } else {
+            errorText = _t("Error: Problem communicating with the given homeserver.") +
                 (errCode ? " (" + errCode + ")" : "");
+        }
 
         if (err.cors === 'rejected') {
             if (window.location.protocol === 'https:' &&
