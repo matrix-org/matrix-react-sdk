@@ -1186,6 +1186,7 @@
     "Custom level": "Custom level",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.",
     "<a>In reply to</a> <pill>": "<a>In reply to</a> <pill>",
+    "e.g. my-room": "e.g. my-room",
     "Room directory": "Room directory",
     "And %(count)s more...|other": "And %(count)s more...",
     "ex. @bob:example.com": "ex. @bob:example.com",
