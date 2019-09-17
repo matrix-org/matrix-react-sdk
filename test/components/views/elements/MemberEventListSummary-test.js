@@ -12,8 +12,6 @@ const MemberEventListSummary = testUtils.wrapInMatrixClientContext(
 );
 
 describe('MemberEventListSummary', function() {
-    let sandbox;
-
     // Generate dummy event tiles for use in simulating an expanded MELS
     const generateTiles = (events) => {
         return events.map((e) => {
@@ -89,7 +87,7 @@ describe('MemberEventListSummary', function() {
 
     beforeEach(function(done) {
         testUtils.beforeEach(this);
-        sandbox = testUtils.stubClient();
+        testUtils.stubClient();
 
         languageHandler.setLanguage('en').done(done);
         languageHandler.setMissingEntryGenerator(function(key) {
@@ -98,7 +96,7 @@ describe('MemberEventListSummary', function() {
     });
 
     afterEach(function() {
-        sandbox.restore();
+        testUtils.restore();
     });
 
     it('renders expanded events if there are less than props.threshold', function() {

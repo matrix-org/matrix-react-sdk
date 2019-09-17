@@ -39,12 +39,8 @@ export function beforeEach(context) {
  * TODO: once the components are updated to get their MatrixClients from
  * the react context, we can get rid of this and just inject a test client
  * via the context instead.
- *
- * @returns {sinon.Sandbox}; remember to call sandbox.restore afterwards.
  */
 export function stubClient() {
-    const sandbox = sinon.createSandbox();
-
     const client = createTestClient();
 
     // stub out the methods in MatrixClientPeg
@@ -53,12 +49,15 @@ export function stubClient() {
     // so we do this for each method
     const methods = ['get', 'unset', 'replaceUsingCreds'];
     for (let i = 0; i < methods.length; i++) {
-        sandbox.stub(peg, methods[i]);
+        sinon.stub(peg, methods[i]);
     }
     // MatrixClientPeg.get() is called a /lot/, so implement it with our own
     // fast stub function rather than a sinon stub
     peg.get = function() { return client; };
-    return sandbox;
+}
+
+export function restore() {
+    sinon.restore();
 }
 
 /**

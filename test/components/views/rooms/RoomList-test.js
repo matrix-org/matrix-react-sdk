@@ -31,7 +31,6 @@ describe('RoomList', () => {
     }
 
     let parentDiv = null;
-    let sandbox = null;
     let client = null;
     let root = null;
     const myUserId = '@me:domain';
@@ -46,7 +45,7 @@ describe('RoomList', () => {
 
     beforeEach(function() {
         TestUtils.beforeEach(this);
-        sandbox = TestUtils.stubClient(sandbox);
+        TestUtils.stubClient();
         client = MatrixClientPeg.get();
         client.credentials = {userId: myUserId};
         //revert this to prototype method as the test-utils monkey-patches this to return a hardcoded value
@@ -112,7 +111,7 @@ describe('RoomList', () => {
             parentDiv.remove();
             parentDiv = null;
         }
-        sandbox.restore();
+        TestUtils.restore();
 
         clock.uninstall();
 

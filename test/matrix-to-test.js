@@ -63,16 +63,14 @@ function mockRoom(roomId, members, serverACL) {
 }
 
 describe('matrix-to', function() {
-    let sandbox;
-
     beforeEach(function() {
         testUtils.beforeEach(this);
-        sandbox = testUtils.stubClient();
+        testUtils.stubClient();
         peg.get().credentials = { userId: "@test:example.com" };
     });
 
     afterEach(function() {
-        sandbox.restore();
+        testUtils.restore();
     });
 
     it('should pick no candidate servers when the room has no members', function() {

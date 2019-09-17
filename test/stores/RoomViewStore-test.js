@@ -1,6 +1,5 @@
 import expect from 'expect';
 
-import dis from '../../src/dispatcher';
 import RoomViewStore from '../../src/stores/RoomViewStore';
 
 
@@ -12,11 +11,9 @@ import Promise from 'bluebird';
 const dispatch = testUtils.getDispatchForStore(RoomViewStore);
 
 describe('RoomViewStore', function() {
-    let sandbox;
-
     beforeEach(function() {
         testUtils.beforeEach(this);
-        sandbox = testUtils.stubClient();
+        testUtils.stubClient();
         peg.get().credentials = { userId: "@test:example.com" };
 
         // Reset the state of the store
@@ -24,7 +21,7 @@ describe('RoomViewStore', function() {
     });
 
     afterEach(function() {
-        sandbox.restore();
+        testUtils.restore();
     });
 
     it('can be used to view a room by ID and join', function(done) {

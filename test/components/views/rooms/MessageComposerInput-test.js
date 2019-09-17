@@ -23,14 +23,13 @@ function addTextToDraft(text) {
 
 xdescribe('MessageComposerInput', () => {
     let parentDiv = null,
-        sandbox = null,
         client = null,
         mci = null,
         room = testUtils.mkStubRoom('!DdJkzRliezrwpNebLk:matrix.org');
 
     beforeEach(function() {
         testUtils.beforeEach(this);
-        sandbox = testUtils.stubClient(sandbox);
+        testUtils.stubClient();
         client = MatrixClientPeg.get();
         client.credentials = {userId: '@me:domain.com'};
 
@@ -55,7 +54,7 @@ xdescribe('MessageComposerInput', () => {
                 parentDiv.remove();
                 parentDiv = null;
             }
-            sandbox.restore();
+            testUtils.restore();
             done();
         });
     });

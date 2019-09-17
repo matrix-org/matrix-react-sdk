@@ -26,7 +26,6 @@ describe('MemberList', () => {
     }
 
     let parentDiv = null;
-    let sandbox = null;
     let client = null;
     let root = null;
     let clock = null;
@@ -39,7 +38,7 @@ describe('MemberList', () => {
 
     beforeEach(function() {
         TestUtils.beforeEach(this);
-        sandbox = TestUtils.stubClient(sandbox);
+        TestUtils.stubClient();
         client = MatrixClientPeg.get();
         client.hasLazyLoadMembersEnabled = () => false;
 
@@ -116,7 +115,7 @@ describe('MemberList', () => {
             parentDiv.remove();
             parentDiv = null;
         }
-        sandbox.restore();
+        TestUtils.restore();
 
         clock.uninstall();
 
