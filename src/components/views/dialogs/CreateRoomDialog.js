@@ -34,6 +34,7 @@ export default createReactClass({
             name: "",
             topic: "",
             alias: "",
+            detailsOpen: false,
         };
     },
 
@@ -41,6 +42,14 @@ export default createReactClass({
         const config = SdkConfig.get();
         // Dialog shows inverse of m.federate (noFederate) strict false check to skip undefined check (default = true)
         this.defaultNoFederate = config.default_federate === false;
+    },
+
+    componentDidMount() {
+        this._detailsRef.addEventListener("toggle", this._onDetailsToggled);
+    },
+
+    componentWillUnmount() {
+        this._detailsRef.removeEventListener("toggle", this._onDetailsToggled);
     },
 
     onOk: function() {
@@ -65,6 +74,14 @@ export default createReactClass({
 
     onAliasChange(ev) {
         this.setState({alias: ev.target.value});
+    },
+
+    _onDetailsToggled(ev) {
+        this.setState({detailsOpen: ev.target.open});
+    },
+
+    _collectDetailsRef(ref) {
+        this._detailsRef = ref;
     },
 
     render: function() {
@@ -98,6 +115,8 @@ export default createReactClass({
                         { privateLabel }
                         { publicLabel }
                         { aliasField }
+                        <details ref={this._collectDetailsRef} className="mx_CreateRoomDialog_details">
+                            <summary className="mx_CreateRoomDialog_details_summary">{ this.state.detailsOpen ? _t('Hide advanced') : _t('Show advanced') }</summary>
                             <div>
                                 <input type="checkbox" id="checkbox" ref="checkbox" defaultChecked={this.defaultNoFederate} />
                                 <label htmlFor="checkbox">
