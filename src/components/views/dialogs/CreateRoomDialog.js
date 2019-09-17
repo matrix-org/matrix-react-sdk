@@ -30,6 +30,7 @@ export default createReactClass({
     getInitialState() {
         return {
             name: "",
+            topic: "",
         };
     },
 
@@ -51,6 +52,10 @@ export default createReactClass({
         this.setState({name: ev.target.value});
     },
 
+    onTopicChange(ev) {
+        this.setState({topic: ev.target.value});
+    },
+
     render: function() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
@@ -62,6 +67,7 @@ export default createReactClass({
                 <form onSubmit={this.onOk}>
                     <div className="mx_Dialog_content">
                         <Field className="mx_CreateRoomDialog_input" label={ _t('Name') } onChange={this.onNameChange} />
+                        <Field label={ _t('Topic (optional)') } onChange={this.onTopicChange} />
                             <div>
                                 <input type="checkbox" id="checkbox" ref="checkbox" defaultChecked={this.defaultNoFederate} />
                                 <label htmlFor="checkbox">
