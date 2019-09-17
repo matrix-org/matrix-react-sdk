@@ -1475,14 +1475,43 @@ module.exports = React.createClass({
         return null;
     },
 
-    _pruneStart: (node, startNode, startOffset) => {
+    _pruneStart: function(node, startNode, startOffset) {
         // todo: prune contents before the selection start offset
         return node;
     },
 
-    _pruneEnd: (node, endNode, endOffset) => {
+    _pruneEnd: function(node, endNode, endOffset) {
         // todo: prune contents after the selection end offset
         return node;
+    },
+
+    _formatNodeForCopy: function(node, eventId) {
+        let html, text;
+        const mxEvent = this.state.room.findEventById(eventId);
+        const sender = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
+        const showTwelveHour = SettingsStore.getValue("showTwelveHourTimestamps");
+        const ts = formatDate(new Date(mxEvent.getTs()), showTwelveHour);
+        // FIXME handle replies properly
+        const contents = node.querySelectorAll(".mx_EventTile_line > .mx_Content");
+        const content = contents[contents.length - 1];
+        if (content) {
+            // FIXME: replace this with rendering from EventTiles once we add the ability
+            // to render out events in 'log' mode.
+            if (mxEvent.getType() === 'm.room.message' || mxEvent.getType() === 'm.room.sticker') {
+                html = `<div>[${ts}] &lt;${sender}&gt; ${content.innerHTML}</div>\n`;
+                text = `[${ts}] <${sender}> ${content.innerText}\n`;
+            }
+            else {
+                html = `<div>[${ts}] ${content.innerHTML}</div>\n`;
+                text = `[${ts}] ${content.innerText}\n`;
+            }
+        }
+        else {
+            html = node.innerHTML;
+            text = node.innerText;
+        }
+
+        return { html, text };
     },
 
     onCopy: function(ev) {
@@ -1498,6 +1527,11 @@ module.exports = React.createClass({
             console.log("defaulting to normal copy as we think we're in the same content");
             return;
         }
+
+        // alternatively: find which eventtile the start is in, and the end is in, and then iterate
+        // over rendering out the EventTiles in 'logging' mode (whatever that turns out best to be),
+        // and then plonk that in the clipboard.  Unclear how to handle CSS for that.
+        // we give up on handling the start/end offsets for now.
 
         // otherwise, we must be spanning multiple nodes, so let's prepend
         // nice timestamp and sender info.  in order to respect the offsets of the anchor
@@ -1528,22 +1562,19 @@ module.exports = React.createClass({
 
             const eventId = node.getAttribute("data-scroll-tokens");
             if (eventId && this.state.room.findEventById(eventId)) {
-                const mxEvent = this.state.room.findEventById(eventId);
-                const sender = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
-                const showTwelveHour = SettingsStore.getValue("showTwelveHourTimestamps");
-                const ts = formatDate(new Date(mxEvent.getTs()), showTwelveHour);
-                // FIXME handle replies properly
-                const contents = node.querySelectorAll(".mx_EventTile_line > .mx_Content");
-                const content = contents[contents.length - 1];
-                if (content) {
-                    // FIXME: replace this with rendering from EventTiles once we add the ability
-                    // to render out events in 'log' mode.
-                    html += `<div>[${ts}] &lt;${sender}&gt; ${content.innerHTML}</div>\n`;
-                    text += `[${ts}] <${sender}> ${content.innerText}\n`;
-                }
-                else {
-                    html += node.innerHTML;
-                    text += node.innerText;
+                const result = this._formatNodeForCopy(node, eventId);
+                html += result.html;
+                text += result.text;
+            }
+            else if (node.classList.contains("mx_MemberEventListSummary")) {
+                for (let melItem = node.firstChild; melItem; melItem = melItem.nextElementSibling) {
+                    console.log("melItem", melItem.innerHTML);
+                    const melEventId = melItem.getAttribute("data-scroll-tokens");
+                    if (melEventId && this.state.room.findEventById(melEventId)) {
+                        const result = this._formatNodeForCopy(melItem, melEventId);
+                        html += result.html;
+                        text += result.text;
+                    }
                 }
             }
             else {
@@ -1554,8 +1585,8 @@ module.exports = React.createClass({
             }
         }
 
-        // console.log("setting text clipboard to: ", text);
-        // console.log("setting html clipboard to: ", html);
+        console.log("setting text clipboard to: ", text);
+        console.log("setting html clipboard to: ", html);
 
         ev.clipboardData.setData('text/plain', text);
         ev.clipboardData.setData('text/html', html);
