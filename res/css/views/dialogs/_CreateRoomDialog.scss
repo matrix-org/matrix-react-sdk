@@ -14,8 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_CreateRoomDialog_details_summary {
-    outline: none;
+.mx_CreateRoomDialog_details {
+    .mx_CreateRoomDialog_details_summary {
+        outline: none;
+        list-style: none;
+        font-weight: 600;
+        cursor: pointer;
+        color: $accent-color;
+    }
+
+    > div {
+        display: flex;
+        align-items: start;
+        margin: 5px 0;
+
+        input[type=checkbox] {
+            margin-right: 10px;
+        }
+
+    }
 }
 
 .mx_CreateRoomDialog_label {
@@ -36,3 +53,26 @@ limitations under the License.
     background-color: $primary-bg-color;
     width: 100%;
 }
+
+.mx_CreateRoomDialog {
+
+    &.mx_Dialog_fixedWidth {
+        width: 450px;
+    }
+
+    .mx_SettingsFlag {
+      display: flex;
+    }
+
+    .mx_SettingsFlag_label {
+      flex: 1 1 0;
+      min-width: 0;
+      font-weight: 600;
+    }
+
+    .mx_ToggleSwitch {
+      display: ;
+      flex: 0 0 auto;
+    }
+}
+

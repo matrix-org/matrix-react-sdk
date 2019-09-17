@@ -27,39 +27,41 @@ export default createReactClass({
         onFinished: PropTypes.func.isRequired,
     },
 
-    componentWillMount: function() {
+    getInitialState() {
+        return {
+            name: "",
+        };
+    },
+
+    componentWillMount() {
         const config = SdkConfig.get();
         // Dialog shows inverse of m.federate (noFederate) strict false check to skip undefined check (default = true)
         this.defaultNoFederate = config.default_federate === false;
     },
 
     onOk: function() {
-        this.props.onFinished(true, this.refs.textinput.value, this.refs.checkbox.checked);
+        this.props.onFinished(true, this.state.name, this.refs.checkbox.checked);
     },
 
     onCancel: function() {
         this.props.onFinished(false);
     },
 
+    onNameChange(ev) {
+        this.setState({name: ev.target.value});
+    },
+
     render: function() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
+        const Field = sdk.getComponent('views.elements.Field');
         return (
             <BaseDialog className="mx_CreateRoomDialog" onFinished={this.props.onFinished}
                 title={_t('Create Room')}
             >
                 <form onSubmit={this.onOk}>
                     <div className="mx_Dialog_content">
-                        <div className="mx_CreateRoomDialog_label">
-                            <label htmlFor="textinput"> { _t('Room name (optional)') } </label>
-                        </div>
-                        <div className="mx_CreateRoomDialog_input_container">
-                            <input id="textinput" ref="textinput" className="mx_CreateRoomDialog_input" autoFocus={true} />
-                        </div>
-                        <br />
-
-                        <details className="mx_CreateRoomDialog_details">
-                            <summary className="mx_CreateRoomDialog_details_summary">{ _t('Advanced options') }</summary>
+                        <Field className="mx_CreateRoomDialog_input" label={ _t('Name') } onChange={this.onNameChange} />
                             <div>
                                 <input type="checkbox" id="checkbox" ref="checkbox" defaultChecked={this.defaultNoFederate} />
                                 <label htmlFor="checkbox">
