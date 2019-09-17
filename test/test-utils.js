@@ -43,7 +43,7 @@ export function beforeEach(context) {
  * @returns {sinon.Sandbox}; remember to call sandbox.restore afterwards.
  */
 export function stubClient() {
-    const sandbox = sinon.sandbox.create();
+    const sandbox = sinon.createSandbox();
 
     const client = createTestClient();
 
