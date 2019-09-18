@@ -68,6 +68,7 @@ export default function withValidation({ description, rules }) {
                         text,
                     });
                 } else if (!ruleValid && rule.invalid) {
+                    console.log("getting invalid text");
                     // If the rule's result is invalid and has text to show for
                     // the invalid state, show it.
                     const text = rule.invalid.call(this);
@@ -82,6 +83,7 @@ export default function withValidation({ description, rules }) {
                 }
             }
         }
+        console.log("validating", results, focused);
 
         // Hide feedback when not focused
         if (!focused) {

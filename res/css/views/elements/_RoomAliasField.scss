@@ -21,6 +21,12 @@ limitations under the License.
     width: 300px;
     margin: 10px 0 20px 0;
 
+    .mx_Field {
+        margin: 0;
+        border-radius: none;
+        border: none;
+    }
+
     input {
         // the !important is needed here because of the global input styling mess
         // TODO: remove once that is cleaned up

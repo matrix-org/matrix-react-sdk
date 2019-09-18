@@ -19,6 +19,7 @@ import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import sdk from '../../../index';
 import SdkConfig from '../../../SdkConfig';
+import withValidation from '../elements/Validation';
 import { _t } from '../../../languageHandler';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 
@@ -37,19 +38,47 @@ export default createReactClass({
             alias: "",
             detailsOpen: false,
             noFederate: config.default_federate === false,
+            nameIsValid: false,
         };
     },
 
     componentDidMount() {
-        this._detailsRef.addEventListener("toggle", this._onDetailsToggled);
+        this._detailsRef.addEventListener("toggle", this.onDetailsToggled);
     },
 
     componentWillUnmount() {
-        this._detailsRef.removeEventListener("toggle", this._onDetailsToggled);
+        this._detailsRef.removeEventListener("toggle", this.onDetailsToggled);
     },
 
-    onOk: function() {
-        this.props.onFinished(true, this.state.name, this.state.noFederate);
+    onOk: async function() {
+        const activeElement = document.activeElement;
+        if (activeElement) {
+            activeElement.blur();
+        }
+        if (!this.state.nameIsValid) {
+            await this._nameFieldRef.validate({});
+        }
+        if (!this._aliasFieldRef.isValid) {
+            await this._aliasFieldRef.validate();
+        }
+        // Validation and state updates are async, so we need to wait for them to complete
+        // first. Queue a `setState` callback and wait for it to resolve.
+        await new Promise(resolve => this.setState({}, resolve));
+        if (this.state.nameIsValid && this._aliasFieldRef.isValid) {
+            alert(`creating your room now: \n${JSON.stringify(this.state, undefined, 2)}`);
+            // this.props.onFinished(true, this.state.name, this.state.noFederate);
+        } else {
+            let field;
+            if (!this.state.nameIsValid) {
+                field = this._nameFieldRef;
+            } else if (!this._aliasFieldRef.isValid) {
+                field = this._aliasFieldRef;
+            }
+            if (field) {
+                field.focus();
+                field.validate({ focused: true });
+            }
+        }
     },
 
     onCancel: function() {
@@ -72,7 +101,7 @@ export default createReactClass({
         this.setState({alias: ev.target.value});
     },
 
-    _onDetailsToggled(ev) {
+    onDetailsToggled(ev) {
         this.setState({detailsOpen: ev.target.open});
     },
 
@@ -80,9 +109,25 @@ export default createReactClass({
         this.setState({noFederate});
     },
 
-    _collectDetailsRef(ref) {
+    collectDetailsRef(ref) {
         this._detailsRef = ref;
     },
+
+    async onNameValidate(fieldState) {
+        const result = await this._validateRoomName(fieldState);
+        this.setState({nameIsValid: result.valid});
+        return result;
+    },
+
+    _validateRoomName: withValidation({
+        rules: [
+            {
+                key: "required",
+                test: ({ value }) => !!value,
+                invalid: () => _t("Please enter a name for the room"),
+            },
+        ],
+    }),
 
     render: function() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
@@ -97,7 +142,7 @@ export default createReactClass({
         if (this.state.isPublic) {
             publicLabel = (<p>{_t("Set a room address to easily share your room with other people.")}</p>);
             const domain = MatrixClientPeg.get().getDomain();
-            aliasField = (<RoomAliasField onChange={this.onAliasChange} domain={domain} />);
+            aliasField = (<RoomAliasField ref={ref => this._aliasFieldRef = ref} onChange={this.onAliasChange} domain={domain} />);
         } else {
             privateLabel = (<p>{_t("This room is private, and can only be joined by invitation.")}</p>);
         }
@@ -109,13 +154,13 @@ export default createReactClass({
             >
                 <form onSubmit={this.onOk}>
                     <div className="mx_Dialog_content">
-                        <Field className="mx_CreateRoomDialog_input" label={ _t('Name') } onChange={this.onNameChange} />
+                        <Field ref={ref => this._nameFieldRef = ref} className="mx_CreateRoomDialog_input" label={ _t('Name') } onChange={this.onNameChange} onValidate={this.onNameValidate} />
                         <Field label={ _t('Topic (optional)') } onChange={this.onTopicChange} />
                         <LabelledToggleSwitch label={ _t("Make this room public")} onChange={this.onPublicChange} value={this.state.isPublic} />
                         { privateLabel }
                         { publicLabel }
                         { aliasField }
-                        <details ref={this._collectDetailsRef} className="mx_CreateRoomDialog_details">
+                        <details ref={this.collectDetailsRef} className="mx_CreateRoomDialog_details">
                             <summary className="mx_CreateRoomDialog_details_summary">{ this.state.detailsOpen ? _t('Hide advanced') : _t('Show advanced') }</summary>
                             <LabelledToggleSwitch label={ _t('Block users on other matrix homeservers from joining this room (This setting cannot be changed later!)')} onChange={this.onNoFederateChange} value={this.state.noFederate} />
                         </details>
