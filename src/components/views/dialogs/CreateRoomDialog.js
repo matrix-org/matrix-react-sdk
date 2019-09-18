@@ -29,19 +29,15 @@ export default createReactClass({
     },
 
     getInitialState() {
+        const config = SdkConfig.get();
         return {
             isPublic: false,
             name: "",
             topic: "",
             alias: "",
             detailsOpen: false,
+            noFederate: config.default_federate === false,
         };
-    },
-
-    componentWillMount() {
-        const config = SdkConfig.get();
-        // Dialog shows inverse of m.federate (noFederate) strict false check to skip undefined check (default = true)
-        this.defaultNoFederate = config.default_federate === false;
     },
 
     componentDidMount() {
@@ -53,7 +49,7 @@ export default createReactClass({
     },
 
     onOk: function() {
-        this.props.onFinished(true, this.state.name, this.refs.checkbox.checked);
+        this.props.onFinished(true, this.state.name, this.state.noFederate);
     },
 
     onCancel: function() {
@@ -78,6 +74,10 @@ export default createReactClass({
 
     _onDetailsToggled(ev) {
         this.setState({detailsOpen: ev.target.open});
+    },
+
+    onNoFederateChange(noFederate) {
+        this.setState({noFederate});
     },
 
     _collectDetailsRef(ref) {
@@ -117,14 +117,7 @@ export default createReactClass({
                         { aliasField }
                         <details ref={this._collectDetailsRef} className="mx_CreateRoomDialog_details">
                             <summary className="mx_CreateRoomDialog_details_summary">{ this.state.detailsOpen ? _t('Hide advanced') : _t('Show advanced') }</summary>
-                            <div>
-                                <input type="checkbox" id="checkbox" ref="checkbox" defaultChecked={this.defaultNoFederate} />
-                                <label htmlFor="checkbox">
-                                { _t('Block users on other matrix homeservers from joining this room') }
-                                    <br />
-                                    ({ _t('This setting cannot be changed later!') })
-                                </label>
-                            </div>
+                            <LabelledToggleSwitch label={ _t('Block users on other matrix homeservers from joining this room (This setting cannot be changed later!)')} onChange={this.onNoFederateChange} value={this.state.noFederate} />
                         </details>
                     </div>
                 </form>

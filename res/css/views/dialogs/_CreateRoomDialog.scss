@@ -31,7 +31,6 @@ limitations under the License.
         input[type=checkbox] {
             margin-right: 10px;
         }
-
     }
 }
 
@@ -61,18 +60,19 @@ limitations under the License.
     }
 
     .mx_SettingsFlag {
-      display: flex;
+        display: flex;
     }
 
     .mx_SettingsFlag_label {
-      flex: 1 1 0;
-      min-width: 0;
-      font-weight: 600;
+        flex: 1 1 0;
+        min-width: 0;
+        font-weight: 600;
     }
 
     .mx_ToggleSwitch {
-      display: ;
-      flex: 0 0 auto;
+        display: ;
+        flex: 0 0 auto;
+        margin-left: 30px;
     }
 }
 
