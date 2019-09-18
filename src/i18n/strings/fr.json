@@ -1908,5 +1908,6 @@
     "Join the discussion": "Rejoindre la discussion",
     "Do you want to join this room?": "Voulez-vous rejoindre ce salon ?",
     "<userName/> invited you": "<userName/> vous a invité",
-    "Unable to decrypt: The sender's device has not sent us the keys for this message.": "Déchiffrement impossible : L'utilisateur n'a pas envoyé les clefs de déchiffrement pour ce message."
+    "Unable to decrypt: The sender's device has not sent us the keys for this message.": "Déchiffrement impossible : L'utilisateur n'a pas envoyé les clefs de déchiffrement pour ce message.",
+    "Room open to external users": "Salon accessible aux externes"
 }
