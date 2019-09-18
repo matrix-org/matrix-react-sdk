@@ -104,6 +104,13 @@ module.exports = {
 
         // crashes currently: https://github.com/eslint/eslint/issues/6274
         "generator-star-spacing": "off",
+
+        "camelcase": ["warn", {
+            // We use these all over the place for things like classNames
+            "properties": "never",
+            // Get rid of this once we migrate away from all our usages of unsafe lifecycle methods
+            "allow": ["^UNSAFE_"],
+        }],
     },
     settings: {
         flowtype: {

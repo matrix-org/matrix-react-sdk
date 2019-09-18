@@ -170,6 +170,7 @@ const Pill = createReactClass({
     UNSAFE_componentWillMount() {
         this._unmounted = false;
         this._matrixClient = MatrixClientPeg.get();
+        // eslint-disable-next-line new-cap
         this.UNSAFE_componentWillReceiveProps(this.props);
     },
 
