@@ -22,6 +22,7 @@ import sdk from '../../../index';
 import Email from '../../../email';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
+import Tchap from "../../../Tchap";
 
 const FIELD_EMAIL = 'field_email';
 const FIELD_PASSWORD = 'field_password';
@@ -47,6 +48,7 @@ module.exports = React.createClass({
         // instead of the HS URL when talking about "your account".
         hsName: PropTypes.string,
         hsUrl: PropTypes.string,
+        isExtern: PropTypes.bool,
     },
 
     getDefaultProps: function() {
@@ -64,6 +66,7 @@ module.exports = React.createClass({
             email: "",
             password: "",
             passwordConfirm: "",
+            isExtern: false
         };
     },
 
@@ -204,7 +207,19 @@ module.exports = React.createClass({
     },
 
     onEmailBlur(ev) {
+        this.setState({
+            isExtern: false
+        });
         this.validateField(FIELD_EMAIL, ev.type);
+        if (Email.looksValid(ev.target.value)) {
+            Tchap.discoverPlatform(ev.target.value).then(e => {
+                if (Tchap.isUserExternFromHs(e)) {
+                    this.setState({
+                        isExtern: true
+                    });
+                }
+            });
+        }
     },
 
     onEmailChange(ev) {
@@ -239,6 +254,16 @@ module.exports = React.createClass({
             <input className="mx_Login_submit" type="submit" value={_t("Register")} />
         );
 
+        let warnExternMessage;
+        if (this.state.isExtern === true) {
+            warnExternMessage = (<div className="mx_AuthBody_fieldRow">{
+                _t("Warning: The domain of your email address is not " +
+                    "declared in Tchap. If you have received an invitation, " +
+                    "you will be able to create a \"guest\" account, allowing " +
+                    "only to participate in private exchanges to which you are invited.")
+            }</div>);
+        }
+
         return (
             <div>
                 <form onSubmit={this.onSubmit}>
@@ -254,6 +279,7 @@ module.exports = React.createClass({
                             onChange={this.onEmailChange}
                         />
                     </div>
+                    { warnExternMessage }
                     <div className="mx_AuthBody_fieldRow">
                         <Field
                             className={this._classForField(FIELD_PASSWORD)}

@@ -1908,5 +1908,6 @@
     "Join the discussion": "Rejoindre la discussion",
     "Do you want to join this room?": "Voulez-vous rejoindre ce salon ?",
     "<userName/> invited you": "<userName/> vous a invité",
-    "Unable to decrypt: The sender's device has not sent us the keys for this message.": "Déchiffrement impossible : L'utilisateur n'a pas envoyé les clefs de déchiffrement pour ce message."
+    "Unable to decrypt: The sender's device has not sent us the keys for this message.": "Déchiffrement impossible : L'utilisateur n'a pas envoyé les clefs de déchiffrement pour ce message.",
+    "Warning: The domain of your email address is not declared in Tchap. If you have received an invitation, you will be able to create a \"guest\" account, allowing only to participate in private exchanges to which you are invited.": "Attention : Le domaine de votre adresse email n'est pas déclaré dans Tchap. Si vous avez reçu une invitation, vous allez pouvoir créer un compte Tchap \"invité\", permettant uniquement de participer aux échanges privés auxquels vous êtes convié."
 }
