@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {_t, _td} from '../languageHandler';
+import {_td} from '../languageHandler';
 import {
     AudioNotificationsEnabledController,
     NotificationBodyEnabledController,
