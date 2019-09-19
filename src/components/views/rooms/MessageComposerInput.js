@@ -1111,10 +1111,11 @@ export default class MessageComposerInput extends React.Component {
                 mathDelimiters.forEach(function (d) {
                     var reg = RegExp(d.symbol + "([^" + d.symbol + "]*)" + d.symbol, "g");
                     contentHTML = contentHTML.replace(reg, function(match, p1) {
-                        if (d.display == true) {
-                            return `<matrix-math-display>${p1}</matrix-math-display>`;
+                        if ( d.display ) {
+                            // currently we just send the code as the fallback
+                            return `<div data-mx-maths="${p1}"><code>${p1}</code></div>`;
                         } else {
-                            return `<matrix-math>${p1}</matrix-math>`;
+                            return `<span data-mx-maths="${p1}"><code>${p1}</code></span>`;
                         }
                     });
                 });

@@ -258,7 +258,8 @@ const sanitizeHtmlParams = {
     allowedAttributes: {
         // custom ones first:
         font: ['color', 'data-mx-bg-color', 'data-mx-color', 'style'], // custom to matrix
-        span: ['data-mx-bg-color', 'data-mx-color', 'style'], // custom to matrix
+        span: ['data-mx-bg-color', 'data-mx-color', 'style', 'data-mx-maths'], // custom to matrix
+        div: ['data-mx-maths'],
         a: ['href', 'name', 'target', 'rel'], // remote target: custom to matrix
         img: ['src', 'width', 'height', 'alt', 'title'],
         ol: ['start'],
@@ -480,35 +481,26 @@ export function bodyToHtml(content, highlights, opts={}) {
         'mx_EventTile_bigEmoji': emojiBody,
         'markdown-body': isHtmlMessage && !emojiBody,
     });
-    
-    const mathDelimiters = [ 
-        { left: "<matrix-math-display>", right: "<\\/matrix-math-display>", display: true },
-        { left: "<matrix-math>", right: "<\\/matrix-math>", display: false }
-    ];
 
-    if (opts.renderKatex) {
-        if ("undefined" != typeof safeBody) {
-            mathDelimiters.forEach(function (d) {
-                var reg = RegExp(d.left + "(.*?)" + d.right, "g");
-                safeBody = safeBody.replace(reg, function(match, p1) {
-                    return katex.renderToString(p1, {
-                        throwOnError: false,
-                        displayMode: d.display
-                    })
-                });
+    if ( opts.renderKatex ) {
+      if ( 'undefined' != typeof safeBody ) {
+        console.log("HI THERE: " + safeBody);
+        var inlineRegex = /<span data-mx-maths="(.*?)">.*?<\/span>/g;
+        var displayRegex = /<div data-mx-maths="(.*?)">.*?<\/div>/g;
+        safeBody = safeBody.replace(inlineRegex, function(match, p1) {
+            return katex.renderToString(p1, {
+                throwOnError: false,
+                displayMode: false
             });
-        };
-    } else {
-        // TODO: if !renderKatex then replace tags with <code>
-        if ("undefined" != typeof safeBody) {
-            mathDelimiters.forEach(function (d) {
-                var reg = RegExp(d.left + "(.*?)" + d.right, "g");
-                safeBody = safeBody.replace(reg, function(match, p1) {
-                    return "<code>" + p1 + "</code>"
-                });
+        });
+        safeBody = safeBody.replace(displayRegex, function(match, p1) {
+            return katex.renderToString(p1, {
+                throwOnError: false,
+                displayMode: true
             });
-        };
-    };
+        });
+      }
+    }
 
     return isDisplayedWithHtml ?
         <span key="body" className={className} dangerouslySetInnerHTML={{ __html: safeBody }} dir="auto" /> :
