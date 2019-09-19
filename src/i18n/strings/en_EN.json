@@ -1651,5 +1651,5 @@
     "Password too weak !": "Password too weak !",
     "Unable to decrypt: The sender's device has not sent us the keys for this message.": "Unable to decrypt: The sender's device has not sent us the keys for this message.",
     "Unreachable Homeserver": "Unreachable Homeserver",
-    "Too many request": "Too many request"
+    "Error : Too many requests": "Error : Too many requests"
 }

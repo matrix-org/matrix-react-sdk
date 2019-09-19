@@ -330,7 +330,7 @@ module.exports = React.createClass({
         let errorText;
 
         if (errCode === "M_LIMIT_EXCEEDED") {
-            errorText = _t("Too many request");
+            errorText = _t("Error : Too many requests");
         } else {
             errorText = _t("Error: Problem communicating with the given homeserver.") +
                 (errCode ? " (" + errCode + ")" : "");
