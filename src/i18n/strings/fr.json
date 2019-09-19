@@ -1910,5 +1910,5 @@
     "<userName/> invited you": "<userName/> vous a invité",
     "Unable to decrypt: The sender's device has not sent us the keys for this message.": "Déchiffrement impossible : L'utilisateur n'a pas envoyé les clefs de déchiffrement pour ce message.",
     "Unreachable Homeserver": "Homeserver inaccessible",
-    "Error : Too many request": "Erreur : Trop de requêtes ont été envoyées"
+    "Too many request": "Trop de requêtes ont été envoyées"
 }
