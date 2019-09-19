@@ -1650,5 +1650,13 @@
     "This password is too weak. It must include a lower-case letter, an upper-case letter, a number and a symbol and be at a minimum 8 characters in length.": "This password is too weak. It must include a lower-case letter, an upper-case letter, a number and a symbol and be at a minimum 8 characters in length.",
     "Password too weak !": "Password too weak !",
     "Unable to decrypt: The sender's device has not sent us the keys for this message.": "Unable to decrypt: The sender's device has not sent us the keys for this message.",
-    "Room open to external users": "Room open to external users"
+    "Room open to external users": "Room open to external users",
+    "Unreachable Homeserver": "Unreachable Homeserver",
+    "Error : Too many requests": "Error : Too many requests",
+    "You have encountered an error and you want to help us ? Please describe the error encountered. There will be no direct answer, but your report will help us to improve Tchap. What have you done ? What was the expected behavior ? What really happened ?": "You have encountered an error and you want to help us ? Please describe the error encountered. There will be no direct answer, but your report will help us to improve Tchap. What have you done ? What was the expected behavior ? What really happened ?",
+    "Report an error": "Report an error",
+    "Describe your problem here.": "Describe your problem here.",
+    "In order to diagnose problems, logs from this client will be sent with this error report. This error report, including logs, will not be visible publicly.": "In order to diagnose problems, logs from this client will be sent with this error report. This error report, including logs, will not be visible publicly.",
+    "Please describe the error encountered. What have you done ? What was the expected behavior ? What really happened ?": "Please describe the error encountered. What have you done ? What was the expected behavior ? What really happened ?",
+    "The field note is required.": "The field note is required."
 }

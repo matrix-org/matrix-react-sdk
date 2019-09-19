@@ -53,11 +53,6 @@ export default class UserSettingsDialog extends React.Component {
             <PreferencesUserSettingsTab />,
         ));
         tabs.push(new Tab(
-            _td("Voice & Video"),
-            "mx_UserSettingsDialog_voiceIcon",
-            <VoiceUserSettingsTab />,
-        ));
-        tabs.push(new Tab(
             _td("Security & Privacy"),
             "mx_UserSettingsDialog_securityIcon",
             <SecurityUserSettingsTab />,
