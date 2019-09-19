@@ -1909,5 +1909,14 @@
     "Do you want to join this room?": "Voulez-vous rejoindre ce salon ?",
     "<userName/> invited you": "<userName/> vous a invité",
     "Unable to decrypt: The sender's device has not sent us the keys for this message.": "Déchiffrement impossible : L'utilisateur n'a pas envoyé les clefs de déchiffrement pour ce message.",
-    "Warning: The domain of your email address is not declared in Tchap. If you have received an invitation, you will be able to create a \"guest\" account, allowing only to participate in private exchanges to which you are invited.": "Attention : Le domaine de votre adresse email n'est pas déclaré dans Tchap. Si vous avez reçu une invitation, vous allez pouvoir créer un compte Tchap \"invité\", permettant uniquement de participer aux échanges privés auxquels vous êtes convié."
+    "Warning: The domain of your email address is not declared in Tchap. If you have received an invitation, you will be able to create a \"guest\" account, allowing only to participate in private exchanges to which you are invited.": "Attention : Le domaine de votre adresse email n'est pas déclaré dans Tchap. Si vous avez reçu une invitation, vous allez pouvoir créer un compte Tchap \"invité\", permettant uniquement de participer aux échanges privés auxquels vous êtes convié.",
+    "Room open to external users": "Salon accessible aux externes",
+    "Unreachable Homeserver": "Homeserver inaccessible",
+    "Error : Too many requests": "Erreur : Trop de requêtes ont été envoyées",
+    "You have encountered an error and you want to help us ? Please describe the error encountered. There will be no direct answer, but your report will help us to improve Tchap. What have you done ? What was the expected behavior ? What really happened ?": "Vous avez rencontré une erreur et vous voulez nous aider ? Veuillez décrire l’erreur rencontrée. Il ne sera pas apporté de réponse directe mais votre rapport nous aidera à améliorer Tchap. Qu’avez vous fait ? Quel était le comportement attendu ? Que s’est-il réellement passé ?",
+    "Report an error": "Rapporter une erreur",
+    "Describe your problem here.": "Décrivez votre problème ici.",
+    "In order to diagnose problems, logs from this client will be sent with this error report. This error report, including logs, will not be visible publicly.": "Afin de diagnostiquer les problèmes, les journaux de ce client seront envoyés avec ce rapport d'erreur. Ce rapport d'erreur, y compris les journaux, ne seront pas visibles publiquement.",
+    "Please describe the error encountered. What have you done ? What was the expected behavior ? What really happened ?": "Veuillez décrire l’erreur rencontrée. Qu’avez vous fait ? Quel était le comportement attendu ? Que s’est-il réellement passé ?",
+    "The field note is required.": "Le champ note est requis."
 }

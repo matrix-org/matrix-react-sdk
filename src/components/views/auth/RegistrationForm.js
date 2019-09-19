@@ -107,7 +107,8 @@ module.exports = React.createClass({
     },
 
     _doSubmit: function(ev) {
-        const email = this.state.email.trim();
+        let email = this.state.email.trim();
+        email = email.toLowerCase();
         const promise = this.props.onRegisterClick({
             password: this.state.password.trim(),
             email: email,

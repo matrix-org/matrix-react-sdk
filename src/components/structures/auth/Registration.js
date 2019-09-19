@@ -154,7 +154,18 @@ module.exports = React.createClass({
                         this._replaceClient();
                     }
                 });
-            });
+            }).catch(err =>{
+                console.error(err);
+                let errorText;
+                if (err === "ERR_UNREACHABLE_HOMESERVER") {
+                    errorText = _t('Unreachable Homeserver');
+                } else {
+                    errorText = err;
+                }
+                this.setState({
+                    errorText: errorText,
+                });
+        });
     },
 
     _onUIAuthFinished: async function(success, response, extra) {

@@ -85,6 +85,8 @@ class PasswordLogin extends React.Component {
             return;
         }
 
+        username = username.toLowerCase();
+
         this.props.onSubmit(
             username,
             null,
