@@ -55,28 +55,26 @@ export default createReactClass({
         if (activeElement) {
             activeElement.blur();
         }
-        if (!this.state.nameIsValid) {
-            await this._nameFieldRef.validate({});
-        }
-        if (!this._aliasFieldRef.isValid) {
-            await this._aliasFieldRef.validate();
+        await this._nameFieldRef.validate({allowEmpty: false});
+        if (this._aliasFieldRef) {
+            await this._aliasFieldRef.validate({allowEmpty: false});
         }
         // Validation and state updates are async, so we need to wait for them to complete
         // first. Queue a `setState` callback and wait for it to resolve.
         await new Promise(resolve => this.setState({}, resolve));
-        if (this.state.nameIsValid && this._aliasFieldRef.isValid) {
+        if (this.state.nameIsValid && (!this._aliasFieldRef || this._aliasFieldRef.isValid)) {
             alert(`creating your room now: \n${JSON.stringify(this.state, undefined, 2)}`);
             // this.props.onFinished(true, this.state.name, this.state.noFederate);
         } else {
             let field;
             if (!this.state.nameIsValid) {
                 field = this._nameFieldRef;
-            } else if (!this._aliasFieldRef.isValid) {
+            } else if (this._aliasFieldRef && !this._aliasFieldRef.isValid) {
                 field = this._aliasFieldRef;
             }
             if (field) {
                 field.focus();
-                field.validate({ focused: true });
+                field.validate({ allowEmpty: false, focused: true });
             }
         }
     },
@@ -115,6 +113,7 @@ export default createReactClass({
 
     async onNameValidate(fieldState) {
         const result = await this._validateRoomName(fieldState);
+        console.log("CreateRoomDialog name validate", result.valid);
         this.setState({nameIsValid: result.valid});
         return result;
     },
@@ -123,7 +122,7 @@ export default createReactClass({
         rules: [
             {
                 key: "required",
-                test: ({ value }) => !!value,
+                test: async ({ value }) => !!value,
                 invalid: () => _t("Please enter a name for the room"),
             },
         ],
@@ -142,7 +141,7 @@ export default createReactClass({
         if (this.state.isPublic) {
             publicLabel = (<p>{_t("Set a room address to easily share your room with other people.")}</p>);
             const domain = MatrixClientPeg.get().getDomain();
-            aliasField = (<RoomAliasField ref={ref => this._aliasFieldRef = ref} onChange={this.onAliasChange} domain={domain} />);
+            aliasField = (<RoomAliasField id="alias" ref={ref => this._aliasFieldRef = ref} onChange={this.onAliasChange} domain={domain} />);
         } else {
             privateLabel = (<p>{_t("This room is private, and can only be joined by invitation.")}</p>);
         }
@@ -154,8 +153,8 @@ export default createReactClass({
             >
                 <form onSubmit={this.onOk}>
                     <div className="mx_Dialog_content">
-                        <Field ref={ref => this._nameFieldRef = ref} className="mx_CreateRoomDialog_input" label={ _t('Name') } onChange={this.onNameChange} onValidate={this.onNameValidate} />
-                        <Field label={ _t('Topic (optional)') } onChange={this.onTopicChange} />
+                        <Field id="name" ref={ref => this._nameFieldRef = ref} label={ _t('Name') } onChange={this.onNameChange} onValidate={this.onNameValidate} value={this.state.name} />
+                        <Field id="topic" label={ _t('Topic (optional)') } onChange={this.onTopicChange} value={this.state.topic} />
                         <LabelledToggleSwitch label={ _t("Make this room public")} onChange={this.onPublicChange} value={this.state.isPublic} />
                         { privateLabel }
                         { publicLabel }

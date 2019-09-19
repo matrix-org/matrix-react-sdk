@@ -19,36 +19,47 @@ import PropTypes from 'prop-types';
 import sdk from '../../../index';
 import withValidation from './Validation';
 
-export const SAFE_LOCALPART_REGEX = /^[a-z0-9=_\-./]+$/;
+const SAFE_LOCALPART_REGEX = /^[a-z0-9=_\-./]+$/;
 
 export default class RoomAliasField extends React.PureComponent {
     static propTypes = {
+        id: PropTypes.string.isRequired,
         domain: PropTypes.string.isRequired,
         onChange: PropTypes.func,
     };
+
+    constructor(props) {
+        super(props);
+        this.state = {isValid: true};
+    }
 
     render() {
         const Field = sdk.getComponent('views.elements.Field');
         return (
             <div className="mx_RoomAliasField">
                 <span>#</span>
-                <Field ref={ref => this._fieldRef = ref} onValidate={this._onValidate} placeholder={_t("e.g. my-room")} onChange={this.props.onChange} />
+                <Field id={this.props.id} ref={ref => this._fieldRef = ref} onValidate={this._onValidate} placeholder={_t("e.g. my-room")} onChange={this.props.onChange} />
                 <span>:{this.props.domain}</span>
             </div>
         );
     }
 
-    _onValidate(fieldState) {
-        const result = this._validationRules(fieldState);
+    _onValidate = async (fieldState) => {
+        const result = await this._validationRules(fieldState);
+        console.log("RoomAliasField.valid", fieldState.allowEmpty, result.valid);
         this.setState({isValid: result.valid});
         return result;
-    }
+    };
 
     _validationRules = withValidation({
         rules: [
             {
                 key: "safeLocalpart",
-                test: ({ value }) => !value || SAFE_LOCALPART_REGEX.test(value),
+                test: async ({ value, allowEmpty }) => {
+                    const result = (!value && allowEmpty) || SAFE_LOCALPART_REGEX.test(value);
+                    console.log("validating", value, result);
+                    return result;
+                },
                 invalid: () => _t("Some characters not allowed"),
             },
         ],
@@ -58,12 +69,11 @@ export default class RoomAliasField extends React.PureComponent {
         return this.state.isValid;
     }
 
-    validate(...params) {
-        return this._fieldRef.validate(...params);
+    validate(options) {
+        return this._fieldRef.validate(options);
     }
 
     focus() {
         this._fieldRef.focus();
     }
 }
-

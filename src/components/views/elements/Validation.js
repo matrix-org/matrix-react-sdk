@@ -36,7 +36,7 @@ import classNames from 'classnames';
  *     the overall validity and a feedback UI that can be rendered for more detail.
  */
 export default function withValidation({ description, rules }) {
-    return async function onValidate({ value, focused, allowEmpty = true }) {
+    return async function onValidate({ value, focused, allowEmpty = true }, stoppit) {
         if (!value && allowEmpty) {
             return {
                 valid: null,
@@ -54,6 +54,7 @@ export default function withValidation({ description, rules }) {
                 // We're setting `this` to whichever component holds the validation
                 // function. That allows rules to access the state of the component.
                 const ruleValid = await rule.test.call(this, { value, allowEmpty });
+                console.log("onValidate, ruleValid", ruleValid);
                 valid = valid && ruleValid;
                 if (ruleValid && rule.valid) {
                     // If the rule's result is valid and has text to show for
@@ -68,7 +69,6 @@ export default function withValidation({ description, rules }) {
                         text,
                     });
                 } else if (!ruleValid && rule.invalid) {
-                    console.log("getting invalid text");
                     // If the rule's result is invalid and has text to show for
                     // the invalid state, show it.
                     const text = rule.invalid.call(this);
@@ -83,7 +83,6 @@ export default function withValidation({ description, rules }) {
                 }
             }
         }
-        console.log("validating", results, focused);
 
         // Hide feedback when not focused
         if (!focused) {
