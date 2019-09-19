@@ -19,6 +19,7 @@ limitations under the License.
 module.exports = {
     // Encodes a dictionary of {
     //   "notify": true/false,
+    //   "push": true/false,
     //   "sound": string or undefined,
     //   "highlight: true/false,
     // }
@@ -27,8 +28,12 @@ module.exports = {
         const notify = action.notify;
         const sound = action.sound;
         const highlight = action.highlight;
+        const push = action.push;
         if (notify) {
             const actions = ["notify"];
+            if (push === false) {
+                actions.push("dont_push");
+            }
             if (sound) {
                 actions.push({"set_tweak": "sound", "value": sound});
             }
@@ -45,6 +50,7 @@ module.exports = {
 
     // Decode a list of actions to a dictionary of {
     //   "notify": true/false,
+    //   "push": true/false,
     //   "sound": string or undefined,
     //   "highlight: true/false,
     // }
@@ -53,6 +59,7 @@ module.exports = {
         let notify = false;
         let sound = null;
         let highlight = false;
+        let push = true;
 
         for (let i = 0; i < actions.length; ++i) {
             const action = actions[i];
@@ -60,6 +67,8 @@ module.exports = {
                 notify = true;
             } else if (action === "dont_notify") {
                 notify = false;
+            } else if (action === "dont_push") {
+                push = false;
             } else if (typeof action === 'object') {
                 if (action.set_tweak === "sound") {
                     sound = action.value;
@@ -80,7 +89,7 @@ module.exports = {
             highlight = true;
         }
 
-        const result = {notify: notify, highlight: highlight};
+        const result = {notify: notify, highlight: highlight, push: push};
         if (sound !== null) {
             result.sound = sound;
         }
