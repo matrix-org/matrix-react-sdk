@@ -580,10 +580,8 @@ class RoomListStore extends Store {
                     // Hiding direct rooms created with an email invite.
                     if (!Email.looksValid(dmUserId)) {
                         // Update the name of a left room by the old user name.
-                        if (room.name.includes("Empty room (was ")) {
-                            const member = room.getMember(dmUserId);
-                            this._matrixClient.setRoomName(room.roomId, member.rawDisplayName);
-                        }
+                        const member = room.getMember(dmUserId);
+                        this._matrixClient.setRoomName(room.roomId, member.rawDisplayName);
                         lists["im.vector.fake.direct"].push({room, category: this._calculateCategory(room)});
                     }
                 } else {
