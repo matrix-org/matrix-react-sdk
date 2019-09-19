@@ -95,7 +95,7 @@ module.exports = React.createClass({
         return (
             <div>
                 <div className='mx_SettingsTab_subsectionText'>
-                    { _t('When someone types mathematics using \$ signs, KaTeX can render the contents.') }
+                    { _t('Riot can use KaTeX to render mathematics instead of relying on image fallbacks.') }
                 </div>
                 <div className='mx_SettingsTab_subsectionText'>
                     { katexForAccount }

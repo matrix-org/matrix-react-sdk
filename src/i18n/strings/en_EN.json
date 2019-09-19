@@ -1687,7 +1687,7 @@
     "Enable KaTeX rendering by default for participants in this room": "Enable KaTeX rendering by default for participants in this room",
     "Enable KaTeX rendering for this room (only affects you)": "Enable KaTeX rendering for this room (only affects you)",
     "KaTeX rendering is disabled by default for participants in this room.": "KaTeX rendering is disabled by default for participants in this room.",
-    "When someone types mathematics using $ signs, KaTeX can render the contents.": "When someone types mathematics using $ signs, KaTeX can render the contents.",
+    "Riot can use KaTeX to render mathematics instead of relying on image fallbacks.": "Riot can use KaTeX to render mathematics instead of relying on image fallbacks.",
     "Enable KaTeX rendering by default": "Enable KaTeX rendering by default",
     "You have <a>enabled</a> KaTeX rendering by default.": "You have <a>enabled</a> KaTeX rendering by default.",
     "You have <a>disabled</a> KaTeX rendering by default.": "You have <a>disabled</a> KaTeX rendering by default.",
