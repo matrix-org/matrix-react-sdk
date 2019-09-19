@@ -293,7 +293,7 @@ export const SETTINGS = {
             "room-account": _td("Enable URL previews for this room (only affects you)"),
             "room": _td("Enable URL previews by default for participants in this room"),
         },
-        default: true,
+        default: false,
     },
     "urlPreviewsEnabled_e2ee": {
         supportedLevels: ['room-device', 'room-account'],

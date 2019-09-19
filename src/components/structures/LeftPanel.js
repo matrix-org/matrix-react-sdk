@@ -219,7 +219,7 @@ const LeftPanel = React.createClass({
         const SearchBox = sdk.getComponent('structures.SearchBox');
         const CallPreview = sdk.getComponent('voip.CallPreview');
 
-        const tagPanelEnabled = SettingsStore.getValue("TagPanel.enableTagPanel");
+        const tagPanelEnabled = false;
         let tagPanelContainer;
 
         const isCustomTagsEnabled = SettingsStore.isFeatureEnabled("feature_custom_tags");

@@ -579,6 +579,8 @@ class RoomListStore extends Store {
                 } else if (dmUserId) {
                     // Hiding direct rooms created with an email invite.
                     if (!Email.looksValid(dmUserId)) {
+                        const member = room.getMember(dmUserId);
+                        this._matrixClient.setRoomName(room.roomId, member.rawDisplayName);
                         lists["im.vector.fake.direct"].push({room, category: this._calculateCategory(room)});
                     }
                 } else {

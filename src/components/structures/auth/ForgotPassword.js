@@ -74,7 +74,8 @@ module.exports = React.createClass({
             phase: PHASE_SENDING_EMAIL,
         });
         this.reset = new PasswordReset(hsUrl, identityUrl);
-        this.reset.resetPassword(email, password).done(() => {
+        let lowercaseEmail = email.toLowerCase();
+        this.reset.resetPassword(lowercaseEmail, password).done(() => {
             this.setState({
                 phase: PHASE_EMAIL_SENT,
             });

@@ -170,16 +170,15 @@ export default class HelpUserSettingsTab extends React.Component {
                     <span className='mx_SettingsTab_subheading'>{_t('Bug reporting')}</span>
                     <div className='mx_SettingsTab_subsectionText'>
                         {
-                            _t( "If you've submitted a bug via GitHub, debug logs can help " +
-                                "us track down the problem. Debug logs contain application " +
-                                "usage data including your username, the IDs or aliases of " +
-                                "the rooms or groups you have visited and the usernames of " +
-                                "other users. They do not contain messages.",
+                            _t( "You have encountered an error and you want to help us ? " +
+                                "Please describe the error encountered. There will be no direct answer, " +
+                                "but your report will help us to improve Tchap. What have you done ? " +
+                                "What was the expected behavior ? What really happened ?",
                             )
                         }
                         <div className='mx_HelpUserSettingsTab_debugButton'>
                             <AccessibleButton onClick={this._onBugReport} kind='primary'>
-                                {_t("Submit debug logs")}
+                                {_t("Report an error")}
                             </AccessibleButton>
                         </div>
                         <div className='mx_HelpUserSettingsTab_debugButton'>
