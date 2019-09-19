@@ -1909,6 +1909,7 @@
     "Do you want to join this room?": "Voulez-vous rejoindre ce salon ?",
     "<userName/> invited you": "<userName/> vous a invité",
     "Unable to decrypt: The sender's device has not sent us the keys for this message.": "Déchiffrement impossible : L'utilisateur n'a pas envoyé les clefs de déchiffrement pour ce message.",
+    "Room open to external users": "Salon accessible aux externes",
     "Unreachable Homeserver": "Homeserver inaccessible",
     "Error : Too many requests": "Erreur : Trop de requêtes ont été envoyées",
     "You have encountered an error and you want to help us ? Please describe the error encountered. There will be no direct answer, but your report will help us to improve Tchap. What have you done ? What was the expected behavior ? What really happened ?": "Vous avez rencontré une erreur et vous voulez nous aider ? Veuillez décrire l’erreur rencontrée. Il ne sera pas apporté de réponse directe mais votre rapport nous aidera à améliorer Tchap. Qu’avez vous fait ? Quel était le comportement attendu ? Que s’est-il réellement passé ?",
