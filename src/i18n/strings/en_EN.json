@@ -1650,6 +1650,7 @@
     "This password is too weak. It must include a lower-case letter, an upper-case letter, a number and a symbol and be at a minimum 8 characters in length.": "This password is too weak. It must include a lower-case letter, an upper-case letter, a number and a symbol and be at a minimum 8 characters in length.",
     "Password too weak !": "Password too weak !",
     "Unable to decrypt: The sender's device has not sent us the keys for this message.": "Unable to decrypt: The sender's device has not sent us the keys for this message.",
+    "Warning: The domain of your email address is not declared in Tchap. If you have received an invitation, you will be able to create a \"guest\" account, allowing only to participate in private exchanges to which you are invited.": "Warning: The domain of your email address is not declared in Tchap. If you have received an invitation, you will be able to create a \"guest\" account, allowing only to participate in private exchanges to which you are invited.",
     "Room open to external users": "Room open to external users",
     "Unreachable Homeserver": "Unreachable Homeserver",
     "Error : Too many requests": "Error : Too many requests",
