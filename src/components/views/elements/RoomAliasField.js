@@ -18,6 +18,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import sdk from '../../../index';
 import withValidation from './Validation';
+import MatrixClientPeg from '../../../MatrixClientPeg';
 
 export default class RoomAliasField extends React.PureComponent {
     static propTypes = {
@@ -86,6 +87,26 @@ export default class RoomAliasField extends React.PureComponent {
                 key: "required",
                 test: async ({ value, allowEmpty }) => allowEmpty || !!value,
                 invalid: () => _t("Please provide a room alias"),
+            }, {
+                key: "taken",
+                test: async ({value}) => {
+                    if (!value) {
+                        return true;
+                    }
+                    const client = MatrixClientPeg.get();
+                    try {
+                        await client.getRoomIdForAlias(this._asFullAlias(value));
+                        // we got a room id, so the alias is taken
+                        return false;
+                    } catch (err) {
+                        // any server error code will do,
+                        // either it M_NOT_FOUND or the alias is invalid somehow,
+                        // in which case we don't want to show the invalid message
+                        return !!err.errcode;
+                    }
+                },
+                valid: () => _t("This alias is available to use"),
+                invalid: () => _t("This alias is already in use"),
             },
         ],
     });
