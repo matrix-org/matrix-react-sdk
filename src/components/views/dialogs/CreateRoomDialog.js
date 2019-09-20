@@ -42,6 +42,27 @@ export default createReactClass({
         };
     },
 
+    _roomCreateOptions() {
+        const createOpts = {};
+        createOpts.name = this.state.name;
+        if (this.state.isPublic) {
+            createOpts.visibility = "public";
+            createOpts.preset = "public_chat";
+            // to prevent createRoom from enabling guest access
+            createOpts['initial_state'] = [];
+            const {alias} = this.state;
+            const localPart = alias.substr(1, alias.indexOf(":") - 1);
+            createOpts['room_alias_name'] = localPart;
+        }
+        if (this.state.topic) {
+            createOpts.topic = this.state.topic;
+        }
+        if (this.state.noFederate) {
+            createOpts.creation_content = {'m.federate': false};
+        }
+        return createOpts;
+    },
+
     componentDidMount() {
         this._detailsRef.addEventListener("toggle", this.onDetailsToggled);
     },
@@ -63,8 +84,7 @@ export default createReactClass({
         // first. Queue a `setState` callback and wait for it to resolve.
         await new Promise(resolve => this.setState({}, resolve));
         if (this.state.nameIsValid && (!this._aliasFieldRef || this._aliasFieldRef.isValid)) {
-            alert(`creating your room now: \n${JSON.stringify(this.state, undefined, 2)}`);
-            // this.props.onFinished(true, this.state.name, this.state.noFederate);
+            this.props.onFinished(true, this._roomCreateOptions());
         } else {
             let field;
             if (!this.state.nameIsValid) {
