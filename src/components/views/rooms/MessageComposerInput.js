@@ -1111,9 +1111,8 @@ export default class MessageComposerInput extends React.Component {
                 mathDelimiters.forEach(function (d) {
                     var reg = RegExp(d.symbol + "([^" + d.symbol + "]*)" + d.symbol, "g");
                     contentHTML = contentHTML.replace(reg, function(match, p1) {
-                        var fallback = HtmlUtils.latexToImg(p1);
+                        var fallback = HtmlUtils.latexToImg(p1, d.display);
                         if ( d.display ) {
-                            // currently we just send the code as the fallback
                             return `<div data-mx-maths="${p1}">${fallback}</div>`;
                         } else {
                             return `<span data-mx-maths="${p1}">${fallback}</span>`;

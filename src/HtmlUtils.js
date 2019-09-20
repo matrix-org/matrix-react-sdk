@@ -399,7 +399,7 @@ class TextHighlighter extends BaseHighlighter {
  * content: the LaTeX source
  */
 
-export function latexToImg(content, opts={}) {
+export function latexToImg(content, displayMode) {
   return `<code>${content}</code>`;
 }
 
