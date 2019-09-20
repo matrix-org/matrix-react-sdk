@@ -19,8 +19,6 @@ import PropTypes from 'prop-types';
 import sdk from '../../../index';
 import withValidation from './Validation';
 
-const SAFE_LOCALPART_REGEX = /^[a-z0-9=_\-./]+$/;
-
 export default class RoomAliasField extends React.PureComponent {
     static propTypes = {
         id: PropTypes.string.isRequired,
@@ -33,11 +31,16 @@ export default class RoomAliasField extends React.PureComponent {
         this.state = {isValid: true};
     }
 
+    _asFullAlias(localpart) {
+        return `#${localpart}:${this.props.domain}`;
+    }
+
     render() {
         const Field = sdk.getComponent('views.elements.Field');
         const poundSign = (<span>#</span>);
         const aliasPostfix = ":" + this.props.domain;
         const domain = (<span title={aliasPostfix}>{aliasPostfix}</span>);
+        const maxlength = 255 - this.props.domain.length - 2;   // 2 for # and :
         return (
                 <Field
                     label={_t("Room alias")}
@@ -48,13 +51,19 @@ export default class RoomAliasField extends React.PureComponent {
                     ref={ref => this._fieldRef = ref}
                     onValidate={this._onValidate}
                     placeholder={_t("e.g. my-room")}
-                    onChange={this.props.onChange} />
+                    onChange={this._onChange}
+                    maxlength={maxlength} />
         );
+    }
+
+    _onChange = (ev) => {
+        if (this.props.onChange) {
+            this.props.onChange(this._asFullAlias(ev.target.value));
+        }
     }
 
     _onValidate = async (fieldState) => {
         const result = await this._validationRules(fieldState);
-        console.log("RoomAliasField.valid", fieldState.allowEmpty, result.valid);
         this.setState({isValid: result.valid});
         return result;
     };
@@ -63,12 +72,20 @@ export default class RoomAliasField extends React.PureComponent {
         rules: [
             {
                 key: "safeLocalpart",
-                test: async ({ value, allowEmpty }) => {
-                    const result = (!value && allowEmpty) || SAFE_LOCALPART_REGEX.test(value);
-                    console.log("validating", value, result);
-                    return result;
+                test: async ({ value }) => {
+                    if (!value) {
+                        return true;
+                    }
+                    const fullAlias = this._asFullAlias(value);
+                    // XXX: FIXME https://github.com/matrix-org/matrix-doc/issues/668
+                    return !value.includes("#") && !value.includes(":") && !value.includes(",") &&
+                        encodeURI(fullAlias) === fullAlias;
                 },
                 invalid: () => _t("Some characters not allowed"),
+            }, {
+                key: "required",
+                test: async ({ value, allowEmpty }) => allowEmpty || !!value,
+                invalid: () => _t("Please provide a room alias"),
             },
         ],
     });

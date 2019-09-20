@@ -95,8 +95,8 @@ export default createReactClass({
         this.setState({isPublic});
     },
 
-    onAliasChange(ev) {
-        this.setState({alias: ev.target.value});
+    onAliasChange(alias) {
+        this.setState({alias});
     },
 
     onDetailsToggled(ev) {
@@ -113,7 +113,6 @@ export default createReactClass({
 
     async onNameValidate(fieldState) {
         const result = await this._validateRoomName(fieldState);
-        console.log("CreateRoomDialog name validate", result.valid);
         this.setState({nameIsValid: result.valid});
         return result;
     },

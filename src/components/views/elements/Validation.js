@@ -54,7 +54,6 @@ export default function withValidation({ description, rules }) {
                 // We're setting `this` to whichever component holds the validation
                 // function. That allows rules to access the state of the component.
                 const ruleValid = await rule.test.call(this, { value, allowEmpty });
-                console.log("onValidate, ruleValid", ruleValid);
                 valid = valid && ruleValid;
                 if (ruleValid && rule.valid) {
                     // If the rule's result is valid and has text to show for
