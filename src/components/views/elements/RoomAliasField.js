@@ -35,12 +35,19 @@ export default class RoomAliasField extends React.PureComponent {
 
     render() {
         const Field = sdk.getComponent('views.elements.Field');
+        const poundSign = (<span>#</span>);
+        const aliasPostfix = ":" + this.props.domain;
+        const domain = (<span title={aliasPostfix}>{aliasPostfix}</span>);
         return (
-            <div className="mx_RoomAliasField">
-                <span>#</span>
-                <Field id={this.props.id} ref={ref => this._fieldRef = ref} onValidate={this._onValidate} placeholder={_t("e.g. my-room")} onChange={this.props.onChange} />
-                <span>:{this.props.domain}</span>
-            </div>
+                <Field
+                    className="mx_RoomAliasField"
+                    prefix={poundSign}
+                    postfix={domain}
+                    id={this.props.id}
+                    ref={ref => this._fieldRef = ref}
+                    onValidate={this._onValidate}
+                    placeholder={_t("e.g. my-room")}
+                    onChange={this.props.onChange} />
         );
     }
 

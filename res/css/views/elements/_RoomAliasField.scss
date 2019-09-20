@@ -15,30 +15,30 @@ limitations under the License.
 */
 
 .mx_RoomAliasField {
+    // if parent is a flex container, this allows the
+    // width to be as wide as needed, and not 100%
+    flex: 0 1 auto;
     display: flex;
     align-items: stretch;
-    padding: 0;
-    width: 300px;
-    margin: 10px 0 20px 0;
+    min-width: 0;
+    max-width: 100%;
 
-    .mx_Field {
-        margin: 0;
-        border-radius: none;
-        border: none;
-    }
+    // input {
+    //     // the !important is needed here because of the global input styling mess
+    //     // TODO: remove once that is cleaned up
+    //     margin: 0 !important;
+    //     padding: 7px !important;
+    //     border-radius: 0 !important;
+    //     flex: 1 0 auto !important;
+    //     color: $primary-fg-color !important;
+    //     border: none !important;
+    //     border-top: 1px solid $header-panel-bg-color !important;
+    //     border-bottom: 1px solid $header-panel-bg-color !important;
+    //     width: 0;
+    // }
 
     input {
-        // the !important is needed here because of the global input styling mess
-        // TODO: remove once that is cleaned up
-        margin: 0 !important;
-        padding: 7px !important;
-        border-radius: 0 !important;
-        flex: 1 0 auto !important;
-        color: $primary-fg-color !important;
-        border: none !important;
-        border-top: 1px solid $header-panel-bg-color !important;
-        border-bottom: 1px solid $header-panel-bg-color !important;
-        width: 0;
+        width: 150px;
     }
 
     input::placeholder {
@@ -46,19 +46,21 @@ limitations under the License.
         font-weight: normal;
     }
 
-    span {
+    .mx_Field_prefix, .mx_Field_postfix {
         background: $header-panel-bg-color;
         font-weight: 600;
         padding: 9px 10px;
         flex: 0 0 auto;
+    }
 
-        &:last-child {
-            border-radius: 0 4px 4px 0;
-        }
-
-        &:first-child {
-            border-radius: 4px 0 0 4px;
-        }
+    .mx_Field_postfix {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        // this allows the domain name to show
+        // as long as it doesn't make the input shrink
+        // if it's too big, it shows an ellipsis
+        // 200: 30 for prefix, 150 for input + paddings
+        max-width: calc(100% - 200px);
     }
 }
-

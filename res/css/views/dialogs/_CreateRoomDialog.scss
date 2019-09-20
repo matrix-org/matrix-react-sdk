@@ -53,6 +53,18 @@ limitations under the License.
     width: 100%;
 }
 
+// needed to make the alias field only grow as wide as needed
+// as opposed to full width
+.mx_CreateRoomDialog_aliasContainer {
+    display: flex;
+    // put margin on container so it can collapse with siblings
+    margin: 10px 0;
+
+    .mx_RoomAliasField {
+        margin: 0;
+    }
+}
+
 .mx_CreateRoomDialog {
 
     &.mx_Dialog_fixedWidth {

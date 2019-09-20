@@ -29,6 +29,12 @@ limitations under the License.
 
 .mx_Field_prefix {
     border-right: 1px solid $input-border-color;
+    border-radius: 4px 0 0 4px;
+}
+
+.mx_Field_postfix {
+    border-left: 1px solid $input-border-color;
+    border-radius: 0 4px 4px 0;
 }
 
 .mx_Field input,

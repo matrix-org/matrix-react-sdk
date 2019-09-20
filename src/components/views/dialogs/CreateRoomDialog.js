@@ -141,7 +141,11 @@ export default createReactClass({
         if (this.state.isPublic) {
             publicLabel = (<p>{_t("Set a room address to easily share your room with other people.")}</p>);
             const domain = MatrixClientPeg.get().getDomain();
-            aliasField = (<RoomAliasField id="alias" ref={ref => this._aliasFieldRef = ref} onChange={this.onAliasChange} domain={domain} />);
+            aliasField = (
+                <div className="mx_CreateRoomDialog_aliasContainer">
+                    <RoomAliasField id="alias" ref={ref => this._aliasFieldRef = ref} onChange={this.onAliasChange} domain={domain} />
+                </div>
+            );
         } else {
             privateLabel = (<p>{_t("This room is private, and can only be joined by invitation.")}</p>);
         }
