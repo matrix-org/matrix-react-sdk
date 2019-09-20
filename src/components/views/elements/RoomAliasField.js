@@ -40,6 +40,7 @@ export default class RoomAliasField extends React.PureComponent {
         const domain = (<span title={aliasPostfix}>{aliasPostfix}</span>);
         return (
                 <Field
+                    label={_t("Room alias")}
                     className="mx_RoomAliasField"
                     prefix={poundSign}
                     postfix={domain}

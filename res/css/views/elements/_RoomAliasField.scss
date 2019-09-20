@@ -23,22 +23,10 @@ limitations under the License.
     min-width: 0;
     max-width: 100%;
 
-    // input {
-    //     // the !important is needed here because of the global input styling mess
-    //     // TODO: remove once that is cleaned up
-    //     margin: 0 !important;
-    //     padding: 7px !important;
-    //     border-radius: 0 !important;
-    //     flex: 1 0 auto !important;
-    //     color: $primary-fg-color !important;
-    //     border: none !important;
-    //     border-top: 1px solid $header-panel-bg-color !important;
-    //     border-bottom: 1px solid $header-panel-bg-color !important;
-    //     width: 0;
-    // }
-
     input {
         width: 150px;
+        padding-left: 0;
+        padding-right: 0;
     }
 
     input::placeholder {
@@ -47,7 +35,9 @@ limitations under the License.
     }
 
     .mx_Field_prefix, .mx_Field_postfix {
-        background: $header-panel-bg-color;
+        color: $greyed-fg-color;
+        border-left: none;
+        border-right: none;
         font-weight: 600;
         padding: 9px 10px;
         flex: 0 0 auto;
@@ -60,7 +50,7 @@ limitations under the License.
         // this allows the domain name to show
         // as long as it doesn't make the input shrink
         // if it's too big, it shows an ellipsis
-        // 200: 30 for prefix, 150 for input + paddings
-        max-width: calc(100% - 200px);
+        // 180: 28 for prefix, 152 for input
+        max-width: calc(100% - 180px);
     }
 }

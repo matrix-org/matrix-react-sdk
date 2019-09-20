@@ -139,7 +139,7 @@ export default createReactClass({
         let publicLabel;
         let aliasField;
         if (this.state.isPublic) {
-            publicLabel = (<p>{_t("Set a room address to easily share your room with other people.")}</p>);
+            publicLabel = (<p>{_t("Set a room alias to easily share your room with other people.")}</p>);
             const domain = MatrixClientPeg.get().getDomain();
             aliasField = (
                 <div className="mx_CreateRoomDialog_aliasContainer">
