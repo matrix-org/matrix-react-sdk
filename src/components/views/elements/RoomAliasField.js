@@ -53,7 +53,7 @@ export default class RoomAliasField extends React.PureComponent {
                     onValidate={this._onValidate}
                     placeholder={_t("e.g. my-room")}
                     onChange={this._onChange}
-                    maxlength={maxlength} />
+                    maxLength={maxlength} />
         );
     }
 
