@@ -392,18 +392,6 @@ class TextHighlighter extends BaseHighlighter {
     }
 }
 
-
-/* render LaTeX to an image to send as a fallback for any receiving client that
- * doesn't have a maths renderer
- *
- * content: the LaTeX source
- */
-
-export function latexToImg(content, displayMode) {
-  return `<code>${content}</code>`;
-}
-
-
 /* turn a matrix event body into html
  *
  * content: 'content' of the MatrixEvent
