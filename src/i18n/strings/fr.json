@@ -1911,5 +1911,15 @@
     "Unable to decrypt: The sender's device has not sent us the keys for this message.": "Déchiffrement impossible : L'utilisateur n'a pas envoyé les clefs de déchiffrement pour ce message.",
     "This device is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Cet appareil <b>ne sauvegarde pas vos clés</b>, mais vous avez une sauvegarde existante que vous pouvez restaurer et joindre.",
     "Connect this device to key backup before signing out to avoid losing any keys that may only be on this device.": "Connecter cet appareil à la sauvegarde de clés avant de vous déconnecter pour éviter de perdre des clés qui pourraient n’être présentes que sur cet appareil.",
-    "Connect this device to Key Backup": "Connecter cet appareil à la sauvegarde de clés"
+    "Connect this device to Key Backup": "Connecter cet appareil à la sauvegarde de clés",
+    "Warning: The domain of your email address is not declared in Tchap. If you have received an invitation, you will be able to create a \"guest\" account, allowing only to participate in private exchanges to which you are invited.": "Attention : Le domaine de votre adresse email n'est pas déclaré dans Tchap. Si vous avez reçu une invitation, vous allez pouvoir créer un compte Tchap \"invité\", permettant uniquement de participer aux échanges privés auxquels vous êtes convié.",
+    "Room open to external users": "Salon accessible aux externes",
+    "Unreachable Homeserver": "Homeserver inaccessible",
+    "Error : Too many requests": "Erreur : Trop de requêtes ont été envoyées",
+    "You have encountered an error and you want to help us ? Please describe the error encountered. There will be no direct answer, but your report will help us to improve Tchap. What have you done ? What was the expected behavior ? What really happened ?": "Vous avez rencontré une erreur et vous voulez nous aider ? Veuillez décrire l’erreur rencontrée. Il ne sera pas apporté de réponse directe mais votre rapport nous aidera à améliorer Tchap. Qu’avez vous fait ? Quel était le comportement attendu ? Que s’est-il réellement passé ?",
+    "Report an error": "Rapporter une erreur",
+    "Describe your problem here.": "Décrivez votre problème ici.",
+    "In order to diagnose problems, logs from this client will be sent with this error report. This error report, including logs, will not be visible publicly.": "Afin de diagnostiquer les problèmes, les journaux de ce client seront envoyés avec ce rapport d'erreur. Ce rapport d'erreur, y compris les journaux, ne seront pas visibles publiquement.",
+    "Please describe the error encountered. What have you done ? What was the expected behavior ? What really happened ?": "Veuillez décrire l’erreur rencontrée. Qu’avez vous fait ? Quel était le comportement attendu ? Que s’est-il réellement passé ?",
+    "The field note is required.": "Le champ note est requis."
 }

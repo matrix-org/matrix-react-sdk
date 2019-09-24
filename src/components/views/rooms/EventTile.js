@@ -604,9 +604,12 @@ module.exports = withMatrixClient(React.createClass({
             }
         }
 
-        const editButton = (
-            <span className="mx_EventTile_editButton" title={_t("Options")} onClick={this.onEditClicked} />
-        );
+        let editButton;
+        if (!("state_key" in this.props.mxEvent.event)) {
+            editButton = (
+                <span className="mx_EventTile_editButton" title={_t("Options")} onClick={this.onEditClicked} />
+            );
+        }
 
         const timestamp = this.props.mxEvent.getTs() ?
             <MessageTimestamp showTwelveHour={this.props.isTwelveHour} ts={this.props.mxEvent.getTs()} /> : null;

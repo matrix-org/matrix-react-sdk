@@ -186,7 +186,7 @@ module.exports = React.createClass({
 
         const emojiTextClasses = classNames('mx_RoomHeader_nametext', { mx_RoomHeader_settingsHint: settingsHint });
         const name =
-            <div className="mx_RoomHeader_name" onClick={this.props.onSettingsClick}>
+            <div className="mx_RoomHeader_name">
                 <EmojiText dir="auto" element="div" className={emojiTextClasses} title={roomName}>{ roomName }</EmojiText>
                 { searchStatus }
             </div>;
@@ -282,9 +282,13 @@ module.exports = React.createClass({
                 { searchButton }
             </div>;
 
+        let roomAccessibility;
         let mainAvatarClass = "mx_RoomHeader_avatar";
         if (!isDMRoom) {
-            mainAvatarClass += ` mx_RoomHeader_avatar_room mx_RoomHeader_avatar_${Tchap.getAccessRules(this.props.room.roomId)}`
+            mainAvatarClass += ` mx_RoomHeader_avatar_room mx_RoomHeader_avatar_${Tchap.getAccessRules(this.props.room.roomId)}`;
+            if (Tchap.getAccessRules(this.props.room.roomId) !== "restricted") {
+                roomAccessibility = (<div className="mx_RoomHeader_accessibility" ref="accessibility" title={ _t("Room open to external users") } dir="auto">{ _t("Room open to external users") }</div>);
+            }
         }
 
         return (
@@ -295,6 +299,7 @@ module.exports = React.createClass({
                     { name }
                     { topicElement }
                     { cancelButton }
+                    { roomAccessibility }
                     { rightRow }
                     <RoomHeaderButtons collapsedRhs={this.props.collapsedRhs} />
                 </div>

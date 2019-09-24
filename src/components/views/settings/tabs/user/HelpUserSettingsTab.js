@@ -118,26 +118,6 @@ export default class HelpUserSettingsTab extends React.Component {
         );
     }
 
-    _renderCredits() {
-        // Note: This is not translated because it is legal text.
-        // Also, &nbsp; is ugly but necessary.
-        return (
-            <div className='mx_SettingsTab_section'>
-                <span className='mx_SettingsTab_subheading'>{_t("Credits")}</span>
-                <ul>
-                    <li>
-                        The <a href="themes/riot/img/backgrounds/valley.jpg" rel="noopener" target="_blank">
-                        default cover photo</a> is (C)&nbsp;
-                        <a href="https://www.flickr.com/golan" rel="noopener" target="_blank">Jesús Roncero</a>{' '}
-                        used under the terms of&nbsp;
-                        <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener" target="_blank">
-                        CC-BY-SA 4.0</a>. No warranties are given.
-                    </li>
-                </ul>
-            </div>
-        );
-    }
-
     render() {
         let faqText = _t('For help with using Tchap, click <a>here</a>.', {}, {
             'a': (sub) => <a href="https://www.tchap.gouv.fr/faq/" rel='noreferrer nofollow noopener' target='_blank'>{sub}</a>,
@@ -170,16 +150,15 @@ export default class HelpUserSettingsTab extends React.Component {
                     <span className='mx_SettingsTab_subheading'>{_t('Bug reporting')}</span>
                     <div className='mx_SettingsTab_subsectionText'>
                         {
-                            _t( "If you've submitted a bug via GitHub, debug logs can help " +
-                                "us track down the problem. Debug logs contain application " +
-                                "usage data including your username, the IDs or aliases of " +
-                                "the rooms or groups you have visited and the usernames of " +
-                                "other users. They do not contain messages.",
+                            _t( "You have encountered an error and you want to help us ? " +
+                                "Please describe the error encountered. There will be no direct answer, " +
+                                "but your report will help us to improve Tchap. What have you done ? " +
+                                "What was the expected behavior ? What really happened ?",
                             )
                         }
                         <div className='mx_HelpUserSettingsTab_debugButton'>
                             <AccessibleButton onClick={this._onBugReport} kind='primary'>
-                                {_t("Submit debug logs")}
+                                {_t("Report an error")}
                             </AccessibleButton>
                         </div>
                         <div className='mx_HelpUserSettingsTab_debugButton'>
@@ -205,7 +184,6 @@ export default class HelpUserSettingsTab extends React.Component {
                     </div>
                 </div>
                 {this._renderLegal()}
-                {this._renderCredits()}
                 <div className='mx_SettingsTab_section mx_HelpUserSettingsTab_versions'>
                     <span className='mx_SettingsTab_subheading'>{_t("Advanced")}</span>
                     <div className='mx_SettingsTab_subsectionText'>
