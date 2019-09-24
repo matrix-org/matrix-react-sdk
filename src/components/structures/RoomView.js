@@ -45,6 +45,7 @@ import ObjectUtils from '../../ObjectUtils';
 import * as Rooms from '../../Rooms';
 
 import { KeyCode, isOnlyCtrlOrCmdKeyEvent } from '../../Keyboard';
+import { formatDate } from '../../DateUtils';
 
 import MainSplit from './MainSplit';
 import RightPanel from './RightPanel';
@@ -1455,6 +1456,149 @@ module.exports = createReactClass({
         this.setState({auxPanelMaxHeight: auxPanelMaxHeight});
     },
 
+    _findEventTileContent: (node) => {
+        while (node) {
+            if (node.classList && node.classList.contains("mx_RoomView_MessageList")) {
+                return null;
+            }
+            if (node.classList && node.classList.contains("mx_Content")) {
+                return node;
+            }
+            node = node.parentNode;
+        }
+        return null;
+    },
+
+    _findListItem: (node) => {
+        while (node.parentNode) {
+            if (node.parentNode.classList &&
+                node.parentNode.classList.contains("mx_RoomView_MessageList"))
+            {
+                return node;
+            }
+            node = node.parentNode;
+        }
+        return null;
+    },
+
+    _pruneStart: function(node, startNode, startOffset) {
+        // todo: prune contents before the selection start offset
+        return node;
+    },
+
+    _pruneEnd: function(node, endNode, endOffset) {
+        // todo: prune contents after the selection end offset
+        return node;
+    },
+
+    _formatNodeForCopy: function(node, eventId) {
+        let html, text;
+        const mxEvent = this.state.room.findEventById(eventId);
+        const sender = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
+        const showTwelveHour = SettingsStore.getValue("showTwelveHourTimestamps");
+        const ts = formatDate(new Date(mxEvent.getTs()), showTwelveHour);
+        // FIXME handle replies properly
+        const contents = node.querySelectorAll(".mx_EventTile_line > .mx_Content");
+        const content = contents[contents.length - 1];
+        if (content) {
+            // FIXME: replace this with rendering from EventTiles once we add the ability
+            // to render out events in 'log' mode.
+            if (mxEvent.getType() === 'm.room.message' || mxEvent.getType() === 'm.room.sticker') {
+                html = `<div>[${ts}] &lt;${sender}&gt; ${content.innerHTML}</div>\n`;
+                text = `[${ts}] <${sender}> ${content.innerText}\n`;
+            }
+            else {
+                html = `<div>[${ts}] ${content.innerHTML}</div>\n`;
+                text = `[${ts}] ${content.innerText}\n`;
+            }
+        }
+        else {
+            html = node.innerHTML;
+            text = node.innerText;
+        }
+
+        return { html, text };
+    },
+
+    onCopy: function(ev) {
+        const sel = document.getSelection();
+        // iterate over all the selected events and build up pretty
+        // plaintext & HTML representations of them
+
+        // if we're copying a fragment of content then don't do anything funky
+        if (sel.anchorNode === sel.focusNode ||
+            (this._findEventTileContent(sel.anchorNode) === this._findEventTileContent(sel.focusNode) &&
+             this._findEventTileContent(sel.anchorNode) != null))
+        {
+            console.log("defaulting to normal copy as we think we're in the same content");
+            return;
+        }
+
+        // alternatively: find which eventtile the start is in, and the end is in, and then iterate
+        // over rendering out the EventTiles in 'logging' mode (whatever that turns out best to be),
+        // and then plonk that in the clipboard.  Unclear how to handle CSS for that.
+        // we give up on handling the start/end offsets for now.
+
+        // otherwise, we must be spanning multiple nodes, so let's prepend
+        // nice timestamp and sender info.  in order to respect the offsets of the anchor
+        // and focus end of the selection block, we do this by traversing the selection DOM,
+        // rebuilding the metadata blocks but keeping the data blocks intact.
+
+        const dir = sel.anchorNode.compareDocumentPosition(sel.focusNode);
+        const startNode   = dir & Node.DOCUMENT_POSITION_PRECEDING ? sel.focusNode : sel.anchorNode;
+        const endNode     = dir & Node.DOCUMENT_POSITION_PRECEDING ? sel.anchorNode : sel.focusNode;
+        const startOffset = dir & Node.DOCUMENT_POSITION_PRECEDING ? sel.focusOffset : sel.anchorOffset;
+        const endOffset   = dir & Node.DOCUMENT_POSITION_PRECEDING ? sel.anchorOffset : sel.focusOffset;
+
+        const messageList = ReactDOM.findDOMNode(this.refs.messagePanel).querySelector(".mx_RoomView_MessageList");
+        const startItem = this._findListItem(startNode) || messageList.firstChild;
+        const endItem = this._findListItem(endNode) || messageList.lastChild;
+
+        let html = "";
+        let text = "";
+        for (let item = startItem; item !== endItem; item = item.nextElementSibling) {
+            let node = item;
+
+            if (item === startItem) {
+                node = this._pruneStart(item, startNode, startOffset);
+            }
+            else if (item === endItem) {
+                node = this._pruneEnd(item, endNode, endOffset);
+            }
+
+            const eventId = node.getAttribute("data-scroll-tokens");
+            if (eventId && this.state.room.findEventById(eventId)) {
+                const result = this._formatNodeForCopy(node, eventId);
+                html += result.html;
+                text += result.text;
+            }
+            else if (node.classList.contains("mx_MemberEventListSummary")) {
+                for (let melItem = node.firstChild; melItem; melItem = melItem.nextElementSibling) {
+                    console.log("melItem", melItem.innerHTML);
+                    const melEventId = melItem.getAttribute("data-scroll-tokens");
+                    if (melEventId && this.state.room.findEventById(melEventId)) {
+                        const result = this._formatNodeForCopy(melItem, melEventId);
+                        html += result.html;
+                        text += result.text;
+                    }
+                }
+            }
+            else {
+                if (node.querySelector(".mx_DateSeparator")) continue;
+                // fall back for MELS etc
+                html += node.innerHTML;
+                text += node.innerText;
+            }
+        }
+
+        console.log("setting text clipboard to: ", text);
+        console.log("setting html clipboard to: ", html);
+
+        ev.clipboardData.setData('text/plain', text);
+        ev.clipboardData.setData('text/html', html);
+        ev.preventDefault();
+    },
+
     onFullscreenClick: function() {
         dis.dispatch({
             action: 'video_fullscreen',
@@ -1961,7 +2105,7 @@ module.exports = createReactClass({
                 >
                     <div className={fadableSectionClasses}>
                         { auxPanel }
-                        <div className="mx_RoomView_timeline">
+                        <div className="mx_RoomView_timeline" onCopy={ this.onCopy }>
                             { topUnreadMessagesBar }
                             { jumpToBottom }
                             { messagePanel }

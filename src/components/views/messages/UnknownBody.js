@@ -32,7 +32,7 @@ module.exports = createReactClass({
 
         const text = this.props.mxEvent.getContent().body;
         return (
-            <span className="mx_UnknownBody" title={tooltip}>
+            <span className="mx_UnknownBody mx_Content" title={tooltip}>
                 { text }
             </span>
         );

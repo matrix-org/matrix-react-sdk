@@ -325,7 +325,7 @@ module.exports = createReactClass({
                 };
 
                 return (
-                    <span className="mx_MFileBody" ref="body">
+                    <span className="mx_MFileBody mx_Content" ref="body">
                         <div className="mx_MFileBody_download">
                             <a href="javascript:void(0)" onClick={decrypt}>
                                 { _t("Decrypt %(text)s", { text: text }) }
@@ -359,7 +359,7 @@ module.exports = createReactClass({
             }
             renderer_url += "?origin=" + encodeURIComponent(window.location.origin);
             return (
-                <span className="mx_MFileBody">
+                <span className="mx_MFileBody mx_Content">
                     <div className="mx_MFileBody_download">
                         <div style={{display: "none"}}>
                             { /*
@@ -423,7 +423,7 @@ module.exports = createReactClass({
             // files in the right hand side of the screen.
             if (this.props.tileShape === "file_grid") {
                 return (
-                    <span className="mx_MFileBody">
+                    <span className="mx_MFileBody mx_Content">
                         <div className="mx_MFileBody_download">
                             <a className="mx_MFileBody_downloadLink" {...downloadProps}>
                                 { fileName }
@@ -436,7 +436,7 @@ module.exports = createReactClass({
                 );
             } else {
                 return (
-                    <span className="mx_MFileBody">
+                    <span className="mx_MFileBody mx_Content">
                         <div className="mx_MFileBody_download">
                             <a {...downloadProps}>
                                 <img src={tintedDownloadImageURL} width="12" height="14" ref="downloadImage" />
@@ -448,7 +448,7 @@ module.exports = createReactClass({
             }
         } else {
             const extra = text ? (': ' + text) : '';
-            return <span className="mx_MFileBody">
+            return <span className="mx_MFileBody mx_Content">
                 { _t("Invalid file%(extra)s", { extra: extra }) }
             </span>;
         }

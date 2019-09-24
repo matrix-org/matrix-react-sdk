@@ -53,7 +53,7 @@ module.exports = createReactClass({
         const permalinkCreator = new RoomPermalinkCreator(prevRoom, predecessor['room_id']);
         permalinkCreator.load();
         const predecessorPermalink = permalinkCreator.forEvent(predecessor['event_id']);
-        return <div className="mx_CreateEvent">
+        return <div className="mx_CreateEvent mx_Content">
             <div className="mx_CreateEvent_image" />
             <div className="mx_CreateEvent_header">
                 {_t("This room is a continuation of another conversation.")}

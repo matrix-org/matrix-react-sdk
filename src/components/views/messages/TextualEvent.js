@@ -32,7 +32,7 @@ module.exports = createReactClass({
         const text = TextForEvent.textForEvent(this.props.mxEvent);
         if (text == null || text.length === 0) return null;
         return (
-            <div className="mx_TextualEvent">{ text }</div>
+            <div className="mx_TextualEvent mx_Content">{ text }</div>
         );
     },
 });
