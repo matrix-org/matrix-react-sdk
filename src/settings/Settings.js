@@ -102,6 +102,16 @@ export const SETTINGS = {
         default: false,
         controller: new CustomStatusController(),
     },
+    "pushToTalk": {
+        displayName: _td('Push-to-Talk'),
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        default: {
+            enabled: false,
+            toggle: false,
+            keybinding: [],
+            ascii: _td('Not set'),
+        },
+    },
     "feature_custom_tags": {
         isFeature: true,
         displayName: _td("Group & filter rooms by custom tags (refresh to apply changes)"),

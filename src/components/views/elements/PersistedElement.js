@@ -17,8 +17,10 @@ limitations under the License.
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-
 import ResizeObserver from 'resize-observer-polyfill';
+import SettingsStore from '../../../settings/SettingsStore';
+
+import PushToTalk from '../../../PushToTalk';
 
 import dis from '../../../dispatcher';
 
@@ -112,6 +114,11 @@ export default class PersistedElement extends React.Component {
     }
 
     componentDidMount() {
+        // Start Push-To-Talk service when Jitsi widget is mounted
+        if (this.props.persistKey.includes('jitsi') && SettingsStore.getValue(PushToTalk.id).enabled) {
+            PushToTalk.start(SettingsStore.getValue(PushToTalk.id).keybinding);
+        }
+
         this.updateChild();
     }
 
@@ -124,6 +131,11 @@ export default class PersistedElement extends React.Component {
         this.resizeObserver.disconnect();
         window.removeEventListener('resize', this._repositionChild);
         dis.unregister(this._dispatcherRef);
+
+        // Stop Push-To-Talk service when Jitsi widget is unmounted
+        if (this.props.persistKey.includes('jitsi') && SettingsStore.getValue(PushToTalk.id).enabled) {
+            PushToTalk.stop();
+        }
     }
 
     _onAction(payload) {

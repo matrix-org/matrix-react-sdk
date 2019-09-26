@@ -18,6 +18,20 @@ limitations under the License.
     @mixin mx_Settings_fullWidthField;
 }
 
+.mx_Shortcut {
+    height: 30px;
+}
+
+.mx_Shortcut_label {
+    margin-left: 30px;
+}
+
+.mx_VoiceUserSettingsTab .mx_ShortcutSet {
+    float: right;
+    width: 48px;
+    margin-right: 17px;
+}
+
 .mx_VoiceUserSettingsTab_missingMediaPermissions {
     margin-bottom: 15px;
 }

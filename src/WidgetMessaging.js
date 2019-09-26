@@ -104,6 +104,45 @@ export default class WidgetMessaging {
             });
     }
 
+    /**
+     * Toggle Jitsi Audio Mute
+     * @return {Promise} To be resolved when action completed
+     */
+    toggleJitsiAudio() {
+        return this.messageToWidget({
+            api: OUTBOUND_API_NAME,
+            action: "audioToggle",
+        }).then((response) => {
+            return response.success;
+        });
+    }
+
+    /**
+     * Jitsi Audio Mute
+     * @return {Promise} To be resolved when action completed
+     */
+    muteJitsiAudio() {
+        return this.messageToWidget({
+            api: OUTBOUND_API_NAME,
+            action: "audioMute",
+        }).then((response) => {
+            return response.success;
+        });
+    }
+
+    /**
+     * Jitsi Audio Unmute
+     * @return {Promise} To be resolved when action completed
+     */
+    unmuteJitsiAudio() {
+        return this.messageToWidget({
+            api: OUTBOUND_API_NAME,
+            action: "audioUnmute",
+        }).then((response) => {
+            return response.success;
+        });
+    }
+
     sendVisibility(visible) {
         return this.messageToWidget({
             api: OUTBOUND_API_NAME,
