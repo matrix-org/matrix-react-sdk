@@ -259,7 +259,7 @@ module.exports = createReactClass({
         }
 
         let searchButton;
-        if (this.props.onSearchClick && this.props.inRoom) {
+        if (this.props.onSearchClick && this.props.inRoom && !this.props.e2eStatus) {
             searchButton =
                 <AccessibleButton className="mx_RoomHeader_button mx_RoomHeader_searchButton"
                     onClick={this.props.onSearchClick}
