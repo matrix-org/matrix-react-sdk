@@ -22,6 +22,7 @@ import WhoIsTyping from '../../../WhoIsTyping';
 import Timer from '../../../utils/Timer';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import MemberAvatar from '../avatars/MemberAvatar';
+import SettingsStore from '../../../settings/SettingsStore';
 
 module.exports = createReactClass({
     displayName: 'WhoIsTypingTile',
@@ -194,6 +195,7 @@ module.exports = createReactClass({
 
     render: function() {
         let usersTyping = this.state.usersTyping;
+        const showTypingNotifications = SettingsStore.getValue("showTypingNotifications", this.props.room.roomId)
         const stoppedUsersOnTimer = Object.keys(this.state.delayedStopTypingTimers)
             .map((userId) => this.props.room.getMember(userId));
         // append the users that have been reported not typing anymore
@@ -208,7 +210,7 @@ module.exports = createReactClass({
             usersTyping,
             this.props.whoIsTypingLimit,
         );
-        if (!typingString) {
+        if (!typingString || !showTypingNotifications) {
             return (<div className="mx_WhoIsTypingTile_empty" />);
         }
 
