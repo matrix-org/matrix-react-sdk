@@ -336,6 +336,13 @@ module.exports = React.createClass({
         if (name == undefined || name == null) name = '';
         name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
 
+        if (this._isDirectMessageRoom(this.props.room.roomId)) {
+            const room = this.props.room;
+            let memberLeave = room.getMembersWithMembership("leave");
+            if (memberLeave.length > 0) {
+                name = memberLeave[0].rawDisplayName;
+            }
+        }
 
         let badge;
         if (badges) {
