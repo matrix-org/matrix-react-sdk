@@ -380,7 +380,8 @@ export default class BasicMessageEditor extends React.Component {
                     default:
                         return; // don't preventDefault on anything else
                 }
-            } else if (event.key === "Tab") {
+            // Allow tabbing out of the composer and navigating around the app but only if the composer is empty
+            } else if (event.key === "Tab" && !this.props.model.isEmpty) {
                 this._tabCompleteName();
                 handled = true;
             }
