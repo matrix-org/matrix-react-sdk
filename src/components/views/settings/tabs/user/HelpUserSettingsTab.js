@@ -25,6 +25,7 @@ const packageJson = require('../../../../../../package.json');
 const Modal = require("../../../../../Modal");
 const sdk = require("../../../../..");
 const PlatformPeg = require("../../../../../PlatformPeg");
+import {SettingLevel} from "../../../../../settings/SettingsStore";
 
 // if this looks like a release, use the 'version' from package.json; else use
 // the git sha. Prepend version with v, to look like riot-web version
@@ -166,6 +167,8 @@ export default class HelpUserSettingsTab extends React.Component {
     }
 
     render() {
+        const SettingsFlag = sdk.getComponent("views.elements.SettingsFlag");
+        
         let faqText = _t('For help with using Riot, click <a>here</a>.', {}, {
             'a': (sub) => <a href="https://about.riot.im/need-help/" rel='noopener' target='_blank'>{sub}</a>,
         });
@@ -242,6 +245,9 @@ export default class HelpUserSettingsTab extends React.Component {
                 </div>
                 <div className='mx_SettingsTab_section mx_HelpUserSettingsTab_versions'>
                     <span className='mx_SettingsTab_subheading'>{_t("Versions")}</span>
+                    <div className="mx_SettingsTab_subsectionText">
+                        <SettingsFlag name="useEnableNewSoftwareNotificationPopup" level={SettingLevel.ACCOUNT} />
+                    </div>
                     <div className='mx_SettingsTab_subsectionText'>
                         {_t("matrix-react-sdk version:")} {reactSdkVersion}<br />
                         {_t("riot-web version:")} {vectorVersion}<br />

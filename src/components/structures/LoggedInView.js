@@ -605,7 +605,7 @@ const LoggedInView = createReactClass({
         ) {
             const policyUrl = this.props.config.piwik.policyUrl || null;
             topBar = <CookieBar policyUrl={policyUrl} />;
-        } else if (this.props.hasNewVersion) {
+        } else if (this.props.hasNewVersion && SettingsStore.getValue('useEnableNewSoftwareNotificationPopup')) {
             topBar = <NewVersionBar version={this.props.version} newVersion={this.props.newVersion}
                                     releaseNotes={this.props.newVersionReleaseNotes}
             />;

@@ -136,6 +136,11 @@ export const SETTINGS = {
         displayName: _td('Use compact timeline layout'),
         default: false,
     },
+    "useEnableNewSoftwareNotificationPopup": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Enable new software notification popup'),
+        default: true,
+    },
     "showRedactions": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
         displayName: _td('Show a placeholder for removed messages'),
