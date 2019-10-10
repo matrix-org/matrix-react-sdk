@@ -1659,5 +1659,6 @@
     "Describe your problem here.": "Describe your problem here.",
     "In order to diagnose problems, logs from this client will be sent with this error report. This error report, including logs, will not be visible publicly.": "In order to diagnose problems, logs from this client will be sent with this error report. This error report, including logs, will not be visible publicly.",
     "Please describe the error encountered. What have you done ? What was the expected behavior ? What really happened ?": "Please describe the error encountered. What have you done ? What was the expected behavior ? What really happened ?",
-    "The field note is required.": "The field note is required."
+    "The field note is required.": "The field note is required.",
+    "Error : Externals aren't allowed to join this room": "Error : Externals aren't allowed to join this room"
 }
