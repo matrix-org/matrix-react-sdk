@@ -47,6 +47,9 @@ export default createReactClass({
 
         /* the maximum image height to use, if the event is an image */
         maxImageHeight: PropTypes.number,
+
+        overrideBodyTypes: PropTypes.object,
+        overrideEventTypes: PropTypes.object,
     },
 
     // TODO: [REACT-WARNING] Replace component with real class, use constructor for refs
@@ -71,9 +74,11 @@ export default createReactClass({
             'm.file': sdk.getComponent('messages.MFileBody'),
             'm.audio': sdk.getComponent('messages.MAudioBody'),
             'm.video': sdk.getComponent('messages.MVideoBody'),
+            ...(this.props.overrideBodyTypes || {}),
         };
         const evTypes = {
             'm.sticker': sdk.getComponent('messages.MStickerBody'),
+            ...(this.props.overrideEventTypes || {}),
         };
 
         const content = this.props.mxEvent.getContent();
@@ -110,9 +115,10 @@ export default createReactClass({
             }
         }
 
-        return <BodyType
+        return BodyType ? <BodyType
             ref={this._body}
             mxEvent={this.props.mxEvent}
+            ref="body" mxEvent={this.props.mxEvent}
             highlights={this.props.highlights}
             highlightLink={this.props.highlightLink}
             showUrlPreview={this.props.showUrlPreview}
@@ -120,8 +126,7 @@ export default createReactClass({
             maxImageHeight={this.props.maxImageHeight}
             replacingEventId={this.props.replacingEventId}
             editState={this.props.editState}
-            onHeightChanged={this.props.onHeightChanged}
             onMessageAllowed={this.onTileUpdate}
-        />;
+            onHeightChanged={this.props.onHeightChanged} /> : null;
     },
 });
