@@ -94,20 +94,27 @@ module.exports = React.createClass({
     _onClickLeave: function() {
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
         if (Tchap.isUserLastAdmin(this.props.room)) {
-            Modal.createTrackedDialog('Last admin leave', '', QuestionDialog, {
-                title: _t("You are the last administrator"),
-                description: _t("Are you sure you want to leave the room? The room will no longer be administered, and you may not be able to join it again."),
-                button: _t("Leave"),
-                onFinished: (proceed) => {
-                    if (proceed) {
-                        // Leave rooms
-                        dis.dispatch({
-                            action: 'leave_room',
-                            room_id: this.props.room.roomId,
-                        });
-                    }
-                },
-            });
+            if (!this.state.isDirectMessage) {
+                Modal.createTrackedDialog('Last admin leave', '', QuestionDialog, {
+                    title: _t("You are the last administrator"),
+                    description: _t("Are you sure you want to leave the room? The room will no longer be administered, and you may not be able to join it again."),
+                    button: _t("Leave"),
+                    onFinished: (proceed) => {
+                        if (proceed) {
+                            // Leave rooms
+                            dis.dispatch({
+                                action: 'leave_room',
+                                room_id: this.props.room.roomId,
+                            });
+                        }
+                    },
+                });
+            } else {
+                dis.dispatch({
+                    action: 'leave_room',
+                    room_id: this.props.room.roomId,
+                });
+            }
         } else {
             dis.dispatch({
                 action: 'leave_room',
