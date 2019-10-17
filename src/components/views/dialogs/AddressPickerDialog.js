@@ -167,7 +167,7 @@ module.exports = createReactClass({
             } else {
                 this._addAddressesToList([this.refs.textinput.value]);
             }
-        } else if (e.keyCode === 188 || e.keyCode === 9) { // comma or tab
+        } else if (this.refs.textinput.value && (e.keyCode === 188 || e.keyCode === 9)) { // comma or tab
             e.stopPropagation();
             e.preventDefault();
             this._addAddressesToList([this.refs.textinput.value]);
