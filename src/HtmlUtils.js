@@ -167,6 +167,7 @@ const transformTags = { // custom to matrix
             }
         }
         attribs.rel = 'noopener'; // https://mathiasbynens.github.io/rel-noopener/
+        attribs.rel += ' noreferrer';
         return { tagName, attribs };
     },
     'img': function(tagName, attribs) {
@@ -181,6 +182,7 @@ const transformTags = { // custom to matrix
             attribs.width || 800,
             attribs.height || 600,
         );
+        attribs.rel = 'noreferrer';
         return { tagName, attribs };
     },
     'code': function(tagName, attribs) {
