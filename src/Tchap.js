@@ -84,11 +84,11 @@ class Tchap {
         return hsUrl.includes('.e.') || hsUrl.includes('.externe.');
     }
 
-    static isUserExternFromLongHs(hs) {
+    static isUserExternFromServer(hs) {
         return hs.includes('.e.') || hs.includes('.externe.');
     }
 
-    static isUserExternFromShortHs(hs) {
+    static isUserExternFromServerHostname(hs) {
         return hs.includes('e.') || hs.includes('externe.');
     }
 
