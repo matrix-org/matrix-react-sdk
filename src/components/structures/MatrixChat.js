@@ -38,6 +38,7 @@ import { showStartChatInviteDialog, showRoomInviteDialog } from '../../RoomInvit
 import * as Rooms from '../../Rooms';
 import linkifyMatrix from "../../linkify-matrix";
 import * as Lifecycle from '../../Lifecycle';
+import Tchap from "../../Tchap";
 // LifecycleStore is not used but does listen to and dispatch actions
 require('../../stores/LifecycleStore');
 import PageTypes from '../../PageTypes';
@@ -1044,10 +1045,11 @@ export default React.createClass({
         const roomToLeave = MatrixClientPeg.get().getRoom(roomId);
         // Show a warning if there are additional complications.
         const joinRules = roomToLeave.currentState.getStateEvents('m.room.join_rules', '');
+        const accessRules = Tchap.getAccessRules(roomId);
         const warnings = [];
         if (joinRules) {
             const rule = joinRules.getContent().join_rule;
-            if (rule !== "public") {
+            if (rule !== "public" && accessRules !== "direct") {
                 warnings.push((
                     <span className="warning" key="non_public_warning">
                         {' '/* Whitespace, otherwise the sentences get smashed together */ }

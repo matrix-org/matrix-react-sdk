@@ -93,7 +93,7 @@ module.exports = React.createClass({
 
     _onClickLeave: function() {
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-        if (Tchap.isUserLastAdmin(this.props.room)) {
+        if (!this.state.isDirectMessage && Tchap.isUserLastAdmin(this.props.room)) {
             Modal.createTrackedDialog('Last admin leave', '', QuestionDialog, {
                 title: _t("You are the last administrator"),
                 description: _t("Are you sure you want to leave the room? The room will no longer be administered, and you may not be able to join it again."),
