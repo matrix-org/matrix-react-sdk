@@ -1921,5 +1921,6 @@
     "Describe your problem here.": "Décrivez votre problème ici.",
     "In order to diagnose problems, logs from this client will be sent with this error report. This error report, including logs, will not be visible publicly.": "Afin de diagnostiquer les problèmes, les journaux de ce client seront envoyés avec ce rapport d'erreur. Ce rapport d'erreur, y compris les journaux, ne seront pas visibles publiquement.",
     "Please describe the error encountered. What have you done ? What was the expected behavior ? What really happened ?": "Veuillez décrire l’erreur rencontrée. Qu’avez vous fait ? Quel était le comportement attendu ? Que s’est-il réellement passé ?",
-    "The field note is required.": "Le champ note est requis."
+    "The field note is required.": "Le champ note est requis.",
+    "Error : Externals aren't allowed to join this room": "Erreur : Les externes ne sont pas autorisés à rejoindre ce salon"
 }

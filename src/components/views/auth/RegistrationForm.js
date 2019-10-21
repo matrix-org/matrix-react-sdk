@@ -214,7 +214,7 @@ module.exports = React.createClass({
         this.validateField(FIELD_EMAIL, ev.type);
         if (Email.looksValid(ev.target.value)) {
             Tchap.discoverPlatform(ev.target.value).then(e => {
-                if (Tchap.isUserExternFromHs(e)) {
+                if (Tchap.isUserExternFromServer(e)) {
                     this.setState({
                         isExtern: true
                     });

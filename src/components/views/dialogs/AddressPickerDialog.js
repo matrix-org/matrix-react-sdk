@@ -120,7 +120,7 @@ module.exports = React.createClass({
                     selectedList.forEach(u => {
                         if (u.addressType === "email") {
                             Tchap.getInfo(u.address).then(a => {
-                                if (Tchap.isUserExternFromHs(a.hs)) {
+                                if (Tchap.isUserExternFromServerHostname(a.hs)) {
                                     self.setState({
                                         isExternInList: true,
                                         lastExternInList: u.address,
@@ -144,7 +144,7 @@ module.exports = React.createClass({
                             "Externals aren't allowed to join this room",
                             '', ErrorDialog,
                             {
-                                title: _t("Error"),
+                                title: _t("Error : Externals aren't allowed to join this room"),
                                 description: (_t("The user %(user)s is external.", {user: self.state.lastExternInList}) + " "
                                     + _t("Externals aren't allowed to join this room")),
                             });
