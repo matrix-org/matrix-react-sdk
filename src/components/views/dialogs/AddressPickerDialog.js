@@ -103,6 +103,8 @@ module.exports = createReactClass({
             // List of address types initialised from props, but may change while the
             // dialog is open and represents the supported list of address types at this time.
             validAddressTypes,
+
+            userList: getSuggestions(),
         };
     },
 
@@ -713,6 +715,13 @@ module.exports = createReactClass({
             }
         }
 
+        const MemberAvatar = sdk.getComponent('views.avatars.MemberAvatar');
+        const userList = (<ul class="mx_AddressPickerDialog_userList">
+            {this.state.userList.map(m => {
+                return (<li key={m.userId}><MemberAvatar member={m} />{m.name || m.userId}</li>);
+            })}
+        </ul>);
+
         return (
             <BaseDialog className="mx_AddressPickerDialog" onKeyDown={this.onKeyDown}
                 onFinished={this.props.onFinished} title={this.props.title}>
@@ -722,6 +731,7 @@ module.exports = createReactClass({
                     { error }
                     { addressSelector }
                     { this.props.extraNode }
+                    { userList }
                     { identityServer }
                 </div>
                 <DialogButtons primaryButton={this.props.button}
@@ -731,3 +741,53 @@ module.exports = createReactClass({
         );
     },
 });
+
+function getSuggestions() {
+    const client = MatrixClientPeg.get();
+    const allRooms = client.getRooms();
+    const rooms = allRooms.filter(r => r.getMyMembership() === "join" && r.getJoinedMembers().length <= 200);
+    const allMembersWithRoom = rooms.reduce((allMembers, room) => {
+        const members = room.getJoinedMembers();
+        // const roomSize = members.length;
+        return allMembers.concat(members.map(member => { return {member, room}; }));
+    }, []);
+    const uniqueEntries = Array.from(allMembersWithRoom.reduce((uniqueEntries, {member, room}) => {
+        const {userId} = member;
+        if (userId !== client.getUserId()) {
+            let entry = uniqueEntries.get(userId);
+            if (!entry) {
+                entry = {member, rooms: [room]};
+                uniqueEntries.set(userId, entry);
+            } else {
+                entry.rooms.push(room);
+            }
+        }
+        return uniqueEntries;
+    }, new Map()).values());
+    uniqueEntries.sort((a, b) => {
+        return userScore(b) - userScore(a);
+
+        // if (a.minRoomSize !== b.minRoomSize) {
+        //     return a.minRoomSize - b.minRoomSize;
+        // } else if (a.roomCount !== b.roomCount) {
+        //     return a.roomCount - b.roomCount;
+        // } else if (a.name && b.name) {
+        //     return a.member.name.localeCompare(b.member.name);
+        // } else {
+        //     return a.member.userId.localeCompare(b.member.userId);
+        // }
+    });
+    const uniqueMembers = uniqueEntries.map(({member}) => member);
+    const cappedMembers = uniqueMembers.slice(0, 20);
+    console.log(cappedMembers);
+    return cappedMembers;
+    // const users = cappedMembers.map(({member}) => client.getUser(member.userId));
+    // return users;
+}
+
+function userScore({rooms, member}) {
+    return rooms.reduce((score, room) => {
+        const roomSize = room.getJoinedMembers().length;
+        return score + Math.max(0, Math.pow(1 - (roomSize / 200), 5));
+    }, 0);
+}
