@@ -60,6 +60,7 @@ module.exports = createReactClass({
             'm.file': sdk.getComponent('messages.MFileBody'),
             'm.audio': sdk.getComponent('messages.MAudioBody'),
             'm.video': sdk.getComponent('messages.MVideoBody'),
+            'm.key.verification.request': sdk.getComponent('messages.MKeyVerification'),
         };
         const evTypes = {
             'm.sticker': sdk.getComponent('messages.MStickerBody'),

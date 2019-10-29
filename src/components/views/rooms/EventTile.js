@@ -32,6 +32,7 @@ const TextForEvent = require('../../../TextForEvent');
 import dis from '../../../dispatcher';
 import SettingsStore from "../../../settings/SettingsStore";
 import {EventStatus, MatrixClient} from 'matrix-js-sdk';
+import MatrixClientPeg from '../../../MatrixClientPeg';
 
 const ObjectUtils = require('../../../ObjectUtils');
 
@@ -829,6 +830,18 @@ module.exports.haveTileForEvent = function(e) {
 
     // No tile for replacement events since they update the original tile
     if (e.isRelation("m.replace")) return false;
+
+    // don't show verification requests we're not involved in
+    if (e.getType() === "m.room.message") {
+        const content = e.getContent();
+        if (content && content.msgtype === "m.key.verification.request") {
+            const client = MatrixClientPeg.get();
+            const me = client && client.getUserId();
+            if (e.getSender() !== me && content.to !== me) {
+                return false;
+            }
+        }
+    }
 
     const handler = getHandlerTile(e);
     if (handler === undefined) return false;

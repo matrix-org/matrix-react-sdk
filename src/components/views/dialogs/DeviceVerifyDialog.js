@@ -319,7 +319,7 @@ async function ensureDMExistsAndOpen(userId) {
     const suitableDMRooms = rooms.filter(r => {
         if (r && r.getMyMembership() === "join") {
             const member = r.getMember(userId);
-            return member && member.membership === "invite" && member.membership === "join";
+            return member && (member.membership === "invite" || member.membership === "join");
         }
         return false;
     });
