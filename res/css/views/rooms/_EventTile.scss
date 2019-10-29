@@ -138,11 +138,13 @@ limitations under the License.
 // Explicit relationships so that it doesn't apply to nested EventTile components (e.g in Replies)
 .mx_EventTile_last > div > a > .mx_MessageTimestamp,
 .mx_EventTile:hover > div > a > .mx_MessageTimestamp,
+.mx_EventTile:focus-within > div > a > .mx_MessageTimestamp,
 .mx_EventTile.mx_EventTile_actionBarFocused > div > a > .mx_MessageTimestamp {
     visibility: visible;
 }
 
 .mx_EventTile:hover .mx_MessageActionBar,
+.mx_EventTile:focus-within .mx_MessageActionBar,
 .mx_EventTile.mx_EventTile_actionBarFocused .mx_MessageActionBar {
     visibility: visible;
 }
