@@ -84,6 +84,7 @@ export default class BasicMessageEditor extends React.Component {
         super(props, context);
         this.state = {
             autoComplete: null,
+            showVisualBell: false,
         };
         this._editorRef = null;
         this._autocompleteRef = null;
@@ -144,14 +145,19 @@ export default class BasicMessageEditor extends React.Component {
                 this._hidePlaceholder();
             }
         }
-        this.setState({autoComplete: this.props.model.autoComplete});
+
+        this.setState({
+            autoComplete: this.props.model.autoComplete,
+            // if a change is happening then clear the showVisualBell
+            showVisualBell: diff ? false : this.state.showVisualBell,
+        });
         this.historyManager.tryPush(this.props.model, selection, inputType, diff);
         TypingStore.sharedInstance().setSelfTyping(this.props.room.roomId, !this.props.model.isEmpty);
 
         if (this.props.onChange) {
             this.props.onChange();
         }
-    }
+    };
 
     _showPlaceholder() {
         this._editorRef.style.setProperty("--placeholder", `'${this.props.placeholder}'`);
@@ -367,6 +373,7 @@ export default class BasicMessageEditor extends React.Component {
                         }
                         break;
                     case Key.TAB:
+                    case Key.ENTER:
                         if (!metaOrAltPressed) {
                             autoComplete.onTab(event);
                             handled = true;
@@ -381,7 +388,7 @@ export default class BasicMessageEditor extends React.Component {
                     default:
                         return; // don't preventDefault on anything else
                 }
-            } else if (event.key === Key.TAB) {
+            } else if (!this.state.showVisualBell && event.key === Key.TAB) {
                 this._tabCompleteName();
                 handled = true;
             }
@@ -412,6 +419,7 @@ export default class BasicMessageEditor extends React.Component {
                 const addedLen = range.replace([partCreator.pillCandidate(range.text)]);
                 return model.positionForOffset(caret.offset + addedLen, true);
             });
+            if (!model.autoComplete) return;
             await model.autoComplete.onTab();
             if (!model.autoComplete.hasSelection()) {
                 this.setState({showVisualBell: true});
@@ -432,12 +440,12 @@ export default class BasicMessageEditor extends React.Component {
 
     _onAutoCompleteConfirm = (completion) => {
         this.props.model.autoComplete.onComponentConfirm(completion);
-    }
+    };
 
     _onAutoCompleteSelectionChange = (completion, completionIndex) => {
-        this.props.model.autoComplete.onComponentSelectionChange(completion);
+        // this.props.model.autoComplete.onComponentSelectionChange(completion);
         this.setState({completionIndex});
-    }
+    };
 
     _configureEmoticonAutoReplace() {
         const shouldReplace = SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji');
@@ -546,6 +554,11 @@ export default class BasicMessageEditor extends React.Component {
         };
 
         const {completionIndex} = this.state;
+        const hasAutocomplete = Boolean(this.state.autoComplete);
+        let activeDescendant;
+        if (hasAutocomplete && completionIndex >= 0) {
+            activeDescendant = generateCompletionDomId(completionIndex);
+        }
 
         return (<div className={classes}>
             { autoComplete }
@@ -562,10 +575,11 @@ export default class BasicMessageEditor extends React.Component {
                 aria-label={this.props.label}
                 role="textbox"
                 aria-multiline="true"
-                aria-autocomplete="both"
+                aria-autocomplete="list"
                 aria-haspopup="listbox"
-                aria-expanded={Boolean(this.state.autoComplete)}
-                aria-activedescendant={completionIndex >= 0 ? generateCompletionDomId(completionIndex) : undefined}
+                aria-expanded={hasAutocomplete}
+                aria-owns="mx_Autocomplete"
+                aria-activedescendant={activeDescendant}
             />
         </div>);
     }
