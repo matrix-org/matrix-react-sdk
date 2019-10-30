@@ -388,7 +388,7 @@ export default class BasicMessageEditor extends React.Component {
                     default:
                         return; // don't preventDefault on anything else
                 }
-            } else if (!this.state.showVisualBell && event.key === Key.TAB) {
+            } else if (!this.props.model.isEmpty && !this.state.showVisualBell && event.key === Key.TAB) {
                 this._tabCompleteName();
                 handled = true;
             }
@@ -419,7 +419,10 @@ export default class BasicMessageEditor extends React.Component {
                 const addedLen = range.replace([partCreator.pillCandidate(range.text)]);
                 return model.positionForOffset(caret.offset + addedLen, true);
             });
-            if (!model.autoComplete) return;
+            if (!model.autoComplete) {
+                this.setState({showVisualBell: true});
+                return;
+            }
             await model.autoComplete.onTab();
             if (!model.autoComplete.hasSelection()) {
                 this.setState({showVisualBell: true});
