@@ -179,8 +179,8 @@ export default class Autocomplete extends React.Component {
         if (completionCount === 0) return; // there are no items to move the selection through
 
         // Note: selectionOffset 0 represents the unsubstituted text, while 1 means first pill selected
-        const index = (this.state.selectionOffset + delta + completionCount + 1) % (completionCount + 1);
-        this.setSelection(index);
+        const index = ((this.state.selectionOffset + delta + completionCount - 1) % completionCount);
+        this.setSelection(1 + index);
     }
 
     onEscape(e): boolean {
