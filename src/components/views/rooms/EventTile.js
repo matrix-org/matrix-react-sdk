@@ -32,6 +32,7 @@ const TextForEvent = require('../../../TextForEvent');
 import dis from '../../../dispatcher';
 import SettingsStore from "../../../settings/SettingsStore";
 import {EventStatus, MatrixClient} from 'matrix-js-sdk';
+import {formatTime} from "../../../DateUtils";
 
 const ObjectUtils = require('../../../ObjectUtils');
 
@@ -608,12 +609,12 @@ module.exports = createReactClass({
 
         if (this.props.mxEvent.sender && avatarSize) {
             avatar = (
-                    <div className="mx_EventTile_avatar">
-                        <MemberAvatar member={this.props.mxEvent.sender}
-                            width={avatarSize} height={avatarSize}
-                            viewUserOnClick={true}
-                        />
-                    </div>
+                <div className="mx_EventTile_avatar">
+                    <MemberAvatar member={this.props.mxEvent.sender}
+                        width={avatarSize} height={avatarSize}
+                        viewUserOnClick={true}
+                    />
+                </div>
             );
         }
 
@@ -780,14 +781,25 @@ module.exports = createReactClass({
                     this.props.permalinkCreator,
                     'replyThread',
                 );
+                const {mxEvent} = this.props;
+                let senderLabel;
+                if (mxEvent.getSender() === this.context.matrixClient.getUserId()) {
+                    senderLabel = _t("You sent: ");
+                } else {
+                    senderLabel = _t("%(sender)s sent: ", {
+                        sender: mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender(),
+                    });
+                }
+
                 return (
-                    <div className={classes}>
-                        <div className="mx_EventTile_msgOption">
+                    <div className={classes} role="listitem" tabIndex={-1}>
+                        { sender }
+                        <span aria-label={senderLabel} />
+                        <div className="mx_EventTile_msgOption" aria-hidden={true}>
                             { readAvatars }
                         </div>
-                        { sender }
-                        <div className="mx_EventTile_line">
-                            <a href={permalink} onClick={this.onPermalinkClicked}>
+                        <div className="mx_EventTile_line" role="document">
+                            <a href={permalink} onClick={this.onPermalinkClicked} aria-hidden={true}>
                                 { timestamp }
                             </a>
                             { this._renderE2EPadlock() }
@@ -800,6 +812,9 @@ module.exports = createReactClass({
                                            highlightLink={this.props.highlightLink}
                                            showUrlPreview={this.props.showUrlPreview}
                                            onHeightChanged={this.props.onHeightChanged} />
+                            { timestamp && <span aria-label={_t(" at %(time)s.", {
+                                time: formatTime(new Date(this.props.mxEvent.getTs()), this.props.isTwelveHour),
+                            })} /> }
                             { keyRequestInfo }
                             { reactionsRow }
                             { actionBar }

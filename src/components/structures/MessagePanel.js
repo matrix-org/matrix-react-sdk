@@ -664,7 +664,7 @@ module.exports = createReactClass({
         const readReceipts = this._readReceiptsByEvent[eventId];
 
         ret.push(
-            <li key={eventId}
+            <div key={eventId}
                 ref={this._collectEventNode.bind(this, eventId)}
                 data-scroll-tokens={scrollToken}
             >
@@ -687,7 +687,7 @@ module.exports = createReactClass({
                     getRelationsForEvent={this.props.getRelationsForEvent}
                     showReactions={this.props.showReactions}
                 />
-            </li>,
+            </div>,
         );
 
         return ret;

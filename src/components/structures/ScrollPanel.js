@@ -877,10 +877,10 @@ module.exports = createReactClass({
         return (<AutoHideScrollbar wrappedRef={this._collectScroll}
                 onScroll={this.onScroll}
                 className={`mx_ScrollPanel ${this.props.className}`} style={this.props.style}>
-                    <div className="mx_RoomView_messageListWrapper">
-                        <ol ref="itemlist" className="mx_RoomView_MessageList" aria-live="polite">
+                    <div className="mx_RoomView_messageListWrapper" role="list">
+                        <div ref="itemlist" className="mx_RoomView_MessageList" aria-live="polite">
                             { this.props.children }
-                        </ol>
+                        </div>
                     </div>
                 </AutoHideScrollbar>
             );
