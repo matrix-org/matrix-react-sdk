@@ -39,6 +39,8 @@ const ObjectUtils = require('../../../ObjectUtils');
 const eventTileTypes = {
     'm.room.message': 'messages.MessageEvent',
     'm.sticker': 'messages.MessageEvent',
+    'm.key.verification.cancel': 'messages.MessageEvent',
+    'm.key.verification.done': 'messages.MessageEvent',
     'm.call.invite': 'messages.TextualEvent',
     'm.call.answer': 'messages.TextualEvent',
     'm.call.hangup': 'messages.TextualEvent',
@@ -68,6 +70,30 @@ const stateEventTileTypes = {
 
 function getHandlerTile(ev) {
     const type = ev.getType();
+
+    // don't show verification requests we're not involved in,
+    // not even when showing hidden events
+    if (type === "m.room.message") {
+        const content = ev.getContent();
+        if (content && content.msgtype === "m.key.verification.request") {
+            const client = MatrixClientPeg.get();
+            const me = client && client.getUserId();
+            if (ev.getSender() !== me && content.to !== me) {
+                return;
+            }
+        }
+    }
+    // these events are sent by both parties during verification, but we only want to render one
+    // tile once the verification concludes, so filter out the one from the other party.
+    if (type === "m.key.verification.done") {
+        const client = MatrixClientPeg.get();
+        const me = client && client.getUserId();
+        if (ev.getSender() !== me) {
+            console.log("dont have tile for ", type, "tile because it's not mine, its", ev.getSender());
+            return;
+        }
+    }
+
     return ev.isState() ? stateEventTileTypes[type] : eventTileTypes[type];
 }
 
@@ -522,7 +548,7 @@ module.exports = createReactClass({
 
         // Info messages are basically information about commands processed on a room
         let isInfoMessage = (
-            eventType !== 'm.room.message' && eventType !== 'm.sticker' && eventType != 'm.room.create'
+            eventType !== 'm.room.message' && eventType !== 'm.sticker' && eventType != 'm.room.create' && !eventType.startsWith("m.key.verification")
         );
 
         let tileHandler = getHandlerTile(this.props.mxEvent);
@@ -830,18 +856,6 @@ module.exports.haveTileForEvent = function(e) {
 
     // No tile for replacement events since they update the original tile
     if (e.isRelation("m.replace")) return false;
-
-    // don't show verification requests we're not involved in
-    if (e.getType() === "m.room.message") {
-        const content = e.getContent();
-        if (content && content.msgtype === "m.key.verification.request") {
-            const client = MatrixClientPeg.get();
-            const me = client && client.getUserId();
-            if (e.getSender() !== me && content.to !== me) {
-                return false;
-            }
-        }
-    }
 
     const handler = getHandlerTile(e);
     if (handler === undefined) return false;

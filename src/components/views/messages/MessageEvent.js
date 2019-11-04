@@ -51,7 +51,6 @@ module.exports = createReactClass({
 
     render: function() {
         const UnknownBody = sdk.getComponent('messages.UnknownBody');
-
         const bodyTypes = {
             'm.text': sdk.getComponent('messages.TextualBody'),
             'm.notice': sdk.getComponent('messages.TextualBody'),
@@ -60,10 +59,13 @@ module.exports = createReactClass({
             'm.file': sdk.getComponent('messages.MFileBody'),
             'm.audio': sdk.getComponent('messages.MAudioBody'),
             'm.video': sdk.getComponent('messages.MVideoBody'),
-            'm.key.verification.request': sdk.getComponent('messages.MKeyVerification'),
+            'm.key.verification.request': sdk.getComponent('messages.MKeyVerificationRequest'),
         };
+        const MKeyVerificationConclusion = sdk.getComponent('messages.MKeyVerificationConclusion');
         const evTypes = {
             'm.sticker': sdk.getComponent('messages.MStickerBody'),
+            'm.key.verification.cancel': MKeyVerificationConclusion,
+            'm.key.verification.done': MKeyVerificationConclusion,
         };
 
         const content = this.props.mxEvent.getContent();
