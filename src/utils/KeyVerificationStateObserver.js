@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+const SUB_EVENT_TYPES_OF_INTEREST = ["start", "cancel", "done"];
+
 export default class KeyVerificationStateObserver {
     constructor(requestEvent, client, updateCallback) {
         this._requestEvent = requestEvent;
@@ -27,13 +29,16 @@ export default class KeyVerificationStateObserver {
 
     attach() {
         this._requestEvent.on("Event.relationsCreated", this._onRelationsCreated);
+        for (const phaseName of SUB_EVENT_TYPES_OF_INTEREST) {
+            this._tryListenOnRelationsForType(`m.key.verification.${phaseName}`);
+        }
     }
 
     detach() {
         const roomId = this._requestEvent.getRoomId();
         const room = this._client.getRoom(roomId);
 
-        for (const phaseName of ["start", "cancel", "done"]) {
+        for (const phaseName of SUB_EVENT_TYPES_OF_INTEREST) {
             const relations = room.getUnfilteredTimelineSet()
                 .getRelationsForEvent(this._requestEvent.getId(), "m.reference", `m.key.verification.${phaseName}`);
             if (relations) {
@@ -44,7 +49,6 @@ export default class KeyVerificationStateObserver {
         }
         this._requestEvent.removeListener("Event.relationsCreated", this._onRelationsCreated);
     }
-
 
     _onRelationsCreated = (relationType, eventType) => {
         if (relationType !== "m.reference") {
@@ -57,19 +61,22 @@ export default class KeyVerificationStateObserver {
         ) {
             return;
         }
-
-        const roomId = this._requestEvent.getRoomId();
-        const room = this._client.getRoom(roomId);
-        const relations = room.getUnfilteredTimelineSet()
-            .getRelationsForEvent(this._requestEvent.getId(), relationType, eventType);
-
-        relations.on("Relations.add", this._onRelationsUpdated);
-        relations.on("Relations.remove", this._onRelationsUpdated);
-        relations.on("Relations.redaction", this._onRelationsUpdated);
-
+        this._tryListenOnRelationsForType(eventType);
         this._updateVerificationState();
         this._updateCallback();
     };
+
+    _tryListenOnRelationsForType(eventType) {
+        const roomId = this._requestEvent.getRoomId();
+        const room = this._client.getRoom(roomId);
+        const relations = room.getUnfilteredTimelineSet()
+            .getRelationsForEvent(this._requestEvent.getId(), "m.reference", eventType);
+        if (relations) {
+            relations.on("Relations.add", this._onRelationsUpdated);
+            relations.on("Relations.remove", this._onRelationsUpdated);
+            relations.on("Relations.redaction", this._onRelationsUpdated);
+        }
+    }
 
     _onRelationsUpdated = (event) => {
         this._updateVerificationState();
@@ -112,7 +119,6 @@ export default class KeyVerificationStateObserver {
                     senderDone = true;
                 }
             }
-            console.log("doneRelations", senderDone, receiverDone);
             if (senderDone && receiverDone) {
                 this.done = true;
             }
@@ -123,19 +129,11 @@ export default class KeyVerificationStateObserver {
                 this._requestEvent.getId(), "m.reference", "m.key.verification.cancel");
 
             if (cancelRelations) {
-                let earliestCancelEvent;
                 for (const cancelEvent of cancelRelations.getRelations()) {
                     // only accept cancellation from the users involved
                     if (cancelEvent.getSender() === toUserId || cancelEvent.getSender() === fromUserId) {
                         this.cancelled = true;
-
-                        if (!earliestCancelEvent || cancelEvent.getTs() < earliestCancelEvent.getTs()) {
-                            earliestCancelEvent = cancelEvent;
-                        }
                     }
-                }
-                if (earliestCancelEvent) {
-                    this.cancelPartyUserId = earliestCancelEvent.getSender();
                 }
             }
         }
