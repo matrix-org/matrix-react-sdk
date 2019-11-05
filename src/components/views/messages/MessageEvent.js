@@ -59,13 +59,9 @@ module.exports = createReactClass({
             'm.file': sdk.getComponent('messages.MFileBody'),
             'm.audio': sdk.getComponent('messages.MAudioBody'),
             'm.video': sdk.getComponent('messages.MVideoBody'),
-            'm.key.verification.request': sdk.getComponent('messages.MKeyVerificationRequest'),
         };
-        const MKeyVerificationConclusion = sdk.getComponent('messages.MKeyVerificationConclusion');
         const evTypes = {
             'm.sticker': sdk.getComponent('messages.MStickerBody'),
-            'm.key.verification.cancel': MKeyVerificationConclusion,
-            'm.key.verification.done': MKeyVerificationConclusion,
         };
 
         const content = this.props.mxEvent.getContent();

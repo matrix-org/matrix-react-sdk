@@ -22,6 +22,15 @@ limitations under the License.
     position: relative;
 }
 
+.mx_EventTile_bubble {
+    max-width: 400px;
+    min-width: 200px;
+    width: 50%;
+    background-color: lightgrey;
+    padding: 20px;
+    border-radius: 20px;
+}
+
 .mx_EventTile.mx_EventTile_info {
     padding-top: 0px;
 }
@@ -612,4 +621,5 @@ div.mx_EventTile_notSent.mx_EventTile_redacted .mx_UnknownBody {
         }
     }
 }
+
 /* stylelint-enable no-descending-specificity */

@@ -88,13 +88,13 @@ export default class MKeyVerificationRequest extends React.Component {
 
         if (toUserId === myUserId) {
             if (this.state.accepted || this.state.cancelled || this.state.done) {
-                return (<div>{_t("%(fromLabel)s wants to verify you.", {fromLabel})}</div>);
+                return (<div className="mx_EventTile_bubble mx_KeyVerificationRequest">{_t("%(fromLabel)s wants to verify you.", {fromLabel})}</div>);
             } else {
-                return (<div>{_t("%(fromLabel)s wants to verify you. If you expected this, you can <button>start verification</button>.",
+                return (<div className="mx_EventTile_bubble mx_KeyVerificationRequest">{_t("%(fromLabel)s wants to verify you. If you expected this, you can <button>start verification</button>.",
                     {fromLabel}, {button: label => <button onClick={this._onAcceptClicked}>{label}</button>})}</div>);
             }
         } else if (isOwn) {
-            return (<div>{_t("You sent a verification request to %(toLabel)s",
+            return (<div className="mx_EventTile_bubble mx_KeyVerificationRequest">{_t("You sent a verification request to %(toLabel)s",
                 {toLabel})}</div>);
         }
     }

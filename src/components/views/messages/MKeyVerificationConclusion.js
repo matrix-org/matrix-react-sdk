@@ -41,16 +41,14 @@ export default class MKeyVerificationConclusion extends React.Component {
             const client = MatrixClientPeg.get();
             const room = client.getRoom(this.props.mxEvent.getRoomId());
             const requestEvent = room.findEventById(rel.event_id);
-            // console.log("related event for MKeyVerificationConclusion is", requestEvent);
             if (requestEvent) {
-                // console.log("requestEvent for MKeyVerificationConclusion", rel.event_id, requestEvent);
                 this._createStateObserver(requestEvent, client);
+                this.state = this._copyState();
             } else {
-                // console.warn("MKeyVerificationConclusion: Did not find my reference event!");
                 const findEvent = event => {
                     if (event.getId() === rel.event_id) {
-                        // console.log("relation for MKeyVerificationConclusion found now!", event);
                         this._createStateObserver(event, client);
+                        this.setState(this._copyState());
                         room.removeListener("Room.timeline", findEvent);
                     }
                 };
@@ -63,12 +61,11 @@ export default class MKeyVerificationConclusion extends React.Component {
         this.keyVerificationState = new KeyVerificationStateObserver(requestEvent, client, () => {
             this.setState(this._copyState());
         });
-        this.state = this._copyState();
     }
 
     _copyState() {
-        const {done, cancelled, otherPartyUserId, cancelPartyUserId} = this.keyVerificationState;
-        return {done, cancelled, otherPartyUserId, cancelPartyUserId};
+        const {done, cancelled, otherPartyUserId} = this.keyVerificationState;
+        return {done, cancelled, otherPartyUserId};
     }
 
     componentDidMount() {
@@ -93,15 +90,15 @@ export default class MKeyVerificationConclusion extends React.Component {
         const otherLabel = userLabel(otherName, this.state.otherPartyUserId);
 
         if (this.state.done) {
-            return (<div className="mx_MKeyVerificationConclusion">{
+            return (<div className="mx_EventTile_bubble MKeyVerificationConclusion">{
                 _t("You have successfully verified %(otherLabel)s.",
                 {otherLabel})}</div>);
         } else if (this.state.cancelled) {
-            if (this.state.cancelPartyUserId === client.getUserId()) {
-                return (<div className="mx_MKeyVerificationConclusion">{
+            if (mxEvent.getSender() === client.getUserId()) {
+                return (<div className="mx_EventTile_bubble mx_MKeyVerificationConclusion">{
                     _t("You declined the verification request.")}</div>);
-            } else if (this.state.cancelPartyUserId === this.state.otherPartyUserId) {
-                return (<div className="mx_MKeyVerificationConclusion">{
+            } else if (mxEvent.getSender() === this.state.otherPartyUserId) {
+                return (<div className="mx_EventTile_bubble mx_MKeyVerificationConclusion">{
                     _t("%(otherLabel)s declined the verification request.", {otherLabel})}</div>);
             }
         }

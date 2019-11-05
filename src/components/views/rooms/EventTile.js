@@ -39,8 +39,8 @@ const ObjectUtils = require('../../../ObjectUtils');
 const eventTileTypes = {
     'm.room.message': 'messages.MessageEvent',
     'm.sticker': 'messages.MessageEvent',
-    'm.key.verification.cancel': 'messages.MessageEvent',
-    'm.key.verification.done': 'messages.MessageEvent',
+    'm.key.verification.cancel': 'messages.MKeyVerificationConclusion',
+    'm.key.verification.done': 'messages.MKeyVerificationConclusion',
     'm.call.invite': 'messages.TextualEvent',
     'm.call.answer': 'messages.TextualEvent',
     'm.call.hangup': 'messages.TextualEvent',
@@ -79,7 +79,9 @@ function getHandlerTile(ev) {
             const client = MatrixClientPeg.get();
             const me = client && client.getUserId();
             if (ev.getSender() !== me && content.to !== me) {
-                return;
+                return undefined;
+            } else {
+                return "messages.MKeyVerificationRequest";
             }
         }
     }
@@ -89,8 +91,7 @@ function getHandlerTile(ev) {
         const client = MatrixClientPeg.get();
         const me = client && client.getUserId();
         if (ev.getSender() !== me) {
-            console.log("dont have tile for ", type, "tile because it's not mine, its", ev.getSender());
-            return;
+            return undefined;
         }
     }
 
@@ -547,8 +548,10 @@ module.exports = createReactClass({
         const eventType = this.props.mxEvent.getType();
 
         // Info messages are basically information about commands processed on a room
+        const isBubbleMessage = eventType.startsWith("m.key.verification") ||
+            (eventType === "m.room.message" && msgtype.startsWith("m.key.verification"));
         let isInfoMessage = (
-            eventType !== 'm.room.message' && eventType !== 'm.sticker' && eventType != 'm.room.create' && !eventType.startsWith("m.key.verification")
+            !isBubbleMessage && eventType !== 'm.room.message' && eventType !== 'm.sticker' && eventType != 'm.room.create'
         );
 
         let tileHandler = getHandlerTile(this.props.mxEvent);
@@ -616,7 +619,7 @@ module.exports = createReactClass({
         if (this.props.tileShape === "notif") {
             avatarSize = 24;
             needsSenderProfile = true;
-        } else if (tileHandler === 'messages.RoomCreate') {
+        } else if (tileHandler === 'messages.RoomCreate' || isBubbleMessage) {
             avatarSize = 0;
             needsSenderProfile = false;
         } else if (isInfoMessage) {
