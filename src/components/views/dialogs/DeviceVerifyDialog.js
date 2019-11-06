@@ -96,28 +96,31 @@ export default class DeviceVerifyDialog extends React.Component {
         });
         const client = MatrixClientPeg.get();
         const verifyingOwnDevice = this.props.userId === client.getUserId();
-        if (!verifyingOwnDevice && SettingsStore.getValue("feature_dm_verification")) {
-            const roomId = await ensureDMExistsAndOpen(this.props.userId);
-            this._verifier = await client.requestVerificationDM(
-                this.props.userId, roomId, [verificationMethods.SAS],
-            );
-        } else {
-            this._verifier = client.beginKeyVerification(
-                verificationMethods.SAS, this.props.userId, this.props.device.deviceId,
-            );
-        }
-        this._verifier.on('show_sas', this._onVerifierShowSas);
-        this._verifier.verify().then(() => {
+        try {
+            if (!verifyingOwnDevice && SettingsStore.getValue("feature_dm_verification")) {
+                const roomId = await ensureDMExistsAndOpen(this.props.userId);
+                // throws upon cancellation before having started
+                this._verifier = await client.requestVerificationDM(
+                    this.props.userId, roomId, [verificationMethods.SAS],
+                );
+            } else {
+                this._verifier = client.beginKeyVerification(
+                    verificationMethods.SAS, this.props.userId, this.props.device.deviceId,
+                );
+            }
+            this._verifier.on('show_sas', this._onVerifierShowSas);
+            // throws upon cancellation
+            await this._verifier.verify();
             this.setState({phase: PHASE_VERIFIED});
             this._verifier.removeListener('show_sas', this._onVerifierShowSas);
             this._verifier = null;
-        }).catch((e) => {
+        } catch (e) {
             console.log("Verification failed", e);
             this.setState({
                 phase: PHASE_CANCELLED,
             });
             this._verifier = null;
-        });
+        }
     }
 
     _onSasMatchesClick = () => {
