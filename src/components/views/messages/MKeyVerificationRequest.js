@@ -56,11 +56,6 @@ export default class MKeyVerificationRequest extends React.Component {
         this.keyVerificationState.detach();
     }
 
-    // we should only show this tile if we are the sender, or if we are in content.to
-
-    // listen on mxEvent."Event.relationsCreated"
-    // listen on relations for adding and removing relations:
-
     _onAcceptClicked = () => {
         const IncomingSasDialog = sdk.getComponent('views.dialogs.IncomingSasDialog');
         // todo: validate event, for example if it has sas in the methods.
@@ -68,6 +63,12 @@ export default class MKeyVerificationRequest extends React.Component {
         Modal.createTrackedDialog('Incoming Verification', '', IncomingSasDialog, {
             verifier,
         });
+    };
+
+    _onRejectClicked = () => {
+        // todo: validate event, for example if it has sas in the methods.
+        const verifier = MatrixClientPeg.get().acceptVerificationDM(this.props.mxEvent, verificationMethods.SAS);
+        verifier.cancel("User declined");
     };
 
     render() {
@@ -90,8 +91,11 @@ export default class MKeyVerificationRequest extends React.Component {
             if (this.state.accepted || this.state.cancelled || this.state.done) {
                 return (<div className="mx_EventTile_bubble mx_KeyVerificationRequest">{_t("%(fromLabel)s wants to verify you.", {fromLabel})}</div>);
             } else {
-                return (<div className="mx_EventTile_bubble mx_KeyVerificationRequest">{_t("%(fromLabel)s wants to verify you. If you expected this, you can <button>start verification</button>.",
-                    {fromLabel}, {button: label => <button onClick={this._onAcceptClicked}>{label}</button>})}</div>);
+                return (<div className="mx_EventTile_bubble mx_KeyVerificationRequest">{_t("%(fromLabel)s wants to verify you. <acceptButton>Accept</acceptButton> or <rejectButton>Decline</rejectButton>",
+                    {fromLabel}, {
+                        acceptButton: label => <button onClick={this._onAcceptClicked}>{label}</button>,
+                        rejectButton: label => <button onClick={this._onRejectClicked}>{label}</button>,
+                    })}</div>);
             }
         } else if (isOwn) {
             return (<div className="mx_EventTile_bubble mx_KeyVerificationRequest">{_t("You sent a verification request to %(toLabel)s",
