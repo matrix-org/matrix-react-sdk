@@ -129,11 +129,18 @@ export default class KeyVerificationStateObserver {
                 this._requestEvent.getId(), "m.reference", "m.key.verification.cancel");
 
             if (cancelRelations) {
+                let earliestCancelEvent;
                 for (const cancelEvent of cancelRelations.getRelations()) {
                     // only accept cancellation from the users involved
                     if (cancelEvent.getSender() === toUserId || cancelEvent.getSender() === fromUserId) {
                         this.cancelled = true;
+                        if (!earliestCancelEvent || cancelEvent.getTs() < earliestCancelEvent.getTs()) {
+                            earliestCancelEvent = cancelEvent;
+                        }
                     }
+                }
+                if (earliestCancelEvent) {
+                    this.cancelPartyUserId = earliestCancelEvent.getSender();
                 }
             }
         }

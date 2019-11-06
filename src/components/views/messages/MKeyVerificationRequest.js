@@ -23,29 +23,18 @@ import Modal from "../../../Modal";
 import { _t } from '../../../languageHandler';
 import KeyVerificationStateObserver from '../../../utils/KeyVerificationStateObserver';
 
-function userLabel(name, userId) {
-    if (name) {
-        return _t("%(name)s (%(userId)s)", {name, userId});
-    } else {
-        return userId;
-    }
-}
-
 export default class MKeyVerificationRequest extends React.Component {
     constructor(props) {
         super(props);
         this.keyVerificationState = new KeyVerificationStateObserver(this.props.mxEvent, MatrixClientPeg.get(), () => {
-            this.setState({
-                accepted: this.keyVerificationState.accepted,
-                done: this.keyVerificationState.done,
-                cancelled: this.keyVerificationState.cancelled,
-            });
+            this.setState(this._copyState());
         });
-        this.state = {
-            accepted: this.keyVerificationState.accepted,
-            done: this.keyVerificationState.done,
-            cancelled: this.keyVerificationState.cancelled,
-        };
+        this.state = this._copyState();
+    }
+
+    _copyState() {
+        const {accepted, done, cancelled, cancelPartyUserId, otherPartyUserId} = this.keyVerificationState;
+        return {accepted, done, cancelled, cancelPartyUserId, otherPartyUserId};
     }
 
     componentDidMount() {
@@ -71,35 +60,92 @@ export default class MKeyVerificationRequest extends React.Component {
         verifier.cancel("User declined");
     };
 
-    render() {
-        const {mxEvent} = this.props;
+    _getName(userId) {
+        const roomId = this.props.mxEvent.getRoomId();
+        const client = MatrixClientPeg.get();
+        const room = client.getRoom(roomId);
+        const member = room.getMember(userId);
+        return member ? member.name : userId;
+    }
+
+    _acceptedLabel(userId) {
         const client = MatrixClientPeg.get();
         const myUserId = client.getUserId();
-        const roomId = mxEvent.getRoomId();
-        const room = client.getRoom(roomId);
+        if (userId === myUserId) {
+            return _t("You accepted");
+        } else {
+            return _t("%(name)s accepted", {name: this._getName(userId)});
+        }
+    }
+
+    _cancelledLabel(userId) {
+        const client = MatrixClientPeg.get();
+        const myUserId = client.getUserId();
+        if (userId === myUserId) {
+            return _t("You cancelled");
+        } else {
+            return _t("%(name)s cancelled", {name: this._getName(userId)});
+        }
+    }
+
+    _userLabel(userId) {
+        const name = this._getName(userId);
+        if (name !== userId) {
+            return _t("%(name)s (%(userId)s)", {name, userId});
+        } else {
+            return userId;
+        }
+    }
+
+    render() {
+        const {mxEvent} = this.props;
         const fromUserId = mxEvent.getSender();
-        const fromName = mxEvent.sender && mxEvent.sender.name;
-        const fromLabel = userLabel(fromName, fromUserId);
         const content = mxEvent.getContent();
         const toUserId = content.to;
-        const toMember = room.getMember(toUserId);
-        const toName = toMember && toMember.name;
-        const toLabel = userLabel(toName, toUserId);
+        const client = MatrixClientPeg.get();
+        const myUserId = client.getUserId();
         const isOwn = fromUserId === myUserId;
 
-        if (toUserId === myUserId) {
-            if (this.state.accepted || this.state.cancelled || this.state.done) {
-                return (<div className="mx_EventTile_bubble mx_KeyVerificationRequest">{_t("%(fromLabel)s wants to verify you.", {fromLabel})}</div>);
-            } else {
-                return (<div className="mx_EventTile_bubble mx_KeyVerificationRequest">{_t("%(fromLabel)s wants to verify you. <acceptButton>Accept</acceptButton> or <rejectButton>Decline</rejectButton>",
-                    {fromLabel}, {
-                        acceptButton: label => <button onClick={this._onAcceptClicked}>{label}</button>,
-                        rejectButton: label => <button onClick={this._onRejectClicked}>{label}</button>,
-                    })}</div>);
+        let title;
+        let subtitle;
+        let stateNode;
+
+        if (this.state.accepted || this.state.cancelled) {
+            let stateLabel;
+            if (this.state.accepted) {
+                stateLabel = this._acceptedLabel(toUserId);
+            } else if (this.state.cancelled) {
+                stateLabel = this._cancelledLabel(this.state.cancelPartyUserId);
             }
-        } else if (isOwn) {
-            return (<div className="mx_EventTile_bubble mx_KeyVerificationRequest">{_t("You sent a verification request to %(toLabel)s",
-                {toLabel})}</div>);
+            stateNode = (<div className="mx_KeyVerificationRequest_state">{stateLabel}</div>);
+        }
+
+        if (toUserId === myUserId) { // request sent to us
+            title = (<div className="mx_KeyVerificationRequest_title">{
+                _t("%(name)s wants to verify", {name: this._getName(fromUserId)})}</div>);
+            subtitle = (<div className="mx_KeyVerificationRequest_subtitle">{
+                this._userLabel(fromUserId)}</div>);
+            const isResolved = !(this.state.accepted || this.state.cancelled || this.state.done);
+            if (isResolved) {
+                const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
+                stateNode = (<div className="mx_KeyVerificationRequest_buttons">
+                    <AccessibleButton onClick={this._onRejectClicked}>{_t("Decline")}</AccessibleButton>
+                    <AccessibleButton onClick={this._onAcceptClicked}>{_t("Accept")}</AccessibleButton>
+                </div>);
+            }
+        } else if (isOwn) { // request sent by us
+            title = (<div className="mx_KeyVerificationRequest_title">{
+                _t("You sent a verification request")}</div>);
+            subtitle = (<div className="mx_KeyVerificationRequest_subtitle">{
+                this._userLabel(this.state.otherPartyUserId)}</div>);
+        }
+
+        if (title) {
+            return (<div className="mx_EventTile_bubble mx_KeyVerificationRequest">
+                {title}
+                {subtitle}
+                {stateNode}
+            </div>);
         }
     }
 }

@@ -584,6 +584,7 @@ module.exports = createReactClass({
 
         const isEditing = !!this.props.editState;
         const classes = classNames({
+            mx_EventTile_bubbleContainer: isBubbleMessage,
             mx_EventTile: true,
             mx_EventTile_isEditing: isEditing,
             mx_EventTile_info: isInfoMessage,
@@ -816,7 +817,7 @@ module.exports = createReactClass({
                             { readAvatars }
                         </div>
                         { sender }
-                        <div className="mx_EventTile_line">
+                        <div className={classNames({mx_EventTile_line: true, mx_EventTile_bubbleLine: isBubbleMessage})}>
                             <a href={permalink} onClick={this.onPermalinkClicked}>
                                 { timestamp }
                             </a>
