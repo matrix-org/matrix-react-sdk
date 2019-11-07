@@ -27,9 +27,7 @@ limitations under the License.
     padding: 10px;
     border-radius: 5px;
     margin: 10px auto;
-    min-width: 200px;
-    max-width: 400px;
-    width: 50%;
+    max-width: 75%;
     box-sizing: border-box;
 }
 
@@ -130,8 +128,7 @@ limitations under the License.
     .mx_EventTile_line {
         margin-right: 0px;
         grid-column: 1 / 3;
-        padding-top: 0;
-        padding-bottom: 0;
+        padding: 0;
     }
 
     .mx_EventTile_msgOption {
