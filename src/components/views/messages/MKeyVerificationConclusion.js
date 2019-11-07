@@ -19,7 +19,8 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
-import KeyVerificationStateObserver from '../../../utils/KeyVerificationStateObserver';
+import KeyVerificationStateObserver, {getNameForEventRoom, userLabelForEventRoom}
+    from '../../../utils/KeyVerificationStateObserver';
 
 export default class MKeyVerificationConclusion extends React.Component {
     constructor(props) {
@@ -99,18 +100,18 @@ export default class MKeyVerificationConclusion extends React.Component {
         let title;
 
         if (this.state.done) {
-            title = _t("You verified %(name)s", {name: this._getName(this.state.otherPartyUserId)});
+            title = _t("You verified %(name)s", {name: getNameForEventRoom(this.state.otherPartyUserId, mxEvent)});
         } else if (this.state.cancelled) {
             if (mxEvent.getSender() === myUserId) {
-                title = _t("You cancelled verifying %(name)s", {name: this._getName(this.state.otherPartyUserId)});
+                title = _t("You cancelled verifying %(name)s", {name: getNameForEventRoom(this.state.otherPartyUserId, mxEvent)});
             } else if (mxEvent.getSender() === this.state.otherPartyUserId) {
-                title = _t("%(name)s cancelled verifying", {name: this._getName(this.state.otherPartyUserId)});
+                title = _t("%(name)s cancelled verifying", {name: getNameForEventRoom(this.state.otherPartyUserId, mxEvent)});
             }
         }
 
         if (title) {
-            const subtitle = this._userLabel(this.state.otherPartyUserId);
-            const classes = classNames("mx_EventTile_bubble", "mx_KeyVerification", "mx_KeyVerification_icon",{
+            const subtitle = userLabelForEventRoom(this.state.otherPartyUserId, mxEvent);
+            const classes = classNames("mx_EventTile_bubble", "mx_KeyVerification", "mx_KeyVerification_icon", {
                 mx_KeyVerification_icon_verified: this.state.done,
             });
             return (<div className={classes}>

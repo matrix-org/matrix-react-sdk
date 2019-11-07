@@ -21,7 +21,8 @@ import {verificationMethods} from 'matrix-js-sdk/lib/crypto';
 import sdk from '../../../index';
 import Modal from "../../../Modal";
 import { _t } from '../../../languageHandler';
-import KeyVerificationStateObserver from '../../../utils/KeyVerificationStateObserver';
+import KeyVerificationStateObserver, {getNameForEventRoom, userLabelForEventRoom}
+    from '../../../utils/KeyVerificationStateObserver';
 
 export default class MKeyVerificationRequest extends React.Component {
     constructor(props) {
@@ -60,30 +61,13 @@ export default class MKeyVerificationRequest extends React.Component {
         verifier.cancel("User declined");
     };
 
-    _getName(userId) {
-        const roomId = this.props.mxEvent.getRoomId();
-        const client = MatrixClientPeg.get();
-        const room = client.getRoom(roomId);
-        const member = room.getMember(userId);
-        return member ? member.name : userId;
-    }
-
-    _userLabel(userId) {
-        const name = this._getName(userId);
-        if (name !== userId) {
-            return _t("%(name)s (%(userId)s)", {name, userId});
-        } else {
-            return userId;
-        }
-    }
-
     _acceptedLabel(userId) {
         const client = MatrixClientPeg.get();
         const myUserId = client.getUserId();
         if (userId === myUserId) {
             return _t("You accepted");
         } else {
-            return _t("%(name)s accepted", {name: this._getName(userId)});
+            return _t("%(name)s accepted", {name: getNameForEventRoom(userId, this.props.mxEvent)});
         }
     }
 
@@ -93,7 +77,7 @@ export default class MKeyVerificationRequest extends React.Component {
         if (userId === myUserId) {
             return _t("You cancelled");
         } else {
-            return _t("%(name)s cancelled", {name: this._getName(userId)});
+            return _t("%(name)s cancelled", {name: getNameForEventRoom(userId, this.props.mxEvent)});
         }
     }
 
@@ -122,9 +106,9 @@ export default class MKeyVerificationRequest extends React.Component {
 
         if (toUserId === myUserId) { // request sent to us
             title = (<div className="mx_KeyVerification_title">{
-                _t("%(name)s wants to verify", {name: this._getName(fromUserId)})}</div>);
+                _t("%(name)s wants to verify", {name: getNameForEventRoom(fromUserId, mxEvent)})}</div>);
             subtitle = (<div className="mx_KeyVerification_subtitle">{
-                this._userLabel(fromUserId)}</div>);
+                userLabelForEventRoom(fromUserId, mxEvent)}</div>);
             const isResolved = !(this.state.accepted || this.state.cancelled || this.state.done);
             if (isResolved) {
                 const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
@@ -137,7 +121,7 @@ export default class MKeyVerificationRequest extends React.Component {
             title = (<div className="mx_KeyVerification_title">{
                 _t("You sent a verification request")}</div>);
             subtitle = (<div className="mx_KeyVerification_subtitle">{
-                this._userLabel(this.state.otherPartyUserId)}</div>);
+                userLabelForEventRoom(this.state.otherPartyUserId, mxEvent)}</div>);
         }
 
         if (title) {

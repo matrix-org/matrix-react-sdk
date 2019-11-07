@@ -14,6 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import MatrixClientPeg from '../MatrixClientPeg';
+import { _t } from '../languageHandler';
+
 const SUB_EVENT_TYPES_OF_INTEREST = ["start", "cancel", "done"];
 
 export default class KeyVerificationStateObserver {
@@ -146,5 +149,22 @@ export default class KeyVerificationStateObserver {
         }
 
         this.otherPartyUserId = fromUserId === this._client.getUserId() ? toUserId : fromUserId;
+    }
+}
+
+export function getNameForEventRoom(userId, mxEvent) {
+    const roomId = mxEvent.getRoomId();
+    const client = MatrixClientPeg.get();
+    const room = client.getRoom(roomId);
+    const member = room.getMember(userId);
+    return member ? member.name : userId;
+}
+
+export function userLabelForEventRoom(userId, mxEvent) {
+    const name = getNameForEventRoom(userId, mxEvent);
+    if (name !== userId) {
+        return _t("%(name)s (%(userId)s)", {name, userId});
+    } else {
+        return userId;
     }
 }
