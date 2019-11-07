@@ -15,18 +15,11 @@ limitations under the License.
 */
 
 import React from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 import KeyVerificationStateObserver from '../../../utils/KeyVerificationStateObserver';
-
-function userLabel(name, userId) {
-    if (name) {
-        return _t("%(name)s (%(userId)s)", {name, userId});
-    } else {
-        return userId;
-    }
-}
 
 export default class MKeyVerificationConclusion extends React.Component {
     constructor(props) {
@@ -35,6 +28,8 @@ export default class MKeyVerificationConclusion extends React.Component {
         this.state = {
             done: false,
             cancelled: false,
+            otherPartyUserId: null,
+            cancelPartyUserId: null,
         };
         const rel = this.props.mxEvent.getRelation();
         if (rel) {
@@ -64,8 +59,8 @@ export default class MKeyVerificationConclusion extends React.Component {
     }
 
     _copyState() {
-        const {done, cancelled, otherPartyUserId} = this.keyVerificationState;
-        return {done, cancelled, otherPartyUserId};
+        const {done, cancelled, otherPartyUserId, cancelPartyUserId} = this.keyVerificationState;
+        return {done, cancelled, otherPartyUserId, cancelPartyUserId};
     }
 
     componentDidMount() {
@@ -80,28 +75,50 @@ export default class MKeyVerificationConclusion extends React.Component {
         }
     }
 
+    _getName(userId) {
+        const roomId = this.props.mxEvent.getRoomId();
+        const client = MatrixClientPeg.get();
+        const room = client.getRoom(roomId);
+        const member = room.getMember(userId);
+        return member ? member.name : userId;
+    }
+
+    _userLabel(userId) {
+        const name = this._getName(userId);
+        if (name !== userId) {
+            return _t("%(name)s (%(userId)s)", {name, userId});
+        } else {
+            return userId;
+        }
+    }
+
     render() {
         const {mxEvent} = this.props;
         const client = MatrixClientPeg.get();
-        const roomId = mxEvent.getRoomId();
-        const room = client.getRoom(roomId);
-        const otherMember = room.getMember(this.state.otherPartyUserId);
-        const otherName = otherMember && otherMember.name;
-        const otherLabel = userLabel(otherName, this.state.otherPartyUserId);
+        const myUserId = client.getUserId();
+        let title;
 
         if (this.state.done) {
-            return (<div className="mx_EventTile_bubble MKeyVerificationConclusion">{
-                _t("You have successfully verified %(otherLabel)s.",
-                {otherLabel})}</div>);
+            title = _t("You verified %(name)s", {name: this._getName(this.state.otherPartyUserId)});
         } else if (this.state.cancelled) {
-            if (mxEvent.getSender() === client.getUserId()) {
-                return (<div className="mx_EventTile_bubble mx_MKeyVerificationConclusion">{
-                    _t("You declined the verification request.")}</div>);
+            if (mxEvent.getSender() === myUserId) {
+                title = _t("You cancelled verifying %(name)s", {name: this._getName(this.state.otherPartyUserId)});
             } else if (mxEvent.getSender() === this.state.otherPartyUserId) {
-                return (<div className="mx_EventTile_bubble mx_MKeyVerificationConclusion">{
-                    _t("%(otherLabel)s declined the verification request.", {otherLabel})}</div>);
+                title = _t("%(name)s cancelled verifying", {name: this._getName(this.state.otherPartyUserId)});
             }
         }
+
+        if (title) {
+            const subtitle = this._userLabel(this.state.otherPartyUserId);
+            const classes = classNames("mx_EventTile_bubble", "mx_KeyVerification", "mx_KeyVerification_icon",{
+                mx_KeyVerification_icon_verified: this.state.done,
+            });
+            return (<div className={classes}>
+                <div className="mx_KeyVerification_title">{title}</div>
+                <div className="mx_KeyVerification_subtitle">{subtitle}</div>
+            </div>);
+        }
+
         return null;
     }
 }
