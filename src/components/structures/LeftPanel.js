@@ -120,6 +120,13 @@ const LeftPanel = createReactClass({
         if (!this.focusedElement) return;
 
         switch (ev.key) {
+            case Key.TAB:
+                // FIXME this shouldn't be needed but without it we end up focusing on body (Gemini?)
+                if (!ev.shiftKey) {
+                    ev.stopPropagation();
+                //     this._onMoveFocus(ev, false);
+                }
+                break;
             // On enter of rooms filter select and activate first room if such one exists
             case Key.ENTER: {
                 const firstRoom = ev.target.closest(".mx_LeftPanel").querySelector(".mx_RoomTile");
@@ -135,9 +142,6 @@ const LeftPanel = createReactClass({
         if (!this.focusedElement) return;
 
         switch (ev.key) {
-            case Key.TAB:
-                this._onMoveFocus(ev, ev.shiftKey);
-                break;
             case Key.ARROW_UP:
                 this._onMoveFocus(ev, true, true);
                 break;
@@ -181,11 +185,12 @@ const LeftPanel = createReactClass({
 
             if (element) {
                 classes = element.classList;
+                if (classes.contains("mx_LeftPanel")) { // we hit the top
+                    element = up ? element.lastElementChild : element.firstElementChild;
+                    descending = true;
+                }
             }
-        } while (element && !(
-            classes.contains("mx_RoomTile") ||
-            classes.contains("mx_RoomSubList_label") ||
-            classes.contains("mx_LeftPanel_filterRooms")));
+        } while (element && !(classes.contains("mx_RoomTile") || classes.contains("mx_RoomSubList_label")));
 
         if (element) {
             ev.stopPropagation();

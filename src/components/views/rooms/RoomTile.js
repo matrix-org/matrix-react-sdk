@@ -34,6 +34,7 @@ import ActiveRoomObserver from '../../../ActiveRoomObserver';
 import RoomViewStore from '../../../stores/RoomViewStore';
 import SettingsStore from "../../../settings/SettingsStore";
 import {_t} from "../../../languageHandler";
+import RovingTabIndexContext from "../../../contexts/RovingTabIndexContext";
 
 module.exports = createReactClass({
     displayName: 'RoomTile',
@@ -59,8 +60,8 @@ module.exports = createReactClass({
 
     getInitialState: function() {
         return ({
+            focus: false,
             hover: false,
-            badgeHover: false,
             menuDisplayed: false,
             roomName: this.props.room.name,
             notifState: RoomNotifs.getRoomNotifsState(this.props.room.roomId),
@@ -220,13 +221,11 @@ module.exports = createReactClass({
     },
 
     onMouseEnter: function() {
-        this.setState( { hover: true });
-        this.badgeOnMouseEnter();
+        this.setState({ hover: true });
     },
 
     onMouseLeave: function() {
-        this.setState( { hover: false });
-        this.badgeOnMouseLeave();
+        this.setState({ hover: false });
     },
 
     _showContextMenu: function(x, y, chevronOffset) {
@@ -253,18 +252,6 @@ module.exports = createReactClass({
 
         const chevronOffset = 12;
         this._showContextMenu(e.clientX, e.clientY - (chevronOffset + 8), chevronOffset);
-    },
-
-    badgeOnMouseEnter: function() {
-        // Only allow non-guests to access the context menu
-        // and only change it if it needs to change
-        if (!MatrixClientPeg.get().isGuest() && !this.state.badgeHover) {
-            this.setState( { badgeHover: true } );
-        }
-    },
-
-    badgeOnMouseLeave: function() {
-        this.setState( { badgeHover: false } );
     },
 
     onOpenMenu: function(e) {
@@ -320,9 +307,10 @@ module.exports = createReactClass({
             'mx_RoomTile_avatar': true,
         });
 
+        const showBadge = !MatrixClientPeg.get().isGuest() && (this.state.hover || this.state.focus);
         const badgeClasses = classNames({
             'mx_RoomTile_badge': true,
-            'mx_RoomTile_badgeButton': this.state.badgeHover || this.state.menuDisplayed,
+            'mx_RoomTile_badgeButton': showBadge || this.state.menuDisplayed,
         });
 
         let name = this.state.roomName;
@@ -344,7 +332,7 @@ module.exports = createReactClass({
             const nameClasses = classNames({
                 'mx_RoomTile_name': true,
                 'mx_RoomTile_invite': this.props.isInvite,
-                'mx_RoomTile_badgeShown': badges || this.state.badgeHover || this.state.menuDisplayed,
+                'mx_RoomTile_badgeShown': badges || showBadge || this.state.menuDisplayed,
             });
 
             subtextLabel = subtext ? <span className="mx_RoomTile_subtext">{ subtext }</span> : null;
@@ -362,7 +350,13 @@ module.exports = createReactClass({
 
         let contextMenuButton;
         if (!MatrixClientPeg.get().isGuest()) {
-            contextMenuButton = <AccessibleButton className="mx_RoomTile_menuButton" onClick={this.onOpenMenu} />;
+            contextMenuButton = (
+                <AccessibleButton
+                    className="mx_RoomTile_menuButton"
+                    aria-label="Options"
+                    aria-expanded={this.state.focus ? this.state.menuDisplayed : undefined}
+                    onClick={this.onOpenMenu} />
+            );
         }
 
         const RoomAvatar = sdk.getComponent('avatars.RoomAvatar');
@@ -393,32 +387,43 @@ module.exports = createReactClass({
             ariaLabel += " " + _t("Unread messages.");
         }
 
-        return <AccessibleButton tabIndex="0"
-                                 className={classes}
-                                 onClick={this.onClick}
-                                 onMouseEnter={this.onMouseEnter}
-                                 onMouseLeave={this.onMouseLeave}
-                                 onContextMenu={this.onContextMenu}
-                                 aria-label={ariaLabel}
-                                 aria-selected={this.state.selected}
-                                 role="treeitem"
-        >
-            <div className={avatarClasses}>
-                <div className="mx_RoomTile_avatar_container">
-                    <RoomAvatar room={this.props.room} width={24} height={24} />
-                    { dmIndicator }
-                </div>
-            </div>
-            <div className="mx_RoomTile_nameContainer">
-                <div className="mx_RoomTile_labelContainer">
-                    { label }
-                    { subtextLabel }
-                </div>
-                { contextMenuButton }
-                { badge }
-            </div>
-            { /* { incomingCallBox } */ }
-            { tooltip }
-        </AccessibleButton>;
+        return <RovingTabIndexContext.Consumer>
+            { ([focusKey, setFocusKey]) => (
+                <AccessibleButton tabIndex={focusKey === this.props.room.roomId ? 0 : -1}
+                                  className={classes}
+                                  onClick={this.onClick}
+                                  onMouseEnter={this.onMouseEnter}
+                                  onMouseLeave={this.onMouseLeave}
+                                  onFocus={() => {
+                                      this.setState({ focus: true });
+                                      setFocusKey(this.props.room.roomId);
+                                  }}
+                                  onBlur={() => {
+                                      this.setState({ focus: false });
+                                  }}
+                                  onContextMenu={this.onContextMenu}
+                                  aria-label={ariaLabel}
+                                  aria-selected={this.state.selected}
+                                  role="treeitem"
+                >
+                    <div className={avatarClasses}>
+                        <div className="mx_RoomTile_avatar_container">
+                            <RoomAvatar room={this.props.room} width={24} height={24} />
+                            { dmIndicator }
+                        </div>
+                    </div>
+                    <div className="mx_RoomTile_nameContainer">
+                        <div className="mx_RoomTile_labelContainer">
+                            { label }
+                            { subtextLabel }
+                        </div>
+                        { contextMenuButton }
+                        { badge }
+                    </div>
+                    { /* { incomingCallBox } */ }
+                    { tooltip }
+                </AccessibleButton>
+            ) }
+        </RovingTabIndexContext.Consumer>;
     },
 });

@@ -32,6 +32,7 @@ import PropTypes from 'prop-types';
 import RoomTile from "../views/rooms/RoomTile";
 import LazyRenderList from "../views/elements/LazyRenderList";
 import {_t} from "../../languageHandler";
+import RovingTabIndexContext from "../../contexts/RovingTabIndexContext";
 
 // turn this on for drop & drag console debugging galore
 const debug = false;
@@ -63,6 +64,7 @@ const RoomSubList = createReactClass({
 
     getInitialState: function() {
         return {
+            focus: false,
             hidden: this.props.startAsHidden || false,
             // some values to get LazyRenderList starting
             scrollerHeight: 800,
@@ -83,6 +85,7 @@ const RoomSubList = createReactClass({
     },
 
     componentDidMount: function() {
+        this._header = createRef();
         this._headerButton = createRef();
         this.dispatcherRef = dis.register(this.onAction);
     },
@@ -103,7 +106,7 @@ const RoomSubList = createReactClass({
     // The header is collapsible if it is hidden or not stuck
     // The dataset elements are added in the RoomList _initAndPositionStickyHeaders method
     isCollapsibleOnClick: function() {
-        const stuck = this.refs.header.dataset.stuck;
+        const stuck = this._header.current.dataset.stuck;
         if (!this.props.forceExpand && (this.state.hidden || stuck === undefined || stuck === "none")) {
             return true;
         } else {
@@ -135,16 +138,12 @@ const RoomSubList = createReactClass({
             });
         } else {
             // The header is stuck, so the click is to be interpreted as a scroll to the header
-            this.props.onHeaderClick(this.state.hidden, this.refs.header.dataset.originalPosition);
+            this.props.onHeaderClick(this.state.hidden, this._header.current.dataset.originalPosition);
         }
     },
 
     onHeaderKeyDown: function(ev) {
         switch (ev.key) {
-            case Key.TAB:
-                // Prevent LeftPanel handling Tab if focus is on the sublist header itself
-                ev.stopPropagation();
-                break;
             case Key.ARROW_LEFT:
                 // On ARROW_LEFT collapse the room sublist
                 if (!this.state.hidden && !this.props.forceExpand) {
@@ -254,7 +253,7 @@ const RoomSubList = createReactClass({
         if (this.props.onAddRoom) this.props.onAddRoom();
     },
 
-    _getHeaderJsx: function(isCollapsed) {
+    _getHeaderJsx: function(isCollapsed, focusKey, setFocusKey) {
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         const AccessibleTooltipButton = sdk.getComponent('elements.AccessibleTooltipButton');
         const subListNotifications = !this.props.isInvite ?
@@ -262,6 +261,10 @@ const RoomSubList = createReactClass({
             {count: 0, highlight: true};
         const subListNotifCount = subListNotifications.count;
         const subListNotifHighlight = subListNotifications.highlight;
+
+        // if this room sublist header is not focused then do not set a tab index for it or its notification badge
+        const tabIndex = this.props.label === focusKey ? 0 : -1;
+        const onFocus = () => { setFocusKey(this.props.label); };
 
         let badge;
         if (!this.props.collapsed) {
@@ -272,7 +275,12 @@ const RoomSubList = createReactClass({
             // Wrap the contents in a div and apply styles to the child div so that the browser default outline works
             if (subListNotifCount > 0) {
                 badge = (
-                    <AccessibleButton className={badgeClasses} onClick={this._onNotifBadgeClick} aria-label={_t("Jump to first unread room.")}>
+                    <AccessibleButton
+                        className={badgeClasses}
+                        onClick={this._onNotifBadgeClick}
+                        aria-label={_t("Jump to first unread room.")}
+                        tabIndex={tabIndex}
+                    >
                         <div>
                             { FormattingUtils.formatCount(subListNotifCount) }
                         </div>
@@ -281,7 +289,12 @@ const RoomSubList = createReactClass({
             } else if (this.props.isInvite && this.props.list.length) {
                 // no notifications but highlight anyway because this is an invite badge
                 badge = (
-                    <AccessibleButton className={badgeClasses} onClick={this._onInviteBadgeClick} aria-label={_t("Jump to first invite.")}>
+                    <AccessibleButton
+                        className={badgeClasses}
+                        onClick={this._onInviteBadgeClick}
+                        aria-label={_t("Jump to first invite.")}
+                        tabIndex={tabIndex}
+                    >
                         <div>
                             { this.props.list.length }
                         </div>
@@ -328,11 +341,12 @@ const RoomSubList = createReactClass({
         }
 
         return (
-            <div className="mx_RoomSubList_labelContainer" title={title} ref="header" onKeyDown={this.onHeaderKeyDown}>
+            <div className="mx_RoomSubList_labelContainer" title={title} ref={this._header} onKeyDown={this.onHeaderKeyDown}>
                 <AccessibleButton
                     onClick={this.onClick}
                     className="mx_RoomSubList_label"
-                    tabIndex={0}
+                    tabIndex={tabIndex}
+                    onFocus={onFocus}
                     aria-expanded={!isCollapsed}
                     inputRef={this._headerButton}
                     role="treeitem"
@@ -424,7 +438,9 @@ const RoomSubList = createReactClass({
                 aria-label={this.props.label}
                 onKeyDown={this.onKeyDown}
             >
-                { this._getHeaderJsx(isCollapsed) }
+                <RovingTabIndexContext.Consumer>
+                    { ([focusKey, setFocusKey]) => this._getHeaderJsx(isCollapsed, focusKey, setFocusKey) }
+                </RovingTabIndexContext.Consumer>
                 { content }
             </div>
         );
