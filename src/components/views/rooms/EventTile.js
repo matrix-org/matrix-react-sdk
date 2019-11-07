@@ -39,6 +39,8 @@ const ObjectUtils = require('../../../ObjectUtils');
 const eventTileTypes = {
     'm.room.message': 'messages.MessageEvent',
     'm.sticker': 'messages.MessageEvent',
+    'm.key.verification.cancel': 'messages.MKeyVerificationConclusion',
+    'm.key.verification.done': 'messages.MKeyVerificationConclusion',
     'm.call.invite': 'messages.TextualEvent',
     'm.call.answer': 'messages.TextualEvent',
     'm.call.hangup': 'messages.TextualEvent',
@@ -83,6 +85,16 @@ function getHandlerTile(ev) {
             }
         }
     }
+    // these events are sent by both parties during verification, but we only want to render one
+    // tile once the verification concludes, so filter out the one from the other party.
+    if (type === "m.key.verification.done") {
+        const client = MatrixClientPeg.get();
+        const me = client && client.getUserId();
+        if (ev.getSender() !== me) {
+            return undefined;
+        }
+    }
+
     return ev.isState() ? stateEventTileTypes[type] : eventTileTypes[type];
 }
 
