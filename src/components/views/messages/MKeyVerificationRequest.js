@@ -68,6 +68,15 @@ export default class MKeyVerificationRequest extends React.Component {
         return member ? member.name : userId;
     }
 
+    _userLabel(userId) {
+        const name = this._getName(userId);
+        if (name !== userId) {
+            return _t("%(name)s (%(userId)s)", {name, userId});
+        } else {
+            return userId;
+        }
+    }
+
     _acceptedLabel(userId) {
         const client = MatrixClientPeg.get();
         const myUserId = client.getUserId();
@@ -85,15 +94,6 @@ export default class MKeyVerificationRequest extends React.Component {
             return _t("You cancelled");
         } else {
             return _t("%(name)s cancelled", {name: this._getName(userId)});
-        }
-    }
-
-    _userLabel(userId) {
-        const name = this._getName(userId);
-        if (name !== userId) {
-            return _t("%(name)s (%(userId)s)", {name, userId});
-        } else {
-            return userId;
         }
     }
 
@@ -117,36 +117,37 @@ export default class MKeyVerificationRequest extends React.Component {
             } else if (this.state.cancelled) {
                 stateLabel = this._cancelledLabel(this.state.cancelPartyUserId);
             }
-            stateNode = (<div className="mx_KeyVerificationRequest_state">{stateLabel}</div>);
+            stateNode = (<div className="mx_KeyVerification_state">{stateLabel}</div>);
         }
 
         if (toUserId === myUserId) { // request sent to us
-            title = (<div className="mx_KeyVerificationRequest_title">{
+            title = (<div className="mx_KeyVerification_title">{
                 _t("%(name)s wants to verify", {name: this._getName(fromUserId)})}</div>);
-            subtitle = (<div className="mx_KeyVerificationRequest_subtitle">{
+            subtitle = (<div className="mx_KeyVerification_subtitle">{
                 this._userLabel(fromUserId)}</div>);
             const isResolved = !(this.state.accepted || this.state.cancelled || this.state.done);
             if (isResolved) {
                 const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
-                stateNode = (<div className="mx_KeyVerificationRequest_buttons">
-                    <AccessibleButton onClick={this._onRejectClicked}>{_t("Decline")}</AccessibleButton>
-                    <AccessibleButton onClick={this._onAcceptClicked}>{_t("Accept")}</AccessibleButton>
+                stateNode = (<div className="mx_KeyVerification_buttons">
+                    <AccessibleButton kind="decline" onClick={this._onRejectClicked}>{_t("Decline")}</AccessibleButton>
+                    <AccessibleButton kind="accept" onClick={this._onAcceptClicked}>{_t("Accept")}</AccessibleButton>
                 </div>);
             }
         } else if (isOwn) { // request sent by us
-            title = (<div className="mx_KeyVerificationRequest_title">{
+            title = (<div className="mx_KeyVerification_title">{
                 _t("You sent a verification request")}</div>);
-            subtitle = (<div className="mx_KeyVerificationRequest_subtitle">{
+            subtitle = (<div className="mx_KeyVerification_subtitle">{
                 this._userLabel(this.state.otherPartyUserId)}</div>);
         }
 
         if (title) {
-            return (<div className="mx_EventTile_bubble mx_KeyVerificationRequest">
+            return (<div className="mx_EventTile_bubble mx_KeyVerification mx_KeyVerification_icon">
                 {title}
                 {subtitle}
                 {stateNode}
             </div>);
         }
+        return null;
     }
 }
 
