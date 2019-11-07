@@ -32,6 +32,7 @@ const TextForEvent = require('../../../TextForEvent');
 import dis from '../../../dispatcher';
 import SettingsStore from "../../../settings/SettingsStore";
 import {EventStatus, MatrixClient} from 'matrix-js-sdk';
+import MatrixClientPeg from '../../../MatrixClientPeg';
 
 const ObjectUtils = require('../../../ObjectUtils');
 
@@ -67,6 +68,21 @@ const stateEventTileTypes = {
 
 function getHandlerTile(ev) {
     const type = ev.getType();
+
+    // don't show verification requests we're not involved in,
+    // not even when showing hidden events
+    if (type === "m.room.message") {
+        const content = ev.getContent();
+        if (content && content.msgtype === "m.key.verification.request") {
+            const client = MatrixClientPeg.get();
+            const me = client && client.getUserId();
+            if (ev.getSender() !== me && content.to !== me) {
+                return undefined;
+            } else {
+                return "messages.MKeyVerificationRequest";
+            }
+        }
+    }
     return ev.isState() ? stateEventTileTypes[type] : eventTileTypes[type];
 }
 
