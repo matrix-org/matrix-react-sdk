@@ -38,6 +38,7 @@ module.exports = createReactClass({
         // XXX resizeMethod not actually used.
         resizeMethod: PropTypes.string,
         defaultToInitialLetter: PropTypes.bool, // true to add default url
+        onClick: PropTypes.func,
     },
 
     contextTypes: {

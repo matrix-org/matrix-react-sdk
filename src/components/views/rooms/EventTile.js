@@ -615,12 +615,12 @@ module.exports = createReactClass({
 
         if (this.props.mxEvent.sender && avatarSize) {
             avatar = (
-                    <div className="mx_EventTile_avatar">
-                        <MemberAvatar member={this.props.mxEvent.sender}
-                            width={avatarSize} height={avatarSize}
-                            viewUserOnClick={true}
-                        />
-                    </div>
+                <div className="mx_EventTile_avatar">
+                    <MemberAvatar member={this.props.mxEvent.sender}
+                        width={avatarSize} height={avatarSize}
+                        viewUserOnClick={true}
+                    />
+                </div>
             );
         }
 
@@ -787,10 +787,22 @@ module.exports = createReactClass({
                     this.props.permalinkCreator,
                     'replyThread',
                 );
+                const {mxEvent} = this.props;
+                let senderLabel;
+                if (mxEvent.getSender() === this.context.matrixClient.getUserId()) {
+                    senderLabel = _t("You sent: ");
+                } else {
+                    senderLabel = _t("%(sender)s sent: ", {
+                        sender: mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender(),
+                    });
+                }
+
                 // tab-index=-1 to allow it to be focusable but do not add tab stop for it, primarily for screen readers
                 return (
-                    <div className={classes} tabIndex={-1}>
-                        <div className="mx_EventTile_msgOption">
+                    <div className={classes} role="listitem" tabIndex={-1}>
+                        { sender }
+                        <span aria-label={senderLabel} />
+                        <div className="mx_EventTile_msgOption" aria-live="off">
                             { readAvatars }
                         </div>
                         { sender }
