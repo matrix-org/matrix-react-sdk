@@ -129,9 +129,12 @@ module.exports = createReactClass({
             return null;
         }
         const clearButton = (!this.state.blurred || this.state.searchTerm) ?
-            (<AccessibleButton key="button"
-                    className="mx_SearchBox_closeButton"
-                    onClick={ () => {this._clearSearch("button"); } }>
+            (<AccessibleButton
+                key="button"
+                className="mx_SearchBox_closeButton"
+                // disable tabbing to this as keyboard users can use Escape
+                tabIndex={-1}
+                onClick={ () => {this._clearSearch("button"); } }>
             </AccessibleButton>) : undefined;
 
         // show a shorter placeholder when blurred, if requested
