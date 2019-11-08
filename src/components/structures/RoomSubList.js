@@ -325,6 +325,7 @@ const RoomSubList = createReactClass({
                     onClick={this.onAddRoom}
                     className="mx_RoomSubList_addRoom"
                     title={this.props.addRoomLabel || _t("Add room")}
+                    tabIndex={tabIndex}
                 />
             );
         }
