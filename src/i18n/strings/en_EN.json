@@ -801,7 +801,6 @@
     "<requestLink>Re-request encryption keys</requestLink> from your other devices.": "<requestLink>Re-request encryption keys</requestLink> from your other devices.",
     "You sent: ": "You sent: ",
     "%(sender)s sent: ": "%(sender)s sent: ",
-    " at %(time)s.": " at %(time)s.",
     "Undecryptable": "Undecryptable",
     "Encrypted by an unverified device": "Encrypted by an unverified device",
     "Unencrypted message": "Unencrypted message",
