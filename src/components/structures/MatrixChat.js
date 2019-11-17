@@ -100,6 +100,9 @@ const VIEWS = {
     // We are logged out (invalid token) but have our local state again. The user
     // should log back in to rehydrate the client.
     SOFT_LOGOUT: 8,
+
+    // we are showing the oauth view
+    OAUTH: 9,
 };
 
 // Actions that are redirected through the onboarding process prior to being
@@ -511,6 +514,20 @@ export default createReactClass({
                     view: VIEWS.LOGIN,
                 });
                 this.notifyNewScreen('login');
+                break;
+            case 'start_oauth':
+                console.info("start oauth");
+                if (Lifecycle.isSoftLogout()) {
+                    this._onSoftLogout();
+                    break;
+                }
+                if (payload.screenAfterLogin) {
+                    this._screenAfterLogin = payload.screenAfterLogin;
+                }
+                this.setStateForNewView({
+                    view: VIEWS.OAUTH,
+                });
+                this.notifyNewScreen('oauth');
                 break;
             case 'start_post_registration':
                 this.setState({
@@ -1519,6 +1536,11 @@ export default createReactClass({
                 action: 'start_login',
                 params: params,
             });
+        } else if (screen == 'oauth') {
+            dis.dispatch({
+                action: 'start_oauth',
+                params: params,
+            });
         } else if (screen == 'forgot_password') {
             dis.dispatch({
                 action: 'start_password_recovery',
@@ -1912,6 +1934,19 @@ export default createReactClass({
             const Login = sdk.getComponent('structures.auth.Login');
             view = (
                 <Login
+                    onLoggedIn={Lifecycle.setLoggedIn}
+                    onRegisterClick={this.onRegisterClick}
+                    fallbackHsUrl={this.getFallbackHsUrl()}
+                    defaultDeviceDisplayName={this.props.defaultDeviceDisplayName}
+                    onForgotPasswordClick={this.onForgotPasswordClick}
+                    onServerConfigChange={this.onServerConfigChange}
+                    {...this.getServerProperties()}
+                />
+            );
+        } else if (this.state.view === VIEWS.OAUTH) {
+            const Oauth = sdk.getComponent('structures.auth.Oauth');
+            view = (
+                <Oauth
                     onLoggedIn={Lifecycle.setLoggedIn}
                     onRegisterClick={this.onRegisterClick}
                     fallbackHsUrl={this.getFallbackHsUrl()}

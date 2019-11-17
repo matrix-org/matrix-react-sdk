@@ -33,12 +33,21 @@ export default class Welcome extends React.PureComponent {
             pageUrl = 'welcome.html';
         }
 
+        let oauthButton = '';
+
+        if (SdkConfig.get().show_oauth) {
+            const OauthButton = sdk.getComponent('auth.OauthButton');
+            console.log("show aouth");
+            oauthButton = <OauthButton />;
+        }
+
         return (
             <AuthPage>
                 <div className="mx_Welcome">
                     <EmbeddedPage className="mx_WelcomePage"
                         url={pageUrl}
                     />
+                    {oauthButton}
                     <LanguageSelector />
                 </div>
             </AuthPage>

@@ -314,6 +314,7 @@
     "Show timestamps in 12 hour format (e.g. 2:30pm)": "Show timestamps in 12 hour format (e.g. 2:30pm)",
     "Signed Out": "Signed Out",
     "Sign in": "Sign in",
+    "Sign in using OAuth": "Sign in using OAuth",
     "Sign out": "Sign out",
     "%(count)s of your messages have not been sent.|other": "Some of your messages have not been sent.",
     "Someone": "Someone",
