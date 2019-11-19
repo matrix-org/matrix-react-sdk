@@ -19,10 +19,10 @@ const emailRegex = /^\S+@\S+\.\S+$/;
 const mxUserIdRegex = /^@\S+:\S+$/;
 const mxRoomIdRegex = /^!\S+:\S+$/;
 
-import PropTypes from 'prop-types';
-export const addressTypes = [
-    'mx-user-id', 'mx-room-id', 'email',
-];
+const mxPhoneRegex = /^\d{10}$/;
+
+import PropTypes from "prop-types";
+export const addressTypes = ["mx-user-id", "mx-room-id", "email"];
 
 // PropType definition for an object describing
 // an address that can be invited to a room (which
@@ -37,21 +37,24 @@ export const UserAddressType = PropTypes.shape({
     // true if the address is known to be a valid address (eg. is a real
     // user we've seen) or false otherwise (eg. is just an address the
     // user has entered)
-    isKnown: PropTypes.bool,
+    isKnown: PropTypes.bool
 });
 
 export function getAddressType(inputText) {
     const isEmailAddress = emailRegex.test(inputText);
     const isUserId = mxUserIdRegex.test(inputText);
     const isRoomId = mxRoomIdRegex.test(inputText);
+    const isPhoneNumber = mxPhoneRegex.test(inputText);
 
     // sanity check the input for user IDs
     if (isEmailAddress) {
-        return 'email';
+        return "email";
     } else if (isUserId) {
-        return 'mx-user-id';
+        return "mx-user-id";
+    } else if (isPhoneNumber) {
+        return "phone";
     } else if (isRoomId) {
-        return 'mx-room-id';
+        return "mx-room-id";
     } else {
         return null;
     }

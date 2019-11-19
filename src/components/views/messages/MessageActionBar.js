@@ -15,16 +15,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { _t } from '../../../languageHandler';
-import sdk from '../../../index';
-import dis from '../../../dispatcher';
-import Modal from '../../../Modal';
-import { createMenu } from '../../structures/ContextualMenu';
-import { isContentActionable, canEditContent } from '../../../utils/EventUtils';
-import {RoomContext} from "../../structures/RoomView";
+import { _t } from "../../../languageHandler";
+import sdk from "../../../index";
+import dis from "../../../dispatcher";
+import Modal from "../../../Modal";
+import { createMenu } from "../../structures/ContextualMenu";
+import { isContentActionable, canEditContent } from "../../../utils/EventUtils";
+import { RoomContext } from "../../structures/RoomView";
 
 export default class MessageActionBar extends React.PureComponent {
     static propTypes = {
@@ -34,11 +34,11 @@ export default class MessageActionBar extends React.PureComponent {
         permalinkCreator: PropTypes.object,
         getTile: PropTypes.func,
         getReplyThread: PropTypes.func,
-        onFocusChange: PropTypes.func,
+        onFocusChange: PropTypes.func
     };
 
     static contextTypes = {
-        room: RoomContext,
+        //room: RoomContext,
     };
 
     componentDidMount() {
@@ -55,7 +55,7 @@ export default class MessageActionBar extends React.PureComponent {
         this.forceUpdate();
     };
 
-    onFocusChange = (focused) => {
+    onFocusChange = focused => {
         if (!this.props.onFocusChange) {
             return;
         }
@@ -64,27 +64,29 @@ export default class MessageActionBar extends React.PureComponent {
 
     onCryptoClick = () => {
         const event = this.props.mxEvent;
-        Modal.createTrackedDialogAsync('Encrypted Event Dialog', '',
-            import('../../../async-components/views/dialogs/EncryptedEventDialog'),
-            {event},
+        Modal.createTrackedDialogAsync(
+            "Encrypted Event Dialog",
+            "",
+            import("../../../async-components/views/dialogs/EncryptedEventDialog"),
+            { event }
         );
     };
 
-    onReplyClick = (ev) => {
+    onReplyClick = ev => {
         dis.dispatch({
-            action: 'reply_to_event',
-            event: this.props.mxEvent,
+            action: "reply_to_event",
+            event: this.props.mxEvent
         });
     };
 
-    onEditClick = (ev) => {
+    onEditClick = ev => {
         dis.dispatch({
-            action: 'edit_event',
-            event: this.props.mxEvent,
+            action: "edit_event",
+            event: this.props.mxEvent
         });
     };
 
-    getMenuOptions = (ev) => {
+    getMenuOptions = ev => {
         const menuOptions = {};
         const buttonRect = ev.target.getBoundingClientRect();
         // The window X and Y offsets are to adjust position when zoomed in to page
@@ -103,15 +105,15 @@ export default class MessageActionBar extends React.PureComponent {
         return menuOptions;
     };
 
-    onReactClick = (ev) => {
-        const ReactionPicker = sdk.getComponent('emojipicker.ReactionPicker');
+    onReactClick = ev => {
+        const ReactionPicker = sdk.getComponent("emojipicker.ReactionPicker");
 
         const menuOptions = {
             ...this.getMenuOptions(ev),
             mxEvent: this.props.mxEvent,
             reactions: this.props.reactions,
             chevronFace: "none",
-            onFinished: () => this.onFocusChange(false),
+            onFinished: () => this.onFocusChange(false)
         };
 
         createMenu(ReactionPicker, menuOptions);
@@ -119,8 +121,10 @@ export default class MessageActionBar extends React.PureComponent {
         this.onFocusChange(true);
     };
 
-    onOptionsClick = (ev) => {
-        const MessageContextMenu = sdk.getComponent('context_menus.MessageContextMenu');
+    onOptionsClick = ev => {
+        const MessageContextMenu = sdk.getComponent(
+            "context_menus.MessageContextMenu"
+        );
 
         const { getTile, getReplyThread } = this.props;
         const tile = getTile && getTile();
@@ -136,12 +140,18 @@ export default class MessageActionBar extends React.PureComponent {
             mxEvent: this.props.mxEvent,
             chevronFace: "none",
             permalinkCreator: this.props.permalinkCreator,
-            eventTileOps: tile && tile.getEventTileOps ? tile.getEventTileOps() : undefined,
-            collapseReplyThread: replyThread && replyThread.canCollapse() ? replyThread.collapse : undefined,
+            eventTileOps:
+                tile && tile.getEventTileOps
+                    ? tile.getEventTileOps()
+                    : undefined,
+            collapseReplyThread:
+                replyThread && replyThread.canCollapse()
+                    ? replyThread.collapse
+                    : undefined,
             e2eInfoCallback: e2eInfoCallback,
             onFinished: () => {
                 this.onFocusChange(false);
-            },
+            }
         };
 
         createMenu(MessageContextMenu, menuOptions);
@@ -150,7 +160,7 @@ export default class MessageActionBar extends React.PureComponent {
     };
 
     render() {
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
+        const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
 
         let reactButton;
         let replyButton;
@@ -158,39 +168,52 @@ export default class MessageActionBar extends React.PureComponent {
 
         if (isContentActionable(this.props.mxEvent)) {
             if (this.context.room.canReact) {
-                reactButton = <AccessibleButton
-                    className="mx_MessageActionBar_maskButton mx_MessageActionBar_reactButton"
-                    title={_t("React")}
-                    onClick={this.onReactClick}
-                />;
+                reactButton = (
+                    <AccessibleButton
+                        className="mx_MessageActionBar_maskButton mx_MessageActionBar_reactButton"
+                        title={_t("React")}
+                        onClick={this.onReactClick}
+                    />
+                );
             }
             if (this.context.room.canReply) {
-                replyButton = <AccessibleButton
-                    className="mx_MessageActionBar_maskButton mx_MessageActionBar_replyButton"
-                    title={_t("Reply")}
-                    onClick={this.onReplyClick}
-                />;
+                replyButton = (
+                    <AccessibleButton
+                        className="mx_MessageActionBar_maskButton mx_MessageActionBar_replyButton"
+                        title={_t("Reply")}
+                        onClick={this.onReplyClick}
+                    />
+                );
             }
         }
         if (canEditContent(this.props.mxEvent)) {
-            editButton = <AccessibleButton
-                className="mx_MessageActionBar_maskButton mx_MessageActionBar_editButton"
-                title={_t("Edit")}
-                onClick={this.onEditClick}
-            />;
+            editButton = (
+                <AccessibleButton
+                    className="mx_MessageActionBar_maskButton mx_MessageActionBar_editButton"
+                    title={_t("Edit")}
+                    onClick={this.onEditClick}
+                />
+            );
         }
 
         // aria-live=off to not have this read out automatically as navigating around timeline, gets repetitive.
-        return <div className="mx_MessageActionBar" role="toolbar" aria-label={_t("Message Actions")} aria-live="off">
-            {reactButton}
-            {replyButton}
-            {editButton}
-            <AccessibleButton
-                className="mx_MessageActionBar_maskButton mx_MessageActionBar_optionsButton"
-                title={_t("Options")}
-                onClick={this.onOptionsClick}
-                aria-haspopup={true}
-            />
-        </div>;
+        return (
+            <div
+                className="mx_MessageActionBar"
+                role="toolbar"
+                aria-label={_t("Message Actions")}
+                aria-live="off"
+            >
+                {reactButton}
+                {replyButton}
+                {editButton}
+                <AccessibleButton
+                    className="mx_MessageActionBar_maskButton mx_MessageActionBar_optionsButton"
+                    title={_t("Options")}
+                    onClick={this.onOptionsClick}
+                    aria-haspopup={true}
+                />
+            </div>
+        );
     }
 }

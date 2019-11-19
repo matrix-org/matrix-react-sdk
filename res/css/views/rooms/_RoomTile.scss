@@ -13,6 +13,33 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+$first-color: 1px solid #50cc60;
+$second-color: #348060;
+
+#call_button {
+  /*
+    background: blue;
+    border: .1px solid black;
+    border-radius: 40px;
+    height: 24px;
+    width: 24px; */
+}
+
+#call_button::before {
+    //transform: scale(.7);
+    //background: black;
+    //mask-image: url(phone.svg);
+    //clip-path: url(#call_button);
+}
+
+.call_buttons {
+    display: none;
+}
+
+.hangup {
+    position: relative;
+    right: 16px;
+}
 
 .mx_RoomTile {
     display: flex;
@@ -23,6 +50,10 @@ limitations under the License.
     margin: 0;
     padding: 0 8px 0 10px;
     position: relative;
+}
+
+.mx_RoomTile:first-child {
+    margin-top: 15px;
 }
 
 .mx_RoomTile:focus {
@@ -151,6 +182,16 @@ limitations under the License.
     }
 }
 
+.mx_RoomTile_calls:hover {
+    .call_buttons {
+        display: flex;
+    }
+    .hangup {
+        position: relative;
+        right: 0px;
+    }
+}
+
 .mx_RoomTile_unreadNotify .mx_RoomTile_badge,
 .mx_RoomTile_badge.mx_RoomTile_badgeUnread {
     background-color: $roomtile-name-color;
@@ -172,6 +213,41 @@ limitations under the License.
 .mx_RoomTile_selected {
     border-radius: 4px;
     background-color: $roomtile-selected-bg-color;
+}
+
+.mx_RoomTile_calling {
+    animation: pulse 2s infinite;
+}
+
+.mx_RoomTile_session, .mx_RoomTile_calling {
+    border: 1px solid $second-color;
+    z-index: 1;
+}
+
+.mx_RoomTile_calling::after, .mx_RoomTile_session::after {
+    content: '';
+    opacity: 0.5;
+    border-radius: 3px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+    background: rgb(113, 193, 12);
+    background: linear-gradient(180deg, rgba(113, 193, 12, 1) 0%, rgba(9, 121, 40, 1) 20%, rgba(36, 88, 66, 1) 100%);
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0px 0px 10px 2px $second-color;
+    }
+    50% {
+        box-shadow: 0px 0px 10px 4px $second-color;
+    }
+    100% {
+        box-shadow: 0px 0px 10px 2px $second-color;
+    }
 }
 
 .mx_DNDRoomTile {

@@ -13,10 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import {Store} from 'flux/utils';
-import dis from '../dispatcher';
-import DMRoomMap from '../utils/DMRoomMap';
-import Unread from '../Unread';
+import { Store } from "flux/utils";
+import dis from "../dispatcher";
+import DMRoomMap from "../utils/DMRoomMap";
+import Unread from "../Unread";
 import SettingsStore from "../settings/SettingsStore";
 
 /*
@@ -31,19 +31,24 @@ small changes to that over time. This results in quick changes to the room list 
 also having update operations feel more like popping/pushing to a stack.
  */
 
-const CATEGORY_RED = "red";     // Mentions in the room
-const CATEGORY_GREY = "grey";   // Unread notified messages (not mentions)
-const CATEGORY_BOLD = "bold";   // Unread messages (not notified, 'Mentions Only' rooms)
-const CATEGORY_IDLE = "idle";   // Nothing of interest
+const CATEGORY_RED = "red"; // Mentions in the room
+const CATEGORY_GREY = "grey"; // Unread notified messages (not mentions)
+const CATEGORY_BOLD = "bold"; // Unread messages (not notified, 'Mentions Only' rooms)
+const CATEGORY_IDLE = "idle"; // Nothing of interest
 
-const CATEGORY_ORDER = [CATEGORY_RED, CATEGORY_GREY, CATEGORY_BOLD, CATEGORY_IDLE];
+const CATEGORY_ORDER = [
+    CATEGORY_RED,
+    CATEGORY_GREY,
+    CATEGORY_BOLD,
+    CATEGORY_IDLE
+];
 const LIST_ORDERS = {
     "m.favourite": "manual",
     "im.vector.fake.invite": "recent",
     "im.vector.fake.recent": "recent",
     "im.vector.fake.direct": "recent",
     "m.lowpriority": "recent",
-    "im.vector.fake.archived": "recent",
+    "im.vector.fake.archived": "recent"
 };
 
 /**
@@ -81,8 +86,10 @@ class RoomListStore extends Store {
         // Dev note: We only have two algorithms at the moment, but it isn't impossible that we want
         // multiple in the future. Also constants make things slightly clearer.
         const byImportance = algorithm === ALGO_IMPORTANCE;
-        console.log("Updating room sorting algorithm: sortByImportance=" + byImportance);
-        this._setState({orderRoomsByImportance: byImportance});
+        console.log(
+            "Updating room sorting algorithm: sortByImportance=" + byImportance
+        );
+        this._setState({ orderRoomsByImportance: byImportance });
 
         // Trigger a resort of the entire list to reflect the change in algorithm
         this._generateInitialRoomLists();
@@ -91,13 +98,16 @@ class RoomListStore extends Store {
     _init() {
         // Initialise state
         const defaultLists = {
-            "m.server_notice": [/* { room: js-sdk room, category: string } */],
+            "m.server_notice": [
+                /* { room: js-sdk room, category: string } */
+            ],
             "im.vector.fake.invite": [],
             "m.favourite": [],
             "im.vector.fake.recent": [],
+            "im.vector.fake.phone": [],
             "im.vector.fake.direct": [],
             "m.lowpriority": [],
-            "im.vector.fake.archived": [],
+            "im.vector.fake.archived": []
         };
         this._state = {
             // The rooms in these arrays are ordered according to either the
@@ -106,11 +116,11 @@ class RoomListStore extends Store {
             presentationLists: defaultLists, // like `lists`, but with arrays of rooms instead
             ready: false,
             stickyRoomId: null,
-            orderRoomsByImportance: true,
+            orderRoomsByImportance: true
         };
 
-        SettingsStore.monitorSetting('RoomList.orderByImportance', null);
-        SettingsStore.monitorSetting('feature_custom_tags', null);
+        SettingsStore.monitorSetting("RoomList.orderByImportance", null);
+        SettingsStore.monitorSetting("feature_custom_tags", null);
     }
 
     _setState(newState) {
@@ -118,12 +128,14 @@ class RoomListStore extends Store {
         // is given to requesting components). This dramatically simplifies our code elsewhere
         // while also ensuring we don't need to update all the calling components to support
         // categories.
-        if (newState['lists']) {
+        if (newState["lists"]) {
             const presentationLists = {};
-            for (const key of Object.keys(newState['lists'])) {
-                presentationLists[key] = newState['lists'][key].map((e) => e.room);
+            for (const key of Object.keys(newState["lists"])) {
+                presentationLists[key] = newState["lists"][key].map(
+                    e => e.room
+                );
             }
-            newState['presentationLists'] = presentationLists;
+            newState["presentationLists"] = presentationLists;
         }
         this._state = Object.assign(this._state, newState);
         this.__emitChange();
@@ -132,118 +144,153 @@ class RoomListStore extends Store {
     __onDispatch(payload) {
         const logicallyReady = this._matrixClient && this._state.ready;
         switch (payload.action) {
-            case 'setting_updated': {
-                if (!logicallyReady) break;
+            case "setting_updated":
+                {
+                    if (!logicallyReady) break;
 
-                if (payload.settingName === 'RoomList.orderByImportance') {
-                    this.updateSortingAlgorithm(payload.newValue === true ? ALGO_IMPORTANCE : ALGO_RECENT);
-                } else if (payload.settingName === 'feature_custom_tags') {
-                    this._setState({tagsEnabled: payload.newValue});
-                    this._generateInitialRoomLists(); // Tags means we have to start from scratch
-                }
-            }
-            break;
-            // Initialise state after initial sync
-            case 'MatrixActions.sync': {
-                if (!(payload.prevState !== 'PREPARED' && payload.state === 'PREPARED')) {
-                    break;
-                }
-
-                // Always ensure that we set any state needed for settings here. It is possible that
-                // setting updates trigger on startup before we are ready to sync, so we want to make
-                // sure that the right state is in place before we actually react to those changes.
-
-                this._setState({tagsEnabled: SettingsStore.isFeatureEnabled("feature_custom_tags")});
-
-                this._matrixClient = payload.matrixClient;
-
-                const algorithm = SettingsStore.getValue("RoomList.orderByImportance")
-                    ? ALGO_IMPORTANCE : ALGO_RECENT;
-                this.updateSortingAlgorithm(algorithm);
-            }
-            break;
-            case 'MatrixActions.Room.receipt': {
-                if (!logicallyReady) break;
-
-                // First see if the receipt event is for our own user. If it was, trigger
-                // a room update (we probably read the room on a different device).
-                const myUserId = this._matrixClient.getUserId();
-                for (const eventId of Object.keys(payload.event.getContent())) {
-                    const receiptUsers = Object.keys(payload.event.getContent()[eventId]['m.read'] || {});
-                    if (receiptUsers.includes(myUserId)) {
-                        this._roomUpdateTriggered(payload.room.roomId);
-                        return;
+                    if (payload.settingName === "RoomList.orderByImportance") {
+                        this.updateSortingAlgorithm(
+                            payload.newValue === true
+                                ? ALGO_IMPORTANCE
+                                : ALGO_RECENT
+                        );
+                    } else if (payload.settingName === "feature_custom_tags") {
+                        this._setState({ tagsEnabled: payload.newValue });
+                        this._generateInitialRoomLists(); // Tags means we have to start from scratch
                     }
                 }
-            }
-            break;
-            case 'MatrixActions.Room.tags': {
-                if (!logicallyReady) break;
-                // TODO: Figure out which rooms changed in the tag and only change those.
-                // This is very blunt and wipes out the sticky room stuff
-                this._generateInitialRoomLists();
-            }
-            break;
-            case 'MatrixActions.Room.timeline': {
-                if (!logicallyReady ||
-                    !payload.isLiveEvent ||
-                    !payload.isLiveUnfilteredRoomTimelineEvent ||
-                    !this._eventTriggersRecentReorder(payload.event)
-                ) {
-                    break;
-                }
+                break;
+            // Initialise state after initial sync
+            case "MatrixActions.sync":
+                {
+                    if (
+                        !(
+                            payload.prevState !== "PREPARED" &&
+                            payload.state === "PREPARED"
+                        )
+                    ) {
+                        break;
+                    }
 
-                this._roomUpdateTriggered(payload.event.getRoomId());
-            }
-            break;
+                    // Always ensure that we set any state needed for settings here. It is possible that
+                    // setting updates trigger on startup before we are ready to sync, so we want to make
+                    // sure that the right state is in place before we actually react to those changes.
+
+                    this._setState({
+                        tagsEnabled: SettingsStore.isFeatureEnabled(
+                            "feature_custom_tags"
+                        )
+                    });
+
+                    this._matrixClient = payload.matrixClient;
+
+                    const algorithm = SettingsStore.getValue(
+                        "RoomList.orderByImportance"
+                    )
+                        ? ALGO_IMPORTANCE
+                        : ALGO_RECENT;
+                    this.updateSortingAlgorithm(algorithm);
+                }
+                break;
+            case "MatrixActions.Room.receipt":
+                {
+                    if (!logicallyReady) break;
+
+                    // First see if the receipt event is for our own user. If it was, trigger
+                    // a room update (we probably read the room on a different device).
+                    const myUserId = this._matrixClient.getUserId();
+                    for (const eventId of Object.keys(
+                        payload.event.getContent()
+                    )) {
+                        const receiptUsers = Object.keys(
+                            payload.event.getContent()[eventId]["m.read"] || {}
+                        );
+                        if (receiptUsers.includes(myUserId)) {
+                            this._roomUpdateTriggered(payload.room.roomId);
+                            return;
+                        }
+                    }
+                }
+                break;
+            case "MatrixActions.Room.tags":
+                {
+                    if (!logicallyReady) break;
+                    // TODO: Figure out which rooms changed in the tag and only change those.
+                    // This is very blunt and wipes out the sticky room stuff
+                    this._generateInitialRoomLists();
+                }
+                break;
+            case "MatrixActions.Room.timeline":
+                {
+                    if (
+                        !logicallyReady ||
+                        !payload.isLiveEvent ||
+                        !payload.isLiveUnfilteredRoomTimelineEvent ||
+                        !this._eventTriggersRecentReorder(payload.event)
+                    ) {
+                        break;
+                    }
+
+                    this._roomUpdateTriggered(payload.event.getRoomId());
+                }
+                break;
             // When an event is decrypted, it could mean we need to reorder the room
             // list because we now know the type of the event.
-            case 'MatrixActions.Event.decrypted': {
-                if (!logicallyReady) break;
+            case "MatrixActions.Event.decrypted":
+                {
+                    if (!logicallyReady) break;
 
-                const roomId = payload.event.getRoomId();
+                    const roomId = payload.event.getRoomId();
 
-                // We may have decrypted an event without a roomId (e.g to_device)
-                if (!roomId) break;
+                    // We may have decrypted an event without a roomId (e.g to_device)
+                    if (!roomId) break;
 
-                const room = this._matrixClient.getRoom(roomId);
+                    const room = this._matrixClient.getRoom(roomId);
 
-                // We somehow decrypted an event for a room our client is unaware of
-                if (!room) break;
+                    // We somehow decrypted an event for a room our client is unaware of
+                    if (!room) break;
 
-                const liveTimeline = room.getLiveTimeline();
-                const eventTimeline = room.getTimelineForEvent(payload.event.getId());
+                    const liveTimeline = room.getLiveTimeline();
+                    const eventTimeline = room.getTimelineForEvent(
+                        payload.event.getId()
+                    );
 
-                // Either this event was not added to the live timeline (e.g. pagination)
-                // or it doesn't affect the ordering of the room list.
-                if (liveTimeline !== eventTimeline || !this._eventTriggersRecentReorder(payload.event)) {
-                    break;
+                    // Either this event was not added to the live timeline (e.g. pagination)
+                    // or it doesn't affect the ordering of the room list.
+                    if (
+                        liveTimeline !== eventTimeline ||
+                        !this._eventTriggersRecentReorder(payload.event)
+                    ) {
+                        break;
+                    }
+
+                    this._roomUpdateTriggered(roomId);
                 }
-
-                this._roomUpdateTriggered(roomId);
-            }
-            break;
-            case 'MatrixActions.accountData': {
-                if (!logicallyReady) break;
-                if (payload.event_type !== 'm.direct') break;
-                // TODO: Figure out which rooms changed in the direct chat and only change those.
-                // This is very blunt and wipes out the sticky room stuff
-                this._generateInitialRoomLists();
-            }
-            break;
-            case 'MatrixActions.Room.myMembership': {
-                if (!logicallyReady) break;
-                this._roomUpdateTriggered(payload.room.roomId, true);
-            }
-            break;
+                break;
+            case "MatrixActions.accountData":
+                {
+                    if (!logicallyReady) break;
+                    if (payload.event_type !== "m.direct") break;
+                    // TODO: Figure out which rooms changed in the direct chat and only change those.
+                    // This is very blunt and wipes out the sticky room stuff
+                    this._generateInitialRoomLists();
+                }
+                break;
+            case "MatrixActions.Room.myMembership":
+                {
+                    if (!logicallyReady) break;
+                    this._roomUpdateTriggered(payload.room.roomId, true);
+                }
+                break;
             // This could be a new room that we've been invited to, joined or created
             // we won't get a RoomMember.membership for these cases if we're not already
             // a member.
-            case 'MatrixActions.Room': {
-                if (!logicallyReady) break;
-                this._roomUpdateTriggered(payload.room.roomId, true);
-            }
-            break;
+            case "MatrixActions.Room":
+                {
+                    if (!logicallyReady) break;
+                    this._roomUpdateTriggered(payload.room.roomId, true);
+                }
+                break;
             // TODO: Re-enable optimistic updates when we support dragging again
             // case 'RoomListActions.tagRoom.pending': {
             //     if (!logicallyReady) break;
@@ -261,26 +308,31 @@ class RoomListStore extends Store {
             //     console.log("!! Optimistic tag failure: ", payload);
             // }
             // break;
-            case 'on_client_not_viable':
-            case 'on_logged_out': {
-                // Reset state without pushing an update to the view, which generally assumes that
-                // the matrix client isn't `null` and so causing a re-render will cause NPEs.
-                this._init();
-                this._matrixClient = null;
-            }
-            break;
-            case 'view_room': {
-                if (!logicallyReady) break;
-
-                // Note: it is important that we set a new stickyRoomId before setting the old room
-                // to IDLE. If we don't, the wrong room gets counted as sticky.
-                const currentStickyId = this._state.stickyRoomId;
-                this._setState({stickyRoomId: payload.room_id});
-                if (currentStickyId) {
-                    this._setRoomCategory(this._matrixClient.getRoom(currentStickyId), CATEGORY_IDLE);
+            case "on_client_not_viable":
+            case "on_logged_out":
+                {
+                    // Reset state without pushing an update to the view, which generally assumes that
+                    // the matrix client isn't `null` and so causing a re-render will cause NPEs.
+                    this._init();
+                    this._matrixClient = null;
                 }
-            }
-            break;
+                break;
+            case "view_room":
+                {
+                    if (!logicallyReady) break;
+
+                    // Note: it is important that we set a new stickyRoomId before setting the old room
+                    // to IDLE. If we don't, the wrong room gets counted as sticky.
+                    const currentStickyId = this._state.stickyRoomId;
+                    this._setState({ stickyRoomId: payload.room_id });
+                    if (currentStickyId) {
+                        this._setRoomCategory(
+                            this._matrixClient.getRoom(currentStickyId),
+                            CATEGORY_IDLE
+                        );
+                    }
+                }
+                break;
         }
     }
 
@@ -302,14 +354,14 @@ class RoomListStore extends Store {
     _filterTags(tags) {
         tags = tags ? Object.keys(tags) : [];
         if (this._state.tagsEnabled) return tags;
-        return tags.filter((t) => !!LIST_ORDERS[t]);
+        return tags.filter(t => !!LIST_ORDERS[t]);
     }
 
     _getRecommendedTagsForRoom(room) {
         const tags = [];
 
         const myMembership = room.getMyMembership();
-        if (myMembership === 'join' || myMembership === 'invite') {
+        if (myMembership === "join" || myMembership === "invite") {
             // Stack the user's tags on top
             tags.push(...this._filterTags(room.tags));
 
@@ -318,24 +370,34 @@ class RoomListStore extends Store {
             // first, then if it is a direct chat, and finally default
             // to the "recents" list.
             const dmRoomMap = DMRoomMap.shared();
-            if (myMembership === 'invite') {
+            if (myMembership === "invite") {
                 tags.push("im.vector.fake.invite");
-            } else if (dmRoomMap.getUserIdForRoomId(room.roomId) && tags.length === 0) {
+            } else if (
+                dmRoomMap.getUserIdForRoomId(room.roomId) &&
+                tags.length === 0
+            ) {
                 // We intentionally don't duplicate rooms in other tags into the people list
                 // as a feature.
                 tags.push("im.vector.fake.direct");
             } else if (tags.length === 0) {
                 tags.push("im.vector.fake.recent");
             }
-        } else if (myMembership) { // null-guard as null means it was peeked
+        } else if (myMembership) {
+            // null-guard as null means it was peeked
             tags.push("im.vector.fake.archived");
         }
-
 
         return tags;
     }
 
-    _slotRoomIntoList(room, category, tag, existingEntries, newList, lastTimestampFn) {
+    _slotRoomIntoList(
+        room,
+        category,
+        tag,
+        existingEntries,
+        newList,
+        lastTimestampFn
+    ) {
         const targetCategoryIndex = CATEGORY_ORDER.indexOf(category);
 
         // The slotting algorithm works by trying to position the room in the most relevant
@@ -401,11 +463,19 @@ class RoomListStore extends Store {
             // if the list is a recent list, and the room appears in this list, and we're
             // not looking at a sticky room (sticky rooms have unreliable categories), try
             // to slot the new room in
-            if (entry.room.roomId !== this._state.stickyRoomId && !pushedEntry) {
-                const entryCategoryIndex = CATEGORY_ORDER.indexOf(entry.category);
+            if (
+                entry.room.roomId !== this._state.stickyRoomId &&
+                !pushedEntry
+            ) {
+                const entryCategoryIndex = CATEGORY_ORDER.indexOf(
+                    entry.category
+                );
 
                 // As per above, check if we're meeting that boundary we wanted to locate.
-                if (entryCategoryIndex >= targetCategoryIndex && !foundBoundary) {
+                if (
+                    entryCategoryIndex >= targetCategoryIndex &&
+                    !foundBoundary
+                ) {
                     desiredCategoryBoundaryIndex = newList.length - 1;
                     foundBoundary = true;
                 }
@@ -413,16 +483,25 @@ class RoomListStore extends Store {
                 // If we've hit the top of a boundary beyond our target category, insert at the top of
                 // the grouping to ensure the room isn't slotted incorrectly. Otherwise, try to insert
                 // based on most recent timestamp.
-                const changedBoundary = entryCategoryIndex > targetCategoryIndex;
-                const currentCategory = entryCategoryIndex === targetCategoryIndex;
-                if (changedBoundary || (currentCategory && lastTimestampFn(room) >= lastTimestampFn(entry.room))) {
+                const changedBoundary =
+                    entryCategoryIndex > targetCategoryIndex;
+                const currentCategory =
+                    entryCategoryIndex === targetCategoryIndex;
+                if (
+                    changedBoundary ||
+                    (currentCategory &&
+                        lastTimestampFn(room) >= lastTimestampFn(entry.room))
+                ) {
                     if (changedBoundary) {
                         // If we changed a boundary, then we've gone too far - go to the top of the last
                         // section instead.
-                        newList.splice(desiredCategoryBoundaryIndex, 0, {room, category});
+                        newList.splice(desiredCategoryBoundaryIndex, 0, {
+                            room,
+                            category
+                        });
                     } else {
                         // If we're ordering by timestamp, just insert normally
-                        newList.push({room, category});
+                        newList.push({ room, category });
                     }
                     pushedEntry = true;
                 }
@@ -433,9 +512,13 @@ class RoomListStore extends Store {
         }
 
         if (!pushedEntry && desiredCategoryBoundaryIndex >= 0) {
-            console.warn(`!! Room ${room.roomId} nearly lost: Ran off the end of ${tag}`);
-            console.warn(`!! Inserting at position ${desiredCategoryBoundaryIndex} with category ${category}`);
-            newList.splice(desiredCategoryBoundaryIndex, 0, {room, category});
+            console.warn(
+                `!! Room ${room.roomId} nearly lost: Ran off the end of ${tag}`
+            );
+            console.warn(
+                `!! Inserting at position ${desiredCategoryBoundaryIndex} with category ${category}`
+            );
+            newList.splice(desiredCategoryBoundaryIndex, 0, { room, category });
             pushedEntry = true;
         }
 
@@ -449,7 +532,7 @@ class RoomListStore extends Store {
 
         // Micro optimization: Support lazily loading the last timestamp in a room
         const timestampCache = {}; // {roomId => ts}
-        const lastTimestamp = (room) => {
+        const lastTimestamp = room => {
             if (!timestampCache[room.roomId]) {
                 timestampCache[room.roomId] = this._tsOfNewestEvent(room);
             }
@@ -473,18 +556,28 @@ class RoomListStore extends Store {
 
             // Speed optimization: Don't do complicated math if we don't have to.
             if (!shouldHaveRoom) {
-                listsClone[key] = this._state.lists[key].filter((e) => e.room.roomId !== room.roomId);
-            } else if (LIST_ORDERS[key] !== 'recent') {
+                listsClone[key] = this._state.lists[key].filter(
+                    e => e.room.roomId !== room.roomId
+                );
+            } else if (LIST_ORDERS[key] !== "recent") {
                 // Manually ordered tags are sorted later, so for now we'll just clone the tag
                 // and add our room if needed
-                listsClone[key] = this._state.lists[key].filter((e) => e.room.roomId !== room.roomId);
-                listsClone[key].push({room, category});
+                listsClone[key] = this._state.lists[key].filter(
+                    e => e.room.roomId !== room.roomId
+                );
+                listsClone[key].push({ room, category });
                 insertedIntoTags.push(key);
             } else {
                 listsClone[key] = [];
 
                 const pushedEntry = this._slotRoomIntoList(
-                    room, category, key, this._state.lists[key], listsClone[key], lastTimestamp);
+                    room,
+                    category,
+                    key,
+                    this._state.lists[key],
+                    listsClone[key],
+                    lastTimestamp
+                );
 
                 if (!pushedEntry) {
                     // This should rarely happen: _slotRoomIntoList has several checks which attempt
@@ -492,15 +585,21 @@ class RoomListStore extends Store {
                     // we shouldn't throw it on the floor and forget about it. Instead, we should insert
                     // it somewhere. We'll insert it at the top for a couple reasons: 1) it is probably
                     // an important room for the user and 2) if this does happen, we'd want a bug report.
-                    console.warn(`!! Room ${room.roomId} nearly lost: Failed to find a position`);
-                    console.warn(`!! Inserting at position 0 in the list and flagging as inserted`);
+                    console.warn(
+                        `!! Room ${
+                            room.roomId
+                        } nearly lost: Failed to find a position`
+                    );
+                    console.warn(
+                        `!! Inserting at position 0 in the list and flagging as inserted`
+                    );
                     console.warn("!! Additional info: ", {
-                       category,
-                       key,
-                       upToIndex: listsClone[key].length,
-                       expectedCount: this._state.lists[key].length,
+                        category,
+                        key,
+                        upToIndex: listsClone[key].length,
+                        expectedCount: this._state.lists[key].length
                     });
-                    listsClone[key].splice(0, 0, {room, category});
+                    listsClone[key].splice(0, 0, { room, category });
                 }
                 insertedIntoTags.push(key);
             }
@@ -521,11 +620,11 @@ class RoomListStore extends Store {
 
         // Sort the favourites before we set the clone
         for (const tag of Object.keys(listsClone)) {
-            if (LIST_ORDERS[tag] === 'recent') continue; // skip recents (pre-sorted)
+            if (LIST_ORDERS[tag] === "recent") continue; // skip recents (pre-sorted)
             listsClone[tag].sort(this._getManualComparator(tag));
         }
 
-        this._setState({lists: listsClone});
+        this._setState({ lists: listsClone });
     }
 
     _generateInitialRoomLists() {
@@ -541,27 +640,37 @@ class RoomListStore extends Store {
             "im.vector.fake.recent": [],
             "im.vector.fake.direct": [],
             "m.lowpriority": [],
-            "im.vector.fake.archived": [],
+            "im.vector.fake.archived": []
         };
 
         const dmRoomMap = DMRoomMap.shared();
 
-        this._matrixClient.getRooms().forEach((room) => {
+        this._matrixClient.getRooms().forEach(room => {
             const myUserId = this._matrixClient.getUserId();
             const membership = room.getMyMembership();
             const me = room.getMember(myUserId);
 
             if (membership === "invite") {
-                lists["im.vector.fake.invite"].push({room, category: CATEGORY_RED});
-            } else if (membership === "join" || membership === "ban" || (me && me.isKicked())) {
+                lists["im.vector.fake.invite"].push({
+                    room,
+                    category: CATEGORY_RED
+                });
+            } else if (
+                membership === "join" ||
+                membership === "ban" ||
+                (me && me.isKicked())
+            ) {
                 // Used to split rooms via tags
                 let tagNames = Object.keys(room.tags);
 
                 // ignore any m. tag names we don't know about
-                tagNames = tagNames.filter((t) => {
+                tagNames = tagNames.filter(t => {
                     // Speed optimization: Avoid hitting the SettingsStore at all costs by making it the
                     // last condition possible.
-                    return lists[t] !== undefined || (!t.startsWith('m.') && this._state.tagsEnabled);
+                    return (
+                        lists[t] !== undefined ||
+                        (!t.startsWith("m.") && this._state.tagsEnabled)
+                    );
                 });
 
                 if (tagNames.length) {
@@ -571,19 +680,29 @@ class RoomListStore extends Store {
 
                         // Default to an arbitrary category for tags which aren't ordered by recents
                         let category = CATEGORY_IDLE;
-                        if (LIST_ORDERS[tagName] === 'recent') category = this._calculateCategory(room);
-                        lists[tagName].push({room, category: category});
+                        if (LIST_ORDERS[tagName] === "recent")
+                            category = this._calculateCategory(room);
+                        lists[tagName].push({ room, category: category });
                     }
                 } else if (dmRoomMap.getUserIdForRoomId(room.roomId)) {
                     // "Direct Message" rooms (that we're still in and that aren't otherwise tagged)
-                    lists["im.vector.fake.direct"].push({room, category: this._calculateCategory(room)});
+                    lists["im.vector.fake.direct"].push({
+                        room,
+                        category: this._calculateCategory(room)
+                    });
                 } else {
-                    lists["im.vector.fake.recent"].push({room, category: this._calculateCategory(room)});
+                    lists["im.vector.fake.recent"].push({
+                        room,
+                        category: this._calculateCategory(room)
+                    });
                 }
             } else if (membership === "leave") {
                 // The category of these rooms is not super important, so deprioritize it to the lowest
                 // possible value.
-                lists["im.vector.fake.archived"].push({room, category: CATEGORY_IDLE});
+                lists["im.vector.fake.archived"].push({
+                    room,
+                    category: CATEGORY_IDLE
+                });
             }
         });
 
@@ -592,12 +711,12 @@ class RoomListStore extends Store {
         // of this function, otherwise the room lists will almost certainly be out of date and wrong.
         const latestEventTsCache = {}; // roomId => timestamp
 
-        Object.keys(lists).forEach((listKey) => {
+        Object.keys(lists).forEach(listKey => {
             let comparator;
             switch (LIST_ORDERS[listKey]) {
                 case "recent":
                     comparator = (entryA, entryB) => {
-                        return this._recentsComparator(entryA, entryB, (room) => {
+                        return this._recentsComparator(entryA, entryB, room => {
                             if (!room) return Number.MAX_SAFE_INTEGER; // Should only happen in tests
 
                             if (latestEventTsCache[room.roomId]) {
@@ -620,14 +739,15 @@ class RoomListStore extends Store {
 
         this._setState({
             lists,
-            ready: true, // Ready to receive updates to ordering
+            ready: true // Ready to receive updates to ordering
         });
     }
 
     _eventTriggersRecentReorder(ev) {
-        return ev.getTs() && (
-            Unread.eventTriggersUnreadCount(ev) ||
-            ev.getSender() === this._matrixClient.credentials.userId
+        return (
+            ev.getTs() &&
+            (Unread.eventTriggersUnreadCount(ev) ||
+                ev.getSender() === this._matrixClient.credentials.userId)
         );
     }
 
@@ -705,8 +825,10 @@ class RoomListStore extends Store {
             let metaA = roomA.tags[tagName];
             let metaB = roomB.tags[tagName];
 
-            if (optimisticRequest && roomA === optimisticRequest.room) metaA = optimisticRequest.metaData;
-            if (optimisticRequest && roomB === optimisticRequest.room) metaB = optimisticRequest.metaData;
+            if (optimisticRequest && roomA === optimisticRequest.room)
+                metaA = optimisticRequest.metaData;
+            if (optimisticRequest && roomB === optimisticRequest.room)
+                metaB = optimisticRequest.metaData;
 
             // Make sure the room tag has an order element, if not set it to be the bottom
             const a = metaA ? Number(metaA.order) : undefined;
@@ -719,7 +841,11 @@ class RoomListStore extends Store {
                 return -1;
             }
 
-            return a === b ? this._lexicographicalComparator(roomA, roomB) : (a > b ? 1 : -1);
+            return a === b
+                ? this._lexicographicalComparator(roomA, roomB)
+                : a > b
+                ? 1
+                : -1;
         };
     }
 
