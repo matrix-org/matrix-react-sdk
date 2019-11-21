@@ -59,7 +59,6 @@ class ItemRange {
 }
 
 export default class LazyRenderList extends React.Component {
-
     static getDerivedStateFromProps(props, state) {
         const range = LazyRenderList.getVisibleRangeFromProps(props);
         const intersectRange = range.expand(props.overflowMargin);
@@ -94,9 +93,6 @@ export default class LazyRenderList extends React.Component {
     }
 
     render() {
-        console.log("\n****");
-        console.log("THIS IS THE STATE", this.state);
-        console.log("****\n");
         const { itemHeight, items, renderItem } = this.props;
         const { renderRange } = this.state;
         const { topCount, renderCount, bottomCount } = renderRange;

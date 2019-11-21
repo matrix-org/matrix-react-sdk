@@ -17,7 +17,7 @@ $first-color: 1px solid #50cc60;
 $second-color: #348060;
 
 #call_button {
-  /*
+    /*
     background: blue;
     border: .1px solid black;
     border-radius: 40px;
@@ -36,11 +36,6 @@ $second-color: #348060;
     display: none;
 }
 
-.hangup {
-    position: relative;
-    right: 16px;
-}
-
 .mx_RoomTile {
     display: flex;
     flex-direction: row;
@@ -53,7 +48,8 @@ $second-color: #348060;
 }
 
 .mx_RoomTile:first-child {
-    margin-top: 15px;
+    //.mx_RoomTile[aria-label="People"] {
+    //margin-top: 15px;
 }
 
 .mx_RoomTile:focus {
@@ -182,13 +178,19 @@ $second-color: #348060;
     }
 }
 
+.hangup {
+    //position: relative;
+    padding-right: 16px;
+}
+
 .mx_RoomTile_calls:hover {
     .call_buttons {
         display: flex;
     }
     .hangup {
-        position: relative;
-        right: 0px;
+        //position: relative;
+        padding-right: 0px;
+        //z-index: 100;
     }
 }
 
@@ -222,6 +224,7 @@ $second-color: #348060;
 .mx_RoomTile_session, .mx_RoomTile_calling {
     border: 1px solid $second-color;
     z-index: 1;
+    border-radius: 4px;
 }
 
 .mx_RoomTile_calling::after, .mx_RoomTile_session::after {

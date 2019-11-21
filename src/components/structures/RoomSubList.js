@@ -192,6 +192,12 @@ const RoomSubList = createReactClass({
     },
 
     onRoomTileClick(roomId, ev) {
+        console.log("\n************************");
+        console.log("WHAT DOES THIS TILE CLICK CONTAIN", roomId);
+        console.log("EVENT", ev);
+        console.log("************************\n");
+        // view should be determined by the room tag
+        // chat || call
         dis.dispatch({
             action: "view_room",
             room_id: roomId,
@@ -213,10 +219,11 @@ const RoomSubList = createReactClass({
     makeRoomTile: function(room) {
         return (
             <RoomTile
-                calls={this.props.tagName === "im.vector.fake.direct"}
+                calls={this.props.tagName === "u.phone"}
                 room={room}
                 roomSubList={this}
-                tagName={this.props.tagName}
+                tagName={"CATS"}
+                //tagName={this.props.tagName}
                 key={room.roomId}
                 collapsed={this.props.collapsed || false}
                 unread={Unread.doesRoomHaveUnreadMessages(room)}

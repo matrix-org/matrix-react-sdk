@@ -489,7 +489,9 @@ module.exports = createReactClass({
         //    incomingCallBox = <IncomingCallBox incomingCall={ this.props.incomingCall }/>;
         //}
 
-        let contextMenuButton, callButtons;
+        let contextMenuButton;
+        let callButtons;
+
         if (!MatrixClientPeg.get().isGuest()) {
             contextMenuButton = (
                 <AccessibleButton

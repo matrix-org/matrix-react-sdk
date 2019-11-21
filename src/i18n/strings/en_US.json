@@ -258,7 +258,7 @@
     "People": "People",
     "Permissions": "Permissions",
     "Phone": "Phone",
-    "Phone Calls": "Phone Calls",
+    "VoIP Calls": "VoIP Calls",
     "Phone number": "e.g. 954 414 1212",
     "%(senderName)s placed a %(callType)s call.": "%(senderName)s placed a %(callType)s call.",
 	"Place call": "Place call",

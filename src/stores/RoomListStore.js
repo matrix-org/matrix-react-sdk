@@ -45,6 +45,7 @@ const CATEGORY_ORDER = [
 const LIST_ORDERS = {
     "m.favourite": "manual",
     "im.vector.fake.invite": "recent",
+    "u.phone": "importance",
     "im.vector.fake.recent": "recent",
     "im.vector.fake.direct": "recent",
     "m.lowpriority": "recent",
@@ -104,7 +105,7 @@ class RoomListStore extends Store {
             "im.vector.fake.invite": [],
             "m.favourite": [],
             "im.vector.fake.recent": [],
-            "im.vector.fake.phone": [],
+            "u.phone": [],
             "im.vector.fake.direct": [],
             "m.lowpriority": [],
             "im.vector.fake.archived": []
@@ -116,7 +117,8 @@ class RoomListStore extends Store {
             presentationLists: defaultLists, // like `lists`, but with arrays of rooms instead
             ready: false,
             stickyRoomId: null,
-            orderRoomsByImportance: true
+            orderRoomsByImportance: false // NO ORDER
+            //orderRoomsByImportance: true
         };
 
         SettingsStore.monitorSetting("RoomList.orderByImportance", null);
@@ -636,6 +638,7 @@ class RoomListStore extends Store {
         const lists = {
             "m.server_notice": [],
             "im.vector.fake.invite": [],
+            "u.phone": [],
             "m.favourite": [],
             "im.vector.fake.recent": [],
             "im.vector.fake.direct": [],

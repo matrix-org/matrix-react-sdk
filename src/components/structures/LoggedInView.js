@@ -16,38 +16,40 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from 'matrix-js-sdk';
-import React from 'react';
-import createReactClass from 'create-react-class';
-import PropTypes from 'prop-types';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { MatrixClient } from "matrix-js-sdk";
+import React from "react";
+import createReactClass from "create-react-class";
+import PropTypes from "prop-types";
+import { DragDropContext } from "react-beautiful-dnd";
 
-import { Key, isOnlyCtrlOrCmdKeyEvent } from '../../Keyboard';
-import PageTypes from '../../PageTypes';
-import CallMediaHandler from '../../CallMediaHandler';
-import { fixupColorFonts } from '../../utils/FontManager';
-import sdk from '../../index';
-import dis from '../../dispatcher';
-import sessionStore from '../../stores/SessionStore';
-import MatrixClientPeg from '../../MatrixClientPeg';
+import { Key, isOnlyCtrlOrCmdKeyEvent } from "../../Keyboard";
+import PageTypes from "../../PageTypes";
+import CallMediaHandler from "../../CallMediaHandler";
+import { fixupColorFonts } from "../../utils/FontManager";
+import sdk from "../../index";
+import dis from "../../dispatcher";
+import sessionStore from "../../stores/SessionStore";
+import MatrixClientPeg from "../../MatrixClientPeg";
 import SettingsStore from "../../settings/SettingsStore";
 import RoomListStore from "../../stores/RoomListStore";
-import { getHomePageUrl } from '../../utils/pages';
+import { getHomePageUrl } from "../../utils/pages";
 
-import TagOrderActions from '../../actions/TagOrderActions';
-import RoomListActions from '../../actions/RoomListActions';
-import ResizeHandle from '../views/elements/ResizeHandle';
-import {Resizer, CollapseDistributor} from '../../resizer';
+import TagOrderActions from "../../actions/TagOrderActions";
+import RoomListActions from "../../actions/RoomListActions";
+import ResizeHandle from "../views/elements/ResizeHandle";
+import { Resizer, CollapseDistributor } from "../../resizer";
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
 // NB. this is just for server notices rather than pinned messages in general.
 const MAX_PINNED_NOTICES_PER_ROOM = 2;
 
 function canElementReceiveInput(el) {
-    return el.tagName === "INPUT" ||
+    return (
+        el.tagName === "INPUT" ||
         el.tagName === "TEXTAREA" ||
         el.tagName === "SELECT" ||
-        !!el.getAttribute("contenteditable");
+        !!el.getAttribute("contenteditable")
+    );
 }
 
 /**
@@ -60,7 +62,7 @@ function canElementReceiveInput(el) {
  * Components mounted below us can access the matrix client via the react context.
  */
 const LoggedInView = createReactClass({
-    displayName: 'LoggedInView',
+    displayName: "LoggedInView",
 
     propTypes: {
         matrixClient: PropTypes.instanceOf(MatrixClient).isRequired,
@@ -73,14 +75,14 @@ const LoggedInView = createReactClass({
         collapsedRhs: PropTypes.bool,
 
         // Used by the RoomView to handle joining rooms
-        viaServers: PropTypes.arrayOf(PropTypes.string),
+        viaServers: PropTypes.arrayOf(PropTypes.string)
 
         // and lots and lots of other stuff.
     },
 
     childContextTypes: {
         matrixClient: PropTypes.instanceOf(MatrixClient),
-        authCache: PropTypes.object,
+        authCache: PropTypes.object
     },
 
     getChildContext: function() {
@@ -88,17 +90,17 @@ const LoggedInView = createReactClass({
             matrixClient: this._matrixClient,
             authCache: {
                 auth: {},
-                lastUpdate: 0,
-            },
+                lastUpdate: 0
+            }
         };
     },
 
     getInitialState: function() {
         return {
             // use compact timeline view
-            useCompactLayout: SettingsStore.getValue('useCompactLayout'),
+            useCompactLayout: SettingsStore.getValue("useCompactLayout"),
             // any currently active server notice events
-            serverNoticeEvents: [],
+            serverNoticeEvents: []
         };
     },
 
@@ -114,11 +116,11 @@ const LoggedInView = createReactClass({
 
         CallMediaHandler.loadDevices();
 
-        document.addEventListener('keydown', this._onNativeKeyDown, false);
+        document.addEventListener("keydown", this._onNativeKeyDown, false);
 
         this._sessionStore = sessionStore;
         this._sessionStoreToken = this._sessionStore.addListener(
-            this._setStateFromSessionStore,
+            this._setStateFromSessionStore
         );
         this._setStateFromSessionStore();
 
@@ -134,20 +136,24 @@ const LoggedInView = createReactClass({
     componentDidUpdate(prevProps) {
         // attempt to guess when a banner was opened or closed
         if (
-            (prevProps.showCookieBar !== this.props.showCookieBar) ||
-            (prevProps.hasNewVersion !== this.props.hasNewVersion) ||
-            (prevProps.userHasGeneratedPassword !== this.props.userHasGeneratedPassword) ||
-            (prevProps.showNotifierToolbar !== this.props.showNotifierToolbar)
+            prevProps.showCookieBar !== this.props.showCookieBar ||
+            prevProps.hasNewVersion !== this.props.hasNewVersion ||
+            prevProps.userHasGeneratedPassword !==
+                this.props.userHasGeneratedPassword ||
+            prevProps.showNotifierToolbar !== this.props.showNotifierToolbar
         ) {
             this.props.resizeNotifier.notifyBannersChanged();
         }
     },
 
     componentWillUnmount: function() {
-        document.removeEventListener('keydown', this._onNativeKeyDown, false);
+        document.removeEventListener("keydown", this._onNativeKeyDown, false);
         this._matrixClient.removeListener("accountData", this.onAccountData);
         this._matrixClient.removeListener("sync", this.onSync);
-        this._matrixClient.removeListener("RoomState.events", this.onRoomStateEvents);
+        this._matrixClient.removeListener(
+            "RoomState.events",
+            this.onRoomStateEvents
+        );
         if (this._sessionStoreToken) {
             this._sessionStoreToken.remove();
         }
@@ -173,7 +179,9 @@ const LoggedInView = createReactClass({
 
     _setStateFromSessionStore() {
         this.setState({
-            userHasGeneratedPassword: Boolean(this._sessionStore.getCachedPassword()),
+            userHasGeneratedPassword: Boolean(
+                this._sessionStore.getCachedPassword()
+            )
         });
     },
 
@@ -181,27 +189,28 @@ const LoggedInView = createReactClass({
         const classNames = {
             handle: "mx_ResizeHandle",
             vertical: "mx_ResizeHandle_vertical",
-            reverse: "mx_ResizeHandle_reverse",
+            reverse: "mx_ResizeHandle_reverse"
         };
         const collapseConfig = {
             toggleSize: 260 - 50,
-            onCollapsed: (collapsed) => {
+            onCollapsed: collapsed => {
                 if (collapsed) {
-                    dis.dispatch({action: "hide_left_panel"}, true);
-                    window.localStorage.setItem("mx_lhs_size", '0');
+                    dis.dispatch({ action: "hide_left_panel" }, true);
+                    window.localStorage.setItem("mx_lhs_size", "0");
                 } else {
-                    dis.dispatch({action: "show_left_panel"}, true);
+                    dis.dispatch({ action: "show_left_panel" }, true);
                 }
             },
-            onResized: (size) => {
-                window.localStorage.setItem("mx_lhs_size", '' + size);
+            onResized: size => {
+                window.localStorage.setItem("mx_lhs_size", "" + size);
                 this.props.resizeNotifier.notifyLeftHandleResized();
-            },
+            }
         };
         const resizer = new Resizer(
             this.resizeContainer,
             CollapseDistributor,
-            collapseConfig);
+            collapseConfig
+        );
         resizer.setClassNames(classNames);
         return resizer;
     },
@@ -219,64 +228,77 @@ const LoggedInView = createReactClass({
     onAccountData: function(event) {
         if (event.getType() === "im.vector.web.settings") {
             this.setState({
-                useCompactLayout: event.getContent().useCompactLayout,
+                useCompactLayout: event.getContent().useCompactLayout
             });
         }
         if (event.getType() === "m.ignored_user_list") {
-            dis.dispatch({action: "ignore_state_changed"});
+            dis.dispatch({ action: "ignore_state_changed" });
         }
     },
 
     onSync: function(syncState, oldSyncState, data) {
-        const oldErrCode = (
+        const oldErrCode =
             this.state.syncErrorData &&
             this.state.syncErrorData.error &&
-            this.state.syncErrorData.error.errcode
-        );
+            this.state.syncErrorData.error.errcode;
         const newErrCode = data && data.error && data.error.errcode;
         if (syncState === oldSyncState && oldErrCode === newErrCode) return;
 
-        if (syncState === 'ERROR') {
+        if (syncState === "ERROR") {
             this.setState({
-                syncErrorData: data,
+                syncErrorData: data
             });
         } else {
             this.setState({
-                syncErrorData: null,
+                syncErrorData: null
             });
         }
 
-        if (oldSyncState === 'PREPARED' && syncState === 'SYNCING') {
+        if (oldSyncState === "PREPARED" && syncState === "SYNCING") {
             this._updateServerNoticeEvents();
         }
     },
 
     onRoomStateEvents: function(ev, state) {
         const roomLists = RoomListStore.getRoomLists();
-        if (roomLists['m.server_notice'] && roomLists['m.server_notice'].some(r => r.roomId === ev.getRoomId())) {
+        if (
+            roomLists["m.server_notice"] &&
+            roomLists["m.server_notice"].some(r => r.roomId === ev.getRoomId())
+        ) {
             this._updateServerNoticeEvents();
         }
     },
 
     _updateServerNoticeEvents: async function() {
         const roomLists = RoomListStore.getRoomLists();
-        if (!roomLists['m.server_notice']) return [];
+        if (!roomLists["m.server_notice"]) return [];
 
         const pinnedEvents = [];
-        for (const room of roomLists['m.server_notice']) {
-            const pinStateEvent = room.currentState.getStateEvents("m.room.pinned_events", "");
+        for (const room of roomLists["m.server_notice"]) {
+            const pinStateEvent = room.currentState.getStateEvents(
+                "m.room.pinned_events",
+                ""
+            );
 
             if (!pinStateEvent || !pinStateEvent.getContent().pinned) continue;
 
-            const pinnedEventIds = pinStateEvent.getContent().pinned.slice(0, MAX_PINNED_NOTICES_PER_ROOM);
+            const pinnedEventIds = pinStateEvent
+                .getContent()
+                .pinned.slice(0, MAX_PINNED_NOTICES_PER_ROOM);
             for (const eventId of pinnedEventIds) {
-                const timeline = await this._matrixClient.getEventTimeline(room.getUnfilteredTimelineSet(), eventId, 0);
-                const ev = timeline.getEvents().find(ev => ev.getId() === eventId);
+                const timeline = await this._matrixClient.getEventTimeline(
+                    room.getUnfilteredTimelineSet(),
+                    eventId,
+                    0
+                );
+                const ev = timeline
+                    .getEvents()
+                    .find(ev => ev.getId() === eventId);
                 if (ev) pinnedEvents.push(ev);
             }
         }
         this.setState({
-            serverNoticeEvents: pinnedEvents,
+            serverNoticeEvents: pinnedEvents
         });
     },
 
@@ -292,7 +314,7 @@ const LoggedInView = createReactClass({
             // refocusing during a paste event will make the
             // paste end up in the newly focused element,
             // so dispatch synchronously before paste happens
-            dis.dispatch({action: 'focus_composer'}, true);
+            dis.dispatch({ action: "focus_composer" }, true);
         }
     },
 
@@ -334,7 +356,7 @@ const LoggedInView = createReactClass({
     },
 
     _onKeyDown: function(ev) {
-            /*
+        /*
             // Remove this for now as ctrl+alt = alt-gr so this breaks keyboards which rely on alt-gr for numbers
             // Will need to find a better meta key if anyone actually cares about using this.
             if (ev.altKey && ev.ctrlKey && ev.keyCode > 48 && ev.keyCode < 58) {
@@ -350,8 +372,15 @@ const LoggedInView = createReactClass({
 
         let handled = false;
         const ctrlCmdOnly = isOnlyCtrlOrCmdKeyEvent(ev);
-        const hasModifier = ev.altKey || ev.ctrlKey || ev.metaKey || ev.shiftKey ||
-            ev.key === Key.ALT || ev.key === Key.CONTROL || ev.key === Key.META || ev.key === Key.SHIFT;
+        const hasModifier =
+            ev.altKey ||
+            ev.ctrlKey ||
+            ev.metaKey ||
+            ev.shiftKey ||
+            ev.key === Key.ALT ||
+            ev.key === Key.CONTROL ||
+            ev.key === Key.META ||
+            ev.key === Key.SHIFT;
 
         switch (ev.key) {
             case Key.PAGE_UP:
@@ -372,7 +401,7 @@ const LoggedInView = createReactClass({
             case Key.K:
                 if (ctrlCmdOnly) {
                     dis.dispatch({
-                        action: 'focus_room_filter',
+                        action: "focus_room_filter"
                     });
                     handled = true;
                 }
@@ -387,7 +416,7 @@ const LoggedInView = createReactClass({
 
                 if (ctrlCmdOnly) {
                     dis.dispatch({
-                        action: 'toggle_top_left_menu',
+                        action: "toggle_top_left_menu"
                     });
                     handled = true;
                 }
@@ -398,19 +427,27 @@ const LoggedInView = createReactClass({
             ev.stopPropagation();
             ev.preventDefault();
         } else if (!hasModifier) {
-            const isClickShortcut = ev.target !== document.body &&
+            const isClickShortcut =
+                ev.target !== document.body &&
                 (ev.key === Key.SPACE || ev.key === Key.ENTER);
 
             // XXX: Remove after CIDER replaces Slate completely: https://github.com/vector-im/riot-web/issues/11036
             // If using Slate, consume the Backspace without first focusing as it causes an implosion
-            if (ev.key === Key.BACKSPACE && !SettingsStore.getValue("useCiderComposer")) {
+            if (
+                ev.key === Key.BACKSPACE &&
+                !SettingsStore.getValue("useCiderComposer")
+            ) {
                 ev.stopPropagation();
                 return;
             }
 
-            if (!isClickShortcut && ev.key !== Key.TAB && !canElementReceiveInput(ev.target)) {
+            if (
+                !isClickShortcut &&
+                ev.key !== Key.TAB &&
+                !canElementReceiveInput(ev.target)
+            ) {
                 // synchronous dispatch so we focus before key generates input
-                dis.dispatch({action: 'focus_composer'}, true);
+                dis.dispatch({ action: "focus_composer" }, true);
                 ev.stopPropagation();
                 // we should *not* preventDefault() here as
                 // that would prevent typing in the now-focussed composer
@@ -436,40 +473,48 @@ const LoggedInView = createReactClass({
 
         const dest = result.destination.droppableId;
 
-        if (dest === 'tag-panel-droppable') {
+        if (dest === "tag-panel-droppable") {
             // Could be "GroupTile +groupId:domain"
-            const draggableId = result.draggableId.split(' ').pop();
+            const draggableId = result.draggableId.split(" ").pop();
 
             // Dispatch synchronously so that the TagPanel receives an
             // optimistic update from TagOrderStore before the previous
             // state is shown.
-            dis.dispatch(TagOrderActions.moveTag(
-                this._matrixClient,
-                draggableId,
-                result.destination.index,
-            ), true);
-        } else if (dest.startsWith('room-sub-list-droppable_')) {
+            dis.dispatch(
+                TagOrderActions.moveTag(
+                    this._matrixClient,
+                    draggableId,
+                    result.destination.index
+                ),
+                true
+            );
+        } else if (dest.startsWith("room-sub-list-droppable_")) {
             this._onRoomTileEndDrag(result);
         }
     },
 
     _onRoomTileEndDrag: function(result) {
-        let newTag = result.destination.droppableId.split('_')[1];
-        let prevTag = result.source.droppableId.split('_')[1];
-        if (newTag === 'undefined') newTag = undefined;
-        if (prevTag === 'undefined') prevTag = undefined;
+        let newTag = result.destination.droppableId.split("_")[1];
+        let prevTag = result.source.droppableId.split("_")[1];
+        if (newTag === "undefined") newTag = undefined;
+        if (prevTag === "undefined") prevTag = undefined;
 
-        const roomId = result.draggableId.split('_')[1];
+        const roomId = result.draggableId.split("_")[1];
 
         const oldIndex = result.source.index;
         const newIndex = result.destination.index;
 
-        dis.dispatch(RoomListActions.tagRoom(
-            this._matrixClient,
-            this._matrixClient.getRoom(roomId),
-            prevTag, newTag,
-            oldIndex, newIndex,
-        ), true);
+        dis.dispatch(
+            RoomListActions.tagRoom(
+                this._matrixClient,
+                this._matrixClient.getRoom(roomId),
+                prevTag,
+                newTag,
+                oldIndex,
+                newIndex
+            ),
+            true
+        );
     },
 
     _onMouseDown: function(ev) {
@@ -477,17 +522,17 @@ const LoggedInView = createReactClass({
         // which bubbles to certain elements in the tree. When this happens, close
         // any settings page that is currently open (user/room/group).
         if (this.props.leftDisabled && this.props.rightDisabled) {
-            const targetClasses = new Set(ev.target.className.split(' '));
+            const targetClasses = new Set(ev.target.className.split(" "));
             if (
-                targetClasses.has('mx_MatrixChat') ||
-                targetClasses.has('mx_MatrixChat_middlePanel') ||
-                targetClasses.has('mx_RoomView')
+                targetClasses.has("mx_MatrixChat") ||
+                targetClasses.has("mx_MatrixChat_middlePanel") ||
+                targetClasses.has("mx_RoomView")
             ) {
                 this.setState({
                     mouseDown: {
                         x: ev.pageX,
-                        y: ev.pageY,
-                    },
+                        y: ev.pageY
+                    }
                 });
             }
         }
@@ -498,7 +543,7 @@ const LoggedInView = createReactClass({
 
         const deltaX = ev.pageX - this.state.mouseDown.x;
         const deltaY = ev.pageY - this.state.mouseDown.y;
-        const distance = Math.sqrt((deltaX * deltaX) + (deltaY + deltaY));
+        const distance = Math.sqrt(deltaX * deltaX + (deltaY + deltaY));
         const maxRadius = 5; // People shouldn't be straying too far, hopefully
 
         // Note: we track how far the user moved their mouse to help
@@ -506,12 +551,12 @@ const LoggedInView = createReactClass({
 
         if (distance < maxRadius) {
             // This is probably a real click, and not a drag
-            dis.dispatch({ action: 'close_settings' });
+            dis.dispatch({ action: "close_settings" });
         }
 
         // Always clear the mouseDown state to ensure we don't accidentally
         // use stale values due to the mouseDown checks.
-        this.setState({mouseDown: null});
+        this.setState({ mouseDown: null });
     },
 
     _setResizeContainerRef(div) {
@@ -519,37 +564,47 @@ const LoggedInView = createReactClass({
     },
 
     render: function() {
-        const LeftPanel = sdk.getComponent('structures.LeftPanel');
-        const RoomView = sdk.getComponent('structures.RoomView');
-        const UserView = sdk.getComponent('structures.UserView');
-        const EmbeddedPage = sdk.getComponent('structures.EmbeddedPage');
-        const GroupView = sdk.getComponent('structures.GroupView');
-        const MyGroups = sdk.getComponent('structures.MyGroups');
-        const MatrixToolbar = sdk.getComponent('globals.MatrixToolbar');
-        const CookieBar = sdk.getComponent('globals.CookieBar');
-        const NewVersionBar = sdk.getComponent('globals.NewVersionBar');
-        const UpdateCheckBar = sdk.getComponent('globals.UpdateCheckBar');
-        const PasswordNagBar = sdk.getComponent('globals.PasswordNagBar');
-        const ServerLimitBar = sdk.getComponent('globals.ServerLimitBar');
+        const LeftPanel = sdk.getComponent("structures.LeftPanel");
+        const RoomView = sdk.getComponent("structures.RoomView");
+        const CallView = sdk.getComponent("structures.CallView");
+        const UserView = sdk.getComponent("structures.UserView");
+        const EmbeddedPage = sdk.getComponent("structures.EmbeddedPage");
+        const GroupView = sdk.getComponent("structures.GroupView");
+        const MyGroups = sdk.getComponent("structures.MyGroups");
+        const MatrixToolbar = sdk.getComponent("globals.MatrixToolbar");
+        const CookieBar = sdk.getComponent("globals.CookieBar");
+        const NewVersionBar = sdk.getComponent("globals.NewVersionBar");
+        const UpdateCheckBar = sdk.getComponent("globals.UpdateCheckBar");
+        const PasswordNagBar = sdk.getComponent("globals.PasswordNagBar");
+        const ServerLimitBar = sdk.getComponent("globals.ServerLimitBar");
 
         let pageElement;
 
+        // console.log("\n*****************");
+        // console.log(this.props.page_type); // default: room_view - needs to be: call_view
+        // console.log("*****************\n");
+
         switch (this.props.page_type) {
             case PageTypes.RoomView:
-                pageElement = <RoomView
-                        ref='roomView'
+                pageElement = (
+                    <RoomView
+                        ref="roomView"
                         autoJoin={this.props.autoJoin}
                         onRegistered={this.props.onRegistered}
                         thirdPartyInvite={this.props.thirdPartyInvite}
                         oobData={this.props.roomOobData}
                         viaServers={this.props.viaServers}
                         eventPixelOffset={this.props.initialEventPixelOffset}
-                        key={this.props.currentRoomId || 'roomview'}
+                        key={this.props.currentRoomId || "roomview"}
                         disabled={this.props.middleDisabled}
                         collapsedRhs={this.props.collapsedRhs}
                         ConferenceHandler={this.props.ConferenceHandler}
                         resizeNotifier={this.props.resizeNotifier}
-                    />;
+                    />
+                );
+                break;
+            case PageTypes.CallView:
+                pageElement = <CallView />;
                 break;
 
             case PageTypes.MyGroups:
@@ -563,10 +618,13 @@ const LoggedInView = createReactClass({
             case PageTypes.HomePage:
                 {
                     const pageUrl = getHomePageUrl(this.props.config);
-                    pageElement = <EmbeddedPage className="mx_HomePage"
-                        url={pageUrl}
-                        scrollbar={true}
-                    />;
+                    pageElement = (
+                        <EmbeddedPage
+                            className="mx_HomePage"
+                            url={pageUrl}
+                            scrollbar={true}
+                        />
+                    );
                 }
                 break;
 
@@ -574,41 +632,59 @@ const LoggedInView = createReactClass({
                 pageElement = <UserView userId={this.props.currentUserId} />;
                 break;
             case PageTypes.GroupView:
-                pageElement = <GroupView
-                    groupId={this.props.currentGroupId}
-                    isNew={this.props.currentGroupIsNew}
-                    collapsedRhs={this.props.collapsedRhs}
-                />;
+                pageElement = (
+                    <GroupView
+                        groupId={this.props.currentGroupId}
+                        isNew={this.props.currentGroupIsNew}
+                        collapsedRhs={this.props.collapsedRhs}
+                    />
+                );
                 break;
         }
 
-        const usageLimitEvent = this.state.serverNoticeEvents.find((e) => {
+        const usageLimitEvent = this.state.serverNoticeEvents.find(e => {
             return (
-                e && e.getType() === 'm.room.message' &&
-                e.getContent()['server_notice_type'] === 'm.server_notice.usage_limit_reached'
+                e &&
+                e.getType() === "m.room.message" &&
+                e.getContent()["server_notice_type"] ===
+                    "m.server_notice.usage_limit_reached"
             );
         });
 
         let topBar;
-        if (this.state.syncErrorData && this.state.syncErrorData.error.errcode === 'M_RESOURCE_LIMIT_EXCEEDED') {
-            topBar = <ServerLimitBar kind='hard'
-                adminContact={this.state.syncErrorData.error.data.admin_contact}
-                limitType={this.state.syncErrorData.error.data.limit_type}
-            />;
-        } else if (usageLimitEvent) {
-            topBar = <ServerLimitBar kind='soft'
-                adminContact={usageLimitEvent.getContent().admin_contact}
-                limitType={usageLimitEvent.getContent().limit_type}
-            />;
-        } else if (this.props.showCookieBar &&
-            this.props.config.piwik
+        if (
+            this.state.syncErrorData &&
+            this.state.syncErrorData.error.errcode ===
+                "M_RESOURCE_LIMIT_EXCEEDED"
         ) {
+            topBar = (
+                <ServerLimitBar
+                    kind="hard"
+                    adminContact={
+                        this.state.syncErrorData.error.data.admin_contact
+                    }
+                    limitType={this.state.syncErrorData.error.data.limit_type}
+                />
+            );
+        } else if (usageLimitEvent) {
+            topBar = (
+                <ServerLimitBar
+                    kind="soft"
+                    adminContact={usageLimitEvent.getContent().admin_contact}
+                    limitType={usageLimitEvent.getContent().limit_type}
+                />
+            );
+        } else if (this.props.showCookieBar && this.props.config.piwik) {
             const policyUrl = this.props.config.piwik.policyUrl || null;
             topBar = <CookieBar policyUrl={policyUrl} />;
         } else if (this.props.hasNewVersion) {
-            topBar = <NewVersionBar version={this.props.version} newVersion={this.props.newVersion}
-                                    releaseNotes={this.props.newVersionReleaseNotes}
-            />;
+            topBar = (
+                <NewVersionBar
+                    version={this.props.version}
+                    newVersion={this.props.newVersion}
+                    releaseNotes={this.props.newVersionReleaseNotes}
+                />
+            );
         } else if (this.props.checkingForUpdate) {
             topBar = <UpdateCheckBar {...this.props.checkingForUpdate} />;
         } else if (this.state.userHasGeneratedPassword) {
@@ -617,31 +693,41 @@ const LoggedInView = createReactClass({
             topBar = <MatrixToolbar />;
         }
 
-        let bodyClasses = 'mx_MatrixChat';
+        let bodyClasses = "mx_MatrixChat";
         if (topBar) {
-            bodyClasses += ' mx_MatrixChat_toolbarShowing';
+            bodyClasses += " mx_MatrixChat_toolbarShowing";
         }
         if (this.state.useCompactLayout) {
-            bodyClasses += ' mx_MatrixChat_useCompactLayout';
+            bodyClasses += " mx_MatrixChat_useCompactLayout";
         }
 
         return (
-            <div onPaste={this._onPaste} onKeyDown={this._onReactKeyDown} className='mx_MatrixChat_wrapper' aria-hidden={this.props.hideToSRUsers} onMouseDown={this._onMouseDown} onMouseUp={this._onMouseUp}>
-                { topBar }
+            <div
+                onPaste={this._onPaste}
+                onKeyDown={this._onReactKeyDown}
+                className="mx_MatrixChat_wrapper"
+                aria-hidden={this.props.hideToSRUsers}
+                onMouseDown={this._onMouseDown}
+                onMouseUp={this._onMouseUp}
+            >
+                {topBar}
                 <DragDropContext onDragEnd={this._onDragEnd}>
-                    <div ref={this._setResizeContainerRef} className={bodyClasses}>
+                    <div
+                        ref={this._setResizeContainerRef}
+                        className={bodyClasses}
+                    >
                         <LeftPanel
                             resizeNotifier={this.props.resizeNotifier}
                             collapsed={this.props.collapseLhs || false}
                             disabled={this.props.leftDisabled}
                         />
                         <ResizeHandle />
-                        { pageElement }
+                        {pageElement}
                     </div>
                 </DragDropContext>
             </div>
         );
-    },
+    }
 });
 
 export default LoggedInView;

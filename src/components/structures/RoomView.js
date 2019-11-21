@@ -1875,7 +1875,7 @@ module.exports = createReactClass({
                 const myUserId = MatrixClientPeg.get().credentials.userId;
                 const myMember = this.state.room.getMember(myUserId);
                 const inviteEvent = myMember.events.member;
-                var inviterName = inviteEvent.sender
+                let inviterName = inviteEvent.sender
                     ? inviteEvent.sender.name
                     : inviteEvent.getSender();
 
@@ -1999,11 +1999,11 @@ module.exports = createReactClass({
         } else if (myMembership !== "join") {
             // We do have a room object for this room, but we're not currently in it.
             // We may have a 3rd party invite to it.
-            var inviterName = undefined;
+            let inviterName = undefined;
             if (this.props.oobData) {
                 inviterName = this.props.oobData.inviterName;
             }
-            var invitedEmail = undefined;
+            let invitedEmail = undefined;
             if (this.props.thirdPartyInvite) {
                 invitedEmail = this.props.thirdPartyInvite.invitedEmail;
             }
@@ -2355,4 +2355,4 @@ module.exports = createReactClass({
     }
 });
 
-//module.exports.RoomContext = RoomContext;
+module.exports.RoomContext = RoomContext;

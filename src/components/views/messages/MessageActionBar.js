@@ -38,7 +38,7 @@ export default class MessageActionBar extends React.PureComponent {
     };
 
     static contextTypes = {
-        //room: RoomContext,
+        room: RoomContext
     };
 
     componentDidMount() {

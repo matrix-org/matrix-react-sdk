@@ -49,6 +49,9 @@ const HOVER_MOVE_TIMEOUT = 1000;
 
 function labelForTagName(tagName) {
     if (tagName.startsWith("u.")) return tagName.slice(2);
+    console.log("\n*************************");
+    console.log("IS THIS RUNNING?", tagName);
+    console.log("*************************\n");
     return tagName;
 }
 
@@ -181,6 +184,7 @@ module.exports = createReactClass({
                 this.setState({
                     customTags: CustomRoomTagStore.getTags()
                 });
+                console.log("CUSTOM TAGS", this.state.customTags);
             });
         }
 
@@ -242,7 +246,7 @@ module.exports = createReactClass({
                 this.tooltip = payload.tooltip;
                 break;
             case "call_state":
-                var call = CallHandler.getCall(payload.room_id);
+                let call = CallHandler.getCall(payload.room_id);
                 if (call && call.call_state === "ringing") {
                     this.setState({
                         incomingCall: call,
@@ -729,14 +733,15 @@ module.exports = createReactClass({
     },
 
     _mapSubListProps: function(subListsProps) {
-        //console.log("SUBLIST_PROPS ARG", subListsProps);
         this._layoutSections = [];
         const defaultProps = {
             collapsed: this.props.collapsed,
             isFiltered: !!this.props.searchFilter,
             incomingCall: this.state.incomingCall
-            //className: "mx_RoomTile_calls"
         };
+        console.log("\n****** SUBLIST PROPS");
+        console.log(subListsProps);
+        console.log("******\n");
 
         subListsProps.forEach(p => {
             p.list = this._applySearchFilter(p.list, this.props.searchFilter);
@@ -806,19 +811,20 @@ module.exports = createReactClass({
             if (this.state.incomingCallTag !== tagName) return null;
             return this.state.incomingCall;
         };
+        console.log("THIS.STATE.LISTS", this.state.lists);
 
         let subLists = [
             {
                 list: [],
                 extraTiles: this._makeGroupInviteTiles(this.props.searchFilter),
                 label: _t("Community Invites"),
-                order: "recent",
+                order: "manual",
                 isInvite: true
             },
             {
                 list: this.state.lists["im.vector.fake.invite"],
                 label: _t("Invites"),
-                order: "recent",
+                order: "manual",
                 incomingCall: incomingCallIfTaggedAs("im.vector.fake.invite"),
                 isInvite: true
             },
@@ -829,23 +835,24 @@ module.exports = createReactClass({
                 order: "manual",
                 incomingCall: incomingCallIfTaggedAs("m.favourite")
             },
-            {
-                list: [],
-                //list: this.state.lists["im.vector.fake.phone"],
-                label: _t("Phone Calls"),
-                tagName: "im.vector.fake.phone",
-                order: "recent",
-                incomingCall: incomingCallIfTaggedAs("im.vector.fake.phone"),
-                onAddRoom: () => {
-                    dis.dispatch({ action: "view_create_phone_call" });
-                },
-                addRoomLabel: _t("Place call")
-            },
+            //{
+            //list: [],
+            //list: this.state.lists["u.phone"],
+            //label: _t("VoIP Calls"),
+            //tagName: "u.phone",
+            //order: "recent",
+            //incomingCall: incomingCallIfTaggedAs("u.phone"),
+            //onAddRoom: () => {
+            //dis.dispatch({ action: "view_create_phone_call" });
+            //},
+            //addRoomLabel: _t("Place call")
+            //},
             {
                 list: this.state.lists["im.vector.fake.direct"],
                 label: _t("People"),
                 tagName: "im.vector.fake.direct",
-                order: "recent",
+                order: "manual",
+                //order: "recent",
                 incomingCall: incomingCallIfTaggedAs("im.vector.fake.direct"),
                 onAddRoom: () => {
                     dis.dispatch({ action: "view_create_chat" });
@@ -855,7 +862,7 @@ module.exports = createReactClass({
             {
                 list: this.state.lists["im.vector.fake.recent"],
                 label: _t("Rooms"),
-                order: "recent",
+                order: "manual",
                 incomingCall: incomingCallIfTaggedAs("im.vector.fake.recent"),
                 onAddRoom: () => {
                     dis.dispatch({ action: "view_create_room" });
@@ -873,10 +880,11 @@ module.exports = createReactClass({
             .map(tagName => {
                 return {
                     list: this.state.lists[tagName],
-                    key: tagName,
+                    key: "VOIP CALLS",
+                    //key: tagName,
                     label: labelForTagName(tagName),
                     tagName: tagName,
-                    order: "manual",
+                    order: "recent",
                     incomingCall: incomingCallIfTaggedAs(tagName)
                 };
             });

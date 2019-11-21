@@ -102,8 +102,7 @@ const VIEWS = {
 
     // We are logged out (invalid token) but have our local state again. The user
     // should log back in to rehydrate the client.
-    SOFT_LOGOUT: 8,
-    BLAST: 9
+    SOFT_LOGOUT: 8
 };
 
 // Actions that are redirected through the onboarding process prior to being
@@ -172,6 +171,7 @@ export default createReactClass({
             view: VIEWS.LOADING,
 
             // What the LoggedInView would be showing if visible
+            // TODO TEST
             page_type: null,
 
             // The ID of the room we're viewing. This is either populated directly
@@ -238,6 +238,7 @@ export default createReactClass({
     },
 
     componentWillMount: function() {
+        // this.props.config only uses data from the config.json
         SdkConfig.put(this.props.config);
 
         // Used by _viewRoom before getting state from sync
@@ -251,6 +252,7 @@ export default createReactClass({
         // a thing to call showScreen with once login completes.  this is kept
         // outside this.state because updating it should never trigger a
         // rerender.
+        // initial screen is room/!asdf.vinix.im
         this._screenAfterLogin = this.props.initialScreenAfterLogin;
 
         this._windowWidth = 10000;
@@ -441,6 +443,7 @@ export default createReactClass({
         return measurement.duration;
     },
 
+    // WATCHES FOR PAGE_TYPE CHANGE
     shouldTrackPageChange(prevState, state) {
         return (
             prevState.currentRoomId !== state.currentRoomId ||
@@ -482,6 +485,12 @@ export default createReactClass({
             dis.dispatch({ action: "require_registration" });
             return;
         }
+
+        // TODO
+        // NEED ACTION TO DISPATCH THE CALL_VIEW
+        //console.log("\n**************");
+        //console.log("PAYLOAD.ACTION", payload.action);
+        //console.log("**************\n");
 
         switch (payload.action) {
             case "MatrixActions.accountData":
@@ -616,6 +625,9 @@ export default createReactClass({
                 break;
             case "view_user_info":
                 this._viewUser(payload.userId, payload.subAction);
+                break;
+            case "call_view":
+                this._callView();
                 break;
             case "view_room":
                 // Takes either a room ID or room alias: if switching to a room the client is already
@@ -848,6 +860,7 @@ export default createReactClass({
         }
     },
 
+    // SETS NEW PAGE_TYPE
     _setPage: function(pageType) {
         this.setState({
             page_type: pageType
@@ -924,6 +937,15 @@ export default createReactClass({
         }
     },
 
+    // CALL VIEW
+    _callView: function() {
+        const newState = {
+            view: VIEWS.LOGGED_IN,
+            page_type: PageTypes.CallView
+        };
+        this.setState(newState);
+    },
+
     // switch view to the given room
     //
     // @param {Object} roomInfo Object containing data about the room to be joined
@@ -941,11 +963,11 @@ export default createReactClass({
     // @param {Object=} roomInfo.oob_data Object of additional data about the room
     //                               that has been passed out-of-band (eg.
     //                               room name and avatar from an invite email)
+    // ROOM VIEW
     _viewRoom: function(roomInfo) {
         this.focusComposer = true;
 
         const newState = {
-            //view: VIEWS.BLAST,
             view: VIEWS.LOGGED_IN,
             currentRoomId: roomInfo.room_id || null,
             page_type: PageTypes.RoomView,
@@ -983,6 +1005,11 @@ export default createReactClass({
         waitFor.done(() => {
             let presentedId = roomInfo.room_alias || roomInfo.room_id;
             const room = MatrixClientPeg.get().getRoom(roomInfo.room_id);
+
+            console.log("\n********");
+            console.log("WHAT IS THE DATA FROM VIEW_ROOM METHOD ROOM", room);
+            console.log("********\n");
+
             if (room) {
                 const theAlias = Rooms.getDisplayAliasForRoom(room);
                 if (theAlias) presentedId = theAlias;
@@ -998,11 +1025,14 @@ export default createReactClass({
                 presentedId += "/" + roomInfo.event_id;
             }
             newState.ready = true;
+
+            // BLAST
+            // SHOULD DISPATCH A VIEW_CALL ACTION IF THE ROOM CONTAINS A PHONE TAG
             this.setState(newState, () => {
                 this.notifyNewScreen("room/" + presentedId);
             });
         });
-    },
+    }, // end of viewRoom method
 
     _viewGroup: function(payload) {
         const groupId = payload.group_id;
@@ -1132,9 +1162,12 @@ export default createReactClass({
         const dmRoomMap = new DMRoomMap(client);
         const dmRooms = dmRoomMap.getDMRoomsForUserId(userId);
 
+        // TEST
+        // DISPATCH ACTIONS HERE
         if (dmRooms.length > 0) {
             dis.dispatch({
-                action: "view_room",
+                //action: "view_room",
+                action: "call_view",
                 room_id: dmRooms[0]
             });
         } else {
@@ -1827,7 +1860,11 @@ export default createReactClass({
                 else via = params.via;
             }
 
+            // BLAST
+            // SHOULD DIFFERENTIATE BETWEEN VIEW_ROOM AND CALL_VIEW
             const payload = {
+                // ONLY ON THE INITIAL LOAD
+                //action: "call_view",
                 action: "view_room",
                 event_id: eventId,
                 via_servers: via,
@@ -2056,7 +2093,6 @@ export default createReactClass({
 
     render: function() {
         let view;
-        //this.state.view = VIEWS.BLAST;
         if (
             this.state.view === VIEWS.LOADING ||
             this.state.view === VIEWS.LOGGING_IN
@@ -2075,9 +2111,6 @@ export default createReactClass({
             view = (
                 <PostRegistration onComplete={this.onFinishPostRegistration} />
             );
-        } else if (this.state.view === VIEWS.BLAST) {
-            // needs to be before normal PageTypes as you are logged in technically
-            view = <h1>CATS</h1>;
         } else if (this.state.view === VIEWS.LOGGED_IN) {
             // store errors stop the client syncing and require user intervention, so we'll
             // be showing a dialog. Don't show anything else.

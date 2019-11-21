@@ -16,28 +16,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {MatrixClient, MemoryStore} from 'matrix-js-sdk';
+import { MatrixClient, MemoryStore } from "matrix-js-sdk";
 
-import utils from 'matrix-js-sdk/lib/utils';
-import EventTimeline from 'matrix-js-sdk/lib/models/event-timeline';
-import EventTimelineSet from 'matrix-js-sdk/lib/models/event-timeline-set';
-import sdk from './index';
-import createMatrixClient from './utils/createMatrixClient';
-import SettingsStore from './settings/SettingsStore';
-import MatrixActionCreators from './actions/MatrixActionCreators';
-import Modal from './Modal';
-import {verificationMethods} from 'matrix-js-sdk/lib/crypto';
+import utils from "matrix-js-sdk/lib/utils";
+import EventTimeline from "matrix-js-sdk/lib/models/event-timeline";
+import EventTimelineSet from "matrix-js-sdk/lib/models/event-timeline-set";
+import sdk from "./index";
+import createMatrixClient from "./utils/createMatrixClient";
+import SettingsStore from "./settings/SettingsStore";
+import MatrixActionCreators from "./actions/MatrixActionCreators";
+import Modal from "./Modal";
+import { verificationMethods } from "matrix-js-sdk/lib/crypto";
 import MatrixClientBackedSettingsHandler from "./settings/handlers/MatrixClientBackedSettingsHandler";
-import * as StorageManager from './utils/StorageManager';
-import IdentityAuthClient from './IdentityAuthClient';
+import * as StorageManager from "./utils/StorageManager";
+import IdentityAuthClient from "./IdentityAuthClient";
 
 interface MatrixClientCreds {
-    homeserverUrl: string,
-    identityServerUrl: string,
-    userId: string,
-    deviceId: string,
-    accessToken: string,
-    guest: boolean,
+    homeserverUrl: string;
+    identityServerUrl: string;
+    userId: string;
+    deviceId: string;
+    accessToken: string;
+    guest: boolean;
 }
 
 /**
@@ -56,7 +56,7 @@ class MatrixClientPeg {
         // at any time up to after the 'will_start_client'
         // event is finished processing.
         this.opts = {
-            initialSyncLimit: 20,
+            initialSyncLimit: 20
         };
         // the credentials used to init the current client object.
         // used if we tear it down & recreate it with a different store
@@ -119,20 +119,25 @@ class MatrixClientPeg {
     }
 
     async assign() {
-        for (const dbType of ['indexeddb', 'memory']) {
+        for (const dbType of ["indexeddb", "memory"]) {
             try {
                 const promise = this.matrixClient.store.startup();
-                console.log("MatrixClientPeg: waiting for MatrixClient store to initialise");
+                console.log(
+                    "MatrixClientPeg: waiting for MatrixClient store to initialise"
+                );
                 await promise;
                 break;
             } catch (err) {
-                if (dbType === 'indexeddb') {
-                    console.error('Error starting matrixclient store - falling back to memory store', err);
+                if (dbType === "indexeddb") {
+                    console.error(
+                        "Error starting matrixclient store - falling back to memory store",
+                        err
+                    );
                     this.matrixClient.store = new MemoryStore({
-                        localStorage: global.localStorage,
+                        localStorage: global.localStorage
                     });
                 } else {
-                    console.error('Failed to start memory store!', err);
+                    console.error("Failed to start memory store!", err);
                     throw err;
                 }
             }
@@ -143,17 +148,21 @@ class MatrixClientPeg {
         // try to initialise e2e on the new client
         try {
             // check that we have a version of the js-sdk which includes initCrypto
-            if (!SettingsStore.getValue("lowBandwidth") && this.matrixClient.initCrypto) {
+            if (
+                !SettingsStore.getValue("lowBandwidth") &&
+                this.matrixClient.initCrypto
+            ) {
                 await this.matrixClient.initCrypto();
                 StorageManager.setCryptoInitialised(true);
             }
         } catch (e) {
-            if (e && e.name === 'InvalidCryptoStoreError') {
+            if (e && e.name === "InvalidCryptoStoreError") {
                 // The js-sdk found a crypto DB too new for it to use
-                const CryptoStoreTooNewDialog =
-                    sdk.getComponent("views.dialogs.CryptoStoreTooNewDialog");
+                const CryptoStoreTooNewDialog = sdk.getComponent(
+                    "views.dialogs.CryptoStoreTooNewDialog"
+                );
                 Modal.createDialog(CryptoStoreTooNewDialog, {
-                    host: window.location.host,
+                    host: window.location.host
                 });
             }
             // this can happen for a number of reasons, the most likely being
@@ -188,7 +197,7 @@ class MatrixClientPeg {
             userId: this.matrixClient.credentials.userId,
             deviceId: this.matrixClient.getDeviceId(),
             accessToken: this.matrixClient.getAccessToken(),
-            guest: this.matrixClient.isGuest(),
+            guest: this.matrixClient.isGuest()
         };
     }
 
@@ -213,11 +222,13 @@ class MatrixClientPeg {
             userId: creds.userId,
             deviceId: creds.deviceId,
             timelineSupport: true,
-            forceTURN: !SettingsStore.getValue('webRtcAllowPeerToPeer', false),
-            fallbackICEServerAllowed: !!SettingsStore.getValue('fallbackICEServerAllowed'),
+            forceTURN: !SettingsStore.getValue("webRtcAllowPeerToPeer", false),
+            fallbackICEServerAllowed: !!SettingsStore.getValue(
+                "fallbackICEServerAllowed"
+            ),
             verificationMethods: [verificationMethods.SAS],
             unstableClientRelationAggregation: true,
-            identityServer: new IdentityAuthClient(),
+            identityServer: new IdentityAuthClient()
         };
 
         this.matrixClient = createMatrixClient(opts);
@@ -229,11 +240,14 @@ class MatrixClientPeg {
         this.matrixClient.setGuest(Boolean(creds.guest));
 
         const notifTimelineSet = new EventTimelineSet(null, {
-            timelineSupport: true,
+            timelineSupport: true
         });
         // XXX: what is our initial pagination token?! it somehow needs to be synchronised with /sync.
-        notifTimelineSet.getLiveTimeline().setPaginationToken("", EventTimeline.BACKWARDS);
+        notifTimelineSet
+            .getLiveTimeline()
+            .setPaginationToken("", EventTimeline.BACKWARDS);
         this.matrixClient.setNotifTimelineSet(notifTimelineSet);
+        //console.log("OPTIONS TO GET CLIENT CREDENTIALS", opts);
     }
 }
 
