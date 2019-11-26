@@ -84,9 +84,9 @@ export default class HelpUserSettingsTab extends React.Component {
         MatrixClientPeg.get().getRooms().forEach(function(element) {
             MatrixClientPeg.get().sendReadReceipt(function(evs) {
                 return evs[evs.length - 1]
-            }(element.getLiveTimeline()._events), {})
-        })
-    }
+            }(element.getLiveTimeline()._events), {});
+        });
+    };
 
     _onBugReport = (e) => {
         const BugReportDialog = sdk.getComponent("dialogs.BugReportDialog");
