@@ -631,6 +631,7 @@
     "If you've submitted a bug via GitHub, debug logs can help us track down the problem. Debug logs contain application usage data including your username, the IDs or aliases of the rooms or groups you have visited and the usernames of other users. They do not contain messages.": "If you've submitted a bug via GitHub, debug logs can help us track down the problem. Debug logs contain application usage data including your username, the IDs or aliases of the rooms or groups you have visited and the usernames of other users. They do not contain messages.",
     "Submit debug logs": "Submit debug logs",
     "Clear cache and reload": "Clear cache and reload",
+    "Mark all rooms as read": "Mark all rooms as read",
     "FAQ": "FAQ",
     "Versions": "Versions",
     "matrix-react-sdk version:": "matrix-react-sdk version:",

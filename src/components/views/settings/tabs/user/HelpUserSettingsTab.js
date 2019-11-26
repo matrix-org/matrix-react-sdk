@@ -80,6 +80,14 @@ export default class HelpUserSettingsTab extends React.Component {
         });
     };
 
+    _onMarkAllRoomsAsRead = (e) => {
+        MatrixClientPeg.get().getRooms().forEach(function(element) {
+            MatrixClientPeg.get().sendReadReceipt(function(evs) {
+                return evs[evs.length - 1]
+            }(element.getLiveTimeline()._events), {})
+        })
+    }
+
     _onBugReport = (e) => {
         const BugReportDialog = sdk.getComponent("dialogs.BugReportDialog");
         if (!BugReportDialog) {
@@ -230,6 +238,11 @@ export default class HelpUserSettingsTab extends React.Component {
                         <div className='mx_HelpUserSettingsTab_debugButton'>
                             <AccessibleButton onClick={this._onClearCacheAndReload} kind='danger'>
                                 {_t("Clear cache and reload")}
+                            </AccessibleButton>
+                        </div>
+                        <div className='mx_HelpUserSettingsTab_debugButton'>
+                            <AccessibleButton onClick={this._onMarkAllRoomsAsRead} kind='danger'>
+                                {_t("Mark all rooms as read")}
                             </AccessibleButton>
                         </div>
                     </div>
