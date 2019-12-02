@@ -40,7 +40,6 @@ module.exports = createReactClass({
 
     propTypes: {
         onClick: PropTypes.func,
-
         room: PropTypes.object.isRequired,
         collapsed: PropTypes.bool.isRequired,
         unread: PropTypes.bool.isRequired,
@@ -57,6 +56,7 @@ module.exports = createReactClass({
         };
     },
 
+    // GET INITIAL STATE OF EACH ROOM
     getInitialState: function() {
         return {
             hover: false,
@@ -67,10 +67,9 @@ module.exports = createReactClass({
             notificationCount: this.props.room.getUnreadNotificationCount(),
             selected: this.props.room.roomId === RoomViewStore.getRoomId(),
             statusMessage: this._getStatusMessage(),
-            session: false,
             mute: false,
-            hold: false,
-            callState: null
+            transfer: false,
+            hold: false
             //media: true
         };
     },
@@ -345,12 +344,23 @@ module.exports = createReactClass({
         this._showContextMenu(x, y, chevronOffset);
     },
 
-    render: function() {
+    callStateCheck: function() {
         const call = this._getCallForRoom();
-        //console.log("WHAT IS CALL AFTER RETURNED FROM FUNCTION", call);
+        //console.log("======================");
+        //console.log("WHAT IS THIS?", call);
+        //console.log("======================");
+
         const callState = call ? call.call_state : "ended";
+        console.log("*** SETTING CALL STATE", callState);
         this.setState({ callState });
-        //console.log("\n****** SHOW ME THE CALL STATE: ", this.state.callState);
+
+        // PROBLEM - why doesn't the connected state change the component state?
+    },
+
+    render: function() {
+        //console.log("WHAT IS CALL AFTER RETURNED FROM FUNCTION", call);
+        this.callStateCheck();
+        // state should not be here constructor will only run when mounted
         /***  ABOVE IS TEST ***/
 
         const CallButton = props => {
@@ -412,10 +422,12 @@ module.exports = createReactClass({
                 />
             );
         };
-        //const callInProgress =
-        //this.props.callState && this.props.callState !== "ended";
-        //console.log("WHATS THE CALL PROGRESS?", callInProgress); // Boolean
-        //const controls = [CallButton, VideoButton, HangupButton];
+        /*
+        const callInProgress =
+            this.props.callState && this.props.callState !== "ended";
+        console.log("WHATS THE CALL PROGRESS?", callInProgress); // Boolean
+        const controls = [CallButton, VideoButton, HangupButton];
+		*/
 
         const isInvite = this.props.room.getMyMembership() === "invite";
         const notificationCount = this.props.notificationCount;
@@ -430,9 +442,6 @@ module.exports = createReactClass({
         const badges = notifBadges || mentionBadges;
 
         let subtext = null;
-        if (this._shouldShowStatusMessage()) {
-            subtext = this.state.statusMessage;
-        }
 
         const classes = classNames({
             mx_RoomTile: true,
@@ -445,10 +454,12 @@ module.exports = createReactClass({
             mx_RoomTile_noBadges: !badges,
             mx_RoomTile_transparent: this.props.transparent,
             mx_RoomTile_hasSubtext: subtext && !this.props.collapsed,
-            mx_RoomTile_calling: this.state.session,
             mx_RoomTile_calls: this.props.calls,
             mx_RoomTile_mute: this.state.mute,
-            mx_RoomTile_hold: this.state.hold
+            mx_RoomTile_transfer: this.state.transfer,
+            mx_RoomTile_hold: this.state.hold,
+            mx_RoomTile_calling: this.state.callState === "ringback",
+            mx_RoomTile_call: this.state.callState === "connected"
         });
 
         const avatarClasses = classNames({
@@ -461,21 +472,29 @@ module.exports = createReactClass({
                 this.state.badgeHover || this.state.menuDisplayed
         });
 
+        if (this._shouldShowStatusMessage()) {
+            console.log("RUNNING SHOW STATUS MESSAGE");
+            subtext = this.state.statusMessage;
+        }
+
         let name = this.state.roomName;
         if (name == undefined || name == null) name = "";
         name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
 
         let badge;
         if (badges) {
+            console.log("BADGES EXIST <line 486>");
             const limitedCount = FormattingUtils.formatCount(notificationCount);
             const badgeContent = notificationCount ? limitedCount : "!";
-            badge = <div className={badgeClasses}>{badgeContent}</div>;
+            // TODO BADGES KEEP GETTING RENDERED
+            //badge = <div className={badgeClasses}>{badgeContent}</div>;
         }
 
         let label;
         let subtextLabel;
         let tooltip;
         if (!this.props.collapsed) {
+            // NOT COLLAPSED
             const nameClasses = classNames({
                 mx_RoomTile_name: true,
                 mx_RoomTile_invite: this.props.isInvite,
@@ -492,6 +511,7 @@ module.exports = createReactClass({
                 </div>
             );
         } else if (this.state.hover) {
+            // COLLAPSED AND HOVERING
             const Tooltip = sdk.getComponent("elements.Tooltip");
             tooltip = (
                 <Tooltip
@@ -526,6 +546,10 @@ module.exports = createReactClass({
 
         let dmIndicator;
         if (this._isDirectMessageRoom(this.props.room.roomId)) {
+            console.log("**");
+            console.log("THIS IS A DIRECT MESSAGE ROOM");
+            console.log("**");
+
             dmIndicator = (
                 <img
                     src={require("../../../../res/img/icon_person.svg")}
@@ -539,42 +563,76 @@ module.exports = createReactClass({
 
         // The following labels are written in such a fashion to increase screen reader efficiency (speed).
         if (notifBadges && mentionBadges && !isInvite) {
+            console.log("**** #1 NOTIF && MENTION BADGE && NOT AN INVITE ****");
             ariaLabel +=
                 " " +
                 _t("%(count)s unread messages including mentions.", {
                     count: notificationCount
                 });
         } else if (notifBadges) {
+            console.log("**** #2 ONLY NOTIF BADGE ****");
             ariaLabel +=
                 " " +
                 _t("%(count)s unread messages.", { count: notificationCount });
         } else if (mentionBadges && !isInvite) {
+            console.log(
+                "**** #3 ONLY MENTION BADGE && NO INVITE - UNREAD MENTIONS ****"
+            );
             ariaLabel += " " + _t("Unread mentions.");
         } else if (this.props.unread) {
+            console.log("**** #4 UNREAD MESSAGES ****");
             ariaLabel += " " + _t("Unread messages.");
-        } else if (!this.state.session) {
-            callButtons = (
-                <div className="call_buttons" onClick={this.callSession}>
-                    <CallButton
-                        roomId={this.props.room.roomId}
-                        key="controls_call_button"
-                    />
-                    <VideoButton
-                        roomId={this.props.room.roomId}
-                        key="controls_videocall_button"
-                    />
-                </div>
-            );
-        } else if (this.state.callState) {
-            callButtons = (
-                <div className="hangup" onClick={this.callSession}>
-                    <HangupButton
-                        roomId={this.props.room.roomId}
-                        key="controls_hangup_button"
-                    />
-                </div>
-            );
         }
+
+        // SEPARATE LOGIC
+        if (this.state.callState) {
+            console.log("\n*************");
+            console.log("#5 THIS IS THE CALL STATE", this.state.callState);
+            console.log("*************\n");
+
+            switch (this.state.callState) {
+                case "ended":
+                    callButtons = (
+                        <div
+                            className="call_buttons"
+                            onClick={this.callSession}
+                        >
+                            <CallButton
+                                roomId={this.props.room.roomId}
+                                key="controls_call_button"
+                            />
+                            <VideoButton
+                                roomId={this.props.room.roomId}
+                                key="controls_videocall_button"
+                            />
+                        </div>
+                    );
+                    break;
+                case "ringback":
+                    callButtons = (
+                        <div className="hangup" onClick={this.callSession}>
+                            <HangupButton
+                                roomId={this.props.room.roomId}
+                                key="controls_hangup_button"
+                            />
+                        </div>
+                    );
+                    break;
+                case "connected":
+                    console.log("STATE CHANGED TO CONNECTED, <line 594>");
+                    callButtons = (
+                        <div>
+                            <p className="mx_TextualEvent" key="timer">
+                                Duration: 00:00:00
+                            </p>
+                        </div>
+                    );
+                    break;
+                default:
+                    return;
+            }
+        }
+        // END OF RENDER FUNCTION
 
         return (
             <AccessibleButton

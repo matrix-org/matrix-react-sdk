@@ -25,13 +25,6 @@ $second-color: #348060;
     width: 24px; */
 }
 
-#call_button::before {
-    //transform: scale(.7);
-    //background: black;
-    //mask-image: url(phone.svg);
-    //clip-path: url(#call_button);
-}
-
 .call_buttons {
     display: none;
 }
@@ -46,11 +39,6 @@ $second-color: #348060;
     padding: 0 8px 0 10px;
     position: relative;
     border-radius: 4px;
-}
-
-.mx_RoomTile:first-child {
-    //.mx_RoomTile[aria-label="People"] {
-    //margin-top: 15px;
 }
 
 .mx_RoomTile:focus {
@@ -224,7 +212,6 @@ $second-color: #348060;
 
 .mx_RoomTile_session, .mx_RoomTile_calling {
     border: 1px solid green;
-    //border: 1px solid $second-color;
     z-index: 1;
     border-radius: 4px;
 }
@@ -239,23 +226,28 @@ $second-color: #348060;
     bottom: 0;
     right: 0;
     z-index: -1;
-    //background: rgb(113, 193, 12);
+    background: linear-gradient(180deg, rgba(113, 193, 12, 1) 0%, rgba(9, 121, 40, 1) 20%, rgba(36, 88, 66, 1) 100%);
+}
+
+.mx_RoomTile_call {
+    border: 1px solid green;
+    border-radius: 3px;
     background: linear-gradient(180deg, rgba(113, 193, 12, 1) 0%, rgba(9, 121, 40, 1) 20%, rgba(36, 88, 66, 1) 100%);
 }
 
 .mx_RoomTile_mute {
-    //background: #ff8c00ad;
-    border: 1px solid orange;
-    //border: 1px solid #ff8c00;
-    background: linear-gradient(180deg, rgba(173, 109, 31, 1) 0%, rgba(88, 36, 42, 1) 20%);
-    //background: linear-gradient(180deg, rgba(88, 36, 42, 1) 0%, rgba(255, 140, 0, 1) 90%, rgba(255, 140, 0, 1) 100%);
+    border: 1px solid rgb(173, 109, 31);
+    background: linear-gradient(180deg, rgba(173, 109, 31, 1) 0%, rgb(88, 55, 36) 20%);
 }
 
 .mx_RoomTile_hold {
-    //background: #ff8c00ad;
-    border: 1px solid yellow;
-    background: linear-gradient(180deg, rgba(173, 176, 31, 1) 0%, rgba(88, 36, 42, 1) 20%);
-    //background: linear-gradient(180deg, rgba(88, 36, 42, 1) 0%, rgba(255, 140, 0, 1) 90%, rgba(255, 140, 0, 1) 100%);
+    border: 1px solid rgb(173, 176, 31);
+    background: linear-gradient(180deg, rgba(173, 176, 31, 1) 0%, rgb(88, 84, 34) 20%);
+}
+
+.mx_RoomTile_transfer {
+    border: 1px solid #ac3aa8;
+    background: linear-gradient(180deg, rgba(138, 65, 147, 1) 0%, rgb(79, 35, 74) 20%);
 }
 
 @keyframes pulse {
