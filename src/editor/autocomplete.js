@@ -49,7 +49,7 @@ export default class AutocompleteWrapperModel {
         this._updateCallback({close: true});
     }
 
-    async onTab(e) {
+    async onTab() {
         const acComponent = this._getAutocompleterComponent();
 
         if (acComponent.countCompletions() === 0) {
@@ -58,7 +58,7 @@ export default class AutocompleteWrapperModel {
             // Select the first item by moving "down"
             await acComponent.moveSelection(+1);
         } else {
-            await acComponent.moveSelection(e.shiftKey ? -1 : +1);
+            this._updateCallback({close: true});
         }
     }
 

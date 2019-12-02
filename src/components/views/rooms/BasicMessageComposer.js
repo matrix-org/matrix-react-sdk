@@ -366,9 +366,15 @@ export default class BasicMessageEditor extends React.Component {
                             handled = true;
                         }
                         break;
+                    case Key.ENTER:
+                        if (!metaOrAltPressed) {
+                            autoComplete.onEnter();
+                            handled = true;
+                        }
+                        break;
                     case Key.TAB:
                         if (!metaOrAltPressed) {
-                            autoComplete.onTab(event);
+                            autoComplete.onTab();
                             handled = true;
                         }
                         break;
