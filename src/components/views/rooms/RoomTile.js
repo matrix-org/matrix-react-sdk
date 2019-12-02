@@ -68,6 +68,8 @@ module.exports = createReactClass({
             selected: this.props.room.roomId === RoomViewStore.getRoomId(),
             statusMessage: this._getStatusMessage(),
             session: false,
+            mute: false,
+            hold: false,
             callState: null
             //media: true
         };
@@ -145,6 +147,22 @@ module.exports = createReactClass({
             case "feature_custom_status_changed":
                 this.forceUpdate();
                 break;
+            case "hangup":
+                // This is needed when RoomTileContextMenu hangs up
+                this.setState({ session: false });
+                break;
+            case "mute":
+                // This is needed when RoomTileContextMenu mutes
+                //this.setState({ mute: true });
+                this.setState({ mute: this.state.mute });
+                break;
+            case "hold":
+                // This is needed when RoomTileContextMenu hold
+                //this.setState({ hold: true });
+                this.setState({ hold: this.state.hold });
+                break;
+            default:
+                return;
         }
     },
 
@@ -397,7 +415,6 @@ module.exports = createReactClass({
         //const callInProgress =
         //this.props.callState && this.props.callState !== "ended";
         //console.log("WHATS THE CALL PROGRESS?", callInProgress); // Boolean
-
         //const controls = [CallButton, VideoButton, HangupButton];
 
         const isInvite = this.props.room.getMyMembership() === "invite";
@@ -429,7 +446,9 @@ module.exports = createReactClass({
             mx_RoomTile_transparent: this.props.transparent,
             mx_RoomTile_hasSubtext: subtext && !this.props.collapsed,
             mx_RoomTile_calling: this.state.session,
-            mx_RoomTile_calls: this.props.calls
+            mx_RoomTile_calls: this.props.calls,
+            mx_RoomTile_mute: this.state.mute,
+            mx_RoomTile_hold: this.state.hold
         });
 
         const avatarClasses = classNames({

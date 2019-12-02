@@ -192,14 +192,18 @@ const RoomSubList = createReactClass({
     },
 
     onRoomTileClick(roomId, ev) {
-        console.log("\n************************");
-        console.log("WHAT DOES THIS TILE CLICK CONTAIN", roomId);
-        console.log("EVENT", ev);
-        console.log("************************\n");
-        // view should be determined by the room tag
-        // chat || call
         dis.dispatch({
             action: "view_room",
+            room_id: roomId,
+            clear_search:
+                ev &&
+                (ev.keyCode === KeyCode.ENTER || ev.keyCode === KeyCode.SPACE)
+        });
+    },
+
+    onRoomTileClickCall(roomId, ev) {
+        dis.dispatch({
+            action: "call_view",
             room_id: roomId,
             clear_search:
                 ev &&
@@ -235,7 +239,11 @@ const RoomSubList = createReactClass({
                 isInvite={this.props.isInvite}
                 refreshSubList={this._updateSubListCount}
                 incomingCall={null}
-                onClick={this.onRoomTileClick}
+                onClick={
+                    this.props.tagName === "u.phone"
+                        ? this.onRoomTileClickCall
+                        : this.onRoomTileClick
+                }
             />
         );
     },

@@ -44,14 +44,12 @@ import {
     Distributor
 } from "../../../resizer/distributors/roomsublist2";
 const HIDE_CONFERENCE_CHANS = true;
+// WHAT IS THIS USED FOR?
 const STANDARD_TAGS_REGEX = /^(m\.(favourite|lowpriority|server_notice)|im\.vector\.fake\.(invite|recent|direct|archived))$/;
 const HOVER_MOVE_TIMEOUT = 1000;
 
 function labelForTagName(tagName) {
     if (tagName.startsWith("u.")) return tagName.slice(2);
-    console.log("\n*************************");
-    console.log("IS THIS RUNNING?", tagName);
-    console.log("*************************\n");
     return tagName;
 }
 
@@ -184,7 +182,6 @@ module.exports = createReactClass({
                 this.setState({
                     customTags: CustomRoomTagStore.getTags()
                 });
-                console.log("CUSTOM TAGS", this.state.customTags);
             });
         }
 
@@ -739,9 +736,6 @@ module.exports = createReactClass({
             isFiltered: !!this.props.searchFilter,
             incomingCall: this.state.incomingCall
         };
-        console.log("\n****** SUBLIST PROPS");
-        console.log(subListsProps);
-        console.log("******\n");
 
         subListsProps.forEach(p => {
             p.list = this._applySearchFilter(p.list, this.props.searchFilter);
@@ -811,8 +805,7 @@ module.exports = createReactClass({
             if (this.state.incomingCallTag !== tagName) return null;
             return this.state.incomingCall;
         };
-        console.log("THIS.STATE.LISTS", this.state.lists);
-
+        // incomingCallIfTaggedAs = im.vector.fake.direct, archived, invite, u.phone
         let subLists = [
             {
                 list: [],
@@ -835,18 +828,17 @@ module.exports = createReactClass({
                 order: "manual",
                 incomingCall: incomingCallIfTaggedAs("m.favourite")
             },
-            //{
-            //list: [],
-            //list: this.state.lists["u.phone"],
-            //label: _t("VoIP Calls"),
-            //tagName: "u.phone",
-            //order: "recent",
-            //incomingCall: incomingCallIfTaggedAs("u.phone"),
-            //onAddRoom: () => {
-            //dis.dispatch({ action: "view_create_phone_call" });
-            //},
-            //addRoomLabel: _t("Place call")
-            //},
+            {
+                list: this.state.lists["u.phone"],
+                label: _t("VoIP Calls"),
+                tagName: "u.phone",
+                order: "recent",
+                incomingCall: incomingCallIfTaggedAs("u.phone"),
+                onAddRoom: () => {
+                    dis.dispatch({ action: "view_create_phone_call" });
+                },
+                addRoomLabel: _t("Place call")
+            },
             {
                 list: this.state.lists["im.vector.fake.direct"],
                 label: _t("People"),
@@ -869,6 +861,7 @@ module.exports = createReactClass({
                 }
             }
         ];
+        // THESE ARE FOR CUSTOM TAGS
         const tagSubLists = Object.keys(this.state.lists)
             .filter(tagName => {
                 return (
@@ -880,15 +873,15 @@ module.exports = createReactClass({
             .map(tagName => {
                 return {
                     list: this.state.lists[tagName],
-                    key: "VOIP CALLS",
-                    //key: tagName,
+                    //key: "VOIP CALLS",// ALWAYS SETS PHONE AS ROOM NAME
+                    key: tagName,
                     label: labelForTagName(tagName),
                     tagName: tagName,
                     order: "recent",
                     incomingCall: incomingCallIfTaggedAs(tagName)
                 };
             });
-        subLists = subLists.concat(tagSubLists);
+        //subLists = subLists.concat(tagSubLists); // REMOVES CUSTOM ROOMS
         subLists = subLists.concat([
             {
                 list: this.state.lists["m.lowpriority"],

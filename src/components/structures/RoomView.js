@@ -659,6 +659,8 @@ module.exports = createReactClass({
     },
 
     onAction: function(payload) {
+        const call = this._getCallForRoom();
+        let callState;
         switch (payload.action) {
             case "message_send_failed":
             case "message_sent":
@@ -692,9 +694,10 @@ module.exports = createReactClass({
                     return;
                 }
 
-                var call = this._getCallForRoom();
-                var callState;
+                //const call = this._getCallForRoom();
+                //let callState;
 
+                //if (this._getCallForRoom()) {
                 if (call) {
                     callState = call.call_state;
                 } else {
@@ -2113,7 +2116,7 @@ module.exports = createReactClass({
 
         if (inCall) {
             let zoomButton;
-            let voiceMuteButton;
+            //let voiceMuteButton;
             let videoMuteButton;
 
             if (call.type === "video") {
@@ -2154,7 +2157,7 @@ module.exports = createReactClass({
                     </div>
                 );
             }
-            voiceMuteButton = (
+            const voiceMuteButton = (
                 <div
                     className="mx_RoomView_voipButton"
                     onClick={this.onMuteAudioClick}

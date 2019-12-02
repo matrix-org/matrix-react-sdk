@@ -633,8 +633,6 @@ class RoomListStore extends Store {
         // Log something to show that we're throwing away the old results. This is for the inevitable
         // question of "why is 100% of my CPU going towards Riot?" - a quick look at the logs would reveal
         // that something is wrong with the RoomListStore.
-        console.log("Generating initial room lists");
-
         const lists = {
             "m.server_notice": [],
             "im.vector.fake.invite": [],

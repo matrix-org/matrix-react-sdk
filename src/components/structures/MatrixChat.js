@@ -1006,10 +1006,6 @@ export default createReactClass({
             let presentedId = roomInfo.room_alias || roomInfo.room_id;
             const room = MatrixClientPeg.get().getRoom(roomInfo.room_id);
 
-            console.log("\n********");
-            console.log("WHAT IS THE DATA FROM VIEW_ROOM METHOD ROOM", room);
-            console.log("********\n");
-
             if (room) {
                 const theAlias = Rooms.getDisplayAliasForRoom(room);
                 if (theAlias) presentedId = theAlias;
@@ -1028,6 +1024,7 @@ export default createReactClass({
 
             // BLAST
             // SHOULD DISPATCH A VIEW_CALL ACTION IF THE ROOM CONTAINS A PHONE TAG
+            // DONE IN THE ROOM SUB LIST
             this.setState(newState, () => {
                 this.notifyNewScreen("room/" + presentedId);
             });
