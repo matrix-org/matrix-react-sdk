@@ -80,7 +80,6 @@ module.exports = createReactClass({
                     ),
                     true
                 );
-
                 this.props.onFinished();
             });
         }
@@ -299,6 +298,7 @@ module.exports = createReactClass({
         });
 
         return (
+            // CONTEXT MENU BUTTONS
             <div className="mx_RoomTileContextMenu">
                 <div className="mx_RoomTileContextMenu_notif_picker">
                     <img
@@ -381,6 +381,7 @@ module.exports = createReactClass({
                 </AccessibleButton>
             </div>
         );
+        // CONTEXT MENU BUTTONS
     },
 
     _onClickSettings: function() {
@@ -558,10 +559,14 @@ module.exports = createReactClass({
             }
         };
         const onMuteClick = () => {
+            console.log("\n******");
+            console.log("MUTE BUTTON WAS CLICKED");
+            console.log("******\n");
             dis.dispatch({
                 action: "mute",
                 room_id: this.props.room.roomId
             });
+            // CLOSES THE CONTEXT MENU MODAL
             if (this.props.onFinished) {
                 this.props.onFinished();
             }
@@ -577,7 +582,7 @@ module.exports = createReactClass({
 
         if (call) {
             // if ("u.phone" in this.props.room.tags) {
-            // const TintableSvg = sdk.getComponent("elements.TintableSvg");
+            // const TintableSvg = sdk.getComponent("elements.TintableSvg"); // NOT USED
             // call is used for mute state and call session
             return (
                 <div>

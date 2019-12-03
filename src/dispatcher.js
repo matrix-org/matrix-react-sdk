@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
+"use strict";
 
 const flux = require("flux");
 
@@ -32,8 +32,9 @@ class MatrixDispatcher extends flux.Dispatcher {
     dispatch(payload, sync) {
         // Allow for asynchronous dispatching by accepting payloads that have the
         // type `function (dispatch) {...}`
-        if (typeof payload === 'function') {
-            payload((action) => {
+        if (typeof payload === "function") {
+            console.log("THIS IS THE PAYLOAD", payload);
+            payload(action => {
                 this.dispatch(action, sync);
             });
             return;

@@ -34,6 +34,7 @@ import RoomViewStore from "../../../stores/RoomViewStore";
 import SettingsStore from "../../../settings/SettingsStore";
 import { _t } from "../../../languageHandler";
 import CallHandler from "../../../CallHandler";
+import CallTimer from "../elements/CallTimer";
 
 module.exports = createReactClass({
     displayName: "RoomTile",
@@ -351,7 +352,7 @@ module.exports = createReactClass({
         //console.log("======================");
 
         const callState = call ? call.call_state : "ended";
-        console.log("*** SETTING CALL STATE", callState);
+        //console.log("*** SETTING CALL STATE", callState);
         this.setState({ callState });
 
         // PROBLEM - why doesn't the connected state change the component state?
@@ -422,12 +423,28 @@ module.exports = createReactClass({
                 />
             );
         };
-        /*
-        const callInProgress =
-            this.props.callState && this.props.callState !== "ended";
-        console.log("WHATS THE CALL PROGRESS?", callInProgress); // Boolean
-        const controls = [CallButton, VideoButton, HangupButton];
-		*/
+        const MuteButton = props => {
+            const AccessibleButton = sdk.getComponent(
+                "elements.AccessibleButton"
+            );
+            const onMuteButtonClick = () => {
+                const call = CallHandler.getCallForRoom(props.roomId);
+                if (!call) return;
+                if (this.state.callState === "connected") {
+                    dis.dispatch({
+                        action: "mute",
+                        room_id: call.roomId
+                    });
+                }
+                return (
+                    <AccessibleButton
+                        className="mx_MessageComposer_button mx_MessageCompose_hangup"
+                        onClick={onHangupClick}
+                        title={_t("Mute")}
+                    />
+                );
+            };
+        };
 
         const isInvite = this.props.room.getMyMembership() === "invite";
         const notificationCount = this.props.notificationCount;
@@ -473,7 +490,7 @@ module.exports = createReactClass({
         });
 
         if (this._shouldShowStatusMessage()) {
-            console.log("RUNNING SHOW STATUS MESSAGE");
+            //console.log("RUNNING SHOW STATUS MESSAGE");
             subtext = this.state.statusMessage;
         }
 
@@ -483,7 +500,7 @@ module.exports = createReactClass({
 
         let badge;
         if (badges) {
-            console.log("BADGES EXIST <line 486>");
+            //console.log("BADGES EXIST <line 486>");
             const limitedCount = FormattingUtils.formatCount(notificationCount);
             const badgeContent = notificationCount ? limitedCount : "!";
             // TODO BADGES KEEP GETTING RENDERED
@@ -546,9 +563,9 @@ module.exports = createReactClass({
 
         let dmIndicator;
         if (this._isDirectMessageRoom(this.props.room.roomId)) {
-            console.log("**");
-            console.log("THIS IS A DIRECT MESSAGE ROOM");
-            console.log("**");
+            //console.log("**");
+            //console.log("THIS IS A DIRECT MESSAGE ROOM");
+            //console.log("**");
 
             dmIndicator = (
                 <img
@@ -563,32 +580,30 @@ module.exports = createReactClass({
 
         // The following labels are written in such a fashion to increase screen reader efficiency (speed).
         if (notifBadges && mentionBadges && !isInvite) {
-            console.log("**** #1 NOTIF && MENTION BADGE && NOT AN INVITE ****");
+            //console.log("**** #1 NOTIF && MENTION BADGE && NOT AN INVITE ****");
             ariaLabel +=
                 " " +
                 _t("%(count)s unread messages including mentions.", {
                     count: notificationCount
                 });
         } else if (notifBadges) {
-            console.log("**** #2 ONLY NOTIF BADGE ****");
+            //console.log("**** #2 ONLY NOTIF BADGE ****");
             ariaLabel +=
                 " " +
                 _t("%(count)s unread messages.", { count: notificationCount });
         } else if (mentionBadges && !isInvite) {
-            console.log(
-                "**** #3 ONLY MENTION BADGE && NO INVITE - UNREAD MENTIONS ****"
-            );
+            //console.log("#3 ONLY MENTION BADGE && NO INVITE - UNREAD MENTIONS");
             ariaLabel += " " + _t("Unread mentions.");
         } else if (this.props.unread) {
-            console.log("**** #4 UNREAD MESSAGES ****");
+            //console.log("**** #4 UNREAD MESSAGES ****");
             ariaLabel += " " + _t("Unread messages.");
         }
 
         // SEPARATE LOGIC
         if (this.state.callState) {
-            console.log("\n*************");
-            console.log("#5 THIS IS THE CALL STATE", this.state.callState);
-            console.log("*************\n");
+            //console.log("\n*************");
+            //console.log("#5 THIS IS THE CALL STATE", this.state.callState);
+            //console.log("*************\n");
 
             switch (this.state.callState) {
                 case "ended":
@@ -607,6 +622,9 @@ module.exports = createReactClass({
                             />
                         </div>
                     );
+                    this.setState({
+                        notificationCount: 0
+                    });
                     break;
                 case "ringback":
                     callButtons = (
@@ -617,19 +635,18 @@ module.exports = createReactClass({
                             />
                         </div>
                     );
+                    this.setState({
+                        notificationCount: 0
+                    });
                     break;
                 case "connected":
-                    console.log("STATE CHANGED TO CONNECTED, <line 594>");
-                    callButtons = (
-                        <div>
-                            <p className="mx_TextualEvent" key="timer">
-                                Duration: 00:00:00
-                            </p>
-                        </div>
-                    );
+                    callButtons = <CallTimer />;
+                    this.setState({
+                        notificationCount: 0
+                    });
                     break;
                 default:
-                    return;
+                //return;
             }
         }
         // END OF RENDER FUNCTION
@@ -649,9 +666,6 @@ module.exports = createReactClass({
                 <div className={avatarClasses}>
                     <div className="mx_RoomTile_avatar_container">
                         <RoomAvatar
-                            onClick={props =>
-                                console.log("ROOM AVATAR PROPS", this.props)
-                            }
                             room={this.props.room}
                             width={24}
                             height={24}
@@ -666,7 +680,7 @@ module.exports = createReactClass({
                     </div>
                     {callButtons}
                     {contextMenuButton}
-                    {badge}
+                    {/*{badge}*/}
                 </div>
                 {/* { incomingCallBox } */}
                 {tooltip}
