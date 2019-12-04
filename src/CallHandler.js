@@ -71,6 +71,11 @@ global.mxCalls = {
     //room_id: MatrixCall
 };
 const calls = global.mxCalls;
+
+console.log("\n++++++++++++++++");
+console.log("WHAT IS CALLS", calls);
+console.log("++++++++++++++++\n");
+
 let ConferenceHandler = null;
 
 const audioPromises = {};
@@ -120,6 +125,7 @@ function _reAttemptCall(call) {
 }
 
 function _setCallListeners(call) {
+    console.log("CHECK IF THERE IS A LISTENER FOR MUTE <line 128>", call);
     call.on("error", function(err) {
         console.error("Call error:", err);
         if (err.code === "unknown_devices") {
@@ -169,12 +175,24 @@ function _setCallListeners(call) {
         }
     });
     call.on("hangup", function() {
+        console.log("HANGUP EVENT HANDLER RUN IN CALL_HANDLER <line 178>");
         _setCallState(undefined, call.roomId, "ended");
+    });
+    // IS THERE A LISTENER FOR MUTE?
+    // NO
+    call.on("mute", function() {
+        console.log("------------------------");
+        console.log("MUTE FROM CALL HANDLER");
+        console.log("------------------------");
+        //_setCallState(undefined, call.roomId, "mute");
     });
     // map web rtc states to dummy UI state
     // ringing|ringback|connected|ended|busy|stop_ringback|stop_ringing
-    // TODO add call feature states
     call.on("state", function(newState, oldState) {
+        //console.log("++++++++++++++++++++");
+        //console.log("NEW STATE", newState);
+        //console.log("OLD STATE", oldState);
+        //console.log("++++++++++++++++++++");
         if (newState === "ringing") {
             _setCallState(call, call.roomId, "ringing");
             pause("ringbackAudio");
@@ -214,26 +232,47 @@ function _setCallListeners(call) {
         } else if (newState === "connected") {
             _setCallState(call, call.roomId, "connected");
             pause("ringbackAudio");
-            // CALL FEATURES
-        } else if (newState === "mute") {
-            _setCallState(call, call.roomId, "mute");
+            // DO NOT CHANGE CALL STATE
+            // CALL STATE SHOULD ALWAYS BE CONNECTED FOR ACTIVE CALL
+        } /* else if (newState === "mute") {
+            console.log(
+                "NEW CALL STATE SET TO MUTE, <line 224 CallHandler.js>"
+            );
+            //_setCallState(call, call.roomId, "mute");
         } else if (newState === "hold") {
-            _setCallState(call, call.roomId, "hold");
+            //_setCallState(call, call.roomId, "hold");
         } else if (newState === "transfer") {
-            _setCallState(call, call.roomId, "transfer");
+            //_setCallState(call, call.roomId, "transfer");
         } else if (newState === "dialpad") {
-            _setCallState(call, call.roomId, "dialpad");
-        }
+            //_setCallState(call, call.roomId, "dialpad");
+        }*/
     });
 }
 
+// SET CALL STATE
+// XXX status is never mute ???
 function _setCallState(call, roomId, status) {
+    // status => stop_ringback, connected, ringback
+    // CALL HANDLER HAS STATUS && CALL STATE
+
+    console.log("************ CALL HANDLER ****************");
+    console.log("call is: ", call);
+    console.log("room ID: ", roomId);
+    console.log("STATUS: ", status); // status = 'connected'
+    console.log("************ CALL HANDLER ****************");
+
     console.log(
         `Call state in ${roomId} changed to ${status} (${
             call ? call.call_state : "-"
         })`
     );
+
+    //console.log("-----------------");
+    //console.log("CALLS", calls);
+    //console.log("-----------------");
+
     calls[roomId] = call;
+    //console.log("** SET CALL STATE", calls[roomId]);
 
     if (status === "ringing") {
         play("ringAudio");
@@ -244,6 +283,24 @@ function _setCallState(call, roomId, status) {
     if (call) {
         call.call_state = status;
     }
+
+    // HAS TO BE DONE AFTER SO IT DOESN'T GET OVERWRITTEN
+    if (status === "mute") {
+        // SETTING STATUS AS STATE WILL ALWAYS HAVE CALL 'CONNECTED'
+        call.call_state = "connected";
+        call.mute = !call.mute;
+    }
+    if (status === "hold") {
+        // SETTING STATUS AS STATE WILL ALWAYS HAVE CALL 'CONNECTED'
+        call.call_state = "connected";
+        call.hold = !call.hold;
+    }
+    if (status === "transfer") {
+        // SETTING STATUS AS STATE WILL ALWAYS HAVE CALL 'CONNECTED'
+        call.call_state = "connected";
+        call.transfer = !transfer;
+    }
+
     dis.dispatch({
         action: "call_state",
         room_id: roomId,
@@ -302,10 +359,14 @@ function _showICEFallbackPrompt() {
 }
 
 function _onAction(payload) {
+    // FUNCTION TO MAKE VOICE/VIDEO CALL
     function placeCall(newCall) {
+        // newCall === MatrixCall
         _setCallListeners(newCall);
+        // VOICE CALL
         if (payload.type === "voice") {
             newCall.placeVoiceCall();
+            // VIDEO CALL
         } else if (payload.type === "video") {
             newCall.placeVideoCall(
                 payload.remote_element,
@@ -335,10 +396,20 @@ function _onAction(payload) {
         } else {
             console.error("Unknown conf call type: %s", payload.type);
         }
-    }
+    } // END OF PLACE CALL FUNCTION
 
     switch (payload.action) {
-        case "place_call":
+        // THIS IS WHERE THE STATE IN ROOM TILE SHOULD BE CHANGED TO MUTE = TRUE
+        case "mute":
+            _setCallState(payload.call, payload.room_id, payload.action);
+            break;
+        case "hold":
+            _setCallState(payload.call, payload.room_id, payload.action);
+            break;
+        case "transfer":
+            _setCallState(payload.call, payload.room_id, payload.action);
+            break;
+        case "place_call": // LIMITS CALLS
             {
                 if (module.exports.getAnyActiveCall()) {
                     const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");

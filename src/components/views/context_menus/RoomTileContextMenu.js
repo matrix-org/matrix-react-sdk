@@ -547,6 +547,7 @@ module.exports = createReactClass({
             mx_RoomTileContextMenu_tag_fieldSet: this.state.isFavourite,
             mx_RoomTileContextMenu_tag_fieldDisabled: false
         });
+        const call = CallHandler.getCallForRoom(this.props.room.roomId);
         const onHangupClick = () => {
             dis.dispatch({
                 action: "hangup",
@@ -559,12 +560,32 @@ module.exports = createReactClass({
             }
         };
         const onMuteClick = () => {
-            console.log("\n******");
-            console.log("MUTE BUTTON WAS CLICKED");
-            console.log("******\n");
             dis.dispatch({
                 action: "mute",
-                room_id: this.props.room.roomId
+                room_id: this.props.room.roomId,
+                call
+            });
+            // CLOSES THE CONTEXT MENU MODAL
+            if (this.props.onFinished) {
+                this.props.onFinished();
+            }
+        };
+        const onHoldClick = () => {
+            dis.dispatch({
+                action: "hold",
+                room_id: this.props.room.roomId,
+                call
+            });
+            // CLOSES THE CONTEXT MENU MODAL
+            if (this.props.onFinished) {
+                this.props.onFinished();
+            }
+        };
+        const onTransferClick = () => {
+            dis.dispatch({
+                action: "transfer",
+                room_id: this.props.room.roomId,
+                call
             });
             // CLOSES THE CONTEXT MENU MODAL
             if (this.props.onFinished) {
@@ -577,8 +598,6 @@ module.exports = createReactClass({
             }
             return CallHandler.getCallForRoom(this.props.room.roomId);
         };
-
-        const call = CallHandler.getCallForRoom(this.props.room.roomId);
 
         if (call) {
             // if ("u.phone" in this.props.room.tags) {
@@ -626,7 +645,7 @@ module.exports = createReactClass({
 
                     <AccessibleButton
                         className={favouriteClasses}
-                        onClick={this._onClickFavourite}
+                        onClick={onHoldClick}
                     >
                         <img
                             className="mx_RoomTileContextMenu_tag_icon"
@@ -645,7 +664,7 @@ module.exports = createReactClass({
 
                     <AccessibleButton
                         className={favouriteClasses}
-                        onClick={this._onClickFavourite}
+                        onClick={onTransferClick}
                     >
                         <img
                             className="mx_RoomTileContextMenu_tag_icon"

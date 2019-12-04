@@ -147,20 +147,20 @@ module.exports = createReactClass({
             case "feature_custom_status_changed":
                 this.forceUpdate();
                 break;
+            //case "mute":
+            //this.setState({ mute: !this.state.mute });
+            //break;
+            /*
             case "hangup":
                 // This is needed when RoomTileContextMenu hangs up
                 this.setState({ session: false });
-                break;
-            case "mute":
-                // This is needed when RoomTileContextMenu mutes
-                //this.setState({ mute: true });
-                this.setState({ mute: this.state.mute });
                 break;
             case "hold":
                 // This is needed when RoomTileContextMenu hold
                 //this.setState({ hold: true });
                 this.setState({ hold: this.state.hold });
                 break;
+				*/
             default:
                 return;
         }
@@ -347,20 +347,30 @@ module.exports = createReactClass({
 
     callStateCheck: function() {
         const call = this._getCallForRoom();
+        //console.log("DOES THIS CALL HAVE ANY DATA FROM MUTE", call);
         //console.log("======================");
-        //console.log("WHAT IS THIS?", call);
+        //console.log("CURRENT CALL STATE", call);
         //console.log("======================");
 
         const callState = call ? call.call_state : "ended";
-        //console.log("*** SETTING CALL STATE", callState);
-        this.setState({ callState });
+        // NEED LOGIC TO CANCEL OUT PREVIOUS CALL STATE
+        // IF HOLD THEN MUTE IS CLICKED, ONLY MUTE SHOULD BE SHOWN
+        const mute = call ? (call.mute ? call.mute : false) : false;
+        const hold = call ? (call.hold ? call.hold : false) : false;
+        const transfer = call ? (call.transfer ? call.transfer : false) : false;
+        //const hold = call.hold;
+        //const transfer = call.transfer;
+        this.setState({ callState, mute, hold, transfer });
 
-        // PROBLEM - why doesn't the connected state change the component state?
+        // PROBLEM - why doesn't the current state change the component state?
+        //
     },
 
     render: function() {
         //console.log("WHAT IS CALL AFTER RETURNED FROM FUNCTION", call);
         this.callStateCheck();
+        //console.log("ROOM TILE: STATE", this.state);
+        //console.log("ROOM TILE: PROPS", this.props);
         // state should not be here constructor will only run when mounted
         /***  ABOVE IS TEST ***/
 
@@ -423,6 +433,7 @@ module.exports = createReactClass({
                 />
             );
         };
+        /*
         const MuteButton = props => {
             const AccessibleButton = sdk.getComponent(
                 "elements.AccessibleButton"
@@ -433,9 +444,11 @@ module.exports = createReactClass({
                 if (this.state.callState === "connected") {
                     dis.dispatch({
                         action: "mute",
-                        room_id: call.roomId
+                        room_id: call.roomId,
+                        call
                     });
                 }
+                setState({ mute: !this.state.mute });
                 return (
                     <AccessibleButton
                         className="mx_MessageComposer_button mx_MessageCompose_hangup"
@@ -444,7 +457,7 @@ module.exports = createReactClass({
                     />
                 );
             };
-        };
+        };*/
 
         const isInvite = this.props.room.getMyMembership() === "invite";
         const notificationCount = this.props.notificationCount;
