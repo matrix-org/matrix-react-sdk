@@ -32,7 +32,7 @@ export default class ConfigSettingsHandler extends SettingsHandler {
         }
 
         const settingsConfig = config["settingDefaults"];
-        if (!settingsConfig || !settingsConfig[settingName]) return null;
+        if (!settingsConfig || settingsConfig[settingName] == null) return null;
         return settingsConfig[settingName];
     }
 
