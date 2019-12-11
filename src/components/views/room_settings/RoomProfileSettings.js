@@ -20,7 +20,6 @@ import {_t} from "../../../languageHandler";
 import MatrixClientPeg from "../../../MatrixClientPeg";
 import Field from "../elements/Field";
 import AccessibleButton from "../elements/AccessibleButton";
-import classNames from 'classnames';
 import sdk from "../../../index";
 
 // TODO: Merge with ProfileSettings?
