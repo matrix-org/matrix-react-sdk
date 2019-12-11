@@ -1,0 +1,105 @@
+/*
+Copyright 2019 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+.mx_AvatarSetting_avatar {
+    width: 88px;
+    height: 88px;
+    margin-left: 13px;
+    position: relative;
+}
+
+.mx_AvatarSetting_avatar > * {
+    display: block;
+    width: 88px;
+    height: 88px;
+    border-radius: 4px;
+}
+
+.mx_AvatarSetting_avatar .mx_AvatarSetting_avatarOverlay_disabled {
+    cursor: default;
+}
+
+.mx_AvatarSetting_avatar .mx_AvatarSetting_avatarPlaceholder {
+    background-color: $settings-profile-placeholder-bg-color;
+}
+
+.mx_AvatarSetting_avatarOverlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: none;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 10px;
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.mx_AvatarSetting_avatar:hover .mx_AvatarSetting_avatarOverlay:not(.mx_AvatarSetting_avatarOverlay_disabled) {
+    display: inline-block;
+    opacity: 0.5 !important;
+    color: $settings-profile-overlay-fg-color !important;
+    background-color: $settings-profile-overlay-bg-color !important;
+}
+
+.mx_AvatarSetting_avatarOverlay_show {
+    display: inline-block;
+    opacity: 1;
+    color: $settings-profile-overlay-placeholder-fg-color;
+    background-color: $settings-profile-overlay-placeholder-bg-color;
+}
+
+.mx_AvatarSetting_avatarOverlayText {
+    display: block;
+    margin-top: 17px;
+    margin-bottom: 8px;
+}
+
+.mx_AvatarSetting_noAvatarText {
+    display: block;
+    margin: 34px auto auto;
+}
+
+.mx_AvatarSetting_avatarOverlayImgContainer {
+    position: relative;
+    width: 14px;
+    height: 14px;
+    margin: auto;
+}
+
+.mx_AvatarSetting_avatarOverlayImg::before {
+    background-color: $settings-profile-overlay-placeholder-fg-color;
+    mask: url("$(res)/img/feather-customised/upload.svg");
+    mask-repeat: no-repeat;
+    mask-size: 14px;
+    mask-position: center;
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.mx_AvatarSetting_avatar:hover .mx_AvatarSetting_avatarOverlayImg::before {
+    background-color: $settings-profile-overlay-fg-color !important;
+}
+
+.mx_AvatarSetting_avatarUpload {
+    display: none;
+}

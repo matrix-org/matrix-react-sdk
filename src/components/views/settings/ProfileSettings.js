@@ -1,5 +1,6 @@
 /*
 Copyright 2019 New Vector Ltd
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,11 +20,9 @@ import {_t} from "../../../languageHandler";
 import MatrixClientPeg from "../../../MatrixClientPeg";
 import Field from "../elements/Field";
 import AccessibleButton from "../elements/AccessibleButton";
-import classNames from 'classnames';
 import {User} from "matrix-js-sdk";
 import { getHostingLink } from '../../../utils/HostingLink';
 import sdk from "../../../index";
-import {createMenu} from "../../structures/ContextualMenu";
 
 export default class ProfileSettings extends React.Component {
     constructor() {
@@ -90,7 +89,7 @@ export default class ProfileSettings extends React.Component {
             newState.originalAvatarUrl = newState.avatarUrl;
             newState.avatarFile = null;
         } else if (!this.state.avatarUrl && this.state.originalAvatarUrl) {
-            await client.setAvatarUrl(null);
+            await client.setAvatarUrl(""); // null causes 500 on Synapse
             newState.originalAvatarUrl = this.state.avatarUrl;
         }
 
@@ -126,62 +125,7 @@ export default class ProfileSettings extends React.Component {
         reader.readAsDataURL(file);
     };
 
-    _onAvatarClick = (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        if (this.state.avatarUrl) {
-            this._showAvatarContextMenu(e);
-        } else {
-            this._uploadAvatar();
-        }
-    };
-
-    _showAvatarContextMenu = (e) => {
-        const elementRect = e.target.getBoundingClientRect();
-
-        // The window X and Y offsets are to adjust position when zoomed in to page
-        const x = elementRect.right + window.pageXOffset + 3;
-        const chevronOffset = 12;
-        let y = (elementRect.top + (elementRect.height / 2) + window.pageYOffset);
-        y = y - (chevronOffset + 8); // where 8 is half the height of the chevron
-
-        const RoomTileContextMenu = sdk.getComponent('context_menus.AvatarContextMenu');
-
-        createMenu(RoomTileContextMenu, {
-            chevronOffset,
-            left: x,
-            top: y,
-            uploadAvatar: this._uploadAvatar,
-            removeAvatar: this._removeAvatar,
-        });
-    };
-
     render() {
-        // TODO: Why is rendering a box with an overlay so complicated? Can the DOM be reduced?
-
-        let showOverlayAnyways = true;
-        let avatarElement = <div className="mx_ProfileSettings_avatarPlaceholder" />;
-        if (this.state.avatarUrl) {
-            showOverlayAnyways = false;
-            avatarElement = <img src={this.state.avatarUrl}
-                                 alt={_t("Profile picture")} />;
-        }
-
-        const avatarOverlayClasses = classNames({
-            "mx_ProfileSettings_avatarOverlay": true,
-            "mx_ProfileSettings_avatarOverlay_show": showOverlayAnyways,
-        });
-
-        const uploadText = this.state.avatarUrl ? _t("Change profile picture") : _t("Upload profile picture");
-        const avatarHoverElement = (
-            <div className={avatarOverlayClasses} onClick={this._onAvatarClick}>
-                <span className="mx_ProfileSettings_avatarOverlayText">{uploadText}</span>
-                <div className="mx_ProfileSettings_avatarOverlayImgContainer">
-                    <div className="mx_ProfileSettings_avatarOverlayImg" />
-                </div>
-            </div>
-        );
-
         const hostingSignupLink = getHostingLink('user-settings');
         let hostingSignup = null;
         if (hostingSignupLink) {
@@ -198,6 +142,7 @@ export default class ProfileSettings extends React.Component {
             </span>;
         }
 
+        const AvatarSetting = sdk.getComponent("views.settings.AvatarSetting");
         return (
             <form onSubmit={this._saveProfile} autoComplete="off" noValidate={true}>
                 <input type="file" ref={this._avatarUpload} className="mx_ProfileSettings_avatarUpload"
@@ -212,10 +157,15 @@ export default class ProfileSettings extends React.Component {
                                type="text" value={this.state.displayName} autoComplete="off"
                                onChange={this._onDisplayNameChanged} />
                     </div>
-                    <div className="mx_ProfileSettings_avatar">
-                        {avatarElement}
-                        {avatarHoverElement}
-                    </div>
+                    <AvatarSetting
+                        uploadAvatar={this._uploadAvatar}
+                        removeAvatar={this._removeAvatar}
+                        avatarUrl={this.state.avatarUrl}
+                        avatarButtonText={_t("Profile picture options")}
+                        changeAvatarText={_t("Change profile picture")}
+                        uploadAvatarText={_t("Upload profile picture")}
+                        avatarImgAlt={_t("Profile picture")}
+                    />
                 </div>
                 <AccessibleButton onClick={this._saveProfile} kind="primary"
                                   disabled={!this.state.enableProfileSave}>

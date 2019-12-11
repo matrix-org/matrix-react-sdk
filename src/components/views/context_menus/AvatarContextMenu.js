@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import {_t} from "../../../languageHandler";
+import {MenuItem} from "../../structures/ContextMenu";
 
 export default class AvatarContextMenu extends React.PureComponent {
     static propTypes = {
@@ -36,15 +37,14 @@ export default class AvatarContextMenu extends React.PureComponent {
     };
 
     render() {
-        console.log(this.props);
-        return <div className="mx_MessageContextMenu">
-            <div className="mx_MessageContextMenu_field" onClick={this._onUploadAvatarClick}>
+        return <div className="mx_AvatarContextMenu">
+            <MenuItem className="mx_AvatarContextMenu_field" onClick={this._onUploadAvatarClick}>
                 { _t('Upload new image') }
-            </div>
-            <hr className="mx_RoomTileContextMenu_separator" />
-            <div className="mx_RoomTileContextMenu_leave" onClick={this._onRemoveAvatarClick}>
+            </MenuItem>
+            <hr className="mx_AvatarContextMenu_separator" />
+            <MenuItem className="mx_AvatarContextMenu_leave" onClick={this._onRemoveAvatarClick}>
                 { _t('Remove') }
-            </div>
+            </MenuItem>
         </div>;
     }
 }

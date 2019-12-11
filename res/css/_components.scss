@@ -44,6 +44,7 @@
 @import "./views/auth/_Welcome.scss";
 @import "./views/avatars/_BaseAvatar.scss";
 @import "./views/avatars/_MemberStatusMessageAvatar.scss";
+@import "./views/context_menus/_AvatarContextMenu.scss";
 @import "./views/context_menus/_MessageContextMenu.scss";
 @import "./views/context_menus/_RoomTileContextMenu.scss";
 @import "./views/context_menus/_StatusMessageContextMenu.scss";
@@ -175,6 +176,7 @@
 @import "./views/rooms/_Stickers.scss";
 @import "./views/rooms/_TopUnreadMessagesBar.scss";
 @import "./views/rooms/_WhoIsTypingTile.scss";
+@import "./views/settings/_AvatarSetting.scss";
 @import "./views/settings/_CrossSigningPanel.scss";
 @import "./views/settings/_DevicesPanel.scss";
 @import "./views/settings/_EmailAddresses.scss";

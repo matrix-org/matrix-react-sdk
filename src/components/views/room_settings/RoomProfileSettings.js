@@ -21,6 +21,7 @@ import MatrixClientPeg from "../../../MatrixClientPeg";
 import Field from "../elements/Field";
 import AccessibleButton from "../elements/AccessibleButton";
 import classNames from 'classnames';
+import sdk from "../../../index";
 
 // TODO: Merge with ProfileSettings?
 export default class RoomProfileSettings extends React.Component {
@@ -62,11 +63,16 @@ export default class RoomProfileSettings extends React.Component {
         this._avatarUpload = createRef();
     }
 
-    _uploadAvatar = (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-
+    _uploadAvatar = () => {
         this._avatarUpload.current.click();
+    };
+
+    _removeAvatar = () => {
+        this.setState({
+            avatarUrl: null,
+            avatarFile: null,
+            enableProfileSave: true,
+        });
     };
 
     _saveProfile = async (e) => {
@@ -92,6 +98,9 @@ export default class RoomProfileSettings extends React.Component {
             newState.avatarUrl = client.mxcUrlToHttp(uri, 96, 96, 'crop', false);
             newState.originalAvatarUrl = newState.avatarUrl;
             newState.avatarFile = null;
+        } else if (!this.state.avatarUrl && this.state.originalAvatarUrl) {
+            await client.sendStateEvent(this.props.roomId, 'm.room.avatar', {url: null}, '');
+            newState.originalAvatarUrl = this.state.avatarUrl;
         }
 
         if (this.state.originalTopic !== this.state.topic) {
@@ -139,45 +148,7 @@ export default class RoomProfileSettings extends React.Component {
     };
 
     render() {
-        // TODO: Why is rendering a box with an overlay so complicated? Can the DOM be reduced?
-
-        let showOverlayAnyways = true;
-        let avatarElement = <div className="mx_ProfileSettings_avatarPlaceholder" />;
-        if (this.state.avatarUrl) {
-            showOverlayAnyways = false;
-            avatarElement = <img src={this.state.avatarUrl}
-                                 alt={_t("Room avatar")} />;
-        }
-
-        const avatarOverlayClasses = classNames({
-            "mx_ProfileSettings_avatarOverlay": true,
-            "mx_ProfileSettings_avatarOverlay_show": showOverlayAnyways,
-        });
-        let avatarHoverElement = (
-            <div className={avatarOverlayClasses} onClick={this._uploadAvatar}>
-                <span className="mx_ProfileSettings_avatarOverlayText">{_t("Upload room avatar")}</span>
-                <div className="mx_ProfileSettings_avatarOverlayImgContainer">
-                    <div className="mx_ProfileSettings_avatarOverlayImg" />
-                </div>
-            </div>
-        );
-        if (!this.state.canSetAvatar) {
-            if (!showOverlayAnyways) {
-                avatarHoverElement = null;
-            } else {
-                const disabledOverlayClasses = classNames({
-                    "mx_ProfileSettings_avatarOverlay": true,
-                    "mx_ProfileSettings_avatarOverlay_show": true,
-                    "mx_ProfileSettings_avatarOverlay_disabled": true,
-                });
-                avatarHoverElement = (
-                    <div className={disabledOverlayClasses}>
-                        <span className="mx_ProfileSettings_noAvatarText">{_t("No room avatar")}</span>
-                    </div>
-                );
-            }
-        }
-
+        const AvatarSetting = sdk.getComponent("views.settings.AvatarSetting");
         return (
             <form onSubmit={this._saveProfile} autoComplete="off" noValidate={true}>
                 <input type="file" ref={this._avatarUpload} className="mx_ProfileSettings_avatarUpload"
@@ -191,10 +162,16 @@ export default class RoomProfileSettings extends React.Component {
                                type="text" value={this.state.topic} autoComplete="off"
                                onChange={this._onTopicChanged} element="textarea" />
                     </div>
-                    <div className="mx_ProfileSettings_avatar">
-                        {avatarElement}
-                        {avatarHoverElement}
-                    </div>
+                    <AvatarSetting
+                        uploadAvatar={this.state.canSetAvatar ? this._uploadAvatar : undefined}
+                        removeAvatar={this.state.canSetAvatar ? this._removeAvatar : undefined}
+                        avatarUrl={this.state.avatarUrl}
+                        avatarButtonText={_t("Avatar options")}
+                        changeAvatarText={_t("Change room avatar")}
+                        uploadAvatarText={_t("Upload room avatar")}
+                        avatarImgAlt={_t("Room avatar")}
+                        noAvatarText={_t("No room avatar")}
+                    />
                 </div>
                 <AccessibleButton onClick={this._saveProfile} kind="primary"
                                   disabled={!this.state.enableProfileSave}>
