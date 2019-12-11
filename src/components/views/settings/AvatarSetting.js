@@ -54,9 +54,11 @@ const AvatarSetting = (props) => {
                 { avatarElement }
             </ContextMenuButton>;
         }
-    } else {
+    } else if (canSet) {
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         avatarElement = <AccessibleButton className="mx_AvatarSetting_avatarPlaceholder" onClick={uploadAvatar} />;
+    } else {
+        avatarElement = <div className="mx_AvatarSetting_avatarPlaceholder" />;
     }
 
     const avatarOverlayClasses = classNames({
