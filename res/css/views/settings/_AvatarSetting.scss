@@ -21,7 +21,8 @@ limitations under the License.
     position: relative;
 }
 
-.mx_AvatarSetting_avatar > * {
+.mx_AvatarSetting_avatar > *,
+.mx_AvatarSetting_avatar img {
     display: block;
     width: 88px;
     height: 88px;
