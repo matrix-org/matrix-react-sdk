@@ -26,6 +26,7 @@ import PlatformPeg from "../../../../../PlatformPeg";
 
 export default class PreferencesUserSettingsTab extends React.Component {
     static COMPOSER_SETTINGS = [
+        'useCiderComposer',
         'MessageComposerInput.autoReplaceEmoji',
         'MessageComposerInput.suggestEmoji',
         'sendTypingNotifications',
@@ -43,6 +44,7 @@ export default class PreferencesUserSettingsTab extends React.Component {
         'showJoinLeaves',
         'showAvatarChanges',
         'showDisplaynameChanges',
+        'showImages',
     ];
 
     static ROOM_LIST_SETTINGS = [
@@ -69,7 +71,12 @@ export default class PreferencesUserSettingsTab extends React.Component {
             alwaysShowMenuBarSupported: false,
             minimizeToTray: true,
             minimizeToTraySupported: false,
-            autocompleteDelay: SettingsStore.getValueAt(SettingLevel.DEVICE, 'autocompleteDelay').toString(10),
+            autocompleteDelay:
+                SettingsStore.getValueAt(SettingLevel.DEVICE, 'autocompleteDelay').toString(10),
+            readMarkerInViewThresholdMs:
+                SettingsStore.getValueAt(SettingLevel.DEVICE, 'readMarkerInViewThresholdMs').toString(10),
+            readMarkerOutOfViewThresholdMs:
+                SettingsStore.getValueAt(SettingLevel.DEVICE, 'readMarkerOutOfViewThresholdMs').toString(10),
         };
     }
 
@@ -78,21 +85,18 @@ export default class PreferencesUserSettingsTab extends React.Component {
 
         const autoLaunchSupported = await platform.supportsAutoLaunch();
         let autoLaunch = false;
-
         if (autoLaunchSupported) {
             autoLaunch = await platform.getAutoLaunchEnabled();
         }
 
         const alwaysShowMenuBarSupported = await platform.supportsAutoHideMenuBar();
         let alwaysShowMenuBar = true;
-
         if (alwaysShowMenuBarSupported) {
             alwaysShowMenuBar = !await platform.getAutoHideMenuBarEnabled();
         }
 
         const minimizeToTraySupported = await platform.supportsMinimizeToTray();
         let minimizeToTray = true;
-
         if (minimizeToTraySupported) {
             minimizeToTray = await platform.getMinimizeToTrayEnabled();
         }
@@ -124,6 +128,16 @@ export default class PreferencesUserSettingsTab extends React.Component {
         SettingsStore.setValue("autocompleteDelay", null, SettingLevel.DEVICE, e.target.value);
     };
 
+    _onReadMarkerInViewThresholdMs = (e) => {
+        this.setState({readMarkerInViewThresholdMs: e.target.value});
+        SettingsStore.setValue("readMarkerInViewThresholdMs", null, SettingLevel.DEVICE, e.target.value);
+    };
+
+    _onReadMarkerOutOfViewThresholdMs = (e) => {
+        this.setState({readMarkerOutOfViewThresholdMs: e.target.value});
+        SettingsStore.setValue("readMarkerOutOfViewThresholdMs", null, SettingLevel.DEVICE, e.target.value);
+    };
+
     _renderGroup(settingIds) {
         const SettingsFlag = sdk.getComponent("views.elements.SettingsFlag");
         return settingIds.map(i => <SettingsFlag key={i} name={i} level={SettingLevel.ACCOUNT} />);
@@ -151,7 +165,7 @@ export default class PreferencesUserSettingsTab extends React.Component {
             minimizeToTrayOption = <LabelledToggleSwitch
                 value={this.state.minimizeToTray}
                 onChange={this._onMinimizeToTrayChange}
-                label={_t('Close button should minimize window to tray')} />;
+                label={_t('Show tray icon and minimize window to it on close')} />;
         }
 
         return (
@@ -178,6 +192,18 @@ export default class PreferencesUserSettingsTab extends React.Component {
                         type='number'
                         value={this.state.autocompleteDelay}
                         onChange={this._onAutocompleteDelayChange} />
+                    <Field
+                        id={"readMarkerInViewThresholdMs"}
+                        label={_t('Read Marker lifetime (ms)')}
+                        type='number'
+                        value={this.state.readMarkerInViewThresholdMs}
+                        onChange={this._onReadMarkerInViewThresholdMs} />
+                    <Field
+                        id={"readMarkerOutOfViewThresholdMs"}
+                        label={_t('Read Marker off-screen lifetime (ms)')}
+                        type='number'
+                        value={this.state.readMarkerOutOfViewThresholdMs}
+                        onChange={this._onReadMarkerOutOfViewThresholdMs} />
                 </div>
             </div>
         );

@@ -35,6 +35,11 @@ import Range from "./range";
  *    This is used to adjust the caret position.
  */
 
+/**
+ * @callback ManualTransformCallback
+ * @return the caret position
+ */
+
 export default class EditorModel {
     constructor(parts, partCreator, updateCallback = null) {
         this._parts = parts;
@@ -42,9 +47,9 @@ export default class EditorModel {
         this._activePartIdx = null;
         this._autoComplete = null;
         this._autoCompletePartIdx = null;
+        this._autoCompletePartCount = 0;
         this._transformCallback = null;
         this.setUpdateCallback(updateCallback);
-        this._updateInProgress = false;
     }
 
     /**
@@ -90,10 +95,14 @@ export default class EditorModel {
 
     _removePart(index) {
         this._parts.splice(index, 1);
-        if (this._activePartIdx >= index) {
+        if (index === this._activePartIdx) {
+            this._activePartIdx = null;
+        } else if (this._activePartIdx > index) {
             --this._activePartIdx;
         }
-        if (this._autoCompletePartIdx >= index) {
+        if (index === this._autoCompletePartIdx) {
+            this._autoCompletePartIdx = null;
+        } else if (this._autoCompletePartIdx > index) {
             --this._autoCompletePartIdx;
         }
     }
@@ -140,6 +149,9 @@ export default class EditorModel {
 
     reset(serializedParts, caret, inputType) {
         this._parts = serializedParts.map(p => this._partCreator.deserializePart(p));
+        if (!caret) {
+            caret = this.getPositionAtEnd();
+        }
         // close auto complete if open
         // this would happen when clearing the composer after sending
         // a message with the autocomplete still open
@@ -150,8 +162,14 @@ export default class EditorModel {
         this._updateCallback(caret, inputType);
     }
 
-    insertPartsAt(parts, caret) {
-        const position = this.positionForOffset(caret.offset, caret.atNodeEnd);
+    /**
+     * Inserts the given parts at the given position.
+     * Should be run inside a `model.transform()` callback.
+     * @param {Part[]} parts the parts to replace the range with
+     * @param {DocumentPosition} position the position to start inserting at
+     * @return {Number} the amount of characters added
+     */
+    insert(parts, position) {
         const insertIndex = this._splitAt(position);
         let newTextLength = 0;
         for (let i = 0; i < parts.length; ++i) {
@@ -159,36 +177,31 @@ export default class EditorModel {
             newTextLength += part.text.length;
             this._insertPart(insertIndex + i, part);
         }
-        // put caret after new part
-        const lastPartIndex = insertIndex + parts.length - 1;
-        const newPosition = new DocumentPosition(lastPartIndex, newTextLength);
-        this._updateCallback(newPosition);
+        return newTextLength;
     }
 
     update(newValue, inputType, caret) {
-        this._updateInProgress = true;
         const diff = this._diff(newValue, inputType, caret);
         const position = this.positionForOffset(diff.at, caret.atNodeEnd);
         let removedOffsetDecrease = 0;
         if (diff.removed) {
             removedOffsetDecrease = this.removeText(position, diff.removed.length);
         }
-        const canOpenAutoComplete = inputType !== "insertFromPaste" && inputType !== "insertFromDrop";
         let addedLen = 0;
         if (diff.added) {
-            // these shouldn't trigger auto-complete, you just want to append a piece of text
-            addedLen = this._addText(position, diff.added, {validate: canOpenAutoComplete});
+            addedLen = this._addText(position, diff.added, inputType);
         }
         this._mergeAdjacentParts();
         const caretOffset = diff.at - removedOffsetDecrease + addedLen;
         let newPosition = this.positionForOffset(caretOffset, true);
-        this._setActivePart(newPosition, canOpenAutoComplete);
+        const canOpenAutoComplete = inputType !== "insertFromPaste" && inputType !== "insertFromDrop";
+        const acPromise = this._setActivePart(newPosition, canOpenAutoComplete);
         if (this._transformCallback) {
             const transformAddedLen = this._transform(newPosition, inputType, diff);
             newPosition = this.positionForOffset(caretOffset + transformAddedLen, true);
         }
-        this._updateInProgress = false;
         this._updateCallback(newPosition, inputType, diff);
+        return acPromise;
     }
 
     _transform(newPosition, inputType, diff) {
@@ -209,33 +222,36 @@ export default class EditorModel {
                         // make sure that react picks up the difference between both acs
                         this._autoComplete = ac;
                         this._autoCompletePartIdx = index;
+                        this._autoCompletePartCount = 1;
                     }
                 }
             }
             // not _autoComplete, only there if active part is autocomplete part
             if (this.autoComplete) {
-                this.autoComplete.onPartUpdate(part, pos.offset);
+                return this.autoComplete.onPartUpdate(part, pos);
             }
         } else {
             this._activePartIdx = null;
             this._autoComplete = null;
             this._autoCompletePartIdx = null;
+            this._autoCompletePartCount = 0;
         }
+        return Promise.resolve();
     }
 
-    _onAutoComplete = ({replacePart, caretOffset, close}) => {
+    _onAutoComplete = ({replaceParts, close}) => {
         let pos;
-        if (replacePart) {
-            this._replacePart(this._autoCompletePartIdx, replacePart);
-            const index = this._autoCompletePartIdx;
-            if (caretOffset === undefined) {
-                caretOffset = replacePart.text.length;
-            }
-            pos = new DocumentPosition(index, caretOffset);
+        if (replaceParts) {
+            this._parts.splice(this._autoCompletePartIdx, this._autoCompletePartCount, ...replaceParts);
+            this._autoCompletePartCount = replaceParts.length;
+            const lastPart = replaceParts[replaceParts.length - 1];
+            const lastPartIndex = this._autoCompletePartIdx + replaceParts.length - 1;
+            pos = new DocumentPosition(lastPartIndex, lastPart.text.length);
         }
         if (close) {
             this._autoComplete = null;
             this._autoCompletePartIdx = null;
+            this._autoCompletePartCount = 0;
         }
         // rerender even if editor contents didn't change
         // to make sure the MessageEditor checks
@@ -322,22 +338,20 @@ export default class EditorModel {
      * inserts `str` into the model at `pos`.
      * @param {Object} pos
      * @param {string} str
-     * @param {Object} options
+     * @param {string} inputType the source of the input, see html InputEvent.inputType
      * @param {bool} options.validate Whether characters will be validated by the part.
      *                                Validating allows the inserted text to be parsed according to the part rules.
      * @return {Number} how far from position (in characters) the insertion ended.
      * This can be more than the length of `str` when crossing non-editable parts, which are skipped.
      */
-    _addText(pos, str, {validate=true}) {
+    _addText(pos, str, inputType) {
         let {index} = pos;
         const {offset} = pos;
         let addLen = str.length;
         const part = this._parts[index];
         if (part) {
             if (part.canEdit) {
-                if (validate && part.validateAndInsert(offset, str)) {
-                    str = null;
-                } else if (!validate && part.insert(offset, str)) {
+                if (part.validateAndInsert(offset, str, inputType)) {
                     str = null;
                 } else {
                     const splitPart = part.split(offset);
@@ -356,13 +370,8 @@ export default class EditorModel {
             index = 0;
         }
         while (str) {
-            const newPart = this._partCreator.createPartForInput(str, index);
-            if (validate) {
-                str = newPart.appendUntilRejected(str);
-            } else {
-                newPart.insert(0, str);
-                str = null;
-            }
+            const newPart = this._partCreator.createPartForInput(str, index, inputType);
+            str = newPart.appendUntilRejected(str, inputType);
             this._insertPart(index, newPart);
             index += 1;
         }
@@ -382,31 +391,32 @@ export default class EditorModel {
             currentOffset += partLen;
             return false;
         });
-
-        return new DocumentPosition(index, totalOffset - currentOffset);
+        if (index === -1) {
+            return this.getPositionAtEnd();
+        } else {
+            return new DocumentPosition(index, totalOffset - currentOffset);
+        }
     }
 
     /**
      * Starts a range, which can span across multiple parts, to find and replace text.
-     * @param {DocumentPosition} position where to start the range
+     * @param {DocumentPosition} positionA a boundary of the range
+     * @param {DocumentPosition?} positionB the other boundary of the range, optional
      * @return {Range}
      */
-    startRange(position) {
-        return new Range(this, position);
+    startRange(positionA, positionB = positionA) {
+        return new Range(this, positionA, positionB);
     }
 
     // called from Range.replace
-    replaceRange(startPosition, endPosition, parts) {
+    _replaceRange(startPosition, endPosition, parts) {
+        // convert end position to offset, so it is independent of how the document is split into parts
+        // which we'll change when splitting up at the start position
+        const endOffset = endPosition.asOffset(this);
         const newStartPartIndex = this._splitAt(startPosition);
-        const idxDiff = newStartPartIndex - startPosition.index;
-        // if both position are in the same part, and we split it at start position,
-        // the offset of the end position needs to be decreased by the offset of the start position
-        const removedOffset = startPosition.index === endPosition.index ? startPosition.offset : 0;
-        const adjustedEndPosition = new DocumentPosition(
-            endPosition.index + idxDiff,
-            endPosition.offset - removedOffset,
-        );
-        const newEndPartIndex = this._splitAt(adjustedEndPosition);
+        // convert it back to position once split at start
+        endPosition = endOffset.asPosition(this);
+        const newEndPartIndex = this._splitAt(endPosition);
         for (let i = newEndPartIndex - 1; i >= newStartPartIndex; --i) {
             this._removePart(i);
         }
@@ -416,8 +426,23 @@ export default class EditorModel {
             insertIdx += 1;
         }
         this._mergeAdjacentParts();
-        if (!this._updateInProgress) {
-            this._updateCallback();
+    }
+
+    /**
+     * Performs a transformation not part of an update cycle.
+     * Modifying the model should only happen inside a transform call if not part of an update call.
+     * @param {ManualTransformCallback} callback to run the transformations in
+     * @return {Promise} a promise when auto-complete (if applicable) is done updating
+     */
+    transform(callback) {
+        const pos = callback();
+        let acPromise = null;
+        if (!(pos instanceof Range)) {
+            acPromise = this._setActivePart(pos, true);
+        } else {
+            acPromise = Promise.resolve();
         }
+        this._updateCallback(pos);
+        return acPromise;
     }
 }

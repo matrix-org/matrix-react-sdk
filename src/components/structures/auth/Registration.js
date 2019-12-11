@@ -18,8 +18,8 @@ limitations under the License.
 */
 
 import Matrix from 'matrix-js-sdk';
-import Promise from 'bluebird';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import sdk from '../../../index';
 import { _t, _td } from '../../../languageHandler';
@@ -40,7 +40,7 @@ const PHASE_REGISTRATION = 1;
 // Enable phases for registration
 const PHASES_ENABLED = true;
 
-module.exports = React.createClass({
+module.exports = createReactClass({
     displayName: 'Registration',
 
     propTypes: {
@@ -237,11 +237,15 @@ module.exports = React.createClass({
             } else if (e.httpStatus === 403 && e.errcode === "M_UNKNOWN") {
                 this.setState({
                     errorText: _t("Registration has been disabled on this homeserver."),
+                    // add empty flows array to get rid of spinner
+                    flows: [],
                 });
             } else {
                 console.log("Unable to query for supported registration methods.", e);
                 this.setState({
                     errorText: _t("Unable to query for supported registration methods."),
+                    // add empty flows array to get rid of spinner
+                    flows: [],
                 });
             }
         }
@@ -366,7 +370,7 @@ module.exports = React.createClass({
                 if (pushers[i].kind === 'email') {
                     const emailPusher = pushers[i];
                     emailPusher.data = { brand: this.props.brand };
-                    matrixClient.setPusher(emailPusher).done(() => {
+                    matrixClient.setPusher(emailPusher).then(() => {
                         console.log("Set email branding to " + this.props.brand);
                     }, (error) => {
                         console.error("Couldn't set email branding: " + error);
@@ -499,6 +503,7 @@ module.exports = React.createClass({
                     serverConfig={this.props.serverConfig}
                     onServerConfigChange={this.props.onServerConfigChange}
                     delayTimeMs={250}
+                    showIdentityServerIfRequiredByHomeserver={true}
                     {...serverDetailsProps}
                 />;
                 break;
@@ -540,7 +545,7 @@ module.exports = React.createClass({
             return <div className="mx_AuthBody_spinner">
                 <Spinner />
             </div>;
-        } else {
+        } else if (this.state.flows.length) {
             let onEditServerDetailsClick = null;
             // If custom URLs are allowed and we haven't selected the Free server type, wire
             // up the server details edit link.

@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import Markdown from '../Markdown';
+import {makeGenericPermalink} from "../utils/permalinks/Permalinks";
 
 export function mdSerialize(model) {
     return model.parts.reduce((html, part) => {
@@ -29,7 +30,7 @@ export function mdSerialize(model) {
                 return html + part.text;
             case "room-pill":
             case "user-pill":
-                return html + `[${part.text}](https://matrix.to/#/${part.resourceId})`;
+                return html + `[${part.text}](${makeGenericPermalink(part.resourceId)})`;
         }
     }, "");
 }
@@ -54,7 +55,7 @@ export function textSerialize(model) {
                 return text + part.text;
             case "room-pill":
             case "user-pill":
-                return text + `${part.resourceId}`;
+                return text + `${part.text}`;
         }
     }, "");
 }
@@ -72,5 +73,18 @@ export function stripEmoteCommand(model) {
     // trim "/me "
     model = model.clone();
     model.removeText({index: 0, offset: 0}, 4);
+    return model;
+}
+
+export function unescapeMessage(model) {
+    const {parts} = model;
+    if (parts.length) {
+        const firstPart = parts[0];
+        // only unescape \/ to / at start of editor
+        if (firstPart.type === "plain" && firstPart.text.startsWith("\\/")) {
+            model = model.clone();
+            model.removeText({index: 0, offset: 0}, 1);
+        }
+    }
     return model;
 }

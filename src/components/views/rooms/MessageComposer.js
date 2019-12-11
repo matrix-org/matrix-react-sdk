@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import React from 'react';
+import React, {createRef} from 'react';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import CallHandler from '../../../CallHandler';
@@ -23,9 +23,8 @@ import sdk from '../../../index';
 import dis from '../../../dispatcher';
 import RoomViewStore from '../../../stores/RoomViewStore';
 import Stickerpicker from './Stickerpicker';
-import { makeRoomPermalink } from '../../../matrix-to';
+import { makeRoomPermalink } from '../../../utils/permalinks/Permalinks';
 import ContentMessages from '../../../ContentMessages';
-import classNames from 'classnames';
 import E2EIcon from './E2EIcon';
 
 function ComposerAvatar(props) {
@@ -112,6 +111,8 @@ class UploadButton extends React.Component {
         super(props, context);
         this.onUploadClick = this.onUploadClick.bind(this);
         this.onUploadFileInputChange = this.onUploadFileInputChange.bind(this);
+
+        this._uploadInput = createRef();
     }
 
     onUploadClick(ev) {
@@ -119,7 +120,7 @@ class UploadButton extends React.Component {
             dis.dispatch({action: 'require_registration'});
             return;
         }
-        this.refs.uploadInput.click();
+        this._uploadInput.current.click();
     }
 
     onUploadFileInputChange(ev) {
@@ -151,7 +152,9 @@ class UploadButton extends React.Component {
                 onClick={this.onUploadClick}
                 title={_t('Upload file')}
             >
-                <input ref="uploadInput" type="file"
+                <input
+                    ref={this._uploadInput}
+                    type="file"
                     style={uploadInputStyle}
                     multiple
                     onChange={this.onUploadFileInputChange}
@@ -353,13 +356,9 @@ export default class MessageComposer extends React.Component {
             );
         }
 
-        const wrapperClasses = classNames({
-            mx_MessageComposer_wrapper: true,
-            mx_MessageComposer_hasE2EIcon: !!this.props.e2eStatus,
-        });
         return (
             <div className="mx_MessageComposer">
-                <div className={wrapperClasses}>
+                <div className="mx_MessageComposer_wrapper">
                     <div className="mx_MessageComposer_row">
                         { controls }
                     </div>

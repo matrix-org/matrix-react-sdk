@@ -27,14 +27,22 @@ export default class AutocompleteWrapperModel {
     onEscape(e) {
         this._getAutocompleterComponent().onEscape(e);
         this._updateCallback({
-            replacePart: this._partCreator.plain(this._queryPart.text),
-            caretOffset: this._queryOffset,
+            replaceParts: [this._partCreator.plain(this._queryPart.text)],
             close: true,
         });
     }
 
+    close() {
+        this._updateCallback({close: true});
+    }
+
     hasSelection() {
         return this._getAutocompleterComponent().hasSelection();
+    }
+
+    hasCompletions() {
+        const ac = this._getAutocompleterComponent();
+        return ac && ac.countCompletions() > 0;
     }
 
     onEnter() {
@@ -52,9 +60,6 @@ export default class AutocompleteWrapperModel {
         } else {
             await acComponent.moveSelection(e.shiftKey ? -1 : +1);
         }
-        this._updateCallback({
-            close: true,
-        });
     }
 
     onUpArrow() {
@@ -65,30 +70,29 @@ export default class AutocompleteWrapperModel {
         this._getAutocompleterComponent().moveSelection(+1);
     }
 
-    onPartUpdate(part, offset) {
+    onPartUpdate(part, pos) {
         // cache the typed value and caret here
         // so we can restore it in onComponentSelectionChange when the value is undefined (meaning it should be the typed text)
         this._queryPart = part;
-        this._queryOffset = offset;
-        this._updateQuery(part.text);
+        this._partIndex = pos.index;
+        return this._updateQuery(part.text);
     }
 
     onComponentSelectionChange(completion) {
         if (!completion) {
             this._updateCallback({
-                replacePart: this._queryPart,
-                caretOffset: this._queryOffset,
+                replaceParts: [this._queryPart],
             });
         } else {
             this._updateCallback({
-                replacePart: this._partForCompletion(completion),
+                replaceParts: this._partForCompletion(completion),
             });
         }
     }
 
     onComponentConfirm(completion) {
         this._updateCallback({
-            replacePart: this._partForCompletion(completion),
+            replaceParts: this._partForCompletion(completion),
             close: true,
         });
     }
@@ -96,20 +100,22 @@ export default class AutocompleteWrapperModel {
     _partForCompletion(completion) {
         const {completionId} = completion;
         const text = completion.completion;
-        const firstChr = completionId && completionId[0];
-        switch (firstChr) {
-            case "@": {
-                if (completionId === "@room") {
-                    return this._partCreator.atRoomPill(completionId);
-                } else {
-                    return this._partCreator.userPill(text, completionId);
-                }
-            }
-            case "#":
-                return this._partCreator.roomPill(completionId);
-            // used for emoji and command completion replacement
+        switch (completion.type) {
+            case "room":
+                return [this._partCreator.roomPill(completionId), this._partCreator.plain(completion.suffix)];
+            case "at-room":
+                return [this._partCreator.atRoomPill(completionId), this._partCreator.plain(completion.suffix)];
+            case "user":
+                // not using suffix here, because we also need to calculate
+                // the suffix when clicking a display name to insert a mention,
+                // which happens in createMentionParts
+                return this._partCreator.createMentionParts(this._partIndex, text, completionId);
+            case "command":
+                // command needs special handling for auto complete, but also renders as plain texts
+                return [this._partCreator.command(text)];
             default:
-                return this._partCreator.plain(text);
+                // used for emoji and other plain text completion replacement
+                return [this._partCreator.plain(text)];
         }
     }
 }

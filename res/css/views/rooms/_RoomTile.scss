@@ -110,7 +110,7 @@ limitations under the License.
     flex: 0 1 content;
     border-radius: 0.8em;
     padding: 0 0.4em;
-    color: $accent-fg-color;
+    color: $roomtile-badge-fg-color;
     font-weight: 600;
     font-size: 12px;
 }
@@ -143,6 +143,8 @@ limitations under the License.
 
 // toggle menuButton and badge on hover/menu displayed
 .mx_RoomTile_menuDisplayed,
+// or on keyboard focus of room tile
+.mx_RoomTile.focus-visible:focus-within,
 .mx_LeftPanel_container:not(.collapsed) .mx_RoomTile:hover {
     .mx_RoomTile_menuButton {
         display: block;
@@ -156,6 +158,7 @@ limitations under the License.
 
 .mx_RoomTile_highlight .mx_RoomTile_badge,
 .mx_RoomTile_badge.mx_RoomTile_badgeRed {
+    color: $accent-fg-color;
     background-color: $warning-color;
 }
 

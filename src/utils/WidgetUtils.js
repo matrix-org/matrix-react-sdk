@@ -100,11 +100,14 @@ export default class WidgetUtils {
         }
 
         const testUrl = url.parse(testUrlString);
-
         let scalarUrls = SdkConfig.get().integrations_widgets_urls;
         if (!scalarUrls || scalarUrls.length === 0) {
             const defaultManager = IntegrationManagers.sharedInstance().getPrimaryManager();
-            if (defaultManager) scalarUrls = [defaultManager.apiUrl];
+            if (defaultManager) {
+                scalarUrls = [defaultManager.apiUrl];
+            } else {
+                scalarUrls = [];
+            }
         }
 
         for (let i = 0; i < scalarUrls.length; i++) {
@@ -230,7 +233,9 @@ export default class WidgetUtils {
         };
 
         const client = MatrixClientPeg.get();
-        const userWidgets = WidgetUtils.getUserWidgets();
+        // Get the current widgets and clone them before we modify them, otherwise
+        // we'll modify the content of the old event.
+        const userWidgets = JSON.parse(JSON.stringify(WidgetUtils.getUserWidgets()));
 
         // Delete existing widget with ID
         try {
@@ -395,7 +400,7 @@ export default class WidgetUtils {
         return client.setAccountData('m.widgets', userWidgets);
     }
 
-    static makeAppConfig(appId, app, sender, roomId) {
+    static makeAppConfig(appId, app, senderUserId, roomId, eventId) {
         const myUserId = MatrixClientPeg.get().credentials.userId;
         const user = MatrixClientPeg.get().getUser(myUserId);
         const params = {
@@ -408,7 +413,13 @@ export default class WidgetUtils {
             '$theme': SettingsStore.getValue("theme"),
         };
 
+        if (!senderUserId) {
+            throw new Error("Widgets must be created by someone - provide a senderUserId");
+        }
+        app.creatorUserId = senderUserId;
+
         app.id = appId;
+        app.eventId = eventId;
         app.name = app.name || app.type;
 
         if (app.data) {
@@ -420,7 +431,6 @@ export default class WidgetUtils {
         }
 
         app.url = encodeUri(app.url, params);
-        app.creatorUserId = (sender && sender.userId) ? sender.userId : null;
 
         return app;
     }

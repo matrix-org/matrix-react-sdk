@@ -17,11 +17,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Promise from 'bluebird';
-
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import Matrix from "matrix-js-sdk";
+
+// focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by _AccessibleButton.scss
+import 'focus-visible';
+// what-input helps improve keyboard accessibility
+import 'what-input';
 
 import Analytics from "../../Analytics";
 import { DecryptionFailureTracker } from "../../DecryptionFailureTracker";
@@ -40,7 +44,7 @@ import * as Rooms from '../../Rooms';
 import linkifyMatrix from "../../linkify-matrix";
 import * as Lifecycle from '../../Lifecycle';
 // LifecycleStore is not used but does listen to and dispatch actions
-require('../../stores/LifecycleStore');
+import '../../stores/LifecycleStore';
 import PageTypes from '../../PageTypes';
 import { getHomePageUrl } from '../../utils/pages';
 
@@ -55,10 +59,10 @@ import { ValidatedServerConfig } from "../../utils/AutoDiscoveryUtils";
 import AutoDiscoveryUtils from "../../utils/AutoDiscoveryUtils";
 import DMRoomMap from '../../utils/DMRoomMap';
 import { countRoomsWithNotif } from '../../RoomNotifs';
-
-// Disable warnings for now: we use deprecated bluebird functions
-// and need to migrate, but they spam the console with warnings.
-Promise.config({warnings: false});
+import { ThemeWatcher } from "../../theme";
+import { storeRoomAliasInCache } from '../../RoomAliasCache';
+import { defer } from "../../utils/promise";
+import KeyVerificationStateObserver from '../../utils/KeyVerificationStateObserver';
 
 /** constants for MatrixChat.state.view */
 const VIEWS = {
@@ -106,7 +110,7 @@ const ONBOARDING_FLOW_STARTERS = [
     'view_create_group',
 ];
 
-export default React.createClass({
+export default createReactClass({
     // we export this so that the integration tests can use it :-S
     statics: {
         VIEWS: VIEWS,
@@ -173,10 +177,9 @@ export default React.createClass({
             viewUserId: null,
             // this is persisted as mx_lhs_size, loaded in LoggedInView
             collapseLhs: false,
-            collapsedRhs: window.localStorage.getItem("mx_rhs_collapsed") === "true",
             leftDisabled: false,
             middleDisabled: false,
-            rightDisabled: false,
+            // the right panel's disabled state is tracked in its store.
 
             version: null,
             newVersion: null,
@@ -231,7 +234,7 @@ export default React.createClass({
 
         // Used by _viewRoom before getting state from sync
         this.firstSyncComplete = false;
-        this.firstSyncPromise = Promise.defer();
+        this.firstSyncPromise = defer();
 
         if (this.props.config.sync_timeline_limit) {
             MatrixClientPeg.opts.initialSyncLimit = this.props.config.sync_timeline_limit;
@@ -267,8 +270,14 @@ export default React.createClass({
 
     componentDidMount: function() {
         this.dispatcherRef = dis.register(this.onAction);
+        this._themeWatcher = new ThemeWatcher();
+        this._themeWatcher.start();
 
         this.focusComposer = false;
+
+        // object field used for tracking the status info appended to the title tag.
+        // we don't do it as react state as i'm scared about triggering needless react refreshes.
+        this.subTitleStatus = '';
 
         // this can technically be done anywhere but doing this here keeps all
         // the routing url path logic together.
@@ -285,7 +294,10 @@ export default React.createClass({
         // the first thing to do is to try the token params in the query-string
         // if the session isn't soft logged out (ie: is a clean session being logged in)
         if (!Lifecycle.isSoftLogout()) {
-            Lifecycle.attemptTokenLogin(this.props.realQueryParams).then((loggedIn) => {
+            Lifecycle.attemptTokenLogin(
+                this.props.realQueryParams,
+                this.props.defaultDeviceDisplayName,
+            ).then((loggedIn) => {
                 if (loggedIn) {
                     this.props.onTokenLoginCompleted();
 
@@ -346,6 +358,7 @@ export default React.createClass({
     componentWillUnmount: function() {
         Lifecycle.stopMatrixClient();
         dis.unregister(this.dispatcherRef);
+        this._themeWatcher.stop();
         window.removeEventListener("focus", this.onFocus);
         window.removeEventListener('resize', this.handleResize);
         this.state.resizeNotifier.removeListener("middlePanelResized", this._dispatchTimelineResize);
@@ -528,7 +541,7 @@ export default React.createClass({
                             const Loader = sdk.getComponent("elements.Spinner");
                             const modal = Modal.createDialog(Loader, null, 'mx_Dialog_spinner');
 
-                            MatrixClientPeg.get().leave(payload.room_id).done(() => {
+                            MatrixClientPeg.get().leave(payload.room_id).then(() => {
                                 modal.close();
                                 if (this.state.currentRoomId === payload.room_id) {
                                     dis.dispatch({action: 'view_next_room'});
@@ -615,6 +628,22 @@ export default React.createClass({
             case 'view_invite':
                 showRoomInviteDialog(payload.roomId);
                 break;
+            case 'view_last_screen':
+                // This function does what we want, despite the name. The idea is that it shows
+                // the last room we were looking at or some reasonable default/guess. We don't
+                // have to worry about email invites or similar being re-triggered because the
+                // function will have cleared that state and not execute that path.
+                this._showScreenAfterLogin();
+                break;
+            case 'toggle_my_groups':
+                // We just dispatch the page change rather than have to worry about
+                // what the logic is for each of these branches.
+                if (this.state.page_type === PageTypes.MyGroups) {
+                    dis.dispatch({action: 'view_last_screen'});
+                } else {
+                    dis.dispatch({action: 'view_my_groups'});
+                }
+                break;
             case 'notifier_enabled': {
                     this.setState({showNotifierToolbar: Notifier.shouldShowToolbar()});
                 }
@@ -629,29 +658,14 @@ export default React.createClass({
                     collapseLhs: false,
                 });
                 break;
-            case 'hide_right_panel':
-                window.localStorage.setItem("mx_rhs_collapsed", true);
-                this.setState({
-                    collapsedRhs: true,
-                });
-                break;
-            case 'show_right_panel':
-                window.localStorage.setItem("mx_rhs_collapsed", false);
-                this.setState({
-                    collapsedRhs: false,
-                });
-                break;
             case 'panel_disable': {
                 this.setState({
                     leftDisabled: payload.leftDisabled || payload.sideDisabled || false,
                     middleDisabled: payload.middleDisabled || false,
-                    rightDisabled: payload.rightDisabled || payload.sideDisabled || false,
+                    // We don't track the right panel being disabled here - it's tracked in the store.
                 });
                 break;
             }
-            case 'set_theme':
-                this._onSetTheme(payload.value);
-                break;
             case 'on_logging_in':
                 // We are now logging in, so set the state to reflect that
                 // NB. This does not touch 'ready' since if our dispatches
@@ -849,12 +863,17 @@ export default React.createClass({
             waitFor = this.firstSyncPromise.promise;
         }
 
-        waitFor.done(() => {
+        waitFor.then(() => {
             let presentedId = roomInfo.room_alias || roomInfo.room_id;
             const room = MatrixClientPeg.get().getRoom(roomInfo.room_id);
             if (room) {
                 const theAlias = Rooms.getDisplayAliasForRoom(room);
-                if (theAlias) presentedId = theAlias;
+                if (theAlias) {
+                    presentedId = theAlias;
+                    // Store display alias of the presented room in cache to speed future
+                    // navigation.
+                    storeRoomAliasInCache(theAlias, room.roomId);
+                }
 
                 // Store this as the ID of the last room accessed. This is so that we can
                 // persist which room is being stored across refreshes and browser quits.
@@ -866,9 +885,10 @@ export default React.createClass({
             if (roomInfo.event_id && roomInfo.highlighted) {
                 presentedId += "/" + roomInfo.event_id;
             }
-            this.notifyNewScreen('room/' + presentedId);
             newState.ready = true;
-            this.setState(newState);
+            this.setState(newState, ()=>{
+                this.notifyNewScreen('room/' + presentedId);
+            });
         });
     },
 
@@ -958,12 +978,9 @@ export default React.createClass({
         const CreateRoomDialog = sdk.getComponent('dialogs.CreateRoomDialog');
         const modal = Modal.createTrackedDialog('Create Room', '', CreateRoomDialog);
 
-        const [shouldCreate, name, noFederate] = await modal.finished;
+        const [shouldCreate, createOpts] = await modal.finished;
         if (shouldCreate) {
-            const createOpts = {};
-            if (name) createOpts.name = name;
-            if (noFederate) createOpts.creation_content = {'m.federate': false};
-            createRoom({createOpts}).done();
+            createRoom({createOpts});
         }
     },
 
@@ -1097,82 +1114,6 @@ export default React.createClass({
     },
 
     /**
-     * Called whenever someone changes the theme
-     *
-     * @param {string} theme new theme
-     */
-    _onSetTheme: function(theme) {
-        if (!theme) {
-            theme = SettingsStore.getValue("theme");
-        }
-
-        // look for the stylesheet elements.
-        // styleElements is a map from style name to HTMLLinkElement.
-        const styleElements = Object.create(null);
-        let a;
-        for (let i = 0; (a = document.getElementsByTagName("link")[i]); i++) {
-            const href = a.getAttribute("href");
-            // shouldn't we be using the 'title' tag rather than the href?
-            const match = href.match(/^bundles\/.*\/theme-(.*)\.css$/);
-            if (match) {
-                styleElements[match[1]] = a;
-            }
-        }
-
-        if (!(theme in styleElements)) {
-            throw new Error("Unknown theme " + theme);
-        }
-
-        // disable all of them first, then enable the one we want. Chrome only
-        // bothers to do an update on a true->false transition, so this ensures
-        // that we get exactly one update, at the right time.
-        //
-        // ^ This comment was true when we used to use alternative stylesheets
-        // for the CSS.  Nowadays we just set them all as disabled in index.html
-        // and enable them as needed.  It might be cleaner to disable them all
-        // at the same time to prevent loading two themes simultaneously and
-        // having them interact badly... but this causes a flash of unstyled app
-        // which is even uglier.  So we don't.
-
-        styleElements[theme].disabled = false;
-
-        const switchTheme = function() {
-            // we re-enable our theme here just in case we raced with another
-            // theme set request as per https://github.com/vector-im/riot-web/issues/5601.
-            // We could alternatively lock or similar to stop the race, but
-            // this is probably good enough for now.
-            styleElements[theme].disabled = false;
-            Object.values(styleElements).forEach((a) => {
-                if (a == styleElements[theme]) return;
-                a.disabled = true;
-            });
-            Tinter.setTheme(theme);
-        };
-
-        // turns out that Firefox preloads the CSS for link elements with
-        // the disabled attribute, but Chrome doesn't.
-
-        let cssLoaded = false;
-
-        styleElements[theme].onload = () => {
-            switchTheme();
-        };
-
-        for (let i = 0; i < document.styleSheets.length; i++) {
-            const ss = document.styleSheets[i];
-            if (ss && ss.href === styleElements[theme].href) {
-                cssLoaded = true;
-                break;
-            }
-        }
-
-        if (cssLoaded) {
-            styleElements[theme].onload = undefined;
-            switchTheme();
-        }
-    },
-
-    /**
      * Starts a chat with the welcome user, if the user doesn't already have one
      * @returns {string} The room ID of the new room, or null if no room was created
      */
@@ -1293,9 +1234,9 @@ export default React.createClass({
             view: VIEWS.LOGIN,
             ready: false,
             collapseLhs: false,
-            collapsedRhs: false,
             currentRoomId: null,
         });
+        this.subTitleStatus = '';
         this._setPageSubtitle();
     },
 
@@ -1308,9 +1249,9 @@ export default React.createClass({
             view: VIEWS.SOFT_LOGOUT,
             ready: false,
             collapseLhs: false,
-            collapsedRhs: false,
             currentRoomId: null,
         });
+        this.subTitleStatus = '';
         this._setPageSubtitle();
     },
 
@@ -1325,9 +1266,8 @@ export default React.createClass({
         // since we're about to start the client and therefore about
         // to do the first sync
         this.firstSyncComplete = false;
-        this.firstSyncPromise = Promise.defer();
+        this.firstSyncPromise = defer();
         const cli = MatrixClientPeg.get();
-        const IncomingSasDialog = sdk.getComponent('views.dialogs.IncomingSasDialog');
 
         // Allow the JS SDK to reap timeline events. This reduces the amount of
         // memory consumed as the JS SDK stores multiple distinct copies of room
@@ -1372,7 +1312,7 @@ export default React.createClass({
             if (state === "SYNCING" && prevState === "SYNCING") {
                 return;
             }
-            console.log("MatrixClient sync state => %s", state);
+            console.info("MatrixClient sync state => %s", state);
             if (state !== "PREPARED") { return; }
 
             self.firstSyncComplete = true;
@@ -1431,17 +1371,6 @@ export default React.createClass({
                     }
                 },
             }, null, true);
-        });
-
-        cli.on("accountData", function(ev) {
-            if (ev.getType() === 'im.vector.web.settings') {
-                if (ev.getContent() && ev.getContent().theme) {
-                    dis.dispatch({
-                        action: 'set_theme',
-                        value: ev.getContent().theme,
-                    });
-                }
-            }
         });
 
         const dft = new DecryptionFailureTracker((total, errorCode) => {
@@ -1537,12 +1466,35 @@ export default React.createClass({
             }
         });
 
-        cli.on("crypto.verification.start", (verifier) => {
-            Modal.createTrackedDialog('Incoming Verification', '', IncomingSasDialog, {
-                verifier,
-            });
-        });
+        if (SettingsStore.isFeatureEnabled("feature_dm_verification")) {
+            cli.on("crypto.verification.request", request => {
+                let requestObserver;
+                if (request.event.getRoomId()) {
+                    requestObserver = new KeyVerificationStateObserver(
+                        request.event, MatrixClientPeg.get());
+                }
 
+                if (!requestObserver || requestObserver.pending) {
+                    dis.dispatch({
+                        action: "show_toast",
+                        toast: {
+                            key: request.event.getId(),
+                            title: _t("Verification Request"),
+                            icon: "verification",
+                            props: {request, requestObserver},
+                            component: sdk.getComponent("toasts.VerificationRequestToast"),
+                        },
+                    });
+                }
+            });
+        } else {
+            cli.on("crypto.verification.start", (verifier) => {
+                const IncomingSasDialog = sdk.getComponent("views.dialogs.IncomingSasDialog");
+                Modal.createTrackedDialog('Incoming Verification', '', IncomingSasDialog, {
+                    verifier,
+                });
+            });
+        }
         // Fire the tinter right on startup to ensure the default theme is applied
         // A later sync can/will correct the tint to be the right value for the user
         const colorScheme = SettingsStore.getValue("roomColor");
@@ -1705,6 +1657,7 @@ export default React.createClass({
         if (this.props.onNewScreen) {
             this.props.onNewScreen(screen);
         }
+        this._setPageSubtitle();
     },
 
     onAliasClick: function(event, alias) {
@@ -1739,20 +1692,12 @@ export default React.createClass({
     handleResize: function(e) {
         const hideLhsThreshold = 1000;
         const showLhsThreshold = 1000;
-        const hideRhsThreshold = 820;
-        const showRhsThreshold = 820;
 
         if (this._windowWidth > hideLhsThreshold && window.innerWidth <= hideLhsThreshold) {
             dis.dispatch({ action: 'hide_left_panel' });
         }
         if (this._windowWidth <= showLhsThreshold && window.innerWidth > showLhsThreshold) {
             dis.dispatch({ action: 'show_left_panel' });
-        }
-        if (this._windowWidth > hideRhsThreshold && window.innerWidth <= hideRhsThreshold) {
-            dis.dispatch({ action: 'hide_right_panel' });
-        }
-        if (this._windowWidth <= showRhsThreshold && window.innerWidth > showRhsThreshold) {
-            dis.dispatch({ action: 'show_right_panel' });
         }
 
         this.state.resizeNotifier.notifyWindowResized();
@@ -1812,7 +1757,7 @@ export default React.createClass({
             return;
         }
 
-        cli.sendEvent(roomId, event.getType(), event.getContent()).done(() => {
+        cli.sendEvent(roomId, event.getType(), event.getContent()).then(() => {
             dis.dispatch({action: 'message_sent'});
         }, (err) => {
             dis.dispatch({action: 'message_send_failed'});
@@ -1820,6 +1765,15 @@ export default React.createClass({
     },
 
     _setPageSubtitle: function(subtitle='') {
+        if (this.state.currentRoomId) {
+            const client = MatrixClientPeg.get();
+            const room = client && client.getRoom(this.state.currentRoomId);
+            if (room) {
+                subtitle = `${this.subTitleStatus} | ${ room.name } ${subtitle}`;
+            }
+        } else {
+            subtitle = `${this.subTitleStatus} ${subtitle}`;
+        }
         document.title = `${SdkConfig.get().brand || 'Riot'} ${subtitle}`;
     },
 
@@ -1831,15 +1785,15 @@ export default React.createClass({
             PlatformPeg.get().setNotificationCount(notifCount);
         }
 
-        let subtitle = '';
+        this.subTitleStatus = '';
         if (state === "ERROR") {
-            subtitle += `[${_t("Offline")}] `;
+            this.subTitleStatus += `[${_t("Offline")}] `;
         }
         if (notifCount > 0) {
-            subtitle += `[${notifCount}]`;
+            this.subTitleStatus += `[${notifCount}]`;
         }
 
-        this._setPageSubtitle(subtitle);
+        this._setPageSubtitle();
     },
 
     onCloseAllSettings() {
@@ -1864,28 +1818,26 @@ export default React.createClass({
     render: function() {
         // console.log(`Rendering MatrixChat with view ${this.state.view}`);
 
+        let view;
+
         if (
             this.state.view === VIEWS.LOADING ||
             this.state.view === VIEWS.LOGGING_IN
         ) {
             const Spinner = sdk.getComponent('elements.Spinner');
-            return (
+            view = (
                 <div className="mx_MatrixChat_splash">
                     <Spinner />
                 </div>
             );
-        }
-
-        // needs to be before normal PageTypes as you are logged in technically
-        if (this.state.view === VIEWS.POST_REGISTRATION) {
+        } else if (this.state.view === VIEWS.POST_REGISTRATION) {
+            // needs to be before normal PageTypes as you are logged in technically
             const PostRegistration = sdk.getComponent('structures.auth.PostRegistration');
-            return (
+            view = (
                 <PostRegistration
                     onComplete={this.onFinishPostRegistration} />
             );
-        }
-
-        if (this.state.view === VIEWS.LOGGED_IN) {
+        } else if (this.state.view === VIEWS.LOGGED_IN) {
             // store errors stop the client syncing and require user intervention, so we'll
             // be showing a dialog. Don't show anything else.
             const isStoreError = this.state.syncError && this.state.syncError instanceof Matrix.InvalidStoreError;
@@ -1899,8 +1851,8 @@ export default React.createClass({
                  * as using something like redux to avoid having a billion bits of state kicking around.
                  */
                 const LoggedInView = sdk.getComponent('structures.LoggedInView');
-                return (
-                   <LoggedInView ref={this._collectLoggedInView} matrixClient={MatrixClientPeg.get()}
+                view = (
+                    <LoggedInView ref={this._collectLoggedInView} matrixClient={MatrixClientPeg.get()}
                         onRoomCreated={this.onRoomCreated}
                         onCloseAllSettings={this.onCloseAllSettings}
                         onRegistered={this.onRegistered}
@@ -1919,26 +1871,22 @@ export default React.createClass({
                         {messageForSyncError(this.state.syncError)}
                     </div>;
                 }
-                return (
+                view = (
                     <div className="mx_MatrixChat_splash">
                         {errorBox}
                         <Spinner />
                         <a href="#" className="mx_MatrixChat_splashButtons" onClick={this.onLogoutClick}>
-                        { _t('Logout') }
+                            {_t('Logout')}
                         </a>
                     </div>
                 );
             }
-        }
-
-        if (this.state.view === VIEWS.WELCOME) {
+        } else if (this.state.view === VIEWS.WELCOME) {
             const Welcome = sdk.getComponent('auth.Welcome');
-            return <Welcome />;
-        }
-
-        if (this.state.view === VIEWS.REGISTER) {
+            view = <Welcome />;
+        } else if (this.state.view === VIEWS.REGISTER) {
             const Registration = sdk.getComponent('structures.auth.Registration');
-            return (
+            view = (
                 <Registration
                     clientSecret={this.state.register_client_secret}
                     sessionId={this.state.register_session_id}
@@ -1952,12 +1900,9 @@ export default React.createClass({
                     {...this.getServerProperties()}
                 />
             );
-        }
-
-
-        if (this.state.view === VIEWS.FORGOT_PASSWORD) {
+        } else if (this.state.view === VIEWS.FORGOT_PASSWORD) {
             const ForgotPassword = sdk.getComponent('structures.auth.ForgotPassword');
-            return (
+            view = (
                 <ForgotPassword
                     onComplete={this.onLoginClick}
                     onLoginClick={this.onLoginClick}
@@ -1965,11 +1910,9 @@ export default React.createClass({
                     {...this.getServerProperties()}
                 />
             );
-        }
-
-        if (this.state.view === VIEWS.LOGIN) {
+        } else if (this.state.view === VIEWS.LOGIN) {
             const Login = sdk.getComponent('structures.auth.Login');
-            return (
+            view = (
                 <Login
                     onLoggedIn={Lifecycle.setLoggedIn}
                     onRegisterClick={this.onRegisterClick}
@@ -1980,18 +1923,21 @@ export default React.createClass({
                     {...this.getServerProperties()}
                 />
             );
-        }
-
-        if (this.state.view === VIEWS.SOFT_LOGOUT) {
+        } else if (this.state.view === VIEWS.SOFT_LOGOUT) {
             const SoftLogout = sdk.getComponent('structures.auth.SoftLogout');
-            return (
+            view = (
                 <SoftLogout
                     realQueryParams={this.props.realQueryParams}
                     onTokenLoginCompleted={this.props.onTokenLoginCompleted}
                 />
             );
+        } else {
+            console.error(`Unknown view ${this.state.view}`);
         }
 
-        console.error(`Unknown view ${this.state.view}`);
+        const ErrorBoundary = sdk.getComponent('elements.ErrorBoundary');
+        return <ErrorBoundary>
+            {view}
+        </ErrorBoundary>;
     },
 });

@@ -1,10 +1,6 @@
 steps:
   - label: ":eslint: Lint"
     command:
-      # TODO: Remove hacky chmod for BuildKite
-      - "echo '--- Setup'"
-      - "chmod +x ./scripts/ci/*.sh"
-      - "chmod +x ./scripts/*"
       - "echo '--- Install js-sdk'"
       - "./scripts/ci/install-deps.sh"
       - "yarn lintwithexclusions"
@@ -15,9 +11,9 @@ steps:
 
   - label: ":chains: End-to-End Tests"
     agents:
-      # We use a medium sized instance instead of the normal small ones because
+      # We use a xlarge sized instance instead of the normal small ones because
       # e2e tests otherwise take +-8min
-      queue: "medium"
+      queue: "xlarge"
     command:
       # TODO: Remove hacky chmod for BuildKite
       - "echo '--- Setup'"
@@ -96,7 +92,7 @@ steps:
           image: "node:10"
 
   - wait
- 
+
   - label: "🐴 Trigger riot-web"
     trigger: "riot-web"
     branches: "develop"

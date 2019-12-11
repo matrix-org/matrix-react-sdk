@@ -19,10 +19,10 @@ limitations under the License.
 
 import SettingsStore from "../../settings/SettingsStore";
 
-const React = require('react');
-const ReactDOM = require("react-dom");
+import React, {createRef} from 'react';
+import createReactClass from 'create-react-class';
+import ReactDOM from "react-dom";
 import PropTypes from 'prop-types';
-import Promise from 'bluebird';
 
 const Matrix = require("matrix-js-sdk");
 const EventTimeline = Matrix.EventTimeline;
@@ -41,8 +41,6 @@ import EditorStateTransfer from '../../utils/EditorStateTransfer';
 
 const PAGINATE_SIZE = 20;
 const INITIAL_SIZE = 20;
-const READ_MARKER_INVIEW_THRESHOLD_MS = 1 * 1000;
-const READ_MARKER_OUTOFVIEW_THRESHOLD_MS = 30 * 1000;
 const READ_RECEIPT_INTERVAL_MS = 500;
 
 const DEBUG = false;
@@ -58,7 +56,7 @@ if (DEBUG) {
  *
  * Also responsible for handling and sending read receipts.
  */
-const TimelinePanel = React.createClass({
+const TimelinePanel = createReactClass({
     displayName: 'TimelinePanel',
 
     propTypes: {
@@ -190,6 +188,12 @@ const TimelinePanel = React.createClass({
 
             // always show timestamps on event tiles?
             alwaysShowTimestamps: SettingsStore.getValue("alwaysShowTimestamps"),
+
+            // how long to show the RM for when it's visible in the window
+            readMarkerInViewThresholdMs: SettingsStore.getValue("readMarkerInViewThresholdMs"),
+
+            // how long to show the RM for when it's scrolled off-screen
+            readMarkerOutOfViewThresholdMs: SettingsStore.getValue("readMarkerOutOfViewThresholdMs"),
         };
     },
 
@@ -198,6 +202,8 @@ const TimelinePanel = React.createClass({
 
         this.lastRRSentEventId = undefined;
         this.lastRMSentEventId = undefined;
+
+        this._messagePanel = createRef();
 
         if (this.props.manageReadReceipts) {
             this.updateReadReceiptOnUserActivity();
@@ -421,8 +427,8 @@ const TimelinePanel = React.createClass({
         if (payload.action === "edit_event") {
             const editState = payload.event ? new EditorStateTransfer(payload.event) : null;
             this.setState({editState}, () => {
-                if (payload.event && this.refs.messagePanel) {
-                    this.refs.messagePanel.scrollToEventIfNeeded(
+                if (payload.event && this._messagePanel.current) {
+                    this._messagePanel.current.scrollToEventIfNeeded(
                         payload.event.getId(),
                     );
                 }
@@ -438,9 +444,9 @@ const TimelinePanel = React.createClass({
         // updates from pagination will happen when the paginate completes.
         if (toStartOfTimeline || !data || !data.liveEvent) return;
 
-        if (!this.refs.messagePanel) return;
+        if (!this._messagePanel.current) return;
 
-        if (!this.refs.messagePanel.getScrollState().stuckAtBottom) {
+        if (!this._messagePanel.current.getScrollState().stuckAtBottom) {
             // we won't load this event now, because we don't want to push any
             // events off the other end of the timeline. But we need to note
             // that we can now paginate.
@@ -457,7 +463,7 @@ const TimelinePanel = React.createClass({
         // timeline window.
         //
         // see https://github.com/vector-im/vector-web/issues/1035
-        this._timelineWindow.paginate(EventTimeline.FORWARDS, 1, false).done(() => {
+        this._timelineWindow.paginate(EventTimeline.FORWARDS, 1, false).then(() => {
             if (this.unmounted) { return; }
 
             const { events, liveEvents } = this._getEvents();
@@ -495,7 +501,7 @@ const TimelinePanel = React.createClass({
             }
 
             this.setState(updatedState, () => {
-                this.refs.messagePanel.updateTimelineMinHeight();
+                this._messagePanel.current.updateTimelineMinHeight();
                 if (callRMUpdated) {
                     this.props.onReadMarkerUpdated();
                 }
@@ -506,13 +512,13 @@ const TimelinePanel = React.createClass({
     onRoomTimelineReset: function(room, timelineSet) {
         if (timelineSet !== this.props.timelineSet) return;
 
-        if (this.refs.messagePanel && this.refs.messagePanel.isAtBottom()) {
+        if (this._messagePanel.current && this._messagePanel.current.isAtBottom()) {
             this._loadTimeline();
         }
     },
 
     canResetTimeline: function() {
-        return this.refs.messagePanel && this.refs.messagePanel.isAtBottom();
+        return this._messagePanel.current && this._messagePanel.current.isAtBottom();
     },
 
     onRoomRedaction: function(ev, room) {
@@ -592,8 +598,8 @@ const TimelinePanel = React.createClass({
 
     _readMarkerTimeout(readMarkerPosition) {
         return readMarkerPosition === 0 ?
-            READ_MARKER_INVIEW_THRESHOLD_MS :
-            READ_MARKER_OUTOFVIEW_THRESHOLD_MS;
+            this.state.readMarkerInViewThresholdMs :
+            this.state.readMarkerOutOfViewThresholdMs;
     },
 
     updateReadMarkerOnUserActivity: async function() {
@@ -625,7 +631,7 @@ const TimelinePanel = React.createClass({
     sendReadReceipt: function() {
         if (SettingsStore.getValue("lowBandwidth")) return;
 
-        if (!this.refs.messagePanel) return;
+        if (!this._messagePanel.current) return;
         if (!this.props.manageReadReceipts) return;
         // This happens on user_activity_end which is delayed, and it's
         // very possible have logged out within that timeframe, so check
@@ -684,20 +690,26 @@ const TimelinePanel = React.createClass({
             }
             this.lastRMSentEventId = this.state.readMarkerEventId;
 
+            const roomId = this.props.timelineSet.room.roomId;
+            const hiddenRR = !SettingsStore.getValue("sendReadReceipts", roomId);
+
             debuglog('TimelinePanel: Sending Read Markers for ',
                 this.props.timelineSet.room.roomId,
                 'rm', this.state.readMarkerEventId,
                 lastReadEvent ? 'rr ' + lastReadEvent.getId() : '',
+                ' hidden:' + hiddenRR,
             );
             MatrixClientPeg.get().setRoomReadMarkers(
                 this.props.timelineSet.room.roomId,
                 this.state.readMarkerEventId,
                 lastReadEvent, // Could be null, in which case no RR is sent
+                {hidden: hiddenRR},
             ).catch((e) => {
                 // /read_markers API is not implemented on this HS, fallback to just RR
                 if (e.errcode === 'M_UNRECOGNIZED' && lastReadEvent) {
                     return MatrixClientPeg.get().sendReadReceipt(
                         lastReadEvent,
+                        {hidden: hiddenRR},
                     ).catch((e) => {
                         console.error(e);
                         this.lastRRSentEventId = undefined;
@@ -805,8 +817,8 @@ const TimelinePanel = React.createClass({
         if (this._timelineWindow.canPaginate(EventTimeline.FORWARDS)) {
             this._loadTimeline();
         } else {
-            if (this.refs.messagePanel) {
-                this.refs.messagePanel.scrollToBottom();
+            if (this._messagePanel.current) {
+                this._messagePanel.current.scrollToBottom();
             }
         }
     },
@@ -816,7 +828,7 @@ const TimelinePanel = React.createClass({
      */
     jumpToReadMarker: function() {
         if (!this.props.manageReadMarkers) return;
-        if (!this.refs.messagePanel) return;
+        if (!this._messagePanel.current) return;
         if (!this.state.readMarkerEventId) return;
 
         // we may not have loaded the event corresponding to the read-marker
@@ -825,11 +837,11 @@ const TimelinePanel = React.createClass({
         //
         // a quick way to figure out if we've loaded the relevant event is
         // simply to check if the messagepanel knows where the read-marker is.
-        const ret = this.refs.messagePanel.getReadMarkerPosition();
+        const ret = this._messagePanel.current.getReadMarkerPosition();
         if (ret !== null) {
             // The messagepanel knows where the RM is, so we must have loaded
             // the relevant event.
-            this.refs.messagePanel.scrollToEvent(this.state.readMarkerEventId,
+            this._messagePanel.current.scrollToEvent(this.state.readMarkerEventId,
                                                  0, 1/3);
             return;
         }
@@ -864,8 +876,8 @@ const TimelinePanel = React.createClass({
      * at the end of the live timeline.
      */
     isAtEndOfLiveTimeline: function() {
-        return this.refs.messagePanel
-            && this.refs.messagePanel.isAtBottom()
+        return this._messagePanel.current
+            && this._messagePanel.current.isAtBottom()
             && this._timelineWindow
             && !this._timelineWindow.canPaginate(EventTimeline.FORWARDS);
     },
@@ -877,8 +889,8 @@ const TimelinePanel = React.createClass({
      * returns null if we are not mounted.
      */
     getScrollState: function() {
-        if (!this.refs.messagePanel) { return null; }
-        return this.refs.messagePanel.getScrollState();
+        if (!this._messagePanel.current) { return null; }
+        return this._messagePanel.current.getScrollState();
     },
 
     // returns one of:
@@ -889,9 +901,9 @@ const TimelinePanel = React.createClass({
     //  +1: read marker is below the window
     getReadMarkerPosition: function() {
         if (!this.props.manageReadMarkers) return null;
-        if (!this.refs.messagePanel) return null;
+        if (!this._messagePanel.current) return null;
 
-        const ret = this.refs.messagePanel.getReadMarkerPosition();
+        const ret = this._messagePanel.current.getReadMarkerPosition();
         if (ret !== null) {
             return ret;
         }
@@ -926,7 +938,7 @@ const TimelinePanel = React.createClass({
      * We pass it down to the scroll panel.
      */
     handleScrollKey: function(ev) {
-        if (!this.refs.messagePanel) { return; }
+        if (!this._messagePanel.current) { return; }
 
         // jump to the live timeline on ctrl-end, rather than the end of the
         // timeline window.
@@ -934,7 +946,7 @@ const TimelinePanel = React.createClass({
             ev.keyCode == KeyCode.END) {
             this.jumpToLiveTimeline();
         } else {
-            this.refs.messagePanel.handleScrollKey(ev);
+            this._messagePanel.current.handleScrollKey(ev);
         }
     },
 
@@ -976,8 +988,8 @@ const TimelinePanel = React.createClass({
         const onLoaded = () => {
             // clear the timeline min-height when
             // (re)loading the timeline
-            if (this.refs.messagePanel) {
-                this.refs.messagePanel.onTimelineReset();
+            if (this._messagePanel.current) {
+                this._messagePanel.current.onTimelineReset();
             }
             this._reloadEvents();
 
@@ -992,7 +1004,7 @@ const TimelinePanel = React.createClass({
                 timelineLoading: false,
             }, () => {
                 // initialise the scroll state of the message panel
-                if (!this.refs.messagePanel) {
+                if (!this._messagePanel.current) {
                     // this shouldn't happen - we know we're mounted because
                     // we're in a setState callback, and we know
                     // timelineLoading is now false, so render() should have
@@ -1002,10 +1014,10 @@ const TimelinePanel = React.createClass({
                     return;
                 }
                 if (eventId) {
-                    this.refs.messagePanel.scrollToEvent(eventId, pixelOffset,
+                    this._messagePanel.current.scrollToEvent(eventId, pixelOffset,
                                                          offsetBase);
                 } else {
-                    this.refs.messagePanel.scrollToBottom();
+                    this._messagePanel.current.scrollToBottom();
                 }
 
                 this.sendReadReceipt();
@@ -1053,8 +1065,6 @@ const TimelinePanel = React.createClass({
             });
         };
 
-        let prom = this._timelineWindow.load(eventId, INITIAL_SIZE);
-
         // if we already have the event in question, TimelineWindow.load
         // returns a resolved promise.
         //
@@ -1063,9 +1073,14 @@ const TimelinePanel = React.createClass({
         // quite slow. So we detect that situation and shortcut straight to
         // calling _reloadEvents and updating the state.
 
-        if (prom.isFulfilled()) {
+        const timeline = this.props.timelineSet.getTimelineForEvent(eventId);
+        if (timeline) {
+            // This is a hot-path optimization by skipping a promise tick
+            // by repeating a no-op sync branch in TimelineSet.getTimelineForEvent & MatrixClient.getEventTimeline
+            this._timelineWindow.load(eventId, INITIAL_SIZE); // in this branch this method will happen in sync time
             onLoaded();
         } else {
+            const prom = this._timelineWindow.load(eventId, INITIAL_SIZE);
             this.setState({
                 events: [],
                 liveEvents: [],
@@ -1073,11 +1088,8 @@ const TimelinePanel = React.createClass({
                 canForwardPaginate: false,
                 timelineLoading: true,
             });
-
-            prom = prom.then(onLoaded, onError);
+            prom.then(onLoaded, onError);
         }
-
-        prom.done();
     },
 
     // handle the completion of a timeline load or localEchoUpdate, by
@@ -1124,7 +1136,7 @@ const TimelinePanel = React.createClass({
         const ignoreOwn = opts.ignoreOwn || false;
         const allowPartial = opts.allowPartial || false;
 
-        const messagePanel = this.refs.messagePanel;
+        const messagePanel = this._messagePanel.current;
         if (messagePanel === undefined) return null;
 
         const EventTile = sdk.getComponent('rooms.EventTile');
@@ -1303,7 +1315,8 @@ const TimelinePanel = React.createClass({
             ['PREPARED', 'CATCHUP'].includes(this.state.clientSyncState)
         );
         return (
-            <MessagePanel ref="messagePanel"
+            <MessagePanel
+                ref={this._messagePanel}
                 room={this.props.timelineSet.room}
                 permalinkCreator={this.props.permalinkCreator}
                 hidden={this.props.hidden}

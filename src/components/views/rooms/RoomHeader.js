@@ -14,10 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
-import React from 'react';
+import React, {createRef} from 'react';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import classNames from 'classnames';
 import sdk from '../../../index';
 import { _t } from '../../../languageHandler';
@@ -33,14 +32,13 @@ import SettingsStore from "../../../settings/SettingsStore";
 import RoomHeaderButtons from '../right_panel/RoomHeaderButtons';
 import E2EIcon from './E2EIcon';
 
-module.exports = React.createClass({
+module.exports = createReactClass({
     displayName: 'RoomHeader',
 
     propTypes: {
         room: PropTypes.object,
         oobData: PropTypes.object,
         inRoom: PropTypes.bool,
-        collapsedRhs: PropTypes.bool,
         onSettingsClick: PropTypes.func,
         onPinnedClick: PropTypes.func,
         onSearchClick: PropTypes.func,
@@ -57,6 +55,10 @@ module.exports = React.createClass({
         };
     },
 
+    UNSAFE_componentWillMount: function() {
+        this._topic = createRef();
+    },
+
     componentDidMount: function() {
         const cli = MatrixClientPeg.get();
         cli.on("RoomState.events", this._onRoomStateEvents);
@@ -71,8 +73,8 @@ module.exports = React.createClass({
     },
 
     componentDidUpdate: function() {
-        if (this.refs.topic) {
-            linkifyElement(this.refs.topic);
+        if (this._topic.current) {
+            linkifyElement(this._topic.current);
         }
     },
 
@@ -205,7 +207,7 @@ module.exports = React.createClass({
             }
         }
         const topicElement =
-            <div className="mx_RoomHeader_topic" ref="topic" title={topic} dir="auto">{ topic }</div>;
+            <div className="mx_RoomHeader_topic" ref={this._topic} title={topic} dir="auto">{ topic }</div>;
         const avatarSize = 28;
         let roomAvatar;
         if (this.props.room) {
@@ -305,7 +307,7 @@ module.exports = React.createClass({
                     { topicElement }
                     { cancelButton }
                     { rightRow }
-                    <RoomHeaderButtons collapsedRhs={this.props.collapsedRhs} />
+                    <RoomHeaderButtons />
                 </div>
             </div>
         );

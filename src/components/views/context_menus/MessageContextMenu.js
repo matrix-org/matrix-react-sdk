@@ -1,6 +1,8 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2018 New Vector Ltd
+Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,6 +19,7 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import {EventStatus} from 'matrix-js-sdk';
 
 import MatrixClientPeg from '../../../MatrixClientPeg';
@@ -28,12 +31,13 @@ import Resend from '../../../Resend';
 import SettingsStore from '../../../settings/SettingsStore';
 import { isUrlPermitted } from '../../../HtmlUtils';
 import { isContentActionable } from '../../../utils/EventUtils';
+import {MenuItem} from "../../structures/ContextMenu";
 
 function canCancel(eventStatus) {
     return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
 }
 
-module.exports = React.createClass({
+module.exports = createReactClass({
     displayName: 'MessageContextMenu',
 
     propTypes: {
@@ -113,6 +117,14 @@ module.exports = React.createClass({
 
     e2eInfoClicked: function() {
         this.props.e2eInfoCallback();
+        this.closeMenu();
+    },
+
+    onReportEventClick: function() {
+        const ReportEventDialog = sdk.getComponent("dialogs.ReportEventDialog");
+        Modal.createTrackedDialog('Report Event', '', ReportEventDialog, {
+            mxEvent: this.props.mxEvent,
+        }, 'mx_Dialog_reportEvent');
         this.closeMenu();
     },
 
@@ -278,6 +290,8 @@ module.exports = React.createClass({
     },
 
     render: function() {
+        const cli = MatrixClientPeg.get();
+        const me = cli.getUserId();
         const mxEvent = this.props.mxEvent;
         const eventStatus = mxEvent.status;
         const editStatus = mxEvent.replacingEvent() && mxEvent.replacingEvent().status;
@@ -307,89 +321,89 @@ module.exports = React.createClass({
         if (!mxEvent.isRedacted()) {
             if (eventStatus === EventStatus.NOT_SENT) {
                 resendButton = (
-                    <div className="mx_MessageContextMenu_field" onClick={this.onResendClick}>
+                    <MenuItem className="mx_MessageContextMenu_field" onClick={this.onResendClick}>
                         { _t('Resend') }
-                    </div>
+                    </MenuItem>
                 );
             }
 
             if (editStatus === EventStatus.NOT_SENT) {
                 resendEditButton = (
-                    <div className="mx_MessageContextMenu_field" onClick={this.onResendEditClick}>
+                    <MenuItem className="mx_MessageContextMenu_field" onClick={this.onResendEditClick}>
                         { _t('Resend edit') }
-                    </div>
+                    </MenuItem>
                 );
             }
 
             if (unsentReactionsCount !== 0) {
                 resendReactionsButton = (
-                    <div className="mx_MessageContextMenu_field" onClick={this.onResendReactionsClick}>
+                    <MenuItem className="mx_MessageContextMenu_field" onClick={this.onResendReactionsClick}>
                         { _t('Resend %(unsentCount)s reaction(s)', {unsentCount: unsentReactionsCount}) }
-                    </div>
+                    </MenuItem>
                 );
             }
         }
 
         if (redactStatus === EventStatus.NOT_SENT) {
             resendRedactionButton = (
-                <div className="mx_MessageContextMenu_field" onClick={this.onResendRedactionClick}>
+                <MenuItem className="mx_MessageContextMenu_field" onClick={this.onResendRedactionClick}>
                     { _t('Resend removal') }
-                </div>
+                </MenuItem>
             );
         }
 
         if (isSent && this.state.canRedact) {
             redactButton = (
-                <div className="mx_MessageContextMenu_field" onClick={this.onRedactClick}>
+                <MenuItem className="mx_MessageContextMenu_field" onClick={this.onRedactClick}>
                     { _t('Remove') }
-                </div>
+                </MenuItem>
             );
         }
 
         if (allowCancel) {
             cancelButton = (
-                <div className="mx_MessageContextMenu_field" onClick={this.onCancelSendClick}>
+                <MenuItem className="mx_MessageContextMenu_field" onClick={this.onCancelSendClick}>
                     { _t('Cancel Sending') }
-                </div>
+                </MenuItem>
             );
         }
 
         if (isContentActionable(mxEvent)) {
             forwardButton = (
-                <div className="mx_MessageContextMenu_field" onClick={this.onForwardClick}>
+                <MenuItem className="mx_MessageContextMenu_field" onClick={this.onForwardClick}>
                     { _t('Forward Message') }
-                </div>
+                </MenuItem>
             );
 
             if (this.state.canPin) {
                 pinButton = (
-                    <div className="mx_MessageContextMenu_field" onClick={this.onPinClick}>
+                    <MenuItem className="mx_MessageContextMenu_field" onClick={this.onPinClick}>
                         { this._isPinned() ? _t('Unpin Message') : _t('Pin Message') }
-                    </div>
+                    </MenuItem>
                 );
             }
         }
 
         const viewSourceButton = (
-            <div className="mx_MessageContextMenu_field" onClick={this.onViewSourceClick}>
+            <MenuItem className="mx_MessageContextMenu_field" onClick={this.onViewSourceClick}>
                 { _t('View Source') }
-            </div>
+            </MenuItem>
         );
 
         if (mxEvent.getType() !== mxEvent.getWireType()) {
             viewClearSourceButton = (
-                <div className="mx_MessageContextMenu_field" onClick={this.onViewClearSourceClick}>
+                <MenuItem className="mx_MessageContextMenu_field" onClick={this.onViewClearSourceClick}>
                     { _t('View Decrypted Source') }
-                </div>
+                </MenuItem>
             );
         }
 
         if (this.props.eventTileOps) {
             if (this.props.eventTileOps.isWidgetHidden()) {
                 unhidePreviewButton = (
-                    <div className="mx_MessageContextMenu_field" onClick={this.onUnhidePreviewClick}>
+                    <MenuItem className="mx_MessageContextMenu_field" onClick={this.onUnhidePreviewClick}>
                         { _t('Unhide Preview') }
-                    </div>
+                    </MenuItem>
                 );
             }
         }
@@ -400,20 +414,19 @@ module.exports = React.createClass({
         }
         // XXX: if we use room ID, we should also include a server where the event can be found (other than in the domain of the event ID)
         const permalinkButton = (
-            <div className="mx_MessageContextMenu_field">
-                <a href={permalink}
-                  target="_blank" rel="noopener" onClick={this.onPermalinkClick}>
+            <MenuItem className="mx_MessageContextMenu_field">
+                <a href={permalink} target="_blank" rel="noopener" onClick={this.onPermalinkClick} tabIndex={-1}>
                     { mxEvent.isRedacted() || mxEvent.getType() !== 'm.room.message'
                         ? _t('Share Permalink') : _t('Share Message') }
                 </a>
-            </div>
+            </MenuItem>
         );
 
         if (this.props.eventTileOps && this.props.eventTileOps.getInnerText) {
             quoteButton = (
-                <div className="mx_MessageContextMenu_field" onClick={this.onQuoteClick}>
+                <MenuItem className="mx_MessageContextMenu_field" onClick={this.onQuoteClick}>
                     { _t('Quote') }
-                </div>
+                </MenuItem>
             );
         }
 
@@ -423,26 +436,44 @@ module.exports = React.createClass({
             isUrlPermitted(mxEvent.event.content.external_url)
         ) {
             externalURLButton = (
-                <div className="mx_MessageContextMenu_field">
-                    <a href={mxEvent.event.content.external_url}
-                      rel="noopener" target="_blank" onClick={this.closeMenu}>{ _t('Source URL') }</a>
-                </div>
+                <MenuItem className="mx_MessageContextMenu_field">
+                    <a
+                        href={mxEvent.event.content.external_url}
+                        target="_blank"
+                        rel="noopener"
+                        onClick={this.closeMenu}
+                        tabIndex={-1}
+                    >
+                        { _t('Source URL') }
+                    </a>
+                </MenuItem>
           );
         }
 
         if (this.props.collapseReplyThread) {
             collapseReplyThread = (
-                <div className="mx_MessageContextMenu_field" onClick={this.onCollapseReplyThreadClick}>
+                <MenuItem className="mx_MessageContextMenu_field" onClick={this.onCollapseReplyThreadClick}>
                     { _t('Collapse Reply Thread') }
-                </div>
+                </MenuItem>
             );
         }
 
         let e2eInfo;
         if (this.props.e2eInfoCallback) {
-            e2eInfo = <div className="mx_MessageContextMenu_field" onClick={this.e2eInfoClicked}>
+            e2eInfo = (
+                <MenuItem className="mx_MessageContextMenu_field" onClick={this.e2eInfoClicked}>
                     { _t('End-to-end encryption information') }
-                </div>;
+                </MenuItem>
+            );
+        }
+
+        let reportEventButton;
+        if (mxEvent.getSender() !== me) {
+            reportEventButton = (
+                <MenuItem className="mx_MessageContextMenu_field" onClick={this.onReportEventClick}>
+                    { _t('Report Content') }
+                </MenuItem>
+            );
         }
 
         return (
@@ -463,6 +494,7 @@ module.exports = React.createClass({
                 { externalURLButton }
                 { collapseReplyThread }
                 { e2eInfo }
+                { reportEventButton }
             </div>
         );
     },

@@ -17,6 +17,7 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import MatrixClientPeg from "../../../MatrixClientPeg";
 import sdk from '../../../index';
 import dis from "../../../dispatcher";
@@ -28,7 +29,7 @@ import RateLimitedFunc from '../../../ratelimitedfunc';
 import SettingsStore from "../../../settings/SettingsStore";
 
 
-module.exports = React.createClass({
+module.exports = createReactClass({
     displayName: 'AuxPanel',
 
     propTypes: {
@@ -187,14 +188,15 @@ module.exports = React.createClass({
         }
 
         const callView = (
-            <CallView ref="callView" room={this.props.room}
+            <CallView
+                room={this.props.room}
                 ConferenceHandler={this.props.conferenceHandler}
                 onResize={this.props.onResize}
                 maxVideoHeight={this.props.maxHeight}
             />
         );
 
-        const appsDrawer = <AppsDrawer ref="appsDrawer"
+        const appsDrawer = <AppsDrawer
             room={this.props.room}
             userId={this.props.userId}
             maxHeight={this.props.maxHeight}

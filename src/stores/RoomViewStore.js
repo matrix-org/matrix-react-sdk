@@ -20,6 +20,7 @@ import MatrixClientPeg from '../MatrixClientPeg';
 import sdk from '../index';
 import Modal from '../Modal';
 import { _t } from '../languageHandler';
+import { getCachedRoomIDForAlias, storeRoomAliasInCache } from '../RoomAliasCache';
 
 const INITIAL_STATE = {
     // Whether we're joining the currently viewed room (see isJoining())
@@ -113,9 +114,19 @@ class RoomViewStore extends Store {
                 });
                 break;
             case 'reply_to_event':
-                this._setState({
-                    replyingToEvent: payload.event,
-                });
+                // If currently viewed room does not match the room in which we wish to reply then change rooms
+                // this can happen when performing a search across all rooms
+                if (payload.event && payload.event.getRoomId() !== this._state.roomId) {
+                    dis.dispatch({
+                        action: 'view_room',
+                        room_id: payload.event.getRoomId(),
+                        replyingToEvent: payload.event,
+                    });
+                } else {
+                    this._setState({
+                        replyingToEvent: payload.event,
+                    });
+                }
                 break;
             case 'open_room_settings': {
                 const RoomSettingsDialog = sdk.getComponent("dialogs.RoomSettingsDialog");
@@ -127,7 +138,7 @@ class RoomViewStore extends Store {
         }
     }
 
-    _viewRoom(payload) {
+    async _viewRoom(payload) {
         if (payload.room_id) {
             const newState = {
                 roomId: payload.room_id,
@@ -147,6 +158,11 @@ class RoomViewStore extends Store {
                 isEditingSettings: false,
             };
 
+            // Allow being given an event to be replied to when switching rooms but sanity check its for this room
+            if (payload.replyingToEvent && payload.replyingToEvent.getRoomId() === payload.room_id) {
+                newState.replyingToEvent = payload.replyingToEvent;
+            }
+
             if (this._state.forwardingEvent) {
                 dis.dispatch({
                     action: 'send_event',
@@ -161,34 +177,44 @@ class RoomViewStore extends Store {
                 this._joinRoom(payload);
             }
         } else if (payload.room_alias) {
-            // Resolve the alias and then do a second dispatch with the room ID acquired
-            this._setState({
-                roomId: null,
-                initialEventId: null,
-                initialEventPixelOffset: null,
-                isInitialEventHighlighted: null,
-                roomAlias: payload.room_alias,
-                roomLoading: true,
-                roomLoadError: null,
-            });
-            MatrixClientPeg.get().getRoomIdForAlias(payload.room_alias).done(
-            (result) => {
-                dis.dispatch({
-                    action: 'view_room',
-                    room_id: result.room_id,
-                    event_id: payload.event_id,
-                    highlighted: payload.highlighted,
-                    room_alias: payload.room_alias,
-                    auto_join: payload.auto_join,
-                    oob_data: payload.oob_data,
+            // Try the room alias to room ID navigation cache first to avoid
+            // blocking room navigation on the homeserver.
+            let roomId = getCachedRoomIDForAlias(payload.room_alias);
+            if (!roomId) {
+                // Room alias cache miss, so let's ask the homeserver. Resolve the alias
+                // and then do a second dispatch with the room ID acquired.
+                this._setState({
+                    roomId: null,
+                    initialEventId: null,
+                    initialEventPixelOffset: null,
+                    isInitialEventHighlighted: null,
+                    roomAlias: payload.room_alias,
+                    roomLoading: true,
+                    roomLoadError: null,
                 });
-            }, (err) => {
-                dis.dispatch({
-                    action: 'view_room_error',
-                    room_id: null,
-                    room_alias: payload.room_alias,
-                    err: err,
-                });
+                try {
+                    const result = await MatrixClientPeg.get().getRoomIdForAlias(payload.room_alias);
+                    storeRoomAliasInCache(payload.room_alias, result.room_id);
+                    roomId = result.room_id;
+                } catch (err) {
+                    dis.dispatch({
+                        action: 'view_room_error',
+                        room_id: null,
+                        room_alias: payload.room_alias,
+                        err,
+                    });
+                    return;
+                }
+            }
+
+            dis.dispatch({
+                action: 'view_room',
+                room_id: roomId,
+                event_id: payload.event_id,
+                highlighted: payload.highlighted,
+                room_alias: payload.room_alias,
+                auto_join: payload.auto_join,
+                oob_data: payload.oob_data,
             });
         }
     }
@@ -208,7 +234,7 @@ class RoomViewStore extends Store {
         });
         MatrixClientPeg.get().joinRoom(
             this._state.roomAlias || this._state.roomId, payload.opts,
-        ).done(() => {
+        ).then(() => {
             // We don't actually need to do anything here: we do *not*
             // clear the 'joining' flag because the Room object and/or
             // our 'joined' member event may not have come down the sync

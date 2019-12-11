@@ -18,6 +18,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import sdk from '../../../index';
 import Email from '../../../email';
@@ -40,7 +41,7 @@ const PASSWORD_MIN_SCORE = 3; // safely unguessable: moderate protection from of
 /**
  * A pure UI component which displays a registration form.
  */
-module.exports = React.createClass({
+module.exports = createReactClass({
     displayName: 'RegistrationForm',
 
     propTypes: {
@@ -96,15 +97,15 @@ module.exports = React.createClass({
             const haveIs = Boolean(this.props.serverConfig.isUrl);
 
             let desc;
-            if (haveIs) {
+            if (this.props.serverRequiresIdServer && !haveIs) {
                 desc = _t(
-                    "If you don't specify an email address, you won't be able to reset your password. " +
-                    "Are you sure?",
+                    "No identity server is configured so you cannot add an email address in order to " +
+                    "reset your password in the future.",
                 );
             } else {
                 desc = _t(
-                    "No Identity Server is configured so you cannot add add an email address in order to " +
-                    "reset your password in the future.",
+                    "If you don't specify an email address, you won't be able to reset your password. " +
+                    "Are you sure?",
                 );
             }
 
@@ -438,7 +439,23 @@ module.exports = React.createClass({
 
     _showEmail() {
         const haveIs = Boolean(this.props.serverConfig.isUrl);
-        if ((this.props.serverRequiresIdServer && !haveIs) || !this._authStepIsUsed('m.login.email.identity')) {
+        if (
+            (this.props.serverRequiresIdServer && !haveIs) ||
+            !this._authStepIsUsed('m.login.email.identity')
+        ) {
+            return false;
+        }
+        return true;
+    },
+
+    _showPhoneNumber() {
+        const threePidLogin = !SdkConfig.get().disable_3pid_login;
+        const haveIs = Boolean(this.props.serverConfig.isUrl);
+        if (
+            !threePidLogin ||
+            (this.props.serverRequiresIdServer && !haveIs) ||
+            !this._authStepIsUsed('m.login.msisdn')
+        ) {
             return false;
         }
         return true;
@@ -490,9 +507,7 @@ module.exports = React.createClass({
     },
 
     renderPhoneNumber() {
-        const threePidLogin = !SdkConfig.get().disable_3pid_login;
-        const haveIs = Boolean(this.props.serverConfig.isUrl);
-        if (!threePidLogin || !haveIs || !this._authStepIsUsed('m.login.msisdn')) {
+        if (!this._showPhoneNumber()) {
             return null;
         }
         const CountryDropdown = sdk.getComponent('views.auth.CountryDropdown');
@@ -564,18 +579,34 @@ module.exports = React.createClass({
             <input className="mx_Login_submit" type="submit" value={_t("Register")} disabled={!this.props.canSubmit} />
         );
 
-        const emailHelperText = this._showEmail() ? <div>
-            {_t("Use an email address to recover your account.") + " "}
-            {_t("Other users can invite you to rooms using your contact details.")}
-        </div> : null;
-
+        let emailHelperText = null;
+        if (this._showEmail()) {
+            if (this._showPhoneNumber()) {
+                emailHelperText = <div>
+                    {_t(
+                        "Set an email for account recovery. " +
+                        "Use email or phone to optionally be discoverable by existing contacts.",
+                    )}
+                </div>;
+            } else {
+                emailHelperText = <div>
+                    {_t(
+                        "Set an email for account recovery. " +
+                        "Use email to optionally be discoverable by existing contacts.",
+                    )}
+                </div>;
+            }
+        }
         const haveIs = Boolean(this.props.serverConfig.isUrl);
-        const noIsText = haveIs ? null : <div>
-            {_t(
-                "No Identity Server is configured: no email addreses can be added. " +
-                "You will be unable to reset your password.",
-            )}
-        </div>;
+        let noIsText = null;
+        if (this.props.serverRequiresIdServer && !haveIs) {
+            noIsText = <div>
+                {_t(
+                    "No identity server is configured so you cannot add an email address in order to " +
+                    "reset your password in the future.",
+                )}
+            </div>;
+        }
 
         return (
             <div>

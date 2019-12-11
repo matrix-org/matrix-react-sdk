@@ -19,11 +19,12 @@ import dis from '../../../dispatcher';
 import React from 'react';
 import { _t } from '../../../languageHandler';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import classNames from 'classnames';
 
 import {roomShape} from './RoomDetailRow';
 
-export default React.createClass({
+export default createReactClass({
     displayName: 'RoomDetailList',
 
     propTypes: {
@@ -54,7 +55,7 @@ export default React.createClass({
         if (rows.length === 0) {
             rooms = <i>{ _t('No rooms to show') }</i>;
         } else {
-            rooms = <table ref="directory_table" className="mx_RoomDirectory_table">
+            rooms = <table className="mx_RoomDirectory_table">
                 <tbody>
                     { this.getRows() }
                 </tbody>

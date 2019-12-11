@@ -2,6 +2,7 @@
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017, 2018 New Vector Ltd
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,6 +34,7 @@ import url from 'url';
 
 import EMOJIBASE from 'emojibase-data/en/compact.json';
 import EMOJIBASE_REGEX from 'emojibase-regex';
+import {tryTransformPermalinkToLocalHref} from "./utils/permalinks/Permalinks";
 
 linkifyMatrix(linkify);
 
@@ -51,7 +53,6 @@ const ZWJ_REGEX = new RegExp("\u200D|\u2003", "g");
 const WHITESPACE_REGEX = new RegExp("\\s", "g");
 
 const BIGEMOJI_REGEX = new RegExp(`^(${EMOJIBASE_REGEX.source})+$`, 'i');
-const SINGLE_EMOJI_REGEX = new RegExp(`^(${EMOJIBASE_REGEX.source})$`, 'i');
 
 const COLOR_REGEX = /^#[0-9a-fA-F]{6}$/;
 
@@ -71,16 +72,28 @@ function mightContainEmoji(str) {
 }
 
 /**
+ * Find emoji data in emojibase by character.
+ *
+ * @param {String} char The emoji character
+ * @return {Object} The emoji data
+ */
+export function findEmojiData(char) {
+    // Check against both the char and the char with an empty variation selector
+    // appended because that's how emojibase stores its base emojis which have
+    // variations.
+    // See also https://github.com/vector-im/riot-web/issues/9785.
+    const emptyVariation = char + VARIATION_SELECTOR;
+    return EMOJIBASE.find(e => e.unicode === char || e.unicode === emptyVariation);
+}
+
+/**
  * Returns the shortcode for an emoji character.
  *
  * @param {String} char The emoji character
  * @return {String} The shortcode (such as :thumbup:)
  */
 export function unicodeToShortcode(char) {
-    // Check against both the char and the char with an empty variation selector appended because that's how
-    // emoji-base stores its base emojis which have variations. https://github.com/vector-im/riot-web/issues/9785
-    const emptyVariation = char + VARIATION_SELECTOR;
-    const data = EMOJIBASE.find(e => e.unicode === char || e.unicode === emptyVariation);
+    const data = findEmojiData(char);
     return (data && data.shortcodes ? `:${data.shortcodes[0]}:` : '');
 }
 
@@ -158,30 +171,10 @@ const transformTags = { // custom to matrix
         if (attribs.href) {
             attribs.target = '_blank'; // by default
 
-            let m;
-            // FIXME: horrible duplication with linkify-matrix
-            m = attribs.href.match(linkifyMatrix.VECTOR_URL_PATTERN);
-            if (m) {
-                attribs.href = m[1];
+            const transformed = tryTransformPermalinkToLocalHref(attribs.href);
+            if (transformed !== attribs.href || attribs.href.match(linkifyMatrix.VECTOR_URL_PATTERN)) {
+                attribs.href = transformed;
                 delete attribs.target;
-            } else {
-                m = attribs.href.match(linkifyMatrix.MATRIXTO_URL_PATTERN);
-                if (m) {
-                    const entity = m[1];
-                    switch (entity[0]) {
-                        case '@':
-                            attribs.href = '#/user/' + entity;
-                            break;
-                        case '+':
-                            attribs.href = '#/group/' + entity;
-                            break;
-                        case '#':
-                        case '!':
-                            attribs.href = '#/room/' + entity;
-                            break;
-                    }
-                    delete attribs.target;
-                }
             }
         }
         attribs.rel = 'noopener'; // https://mathiasbynens.github.io/rel-noopener/
@@ -256,7 +249,7 @@ const sanitizeHtmlParams = {
     allowedAttributes: {
         // custom ones first:
         font: ['color', 'data-mx-bg-color', 'data-mx-color', 'style'], // custom to matrix
-        span: ['data-mx-bg-color', 'data-mx-color', 'style'], // custom to matrix
+        span: ['data-mx-bg-color', 'data-mx-color', 'data-mx-spoiler', 'style'], // custom to matrix
         a: ['href', 'name', 'target', 'rel'], // remote target: custom to matrix
         img: ['src', 'width', 'height', 'alt', 'title'],
         ol: ['start'],
@@ -430,11 +423,13 @@ export function bodyToHtml(content, highlights, opts={}) {
             };
         }
 
-        let formattedBody = content.formatted_body;
-        if (opts.stripReplyFallback && formattedBody) formattedBody = ReplyThread.stripHTMLReply(formattedBody);
-        strippedBody = opts.stripReplyFallback ? ReplyThread.stripPlainReply(content.body) : content.body;
+        let formattedBody = typeof content.formatted_body === 'string' ? content.formatted_body : null;
+        const plainBody = typeof content.body === 'string' ? content.body : null;
 
-        bodyHasEmoji = mightContainEmoji(isHtmlMessage ? formattedBody : content.body);
+        if (opts.stripReplyFallback && formattedBody) formattedBody = ReplyThread.stripHTMLReply(formattedBody);
+        strippedBody = opts.stripReplyFallback ? ReplyThread.stripPlainReply(plainBody) : plainBody;
+
+        bodyHasEmoji = mightContainEmoji(isHtmlMessage ? formattedBody : plainBody);
 
         // Only generate safeBody if the message was sent as org.matrix.custom.html
         if (isHtmlMessage) {
@@ -465,10 +460,12 @@ export function bodyToHtml(content, highlights, opts={}) {
         const match = BIGEMOJI_REGEX.exec(contentBodyTrimmed);
         emojiBody = match && match[0] && match[0].length === contentBodyTrimmed.length &&
                     // Prevent user pills expanding for users with only emoji in
-                    // their username
+                    // their username. Permalinks (links in pills) can be any URL
+                    // now, so we just check for an HTTP-looking thing.
                     (
                         content.formatted_body == undefined ||
-                        !content.formatted_body.includes("https://matrix.to/")
+                        (!content.formatted_body.includes("http:") &&
+                        !content.formatted_body.includes("https:"))
                     );
     }
 

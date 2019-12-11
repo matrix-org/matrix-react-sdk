@@ -15,12 +15,13 @@ limitations under the License.
 */
 
 import sdk from '../../../index';
-import React from 'react';
+import React, {createRef} from 'react';
 import { _t } from '../../../languageHandler';
 import { linkifyElement } from '../../../HtmlUtils';
 import { ContentRepo } from 'matrix-js-sdk';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 
 export function getDisplayAliasForRoom(room) {
     return room.canonicalAlias || (room.aliases ? room.aliases[0] : "");
@@ -39,7 +40,7 @@ export const roomShape = PropTypes.shape({
     guestCanJoin: PropTypes.bool,
 });
 
-export default React.createClass({
+export default createReactClass({
     propTypes: {
         room: roomShape,
         // passes ev, room as args
@@ -48,9 +49,13 @@ export default React.createClass({
     },
 
     _linkifyTopic: function() {
-        if (this.refs.topic) {
-            linkifyElement(this.refs.topic);
+        if (this._topic.current) {
+            linkifyElement(this._topic.current);
         }
+    },
+
+    UNSAFE_componentWillMount: function() {
+        this._topic = createRef();
     },
 
     componentDidMount: function() {
@@ -103,7 +108,7 @@ export default React.createClass({
             <td className="mx_RoomDirectory_roomDescription">
                 <div className="mx_RoomDirectory_name">{ name }</div>&nbsp;
                 { perms }
-                <div className="mx_RoomDirectory_topic" ref="topic" onClick={this.onTopicClick}>
+                <div className="mx_RoomDirectory_topic" ref={this._topic} onClick={this.onTopicClick}>
                     { room.topic }
                 </div>
                 <div className="mx_RoomDirectory_alias">{ getDisplayAliasForRoom(room) }</div>

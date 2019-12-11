@@ -43,39 +43,42 @@ function inviteMultipleToRoom(roomId, addrs) {
 export function showStartChatInviteDialog() {
     const AddressPickerDialog = sdk.getComponent("dialogs.AddressPickerDialog");
 
-    const validAddressTypes = ['mx-user-id'];
-    if (MatrixClientPeg.get().getIdentityServerUrl()) {
-        validAddressTypes.push('email');
-    }
-
     Modal.createTrackedDialog('Start a chat', '', AddressPickerDialog, {
         title: _t('Start a chat'),
         description: _t("Who would you like to communicate with?"),
-        placeholder: _t("Email, name or Matrix ID"),
-        validAddressTypes,
+        placeholder: (validAddressTypes) => {
+            // The set of valid address type can be mutated inside the dialog
+            // when you first have no IS but agree to use one in the dialog.
+            if (validAddressTypes.includes('email')) {
+                return _t("Email, name or Matrix ID");
+            }
+            return _t("Name or Matrix ID");
+        },
+        validAddressTypes: ['mx-user-id', 'email'],
         button: _t("Start Chat"),
         onFinished: _onStartDmFinished,
-    });
+    }, /*className=*/null, /*isPriority=*/false, /*isStatic=*/true);
 }
 
 export function showRoomInviteDialog(roomId) {
     const AddressPickerDialog = sdk.getComponent("dialogs.AddressPickerDialog");
 
-    const validAddressTypes = ['mx-user-id'];
-    if (MatrixClientPeg.get().getIdentityServerUrl()) {
-        validAddressTypes.push('email');
-    }
-
     Modal.createTrackedDialog('Chat Invite', '', AddressPickerDialog, {
         title: _t('Invite new room members'),
-        description: _t('Who would you like to add to this room?'),
         button: _t('Send Invites'),
-        placeholder: _t("Email, name or Matrix ID"),
-        validAddressTypes,
+        placeholder: (validAddressTypes) => {
+            // The set of valid address type can be mutated inside the dialog
+            // when you first have no IS but agree to use one in the dialog.
+            if (validAddressTypes.includes('email')) {
+                return _t("Email, name or Matrix ID");
+            }
+            return _t("Name or Matrix ID");
+        },
+        validAddressTypes: ['mx-user-id', 'email'],
         onFinished: (shouldInvite, addrs) => {
             _onRoomInviteFinished(roomId, shouldInvite, addrs);
         },
-    });
+    }, /*className=*/null, /*isPriority=*/false, /*isStatic=*/true);
 }
 
 /**
@@ -150,13 +153,8 @@ function _onStartDmFinished(shouldInvite, addrs) {
     }
 }
 
-function _onRoomInviteFinished(roomId, shouldInvite, addrs) {
-    if (!shouldInvite) return;
-
-    const addrTexts = addrs.map((addr) => addr.address);
-
-    // Invite new users to a room
-    inviteMultipleToRoom(roomId, addrTexts).then((result) => {
+export function inviteUsersToRoom(roomId, userIds) {
+    return inviteMultipleToRoom(roomId, userIds).then((result) => {
         const room = MatrixClientPeg.get().getRoom(roomId);
         return _showAnyInviteErrors(result.states, room, result.inviter);
     }).catch((err) => {
@@ -167,6 +165,15 @@ function _onRoomInviteFinished(roomId, shouldInvite, addrs) {
             description: ((err && err.message) ? err.message : _t("Operation failed")),
         });
     });
+}
+
+function _onRoomInviteFinished(roomId, shouldInvite, addrs) {
+    if (!shouldInvite) return;
+
+    const addrTexts = addrs.map((addr) => addr.address);
+
+    // Invite new users to a room
+    inviteUsersToRoom(roomId, addrTexts);
 }
 
 // TODO: Immutable DMs replaces this
@@ -200,10 +207,13 @@ function _showAnyInviteErrors(addrs, room, inviter) {
         }
 
         if (errorList.length > 0) {
+            // React 16 doesn't let us use `errorList.join(<br />)` anymore, so this is our solution
+            const description = <div>{errorList.map(e => <div key={e}>{e}</div>)}</div>;
+
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog('Failed to invite the following users to the room', '', ErrorDialog, {
                 title: _t("Failed to invite the following users to the %(roomName)s room:", {roomName: room.name}),
-                description: errorList.join(<br />),
+                description,
             });
         }
     }
@@ -222,4 +232,3 @@ function _getDirectMessageRooms(addr) {
     });
     return rooms;
 }
-

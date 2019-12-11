@@ -24,6 +24,7 @@ import Modal from "../../../Modal";
 import SdkConfig from '../../../SdkConfig';
 import { getHostingLink } from '../../../utils/HostingLink';
 import MatrixClientPeg from '../../../MatrixClientPeg';
+import {MenuItem} from "../../structures/ContextMenu";
 
 export class TopLeftMenu extends React.Component {
     static propTypes = {
@@ -66,10 +67,10 @@ export class TopLeftMenu extends React.Component {
                 {_t(
                     "<a>Upgrade</a> to your own domain", {},
                     {
-                        a: sub => <a href={hostingSignupLink} target="_blank" rel="noopener" tabIndex="0">{sub}</a>,
+                        a: sub => <a href={hostingSignupLink} target="_blank" rel="noopener" tabIndex={-1}>{sub}</a>,
                     },
                 )}
-                <a href={hostingSignupLink} target="_blank" rel="noopener" aria-hidden={true}>
+                <a href={hostingSignupLink} target="_blank" rel="noopener" role="presentation" aria-hidden={true} tabIndex={-1}>
                     <img src={require("../../../../res/img/external-link.svg")} width="11" height="10" alt='' />
                 </a>
             </div>;
@@ -77,33 +78,41 @@ export class TopLeftMenu extends React.Component {
 
         let homePageItem = null;
         if (this.hasHomePage()) {
-            homePageItem = <li className="mx_TopLeftMenu_icon_home" onClick={this.viewHomePage} tabIndex={0}>
-                {_t("Home")}
-            </li>;
+            homePageItem = (
+                <MenuItem className="mx_TopLeftMenu_icon_home" onClick={this.viewHomePage}>
+                    {_t("Home")}
+                </MenuItem>
+            );
         }
 
         let signInOutItem;
         if (isGuest) {
-            signInOutItem = <li className="mx_TopLeftMenu_icon_signin" onClick={this.signIn} tabIndex={0}>
-                {_t("Sign in")}
-            </li>;
+            signInOutItem = (
+                <MenuItem className="mx_TopLeftMenu_icon_signin" onClick={this.signIn}>
+                    {_t("Sign in")}
+                </MenuItem>
+            );
         } else {
-            signInOutItem = <li className="mx_TopLeftMenu_icon_signout" onClick={this.signOut} tabIndex={0}>
-                {_t("Sign out")}
-            </li>;
+            signInOutItem = (
+                <MenuItem className="mx_TopLeftMenu_icon_signout" onClick={this.signOut}>
+                    {_t("Sign out")}
+                </MenuItem>
+            );
         }
 
-        const settingsItem = <li className="mx_TopLeftMenu_icon_settings" onClick={this.openSettings} tabIndex={0}>
-            {_t("Settings")}
-        </li>;
+        const settingsItem = (
+            <MenuItem className="mx_TopLeftMenu_icon_settings" onClick={this.openSettings}>
+                {_t("Settings")}
+            </MenuItem>
+        );
 
-        return <div className="mx_TopLeftMenu mx_HiddenFocusable" tabIndex={0} ref={this.props.containerRef}>
-            <div className="mx_TopLeftMenu_section_noIcon" aria-readonly={true}>
+        return <div className="mx_TopLeftMenu" ref={this.props.containerRef} role="menu">
+            <div className="mx_TopLeftMenu_section_noIcon" aria-readonly={true} tabIndex={-1}>
                 <div>{this.props.displayName}</div>
                 <div className="mx_TopLeftMenu_greyedText" aria-hidden={true}>{this.props.userId}</div>
                 {hostingSignup}
             </div>
-            <ul className="mx_TopLeftMenu_section_withIcon">
+            <ul className="mx_TopLeftMenu_section_withIcon" role="none">
                 {homePageItem}
                 {settingsItem}
                 {signInOutItem}

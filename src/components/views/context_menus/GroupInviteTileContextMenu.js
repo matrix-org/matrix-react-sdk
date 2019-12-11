@@ -1,5 +1,6 @@
 /*
 Copyright 2018 Vector Creations Ltd
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,6 +22,7 @@ import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
 import {Group} from 'matrix-js-sdk';
 import GroupStore from "../../../stores/GroupStore";
+import {MenuItem} from "../../structures/ContextMenu";
 
 export default class GroupInviteTileContextMenu extends React.Component {
     static propTypes = {
@@ -35,7 +37,7 @@ export default class GroupInviteTileContextMenu extends React.Component {
         this._onClickReject = this._onClickReject.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this._unmounted = false;
     }
 
@@ -78,10 +80,10 @@ export default class GroupInviteTileContextMenu extends React.Component {
 
     render() {
         return <div>
-            <div className="mx_RoomTileContextMenu_leave" onClick={this._onClickReject} >
-                <img className="mx_RoomTileContextMenu_tag_icon" src={require("../../../../res/img/icon_context_delete.svg")} width="15" height="15" />
+            <MenuItem className="mx_RoomTileContextMenu_leave" onClick={this._onClickReject}>
+                <img className="mx_RoomTileContextMenu_tag_icon" src={require("../../../../res/img/icon_context_delete.svg")} width="15" height="15" alt="" />
                 { _t('Reject') }
-            </div>
+            </MenuItem>
         </div>;
     }
 }

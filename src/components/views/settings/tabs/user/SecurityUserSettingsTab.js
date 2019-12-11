@@ -17,14 +17,14 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import {_t} from "../../../../../languageHandler";
-import {SettingLevel} from "../../../../../settings/SettingsStore";
+import SettingsStore, {SettingLevel} from "../../../../../settings/SettingsStore";
 import MatrixClientPeg from "../../../../../MatrixClientPeg";
 import * as FormattingUtils from "../../../../../utils/FormattingUtils";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import Analytics from "../../../../../Analytics";
-import Promise from "bluebird";
 import Modal from "../../../../../Modal";
 import sdk from "../../../../..";
+import {sleep} from "../../../../../utils/promise";
 
 export class IgnoredUser extends React.Component {
     static propTypes = {
@@ -129,7 +129,7 @@ export default class SecurityUserSettingsTab extends React.Component {
                 if (e.errcode === "M_LIMIT_EXCEEDED") {
                     // Add a delay between each invite change in order to avoid rate
                     // limiting by the server.
-                    await Promise.delay(e.retry_after_ms || 2500);
+                    await sleep(e.retry_after_ms || 2500);
 
                     // Redo last action
                     i--;
@@ -252,6 +252,23 @@ export default class SecurityUserSettingsTab extends React.Component {
             </div>
         );
 
+        // XXX: There's no such panel in the current cross-signing designs, but
+        // it's useful to have for testing the feature. If there's no interest
+        // in having advanced details here once all flows are implemented, we
+        // can remove this.
+        const CrossSigningPanel = sdk.getComponent('views.settings.CrossSigningPanel');
+        let crossSigning;
+        if (SettingsStore.isFeatureEnabled("feature_cross_signing")) {
+            crossSigning = (
+                <div className='mx_SettingsTab_section'>
+                    <span className="mx_SettingsTab_subheading">{_t("Cross-signing")}</span>
+                    <div className='mx_SettingsTab_subsectionText'>
+                        <CrossSigningPanel />
+                    </div>
+                </div>
+            );
+        }
+
         return (
             <div className="mx_SettingsTab mx_SecurityUserSettingsTab">
                 <div className="mx_SettingsTab_heading">{_t("Security & Privacy")}</div>
@@ -263,6 +280,7 @@ export default class SecurityUserSettingsTab extends React.Component {
                     </div>
                 </div>
                 {keyBackup}
+                {crossSigning}
                 {this._renderCurrentDeviceInfo()}
                 <div className='mx_SettingsTab_section'>
                     <span className="mx_SettingsTab_subheading">{_t("Analytics")}</span>

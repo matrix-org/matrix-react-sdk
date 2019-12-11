@@ -23,14 +23,16 @@ import dis from './dispatcher';
 import sdk from './index';
 import {_t, _td} from './languageHandler';
 import Modal from './Modal';
-import {MATRIXTO_URL_PATTERN} from "./linkify-matrix";
-import * as querystring from "querystring";
 import MultiInviter from './utils/MultiInviter';
 import { linkifyAndSanitizeHtml } from './HtmlUtils';
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 import WidgetUtils from "./utils/WidgetUtils";
 import {textToHtmlRainbow} from "./utils/colour";
-import Promise from "bluebird";
+import { getAddressType } from './UserAddress';
+import { abbreviateUrl } from './utils/UrlUtils';
+import { getDefaultIdentityServerUrl, useDefaultIdentityServer } from './utils/IdentityServerUtils';
+import {isPermalinkHost, parsePermalink} from "./utils/permalinks/Permalinks";
+import {inviteUsersToRoom} from "./RoomInvite";
 
 const singleMxcUpload = async () => {
     return new Promise((resolve) => {
@@ -115,7 +117,15 @@ export const CommandMap = {
         },
         category: CommandCategories.messages,
     }),
-
+    plain: new Command({
+        name: 'plain',
+        args: '<message>',
+        description: _td('Sends a message as plain text, without interpreting it as markdown'),
+        runFn: function(roomId, messages) {
+            return success(MatrixClientPeg.get().sendTextMessage(roomId, messages));
+        },
+        category: CommandCategories.messages,
+    }),
     ddg: new Command({
         name: 'ddg',
         args: '<query>',
@@ -139,72 +149,65 @@ export const CommandMap = {
         description: _td('Upgrades a room to a new version'),
         runFn: function(roomId, args) {
             if (args) {
-                const room = MatrixClientPeg.get().getRoom(roomId);
-                Modal.createTrackedDialog('Slash Commands', 'upgrade room confirmation',
-                    QuestionDialog, {
-                    title: _t('Room upgrade confirmation'),
-                    description: (
-                        <div>
-                            <p>{_t("Upgrading a room can be destructive and isn't always necessary.")}</p>
-                            <p>
-                                {_t(
-                                    "Room upgrades are usually recommended when a room version is considered " +
-                                    "<i>unstable</i>. Unstable room versions might have bugs, missing features, or " +
-                                    "security vulnerabilities.",
-                                    {}, {
-                                        "i": (sub) => <i>{sub}</i>,
-                                    },
-                                )}
-                            </p>
-                            <p>
-                                {_t(
-                                    "Room upgrades usually only affect <i>server-side</i> processing of the " +
-                                    "room. If you're having problems with your Riot client, please file an issue " +
-                                    "with <issueLink />.",
-                                    {}, {
-                                        "i": (sub) => <i>{sub}</i>,
-                                        "issueLink": () => {
-                                            return <a href="https://github.com/vector-im/riot-web/issues/new/choose"
-                                                      target="_blank" rel="noopener">
-                                                https://github.com/vector-im/riot-web/issues/new/choose
-                                            </a>;
-                                        },
-                                    },
-                                )}
-                            </p>
-                            <p>
-                                {_t(
-                                    "<b>Warning</b>: Upgrading a room will <i>not automatically migrate room " +
-                                    "members to the new version of the room.</i> We'll post a link to the new room " +
-                                    "in the old version of the room - room members will have to click this link to " +
-                                    "join the new room.",
-                                    {}, {
-                                        "b": (sub) => <b>{sub}</b>,
-                                        "i": (sub) => <i>{sub}</i>,
-                                    },
-                                )}
-                            </p>
-                            <p>
-                                {_t(
-                                    "Please confirm that you'd like to go forward with upgrading this room " +
-                                    "from <oldVersion /> to <newVersion />.",
-                                    {},
-                                    {
-                                        oldVersion: () => <code>{room ? room.getVersion() : "1"}</code>,
-                                        newVersion: () => <code>{args}</code>,
-                                    },
-                                )}
-                            </p>
-                        </div>
-                    ),
-                    button: _t("Upgrade"),
-                    onFinished: (confirm) => {
-                        if (!confirm) return;
+                const cli = MatrixClientPeg.get();
+                const room = cli.getRoom(roomId);
+                if (!room.currentState.mayClientSendStateEvent("m.room.tombstone", cli)) {
+                    return reject(_t("You do not have the required permissions to use this command."));
+                }
 
-                        MatrixClientPeg.get().upgradeRoom(roomId, args);
-                    },
-                });
-                return success();
+                const RoomUpgradeWarningDialog = sdk.getComponent("dialogs.RoomUpgradeWarningDialog");
+
+                const {finished} = Modal.createTrackedDialog('Slash Commands', 'upgrade room confirmation',
+                    RoomUpgradeWarningDialog, {roomId: roomId, targetVersion: args}, /*className=*/null,
+                    /*isPriority=*/false, /*isStatic=*/true);
+
+                return success(finished.then(async ([resp]) => {
+                    if (!resp.continue) return;
+
+                    let checkForUpgradeFn;
+                    try {
+                        const upgradePromise = cli.upgradeRoom(roomId, args);
+
+                        // We have to wait for the js-sdk to give us the room back so
+                        // we can more effectively abuse the MultiInviter behaviour
+                        // which heavily relies on the Room object being available.
+                        if (resp.invite) {
+                            checkForUpgradeFn = async (newRoom) => {
+                                // The upgradePromise should be done by the time we await it here.
+                                const {replacement_room: newRoomId} = await upgradePromise;
+                                if (newRoom.roomId !== newRoomId) return;
+
+                                const toInvite = [
+                                    ...room.getMembersWithMembership("join"),
+                                    ...room.getMembersWithMembership("invite"),
+                                ].map(m => m.userId).filter(m => m !== cli.getUserId());
+
+                                if (toInvite.length > 0) {
+                                    // Errors are handled internally to this function
+                                    await inviteUsersToRoom(newRoomId, toInvite);
+                                }
+
+                                cli.removeListener('Room', checkForUpgradeFn);
+                            };
+                            cli.on('Room', checkForUpgradeFn);
+                        }
+
+                        // We have to await after so that the checkForUpgradesFn has a proper reference
+                        // to the new room's ID.
+                        await upgradePromise;
+                    } catch (e) {
+                        console.error(e);
+
+                        if (checkForUpgradeFn) cli.removeListener('Room', checkForUpgradeFn);
+
+                        const ErrorDialog = sdk.getComponent('dialogs.ErrorDialog');
+                        Modal.createTrackedDialog('Slash Commands', 'room upgrade error', ErrorDialog, {
+                            title: _t('Error upgrading room'),
+                            description: _t(
+                                'Double check that your server supports the room version chosen and try again.'),
+                        });
+                    }
+                }));
             }
             return reject(this.getUsage());
         },
@@ -239,6 +242,24 @@ export const CommandMap = {
                 return success(cli.sendStateEvent(roomId, 'm.room.member', content, cli.getUserId()));
             }
             return reject(this.getUsage());
+        },
+        category: CommandCategories.actions,
+    }),
+
+    roomavatar: new Command({
+        name: 'roomavatar',
+        args: '[<mxc_url>]',
+        description: _td('Changes the avatar of the current room'),
+        runFn: function(roomId, args) {
+            let promise = Promise.resolve(args);
+            if (!args) {
+                promise = singleMxcUpload();
+            }
+
+            return success(promise.then((url) => {
+                if (!url) return;
+                return MatrixClientPeg.get().sendStateEvent(roomId, 'm.room.avatar', {url}, '');
+            }));
         },
         category: CommandCategories.actions,
     }),
@@ -337,11 +358,46 @@ export const CommandMap = {
                 if (matches) {
                     // We use a MultiInviter to re-use the invite logic, even though
                     // we're only inviting one user.
-                    const userId = matches[1];
+                    const address = matches[1];
+                    // If we need an identity server but don't have one, things
+                    // get a bit more complex here, but we try to show something
+                    // meaningful.
+                    let finished = Promise.resolve();
+                    if (
+                        getAddressType(address) === 'email' &&
+                        !MatrixClientPeg.get().getIdentityServerUrl()
+                    ) {
+                        const defaultIdentityServerUrl = getDefaultIdentityServerUrl();
+                        if (defaultIdentityServerUrl) {
+                            ({ finished } = Modal.createTrackedDialog('Slash Commands', 'Identity server',
+                                QuestionDialog, {
+                                    title: _t("Use an identity server"),
+                                    description: <p>{_t(
+                                        "Use an identity server to invite by email. " +
+                                        "Click continue to use the default identity server " +
+                                        "(%(defaultIdentityServerName)s) or manage in Settings.",
+                                        {
+                                            defaultIdentityServerName: abbreviateUrl(defaultIdentityServerUrl),
+                                        },
+                                    )}</p>,
+                                    button: _t("Continue"),
+                                },
+                            ));
+                        } else {
+                            return reject(_t("Use an identity server to invite by email. Manage in Settings."));
+                        }
+                    }
                     const inviter = new MultiInviter(roomId);
-                    return success(inviter.invite([userId]).then(() => {
-                        if (inviter.getCompletionState(userId) !== "invited") {
-                            throw new Error(inviter.getErrorText(userId));
+                    return success(finished.then(([useDefault] = []) => {
+                        if (useDefault) {
+                            useDefaultIdentityServer();
+                        } else if (useDefault === false) {
+                            throw new Error(_t("Use an identity server to invite by email. Manage in Settings."));
+                        }
+                        return inviter.invite([address]);
+                    }).then(() => {
+                        if (inviter.getCompletionState(address) !== "invited") {
+                            throw new Error(inviter.getErrorText(address));
                         }
                     }));
                 }
@@ -372,7 +428,19 @@ export const CommandMap = {
                 const params = args.split(' ');
                 if (params.length < 1) return reject(this.getUsage());
 
-                const matrixToMatches = params[0].match(MATRIXTO_URL_PATTERN);
+                let isPermalink = false;
+                if (params[0].startsWith("http:") || params[0].startsWith("https:")) {
+                    // It's at least a URL - try and pull out a hostname to check against the
+                    // permalink handler
+                    const parsedUrl = new URL(params[0]);
+                    const hostname = parsedUrl.host || parsedUrl.hostname; // takes first non-falsey value
+
+                    // if we're using a Riot permalink handler, this will catch it before we get much further.
+                    // see below where we make assumptions about parsing the URL.
+                    if (isPermalinkHost(hostname)) {
+                        isPermalink = true;
+                    }
+                }
                 if (params[0][0] === '#') {
                     let roomAlias = params[0];
                     if (!roomAlias.includes(':')) {
@@ -400,28 +468,24 @@ export const CommandMap = {
                         auto_join: true,
                     });
                     return success();
-                } else if (matrixToMatches) {
-                    let entity = matrixToMatches[1];
-                    let eventId = null;
-                    let viaServers = [];
+                } else if (isPermalink) {
+                    const permalinkParts = parsePermalink(params[0]);
 
-                    if (entity[0] !== '!' && entity[0] !== '#') return reject(this.getUsage());
-
-                    if (entity.indexOf('?') !== -1) {
-                        const parts = entity.split('?');
-                        entity = parts[0];
-
-                        const parsed = querystring.parse(parts[1]);
-                        viaServers = parsed["via"];
-                        if (typeof viaServers === 'string') viaServers = [viaServers];
+                    // This check technically isn't needed because we already did our
+                    // safety checks up above. However, for good measure, let's be sure.
+                    if (!permalinkParts) {
+                        return reject(this.getUsage());
                     }
 
-                    // We quietly support event ID permalinks too
-                    if (entity.indexOf('/$') !== -1) {
-                        const parts = entity.split("/$");
-                        entity = parts[0];
-                        eventId = `$${parts[1]}`;
+                    // If for some reason someone wanted to join a group or user, we should
+                    // stop them now.
+                    if (!permalinkParts.roomIdOrAlias) {
+                        return reject(this.getUsage());
                     }
+
+                    const entity = permalinkParts.roomIdOrAlias;
+                    const viaServers = permalinkParts.viaServers;
+                    const eventId = permalinkParts.eventId;
 
                     const dispatch = {
                         action: 'view_room',

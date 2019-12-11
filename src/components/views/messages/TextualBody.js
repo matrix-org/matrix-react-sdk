@@ -16,27 +16,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
-import React from 'react';
+import React, {createRef} from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import highlight from 'highlight.js';
 import * as HtmlUtils from '../../../HtmlUtils';
 import {formatDate} from '../../../DateUtils';
 import sdk from '../../../index';
 import Modal from '../../../Modal';
-import SdkConfig from '../../../SdkConfig';
 import dis from '../../../dispatcher';
 import { _t } from '../../../languageHandler';
-import * as ContextualMenu from '../../structures/ContextualMenu';
+import * as ContextMenu from '../../structures/ContextMenu';
 import SettingsStore from "../../../settings/SettingsStore";
 import ReplyThread from "../elements/ReplyThread";
-import {host as matrixtoHost} from '../../../matrix-to';
 import {pillifyLinks} from '../../../utils/pillify';
 import {IntegrationManagers} from "../../../integrations/IntegrationManagers";
+import {isPermalinkHost} from "../../../utils/permalinks/Permalinks";
+import {toRightOf} from "../../structures/ContextMenu";
 
-module.exports = React.createClass({
+module.exports = createReactClass({
     displayName: 'TextualBody',
 
     propTypes: {
@@ -87,6 +86,10 @@ module.exports = React.createClass({
         return successful;
     },
 
+    UNSAFE_componentWillMount: function() {
+        this._content = createRef();
+    },
+
     componentDidMount: function() {
         this._unmounted = false;
         if (!this.props.editState) {
@@ -95,11 +98,13 @@ module.exports = React.createClass({
     },
 
     _applyFormatting() {
+        this.activateSpoilers(this._content.current.children);
+
         // pillifyLinks BEFORE linkifyElement because plain room/user URLs in the composer
         // are still sent as plaintext URLs. If these are ever pillified in the composer,
         // we should be pillify them here by doing the linkifying BEFORE the pillifying.
-        pillifyLinks(this.refs.content.children, this.props.mxEvent);
-        HtmlUtils.linkifyElement(this.refs.content);
+        pillifyLinks(this._content.current.children, this.props.mxEvent);
+        HtmlUtils.linkifyElement(this._content.current);
         this.calculateUrlPreview();
 
         if (this.props.mxEvent.getContent().format === "org.matrix.custom.html") {
@@ -144,7 +149,7 @@ module.exports = React.createClass({
     },
 
     shouldComponentUpdate: function(nextProps, nextState) {
-        //console.log("shouldComponentUpdate: ShowUrlPreview for %s is %s", this.props.mxEvent.getId(), this.props.showUrlPreview);
+        //console.info("shouldComponentUpdate: ShowUrlPreview for %s is %s", this.props.mxEvent.getId(), this.props.showUrlPreview);
 
         // exploit that events are immutable :)
         return (nextProps.mxEvent.getId() !== this.props.mxEvent.getId() ||
@@ -159,10 +164,10 @@ module.exports = React.createClass({
     },
 
     calculateUrlPreview: function() {
-        //console.log("calculateUrlPreview: ShowUrlPreview for %s is %s", this.props.mxEvent.getId(), this.props.showUrlPreview);
+        //console.info("calculateUrlPreview: ShowUrlPreview for %s is %s", this.props.mxEvent.getId(), this.props.showUrlPreview);
 
         if (this.props.showUrlPreview) {
-            let links = this.findLinks(this.refs.content.children);
+            let links = this.findLinks(this._content.current.children);
             if (links.length) {
                 // de-dup the links (but preserve ordering)
                 const seen = new Set();
@@ -180,6 +185,34 @@ module.exports = React.createClass({
                     this.setState({ widgetHidden: hidden });
                 }
             }
+        }
+    },
+
+    activateSpoilers: function(nodes) {
+        let node = nodes[0];
+        while (node) {
+            if (node.tagName === "SPAN" && typeof node.getAttribute("data-mx-spoiler") === "string") {
+                const spoilerContainer = document.createElement('span');
+
+                const reason = node.getAttribute("data-mx-spoiler");
+                const Spoiler = sdk.getComponent('elements.Spoiler');
+                node.removeAttribute("data-mx-spoiler"); // we don't want to recurse
+                const spoiler = <Spoiler
+                    reason={reason}
+                    contentHtml={node.outerHTML}
+                />;
+
+                ReactDOM.render(spoiler, spoilerContainer);
+                node.parentNode.replaceChild(spoilerContainer, node);
+
+                node = spoilerContainer;
+            }
+
+            if (node.childNodes && node.childNodes.length) {
+                this.activateSpoilers(node.childNodes);
+            }
+
+            node = node.nextSibling;
         }
     },
 
@@ -220,10 +253,10 @@ module.exports = React.createClass({
             const url = node.getAttribute("href");
             const host = url.match(/^https?:\/\/(.*?)(\/|$)/)[1];
 
-            // never preview matrix.to links (if anything we should give a smart
+            // never preview permalinks (if anything we should give a smart
             // preview of the room/user they point to: nobody needs to be reminded
             // what the matrix.to site looks like).
-            if (host === matrixtoHost) return false;
+            if (isPermalinkHost(host)) return false;
 
             if (node.textContent.toLowerCase().trim().startsWith(host.toLowerCase())) {
                 // it's a "foo.pl" style link
@@ -244,18 +277,12 @@ module.exports = React.createClass({
                 const copyCode = button.parentNode.getElementsByTagName("code")[0];
                 const successful = this.copyToClipboard(copyCode.textContent);
 
-                const GenericTextContextMenu = sdk.getComponent('context_menus.GenericTextContextMenu');
                 const buttonRect = e.target.getBoundingClientRect();
-
-                // The window X and Y offsets are to adjust position when zoomed in to page
-                const x = buttonRect.right + window.pageXOffset;
-                const y = (buttonRect.top + (buttonRect.height / 2) + window.pageYOffset) - 19;
-                const {close} = ContextualMenu.createMenu(GenericTextContextMenu, {
-                    chevronOffset: 10,
-                    left: x,
-                    top: y,
+                const GenericTextContextMenu = sdk.getComponent('context_menus.GenericTextContextMenu');
+                const {close} = ContextMenu.createMenu(GenericTextContextMenu, {
+                    ...toRightOf(buttonRect, 2),
                     message: successful ? _t('Copied!') : _t('Failed to copy'),
-                }, false);
+                });
                 e.target.onmouseleave = close;
             };
 
@@ -304,7 +331,7 @@ module.exports = React.createClass({
             },
 
             getInnerText: () => {
-                return this.refs.content.innerText;
+                return this._content.current.innerText;
             },
         };
     },
@@ -378,13 +405,18 @@ module.exports = React.createClass({
                 label={_t("Edited at %(date)s. Click to view edits.", {date: dateString})}
             />;
         }
+
+        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         return (
-            <div
-                key="editedMarker" className="mx_EventTile_edited"
+            <AccessibleButton
+                key="editedMarker"
+                className="mx_EventTile_edited"
                 onClick={this._openHistoryDialog}
                 onMouseEnter={this._onMouseEnterEditedMarker}
                 onMouseLeave={this._onMouseLeaveEditedMarker}
-            >{editedTooltip}<span>{`(${_t("edited")})`}</span></div>
+            >
+                { editedTooltip }<span>{`(${_t("edited")})`}</span>
+            </AccessibleButton>
         );
     },
 
@@ -429,7 +461,7 @@ module.exports = React.createClass({
             case "m.emote":
                 const name = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
                 return (
-                    <span ref="content" className="mx_MEmoteBody mx_EventTile_content">
+                    <span ref={this._content} className="mx_MEmoteBody mx_EventTile_content">
                         *&nbsp;
                         <span
                             className="mx_MEmoteBody_sender"
@@ -444,14 +476,14 @@ module.exports = React.createClass({
                 );
             case "m.notice":
                 return (
-                    <span ref="content" className="mx_MNoticeBody mx_EventTile_content">
+                    <span ref={this._content} className="mx_MNoticeBody mx_EventTile_content">
                         { body }
                         { widgets }
                     </span>
                 );
             default: // including "m.text"
                 return (
-                    <span ref="content" className="mx_MTextBody mx_EventTile_content">
+                    <span ref={this._content} className="mx_MTextBody mx_EventTile_content">
                         { body }
                         { widgets }
                     </span>

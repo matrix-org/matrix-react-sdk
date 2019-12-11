@@ -23,7 +23,6 @@ import MatrixClientPeg from "../../../../MatrixClientPeg";
 import sdk from '../../../../index';
 import Modal from '../../../../Modal';
 import AddThreepid from '../../../../AddThreepid';
-import { getThreepidBindStatus } from '../../../../boundThreepids';
 
 /*
 TODO: Improve the UX for everything in here.
@@ -51,7 +50,54 @@ export class PhoneNumber extends React.Component {
         };
     }
 
+    componentWillReceiveProps(nextProps) {
+        const { bound } = nextProps.msisdn;
+        this.setState({ bound });
+    }
+
     async changeBinding({ bind, label, errorTitle }) {
+        if (!await MatrixClientPeg.get().doesServerSupportSeparateAddAndBind()) {
+            return this.changeBindingTangledAddBind({ bind, label, errorTitle });
+        }
+
+        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+        const { medium, address } = this.props.msisdn;
+
+        try {
+            if (bind) {
+                const task = new AddThreepid();
+                this.setState({
+                    verifying: true,
+                    continueDisabled: true,
+                    addTask: task,
+                });
+                // XXX: Sydent will accept a number without country code if you add
+                // a leading plus sign to a number in E.164 format (which the 3PID
+                // address is), but this goes against the spec.
+                // See https://github.com/matrix-org/matrix-doc/issues/2222
+                await task.bindMsisdn(null, `+${address}`);
+                this.setState({
+                    continueDisabled: false,
+                });
+            } else {
+                await MatrixClientPeg.get().unbindThreePid(medium, address);
+            }
+            this.setState({ bound: bind });
+        } catch (err) {
+            console.error(`Unable to ${label} phone number ${address} ${err}`);
+            this.setState({
+                verifying: false,
+                continueDisabled: false,
+                addTask: null,
+            });
+            Modal.createTrackedDialog(`Unable to ${label} phone number`, '', ErrorDialog, {
+                title: errorTitle,
+                description: ((err && err.message) ? err.message : _t("Operation failed")),
+            });
+        }
+    }
+
+    async changeBindingTangledAddBind({ bind, label, errorTitle }) {
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         const { medium, address } = this.props.msisdn;
 
@@ -63,18 +109,16 @@ export class PhoneNumber extends React.Component {
         });
 
         try {
-            // XXX: Unfortunately, at the moment we can't just bind via the HS
-            // in a single operation, at it will error saying the 3PID is in use
-            // even though it's in use by the current user. For the moment, we
-            // work around this by removing the 3PID from the HS and re-adding
-            // it with IS binding enabled.
-            // See https://github.com/matrix-org/matrix-doc/pull/2140/files#r311462052
             await MatrixClientPeg.get().deleteThreePid(medium, address);
             // XXX: Sydent will accept a number without country code if you add
             // a leading plus sign to a number in E.164 format (which the 3PID
             // address is), but this goes against the spec.
             // See https://github.com/matrix-org/matrix-doc/issues/2222
-            await task.addMsisdn(null, `+${address}`, bind);
+            if (bind) {
+                await task.bindMsisdn(null, `+${address}`);
+            } else {
+                await task.addMsisdn(null, `+${address}`);
+            }
             this.setState({
                 continueDisabled: false,
                 bound: bind,
@@ -163,11 +207,7 @@ export class PhoneNumber extends React.Component {
                     <br />
                     {this.state.verifyError}
                 </span>
-                <form
-                    onSubmit={this.onContinueClick}
-                    autoComplete={false}
-                    noValidate={true}
-                >
+                <form onSubmit={this.onContinueClick} autoComplete="off" noValidate={true}>
                     <Field id="mx_PhoneNumbers_newPhoneNumberCode"
                         type="text"
                         label={_t("Verification code")}
@@ -206,27 +246,14 @@ export class PhoneNumber extends React.Component {
 }
 
 export default class PhoneNumbers extends React.Component {
-    constructor() {
-        super();
-
-        this.state = {
-            loaded: false,
-            msisdns: [],
-        };
-    }
-
-    async componentWillMount() {
-        const client = MatrixClientPeg.get();
-
-        const msisdns = await getThreepidBindStatus(client, 'msisdn');
-
-        this.setState({ msisdns });
+    static propTypes = {
+        msisdns: PropTypes.array.isRequired,
     }
 
     render() {
         let content;
-        if (this.state.msisdns.length > 0) {
-            content = this.state.msisdns.map((e) => {
+        if (this.props.msisdns.length > 0) {
+            content = this.props.msisdns.map((e) => {
                 return <PhoneNumber msisdn={e} key={e.address} />;
             });
         } else {

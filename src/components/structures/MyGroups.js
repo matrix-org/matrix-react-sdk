@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import { MatrixClient } from 'matrix-js-sdk';
 import sdk from '../../index';
@@ -23,7 +24,7 @@ import { _t } from '../../languageHandler';
 import dis from '../../dispatcher';
 import AccessibleButton from '../views/elements/AccessibleButton';
 
-export default React.createClass({
+export default createReactClass({
     displayName: 'MyGroups',
 
     getInitialState: function() {
@@ -46,7 +47,7 @@ export default React.createClass({
     },
 
     _fetch: function() {
-        this.context.matrixClient.getJoinedGroups().done((result) => {
+        this.context.matrixClient.getJoinedGroups().then((result) => {
             this.setState({groups: result.groups, error: null});
         }, (err) => {
             if (err.errcode === 'M_GUEST_ACCESS_FORBIDDEN') {

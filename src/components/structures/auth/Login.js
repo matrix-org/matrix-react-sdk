@@ -16,9 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import {_t, _td} from '../../../languageHandler';
 import sdk from '../../../index';
@@ -54,7 +53,7 @@ _td("General failure");
 /**
  * A wire component which glues together login UI components and Login logic
  */
-module.exports = React.createClass({
+module.exports = createReactClass({
     displayName: 'Login',
 
     propTypes: {
@@ -94,7 +93,7 @@ module.exports = React.createClass({
             // Phase of the overall login dialog.
             phase: PHASE_LOGIN,
             // The current login flow, such as password, SSO, etc.
-            currentFlow: "m.login.password",
+            currentFlow: null, // we need to load the flows from the server
 
             // We perform liveliness checks later, but for now suppress the errors.
             // We also track the server dead errors independently of the regular errors so
@@ -254,7 +253,7 @@ module.exports = React.createClass({
             this.setState({
                 busy: false,
             });
-        }).done();
+        });
     },
 
     onUsernameChanged: function(username) {
@@ -373,20 +372,36 @@ module.exports = React.createClass({
 
         this.setState({
             busy: true,
+            currentFlow: null, // reset flow
             loginIncorrect: false,
         });
 
         // Do a quick liveliness check on the URLs
         try {
-            await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(hsUrl, isUrl);
-            this.setState({serverIsAlive: true, errorText: ""});
+            const { warning } =
+                await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(hsUrl, isUrl);
+            if (warning) {
+                this.setState({
+                    ...AutoDiscoveryUtils.authComponentStateForError(warning),
+                    errorText: "",
+                });
+            } else {
+                this.setState({
+                    serverIsAlive: true,
+                    errorText: "",
+                });
+            }
         } catch (e) {
             this.setState({
                 busy: false,
                 ...AutoDiscoveryUtils.authComponentStateForError(e),
             });
             if (this.state.serverErrorIsFatal) {
-                return; // Server is dead - do not continue.
+                // Server is dead: show server details prompt instead
+                this.setState({
+                    phase: PHASE_SERVER_DETAILS,
+                });
+                return;
             }
         }
 
@@ -424,7 +439,7 @@ module.exports = React.createClass({
             this.setState({
                 busy: false,
             });
-        }).done();
+        });
     },
 
     _isSupportedFlow: function(flow) {
@@ -566,6 +581,13 @@ module.exports = React.createClass({
     },
 
     _renderSsoStep: function(url) {
+        const SignInToText = sdk.getComponent('views.auth.SignInToText');
+
+        let onEditServerDetailsClick = null;
+        // If custom URLs are allowed, wire up the server details edit link.
+        if (PHASES_ENABLED && !SdkConfig.get()['disable_custom_urls']) {
+            onEditServerDetailsClick = this.onEditServerDetailsClick;
+        }
         // XXX: This link does *not* have a target="_blank" because single sign-on relies on
         // redirecting the user back to a URI once they're logged in. On the web, this means
         // we use the same window and redirect back to riot. On electron, this actually
@@ -575,7 +597,12 @@ module.exports = React.createClass({
         // user's browser, let them log into their SSO provider, then redirect their browser
         // to vector://vector which, of course, will not work.
         return (
-            <a href={url} className="mx_Login_sso_link mx_Login_submit">{ _t('Sign in with single sign-on') }</a>
+            <div>
+                <SignInToText serverConfig={this.props.serverConfig}
+                    onEditServerDetailsClick={onEditServerDetailsClick} />
+
+                <a href={url} className="mx_Login_sso_link mx_Login_submit">{ _t('Sign in with single sign-on') }</a>
+            </div>
         );
     },
 

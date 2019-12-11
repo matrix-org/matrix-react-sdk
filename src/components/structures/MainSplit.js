@@ -1,5 +1,6 @@
 /*
 Copyright 2018 New Vector Ltd
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -61,27 +62,13 @@ export default class MainSplit extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.panel && !this.props.collapsedRhs) {
+        if (this.props.panel) {
             this._createResizer();
         }
     }
 
     componentWillUnmount() {
         if (this.resizer) {
-            this.resizer.detach();
-            this.resizer = null;
-        }
-    }
-
-    componentDidUpdate(prevProps) {
-        const wasExpanded = !this.props.collapsedRhs && prevProps.collapsedRhs;
-        const wasCollapsed = this.props.collapsedRhs && !prevProps.collapsedRhs;
-        const wasPanelSet = this.props.panel && !prevProps.panel;
-        const wasPanelCleared = !this.props.panel && prevProps.panel;
-
-        if (wasExpanded || wasPanelSet) {
-            this._createResizer();
-        } else if (wasCollapsed || wasPanelCleared) {
             this.resizer.detach();
             this.resizer = null;
         }

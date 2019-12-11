@@ -1,7 +1,8 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd.
-Copyright 2017 New Vector Ltd
+Copyright 2017, 2018, 2019 New Vector Ltd
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,9 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
-import Matrix from 'matrix-js-sdk';
+import {MatrixClient, MemoryStore} from 'matrix-js-sdk';
 
 import utils from 'matrix-js-sdk/lib/utils';
 import EventTimeline from 'matrix-js-sdk/lib/models/event-timeline';
@@ -27,12 +26,12 @@ import sdk from './index';
 import createMatrixClient from './utils/createMatrixClient';
 import SettingsStore from './settings/SettingsStore';
 import MatrixActionCreators from './actions/MatrixActionCreators';
-import {phasedRollOutExpiredForUser} from "./PhasedRollOut";
 import Modal from './Modal';
 import {verificationMethods} from 'matrix-js-sdk/lib/crypto';
 import MatrixClientBackedSettingsHandler from "./settings/handlers/MatrixClientBackedSettingsHandler";
 import * as StorageManager from './utils/StorageManager';
 import IdentityAuthClient from './IdentityAuthClient';
+import * as CrossSigningManager from './CrossSigningManager';
 
 interface MatrixClientCreds {
     homeserverUrl: string,
@@ -87,7 +86,7 @@ class MatrixClientPeg {
         MatrixActionCreators.stop();
     }
 
-    /*
+    /**
      * If we've registered a user ID we set this to the ID of the
      * user we've just registered. If they then go & log in, we
      * can send them to the welcome user (obviously this doesn't
@@ -99,7 +98,7 @@ class MatrixClientPeg {
         this._justRegisteredUserId = uid;
     }
 
-    /*
+    /**
      * Returns true if the current user has just been registered by this
      * client as determined by setJustRegisteredUserId()
      *
@@ -112,7 +111,7 @@ class MatrixClientPeg {
         );
     }
 
-    /**
+    /*
      * Replace this MatrixClientPeg's client with a client instance that has
      * homeserver / identity server URLs and active credentials
      */
@@ -131,7 +130,7 @@ class MatrixClientPeg {
             } catch (err) {
                 if (dbType === 'indexeddb') {
                     console.error('Error starting matrixclient store - falling back to memory store', err);
-                    this.matrixClient.store = new Matrix.MemoryStore({
+                    this.matrixClient.store = new MemoryStore({
                         localStorage: global.localStorage,
                     });
                 } else {
@@ -195,7 +194,7 @@ class MatrixClientPeg {
         };
     }
 
-    /**
+    /*
      * Return the server name of the user's homeserver
      * Throws an error if unable to deduce the homeserver name
      * (eg. if the user is not logged in)
@@ -222,6 +221,11 @@ class MatrixClientPeg {
             unstableClientRelationAggregation: true,
             identityServer: new IdentityAuthClient(),
         };
+
+        opts.cryptoCallbacks = {};
+        if (SettingsStore.isFeatureEnabled("feature_cross_signing")) {
+            Object.assign(opts.cryptoCallbacks, CrossSigningManager);
+        }
 
         this.matrixClient = createMatrixClient(opts);
 

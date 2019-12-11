@@ -23,8 +23,8 @@ import Field from "../../elements/Field";
 import AccessibleButton from "../../elements/AccessibleButton";
 import AddThreepid from "../../../../AddThreepid";
 import CountryDropdown from "../../auth/CountryDropdown";
-const sdk = require('../../../../index');
-const Modal = require("../../../../Modal");
+import sdk from '../../../../index';
+import Modal from '../../../../Modal';
 
 /*
 TODO: Improve the UX for everything in here.
@@ -108,11 +108,15 @@ export class ExistingPhoneNumber extends React.Component {
 }
 
 export default class PhoneNumbers extends React.Component {
-    constructor() {
-        super();
+    static propTypes = {
+        msisdns: PropTypes.array.isRequired,
+        onMsisdnsChange: PropTypes.func.isRequired,
+    }
+
+    constructor(props) {
+        super(props);
 
         this.state = {
-            msisdns: [],
             verifying: false,
             verifyError: false,
             verifyMsisdn: "",
@@ -124,16 +128,9 @@ export default class PhoneNumbers extends React.Component {
         };
     }
 
-    componentWillMount(): void {
-        const client = MatrixClientPeg.get();
-
-        client.getThreePids().then((addresses) => {
-            this.setState({msisdns: addresses.threepids.filter((a) => a.medium === 'msisdn')});
-        });
-    }
-
     _onRemoved = (address) => {
-        this.setState({msisdns: this.state.msisdns.filter((e) => e !== address)});
+        const msisdns = this.props.msisdns.filter((e) => e !== address);
+        this.props.onMsisdnsChange(msisdns);
     };
 
     _onChangeNewPhoneNumber = (e) => {
@@ -161,7 +158,7 @@ export default class PhoneNumbers extends React.Component {
         const task = new AddThreepid();
         this.setState({verifying: true, continueDisabled: true, addTask: task});
 
-        task.addMsisdn(phoneCountry, phoneNumber, false).then((response) => {
+        task.addMsisdn(phoneCountry, phoneNumber).then((response) => {
             this.setState({continueDisabled: false, verifyMsisdn: response.msisdn});
         }).catch((err) => {
             console.error("Unable to add phone number " + phoneNumber + " " + err);
@@ -179,9 +176,9 @@ export default class PhoneNumbers extends React.Component {
 
         this.setState({continueDisabled: true});
         const token = this.state.newPhoneNumberCode;
+        const address = this.state.verifyMsisdn;
         this.state.addTask.haveMsisdnToken(token).then(() => {
             this.setState({
-                msisdns: [...this.state.msisdns, {address: this.state.verifyMsisdn, medium: "msisdn"}],
                 addTask: null,
                 continueDisabled: false,
                 verifying: false,
@@ -190,6 +187,11 @@ export default class PhoneNumbers extends React.Component {
                 newPhoneNumber: "",
                 newPhoneNumberCode: "",
             });
+            const msisdns = [
+                ...this.props.msisdns,
+                { address, medium: "msisdn" },
+            ];
+            this.props.onMsisdnsChange(msisdns);
         }).catch((err) => {
             this.setState({continueDisabled: false});
             if (err.errcode !== 'M_THREEPID_AUTH_FAILED') {
@@ -210,7 +212,7 @@ export default class PhoneNumbers extends React.Component {
     };
 
     render() {
-        const existingPhoneElements = this.state.msisdns.map((p) => {
+        const existingPhoneElements = this.props.msisdns.map((p) => {
             return <ExistingPhoneNumber msisdn={p} onRemoved={this._onRemoved} key={p.address} />;
         });
 
@@ -229,7 +231,7 @@ export default class PhoneNumbers extends React.Component {
                         <br />
                         {this.state.verifyError}
                     </div>
-                    <form onSubmit={this._onContinueClick} autoComplete={false} noValidate={true}>
+                    <form onSubmit={this._onContinueClick} autoComplete="off" noValidate={true}>
                         <Field id="mx_PhoneNumbers_newPhoneNumberCode"
                             type="text"
                             label={_t("Verification code")}
@@ -258,8 +260,7 @@ export default class PhoneNumbers extends React.Component {
         return (
             <div className="mx_PhoneNumbers">
                 {existingPhoneElements}
-                <form onSubmit={this._onAddClick} autoComplete={false}
-                      noValidate={true} className="mx_PhoneNumbers_new">
+                <form onSubmit={this._onAddClick} autoComplete="off" noValidate={true} className="mx_PhoneNumbers_new">
                     <div className="mx_PhoneNumbers_input">
                         <Field id="mx_PhoneNumbers_newPhoneNumber"
                             type="text"
@@ -271,8 +272,8 @@ export default class PhoneNumbers extends React.Component {
                             onChange={this._onChangeNewPhoneNumber}
                         />
                     </div>
-                    {addVerifySection}
                 </form>
+                {addVerifySection}
             </div>
         );
     }

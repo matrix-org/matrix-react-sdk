@@ -23,8 +23,8 @@ import Field from "../../elements/Field";
 import AccessibleButton from "../../elements/AccessibleButton";
 import * as Email from "../../../../email";
 import AddThreepid from "../../../../AddThreepid";
-const sdk = require('../../../../index');
-const Modal = require("../../../../Modal");
+import sdk from '../../../../index';
+import Modal from '../../../../Modal';
 
 /*
 TODO: Improve the UX for everything in here.
@@ -113,11 +113,15 @@ export class ExistingEmailAddress extends React.Component {
 }
 
 export default class EmailAddresses extends React.Component {
-    constructor() {
-        super();
+    static propTypes = {
+        emails: PropTypes.array.isRequired,
+        onEmailsChange: PropTypes.func.isRequired,
+    }
+
+    constructor(props) {
+        super(props);
 
         this.state = {
-            emails: [],
             verifying: false,
             addTask: null,
             continueDisabled: false,
@@ -125,16 +129,9 @@ export default class EmailAddresses extends React.Component {
         };
     }
 
-    componentWillMount(): void {
-        const client = MatrixClientPeg.get();
-
-        client.getThreePids().then((addresses) => {
-            this.setState({emails: addresses.threepids.filter((a) => a.medium === 'email')});
-        });
-    }
-
     _onRemoved = (address) => {
-        this.setState({emails: this.state.emails.filter((e) => e !== address)});
+        const emails = this.props.emails.filter((e) => e !== address);
+        this.props.onEmailsChange(emails);
     };
 
     _onChangeNewEmailAddress = (e) => {
@@ -164,7 +161,7 @@ export default class EmailAddresses extends React.Component {
         const task = new AddThreepid();
         this.setState({verifying: true, continueDisabled: true, addTask: task});
 
-        task.addEmailAddress(email, false).then(() => {
+        task.addEmailAddress(email).then(() => {
             this.setState({continueDisabled: false});
         }).catch((err) => {
             console.error("Unable to add email address " + email + " " + err);
@@ -184,17 +181,27 @@ export default class EmailAddresses extends React.Component {
         this.state.addTask.checkEmailLinkClicked().then(() => {
             const email = this.state.newEmailAddress;
             this.setState({
-                emails: [...this.state.emails, {address: email, medium: "email"}],
                 addTask: null,
                 continueDisabled: false,
                 verifying: false,
                 newEmailAddress: "",
             });
+            const emails = [
+                ...this.props.emails,
+                { address: email, medium: "email" },
+            ];
+            this.props.onEmailsChange(emails);
         }).catch((err) => {
             this.setState({continueDisabled: false});
-            if (err.errcode !== 'M_THREEPID_AUTH_FAILED') {
-                const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-                console.error("Unable to verify email address: " + err);
+            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+            if (err.errcode === 'M_THREEPID_AUTH_FAILED') {
+                Modal.createTrackedDialog("Email hasn't been verified yet", "", ErrorDialog, {
+                    title: _t("Your email address hasn't been verified yet"),
+                    description: _t("Click the link in the email you received to verify " +
+                        "and then click continue again."),
+                });
+            } else {
+                console.error("Unable to verify email address: ", err);
                 Modal.createTrackedDialog('Unable to verify email address', '', ErrorDialog, {
                     title: _t("Unable to verify email address."),
                     description: ((err && err.message) ? err.message : _t("Operation failed")),
@@ -204,7 +211,7 @@ export default class EmailAddresses extends React.Component {
     };
 
     render() {
-        const existingEmailElements = this.state.emails.map((e) => {
+        const existingEmailElements = this.props.emails.map((e) => {
             return <ExistingEmailAddress email={e} onRemoved={this._onRemoved} key={e.address} />;
         });
 
@@ -228,7 +235,7 @@ export default class EmailAddresses extends React.Component {
         return (
             <div className="mx_EmailAddresses">
                 {existingEmailElements}
-                <form onSubmit={this._onAddClick} autoComplete={false}
+                <form onSubmit={this._onAddClick} autoComplete="off"
                       noValidate={true} className="mx_EmailAddresses_new">
                     <Field id="mx_EmailAddressses_newEmailAddress"
                         type="text"

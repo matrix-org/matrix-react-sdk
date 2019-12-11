@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
-import React from 'react';
+import React, {createRef} from 'react';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import { linkifyElement } from '../../../HtmlUtils';
+import SettingsStore from "../../../settings/SettingsStore";
 
 const sdk = require('../../../index');
 const MatrixClientPeg = require('../../../MatrixClientPeg');
 const ImageUtils = require('../../../ImageUtils');
 const Modal = require('../../../Modal');
 
-module.exports = React.createClass({
+module.exports = createReactClass({
     displayName: 'LinkPreviewWidget',
 
     propTypes: {
@@ -53,18 +53,20 @@ module.exports = React.createClass({
             );
         }, (error)=>{
             console.error("Failed to get URL preview: " + error);
-        }).done();
+        });
+
+        this._description = createRef();
     },
 
     componentDidMount: function() {
-        if (this.refs.description) {
-            linkifyElement(this.refs.description);
+        if (this._description.current) {
+            linkifyElement(this._description.current);
         }
     },
 
     componentDidUpdate: function() {
-        if (this.refs.description) {
-            linkifyElement(this.refs.description);
+        if (this._description.current) {
+            linkifyElement(this._description.current);
         }
     },
 
@@ -103,6 +105,9 @@ module.exports = React.createClass({
 
         // FIXME: do we want to factor out all image displaying between this and MImageBody - especially for lightboxing?
         let image = p["og:image"];
+        if (!SettingsStore.getValue("showImages")) {
+            image = null; // Don't render a button to show the image, just hide it outright
+        }
         const imageMaxWidth = 100; const imageMaxHeight = 100;
         if (image && image.startsWith("mxc://")) {
             image = MatrixClientPeg.get().mxcUrlToHttp(image, imageMaxWidth, imageMaxHeight);
@@ -126,7 +131,7 @@ module.exports = React.createClass({
                 <div className="mx_LinkPreviewWidget_caption">
                     <div className="mx_LinkPreviewWidget_title"><a href={this.props.link} target="_blank" rel="noopener">{ p["og:title"] }</a></div>
                     <div className="mx_LinkPreviewWidget_siteName">{ p["og:site_name"] ? (" - " + p["og:site_name"]) : null }</div>
-                    <div className="mx_LinkPreviewWidget_description" ref="description">
+                    <div className="mx_LinkPreviewWidget_description" ref={this._description}>
                         { p["og:description"] }
                     </div>
                 </div>

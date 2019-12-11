@@ -58,7 +58,37 @@ export const KeyCode = {
     KEY_X: 88,
     KEY_Y: 89,
     KEY_Z: 90,
-    KEY_BACKTICK: 223,
+    KEY_BACKTICK: 223, // DO NOT USE THIS: browsers disagree on backtick 192 vs 223
+};
+
+export const Key = {
+    HOME: "Home",
+    END: "End",
+    PAGE_UP: "PageUp",
+    PAGE_DOWN: "PageDown",
+    BACKSPACE: "Backspace",
+    ARROW_UP: "ArrowUp",
+    ARROW_DOWN: "ArrowDown",
+    ARROW_LEFT: "ArrowLeft",
+    ARROW_RIGHT: "ArrowRight",
+    TAB: "Tab",
+    ESCAPE: "Escape",
+    ENTER: "Enter",
+    ALT: "Alt",
+    CONTROL: "Control",
+    META: "Meta",
+    SHIFT: "Shift",
+    CONTEXT_MENU: "ContextMenu",
+
+    LESS_THAN: "<",
+    GREATER_THAN: ">",
+    BACKTICK: "`",
+    SPACE: " ",
+    B: "b",
+    I: "i",
+    K: "k",
+    Y: "y",
+    Z: "z",
 };
 
 export function isOnlyCtrlOrCmdKeyEvent(ev) {

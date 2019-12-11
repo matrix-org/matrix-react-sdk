@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
-import React from 'react';
+import React, {createRef} from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 
@@ -25,7 +24,7 @@ const DIV_ID = 'mx_recaptcha';
 /**
  * A pure UI component which displays a captcha form.
  */
-module.exports = React.createClass({
+module.exports = createReactClass({
     displayName: 'CaptchaForm',
 
     propTypes: {
@@ -49,6 +48,8 @@ module.exports = React.createClass({
 
     componentWillMount: function() {
         this._captchaWidgetId = null;
+
+        this._recaptchaContainer = createRef();
     },
 
     componentDidMount: function() {
@@ -68,7 +69,7 @@ module.exports = React.createClass({
             scriptTag.setAttribute(
                 'src', `${protocol}//www.recaptcha.net/recaptcha/api.js?onload=mx_on_recaptcha_loaded&render=explicit`,
             );
-            this.refs.recaptchaContainer.appendChild(scriptTag);
+            this._recaptchaContainer.current.appendChild(scriptTag);
         }
     },
 
@@ -90,7 +91,7 @@ module.exports = React.createClass({
                     + "authentication");
         }
 
-        console.log("Rendering to %s", divId);
+        console.info("Rendering to %s", divId);
         this._captchaWidgetId = global.grecaptcha.render(divId, {
             sitekey: publicKey,
             callback: this.props.onCaptchaResponse,
@@ -125,11 +126,11 @@ module.exports = React.createClass({
         }
 
         return (
-            <div ref="recaptchaContainer">
+            <div ref={this._recaptchaContainer}>
                 <p>{_t(
                     "This homeserver would like to make sure you are not a robot.",
                 )}</p>
-                <div id={DIV_ID}></div>
+                <div id={DIV_ID} />
                 { error }
             </div>
         );

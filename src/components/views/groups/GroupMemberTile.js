@@ -18,12 +18,13 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import { MatrixClient } from 'matrix-js-sdk';
 import sdk from '../../../index';
 import dis from '../../../dispatcher';
 import { GroupMemberType } from '../../../groups';
 
-export default React.createClass({
+export default createReactClass({
     displayName: 'GroupMemberTile',
 
     propTypes: {
@@ -58,7 +59,9 @@ export default React.createClass({
         );
 
         const av = (
-            <BaseAvatar name={this.props.member.userId}
+            <BaseAvatar
+                name={this.props.member.displayname || this.props.member.userId}
+                idName={this.props.member.userId}
                 width={36} height={36}
                 url={avatarUrl}
             />

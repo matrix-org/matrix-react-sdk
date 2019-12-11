@@ -18,7 +18,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dis from '../../../dispatcher';
 import EditorModel from '../../../editor/model';
-import {htmlSerializeIfNeeded, textSerialize, containsEmote, stripEmoteCommand} from '../../../editor/serialize';
+import {
+    htmlSerializeIfNeeded,
+    textSerialize,
+    containsEmote,
+    stripEmoteCommand,
+    unescapeMessage,
+} from '../../../editor/serialize';
 import {CommandPartCreator} from '../../../editor/parts';
 import {MatrixClient} from 'matrix-js-sdk';
 import BasicMessageComposer from "./BasicMessageComposer";
@@ -31,7 +37,9 @@ import SendHistoryManager from "../../../SendHistoryManager";
 import {processCommandInput} from '../../../SlashCommands';
 import sdk from '../../../index';
 import Modal from '../../../Modal';
-import { _t } from '../../../languageHandler';
+import {_t, _td} from '../../../languageHandler';
+import ContentMessages from '../../../ContentMessages';
+import {Key} from "../../../Keyboard";
 
 function addReplyToMessageContent(content, repliedToEvent, permalinkCreator) {
     const replyContent = ReplyThread.makeReplyMixIn(repliedToEvent);
@@ -53,6 +61,7 @@ function createMessageContent(model, permalinkCreator) {
     if (isEmote) {
         model = stripEmoteCommand(model);
     }
+    model = unescapeMessage(model);
     const repliedToEvent = RoomViewStore.getQuotingEvent();
 
     const body = textSerialize(model);
@@ -96,13 +105,17 @@ export default class SendMessageComposer extends React.Component {
     };
 
     _onKeyDown = (event) => {
+        // ignore any keypress while doing IME compositions
+        if (this._editorRef.isComposing(event)) {
+            return;
+        }
         const hasModifier = event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
-        if (event.key === "Enter" && !hasModifier) {
+        if (event.key === Key.ENTER && !hasModifier) {
             this._sendMessage();
             event.preventDefault();
-        } else if (event.key === "ArrowUp") {
+        } else if (event.key === Key.ARROW_UP) {
             this.onVerticalArrow(event, true);
-        } else if (event.key === "ArrowDown") {
+        } else if (event.key === Key.ARROW_DOWN) {
             this.onVerticalArrow(event, false);
         }
     }
@@ -162,14 +175,27 @@ export default class SendMessageComposer extends React.Component {
 
     _isSlashCommand() {
         const parts = this.model.parts;
-        const isPlain = parts.reduce((isPlain, part) => {
-            return isPlain && (part.type === "command" || part.type === "plain" || part.type === "newline");
-        }, true);
-        return isPlain && parts.length > 0 && parts[0].text.startsWith("/");
+        const firstPart = parts[0];
+        if (firstPart) {
+            if (firstPart.type === "command") {
+                return true;
+            }
+            // be extra resilient when somehow the AutocompleteWrapperModel or
+            // CommandPartCreator fails to insert a command part, so we don't send
+            // a command as a message
+            if (firstPart.text.startsWith("/") && (firstPart.type === "plain" || firstPart.type === "pill-candidate")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     async _runSlashCommand() {
         const commandText = this.model.parts.reduce((text, part) => {
+            // use mxid to textify user pills in a command
+            if (part.type === "user-pill") {
+                return text + part.resourceId;
+            }
             return text + part.text;
         }, "");
         const cmd = processCommandInput(this.props.room.roomId, commandText);
@@ -188,12 +214,20 @@ export default class SendMessageComposer extends React.Component {
                 const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 // assume the error is a server error when the command is async
                 const isServerError = !!cmd.promise;
-                const title = isServerError ? "Server error" : "Command error";
+                const title = isServerError ? _td("Server error") : _td("Command error");
+
+                let errText;
+                if (typeof error === 'string') {
+                    errText = error;
+                } else if (error.message) {
+                    errText = error.message;
+                } else {
+                    errText = _t("Server unavailable, overloaded, or something else went wrong.");
+                }
+
                 Modal.createTrackedDialog(title, '', ErrorDialog, {
-                    title: isServerError ? _t("Server error") : _t("Command error"),
-                    description: error.message ? error.message : _t(
-                        "Server unavailable, overloaded, or something else went wrong.",
-                    ),
+                    title: _t(title),
+                    description: errText,
                 });
             } else {
                 console.log("Command success.");
@@ -202,6 +236,9 @@ export default class SendMessageComposer extends React.Component {
     }
 
     _sendMessage() {
+        if (this.model.isEmpty) {
+            return;
+        }
         if (!containsEmote(this.model) && this._isSlashCommand()) {
             this._runSlashCommand();
         } else {
@@ -226,8 +263,13 @@ export default class SendMessageComposer extends React.Component {
         this._clearStoredEditorState();
     }
 
+    componentDidMount() {
+        this._editorRef.getEditableRootNode().addEventListener("paste", this._onPaste, true);
+    }
+
     componentWillUnmount() {
         dis.unregister(this.dispatcherRef);
+        this._editorRef.getEditableRootNode().removeEventListener("paste", this._onPaste, true);
     }
 
     componentWillMount() {
@@ -279,24 +321,49 @@ export default class SendMessageComposer extends React.Component {
     };
 
     _insertMention(userId) {
+        const {model} = this;
+        const {partCreator} = model;
         const member = this.props.room.getMember(userId);
         const displayName = member ?
             member.rawDisplayName : userId;
-        const userPillPart = this.model.partCreator.userPill(displayName, userId);
-        this.model.insertPartsAt([userPillPart], this._editorRef.getCaret());
+        const caret = this._editorRef.getCaret();
+        const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
+        const insertIndex = position.index + 1;
+        const parts = partCreator.createMentionParts(insertIndex, displayName, userId);
+        model.transform(() => {
+            const addedLen = model.insert(parts, position);
+            return model.positionForOffset(caret.offset + addedLen, true);
+        });
         // refocus on composer, as we just clicked "Mention"
         this._editorRef && this._editorRef.focus();
     }
 
     _insertQuotedMessage(event) {
-        const {partCreator} = this.model;
+        const {model} = this;
+        const {partCreator} = model;
         const quoteParts = parseEvent(event, partCreator, { isQuotedMessage: true });
         // add two newlines
         quoteParts.push(partCreator.newline());
         quoteParts.push(partCreator.newline());
-        this.model.insertPartsAt(quoteParts, {offset: 0});
+        model.transform(() => {
+            const addedLen = model.insert(quoteParts, model.positionForOffset(0));
+            return model.positionForOffset(addedLen, true);
+        });
         // refocus on composer, as we just clicked "Quote"
         this._editorRef && this._editorRef.focus();
+    }
+
+    _onPaste = (event) => {
+        const {clipboardData} = event;
+        if (clipboardData.files.length) {
+            // This actually not so much for 'files' as such (at time of writing
+            // neither chrome nor firefox let you paste a plain file copied
+            // from Finder) but more images copied from a different website
+            // / word processor etc.
+            ContentMessages.sharedInstance().sendContentListToRoom(
+                Array.from(clipboardData.files), this.props.room.roomId, this.context.matrixClient,
+            );
+        }
     }
 
     render() {

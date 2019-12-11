@@ -15,10 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
-import React from 'react';
+import React, {createRef} from 'react';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import filesize from 'filesize';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import sdk from '../../../index';
@@ -195,7 +194,7 @@ function computedStyle(element) {
     return cssText;
 }
 
-module.exports = React.createClass({
+module.exports = createReactClass({
     displayName: 'MFileBody',
 
     getInitialState: function() {
@@ -252,6 +251,12 @@ module.exports = React.createClass({
         return MatrixClientPeg.get().mxcUrlToHttp(content.url);
     },
 
+    UNSAFE_componentWillMount: function() {
+        this._iframe = createRef();
+        this._dummyLink = createRef();
+        this._downloadImage = createRef();
+    },
+
     componentDidMount: function() {
         // Add this to the list of mounted components to receive notifications
         // when the tint changes.
@@ -273,17 +278,17 @@ module.exports = React.createClass({
 
     tint: function() {
         // Update our tinted copy of require("../../../../res/img/download.svg")
-        if (this.refs.downloadImage) {
-            this.refs.downloadImage.src = tintedDownloadImageURL;
+        if (this._downloadImage.current) {
+            this._downloadImage.current.src = tintedDownloadImageURL;
         }
-        if (this.refs.iframe) {
+        if (this._iframe.current) {
             // If the attachment is encrypted then the download image
             // will be inside the iframe so we wont be able to update
             // it directly.
-            this.refs.iframe.contentWindow.postMessage({
+            this._iframe.current.contentWindow.postMessage({
                 code: remoteSetTint.toString(),
                 imgSrc: tintedDownloadImageURL,
-                style: computedStyle(this.refs.dummyLink),
+                style: computedStyle(this._dummyLink.current),
             }, "*");
         }
     },
@@ -326,7 +331,7 @@ module.exports = React.createClass({
                 };
 
                 return (
-                    <span className="mx_MFileBody" ref="body">
+                    <span className="mx_MFileBody">
                         <div className="mx_MFileBody_download">
                             <a href="javascript:void(0)" onClick={decrypt}>
                                 { _t("Decrypt %(text)s", { text: text }) }
@@ -341,7 +346,7 @@ module.exports = React.createClass({
                 ev.target.contentWindow.postMessage({
                     code: remoteRender.toString(),
                     imgSrc: tintedDownloadImageURL,
-                    style: computedStyle(this.refs.dummyLink),
+                    style: computedStyle(this._dummyLink.current),
                     blob: this.state.decryptedBlob,
                     // Set a download attribute for encrypted files so that the file
                     // will have the correct name when the user tries to download it.
@@ -368,9 +373,9 @@ module.exports = React.createClass({
                               * We'll use it to learn how the download link
                               * would have been styled if it was rendered inline.
                               */ }
-                            <a ref="dummyLink" />
+                            <a ref={this._dummyLink} />
                         </div>
-                        <iframe src={renderer_url} onLoad={onIframeLoad} ref="iframe" />
+                        <iframe src={renderer_url} onLoad={onIframeLoad} ref={this._iframe} />
                     </div>
                 </span>
             );
@@ -440,7 +445,7 @@ module.exports = React.createClass({
                     <span className="mx_MFileBody">
                         <div className="mx_MFileBody_download">
                             <a {...downloadProps}>
-                                <img src={tintedDownloadImageURL} width="12" height="14" ref="downloadImage" />
+                                <img src={tintedDownloadImageURL} width="12" height="14" ref={this._downloadImage} />
                                 { _t("Download %(text)s", { text: text }) }
                             </a>
                         </div>
