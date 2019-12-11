@@ -32,12 +32,12 @@ const ToggleSwitch = ({checked, disabled=false, onChange, ...props}) => {
     };
 
     const _onKeyDown = (e) => {
-        e.stopPropagation();
-        e.preventDefault();
         if (disabled) return;
 
         if (e.keyCode === KeyCode.ENTER || e.keyCode === KeyCode.SPACE) {
             onChange(!checked);
+            e.stopPropagation();
+            e.preventDefault();
         }
     };
 
