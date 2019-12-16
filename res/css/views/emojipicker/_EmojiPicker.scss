@@ -32,6 +32,7 @@ limitations under the License.
 }
 
 .mx_EmojiPicker_header {
+    display: inherit;
     padding: 4px 8px 0;
     border-bottom: 1px solid $message-action-bar-border-color;
 }
@@ -42,6 +43,7 @@ limitations under the License.
     border-bottom: 2px solid transparent;
     background-color: transparent;
     border-radius: 4px 4px 0 0;
+    box-sizing: border-box;
 
     width: 36px;
     height: 38px;

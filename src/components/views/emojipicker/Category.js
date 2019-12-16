@@ -67,7 +67,7 @@ class Category extends React.PureComponent {
         const localScrollTop = Math.max(0, scrollTop - listTop);
 
         return (
-            <section className="mx_EmojiPicker_category" data-category-id={this.props.id}>
+            <section className="mx_EmojiPicker_category" data-category-id={this.props.id} role="group" aria-label={name}>
                 <h2 className="mx_EmojiPicker_category_label">
                     {name}
                 </h2>
