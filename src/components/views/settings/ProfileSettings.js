@@ -27,26 +27,31 @@ export default class ProfileSettings extends React.Component {
         super();
 
         const client = MatrixClientPeg.get();
-        let user = client.getUser(client.getUserId());
-        if (!user) {
-            // XXX: We shouldn't have to do this.
-            // There seems to be a condition where the User object won't exist until a room
-            // exists on the account. To work around this, we'll just create a temporary User
-            // and use that.
-            console.warn("User object not found - creating one for ProfileSettings");
-            user = new User(client.getUserId());
-        }
-        let avatarUrl = user.avatarUrl;
-        if (avatarUrl) avatarUrl = client.mxcUrlToHttp(avatarUrl, 96, 96, 'crop', false);
         this.state = {
             userId: user.userId,
-            originalDisplayName: user.displayName,
-            displayName: user.displayName,
-            originalAvatarUrl: avatarUrl,
-            avatarUrl: avatarUrl,
+            originalDisplayName: undefined,
+            displayName: undefined,
+            originalAvatarUrl: undefined,
+            avatarUrl: undefined,
             avatarFile: null,
             enableProfileSave: false,
         };
+
+        // We want to fetch the user's real profile each time so we don't render
+        // stale or per-room profiles by mistake.
+        client.getProfileInfo(client.getUserId()).then((user) => ({
+            let avatarUrl = user.avatarUrl;
+            if (avatarUrl) avatarUrl = client.mxcUrlToHttp(avatarUrl, 96, 96, 'crop', false);
+            let displayName = user.displayname;
+            this.setState({
+                displayName: user.displayname,
+                originalDisplayName: user.displayname,
+                originalAvatarUrl: avatarUrl,
+                avatarUrl: avatarUrl,
+            });
+        }).catch((e) => {
+            console.warn("User profile could not be fetched:", e);
+        });
 
         this._avatarUpload = createRef();
     }
