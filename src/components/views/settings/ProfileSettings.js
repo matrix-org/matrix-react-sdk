@@ -39,7 +39,7 @@ export default class ProfileSettings extends React.Component {
 
         // We want to fetch the user's real profile each time so we don't render
         // stale or per-room profiles by mistake.
-        client.getProfileInfo(client.getUserId()).then((user) => ({
+        client.getProfileInfo(client.getUserId()).then((user) => {
             let avatarUrl = user.avatarUrl;
             if (avatarUrl) avatarUrl = client.mxcUrlToHttp(avatarUrl, 96, 96, 'crop', false);
             let displayName = user.displayname;
