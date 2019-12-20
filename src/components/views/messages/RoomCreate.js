@@ -22,7 +22,7 @@ import createReactClass from 'create-react-class';
 import dis from '../../../dispatcher';
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import { _t } from '../../../languageHandler';
-import MatrixClientPeg from '../../../MatrixClientPeg';
+import {MatrixClientPeg} from '../../../MatrixClientPeg';
 
 export default createReactClass({
     displayName: 'RoomCreate',
