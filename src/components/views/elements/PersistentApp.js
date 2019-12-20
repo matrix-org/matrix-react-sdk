@@ -20,7 +20,7 @@ import createReactClass from 'create-react-class';
 import RoomViewStore from '../../../stores/RoomViewStore';
 import ActiveWidgetStore from '../../../stores/ActiveWidgetStore';
 import WidgetUtils from '../../../utils/WidgetUtils';
-import sdk from '../../../index';
+import * as sdk from '../../../index';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 
 export default createReactClass({

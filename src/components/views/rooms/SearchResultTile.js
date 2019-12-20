@@ -18,7 +18,7 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import sdk from '../../../index';
+import * as sdk from '../../../index';
 
 export default createReactClass({
     displayName: 'SearchResult',

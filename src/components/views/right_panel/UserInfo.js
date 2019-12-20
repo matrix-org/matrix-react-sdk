@@ -23,7 +23,7 @@ import classNames from 'classnames';
 import {Group, RoomMember, User} from 'matrix-js-sdk';
 import dis from '../../../dispatcher';
 import Modal from '../../../Modal';
-import sdk from '../../../index';
+import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import createRoom from '../../../createRoom';
 import DMRoomMap from '../../../utils/DMRoomMap';

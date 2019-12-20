@@ -21,7 +21,7 @@ import createReactClass from 'create-react-class';
 import MatrixClientPeg from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher';
 import { _t } from '../../../languageHandler';
-import sdk from '../../../index';
+import * as sdk from '../../../index';
 
 export default createReactClass({
     displayName: 'IncomingCallBox',
