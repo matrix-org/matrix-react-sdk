@@ -746,5 +746,6 @@
     "Failed to start chat": "Failed to start chat",
     "Messages": "Messages",
     "Actions": "Actions",
-    "Other": "Other"
+    "Other": "Other",
+    "Copy Message Contents": "Copy Message Contents"
 }

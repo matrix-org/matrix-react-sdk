@@ -253,6 +253,16 @@ module.exports = createReactClass({
         this.closeMenu();
     },
 
+    onCopyClick: function(e: Event) {
+        const textField = document.createElement('textarea');
+        textField.innerText = this.props.mxEvent.event.content.body;
+        document.body.appendChild(textField);
+        textField.select();
+        document.execCommand('copy');
+        textField.remove();
+        this.closeMenu();
+    },
+
     onPermalinkClick: function(e: Event) {
         e.preventDefault();
         const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
@@ -314,6 +324,7 @@ module.exports = createReactClass({
         let unhidePreviewButton;
         let externalURLButton;
         let quoteButton;
+        let copyButton;
         let collapseReplyThread;
 
         // status is SENT before remote-echo, null after
@@ -430,6 +441,14 @@ module.exports = createReactClass({
             );
         }
 
+        if (this.props.eventTileOps && this.props.eventTileOps.getInnerText) {
+            copyButton = (
+                <MenuItem className="mx_MessageContextMenu_field" onClick={this.onCopyClick}>
+                    { _t('Copy Message Contents') }
+                </MenuItem>
+            );
+        }
+
         // Bridges can provide a 'external_url' to link back to the source.
         if (
             typeof(mxEvent.event.content.external_url) === "string" &&
@@ -491,6 +510,7 @@ module.exports = createReactClass({
                 { unhidePreviewButton }
                 { permalinkButton }
                 { quoteButton }
+                { copyButton }
                 { externalURLButton }
                 { collapseReplyThread }
                 { e2eInfo }
