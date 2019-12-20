@@ -41,7 +41,7 @@ function reskindex() {
         var moduleName = (file.replace(/\//g, '.'));
         var importName = moduleName.replace(/\./g, "$");
 
-        strm.write("import * as " + importName + " from './components/" + file + "';\n");
+        strm.write("import " + importName + " from './components/" + file + "';\n");
         strm.write(importName + " && (components['"+moduleName+"'] = " + importName + ");");
         strm.write('\n');
         strm.uncork();
