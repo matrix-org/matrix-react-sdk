@@ -19,8 +19,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import * as Avatar from '../../../Avatar';
-
-const sdk = require('../../../index');
+import * as sdk from "../../../index";
 
 export default createReactClass({
     displayName: 'UserTile',

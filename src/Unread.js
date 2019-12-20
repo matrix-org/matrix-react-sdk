@@ -16,7 +16,7 @@ limitations under the License.
 
 import {MatrixClientPeg} from "./MatrixClientPeg";
 import shouldHideEvent from './shouldHideEvent';
-const sdk = require('./index');
+import * as sdk from "./index";
 
 /**
  * Returns true iff this event arriving in a room should affect the room's
