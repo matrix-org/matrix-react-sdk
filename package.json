@@ -26,8 +26,9 @@
     "matrix-gen-i18n": "scripts/gen-i18n.js",
     "matrix-prune-i18n": "scripts/prune-i18n.js"
   },
-  "main": "./src/index.js",
+  "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
+  "matrix_src_main": "./src/index.js",
   "scripts": {
     "i18n": "matrix-gen-i18n",
     "prunei18n": "matrix-prune-i18n",
