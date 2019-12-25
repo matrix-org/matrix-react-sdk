@@ -424,7 +424,7 @@ const useRoomPowerLevels = (cli, room) => {
 
 const RoomKickButton = ({member, startUpdating, stopUpdating}) => {
     const cli = useContext(MatrixClientContext);
-    
+
     const onKick = async () => {
         const ConfirmUserActionDialog = sdk.getComponent("dialogs.ConfirmUserActionDialog");
         const {finished} = Modal.createTrackedDialog(
