@@ -50,3 +50,7 @@ limitations under the License.
 .mx_ReplyPreview_clear {
     clear: both;
 }
+
+.mx_ReplyPreview .mx_EventTile {
+    display: inline-block;
+}
