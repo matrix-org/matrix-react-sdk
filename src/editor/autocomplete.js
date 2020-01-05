@@ -113,6 +113,7 @@ export default class AutocompleteWrapperModel {
             case "command":
                 // command needs special handling for auto complete, but also renders as plain texts
                 return [this._partCreator.command(text)];
+            case "sed-edit":
             default:
                 // used for emoji and other plain text completion replacement
                 return [this._partCreator.plain(text)];

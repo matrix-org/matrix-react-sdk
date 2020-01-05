@@ -378,6 +378,7 @@ export class PartCreator {
 
     createPartForInput(input) {
         switch (input[0]) {
+            case "s": // sed replacement
             case "#":
             case "@":
             case ":":

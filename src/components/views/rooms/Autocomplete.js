@@ -230,6 +230,7 @@ export default class Autocomplete extends React.Component {
         // this is the selected completion, so scroll it into view if needed
         const selectedCompletion = this.refs[`completion${this.state.selectionOffset}`];
         if (selectedCompletion && this.container) {
+            // TODO scrollIntoView
             const domNode = ReactDOM.findDOMNode(selectedCompletion);
             const offsetTop = domNode && domNode.offsetTop;
             if (offsetTop > this.container.scrollTop + this.container.offsetHeight ||

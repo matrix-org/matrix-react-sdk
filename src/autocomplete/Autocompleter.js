@@ -26,6 +26,7 @@ import RoomProvider from './RoomProvider';
 import UserProvider from './UserProvider';
 import EmojiProvider from './EmojiProvider';
 import NotifProvider from './NotifProvider';
+import SedEditProvider from "./SedEditProvider";
 import {timeout} from "../utils/promise";
 
 export type SelectionRange = {
@@ -52,6 +53,7 @@ const PROVIDERS = [
     CommandProvider,
     CommunityProvider,
     DuckDuckGoProvider,
+    SedEditProvider,
 ];
 
 // Providers will get rejected if they take longer than this.
