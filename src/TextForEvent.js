@@ -420,9 +420,7 @@ function textForHistoryVisibilityEvent(event) {
 
 function textForEncryptionEvent(event) {
     const senderName = event.sender ? event.sender.name : event.getSender();
-    return _t('%(senderName)s turned on end-to-end encryption.', {
-        senderName
-    });
+    return _t('%(senderName)s turned on end-to-end encryption.', {senderName});
 }
 
 // Currently will only display a change if a user's power level is changed
