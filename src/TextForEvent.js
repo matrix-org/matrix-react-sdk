@@ -420,9 +420,8 @@ function textForHistoryVisibilityEvent(event) {
 
 function textForEncryptionEvent(event) {
     const senderName = event.sender ? event.sender.name : event.getSender();
-    return _t('%(senderName)s turned on end-to-end encryption (algorithm %(algorithm)s).', {
-        senderName,
-        algorithm: event.getContent().algorithm,
+    return _t('%(senderName)s turned on end-to-end encryption.', {
+        senderName
     });
 }
 
