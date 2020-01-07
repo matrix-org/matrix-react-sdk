@@ -55,6 +55,7 @@ import SettingsStore, {SettingLevel} from "../../settings/SettingsStore";
 import WidgetUtils from '../../utils/WidgetUtils';
 import AccessibleButton from "../views/elements/AccessibleButton";
 import RightPanelStore from "../../stores/RightPanelStore";
+import {haveTileForEvent} from "../views/rooms/EventTile";
 
 const DEBUG = false;
 let debuglog = function() {};
@@ -66,13 +67,13 @@ if (DEBUG) {
     debuglog = console.log.bind(console);
 }
 
-const RoomContext = PropTypes.shape({
+export const RoomContext = PropTypes.shape({
     canReact: PropTypes.bool.isRequired,
     canReply: PropTypes.bool.isRequired,
     room: PropTypes.instanceOf(Room),
 });
 
-module.exports = createReactClass({
+export default createReactClass({
     displayName: 'RoomView',
     propTypes: {
         ConferenceHandler: PropTypes.any,
@@ -1245,7 +1246,7 @@ module.exports = createReactClass({
             const roomId = mxEv.getRoomId();
             const room = cli.getRoom(roomId);
 
-            if (!EventTile.haveTileForEvent(mxEv)) {
+            if (!haveTileForEvent(mxEv)) {
                 // XXX: can this ever happen? It will make the result count
                 // not match the displayed count.
                 continue;
@@ -2002,5 +2003,3 @@ module.exports = createReactClass({
         );
     },
 });
-
-module.exports.RoomContext = RoomContext;
