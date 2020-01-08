@@ -326,6 +326,27 @@ module.exports = createReactClass({
             badge = <div className={badgeClasses}>{ badgeContent }</div>;
         }
 
+        const dmUserId = DMRoomMap.shared().getUserIdForRoomId(this.props.room.roomId);
+
+        let dmIndicator;
+        let dmOnline;
+        if (dmUserId) {
+            dmIndicator = <img
+                src={require("../../../../res/img/icon_person.svg")}
+                className="mx_RoomTile_dm"
+                width="11"
+                height="13"
+                alt="dm"
+            />;
+
+            const { room } = this.props;
+            const member = room.getMember(dmUserId);
+            if (member && member.membership === "join" && room.getJoinedMemberCount() === 2) {
+                const UserOnlineDot = sdk.getComponent('rooms.UserOnlineDot');
+                dmOnline = <UserOnlineDot userId={dmUserId} />;
+            }
+        }
+
         let label;
         let subtextLabel;
         let tooltip;
@@ -337,7 +358,7 @@ module.exports = createReactClass({
             });
 
             subtextLabel = subtext ? <span className="mx_RoomTile_subtext">{ subtext }</span> : null;
-            label = <div title={name} className={nameClasses} dir="auto">{ name }</div>;
+            label = <div title={name} className={nameClasses} dir="auto">{ name }{ dmOnline }</div>;
         } else if (this.state.hover) {
             const Tooltip = sdk.getComponent("elements.Tooltip");
             tooltip = <Tooltip className="mx_RoomTile_tooltip" label={this.props.room.name} dir="auto" />;
@@ -365,27 +386,6 @@ module.exports = createReactClass({
         const RoomAvatar = sdk.getComponent('avatars.RoomAvatar');
 
         let ariaLabel = name;
-
-        const dmUserId = DMRoomMap.shared().getUserIdForRoomId(this.props.room.roomId);
-
-        let dmIndicator;
-        let dmOnline;
-        if (dmUserId) {
-            dmIndicator = <img
-                src={require("../../../../res/img/icon_person.svg")}
-                className="mx_RoomTile_dm"
-                width="11"
-                height="13"
-                alt="dm"
-            />;
-
-            const { room } = this.props;
-            const member = room.getMember(dmUserId);
-            if (member && member.membership === "join" && room.getJoinedMemberCount() === 2) {
-                const UserOnlineDot = sdk.getComponent('rooms.UserOnlineDot');
-                dmOnline = <UserOnlineDot userId={dmUserId} />;
-            }
-        }
 
         // The following labels are written in such a fashion to increase screen reader efficiency (speed).
         if (notifBadges && mentionBadges && !isInvite) {
@@ -433,7 +433,6 @@ module.exports = createReactClass({
                         { label }
                         { subtextLabel }
                     </div>
-                    { dmOnline }
                     { contextMenuButton }
                     { badge }
                 </div>
