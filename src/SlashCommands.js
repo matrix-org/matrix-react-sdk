@@ -246,6 +246,17 @@ export const CommandMap = {
         category: CommandCategories.actions,
     }),
 
+    status: new Command({
+        name: 'status',
+        args: '[<message>]',
+        description: _td('Set or clear your custom status'),
+        runFn: function(roomId, args) {
+            const cli = MatrixClientPeg.get();
+            return success(cli._unstable_setStatusMessage(args));
+        },
+        category: CommandCategories.actions,
+    }),
+
     roomavatar: new Command({
         name: 'roomavatar',
         args: '[<mxc_url>]',

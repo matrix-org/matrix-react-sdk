@@ -245,6 +245,7 @@
     "Session ID": "Session ID",
     "%(senderName)s set a profile picture.": "%(senderName)s set a profile picture.",
     "%(senderName)s set their display name to %(displayName)s.": "%(senderName)s set their display name to %(displayName)s.",
+    "Set or clear your custom status": "Set or clear your custom status",
     "Settings": "Settings",
     "Show timestamps in 12 hour format (e.g. 2:30pm)": "Show timestamps in 12 hour format (e.g. 2:30pm)",
     "Signed Out": "Signed Out",
