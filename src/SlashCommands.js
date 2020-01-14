@@ -33,6 +33,7 @@ import { abbreviateUrl } from './utils/UrlUtils';
 import { getDefaultIdentityServerUrl, useDefaultIdentityServer } from './utils/IdentityServerUtils';
 import {isPermalinkHost, parsePermalink} from "./utils/permalinks/Permalinks";
 import {inviteUsersToRoom} from "./RoomInvite";
+import SettingsStore from "./settings/SettingsStore";
 
 const singleMxcUpload = async () => {
     return new Promise((resolve) => {
@@ -63,13 +64,22 @@ export const CommandCategories = {
 };
 
 class Command {
-    constructor({name, args='', description, runFn, category=CommandCategories.other, hideCompletionAfterSpace=false}) {
+    constructor({
+        name,
+        args = '',
+        description,
+        runFn,
+        category = CommandCategories.other,
+        hideCompletionAfterSpace = false,
+        labFeature = null,
+    }) {
         this.command = '/' + name;
         this.args = args;
         this.description = description;
         this.runFn = runFn;
         this.category = category;
         this.hideCompletionAfterSpace = hideCompletionAfterSpace;
+        this.labFeature = labFeature;
     }
 
     getCommand() {
@@ -251,10 +261,10 @@ export const CommandMap = {
         args: '[<message>]',
         description: _td('Set or clear your custom status'),
         runFn: function(roomId, args) {
-            const cli = MatrixClientPeg.get();
-            return success(cli._unstable_setStatusMessage(args));
+            return success(MatrixClientPeg.get()._unstable_setStatusMessage(args));
         },
         category: CommandCategories.actions,
+        labFeature: 'feature_custom_status',
     }),
 
     roomavatar: new Command({
@@ -930,23 +940,24 @@ export function processCommandInput(roomId, input) {
     if (input[0] !== '/') return null; // not a command
 
     const bits = input.match(/^(\S+?)( +((.|\n)*))?$/);
-    let cmd;
+    let cmdText;
     let args;
     if (bits) {
-        cmd = bits[1].substring(1).toLowerCase();
+        cmdText = bits[1].substring(1).toLowerCase();
         args = bits[3];
     } else {
-        cmd = input;
+        cmdText = input;
     }
 
-    if (aliases[cmd]) {
-        cmd = aliases[cmd];
+    if (aliases[cmdText]) {
+        cmdText = aliases[cmdText];
     }
-    if (CommandMap[cmd]) {
+    const cmd = CommandMap[cmdText];
+    if (cmd && (!cmd.labFeature || SettingsStore.isFeatureEnabled(cmd.labFeature))) {
         // if it has no runFn then its an ignored/nop command (autocomplete only) e.g `/me`
-        if (!CommandMap[cmd].runFn) return null;
+        if (!cmd.runFn) return null;
 
-        return CommandMap[cmd].run(roomId, args);
+        return cmd.run(roomId, args);
     } else {
         return reject(_t('Unrecognised command:') + ' ' + input);
     }

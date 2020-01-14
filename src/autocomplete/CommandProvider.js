@@ -24,6 +24,7 @@ import QueryMatcher from './QueryMatcher';
 import {TextualCompletion} from './Components';
 import type {Completion, SelectionRange} from "./Autocompleter";
 import {CommandMap} from '../SlashCommands';
+import SettingsStore from '../settings/SettingsStore';
 
 const COMMANDS = Object.values(CommandMap);
 
@@ -60,6 +61,9 @@ export default class CommandProvider extends AutocompleteProvider {
                 matches = this.matcher.match(command[1]);
             }
         }
+
+        // hide the command if it's a lab feature and the feature isn't enabled
+        matches = matches.filter(match => !match.labFeature || SettingsStore.isFeatureEnabled(match.labFeature));
 
         return matches.map((result) => ({
             // If the command is the same as the one they entered, we don't want to discard their arguments

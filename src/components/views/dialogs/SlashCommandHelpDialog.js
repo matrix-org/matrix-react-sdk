@@ -18,12 +18,14 @@ import React from 'react';
 import {_t} from "../../../languageHandler";
 import {CommandCategories, CommandMap} from "../../../SlashCommands";
 import sdk from "../../../index";
+import SettingsStore from '../../../settings/SettingsStore';
 
 export default ({onFinished}) => {
     const InfoDialog = sdk.getComponent('dialogs.InfoDialog');
 
     const categories = {};
     Object.values(CommandMap).forEach(cmd => {
+        if (cmd.labFeature && !SettingsStore.isFeatureEnabled(cmd.labFeature)) return;
         if (!categories[cmd.category]) {
             categories[cmd.category] = [];
         }
