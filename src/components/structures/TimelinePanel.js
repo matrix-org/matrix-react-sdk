@@ -384,9 +384,12 @@ const TimelinePanel = createReactClass({
                     const prevContent = event.getPrevContent();
                     debuglog("prevcontent", prevContent);
                     userRoomMembership = prevContent.membership || "leave";
-                } else if (userRoomMembership === "leave" && event.isDecryptionFailure()) {
+                } else if (userRoomMembership === "leave" &&
+                           (event.isDecryptionFailure() || event.isBeingDecrypted())) {
                     // reached an undecryptable message when the user wasn't in
                     // the room -- don't try to load any more
+                    // (for now, we assume that events that are being decrypted will
+                    // fail if they were sent while the use wasn't in the room)
                     stopBackPaginating = true;
                     if (backwards) {
                         canPaginate = false;
@@ -397,28 +400,12 @@ const TimelinePanel = createReactClass({
                             type: "m.room.message",
                             content: {
                                 msgtype: "m.bad.encrypted",
-                                body: "** This room has encrypted messages that were sent before you joined the room.  You will not be able to read these messages. **"
-                            }
-                        }
-                    })
-                    liveEvents = liveEvents.slice(i);
-                    break;
-                } else if (userRoomMembership === "leave" && event.isBeingDecrypted()) {
-                    // reached an undecryptable message when the user wasn't in
-                    // the room -- don't try to load any more
-                    stopBackPaginating = true;
-                    if (backwards) {
-                        canPaginate = false;
-                    }
-                    events = events.slice(i);
-                    events[0]._setClearData({
-                        clearEvent: {
-                            type: "m.room.message",
-                            content: {
-                                msgtype: "m.bad.encrypted",
-                                body: "** This room has encrypted messages that were sent before you joined the room.  You will not be able to read these messages. **"
-                            }
-                        }
+                                body:
+                                "** This room has encrypted messages that were sent before "
+                                    + "you joined the room.  You will not be able to read "
+                                    + "these messages. **",
+                            },
+                        },
                     })
                     liveEvents = liveEvents.slice(i);
                     break;
