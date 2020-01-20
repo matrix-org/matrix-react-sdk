@@ -497,6 +497,7 @@ export default class BasicMessageEditor extends React.Component {
         this.historyManager = new HistoryManager(partCreator);
         // initial render of model
         this._updateEditorState(this._getInitialCaretPosition());
+        this._modifiedFlag = false;
         // attach input listener by hand so React doesn't proxy the events,
         // as the proxied event doesn't support inputType, which we need.
         this._editorRef.addEventListener("input", this._onInput, true);
