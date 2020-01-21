@@ -21,7 +21,9 @@ import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import {IntegrationManagers} from "../../../integrations/IntegrationManagers";
 import SettingsStore from "../../../settings/SettingsStore";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.elements.ManageIntegsButton")
 export default class ManageIntegsButton extends React.Component {
     constructor(props) {
         super(props);
