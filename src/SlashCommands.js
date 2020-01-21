@@ -34,6 +34,7 @@ import { getDefaultIdentityServerUrl, useDefaultIdentityServer } from './utils/I
 import {isPermalinkHost, parsePermalink} from "./utils/permalinks/Permalinks";
 import {inviteUsersToRoom} from "./RoomInvite";
 import RoomUpgradeWarningDialog from "./components/views/dialogs/RoomUpgradeWarningDialog";
+import UploadConfirmDialog from "./components/views/dialogs/UploadConfirmDialog";
 
 const singleMxcUpload = async () => {
     return new Promise((resolve) => {
@@ -42,7 +43,6 @@ const singleMxcUpload = async () => {
         fileSelector.onchange = (ev) => {
             const file = ev.target.files[0];
 
-            const UploadConfirmDialog = sdk.getComponent("dialogs.UploadConfirmDialog");
             Modal.createTrackedDialog('Upload Files confirmation', '', UploadConfirmDialog, {
                 file,
                 onFinished: (shouldContinue) => {

@@ -29,6 +29,7 @@ import extractPngChunks from "png-chunks-extract";
 
 // Polyfill for Canvas.toBlob API using Canvas.toDataURL
 import "blueimp-canvas-to-blob";
+import UploadConfirmDialog from "./components/views/dialogs/UploadConfirmDialog";
 
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 600;
@@ -420,7 +421,6 @@ export default class ContentMessages {
             if (!shouldContinue) return;
         }
 
-        const UploadConfirmDialog = sdk.getComponent("dialogs.UploadConfirmDialog");
         let uploadAll = false;
         // Promise to complete before sending next file into room, used for synchronisation of file-sending
         // to match the order the files were specified in
