@@ -25,7 +25,9 @@ import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import AliasSettings from "../../../room_settings/AliasSettings";
 import RelatedGroupSettings from "../../../room_settings/RelatedGroupSettings";
+import {replaceableComponent} from "../../../../../utils/replaceableComponent";
 
+@replaceableComponent("views.settings.tabs.room.GeneralRoomSettingsTab")
 export default class GeneralRoomSettingsTab extends React.Component {
     static propTypes = {
         roomId: PropTypes.string.isRequired,
