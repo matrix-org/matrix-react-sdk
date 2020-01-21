@@ -20,6 +20,7 @@ import * as sdk from '../../../index';
 import SdkConfig from '../../../SdkConfig';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
+import BugReportDialog from "./BugReportDialog";
 
 export default class StorageEvictedDialog extends React.Component {
     static propTypes = {
@@ -28,7 +29,6 @@ export default class StorageEvictedDialog extends React.Component {
 
     _sendBugReport = ev => {
         ev.preventDefault();
-        const BugReportDialog = sdk.getComponent("dialogs.BugReportDialog");
         Modal.createTrackedDialog('Storage evicted', 'Send Bug Report Dialog', BugReportDialog, {});
     };
 

@@ -24,7 +24,9 @@ import SdkConfig from '../../../SdkConfig';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
 import sendBugReport from '../../../rageshake/submit-rageshake';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.dialogs.BugReportDialog")
 export default class BugReportDialog extends React.Component {
     constructor(props) {
         super(props);

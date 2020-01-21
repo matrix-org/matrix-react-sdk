@@ -25,6 +25,7 @@ import packageJson from "../../../../../../package.json";
 import Modal from "../../../../../Modal";
 import * as sdk from "../../../../../";
 import PlatformPeg from "../../../../../PlatformPeg";
+import BugReportDialog from "../../../dialogs/BugReportDialog";
 
 // if this looks like a release, use the 'version' from package.json; else use
 // the git sha. Prepend version with v, to look like riot-web version
@@ -81,10 +82,6 @@ export default class HelpUserSettingsTab extends React.Component {
     };
 
     _onBugReport = (e) => {
-        const BugReportDialog = sdk.getComponent("dialogs.BugReportDialog");
-        if (!BugReportDialog) {
-            return;
-        }
         Modal.createTrackedDialog('Bug Report Dialog', '', BugReportDialog, {});
     };
 

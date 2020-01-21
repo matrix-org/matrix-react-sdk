@@ -20,6 +20,7 @@ import { _t } from '../../../languageHandler';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import PlatformPeg from '../../../PlatformPeg';
 import Modal from '../../../Modal';
+import BugReportDialog from "../dialogs/BugReportDialog";
 
 /**
  * This error boundary component can be used to wrap large content areas and
@@ -60,10 +61,6 @@ export default class ErrorBoundary extends React.PureComponent {
     };
 
     _onBugReport = () => {
-        const BugReportDialog = sdk.getComponent("dialogs.BugReportDialog");
-        if (!BugReportDialog) {
-            return;
-        }
         Modal.createTrackedDialog('Bug Report Dialog', '', BugReportDialog, {
             label: 'react-soft-crash',
         });
