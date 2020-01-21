@@ -30,6 +30,7 @@ import { SAFE_LOCALPART_REGEX } from '../../../Registration';
 import withValidation from '../elements/Validation';
 import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
 import CountryDropdown from "./CountryDropdown";
+import TextWithTooltip from "../elements/TextWithTooltip";
 
 const FIELD_EMAIL = 'field_email';
 const FIELD_PHONE_NUMBER = 'field_phone_number';
@@ -552,8 +553,6 @@ export default createReactClass({
             serverName: this.props.serverConfig.hsName,
         });
         if (this.props.serverConfig.hsNameIsDifferent) {
-            const TextWithTooltip = sdk.getComponent("elements.TextWithTooltip");
-
             yourMatrixAccountText = _t('Create your Matrix account on <underlinedServerName />', {}, {
                 'underlinedServerName': () => {
                     return <TextWithTooltip

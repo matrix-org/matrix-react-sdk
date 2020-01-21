@@ -27,6 +27,7 @@ import PasswordReset from "../../../PasswordReset";
 import AutoDiscoveryUtils, {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
 import classNames from 'classnames';
 import AuthPage from "../../views/auth/AuthPage";
+import TextWithTooltip from "../../views/elements/TextWithTooltip";
 
 // Phases
 // Show controls to configure server details
@@ -246,8 +247,6 @@ export default createReactClass({
             serverName: this.props.serverConfig.hsName,
         });
         if (this.props.serverConfig.hsNameIsDifferent) {
-            const TextWithTooltip = sdk.getComponent("elements.TextWithTooltip");
-
             yourMatrixAccountText = _t('Your Matrix account on <underlinedServerName />', {}, {
                 'underlinedServerName': () => {
                     return <TextWithTooltip

@@ -24,6 +24,7 @@ import { _t } from '../../../languageHandler';
 import WidgetUtils from "../../../utils/WidgetUtils";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import TextWithTooltip from "./TextWithTooltip";
 
 @replaceableComponent("views.elements.AppPermission")
 export default class AppPermission extends React.Component {
@@ -81,7 +82,6 @@ export default class AppPermission extends React.Component {
         const AccessibleButton = sdk.getComponent("views.elements.AccessibleButton");
         const MemberAvatar = sdk.getComponent("views.avatars.MemberAvatar");
         const BaseAvatar = sdk.getComponent("views.avatars.BaseAvatar");
-        const TextWithTooltip = sdk.getComponent("views.elements.TextWithTooltip");
 
         const displayName = this.state.roomMember ? this.state.roomMember.name : this.props.creatorUserId;
         const userId = displayName === this.props.creatorUserId ? null : this.props.creatorUserId;

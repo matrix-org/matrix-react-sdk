@@ -19,6 +19,7 @@ import {_t} from "../../../languageHandler";
 import * as sdk from "../../../index";
 import PropTypes from "prop-types";
 import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
+import TextWithTooltip from "../elements/TextWithTooltip";
 
 export default class SignInToText extends React.PureComponent {
     static propTypes = {
@@ -31,8 +32,6 @@ export default class SignInToText extends React.PureComponent {
             serverName: this.props.serverConfig.hsName,
         });
         if (this.props.serverConfig.hsNameIsDifferent) {
-            const TextWithTooltip = sdk.getComponent("elements.TextWithTooltip");
-
             signInToText = _t('Sign in to your Matrix account on <underlinedServerName />', {}, {
                 'underlinedServerName': () => {
                     return <TextWithTooltip
