@@ -32,6 +32,7 @@ import {CancelButton} from './SimpleRoomHeader';
 import SettingsStore from "../../../settings/SettingsStore";
 import RoomHeaderButtons from '../right_panel/RoomHeaderButtons';
 import E2EIcon from './E2EIcon';
+import ShareDialog from "../dialogs/ShareDialog";
 
 export default createReactClass({
     displayName: 'RoomHeader',
@@ -116,7 +117,6 @@ export default createReactClass({
     },
 
     onShareRoomClick: function(ev) {
-        const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
         Modal.createTrackedDialog('share room dialog', '', ShareDialog, {
             target: this.props.room,
         });

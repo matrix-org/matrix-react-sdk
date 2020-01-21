@@ -39,6 +39,7 @@ import {makeGroupPermalink, makeUserPermalink} from "../../utils/permalinks/Perm
 import {Group} from "matrix-js-sdk";
 import {allSettled, sleep} from "../../utils/promise";
 import RightPanelStore from "../../stores/RightPanelStore";
+import ShareDialog from "../views/dialogs/ShareDialog";
 
 const LONG_DESC_PLACEHOLDER = _td(
 `<h1>HTML for your community's page</h1>
@@ -561,7 +562,6 @@ export default createReactClass({
     },
 
     _onShareClick: function() {
-        const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
         Modal.createTrackedDialog('share community dialog', '', ShareDialog, {
             target: this._matrixClient.getGroup(this.props.groupId) || new Group(this.props.groupId),
         });

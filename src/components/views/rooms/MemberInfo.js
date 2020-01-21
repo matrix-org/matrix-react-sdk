@@ -48,6 +48,7 @@ import E2EIcon from "./E2EIcon";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import ShareDialog from "../dialogs/ShareDialog";
 
 export default createReactClass({
     displayName: 'MemberInfo',
@@ -789,7 +790,6 @@ export default createReactClass({
     },
 
     onShareUserClick: function() {
-        const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
         Modal.createTrackedDialog('share room member dialog', '', ShareDialog, {
             target: this.props.member,
         });

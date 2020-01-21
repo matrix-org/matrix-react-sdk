@@ -24,6 +24,7 @@ import {RoomPermalinkCreator, makeGroupPermalink, makeUserPermalink} from "../..
 import * as ContextMenu from "../../structures/ContextMenu";
 import {toRightOf} from "../../structures/ContextMenu";
 import GenericTextContextMenu from "../context_menus/GenericTextContextMenu";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 const socials = [
     {
@@ -53,6 +54,7 @@ const socials = [
     },
 ];
 
+@replaceableComponent("views.dialogs.ShareDialog")
 export default class ShareDialog extends React.Component {
     static propTypes = {
         onFinished: PropTypes.func.isRequired,

@@ -42,6 +42,7 @@ import {textualPowerLevel} from '../../../Roles';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import {RIGHT_PANEL_PHASES} from "../../../stores/RightPanelStorePhases";
 import DeviceVerifyDialog from "../dialogs/DeviceVerifyDialog";
+import ShareDialog from "../dialogs/ShareDialog";
 
 const _disambiguateDevices = (devices) => {
     const names = Object.create(null);
@@ -228,7 +229,6 @@ const UserOptionsSection = ({member, isIgnored, canInvite, devices}) => {
     const isMe = member.userId === cli.getUserId();
 
     const onShareUserClick = () => {
-        const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
         Modal.createTrackedDialog('share room member dialog', '', ShareDialog, {
             target: member,
         });
