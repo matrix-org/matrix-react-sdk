@@ -18,7 +18,9 @@ limitations under the License.
 import React from 'react';
 import ResizeHandle from '../views/elements/ResizeHandle';
 import {Resizer, FixedDistributor} from '../../resizer';
+import {replaceableComponent} from "../../utils/replaceableComponent";
 
+@replaceableComponent("structures.MainSplit")
 export default class MainSplit extends React.Component {
     constructor(props) {
         super(props);

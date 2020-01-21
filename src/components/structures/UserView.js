@@ -22,6 +22,7 @@ import {MatrixClientPeg} from "../../MatrixClientPeg";
 import * as sdk from "../../index";
 import Modal from '../../Modal';
 import { _t } from '../../languageHandler';
+import MainSplit from "./MainSplit";
 
 export default class UserView extends React.Component {
     static get propTypes() {
@@ -74,7 +75,6 @@ export default class UserView extends React.Component {
             return <Spinner />;
         } else if (this.state.member) {
             const RightPanel = sdk.getComponent('structures.RightPanel');
-            const MainSplit = sdk.getComponent('structures.MainSplit');
             const panel = <RightPanel user={this.state.member} />;
             return (<MainSplit panel={panel}><div style={{flex: "1"}} /></MainSplit>);
         } else {
