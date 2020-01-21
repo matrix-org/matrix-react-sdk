@@ -19,6 +19,7 @@ import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import * as sdk from '../../../index';
 import classNames from 'classnames';
+import InteractiveTooltip from "../elements/InteractiveTooltip";
 
 export default class MessageComposerFormatBar extends React.PureComponent {
     static propTypes = {
@@ -67,7 +68,6 @@ class FormatButton extends React.PureComponent {
     }
 
     render() {
-        const InteractiveTooltip = sdk.getComponent('elements.InteractiveTooltip');
         const className = `mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIcon${this.props.icon}`;
         let shortcut;
         if (this.props.shortcut) {

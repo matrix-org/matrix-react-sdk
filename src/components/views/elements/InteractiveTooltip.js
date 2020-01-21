@@ -18,6 +18,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 const InteractiveTooltipContainerId = "mx_InteractiveTooltip_Container";
 
@@ -89,6 +90,7 @@ function isInLowerLeftHalf(x, y, rect) {
  * This style of tooltip takes a "target" element as its child and centers the
  * tooltip along one edge of the target.
  */
+@replaceableComponent("views.elements.InteractiveTooltip")
 export default class InteractiveTooltip extends React.Component {
     static propTypes = {
         // Content to show in the tooltip
