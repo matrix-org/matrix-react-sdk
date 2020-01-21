@@ -26,6 +26,7 @@ import PersistedElement from "../elements/PersistedElement";
 import {IntegrationManagers} from "../../../integrations/IntegrationManagers";
 import SettingsStore from "../../../settings/SettingsStore";
 import {ContextMenu} from "../../structures/ContextMenu";
+import GenericElementContextMenu from "../context_menus/GenericElementContextMenu";
 
 const widgetType = 'm.stickerpicker';
 
@@ -385,7 +386,6 @@ export default class Stickerpicker extends React.Component {
                 >
                 </AccessibleButton>;
 
-            const GenericElementContextMenu = sdk.getComponent('context_menus.GenericElementContextMenu');
             stickerPicker = <ContextMenu
                 chevronOffset={this.state.stickerPickerChevronOffset}
                 chevronFace="bottom"
