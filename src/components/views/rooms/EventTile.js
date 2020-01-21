@@ -33,6 +33,7 @@ import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import {ALL_RULE_TYPES} from "../../../mjolnir/BanList";
 import * as ObjectUtils from "../../../ObjectUtils";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import MessageTimestamp from "../messages/MessageTimestamp";
 
 const eventTileTypes = {
     'm.room.message': 'messages.MessageEvent',
@@ -542,7 +543,6 @@ export default createReactClass({
     },
 
     render: function() {
-        const MessageTimestamp = sdk.getComponent('messages.MessageTimestamp');
         const SenderProfile = sdk.getComponent('messages.SenderProfile');
         const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
 
