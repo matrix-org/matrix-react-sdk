@@ -35,6 +35,7 @@ import {IntegrationManagers} from "../../../integrations/IntegrationManagers";
 import {isPermalinkHost} from "../../../utils/permalinks/Permalinks";
 import {toRightOf} from "../../structures/ContextMenu";
 import GenericTextContextMenu from "../context_menus/GenericTextContextMenu";
+import Spoiler from "../elements/Spoiler";
 
 export default createReactClass({
     displayName: 'TextualBody',
@@ -197,7 +198,6 @@ export default createReactClass({
                 const spoilerContainer = document.createElement('span');
 
                 const reason = node.getAttribute("data-mx-spoiler");
-                const Spoiler = sdk.getComponent('elements.Spoiler');
                 node.removeAttribute("data-mx-spoiler"); // we don't want to recurse
                 const spoiler = <Spoiler
                     reason={reason}
