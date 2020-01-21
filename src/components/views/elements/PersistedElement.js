@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import ResizeObserver from 'resize-observer-polyfill';
 
 import dis from '../../../dispatcher';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 // Shamelessly ripped off Modal.js.  There's probably a better way
 // of doing reusable widgets like dialog boxes & menus where we go and
@@ -53,6 +54,7 @@ function getOrCreateContainer(containerId) {
  * children are made visible and are positioned into a div that is given the same
  * bounding rect as the parent of PE.
  */
+@replaceableComponent("views.elements.PersistedElement")
 export default class PersistedElement extends React.Component {
     static propTypes = {
         // Unique identifier for this PersistedElement instance

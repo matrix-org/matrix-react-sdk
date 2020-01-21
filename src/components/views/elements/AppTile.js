@@ -84,7 +84,6 @@ export default class AppTile extends React.Component {
             return !!currentlyAllowedWidgets[newProps.eventId];
         };
 
-        const PersistedElement = sdk.getComponent("elements.PersistedElement");
         return {
             initialising: true, // True while we are mangling the widget URL
             // True while the iframe content is loading
@@ -169,7 +168,6 @@ export default class AppTile extends React.Component {
         // if it's not remaining on screen, get rid of the PersistedElement container
         if (!ActiveWidgetStore.getWidgetPersistence(this.props.id)) {
             ActiveWidgetStore.destroyPersistentWidget(this.props.id);
-            const PersistedElement = sdk.getComponent("elements.PersistedElement");
             PersistedElement.destroyElement(this._persistKey);
         }
     }
@@ -481,7 +479,6 @@ export default class AppTile extends React.Component {
 
             // Force the widget to be non-persistent (able to be deleted/forgotten)
             ActiveWidgetStore.destroyPersistentWidget(this.props.id);
-            const PersistedElement = sdk.getComponent("elements.PersistedElement");
             PersistedElement.destroyElement(this._persistKey);
         }).catch(err => {
             console.error(err);
@@ -642,7 +639,6 @@ export default class AppTile extends React.Component {
                     // a PersistedElement from the get-go, otherwise the iframe will be
                     // re-mounted later when we do.
                     if (this.props.whitelistCapabilities.includes('m.always_on_screen')) {
-                        const PersistedElement = sdk.getComponent("elements.PersistedElement");
                         // Also wrap the PersistedElement in a div to fix the height, otherwise
                         // AppTile's border is in the wrong place
                         appTileBody = <div className="mx_AppTile_persistedWrapper">
