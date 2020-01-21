@@ -2,6 +2,7 @@ import React from "react";
 import ReactDom from "react-dom";
 import Velocity from "velocity-animate";
 import PropTypes from 'prop-types';
+import {replaceableComponent} from "./utils/replaceableComponent";
 
 /**
  * The Velociraptor contains components and animates transitions with velocity.
@@ -10,6 +11,7 @@ import PropTypes from 'prop-types';
  * from DOM order. This makes it a lot simpler and lighter: if you need fully
  * automatic positional animation, look at react-shuffle or similar libraries.
  */
+@replaceableComponent("Velociraptor")
 export default class Velociraptor extends React.Component {
     static propTypes = {
         // either a list of child nodes, or a single child.
