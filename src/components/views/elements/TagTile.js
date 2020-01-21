@@ -30,6 +30,7 @@ import GroupStore from '../../../stores/GroupStore';
 import TagOrderStore from '../../../stores/TagOrderStore';
 import {ContextMenu, toRightOf} from "../../structures/ContextMenu";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import TagTileContextMenu from "../context_menus/TagTileContextMenu";
 
 // A class for a child of TagPanel (possibly wrapped in a DNDTagTile) that represents
 // a thing to click on for the user to filter the visible rooms in the RoomList to:
@@ -171,7 +172,6 @@ export default createReactClass({
         let contextMenu;
         if (this.state.menuDisplayed) {
             const elementRect = this._contextMenuButton.current.getBoundingClientRect();
-            const TagTileContextMenu = sdk.getComponent('context_menus.TagTileContextMenu');
             contextMenu = (
                 <ContextMenu {...toRightOf(elementRect)} onFinished={this.closeMenu}>
                     <TagTileContextMenu tag={this.props.tag} onFinished={this.closeMenu} />
