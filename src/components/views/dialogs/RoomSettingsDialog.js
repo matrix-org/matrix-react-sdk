@@ -29,7 +29,9 @@ import * as sdk from "../../../index";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import dis from "../../../dispatcher";
 import SettingsStore from "../../../settings/SettingsStore";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.dialogs.RoomSettingsDialog")
 export default class RoomSettingsDialog extends React.Component {
     static propTypes = {
         roomId: PropTypes.string.isRequired,

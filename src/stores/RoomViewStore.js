@@ -22,6 +22,7 @@ import * as sdk from '../index';
 import Modal from '../Modal';
 import { _t } from '../languageHandler';
 import { getCachedRoomIDForAlias, storeRoomAliasInCache } from '../RoomAliasCache';
+import RoomSettingsDialog from "../components/views/dialogs/RoomSettingsDialog";
 
 const INITIAL_STATE = {
     // Whether we're joining the currently viewed room (see isJoining())
@@ -130,7 +131,6 @@ class RoomViewStore extends Store {
                 }
                 break;
             case 'open_room_settings': {
-                const RoomSettingsDialog = sdk.getComponent("dialogs.RoomSettingsDialog");
                 Modal.createTrackedDialog('Room settings', '', RoomSettingsDialog, {
                     roomId: payload.room_id || this._state.roomId,
                 }, /*className=*/null, /*isPriority=*/false, /*isStatic=*/true);
