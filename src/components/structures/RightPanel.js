@@ -31,6 +31,7 @@ import {RIGHT_PANEL_PHASES, RIGHT_PANEL_PHASES_NO_ARGS} from "../../stores/Right
 import RightPanelStore from "../../stores/RightPanelStore";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import {replaceableComponent} from "../../utils/replaceableComponent";
+import ThirdPartyMemberInfo from "../views/rooms/ThirdPartyMemberInfo";
 
 @replaceableComponent("structures.RightPanel")
 export default class RightPanel extends React.Component {
@@ -172,7 +173,6 @@ export default class RightPanel extends React.Component {
         const MemberInfo = sdk.getComponent('rooms.MemberInfo');
         const UserInfo = sdk.getComponent('right_panel.UserInfo');
         const EncryptionPanel = sdk.getComponent('right_panel.EncryptionPanel');
-        const ThirdPartyMemberInfo = sdk.getComponent('rooms.ThirdPartyMemberInfo');
         const NotificationPanel = sdk.getComponent('structures.NotificationPanel');
         const FilePanel = sdk.getComponent('structures.FilePanel');
 

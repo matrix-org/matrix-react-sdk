@@ -23,7 +23,9 @@ import dis from "../../../dispatcher";
 import * as sdk from "../../../index";
 import Modal from "../../../Modal";
 import {isValid3pidInvite} from "../../../RoomInvite";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.rooms.ThirdPartyMemberInfo")
 export default class ThirdPartyMemberInfo extends React.Component {
     static propTypes = {
         event: PropTypes.instanceOf(MatrixEvent).isRequired,
