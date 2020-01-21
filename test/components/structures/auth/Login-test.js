@@ -20,6 +20,7 @@ import ReactTestUtils from 'react-dom/test-utils';
 import sdk from '../../../skinned-sdk';
 import SdkConfig from '../../../../src/SdkConfig';
 import {mkServerConfig} from "../../../test-utils";
+import PasswordLogin from "../../../../src/components/views/auth/PasswordLogin";
 
 const Login = sdk.getComponent(
     'structures.auth.Login',
@@ -57,7 +58,7 @@ describe('Login', function() {
 
         const form = ReactTestUtils.findRenderedComponentWithType(
             root,
-            sdk.getComponent('auth.PasswordLogin'),
+            PasswordLogin,
         );
         expect(form).toBeTruthy();
 
@@ -82,7 +83,7 @@ describe('Login', function() {
 
         const form = ReactTestUtils.findRenderedComponentWithType(
             root,
-            sdk.getComponent('auth.PasswordLogin'),
+            PasswordLogin,
         );
         expect(form).toBeTruthy();
 

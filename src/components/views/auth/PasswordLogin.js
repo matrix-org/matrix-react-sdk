@@ -24,10 +24,12 @@ import { _t } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
 import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
 import CountryDropdown from "./CountryDropdown";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 /**
  * A pure UI component which displays a username/password form.
  */
+@replaceableComponent("views.auth.PasswordLogin")
 export default class PasswordLogin extends React.Component {
     static propTypes = {
         onSubmit: PropTypes.func.isRequired, // fn(username, password)

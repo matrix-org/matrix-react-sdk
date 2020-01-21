@@ -27,6 +27,7 @@ import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
 import AutoDiscoveryUtils, {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
 import classNames from "classnames";
 import AuthPage from "../../views/auth/AuthPage";
+import PasswordLogin from "../../views/auth/PasswordLogin";
 
 // For validating phone numbers without country codes
 const PHONE_NUMBER_REGEX = /^[0-9()\-\s]*$/;
@@ -552,8 +553,6 @@ export default createReactClass({
     },
 
     _renderPasswordStep: function() {
-        const PasswordLogin = sdk.getComponent('auth.PasswordLogin');
-
         let onEditServerDetailsClick = null;
         // If custom URLs are allowed, wire up the server details edit link.
         if (PHASES_ENABLED && !SdkConfig.get()['disable_custom_urls']) {
