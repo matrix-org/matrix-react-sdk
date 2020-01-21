@@ -21,7 +21,9 @@ import * as sdk from "../../../../index";
 import dis from "../../../../dispatcher";
 import { _t } from "../../../../languageHandler";
 import Modal from "../../../../Modal";
+import {replaceableComponent} from "../../../../utils/replaceableComponent";
 
+@replaceableComponent("views.dialogs.keybackup.RecoveryMethodRemovedDialog")
 export default class RecoveryMethodRemovedDialog extends React.PureComponent {
     static propTypes = {
         onFinished: PropTypes.func.isRequired,
