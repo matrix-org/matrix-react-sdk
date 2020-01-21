@@ -20,6 +20,7 @@ import * as React from "react";
 import {_t} from '../../languageHandler';
 import PropTypes from "prop-types";
 import * as sdk from "../../index";
+import {replaceableComponent} from "../../utils/replaceableComponent";
 
 /**
  * Represents a tab for the TabbedView.
@@ -38,6 +39,7 @@ export class Tab {
     }
 }
 
+@replaceableComponent("structures.TabbedView")
 export default class TabbedView extends React.Component {
     static propTypes = {
         // The tabs to show
