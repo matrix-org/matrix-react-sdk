@@ -21,12 +21,14 @@ limitations under the License.
 import React from 'react';
 import dis from '../../../dispatcher';
 import RightPanelStore from "../../../stores/RightPanelStore";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 export const HEADER_KIND_ROOM = "room";
 export const HEADER_KIND_GROUP = "group";
 
 const HEADER_KINDS = [HEADER_KIND_GROUP, HEADER_KIND_ROOM];
 
+@replaceableComponent("views.right_panel.HeaderButtons")
 export default class HeaderButtons extends React.Component {
     constructor(props, kind) {
         super(props);
