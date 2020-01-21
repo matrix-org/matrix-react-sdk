@@ -45,7 +45,9 @@ import EmailAddresses from "../../account/EmailAddresses";
 import PhoneNumbers from "../../account/PhoneNumbers";
 import DiscoveryEmailAddresses from "../../discovery/EmailAddresses";
 import DiscoveryPhoneNumbers from "../../discovery/PhoneNumbers";
+import {replaceableComponent} from "../../../../../utils/replaceableComponent";
 
+@replaceableComponent("views.settings.tabs.user.GeneralUserSettingsTab")
 export default class GeneralUserSettingsTab extends React.Component {
     static propTypes = {
         closeSettingsFn: PropTypes.func.isRequired,
