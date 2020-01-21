@@ -30,6 +30,7 @@ import extractPngChunks from "png-chunks-extract";
 // Polyfill for Canvas.toBlob API using Canvas.toDataURL
 import "blueimp-canvas-to-blob";
 import UploadConfirmDialog from "./components/views/dialogs/UploadConfirmDialog";
+import UploadFailureDialog from "./components/views/dialogs/UploadFailureDialog";
 
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 600;
@@ -406,7 +407,6 @@ export default class ContentMessages {
         }
 
         if (tooBigFiles.length > 0) {
-            const UploadFailureDialog = sdk.getComponent("dialogs.UploadFailureDialog");
             const uploadFailureDialogPromise = new Promise((resolve) => {
                 Modal.createTrackedDialog('Upload Failure', '', UploadFailureDialog, {
                     badFiles: tooBigFiles,
