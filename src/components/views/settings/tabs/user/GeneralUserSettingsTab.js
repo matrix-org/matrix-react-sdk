@@ -39,6 +39,7 @@ import IdentityAuthClient from "../../../../../IdentityAuthClient";
 import {abbreviateUrl} from "../../../../../utils/UrlUtils";
 import { getThreepidsWithBindStatus } from '../../../../../boundThreepids';
 import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
+import SetIdServer from "../../SetIdServer";
 
 export default class GeneralUserSettingsTab extends React.Component {
     static propTypes = {
@@ -370,8 +371,6 @@ export default class GeneralUserSettingsTab extends React.Component {
     }
 
     _renderDiscoverySection() {
-        const SetIdServer = sdk.getComponent("views.settings.SetIdServer");
-
         if (this.state.requiredPolicyInfo.hasTerms) {
             const InlineTermsAgreement = sdk.getComponent("views.terms.InlineTermsAgreement");
             const intro = <span className="mx_SettingsTab_subsectionText">
