@@ -33,6 +33,7 @@ import * as sdk from '../index';
  * will be used.
  */
 export function replaceableComponent(name: string, origComponent: React.Component) {
+    console.log(`Decorating ${name}`);
     // Decorators return a function to override the class (origComponent). This
     // ultimately assumes that `getComponent()` won't throw an error and instead
     // return a falsey value like `null` when the skin doesn't have a component.
