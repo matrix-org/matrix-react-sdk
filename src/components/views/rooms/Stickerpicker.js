@@ -27,6 +27,7 @@ import {IntegrationManagers} from "../../../integrations/IntegrationManagers";
 import SettingsStore from "../../../settings/SettingsStore";
 import {ContextMenu} from "../../structures/ContextMenu";
 import GenericElementContextMenu from "../context_menus/GenericElementContextMenu";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 const widgetType = 'm.stickerpicker';
 
@@ -37,6 +38,7 @@ const STICKERPICKER_Z_INDEX = 3500;
 // Key to store the widget's AppTile under in PersistedElement
 const PERSISTED_ELEMENT_KEY = "stickerPicker";
 
+@replaceableComponent("views.rooms.Stickerpicker")
 export default class Stickerpicker extends React.Component {
     static currentWidget;
 
