@@ -21,6 +21,7 @@ import { _t } from '../../../languageHandler';
 import * as sdk from "../../../index";
 import {wantsDateSeparator} from '../../../DateUtils';
 import SettingsStore from '../../../settings/SettingsStore';
+import DateSeparator from "../messages/DateSeparator";
 
 export default class MessageEditHistoryDialog extends React.PureComponent {
     static propTypes = {
@@ -99,7 +100,6 @@ export default class MessageEditHistoryDialog extends React.PureComponent {
 
     _renderEdits() {
         const EditHistoryMessage = sdk.getComponent('messages.EditHistoryMessage');
-        const DateSeparator = sdk.getComponent('messages.DateSeparator');
         const nodes = [];
         let lastEvent;
         let allEvents = this.state.events;

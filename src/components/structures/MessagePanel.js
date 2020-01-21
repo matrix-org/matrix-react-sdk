@@ -29,6 +29,7 @@ import SettingsStore from '../../settings/SettingsStore';
 import {_t} from "../../languageHandler";
 import {haveTileForEvent} from "../views/rooms/EventTile";
 import {replaceableComponent} from "../../utils/replaceableComponent";
+import DateSeparator from "../views/messages/DateSeparator";
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = ['m.sticker', 'm.room.message'];
@@ -404,7 +405,6 @@ export default class MessagePanel extends React.Component {
     };
 
     _getEventTiles() {
-        const DateSeparator = sdk.getComponent('messages.DateSeparator');
         const EventListSummary = sdk.getComponent('views.elements.EventListSummary');
         const MemberEventListSummary = sdk.getComponent('views.elements.MemberEventListSummary');
 
@@ -634,7 +634,6 @@ export default class MessagePanel extends React.Component {
 
     _getTilesForEvent(prevEvent, mxEv, last) {
         const EventTile = sdk.getComponent('rooms.EventTile');
-        const DateSeparator = sdk.getComponent('messages.DateSeparator');
         const ret = [];
 
         const isEditing = this.props.editState &&

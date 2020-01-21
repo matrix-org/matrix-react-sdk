@@ -20,6 +20,7 @@ import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import * as sdk from '../../../index';
 import {haveTileForEvent} from "./EventTile";
+import DateSeparator from "../messages/DateSeparator";
 
 export default createReactClass({
     displayName: 'SearchResult',
@@ -38,7 +39,6 @@ export default createReactClass({
     },
 
     render: function() {
-        const DateSeparator = sdk.getComponent('messages.DateSeparator');
         const EventTile = sdk.getComponent('rooms.EventTile');
         const result = this.props.searchResult;
         const mxEv = result.context.getEvent();
