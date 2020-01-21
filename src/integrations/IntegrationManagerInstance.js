@@ -22,6 +22,7 @@ import Modal from '../Modal';
 import url from 'url';
 import SettingsStore from "../settings/SettingsStore";
 import {IntegrationManagers} from "./IntegrationManagers";
+import IntegrationManager from "../components/views/settings/IntegrationManager";
 
 export const KIND_ACCOUNT = "account";
 export const KIND_CONFIG = "config";
@@ -63,7 +64,6 @@ export class IntegrationManagerInstance {
             return IntegrationManagers.sharedInstance().showDisabledDialog();
         }
 
-        const IntegrationManager = sdk.getComponent("views.settings.IntegrationManager");
         const dialog = Modal.createTrackedDialog(
             'Integration Manager', '', IntegrationManager,
             {loading: true}, 'mx_IntegrationManager',

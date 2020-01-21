@@ -23,6 +23,7 @@ import {dialogTermsInteractionCallback, TermsNotSignedError} from "../../../Term
 import classNames from 'classnames';
 import * as ScalarMessaging from "../../../ScalarMessaging";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import IntegrationManager from "../settings/IntegrationManager";
 
 @replaceableComponent("views.dialogs.TabbedIntegrationManagerDialog")
 export default class TabbedIntegrationManagerDialog extends React.Component {
@@ -141,7 +142,6 @@ export default class TabbedIntegrationManagerDialog extends React.Component {
     }
 
     _renderTab() {
-        const IntegrationManager = sdk.getComponent("views.settings.IntegrationManager");
         let uiUrl = null;
         if (this.state.currentScalarClient) {
             uiUrl = this.state.currentScalarClient.getScalarInterfaceUrlForRoom(
