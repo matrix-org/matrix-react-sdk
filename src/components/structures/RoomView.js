@@ -55,6 +55,7 @@ import AccessibleButton from "../views/elements/AccessibleButton";
 import RightPanelStore from "../../stores/RightPanelStore";
 import {haveTileForEvent} from "../views/rooms/EventTile";
 import RoomContext from "../../contexts/RoomContext";
+import MessageComposer from "../views/rooms/MessageComposer";
 
 const DEBUG = false;
 let debuglog = function() {};
@@ -1817,7 +1818,6 @@ export default createReactClass({
             myMembership === 'join' && !this.state.searchResults
         );
         if (canSpeak) {
-            const MessageComposer = sdk.getComponent('rooms.MessageComposer');
             messageComposer =
                 <MessageComposer
                     room={this.state.room}

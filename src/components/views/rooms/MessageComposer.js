@@ -27,6 +27,7 @@ import { makeRoomPermalink } from '../../../utils/permalinks/Permalinks';
 import ContentMessages from '../../../ContentMessages';
 import E2EIcon from './E2EIcon';
 import MemberStatusMessageAvatar from "../avatars/MemberStatusMessageAvatar";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 function ComposerAvatar(props) {
     return <div className="mx_MessageComposer_avatar">
@@ -164,6 +165,7 @@ class UploadButton extends React.Component {
     }
 }
 
+@replaceableComponent("views.rooms.MessageComposer")
 export default class MessageComposer extends React.Component {
     constructor(props) {
         super(props);
