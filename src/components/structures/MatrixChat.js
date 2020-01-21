@@ -66,6 +66,7 @@ import { defer } from "../../utils/promise";
 import ToastStore from "../../stores/ToastStore";
 import CompleteSecurity from "./auth/CompleteSecurity";
 import SoftLogout from "./auth/SoftLogout";
+import IncomingSasDialog from "../views/dialogs/IncomingSasDialog";
 
 /** constants for MatrixChat.state.view */
 export const VIEWS = {
@@ -1468,7 +1469,6 @@ export default createReactClass({
             });
         } else {
             cli.on("crypto.verification.start", (verifier) => {
-                const IncomingSasDialog = sdk.getComponent("views.dialogs.IncomingSasDialog");
                 Modal.createTrackedDialog('Incoming Verification', '', IncomingSasDialog, {
                     verifier,
                 }, null, /* priority = */ false, /* static = */ true);
