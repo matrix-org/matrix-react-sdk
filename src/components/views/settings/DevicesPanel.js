@@ -24,6 +24,7 @@ import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import DevicesPanelEntry from "./DevicesPanelEntry";
 
 @replaceableComponent("views.settings.DevicesPanel")
 export default class DevicesPanel extends React.Component {
@@ -156,7 +157,6 @@ export default class DevicesPanel extends React.Component {
     }
 
     _renderDevice(device) {
-        const DevicesPanelEntry = sdk.getComponent('settings.DevicesPanelEntry');
         return <DevicesPanelEntry
             key={device.device_id}
             device={device}
