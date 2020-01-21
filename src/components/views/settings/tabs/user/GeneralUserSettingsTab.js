@@ -29,8 +29,8 @@ import DeactivateAccountDialog from "../../../dialogs/DeactivateAccountDialog";
 import PropTypes from "prop-types";
 import {enumerateThemes, ThemeWatcher} from "../../../../../theme";
 import PlatformPeg from "../../../../../PlatformPeg";
-import MatrixClientPeg from "../../../../../MatrixClientPeg";
-import sdk from "../../../../..";
+import {MatrixClientPeg} from "../../../../../MatrixClientPeg";
+import * as sdk from "../../../../..";
 import Modal from "../../../../../Modal";
 import dis from "../../../../../dispatcher";
 import {Service, startTermsFlow} from "../../../../../Terms";
@@ -160,8 +160,8 @@ export default class GeneralUserSettingsTab extends React.Component {
         // for free. So we might as well use that for our own purposes.
         const idServerUrl = MatrixClientPeg.get().getIdentityServerUrl();
         const authClient = new IdentityAuthClient();
-        const idAccessToken = await authClient.getAccessToken({ check: false });
         try {
+            const idAccessToken = await authClient.getAccessToken({ check: false });
             await startTermsFlow([new Service(
                 SERVICE_TYPES.IS,
                 idServerUrl,

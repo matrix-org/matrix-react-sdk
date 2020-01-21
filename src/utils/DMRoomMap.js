@@ -15,9 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import MatrixClientPeg from '../MatrixClientPeg';
+import {MatrixClientPeg} from '../MatrixClientPeg';
 import _uniq from 'lodash/uniq';
-import {Room} from "matrix-js-sdk/lib/matrix";
+import {Room} from "matrix-js-sdk/src/matrix";
 
 /**
  * Class that takes a Matrix Client and flips the m.direct map
@@ -122,6 +122,27 @@ export default class DMRoomMap {
         // Here, we return the empty list if there are no rooms,
         // since the number of conversations you have with this user is zero.
         return this._getUserToRooms()[userId] || [];
+    }
+
+    /**
+     * Gets the DM room which the given IDs share, if any.
+     * @param {string[]} ids The identifiers (user IDs and email addresses) to look for.
+     * @returns {Room} The DM room which all IDs given share, or falsey if no common room.
+     */
+    getDMRoomForIdentifiers(ids) {
+        // TODO: [Canonical DMs] Handle lookups for email addresses.
+        // For now we'll pretend we only get user IDs and end up returning nothing for email addresses
+
+        let commonRooms = this.getDMRoomsForUserId(ids[0]);
+        for (let i = 1; i < ids.length; i++) {
+            const userRooms = this.getDMRoomsForUserId(ids[i]);
+            commonRooms = commonRooms.filter(r => userRooms.includes(r));
+        }
+
+        const joinedRooms = commonRooms.map(r => MatrixClientPeg.get().getRoom(r))
+            .filter(r => r && r.getMyMembership() === 'join');
+
+        return joinedRooms[0];
     }
 
     getUserIdForRoomId(roomId) {

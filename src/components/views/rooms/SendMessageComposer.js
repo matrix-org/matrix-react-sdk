@@ -34,7 +34,7 @@ import {parseEvent} from '../../../editor/deserialize';
 import {findEditableEvent} from '../../../utils/EventUtils';
 import SendHistoryManager from "../../../SendHistoryManager";
 import {processCommandInput} from '../../../SlashCommands';
-import sdk from '../../../index';
+import * as sdk from '../../../index';
 import Modal from '../../../Modal';
 import {_t, _td} from '../../../languageHandler';
 import ContentMessages from '../../../ContentMessages';
@@ -326,7 +326,8 @@ export default class SendMessageComposer extends React.Component {
             member.rawDisplayName : userId;
         const caret = this._editorRef.getCaret();
         const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
-        const insertIndex = position.index + 1;
+        // index is -1 if there are no parts but we only care for if this would be the part in position 0
+        const insertIndex = position.index > 0 ? position.index : 0;
         const parts = partCreator.createMentionParts(insertIndex, displayName, userId);
         model.transform(() => {
             const addedLen = model.insert(parts, position);

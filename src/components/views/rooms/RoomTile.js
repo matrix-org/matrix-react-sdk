@@ -22,9 +22,9 @@ import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import classNames from 'classnames';
 import dis from '../../../dispatcher';
-import MatrixClientPeg from '../../../MatrixClientPeg';
+import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import DMRoomMap from '../../../utils/DMRoomMap';
-import sdk from '../../../index';
+import * as sdk from '../../../index';
 import {ContextMenu, ContextMenuButton, toRightOf} from '../../structures/ContextMenu';
 import * as RoomNotifs from '../../../RoomNotifs';
 import * as FormattingUtils from '../../../utils/FormattingUtils';
@@ -33,7 +33,7 @@ import RoomViewStore from '../../../stores/RoomViewStore';
 import SettingsStore from "../../../settings/SettingsStore";
 import {_t} from "../../../languageHandler";
 
-module.exports = createReactClass({
+export default createReactClass({
     displayName: 'RoomTile',
 
     propTypes: {
@@ -426,6 +426,11 @@ module.exports = createReactClass({
             );
         }
 
+        let privateIcon = null;
+        if (SettingsStore.isFeatureEnabled("feature_cross_signing")) {
+            privateIcon = <div className="mx_RoomTile_PrivateIcon" />;
+        }
+
         return <React.Fragment>
             <AccessibleButton
                 tabIndex="0"
@@ -444,7 +449,7 @@ module.exports = createReactClass({
                         { dmIndicator }
                     </div>
                 </div>
-                <div className="mx_RoomTile_PrivateIcon" />
+                { privateIcon }
                 <div className="mx_RoomTile_nameContainer">
                     <div className="mx_RoomTile_labelContainer">
                         { label }
