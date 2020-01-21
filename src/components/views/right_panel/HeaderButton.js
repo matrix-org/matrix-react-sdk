@@ -23,7 +23,9 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Analytics from '../../../Analytics';
 import AccessibleButton from '../elements/AccessibleButton';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.right_panel.HeaderButton")
 export default class HeaderButton extends React.Component {
     constructor() {
         super();
