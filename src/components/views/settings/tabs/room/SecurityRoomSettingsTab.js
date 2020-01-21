@@ -23,7 +23,9 @@ import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import {SettingLevel} from "../../../../../settings/SettingsStore";
 import Modal from "../../../../../Modal";
 import QuestionDialog from "../../../dialogs/QuestionDialog";
+import {replaceableComponent} from "../../../../../utils/replaceableComponent";
 
+@replaceableComponent("views.settings.tabs.room.SecurityRoomSettingsTab")
 export default class SecurityRoomSettingsTab extends React.Component {
     static propTypes = {
         roomId: PropTypes.string.isRequired,
