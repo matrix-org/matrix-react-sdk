@@ -30,6 +30,7 @@ import SettingsStore from '../../../settings/SettingsStore';
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 import VerificationCancelled from "../verification/VerificationCancelled";
 import VerificationComplete from "../verification/VerificationComplete";
+import VerificationShowSas from "../verification/VerificationShowSas";
 
 const MODE_LEGACY = 'legacy';
 const MODE_SAS = 'sas';
@@ -235,7 +236,6 @@ export default class DeviceVerifyDialog extends React.Component {
     }
 
     _renderSasVerificationPhaseShowSas() {
-        const VerificationShowSas = sdk.getComponent('views.verification.VerificationShowSas');
         return <VerificationShowSas
             sas={this._showSasEvent.sas}
             onCancel={this._onCancelClick}

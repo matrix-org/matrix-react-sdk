@@ -22,6 +22,7 @@ import { _t } from '../../../languageHandler';
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 import VerificationCancelled from "../verification/VerificationCancelled";
 import VerificationComplete from "../verification/VerificationComplete";
+import VerificationShowSas from "../verification/VerificationShowSas";
 
 const PHASE_START = 0;
 const PHASE_SHOW_SAS = 1;
@@ -177,7 +178,6 @@ export default class IncomingSasDialog extends React.Component {
     }
 
     _renderPhaseShowSas() {
-        const VerificationShowSas = sdk.getComponent('views.verification.VerificationShowSas');
         return <VerificationShowSas
             sas={this._showSasEvent.sas}
             onCancel={this._onCancelClick}

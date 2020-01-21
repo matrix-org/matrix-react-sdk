@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import * as sdk from '../../../index';
 import {verificationMethods} from 'matrix-js-sdk/src/crypto';
+import VerificationShowSas from "../verification/VerificationShowSas";
 
 export default class VerificationPanel extends React.PureComponent {
     constructor(props) {
@@ -49,7 +50,6 @@ export default class VerificationPanel extends React.PureComponent {
             if (this.state.sasWaitingForOtherParty) {
                 return <p>Waiting for {request.otherUserId} to confirm ...</p>;
             } else if (this.state.sasEvent) {
-                const VerificationShowSas = sdk.getComponent('views.verification.VerificationShowSas');
                 return (<div>
                     <VerificationShowSas
                         sas={this.state.sasEvent.sas}

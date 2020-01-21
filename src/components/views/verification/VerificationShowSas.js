@@ -18,11 +18,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as sdk from '../../../index';
 import { _t, _td } from '../../../languageHandler';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 function capFirst(s) {
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
+@replaceableComponent("views.verification.VerificationShowSas")
 export default class VerificationShowSas extends React.Component {
     static propTypes = {
         onDone: PropTypes.func.isRequired,
