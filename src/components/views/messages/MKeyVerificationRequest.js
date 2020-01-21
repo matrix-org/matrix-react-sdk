@@ -23,7 +23,9 @@ import {getNameForEventRoom, userLabelForEventRoom}
     from '../../../utils/KeyVerificationStateObserver';
 import dis from "../../../dispatcher";
 import {RIGHT_PANEL_PHASES} from "../../../stores/RightPanelStorePhases";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.messages.MKeyVerificationRequest")
 export default class MKeyVerificationRequest extends React.Component {
     constructor(props) {
         super(props);

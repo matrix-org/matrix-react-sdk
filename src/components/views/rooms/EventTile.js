@@ -86,6 +86,7 @@ export function getHandlerTile(ev) {
             if (ev.getSender() !== me && content.to !== me) {
                 return undefined;
             } else {
+                // TODO: [TravisR] Fix import
                 return "messages.MKeyVerificationRequest";
             }
         }
