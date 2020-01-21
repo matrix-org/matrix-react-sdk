@@ -23,7 +23,9 @@ import Analytics from '../../../Analytics';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import * as Lifecycle from '../../../Lifecycle';
 import { _t } from '../../../languageHandler';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.dialogs.DeactivateAccountDialog")
 export default class DeactivateAccountDialog extends React.Component {
     constructor(props) {
         super(props);
