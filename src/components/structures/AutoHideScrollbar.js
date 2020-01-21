@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
+import {replaceableComponent} from "../../utils/replaceableComponent";
 
 // derived from code from github.com/noeldelgado/gemini-scrollbar
 // Copyright (c) Noel Delgado <pixelia.me@gmail.com> (pixelia.me)
@@ -64,6 +65,7 @@ const installBodyClassesIfNeeded = (function() {
     };
 })();
 
+@replaceableComponent("structures.AutoHideScrollbar")
 export default class AutoHideScrollbar extends React.Component {
     constructor(props) {
         super(props);
