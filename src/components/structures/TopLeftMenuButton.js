@@ -24,9 +24,11 @@ import * as Avatar from '../../Avatar';
 import { _t } from '../../languageHandler';
 import dis from "../../dispatcher";
 import {ContextMenu, ContextMenuButton} from "./ContextMenu";
+import {replaceableComponent} from "../../utils/replaceableComponent";
 
 const AVATAR_SIZE = 28;
 
+@replaceableComponent("structures.TopLeftMenuButton")
 export default class TopLeftMenuButton extends React.Component {
     static propTypes = {
         collapsed: PropTypes.bool.isRequired,

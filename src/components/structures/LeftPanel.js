@@ -26,6 +26,7 @@ import * as VectorConferenceHandler from '../../VectorConferenceHandler';
 import SettingsStore from '../../settings/SettingsStore';
 import {_t} from "../../languageHandler";
 import Analytics from "../../Analytics";
+import TopLeftMenuButton from "./TopLeftMenuButton";
 
 
 const LeftPanel = createReactClass({
@@ -223,7 +224,6 @@ const LeftPanel = createReactClass({
         const RoomBreadcrumbs = sdk.getComponent('rooms.RoomBreadcrumbs');
         const TagPanel = sdk.getComponent('structures.TagPanel');
         const CustomRoomTagPanel = sdk.getComponent('structures.CustomRoomTagPanel');
-        const TopLeftMenuButton = sdk.getComponent('structures.TopLeftMenuButton');
         const SearchBox = sdk.getComponent('structures.SearchBox');
         const CallPreview = sdk.getComponent('voip.CallPreview');
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
