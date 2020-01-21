@@ -23,7 +23,9 @@ import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import WidgetUtils from "../../../utils/WidgetUtils";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.elements.AppPermission")
 export default class AppPermission extends React.Component {
     static propTypes = {
         url: PropTypes.string.isRequired,
