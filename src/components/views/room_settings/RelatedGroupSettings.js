@@ -23,9 +23,11 @@ import Modal from '../../../Modal';
 import ErrorDialog from "../dialogs/ErrorDialog";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import EditableItemList from "../elements/EditableItemList";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 const GROUP_ID_REGEX = /\+\S+:\S+/;
 
+@replaceableComponent("views.room_settings.RelatedGroupSettings")
 export default class RelatedGroupSettings extends React.Component {
     static propTypes = {
         roomId: PropTypes.string.isRequired,

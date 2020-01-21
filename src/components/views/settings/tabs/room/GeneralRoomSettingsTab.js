@@ -24,6 +24,7 @@ import dis from "../../../../../dispatcher";
 import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import AliasSettings from "../../../room_settings/AliasSettings";
+import RelatedGroupSettings from "../../../room_settings/RelatedGroupSettings";
 
 export default class GeneralRoomSettingsTab extends React.Component {
     static propTypes = {
@@ -68,7 +69,6 @@ export default class GeneralRoomSettingsTab extends React.Component {
     };
 
     render() {
-        const RelatedGroupSettings = sdk.getComponent("room_settings.RelatedGroupSettings");
         const UrlPreviewSettings = sdk.getComponent("room_settings.UrlPreviewSettings");
 
         const client = this.context;
