@@ -22,6 +22,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import {Mjolnir} from "../../../mjolnir/Mjolnir";
 import MAudioBody from "./MAudioBody";
 import MImageBody from "./MImageBody";
+import MjolnirBody from "./MjolnirBody";
 
 export default createReactClass({
     displayName: 'MessageEvent',
@@ -103,7 +104,7 @@ export default createReactClass({
                 const serverBanned = Mjolnir.sharedInstance().isServerBanned(userDomain);
 
                 if (userBanned || serverBanned) {
-                    BodyType = sdk.getComponent('messages.MjolnirBody');
+                    BodyType = MjolnirBody;
                 }
             }
         }
