@@ -22,7 +22,9 @@ import {MatrixClientPeg} from '../../../../MatrixClientPeg';
 import dis from "../../../../dispatcher";
 import { _t } from "../../../../languageHandler";
 import Modal from "../../../../Modal";
+import {replaceableComponent} from "../../../../utils/replaceableComponent";
 
+@replaceableComponent("views.dialogs.keybackup.NewRecoveryMethodDialog")
 export default class NewRecoveryMethodDialog extends React.PureComponent {
     static propTypes = {
         // As returned by js-sdk getKeyBackupVersion()
