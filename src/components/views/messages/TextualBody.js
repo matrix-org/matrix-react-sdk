@@ -34,6 +34,7 @@ import {pillifyLinks} from '../../../utils/pillify';
 import {IntegrationManagers} from "../../../integrations/IntegrationManagers";
 import {isPermalinkHost} from "../../../utils/permalinks/Permalinks";
 import {toRightOf} from "../../structures/ContextMenu";
+import GenericTextContextMenu from "../context_menus/GenericTextContextMenu";
 
 export default createReactClass({
     displayName: 'TextualBody',
@@ -279,7 +280,6 @@ export default createReactClass({
                 const successful = this.copyToClipboard(copyCode.textContent);
 
                 const buttonRect = e.target.getBoundingClientRect();
-                const GenericTextContextMenu = sdk.getComponent('context_menus.GenericTextContextMenu');
                 const {close} = ContextMenu.createMenu(GenericTextContextMenu, {
                     ...toRightOf(buttonRect, 2),
                     message: successful ? _t('Copied!') : _t('Failed to copy'),

@@ -23,6 +23,7 @@ import QRCode from 'qrcode-react';
 import {RoomPermalinkCreator, makeGroupPermalink, makeUserPermalink} from "../../../utils/permalinks/Permalinks";
 import * as ContextMenu from "../../structures/ContextMenu";
 import {toRightOf} from "../../structures/ContextMenu";
+import GenericTextContextMenu from "../context_menus/GenericTextContextMenu";
 
 const socials = [
     {
@@ -106,7 +107,6 @@ export default class ShareDialog extends React.Component {
         }
 
         const buttonRect = e.target.getBoundingClientRect();
-        const GenericTextContextMenu = sdk.getComponent('context_menus.GenericTextContextMenu');
         const {close} = ContextMenu.createMenu(GenericTextContextMenu, {
             ...toRightOf(buttonRect, 2),
             message: successful ? _t('Copied!') : _t('Failed to copy'),
