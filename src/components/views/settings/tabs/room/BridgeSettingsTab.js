@@ -22,12 +22,14 @@ import Pill from "../../../elements/Pill";
 import {makeUserPermalink} from "../../../../../utils/permalinks/Permalinks";
 import BaseAvatar from "../../../avatars/BaseAvatar";
 import {getHttpUriForMxc} from "matrix-js-sdk/src/content-repo";
+import {replaceableComponent} from "../../../../../utils/replaceableComponent";
 
 const BRIDGE_EVENT_TYPES = [
     "uk.half-shot.bridge",
     // m.bridge
 ];
 
+@replaceableComponent("views.settings.tabs.room.BridgeSettingsTab")
 export default class BridgeSettingsTab extends React.Component {
     static propTypes = {
         roomId: PropTypes.string.isRequired,
