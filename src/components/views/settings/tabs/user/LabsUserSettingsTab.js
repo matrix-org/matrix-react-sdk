@@ -20,6 +20,7 @@ import PropTypes from "prop-types";
 import SettingsStore, {SettingLevel} from "../../../../../settings/SettingsStore";
 import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import * as sdk from "../../../../../index";
+import {replaceableComponent} from "../../../../../utils/replaceableComponent";
 
 export class LabsSettingToggle extends React.Component {
     static propTypes = {
@@ -38,6 +39,7 @@ export class LabsSettingToggle extends React.Component {
     }
 }
 
+@replaceableComponent("views.settings.tabs.user.LabsUserSettingsTab")
 export default class LabsUserSettingsTab extends React.Component {
     constructor() {
         super();
