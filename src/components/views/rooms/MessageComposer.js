@@ -26,9 +26,9 @@ import Stickerpicker from './Stickerpicker';
 import { makeRoomPermalink } from '../../../utils/permalinks/Permalinks';
 import ContentMessages from '../../../ContentMessages';
 import E2EIcon from './E2EIcon';
+import MemberStatusMessageAvatar from "../avatars/MemberStatusMessageAvatar";
 
 function ComposerAvatar(props) {
-    const MemberStatusMessageAvatar = sdk.getComponent('avatars.MemberStatusMessageAvatar');
     return <div className="mx_MessageComposer_avatar">
         <MemberStatusMessageAvatar member={props.me} width={24} height={24} />
     </div>;
