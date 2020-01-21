@@ -18,6 +18,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { CATEGORY_HEADER_HEIGHT, EMOJI_HEIGHT, EMOJIS_PER_ROW } from "./EmojiPicker";
 import * as sdk from '../../../index';
+import LazyRenderList from "../elements/LazyRenderList";
 
 const OVERFLOW_ROWS = 3;
 
@@ -52,7 +53,6 @@ class Category extends React.PureComponent {
         for (let counter = 0; counter < rows.length; ++counter) {
             rows[counter] = counter;
         }
-        const LazyRenderList = sdk.getComponent('elements.LazyRenderList');
 
         const viewportTop = scrollTop;
         const viewportBottom = viewportTop + viewportHeight;
