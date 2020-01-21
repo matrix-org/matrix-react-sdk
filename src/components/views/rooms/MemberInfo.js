@@ -50,6 +50,7 @@ import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import ShareDialog from "../dialogs/ShareDialog";
 import ImageView from "../elements/ImageView";
+import MemberDeviceInfo from "./MemberDeviceInfo";
 
 export default createReactClass({
     displayName: 'MemberInfo',
@@ -759,7 +760,6 @@ export default createReactClass({
         if (!this._enableDevices) return null;
 
         const devices = this.state.devices;
-        const MemberDeviceInfo = sdk.getComponent('rooms.MemberDeviceInfo');
         const Spinner = sdk.getComponent("elements.Spinner");
 
         let devComponents;

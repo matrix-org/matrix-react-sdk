@@ -19,7 +19,9 @@ import PropTypes from 'prop-types';
 import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import classNames from 'classnames';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.rooms.MemberDeviceInfo")
 export default class MemberDeviceInfo extends React.Component {
     render() {
         const DeviceVerifyButtons = sdk.getComponent('elements.DeviceVerifyButtons');

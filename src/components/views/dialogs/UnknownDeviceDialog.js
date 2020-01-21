@@ -23,9 +23,9 @@ import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
 import { markAllDevicesKnown } from '../../../cryptodevices';
+import MemberDeviceInfo from "../rooms/MemberDeviceInfo";
 
 function UserUnknownDeviceList(props) {
-    const MemberDeviceInfo = sdk.getComponent('rooms.MemberDeviceInfo');
     const {userId, userDevices} = props;
 
     const deviceListEntries = Object.keys(userDevices).map((deviceId) =>
