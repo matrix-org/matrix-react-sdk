@@ -30,7 +30,9 @@ import SettingsStore from "../../settings/SettingsStore";
 import {RIGHT_PANEL_PHASES, RIGHT_PANEL_PHASES_NO_ARGS} from "../../stores/RightPanelStorePhases";
 import RightPanelStore from "../../stores/RightPanelStore";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
+import {replaceableComponent} from "../../utils/replaceableComponent";
 
+@replaceableComponent("structures.RightPanel")
 export default class RightPanel extends React.Component {
     static get propTypes() {
         return {

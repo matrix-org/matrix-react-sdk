@@ -23,6 +23,7 @@ import * as sdk from "../../index";
 import Modal from '../../Modal';
 import { _t } from '../../languageHandler';
 import MainSplit from "./MainSplit";
+import RightPanel from "./RightPanel";
 
 export default class UserView extends React.Component {
     static get propTypes() {
@@ -74,7 +75,6 @@ export default class UserView extends React.Component {
             const Spinner = sdk.getComponent("elements.Spinner");
             return <Spinner />;
         } else if (this.state.member) {
-            const RightPanel = sdk.getComponent('structures.RightPanel');
             const panel = <RightPanel user={this.state.member} />;
             return (<MainSplit panel={panel}><div style={{flex: "1"}} /></MainSplit>);
         } else {
