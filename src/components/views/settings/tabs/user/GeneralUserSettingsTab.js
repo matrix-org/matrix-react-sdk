@@ -46,6 +46,7 @@ import PhoneNumbers from "../../account/PhoneNumbers";
 import DiscoveryEmailAddresses from "../../discovery/EmailAddresses";
 import DiscoveryPhoneNumbers from "../../discovery/PhoneNumbers";
 import {replaceableComponent} from "../../../../../utils/replaceableComponent";
+import InlineTermsAgreement from "../../../terms/InlineTermsAgreement";
 
 @replaceableComponent("views.settings.tabs.user.GeneralUserSettingsTab")
 export default class GeneralUserSettingsTab extends React.Component {
@@ -377,7 +378,6 @@ export default class GeneralUserSettingsTab extends React.Component {
 
     _renderDiscoverySection() {
         if (this.state.requiredPolicyInfo.hasTerms) {
-            const InlineTermsAgreement = sdk.getComponent("views.terms.InlineTermsAgreement");
             const intro = <span className="mx_SettingsTab_subsectionText">
                 {_t(
                     "Agree to the identity server (%(serverName)s) Terms of Service to " +
