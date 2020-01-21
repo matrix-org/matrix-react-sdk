@@ -26,6 +26,7 @@ import Modal from "../../../../../Modal";
 import * as sdk from "../../../../../";
 import PlatformPeg from "../../../../../PlatformPeg";
 import BugReportDialog from "../../../dialogs/BugReportDialog";
+import {replaceableComponent} from "../../../../../utils/replaceableComponent";
 
 // if this looks like a release, use the 'version' from package.json; else use
 // the git sha. Prepend version with v, to look like riot-web version
@@ -46,6 +47,7 @@ const ghVersionLabel = function(repo, token='') {
     return <a target="_blank" rel="noopener" href={url}>{ token }</a>;
 };
 
+@replaceableComponent("views.settings.tabs.user.HelpUserSettingsTab")
 export default class HelpUserSettingsTab extends React.Component {
     static propTypes = {
         closeSettingsFn: PropTypes.func.isRequired,
