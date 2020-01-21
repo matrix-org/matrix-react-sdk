@@ -21,6 +21,7 @@ import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import {formatDate} from '../../../DateUtils';
+import EditableTextContainer from "../elements/EditableTextContainer";
 
 export default class DevicesPanelEntry extends React.Component {
     constructor(props) {
@@ -50,8 +51,6 @@ export default class DevicesPanelEntry extends React.Component {
     }
 
     render() {
-        const EditableTextContainer = sdk.getComponent('elements.EditableTextContainer');
-
         const device = this.props.device;
 
         let lastSeen = "";

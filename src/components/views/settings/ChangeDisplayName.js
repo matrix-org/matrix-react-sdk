@@ -21,6 +21,7 @@ import createReactClass from 'create-react-class';
 import * as sdk from '../../../index';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
+import EditableTextContainer from "../elements/EditableTextContainer";
 
 export default createReactClass({
     displayName: 'ChangeDisplayName',
@@ -43,7 +44,6 @@ export default createReactClass({
     },
 
     render: function() {
-        const EditableTextContainer = sdk.getComponent('elements.EditableTextContainer');
         return (
             <EditableTextContainer
                 getInitialValue={this._getDisplayName}
