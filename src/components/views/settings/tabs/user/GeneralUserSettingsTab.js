@@ -41,6 +41,7 @@ import { getThreepidsWithBindStatus } from '../../../../../boundThreepids';
 import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import SetIdServer from "../../SetIdServer";
 import SetIntegrationManager from "../../SetIntegrationManager";
+import EmailAddresses from "../../account/EmailAddresses";
 
 export default class GeneralUserSettingsTab extends React.Component {
     static propTypes = {
@@ -279,7 +280,6 @@ export default class GeneralUserSettingsTab extends React.Component {
 
     _renderAccountSection() {
         const ChangePassword = sdk.getComponent("views.settings.ChangePassword");
-        const EmailAddresses = sdk.getComponent("views.settings.account.EmailAddresses");
         const PhoneNumbers = sdk.getComponent("views.settings.account.PhoneNumbers");
         const Spinner = sdk.getComponent("views.elements.Spinner");
 
