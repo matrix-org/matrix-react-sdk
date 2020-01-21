@@ -23,7 +23,9 @@ import SettingsStore from "../../../../../settings/SettingsStore";
 import Field from "../../../elements/Field";
 import * as sdk from "../../../../..";
 import PlatformPeg from "../../../../../PlatformPeg";
+import {replaceableComponent} from "../../../../../utils/replaceableComponent";
 
+@replaceableComponent("views.settings.tabs.user.PreferencesUserSettingsTab")
 export default class PreferencesUserSettingsTab extends React.Component {
     static COMPOSER_SETTINGS = [
         'MessageComposerInput.autoReplaceEmoji',
