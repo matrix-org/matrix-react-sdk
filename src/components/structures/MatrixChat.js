@@ -67,6 +67,7 @@ import ToastStore from "../../stores/ToastStore";
 import CompleteSecurity from "./auth/CompleteSecurity";
 import SoftLogout from "./auth/SoftLogout";
 import IncomingSasDialog from "../views/dialogs/IncomingSasDialog";
+import UserSettingsDialog from "../views/dialogs/UserSettingsDialog";
 
 /** constants for MatrixChat.state.view */
 export const VIEWS = {
@@ -567,7 +568,6 @@ export default createReactClass({
                 this._viewIndexedRoom(payload.roomIndex);
                 break;
             case 'view_user_settings': {
-                const UserSettingsDialog = sdk.getComponent("dialogs.UserSettingsDialog");
                 Modal.createTrackedDialog('User settings', '', UserSettingsDialog, {},
                     /*className=*/null, /*isPriority=*/false, /*isStatic=*/true);
 

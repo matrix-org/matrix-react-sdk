@@ -31,7 +31,9 @@ import FlairUserSettingsTab from "../settings/tabs/user/FlairUserSettingsTab";
 import * as sdk from "../../../index";
 import SdkConfig from "../../../SdkConfig";
 import MjolnirUserSettingsTab from "../settings/tabs/user/MjolnirUserSettingsTab";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.dialogs.UserSettingsDialog")
 export default class UserSettingsDialog extends React.Component {
     static propTypes = {
         onFinished: PropTypes.func.isRequired,
