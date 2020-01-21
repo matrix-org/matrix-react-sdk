@@ -23,6 +23,7 @@ import WidgetUtils from "../utils/WidgetUtils";
 import {MatrixClientPeg} from "../MatrixClientPeg";
 import {AutoDiscovery} from "matrix-js-sdk";
 import SettingsStore from "../settings/SettingsStore";
+import IntegrationsDisabledDialog from "../components/views/dialogs/IntegrationsDisabledDialog";
 
 const HS_MANAGERS_REFRESH_INTERVAL = 8 * 60 * 60 * 1000; // 8 hours
 const KIND_PREFERENCE = [
@@ -195,7 +196,6 @@ export class IntegrationManagers {
     }
 
     showDisabledDialog(): void {
-        const IntegrationsDisabledDialog = sdk.getComponent("dialogs.IntegrationsDisabledDialog");
         Modal.createTrackedDialog('Integrations disabled', '', IntegrationsDisabledDialog);
     }
 
