@@ -21,6 +21,7 @@ import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import * as sdk from '../../../index';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
+import DeviceVerifyDialog from "../dialogs/DeviceVerifyDialog";
 
 // XXX: This component is *not* cross-signing aware. Once everything is
 // cross-signing, this component should just go away.
@@ -57,7 +58,6 @@ export default createReactClass({
     },
 
     onVerifyClick: function() {
-        const DeviceVerifyDialog = sdk.getComponent('views.dialogs.DeviceVerifyDialog');
         Modal.createTrackedDialog('Device Verify Dialog', '', DeviceVerifyDialog, {
             userId: this.props.userId,
             device: this.state.device,

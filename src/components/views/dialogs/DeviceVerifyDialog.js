@@ -27,6 +27,7 @@ import {verificationMethods} from 'matrix-js-sdk/src/crypto';
 import {ensureDMExists} from "../../../createRoom";
 import dis from "../../../dispatcher";
 import SettingsStore from '../../../settings/SettingsStore';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 const MODE_LEGACY = 'legacy';
 const MODE_SAS = 'sas';
@@ -38,6 +39,7 @@ const PHASE_WAIT_FOR_PARTNER_TO_CONFIRM = 3;
 const PHASE_VERIFIED = 4;
 const PHASE_CANCELLED = 5;
 
+@replaceableComponent("views.dialogs.DeviceVerifyDialog")
 export default class DeviceVerifyDialog extends React.Component {
     static propTypes = {
         userId: PropTypes.string.isRequired,

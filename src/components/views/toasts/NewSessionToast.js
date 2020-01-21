@@ -21,6 +21,7 @@ import { _t } from '../../../languageHandler';
 import Modal from "../../../Modal";
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import DeviceListener from '../../../DeviceListener';
+import DeviceVerifyDialog from "../dialogs/DeviceVerifyDialog";
 
 export default class VerifySessionToast extends React.PureComponent {
     static propTypes = {
@@ -34,7 +35,6 @@ export default class VerifySessionToast extends React.PureComponent {
 
     _onVerifyClick = async () => {
         const cli = MatrixClientPeg.get();
-        const DeviceVerifyDialog = sdk.getComponent('views.dialogs.DeviceVerifyDialog');
 
         const device = await cli.getStoredDevice(cli.getUserId(), this.props.deviceId);
 

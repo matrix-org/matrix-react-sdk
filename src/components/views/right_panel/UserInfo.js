@@ -41,6 +41,7 @@ import {useEventEmitter} from "../../../hooks/useEventEmitter";
 import {textualPowerLevel} from '../../../Roles';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import {RIGHT_PANEL_PHASES} from "../../../stores/RightPanelStorePhases";
+import DeviceVerifyDialog from "../dialogs/DeviceVerifyDialog";
 
 const _disambiguateDevices = (devices) => {
     const names = Object.create(null);
@@ -111,7 +112,6 @@ function useIsEncrypted(cli, room) {
 }
 
 function verifyDevice(userId, device) {
-    const DeviceVerifyDialog = sdk.getComponent('views.dialogs.DeviceVerifyDialog');
     Modal.createTrackedDialog('Device Verify Dialog', '', DeviceVerifyDialog, {
         userId: userId,
         device: device,

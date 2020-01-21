@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import * as sdk from '../../../index';
 
 import { _t, _td } from '../../../languageHandler';
+import DeviceVerifyDialog from "./DeviceVerifyDialog";
 
 // TODO: We can remove this once cross-signing is the only way.
 // https://github.com/vector-im/riot-web/issues/11908
@@ -90,8 +91,6 @@ export default createReactClass({
 
 
     _onVerifyClicked: function() {
-        const DeviceVerifyDialog = sdk.getComponent('views.dialogs.DeviceVerifyDialog');
-
         console.log("KeyShareDialog: Starting verify dialog");
         Modal.createTrackedDialog('Key Share', 'Starting dialog', DeviceVerifyDialog, {
             userId: this.props.userId,
