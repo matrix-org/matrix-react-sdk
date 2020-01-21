@@ -49,6 +49,12 @@ export default createReactClass({
         };
     },
 
+    getInitialState() {
+        return {
+            tooltip: null,
+        };
+    },
+
     // Create a wrapper for the tooltip outside the parent and attach it to the body element
     componentDidMount: function() {
         this.tooltipContainer = document.createElement("div");
@@ -61,8 +67,9 @@ export default createReactClass({
         this._renderTooltip();
     },
 
-    componentDidUpdate: function() {
-        this._renderTooltip();
+    componentDidUpdate: function(prevProps) {
+        // if props changed, re-render tooltip
+        if (prevProps !== this.props) this._renderTooltip();
     },
 
     // Remove the wrapper element, as the tooltip has finished using it
@@ -73,7 +80,6 @@ export default createReactClass({
             parent: null,
         });
 
-        ReactDOM.unmountComponentAtNode(this.tooltipContainer);
         document.body.removeChild(this.tooltipContainer);
         window.removeEventListener('scroll', this._renderTooltip, true);
     },
@@ -93,12 +99,20 @@ export default createReactClass({
         return style;
     },
 
+    _bindTooltip: function(elem) {
+        // Tell the roomlist about us so it can manipulate us if it wishes
+        dis.dispatch({
+            action: 'view_tooltip',
+            tooltip: elem,
+            parent: this.parent,
+        });
+    },
+
     _renderTooltip: function() {
         // Add the parent's position to the tooltips, so it's correctly
         // positioned, also taking into account any window zoom
         // NOTE: The additional 6 pixels for the left position, is to take account of the
         // tooltips chevron
-        const parent = ReactDOM.findDOMNode(this).parentNode;
         let style = {};
         style = this._updatePosition(style);
         // Hide the entire container when not visible. This prevents flashing of the tooltip
@@ -111,27 +125,20 @@ export default createReactClass({
         });
 
         const tooltip = (
-            <div className={tooltipClasses} style={style}>
+            <div className={tooltipClasses} style={style} ref={this._bindTooltip}>
                 <div className="mx_Tooltip_chevron" />
                 { this.props.label }
             </div>
         );
 
-        // Render the tooltip manually, as we wish it not to be rendered within the parent
-        this.tooltip = ReactDOM.render(tooltip, this.tooltipContainer);
-
-        // Tell the roomlist about us so it can manipulate us if it wishes
-        dis.dispatch({
-            action: 'view_tooltip',
-            tooltip: this.tooltip,
-            parent: parent,
-        });
+        this.setState({ tooltip });
     },
 
     render: function() {
         // Render a placeholder
         return (
-            <div className={this.props.className} >
+            <div className={this.props.className}>
+                { this.state.tooltip && ReactDOM.createPortal(this.state.tooltip, this.tooltipContainer) }
             </div>
         );
     },
