@@ -18,7 +18,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TintableSvg from './TintableSvg';
 import AccessibleButton from './AccessibleButton';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.elements.TintableSvgButton")
 export default class TintableSvgButton extends React.Component {
     constructor(props) {
         super(props);
