@@ -22,6 +22,7 @@ import ActiveWidgetStore from '../../../stores/ActiveWidgetStore';
 import WidgetUtils from '../../../utils/WidgetUtils';
 import * as sdk from '../../../index';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
+import AppTile from "./AppTile";
 
 export default createReactClass({
     displayName: 'PersistentApp',
@@ -72,7 +73,6 @@ export default createReactClass({
                     persistentWidgetInRoomId, appEvent.getId(),
                 );
                 const capWhitelist = WidgetUtils.getCapWhitelistForAppTypeInRoomId(app.type, persistentWidgetInRoomId);
-                const AppTile = sdk.getComponent('elements.AppTile');
                 return <AppTile
                     key={app.id}
                     id={app.id}

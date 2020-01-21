@@ -38,10 +38,12 @@ import SettingsStore, {SettingLevel} from "../../../settings/SettingsStore";
 import {aboveLeftOf, ContextMenu, ContextMenuButton} from "../../structures/ContextMenu";
 import PersistedElement from "./PersistedElement";
 import WidgetContextMenu from "../context_menus/WidgetContextMenu";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 const ALLOWED_APP_URL_SCHEMES = ['https:', 'http:'];
 const ENABLE_REACT_PERF = false;
 
+@replaceableComponent("views.elements.AppTile")
 export default class AppTile extends React.Component {
     constructor(props) {
         super(props);
