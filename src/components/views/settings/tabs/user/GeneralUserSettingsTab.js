@@ -40,6 +40,7 @@ import {abbreviateUrl} from "../../../../../utils/UrlUtils";
 import { getThreepidsWithBindStatus } from '../../../../../boundThreepids';
 import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import SetIdServer from "../../SetIdServer";
+import SetIntegrationManager from "../../SetIntegrationManager";
 
 export default class GeneralUserSettingsTab extends React.Component {
     static propTypes = {
@@ -430,8 +431,6 @@ export default class GeneralUserSettingsTab extends React.Component {
     }
 
     _renderIntegrationManagerSection() {
-        const SetIntegrationManager = sdk.getComponent("views.settings.SetIntegrationManager");
-
         return (
             <div className="mx_SettingsTab_section">
                 { /* has its own heading as it includes the current integration manager */ }
