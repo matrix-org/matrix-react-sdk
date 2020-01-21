@@ -20,7 +20,9 @@ import dis from '../../../dispatcher';
 import { _t } from '../../../languageHandler';
 import * as sdk from '../../../index';
 import Analytics from '../../../Analytics';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.globals.CookieBar")
 export default class CookieBar extends React.Component {
     static propTypes = {
         policyUrl: PropTypes.string,
