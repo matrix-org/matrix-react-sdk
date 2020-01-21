@@ -26,6 +26,7 @@ import classNames from 'classnames';
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import {ContextMenu, ContextMenuButton, toRightOf} from "../../structures/ContextMenu";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import GroupInviteTileContextMenu from "../context_menus/GroupInviteTileContextMenu";
 
 // XXX this class copies a lot from RoomTile.js
 export default createReactClass({
@@ -162,7 +163,6 @@ export default createReactClass({
 
         let contextMenu;
         if (isMenuDisplayed) {
-            const GroupInviteTileContextMenu = sdk.getComponent('context_menus.GroupInviteTileContextMenu');
             contextMenu = (
                 <ContextMenu {...toRightOf(this.state.contextMenuPosition)} onFinished={this.closeMenu}>
                     <GroupInviteTileContextMenu group={this.props.group} onFinished={this.closeMenu} />
