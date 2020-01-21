@@ -35,6 +35,7 @@ import * as ObjectUtils from "../../../ObjectUtils";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import MessageTimestamp from "../messages/MessageTimestamp";
 
+// TODO: [TravisR] Handle this with imports
 const eventTileTypes = {
     'm.room.message': 'messages.MessageEvent',
     'm.sticker': 'messages.MessageEvent',

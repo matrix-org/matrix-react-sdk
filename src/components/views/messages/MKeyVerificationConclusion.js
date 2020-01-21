@@ -21,7 +21,9 @@ import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 import {getNameForEventRoom, userLabelForEventRoom}
     from '../../../utils/KeyVerificationStateObserver';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.messages.MKeyVerificationConclusion")
 export default class MKeyVerificationConclusion extends React.Component {
     constructor(props) {
         super(props);
