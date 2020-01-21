@@ -22,6 +22,7 @@ import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
 import ErrorDialog from "../dialogs/ErrorDialog";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import EditableItemList from "../elements/EditableItemList";
 
 const GROUP_ID_REGEX = /\+\S+:\S+/;
 
@@ -99,7 +100,6 @@ export default class RelatedGroupSettings extends React.Component {
 
     render() {
         const localDomain = this.context.getDomain();
-        const EditableItemList = sdk.getComponent('elements.EditableItemList');
         return <div>
             <EditableItemList
                 id="relatedGroups"
