@@ -27,6 +27,7 @@ import * as RoomNotifs from '../../../RoomNotifs';
 import * as FormattingUtils from "../../../utils/FormattingUtils";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import {_t} from "../../../languageHandler";
+import IndicatorScrollbar from "../../structures/IndicatorScrollbar";
 
 const MAX_ROOMS = 20;
 const MIN_ROOMS_BEFORE_ENABLED = 10;
@@ -327,7 +328,6 @@ export default class RoomBreadcrumbs extends React.Component {
 
     render() {
         const Tooltip = sdk.getComponent('elements.Tooltip');
-        const IndicatorScrollbar = sdk.getComponent('structures.IndicatorScrollbar');
 
         // check for collapsed here and not at parent so we keep rooms in our state
         // when collapsing and expanding
