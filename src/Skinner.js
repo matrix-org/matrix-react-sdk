@@ -22,7 +22,7 @@ class Skinner {
     getComponent(name) {
         if (this.components === null) {
             throw new Error(
-                "Attempted to get a component before a skin has been loaded."+
+                `Attempted to get a component (${name}) before a skin has been loaded.`+
                 " This is probably because either:"+
                 " a) Your app has not called sdk.loadSkin(), or"+
                 " b) A component has called getComponent at the root level",
