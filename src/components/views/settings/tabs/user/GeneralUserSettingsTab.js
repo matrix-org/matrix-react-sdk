@@ -42,6 +42,7 @@ import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import SetIdServer from "../../SetIdServer";
 import SetIntegrationManager from "../../SetIntegrationManager";
 import EmailAddresses from "../../account/EmailAddresses";
+import PhoneNumbers from "../../account/PhoneNumbers";
 
 export default class GeneralUserSettingsTab extends React.Component {
     static propTypes = {
@@ -280,7 +281,6 @@ export default class GeneralUserSettingsTab extends React.Component {
 
     _renderAccountSection() {
         const ChangePassword = sdk.getComponent("views.settings.ChangePassword");
-        const PhoneNumbers = sdk.getComponent("views.settings.account.PhoneNumbers");
         const Spinner = sdk.getComponent("views.elements.Spinner");
 
         const passwordChangeForm = (
