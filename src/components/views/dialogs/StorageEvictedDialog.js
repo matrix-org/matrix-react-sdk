@@ -21,7 +21,9 @@ import SdkConfig from '../../../SdkConfig';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
 import BugReportDialog from "./BugReportDialog";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.dialogs.StorageEvictedDialog")
 export default class StorageEvictedDialog extends React.Component {
     static propTypes = {
         onFinished: PropTypes.func.isRequired,

@@ -40,6 +40,7 @@ import ToastStore from "./stores/ToastStore";
 import {IntegrationManagers} from "./integrations/IntegrationManagers";
 import {Mjolnir} from "./mjolnir/Mjolnir";
 import DeviceListener from "./DeviceListener";
+import StorageEvictedDialog from "./components/views/dialogs/StorageEvictedDialog";
 
 /**
  * Called at startup, to attempt to build a logged-in Matrix session. It tries
@@ -466,7 +467,6 @@ async function _doSetLoggedIn(credentials, clearStorage) {
 }
 
 function _showStorageEvictedDialog() {
-    const StorageEvictedDialog = sdk.getComponent('views.dialogs.StorageEvictedDialog');
     return new Promise(resolve => {
         Modal.createTrackedDialog('Storage evicted', '', StorageEvictedDialog, {
             onFinished: resolve,
