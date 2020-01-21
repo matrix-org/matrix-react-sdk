@@ -26,6 +26,7 @@ import Modal from "../../../../../Modal";
 import * as sdk from "../../../../..";
 import {sleep} from "../../../../../utils/promise";
 import DevicesPanel from "../../DevicesPanel";
+import {replaceableComponent} from "../../../../../utils/replaceableComponent";
 
 export class IgnoredUser extends React.Component {
     static propTypes = {
@@ -50,6 +51,7 @@ export class IgnoredUser extends React.Component {
     }
 }
 
+@replaceableComponent("views.settings.tabs.user.SecurityUserSettingsTab")
 export default class SecurityUserSettingsTab extends React.Component {
     constructor() {
         super();
