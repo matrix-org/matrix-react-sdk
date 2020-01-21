@@ -22,6 +22,7 @@ import * as sdk from '../../../index';
 import Modal from '../../../Modal';
 import PlatformPeg from '../../../PlatformPeg';
 import { _t } from '../../../languageHandler';
+import ChangelogDialog from "../dialogs/ChangelogDialog";
 
 /**
  * Check a version string is compatible with the Changelog
@@ -54,7 +55,6 @@ export default createReactClass({
     },
 
     displayChangelog: function() {
-        const ChangelogDialog = sdk.getComponent('dialogs.ChangelogDialog');
         Modal.createTrackedDialog('Display Changelog', '', ChangelogDialog, {
             version: this.props.version,
             newVersion: this.props.newVersion,
