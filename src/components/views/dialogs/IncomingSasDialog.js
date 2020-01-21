@@ -21,6 +21,7 @@ import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 import VerificationCancelled from "../verification/VerificationCancelled";
+import VerificationComplete from "../verification/VerificationComplete";
 
 const PHASE_START = 0;
 const PHASE_SHOW_SAS = 1;
@@ -196,7 +197,6 @@ export default class IncomingSasDialog extends React.Component {
     }
 
     _renderPhaseVerified() {
-        const VerificationComplete = sdk.getComponent('views.verification.VerificationComplete');
         return <VerificationComplete onDone={this._onVerifiedDoneClick} />;
     }
 
