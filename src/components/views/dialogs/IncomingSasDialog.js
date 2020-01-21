@@ -20,6 +20,7 @@ import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import VerificationCancelled from "../verification/VerificationCancelled";
 
 const PHASE_START = 0;
 const PHASE_SHOW_SAS = 1;
@@ -200,7 +201,6 @@ export default class IncomingSasDialog extends React.Component {
     }
 
     _renderPhaseCancelled() {
-        const VerificationCancelled = sdk.getComponent('views.verification.VerificationCancelled');
         return <VerificationCancelled onDone={this._onCancelClick} />;
     }
 

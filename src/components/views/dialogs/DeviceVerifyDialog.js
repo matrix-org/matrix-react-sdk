@@ -28,6 +28,7 @@ import {ensureDMExists} from "../../../createRoom";
 import dis from "../../../dispatcher";
 import SettingsStore from '../../../settings/SettingsStore';
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import VerificationCancelled from "../verification/VerificationCancelled";
 
 const MODE_LEGACY = 'legacy';
 const MODE_SAS = 'sas';
@@ -257,7 +258,6 @@ export default class DeviceVerifyDialog extends React.Component {
     }
 
     _renderSasVerificationPhaseCancelled() {
-        const VerificationCancelled = sdk.getComponent('views.verification.VerificationCancelled');
         return <VerificationCancelled onDone={this._onCancelClick} />;
     }
 
