@@ -22,7 +22,9 @@ import dis from '../../../dispatcher';
 import { _t } from '../../../languageHandler';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import SettingsStore from "../../../settings/SettingsStore";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.dialogs.LogoutDialog")
 export default class LogoutDialog extends React.Component {
     defaultProps = {
         onFinished: function() {},
