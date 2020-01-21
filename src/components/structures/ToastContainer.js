@@ -18,7 +18,9 @@ import * as React from "react";
 import { _t } from '../../languageHandler';
 import ToastStore from "../../stores/ToastStore";
 import classNames from "classnames";
+import {replaceableComponent} from "../../utils/replaceableComponent";
 
+@replaceableComponent("structures.ToastContainer")
 export default class ToastContainer extends React.Component {
     constructor() {
         super();
