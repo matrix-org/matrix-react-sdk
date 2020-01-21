@@ -25,6 +25,7 @@ import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import {sendLoginRequest} from "../../../Login";
 import url from 'url';
 import AuthPage from "../../views/auth/AuthPage";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 const LOGIN_VIEW = {
     LOADING: 1,
@@ -40,6 +41,7 @@ const FLOWS_TO_VIEWS = {
     "m.login.sso": LOGIN_VIEW.SSO,
 };
 
+@replaceableComponent("structures.auth.SoftLogout")
 export default class SoftLogout extends React.Component {
     static propTypes = {
         // Query parameters from MatrixChat

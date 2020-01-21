@@ -65,6 +65,7 @@ import { storeRoomAliasInCache } from '../../RoomAliasCache';
 import { defer } from "../../utils/promise";
 import ToastStore from "../../stores/ToastStore";
 import CompleteSecurity from "./auth/CompleteSecurity";
+import SoftLogout from "./auth/SoftLogout";
 
 /** constants for MatrixChat.state.view */
 export const VIEWS = {
@@ -1970,7 +1971,6 @@ export default createReactClass({
                 />
             );
         } else if (this.state.view === VIEWS.SOFT_LOGOUT) {
-            const SoftLogout = sdk.getComponent('structures.auth.SoftLogout');
             view = (
                 <SoftLogout
                     realQueryParams={this.props.realQueryParams}
