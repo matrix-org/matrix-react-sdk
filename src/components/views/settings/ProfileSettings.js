@@ -21,7 +21,9 @@ import Field from "../elements/Field";
 import {User} from "matrix-js-sdk";
 import { getHostingLink } from '../../../utils/HostingLink';
 import * as sdk from "../../../index";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.settings.ProfileSettings")
 export default class ProfileSettings extends React.Component {
     constructor() {
         super();
