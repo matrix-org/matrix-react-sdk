@@ -25,6 +25,7 @@ import Analytics from "../../../../../Analytics";
 import Modal from "../../../../../Modal";
 import * as sdk from "../../../../..";
 import {sleep} from "../../../../../utils/promise";
+import DevicesPanel from "../../DevicesPanel";
 
 export class IgnoredUser extends React.Component {
     static propTypes = {
@@ -240,7 +241,6 @@ export default class SecurityUserSettingsTab extends React.Component {
     }
 
     render() {
-        const DevicesPanel = sdk.getComponent('views.settings.DevicesPanel');
         const SettingsFlag = sdk.getComponent('views.elements.SettingsFlag');
 
         const KeyBackupPanel = sdk.getComponent('views.settings.KeyBackupPanel');
