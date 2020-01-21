@@ -64,6 +64,7 @@ import { ThemeWatcher } from "../../theme";
 import { storeRoomAliasInCache } from '../../RoomAliasCache';
 import { defer } from "../../utils/promise";
 import ToastStore from "../../stores/ToastStore";
+import CompleteSecurity from "./auth/CompleteSecurity";
 
 /** constants for MatrixChat.state.view */
 export const VIEWS = {
@@ -1870,7 +1871,6 @@ export default createReactClass({
                 </div>
             );
         } else if (this.state.view === VIEWS.COMPLETE_SECURITY) {
-            const CompleteSecurity = sdk.getComponent('structures.auth.CompleteSecurity');
             view = (
                 <CompleteSecurity
                     onFinished={this.onCompleteSecurityFinished}

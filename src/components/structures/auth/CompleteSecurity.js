@@ -20,11 +20,13 @@ import { _t } from '../../../languageHandler';
 import * as sdk from '../../../index';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { accessSecretStorage } from '../../../CrossSigningManager';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 const PHASE_INTRO = 0;
 const PHASE_DONE = 1;
 const PHASE_CONFIRM_SKIP = 2;
 
+@replaceableComponent("structures.auth.CompleteSecurity")
 export default class CompleteSecurity extends React.Component {
     static propTypes = {
         onFinished: PropTypes.func.isRequired,
