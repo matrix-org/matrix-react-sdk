@@ -44,6 +44,7 @@ import SetIntegrationManager from "../../SetIntegrationManager";
 import EmailAddresses from "../../account/EmailAddresses";
 import PhoneNumbers from "../../account/PhoneNumbers";
 import DiscoveryEmailAddresses from "../../discovery/EmailAddresses";
+import DiscoveryPhoneNumbers from "../../discovery/PhoneNumbers";
 
 export default class GeneralUserSettingsTab extends React.Component {
     static propTypes = {
@@ -396,14 +397,12 @@ export default class GeneralUserSettingsTab extends React.Component {
             );
         }
 
-        const PhoneNumbers = sdk.getComponent("views.settings.discovery.PhoneNumbers");
-
         const threepidSection = this.state.haveIdServer ? <div className='mx_GeneralUserSettingsTab_discovery'>
             <span className="mx_SettingsTab_subheading">{_t("Email addresses")}</span>
             <DiscoveryEmailAddresses emails={this.state.emails} />
 
             <span className="mx_SettingsTab_subheading">{_t("Phone numbers")}</span>
-            <PhoneNumbers msisdns={this.state.msisdns} />
+            <DiscoveryPhoneNumbers msisdns={this.state.msisdns} />
         </div> : null;
 
         return (
