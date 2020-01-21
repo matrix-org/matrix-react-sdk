@@ -21,7 +21,9 @@ import SettingsStore, {SettingLevel} from "../../../settings/SettingsStore";
 import * as sdk from "../../../index";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import WidgetUtils from "../../../utils/WidgetUtils";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.dialogs.WidgetOpenIDPermissionsDialog")
 export default class WidgetOpenIDPermissionsDialog extends React.Component {
     static propTypes = {
         onFinished: PropTypes.func.isRequired,
