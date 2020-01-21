@@ -18,7 +18,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {_t} from '../../../languageHandler';
 import {MenuItem} from "../../structures/ContextMenu";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.context_menus.WidgetContextMenu")
 export default class WidgetContextMenu extends React.Component {
     static propTypes = {
         onFinished: PropTypes.func,

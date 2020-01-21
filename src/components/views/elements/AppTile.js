@@ -37,6 +37,7 @@ import {IntegrationManagers} from "../../../integrations/IntegrationManagers";
 import SettingsStore, {SettingLevel} from "../../../settings/SettingsStore";
 import {aboveLeftOf, ContextMenu, ContextMenuButton} from "../../structures/ContextMenu";
 import PersistedElement from "./PersistedElement";
+import WidgetContextMenu from "../context_menus/WidgetContextMenu";
 
 const ALLOWED_APP_URL_SCHEMES = ['https:', 'http:'];
 const ENABLE_REACT_PERF = false;
@@ -678,7 +679,6 @@ export default class AppTile extends React.Component {
             const showDeleteButton = (this.props.showDelete === undefined || this.props.showDelete) && canUserModify;
             const showPictureSnapshotButton = this._hasCapability('m.capability.screenshot') && this.props.show;
 
-            const WidgetContextMenu = sdk.getComponent('views.context_menus.WidgetContextMenu');
             contextMenu = (
                 <ContextMenu {...aboveLeftOf(elementRect, null)} onFinished={this._closeContextMenu}>
                     <WidgetContextMenu
