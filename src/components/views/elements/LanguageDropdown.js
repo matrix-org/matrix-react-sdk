@@ -22,6 +22,7 @@ import * as sdk from '../../../index';
 import * as languageHandler from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
 import { _t } from "../../../languageHandler";
+import Dropdown from "./Dropdown";
 
 function languageMatchesSearchQuery(query, language) {
     if (language.label.toUpperCase().indexOf(query.toUpperCase()) == 0) return true;
@@ -77,8 +78,6 @@ export default class LanguageDropdown extends React.Component {
             const Spinner = sdk.getComponent('elements.Spinner');
             return <Spinner />;
         }
-
-        const Dropdown = sdk.getComponent('elements.Dropdown');
 
         let displayedLanguages;
         if (this.state.searchQuery) {

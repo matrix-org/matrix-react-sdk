@@ -23,6 +23,7 @@ import { COUNTRIES } from '../../../phonenumber';
 import SdkConfig from "../../../SdkConfig";
 import { _t } from "../../../languageHandler";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import Dropdown from "../elements/Dropdown";
 
 const COUNTRIES_BY_ISO2 = {};
 for (const c of COUNTRIES) {
@@ -100,8 +101,6 @@ export default class CountryDropdown extends React.Component {
     }
 
     render() {
-        const Dropdown = sdk.getComponent('elements.Dropdown');
-
         let displayedCountries;
         if (this.state.searchQuery) {
             displayedCountries = COUNTRIES.filter(
