@@ -26,6 +26,7 @@ import {sendLoginRequest} from "../../../Login";
 import url from 'url';
 import AuthPage from "../../views/auth/AuthPage";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import ConfirmWipeDeviceDialog from "../../views/dialogs/ConfirmWipeDeviceDialog";
 
 const LOGIN_VIEW = {
     LOADING: 1,
@@ -80,7 +81,6 @@ export default class SoftLogout extends React.Component {
     }
 
     onClearAll = () => {
-        const ConfirmWipeDeviceDialog = sdk.getComponent('dialogs.ConfirmWipeDeviceDialog');
         Modal.createTrackedDialog('Clear Data', 'Soft Logout', ConfirmWipeDeviceDialog, {
             onFinished: (wipeData) => {
                 if (!wipeData) return;
