@@ -21,6 +21,7 @@ import Modal from '../../../Modal';
 import * as sdk from "../../../index";
 import * as Avatar from '../../../Avatar';
 import {getHttpUriForMxc} from "matrix-js-sdk/src/content-repo";
+import ImageView from "../elements/ImageView";
 
 export default createReactClass({
     displayName: 'RoomAvatar',
@@ -110,7 +111,6 @@ export default createReactClass({
         const avatarUrl = this.props.room.getAvatarUrl(
             MatrixClientPeg.get().getHomeserverUrl(),
             null, null, null, false);
-        const ImageView = sdk.getComponent("elements.ImageView");
         const params = {
             src: avatarUrl,
             name: this.props.room.name,

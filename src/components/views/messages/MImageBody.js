@@ -26,6 +26,7 @@ import { decryptFile } from '../../../utils/DecryptFile';
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import ImageView from "../elements/ImageView";
 
 export default class MImageBody extends React.Component {
     static propTypes = {
@@ -101,7 +102,6 @@ export default class MImageBody extends React.Component {
 
             const content = this.props.mxEvent.getContent();
             const httpUrl = this._getContentUrl();
-            const ImageView = sdk.getComponent("elements.ImageView");
             const params = {
                 src: httpUrl,
                 name: content.body && content.body.length > 0 ? content.body : _t('Attachment'),

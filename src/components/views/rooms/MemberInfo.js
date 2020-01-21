@@ -49,6 +49,7 @@ import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import ShareDialog from "../dialogs/ShareDialog";
+import ImageView from "../elements/ImageView";
 
 export default createReactClass({
     displayName: 'MemberInfo',
@@ -739,7 +740,6 @@ export default createReactClass({
         if (!avatarUrl) return;
 
         const httpUrl = this.context.mxcUrlToHttp(avatarUrl);
-        const ImageView = sdk.getComponent("elements.ImageView");
         const params = {
             src: httpUrl,
             name: member.name,

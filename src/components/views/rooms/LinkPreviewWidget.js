@@ -26,6 +26,7 @@ import * as sdk from "../../../index";
 import Modal from "../../../Modal";
 import * as ImageUtils from "../../../ImageUtils";
 import { _t } from "../../../languageHandler";
+import ImageView from "../elements/ImageView";
 
 export default createReactClass({
     displayName: 'LinkPreviewWidget',
@@ -80,7 +81,6 @@ export default createReactClass({
         const p = this.state.preview;
         if (ev.button != 0 || ev.metaKey) return;
         ev.preventDefault();
-        const ImageView = sdk.getComponent("elements.ImageView");
 
         let src = p["og:image"];
         if (src && src.startsWith("mxc://")) {

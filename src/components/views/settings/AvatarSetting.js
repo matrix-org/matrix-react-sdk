@@ -20,12 +20,12 @@ import PropTypes from "prop-types";
 import * as sdk from "../../../index";
 import {_t} from "../../../languageHandler";
 import Modal from "../../../Modal";
+import ImageView from "../elements/ImageView";
 
 const AvatarSetting = ({avatarUrl, avatarAltText, avatarName, uploadAvatar, removeAvatar}) => {
     const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
 
     const openImageView = useCallback(() => {
-        const ImageView = sdk.getComponent("elements.ImageView");
         Modal.createDialog(ImageView, {
             src: avatarUrl,
             name: avatarName,

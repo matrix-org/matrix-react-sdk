@@ -43,6 +43,7 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import {RIGHT_PANEL_PHASES} from "../../../stores/RightPanelStorePhases";
 import DeviceVerifyDialog from "../dialogs/DeviceVerifyDialog";
 import ShareDialog from "../dialogs/ShareDialog";
+import ImageView from "../elements/ImageView";
 
 const _disambiguateDevices = (devices) => {
     const names = Object.create(null);
@@ -1079,7 +1080,6 @@ const UserInfo = ({user, groupId, roomId, onClose}) => {
         if (!avatarUrl) return;
 
         const httpUrl = cli.mxcUrlToHttp(avatarUrl);
-        const ImageView = sdk.getComponent("elements.ImageView");
         const params = {
             src: httpUrl,
             name: member.name,

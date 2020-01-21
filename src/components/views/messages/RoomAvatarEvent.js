@@ -24,6 +24,7 @@ import { _t } from '../../../languageHandler';
 import * as sdk from '../../../index';
 import Modal from '../../../Modal';
 import AccessibleButton from '../elements/AccessibleButton';
+import ImageView from "../elements/ImageView";
 
 export default createReactClass({
     displayName: 'RoomAvatarEvent',
@@ -44,7 +45,6 @@ export default createReactClass({
             roomName: room ? room.name : '',
         });
 
-        const ImageView = sdk.getComponent("elements.ImageView");
         const params = {
             src: httpUrl,
             name: text,
