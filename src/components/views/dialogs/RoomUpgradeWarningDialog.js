@@ -22,7 +22,9 @@ import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import Modal from "../../../Modal";
 import BugReportDialog from "./BugReportDialog";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.dialogs.RoomUpgradeWarningDialog")
 export default class RoomUpgradeWarningDialog extends React.Component {
     static propTypes = {
         onFinished: PropTypes.func.isRequired,

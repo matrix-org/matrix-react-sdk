@@ -33,6 +33,7 @@ import { abbreviateUrl } from './utils/UrlUtils';
 import { getDefaultIdentityServerUrl, useDefaultIdentityServer } from './utils/IdentityServerUtils';
 import {isPermalinkHost, parsePermalink} from "./utils/permalinks/Permalinks";
 import {inviteUsersToRoom} from "./RoomInvite";
+import RoomUpgradeWarningDialog from "./components/views/dialogs/RoomUpgradeWarningDialog";
 
 const singleMxcUpload = async () => {
     return new Promise((resolve) => {
@@ -154,8 +155,6 @@ export const CommandMap = {
                 if (!room.currentState.mayClientSendStateEvent("m.room.tombstone", cli)) {
                     return reject(_t("You do not have the required permissions to use this command."));
                 }
-
-                const RoomUpgradeWarningDialog = sdk.getComponent("dialogs.RoomUpgradeWarningDialog");
 
                 const {finished} = Modal.createTrackedDialog('Slash Commands', 'upgrade room confirmation',
                     RoomUpgradeWarningDialog, {roomId: roomId, targetVersion: args}, /*className=*/null,
