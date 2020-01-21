@@ -340,8 +340,8 @@ export class ContextMenu extends React.Component {
 }
 
 // Semantic component for representing the AccessibleButton which launches a <ContextMenu />
-export const ContextMenuButton = ({ label, isExpanded, children, ...props }) => {
-    const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
+export const ContextMenuButton = ({ label, isExpanded, children, tooltip, ...props }) => {
+    const AccessibleButton = sdk.getComponent(tooltip ? 'elements.AccessibleTooltipButton' : 'elements.AccessibleButton');
     return (
         <AccessibleButton {...props} title={label} aria-label={label} aria-haspopup={true} aria-expanded={isExpanded}>
             { children }
@@ -350,6 +350,7 @@ export const ContextMenuButton = ({ label, isExpanded, children, ...props }) => 
 };
 ContextMenuButton.propTypes = {
     ...AccessibleButton.propTypes,
+    tooltip: PropTypes.bool,
     label: PropTypes.string.isRequired,
     isExpanded: PropTypes.bool.isRequired, // whether or not the context menu is currently open
 };

@@ -72,6 +72,7 @@ const OptionsButton = ({mxEvent, getTile, getReplyThread, permalinkCreator, onFo
             onClick={openMenu}
             isExpanded={menuDisplayed}
             inputRef={button}
+            tooltip
         />
 
         { contextMenu }
@@ -100,6 +101,7 @@ const ReactButton = ({mxEvent, reactions, onFocusChange}) => {
             onClick={openMenu}
             isExpanded={menuDisplayed}
             inputRef={button}
+            tooltip
         />
 
         { contextMenu }
@@ -155,7 +157,7 @@ export default class MessageActionBar extends React.PureComponent {
     };
 
     render() {
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
+        const AccessibleTooltipButton = sdk.getComponent('elements.AccessibleTooltipButton');
 
         let reactButton;
         let replyButton;
@@ -168,7 +170,7 @@ export default class MessageActionBar extends React.PureComponent {
                 );
             }
             if (this.context.canReply) {
-                replyButton = <AccessibleButton
+                replyButton = <AccessibleTooltipButton
                     className="mx_MessageActionBar_maskButton mx_MessageActionBar_replyButton"
                     title={_t("Reply")}
                     onClick={this.onReplyClick}
@@ -176,7 +178,7 @@ export default class MessageActionBar extends React.PureComponent {
             }
         }
         if (canEditContent(this.props.mxEvent)) {
-            editButton = <AccessibleButton
+            editButton = <AccessibleTooltipButton
                 className="mx_MessageActionBar_maskButton mx_MessageActionBar_editButton"
                 title={_t("Edit")}
                 onClick={this.onEditClick}
