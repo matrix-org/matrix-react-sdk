@@ -38,6 +38,7 @@ import {SERVICE_TYPES} from "matrix-js-sdk";
 import IdentityAuthClient from "../../../../../IdentityAuthClient";
 import {abbreviateUrl} from "../../../../../utils/UrlUtils";
 import { getThreepidsWithBindStatus } from '../../../../../boundThreepids';
+import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 
 export default class GeneralUserSettingsTab extends React.Component {
     static propTypes = {
@@ -339,7 +340,6 @@ export default class GeneralUserSettingsTab extends React.Component {
 
     _renderThemeSection() {
         const SettingsFlag = sdk.getComponent("views.elements.SettingsFlag");
-        const LabelledToggleSwitch = sdk.getComponent("views.elements.LabelledToggleSwitch");
 
         const themeWatcher = new ThemeWatcher();
         let systemThemeSection;
