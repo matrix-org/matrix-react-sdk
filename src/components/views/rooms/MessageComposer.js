@@ -28,6 +28,7 @@ import ContentMessages from '../../../ContentMessages';
 import E2EIcon from './E2EIcon';
 import MemberStatusMessageAvatar from "../avatars/MemberStatusMessageAvatar";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import SendMessageComposer from "./SendMessageComposer";
 
 function ComposerAvatar(props) {
     return <div className="mx_MessageComposer_avatar">
@@ -313,7 +314,6 @@ export default class MessageComposer extends React.Component {
             // check separately for whether we can call, but this is slightly
             // complex because of conference calls.
 
-            const SendMessageComposer = sdk.getComponent("rooms.SendMessageComposer");
             const callInProgress = this.props.callState && this.props.callState !== 'ended';
 
             controls.push(
