@@ -28,6 +28,7 @@ import { _t } from '../../languageHandler';
 import { instanceForInstanceId, protocolNameForInstanceId } from '../../utils/DirectoryUtils';
 import Analytics from '../../Analytics';
 import {getHttpUriForMxc} from "matrix-js-sdk/src/content-repo";
+import NetworkDropdown from "../views/directory/NetworkDropdown";
 
 const MAX_NAME_LENGTH = 80;
 const MAX_TOPIC_LENGTH = 160;
@@ -570,7 +571,6 @@ export default createReactClass({
 
         let listHeader;
         if (!this.state.protocolsLoading) {
-            const NetworkDropdown = sdk.getComponent('directory.NetworkDropdown');
             const DirectorySearchBox = sdk.getComponent('elements.DirectorySearchBox');
 
             const protocolName = protocolNameForInstanceId(this.protocols, this.state.instanceId);

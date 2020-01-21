@@ -19,9 +19,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import {instanceForInstanceId} from '../../../utils/DirectoryUtils';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 const DEFAULT_ICON_URL = require("../../../../res/img/network-matrix.svg");
 
+@replaceableComponent("views.directory.NetworkDropdown")
 export default class NetworkDropdown extends React.Component {
     constructor(props) {
         super(props);
