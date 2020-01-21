@@ -26,11 +26,13 @@ import { Room } from 'matrix-js-sdk';
 import SettingsStore from "../../../settings/SettingsStore";
 import Autocompleter from '../../../autocomplete/Autocompleter';
 import {sleep} from "../../../utils/promise";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 const COMPOSER_SELECTED = 0;
 
 export const generateCompletionDomId = (number) => `mx_Autocomplete_Completion_${number}`;
 
+@replaceableComponent("views.rooms.Autocomplete")
 export default class Autocomplete extends React.Component {
     constructor(props) {
         super(props);
