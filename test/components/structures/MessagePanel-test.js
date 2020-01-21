@@ -27,7 +27,6 @@ import { EventEmitter } from "events";
 
 import sdk from '../../skinned-sdk';
 
-const MessagePanel = sdk.getComponent('structures.MessagePanel');
 import {MatrixClientPeg} from '../../../src/MatrixClientPeg';
 import Matrix from 'matrix-js-sdk';
 
@@ -37,6 +36,7 @@ const mockclock = require('../../mock-clock');
 import Velocity from 'velocity-animate';
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import RoomContext from "../../../src/contexts/RoomContext";
+import MessagePanel from "../../../src/components/structures/MessagePanel";
 
 let client;
 const room = new Matrix.Room();

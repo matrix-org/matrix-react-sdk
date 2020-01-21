@@ -36,6 +36,7 @@ import Timer from '../../utils/Timer';
 import shouldHideEvent from '../../shouldHideEvent';
 import EditorStateTransfer from '../../utils/EditorStateTransfer';
 import {haveTileForEvent} from "../views/rooms/EventTile";
+import MessagePanel from "./MessagePanel";
 
 const PAGINATE_SIZE = 20;
 const INITIAL_SIZE = 20;
@@ -1265,7 +1266,6 @@ const TimelinePanel = createReactClass({
     },
 
     render: function() {
-        const MessagePanel = sdk.getComponent("structures.MessagePanel");
         const Loader = sdk.getComponent("elements.Spinner");
 
         // just show a spinner while the timeline loads.

@@ -28,6 +28,7 @@ import {MatrixClientPeg} from '../../MatrixClientPeg';
 import SettingsStore from '../../settings/SettingsStore';
 import {_t} from "../../languageHandler";
 import {haveTileForEvent} from "../views/rooms/EventTile";
+import {replaceableComponent} from "../../utils/replaceableComponent";
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = ['m.sticker', 'm.room.message'];
@@ -36,6 +37,7 @@ const isMembershipChange = (e) => e.getType() === 'm.room.member' || e.getType()
 
 /* (almost) stateless UI component which builds the event tiles in the room timeline.
  */
+@replaceableComponent("structures.MessagePanel")
 export default class MessagePanel extends React.Component {
     static propTypes = {
         // true to give the component a 'display: none' style.
