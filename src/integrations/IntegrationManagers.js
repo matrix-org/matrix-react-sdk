@@ -25,6 +25,7 @@ import {AutoDiscovery} from "matrix-js-sdk";
 import SettingsStore from "../settings/SettingsStore";
 import IntegrationsDisabledDialog from "../components/views/dialogs/IntegrationsDisabledDialog";
 import IntegrationsImpossibleDialog from "../components/views/dialogs/IntegrationsImpossibleDialog";
+import TabbedIntegrationManagerDialog from "../components/views/dialogs/TabbedIntegrationManagerDialog";
 
 const HS_MANAGERS_REFRESH_INTERVAL = 8 * 60 * 60 * 1000; // 8 hours
 const KIND_PREFERENCE = [
@@ -188,7 +189,6 @@ export class IntegrationManagers {
             return this.openNoManagerDialog();
         }
 
-        const TabbedIntegrationManagerDialog = sdk.getComponent("views.dialogs.TabbedIntegrationManagerDialog");
         Modal.createTrackedDialog(
             'Tabbed Integration Manager', '', TabbedIntegrationManagerDialog,
             {room, screen, integrationId}, 'mx_TabbedIntegrationManagerDialog',
