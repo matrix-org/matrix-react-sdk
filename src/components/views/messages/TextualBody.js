@@ -36,6 +36,7 @@ import {isPermalinkHost} from "../../../utils/permalinks/Permalinks";
 import {toRightOf} from "../../structures/ContextMenu";
 import GenericTextContextMenu from "../context_menus/GenericTextContextMenu";
 import Spoiler from "../elements/Spoiler";
+import EditMessageComposer from "../rooms/EditMessageComposer";
 
 export default createReactClass({
     displayName: 'TextualBody',
@@ -419,7 +420,6 @@ export default createReactClass({
 
     render: function() {
         if (this.props.editState) {
-            const EditMessageComposer = sdk.getComponent('rooms.EditMessageComposer');
             return <EditMessageComposer editState={this.props.editState} className="mx_EventTile_content" />;
         }
         const mxEvent = this.props.mxEvent;

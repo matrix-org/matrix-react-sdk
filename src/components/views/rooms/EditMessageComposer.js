@@ -31,6 +31,7 @@ import {EventStatus} from 'matrix-js-sdk';
 import BasicMessageComposer from "./BasicMessageComposer";
 import {Key} from "../../../Keyboard";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 function _isReply(mxEvent) {
     const relatesTo = mxEvent.getContent()["m.relates_to"];
@@ -99,6 +100,7 @@ function createEditContent(model, editedEvent) {
     }, contentBody);
 }
 
+@replaceableComponent("views.rooms.EditMessageComposer")
 export default class EditMessageComposer extends React.Component {
     static propTypes = {
         // the message event being edited
