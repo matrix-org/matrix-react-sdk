@@ -28,6 +28,7 @@ import * as FormattingUtils from "../../../utils/FormattingUtils";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import {_t} from "../../../languageHandler";
 import IndicatorScrollbar from "../../structures/IndicatorScrollbar";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 const MAX_ROOMS = 20;
 const MIN_ROOMS_BEFORE_ENABLED = 10;
@@ -35,6 +36,7 @@ const MIN_ROOMS_BEFORE_ENABLED = 10;
 // The threshold time in milliseconds to wait for an autojoined room to show up.
 const AUTOJOIN_WAIT_THRESHOLD_MS = 90000; // 90 seconds
 
+@replaceableComponent("views.rooms.RoomBreadcrumbs")
 export default class RoomBreadcrumbs extends React.Component {
     constructor(props) {
         super(props);

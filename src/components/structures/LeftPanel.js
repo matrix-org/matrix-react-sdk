@@ -27,6 +27,7 @@ import SettingsStore from '../../settings/SettingsStore';
 import {_t} from "../../languageHandler";
 import Analytics from "../../Analytics";
 import TopLeftMenuButton from "./TopLeftMenuButton";
+import RoomBreadcrumbs from "../views/rooms/RoomBreadcrumbs";
 
 
 const LeftPanel = createReactClass({
@@ -221,7 +222,6 @@ const LeftPanel = createReactClass({
 
     render: function() {
         const RoomList = sdk.getComponent('rooms.RoomList');
-        const RoomBreadcrumbs = sdk.getComponent('rooms.RoomBreadcrumbs');
         const TagPanel = sdk.getComponent('structures.TagPanel');
         const CustomRoomTagPanel = sdk.getComponent('structures.CustomRoomTagPanel');
         const SearchBox = sdk.getComponent('structures.SearchBox');
