@@ -20,6 +20,7 @@ import createReactClass from 'create-react-class';
 import * as sdk from '../../../index';
 import SettingsStore from "../../../settings/SettingsStore";
 import {Mjolnir} from "../../../mjolnir/Mjolnir";
+import MAudioBody from "./MAudioBody";
 
 export default createReactClass({
     displayName: 'MessageEvent',
@@ -68,7 +69,7 @@ export default createReactClass({
             'm.emote': sdk.getComponent('messages.TextualBody'),
             'm.image': sdk.getComponent('messages.MImageBody'),
             'm.file': sdk.getComponent('messages.MFileBody'),
-            'm.audio': sdk.getComponent('messages.MAudioBody'),
+            'm.audio': MAudioBody,
             'm.video': sdk.getComponent('messages.MVideoBody'),
         };
         const evTypes = {
