@@ -23,6 +23,7 @@ import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
 import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
+import CountryDropdown from "./CountryDropdown";
 
 /**
  * A pure UI component which displays a username/password form.
@@ -219,7 +220,6 @@ export default class PasswordLogin extends React.Component {
                     autoFocus
                 />;
             case PasswordLogin.LOGIN_FIELD_PHONE: {
-                const CountryDropdown = sdk.getComponent('views.auth.CountryDropdown');
                 classes.error = this.props.loginIncorrect && !this.state.phoneNumber;
 
                 const phoneCountry = <CountryDropdown

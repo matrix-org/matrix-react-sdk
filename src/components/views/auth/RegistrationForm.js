@@ -29,6 +29,7 @@ import SdkConfig from '../../../SdkConfig';
 import { SAFE_LOCALPART_REGEX } from '../../../Registration';
 import withValidation from '../elements/Validation';
 import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
+import CountryDropdown from "./CountryDropdown";
 
 const FIELD_EMAIL = 'field_email';
 const FIELD_PHONE_NUMBER = 'field_phone_number';
@@ -510,7 +511,6 @@ export default createReactClass({
         if (!this._showPhoneNumber()) {
             return null;
         }
-        const CountryDropdown = sdk.getComponent('views.auth.CountryDropdown');
         const Field = sdk.getComponent('elements.Field');
         const phoneLabel = this._authStepIsRequired('m.login.msisdn') ?
             _t("Phone") :
