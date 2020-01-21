@@ -39,6 +39,7 @@ import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import * as sdk from '../../../index';
 import {Key} from "../../../Keyboard";
 import {EMOTICON_TO_EMOJI} from "../../../emoji";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s$');
 
@@ -70,6 +71,7 @@ function selectionEquals(a: Selection, b: Selection): boolean {
         a.type === b.type;
 }
 
+@replaceableComponent("views.rooms.BasicMessageEditor")
 export default class BasicMessageEditor extends React.Component {
     static propTypes = {
         onChange: PropTypes.func,
