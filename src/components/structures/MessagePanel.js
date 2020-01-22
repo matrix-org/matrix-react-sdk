@@ -446,7 +446,7 @@ export default class MessagePanel extends React.Component {
         const ret = [];
 
         let firstShownEventIndex = checkForPreJoinUISI(
-            this.props.events, this.props.room, this.props.ourUserId
+            this.props.events, this.props.room, this.props.ourUserId,
         );
 
         if (firstShownEventIndex > 0) {
@@ -469,7 +469,7 @@ export default class MessagePanel extends React.Component {
                 event_id: hiddenEvent.getId(),
                 origin_server_ts: hiddenEvent.getTs(),
                 room_id: hiddenEvent.getRoomId(),
-                sender: "invalid"
+                sender: "invalid",
             });
             // FIXME: use a special tile for the error message
             ret.push(
