@@ -178,11 +178,6 @@ const TimelinePanel = createReactClass({
             backPaginating: false,
             forwardPaginating: false,
 
-            // the user's membership in the room prior to the first message in the
-            // current timeline window.
-            // FIXME: should be set to "leave" initially if the user is peeking
-            userRoomMembership: "join",
-
             // cache of matrixClient.getSyncState() (but from the 'sync' event)
             clientSyncState: MatrixClientPeg.get().getSyncState(),
 
@@ -365,59 +360,17 @@ const TimelinePanel = createReactClass({
         debuglog("TimelinePanel: Initiating paginate; backwards:"+backwards);
         this.setState({[paginatingKey]: true});
 
-        return this._timelineWindow.paginate(dir, PAGINATE_SIZE).then((canPaginate) => {
+        return this._timelineWindow.paginate(dir, PAGINATE_SIZE).then((r) => {
             if (this.unmounted) { return; }
 
-            debuglog("TimelinePanel: paginate complete backwards:"+backwards+"; success:"+canPaginate);
+            debuglog("TimelinePanel: paginate complete backwards:"+backwards+"; success:"+r);
 
-            let { events, liveEvents } = this._getEvents();
-
-            const myUserId = MatrixClientPeg.get().credentials.userId;
-            let userRoomMembership = this.state.userRoomMembership;
-            let stopBackPaginating = false;
-            // FIXME: start at new events
-            for (let i = events.length - 1; i >= 0; i--) {
-                const event = events[i];
-                debuglog(event);
-                if (event.getStateKey() === myUserId
-                    && event.getType() === "m.room.member") {
-                    const prevContent = event.getPrevContent();
-                    debuglog("prevcontent", prevContent);
-                    userRoomMembership = prevContent.membership || "leave";
-                } else if (userRoomMembership === "leave" &&
-                           (event.isDecryptionFailure() || event.isBeingDecrypted())) {
-                    // reached an undecryptable message when the user wasn't in
-                    // the room -- don't try to load any more
-                    // (for now, we assume that events that are being decrypted will
-                    // fail if they were sent while the use wasn't in the room)
-                    stopBackPaginating = true;
-                    if (backwards) {
-                        canPaginate = false;
-                    }
-                    events = events.slice(i);
-                    events[0]._setClearData({
-                        clearEvent: {
-                            type: "m.room.message",
-                            content: {
-                                msgtype: "m.bad.encrypted",
-                                body:
-                                "** This room has encrypted messages that were sent before "
-                                    + "you joined the room.  You will not be able to read "
-                                    + "these messages. **",
-                            },
-                        },
-                    })
-                    liveEvents = liveEvents.slice(i);
-                    break;
-                }
-            }
-
+            const { events, liveEvents } = this._getEvents();
             const newState = {
                 [paginatingKey]: false,
-                [canPaginateKey]: canPaginate,
+                [canPaginateKey]: r,
                 events,
                 liveEvents,
-                userRoomMembership,
             };
 
             // moving the window in this direction may mean that we can now
@@ -425,8 +378,7 @@ const TimelinePanel = createReactClass({
             const otherDirection = backwards ? EventTimeline.FORWARDS : EventTimeline.BACKWARDS;
             const canPaginateOtherWayKey = backwards ? 'canForwardPaginate' : 'canBackPaginate';
             if (!this.state[canPaginateOtherWayKey] &&
-                    this._timelineWindow.canPaginate(otherDirection) &&
-                    (backwards || !stopBackPaginating)) {
+                    this._timelineWindow.canPaginate(otherDirection)) {
                 debuglog('TimelinePanel: can now', otherDirection, 'paginate again');
                 newState[canPaginateOtherWayKey] = true;
             }
@@ -438,7 +390,7 @@ const TimelinePanel = createReactClass({
             // itself into the right place
             return new Promise((resolve) => {
                 this.setState(newState, () => {
-                    resolve(canPaginate);
+                    resolve(r);
                 });
             });
         });

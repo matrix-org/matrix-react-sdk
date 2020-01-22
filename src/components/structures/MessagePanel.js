@@ -29,6 +29,8 @@ import SettingsStore from '../../settings/SettingsStore';
 import {_t} from "../../languageHandler";
 import {haveTileForEvent} from "../views/rooms/EventTile";
 
+import {MatrixEvent} from 'matrix-js-sdk';
+
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = ['m.sticker', 'm.room.message'];
 
@@ -115,6 +117,7 @@ export default class MessagePanel extends React.Component {
             // previous positions the read marker has been in, so we can
             // display 'ghost' read markers that are animating away
             ghostReadMarkers: [],
+            preventBackPaginating: false,
         };
 
         // opaque readreceipt info for each userId; used by ReadReceiptMarker
@@ -405,6 +408,7 @@ export default class MessagePanel extends React.Component {
         const DateSeparator = sdk.getComponent('messages.DateSeparator');
         const EventListSummary = sdk.getComponent('views.elements.EventListSummary');
         const MemberEventListSummary = sdk.getComponent('views.elements.MemberEventListSummary');
+        const EventTile = sdk.getComponent('rooms.EventTile');
 
         this.eventNodes = {};
 
@@ -419,6 +423,7 @@ export default class MessagePanel extends React.Component {
         let lastShownEvent;
 
         let lastShownNonLocalEchoIndex = -1;
+
         for (i = this.props.events.length-1; i >= 0; i--) {
             const mxEv = this.props.events[i];
             if (!this._shouldShowEvent(mxEv)) {
@@ -440,6 +445,68 @@ export default class MessagePanel extends React.Component {
 
         const ret = [];
 
+        let firstShownEventIndex = checkForPreJoinUISI(
+            this.props.events, this.props.room, this.props.ourUserId
+        );
+
+        if (firstShownEventIndex > 0) {
+            if (!this.state.preventBackPaginating) {
+                this.setState({
+                    preventBackPaginating: true,
+                });
+            }
+            const hiddenEvent = this.props.events[firstShownEventIndex-1];
+            const eventId = hiddenEvent.getId();
+            const event = new MatrixEvent({
+                type: "m.room.message",
+                content: {
+                    msgtype: "m.text",
+                    body:
+                    "** This room has encrypted messages that were sent before "
+                        + "you joined the room.  You will not be able to read "
+                        + "these messages. **",
+                },
+                event_id: hiddenEvent.getId(),
+                origin_server_ts: hiddenEvent.getTs(),
+                room_id: hiddenEvent.getRoomId(),
+                sender: "invalid"
+            });
+            // FIXME: use a special tile for the error message
+            ret.push(
+                <li key={eventId}
+                    ref={this._collectEventNode.bind(this, eventId)}
+                    data-scroll-tokens={eventId}
+                >
+                    <EventTile mxEvent={event}
+                        continuation={false}
+                        isRedacted={false}
+                        replacingEventId={undefined}
+                        editState={false}
+                        onHeightChanged={this._onHeightChanged}
+                        readReceipts={[]}
+                        readReceiptMap={this._readReceiptMap}
+                        showUrlPreview={false}
+                        checkUnmounting={this._isUnmounting.bind(this)}
+                        eventSendStatus={event.getAssociatedStatus()}
+                        tileShape={this.props.tileShape}
+                        isTwelveHour={this.props.isTwelveHour}
+                        permalinkCreator={this.props.permalinkCreator}
+                        last={lastShownEvent === eventId}
+                        isSelectedEvent={false}
+                        getRelationsForEvent={this.props.getRelationsForEvent}
+                        showReactions={this.props.showReactions}
+                    />
+                </li>,
+            );
+        } else {
+            if (this.state.preventBackPaginating) {
+                this.setState({
+                    preventBackPaginating: false,
+                });
+            }
+            firstShownEventIndex = 0;
+        }
+
         let prevEvent = null; // the last event we showed
 
         this._readReceiptsByEvent = {};
@@ -447,7 +514,7 @@ export default class MessagePanel extends React.Component {
             this._readReceiptsByEvent = this._getReadReceiptsByShownEvent();
         }
 
-        for (i = 0; i < this.props.events.length; i++) {
+        for (i = firstShownEventIndex; i < this.props.events.length; i++) {
             const mxEv = this.props.events[i];
             const eventId = mxEv.getId();
             const last = (mxEv === lastShownEvent);
@@ -883,6 +950,15 @@ export default class MessagePanel extends React.Component {
         }
     }
 
+    onFillRequest(backwards) {
+        console.warn("***", this, this.state, this.props);
+        // FIXME: why are this.state and this.props undefined???
+        if (this.state.preventBackPaginating) {
+            return Promise.resolve(false);
+        }
+        return this.props.onFillRequest(backwards);
+    }
+
     render() {
         const ScrollPanel = sdk.getComponent("structures.ScrollPanel");
         const WhoIsTypingTile = sdk.getComponent("rooms.WhoIsTypingTile");
@@ -921,7 +997,7 @@ export default class MessagePanel extends React.Component {
                 className={className}
                 onScroll={this.props.onScroll}
                 onResize={this.onResize}
-                onFillRequest={this.props.onFillRequest}
+                onFillRequest={this.onFillRequest}
                 onUnfillRequest={this.props.onUnfillRequest}
                 style={style}
                 stickyBottom={this.props.stickyBottom}
@@ -934,4 +1010,52 @@ export default class MessagePanel extends React.Component {
             </ScrollPanel>
         );
     }
+}
+
+function checkForPreJoinUISI(events, room, userId) {
+    if (events.length === 0) {
+        return -1;
+    }
+
+    let i;
+    let userMembership = "leave";
+    // find the last event that is in a timeline (events may not be in a
+    // timeline if they have not been sent yet) and get the user's membership
+    // at that point.
+    for (i = events.length - 1; i >= 0; i--) {
+        const timeline = room.getTimelineForEvent(events[i].getId());
+        if (timeline) {
+            const userMembershipEvent = timeline.getState("f").getMember(userId); // FIXME: EventTimeline.FORWARDS
+            userMembership = userMembershipEvent ? userMembershipEvent.membership : "leave";
+            const timelineEvents = timeline.getEvents();
+            for (let j = timelineEvents.length - 1; j >= 0; j--) {
+                const event = timelineEvents[i];
+                if (event.getStateKey() === userId
+                    && event.getType() === "m.room.member") {
+                    const prevContent = event.getPrevContent();
+                    userMembership = prevContent.membership || "leave";
+                }
+            }
+            break;
+        }
+    }
+
+    // now go through the rest of the events and find the first undecryptable
+    // one that was sent when the user wasn't in the room
+    for (; i >= 0; i--) {
+        const event = events[i];
+        if (event.getStateKey() === userId
+            && event.getType() === "m.room.member") {
+            const prevContent = event.getPrevContent();
+            userMembership = prevContent.membership || "leave";
+        } else if (userMembership === "leave" &&
+                   (event.isDecryptionFailure() || event.isBeingDecrypted())) {
+            // reached an undecryptable message when the user wasn't in
+            // the room -- don't try to load any more
+            // (for now, we assume that events that are being decrypted will
+            // fail if they were sent while the use wasn't in the room)
+            return i + 1;
+        }
+    }
+    return 0;
 }
