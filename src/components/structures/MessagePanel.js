@@ -950,9 +950,7 @@ export default class MessagePanel extends React.Component {
         }
     }
 
-    onFillRequest(backwards) {
-        console.warn("***", this, this.state, this.props);
-        // FIXME: why are this.state and this.props undefined???
+    onFillRequest = (backwards) => {
         if (this.state.preventBackPaginating) {
             return Promise.resolve(false);
         }
