@@ -1,7 +1,7 @@
 /*
 Copyright 2016 OpenMarket Ltd
 Copyright 2018 New Vector Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019-2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -408,7 +408,8 @@ export default class MessagePanel extends React.Component {
         const DateSeparator = sdk.getComponent('messages.DateSeparator');
         const EventListSummary = sdk.getComponent('views.elements.EventListSummary');
         const MemberEventListSummary = sdk.getComponent('views.elements.MemberEventListSummary');
-        const EventTile = sdk.getComponent('rooms.EventTile');
+
+        const PreJoinUISI = sdk.getComponent('messages.PreJoinUISI');
 
         this.eventNodes = {};
 
@@ -457,45 +458,12 @@ export default class MessagePanel extends React.Component {
             }
             const hiddenEvent = this.props.events[firstShownEventIndex-1];
             const eventId = hiddenEvent.getId();
-            const event = new MatrixEvent({
-                type: "m.room.message",
-                content: {
-                    msgtype: "m.text",
-                    body:
-                    "** This room has encrypted messages that were sent before "
-                        + "you joined the room.  You will not be able to read "
-                        + "these messages. **",
-                },
-                event_id: hiddenEvent.getId(),
-                origin_server_ts: hiddenEvent.getTs(),
-                room_id: hiddenEvent.getRoomId(),
-                sender: "invalid",
-            });
-            // FIXME: use a special tile for the error message
             ret.push(
                 <li key={eventId}
                     ref={this._collectEventNode.bind(this, eventId)}
                     data-scroll-tokens={eventId}
                 >
-                    <EventTile mxEvent={event}
-                        continuation={false}
-                        isRedacted={false}
-                        replacingEventId={undefined}
-                        editState={false}
-                        onHeightChanged={this._onHeightChanged}
-                        readReceipts={[]}
-                        readReceiptMap={this._readReceiptMap}
-                        showUrlPreview={false}
-                        checkUnmounting={this._isUnmounting.bind(this)}
-                        eventSendStatus={event.getAssociatedStatus()}
-                        tileShape={this.props.tileShape}
-                        isTwelveHour={this.props.isTwelveHour}
-                        permalinkCreator={this.props.permalinkCreator}
-                        last={lastShownEvent === eventId}
-                        isSelectedEvent={false}
-                        getRelationsForEvent={this.props.getRelationsForEvent}
-                        showReactions={this.props.showReactions}
-                    />
+                    <PreJoinUISI/>
                 </li>,
             );
         } else {
@@ -504,7 +472,6 @@ export default class MessagePanel extends React.Component {
                     preventBackPaginating: false,
                 });
             }
-            firstShownEventIndex = 0;
         }
 
         let prevEvent = null; // the last event we showed
@@ -1011,8 +978,9 @@ export default class MessagePanel extends React.Component {
 }
 
 function checkForPreJoinUISI(events, room, userId) {
-    if (events.length === 0) {
-        return -1;
+    if (events.length === 0 ||
+        !MatrixClientPeg.get().isRoomEncrypted(room.roomId)) {
+        return 0;
     }
 
     let i;
