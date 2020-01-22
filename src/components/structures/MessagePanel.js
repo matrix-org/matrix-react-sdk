@@ -29,8 +29,6 @@ import SettingsStore from '../../settings/SettingsStore';
 import {_t} from "../../languageHandler";
 import {haveTileForEvent} from "../views/rooms/EventTile";
 
-import {MatrixEvent} from 'matrix-js-sdk';
-
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = ['m.sticker', 'm.room.message'];
 
@@ -446,7 +444,7 @@ export default class MessagePanel extends React.Component {
 
         const ret = [];
 
-        let firstShownEventIndex = checkForPreJoinUISI(
+        const firstShownEventIndex = checkForPreJoinUISI(
             this.props.events, this.props.room, this.props.ourUserId,
         );
 
@@ -463,7 +461,7 @@ export default class MessagePanel extends React.Component {
                     ref={this._collectEventNode.bind(this, eventId)}
                     data-scroll-tokens={eventId}
                 >
-                    <PreJoinUISI/>
+                    <PreJoinUISI />
                 </li>,
             );
         } else {

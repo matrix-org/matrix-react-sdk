@@ -1165,6 +1165,7 @@
     "%(name)s wants to verify": "%(name)s wants to verify",
     "You sent a verification request": "You sent a verification request",
     "Error decrypting video": "Error decrypting video",
+    "This room has encrypted messages that were sent before you joined the room.  You will not be able to read these messages.": "This room has encrypted messages that were sent before you joined the room.  You will not be able to read these messages.",
     "Show all": "Show all",
     "Reactions": "Reactions",
     "<reactors/><reactedWith> reacted with %(content)s</reactedWith>": "<reactors/><reactedWith> reacted with %(content)s</reactedWith>",
@@ -2016,6 +2017,5 @@
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.",
     "Failed to set direct chat tag": "Failed to set direct chat tag",
     "Failed to remove tag %(tagName)s from room": "Failed to remove tag %(tagName)s from room",
-    "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room",
-    "This room has encrypted messages that were sent before you joined the room.  You will not be able to read these messages.": "This room has encrypted messages that were sent before you joined the room.  You will not be able to read these messages."
+    "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room"
 }
