@@ -21,6 +21,8 @@ import {isValid3pidInvite} from "./RoomInvite";
 import SettingsStore from "./settings/SettingsStore";
 import {ALL_RULE_TYPES, ROOM_RULE_TYPES, SERVER_RULE_TYPES, USER_RULE_TYPES} from "./mjolnir/BanList";
 
+const CUTOFF_ALIASES_AT_LENGTH = 3;
+
 function textForMemberEvent(ev) {
     // XXX: SYJS-16 "sender is sometimes null for join messages"
     const senderName = ev.sender ? ev.sender.name : ev.getSender();
@@ -279,9 +281,9 @@ function textForRoomAliasesEvent(ev) {
     const oldAliases = ev.getPrevContent().aliases || [];
     const newAliases = ev.getContent().aliases || [];
 
-    const addedAliases = newAliases.filter((x) => !oldAliases.includes(x));
-    const removedAliases = oldAliases.filter((x) => !newAliases.includes(x));
-
+    const addedAliases = newAliases.filter((x) => !oldAliases.includes(x)).slice(0, CUTOFF_ALIASES_AT_LENGTH);
+    const removedAliases = oldAliases.filter((x) => !newAliases.includes(x)).slice(0, CUTOFF_ALIASES_AT_LENGTH);
+    
     if (!addedAliases.length && !removedAliases.length) {
         return '';
     }
