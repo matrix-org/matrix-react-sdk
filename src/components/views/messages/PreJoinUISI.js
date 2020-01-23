@@ -24,7 +24,8 @@ export default class PreJoinUISI extends React.Component {
     render = () => {
         return <div className="mx_PreJoinUISI">
             <div className="mx_PreJoinUISI_image" />
-            {_t("This room has encrypted messages that were sent before you joined the room.  You will not be able to read these messages.")}
-        </div>
+            {_t("This room has encrypted messages that were sent before you joined the room. " +
+                "You will not be able to read these messages.")}
+        </div>;
     };
 }

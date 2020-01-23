@@ -20,6 +20,7 @@ import React, {createRef} from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import {EventTimeline} from 'matrix-js-sdk/src/models/event-timeline';
 import shouldHideEvent from '../../shouldHideEvent';
 import {wantsDateSeparator} from '../../DateUtils';
 import * as sdk from '../../index';
@@ -989,7 +990,8 @@ function checkForPreJoinUISI(events, room, userId) {
     for (i = events.length - 1; i >= 0; i--) {
         const timeline = room.getTimelineForEvent(events[i].getId());
         if (timeline) {
-            const userMembershipEvent = timeline.getState("f").getMember(userId); // FIXME: EventTimeline.FORWARDS
+            const userMembershipEvent =
+                  timeline.getState(EventTimeline.FORWARDS).getMember(userId);
             userMembership = userMembershipEvent ? userMembershipEvent.membership : "leave";
             const timelineEvents = timeline.getEvents();
             for (let j = timelineEvents.length - 1; j >= 0; j--) {
