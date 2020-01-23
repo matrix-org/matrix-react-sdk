@@ -283,7 +283,7 @@ function textForRoomAliasesEvent(ev) {
 
     const addedAliases = newAliases.filter((x) => !oldAliases.includes(x)).slice(0, CUTOFF_ALIASES_AT_LENGTH);
     const removedAliases = oldAliases.filter((x) => !newAliases.includes(x)).slice(0, CUTOFF_ALIASES_AT_LENGTH);
-    
+
     if (!addedAliases.length && !removedAliases.length) {
         return '';
     }
