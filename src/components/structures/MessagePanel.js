@@ -408,8 +408,6 @@ export default class MessagePanel extends React.Component {
         const EventListSummary = sdk.getComponent('views.elements.EventListSummary');
         const MemberEventListSummary = sdk.getComponent('views.elements.MemberEventListSummary');
 
-        const PreJoinUISI = sdk.getComponent('messages.PreJoinUISI');
-
         this.eventNodes = {};
 
         let i;
@@ -455,16 +453,6 @@ export default class MessagePanel extends React.Component {
                     preventBackPaginating: true,
                 });
             }
-            const hiddenEvent = this.props.events[firstShownEventIndex-1];
-            const eventId = hiddenEvent.getId();
-            ret.push(
-                <li key={eventId}
-                    ref={this._collectEventNode.bind(this, eventId)}
-                    data-scroll-tokens={eventId}
-                >
-                    <PreJoinUISI />
-                </li>,
-            );
         } else {
             if (this.state.preventBackPaginating) {
                 this.setState({
@@ -976,6 +964,18 @@ export default class MessagePanel extends React.Component {
     }
 }
 
+/**
+ * Check for undecryptable messages that were sent while the user was not in
+ * the room.
+ *
+ * @param {Array<MatrixEvent>} events The timeline events to check
+ * @param {Room} room The room that the events are in
+ * @param {string} userId The user's ID
+ *
+ * @return Number The index within `events` of the event after the most recent
+ * undecryptable event that was sent while the user was not in the room.  If no
+ * such events were found, then it returns 0.
+ */
 function checkForPreJoinUISI(events, room, userId) {
     if (events.length === 0 ||
         !MatrixClientPeg.get().isRoomEncrypted(room.roomId)) {
@@ -1014,12 +1014,9 @@ function checkForPreJoinUISI(events, room, userId) {
             && event.getType() === "m.room.member") {
             const prevContent = event.getPrevContent();
             userMembership = prevContent.membership || "leave";
-        } else if (userMembership === "leave" &&
-                   (event.isDecryptionFailure() || event.isBeingDecrypted())) {
+        } else if (userMembership === "leave" && event.isDecryptionFailure()) {
             // reached an undecryptable message when the user wasn't in
             // the room -- don't try to load any more
-            // (for now, we assume that events that are being decrypted will
-            // fail if they were sent while the use wasn't in the room)
             return i + 1;
         }
     }
