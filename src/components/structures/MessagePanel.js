@@ -972,7 +972,7 @@ export default class MessagePanel extends React.Component {
  * @param {Room} room The room that the events are in
  * @param {string} userId The user's ID
  *
- * @return Number The index within `events` of the event after the most recent
+ * @return {Number} The index within `events` of the event after the most recent
  * undecryptable event that was sent while the user was not in the room.  If no
  * such events were found, then it returns 0.
  */
