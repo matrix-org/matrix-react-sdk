@@ -995,7 +995,7 @@ function checkForPreJoinUISI(events, room, userId) {
             userMembership = userMembershipEvent ? userMembershipEvent.membership : "leave";
             const timelineEvents = timeline.getEvents();
             for (let j = timelineEvents.length - 1; j >= 0; j--) {
-                const event = timelineEvents[i];
+                const event = timelineEvents[j];
                 if (event.getStateKey() === userId
                     && event.getType() === "m.room.member") {
                     const prevContent = event.getPrevContent();
