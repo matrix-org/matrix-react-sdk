@@ -95,6 +95,10 @@ const TimelinePanel = createReactClass({
         // callback which is called when the read-up-to mark is updated.
         onReadMarkerUpdated: PropTypes.func,
 
+        // callback which is called when we wish to paginate the timeline
+        // window.
+        onPaginationRequest: PropTypes.func,
+
         // maximum number of events to show in a timeline
         timelineCap: PropTypes.number,
 
@@ -339,6 +343,14 @@ const TimelinePanel = createReactClass({
         }
     },
 
+    onPaginationRequest(timelineWindow, direction, size) {
+        if (this.props.onPaginationRequest) {
+            return this.props.onPaginationRequest(timelineWindow, direction, size);
+        } else {
+            return timelineWindow.paginate(direction, size);
+        }
+    },
+
     // set off a pagination request.
     onMessageListFillRequest: function(backwards) {
         if (!this._shouldPaginate()) return Promise.resolve(false);
@@ -361,7 +373,7 @@ const TimelinePanel = createReactClass({
         debuglog("TimelinePanel: Initiating paginate; backwards:"+backwards);
         this.setState({[paginatingKey]: true});
 
-        return this._timelineWindow.paginate(dir, PAGINATE_SIZE).then((r) => {
+        return this.onPaginationRequest(this._timelineWindow, dir, PAGINATE_SIZE).then((r) => {
             if (this.unmounted) { return; }
 
             debuglog("TimelinePanel: paginate complete backwards:"+backwards+"; success:"+r);

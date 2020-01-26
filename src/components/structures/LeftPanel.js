@@ -131,9 +131,6 @@ const LeftPanel = createReactClass({
         if (!this.focusedElement) return;
 
         switch (ev.key) {
-            case Key.TAB:
-                this._onMoveFocus(ev, ev.shiftKey);
-                break;
             case Key.ARROW_UP:
                 this._onMoveFocus(ev, true, true);
                 break;

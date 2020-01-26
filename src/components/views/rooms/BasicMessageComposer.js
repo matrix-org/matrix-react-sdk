@@ -109,8 +109,9 @@ export default class BasicMessageEditor extends React.Component {
         });
         const emoticonMatch = REGEX_EMOTICON_WHITESPACE.exec(range.text);
         if (emoticonMatch) {
-            const query = emoticonMatch[1].toLowerCase().replace("-", "");
-            const data = EMOTICON_TO_EMOJI.get(query);
+            const query = emoticonMatch[1].replace("-", "");
+            // try both exact match and lower-case, this means that xd won't match xD but :P will match :p
+            const data = EMOTICON_TO_EMOJI.get(query) || EMOTICON_TO_EMOJI.get(query.toLowerCase());
 
             if (data) {
                 const {partCreator} = model;
@@ -210,6 +211,7 @@ export default class BasicMessageEditor extends React.Component {
             const range = getRangeForSelection(this._editorRef, model, selection);
             const selectedParts = range.parts.map(p => p.serialize());
             event.clipboardData.setData("application/x-riot-composer", JSON.stringify(selectedParts));
+            event.clipboardData.setData("text/plain", text); // so plain copy/paste works
             if (type === "cut") {
                 // Remove the text, updating the model as appropriate
                 this._modifiedFlag = true;

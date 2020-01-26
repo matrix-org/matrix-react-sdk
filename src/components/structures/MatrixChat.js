@@ -93,12 +93,15 @@ export const VIEWS = {
     // showing flow to trust this new device with cross-signing
     COMPLETE_SECURITY: 6,
 
+    // flow to setup SSSS / cross-signing on this account
+    E2E_SETUP: 7,
+
     // we are logged in with an active matrix client.
-    LOGGED_IN: 7,
+    LOGGED_IN: 8,
 
     // We are logged out (invalid token) but have our local state again. The user
     // should log back in to rehydrate the client.
-    SOFT_LOGOUT: 8,
+    SOFT_LOGOUT: 9,
 };
 
 // Actions that are redirected through the onboarding process prior to being
@@ -660,7 +663,9 @@ export default createReactClass({
                 if (
                     !Lifecycle.isSoftLogout() &&
                     this.state.view !== VIEWS.LOGIN &&
-                    this.state.view !== VIEWS.COMPLETE_SECURITY
+                    this.state.view !== VIEWS.REGISTER &&
+                    this.state.view !== VIEWS.COMPLETE_SECURITY &&
+                    this.state.view !== VIEWS.E2E_SETUP
                 ) {
                     this._onLoggedIn();
                 }
@@ -964,9 +969,9 @@ export default createReactClass({
         const CreateRoomDialog = sdk.getComponent('dialogs.CreateRoomDialog');
         const modal = Modal.createTrackedDialog('Create Room', '', CreateRoomDialog);
 
-        const [shouldCreate, createOpts] = await modal.finished;
+        const [shouldCreate, opts] = await modal.finished;
         if (shouldCreate) {
-            createRoom({createOpts});
+            createRoom(opts);
         }
     },
 
@@ -1456,7 +1461,6 @@ export default createReactClass({
 
         if (SettingsStore.isFeatureEnabled("feature_cross_signing")) {
             cli.on("crypto.verification.request", request => {
-                console.log(`MatrixChat got a .request ${request.channel.transactionId}`, request.event.getRoomId());
                 if (request.pending) {
                     ToastStore.sharedInstance().addOrReplaceToast({
                         key: 'verifreq_' + request.channel.transactionId,
@@ -1727,6 +1731,11 @@ export default createReactClass({
         this.showScreen("forgot_password");
     },
 
+    onRegisterFlowComplete: function(credentials) {
+        this.onUserCompletedLoginFlow();
+        return this.onRegistered(credentials);
+    },
+
     // returns a promise which resolves to the new MatrixClient
     onRegistered: function(credentials) {
         return Lifecycle.setLoggedIn(credentials);
@@ -1850,12 +1859,18 @@ export default createReactClass({
 
         if (masterKeyInStorage) {
             this.setStateForNewView({ view: VIEWS.COMPLETE_SECURITY });
+        } else if (SettingsStore.isFeatureEnabled("feature_cross_signing")) {
+            // This will only work if the feature is set to 'enable' in the config,
+            // since it's too early in the lifecycle for users to have turned the
+            // labs flag on.
+            this.setStateForNewView({ view: VIEWS.E2E_SETUP });
         } else {
             this._onLoggedIn();
         }
     },
 
-    onCompleteSecurityFinished() {
+    // complete security / e2e setup has finished
+    onCompleteSecurityE2eSetupFinished() {
         this._onLoggedIn();
     },
 
@@ -1874,7 +1889,14 @@ export default createReactClass({
         } else if (this.state.view === VIEWS.COMPLETE_SECURITY) {
             view = (
                 <CompleteSecurity
-                    onFinished={this.onCompleteSecurityFinished}
+                    onFinished={this.onCompleteSecurityE2eSetupFinished}
+                />
+            );
+        } else if (this.state.view === VIEWS.E2E_SETUP) {
+            const E2eSetup = sdk.getComponent('structures.auth.E2eSetup');
+            view = (
+                <E2eSetup
+                    onFinished={this.onCompleteSecurityE2eSetupFinished}
                 />
             );
         } else if (this.state.view === VIEWS.POST_REGISTRATION) {
@@ -1941,7 +1963,7 @@ export default createReactClass({
                     email={this.props.startingFragmentQueryParams.email}
                     brand={this.props.config.brand}
                     makeRegistrationUrl={this._makeRegistrationUrl}
-                    onLoggedIn={this.onRegistered}
+                    onLoggedIn={this.onRegisterFlowComplete}
                     onLoginClick={this.onLoginClick}
                     onServerConfigChange={this.onServerConfigChange}
                     {...this.getServerProperties()}

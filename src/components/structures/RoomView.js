@@ -767,7 +767,7 @@ export default createReactClass({
 
     onUserVerificationChanged: function(userId, _trustStatus) {
         const room = this.state.room;
-        if (!room.currentState.getMember(userId)) {
+        if (!room || !room.currentState.getMember(userId)) {
             return;
         }
         this._updateE2EStatus(room);
@@ -797,6 +797,7 @@ export default createReactClass({
             return;
         }
 
+        // Duplication between here and _updateE2eStatus in RoomTile
         /* At this point, the user has encryption on and cross-signing on */
         const e2eMembers = await room.getEncryptionTargetMembers();
         const verified = [];
@@ -813,10 +814,10 @@ export default createReactClass({
         /* Check all verified user devices. */
         for (const userId of verified) {
             const devices = await cli.getStoredDevicesForUser(userId);
-            const allDevicesVerified = devices.every(({deviceId}) => {
-                return cli.checkDeviceTrust(userId, deviceId).isVerified();
+            const anyDeviceNotVerified = devices.some(({deviceId}) => {
+                return !cli.checkDeviceTrust(userId, deviceId).isVerified();
             });
-            if (!allDevicesVerified) {
+            if (anyDeviceNotVerified) {
                 this.setState({
                     e2eStatus: "warning",
                 });
@@ -1368,6 +1369,41 @@ export default createReactClass({
         });
     },
 
+    onRejectAndIgnoreClick: async function() {
+        this.setState({
+            rejecting: true,
+        });
+
+        const cli = MatrixClientPeg.get();
+        try {
+            const myMember = this.state.room.getMember(cli.getUserId());
+            const inviteEvent = myMember.events.member;
+            const ignoredUsers = MatrixClientPeg.get().getIgnoredUsers();
+            ignoredUsers.push(inviteEvent.getSender()); // de-duped internally in the js-sdk
+            await cli.setIgnoredUsers(ignoredUsers);
+
+            await cli.leave(this.state.roomId);
+            dis.dispatch({ action: 'view_next_room' });
+            this.setState({
+                rejecting: false,
+            });
+        } catch (error) {
+            console.error("Failed to reject invite: %s", error);
+
+            const msg = error.message ? error.message : JSON.stringify(error);
+            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+            Modal.createTrackedDialog('Failed to reject invite', '', ErrorDialog, {
+                title: _t("Failed to reject invite"),
+                description: msg,
+            });
+
+            self.setState({
+                rejecting: false,
+                rejectError: error,
+            });
+        }
+    },
+
     onRejectThreepidInviteButtonClicked: function(ev) {
         // We can reject 3pid invites in the same way that we accept them,
         // using /leave rather than /join. In the short term though, we
@@ -1672,9 +1708,11 @@ export default createReactClass({
                 return (
                     <div className="mx_RoomView">
                         <ErrorBoundary>
-                            <RoomPreviewBar onJoinClick={this.onJoinButtonClicked}
+                            <RoomPreviewBar
+                                onJoinClick={this.onJoinButtonClicked}
                                 onForgetClick={this.onForgetClick}
                                 onRejectClick={this.onRejectButtonClicked}
+                                onRejectAndIgnoreClick={this.onRejectAndIgnoreClick}
                                 inviterName={inviterName}
                                 canPreview={false}
                                 joining={this.state.joining}
