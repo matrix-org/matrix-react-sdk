@@ -22,7 +22,10 @@ import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
+import ReactionsRowButtonTooltip from "./ReactionsRowButtonTooltip";
 
+@replaceableComponent("views.messages.ReactionsRowButton")
 export default class ReactionsRowButton extends React.PureComponent {
     static propTypes = {
         // The event we're displaying reactions for
@@ -79,8 +82,6 @@ export default class ReactionsRowButton extends React.PureComponent {
     }
 
     render() {
-        const ReactionsRowButtonTooltip =
-            sdk.getComponent('messages.ReactionsRowButtonTooltip');
         const { mxEvent, content, count, reactionEvents, myReactionEvent } = this.props;
 
         const classes = classNames({

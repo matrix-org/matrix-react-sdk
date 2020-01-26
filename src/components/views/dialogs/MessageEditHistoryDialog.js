@@ -23,6 +23,7 @@ import {wantsDateSeparator} from '../../../DateUtils';
 import SettingsStore from '../../../settings/SettingsStore';
 import DateSeparator from "../messages/DateSeparator";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import EditHistoryMessage from "../messages/EditHistoryMessage";
 
 @replaceableComponent("views.dialogs.MessageEditHistoryDialog")
 export default class MessageEditHistoryDialog extends React.PureComponent {
@@ -101,7 +102,6 @@ export default class MessageEditHistoryDialog extends React.PureComponent {
     }
 
     _renderEdits() {
-        const EditHistoryMessage = sdk.getComponent('messages.EditHistoryMessage');
         const nodes = [];
         let lastEvent;
         let allEvents = this.state.events;

@@ -27,7 +27,10 @@ import * as sdk from "../../../../..";
 import {sleep} from "../../../../../utils/promise";
 import DevicesPanel from "../../DevicesPanel";
 import {replaceableComponent} from "../../../../../utils/replaceableComponent";
+import CrossSigningPanel from "../../CrossSigningPanel";
+import KeyBackupPanel from "../../KeyBackupPanel";
 
+@replaceableComponent("views.settings.tabs.user.IgnoredUser")
 export class IgnoredUser extends React.Component {
     static propTypes = {
         userId: PropTypes.string.isRequired,
@@ -245,7 +248,6 @@ export default class SecurityUserSettingsTab extends React.Component {
     render() {
         const SettingsFlag = sdk.getComponent('views.elements.SettingsFlag');
 
-        const KeyBackupPanel = sdk.getComponent('views.settings.KeyBackupPanel');
         const keyBackup = (
             <div className='mx_SettingsTab_section'>
                 <span className="mx_SettingsTab_subheading">{_t("Key backup")}</span>
@@ -259,7 +261,6 @@ export default class SecurityUserSettingsTab extends React.Component {
         // it's useful to have for testing the feature. If there's no interest
         // in having advanced details here once all flows are implemented, we
         // can remove this.
-        const CrossSigningPanel = sdk.getComponent('views.settings.CrossSigningPanel');
         let crossSigning;
         if (SettingsStore.isFeatureEnabled("feature_cross_signing")) {
             crossSigning = (

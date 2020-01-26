@@ -486,6 +486,7 @@ export default class MImageBody extends React.Component {
     }
 }
 
+@replaceableComponent("views.messages.HiddenImagePlaceholder")
 export class HiddenImagePlaceholder extends React.PureComponent {
     static propTypes = {
         hover: PropTypes.bool,

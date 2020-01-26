@@ -26,12 +26,14 @@ import * as sdk from '../../../index';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import Modal from '../../../Modal';
 import classNames from 'classnames';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 function getReplacedContent(event) {
     const originalContent = event.getOriginalContent();
     return originalContent["m.new_content"] || originalContent;
 }
 
+@replaceableComponent("views.messages.EditHistoryMessage")
 export default class EditHistoryMessage extends React.PureComponent {
     static propTypes = {
         // the message event being edited

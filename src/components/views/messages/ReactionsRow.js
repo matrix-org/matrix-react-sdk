@@ -21,10 +21,13 @@ import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import { isContentActionable } from '../../../utils/EventUtils';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
+import ReactionsRowButton from "./ReactionsRowButton";
 
 // The maximum number of reactions to initially show on a message.
 const MAX_ITEMS_WHEN_LIMITED = 8;
 
+@replaceableComponent("views.messages.ReactionsRow")
 export default class ReactionsRow extends React.PureComponent {
     static propTypes = {
         // The event we're displaying reactions for
@@ -112,7 +115,6 @@ export default class ReactionsRow extends React.PureComponent {
             return null;
         }
 
-        const ReactionsRowButton = sdk.getComponent('messages.ReactionsRowButton');
         let items = reactions.getSortedAnnotationsByKey().map(([content, events]) => {
             const count = events.size;
             if (!count) {

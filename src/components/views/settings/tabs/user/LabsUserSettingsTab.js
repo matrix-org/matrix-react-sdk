@@ -22,6 +22,7 @@ import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import * as sdk from "../../../../../index";
 import {replaceableComponent} from "../../../../../utils/replaceableComponent";
 
+@replaceableComponent("views.settings.tabs.user.LabsSettingToggle")
 export class LabsSettingToggle extends React.Component {
     static propTypes = {
         featureId: PropTypes.string.isRequired,

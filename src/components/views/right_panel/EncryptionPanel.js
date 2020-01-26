@@ -19,7 +19,9 @@ import EncryptionInfo from "./EncryptionInfo";
 import VerificationPanel from "./VerificationPanel";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import {ensureDMExists} from "../../../createRoom";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.right_panel.EncryptionPanel")
 export default class EncryptionPanel extends React.PureComponent {
     constructor(props) {
         super(props);

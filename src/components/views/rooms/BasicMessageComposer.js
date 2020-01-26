@@ -40,6 +40,7 @@ import * as sdk from '../../../index';
 import {Key} from "../../../Keyboard";
 import {EMOTICON_TO_EMOJI} from "../../../emoji";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import MessageComposerFormatBar from "./MessageComposerFormatBar";
 
 const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s$');
 
@@ -574,7 +575,6 @@ export default class BasicMessageEditor extends React.Component {
             "mx_BasicMessageComposer_input_error": this.state.showVisualBell,
         });
 
-        const MessageComposerFormatBar = sdk.getComponent('rooms.MessageComposerFormatBar');
         const shortcuts = {
             bold: ctrlShortcutLabel("B"),
             italics: ctrlShortcutLabel("I"),

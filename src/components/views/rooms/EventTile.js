@@ -35,6 +35,8 @@ import * as ObjectUtils from "../../../ObjectUtils";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import {E2E_STATE} from "./E2EIcon";
 import MessageTimestamp from "../messages/MessageTimestamp";
+import MessageActionBar from "../messages/MessageActionBar";
+import ReactionsRow from "../messages/ReactionsRow";
 
 // TODO: [TravisR] Handle this with imports
 const eventTileTypes = {
@@ -718,7 +720,6 @@ export default createReactClass({
             }
         }
 
-        const MessageActionBar = sdk.getComponent('messages.MessageActionBar');
         const actionBar = !isEditing ? <MessageActionBar
             mxEvent={this.props.mxEvent}
             reactions={this.state.reactions}
@@ -767,7 +768,6 @@ export default createReactClass({
 
         let reactionsRow;
         if (!isRedacted) {
-            const ReactionsRow = sdk.getComponent('messages.ReactionsRow');
             reactionsRow = <ReactionsRow
                 mxEvent={this.props.mxEvent}
                 reactions={this.state.reactions}

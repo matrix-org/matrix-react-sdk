@@ -20,7 +20,9 @@ import { _t } from '../../../languageHandler';
 import * as sdk from '../../../index';
 import classNames from 'classnames';
 import InteractiveTooltip from "../elements/InteractiveTooltip";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.rooms.MessageComposerFormatBar")
 export default class MessageComposerFormatBar extends React.PureComponent {
     static propTypes = {
         onAction: PropTypes.func.isRequired,

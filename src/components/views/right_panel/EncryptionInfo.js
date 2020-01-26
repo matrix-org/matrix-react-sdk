@@ -17,7 +17,9 @@ limitations under the License.
 import React from 'react';
 import * as sdk from '../../../index';
 import {_t} from "../../../languageHandler";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.right_panel.EncryptionInfo")
 export default class EncryptionInfo extends React.PureComponent {
     render() {
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');

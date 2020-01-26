@@ -24,7 +24,9 @@ import {userLabelForEventRoom} from "../../../utils/KeyVerificationStateObserver
 import dis from "../../../dispatcher";
 import ToastStore from "../../../stores/ToastStore";
 import Modal from "../../../Modal";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.toasts.VerificationRequestToast")
 export default class VerificationRequestToast extends React.PureComponent {
     constructor(props) {
         super(props);

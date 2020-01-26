@@ -70,6 +70,7 @@ import IncomingSasDialog from "../views/dialogs/IncomingSasDialog";
 import UserSettingsDialog from "../views/dialogs/UserSettingsDialog";
 import E2eSetup from "./auth/E2eSetup";
 import Welcome from "../views/auth/Welcome";
+import VerificationRequestToast from "../views/toasts/VerificationRequestToast";
 
 /** constants for MatrixChat.state.view */
 export const VIEWS = {
@@ -1469,7 +1470,7 @@ export default createReactClass({
                         title: _t("Verification Request"),
                         icon: "verification",
                         props: {request},
-                        component: sdk.getComponent("toasts.VerificationRequestToast"),
+                        component: VerificationRequestToast,
                     });
                 }
             });

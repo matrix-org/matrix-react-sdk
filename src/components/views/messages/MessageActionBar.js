@@ -26,6 +26,7 @@ import Modal from '../../../Modal';
 import {aboveLeftOf, ContextMenu, ContextMenuButton, useContextMenu} from '../../structures/ContextMenu';
 import { isContentActionable, canEditContent } from '../../../utils/EventUtils';
 import RoomContext from "../../../contexts/RoomContext";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 const OptionsButton = ({mxEvent, getTile, getReplyThread, permalinkCreator, onFocusChange}) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
@@ -106,6 +107,7 @@ const ReactButton = ({mxEvent, reactions, onFocusChange}) => {
     </React.Fragment>;
 };
 
+@replaceableComponent("views.messages.MessageActionBar")
 export default class MessageActionBar extends React.PureComponent {
     static propTypes = {
         mxEvent: PropTypes.object.isRequired,

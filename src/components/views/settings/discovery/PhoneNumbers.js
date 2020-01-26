@@ -33,6 +33,7 @@ This is a copy/paste of EmailAddresses, mostly.
 
 // TODO: Combine EmailAddresses and PhoneNumbers to be 3pid agnostic
 
+@replaceableComponent("views.settings.discovery.PhoneNumber")
 export class PhoneNumber extends React.Component {
     static propTypes = {
         msisdn: PropTypes.object.isRequired,

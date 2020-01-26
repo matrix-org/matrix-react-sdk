@@ -22,7 +22,9 @@ import Modal from "../../../Modal";
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import DeviceListener from '../../../DeviceListener';
 import DeviceVerifyDialog from "../dialogs/DeviceVerifyDialog";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.toasts.VerifySessionToast")
 export default class VerifySessionToast extends React.PureComponent {
     static propTypes = {
         toastKey: PropTypes.string.isRequired,

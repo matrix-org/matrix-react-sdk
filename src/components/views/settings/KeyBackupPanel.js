@@ -22,7 +22,9 @@ import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
 import SettingsStore from '../../../settings/SettingsStore';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.settings.KeyBackupPanel")
 export default class KeyBackupPanel extends React.PureComponent {
     constructor(props) {
         super(props);

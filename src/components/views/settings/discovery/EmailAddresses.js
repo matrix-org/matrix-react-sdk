@@ -41,6 +41,7 @@ that is available.
 TODO: Reduce all the copying between account vs. discovery components.
 */
 
+@replaceableComponent("views.settings.discovery.EmailAddress")
 export class EmailAddress extends React.Component {
     static propTypes = {
         email: PropTypes.object.isRequired,

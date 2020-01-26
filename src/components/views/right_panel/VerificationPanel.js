@@ -21,7 +21,9 @@ import VerificationQRCode from "../elements/crypto/VerificationQRCode";
 import {VerificationRequest} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import VerificationShowSas from "../verification/VerificationShowSas";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.right_panel.VerificationPanel")
 export default class VerificationPanel extends React.PureComponent {
     constructor(props) {
         super(props);

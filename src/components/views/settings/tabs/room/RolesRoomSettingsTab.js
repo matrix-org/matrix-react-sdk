@@ -58,6 +58,7 @@ function parseIntWithDefault(val, def) {
     return isNaN(res) ? def : res;
 }
 
+@replaceableComponent("views.settings.tabs.room.BannedUser")
 export class BannedUser extends React.Component {
     static propTypes = {
         canUnban: PropTypes.bool,

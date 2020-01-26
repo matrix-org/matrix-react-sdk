@@ -20,7 +20,9 @@ import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 import * as sdk from '../../../index';
 import { accessSecretStorage } from '../../../CrossSigningManager';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.settings.CrossSigningPanel")
 export default class CrossSigningPanel extends React.PureComponent {
     constructor(props) {
         super(props);

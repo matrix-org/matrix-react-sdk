@@ -39,6 +39,7 @@ places to communicate errors - these should be replaced with inline validation w
 that is available.
  */
 
+@replaceableComponent("views.settings.account.ExistingEmailAddress")
 export class ExistingEmailAddress extends React.Component {
     static propTypes = {
         email: PropTypes.object.isRequired,

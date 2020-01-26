@@ -22,7 +22,9 @@ import { _t } from "../../../languageHandler";
 import Modal from "../../../Modal";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import SettingsStore, {SettingLevel} from "../../../settings/SettingsStore";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.rooms.RoomRecoveryReminder")
 export default class RoomRecoveryReminder extends React.PureComponent {
     static propTypes = {
         // called if the user sets the option to suppress this reminder in the future
