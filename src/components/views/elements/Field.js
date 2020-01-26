@@ -26,7 +26,7 @@ const VALIDATION_THROTTLE_MS = 200;
 export default class Field extends React.PureComponent {
     static propTypes = {
         // The field's ID, which binds the input and label together.
-        id: PropTypes.string.isRequired,
+        id: PropTypes.string,
         // The element to create. Defaults to "input".
         // To define options for a select, use <Field><option ... /></Field>
         element: PropTypes.oneOf(["input", "select", "textarea"]),
