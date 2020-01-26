@@ -16,7 +16,6 @@ limitations under the License.
 
 import {MatrixClientPeg} from "./MatrixClientPeg";
 import shouldHideEvent from './shouldHideEvent';
-import * as sdk from "./index";
 import {haveTileForEvent} from "./components/views/rooms/EventTile";
 
 /**

@@ -36,7 +36,6 @@ import {Room} from 'matrix-js-sdk';
 import TypingStore from "../../../stores/TypingStore";
 import SettingsStore from "../../../settings/SettingsStore";
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
-import * as sdk from '../../../index';
 import {Key} from "../../../Keyboard";
 import {EMOTICON_TO_EMOJI} from "../../../emoji";
 import {replaceableComponent} from "../../../utils/replaceableComponent";

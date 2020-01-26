@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from 'react';
 import {_t} from "../../../languageHandler";
-import * as sdk from "../../../index";
 import PropTypes from "prop-types";
 import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
 import TextWithTooltip from "../elements/TextWithTooltip";

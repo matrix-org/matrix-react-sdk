@@ -17,8 +17,6 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import * as sdk from '../../../index';
-
 import { COUNTRIES } from '../../../phonenumber';
 import SdkConfig from "../../../SdkConfig";
 import { _t } from "../../../languageHandler";

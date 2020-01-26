@@ -18,7 +18,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
-import * as sdk from '../../../index';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
 import DeviceVerifyDialog from "../dialogs/DeviceVerifyDialog";

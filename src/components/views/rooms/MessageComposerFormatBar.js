@@ -17,7 +17,6 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
-import * as sdk from '../../../index';
 import classNames from 'classnames';
 import InteractiveTooltip from "../elements/InteractiveTooltip";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
