@@ -17,9 +17,7 @@ limitations under the License.
 import classNames from 'classnames';
 
 import {MatrixClientPeg} from './MatrixClientPeg';
-import * as sdk from './';
 import Modal from './Modal';
-import TermsDialog from "./components/views/dialogs/TermsDialog";
 
 export class TermsNotSignedError extends Error {}
 
@@ -166,6 +164,9 @@ export function dialogTermsInteractionCallback(
     return new Promise((resolve, reject) => {
         console.log("Terms that need agreement", policiesAndServicePairs);
 
+        // We have to import this dialog on the fly because otherwise it tries to load before the skin
+        // due to this file's position in the startup routine.
+        const TermsDialog = require("components/views/dialogs/TermsDialog");
         Modal.createTrackedDialog('Terms of Service', '', TermsDialog, {
             policiesAndServicePairs,
             agreedUrls,
