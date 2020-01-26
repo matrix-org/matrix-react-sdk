@@ -20,7 +20,9 @@ import * as sdk from "../../../index";
 import PropTypes from "prop-types";
 import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
 import TextWithTooltip from "../elements/TextWithTooltip";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.auth.SignInToText")
 export default class SignInToText extends React.PureComponent {
     static propTypes = {
         serverConfig: PropTypes.instanceOf(ValidatedServerConfig).isRequired,

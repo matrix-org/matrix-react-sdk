@@ -28,6 +28,9 @@ import AutoDiscoveryUtils, {ValidatedServerConfig} from "../../../utils/AutoDisc
 import classNames from 'classnames';
 import AuthPage from "../../views/auth/AuthPage";
 import TextWithTooltip from "../../views/elements/TextWithTooltip";
+import AuthBody from "../../views/auth/AuthBody";
+import ServerConfig from "../../views/auth/ServerConfig";
+import Field from "../../views/elements/Field";
 
 // Phases
 // Show controls to configure server details
@@ -203,8 +206,6 @@ export default createReactClass({
     },
 
     renderServerDetails() {
-        const ServerConfig = sdk.getComponent("auth.ServerConfig");
-
         if (SdkConfig.get()['disable_custom_urls']) {
             return null;
         }
@@ -221,8 +222,6 @@ export default createReactClass({
     },
 
     renderForgot() {
-        const Field = sdk.getComponent('elements.Field');
-
         let errorText = null;
         const err = this.state.errorText;
         if (err) {
@@ -368,7 +367,6 @@ export default createReactClass({
 
     render: function() {
         const AuthHeader = sdk.getComponent("auth.AuthHeader");
-        const AuthBody = sdk.getComponent("auth.AuthBody");
 
         let resetPasswordJsx;
         switch (this.state.phase) {

@@ -37,6 +37,7 @@ import {toRightOf} from "../../structures/ContextMenu";
 import GenericTextContextMenu from "../context_menus/GenericTextContextMenu";
 import Spoiler from "../elements/Spoiler";
 import EditMessageComposer from "../rooms/EditMessageComposer";
+import MessageEditHistoryDialog from "../dialogs/MessageEditHistoryDialog";
 
 export default createReactClass({
     displayName: 'TextualBody',
@@ -388,7 +389,6 @@ export default createReactClass({
     },
 
     _openHistoryDialog: async function() {
-        const MessageEditHistoryDialog = sdk.getComponent("views.dialogs.MessageEditHistoryDialog");
         Modal.createDialog(MessageEditHistoryDialog, {mxEvent: this.props.mxEvent});
     },
 

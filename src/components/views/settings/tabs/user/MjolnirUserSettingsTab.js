@@ -23,6 +23,7 @@ import Modal from "../../../../../Modal";
 import {MatrixClientPeg} from "../../../../../MatrixClientPeg";
 import * as sdk from "../../../../../index";
 import {replaceableComponent} from "../../../../../utils/replaceableComponent";
+import Field from "../../../elements/Field";
 
 @replaceableComponent("views.settings.tabs.user.MjolnirUserSettingsTab")
 export default class MjolnirUserSettingsTab extends React.Component {
@@ -234,7 +235,6 @@ export default class MjolnirUserSettingsTab extends React.Component {
     }
 
     render() {
-        const Field = sdk.getComponent('elements.Field');
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
 
         return (

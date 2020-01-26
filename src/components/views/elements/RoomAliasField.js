@@ -19,6 +19,7 @@ import PropTypes from 'prop-types';
 import * as sdk from '../../../index';
 import withValidation from './Validation';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
+import Field from "./Field";
 
 // Controlled form component wrapping Field for inputting a room alias scoped to a given domain
 export default class RoomAliasField extends React.PureComponent {
@@ -39,7 +40,6 @@ export default class RoomAliasField extends React.PureComponent {
     }
 
     render() {
-        const Field = sdk.getComponent('views.elements.Field');
         const poundSign = (<span>#</span>);
         const aliasPostfix = ":" + this.props.domain;
         const domain = (<span title={aliasPostfix}>{aliasPostfix}</span>);

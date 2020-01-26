@@ -22,6 +22,7 @@ import SdkConfig from "../../../SdkConfig";
 import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
 import * as ServerType from '../../views/auth/ServerTypeSelector';
 import ServerConfig from "./ServerConfig";
+import Field from "../elements/Field";
 
 const MODULAR_URL = 'https://modular.im/?utm_source=riot-web&utm_medium=web&utm_campaign=riot-web-authentication';
 
@@ -80,7 +81,6 @@ export default class ModularServerConfig extends ServerConfig {
     }
 
     render() {
-        const Field = sdk.getComponent('elements.Field');
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
 
         const submitButton = this.props.submitText

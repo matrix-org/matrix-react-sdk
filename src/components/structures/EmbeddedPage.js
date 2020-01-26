@@ -28,7 +28,9 @@ import dis from '../../dispatcher';
 import {MatrixClientPeg} from '../../MatrixClientPeg';
 import classnames from 'classnames';
 import MatrixClientContext from "../../contexts/MatrixClientContext";
+import {replaceableComponent} from "../../utils/replaceableComponent";
 
+@replaceableComponent("structures.EmbeddedPage")
 export default class EmbeddedPage extends React.PureComponent {
     static propTypes = {
         // URL to request embedded page content from

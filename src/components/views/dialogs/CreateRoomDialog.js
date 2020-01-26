@@ -25,6 +25,7 @@ import { _t } from '../../../languageHandler';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import {Key} from "../../../Keyboard";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
+import Field from "../elements/Field";
 
 export default createReactClass({
     displayName: 'CreateRoomDialog',
@@ -163,7 +164,6 @@ export default createReactClass({
     render: function() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
-        const Field = sdk.getComponent('views.elements.Field');
         const RoomAliasField = sdk.getComponent('views.elements.RoomAliasField');
 
         let privateLabel;

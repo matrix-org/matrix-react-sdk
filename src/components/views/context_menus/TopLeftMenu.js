@@ -26,7 +26,9 @@ import { getHostingLink } from '../../../utils/HostingLink';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import {MenuItem} from "../../structures/ContextMenu";
 import * as sdk from "../../../index";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.context_menus.TopLeftMenu")
 export default class TopLeftMenu extends React.Component {
     static propTypes = {
         displayName: PropTypes.string.isRequired,

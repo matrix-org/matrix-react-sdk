@@ -22,7 +22,7 @@ import MultiInviter from './utils/MultiInviter';
 import Modal from './Modal';
 import * as sdk from './';
 import { _t } from './languageHandler';
-import {KIND_DM, KIND_INVITE} from "./components/views/dialogs/InviteDialog";
+import InviteDialog, {KIND_DM, KIND_INVITE} from "./components/views/dialogs/InviteDialog";
 
 /**
  * Invites multiple addresses to a room
@@ -40,7 +40,6 @@ export function inviteMultipleToRoom(roomId, addrs) {
 
 export function showStartChatInviteDialog() {
     // This dialog handles the room creation internally - we don't need to worry about it.
-    const InviteDialog = sdk.getComponent("dialogs.InviteDialog");
     Modal.createTrackedDialog(
         'Start DM', '', InviteDialog, {kind: KIND_DM},
         /*className=*/null, /*isPriority=*/false, /*isStatic=*/true,
@@ -49,7 +48,6 @@ export function showStartChatInviteDialog() {
 
 export function showRoomInviteDialog(roomId) {
     // This dialog handles the room creation internally - we don't need to worry about it.
-    const InviteDialog = sdk.getComponent("dialogs.InviteDialog");
     Modal.createTrackedDialog(
         'Invite Users', '', InviteDialog, {kind: KIND_INVITE, roomId},
         /*className=*/null, /*isPriority=*/false, /*isStatic=*/true,

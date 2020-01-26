@@ -25,6 +25,7 @@ import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
 import sendBugReport from '../../../rageshake/submit-rageshake';
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import Field from "../elements/Field";
 
 @replaceableComponent("views.dialogs.BugReportDialog")
 export default class BugReportDialog extends React.Component {
@@ -120,7 +121,6 @@ export default class BugReportDialog extends React.Component {
         const Loader = sdk.getComponent("elements.Spinner");
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
-        const Field = sdk.getComponent('elements.Field');
 
         let error = null;
         if (this.state.err) {

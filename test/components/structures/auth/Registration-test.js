@@ -20,6 +20,7 @@ import ReactTestUtils from 'react-dom/test-utils';
 import sdk from '../../../skinned-sdk';
 import SdkConfig from '../../../../src/SdkConfig';
 import {mkServerConfig} from "../../../test-utils";
+import ServerTypeSelector from "../../../../src/components/views/auth/ServerTypeSelector";
 
 const Registration = sdk.getComponent(
     'structures.auth.Registration',
@@ -52,7 +53,7 @@ describe('Registration', function() {
         const root = render();
         const selector = ReactTestUtils.findRenderedComponentWithType(
             root,
-            sdk.getComponent('auth.ServerTypeSelector'),
+            ServerTypeSelector,
         );
         expect(selector).toBeTruthy();
     });

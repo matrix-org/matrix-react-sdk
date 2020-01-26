@@ -21,6 +21,7 @@ import * as sdk from '../../../index';
 import classnames from 'classnames';
 import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
 import {makeType} from "../../../utils/TypeUtils";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 const MODULAR_URL = 'https://modular.im/?utm_source=riot-web&utm_medium=web&utm_campaign=riot-web-authentication';
 
@@ -78,6 +79,7 @@ export function getTypeFromServerConfig(config) {
     }
 }
 
+@replaceableComponent("views.auth.ServerTypeSelector")
 export default class ServerTypeSelector extends React.PureComponent {
     static propTypes = {
         // The default selected type.

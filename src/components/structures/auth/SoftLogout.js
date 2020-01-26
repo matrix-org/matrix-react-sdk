@@ -27,6 +27,7 @@ import url from 'url';
 import AuthPage from "../../views/auth/AuthPage";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 import ConfirmWipeDeviceDialog from "../../views/dialogs/ConfirmWipeDeviceDialog";
+import Field from "../../views/elements/Field";
 
 const LOGIN_VIEW = {
     LOADING: 1,
@@ -219,7 +220,6 @@ export default class SoftLogout extends React.Component {
         }
 
         if (this.state.loginView === LOGIN_VIEW.PASSWORD) {
-            const Field = sdk.getComponent("elements.Field");
             const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
 
             let error = null;

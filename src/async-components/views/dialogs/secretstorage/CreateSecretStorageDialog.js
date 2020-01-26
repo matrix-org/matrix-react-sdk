@@ -23,6 +23,7 @@ import { scorePassword } from '../../../../utils/PasswordScorer';
 import FileSaver from 'file-saver';
 import { _t } from '../../../../languageHandler';
 import Modal from '../../../../Modal';
+import Field from "../../../../components/views/elements/Field";
 
 const PHASE_LOADING = 0;
 const PHASE_RESTORE_KEY_BACKUP = 1;
@@ -390,7 +391,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent {
         // it automatically.
         // https://github.com/vector-im/riot-web/issues/11696
         const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
-        const Field = sdk.getComponent('views.elements.Field');
 
         let authPrompt;
         if (this.state.canUploadKeysWithPasswordOnly) {
@@ -429,7 +429,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent {
 
     _renderPhasePassPhrase() {
         const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
-        const Field = sdk.getComponent('views.elements.Field');
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
 
         let strengthMeter;
@@ -501,7 +500,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent {
 
     _renderPhasePassPhraseConfirm() {
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-        const Field = sdk.getComponent('views.elements.Field');
 
         let matchText;
         if (this.state.passPhraseConfirm === this.state.passPhrase) {

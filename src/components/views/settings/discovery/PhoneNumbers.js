@@ -24,6 +24,7 @@ import * as sdk from '../../../../index';
 import Modal from '../../../../Modal';
 import AddThreepid from '../../../../AddThreepid';
 import {replaceableComponent} from "../../../../utils/replaceableComponent";
+import Field from "../../elements/Field";
 
 /*
 TODO: Improve the UX for everything in here.
@@ -196,7 +197,6 @@ export class PhoneNumber extends React.Component {
 
     render() {
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-        const Field = sdk.getComponent('elements.Field');
         const { address } = this.props.msisdn;
         const { verifying, bound } = this.state;
 

@@ -19,6 +19,7 @@ import classNames from 'classnames';
 import {MatrixClientPeg} from './MatrixClientPeg';
 import * as sdk from './';
 import Modal from './Modal';
+import TermsDialog from "./components/views/dialogs/TermsDialog";
 
 export class TermsNotSignedError extends Error {}
 
@@ -164,7 +165,6 @@ export function dialogTermsInteractionCallback(
 ) {
     return new Promise((resolve, reject) => {
         console.log("Terms that need agreement", policiesAndServicePairs);
-        const TermsDialog = sdk.getComponent("views.dialogs.TermsDialog");
 
         Modal.createTrackedDialog('Terms of Service', '', TermsDialog, {
             policiesAndServicePairs,

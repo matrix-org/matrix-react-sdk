@@ -24,6 +24,7 @@ import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import * as Lifecycle from '../../../Lifecycle';
 import { _t } from '../../../languageHandler';
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import Field from "../elements/Field";
 
 @replaceableComponent("views.dialogs.DeactivateAccountDialog")
 export default class DeactivateAccountDialog extends React.Component {
@@ -117,8 +118,6 @@ export default class DeactivateAccountDialog extends React.Component {
                 { _t("Cancel") }
             </button>;
         }
-
-        const Field = sdk.getComponent('elements.Field');
 
         return (
             <BaseDialog className="mx_DeactivateAccountDialog"

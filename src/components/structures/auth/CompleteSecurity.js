@@ -21,6 +21,7 @@ import * as sdk from '../../../index';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { accessSecretStorage } from '../../../CrossSigningManager';
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import AuthBody from "../../views/auth/AuthBody";
 
 const PHASE_INTRO = 0;
 const PHASE_DONE = 1;
@@ -79,7 +80,6 @@ export default class CompleteSecurity extends React.Component {
 
     render() {
         const AuthPage = sdk.getComponent("auth.AuthPage");
-        const AuthBody = sdk.getComponent("auth.AuthBody");
         const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
 
         const {

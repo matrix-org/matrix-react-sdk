@@ -42,6 +42,7 @@ import MatrixClientContext from "../../contexts/MatrixClientContext";
 import ToastContainer from "./ToastContainer";
 import UserView from "./UserView";
 import CookieBar from "../views/globals/CookieBar";
+import EmbeddedPage from "./EmbeddedPage";
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
 // NB. this is just for server notices rather than pinned messages in general.
@@ -509,7 +510,6 @@ const LoggedInView = createReactClass({
     render: function() {
         const LeftPanel = sdk.getComponent('structures.LeftPanel');
         const RoomView = sdk.getComponent('structures.RoomView');
-        const EmbeddedPage = sdk.getComponent('structures.EmbeddedPage');
         const GroupView = sdk.getComponent('structures.GroupView');
         const MyGroups = sdk.getComponent('structures.MyGroups');
         const MatrixToolbar = sdk.getComponent('globals.MatrixToolbar');

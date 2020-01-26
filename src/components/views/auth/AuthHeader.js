@@ -18,12 +18,12 @@ limitations under the License.
 import React from 'react';
 import createReactClass from 'create-react-class';
 import * as sdk from '../../../index';
+import AuthHeaderLogo from "./AuthHeaderLogo";
 
 export default createReactClass({
     displayName: 'AuthHeader',
 
     render: function() {
-        const AuthHeaderLogo = sdk.getComponent('auth.AuthHeaderLogo');
         const LanguageSelector = sdk.getComponent('views.auth.LanguageSelector');
 
         return (

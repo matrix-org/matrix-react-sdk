@@ -22,6 +22,7 @@ import {MatrixEvent} from "matrix-js-sdk";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import SdkConfig from '../../../SdkConfig';
 import Markdown from '../../../Markdown';
+import Field from "../elements/Field";
 
 /*
  * A dialog for reporting an event.
@@ -79,7 +80,6 @@ export default class ReportEventDialog extends PureComponent {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         const Loader = sdk.getComponent('elements.Spinner');
-        const Field = sdk.getComponent('elements.Field');
 
         let error = null;
         if (this.state.err) {

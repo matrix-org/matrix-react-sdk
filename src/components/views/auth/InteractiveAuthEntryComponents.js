@@ -25,6 +25,7 @@ import classnames from 'classnames';
 import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
+import Field from "../elements/Field";
 
 /* This file contains a collection of components which are used by the
  * InteractiveAuth to prompt the user to enter the information needed
@@ -137,8 +138,6 @@ export const PasswordAuthEntry = createReactClass({
                 </div>
             );
         }
-
-        const Field = sdk.getComponent('elements.Field');
 
         return (
             <div>

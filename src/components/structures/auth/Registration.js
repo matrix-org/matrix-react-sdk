@@ -31,6 +31,8 @@ import classNames from "classnames";
 import * as Lifecycle from '../../../Lifecycle';
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import AuthPage from "../../views/auth/AuthPage";
+import AuthBody from "../../views/auth/AuthBody";
+import ServerConfig from "../../views/auth/ServerConfig";
 
 // Phases
 // Show controls to configure server details
@@ -459,8 +461,6 @@ export default createReactClass({
     },
 
     renderServerComponent() {
-        const ServerTypeSelector = sdk.getComponent("auth.ServerTypeSelector");
-        const ServerConfig = sdk.getComponent("auth.ServerConfig");
         const ModularServerConfig = sdk.getComponent("auth.ModularServerConfig");
 
         if (SdkConfig.get()['disable_custom_urls']) {
@@ -576,7 +576,6 @@ export default createReactClass({
 
     render: function() {
         const AuthHeader = sdk.getComponent('auth.AuthHeader');
-        const AuthBody = sdk.getComponent("auth.AuthBody");
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
 
         let errorText;

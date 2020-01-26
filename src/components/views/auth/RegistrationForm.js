@@ -31,6 +31,7 @@ import withValidation from '../elements/Validation';
 import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
 import CountryDropdown from "./CountryDropdown";
 import TextWithTooltip from "../elements/TextWithTooltip";
+import Field from "../elements/Field";
 
 const FIELD_EMAIL = 'field_email';
 const FIELD_PHONE_NUMBER = 'field_phone_number';
@@ -467,7 +468,6 @@ export default createReactClass({
         if (!this._showEmail()) {
             return null;
         }
-        const Field = sdk.getComponent('elements.Field');
         const emailPlaceholder = this._authStepIsRequired('m.login.email.identity') ?
             _t("Email") :
             _t("Email (optional)");
@@ -483,7 +483,6 @@ export default createReactClass({
     },
 
     renderPassword() {
-        const Field = sdk.getComponent('elements.Field');
         return <Field
             id="mx_RegistrationForm_password"
             ref={field => this[FIELD_PASSWORD] = field}
@@ -496,7 +495,6 @@ export default createReactClass({
     },
 
     renderPasswordConfirm() {
-        const Field = sdk.getComponent('elements.Field');
         return <Field
             id="mx_RegistrationForm_passwordConfirm"
             ref={field => this[FIELD_PASSWORD_CONFIRM] = field}
@@ -512,7 +510,6 @@ export default createReactClass({
         if (!this._showPhoneNumber()) {
             return null;
         }
-        const Field = sdk.getComponent('elements.Field');
         const phoneLabel = this._authStepIsRequired('m.login.msisdn') ?
             _t("Phone") :
             _t("Phone (optional)");
@@ -535,7 +532,6 @@ export default createReactClass({
     },
 
     renderUsername() {
-        const Field = sdk.getComponent('elements.Field');
         return <Field
             id="mx_RegistrationForm_username"
             ref={field => this[FIELD_USERNAME] = field}

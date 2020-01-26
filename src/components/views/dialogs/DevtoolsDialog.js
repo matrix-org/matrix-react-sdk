@@ -22,6 +22,7 @@ import { _t } from '../../../languageHandler';
 import { Room } from "matrix-js-sdk";
 import Field from "../elements/Field";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 class GenericEditor extends React.PureComponent {
     // static propTypes = {onBack: PropTypes.func.isRequired};
@@ -613,6 +614,7 @@ const Entries = [
     ServersInRoomList,
 ];
 
+@replaceableComponent("views.dialogs.DevtoolsDialog")
 export default class DevtoolsDialog extends React.PureComponent {
     static propTypes = {
         roomId: PropTypes.string.isRequired,

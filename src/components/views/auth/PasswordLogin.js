@@ -25,6 +25,8 @@ import SdkConfig from '../../../SdkConfig';
 import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
 import CountryDropdown from "./CountryDropdown";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import SignInToText from "./SignInToText";
+import Field from "../elements/Field";
 
 /**
  * A pure UI component which displays a username/password form.
@@ -187,8 +189,6 @@ export default class PasswordLogin extends React.Component {
     }
 
     renderLoginField(loginType) {
-        const Field = sdk.getComponent('elements.Field');
-
         const classes = {};
 
         switch (loginType) {
@@ -259,9 +259,6 @@ export default class PasswordLogin extends React.Component {
     }
 
     render() {
-        const Field = sdk.getComponent('elements.Field');
-        const SignInToText = sdk.getComponent('views.auth.SignInToText');
-
         let forgotPasswordJsx;
 
         if (this.props.onForgotPasswordClick) {

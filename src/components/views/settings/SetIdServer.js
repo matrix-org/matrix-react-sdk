@@ -28,6 +28,7 @@ import {abbreviateUrl, unabbreviateUrl} from "../../../utils/UrlUtils";
 import { getDefaultIdentityServerUrl, doesIdentityServerHaveTerms } from '../../../utils/IdentityServerUtils';
 import {timeout} from "../../../utils/promise";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import Field from "../elements/Field";
 
 // We'll wait up to this long when checking for 3PID bindings on the IS.
 const REACHABILITY_TIMEOUT = 10000; // ms
@@ -341,7 +342,6 @@ export default class SetIdServer extends React.Component {
 
     render() {
         const AccessibleButton = sdk.getComponent('views.elements.AccessibleButton');
-        const Field = sdk.getComponent('elements.Field');
         const idServerUrl = this.state.currentClientIdServer;
         let sectionTitle;
         let bodyText;

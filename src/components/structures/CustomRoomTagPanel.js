@@ -21,6 +21,7 @@ import * as sdk from '../../index';
 import dis from '../../dispatcher';
 import classNames from 'classnames';
 import * as FormattingUtils from '../../utils/FormattingUtils';
+import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 
 class CustomRoomTagPanel extends React.Component {
     constructor(props) {
@@ -67,7 +68,6 @@ class CustomRoomTagTile extends React.Component {
 
     render() {
         const BaseAvatar = sdk.getComponent('avatars.BaseAvatar');
-        const AccessibleTooltipButton = sdk.getComponent('elements.AccessibleTooltipButton');
 
         const tag = this.props.tag;
         const avatarHeight = 40;

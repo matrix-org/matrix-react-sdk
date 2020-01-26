@@ -18,7 +18,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AsyncWrapper from '../../../AsyncWrapper';
 import * as sdk from '../../../index';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
+import AuthBody from "../../views/auth/AuthBody";
 
+@replaceableComponent("structures.auth.E2eSetup")
 export default class E2eSetup extends React.Component {
     static propTypes = {
         onFinished: PropTypes.func.isRequired,
@@ -33,7 +36,6 @@ export default class E2eSetup extends React.Component {
 
     render() {
         const AuthPage = sdk.getComponent("auth.AuthPage");
-        const AuthBody = sdk.getComponent("auth.AuthBody");
         return (
             <AuthPage>
                 <AuthBody header={false}>

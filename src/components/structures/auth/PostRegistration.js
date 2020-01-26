@@ -21,6 +21,7 @@ import * as sdk from '../../../index';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 import AuthPage from "../../views/auth/AuthPage";
+import AuthBody from "../../views/auth/AuthBody";
 
 export default createReactClass({
     displayName: 'PostRegistration',
@@ -61,7 +62,6 @@ export default createReactClass({
         const ChangeDisplayName = sdk.getComponent('settings.ChangeDisplayName');
         const ChangeAvatar = sdk.getComponent('settings.ChangeAvatar');
         const AuthHeader = sdk.getComponent('auth.AuthHeader');
-        const AuthBody = sdk.getComponent("auth.AuthBody");
         return (
             <AuthPage>
                 <AuthHeader />

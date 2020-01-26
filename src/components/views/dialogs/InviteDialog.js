@@ -34,6 +34,7 @@ import {humanizeTime} from "../../../utils/humanize";
 import createRoom from "../../../createRoom";
 import {inviteMultipleToRoom} from "../../../RoomInvite";
 import SettingsStore from '../../../settings/SettingsStore';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 export const KIND_DM = "dm";
 export const KIND_INVITE = "invite";
@@ -274,6 +275,7 @@ class DMRoomTile extends React.PureComponent {
     }
 }
 
+@replaceableComponent("views.dialogs.InviteDialog")
 export default class InviteDialog extends React.PureComponent {
     static propTypes = {
         // Takes an array of user IDs/emails to invite.

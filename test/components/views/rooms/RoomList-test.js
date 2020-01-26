@@ -14,6 +14,7 @@ import DMRoomMap from '../../../../src/utils/DMRoomMap.js';
 import GroupStore from '../../../../src/stores/GroupStore.js';
 
 import { MatrixClient, Room, RoomMember } from 'matrix-js-sdk';
+import RoomSubList from "../../../../src/components/structures/RoomSubList";
 
 function generateRoomId() {
     return '!' + Math.random().toString().slice(2, 10) + ':domain';
@@ -116,7 +117,6 @@ describe('RoomList', () => {
     });
 
     function expectRoomInSubList(room, subListTest) {
-        const RoomSubList = sdk.getComponent('structures.RoomSubList');
         const RoomTile = sdk.getComponent('views.rooms.RoomTile');
 
         const subLists = ReactTestUtils.scryRenderedComponentsWithType(root, RoomSubList);

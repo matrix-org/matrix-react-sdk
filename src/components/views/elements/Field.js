@@ -19,10 +19,12 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import * as sdk from '../../../index';
 import { debounce } from 'lodash';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 // Invoke validation from user input (when typing, etc.) at most once every N ms.
 const VALIDATION_THROTTLE_MS = 200;
 
+@replaceableComponent("views.elements.Field")
 export default class Field extends React.PureComponent {
     static propTypes = {
         // The field's ID, which binds the input and label together.

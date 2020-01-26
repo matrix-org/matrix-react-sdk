@@ -68,6 +68,8 @@ import CompleteSecurity from "./auth/CompleteSecurity";
 import SoftLogout from "./auth/SoftLogout";
 import IncomingSasDialog from "../views/dialogs/IncomingSasDialog";
 import UserSettingsDialog from "../views/dialogs/UserSettingsDialog";
+import E2eSetup from "./auth/E2eSetup";
+import Welcome from "../views/auth/Welcome";
 
 /** constants for MatrixChat.state.view */
 export const VIEWS = {
@@ -1893,7 +1895,6 @@ export default createReactClass({
                 />
             );
         } else if (this.state.view === VIEWS.E2E_SETUP) {
-            const E2eSetup = sdk.getComponent('structures.auth.E2eSetup');
             view = (
                 <E2eSetup
                     onFinished={this.onCompleteSecurityE2eSetupFinished}
@@ -1951,7 +1952,6 @@ export default createReactClass({
                 );
             }
         } else if (this.state.view === VIEWS.WELCOME) {
-            const Welcome = sdk.getComponent('auth.Welcome');
             view = <Welcome />;
         } else if (this.state.view === VIEWS.REGISTER) {
             const Registration = sdk.getComponent('structures.auth.Registration');

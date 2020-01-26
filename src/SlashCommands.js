@@ -35,6 +35,7 @@ import {isPermalinkHost, parsePermalink} from "./utils/permalinks/Permalinks";
 import {inviteUsersToRoom} from "./RoomInvite";
 import RoomUpgradeWarningDialog from "./components/views/dialogs/RoomUpgradeWarningDialog";
 import UploadConfirmDialog from "./components/views/dialogs/UploadConfirmDialog";
+import DevtoolsDialog from "./components/views/dialogs/DevtoolsDialog";
 
 const singleMxcUpload = async () => {
     return new Promise((resolve) => {
@@ -738,7 +739,6 @@ export const CommandMap = {
         name: 'devtools',
         description: _td('Opens the Developer Tools dialog'),
         runFn: function(roomId) {
-            const DevtoolsDialog = sdk.getComponent('dialogs.DevtoolsDialog');
             Modal.createDialog(DevtoolsDialog, {roomId});
             return success();
         },

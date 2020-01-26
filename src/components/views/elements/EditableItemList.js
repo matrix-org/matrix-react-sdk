@@ -21,6 +21,7 @@ import Field from "./Field";
 import AccessibleButton from "./AccessibleButton";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.elements.EditableItem")
 export class EditableItem extends React.Component {
     static propTypes = {
         index: PropTypes.number,

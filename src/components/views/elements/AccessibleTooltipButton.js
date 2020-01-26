@@ -20,7 +20,9 @@ import PropTypes from 'prop-types';
 
 import AccessibleButton from "./AccessibleButton";
 import * as sdk from "../../../index";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.elements.AccessibleTooltipButton")
 export default class AccessibleTooltipButton extends React.PureComponent {
     static propTypes = {
         ...AccessibleButton.propTypes,

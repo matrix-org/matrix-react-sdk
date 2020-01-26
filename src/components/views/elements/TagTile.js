@@ -31,6 +31,7 @@ import TagOrderStore from '../../../stores/TagOrderStore';
 import {ContextMenu, toRightOf} from "../../structures/ContextMenu";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import TagTileContextMenu from "../context_menus/TagTileContextMenu";
+import AccessibleTooltipButton from "./AccessibleTooltipButton";
 
 // A class for a child of TagPanel (possibly wrapped in a DNDTagTile) that represents
 // a thing to click on for the user to filter the visible rooms in the RoomList to:
@@ -179,7 +180,6 @@ export default createReactClass({
             );
         }
 
-        const AccessibleTooltipButton = sdk.getComponent("elements.AccessibleTooltipButton");
         return <React.Fragment>
             <AccessibleTooltipButton className={className} onClick={this.onClick} onContextMenu={this.openMenu} title={name}>
                 <div className="mx_TagTile_avatar" onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut}>

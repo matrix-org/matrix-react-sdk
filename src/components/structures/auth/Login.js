@@ -28,6 +28,9 @@ import AutoDiscoveryUtils, {ValidatedServerConfig} from "../../../utils/AutoDisc
 import classNames from "classnames";
 import AuthPage from "../../views/auth/AuthPage";
 import PasswordLogin from "../../views/auth/PasswordLogin";
+import AuthBody from "../../views/auth/AuthBody";
+import ServerConfig from "../../views/auth/ServerConfig";
+import SignInToText from "../../views/auth/SignInToText";
 
 // For validating phone numbers without country codes
 const PHONE_NUMBER_REGEX = /^[0-9()\-\s]*$/;
@@ -507,8 +510,6 @@ export default createReactClass({
     },
 
     renderServerComponent() {
-        const ServerConfig = sdk.getComponent("auth.ServerConfig");
-
         if (SdkConfig.get()['disable_custom_urls']) {
             return null;
         }
@@ -581,8 +582,6 @@ export default createReactClass({
     },
 
     _renderSsoStep: function(url) {
-        const SignInToText = sdk.getComponent('views.auth.SignInToText');
-
         let onEditServerDetailsClick = null;
         // If custom URLs are allowed, wire up the server details edit link.
         if (PHASES_ENABLED && !SdkConfig.get()['disable_custom_urls']) {
@@ -609,7 +608,6 @@ export default createReactClass({
     render: function() {
         const Loader = sdk.getComponent("elements.Spinner");
         const AuthHeader = sdk.getComponent("auth.AuthHeader");
-        const AuthBody = sdk.getComponent("auth.AuthBody");
         const loader = this.isBusy() ? <div className="mx_Login_loader"><Loader /></div> : null;
 
         const errorText = this.state.errorText;

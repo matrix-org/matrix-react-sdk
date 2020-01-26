@@ -23,6 +23,7 @@ import AccessibleButton from "../../../elements/AccessibleButton";
 import Modal from "../../../../../Modal";
 import dis from "../../../../../dispatcher";
 import {replaceableComponent} from "../../../../../utils/replaceableComponent";
+import DevtoolsDialog from "../../../dialogs/DevtoolsDialog";
 
 @replaceableComponent("views.settings.tabs.room.AdvancedRoomSettingsTab")
 export default class AdvancedRoomSettingsTab extends React.Component {
@@ -71,7 +72,6 @@ export default class AdvancedRoomSettingsTab extends React.Component {
     };
 
     _openDevtools = (e) => {
-        const DevtoolsDialog = sdk.getComponent('dialogs.DevtoolsDialog');
         Modal.createDialog(DevtoolsDialog, {roomId: this.props.roomId});
     };
 

@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import {replaceableComponent} from "../utils/replaceableComponent";
 
 /* These were earlier stateless functional components but had to be converted
 since we need to use refs/findDOMNode to access the underlying DOM node to focus the correct completion,
@@ -24,6 +25,7 @@ something that is not entirely possible with stateless functional components. On
 presumably wrap them in a <div> before rendering but I think this is the better way to do it.
  */
 
+@replaceableComponent("autocomplete.TextualCompletion")
 export class TextualCompletion extends React.Component {
     render() {
         const {
@@ -49,6 +51,7 @@ TextualCompletion.propTypes = {
     className: PropTypes.string,
 };
 
+@replaceableComponent("autocomplete.PillCompletion")
 export class PillCompletion extends React.Component {
     render() {
         const {

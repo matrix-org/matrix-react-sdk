@@ -26,11 +26,14 @@ import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
 import SdkConfig from "../../../SdkConfig";
 import { createClient } from 'matrix-js-sdk/src/matrix';
 import classNames from 'classnames';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
+import Field from "../elements/Field";
 
 /*
  * A pure UI component which displays the HS and IS to use.
  */
 
+@replaceableComponent("views.auth.ServerConfig")
 export default class ServerConfig extends React.PureComponent {
     static propTypes = {
         onServerConfigChange: PropTypes.func.isRequired,
@@ -216,7 +219,6 @@ export default class ServerConfig extends React.PureComponent {
     };
 
     _renderHomeserverSection() {
-        const Field = sdk.getComponent('elements.Field');
         return <div>
             {_t("Enter your custom homeserver URL <a>What does this mean?</a>", {}, {
                 a: sub => <a className="mx_ServerConfig_help" href="#" onClick={this.showHelpPopup}>
@@ -235,7 +237,6 @@ export default class ServerConfig extends React.PureComponent {
     }
 
     _renderIdentityServerSection() {
-        const Field = sdk.getComponent('elements.Field');
         const classes = classNames({
             "mx_ServerConfig_identityServer": true,
             "mx_ServerConfig_identityServer_shown": this.state.showIdentityServer,

@@ -32,10 +32,13 @@ import RoomTile from "../views/rooms/RoomTile";
 import LazyRenderList from "../views/elements/LazyRenderList";
 import {_t} from "../../languageHandler";
 import {RovingTabIndexWrapper} from "../../accessibility/RovingTabIndex";
+import {replaceableComponent} from "../../utils/replaceableComponent";
+import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 
 // turn this on for drop & drag console debugging galore
 const debug = false;
 
+@replaceableComponent("structures.RoomSubList")
 export default class RoomSubList extends React.PureComponent {
     static displayName = 'RoomSubList';
     static debug = debug;
@@ -253,7 +256,6 @@ export default class RoomSubList extends React.PureComponent {
 
     _getHeaderJsx(isCollapsed) {
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-        const AccessibleTooltipButton = sdk.getComponent('elements.AccessibleTooltipButton');
         const subListNotifications = !this.props.isInvite ?
             RoomNotifs.aggregateNotificationCount(this.props.list) :
             {count: 0, highlight: true};

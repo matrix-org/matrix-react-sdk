@@ -18,10 +18,12 @@ import React from 'react';
 import * as sdk from '../../../index';
 import SdkConfig from '../../../SdkConfig';
 import AuthPage from "./AuthPage";
+import EmbeddedPage from "../../structures/EmbeddedPage";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.auth.Welcome")
 export default class Welcome extends React.PureComponent {
     render() {
-        const EmbeddedPage = sdk.getComponent('structures.EmbeddedPage');
         const LanguageSelector = sdk.getComponent('auth.LanguageSelector');
 
         const pagesConfig = SdkConfig.get().embeddedPages;
