@@ -1,7 +1,7 @@
 /*
 Copyright 2016 OpenMarket Ltd
 Copyright 2018 New Vector Ltd
-Copyright 2019-2020 The Matrix.org Foundation C.I.C.
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import React, {createRef} from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import {EventTimeline} from 'matrix-js-sdk/src/models/event-timeline';
 import shouldHideEvent from '../../shouldHideEvent';
 import {wantsDateSeparator} from '../../DateUtils';
 import * as sdk from '../../index';
@@ -420,7 +419,6 @@ export default class MessagePanel extends React.Component {
         let lastShownEvent;
 
         let lastShownNonLocalEchoIndex = -1;
-
         for (i = this.props.events.length-1; i >= 0; i--) {
             const mxEv = this.props.events[i];
             if (!this._shouldShowEvent(mxEv)) {
@@ -936,63 +934,4 @@ export default class MessagePanel extends React.Component {
             </ScrollPanel>
         );
     }
-}
-
-/**
- * Check for undecryptable messages that were sent while the user was not in
- * the room.
- *
- * @param {Array<MatrixEvent>} events The timeline events to check
- * @param {Room} room The room that the events are in
- * @param {string} userId The user's ID
- *
- * @return {Number} The index within `events` of the event after the most recent
- * undecryptable event that was sent while the user was not in the room.  If no
- * such events were found, then it returns 0.
- */
-function checkForPreJoinUISI(events, room, userId) {
-    if (events.length === 0 ||
-        !MatrixClientPeg.get().isRoomEncrypted(room.roomId)) {
-        return 0;
-    }
-
-    let i;
-    let userMembership = "leave";
-    // find the last event that is in a timeline (events may not be in a
-    // timeline if they have not been sent yet) and get the user's membership
-    // at that point.
-    for (i = events.length - 1; i >= 0; i--) {
-        const timeline = room.getTimelineForEvent(events[i].getId());
-        if (timeline) {
-            const userMembershipEvent =
-                  timeline.getState(EventTimeline.FORWARDS).getMember(userId);
-            userMembership = userMembershipEvent ? userMembershipEvent.membership : "leave";
-            const timelineEvents = timeline.getEvents();
-            for (let j = timelineEvents.length - 1; j >= 0; j--) {
-                const event = timelineEvents[j];
-                if (event.getStateKey() === userId
-                    && event.getType() === "m.room.member") {
-                    const prevContent = event.getPrevContent();
-                    userMembership = prevContent.membership || "leave";
-                }
-            }
-            break;
-        }
-    }
-
-    // now go through the rest of the events and find the first undecryptable
-    // one that was sent when the user wasn't in the room
-    for (; i >= 0; i--) {
-        const event = events[i];
-        if (event.getStateKey() === userId
-            && event.getType() === "m.room.member") {
-            const prevContent = event.getPrevContent();
-            userMembership = prevContent.membership || "leave";
-        } else if (userMembership === "leave" && event.isDecryptionFailure()) {
-            // reached an undecryptable message when the user wasn't in
-            // the room -- don't try to load any more
-            return i + 1;
-        }
-    }
-    return 0;
 }
