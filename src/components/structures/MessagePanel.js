@@ -116,7 +116,6 @@ export default class MessagePanel extends React.Component {
             // previous positions the read marker has been in, so we can
             // display 'ghost' read markers that are animating away
             ghostReadMarkers: [],
-            preventBackPaginating: false,
         };
 
         // opaque readreceipt info for each userId; used by ReadReceiptMarker
@@ -443,24 +442,6 @@ export default class MessagePanel extends React.Component {
 
         const ret = [];
 
-        const firstShownEventIndex = checkForPreJoinUISI(
-            this.props.events, this.props.room, this.props.ourUserId,
-        );
-
-        if (firstShownEventIndex > 0) {
-            if (!this.state.preventBackPaginating) {
-                this.setState({
-                    preventBackPaginating: true,
-                });
-            }
-        } else {
-            if (this.state.preventBackPaginating) {
-                this.setState({
-                    preventBackPaginating: false,
-                });
-            }
-        }
-
         let prevEvent = null; // the last event we showed
 
         this._readReceiptsByEvent = {};
@@ -468,7 +449,7 @@ export default class MessagePanel extends React.Component {
             this._readReceiptsByEvent = this._getReadReceiptsByShownEvent();
         }
 
-        for (i = firstShownEventIndex; i < this.props.events.length; i++) {
+        for (i = 0; i < this.props.events.length; i++) {
             const mxEv = this.props.events[i];
             const eventId = mxEv.getId();
             const last = (mxEv === lastShownEvent);
@@ -904,13 +885,6 @@ export default class MessagePanel extends React.Component {
         }
     }
 
-    onFillRequest = (backwards) => {
-        if (this.state.preventBackPaginating) {
-            return Promise.resolve(false);
-        }
-        return this.props.onFillRequest(backwards);
-    }
-
     render() {
         const ScrollPanel = sdk.getComponent("structures.ScrollPanel");
         const WhoIsTypingTile = sdk.getComponent("rooms.WhoIsTypingTile");
@@ -949,7 +923,7 @@ export default class MessagePanel extends React.Component {
                 className={className}
                 onScroll={this.props.onScroll}
                 onResize={this.onResize}
-                onFillRequest={this.onFillRequest}
+                onFillRequest={this.props.onFillRequest}
                 onUnfillRequest={this.props.onUnfillRequest}
                 style={style}
                 stickyBottom={this.props.stickyBottom}
