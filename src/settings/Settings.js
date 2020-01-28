@@ -1,7 +1,7 @@
 /*
 Copyright 2017 Travis Ralston
 Copyright 2018, 2019 New Vector Ltd.
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -128,12 +128,6 @@ export const SETTINGS = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_ftue_dms": {
-        isFeature: true,
-        displayName: _td("New DM invite dialog (under development)"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-    },
     "feature_presence_in_room_list": {
         isFeature: true,
         displayName: _td("Show a presence dot next to DMs in the room list"),
@@ -153,7 +147,6 @@ export const SETTINGS = {
         displayName: _td("Enable cross-signing to verify per-user instead of per-device (in development)"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
-        controller: new ReloadOnChangeController(),
     },
     "feature_event_indexing": {
         isFeature: true,
@@ -486,5 +479,10 @@ export const SETTINGS = {
     "lastRightPanelPhaseForGroup": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: RIGHT_PANEL_PHASES.GroupMemberList,
+    },
+    "enableEventIndexing": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Enable message search in encrypted rooms"),
+        default: true,
     },
 };

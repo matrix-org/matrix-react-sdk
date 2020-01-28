@@ -18,57 +18,51 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as sdk from "../../../index";
 import { _t } from '../../../languageHandler';
-import Modal from "../../../Modal";
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
-import {verificationMethods} from 'matrix-js-sdk/src/crypto';
-import KeyVerificationStateObserver, {userLabelForEventRoom} from "../../../utils/KeyVerificationStateObserver";
+import {RIGHT_PANEL_PHASES} from "../../../stores/RightPanelStorePhases";
+import {userLabelForEventRoom} from "../../../utils/KeyVerificationStateObserver";
 import dis from "../../../dispatcher";
+import ToastStore from "../../../stores/ToastStore";
+import Modal from "../../../Modal";
 
 export default class VerificationRequestToast extends React.PureComponent {
     constructor(props) {
         super(props);
-        const {event, timeout} = props.request;
-        // to_device requests don't have a timestamp, so consider them age=0
-        const age = event.getTs() ? event.getLocalAge() : 0;
-        const remaining = Math.max(0, timeout - age);
-        const counter = Math.ceil(remaining / 1000);
-        this.state = {counter};
-        if (this.props.requestObserver) {
-            this.props.requestObserver.setCallback(this._checkRequestIsPending);
-        }
+        this.state = {counter: Math.ceil(props.request.timeout / 1000)};
     }
 
     componentDidMount() {
-        if (this.props.requestObserver) {
-            this.props.requestObserver.attach();
-            this._checkRequestIsPending();
-        }
+        const {request} = this.props;
         this._intervalHandle = setInterval(() => {
             let {counter} = this.state;
-            counter -= 1;
-            if (counter <= 0) {
-                this.cancel();
-            } else {
-                this.setState({counter});
-            }
+            counter = Math.max(0, counter - 1);
+            this.setState({counter});
         }, 1000);
+        request.on("change", this._checkRequestIsPending);
+        // We should probably have a separate class managing the active verification toasts,
+        // rather than monitoring this in the toast component itself, since we'll get problems
+        // like the toasdt not going away when the verification is cancelled unless it's the
+        // one on the top (ie. the one that's mounted).
+        // As a quick & dirty fix, check the toast is still relevant when it mounts (this prevents
+        // a toast hanging around after logging in if you did a verification as part of login).
+        this._checkRequestIsPending();
     }
 
     componentWillUnmount() {
         clearInterval(this._intervalHandle);
-        if (this.props.requestObserver) {
-            this.props.requestObserver.detach();
-        }
+        const {request} = this.props;
+        request.off("change", this._checkRequestIsPending);
     }
 
     _checkRequestIsPending = () => {
-        if (!this.props.requestObserver.pending) {
-            this.props.dismiss();
+        const {request} = this.props;
+        if (request.ready || request.started || request.done || request.cancelled || request.observeOnly) {
+            ToastStore.sharedInstance().dismissToast(this.props.toastKey);
         }
-    }
+    };
 
     cancel = () => {
-        this.props.dismiss();
+        ToastStore.sharedInstance().dismissToast(this.props.toastKey);
         try {
             this.props.request.cancel();
         } catch (err) {
@@ -76,34 +70,45 @@ export default class VerificationRequestToast extends React.PureComponent {
         }
     }
 
-    accept = () => {
-        this.props.dismiss();
-        const {event} = this.props.request;
+    accept = async () => {
+        ToastStore.sharedInstance().dismissToast(this.props.toastKey);
+        const {request} = this.props;
         // no room id for to_device requests
-        if (event.getRoomId()) {
-            dis.dispatch({
-                action: 'view_room',
-                room_id: event.getRoomId(),
-                should_peek: false,
-            });
+        try {
+            if (request.channel.roomId) {
+                dis.dispatch({
+                    action: 'view_room',
+                    room_id: request.channel.roomId,
+                    should_peek: false,
+                });
+                await request.accept();
+                dis.dispatch({
+                    action: "set_right_panel_phase",
+                    phase: RIGHT_PANEL_PHASES.EncryptionPanel,
+                    refireParams: {verificationRequest: request},
+                });
+            } else if (request.channel.deviceId && request.verifier) {
+                // show to_device verifications in dialog still
+                const IncomingSasDialog = sdk.getComponent("views.dialogs.IncomingSasDialog");
+                Modal.createTrackedDialog('Incoming Verification', '', IncomingSasDialog, {
+                    verifier: request.verifier,
+                }, null, /* priority = */ false, /* static = */ true);
+            }
+        } catch (err) {
+            console.error(err.message);
         }
-
-        const verifier = this.props.request.beginKeyVerification(verificationMethods.SAS);
-        const IncomingSasDialog = sdk.getComponent('views.dialogs.IncomingSasDialog');
-        Modal.createTrackedDialog('Incoming Verification', '', IncomingSasDialog, {
-            verifier,
-        }, null, /* priority = */ false, /* static = */ true);
     };
 
     render() {
         const FormButton = sdk.getComponent("elements.FormButton");
-        const {event} = this.props.request;
-        const userId = event.getSender();
-        let nameLabel = event.getRoomId() ? userLabelForEventRoom(userId, event) : userId;
+        const {request} = this.props;
+        const userId = request.otherUserId;
+        const roomId = request.channel.roomId;
+        let nameLabel = roomId ? userLabelForEventRoom(userId, roomId) : userId;
         // for legacy to_device verification requests
         if (nameLabel === userId) {
             const client = MatrixClientPeg.get();
-            const user = client.getUser(event.getSender());
+            const user = client.getUser(userId);
             if (user && user.displayName) {
                 nameLabel = _t("%(name)s (%(userId)s)", {name: user.displayName, userId});
             }
@@ -119,7 +124,6 @@ export default class VerificationRequestToast extends React.PureComponent {
 }
 
 VerificationRequestToast.propTypes = {
-    dismiss: PropTypes.func.isRequired,
     request: PropTypes.object.isRequired,
-    requestObserver: PropTypes.instanceOf(KeyVerificationStateObserver),
+    toastKey: PropTypes.string.isRequired,
 };

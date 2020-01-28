@@ -40,6 +40,7 @@ import E2EIcon from "../rooms/E2EIcon";
 import {useEventEmitter} from "../../../hooks/useEventEmitter";
 import {textualPowerLevel} from '../../../Roles';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import {RIGHT_PANEL_PHASES} from "../../../stores/RightPanelStorePhases";
 
 const _disambiguateDevices = (devices) => {
     const names = Object.create(null);
@@ -63,10 +64,17 @@ const _getE2EStatus = (cli, userId, devices) => {
         const hasUnverifiedDevice = devices.some((device) => device.isUnverified());
         return hasUnverifiedDevice ? "warning" : "verified";
     }
+    const isMe = userId === cli.getUserId();
     const userVerified = cli.checkUserTrust(userId).isCrossSigningVerified();
     const allDevicesVerified = devices.every(device => {
         const { deviceId } = device;
-        return cli.checkDeviceTrust(userId, deviceId).isCrossSigningVerified();
+        // For your own devices, we use the stricter check of cross-signing
+        // verification to encourage everyone to trust their own devices via
+        // cross-signing so that other users can then safely trust you.
+        // For other people's devices, the more general verified check that
+        // includes locally verified devices can be used.
+        const deviceTrust = cli.checkDeviceTrust(userId, deviceId);
+        return isMe ? deviceTrust.isCrossSigningVerified() : deviceTrust.isVerified();
     });
     if (allDevicesVerified) {
         return userVerified ? "verified" : "normal";
@@ -74,7 +82,7 @@ const _getE2EStatus = (cli, userId, devices) => {
     return "warning";
 };
 
-function openDMForUser(matrixClient, userId) {
+async function openDMForUser(matrixClient, userId) {
     const dmRooms = DMRoomMap.shared().getDMRoomsForUserId(userId);
     const lastActiveRoom = dmRooms.reduce((lastActiveRoom, roomId) => {
         const room = matrixClient.getRoom(roomId);
@@ -92,9 +100,27 @@ function openDMForUser(matrixClient, userId) {
             action: 'view_room',
             room_id: lastActiveRoom.roomId,
         });
-    } else {
-        createRoom({dmUserId: userId});
+        return;
     }
+
+    const createRoomOptions = {
+        dmUserId: userId,
+    };
+
+    if (SettingsStore.isFeatureEnabled("feature_cross_signing")) {
+        // Check whether all users have uploaded device keys before.
+        // If so, enable encryption in the new room.
+        const usersToDevicesMap = await matrixClient.downloadKeys([userId]);
+        const allHaveDeviceKeys = Object.values(usersToDevicesMap).every(devices => {
+            // `devices` is an object of the form { deviceId: deviceInfo, ... }.
+            return Object.keys(devices).length > 0;
+        });
+        if (allHaveDeviceKeys) {
+            createRoomOptions.encryption = true;
+        }
+    }
+
+    createRoom(createRoomOptions);
 }
 
 function useIsEncrypted(cli, room) {
@@ -117,21 +143,38 @@ function verifyDevice(userId, device) {
     }, null, /* priority = */ false, /* static = */ true);
 }
 
+function verifyUser(user) {
+    dis.dispatch({
+        action: "set_right_panel_phase",
+        phase: RIGHT_PANEL_PHASES.EncryptionPanel,
+        refireParams: {member: user},
+    });
+}
+
 function DeviceItem({userId, device}) {
     const cli = useContext(MatrixClientContext);
+    const isMe = userId === cli.getUserId();
     const deviceTrust = cli.checkDeviceTrust(userId, device.deviceId);
+    // For your own devices, we use the stricter check of cross-signing
+    // verification to encourage everyone to trust their own devices via
+    // cross-signing so that other users can then safely trust you.
+    // For other people's devices, the more general verified check that
+    // includes locally verified devices can be used.
+    const isVerified = (isMe && SettingsStore.isFeatureEnabled("feature_cross_signing")) ?
+        deviceTrust.isCrossSigningVerified() :
+        deviceTrust.isVerified();
 
     const classes = classNames("mx_UserInfo_device", {
-        mx_UserInfo_device_verified: deviceTrust.isVerified(),
-        mx_UserInfo_device_unverified: !deviceTrust.isVerified(),
+        mx_UserInfo_device_verified: isVerified,
+        mx_UserInfo_device_unverified: !isVerified,
     });
     const iconClasses = classNames("mx_E2EIcon", {
-        mx_E2EIcon_verified: deviceTrust.isVerified(),
-        mx_E2EIcon_warning: !deviceTrust.isVerified(),
+        mx_E2EIcon_verified: isVerified,
+        mx_E2EIcon_warning: !isVerified,
     });
 
     const onDeviceClick = () => {
-        if (!deviceTrust.isVerified()) {
+        if (!isVerified) {
             verifyDevice(userId, device);
         }
     };
@@ -139,7 +182,7 @@ function DeviceItem({userId, device}) {
     const deviceName = device.ambiguous ?
             (device.getDisplayName() ? device.getDisplayName() : "") + " (" + device.deviceId + ")" :
             device.getDisplayName();
-    const trustedLabel = deviceTrust.isVerified() ? _t("Trusted") : _t("Not trusted");
+    const trustedLabel = isVerified ? _t("Trusted") : _t("Not trusted");
     return (<AccessibleButton className={classes} onClick={onDeviceClick}>
         <div className={iconClasses} />
         <div className="mx_UserInfo_device_name">{deviceName}</div>
@@ -160,6 +203,7 @@ function DevicesSection({devices, userId, loading}) {
     if (devices === null) {
         return _t("Unable to load device list");
     }
+    const isMe = userId === cli.getUserId();
     const deviceTrusts = devices.map(d => cli.checkDeviceTrust(userId, d.deviceId));
 
     const unverifiedDevices = [];
@@ -168,8 +212,16 @@ function DevicesSection({devices, userId, loading}) {
     for (let i = 0; i < devices.length; ++i) {
         const device = devices[i];
         const deviceTrust = deviceTrusts[i];
+        // For your own devices, we use the stricter check of cross-signing
+        // verification to encourage everyone to trust their own devices via
+        // cross-signing so that other users can then safely trust you.
+        // For other people's devices, the more general verified check that
+        // includes locally verified devices can be used.
+        const isVerified = (isMe && SettingsStore.isFeatureEnabled("feature_cross_signing")) ?
+            deviceTrust.isCrossSigningVerified() :
+            deviceTrust.isVerified();
 
-        if (deviceTrust.isVerified()) {
+        if (isVerified) {
             verifiedDevices.push(device);
         } else {
             unverifiedDevices.push(device);
@@ -1185,10 +1237,9 @@ const UserInfo = ({user, groupId, roomId, onClose}) => {
 
     let closeButton;
     if (onClose) {
-        closeButton = <AccessibleButton
-            className="mx_UserInfo_cancel"
-            onClick={onClose}
-            title={_t('Close')} />;
+        closeButton = <AccessibleButton className="mx_UserInfo_cancel" onClick={onClose} title={_t('Close')}>
+            <div />
+        </AccessibleButton>;
     }
 
     const memberDetails = (
@@ -1225,15 +1276,13 @@ const UserInfo = ({user, groupId, roomId, onClose}) => {
                 setDevices(null);
             }
         }
-        if (isRoomEncrypted) {
-            _downloadDeviceList();
-        }
+        _downloadDeviceList();
 
         // Handle being unmounted
         return () => {
             cancelled = true;
         };
-    }, [cli, user.userId, isRoomEncrypted]);
+    }, [cli, user.userId]);
 
     // Listen to changes
     useEffect(() => {
@@ -1249,18 +1298,13 @@ const UserInfo = ({user, groupId, roomId, onClose}) => {
                 });
             }
         };
-
-        if (isRoomEncrypted) {
-            cli.on("deviceVerificationChanged", onDeviceVerificationChanged);
-        }
+        cli.on("deviceVerificationChanged", onDeviceVerificationChanged);
         // Handle being unmounted
         return () => {
             cancel = true;
-            if (isRoomEncrypted) {
-                cli.removeListener("deviceVerificationChanged", onDeviceVerificationChanged);
-            }
+            cli.removeListener("deviceVerificationChanged", onDeviceVerificationChanged);
         };
-    }, [cli, user.userId, isRoomEncrypted]);
+    }, [cli, user.userId]);
 
     let text;
     if (!isRoomEncrypted) {
@@ -1275,22 +1319,30 @@ const UserInfo = ({user, groupId, roomId, onClose}) => {
         text = _t("Messages in this room are end-to-end encrypted.");
     }
 
-    const devicesSection = isRoomEncrypted ?
-        (<DevicesSection loading={devices === undefined} devices={devices} userId={user.userId} />) : null;
-
-    const userVerified = cli.checkUserTrust(user.userId).isVerified();
+    const userTrust = cli.checkUserTrust(user.userId);
+    const userVerified = SettingsStore.isFeatureEnabled("feature_cross_signing") ?
+        userTrust.isCrossSigningVerified() :
+        userTrust.isVerified();
+    const isMe = user.userId === cli.getUserId();
     let verifyButton;
-    if (!userVerified) {
-        verifyButton = <AccessibleButton className="mx_UserInfo_verify" onClick={() => verifyDevice(user.userId, null)}>
+    if (isRoomEncrypted && !userVerified && !isMe) {
+        verifyButton = <AccessibleButton className="mx_UserInfo_verify" onClick={() => verifyUser(user)}>
             {_t("Verify")}
         </AccessibleButton>;
+    }
+
+    let devicesSection;
+    if (isRoomEncrypted) {
+        devicesSection = <DevicesSection
+            loading={devices === undefined}
+            devices={devices} userId={user.userId} />;
     }
 
     const securitySection = (
         <div className="mx_UserInfo_container">
             <h3>{ _t("Security") }</h3>
             <p>{ text }</p>
-            {verifyButton}
+            { verifyButton }
             { devicesSection }
         </div>
     );
@@ -1303,32 +1355,32 @@ const UserInfo = ({user, groupId, roomId, onClose}) => {
 
     return (
         <div className="mx_UserInfo" role="tabpanel">
-            { closeButton }
-            { avatarElement }
-
-            <div className="mx_UserInfo_container">
-                <div className="mx_UserInfo_profile">
-                    <div >
-                        <h2 aria-label={displayName}>
-                            { e2eIcon }
-                            { displayName }
-                        </h2>
-                    </div>
-                    <div>{ user.userId }</div>
-                    <div className="mx_UserInfo_profileStatus">
-                        {presenceLabel}
-                        {statusLabel}
-                    </div>
-                </div>
-            </div>
-
-            { memberDetails && <div className="mx_UserInfo_container mx_UserInfo_memberDetailsContainer">
-                <div className="mx_UserInfo_memberDetails">
-                    { memberDetails }
-                </div>
-            </div> }
-
             <AutoHideScrollbar className="mx_UserInfo_scrollContainer">
+                { closeButton }
+                { avatarElement }
+
+                <div className="mx_UserInfo_container">
+                    <div className="mx_UserInfo_profile">
+                        <div>
+                            <h2 aria-label={displayName}>
+                                { e2eIcon }
+                                { displayName }
+                            </h2>
+                        </div>
+                        <div>{ user.userId }</div>
+                        <div className="mx_UserInfo_profileStatus">
+                            {presenceLabel}
+                            {statusLabel}
+                        </div>
+                    </div>
+                </div>
+
+                { memberDetails && <div className="mx_UserInfo_container mx_UserInfo_memberDetailsContainer">
+                    <div className="mx_UserInfo_memberDetails">
+                        { memberDetails }
+                    </div>
+                </div> }
+
                 { securitySection }
                 <UserOptionsSection
                     devices={devices}

@@ -173,6 +173,7 @@ export default createReactClass({
         MatrixClientPeg.get().on("accountData", this.onAccountData);
         MatrixClientPeg.get().on("crypto.keyBackupStatus", this.onKeyBackupStatus);
         MatrixClientPeg.get().on("deviceVerificationChanged", this.onDeviceVerificationChanged);
+        MatrixClientPeg.get().on("userTrustStatusChanged", this.onUserVerificationChanged);
         // Start listening for RoomViewStore updates
         this._roomStoreToken = RoomViewStore.addListener(this._onRoomViewStoreUpdate);
         this._onRoomViewStoreUpdate(true);
@@ -492,6 +493,7 @@ export default createReactClass({
             MatrixClientPeg.get().removeListener("accountData", this.onAccountData);
             MatrixClientPeg.get().removeListener("crypto.keyBackupStatus", this.onKeyBackupStatus);
             MatrixClientPeg.get().removeListener("deviceVerificationChanged", this.onDeviceVerificationChanged);
+            MatrixClientPeg.get().removeListener("userTrustStatusChanged", this.onUserVerificationChanged);
         }
 
         window.removeEventListener('beforeunload', this.onPageUnload);
@@ -762,6 +764,14 @@ export default createReactClass({
         this._updateE2EStatus(room);
     },
 
+    onUserVerificationChanged: function(userId, _trustStatus) {
+        const room = this.state.room;
+        if (!room || !room.currentState.getMember(userId)) {
+            return;
+        }
+        this._updateE2EStatus(room);
+    },
+
     _updateE2EStatus: async function(room) {
         const cli = MatrixClientPeg.get();
         if (!cli.isRoomEncrypted(room.roomId)) {
@@ -782,32 +792,42 @@ export default createReactClass({
                     e2eStatus: hasUnverifiedDevices ? "warning" : "verified",
                 });
             });
+            debuglog("e2e check is warning/verified only as cross-signing is off");
             return;
         }
+
+        // Duplication between here and _updateE2eStatus in RoomTile
+        /* At this point, the user has encryption on and cross-signing on */
         const e2eMembers = await room.getEncryptionTargetMembers();
-        for (const member of e2eMembers) {
-            const { userId } = member;
-            const userVerified = cli.checkUserTrust(userId).isCrossSigningVerified();
-            if (!userVerified) {
-                this.setState({
-                    e2eStatus: "warning",
-                });
-                return;
-            }
-            const devices = await cli.getStoredDevicesForUser(userId);
-            const allDevicesVerified = devices.every(device => {
-                const { deviceId } = device;
-                return cli.checkDeviceTrust(userId, deviceId).isCrossSigningVerified();
+        const verified = [];
+        const unverified = [];
+        e2eMembers.map(({userId}) => userId)
+            .filter((userId) => userId !== cli.getUserId())
+            .forEach((userId) => {
+                (cli.checkUserTrust(userId).isCrossSigningVerified() ?
+                verified : unverified).push(userId)
             });
-            if (!allDevicesVerified) {
+
+        debuglog("e2e verified", verified, "unverified", unverified);
+
+        /* Check all verified user devices. */
+        for (const userId of [...verified, cli.getUserId()]) {
+            const devices = await cli.getStoredDevicesForUser(userId);
+            const anyDeviceNotVerified = devices.some(({deviceId}) => {
+                return !cli.checkDeviceTrust(userId, deviceId).isVerified();
+            });
+            if (anyDeviceNotVerified) {
                 this.setState({
                     e2eStatus: "warning",
                 });
+                debuglog("e2e status set to warning as not all users trust all of their devices." +
+                         " Aborted on user", userId);
                 return;
             }
         }
+
         this.setState({
-            e2eStatus: "verified",
+            e2eStatus: unverified.length === 0 ? "verified" : "normal",
         });
     },
 
@@ -1348,6 +1368,41 @@ export default createReactClass({
         });
     },
 
+    onRejectAndIgnoreClick: async function() {
+        this.setState({
+            rejecting: true,
+        });
+
+        const cli = MatrixClientPeg.get();
+        try {
+            const myMember = this.state.room.getMember(cli.getUserId());
+            const inviteEvent = myMember.events.member;
+            const ignoredUsers = MatrixClientPeg.get().getIgnoredUsers();
+            ignoredUsers.push(inviteEvent.getSender()); // de-duped internally in the js-sdk
+            await cli.setIgnoredUsers(ignoredUsers);
+
+            await cli.leave(this.state.roomId);
+            dis.dispatch({ action: 'view_next_room' });
+            this.setState({
+                rejecting: false,
+            });
+        } catch (error) {
+            console.error("Failed to reject invite: %s", error);
+
+            const msg = error.message ? error.message : JSON.stringify(error);
+            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+            Modal.createTrackedDialog('Failed to reject invite', '', ErrorDialog, {
+                title: _t("Failed to reject invite"),
+                description: msg,
+            });
+
+            self.setState({
+                rejecting: false,
+                rejectError: error,
+            });
+        }
+    },
+
     onRejectThreepidInviteButtonClicked: function(ev) {
         // We can reject 3pid invites in the same way that we accept them,
         // using /leave rather than /join. In the short term though, we
@@ -1652,9 +1707,11 @@ export default createReactClass({
                 return (
                     <div className="mx_RoomView">
                         <ErrorBoundary>
-                            <RoomPreviewBar onJoinClick={this.onJoinButtonClicked}
+                            <RoomPreviewBar
+                                onJoinClick={this.onJoinButtonClicked}
                                 onForgetClick={this.onForgetClick}
                                 onRejectClick={this.onRejectButtonClicked}
+                                onRejectAndIgnoreClick={this.onRejectAndIgnoreClick}
                                 inviterName={inviterName}
                                 canPreview={false}
                                 joining={this.state.joining}
