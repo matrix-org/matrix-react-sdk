@@ -113,6 +113,7 @@ export default class VerificationPanel extends React.PureComponent {
     };
 
     _onRequestChange = async () => {
+        console.log("VERIFR: change event received by panel");
         this.forceUpdate();
         const {request} = this.props;
         const hadVerifier = this._hasVerifier;
@@ -128,10 +129,12 @@ export default class VerificationPanel extends React.PureComponent {
     };
 
     componentDidMount() {
+        console.log("VERIFR: mount panel");
         this.props.request.on("change", this._onRequestChange);
     }
 
     componentWillUnmount() {
+        console.log("VERIFR: unmount panel");
         this.props.request.off("change", this._onRequestChange);
     }
 }

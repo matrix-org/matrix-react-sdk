@@ -1462,7 +1462,9 @@ export default createReactClass({
         });
 
         if (SettingsStore.isFeatureEnabled("feature_cross_signing")) {
+            console.log("VERIFR: feature flag is enabled!!");
             cli.on("crypto.verification.request", request => {
+                console.log("VERIFR: new request!! show toast? " + request.pending);
                 if (request.pending) {
                     ToastStore.sharedInstance().addOrReplaceToast({
                         key: 'verifreq_' + request.channel.transactionId,
@@ -1474,6 +1476,7 @@ export default createReactClass({
                 }
             });
         } else {
+            console.log("VERIFR: feature flag is disabled!!");
             cli.on("crypto.verification.start", (verifier) => {
                 const IncomingSasDialog = sdk.getComponent("views.dialogs.IncomingSasDialog");
                 Modal.createTrackedDialog('Incoming Verification', '', IncomingSasDialog, {
