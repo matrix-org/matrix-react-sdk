@@ -113,6 +113,7 @@ export default class VerificationPanel extends React.PureComponent {
     };
 
     _onRequestChange = async () => {
+        this.forceUpdate();
         const {request} = this.props;
         const hadVerifier = this._hasVerifier;
         this._hasVerifier = !!request.verifier;
@@ -124,7 +125,6 @@ export default class VerificationPanel extends React.PureComponent {
                 console.error("error verify", err);
             }
         }
-        this.forceUpdate();
     };
 
     componentDidMount() {
