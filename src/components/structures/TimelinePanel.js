@@ -333,7 +333,7 @@ const TimelinePanel = createReactClass({
             // We can now paginate in the unpaginated direction
             const canPaginateKey = (backwards) ? 'canBackPaginate' : 'canForwardPaginate';
             const { events, liveEvents } = this._getEvents();
-            const firstVisibleEventIndex = this._checkForPreJoinUISI(events);
+            const firstVisibleEventIndex = this._checkForPreJoinUISI(liveEvents);
             this.setState({
                 [canPaginateKey]: true,
                 events,
@@ -371,7 +371,7 @@ const TimelinePanel = createReactClass({
             debuglog("TimelinePanel: paginate complete backwards:"+backwards+"; success:"+r);
 
             const { events, liveEvents } = this._getEvents();
-            const firstVisibleEventIndex = this._checkForPreJoinUISI(events);
+            const firstVisibleEventIndex = this._checkForPreJoinUISI(liveEvents);
             const newState = {
                 [paginatingKey]: false,
                 [canPaginateKey]: r,
@@ -473,7 +473,7 @@ const TimelinePanel = createReactClass({
 
             const { events, liveEvents } = this._getEvents();
             const lastLiveEvent = liveEvents[liveEvents.length - 1];
-            const firstVisibleEventIndex = this._checkForPreJoinUISI(events);
+            const firstVisibleEventIndex = this._checkForPreJoinUISI(liveEvents);
 
             const updatedState = {
                 events,
@@ -1107,7 +1107,7 @@ const TimelinePanel = createReactClass({
         if (this.unmounted) return;
 
         const newState = this._getEvents();
-        newState.firstVisibleEventIndex = this._checkForPreJoinUISI(newState.events);
+        newState.firstVisibleEventIndex = this._checkForPreJoinUISI(newState.liveEvents);
         this.setState(newState);
     },
 
@@ -1135,7 +1135,6 @@ const TimelinePanel = createReactClass({
      * the room.
      *
      * @param {Array<MatrixEvent>} events The timeline events to check
-     * @param {Room} room The room that the events are in
      *
      * @return {Number} The index within `events` of the event after the most recent
      * undecryptable event that was sent while the user was not in the room.  If no
