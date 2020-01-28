@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from "react";
 import PropTypes from "prop-types";
-import {replaceableComponent} from "../../../../utils/replaceableComponent";
 import * as qs from "qs";
 import QRCode from "qrcode-react";
 
