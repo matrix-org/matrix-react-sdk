@@ -90,9 +90,8 @@ export default class VerificationPanel extends React.PureComponent {
     }
 
     _startSAS = async () => {
-        const verifier = this.props.request.beginKeyVerification(verificationMethods.SAS);
         try {
-            await verifier.verify();
+            await this.props.request.start(verificationMethods.SAS);
         } catch (err) {
             console.error(err);
         } finally {
