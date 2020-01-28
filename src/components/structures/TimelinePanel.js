@@ -332,8 +332,7 @@ const TimelinePanel = createReactClass({
 
             // We can now paginate in the unpaginated direction
             const canPaginateKey = (backwards) ? 'canBackPaginate' : 'canForwardPaginate';
-            const { events, liveEvents } = this._getEvents();
-            const firstVisibleEventIndex = this._checkForPreJoinUISI(liveEvents);
+            const { events, liveEvents, firstVisibleEventIndex } = this._getEvents();
             this.setState({
                 [canPaginateKey]: true,
                 events,
@@ -362,6 +361,11 @@ const TimelinePanel = createReactClass({
             return Promise.resolve(false);
         }
 
+        if (backwards && this.state.firstVisibleEventIndex !== 0) {
+            debuglog("TimelinePanel: won't", dir, "paginate past first visible event");
+            return Promise.resolve(false);
+        }
+
         debuglog("TimelinePanel: Initiating paginate; backwards:"+backwards);
         this.setState({[paginatingKey]: true});
 
@@ -370,8 +374,7 @@ const TimelinePanel = createReactClass({
 
             debuglog("TimelinePanel: paginate complete backwards:"+backwards+"; success:"+r);
 
-            const { events, liveEvents } = this._getEvents();
-            const firstVisibleEventIndex = this._checkForPreJoinUISI(liveEvents);
+            const { events, liveEvents, firstVisibleEventIndex } = this._getEvents();
             const newState = {
                 [paginatingKey]: false,
                 [canPaginateKey]: r,
@@ -397,6 +400,10 @@ const TimelinePanel = createReactClass({
             // itself into the right place
             return new Promise((resolve) => {
                 this.setState(newState, () => {
+                    // we can continue paginating in the given direction if:
+                    // - _timelineWindow.paginate says we can
+                    // - we're paginating forwards, or we won't be trying to
+                    //   paginate backwards past the first visible event
                     resolve(r && (!backwards || firstVisibleEventIndex === 0));
                 });
             });
@@ -471,9 +478,8 @@ const TimelinePanel = createReactClass({
         this._timelineWindow.paginate(EventTimeline.FORWARDS, 1, false).then(() => {
             if (this.unmounted) { return; }
 
-            const { events, liveEvents } = this._getEvents();
+            const { events, liveEvents, firstVisibleEventIndex } = this._getEvents();
             const lastLiveEvent = liveEvents[liveEvents.length - 1];
-            const firstVisibleEventIndex = this._checkForPreJoinUISI(liveEvents);
 
             const updatedState = {
                 events,
@@ -1106,14 +1112,13 @@ const TimelinePanel = createReactClass({
         // the results if so.
         if (this.unmounted) return;
 
-        const newState = this._getEvents();
-        newState.firstVisibleEventIndex = this._checkForPreJoinUISI(newState.liveEvents);
-        this.setState(newState);
+        this.setState(this._getEvents());
     },
 
     // get the list of events from the timeline window and the pending event list
     _getEvents: function() {
         const events = this._timelineWindow.getEvents();
+        const firstVisibleEventIndex = this._checkForPreJoinUISI(events);
 
         // Hold onto the live events separately. The read receipt and read marker
         // should use this list, so that they don't advance into pending events.
@@ -1127,6 +1132,7 @@ const TimelinePanel = createReactClass({
         return {
             events,
             liveEvents,
+            firstVisibleEventIndex,
         };
     },
 
@@ -1150,35 +1156,31 @@ const TimelinePanel = createReactClass({
 
         const userId = MatrixClientPeg.get().credentials.userId;
 
-        let i;
-        let userMembership = "leave";
-        // find the last event that is in a timeline (events may not be in a
-        // timeline if they have not been sent yet) and get the user's membership
-        // at that point.
-        for (i = events.length - 1; i >= 0; i--) {
-            const timeline = room.getTimelineForEvent(events[i].getId());
-            if (timeline) {
-                const userMembershipEvent =
-                      timeline.getState(EventTimeline.FORWARDS).getMember(userId);
-                userMembership = userMembershipEvent ? userMembershipEvent.membership : "leave";
-                const timelineEvents = timeline.getEvents();
-                for (let j = timelineEvents.length - 1; j >= 0; j--) {
-                    const event = timelineEvents[j];
-                    if (event.getId() === events[i].getId()) {
-                        break;
-                    } else if (event.getStateKey() === userId
-                        && event.getType() === "m.room.member") {
-                        const prevContent = event.getPrevContent();
-                        userMembership = prevContent.membership || "leave";
-                    }
-                }
+        // get the user's membership at the last event by getting the timeline
+        // that the event belongs to, and traversing the timeline looking for
+        // that event, while keeping track of the user's membership
+        const lastEvent = events[events.length - 1];
+        const timeline = room.getTimelineForEvent(lastEvent.getId());
+        const userMembershipEvent =
+              timeline.getState(EventTimeline.FORWARDS).getMember(userId);
+        let userMembership = userMembershipEvent
+            ? userMembershipEvent.membership : "leave";
+        const timelineEvents = timeline.getEvents();
+        for (let i = timelineEvents.length - 1; i >= 0; i--) {
+            const event = timelineEvents[i];
+            if (event.getId() === lastEvent.getId()) {
+                // found the last event, so we can stop looking through the timeline
                 break;
+            } else if (event.getStateKey() === userId
+                       && event.getType() === "m.room.member") {
+                const prevContent = event.getPrevContent();
+                userMembership = prevContent.membership || "leave";
             }
         }
 
-        // now go through the rest of the events and find the first undecryptable
+        // now go through the events that we have and find the first undecryptable
         // one that was sent when the user wasn't in the room
-        for (; i >= 0; i--) {
+        for (let i = events.length - 1; i >= 0; i--) {
             const event = events[i];
             if (event.getStateKey() === userId
                 && event.getType() === "m.room.member") {
