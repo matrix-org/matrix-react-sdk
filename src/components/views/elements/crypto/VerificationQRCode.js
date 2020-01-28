@@ -20,7 +20,7 @@ import {replaceableComponent} from "../../../../utils/replaceableComponent";
 import * as qs from "qs";
 import QRCode from "qrcode-react";
 
-@replaceableComponent("views.elements.crypto.VerificationQRCode")
+//@replaceableComponent("views.elements.crypto.VerificationQRCode")
 export default class VerificationQRCode extends React.PureComponent {
     static propTypes = {
         // Common for all kinds of QR codes
