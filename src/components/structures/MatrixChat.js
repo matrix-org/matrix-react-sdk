@@ -1464,8 +1464,9 @@ export default createReactClass({
         if (SettingsStore.isFeatureEnabled("feature_cross_signing")) {
             console.log("VERIFR: feature flag is enabled!!");
             cli.on("crypto.verification.request", request => {
-                console.log("VERIFR: new request!! show toast? " + request.pending);
+                console.log("VERIFR: new request!! show toast?", request.pending, request.channel.transactionId);
                 if (request.pending) {
+                    console.log("VERIFR: showing toast now");
                     ToastStore.sharedInstance().addOrReplaceToast({
                         key: 'verifreq_' + request.channel.transactionId,
                         title: _t("Verification Request"),
@@ -1473,6 +1474,7 @@ export default createReactClass({
                         props: {request},
                         component: sdk.getComponent("toasts.VerificationRequestToast"),
                     });
+                    console.log("VERIFR: toast should be shown");
                 }
             });
         } else {
