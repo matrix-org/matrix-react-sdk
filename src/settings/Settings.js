@@ -128,12 +128,6 @@ export const SETTINGS = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_ftue_dms": {
-        isFeature: true,
-        displayName: _td("New invite dialog"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-    },
     "feature_presence_in_room_list": {
         isFeature: true,
         displayName: _td("Show a presence dot next to DMs in the room list"),
@@ -150,7 +144,7 @@ export const SETTINGS = {
     },
     "feature_cross_signing": {
         isFeature: true,
-        displayName: _td("Enable cross-signing to verify per-user instead of per-device (in development)"),
+        displayName: _td("Enable cross-signing to verify per-user instead of per-session (in development)"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
@@ -354,8 +348,8 @@ export const SETTINGS = {
         supportedLevels: ['room-device', 'device'],
         supportedLevelsAreOrdered: true,
         displayName: {
-            "default": _td('Never send encrypted messages to unverified devices from this device'),
-            "room-device": _td('Never send encrypted messages to unverified devices in this room from this device'),
+            "default": _td('Never send encrypted messages to unverified sessions from this session'),
+            "room-device": _td('Never send encrypted messages to unverified sessions in this room from this session'),
         },
         default: false,
     },
@@ -485,5 +479,10 @@ export const SETTINGS = {
     "lastRightPanelPhaseForGroup": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: RIGHT_PANEL_PHASES.GroupMemberList,
+    },
+    "enableEventIndexing": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Enable message search in encrypted rooms"),
+        default: true,
     },
 };

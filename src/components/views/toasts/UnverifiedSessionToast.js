@@ -16,41 +16,49 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from "../../../index";
 import { _t } from '../../../languageHandler';
 import Modal from "../../../Modal";
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import DeviceListener from '../../../DeviceListener';
+import NewSessionReviewDialog from '../dialogs/NewSessionReviewDialog';
+import FormButton from '../elements/FormButton';
+import { replaceableComponent } from '../../../utils/replaceableComponent';
 
-export default class VerifySessionToast extends React.PureComponent {
+@replaceableComponent("views.toasts.UnverifiedSessionToast")
+export default class UnverifiedSessionToast extends React.PureComponent {
     static propTypes = {
         toastKey: PropTypes.string.isRequired,
-        deviceId: PropTypes.string,
+        device: PropTypes.object.isRequired,
     };
 
     _onLaterClick = () => {
-        DeviceListener.sharedInstance().dismissVerification(this.props.deviceId);
+        const { device } = this.props;
+        DeviceListener.sharedInstance().dismissVerification(device.deviceId);
     };
 
-    _onVerifyClick = async () => {
-        const cli = MatrixClientPeg.get();
-        const DeviceVerifyDialog = sdk.getComponent('views.dialogs.DeviceVerifyDialog');
+    _onReviewClick = async () => {
+        const { device } = this.props;
 
-        const device = await cli.getStoredDevice(cli.getUserId(), this.props.deviceId);
-
-        Modal.createTrackedDialog('New Session Verify', 'Starting dialog', DeviceVerifyDialog, {
+        Modal.createTrackedDialog('New Session Review', 'Starting dialog', NewSessionReviewDialog, {
             userId: MatrixClientPeg.get().getUserId(),
             device,
         }, null, /* priority = */ false, /* static = */ true);
     };
 
     render() {
-        const FormButton = sdk.getComponent("elements.FormButton");
+        const { device } = this.props;
+
         return (<div>
-            <div className="mx_Toast_description">{_t("Other users may not trust it")}</div>
+            <div className="mx_Toast_description">
+                <span className="mx_Toast_deviceName">
+                    {device.getDisplayName()}
+                </span> <span className="mx_Toast_deviceID">
+                    ({device.deviceId})
+                </span>
+            </div>
             <div className="mx_Toast_buttons" aria-live="off">
                 <FormButton label={_t("Later")} kind="danger" onClick={this._onLaterClick} />
-                <FormButton label={_t("Verify")} onClick={this._onVerifyClick} />
+                <FormButton label={_t("Review")} onClick={this._onReviewClick} />
             </div>
         </div>);
     }
