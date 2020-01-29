@@ -1,6 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,19 +16,27 @@ limitations under the License.
 */
 
 import React from "react";
-import createReactClass from 'create-react-class';
+import PropTypes from "prop-types";
 
-export default createReactClass({
-    displayName: 'Spinner',
+import {_t} from "../../../languageHandler";
 
-    render: function() {
-        const w = this.props.w || 32;
-        const h = this.props.h || 32;
-        const imgClass = this.props.imgClassName || "";
-        return (
-            <div className="mx_Spinner">
-                <img src={require("../../../../res/img/spinner.gif")} width={w} height={h} className={imgClass} />
-            </div>
-        );
-    },
-});
+const Spinner = ({w = 32, h = 32, imgClassName}) => {
+    return (
+        <div className="mx_Spinner">
+            <img
+                src={require("../../../../res/img/loading.svg")}
+                width={w}
+                height={h}
+                className={imgClassName}
+                alt={_t("Loading...")}
+            />
+        </div>
+    );
+};
+Spinner.propTypes = {
+    w: PropTypes.number,
+    h: PropTypes.number,
+    imgClassName: PropTypes.string,
+};
+
+export default Spinner;
