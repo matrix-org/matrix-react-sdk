@@ -66,7 +66,7 @@ export default class VerificationShowSas extends React.Component {
                     {emojiBlocks.slice(0, 4)}
                 </div>
                 <div className="mx_VerificationShowSas_emojiSas_row">
-                {emojiBlocks.slice(4)}
+                    {emojiBlocks.slice(4)}
                 </div>
             </div>;
             sasCaption = _t(
