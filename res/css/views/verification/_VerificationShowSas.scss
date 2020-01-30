@@ -27,20 +27,12 @@ limitations under the License.
 }
 
 .mx_VerificationShowSas_emojiSas {
-    text-align: center;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     margin: 25px 0;
 }
 
 .mx_VerificationShowSas_emojiSas_block {
     display: inline-block;
-    margin-bottom: 30px;
-    position: relative;
-    // allow the blocks to grow to space themselves evenly up to a limit of 100px
-    flex-grow: 1;
-    max-width: 100px;
+    padding: 5px 2px;
 }
 
 .mx_VerificationShowSas_emojiSas_emoji {
@@ -53,13 +45,17 @@ limitations under the License.
 
 .mx_VerificationShowSas_emojiSas_label {
     font-weight: bold;
-    // allow the text to overflow the parent by 15px on each side
-    // this is to keep the width of the parent consistent for spacing centrally via flexbox
-    position: absolute;
-    left: -15px;
-    right: -15px;
 }
 
-.mx_VerificationShowSas_emojiSas_break {
-    flex-basis: 100%;
+.mx_VerificationShowSas_emojiSas_row {
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0 auto;
+}
+
+.mx_VerificationShowSas_emojiSas_row:nth-child(2) {
+    // make the bottom row with 3 instead of 4 icons 3/4 of the width
+    // so the space-evenly doesn't distort the olympic ring formation
+    width: 75%;
 }

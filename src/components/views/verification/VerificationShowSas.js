@@ -62,9 +62,12 @@ export default class VerificationShowSas extends React.Component {
                 </div>,
             );
             sasDisplay = <div className="mx_VerificationShowSas_emojiSas">
-                {emojiBlocks.slice(0, 4)}
-                <div className="mx_VerificationShowSas_emojiSas_break" />
+                <div className="mx_VerificationShowSas_emojiSas_row">
+                    {emojiBlocks.slice(0, 4)}
+                </div>
+                <div className="mx_VerificationShowSas_emojiSas_row">
                 {emojiBlocks.slice(4)}
+                </div>
             </div>;
             sasCaption = _t(
                 "Verify this user by confirming the following emoji appear on their screen.",
