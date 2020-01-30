@@ -20,6 +20,8 @@ import createReactClass from 'create-react-class';
 import { _t } from '../../../languageHandler';
 import PlatformPeg from '../../../PlatformPeg';
 import AccessibleButton from '../../../components/views/elements/AccessibleButton';
+import Spinner from "../elements/Spinner";
+import InlineSpinner from "../elements/InlineSpinner";
 
 export default createReactClass({
     propTypes: {
@@ -57,10 +59,9 @@ export default createReactClass({
 
     render: function() {
         const message = this.getStatusText();
-        const warning = _t('Warning');
 
         if (!('getUpdateCheckStatusEnum' in PlatformPeg.get())) {
-            return <div></div>;
+            return <div />;
         }
 
         const updateCheckStatusEnum = PlatformPeg.get().getUpdateCheckStatusEnum();
@@ -71,14 +72,16 @@ export default createReactClass({
 
         let image;
         if (doneStatuses.includes(this.props.status)) {
-            image = <img className="mx_MatrixToolbar_warning" src={require("../../../../res/img/warning.svg")} width="24" height="23" alt="" />;
+            image = <img src={require("../../../../res/img/warning.svg")} width="24" height="23" alt="" />;
         } else {
-            image = <img className="mx_MatrixToolbar_warning" src={require("../../../../res/img/spinner.gif")} width="24" height="23" alt="" />;
+            image = <InlineSpinner w={24} h={23} />;
         }
 
         return (
             <div className="mx_MatrixToolbar">
-                {image}
+                <div className="mx_MatrixToolbar_warning">
+                    {image}
+                </div>
                 <div className="mx_MatrixToolbar_content">
                     {message}
                 </div>

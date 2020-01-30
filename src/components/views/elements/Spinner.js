@@ -20,15 +20,16 @@ import PropTypes from "prop-types";
 
 import {_t} from "../../../languageHandler";
 
-const Spinner = ({w = 32, h = 32, imgClassName}) => {
+const Spinner = ({w = 32, h = 32, imgClassName, alt, msg}) => {
     return (
         <div className="mx_Spinner">
+            { msg && <React.Fragment><div className="mx_Spinner_Msg">{ msg }</div>&nbsp;</React.Fragment> }
             <img
-                src={require("../../../../res/img/loading.svg")}
+                src={require("../../../../res/img/spinner.svg")}
                 width={w}
                 height={h}
                 className={imgClassName}
-                alt={_t("Loading...")}
+                alt={alt || _t("Loading...")}
             />
         </div>
     );
@@ -37,6 +38,8 @@ Spinner.propTypes = {
     w: PropTypes.number,
     h: PropTypes.number,
     imgClassName: PropTypes.string,
+    alt: PropTypes.string,
+    message: PropTypes.node,
 };
 
 export default Spinner;
