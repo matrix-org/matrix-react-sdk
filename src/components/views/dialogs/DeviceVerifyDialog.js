@@ -138,6 +138,14 @@ export default class DeviceVerifyDialog extends React.Component {
                 ]);
 
                 await this._request.waitFor(r => r.ready || r.started);
+                this._request.on('change', async () => {
+                    if (this._request.cancelled) {
+                        this.setState({phase: PHASE_CANCELLED});
+                    } else if (this._request.verifier) {
+                        await this._request.verifier.verify();
+                        this.setState({phase: PHASE_VERIFIED});
+                    }
+                });
                 this.setState({phase: PHASE_PICK_VERIFICATION_OPTION});
             } else {
                 this._verifier = client.beginKeyVerification(
