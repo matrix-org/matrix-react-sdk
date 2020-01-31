@@ -26,7 +26,7 @@ import DialogButtons from '../elements/DialogButtons';
 import {verificationMethods} from 'matrix-js-sdk/src/crypto';
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import {RIGHT_PANEL_PHASES} from "../../../stores/RightPanelStorePhases";
-import {SHOW_QR_CODE_METHOD} from "matrix-js-sdk/src/crypto/verification/QRCode";
+import {SCAN_QR_CODE_METHOD, SHOW_QR_CODE_METHOD} from "matrix-js-sdk/src/crypto/verification/QRCode";
 
 @replaceableComponent("views.dialogs.NewSessionReviewDialog")
 export default class NewSessionReviewDialog extends React.PureComponent {
@@ -45,7 +45,7 @@ export default class NewSessionReviewDialog extends React.PureComponent {
         const cli = MatrixClientPeg.get();
         const request = await cli.requestVerification(
             userId,
-            [verificationMethods.SAS, SHOW_QR_CODE_METHOD],
+            [verificationMethods.SAS, SHOW_QR_CODE_METHOD, SCAN_QR_CODE_METHOD],
             [device.deviceId],
         );
         dis.dispatch({
@@ -59,7 +59,7 @@ export default class NewSessionReviewDialog extends React.PureComponent {
         this.props.onFinished(true);
         // Modal.createTrackedDialog('New Session Verification', 'Starting dialog', DeviceVerifyDialog, {
         //     userId,
-        //     [verificationMethods.SAS, SHOW_QR_CODE_METHOD],
+        //     [verificationMethods.SAS, SHOW_QR_CODE_METHOD, SCAN_QR_CODE_METHOD],
         //     [device.deviceId],
         // );
         //         dis.dispatch({
