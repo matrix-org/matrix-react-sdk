@@ -75,9 +75,9 @@ export default class VerificationQREmojiOptions extends React.Component {
                         </AccessibleButton>
                     </div>
                 </div>
-                <AccessibleButton onClick={this.props.onCancel} kind='danger'>
-                    {_t("Cancel")}
-                </AccessibleButton>
+                {/*<AccessibleButton onClick={this.props.onCancel} kind='danger'>*/}
+                {/*    {_t("Cancel")}*/}
+                {/*</AccessibleButton>*/}
             </div>
         );
     }
