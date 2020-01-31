@@ -462,6 +462,7 @@
     "Verify this device by confirming the following number appears on its screen.": "Verify this device by confirming the following number appears on its screen.",
     "Verify this user by confirming the following number appears on their screen.": "Verify this user by confirming the following number appears on their screen.",
     "Unable to find a supported verification method.": "Unable to find a supported verification method.",
+    "Cancel": "Cancel",
     "Waiting for %(displayName)s to verify…": "Waiting for %(displayName)s to verify…",
     "They match": "They match",
     "They don't match": "They don't match",
