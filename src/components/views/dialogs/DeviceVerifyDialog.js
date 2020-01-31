@@ -277,7 +277,6 @@ export default class DeviceVerifyDialog extends React.Component {
             onCancel={this._onCancelClick}
             onDone={this._onSasMatchesClick}
             isSelf={MatrixClientPeg.get().getUserId() === this.props.userId}
-            onStartEmoji={this._onUseSasClick}
         />;
     }
 
