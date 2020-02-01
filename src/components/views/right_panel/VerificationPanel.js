@@ -216,6 +216,8 @@ export default class VerificationPanel extends React.PureComponent {
                 return this.renderVerifiedPhase();
             case PHASE_CANCELLED:
                 return this.renderCancelledPhase();
+            default:
+                console.error("Unknown VerificationPanel phase: " + phase);
         }
         console.error("VerificationPanel unhandled phase:", phase);
         return null;
@@ -252,6 +254,9 @@ export default class VerificationPanel extends React.PureComponent {
                 // on the requester side, this is also awaited in _startSAS,
                 // but that's ok as verify should return the same promise.
                 await request.verifier.verify();
+                if (this.props.layout === 'dialog') {
+                    this.setState({phase: PHASE_DONE});
+                }
             } catch (err) {
                 console.error("error verify", err);
             }
