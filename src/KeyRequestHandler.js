@@ -35,9 +35,9 @@ export default class KeyRequestHandler {
 
     handleKeyRequest(keyRequest) {
         // Ignore own device key requests if cross-signing lab enabled
-        if (SettingsStore.isFeatureEnabled("feature_cross_signing")) {
-            return;
-        }
+        // if (SettingsStore.isFeatureEnabled("feature_cross_signing")) {
+        //     return;
+        // }
 
         const userId = keyRequest.userId;
         const deviceId = keyRequest.deviceId;
