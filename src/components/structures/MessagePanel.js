@@ -710,12 +710,24 @@ export default class MessagePanel extends React.Component {
 
         const readReceipts = this._readReceiptsByEvent[eventId];
 
+        // Adds a class to the message item for each sender / receiver.
+        const myUserId = MatrixClientPeg.get().credentials.userId;
+        const whoClass = mxEv.sender.userId === myUserId ? 'mx_Sender' : 'mx_Receiver';
+        const continuationClass = continuation === true ? ' mx_Continuation' : '';
+        let rowClass = whoClass + continuationClass;
+
+        const messageType = mxEv.getContent().msgtype;
+        if (typeof messageType !== 'undefined') {
+            rowClass = rowClass + ' ' + messageType.replace('m.', 'mx_');
+        }
+
         // Dev note: `this._isUnmounting.bind(this)` is important - it ensures that
         // the function is run in the context of this class and not EventTile, therefore
         // ensuring the right `this._mounted` variable is used by read receipts (which
         // don't update their position if we, the MessagePanel, is unmounting).
         ret.push(
             <li key={eventId}
+                className={rowClass}
                 ref={this._collectEventNode.bind(this, eventId)}
                 data-scroll-tokens={scrollToken}
             >
