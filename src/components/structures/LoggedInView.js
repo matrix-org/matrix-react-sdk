@@ -609,32 +609,62 @@ const LoggedInView = createReactClass({
             bodyClasses += ' mx_MatrixChat_useCompactLayout';
         }
 
-        return (
-            <MatrixClientContext.Provider value={this._matrixClient}>
-                <div
-                    onPaste={this._onPaste}
-                    onKeyDown={this._onReactKeyDown}
-                    className='mx_MatrixChat_wrapper'
-                    aria-hidden={this.props.hideToSRUsers}
-                    onMouseDown={this._onMouseDown}
-                    onMouseUp={this._onMouseUp}
-                >
-                    { topBar }
-                    <ToastContainer />
-                    <DragDropContext onDragEnd={this._onDragEnd}>
-                        <div ref={this._setResizeContainerRef} className={bodyClasses}>
-                            <LeftPanel
-                                resizeNotifier={this.props.resizeNotifier}
-                                collapsed={this.props.collapseLhs || false}
-                                disabled={this.props.leftDisabled}
-                            />
-                            <ResizeHandle />
-                            { pageElement }
-                        </div>
-                    </DragDropContext>
-                </div>
-            </MatrixClientContext.Provider>
-        );
+        const rtl = true;
+        if (rtl) {
+            return (
+                <MatrixClientContext.Provider value={this._matrixClient}>
+                    <div
+                        onPaste={this._onPaste}
+                        onKeyDown={this._onReactKeyDown}
+                        className='mx_MatrixChat_wrapper'
+                        aria-hidden={this.props.hideToSRUsers}
+                        onMouseDown={this._onMouseDown}
+                        onMouseUp={this._onMouseUp}
+                    >
+                        { topBar }
+                        <ToastContainer />
+                        <DragDropContext onDragEnd={this._onDragEnd}>
+                            <div ref={this._setResizeContainerRef} className={bodyClasses}>
+                                { pageElement }
+                                <ResizeHandle reverse={true} />
+                                <LeftPanel
+                                    resizeNotifier={this.props.resizeNotifier}
+                                    collapsed={this.props.collapseLhs || false}
+                                    disabled={this.props.leftDisabled}
+                                />
+                            </div>
+                        </DragDropContext>
+                    </div>
+                </MatrixClientContext.Provider>
+            );
+        } else {
+            return (
+                <MatrixClientContext.Provider value={this._matrixClient}>
+                    <div
+                        onPaste={this._onPaste}
+                        onKeyDown={this._onReactKeyDown}
+                        className='mx_MatrixChat_wrapper'
+                        aria-hidden={this.props.hideToSRUsers}
+                        onMouseDown={this._onMouseDown}
+                        onMouseUp={this._onMouseUp}
+                    >
+                        {topBar}
+                        <ToastContainer/>
+                        <DragDropContext onDragEnd={this._onDragEnd}>
+                            <div ref={this._setResizeContainerRef} className={bodyClasses}>
+                                <LeftPanel
+                                    resizeNotifier={this.props.resizeNotifier}
+                                    collapsed={this.props.collapseLhs || false}
+                                    disabled={this.props.leftDisabled}
+                                />
+                                <ResizeHandle/>
+                                {pageElement}
+                            </div>
+                        </DragDropContext>
+                    </div>
+                </MatrixClientContext.Provider>
+            );
+        }
     },
 });
 

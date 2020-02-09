@@ -96,11 +96,20 @@ export default class MainSplit extends React.Component {
         if (this.props.collapsedRhs || !panelView) {
             return bodyView;
         } else {
-            return <div className="mx_MainSplit" ref={this._setResizeContainerRef}>
-                { bodyView }
-                <ResizeHandle reverse={true} />
-                { panelView }
-            </div>;
+            const rtl = true;
+            if (rtl) {
+                return <div className="mx_MainSplit" ref={this._setResizeContainerRef}>
+                    {panelView}
+                        <ResizeHandle reverse={false}/>
+                    {bodyView}
+                </div>;
+            } else {
+                return <div className="mx_MainSplit" ref={this._setResizeContainerRef}>
+                    {bodyView}
+                        <ResizeHandle reverse={true}/>
+                    {panelView}
+                </div>;
+            }
         }
     }
 }
