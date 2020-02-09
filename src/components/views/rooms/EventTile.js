@@ -407,7 +407,8 @@ export default createReactClass({
     getReadAvatars: function() {
         // return early if there are no read receipts
         if (!this.props.readReceipts || this.props.readReceipts.length === 0) {
-            return (<span className="mx_EventTile_readAvatars" />);
+            return '';
+            //return (<span className="mx_EventTile_readAvatars" />);
         }
 
         const ReadReceiptMarker = sdk.getComponent('rooms.ReadReceiptMarker');
@@ -671,6 +672,7 @@ export default createReactClass({
         let sender;
         let avatarSize;
         let needsSenderProfile;
+        let showTimestamp = true;
 
         if (this.props.tileShape === "notif") {
             avatarSize = 24;
@@ -687,6 +689,7 @@ export default createReactClass({
             // no avatar or sender profile for continuation messages
             avatarSize = 0;
             needsSenderProfile = false;
+            showTimestamp = false;
         } else {
             avatarSize = 30;
             needsSenderProfile = true;
@@ -728,8 +731,10 @@ export default createReactClass({
             onFocusChange={this.onActionBarFocusChange}
         /> : undefined;
 
-        const timestamp = this.props.mxEvent.getTs() ?
-            <MessageTimestamp showTwelveHour={this.props.isTwelveHour} ts={this.props.mxEvent.getTs()} /> : null;
+        let timestamp;
+        if (showTimestamp) {
+            timestamp = this.props.mxEvent.getTs() ? <MessageTimestamp showTwelveHour={this.props.isTwelveHour} ts={this.props.mxEvent.getTs()} /> : null;
+        }
 
         const keyRequestHelpText =
             <div className="mx_EventTile_keyRequestInfo_tooltip_contents">
@@ -869,11 +874,8 @@ export default createReactClass({
                 // tab-index=-1 to allow it to be focusable but do not add tab stop for it, primarily for screen readers
                 return (
                     <div className={classes} tabIndex={-1}>
-                        <div className="mx_EventTile_msgOption">
-                            { readAvatars }
-                        </div>
-                        { sender }
-                        <div className="mx_EventTile_line">
+                        <div className="mx_EventUser">
+                            { sender }
                             <a
                                 href={permalink}
                                 onClick={this.onPermalinkClicked}
@@ -881,6 +883,8 @@ export default createReactClass({
                             >
                                 { timestamp }
                             </a>
+                        </div>
+                        <div className="mx_EventTile_line">
                             { !isBubbleMessage && this._renderE2EPadlock() }
                             { thread }
                             <EventTileType ref={this._tile}
@@ -895,6 +899,7 @@ export default createReactClass({
                             { reactionsRow }
                             { actionBar }
                         </div>
+                        { readAvatars }
                         {
                             // The avatar goes after the event tile as it's absolutely positioned to be over the
                             // event tile line, so needs to be later in the DOM so it appears on top (this avoids
