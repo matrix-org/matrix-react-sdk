@@ -2006,28 +2006,32 @@ export default createReactClass({
             ? <RightPanel roomId={this.state.room.roomId} resizeNotifier={this.props.resizeNotifier} />
             : null;
 
+        const roomHeader = (
+            <RoomHeader
+                room={this.state.room}
+                searchInfo={searchInfo}
+                oobData={this.props.oobData}
+                inRoom={myMembership === 'join'}
+                onSearchClick={this.onSearchClick}
+                onSettingsClick={this.onSettingsClick}
+                onPinnedClick={this.onPinnedClick}
+                onCancelClick={(aux && !hideCancel) ? this.onCancelClick : null}
+                onForgetClick={(myMembership === "leave") ? this.onForgetClick : null}
+                onLeaveClick={(myMembership === "join") ? this.onLeaveClick : null}
+                e2eStatus={this.state.e2eStatus}
+            />
+        );
+
         return (
             <RoomContext.Provider value={this.state}>
                 <main className={"mx_RoomView" + (inCall ? " mx_RoomView_inCall" : "")} ref={this._roomView}>
                     <ErrorBoundary>
-                        <RoomHeader
-                            room={this.state.room}
-                            searchInfo={searchInfo}
-                            oobData={this.props.oobData}
-                            inRoom={myMembership === 'join'}
-                            onSearchClick={this.onSearchClick}
-                            onSettingsClick={this.onSettingsClick}
-                            onPinnedClick={this.onPinnedClick}
-                            onCancelClick={(aux && !hideCancel) ? this.onCancelClick : null}
-                            onForgetClick={(myMembership === "leave") ? this.onForgetClick : null}
-                            onLeaveClick={(myMembership === "join") ? this.onLeaveClick : null}
-                            e2eStatus={this.state.e2eStatus}
-                        />
                         <MainSplit
                             panel={rightPanel}
                             resizeNotifier={this.props.resizeNotifier}
                         >
                             <div className={fadableSectionClasses}>
+                                {roomHeader}
                                 {auxPanel}
                                 <div className="mx_RoomView_timeline">
                                     {topUnreadMessagesBar}
