@@ -340,13 +340,12 @@ div.mx_EventTile_notSent.mx_EventTile_redacted .mx_UnknownBody {
 
 .mx_EventTile_e2eIcon {
     position: absolute;
-    top: 6px;
-    left: 46px;
+    top: -1px;
+    left: -6px;
     width: 15px;
     height: 15px;
     display: block;
     bottom: 0;
-    right: 0;
     opacity: 0.2;
     background-repeat: no-repeat;
     background-size: contain;
@@ -425,7 +424,6 @@ div.mx_EventTile_notSent.mx_EventTile_redacted .mx_UnknownBody {
 .mx_EventTile:hover.mx_EventTile_verified .mx_EventTile_line > a > .mx_MessageTimestamp,
 .mx_EventTile:hover.mx_EventTile_unverified .mx_EventTile_line > a > .mx_MessageTimestamp,
 .mx_EventTile:hover.mx_EventTile_unknown .mx_EventTile_line > a > .mx_MessageTimestamp {
-    left: 3px;
     width: auto;
 }
 
@@ -434,7 +432,6 @@ div.mx_EventTile_notSent.mx_EventTile_redacted .mx_UnknownBody {
 .mx_EventTile:hover.mx_EventTile_unverified .mx_EventTile_line > .mx_EventTile_e2eIcon,
 .mx_EventTile:hover.mx_EventTile_unknown .mx_EventTile_line > .mx_EventTile_e2eIcon {
     display: block;
-    left: 41px;
 }
 
 .mx_EventTile_content .mx_EventTile_edited {

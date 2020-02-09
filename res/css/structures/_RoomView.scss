@@ -348,13 +348,23 @@ limitations under the License.
 }
 
 .mx_RoomView_MessageList li.mx_Sender.mx_image,
-.mx_RoomView_MessageList li.mx_Receiver.mx_image {
-    .mx_EventTile:not(.mx_EventTile_info) {
+.mx_RoomView_MessageList li.mx_Receiver.mx_image,
+.mx_RoomView_MessageList li.mx_Sender.mx_file,
+.mx_RoomView_MessageList li.mx_Receiver.mx_file {
+    .mx_EventTile {
+        height: 100%;
+
         .mx_EventTile_line {
             background: transparent;
             border-radius: 0;
         }
     }
+}
+
+.mx_RoomView_MessageList li.mx_image,
+.mx_RoomView_MessageList li.mx_file {
+    margin-top: 6px;
+    margin-bottom: 6px;
 }
 
 li.mx_RoomView_myReadMarker_container {
