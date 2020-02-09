@@ -84,7 +84,7 @@ export default createReactClass({
                         {_t("All Rooms")}
                     </AccessibleButton>
                 </div>
-                <div className="mx_SearchBar_input mx_textinput">
+                <div className="mx_SearchBar_input mx_Field mx_Field_input">
                     <input ref={this._search_term} type="text" autoFocus={true} placeholder={_t("Search…")} onKeyDown={this.onSearchChange} />
                     <AccessibleButton className={ searchButtonClasses } onClick={this.onSearch} />
                 </div>
