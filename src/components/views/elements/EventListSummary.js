@@ -45,9 +45,7 @@ const EventListSummary = ({events, children, threshold=3, onToggle, startExpande
     if (expanded) {
         return (
             <div className="mx_EventListSummary" data-scroll-tokens={eventIds}>
-                <div className={"mx_EventListSummary_toggle"} onClick={toggleExpanded}>
-                    { _t('collapse') }
-                </div>
+                <div className={"mx_EventListSummary_toggle mx_EventListSummary_toggle_expanded"} onClick={toggleExpanded}></div>
                 <div className="mx_EventListSummary_line">&nbsp;</div>
                 { children }
             </div>
@@ -57,9 +55,7 @@ const EventListSummary = ({events, children, threshold=3, onToggle, startExpande
     const avatars = summaryMembers.map((m) => <MemberAvatar key={m.userId} member={m} width={14} height={14} />);
     return (
         <div className="mx_EventListSummary" data-scroll-tokens={eventIds}>
-            <div className={"mx_EventListSummary_toggle"} onClick={toggleExpanded}>
-                { _t('expand') }
-            </div>
+            <div className={"mx_EventListSummary_toggle mx_EventListSummary_toggle_collapsed"} onClick={toggleExpanded}></div>
             <div className="mx_EventTile_line">
                 <div className="mx_EventTile_info">
                     <span className="mx_EventListSummary_avatars" onClick={toggleExpanded}>
