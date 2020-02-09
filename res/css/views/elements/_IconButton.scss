@@ -33,23 +33,4 @@ limitations under the License.
     &:hover {
         opacity: 90%;
     }
-
-    &::before {
-        content: "";
-        display: block;
-        width: 100%;
-        height: 100%;
-        mask-repeat: no-repeat;
-        mask-position: center;
-        mask-size: 55%;
-        background-color: $accent-color;
-    }
-
-    &.mx_IconButton_icon_check::before {
-        mask-image: url('$(res)/img/feather-customised/check.svg');
-    }
-
-    &.mx_IconButton_icon_edit::before {
-        mask-image: url('$(res)/img/feather-customised/edit.svg');
-    }
 }

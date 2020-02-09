@@ -26,6 +26,7 @@ limitations under the License.
 }
 
 .mx_RoomDirectory {
+    padding: 15px;
     margin-bottom: 12px;
     color: $primary-fg-color;
     word-break: break-word;
@@ -86,22 +87,6 @@ limitations under the License.
     width: 60px;
     padding: 0 10px;
     text-align: center;
-
-    &::before {
-        background-color: $light-fg-color;
-        display: inline-block;
-        vertical-align: text-top;
-        margin-right: 2px;
-        content: "";
-        mask: url('$(res)/img/feather-customised/user.svg');
-        mask-repeat: no-repeat;
-        mask-position: center;
-        // scale it down and make the size slightly bigger (16 instead of 14px)
-        // to avoid rendering artifacts
-        mask-size: 80%;
-        width: 16px;
-        height: 16px;
-    }
 }
 
 .mx_RoomDirectory_join, .mx_RoomDirectory_preview {
@@ -117,16 +102,6 @@ limitations under the License.
 
 .mx_RoomDirectory_perms {
     display: inline-block;
-}
-
-.mx_RoomDirectory_perm {
-    border-radius: 10px;
-    display: inline-block;
-    height: 20px;
-    line-height: 20px;
-    padding: 0 5px;
-    color: $accent-fg-color;
-    background-color: $rte-room-pill-color;
 }
 
 .mx_RoomDirectory_topic {

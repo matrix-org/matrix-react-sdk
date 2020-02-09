@@ -15,56 +15,40 @@ limitations under the License.
 */
 
 .mx_SearchBar {
-    height: 56px;
+    height: 34px;
     display: flex;
     align-items: center;
     border-bottom: 1px solid $primary-hairline-color;
+    background-color: $primary-bg-color;
 
     .mx_SearchBar_input {
-        // border: 1px solid $input-border-color;
-        // font-size: 15px;
         flex: 1 1 0;
-        margin-left: 22px;
-    }
-
-    .mx_SearchBar_searchButton {
-        cursor: pointer;
-        width: 37px;
-        height: 37px;
-        background-color: $accent-color;
-        mask: url('$(res)/img/feather-customised/search-input.svg');
-        mask-repeat: no-repeat;
-        mask-position: center;
+        margin: 0;
+        box-shadow: none;
+        border: 0;
     }
 
     .mx_SearchBar_buttons {
         display: inherit;
-    }
+        height: 100%;
 
-    .mx_SearchBar_button {
-        border: 0;
-        margin: 0 0 0 22px;
-        padding: 5px;
-        font-size: 15px;
-        cursor: pointer;
-        color: $primary-fg-color;
-        border-bottom: 2px solid $accent-color;
-        font-weight: 600;
-    }
+        .mx_SearchBar_button {
+            border: 0;
+            padding: 15px;
+            font-size: 13px;
+            line-height: 3px;
+            cursor: pointer;
+            color: $primary-fg-color;
+            background-color: $primary-bg-color;
+            border-bottom: 2px solid $accent-color;
+            border-right: 1px solid #E7E7E7;
+            font-weight: 600;
+        }
 
-    .mx_SearchBar_unselected {
-        color: $input-darker-fg-color;
-        border-color: transparent;
-    }
-
-    .mx_SearchBar_cancel {
-        background-color: $warning-color;
-        mask: url('$(res)/img/cancel.svg');
-        mask-repeat: no-repeat;
-        mask-position: center;
-        mask-size: 14px;
-        padding: 9px;
-        margin: 0 12px 0 3px;
-        cursor: pointer;
+        .mx_SearchBar_unselected {
+            color: $input-darker-fg-color;
+            border-bottom-color: transparent;
+            font-weight: 400;
+        }
     }
 }

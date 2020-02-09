@@ -21,20 +21,4 @@ limitations under the License.
     display: block !important;
     // Align the padlock with unencrypted room names
     margin: 0 4px;
-
-    &::before {
-        background-color: $roomtile-name-color;
-        mask-image: url('$(res)/img/feather-customised/lock-solid.svg');
-        mask-position: center;
-        mask-repeat: no-repeat;
-        mask-size: contain;
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        width: 12px;
-        height: 12px;
-    }
 }

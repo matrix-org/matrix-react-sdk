@@ -36,6 +36,7 @@ limitations under the License.
 .mx_LeftPanel_tagPanelContainer {
     flex: 0 0 70px;
     height: 100%;
+    display: none;
 }
 
 .mx_LeftPanel_hideButton {
@@ -52,6 +53,9 @@ limitations under the License.
     display: flex;
     flex-direction: column;
     min-height: 0;
+    -webkit-box-shadow: 0 5px 10px $box-shadow-color;
+    -moz-box-shadow: 0 5px 10px 0 $box-shadow-color;
+    box-shadow: 0 5px 10px 0 $box-shadow-color;
 }
 
 .mx_LeftPanel .mx_AppTile_mini {
@@ -127,51 +131,29 @@ limitations under the License.
 }
 
 .mx_LeftPanel_exploreAndFilterRow {
-    display: flex;
+    .mx_LeftPanel_explore {
+        flex: 0 0 50%;
+        overflow: hidden;
+        transition: flex-basis 0.2s;
+        box-sizing: border-box;
 
-    .mx_SearchBox {
-        flex: 1 1 0;
-        min-width: 0;
-        margin: 4px 9px 1px 9px;
-    }
-}
-
-.mx_LeftPanel_explore {
-    flex: 0 0 50%;
-    overflow: hidden;
-    transition: flex-basis 0.2s;
-    box-sizing: border-box;
-
-    &.mx_LeftPanel_explore_hidden {
-        flex-basis: 0;
-    }
-
-    .mx_AccessibleButton {
-        font-size: 14px;
-        margin: 4px 0 1px 9px;
-        padding: 9px;
-        padding-left: 42px;
-        font-weight: 600;
-        color: $notice-secondary-color;
-        position: relative;
-        border-radius: 4px;
-
-        &:hover {
-            background-color: $primary-bg-color;
+        &.mx_LeftPanel_explore_hidden {
+            flex-basis: 0;
         }
 
-        &::before {
-            cursor: pointer;
-            mask: url('$(res)/img/explore.svg');
-            mask-repeat: no-repeat;
-            mask-position: center center;
-            content: "";
-            left: 14px;
-            top: 10px;
-            width: 16px;
-            height: 16px;
-            background-color: $notice-secondary-color;
-            position: absolute;
+        .mx_AccessibleButton {
+            font-size: 14px;
+            margin: 4px 0 1px 9px;
+            padding: 9px;
+            padding-left: 42px;
+            font-weight: 600;
+            color: $notice-secondary-color;
+            position: relative;
+            border-radius: 4px;
+
+            &:hover {
+                background-color: $primary-bg-color;
+            }
         }
     }
 }

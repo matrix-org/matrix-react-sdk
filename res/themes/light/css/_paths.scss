@@ -1,3 +1,7 @@
 // Path from root SCSS file (such as `light.scss`) to `res` dir in the source tree
 // This value is overridden by external themes in `riot-web`.
 $res: ../../..;
+$theme: ../..;
+$fonts: ../fonts;
+$icons: ../icons;
+$img: ../img;

@@ -15,20 +15,11 @@ limitations under the License.
 */
 
 .mx_SearchBox {
+    position: relative;
     flex: 1 1 0;
     min-width: 0;
 
     &.mx_SearchBox_blurred:not(:hover) {
         background-color: transparent;
-    }
-
-    .mx_SearchBox_closeButton {
-        cursor: pointer;
-        background-image: url('$(res)/img/icons-close.svg');
-        background-repeat: no-repeat;
-        width: 16px;
-        height: 16px;
-        background-position: center;
-        padding: 9px;
     }
 }

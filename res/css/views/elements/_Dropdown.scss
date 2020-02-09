@@ -42,15 +42,6 @@ limitations under the License.
     filter: none;
 }
 
-.mx_Dropdown_arrow {
-    width: 10px;
-    height: 6px;
-    padding-right: 9px;
-    mask: url('$(res)/img/feather-customised/dropdown-arrow.svg');
-    mask-repeat: no-repeat;
-    background: $primary-fg-color;
-}
-
 .mx_Dropdown_option {
     height: 35px;
     line-height: 35px;

@@ -45,14 +45,3 @@ limitations under the License.
     border: 1.3px solid $roomtile-name-color;
     cursor: pointer;
 }
-
-.mx_TopUnreadMessagesBar_scrollUp::before {
-    content: "";
-    position: absolute;
-    width: 38px;
-    height: 38px;
-    mask: url('$(res)/img/icon-jump-to-first-unread.svg');
-    mask-repeat: no-repeat;
-    mask-position: 9px 13px;
-    background: $roomtile-name-color;
-}

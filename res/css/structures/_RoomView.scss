@@ -93,29 +93,6 @@ limitations under the License.
     overflow-anchor: none;
 }
 
-.mx_RoomView_messagePanelSearchSpinner {
-    flex: 1;
-    background-image: url('$(res)/img/typing-indicator-2x.gif');
-    background-position: center 367px;
-    background-size: 25px;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.mx_RoomView_messagePanelSearchSpinner::before {
-    background-color: $greyed-fg-color;
-    mask: url('$(res)/img/feather-customised/search-input.svg');
-    mask-repeat: no-repeat;
-    mask-position: center;
-    mask-size: 50px;
-    content: '';
-    position: absolute;
-    top: 286px;
-    left: 0;
-    right: 0;
-    height: 50px;
-}
-
 .mx_RoomView_body {
     position: relative; //for .mx_RoomView_auxPanel_fullHeight
     display: flex;
@@ -158,7 +135,6 @@ limitations under the License.
 }
 
 .mx_RoomView_statusAreaBox_line {
-    margin-left: 65px;
     border-top: 1px solid $primary-hairline-color;
     height: 1px;
 }
@@ -205,6 +181,180 @@ limitations under the License.
 
 .mx_RoomView_MessageList li {
     clear: both;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.mx_RoomView_MessageList li.mx_Continuation {
+    margin-top: 2px;
+}
+
+/* View for Sender */
+.mx_RoomView_MessageList li.mx_Sender {
+    float: right;
+
+    .mx_EventTile:not(.mx_EventTile_info) {
+        .mx_EventTile_msgOption {
+            float: right;
+        }
+
+        .mx_EventTile_avatar {
+            display: none;
+            left: auto;
+            right: 0;
+        }
+
+        .mx_EventTile_line {
+            float: right;
+            margin: 0;
+            background: linear-gradient(154.02deg, #4a419b 25%, #8277dd 100%);
+            color: #ffffff;
+            border-radius: 10px 2px 2px 10px;
+            box-shadow: -7px 7px 5px 0px rgba(200, 200, 200, 0.1);
+
+            .mx_EventTile_content {
+                .markdown-body blockquote {
+                    margin-left: 0;
+                    padding-left: 10px;
+                    border-left: 0;
+                    border-right: 4px solid #43389e;
+                    color: #b8add3;
+                    text-align: right;
+                }
+            }
+
+            .mx_ReactionsRow {
+                border-top: 1px solid #8178d2;
+            }
+        }
+
+        .mx_EventUser {
+            right: 0;
+        }
+
+        .mx_EventTile_readAvatars {
+            float: right;
+        }
+    }
+}
+
+/* View for Receiver */
+.mx_RoomView_MessageList li.mx_Receiver {
+    float: left;
+
+    .mx_EventTile:not(.mx_EventTile_info) {
+        .mx_EventTile_msgOption {
+            float: left;
+            margin-left: 40px;
+        }
+
+        .mx_EventTile_line {
+            float: left;
+            margin: 0 0 0 40px;
+            background: linear-gradient(154.02deg, #f1f1f4 25%, #eeeeee 100%);
+            color: #444444;
+            border-radius: 2px 10px 10px 2px;
+            box-shadow: -7px 7px 5px 0px rgba(200, 200, 200, 0.1);
+
+            .mx_EventTile_content {
+                .markdown-body blockquote {
+                    margin-left: 0;
+                    padding-left: 10px;
+                    border-right: 0;
+                    border-left: 4px solid $blockquote-bar-color;
+                }
+            }
+
+            .mx_ReactionsRow {
+                border-top: 1px solid #dddddd;
+            }
+
+            .mx_MessageActionBar {
+                left: auto;
+                right: 7px;
+            }
+        }
+
+        .mx_EventTile_avatar {
+            top: 20px;
+            left: 0;
+        }
+
+        .mx_EventUser {
+            left: 0;
+        }
+
+        .mx_EventTile_readAvatars {
+            float: left;
+            left: 40px;
+        }
+    }
+}
+
+/* View for Sender and Receiver */
+.mx_RoomView_MessageList li.mx_Sender,
+.mx_RoomView_MessageList li.mx_Receiver {
+    .mx_EventTile {
+        padding-top: 25px;
+        clear: both;
+        height: calc(100% - 20px);
+
+        .mx_MessageTimestamp {
+            width: auto;
+            margin-bottom: 2px;
+        }
+
+        .mx_EventTile_line {
+            padding: 0;
+
+            .mx_EventTile_content {
+                padding: 8px 12px 8px 12px;
+                margin: 0;
+            }
+        }
+
+        .mx_EventUser {
+            position: absolute;
+            top: 0;
+
+            .mx_SenderProfile {
+                text-overflow: initial;
+                max-width: 100%;
+                padding-left: 0;
+            }
+
+            .mx_MessageTimestamp {
+                display: inline-block;
+                position: relative;
+                visibility: visible;
+                text-align: left;
+                top: -5px;
+            }
+        }
+
+        .mx_EventTile_msgOption {
+            height: auto;
+            margin: 0;
+            width: auto;
+            clear: both;
+
+            .mx_SenderProfile {
+                text-overflow: initial;
+                max-width: 100%;
+                padding-left: 0;
+            }
+        }
+    }
+}
+
+.mx_RoomView_MessageList li.mx_Sender.mx_image,
+.mx_RoomView_MessageList li.mx_Receiver.mx_image {
+    .mx_EventTile:not(.mx_EventTile_info) {
+        .mx_EventTile_line {
+            background: transparent;
+            border-radius: 0;
+        }
+    }
 }
 
 li.mx_RoomView_myReadMarker_container {
@@ -273,6 +423,7 @@ hr.mx_RoomView_myReadMarker {
     width: 100%;
     flex: 0 0 auto;
     margin-right: 2px;
+    box-shadow: 0 0 100px 0 rgba(0, 0, 0, 0.1);
 }
 
 .mx_RoomView_ongoingConfCallNotification {

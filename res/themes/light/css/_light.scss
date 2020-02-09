@@ -11,12 +11,14 @@ $monospace-font-family: Inconsolata, Twemoji, 'Apple Color Emoji', 'Segoe UI Emo
 
 // unified palette
 // try to use these colors when possible
-$accent-color: #03b381;
+$accent-color: #d92e9e;
 $accent-bg-color: rgba(3, 179, 129, 0.16);
 $notice-primary-color: #ff4b55;
 $notice-primary-bg-color: rgba(255, 75, 85, 0.16);
 $notice-secondary-color: #61708b;
 $header-panel-bg-color: #f3f8fd;
+
+$box-shadow-color: rgba(0, 0, 0, 0.1);
 
 // typical text (dark-on-white in light skin)
 $primary-fg-color: #2e2f32;
@@ -31,7 +33,7 @@ $focus-bg-color: #dddddd;
 
 // button UI (white-on-green in light skin)
 $accent-fg-color: #ffffff;
-$accent-color-50pct: rgba(3, 179, 129, 0.5);    //#03b381 in rgb
+$accent-color-50pct: rgba(217, 43, 158, 1);    //#03b381 in rgb
 $accent-color-darker: #92caad;
 $accent-color-alt: #238CF5;
 
@@ -59,7 +61,7 @@ $info-plinth-fg-color: #888;
 $preview-bar-bg-color: #f7f7f7;
 
 // left-panel style muted accent color
-$secondary-accent-color: #f2f5f8;
+$secondary-accent-color: #f7f7f7;
 $tertiary-accent-color: #d3efe1;
 
 $tagpanel-bg-color: #27303a;
@@ -77,15 +79,15 @@ $selected-color: $secondary-accent-color;
 $event-selected-color: $header-panel-bg-color;
 
 // used for the hairline dividers in RoomView
-$primary-hairline-color: #e5e5e5;
+$primary-hairline-color: #e7e7e7;
 
 // used for the border of input text fields
 $input-border-color: #e7e7e7;
 $input-darker-bg-color: #e3e8f0;
-$input-darker-fg-color: #9fa9ba;
+$input-darker-fg-color: #444;
 $input-lighter-bg-color: #f2f5f8;
 $input-lighter-fg-color: $input-darker-fg-color;
-$input-focused-border-color: #238cf5;
+$input-focused-border-color: #c8adff;
 $input-valid-border-color: $accent-color;
 $input-invalid-border-color: $warning-color;
 
@@ -95,7 +97,7 @@ $button-bg-color: $accent-color;
 $button-fg-color: white;
 
 // apart from login forms, which have stronger border
-$strong-input-border-color: #c7c7c7;
+$strong-input-border-color: #b7b7b7;
 
 // used for UserSettings EditableText
 $input-underline-color: rgba(151, 151, 151, 0.5);
@@ -106,7 +108,7 @@ $scrollbar-track-color: transparent;
 // context menus
 $menu-border-color: #e7e7e7;
 $menu-bg-color: #fff;
-$menu-box-shadow-color: rgba(118, 131, 156, 0.6);
+$menu-box-shadow-color: rgba(0, 0, 0, 0.1);
 $menu-selected-color: #f5f8fa;
 
 $avatar-initial-color: #ffffff;
@@ -116,7 +118,7 @@ $h3-color: #3d3b39;
 
 $dialog-title-fg-color: #45474a;
 $dialog-backdrop-color: rgba(46, 48, 51, 0.38);
-$dialog-shadow-color: rgba(0, 0, 0, 0.48);
+$dialog-shadow-color: rgba(0, 0, 0, 0.3);
 $dialog-close-fg-color: #c1c1c1;
 
 $dialog-background-bg-color: #e9e9e9;
@@ -154,18 +156,18 @@ $rte-group-pill-color: #aaa;
 
 $topleftmenu-color: #212121;
 $roomheader-color: #45474a;
-$roomheader-addroom-bg-color: #91A1C0;
+$roomheader-addroom-bg-color: #b7b7b7;
 $roomheader-addroom-fg-color: $accent-fg-color;
-$tagpanel-button-color: #91A1C0;
-$roomheader-button-color: #91A1C0;
-$groupheader-button-color: #91A1C0;
-$rightpanel-button-color: #91A1C0;
-$composer-button-color: #91A1C0;
+$tagpanel-button-color: #b7b7b7;
+$roomheader-button-color: #b7b7b7;
+$groupheader-button-color: #b7b7b7;
+$rightpanel-button-color: #b7b7b7;
+$composer-button-color: #b7b7b7;
 $roomtopic-color: #9e9e9e;
 $eventtile-meta-color: $roomtopic-color;
 
 $composer-e2e-icon-color: #c9ced6;
-$header-divider-color: #91A1C0;
+$header-divider-color: #b7b7b7;
 
 // ********************
 
@@ -173,12 +175,12 @@ $roomtile-name-color: #61708b;
 $roomtile-badge-fg-color: $accent-fg-color;
 $roomtile-selected-color: #212121;
 $roomtile-notified-color: #212121;
-$roomtile-selected-bg-color: #fff;
-$roomtile-focused-bg-color: #fff;
+$roomtile-selected-bg-color: #e7e7e7;
+$roomtile-focused-bg-color: #e7e7e7;
 
 $username-variant1-color: #368bd6;
 $username-variant2-color: #ac3ba8;
-$username-variant3-color: #03b381;
+$username-variant3-color: #d92b9e;
 $username-variant4-color: #e64f7a;
 $username-variant5-color: #ff812d;
 $username-variant6-color: #2dc2c5;
@@ -242,8 +244,14 @@ $tab-label-icon-bg-color: #454545;
 $tab-label-active-icon-bg-color: $tab-label-active-fg-color;
 
 // Buttons
+$button-primary-border-color: #47307a;
 $button-primary-fg-color: #ffffff;
-$button-primary-bg-color: $accent-color;
+$button-primary-bg-color: #5b4193;
+
+$button-default-border-color: #a6a6a6;
+$button-default-fg-color: #444444;
+$button-default-bg-color: #fdfdfd;
+
 $button-secondary-bg-color: $accent-fg-color;
 $button-danger-fg-color: #ffffff;
 $button-danger-bg-color: $notice-primary-color;
@@ -277,15 +285,15 @@ $dark-panel-bg-color: $secondary-accent-color;
 $panel-gradient: rgba(242, 245, 248, 0), rgba(242, 245, 248, 1);
 
 $message-action-bar-bg-color: $primary-bg-color;
-$message-action-bar-fg-color: $primary-fg-color;
+$message-action-bar-fg-color: #666666;
 $message-action-bar-border-color: #e9edf1;
 $message-action-bar-hover-border-color: $focus-bg-color;
 
-$reaction-row-button-bg-color: $header-panel-bg-color;
-$reaction-row-button-border-color: #e9edf1;
-$reaction-row-button-hover-border-color: $focus-bg-color;
-$reaction-row-button-selected-bg-color: #e9fff9;
-$reaction-row-button-selected-border-color: $accent-color;
+$reaction-row-button-bg-color: #ffffff;
+$reaction-row-button-border-color: #e7e7e7;
+$reaction-row-button-hover-border-color: #cccccc;
+$reaction-row-button-selected-bg-color: #ffffff;
+$reaction-row-button-selected-border-color: #e7e7e7;
 
 $tooltip-timeline-bg-color: $tagpanel-bg-color;
 $tooltip-timeline-fg-color: #ffffff;
@@ -303,7 +311,7 @@ $user-tile-hover-bg-color: $header-panel-bg-color;
     /* align images in buttons (eg spinners) */
     vertical-align: middle;
     border: 0px;
-    border-radius: 4px;
+    border-radius: 2px;
     font-family: $font-family;
     font-size: 14px;
     color: $button-fg-color;

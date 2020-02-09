@@ -123,20 +123,6 @@ limitations under the License.
     pointer-events: none;
 }
 
-.mx_EmojiPicker_search_icon::after {
-    mask: url('$(res)/img/emojipicker/search.svg') no-repeat;
-    mask-size: 100%;
-    background-color: $primary-fg-color;
-    content: '';
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-}
-
-.mx_EmojiPicker_search_clear::after {
-    mask-image: url('$(res)/img/emojipicker/delete.svg');
-}
-
 .mx_EmojiPicker_category {
     padding: 0 12px;
     display: flex;

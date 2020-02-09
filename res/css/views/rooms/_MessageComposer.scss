@@ -20,7 +20,7 @@ limitations under the License.
     margin: auto;
     border-top: 1px solid $primary-hairline-color;
     position: relative;
-    padding-left: 84px;
+    padding-left: 60px;
 }
 
 .mx_MessageComposer_replaced_wrapper {
@@ -60,7 +60,7 @@ limitations under the License.
 
 .mx_MessageComposer .mx_MessageComposer_avatar {
     position: absolute;
-    left: 27px;
+    left: 15px;
 }
 
 .mx_MessageComposer .mx_MessageComposer_avatar .mx_BaseAvatar {
@@ -73,7 +73,8 @@ limitations under the License.
 
 .mx_MessageComposer_e2eIcon.mx_E2EIcon {
     position: absolute;
-    left: 60px;
+    top: 7px;
+    left: 32px;
     margin-right: 0; // Counteract the E2EIcon class
     margin-left: 3px; // Counteract the E2EIcon class
     width: 15px;
@@ -198,26 +199,6 @@ limitations under the License.
     }
 }
 
-.mx_MessageComposer_upload::before {
-    mask-image: url('$(res)/img/feather-customised/paperclip.svg');
-}
-
-.mx_MessageComposer_hangup::before {
-    mask-image: url('$(res)/img/hangup.svg');
-}
-
-.mx_MessageComposer_voicecall::before {
-    mask-image: url('$(res)/img/feather-customised/phone.svg');
-}
-
-.mx_MessageComposer_videocall::before {
-    mask-image: url('$(res)/img/feather-customised/video.svg');
-}
-
-.mx_MessageComposer_stickers::before {
-    mask-image: url('$(res)/img/feather-customised/face.svg');
-}
-
 .mx_MessageComposer_formatting {
     cursor: pointer;
     margin: 0 11px;
@@ -275,11 +256,6 @@ limitations under the License.
 .mx_MessageComposer_formatbar_markdown,
 .mx_MessageComposer_input_markdownIndicator {
     cursor: pointer;
-    mask-image: url('$(res)/img/markdown.svg');
-    mask-size: contain;
-    mask-position: center;
-    mask-repeat: no-repeat;
-    background-color: $composer-button-color;
 
     &.mx_MessageComposer_markdownDisabled {
         opacity: 0.2;

@@ -51,20 +51,6 @@ limitations under the License.
     border-radius: 20px;
     background-color: $roomheader-addroom-bg-color;
     position: relative;
-
-    &::before {
-        background-color: $roomheader-addroom-fg-color;
-        mask: url('$(res)/img/icons-create-room.svg');
-        mask-repeat: no-repeat;
-        mask-position: center;
-        mask-size: 80%;
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-    }
 }
 
 

@@ -1,0 +1,924 @@
+.mx_RightPanel_headerButton {
+    &::before {
+        content: '';
+        position: absolute;
+        top: 15px;
+        left: 14px;
+        height: 20px;
+        width: 20px;
+        background-color: $rightpanel-button-color;
+        mask-repeat: no-repeat;
+        mask-size: contain;
+    }
+}
+
+.mx_RightPanel_membersButton::before {
+    mask-image: url('$(icons)/user.svg');
+}
+
+.mx_RightPanel_filesButton::before {
+    mask-image: url('$(icons)/files.svg');
+}
+
+.mx_RightPanel_notifsButton::before {
+    mask-image: url('$(icons)/notifications.svg');
+}
+
+.mx_RightPanel_groupMembersButton::before {
+    mask-image: url('$(icons)/icons-people.svg');
+}
+
+.mx_RightPanel_roomsButton::before {
+    mask-image: url('$(icons)/icons-room-nobg.svg');
+}
+
+.mx_GroupHeader_editButton::before {
+    mask-image: url('$(icons)/settings.svg');
+}
+
+.mx_GroupHeader_shareButton::before {
+    mask-image: url('$(icons)/icons-share.svg');
+}
+
+.mx_LeftPanel_explore {
+    .mx_AccessibleButton {
+        &::before {
+            mask: url('$(icons)/explore.svg');
+            cursor: pointer;
+            left: 14px;
+            top: 10px;
+            width: 16px;
+            height: 16px;
+            background-color: $notice-secondary-color;
+            position: absolute;
+        }
+    }
+}
+
+.mx_MyGroups_headerCard .mx_MyGroups_headerCard_button {
+    &::before {
+        background-color: $roomheader-addroom-fg-color;
+        mask: url('$(icons)/icons-create-room.svg');
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: 80%;
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+}
+
+.mx_RoomDirectory_roomMemberCount {
+    &::before {
+        background-color: $light-fg-color;
+        mask: url('$(icons)/user.svg');
+        display: inline-block;
+        vertical-align: text-top;
+        margin-right: 2px;
+        width: 16px;
+        height: 16px;
+    }
+}
+
+.mx_RoomView_messagePanelSearchSpinner::before {
+    background-color: $greyed-fg-color;
+    mask: url('$(icons)/search-input.svg');
+}
+
+.mx_Dialog_cancelButton {
+    mask: url('$(icons)/cancel.svg');
+    background-color: $dialog-close-fg-color;
+}
+
+.mx_RoomView_messagePanelSearchSpinner {
+    flex: 1;
+    background-image: url('$(img)/typing-indicator-2x.gif');
+    background-position: center 367px;
+    background-size: 25px;
+    background-repeat: no-repeat;
+    position: relative;
+
+    &::before {
+        position: absolute;
+        top: 286px;
+        left: 0;
+        right: 0;
+        height: 50px;
+    }
+}
+
+.mx_EventTile_content.mx_ViewSourceEvent {
+    .mx_ViewSourceEvent_toggle {
+        width: 12px;
+        mask-repeat: no-repeat;
+        mask-position: 0 center;
+        mask-size: auto 12px;
+        visibility: hidden;
+        background-color: $accent-color;
+        mask-image: url('$(icons)/widget/maximise.svg');
+    }
+
+    &.mx_ViewSourceEvent_expanded .mx_ViewSourceEvent_toggle {
+        mask-position: 0 bottom;
+        margin-bottom: 7px;
+        mask-image: url('$(icons)/widget/minimise.svg');
+    }
+}
+
+.mx_InviteOnlyIcon {
+    &::before {
+        background-color: $roomtile-name-color;
+        mask-image: url('$(icons)/lock-solid.svg');
+        mask-position: center;
+        mask-repeat: no-repeat;
+        mask-size: contain;
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 12px;
+        height: 12px;
+    }
+}
+
+.mx_RoomSubList_addRoom {
+    &::before {
+        background-color: $roomheader-addroom-fg-color;
+        mask: url('$(icons)/icons-room-add.svg');
+        mask-repeat: no-repeat;
+        mask-position: center;
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+}
+
+.mx_RoomHeader_button {
+    &::before {
+        content: '';
+        position: absolute;
+        top: 15px;
+        left: 13px;
+        height: 20px;
+        width: 20px;
+        background-color: $rightpanel-button-color;
+        mask-repeat: no-repeat;
+        mask-size: contain;
+    }
+}
+
+.mx_RoomHeader_settingsButton::before {
+    mask-image: url('$(icons)/settings.svg');
+}
+
+.mx_RoomHeader_forgetButton::before {
+    mask-image: url('$(icons)/leave.svg');
+    width: 26px;
+}
+
+.mx_RoomHeader_searchButton::before {
+    mask-image: url('$(icons)/search.svg');
+}
+
+.mx_RoomHeader_shareButton::before {
+    mask-image: url('$(icons)/share.svg');
+}
+
+.mx_RoomHeader_manageIntegsButton::before {
+    mask-image: url('$(icons)/grid.svg');
+}
+
+.mx_RoomSubList_chevron {
+    pointer-events: none;
+    mask: url('$(icons)/dropdown-arrow.svg');
+    mask-repeat: no-repeat;
+    transition: transform 0.2s ease-in;
+    width: 10px;
+    height: 6px;
+    margin-left: 2px;
+    background-color: $roomsublist-label-fg-color;
+}
+
+.mx_SearchBox {
+    .mx_SearchBox_closeButton {
+        cursor: pointer;
+        background-image: url('$(icons)/icons-close.svg');
+        background-repeat: no-repeat;
+        width: 16px;
+        height: 16px;
+        background-position: center;
+        padding: 9px;
+    }
+
+    &::before {
+        background-color: $rightpanel-button-color;
+        mask-image: url('$(icons)/search.svg');
+        mask-position: center;
+        mask-repeat: no-repeat;
+        content: '';
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        top: 9px;
+        left: 9px;
+    }
+}
+
+.mx_TagPanel .mx_TagTile_plus {
+    &::before {
+        background-color: $roomheader-addroom-fg-color;
+        mask-image: url('$(icons)/plus.svg');
+        mask-position: center;
+        mask-repeat: no-repeat;
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+}
+
+.mx_ToastContainer {
+    .mx_Toast_toast {
+        &.mx_Toast_hasIcon {
+            &::after {
+                content: "";
+                width: 22px;
+                height: 22px;
+                grid-column: 1;
+                grid-row: 1;
+                mask-size: 100%;
+                mask-repeat: no-repeat;
+            }
+
+            &.mx_Toast_icon_verification::after {
+                mask-image: url("$(icons)/e2e/normal.svg");
+                background-color: $primary-fg-color;
+            }
+
+            &.mx_Toast_icon_verification_warning::after {
+                background-image: url("$(icons)/e2e/warning.svg");
+            }
+        }
+    }
+}
+
+.mx_MessageComposerFormatBar {
+    .mx_MessageComposerFormatBar_button::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        background-color: $message-action-bar-fg-color;
+    }
+
+    .mx_MessageComposerFormatBar_buttonIconBold::after {
+        mask-image: url('$(icons)/format/bold.svg');
+    }
+
+    .mx_MessageComposerFormatBar_buttonIconItalic::after {
+        mask-image: url('$(icons)/format/italics.svg');
+    }
+
+    .mx_MessageComposerFormatBar_buttonIconStrikethrough::after {
+        mask-image: url('$(icons)/format/strikethrough.svg');
+    }
+
+    .mx_MessageComposerFormatBar_buttonIconQuote::after {
+        mask-image: url('$(icons)/format/quote.svg');
+    }
+
+    .mx_MessageComposerFormatBar_buttonIconCode::after {
+        mask-image: url('$(icons)/format/code.svg');
+    }
+}
+
+.mx_TopLeftMenuButton_chevron {
+    margin: 0 7px;
+    mask: url('$(icons)/dropdown-arrow.svg');
+    mask-repeat: no-repeat;
+    width: 10px;
+    height: 6px;
+    background-color: $roomsublist-label-fg-color;
+}
+
+.mx_UserSettingsDialog_settingsIcon::before {
+    mask-image: url('$(icons)/settings.svg');
+}
+
+.mx_UserSettingsDialog_voiceIcon::before {
+    mask-image: url('$(icons)/phone.svg');
+}
+
+.mx_UserSettingsDialog_bellIcon::before {
+    mask-image: url('$(icons)/notifications.svg');
+}
+
+.mx_UserSettingsDialog_preferencesIcon::before {
+    mask-image: url('$(icons)/sliders.svg');
+}
+
+.mx_UserSettingsDialog_securityIcon::before {
+    mask-image: url('$(icons)/lock.svg');
+}
+
+.mx_UserSettingsDialog_helpIcon::before {
+    mask-image: url('$(icons)/help-circle.svg');
+}
+
+.mx_UserSettingsDialog_labsIcon::before {
+    mask-image: url('$(icons)/flag.svg');
+}
+
+.mx_UserSettingsDialog_mjolnirIcon::before {
+    mask-image: url('$(icons)/face.svg');
+}
+
+.mx_UserSettingsDialog_flairIcon::before {
+    mask-image: url('$(icons)/flair.svg');
+}
+
+.mx_MemberInfo_cancel {
+    height: 16px;
+    width: 16px;
+    padding: 10px 0 10px 10px;
+    cursor: pointer;
+    mask-image: url('$(icons)/minimise.svg');
+    mask-repeat: no-repeat;
+    mask-position: 16px center;
+    background-color: $rightpanel-button-color;
+}
+
+.mx_MemberDeviceInfo_icon_blacklisted {
+    mask-image: url('$(icons)/e2e/blacklisted.svg');
+    background-color: $warning-color;
+}
+.mx_MemberDeviceInfo_icon_verified {
+    mask-image: url('$(icons)/e2e/verified.svg');
+    background-color: $accent-color;
+}
+.mx_MemberDeviceInfo_icon_unverified {
+    mask-image: url('$(icons)/e2e/warning.svg');
+    background-color: $warning-color;
+}
+
+.mx_SearchBar {
+    .mx_SearchBar_searchButton {
+        cursor: pointer;
+        width: 18px;
+        height: 18px;
+        background-color: $accent-color;
+        mask: url('$(icons)/search-input.svg');
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: 16px;
+        margin-top: 8px;
+        margin-right: 8px;
+    }
+}
+
+.mx_TopLeftMenu {
+    .mx_TopLeftMenu_section_withIcon {
+        .mx_TopLeftMenu_icon_home::after {
+            mask-image: url('$(icons)/home.svg');
+        }
+
+        .mx_TopLeftMenu_icon_help::after {
+            mask-image: url('$(icons)/life-buoy.svg');
+        }
+
+        .mx_TopLeftMenu_icon_settings::after {
+            mask-image: url('$(icons)/settings.svg');
+        }
+
+        .mx_TopLeftMenu_icon_signin::after {
+            mask-image: url('$(icons)/sign-in.svg');
+        }
+
+        .mx_TopLeftMenu_icon_signout::after {
+            mask-image: url('$(icons)/sign-out.svg');
+        }
+    }
+}
+
+.mx_Dropdown_arrow {
+    width: 10px;
+    height: 6px;
+    padding-right: 9px;
+    mask: url('$(icons)/dropdown-arrow.svg');
+    mask-repeat: no-repeat;
+    background: $primary-fg-color;
+}
+
+.mx_Validation_detail {
+    &::before {
+        content: "";
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        top: 0;
+        left: -18px;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: contain;
+    }
+
+    &.mx_Validation_valid {
+        &::before {
+            mask-image: url('$(icons)/check.svg');
+            background-color: $input-valid-border-color;
+        }
+    }
+
+    &.mx_Validation_invalid {
+        &::before {
+            mask-image: url('$(icons)/x.svg');
+            background-color: $input-invalid-border-color;
+        }
+    }
+}
+
+.mx_InviteDialog_roomTile {
+    .mx_InviteDialog_roomTile_selected {
+        &::before {
+            content: "";
+            width: 24px;
+            height: 24px;
+            grid-column: 1;
+            grid-row: 1;
+            mask-image: url('$(icons)/check.svg');
+            mask-size: 100%;
+            mask-repeat: no-repeat;
+            position: absolute;
+            top: 6px; // 50%
+            left: 6px; // 50%
+            background-color: #ffffff; // this is fine without a var because it's for both themes
+        }
+    }
+}
+
+
+.mx_RoomSettingsDialog_settingsIcon::before {
+    mask-image: url('$(icons)/settings.svg');
+}
+
+.mx_RoomSettingsDialog_securityIcon::before {
+    mask-image: url('$(icons)/lock.svg');
+}
+
+.mx_RoomSettingsDialog_rolesIcon::before {
+    mask-image: url('$(icons)/users-sm.svg');
+}
+
+.mx_RoomSettingsDialog_bridgesIcon::before {
+    // This icon is pants, please improve :)
+    mask-image: url('$(icons)/bridge.svg');
+}
+
+.mx_RoomSettingsDialog_warningIcon::before {
+    mask-image: url('$(icons)/warning-triangle.svg');
+}
+
+// show a different AvatarSetting placeholder for RoomProfileSettings which is basically a clone of ProfileSettings
+.mx_RoomSettingsDialog {
+    .mx_AvatarSetting_avatar {
+        .mx_AvatarSetting_avatarPlaceholder::before {
+            mask: url("$(icons)/image.svg");
+            mask-repeat: no-repeat;
+            mask-size: 36px;
+            mask-position: center;
+        }
+    }
+}
+
+.mx_TermsDialog_link {
+    display: inline-block;
+    mask-image: url('$(icons)/external-link.svg');
+    background-color: $accent-color;
+    width: 10px;
+    height: 10px;
+}
+
+.mx_KeyBackupFailedDialog_title {
+    &::before {
+        mask: url("$(icons)/e2e/lock-warning-filled.svg");
+        mask-repeat: no-repeat;
+        background-color: $primary-fg-color;
+        content: "";
+        position: absolute;
+        top: -6px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+}
+
+.mx_DirectorySearchBox_joinButton {
+    background-image: url('$(icons)/icon-return.svg');
+    background-position: 8px 70%;
+    background-repeat: no-repeat;
+}
+
+.mx_DirectorySearchBox_clear {
+    background-color: $warning-color;
+    mask: url('$(icons)/cancel.svg');
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: 10px;
+}
+
+// Can't add pseudo-elements to a select directly, so we use its parent.
+.mx_Field_select::before {
+    content: "";
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    width: 10px;
+    height: 6px;
+    mask: url('$(icons)/dropdown-arrow.svg');
+    mask-repeat: no-repeat;
+    background-color: $primary-fg-color;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.mx_IconButton {
+    &::before {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 100%;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: 55%;
+        background-color: $accent-color;
+    }
+
+    &.mx_IconButton_icon_check::before {
+        mask-image: url('$(icons)/check.svg');
+    }
+
+    &.mx_IconButton_icon_edit::before {
+        mask-image: url('$(icons)/edit.svg');
+    }
+}
+
+.mx_EmojiPicker_search_icon::after {
+    mask: url('$(icons)/search.svg') no-repeat;
+    mask-size: 100%;
+    background-color: $primary-fg-color;
+    content: '';
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+.mx_CreateEvent_image {
+    float: left;
+    margin-right: 20px;
+    width: 72px;
+    height: 34px;
+
+    background-color: $primary-fg-color;
+    mask: url('$(icons)/room-continuation.svg');
+    mask-repeat: no-repeat;
+    mask-position: center;
+}
+
+.mx_EmojiPicker_search_clear::after {
+    mask-image: url('$(icons)/cancel.svg');
+}
+
+.mx_HiddenImagePlaceholder {
+    .mx_HiddenImagePlaceholder_button {
+        span.mx_HiddenImagePlaceholder_eye {
+            margin-right: 8px;
+            background-color: $accent-color;
+            mask-image: url('$(icons)/eye.svg');
+            display: inline-block;
+            width: 18px;
+            height: 14px;
+        }
+    }
+}
+
+.mx_MessageActionBar_maskButton::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 27px;
+    background-color: $message-action-bar-fg-color;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: 14px;
+}
+
+.mx_MessageActionBar_reactButton::after {
+    mask-image: url('$(icons)/message/react.svg');
+}
+
+.mx_MessageActionBar_replyButton::after {
+    mask-image: url('$(icons)/message/reply.svg');
+}
+
+.mx_MessageActionBar_editButton::after {
+    mask-image: url('$(icons)/message/edit.svg');
+}
+
+.mx_MessageActionBar_optionsButton::after {
+    mask-size: auto;
+    mask-image: url('$(icons)/message/more.svg');
+}
+
+.mx_MessageActionBar_maskButton:hover::after {
+    background-color: $accent-color;
+}
+
+.mx_cryptoEvent {
+    &.mx_cryptoEvent_icon::before {
+        position: absolute;
+        left: 0;
+        top: 7px;
+        width: 16px;
+        height: 16px;
+        content: "";
+        background-image: url("$(icons)/e2e/normal.svg");
+        background-repeat: no-repeat;
+        background-size: 100%;
+    }
+
+    &.mx_cryptoEvent_icon_verified::before {
+        background-image: url("$(icons)/e2e/verified.svg");
+    }
+
+    &.mx_cryptoEvent_icon_warning::before {
+        background-image: url("$(icons)/e2e/warning.svg");
+    }
+}
+
+.mx_UserInfo {
+    .mx_UserInfo_cancel {
+        div {
+            height: 16px;
+            width: 16px;
+            padding: 4px;
+            mask-image: url('$(icons)/minimise.svg');
+            mask-repeat: no-repeat;
+            mask-position: 7px center;
+            background-color: $rightpanel-button-color;
+        }
+    }
+}
+
+.mx_AppTileMenuBar_iconButton.mx_AppTileMenuBar_iconButton_minimise {
+    mask-image: url('$(icons)/widget/minimise.svg');
+    background-color: $accent-color;
+}
+
+.mx_AppTileMenuBar_iconButton.mx_AppTileMenuBar_iconButton_maximise {
+    mask-image: url('$(icons)/widget/maximise.svg');
+    background-color: $accent-color;
+}
+
+.mx_AppTileMenuBar_iconButton.mx_AppTileMenuBar_iconButton_popout {
+    mask-image: url('$(icons)/widget/external-link.svg');
+}
+
+.mx_AppTileMenuBar_iconButton.mx_AppTileMenuBar_iconButton_menu {
+    mask-image: url('$(icons)/icon_context.svg');
+}
+
+.mx_AppPermissionWarning_helpIcon::before {
+    display: inline-block;
+    background-color: $accent-color;
+    mask-repeat: no-repeat;
+    mask-size: 12px;
+    width: 12px;
+    height: 12px;
+    mask-position: center;
+    content: '';
+    vertical-align: middle;
+    mask-image: url('$(icons)/help-circle.svg');
+}
+
+.mx_E2EIcon_warning::after,
+.mx_E2EIcon_normal::after,
+.mx_E2EIcon_verified::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.mx_E2EIcon_warning::after {
+    background-image: url('$(icons)/e2e/warning.svg');
+}
+
+.mx_E2EIcon_normal::after {
+    background-image: url('$(icons)/e2e/normal.svg');
+}
+
+.mx_E2EIcon_verified::after {
+    background-image: url('$(icons)/e2e/verified.svg');
+}
+
+.mx_EventTile_e2eIcon_undecryptable, .mx_EventTile_e2eIcon_unverified {
+    background-image: url('$(icons)/e2e/warning.svg');
+    opacity: 1;
+}
+
+.mx_EventTile_e2eIcon_unknown {
+    background-image: url('$(icons)/e2e/warning.svg');
+    opacity: 1;
+}
+
+.mx_EventTile_e2eIcon_unencrypted {
+    background-image: url('$(icons)/e2e/warning.svg');
+    opacity: 1;
+}
+
+/* always override hidden attribute for blocked and warning */
+.mx_EventTile_e2eIcon_hidden[src*="img/e2e-blocked.svg"],
+.mx_EventTile_e2eIcon_hidden[src*="img/e2e-warning.svg"] {
+    display: block;
+}
+
+.mx_RoomHeader_pinnedButton::before {
+    mask-image: url('$(icons)/icons-pin.svg');
+}
+
+.mx_RoomTile_menuButton {
+    background-image: url('$(icons)/icon_context.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.mx_AvatarSetting_avatar {
+    .mx_AccessibleButton.mx_AccessibleButton_kind_primary {
+        div::before {
+            content: '';
+            position: absolute;
+            height: 12px;
+            width: 12px;
+
+            background-color: $button-primary-fg-color;
+            mask-repeat: no-repeat;
+            mask-size: contain;
+            mask-image: url('$(icons)/upload.svg');
+        }
+    }
+
+    .mx_AvatarSetting_avatarPlaceholder::before {
+        background-color: $settings-profile-overlay-placeholder-fg-color;
+        mask: url("$(icons)/user.svg");
+        mask-repeat: no-repeat;
+        mask-size: 36px;
+        mask-position: center;
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+}
+
+.mx_SearchBar {
+    .mx_SearchBar_cancel {
+        background-color: $warning-color;
+        mask: url('$(icons)/cancel.svg');
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: 14px;
+        padding: 9px;
+        margin: 0 12px 0 3px;
+        cursor: pointer;
+    }
+}
+
+.mx_JumpToBottomButton_scrollDown::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    mask: url('$(icons)/icon-jump-to-bottom.svg');
+    mask-repeat: no-repeat;
+    mask-position: 9px 14px;
+    background: $roomtile-name-color;
+}
+
+.mx_MessageComposer_upload::before {
+    mask-image: url('$(icons)/paperclip.svg');
+}
+
+.mx_MessageComposer_hangup::before {
+    mask-image: url('$(icons)/hangup.svg');
+}
+
+.mx_MessageComposer_voicecall::before {
+    mask-image: url('$(icons)/phone.svg');
+}
+
+.mx_MessageComposer_videocall::before {
+    mask-image: url('$(icons)/video.svg');
+}
+
+.mx_MessageComposer_stickers::before {
+    mask-image: url('$(icons)/face.svg');
+}
+
+.mx_MemberList_invite {
+    span {
+        line-height: 50px;
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        height: 24px;
+        width: 24px;
+        background-color: $rightpanel-button-color;
+        mask-image: url('$(icons)/user-add.svg');
+        mask-repeat: no-repeat;
+        mask-size: contain;
+    }
+}
+
+.mx_MessageComposer_formatbar_markdown,
+.mx_MessageComposer_input_markdownIndicator {
+    mask-image: url('$(icons)/markdown.svg');
+    mask-size: contain;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    background-color: $composer-button-color;
+}
+
+.mx_TopUnreadMessagesBar_scrollUp::before {
+    content: "";
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    mask: url('$(icons)/icon-jump-to-first-unread.svg');
+    mask-repeat: no-repeat;
+    mask-position: 9px 13px;
+    background: $roomtile-name-color;
+}
+
+.mx_InlineTermsAgreement_link {
+    display: inline-block;
+    mask-image: url('$(icons)/external-link.svg');
+    background-color: $accent-color;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    width: 12px;
+    height: 12px;
+    margin-left: 3px;
+    vertical-align: middle;
+}
+
+.mx_EventListSummary_toggle_collapsed::before {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    mask: url('$(icons)/dropdown-arrow.svg');
+    mask-repeat: no-repeat;
+    mask-position: 8px 13px;
+    background: $roomtile-name-color;
+}
+
+.mx_EventListSummary_toggle_expanded::before {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    mask: url('$(icons)/dropdown-arrow.svg');
+    mask-repeat: no-repeat;
+    mask-position: 8px 13px;
+    background: $roomtile-name-color;
+    transition: transform 0.2s ease-in;
+}

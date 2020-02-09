@@ -62,7 +62,7 @@ limitations under the License.
     }
 
     .mx_InviteDialog_goButton {
-        min-width: 48px;
+        width: 48px;
         margin-left: 10px;
         height: 25px;
         line-height: 25px;
@@ -124,21 +124,6 @@ limitations under the License.
         background-color: $username-variant1-color;
         display: inline-block;
         position: relative;
-
-        &::before {
-            content: "";
-            width: 24px;
-            height: 24px;
-            grid-column: 1;
-            grid-row: 1;
-            mask-image: url("$(res)/img/feather-customised/check.svg");
-            mask-size: 100%;
-            mask-repeat: no-repeat;
-            position: absolute;
-            top: 6px; // 50%
-            left: 6px; // 50%
-            background-color: #ffffff; // this is fine without a var because it's for both themes
-        }
     }
 
     .mx_InviteDialog_roomTile_name {
@@ -210,14 +195,17 @@ limitations under the License.
 .mx_InviteDialog {
     // Prevent the dialog from jumping around randomly when elements change.
     height: 590px;
-    padding-left: 20px; // the design wants some padding on the left
+}
+
+.mx_InviteDialog_content {
+    padding: 15px
 }
 
 .mx_InviteDialog_userSections {
     margin-top: 10px;
     overflow-y: auto;
     padding-right: 45px;
-    height: 455px; // mx_InviteDialog's height minus some for the upper elements
+    height: auto; // mx_InviteDialog's height minus some for the upper elements
 }
 
 // Right margin for the design. We could apply this to the whole dialog, but then the scrollbar

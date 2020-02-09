@@ -72,13 +72,14 @@ limitations under the License.
 .mx_RightPanel_invite {
     flex: 0 0 auto;
     position: relative;
-    background-color: $button-bg-color;
-    border-radius: 4px;
-    padding: 8px;
-    margin: 9px;
+    background-color: $primary-bg-color;
+    border-radius: 2px;
+    height: 51px;
+    padding-left: 51px;
     display: flex;
-    justify-content: center;
-    color: $button-fg-color;
+    color: $input-fg-color;
+    border-bottom: 1px solid $primary-hairline-color;
+    box-shadow: 0 5px 10px 0 $box-shadow-color;
     font-weight: 600;
 
     .mx_RightPanel_icon {
@@ -90,11 +91,4 @@ limitations under the License.
 .mx_MemberList_invite.mx_AccessibleButton_disabled {
     background-color: $greyed-fg-color;
     cursor: not-allowed;
-}
-
-.mx_MemberList_invite span {
-    background-image: url('$(res)/img/feather-customised/user-add.svg');
-    background-repeat: no-repeat;
-    background-position: center left;
-    padding-left: 25px;
 }

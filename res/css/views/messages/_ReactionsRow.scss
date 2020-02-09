@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .mx_ReactionsRow {
-    margin: 6px 0;
+    padding: 4px 0 4px 4px;
     color: $primary-fg-color;
 }
 
@@ -23,7 +23,7 @@ limitations under the License.
     text-decoration: none;
     font-size: 10px;
     font-weight: 600;
-    margin-left: 6px;
+    margin-left: 4px;
     vertical-align: top;
 
     &:hover,
