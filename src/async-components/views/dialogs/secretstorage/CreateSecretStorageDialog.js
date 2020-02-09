@@ -467,7 +467,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent {
             </div>;
         }
 
-        return <div>
+        return <div className="mx_CreateSecretStorageDialog_content">
             <p>{_t(
                 "Set up encryption on this session to allow it to verify other sessions, " +
                 "granting them access to encrypted messages and marking them as trusted for other users.",
