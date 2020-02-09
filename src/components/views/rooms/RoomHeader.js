@@ -315,13 +315,13 @@ export default createReactClass({
         return (
             <div className="mx_RoomHeader light-panel">
                 <div className="mx_RoomHeader_wrapper">
+                    <RoomHeaderButtons />
                     <div className="mx_RoomHeader_avatar">{ roomAvatar }{ e2eIcon }</div>
                     { privateIcon }
                     { name }
                     { topicElement }
                     { cancelButton }
                     { rightRow }
-                    <RoomHeaderButtons />
                 </div>
             </div>
         );
