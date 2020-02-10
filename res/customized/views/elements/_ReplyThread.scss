@@ -1,0 +1,81 @@
+.mx_ReplyThread {
+    margin: 0;
+
+    a.mx_ReplyThread_show {
+        margin-left: 10px;
+    }
+
+    .mx_Pill {
+        color: #FFFFFF;
+        margin-right: 5px;
+    }
+
+    .mx_EventTile {
+        padding-top: 10px !important;
+        line-height: 22px;
+
+        .mx_EventTile_avatar {
+            display: block !important;
+            left: 12px !important;
+            right: auto;
+
+            img {
+                width: 28px;
+                height: 28px;
+            }
+        }
+
+        .mx_SenderProfile {
+            padding-left: 46px;
+            padding-top: 3px;
+
+            .mx_Username_color5 {
+                color: #ffffff;
+            }
+        }
+
+        .mx_EventTile_reply > a {
+            position: absolute;
+            top: -9px;
+            left: 46px;
+
+            .mx_MessageTimestamp {
+                visibility: visible !important;
+            }
+        }
+
+        .mx_EventTile_reply {
+            padding-left: 0;
+
+            .mx_EventTile_body {
+                font-style: italic;
+            }
+        }
+    }
+}
+
+.mx_Sender .mx_ReplyThread {
+    border-bottom: 1px solid #8178d2;
+
+    .mx_EventTile {
+        .mx_EventTile_reply {
+            color: #b8add3;
+
+            .mx_EventTile_e2eIcon {
+                display: none;
+            }
+        }
+    }
+}
+
+.mx_Receiver .mx_ReplyThread {
+    border-bottom: 1px solid #dddddd;
+}
+
+blockquote.mx_ReplyThread {
+    min-height: 30px;
+    line-height: 30px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}

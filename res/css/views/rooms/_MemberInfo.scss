@@ -30,6 +30,17 @@ limitations under the License.
     margin-right: 0;
 }
 
+.mx_MemberInfo_cancel {
+    height: 16px;
+    width: 16px;
+    padding: 10px 0 10px 10px;
+    cursor: pointer;
+    mask-image: url('$(res)/img/minimise.svg');
+    mask-repeat: no-repeat;
+    mask-position: 16px center;
+    background-color: $rightpanel-button-color;
+}
+
 .mx_MemberInfo_name h2 {
     flex: 1;
     overflow-x: auto;

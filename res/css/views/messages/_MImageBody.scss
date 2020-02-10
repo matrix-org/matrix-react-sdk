@@ -16,6 +16,7 @@ limitations under the License.
 
 .mx_MImageBody {
     display: block;
+    margin-right: 34px;
 }
 
 .mx_MImageBody_thumbnail {
@@ -77,6 +78,16 @@ limitations under the License.
 
     .mx_HiddenImagePlaceholder_button {
         color: $accent-color;
+
+        span.mx_HiddenImagePlaceholder_eye {
+            margin-right: 8px;
+
+            background-color: $accent-color;
+            mask-image: url('$(res)/img/feather-customised/eye.svg');
+            display: inline-block;
+            width: 18px;
+            height: 14px;
+        }
 
         span:not(.mx_HiddenImagePlaceholder_eye) {
             vertical-align: text-bottom;

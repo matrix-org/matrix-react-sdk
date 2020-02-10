@@ -15,57 +15,7 @@ limitations under the License.
 */
 
 .mx_ReplyThread {
-    margin: 0;
-
-    .mx_EventTile {
-        padding-top: 10px !important;
-
-        .mx_EventTile_avatar {
-            display: block !important;
-            left: 12px !important;
-            right: auto;
-
-            img {
-                width: 28px;
-                height: 28px;
-            }
-        }
-
-        .mx_SenderProfile {
-            padding-left: 46px;
-            padding-top: 3px;
-        }
-
-        .mx_EventTile_reply > a {
-            position: absolute;
-            top: -9px;
-            left: 46px;
-
-            .mx_MessageTimestamp {
-                visibility: visible !important;
-            }
-        }
-
-        .mx_EventTile_reply {
-            .mx_EventTile_body {
-                font-style: italic;
-            }
-        }
-    }
-}
-
-.mx_Sender .mx_ReplyThread {
-    border-bottom: 1px solid #8178d2;
-
-    .mx_EventTile {
-        .mx_EventTile_reply {
-            color: #b8add3;
-        }
-    }
-}
-
-.mx_Receiver .mx_ReplyThread {
-    border-bottom: 1px solid #dddddd;
+    margin-top: 0;
 }
 
 .mx_ReplyThread .mx_DateSeparator {
@@ -78,4 +28,10 @@ limitations under the License.
 
 .mx_ReplyThread_show {
     cursor: pointer;
+}
+
+blockquote.mx_ReplyThread {
+    margin-left: 0;
+    padding-left: 10px;
+    border-left: 4px solid $blockquote-bar-color;
 }

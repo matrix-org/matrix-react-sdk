@@ -49,6 +49,25 @@ limitations under the License.
         padding-right: 16px;
 
         &.mx_Toast_hasIcon {
+            &::after {
+                content: "";
+                width: 22px;
+                height: 22px;
+                grid-column: 1;
+                grid-row: 1;
+                mask-size: 100%;
+                mask-repeat: no-repeat;
+            }
+
+            &.mx_Toast_icon_verification::after {
+                mask-image: url("$(res)/img/e2e/normal.svg");
+                background-color: $primary-fg-color;
+            }
+
+            &.mx_Toast_icon_verification_warning::after {
+                background-image: url("$(res)/img/e2e/warning.svg");
+            }
+
             h2, .mx_Toast_body {
                 grid-column: 2;
             }

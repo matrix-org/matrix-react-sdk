@@ -28,6 +28,22 @@ limitations under the License.
         margin: 3.5px 0;
     }
 
+    .mx_ViewSourceEvent_toggle {
+        width: 12px;
+        mask-repeat: no-repeat;
+        mask-position: 0 center;
+        mask-size: auto 12px;
+        visibility: hidden;
+        background-color: $accent-color;
+        mask-image: url('$(res)/img/feather-customised/widget/maximise.svg');
+    }
+
+    &.mx_ViewSourceEvent_expanded .mx_ViewSourceEvent_toggle {
+        mask-position: 0 bottom;
+        margin-bottom: 7px;
+        mask-image: url('$(res)/img/feather-customised/widget/minimise.svg');
+    }
+
     &:hover .mx_ViewSourceEvent_toggle {
         visibility: visible;
     }

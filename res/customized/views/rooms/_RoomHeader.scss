@@ -1,0 +1,47 @@
+.mx_RoomHeader {
+    box-shadow: 0 5px 10px 0 $box-shadow-color;
+}
+
+.mx_RoomHeader_wrapper {
+    padding: 0;
+}
+
+.mx_RoomHeader_buttons {
+    padding-right: 0;
+    height: 52px;
+}
+
+.mx_RoomHeader_button {
+    margin-left: 0;
+}
+
+.mx_RoomHeader_avatar {
+    margin: 0 5px 0 14px;
+}
+
+.mx_RoomHeader_button {
+    cursor: pointer;
+    flex: 0 0 auto;
+    vertical-align: top;
+    text-align: center;
+    border-left: 1px solid #e7e7e7;
+    padding: 0 10px 0 10px;
+    border-bottom: 2px solid transparent;
+    height: 50px;
+    width: 25px;
+    position: relative;
+}
+
+.mx_RoomHeader_button:hover::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: $button-bg-color;
+}
+
+.mx_RoomHeader_button:hover::before {
+    background-color: $accent-color;
+}

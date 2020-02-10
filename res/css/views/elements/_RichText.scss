@@ -6,9 +6,11 @@
 .mx_RoomPill,
 .mx_GroupPill,
 .mx_AtRoomPill {
+    border-radius: 16px;
     display: inline-block;
-    height: 22px;
+    height: 20px;
     line-height: 20px;
+    padding-left: 5px;
 }
 
 /* More specific to override `.markdown-body a` text-decoration */
@@ -21,7 +23,7 @@
 .mx_UserPill {
     color: $primary-fg-color;
     background-color: $other-user-pill-bg-color;
-    padding-right: 6px;
+    padding-right: 5px;
 }
 
 .mx_UserPill_selected {
@@ -35,7 +37,7 @@
 .mx_MessageComposer_input .mx_AtRoomPill {
     color: $accent-fg-color;
     background-color: $mention-user-pill-bg-color;
-    padding-right: 8px;
+    padding-right: 5px;
 }
 
 /* More specific to override `.markdown-body a` color */
@@ -45,7 +47,7 @@
 .mx_GroupPill {
     color: $accent-fg-color;
     background-color: $rte-room-pill-color;
-    padding-right: 8px;
+    padding-right: 5px;
 }
 
 /* More specific to override `.markdown-body a` color */
@@ -53,7 +55,7 @@
 .mx_GroupPill {
     color: $accent-fg-color;
     background-color: $rte-group-pill-color;
-    padding-right: 8px;
+    padding-right: 5px;
 }
 
 .mx_EventTile_body .mx_UserPill,
@@ -67,9 +69,8 @@
 .mx_GroupPill .mx_BaseAvatar,
 .mx_AtRoomPill .mx_BaseAvatar {
     position: relative;
-    top: 3px;
-    left: 3px;
-    margin-right: 8px;
+    left: -3px;
+    top: 2px;
 }
 
 .mx_Markdown_BOLD {

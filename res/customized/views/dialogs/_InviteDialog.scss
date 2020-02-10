@@ -1,0 +1,18 @@
+.mx_InviteDialog_addressBar {
+    .mx_InviteDialog_goButton {
+        width: 48px;
+    }
+}
+.mx_InviteDialog {
+    // Prevent the dialog from jumping around randomly when elements change.
+    height: 590px;
+    padding-left: 0;
+}
+
+.mx_InviteDialog_content {
+    padding: 15px
+}
+
+.mx_InviteDialog_userSections {
+    height: auto; // mx_InviteDialog's height minus some for the upper elements
+}

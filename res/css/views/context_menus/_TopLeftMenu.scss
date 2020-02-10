@@ -49,6 +49,26 @@ limitations under the License.
         padding: 0;
         list-style: none;
 
+        .mx_TopLeftMenu_icon_home::after {
+            mask-image: url('$(res)/img/feather-customised/home.svg');
+        }
+
+        .mx_TopLeftMenu_icon_help::after {
+            mask-image: url('$(res)/img/feather-customised/life-buoy.svg');
+        }
+
+        .mx_TopLeftMenu_icon_settings::after {
+            mask-image: url('$(res)/img/feather-customised/settings.svg');
+        }
+
+        .mx_TopLeftMenu_icon_signin::after {
+            mask-image: url('$(res)/img/feather-customised/sign-in.svg');
+        }
+
+        .mx_TopLeftMenu_icon_signout::after {
+            mask-image: url('$(res)/img/feather-customised/sign-out.svg');
+        }
+
         .mx_AccessibleButton::after {
             mask-repeat: no-repeat;
             mask-position: 0 center;

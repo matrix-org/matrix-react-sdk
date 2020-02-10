@@ -21,7 +21,7 @@ limitations under the License.
 }
 
 .mx_ShareDialog_content {
-    padding: 15px;
+    margin: 10px 0;
 }
 
 .mx_ShareDialog_matrixto {
@@ -30,6 +30,7 @@ limitations under the License.
     border-radius: 5px;
     border: solid 1px $light-fg-color;
     margin-bottom: 10px;
+    margin-top: 30px;
     padding: 10px;
 }
 

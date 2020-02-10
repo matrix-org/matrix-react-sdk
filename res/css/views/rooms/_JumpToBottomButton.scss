@@ -54,3 +54,16 @@ limitations under the License.
     border: 1.3px solid $roomtile-name-color;
     cursor: pointer;
 }
+
+.mx_JumpToBottomButton_scrollDown::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    mask: url('$(res)/img/icon-jump-to-bottom.svg');
+    mask-repeat: no-repeat;
+    mask-position: 9px 14px;
+    background: $roomtile-name-color;
+}

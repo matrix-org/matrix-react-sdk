@@ -1,0 +1,16 @@
+.mx_MemberList_invite,
+.mx_RightPanel_invite {
+    background-color: $primary-bg-color;
+    border-radius: 2px;
+    height: 51px;
+    padding: 0 0 0 51px;
+    justify-content: normal;
+    color: $input-fg-color;
+    margin: 0;
+    border-bottom: 1px solid $primary-hairline-color;
+    box-shadow: 0 5px 10px 0 $box-shadow-color;
+}
+
+.mx_MemberList_invite span {
+    background-image: none;
+}

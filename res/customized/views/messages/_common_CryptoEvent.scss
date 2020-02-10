@@ -1,0 +1,13 @@
+.mx_cryptoEvent {
+    position: relative;
+    display: inline-block;
+    padding: 4px 4px 4px 20px;
+
+    .mx_cryptoEvent_title {
+        display: none;
+    }
+
+    .mx_cryptoEvent_subtitle {
+        color: #FFFFFF !important;
+    }
+}

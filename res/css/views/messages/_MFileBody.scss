@@ -18,31 +18,10 @@ limitations under the License.
     color: $accent-color;
 }
 
-.mx_MFileBody_download > a {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: normal;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    cursor: pointer;
-    background-image: none;
-    color: #444444;
-    background-color: #fdfdfd;
-    border: 1px solid #d8d8d8;
-    border-radius: 0 0 4px 4px;
-    padding: 6px 12px;
-    margin-top: -1px;
-    font-size: 12px;
-    line-height: 1.42857143;
-    user-select: none;
+.mx_MFileBody_download a {
+    color: $accent-color;
     text-decoration: none;
-
-    &:hover {
-        background-color: #fdfdfd;
-        border-color: #a6a6a6;
-        color: #444444;
-    }
+    cursor: pointer;
 }
 
 .mx_MFileBody_download object {

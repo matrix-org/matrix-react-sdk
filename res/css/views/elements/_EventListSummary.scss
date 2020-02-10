@@ -16,76 +16,6 @@ limitations under the License.
 
 .mx_EventListSummary {
     position: relative;
-    background: linear-gradient(90deg, rgba(247,247,247,1) 0%, rgba(243,243,243,1) 30%, rgba(239,239,239,1) 100%);
-    border: 1px solid #e7e7e7;
-    border-radius: 4px;
-    margin-top: 15px;
-
-    .mx_EventTile_info {
-        text-align: center;
-
-        .mx_EventListSummary_avatars {
-            padding-top: 0;
-        }
-
-        .mx_TextualEvent {
-            padding: 4px;
-        }
-    }
-
-    .mx_EventTile_line {
-        padding: 0;
-        margin-right: 30px;
-        margin-left: 30px;
-        height: 30px;
-
-        .mx_MessageActionBar {
-            top: 3px;
-            right: -23px;
-        }
-    }
-
-    li {
-        margin-top: 0 !important;
-        height: 30px !important;
-        border-bottom: 1px solid #e7e7e7;
-
-        .mx_EventTile {
-            height: 100% !important;
-
-            .mx_EventUser {
-                top: 10px !important;
-                right: 10px;
-            }
-
-            .mx_TextualEvent {
-                padding: 4px;
-                text-align: left;
-            }
-
-            .mx_EventTile_line {
-                padding: 0;
-                margin-right: 30px;
-                margin-left: 30px;
-
-                &:hover {
-                    background-color: transparent !important;
-                }
-            }
-
-            .mx_EventTile_avatar {
-                left: 10px;
-            }
-
-            &:hover {
-                background-color: #fefefe;
-            }
-        }
-    }
-
-    li:last-child {
-        border: 0;
-    }
 }
 
 .mx_TextualEvent.mx_EventListSummary_summary {
@@ -109,15 +39,14 @@ limitations under the License.
     color: $accent-color;
     cursor: pointer;
     float: right;
-    width: 30px;
-    height: 30px;
+    margin-right: 10px;
+    margin-top: 8px;
 }
 
 .mx_EventListSummary_line {
     border-bottom: 1px solid $primary-hairline-color;
-    padding-left: 63px;
+    margin-left: 63px;
     line-height: 30px;
-    height: 30px;
 }
 
 .mx_MatrixChat_useCompactLayout {

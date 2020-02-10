@@ -22,13 +22,22 @@ limitations under the License.
     cursor: pointer;
     height: 34px;
     margin: 0;
-    padding: 0;
+    padding: 0 8px 0 10px;
     position: relative;
 }
 
 .mx_RoomTile:focus {
     filter: none !important;
     background-color: $roomtile-focused-bg-color;
+}
+
+.mx_RoomTile_menuButton {
+    display: none;
+    flex: 0 0 16px;
+    height: 16px;
+    background-image: url('$(res)/img/icon_context.svg');
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .mx_RoomTile_tooltip {
@@ -120,13 +129,6 @@ limitations under the License.
     font-size: 12px;
 }
 
-.mx_RoomTile_menuButton {
-    display: none;
-    flex: 0 0 16px;
-    height: 16px;
-    margin-right: 9px;
-}
-
 .collapsed {
     .mx_RoomTile {
         margin: 0 6px;
@@ -183,7 +185,7 @@ limitations under the License.
 }
 
 .mx_RoomTile_selected {
-    border-radius: 2px;
+    border-radius: 4px;
     background-color: $roomtile-selected-bg-color;
 }
 

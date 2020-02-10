@@ -1,0 +1,104 @@
+input[type=text],
+input[type=search],
+input[type=password] {
+    padding: 0;
+    font-size: 12px;
+}
+
+input[type=text].mx_textinput_icon,
+input[type=search].mx_textinput_icon {
+    background-image: none !important;
+    height: 32px;
+}
+
+.mx_Dialog {
+    padding: 0;
+    box-shadow: 0 0 5px $dialog-shadow-color;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+// .mx_textinput is a container for a text input
+// + some other controls like buttons, ...
+// it has the appearance of a text box so the controls
+// appear to be part of the input
+.mx_Dialog, .mx_MatrixChat {
+    :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type=text],
+    :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type=search],
+    .mx_textinput {
+        border-radius: 0;
+    }
+}
+
+.mx_Dialog_header {
+    margin-bottom: 0;
+}
+
+.mx_Dialog_title {
+    font-size: 16px;
+    line-height: 1.428571429;
+    border-radius: 3px 3px 0 0;
+    padding: 15px;
+    -webkit-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.mx_Dialog_header.mx_Dialog_headerWithButton > .mx_Dialog_title {
+    text-align: left;
+}
+
+.mx_Dialog_cancelButton {
+    mask: none;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: cover;
+    width: 14px;
+    height: 14px;
+    background-color: none;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.mx_Dialog_content {
+    margin: 0;
+    padding: 15px;
+}
+
+.mx_Dialog_buttons {
+    margin-top: 0;
+    padding: 10px 15px 10px 15px;
+    border-top: 1px solid #e5e5e5;
+    background-color: #fafafa;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    text-align: right;
+}
+
+/* XXX: Our button style are a mess: buttons that happen to appear in dialogs get special styles applied
+ * to them that no button anywhere else in the app gets by default. In practice, buttons in other places
+ * in the app look the same by being AccessibleButtons, or possibly by having explict button classes.
+ * We should go through and have one consistent set of styles for buttons throughout the app.
+ * For now, I am duplicating the selectors here for mx_Dialog and mx_DialogButtons.
+ */
+.mx_Dialog button, .mx_Dialog input[type="submit"], .mx_Dialog_buttons button, .mx_Dialog_buttons input[type="submit"] {
+    @mixin mx_DialogButton;
+    margin-left: 0px;
+    margin-right: 8px;
+
+    // flip colours for the secondary ones
+    font-weight: 600;
+    border: 1px solid $button-default-border-color;
+    color: $button-default-fg-color;
+    background-color: $button-default-bg-color;
+}
+
+.mx_Dialog button.mx_Dialog_primary, .mx_Dialog input[type="submit"].mx_Dialog_primary, .mx_Dialog_buttons button.mx_Dialog_primary, .mx_Dialog_buttons input[type="submit"].mx_Dialog_primary {
+    border: 1px solid $button-primary-border-color;
+    color: $button-primary-fg-color;
+    background-color: $button-primary-bg-color;
+    min-width: 156px;
+}

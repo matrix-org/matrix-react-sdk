@@ -69,7 +69,9 @@ a:visited {
 input[type=text],
 input[type=search],
 input[type=password] {
+    padding: 9px;
     font-family: $font-family;
+    font-size: 14px;
     font-weight: 600;
     min-width: 0;
 }
@@ -77,7 +79,14 @@ input[type=password] {
 input[type=text].mx_textinput_icon,
 input[type=search].mx_textinput_icon {
     padding-left: 36px;
-    height: 32px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+}
+
+// FIXME THEME - Tint by CSS rather than referencing a duplicate asset
+input[type=text].mx_textinput_icon.mx_textinput_search,
+input[type=search].mx_textinput_icon.mx_textinput_search {
+    background-image: url('$(res)/img/feather-customised/search-input.svg');
 }
 
 // dont search UI as not all browsers support it,
@@ -139,6 +148,7 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
         box-sizing: border-box;
         background-color: transparent;
         color: $input-darker-fg-color;
+        border-radius: 4px;
         border: 1px solid $dialog-close-fg-color;
         // these things should probably not be defined
         // globally
@@ -271,10 +281,11 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
     font-weight: 300;
     font-size: 15px;
     position: relative;
-    padding: 0;
+    padding: 25px 30px 30px 30px;
     max-height: 80%;
-    box-shadow: 0 0 5px $dialog-shadow-color;
-    border-radius: 2px
+    box-shadow: 2px 15px 30px 0 $dialog-shadow-color;
+    border-radius: 4px;
+    overflow-y: auto;
 }
 
 .mx_Dialog_fixedWidth {
@@ -324,6 +335,7 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 
 .mx_Dialog_header {
     position: relative;
+    margin-bottom: 10px;
 }
 
 .mx_Dialog_titleImage {
@@ -335,19 +347,13 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 }
 
 .mx_Dialog_title {
-    border-radius: 3px 3px 0 0;
-    padding: 15px;
-    -webkit-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
-    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid #e5e5e5;
-    font-size: 16px;
-    line-height: 1.428571429;
+    font-size: 22px;
+    line-height: 36px;
     color: $dialog-title-fg-color;
 }
 
 .mx_Dialog_header.mx_Dialog_headerWithButton > .mx_Dialog_title {
-    text-align: left;
+    text-align: center;
 }
 
 .mx_Dialog_title.danger {
@@ -355,28 +361,28 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 }
 
 .mx_Dialog_cancelButton {
+    mask: url('$(res)/img/feather-customised/cancel.svg');
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: cover;
     width: 14px;
     height: 14px;
+    background-color: $dialog-close-fg-color;
     cursor: pointer;
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 4px;
+    right: 0px;
 }
 
 .mx_Dialog_content {
-    padding: 15px;
-    margin: 0;
+    margin: 24px 0 68px;
     font-size: 14px;
     color: $primary-fg-color;
     word-wrap: break-word;
 }
 
 .mx_Dialog_buttons {
-    padding: 10px 15px 10px 15px;
-    border-top: 1px solid #e5e5e5;
-    background-color: #fafafa;
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;
+    margin-top: 20px;
     text-align: right;
 }
 
@@ -393,9 +399,9 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 
     // flip colours for the secondary ones
     font-weight: 600;
-    border: 1px solid $button-default-border-color;
-    color: $button-default-fg-color;
-    background-color: $button-default-bg-color;
+    border: 1px solid $accent-color;
+    color: $accent-color;
+    background-color: $button-secondary-bg-color;
 }
 
 .mx_Dialog button:last-child {
@@ -411,9 +417,8 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 }
 
 .mx_Dialog button.mx_Dialog_primary, .mx_Dialog input[type="submit"].mx_Dialog_primary, .mx_Dialog_buttons button.mx_Dialog_primary, .mx_Dialog_buttons input[type="submit"].mx_Dialog_primary {
-    border: 1px solid $button-primary-border-color;
-    color: $button-primary-fg-color;
-    background-color: $button-primary-bg-color;
+    color: $accent-fg-color;
+    background-color: $accent-color;
     min-width: 156px;
 }
 

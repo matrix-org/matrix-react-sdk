@@ -1,0 +1,75 @@
+.mx_EventTile_bubble {
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+    margin: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.mx_EventTile_continuation {
+    padding-top: 0px !important;
+
+    &.mx_EventTile_isEditing {
+        padding-top: 5px !important;
+        margin-top: -5px;
+    }
+}
+
+.mx_EventTile_isEditing {
+    height: 100%;
+}
+
+.mx_EventTile_bubbleContainer {
+    display: grid;
+    grid-template-columns: 1fr 100px;
+
+    .mx_EventTile_line {
+        border: 1px solid #4a419b !important;
+        background: linear-gradient(154.02deg, #4a419b 25%, #8277dd 100%) !important;
+        height: 30px;
+        border-radius: 4px !important;
+        text-align: center;
+    }
+}
+
+.mx_EventTile_readAvatars {
+    height: 25px;
+    top: 5px;
+    clear: both;
+}
+
+.mx_EventTile .mx_EventTile_line {
+    border: 0
+}
+
+.mx_EventTile:hover.mx_EventTile_verified .mx_EventTile_line {
+    border: 0
+}
+
+.mx_EventTile:hover.mx_EventTile_unverified .mx_EventTile_line {
+    border: 0
+}
+
+.mx_EventTile:hover.mx_EventTile_unknown .mx_EventTile_line {
+    border: 0
+}
+
+.mx_EventTile_e2eIcon {
+    top: -1px;
+    left: -6px;
+}
+
+// Explicit relationships so that it doesn't apply to nested EventTile components (e.g in Replies)
+.mx_EventTile:hover.mx_EventTile_verified .mx_EventTile_line > a > .mx_MessageTimestamp,
+.mx_EventTile:hover.mx_EventTile_unverified .mx_EventTile_line > a > .mx_MessageTimestamp,
+.mx_EventTile:hover.mx_EventTile_unknown .mx_EventTile_line > a > .mx_MessageTimestamp {
+    left: -6px;
+}
+
+// Explicit relationships so that it doesn't apply to nested EventTile components (e.g in Replies)
+.mx_EventTile:hover.mx_EventTile_verified .mx_EventTile_line > .mx_EventTile_e2eIcon,
+.mx_EventTile:hover.mx_EventTile_unverified .mx_EventTile_line > .mx_EventTile_e2eIcon,
+.mx_EventTile:hover.mx_EventTile_unknown .mx_EventTile_line > .mx_EventTile_e2eIcon {
+    left: -6px;
+}

@@ -15,42 +15,13 @@ limitations under the License.
 */
 
 .mx_MessageContextMenu {
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding: 6px;
 }
 
 .mx_MessageContextMenu_field {
-    font-size: 13px;
-    display: block;
+    padding: 3px 6px 3px 6px;
     cursor: pointer;
-    padding: 9px 15px;
-    font-weight: 500;
-    line-height: 1.42857;
-    color: #444444;
     white-space: nowrap;
-    text-transform: capitalize;
-    position: relative;
-    overflow: hidden;
-    text-align: left;
-
-    &:hover {
-        text-decoration: none;
-        color: #d92b9e;
-        background-color: #f5f5f5;
-    }
-
-    a {
-        display: block;
-        text-decoration: none;
-        color: #444444;
-        width: 100%;
-        margin: -9px -15px;
-        padding: 9px 15px;
-
-        &:hover {
-            color: #d92b9e;
-        }
-    }
 }
 
 .mx_MessageContextMenu_field.mx_MessageContextMenu_fieldSet {

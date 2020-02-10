@@ -1,0 +1,14 @@
+.mx_RoomTile {
+    padding: 0;
+}
+
+.mx_RoomTile_menuButton {
+    display: none;
+    flex: 0 0 16px;
+    height: 16px;
+    margin-right: 9px;
+}
+
+.mx_RoomTile_selected {
+    border-radius: 2px;
+}

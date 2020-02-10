@@ -45,14 +45,14 @@ limitations under the License.
         overflow-x: hidden;
 
         span.mx_UserPill, span.mx_RoomPill {
-            padding-left: 25px;
+            padding-left: 21px;
             position: relative;
 
             // avatar psuedo element
             &::before {
                 position: absolute;
-                left: 3px;
-                top: 3px;
+                left: 2px;
+                top: 2px;
                 content: var(--avatar-letter);
                 width: 16px;
                 height: 16px;
@@ -60,6 +60,7 @@ limitations under the License.
                 color: $avatar-initial-color;
                 background-repeat: no-repeat;
                 background-size: 16px;
+                border-radius: 8px;
                 text-align: center;
                 font-weight: normal;
                 line-height: 16px;

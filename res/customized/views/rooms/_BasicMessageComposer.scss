@@ -1,0 +1,15 @@
+.mx_BasicMessageComposer {
+    .mx_BasicMessageComposer_input {
+        span.mx_UserPill, span.mx_RoomPill {
+            padding-left: 25px;
+            position: relative;
+
+            // avatar psuedo element
+            &::before {
+                left: 3px;
+                top: 3px;
+                border-radius: 0;
+            }
+        }
+    }
+}

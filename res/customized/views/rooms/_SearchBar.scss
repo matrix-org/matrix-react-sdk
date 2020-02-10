@@ -1,0 +1,34 @@
+.mx_SearchBar {
+    height: 34px;
+    background-color: $primary-bg-color;
+
+    .mx_SearchBar_input {
+        margin: 0;
+        border: 0;
+        box-shadow: none;
+    }
+
+    .mx_SearchBar_buttons {
+        display: inherit;
+        height: 100%;
+
+        .mx_SearchBar_button {
+            border: 0;
+            padding: 15px;
+            font-size: 13px;
+            line-height: 3px;
+            cursor: pointer;
+            color: $primary-fg-color;
+            background-color: $primary-bg-color;
+            border-bottom: 2px solid $accent-color;
+            border-right: 1px solid #E7E7E7;
+            font-weight: 600;
+        }
+
+        .mx_SearchBar_unselected {
+            color: $input-darker-fg-color;
+            border-bottom-color: transparent;
+            font-weight: 400;
+        }
+    }
+}

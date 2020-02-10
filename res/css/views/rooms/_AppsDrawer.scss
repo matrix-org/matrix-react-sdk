@@ -143,6 +143,24 @@ $AppsDrawerBodyHeight: 273px;
     margin: 0 3px;
 }
 
+.mx_AppTileMenuBar_iconButton.mx_AppTileMenuBar_iconButton_minimise {
+    mask-image: url('$(res)/img/feather-customised/widget/minimise.svg');
+    background-color: $accent-color;
+}
+
+.mx_AppTileMenuBar_iconButton.mx_AppTileMenuBar_iconButton_maximise {
+    mask-image: url('$(res)/img/feather-customised/widget/maximise.svg');
+    background-color: $accent-color;
+}
+
+.mx_AppTileMenuBar_iconButton.mx_AppTileMenuBar_iconButton_popout {
+    mask-image: url('$(res)/img/feather-customised/widget/external-link.svg');
+}
+
+.mx_AppTileMenuBar_iconButton.mx_AppTileMenuBar_iconButton_menu {
+    mask-image: url('$(res)/img/icon_context.svg');
+}
+
 .mx_AppTileMenuBarWidgetDelete {
     filter: none;
 }
@@ -280,6 +298,19 @@ form.mx_Custom_Widget_Form div {
     width: 10px;
     height: 10px;
     display: inline-block;
+}
+
+.mx_AppPermissionWarning_helpIcon::before {
+    display: inline-block;
+    background-color: $accent-color;
+    mask-repeat: no-repeat;
+    mask-size: 12px;
+    width: 12px;
+    height: 12px;
+    mask-position: center;
+    content: '';
+    vertical-align: middle;
+    mask-image: url('$(res)/img/feather-customised/help-circle.svg');
 }
 
 .mx_AppPermissionWarning_tooltip {
