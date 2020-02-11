@@ -28,10 +28,6 @@
         .mx_SenderProfile {
             padding-left: 46px;
             padding-top: 3px;
-
-            .mx_Username_color5 {
-                color: #ffffff;
-            }
         }
 
         .mx_EventTile_reply > a {
@@ -63,6 +59,12 @@
 
             .mx_EventTile_e2eIcon {
                 display: none;
+            }
+        }
+
+        .mx_SenderProfile {
+            .mx_Username_color5 {
+                color: #ffffff;
             }
         }
     }
