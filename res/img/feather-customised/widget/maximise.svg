@@ -1,1 +1,63 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M448 56v95.005c0 21.382-25.851 32.09-40.971 16.971l-27.704-27.704-107.242 107.243c-4.686 4.686-12.284 4.686-16.971 0l-22.627-22.627c-4.686-4.686-4.686-12.284 0-16.971l107.243-107.243-27.704-27.704C296.905 57.851 307.613 32 328.995 32H424c13.255 0 24 10.745 24 24zM175.917 264.485L68.674 371.728 40.97 344.024C25.851 328.905 0 339.613 0 360.995V456c0 13.255 10.745 24 24 24h95.005c21.382 0 32.09-25.851 16.971-40.971l-27.704-27.704 107.243-107.243c4.686-4.686 4.686-12.284 0-16.971l-22.627-22.627c-4.687-4.685-12.285-4.685-16.971.001z"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="11"
+   height="11"
+   viewBox="0 0 11 11"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="maximise.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <metadata
+     id="metadata12">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs10" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="750"
+     inkscape:window-height="480"
+     id="namedview8"
+     showgrid="false"
+     inkscape:zoom="21.454545"
+     inkscape:cx="5.5"
+     inkscape:cy="5.5"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg6" />
+  <g
+     fill="none"
+     fill-rule="evenodd"
+     stroke="#7AC9A1"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="g4"
+     style="stroke:#000000;stroke-opacity:1">
+    <path
+       d="M7 1h3v3M4 10H1V7M10 1L6.5 4.5M1 10l3.5-3.5"
+       id="path2"
+       style="stroke:#000000;stroke-opacity:1" />
+  </g>
+</svg>

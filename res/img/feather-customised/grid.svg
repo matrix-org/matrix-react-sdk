@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M480 160c17.67 0 32-14.33 32-32V32c0-17.67-14.33-32-32-32h-96c-17.67 0-32 14.33-32 32v16H160V32c0-17.67-14.33-32-32-32H32C14.33 0 0 14.33 0 32v96c0 17.67 14.33 32 32 32h16v192H32c-17.67 0-32 14.33-32 32v96c0 17.67 14.33 32 32 32h96c17.67 0 32-14.33 32-32v-16h192v16c0 17.67 14.33 32 32 32h96c17.67 0 32-14.33 32-32v-96c0-17.67-14.33-32-32-32h-16V160h16zM400 48h64v64h-64V48zM48 48h64v64H48V48zm64 416H48v-64h64v64zm352 0h-64v-64h64v64zm-48-112h-32c-17.67 0-32 14.33-32 32v32H160v-32c0-17.67-14.33-32-32-32H96V160h32c17.67 0 32-14.33 32-32V96h192v32c0 17.67 14.33 32 32 32h32v192z"/></svg>
+
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="LifeBuoy" transform="translate(-1350.000000, -91.000000)" stroke="#B8BEC9" stroke-width="1">
+            <g id="grid-copy" transform="translate(1351.000000, 92.000000)">
+                <rect id="Rectangle" x="0" y="0" width="5.44444444" height="5.44444444"></rect>
+                <rect id="Rectangle" x="8.55555556" y="0" width="5.44444444" height="5.44444444"></rect>
+                <rect id="Rectangle" x="8.55555556" y="8.55555556" width="5.44444444" height="5.44444444"></rect>
+                <rect id="Rectangle" x="0" y="8.55555556" width="5.44444444" height="5.44444444"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

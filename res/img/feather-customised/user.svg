@@ -1,1 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z"/></svg>
+
+<svg width="15px" height="16px" viewBox="0 0 15 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="LifeBuoy" transform="translate(-1406.000000, -91.000000)" stroke="#B8BEC9" stroke-width="1">
+            <g id="user-copy" transform="translate(1407.000000, 92.000000)">
+                <path d="M13,14 L13,12.4444444 C13,10.7262252 11.5449254,9.33333333 9.75,9.33333333 L3.25,9.33333333 C1.45507456,9.33333333 0,10.7262252 0,12.4444444 L0,14" id="Path"></path>
+                <ellipse id="Oval" cx="6.5" cy="3.11111111" rx="3.25" ry="3.11111111"></ellipse>
+            </g>
+        </g>
+    </g>
+</svg>

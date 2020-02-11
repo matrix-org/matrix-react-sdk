@@ -1,1 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M207.6 256l107.72-107.72c6.23-6.23 6.23-16.34 0-22.58l-25.03-25.03c-6.23-6.23-16.34-6.23-22.58 0L160 208.4 52.28 100.68c-6.23-6.23-16.34-6.23-22.58 0L4.68 125.7c-6.23 6.23-6.23 16.34 0 22.58L112.4 256 4.68 363.72c-6.23 6.23-6.23 16.34 0 22.58l25.03 25.03c6.23 6.23 16.34 6.23 22.58 0L160 303.6l107.72 107.72c6.23 6.23 16.34 6.23 22.58 0l25.03-25.03c6.23-6.23 6.23-16.34 0-22.58L207.6 256z"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4.2 (15857) - http://www.bohemiancoding.com/sketch -->
+    <title>Slice 1</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="#" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <path d="M9.74464309,-3.02908503 L8.14106175,-3.02908503 L8.14106175,8.19448443 L-3.03028759,8.19448443 L-3.03028759,9.7978515 L8.14106175,9.7978515 L8.14106175,20.9685098 L9.74464309,20.9685098 L9.74464309,9.7978515 L20.9697124,9.7978515 L20.9697124,8.19448443 L9.74464309,8.19448443 L9.74464309,-3.02908503" id="Fill-108" opacity="0.9" fill="#9fa9ba" sketch:type="MSShapeGroup" transform="translate(8.969712, 8.969712) rotate(-315.000000) translate(-8.969712, -8.969712) "></path>
+    </g>
+</svg>
