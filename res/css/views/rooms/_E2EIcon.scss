@@ -47,3 +47,9 @@ limitations under the License.
 .mx_E2EIcon_verified::after {
     background-image: url('$(res)/img/e2e/verified.svg');
 }
+
+.mx_E2EIcon_tooltip {
+    // Janky fix for https://github.com/vector-im/riot-web/issues/12191
+    // The real issue is that the tooltip should go left sometimes
+    margin-right: 10px;
+}
