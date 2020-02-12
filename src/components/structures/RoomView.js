@@ -422,6 +422,9 @@ export default createReactClass({
                 }
             }, 50);
         }
+
+        // Post to the IFRAME that the chat has been loaded.
+        parent.postMessage('chatLoaded', '*');
     },
 
     shouldComponentUpdate: function(nextProps, nextState) {
@@ -2002,9 +2005,13 @@ export default createReactClass({
 
         const showRightPanel = !forceHideRightPanel && this.state.room
             && RightPanelStore.getSharedInstance().isOpenForRoom;
-        const rightPanel = showRightPanel
-            ? <RightPanel roomId={this.state.room.roomId} resizeNotifier={this.props.resizeNotifier} />
-            : null;
+        const rightPanel = showRightPanel ? <RightPanel
+            onSettingsClick={this.onSettingsClick}
+            inRoom={myMembership === 'join'}
+            room={this.state.room}
+            roomId={this.state.room.roomId}
+            resizeNotifier={this.props.resizeNotifier}
+        /> : null;
 
         const roomHeader = (
             <RoomHeader

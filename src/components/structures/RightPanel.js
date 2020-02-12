@@ -29,11 +29,15 @@ import GroupStore from '../../stores/GroupStore';
 import SettingsStore from "../../settings/SettingsStore";
 import {RIGHT_PANEL_PHASES, RIGHT_PANEL_PHASES_NO_ARGS} from "../../stores/RightPanelStorePhases";
 import RightPanelStore from "../../stores/RightPanelStore";
+import RoomHeaderButtons from '../views/right_panel/RoomHeaderButtons';
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 
 export default class RightPanel extends React.Component {
     static get propTypes() {
         return {
+            onSettingsClick: PropTypes.func,
+            room: PropTypes.object, // if showing panels for a given room, this is set
+            inRoom: PropTypes.bool, // if showing panels for a given room, this is set
             roomId: PropTypes.string, // if showing panels for a given room, this is set
             groupId: PropTypes.string, // if showing panels for a given group, this is set
             user: PropTypes.object, // used if we know the user ahead of opening the panel
@@ -44,6 +48,7 @@ export default class RightPanel extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log(props);
         this.state = {
             phase: this._getPhaseFromProps(),
             isUserPrivilegedInGroup: null,
@@ -286,6 +291,12 @@ export default class RightPanel extends React.Component {
 
         return (
             <aside className={classes}>
+                <RoomHeaderButtons
+                    inRoom={this.props.inRoom}
+                    room={this.props.room}
+                    roomId={this.props.roomId}
+                    onSettingsClick={this.props.onSettingsClick}
+                />
                 { panel }
             </aside>
         );

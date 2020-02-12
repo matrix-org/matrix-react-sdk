@@ -23,6 +23,11 @@ import { _t } from '../../../languageHandler';
 import HeaderButton from './HeaderButton';
 import HeaderButtons, {HEADER_KIND_ROOM} from './HeaderButtons';
 import {RIGHT_PANEL_PHASES} from "../../../stores/RightPanelStorePhases";
+import AccessibleButton from "../elements/AccessibleButton";
+import ManageIntegsButton from "../elements/ManageIntegsButton";
+import PropTypes from "prop-types";
+import * as sdk from "../../../index";
+import Modal from "../../../Modal";
 
 const MEMBER_PHASES = [
     RIGHT_PANEL_PHASES.RoomMemberList,
@@ -32,11 +37,21 @@ const MEMBER_PHASES = [
 ];
 
 export default class RoomHeaderButtons extends HeaderButtons {
+    static get propTypes() {
+        return {
+            onSettingsClick: PropTypes.func,
+            room: PropTypes.object, // if showing panels for a given room, this is set
+            inRoom: PropTypes.bool, // if showing panels for a given room, this is set
+            roomId: PropTypes.string,
+        };
+    }
+
     constructor(props) {
         super(props, HEADER_KIND_ROOM);
         this._onMembersClicked = this._onMembersClicked.bind(this);
         this._onFilesClicked = this._onFilesClicked.bind(this);
         this._onNotificationsClicked = this._onNotificationsClicked.bind(this);
+        this._onShareRoomClick = this._onShareRoomClick.bind(this);
     }
 
     onAction(payload) {
@@ -77,7 +92,39 @@ export default class RoomHeaderButtons extends HeaderButtons {
         this.setPhase(RIGHT_PANEL_PHASES.NotificationPanel);
     }
 
+    _onShareRoomClick() {
+        const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
+        Modal.createTrackedDialog('share room dialog', '', ShareDialog, {
+            target: this.props.room,
+        });
+    }
+
     renderButtons() {
+        let shareRoomButton;
+        if (this.props.inRoom) {
+            shareRoomButton = <AccessibleButton
+                className="mx_RoomHeader_button mx_RoomHeader_shareButton"
+                onClick={this._onShareRoomClick}
+                title={_t('Share room')}
+            />;
+        }
+
+        let manageIntegsButton;
+        if (this.props.room && this.props.roomId && this.props.inRoom) {
+            manageIntegsButton = <ManageIntegsButton
+                room={this.props.room}
+            />;
+        }
+
+        let settingsButton;
+        if (this.props.onSettingsClick) {
+            settingsButton = <AccessibleButton
+                className="mx_RoomHeader_button mx_RoomHeader_settingsButton"
+                onClick={this.props.onSettingsClick}
+                title={_t("Settings")}
+            />;
+        }
+
         return [
             <HeaderButton key="membersButton" name="membersButton"
                 title={_t('Members')}
@@ -97,6 +144,9 @@ export default class RoomHeaderButtons extends HeaderButtons {
                 onClick={this._onNotificationsClicked}
                 analytics={['Right Panel', 'Notification List Button', 'click']}
             />,
+            settingsButton,
+            shareRoomButton,
+            manageIntegsButton,
         ];
     }
 }

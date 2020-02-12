@@ -1,3 +1,32 @@
+.mx_RightPanel {
+    .mx_HeaderButtons {
+        background-color: #ffffff;
+        border-radius: 2px;
+        height: 51px;
+        justify-content: normal;
+        color: rgba(74, 74, 74, 0.9);
+        margin: 0;
+        border-bottom: 1px solid #e7e7e7;
+        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
+
+        .mx_RoomHeader_button {
+            border-left: 0;
+            border-right: 1px solid #e7e7e7;
+
+            &:last-child {
+                border-right: 0;
+            }
+        }
+
+        .mx_RightPanel_headerButton,
+        .mx_RoomHeader_button {
+            padding: 0 !important;
+            width: 16.6% !important;
+        }
+    }
+}
+
+.mx_HeaderPanelButton::before,
 .mx_HeaderButtons::before {
     content: none;
     background-color: transparent;

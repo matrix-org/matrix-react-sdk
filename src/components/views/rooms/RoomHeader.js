@@ -27,10 +27,9 @@ import RateLimitedFunc from '../../../ratelimitedfunc';
 
 import { linkifyElement } from '../../../HtmlUtils';
 import AccessibleButton from '../elements/AccessibleButton';
-import ManageIntegsButton from '../elements/ManageIntegsButton';
 import {CancelButton} from './SimpleRoomHeader';
 import SettingsStore from "../../../settings/SettingsStore";
-import RoomHeaderButtons from '../right_panel/RoomHeaderButtons';
+import RoomPanelButton from '../rooms/RoomPanelButton';
 import DMRoomMap from '../../../utils/DMRoomMap';
 import E2EIcon from './E2EIcon';
 import InviteOnlyIcon from './InviteOnlyIcon';
@@ -115,13 +114,6 @@ export default createReactClass({
 
     _onRoomNameChange: function(room) {
         this.forceUpdate();
-    },
-
-    onShareRoomClick: function(ev) {
-        const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
-        Modal.createTrackedDialog('share room dialog', '', ShareDialog, {
-            target: this.props.room,
-        });
     },
 
     _hasUnreadPins: function() {
@@ -233,15 +225,6 @@ export default createReactClass({
                 viewAvatarOnClick={true} />);
         }
 
-        if (this.props.onSettingsClick) {
-            settingsButton =
-                <AccessibleButton className="mx_RoomHeader_button mx_RoomHeader_settingsButton"
-                    onClick={this.props.onSettingsClick}
-                    title={_t("Settings")}
-                >
-                </AccessibleButton>;
-        }
-
         if (this.props.onPinnedClick && SettingsStore.isFeatureEnabled('feature_pinning')) {
             let pinsIndicator = null;
             if (this._hasUnreadPins()) {
@@ -285,29 +268,9 @@ export default createReactClass({
                 </AccessibleButton>;
         }
 
-        let shareRoomButton;
-        if (this.props.inRoom) {
-            shareRoomButton =
-                <AccessibleButton className="mx_RoomHeader_button mx_RoomHeader_shareButton"
-                    onClick={this.onShareRoomClick}
-                    title={_t('Share room')}
-                >
-                </AccessibleButton>;
-        }
-
-        let manageIntegsButton;
-        if (this.props.room && this.props.room.roomId && this.props.inRoom) {
-            manageIntegsButton = <ManageIntegsButton
-                room={this.props.room}
-            />;
-        }
-
         const rightRow =
             <div className="mx_RoomHeader_buttons">
-                { settingsButton }
                 { pinnedEventsButton }
-                { shareRoomButton }
-                { manageIntegsButton }
                 { forgetButton }
                 { searchButton }
             </div>;
@@ -315,7 +278,7 @@ export default createReactClass({
         return (
             <div className="mx_RoomHeader light-panel">
                 <div className="mx_RoomHeader_wrapper">
-                    <RoomHeaderButtons />
+                    <RoomPanelButton />
                     <div className="mx_RoomHeader_avatar">{ roomAvatar }{ e2eIcon }</div>
                     { privateIcon }
                     { name }
