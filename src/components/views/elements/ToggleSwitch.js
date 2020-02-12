@@ -39,6 +39,7 @@ const ToggleSwitch = ({checked, disabled=false, onChange, ...props}) => {
             className={classes}
             onClick={_onClick}
             role="switch"
+            // aria-pressed despite the spec because of https://github.com/w3c/aria-practices/issues/1327.
             aria-pressed={checked}
             aria-disabled={disabled}
         >
