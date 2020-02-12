@@ -39,7 +39,7 @@ const ToggleSwitch = ({checked, disabled=false, onChange, ...props}) => {
             className={classes}
             onClick={_onClick}
             role="switch"
-            aria-checked={checked}
+            aria-pressed={checked}
             aria-disabled={disabled}
         >
             <div className="mx_ToggleSwitch_ball" />
