@@ -81,7 +81,7 @@ const E2EIcon = ({isUser, status, className, size, onClick}) => {
     const onMouseOver = () => setHover(true);
     const onMouseOut = () => setHover(false);
 
-    let tip = <Tooltip
+    const tip = <Tooltip
       label={e2eTitle ? _t(e2eTitle) : ""}
       visible={hover}
       tooltipClassName="mx_E2EIcon_tooltip"
