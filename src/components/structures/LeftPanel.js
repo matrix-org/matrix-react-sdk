@@ -279,10 +279,6 @@ const LeftPanel = createReactClass({
                     <TopLeftMenuButton collapsed={this.props.collapsed} />
                     { breadcrumbs }
                     <CallPreview ConferenceHandler={VectorConferenceHandler} />
-                    <div className="mx_LeftPanel_exploreAndFilterRow" onKeyDown={this._onKeyDown} onFocus={this._onFocus} onBlur={this._onBlur}>
-                        { exploreButton }
-                        { searchBox }
-                    </div>
                     <RoomList
                         onKeyDown={this._onKeyDown}
                         onFocus={this._onFocus}
@@ -292,6 +288,10 @@ const LeftPanel = createReactClass({
                         collapsed={this.props.collapsed}
                         searchFilter={this.state.searchFilter}
                         ConferenceHandler={VectorConferenceHandler} />
+                        <div className="mx_LeftPanel_exploreAndFilterRow" onKeyDown={this._onKeyDown} onFocus={this._onFocus} onBlur={this._onBlur}>
+                            { exploreButton }
+                            { searchBox }
+                        </div>
                 </aside>
             </div>
         );
