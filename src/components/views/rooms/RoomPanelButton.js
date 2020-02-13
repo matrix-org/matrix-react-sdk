@@ -35,6 +35,7 @@ export default class RoomPanelButton extends HeaderButtons {
     constructor(props) {
         super(props, HEADER_KIND_ROOM);
         this._onTogglePanel = this._onTogglePanel.bind(this);
+        this._onNotificationsClicked = this._onNotificationsClicked.bind(this);
     }
 
     _onTogglePanel() {
@@ -47,8 +48,19 @@ export default class RoomPanelButton extends HeaderButtons {
         }
     }
 
+    _onNotificationsClicked() {
+        // This toggles for us, if needed
+        this.setPhase(RIGHT_PANEL_PHASES.NotificationPanel);
+    }
+
     renderButtons() {
         return [
+            <HeaderButton key="notifsButton" name="notifsButton"
+                  title={_t('Notifications')}
+                  isHighlighted={this.isPhase(RIGHT_PANEL_PHASES.NotificationPanel)}
+                  onClick={this._onNotificationsClicked}
+                  analytics={['Right Panel', 'Notification List Button', 'click']}
+            />,
             <HeaderButton key="expandPanelButton" name="expandPanelButton"
                 title={_t('Members')}
                 isHighlighted={this.isPhase(MEMBER_PHASES)}

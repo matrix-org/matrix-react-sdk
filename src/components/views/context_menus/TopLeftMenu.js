@@ -42,6 +42,7 @@ export default class TopLeftMenu extends React.Component {
         super();
         this.viewHomePage = this.viewHomePage.bind(this);
         this.openSettings = this.openSettings.bind(this);
+        this.openNotifications = this.openNotifications.bind(this);
         this.signIn = this.signIn.bind(this);
         this.signOut = this.signOut.bind(this);
     }
@@ -86,20 +87,30 @@ export default class TopLeftMenu extends React.Component {
             );
         }
 
+        let desktopApp = false;
+
         let signInOutItem;
-        if (isGuest) {
-            signInOutItem = (
-                <MenuItem className="mx_TopLeftMenu_icon_signin" onClick={this.signIn}>
-                    {_t("Sign in")}
-                </MenuItem>
-            );
-        } else {
-            signInOutItem = (
-                <MenuItem className="mx_TopLeftMenu_icon_signout" onClick={this.signOut}>
-                    {_t("Sign out")}
-                </MenuItem>
-            );
+        if (desktopApp) {
+            if (isGuest) {
+                signInOutItem = (
+                    <MenuItem className="mx_TopLeftMenu_icon_signin" onClick={this.signIn}>
+                        {_t("Sign in")}
+                    </MenuItem>
+                );
+            } else {
+                signInOutItem = (
+                    <MenuItem className="mx_TopLeftMenu_icon_signout" onClick={this.signOut}>
+                        {_t("Sign out")}
+                    </MenuItem>
+                );
+            }
         }
+
+        const notificationsItem = (
+            <MenuItem className="mx_TopLeftMenu_icon_signout" onClick={this.openNotifications}>
+                {_t("Notifications")}
+            </MenuItem>
+        );
 
         const helpItem = (
             <MenuItem className="mx_TopLeftMenu_icon_help" onClick={this.openHelp}>
@@ -122,6 +133,7 @@ export default class TopLeftMenu extends React.Component {
             <ul className="mx_TopLeftMenu_section_withIcon" role="none">
                 {homePageItem}
                 {settingsItem}
+                {notificationsItem}
                 {helpItem}
                 {signInOutItem}
             </ul>
@@ -136,6 +148,11 @@ export default class TopLeftMenu extends React.Component {
 
     viewHomePage() {
         dis.dispatch({action: 'view_home_page'});
+        this.closeMenu();
+    }
+
+    openNotifications() {
+        document.querySelector('.mx_RightPanel_notifsButton').click();
         this.closeMenu();
     }
 

@@ -50,7 +50,6 @@ export default class RoomHeaderButtons extends HeaderButtons {
         super(props, HEADER_KIND_ROOM);
         this._onMembersClicked = this._onMembersClicked.bind(this);
         this._onFilesClicked = this._onFilesClicked.bind(this);
-        this._onNotificationsClicked = this._onNotificationsClicked.bind(this);
         this._onShareRoomClick = this._onShareRoomClick.bind(this);
     }
 
@@ -85,11 +84,6 @@ export default class RoomHeaderButtons extends HeaderButtons {
     _onFilesClicked() {
         // This toggles for us, if needed
         this.setPhase(RIGHT_PANEL_PHASES.FilePanel);
-    }
-
-    _onNotificationsClicked() {
-        // This toggles for us, if needed
-        this.setPhase(RIGHT_PANEL_PHASES.NotificationPanel);
     }
 
     _onShareRoomClick() {
@@ -137,12 +131,6 @@ export default class RoomHeaderButtons extends HeaderButtons {
                 isHighlighted={this.isPhase(RIGHT_PANEL_PHASES.FilePanel)}
                 onClick={this._onFilesClicked}
                 analytics={['Right Panel', 'File List Button', 'click']}
-            />,
-            <HeaderButton key="notifsButton" name="notifsButton"
-                title={_t('Notifications')}
-                isHighlighted={this.isPhase(RIGHT_PANEL_PHASES.NotificationPanel)}
-                onClick={this._onNotificationsClicked}
-                analytics={['Right Panel', 'Notification List Button', 'click']}
             />,
             settingsButton,
             shareRoomButton,

@@ -93,9 +93,12 @@ export default class MainSplit extends React.Component {
         const bodyView = React.Children.only(this.props.children);
         const panelView = this.props.panel;
 
+        // Right panel collapse (always show MainSplit)
+        /*
         if (this.props.collapsedRhs || !panelView) {
             return bodyView;
         } else {
+        */
             const rtl = true;
             if (rtl) {
                 return <div className="mx_MainSplit" ref={this._setResizeContainerRef}>
@@ -110,6 +113,6 @@ export default class MainSplit extends React.Component {
                     {panelView}
                 </div>;
             }
-        }
+       // }
     }
 }

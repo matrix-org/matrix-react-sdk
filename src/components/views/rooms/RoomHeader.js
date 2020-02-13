@@ -33,6 +33,8 @@ import RoomPanelButton from '../rooms/RoomPanelButton';
 import DMRoomMap from '../../../utils/DMRoomMap';
 import E2EIcon from './E2EIcon';
 import InviteOnlyIcon from './InviteOnlyIcon';
+import HeaderButton from "../right_panel/HeaderButton";
+import {RIGHT_PANEL_PHASES} from "../../../stores/RightPanelStorePhases";
 
 export default createReactClass({
     displayName: 'RoomHeader',

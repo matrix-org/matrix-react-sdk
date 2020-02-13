@@ -42,13 +42,23 @@ export default class HeaderButton extends React.Component {
             [`mx_RightPanel_${this.props.name}`]: true,
         });
 
-        return <AccessibleButton
-            aria-selected={this.props.isHighlighted}
-            role="tab"
-            title={this.props.title}
-            className={classes}
-            onClick={this.onClick}>
-        </AccessibleButton>;
+        // Right panel collapse (prevent collapse after second click)
+        if (this.props.isHighlighted) {
+            return <AccessibleButton
+                aria-selected={this.props.isHighlighted}
+                role="tab"
+                title={this.props.title}
+                className={classes}>
+            </AccessibleButton>;
+        } else {
+            return <AccessibleButton
+                aria-selected={this.props.isHighlighted}
+                role="tab"
+                title={this.props.title}
+                className={classes}
+                onClick={this.onClick}>
+            </AccessibleButton>;
+        }
     }
 }
 

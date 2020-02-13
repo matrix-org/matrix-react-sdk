@@ -36,6 +36,16 @@
     mask-image: url('$(icons)/expand.svg') !important;
 }
 
+.mx_RightPanel_expandPanelButton.mx_RightPanel_headerButton_highlight {
+    &:before {
+        background-color: $rightpanel-button-color;
+    }
+
+    &:after {
+        background-color: transparent;
+    }
+}
+
 .mx_RightPanel_expandPanelButton.mx_RightPanel_headerButton_highlight::before {
     mask-image: url('$(icons)/collapse.svg') !important;
 }
