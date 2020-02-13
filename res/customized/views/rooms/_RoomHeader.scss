@@ -7,6 +7,7 @@
 }
 
 .mx_RoomHeader_buttons {
+    margin-right: 1px;
     padding-right: 0;
     height: 52px;
 }
@@ -24,7 +25,7 @@
     flex: 0 0 auto;
     vertical-align: top;
     text-align: center;
-    border-left: 1px solid #e7e7e7;
+    border-left: 1px solid $primary-hairline-color;
     padding: 0 10px 0 10px;
     border-bottom: 2px solid transparent;
     height: 50px;

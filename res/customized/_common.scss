@@ -76,6 +76,14 @@ input[type=search].mx_textinput_icon {
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
     text-align: right;
+
+    &:first-child {
+        float: left;
+    }
+
+    &:last-child {
+        float: right;
+    };
 }
 
 /* XXX: Our button style are a mess: buttons that happen to appear in dialogs get special styles applied

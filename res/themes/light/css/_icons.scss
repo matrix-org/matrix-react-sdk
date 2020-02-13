@@ -3,37 +3,43 @@
         content: '';
         position: absolute;
         top: 15px;
-        left: 14px;
+        left: 0;
+        right: 0;
         height: 20px;
-        width: 20px;
+        width: 100%;
         background-color: $rightpanel-button-color;
         mask-repeat: no-repeat;
         mask-size: contain;
+        mask-position: center;
     }
 }
 
 .mx_RightPanel_membersButton::before {
-    mask-image: url('$(icons)/user.svg') !important;
+    mask-image: url('$(icons)/user.svg');
 }
 
 .mx_RightPanel_filesButton::before {
-    mask-image: url('$(icons)/files.svg') !important;
+    mask-image: url('$(icons)/files.svg');
+}
+
+.mx_RightPanel_notifsButton {
+    display: none;
 }
 
 .mx_RightPanel_notifsButton::before {
-    mask-image: url('$(icons)/notifications.svg') !important;
+    mask-image: url('$(icons)/notifications.svg');
 }
 
 .mx_RightPanel_groupMembersButton::before {
-    mask-image: url('$(icons)/icons-people.svg') !important;
+    mask-image: url('$(icons)/icons-people.svg');
 }
 
 .mx_RightPanel_roomsButton::before {
-    mask-image: url('$(icons)/icons-room-nobg.svg') !important;
+    mask-image: url('$(icons)/icons-room-nobg.svg');
 }
 
 .mx_RightPanel_expandPanelButton::before {
-    mask-image: url('$(icons)/expand.svg') !important;
+    mask-image: url('$(icons)/expand.svg');
 }
 
 .mx_RightPanel_expandPanelButton.mx_RightPanel_headerButton_highlight {
@@ -47,25 +53,25 @@
 }
 
 .mx_RightPanel_expandPanelButton.mx_RightPanel_headerButton_highlight::before {
-    mask-image: url('$(icons)/collapse.svg') !important;
+    mask-image: url('$(icons)/collapse.svg');
 }
 
 
 .mx_GroupHeader_editButton::before {
-    mask-image: url('$(icons)/settings.svg') !important;
+    mask-image: url('$(icons)/settings.svg');
 }
 
 .mx_GroupHeader_shareButton::before {
-    mask-image: url('$(icons)/icons-share.svg') !important;
+    mask-image: url('$(icons)/icons-share.svg');
 }
 
 .mx_LeftPanel_explore {
     .mx_AccessibleButton {
         &::before {
-            mask: url('$(icons)/explore.svg') !important;
+            mask: url('$(icons)/explore.svg');
             cursor: pointer;
             left: 14px;
-            top: 10px;
+            top: 16px;
             width: 16px;
             height: 16px;
             background-color: $notice-secondary-color;
@@ -77,7 +83,7 @@
 .mx_MyGroups_headerCard .mx_MyGroups_headerCard_button {
     &::before {
         background-color: $roomheader-addroom-fg-color;
-        mask: url('$(icons)/icons-create-room.svg') !important;
+        mask: url('$(icons)/icons-create-room.svg');
         mask-repeat: no-repeat;
         mask-position: center;
         mask-size: 80%;
@@ -93,7 +99,7 @@
 .mx_RoomDirectory_roomMemberCount {
     &::before {
         background-color: $light-fg-color;
-        mask: url('$(icons)/user.svg') !important;
+        mask: url('$(icons)/user.svg');
         display: inline-block;
         vertical-align: text-top;
         margin-right: 2px;
@@ -104,11 +110,11 @@
 
 .mx_RoomView_messagePanelSearchSpinner::before {
     background-color: $greyed-fg-color;
-    mask: url('$(icons)/search-input.svg') !important;
+    mask: url('$(icons)/search-input.svg');
 }
 
 .mx_Dialog_cancelButton {
-    mask: url('$(icons)/cancel.svg') !important;
+    mask: url('$(icons)/cancel.svg');
     background-color: $dialog-close-fg-color;
 }
 
@@ -137,20 +143,20 @@
         mask-size: auto 12px;
         visibility: hidden;
         background-color: $accent-color;
-        mask-image: url('$(icons)/widget/maximise.svg') !important;
+        mask-image: url('$(icons)/widget/maximise.svg');
     }
 
     &.mx_ViewSourceEvent_expanded .mx_ViewSourceEvent_toggle {
         mask-position: 0 bottom;
         margin-bottom: 7px;
-        mask-image: url('$(icons)/widget/minimise.svg') !important;
+        mask-image: url('$(icons)/widget/minimise.svg');
     }
 }
 
 .mx_InviteOnlyIcon {
     &::before {
         background-color: $roomtile-name-color;
-        mask-image: url('$(icons)/lock-solid.svg') !important;
+        mask-image: url('$(icons)/lock-solid.svg');
         mask-position: center;
         mask-repeat: no-repeat;
         mask-size: contain;
@@ -168,7 +174,7 @@
 .mx_RoomSubList_addRoom {
     &::before {
         background-color: $roomheader-addroom-fg-color;
-        mask: url('$(icons)/icons-room-add.svg') !important;
+        mask: url('$(icons)/icons-room-add.svg');
         mask-repeat: no-repeat;
         mask-position: center;
         content: '';
@@ -195,29 +201,29 @@
 }
 
 .mx_RoomHeader_settingsButton::before {
-    mask-image: url('$(icons)/settings.svg') !important;
+    mask-image: url('$(icons)/settings.svg');
 }
 
 .mx_RoomHeader_forgetButton::before {
-    mask-image: url('$(icons)/leave.svg') !important;
+    mask-image: url('$(icons)/leave.svg');
     width: 26px;
 }
 
 .mx_RoomHeader_searchButton::before {
-    mask-image: url('$(icons)/search.svg') !important;
+    mask-image: url('$(icons)/search.svg');
 }
 
 .mx_RoomHeader_shareButton::before {
-    mask-image: url('$(icons)/share.svg') !important;
+    mask-image: url('$(icons)/share.svg');
 }
 
 .mx_RoomHeader_manageIntegsButton::before {
-    mask-image: url('$(icons)/grid.svg') !important;
+    mask-image: url('$(icons)/grid.svg');
 }
 
 .mx_RoomSubList_chevron {
     pointer-events: none;
-    mask: url('$(icons)/dropdown-arrow.svg') !important;
+    mask: url('$(icons)/dropdown-arrow.svg');
     mask-repeat: no-repeat;
     transition: transform 0.2s ease-in;
     width: 10px;
@@ -229,7 +235,7 @@
 .mx_SearchBox {
     .mx_SearchBox_closeButton {
         cursor: pointer;
-        background-image: url('$(icons)/icons-close.svg') !important;
+        background-image: url('$(icons)/icons-close.svg');
         background-repeat: no-repeat;
         width: 16px;
         height: 16px;
@@ -239,22 +245,21 @@
 
     &::before {
         background-color: $rightpanel-button-color;
-        mask-image: url('$(icons)/search.svg') !important;
+        mask-image: url('$(icons)/search.svg');
         mask-position: center;
         mask-repeat: no-repeat;
         content: '';
         position: absolute;
         width: 15px;
         height: 15px;
-        top: 9px;
-        left: 9px;
+        left: 11px;
     }
 }
 
 .mx_TagPanel .mx_TagTile_plus {
     &::before {
         background-color: $roomheader-addroom-fg-color;
-        mask-image: url('$(icons)/plus.svg') !important;
+        mask-image: url('$(icons)/plus.svg');
         mask-position: center;
         mask-repeat: no-repeat;
         content: '';
@@ -305,69 +310,69 @@
     }
 
     .mx_MessageComposerFormatBar_buttonIconBold::after {
-        mask-image: url('$(icons)/format/bold.svg') !important;
+        mask-image: url('$(icons)/format/bold.svg');
     }
 
     .mx_MessageComposerFormatBar_buttonIconItalic::after {
-        mask-image: url('$(icons)/format/italics.svg') !important;
+        mask-image: url('$(icons)/format/italics.svg');
     }
 
     .mx_MessageComposerFormatBar_buttonIconStrikethrough::after {
-        mask-image: url('$(icons)/format/strikethrough.svg') !important;
+        mask-image: url('$(icons)/format/strikethrough.svg');
     }
 
     .mx_MessageComposerFormatBar_buttonIconQuote::after {
-        mask-image: url('$(icons)/format/quote.svg') !important;
+        mask-image: url('$(icons)/format/quote.svg');
     }
 
     .mx_MessageComposerFormatBar_buttonIconCode::after {
-        mask-image: url('$(icons)/format/code.svg') !important;
+        mask-image: url('$(icons)/format/code.svg');
     }
 }
 
 .mx_TopLeftMenuButton_chevron {
     margin: 0 7px;
-    mask: url('$(icons)/dropdown-arrow.svg') !important;
+    mask: url('$(icons)/dropdown-arrow.svg');
     mask-repeat: no-repeat;
-    width: 10px;
+    width: 20px;
     height: 6px;
     background-color: $roomsublist-label-fg-color;
 }
 
 .mx_UserSettingsDialog_settingsIcon::before {
-    mask-image: url('$(icons)/settings.svg') !important;
+    mask-image: url('$(icons)/settings.svg');
 }
 
 .mx_UserSettingsDialog_voiceIcon::before {
-    mask-image: url('$(icons)/phone.svg') !important;
+    mask-image: url('$(icons)/phone.svg');
 }
 
 .mx_UserSettingsDialog_bellIcon::before {
-    mask-image: url('$(icons)/notifications.svg') !important;
+    mask-image: url('$(icons)/notifications.svg');
 }
 
 .mx_UserSettingsDialog_preferencesIcon::before {
-    mask-image: url('$(icons)/sliders.svg') !important;
+    mask-image: url('$(icons)/sliders.svg');
 }
 
 .mx_UserSettingsDialog_securityIcon::before {
-    mask-image: url('$(icons)/lock.svg') !important;
+    mask-image: url('$(icons)/lock.svg');
 }
 
 .mx_UserSettingsDialog_helpIcon::before {
-    mask-image: url('$(icons)/help-circle.svg') !important;
+    mask-image: url('$(icons)/help-circle.svg');
 }
 
 .mx_UserSettingsDialog_labsIcon::before {
-    mask-image: url('$(icons)/flag.svg') !important;
+    mask-image: url('$(icons)/flag.svg');
 }
 
 .mx_UserSettingsDialog_mjolnirIcon::before {
-    mask-image: url('$(icons)/face.svg') !important;
+    mask-image: url('$(icons)/face.svg');
 }
 
 .mx_UserSettingsDialog_flairIcon::before {
-    mask-image: url('$(icons)/flair.svg') !important;
+    mask-image: url('$(icons)/flair.svg');
 }
 
 .mx_MemberInfo_cancel {
@@ -375,22 +380,22 @@
     width: 16px;
     padding: 10px 0 10px 10px;
     cursor: pointer;
-    mask-image: url('$(icons)/minimise.svg') !important;
+    mask-image: url('$(icons)/minimise.svg');
     mask-repeat: no-repeat;
     mask-position: 16px center;
     background-color: $rightpanel-button-color;
 }
 
 .mx_MemberDeviceInfo_icon_blacklisted {
-    mask-image: url('$(icons)/e2e/blacklisted.svg') !important;
+    mask-image: url('$(icons)/e2e/blacklisted.svg');
     background-color: $warning-color;
 }
 .mx_MemberDeviceInfo_icon_verified {
-    mask-image: url('$(icons)/e2e/verified.svg') !important;
+    mask-image: url('$(icons)/e2e/verified.svg');
     background-color: $accent-color;
 }
 .mx_MemberDeviceInfo_icon_unverified {
-    mask-image: url('$(icons)/e2e/warning.svg') !important;
+    mask-image: url('$(icons)/e2e/warning.svg');
     background-color: $warning-color;
 }
 
@@ -400,7 +405,7 @@
         width: 18px;
         height: 18px;
         background-color: $accent-color;
-        mask: url('$(icons)/search-input.svg') !important;
+        mask: url('$(icons)/search-input.svg');
         mask-repeat: no-repeat;
         mask-position: center;
         mask-size: 16px;
@@ -412,23 +417,23 @@
 .mx_TopLeftMenu {
     .mx_TopLeftMenu_section_withIcon {
         .mx_TopLeftMenu_icon_home::after {
-            mask-image: url('$(icons)/home.svg') !important;
+            mask-image: url('$(icons)/home.svg');
         }
 
         .mx_TopLeftMenu_icon_help::after {
-            mask-image: url('$(icons)/life-buoy.svg') !important;
+            mask-image: url('$(icons)/life-buoy.svg');
         }
 
         .mx_TopLeftMenu_icon_settings::after {
-            mask-image: url('$(icons)/settings.svg') !important;
+            mask-image: url('$(icons)/settings.svg');
         }
 
         .mx_TopLeftMenu_icon_signin::after {
-            mask-image: url('$(icons)/sign-in.svg') !important;
+            mask-image: url('$(icons)/sign-in.svg');
         }
 
         .mx_TopLeftMenu_icon_signout::after {
-            mask-image: url('$(icons)/sign-out.svg') !important;
+            mask-image: url('$(icons)/sign-out.svg');
         }
     }
 }
@@ -437,7 +442,7 @@
     width: 10px;
     height: 6px;
     padding-right: 9px;
-    mask: url('$(icons)/dropdown-arrow.svg') !important;
+    mask: url('$(icons)/dropdown-arrow.svg');
     mask-repeat: no-repeat;
     background: $primary-fg-color;
 }
@@ -457,14 +462,14 @@
 
     &.mx_Validation_valid {
         &::before {
-            mask-image: url('$(icons)/check.svg') !important;
+            mask-image: url('$(icons)/check.svg');
             background-color: $input-valid-border-color;
         }
     }
 
     &.mx_Validation_invalid {
         &::before {
-            mask-image: url('$(icons)/x.svg') !important;
+            mask-image: url('$(icons)/x.svg');
             background-color: $input-invalid-border-color;
         }
     }
@@ -478,7 +483,7 @@
             height: 24px;
             grid-column: 1;
             grid-row: 1;
-            mask-image: url('$(icons)/check.svg') !important;
+            mask-image: url('$(icons)/check.svg');
             mask-size: 100%;
             mask-repeat: no-repeat;
             position: absolute;
@@ -491,24 +496,24 @@
 
 
 .mx_RoomSettingsDialog_settingsIcon::before {
-    mask-image: url('$(icons)/settings.svg') !important;
+    mask-image: url('$(icons)/settings.svg');
 }
 
 .mx_RoomSettingsDialog_securityIcon::before {
-    mask-image: url('$(icons)/lock.svg') !important;
+    mask-image: url('$(icons)/lock.svg');
 }
 
 .mx_RoomSettingsDialog_rolesIcon::before {
-    mask-image: url('$(icons)/users-sm.svg') !important;
+    mask-image: url('$(icons)/users-sm.svg');
 }
 
 .mx_RoomSettingsDialog_bridgesIcon::before {
     // This icon is pants, please improve :)
-    mask-image: url('$(icons)/bridge.svg') !important;
+    mask-image: url('$(icons)/bridge.svg');
 }
 
 .mx_RoomSettingsDialog_warningIcon::before {
-    mask-image: url('$(icons)/warning-triangle.svg') !important;
+    mask-image: url('$(icons)/warning-triangle.svg');
 }
 
 // show a different AvatarSetting placeholder for RoomProfileSettings which is basically a clone of ProfileSettings
@@ -525,7 +530,7 @@
 
 .mx_TermsDialog_link {
     display: inline-block;
-    mask-image: url('$(icons)/external-link.svg') !important;
+    mask-image: url('$(icons)/external-link.svg');
     background-color: $accent-color;
     width: 10px;
     height: 10px;
@@ -546,14 +551,14 @@
 }
 
 .mx_DirectorySearchBox_joinButton {
-    background-image: url('$(icons)/icon-return.svg') !important;
+    background-image: url('$(icons)/icon-return.svg');
     background-position: 8px 70%;
     background-repeat: no-repeat;
 }
 
 .mx_DirectorySearchBox_clear {
     background-color: $warning-color;
-    mask: url('$(icons)/cancel.svg') !important;
+    mask: url('$(icons)/cancel.svg');
     mask-repeat: no-repeat;
     mask-position: center;
     mask-size: 10px;
@@ -567,7 +572,7 @@
     right: 10px;
     width: 10px;
     height: 6px;
-    mask: url('$(icons)/dropdown-arrow.svg') !important;
+    mask: url('$(icons)/dropdown-arrow.svg');
     mask-repeat: no-repeat;
     background-color: $primary-fg-color;
     z-index: 1;
@@ -587,11 +592,11 @@
     }
 
     &.mx_IconButton_icon_check::before {
-        mask-image: url('$(icons)/check.svg') !important;
+        mask-image: url('$(icons)/check.svg');
     }
 
     &.mx_IconButton_icon_edit::before {
-        mask-image: url('$(icons)/edit.svg') !important;
+        mask-image: url('$(icons)/edit.svg');
     }
 }
 
@@ -612,13 +617,13 @@
     height: 34px;
 
     background-color: $primary-fg-color;
-    mask: url('$(icons)/room-continuation.svg') !important;
+    mask: url('$(icons)/room-continuation.svg');
     mask-repeat: no-repeat;
     mask-position: center;
 }
 
 .mx_EmojiPicker_search_clear::after {
-    mask-image: url('$(icons)/cancel.svg') !important;
+    mask-image: url('$(icons)/cancel.svg');
 }
 
 .mx_HiddenImagePlaceholder {
@@ -626,7 +631,7 @@
         span.mx_HiddenImagePlaceholder_eye {
             margin-right: 8px;
             background-color: $accent-color;
-            mask-image: url('$(icons)/eye.svg') !important;
+            mask-image: url('$(icons)/eye.svg');
             display: inline-block;
             width: 18px;
             height: 14px;
@@ -648,20 +653,20 @@
 }
 
 .mx_MessageActionBar_reactButton::after {
-    mask-image: url('$(icons)/message/react.svg') !important;
+    mask-image: url('$(icons)/message/react.svg');
 }
 
 .mx_MessageActionBar_replyButton::after {
-    mask-image: url('$(icons)/message/reply.svg') !important;
+    mask-image: url('$(icons)/message/reply.svg');
 }
 
 .mx_MessageActionBar_editButton::after {
-    mask-image: url('$(icons)/message/edit.svg') !important;
+    mask-image: url('$(icons)/message/edit.svg');
 }
 
 .mx_MessageActionBar_optionsButton::after {
     mask-size: auto;
-    mask-image: url('$(icons)/message/more.svg') !important;
+    mask-image: url('$(icons)/message/more.svg');
 }
 
 .mx_MessageActionBar_maskButton:hover::after {
@@ -696,7 +701,7 @@
             height: 16px;
             width: 16px;
             padding: 4px;
-            mask-image: url('$(icons)/minimise.svg') !important;
+            mask-image: url('$(icons)/minimise.svg');
             mask-repeat: no-repeat;
             mask-position: 7px center;
             background-color: $rightpanel-button-color;
@@ -705,21 +710,21 @@
 }
 
 .mx_AppTileMenuBar_iconButton.mx_AppTileMenuBar_iconButton_minimise {
-    mask-image: url('$(icons)/widget/minimise.svg') !important;
+    mask-image: url('$(icons)/widget/minimise.svg');
     background-color: $accent-color;
 }
 
 .mx_AppTileMenuBar_iconButton.mx_AppTileMenuBar_iconButton_maximise {
-    mask-image: url('$(icons)/widget/maximise.svg') !important;
+    mask-image: url('$(icons)/widget/maximise.svg');
     background-color: $accent-color;
 }
 
 .mx_AppTileMenuBar_iconButton.mx_AppTileMenuBar_iconButton_popout {
-    mask-image: url('$(icons)/widget/external-link.svg') !important;
+    mask-image: url('$(icons)/widget/external-link.svg');
 }
 
 .mx_AppTileMenuBar_iconButton.mx_AppTileMenuBar_iconButton_menu {
-    mask-image: url('$(icons)/icon_context.svg') !important;
+    mask-image: url('$(icons)/icon_context.svg');
 }
 
 .mx_AppPermissionWarning_helpIcon::before {
@@ -732,7 +737,7 @@
     mask-position: center;
     content: '';
     vertical-align: middle;
-    mask-image: url('$(icons)/help-circle.svg') !important;
+    mask-image: url('$(icons)/help-circle.svg');
 }
 
 .mx_E2EIcon_warning::after,
@@ -750,29 +755,29 @@
 }
 
 .mx_E2EIcon_warning::after {
-    background-image: url('$(icons)/e2e/warning.svg') !important;
+    background-image: url('$(icons)/e2e/warning.svg');
 }
 
 .mx_E2EIcon_normal::after {
-    background-image: url('$(icons)/e2e/normal.svg') !important;
+    background-image: url('$(icons)/e2e/normal.svg');
 }
 
 .mx_E2EIcon_verified::after {
-    background-image: url('$(icons)/e2e/verified.svg') !important;
+    background-image: url('$(icons)/e2e/verified.svg');
 }
 
 .mx_EventTile_e2eIcon_undecryptable, .mx_EventTile_e2eIcon_unverified {
-    background-image: url('$(icons)/e2e/warning.svg') !important;
+    background-image: url('$(icons)/e2e/warning.svg');
     opacity: 1;
 }
 
 .mx_EventTile_e2eIcon_unknown {
-    background-image: url('$(icons)/e2e/warning.svg') !important;
+    background-image: url('$(icons)/e2e/warning.svg');
     opacity: 1;
 }
 
 .mx_EventTile_e2eIcon_unencrypted {
-    background-image: url('$(icons)/e2e/warning.svg') !important;
+    background-image: url('$(icons)/e2e/warning.svg');
     opacity: 1;
 }
 
@@ -783,11 +788,11 @@
 }
 
 .mx_RoomHeader_pinnedButton::before {
-    mask-image: url('$(icons)/icons-pin.svg') !important;
+    mask-image: url('$(icons)/icons-pin.svg');
 }
 
 .mx_RoomTile_menuButton {
-    background-image: url('$(icons)/icon_context.svg') !important;
+    background-image: url('$(icons)/icon_context.svg');
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -803,7 +808,7 @@
             background-color: $button-primary-fg-color;
             mask-repeat: no-repeat;
             mask-size: contain;
-            mask-image: url('$(icons)/upload.svg') !important;
+            mask-image: url('$(icons)/upload.svg');
         }
     }
 
@@ -825,7 +830,7 @@
 .mx_SearchBar {
     .mx_SearchBar_cancel {
         background-color: $warning-color;
-        mask: url('$(icons)/cancel.svg') !important;
+        mask: url('$(icons)/cancel.svg');
         mask-repeat: no-repeat;
         mask-position: center;
         mask-size: 14px;
@@ -842,30 +847,30 @@
     bottom: 0;
     left: 0;
     right: 0;
-    mask: url('$(icons)/icon-jump-to-bottom.svg') !important;
+    mask: url('$(icons)/icon-jump-to-bottom.svg');
     mask-repeat: no-repeat;
-    mask-position: 9px 14px;
+    mask-position: center;
     background: $roomtile-name-color;
 }
 
 .mx_MessageComposer_upload::before {
-    mask-image: url('$(icons)/paperclip.svg') !important;
+    mask-image: url('$(icons)/paperclip.svg');
 }
 
 .mx_MessageComposer_hangup::before {
-    mask-image: url('$(icons)/hangup.svg') !important;
+    mask-image: url('$(icons)/hangup.svg');
 }
 
 .mx_MessageComposer_voicecall::before {
-    mask-image: url('$(icons)/phone.svg') !important;
+    mask-image: url('$(icons)/phone.svg');
 }
 
 .mx_MessageComposer_videocall::before {
-    mask-image: url('$(icons)/video.svg') !important;
+    mask-image: url('$(icons)/video.svg');
 }
 
 .mx_MessageComposer_stickers::before {
-    mask-image: url('$(icons)/face.svg') !important;
+    mask-image: url('$(icons)/face.svg');
 }
 
 .mx_MemberList_invite {
@@ -881,7 +886,7 @@
         height: 24px;
         width: 24px;
         background-color: $rightpanel-button-color;
-        mask-image: url('$(icons)/user-add.svg') !important;
+        mask-image: url('$(icons)/user-add.svg');
         mask-repeat: no-repeat;
         mask-size: contain;
     }
@@ -889,7 +894,7 @@
 
 .mx_MessageComposer_formatbar_markdown,
 .mx_MessageComposer_input_markdownIndicator {
-    mask-image: url('$(icons)/markdown.svg') !important;
+    mask-image: url('$(icons)/markdown.svg');
     mask-size: contain;
     mask-position: center;
     mask-repeat: no-repeat;
@@ -901,7 +906,7 @@
     position: absolute;
     width: 38px;
     height: 38px;
-    mask: url('$(icons)/icon-jump-to-first-unread.svg') !important;
+    mask: url('$(icons)/icon-jump-to-first-unread.svg');
     mask-repeat: no-repeat;
     mask-position: 9px 13px;
     background: $roomtile-name-color;
@@ -909,7 +914,7 @@
 
 .mx_InlineTermsAgreement_link {
     display: inline-block;
-    mask-image: url('$(icons)/external-link.svg') !important;
+    mask-image: url('$(icons)/external-link.svg');
     background-color: $accent-color;
     mask-repeat: no-repeat;
     mask-size: contain;
@@ -924,7 +929,7 @@
     position: absolute;
     width: 30px;
     height: 30px;
-    mask: url('$(icons)/dropdown-arrow.svg') !important;
+    mask: url('$(icons)/dropdown-arrow.svg');
     mask-repeat: no-repeat;
     mask-position: 8px 13px;
     background: $roomtile-name-color;
@@ -935,7 +940,7 @@
     position: absolute;
     width: 30px;
     height: 30px;
-    mask: url('$(icons)/dropdown-arrow.svg') !important;
+    mask: url('$(icons)/dropdown-arrow.svg');
     mask-repeat: no-repeat;
     mask-position: 8px 13px;
     background: $roomtile-name-color;

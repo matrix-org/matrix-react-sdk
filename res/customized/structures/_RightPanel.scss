@@ -16,7 +16,19 @@ limitations under the License.
 */
 
 .mx_RightPanel {
+    border-right: 1px solid $primary-hairline-color;
     box-shadow: 0 5px 10px 0 $box-shadow-color;
+
+    .mx_SearchBox {
+        margin: 0;
+        height: 51px;
+        border-top: 1px solid $primary-hairline-color;
+
+        input {
+            font-size: 14px;
+            font-weight: 600;
+        }
+    }
 }
 
 .mx_RightPanel_header {
@@ -25,17 +37,21 @@ limitations under the License.
 
 .mx_RightPanel_headerButton {
     margin: 0;
-    border-right: 1px solid #E7E7E7;
+    border-right: 1px solid $primary-hairline-color;
     padding: 0 10px 0 10px;
     border-bottom: 2px solid transparent;
     height: 50px;
     width: 25px;
-}
 
-.mx_RightPanel_headerButton::before,
-.mx_RightPanel_headerButton_highlight::before {
-    top: 15px;
-    left: 14px;
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -6px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: transparent;
+    }
 }
 
 .mx_RightPanel_headerButton:hover::before,
@@ -45,5 +61,6 @@ limitations under the License.
 
 .mx_RightPanel_headerButton:hover::after,
 .mx_RightPanel_headerButton_highlight::after {
+    background-color: $accent-color;
     bottom: -2px;
 }

@@ -1,6 +1,6 @@
 .mx_EventListSummary {
     background: linear-gradient(90deg, rgba(247,247,247,1) 0%, rgba(243,243,243,1) 30%, rgba(239,239,239,1) 100%);
-    border: 1px solid #e7e7e7;
+    border: 1px solid $primary-hairline-color;
     border-radius: 4px;
     margin-bottom: 7px;
     margin-top: 15px;
@@ -25,7 +25,7 @@
         padding: 0;
         margin-right: 30px;
         margin-left: 30px;
-        height: 30px;
+        min-height: 30px;
 
         .mx_MessageActionBar {
             top: 3px;
@@ -35,8 +35,8 @@
 
     li {
         margin-top: 0 !important;
-        height: 30px !important;
-        border-bottom: 1px solid #e7e7e7;
+        min-height: 30px !important;
+        border-bottom: 1px solid $primary-hairline-color;
 
         .mx_EventTile {
             height: 100% !important;

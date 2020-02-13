@@ -4,4 +4,31 @@
 
 .mx_LeftPanel {
     box-shadow: 0 5px 10px 0 $box-shadow-color;
+    border-left: 1px solid $primary-hairline-color;
+}
+
+.mx_LeftPanel_exploreAndFilterRow {
+    height: 50px;
+    border-top: 1px solid $primary-hairline-color;
+
+    .mx_LeftPanel_explore {
+        .mx_AccessibleButton {
+            margin: 0;
+            padding: 15px 15px 15px 42px;
+            border-right: 1px solid $primary-hairline-color;
+        }
+    }
+
+    .mx_SearchBox {
+        margin: 0;
+
+        &:before {
+            left: 12px;
+        }
+
+        input {
+            font-size: 14px;
+            font-weight: 600;
+        }
+    }
 }
