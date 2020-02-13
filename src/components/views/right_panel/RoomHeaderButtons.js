@@ -97,7 +97,8 @@ export default class RoomHeaderButtons extends HeaderButtons {
         let shareRoomButton;
         if (this.props.inRoom) {
             shareRoomButton = <AccessibleButton
-                className="mx_RoomHeader_button mx_RoomHeader_shareButton"
+                key="shareButton"
+                className="mx_RightPanel_headerButton mx_RoomHeader_shareButton"
                 onClick={this._onShareRoomClick}
                 title={_t('Share room')}
             />;
@@ -106,6 +107,7 @@ export default class RoomHeaderButtons extends HeaderButtons {
         let manageIntegsButton;
         if (this.props.room && this.props.roomId && this.props.inRoom) {
             manageIntegsButton = <ManageIntegsButton
+                key="integsButton"
                 room={this.props.room}
             />;
         }
@@ -113,7 +115,8 @@ export default class RoomHeaderButtons extends HeaderButtons {
         let settingsButton;
         if (this.props.onSettingsClick) {
             settingsButton = <AccessibleButton
-                className="mx_RoomHeader_button mx_RoomHeader_settingsButton"
+                key="settingsButton"
+                className="mx_RightPanel_headerButton mx_RoomHeader_settingsButton"
                 onClick={this.props.onSettingsClick}
                 title={_t("Settings")}
             />;
@@ -132,9 +135,9 @@ export default class RoomHeaderButtons extends HeaderButtons {
                 onClick={this._onFilesClicked}
                 analytics={['Right Panel', 'File List Button', 'click']}
             />,
-            settingsButton,
             shareRoomButton,
             manageIntegsButton,
+            settingsButton,
         ];
     }
 }
