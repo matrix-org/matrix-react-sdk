@@ -98,7 +98,7 @@ AccessibleButton.propTypes = {
         PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
     ]),
     element: PropTypes.string,
-    onClick: PropTypes.func.isRequired,
+    onClick: PropTypes.func,
 
     // The kind of button, similar to how Bootstrap works.
     // See available classes for AccessibleButton for options.
