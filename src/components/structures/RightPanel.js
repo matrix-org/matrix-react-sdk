@@ -290,7 +290,7 @@ export default class RightPanel extends React.Component {
         });
 
         return (
-            <aside className={classes}>
+            <aside className={classes} id="mx_RightPanel">
                 <RoomHeaderButtons
                     inRoom={this.props.inRoom}
                     room={this.props.room}
