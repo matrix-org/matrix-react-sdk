@@ -48,7 +48,7 @@ export default class ManageIntegsButton extends React.Component {
             const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
             integrationsButton = (
                 <AccessibleButton
-                    className='mx_RoomHeader_button mx_RoomHeader_manageIntegsButton'
+                    className='mx_RightPanel_headerButton mx_RoomHeader_manageIntegsButton'
                     title={_t("Manage Integrations")}
                     onClick={this.onManageIntegrations}
                 />
