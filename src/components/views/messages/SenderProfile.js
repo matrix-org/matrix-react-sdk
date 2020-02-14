@@ -126,7 +126,10 @@ export default createReactClass({
 
         const content = this.props.text ?
             <span className="mx_SenderProfile_aux">
-                { _t(this.props.text, { senderName: () => nameElem }) }
+                <span className="mx_SenderProfile_name">
+                    { nameElem }
+                </span>
+                { _t(this.props.text, { senderName: () => '' }) }
             </span> : nameFlair;
 
         return (
