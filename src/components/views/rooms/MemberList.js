@@ -27,6 +27,7 @@ import rate_limited_func from "../../../ratelimitedfunc";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import * as sdk from "../../../index";
 import CallHandler from "../../../CallHandler";
+import classNames from "classnames";
 
 const INITIAL_LOAD_NUM_MEMBERS = 30;
 const INITIAL_LOAD_NUM_INVITED = 5;
@@ -349,6 +350,23 @@ export default createReactClass({
         });
     },
 
+    onSearchCleared: function(source) {
+        if (source === "keyboard") {
+            dis.dispatch({action: 'focus_composer'});
+        }
+        this.setState({searchExpanded: false});
+    },
+
+    _onSearchFocus: function() {
+        this.setState({searchExpanded: true});
+    },
+
+    _onSearchBlur: function(event) {
+        if (event.target.value.length === 0) {
+            this.setState({searchExpanded: false});
+        }
+    },
+
     onSearchQueryChanged: function(searchQuery) {
         this.setState({
             searchQuery,
@@ -465,8 +483,8 @@ export default createReactClass({
 
             const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
             inviteButton =
-                <AccessibleButton className="mx_MemberList_invite" onClick={this.onInviteButtonClick} disabled={!canInvite}>
-                    <span>{ _t('Invite to this room') }</span>
+                <AccessibleButton onClick={this.onInviteButtonClick} disabled={!canInvite}>
+                    <span>{ _t('Invite') }</span>
                 </AccessibleButton>;
         }
 
@@ -481,9 +499,32 @@ export default createReactClass({
                 />;
         }
 
+        /*
+        const searchBox = (<SearchBox
+            className="mx_LeftPanel_filterRooms"
+            enableRoomSearchFocus={true}
+            blurredPlaceholder={ _t('Filter') }
+            placeholder={ _t('Filter rooms…') }
+            onKeyDown={this._onFilterKeyDown}
+            onSearch={ this.onSearch }
+            onCleared={ this.onSearchCleared }
+            onFocus={this._onSearchFocus}
+            onBlur={this._onSearchBlur}
+            collapsed={this.props.collapsed} />
+        */
+
+        const searchBox = <SearchBox
+            className="mx_MemberList_query mx_textinput_icon mx_textinput_search mx_SearchBox_blurred"
+            blurredPlaceholder={ _t('Filter') }
+            placeholder={ _t('Filter') }
+            onSearch={ this.onSearchQueryChanged }
+            onCleared={ this.onSearchCleared }
+            onFocus={this._onSearchFocus}
+            onBlur={this._onSearchBlur}
+            collapsed={this.props.collapsed}/>;
+
         return (
             <div className="mx_MemberList" role="tabpanel">
-                { inviteButton }
                 <AutoHideScrollbar>
                     <div className="mx_MemberList_wrapper">
                         <TruncatedList className="mx_MemberList_section mx_MemberList_joined" truncateAt={this.state.truncateAtJoined}
@@ -494,10 +535,12 @@ export default createReactClass({
                         { invitedSection }
                     </div>
                 </AutoHideScrollbar>
-
-                <SearchBox className="mx_MemberList_query mx_textinput_icon mx_textinput_search"
-                           placeholder={ _t('Filter room members') }
-                           onSearch={ this.onSearchQueryChanged } />
+                <div className="mx_RightPanel_inviteAndFilterRow">
+                    <div className={classNames("mx_RightPanel_inviteUser", {"mx_RightPanel_invite_hidden": this.state.searchExpanded})}>
+                        { inviteButton }
+                    </div>
+                    { searchBox }
+                </div>
             </div>
         );
     },
