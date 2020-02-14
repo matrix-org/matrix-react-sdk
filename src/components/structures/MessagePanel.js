@@ -30,7 +30,7 @@ import {_t} from "../../languageHandler";
 import {haveTileForEvent} from "../views/rooms/EventTile";
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
-const continuedTypes = ['m.sticker', 'm.room.message'];
+const continuedTypes = ['m.sticker', 'm.room.message', 'm.call.invite', 'm.call.hangup'];
 
 const isMembershipChange = (e) => e.getType() === 'm.room.member' || e.getType() === 'm.room.third_party_invite';
 
@@ -721,15 +721,46 @@ export default class MessagePanel extends React.Component {
 
         const readReceipts = this._readReceiptsByEvent[eventId];
 
-        // Adds a class to the message item for each sender / receiver.
+        // Adds a class to the message item for each sender / receiver e.g (mx_Sender, mx_Receiver).
         const myUserId = MatrixClientPeg.get().credentials.userId;
         const whoClass = mxEv.sender.userId === myUserId ? 'mx_Sender' : 'mx_Receiver';
+
+        // Adds a class for continuation e.g mx_Continuation.
         const continuationClass = continuation === true ? ' mx_Continuation' : '';
         let rowClass = whoClass + continuationClass;
 
-        const messageType = mxEv.getContent().msgtype;
+        // Format the name to prefix style e.g. mx_Capitalized.
+        String.prototype.formatName = function() {
+            let that = this;
+            let result;
+            that = that.replace('m.', '');
+
+            let name = that.charAt(0).toUpperCase() + that.slice(1).replace('.', '_');
+            if (/_/.test(name)) {
+                result =
+                name.replace(/_[a-z]/, function(p1) {
+                    return p1.toUpperCase();
+                })
+                .replace(/_/, '');
+
+                return 'mx_' + result;
+            } else {
+                return 'mx_' + name;
+            }
+        };
+
+        // Add Event type class e.g. (mx_Text, mx_Image)
+        let eventTypeName = mxEv.getType();
+        if (typeof eventTypeName !== 'undefined') {
+            eventTypeName = eventTypeName.formatName();
+            rowClass = rowClass + ' ' + eventTypeName;
+        }
+
+        // Add Message type class e.g. (mx_RoomMessage, mx_CallInvite)
+        let messageType = mxEv.getContent().msgtype;
         if (typeof messageType !== 'undefined') {
-            rowClass = rowClass + ' ' + messageType.replace('m.', 'mx_');
+            messageType = messageType.formatName();
+            rowClass = rowClass + ' ' + messageType;
         }
 
         // Dev note: `this._isUnmounting.bind(this)` is important - it ensures that
