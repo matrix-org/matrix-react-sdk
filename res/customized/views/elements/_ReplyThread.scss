@@ -72,6 +72,12 @@
 
 .mx_Receiver .mx_ReplyThread {
     border-bottom: 1px solid #dddddd;
+
+    .mx_EventTile {
+        .mx_EventTile_avatar {
+            top: 15px !important;
+        }
+    }
 }
 
 blockquote.mx_ReplyThread {
@@ -80,4 +86,10 @@ blockquote.mx_ReplyThread {
     margin: 0;
     padding: 0;
     border: 0;
+}
+
+blockquote.mx_ReplyThread > a {
+    display: block;
+    height: 25px;
+    line-height: 25px;
 }

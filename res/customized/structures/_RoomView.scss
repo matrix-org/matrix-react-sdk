@@ -12,14 +12,20 @@
 }
 
 .mx_RoomView_MessageList li.mx_Continuation {
-    margin-top: 2px;
+    margin-top: 4px;
+}
+
+.mx_EventTile:hover .mx_EventTile_line,
+.mx_EventTile.mx_EventTile_actionBarFocused .mx_EventTile_line,
+.mx_EventTile.focus-visible:focus-within .mx_EventTile_line {
+    background-color: transparent !important;
 }
 
 /* View for Sender */
-.mx_RoomView_MessageList li.mx_Sender {
+.mx_RoomView_MessageList li.mx_Sender:not(.mx_RoomMember):not(.mx_RoomTopic) {
     float: right;
 
-    .mx_EventTile:not(.mx_EventTile_info) {
+    .mx_EventTile {
         .mx_EventTile_msgOption {
             float: right;
         }
@@ -61,7 +67,7 @@
         }
 
         .mx_EventUser {
-            top: 4px;
+            top: 4px !important;
             right: 0;
 
             .mx_SenderProfile {
@@ -78,10 +84,10 @@
 }
 
 /* View for Receiver */
-.mx_RoomView_MessageList li.mx_Receiver {
+.mx_RoomView_MessageList li.mx_Receiver:not(.mx_RoomMember):not(.mx_RoomTopic) {
     float: left;
 
-    .mx_EventTile:not(.mx_EventTile_info) {
+    .mx_EventTile {
         .mx_EventTile_msgOption {
             float: left;
             margin-left: 40px;
@@ -115,7 +121,7 @@
         }
 
         .mx_EventTile_avatar {
-            top: 20px;
+            top: 25px;
             left: auto;
             right: auto;
         }
@@ -140,8 +146,8 @@
 }
 
 /* View for Sender and Receiver */
-.mx_RoomView_MessageList li.mx_Sender,
-.mx_RoomView_MessageList li.mx_Receiver {
+.mx_RoomView_MessageList li.mx_Sender:not(.mx_RoomMember):not(.mx_RoomTopic),
+.mx_RoomView_MessageList li.mx_Receiver:not(.mx_RoomMember):not(.mx_RoomTopic) {
     .mx_EventTile {
         padding-top: 25px;
         clear: both;
@@ -149,7 +155,6 @@
 
         .mx_MessageTimestamp {
             width: auto;
-            margin-bottom: 2px;
         }
 
         .mx_EventTile_line {
@@ -195,10 +200,10 @@
     }
 }
 
-.mx_RoomView_MessageList li.mx_Sender.mx_image,
-.mx_RoomView_MessageList li.mx_Receiver.mx_image,
-.mx_RoomView_MessageList li.mx_Sender.mx_file,
-.mx_RoomView_MessageList li.mx_Receiver.mx_file {
+.mx_RoomView_MessageList li.mx_Sender.mx_Image,
+.mx_RoomView_MessageList li.mx_Receiver.mx_Image,
+.mx_RoomView_MessageList li.mx_Sender.mx_File,
+.mx_RoomView_MessageList li.mx_Receiver.mx_File {
     .mx_EventTile {
         height: 100%;
 
@@ -206,13 +211,32 @@
             background: transparent;
             border-radius: 0;
         }
+
+        .mx_EventUser {
+            .mx_SenderProfile {
+                margin-right: 5px !important;
+            }
+        }
     }
 }
 
-.mx_RoomView_MessageList li.mx_image,
-.mx_RoomView_MessageList li.mx_file {
-    margin-top: 6px;
+.mx_RoomView_MessageList li.mx_Image,
+.mx_RoomView_MessageList li.mx_File {
+    margin-top: 10px;
     margin-bottom: 6px;
+}
+
+.mx_RoomView_MessageList li.mx_Sender.mx_CallInvite,
+.mx_RoomView_MessageList li.mx_Sender.mx_CallHangup {
+    .mx_EventTile {
+        .mx_EventUser {
+            a {
+                .mx_MessageTimestamp {
+                    top: 0 !important;
+                }
+            }
+        }
+    }
 }
 
 .mx_RoomView .mx_MessageComposer {

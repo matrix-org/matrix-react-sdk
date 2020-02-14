@@ -10,7 +10,7 @@
     }
 
     .mx_EventTile_info {
-        text-align: center;
+        text-align: left;
 
         .mx_EventListSummary_avatars {
             padding-top: 0;
@@ -24,7 +24,7 @@
     .mx_EventTile_line {
         padding: 0;
         margin-right: 30px;
-        margin-left: 30px;
+        margin-left: 10px;
         min-height: 30px;
 
         .mx_MessageActionBar {
@@ -67,12 +67,66 @@
 
             &:hover {
                 background-color: #fefefe;
+
+                .mx_EventTile_line {
+                    background-color: transparent !important;
+                }
             }
         }
     }
 
     li:last-child {
         border: 0;
+    }
+}
+
+.mx_RoomTopic {
+    background: linear-gradient(90deg, rgba(247,247,247,1) 0%, rgba(243,243,243,1) 30%, rgba(239,239,239,1) 100%);
+    border: 1px solid $primary-hairline-color;
+    border-radius: 4px;
+    margin-bottom: 7px;
+    margin-top: 15px;
+
+    .mx_EventListSummary_line {
+        margin-left: 0;
+    }
+
+    .mx_EventTile {
+        height: 100% !important;
+        text-align: left;
+        padding-top: 0 !important;
+
+        .mx_EventUser {
+            top: 10px !important;
+            right: 10px;
+        }
+
+        .mx_TextualEvent {
+            padding: 4px;
+            text-align: left;
+        }
+
+        .mx_EventTile_line {
+            padding: 0;
+            margin-right: 30px;
+            margin-left: 30px;
+
+            &:hover {
+                background-color: transparent !important;
+            }
+        }
+
+        .mx_EventTile_avatar {
+            left: 10px;
+        }
+
+        &:hover {
+            background-color: #fefefe !important;
+
+            .mx_EventTile_line {
+                background-color: transparent !important;
+            }
+        }
     }
 }
 

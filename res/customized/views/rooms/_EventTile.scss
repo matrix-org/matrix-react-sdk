@@ -67,7 +67,7 @@
     }
 }
 
-.mx_Sender {
+.mx_Sender:not(.mx_RoomMember):not(.mx_RoomTopic) {
     .mx_EventTile .mx_EventTile_line {
         background-origin: border-box !important;
         border-right: 2px solid transparent !important;
@@ -94,7 +94,7 @@
 }
 
 .mx_EventTile_e2eIcon {
-    top: -1px;
+    top: -4px;
     left: -8px;
 }
 
