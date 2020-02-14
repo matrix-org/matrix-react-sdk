@@ -38,12 +38,14 @@ export default class MemberDeviceInfo extends React.Component {
 
         // add the deviceId as a titletext to help with debugging
         return (
-            <div className="mx_MemberDeviceInfo"
-                    title={_t("device id: ") + this.props.device.deviceId} >
-                { indicator }
-                <div className="mx_MemberDeviceInfo_deviceInfo">
-                    <div className="mx_MemberDeviceInfo_deviceId">
-                        { deviceName }
+            <div>
+                <div className="mx_MemberDeviceInfo"
+                     title={_t("device id: ") + this.props.device.deviceId}>
+                    { indicator }
+                    <div className="mx_MemberDeviceInfo_deviceInfo">
+                        <div className="mx_MemberDeviceInfo_deviceId">
+                            { deviceName }
+                        </div>
                     </div>
                 </div>
                 <DeviceVerifyButtons userId={this.props.userId} device={this.props.device} />
