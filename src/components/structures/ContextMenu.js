@@ -238,7 +238,7 @@ export class ContextMenu extends React.Component {
 
         if (props.left) {
             position.left = props.left;
-            chevronFace = 'left';
+            chevronFace = 'right';
         } else {
             position.right = props.right;
             chevronFace = 'right';
