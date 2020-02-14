@@ -54,18 +54,22 @@ export default class RoomPanelButton extends HeaderButtons {
     }
 
     renderButtons() {
+        // used to collapse and expand right panel but not needed anymore.
+        /*
+            <HeaderButton key="expandPanelButton" name="expandPanelButton"
+                title={_t('Members')}
+                isHighlighted={this.isPhase(MEMBER_PHASES)}
+                onClick={this._onTogglePanel}
+                analytics={['Right Panel', 'Member List Button', 'click']}
+            />,
+        */
+
         return [
             <HeaderButton key="notifsButton" name="notifsButton"
                   title={_t('Notifications')}
                   isHighlighted={this.isPhase(RIGHT_PANEL_PHASES.NotificationPanel)}
                   onClick={this._onNotificationsClicked}
                   analytics={['Right Panel', 'Notification List Button', 'click']}
-            />,
-            <HeaderButton key="expandPanelButton" name="expandPanelButton"
-                title={_t('Members')}
-                isHighlighted={this.isPhase(MEMBER_PHASES)}
-                onClick={this._onTogglePanel}
-                analytics={['Right Panel', 'Member List Button', 'click']}
             />,
         ];
     }
