@@ -1,0 +1,14 @@
+.mx_MemberInfo_avatar {
+    background: none;
+}
+
+.mx_adminTools {
+    overflow: hidden;
+    display: flex;
+    height: 50px;
+    border-top: 1px solid $primary-hairline-color;
+}
+
+.mx_adminTools > div {
+    display: flex;
+}

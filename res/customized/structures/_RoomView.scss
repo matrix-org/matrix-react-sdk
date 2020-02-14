@@ -208,7 +208,7 @@
         height: 100%;
 
         .mx_EventTile_line {
-            background: transparent;
+            background: transparent !important;
             border-radius: 0;
         }
 
@@ -220,11 +220,13 @@
     }
 }
 
-.mx_RoomView_MessageList li.mx_Image,
-.mx_RoomView_MessageList li.mx_File {
-    margin-top: 10px;
-    margin-bottom: 6px;
-}
+/*
+    .mx_RoomView_MessageList li.mx_Image,
+    .mx_RoomView_MessageList li.mx_File {
+        margin-top: 10px;
+        margin-bottom: 6px;
+    }
+*/
 
 .mx_RoomView_MessageList li.mx_Sender.mx_CallInvite,
 .mx_RoomView_MessageList li.mx_Sender.mx_CallHangup {

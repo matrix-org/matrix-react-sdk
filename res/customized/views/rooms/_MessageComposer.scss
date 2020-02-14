@@ -9,3 +9,22 @@
 .mx_MessageComposer_e2eIcon {
     display: none;
 }
+
+.mx_MessageComposer_button {
+    height: 50px;
+    width: 45px;
+    border-left: 1px solid $primary-hairline-color;
+    margin: 0;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 14px;
+        height: 20px;
+        width: 100%;
+        background-color: $composer-button-color;
+        mask-repeat: no-repeat;
+        mask-size: contain;
+        mask-position: center;
+    }
+}

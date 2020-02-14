@@ -21,8 +21,6 @@ limitations under the License.
 
     .mx_SearchBox {
         margin: 0;
-        height: 51px;
-        border-top: 1px solid $primary-hairline-color;
 
         input {
             font-size: 14px;
@@ -63,4 +61,51 @@ limitations under the License.
 .mx_RightPanel_headerButton_highlight::after {
     background-color: $accent-color;
     bottom: -2px;
+}
+
+.mx_RightPanel_inviteAndFilterRow {
+    display: flex;
+    height: 50px;
+    border-top: 1px solid $primary-hairline-color;
+
+    .mx_SearchBox {
+        flex: 1 1 0;
+        min-width: 0;
+        margin: 0;
+
+        &:before {
+            left: 12px;
+        }
+
+        input {
+            font-size: 14px;
+            font-weight: 600;
+        }
+    }
+}
+
+.mx_RightPanel_inviteUser {
+    flex: 0 0 50%;
+    overflow: hidden;
+    transition: flex-basis 0.2s;
+    box-sizing: border-box;
+
+    &.mx_RightPanel_invite_hidden {
+        flex-basis: 0;
+    }
+
+    .mx_AccessibleButton {
+        font-size: 14px;
+        margin: 0;
+        padding: 15px 15px 15px 42px;
+        border-right: 1px solid $primary-hairline-color;
+        font-weight: 600;
+        color: $notice-secondary-color;
+        position: relative;
+        border-radius: 4px;
+
+        &:hover {
+            background-color: $primary-bg-color;
+        }
+    }
 }

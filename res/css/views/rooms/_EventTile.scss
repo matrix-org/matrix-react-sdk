@@ -168,11 +168,10 @@ limitations under the License.
     visibility: visible;
 }
 
-.mx_EventTile:hover .mx_MessageActionBar,
-.mx_EventTile.mx_EventTile_actionBarFocused .mx_MessageActionBar,
-[data-whatinput='keyboard'] .mx_EventTile:focus-within .mx_MessageActionBar,
-.mx_EventTile.focus-visible:focus-within .mx_MessageActionBar {
-    /*visibility: visible;*/
+.mx_EventTile_line:hover .mx_MessageActionBar,
+.mx_EventTile_line.mx_EventTile_actionBarFocused .mx_MessageActionBar,
+[data-whatinput='keyboard'] .mx_EventTile_line:focus-within .mx_MessageActionBar {
+    visibility: visible;
 }
 
 /* this is used for the tile for the event which is selected via the URL.

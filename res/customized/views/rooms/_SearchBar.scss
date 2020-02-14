@@ -5,6 +5,7 @@
     .mx_SearchBar_input {
         margin: 0;
         border: 0;
+        padding-left: 15px;
         box-shadow: none;
     }
 
@@ -13,6 +14,7 @@
         height: 100%;
 
         .mx_SearchBar_button {
+            margin: 0;
             border: 0;
             padding: 15px;
             font-size: 13px;

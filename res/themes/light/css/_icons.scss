@@ -56,7 +56,6 @@
     mask-image: url('$(icons)/collapse.svg');
 }
 
-
 .mx_GroupHeader_editButton::before {
     mask-image: url('$(icons)/settings.svg');
 }
@@ -68,6 +67,8 @@
 .mx_LeftPanel_explore {
     .mx_AccessibleButton {
         &::before {
+            position: absolute;
+            content: "";
             mask: url('$(icons)/explore.svg');
             cursor: pointer;
             left: 14px;
@@ -75,10 +76,28 @@
             width: 16px;
             height: 16px;
             background-color: $notice-secondary-color;
-            position: absolute;
         }
     }
 }
+
+.mx_RightPanel_inviteUser {
+    .mx_AccessibleButton {
+        &::before {
+            position: absolute;
+            content: "";
+            cursor: pointer;
+            mask: url('$(icons)/user-add.svg');
+            left: 14px;
+            top: 16px;
+            width: 22px;
+            height: 16px;
+            background-color: $notice-secondary-color;
+            mask-position: center;
+            mask-repeat: no-repeat;
+        }
+    }
+}
+
 
 .mx_MyGroups_headerCard .mx_MyGroups_headerCard_button {
     &::before {
@@ -946,3 +965,47 @@
     background: $roomtile-name-color;
     transition: transform 0.2s ease-in;
 }
+
+.mx_adminButton_mute::before {
+    mask-image: url('$(icons)/user.svg');
+}
+
+.mx_adminButton_unmute::before {
+    mask-image: url('$(icons)/user.svg');
+}
+
+.mx_adminButton_ignore::before {
+    mask-image: url('$(icons)/user.svg');
+}
+
+.mx_adminButton_kick::before {
+    mask-image: url('$(icons)/user.svg');
+}
+
+.mx_adminButton_invite::before {
+    mask-image: url('$(icons)/user.svg');
+}
+
+.mx_adminButton_ban::before {
+    mask-image: url('$(icons)/user.svg');
+}
+
+.mx_adminButton_mention::before {
+    mask-image: url('$(icons)/user.svg');
+}
+
+.mx_adminButton_readRecipient::before {
+    mask-image: url('$(icons)/user.svg');
+}
+
+.mx_adminButton_removeMessages::before {
+    mask-image: url('$(icons)/user.svg');
+}
+
+.mx_adminButton_share::before {
+    mask-image: url('$(icons)/user.svg');
+}
+
+
+
+
