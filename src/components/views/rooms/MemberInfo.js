@@ -807,10 +807,14 @@ export default createReactClass({
         // Only allow the user to ignore the user if its not ourselves
         // same goes for jumping to read receipt
         if (member.userId !== cli.getUserId()) {
+            const ignoreLabel = this.state.isIgnoring ? _t("Unignore") : _t("Ignore");
+            const ignoreClass = this.state.isIgnoring ? 'mx_RightPanel_headerButton mx_adminButton_unignore' : 'mx_RightPanel_headerButton mx_adminButton_ignore'
             ignoreButton = (
-                <AccessibleButton onClick={this.onIgnoreToggle} className="mx_MemberInfo_field">
-                    { this.state.isIgnoring ? _t("Unignore") : _t("Ignore") }
-                </AccessibleButton>
+                <AccessibleButton
+                    className={ignoreClass}
+                    onClick={this.onIgnoreToggle}
+                    title={ignoreLabel}
+                />
             );
 
             if (member.roomId) {
@@ -834,15 +838,19 @@ export default createReactClass({
                 };
 
                 readReceiptButton = (
-                    <AccessibleButton onClick={onReadReceiptButton} className="mx_MemberInfo_field">
-                        { _t('Jump to read receipt') }
-                    </AccessibleButton>
+                    <AccessibleButton
+                        onClick={onReadReceiptButton}
+                        className="mx_RightPanel_headerButton mx_adminButton_readReciepient"
+                        title={ _t('Jump to read receipt') }
+                    />
                 );
 
                 insertPillButton = (
-                    <AccessibleButton onClick={onInsertPillButton} className={"mx_MemberInfo_field"}>
-                        { _t('Mention') }
-                    </AccessibleButton>
+                    <AccessibleButton
+                        onClick={onInsertPillButton}
+                        className={"mx_RightPanel_headerButton mx_adminButton_mention"}
+                        title={ _t('Mention') }
+                    />
                 );
             }
 
@@ -867,29 +875,30 @@ export default createReactClass({
                 };
 
                 inviteUserButton = (
-                    <AccessibleButton onClick={onInviteUserButton} className="mx_MemberInfo_field">
-                        { _t('Invite') }
-                    </AccessibleButton>
+                    <AccessibleButton
+                        onClick={onInviteUserButton}
+                        className="mx_RightPanel_headerButton mx_adminButton_invite"
+                        title={ _t('Invite') }
+                    />
                 );
             }
         }
 
         const shareUserButton = (
-            <AccessibleButton onClick={this.onShareUserClick} className="mx_MemberInfo_field">
-                { _t('Share Link to User') }
-            </AccessibleButton>
+            <AccessibleButton
+                onClick={this.onShareUserClick}
+                className="mx_RightPanel_headerButton mx_adminButton_share"
+                title={ _t('Share Link to User') }
+            />
         );
 
         return (
             <div>
-                <h3>{ _t("User Options") }</h3>
-                <div className="mx_MemberInfo_buttons">
-                    { readReceiptButton }
-                    { shareUserButton }
-                    { insertPillButton }
-                    { ignoreButton }
-                    { inviteUserButton }
-                </div>
+                { readReceiptButton }
+                { shareUserButton }
+                { insertPillButton }
+                { ignoreButton }
+                { inviteUserButton }
             </div>
         );
     },
@@ -974,48 +983,62 @@ export default createReactClass({
         if (this.state.can.kick) {
             const membership = this.props.member.membership;
             const kickLabel = membership === "invite" ? _t("Disinvite") : _t("Kick");
+            const kickClass = membership === "invite" ? 'mx_RightPanel_headerButton mx_adminButton_invite' : 'mx_RightPanel_headerButton mx_adminButton_kick';
             kickButton = (
-                <AccessibleButton className="mx_MemberInfo_field"
-                        onClick={this.onKick}>
-                    { kickLabel }
-                </AccessibleButton>
+                <AccessibleButton
+                    className={kickClass}
+                    onClick={this.onKick}
+                    title={ kickLabel }
+                />
             );
         }
 
         if (this.state.can.redactMessages) {
             redactButton = (
-                <AccessibleButton className="mx_MemberInfo_field" onClick={this.onRedactAllMessages}>
-                    { _t("Remove recent messages") }
-                </AccessibleButton>
+                <AccessibleButton
+                    className="mx_RightPanel_headerButton mx_adminButton_removeMessages"
+                    onClick={this.onRedactAllMessages}
+                    title={ _t("Remove recent messages") }
+                />
             );
         }
 
         if (this.state.can.ban) {
             let label = _t("Ban");
+            let banClass = 'mx_RightPanel_headerButton mx_adminButton_ban';
             if (this.props.member.membership === 'ban') {
                 label = _t("Unban");
+                banClass = 'mx_RightPanel_headerButton mx_adminButton_unban';
             }
             banButton = (
-                <AccessibleButton className="mx_MemberInfo_field"
-                        onClick={this.onBanOrUnban}>
-                    { label }
-                </AccessibleButton>
+                <AccessibleButton
+                    className={ banClass }
+                    onClick={this.onBanOrUnban}
+                    title={ label }
+                />
             );
         }
         if (this.state.can.mute) {
             const muteLabel = this.state.muted ? _t("Unmute") : _t("Mute");
+            const muteClass = this.state.muted ? 'mx_RightPanel_headerButton mx_adminButton_unmute' : 'mx_RightPanel_headerButton mx_adminButton_mute';
             muteButton = (
-                <AccessibleButton className="mx_MemberInfo_field"
-                        onClick={this.onMuteToggle}>
-                    { muteLabel }
-                </AccessibleButton>
+                <AccessibleButton
+                    className={ muteClass }
+                    onClick={this.onMuteToggle}
+                    title={ muteLabel}
+                />
             );
         }
         if (this.state.can.toggleMod) {
             const giveOpLabel = this.state.isTargetMod ? _t("Revoke Moderator") : _t("Make Moderator");
-            giveModButton = <AccessibleButton className="mx_MemberInfo_field" onClick={this.onModToggle}>
-                { giveOpLabel }
-            </AccessibleButton>;
+            const giveOpClass = this.state.isTargetMod ? 'mx_RightPanel_headerButton mx_adminButton_mod' : 'mx_RightPanel_headerButton mx_adminButton_unmod';
+            giveModButton = (
+                <AccessibleButton
+                    className={giveOpClass}
+                    onClick={this.onModToggle}
+                    title={ giveOpLabel }
+                />
+            );
         }
 
         // We don't need a perfect check here, just something to pass as "probably not our homeserver". If
@@ -1031,19 +1054,16 @@ export default createReactClass({
 
         let adminTools;
         if (kickButton || banButton || muteButton || giveModButton || synapseDeactivateButton || redactButton) {
-            adminTools =
+            adminTools = (
                 <div>
-                    <h3>{ _t("Admin Tools") }</h3>
-
-                    <div className="mx_MemberInfo_buttons">
-                        { muteButton }
-                        { kickButton }
-                        { banButton }
-                        { redactButton }
-                        { giveModButton }
-                        { synapseDeactivateButton }
-                    </div>
-                </div>;
+                    { muteButton }
+                    { kickButton }
+                    { banButton }
+                    { redactButton }
+                    { giveModButton }
+                    { synapseDeactivateButton }
+                </div>
+            );
         }
 
         const memberName = this.props.member.name;
@@ -1150,9 +1170,7 @@ export default createReactClass({
                 </div>
                 <AutoHideScrollbar className="mx_MemberInfo_scrollContainer">
                     <div className="mx_MemberInfo_container">
-                        { this._renderUserOptions() }
 
-                        { adminTools }
 
                         { startChat }
 
@@ -1161,6 +1179,10 @@ export default createReactClass({
                         { spinner }
                     </div>
                 </AutoHideScrollbar>
+                <div className="mx_adminTools">
+                    { this._renderUserOptions() }
+                    { adminTools }
+                </div>
             </div>
         );
     },
