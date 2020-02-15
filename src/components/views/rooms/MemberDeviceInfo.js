@@ -32,9 +32,11 @@ export default class MemberDeviceInfo extends React.Component {
             mx_MemberDeviceInfo_icon_unverified: this.props.device.isUnverified(),
         });
         const indicator = (<div className={iconClasses} />);
-        const deviceName = (this.props.device.ambiguous || this.props.showDeviceId) ?
+        let deviceName = (this.props.device.ambiguous || this.props.showDeviceId) ?
             (this.props.device.getDisplayName() ? this.props.device.getDisplayName() : "") + " (" + this.props.device.deviceId + ")" :
             this.props.device.getDisplayName();
+
+        deviceName = deviceName.replace( /^[a-zA-Z]{3,5}\:\/{2}[a-zA-Z0-9_.:-]+\//, '' );
 
         // add the deviceId as a titletext to help with debugging
         return (
