@@ -967,11 +967,11 @@
 }
 
 .mx_adminButton_mute::before {
-    mask-image: url('$(icons)/user.svg');
+    mask-image: url('$(icons)/mute.svg');
 }
 
 .mx_adminButton_unmute::before {
-    mask-image: url('$(icons)/user.svg');
+    mask-image: url('$(icons)/mute-off.svg');
 }
 
 .mx_adminButton_ignore::before {
@@ -979,33 +979,24 @@
 }
 
 .mx_adminButton_kick::before {
-    mask-image: url('$(icons)/user.svg');
+    mask-image: url('$(icons)/user-times.svg');
 }
 
 .mx_adminButton_invite::before {
-    mask-image: url('$(icons)/user.svg');
+    mask-image: url('$(icons)/user-add.svg');
 }
 
 .mx_adminButton_ban::before {
-    mask-image: url('$(icons)/user.svg');
+    mask-image: url('$(icons)/ban.svg');
 }
 
-.mx_adminButton_mention::before {
-    mask-image: url('$(icons)/user.svg');
-}
-
-.mx_adminButton_readRecipient::before {
-    mask-image: url('$(icons)/user.svg');
+.mx_adminButton_unban::before {
+    mask-image: url('$(icons)/ban-off.svg');
 }
 
 .mx_adminButton_removeMessages::before {
-    mask-image: url('$(icons)/user.svg');
+    mask-image: url('$(icons)/remove-messages.svg');
 }
-
-.mx_adminButton_share::before {
-    mask-image: url('$(icons)/user.svg');
-}
-
 
 
 
