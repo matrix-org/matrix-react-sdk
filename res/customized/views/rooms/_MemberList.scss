@@ -3,7 +3,7 @@
 
     .mx_MemberList_section {
         .mx_EntityTile {
-            padding: 4px 9px;
+            padding: 4px 6px;
             border-bottom: 1px solid $primary-hairline-color;
 
             &:hover {
@@ -11,7 +11,7 @@
             }
 
             &:hover:before {
-                right: 0;
+                right: 4px;
             }
         }
     }

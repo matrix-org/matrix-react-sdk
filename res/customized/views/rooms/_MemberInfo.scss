@@ -1,3 +1,95 @@
+.mx_MemberInfo {
+    background-color: #ffffff;
+
+    .mx_MemberHeader {
+        background-position-x: 0;
+        background-position-y: 0;
+        background-size: auto;
+        background: #412c6f;
+        /*background: #412c6f url('$(res)/img/user_header.jpg') no-repeat;*/
+        text-align: center;
+        height: 140px;
+        margin-bottom: 60px;
+
+        h2 {
+            margin: 10px 0 5px;
+            font-size: 16px;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        abbr {
+            color: #ffffff;
+            font-size: 14px;
+        }
+
+        .mx_MemberInfo_cancel {
+            position: absolute;
+            padding: 0;
+            width: 30px;
+            height: 40px;
+            mask-position: center;
+        }
+
+        .mx_MemberInfo_avatar {
+            position: relative;
+            max-width: 111px;
+            max-height: 111px;
+            margin-top: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 3px 2px 4px rgba(0, 0, 0, 0.2), 0 4px 10px rgba(0, 0, 0, 0.2);
+
+            .mx_E2EIcon {
+                position: absolute;
+                margin: 0;
+                top: -5px;
+                left: -8px;
+            }
+        }
+    }
+
+    .mx_MemberInfo_profileField {
+        margin-bottom: 15px;
+
+        .online {
+            color: $online-color;
+        }
+
+        .offline {
+            color: $offline-color;
+        }
+
+        .mx_PresenceLabel {
+            text-align: center;
+            opacity: 1;
+        }
+
+        .mx_MemberInfo_statusMessage {
+            text-align: center;
+            font-size: 14px;
+            opacity: 1;
+            color: #d92e9e;
+            font-weight: 600;
+        }
+    }
+
+    .mx_PowerSelector {
+        .mx_Field_select {
+            margin: 0;
+            border-bottom: 0;
+            border-left: 0;
+            border-right: 0;
+        }
+
+        .mx_Field input:focus + label,
+        .mx_Field select:focus + label,
+        .mx_Field textarea:focus + label {
+            display: none;
+        }
+    }
+}
+
 .mx_MemberInfo_avatar {
     background: none;
 }
@@ -9,6 +101,49 @@
     border-top: 1px solid $primary-hairline-color;
 }
 
-.mx_adminTools > div {
-    display: flex;
+.mx_adminTools {
+    .mx_RightPanel_headerButton {
+        padding: 0;
+        display: block;
+        width: 19.8%;
+    }
+
+    .mx_RightPanel_headerButton:last-child {
+        border-right: 0;
+    }
+}
+
+.mx_MemberInfo_container {
+    margin: 0;
+
+    div {
+        h3 {
+            margin: 0;
+            padding-left: 15px;
+            padding-bottom: 8px;
+            padding-top: 8px;
+            border-top: 1px solid $primary-hairline-color;
+            border-bottom: 1px solid $primary-hairline-color;
+            background: linear-gradient(90deg, rgb(247, 247, 247) 0%, rgb(255, 255, 255) 30%, rgb(249, 249, 249) 100%);
+        }
+
+        .mx_RoomTile {
+            padding-left: 15px;
+            padding-right: 15px;
+            border-bottom: 1px solid $primary-hairline-color;
+
+            .mx_RoomTile_avatar {
+                padding-left: 0;
+                margin-right: 8px;
+            }
+
+            &:hover {
+                background: linear-gradient(90deg, rgb(247, 247, 247) 0%, rgb(255, 255, 255) 30%, rgb(249, 249, 249) 100%);
+            }
+        }
+    }
+}
+
+.mx_MemberInfo_container > div {
+    margin-bottom: 25px;
 }

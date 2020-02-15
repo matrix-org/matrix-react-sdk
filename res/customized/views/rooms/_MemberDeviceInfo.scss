@@ -1,0 +1,35 @@
+.mx_MemberDeviceInfo {
+    padding-bottom: 0;
+    padding-top: 8px;
+}
+
+.mx_MemberInfo_devices > div {
+    border-bottom: 1px solid $primary-hairline-color;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.mx_MemberInfo_devices > div:hover {
+    background: linear-gradient(90deg, rgb(247, 247, 247) 0%, rgb(255, 255, 255) 30%, rgb(249, 249, 249) 100%);
+}
+
+.mx_DeviceVerifyButtons {
+    margin-bottom: 8px;
+
+    .mx_MemberDeviceInfo_verify,
+    .mx_MemberDeviceInfo_blacklist {
+        padding: 2px 9px
+    }
+
+    .mx_MemberDeviceInfo_verify {
+        color: $button-primary-fg-color;
+        background-color: $button-primary-bg-color;
+        border: 1px solid $button-primary-border-color;
+    }
+
+    .mx_MemberDeviceInfo_blacklist {
+        color: $button-default-fg-color;
+        background-color: $button-default-bg-color;
+        border: 1px solid $button-default-border-color;
+    }
+}

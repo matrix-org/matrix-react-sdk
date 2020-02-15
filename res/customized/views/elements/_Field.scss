@@ -17,6 +17,25 @@
     margin: 0 0 1em;
 }
 
+.mx_Field_labelAlwaysTopLeft label,
+.mx_Field select + label /* Always show a select's label on top to not collide with the value */,
+.mx_Field input:focus + label,
+.mx_Field input:not(:placeholder-shown) + label,
+.mx_Field textarea:focus + label,
+.mx_Field textarea:not(:placeholder-shown) + label {
+    background-color: transparent;
+}
+
+.mx_Field select:disabled,
+.mx_Field select:disabled + label,
+.mx_Field input:disabled,
+.mx_Field input:disabled + label,
+.mx_Field textarea:disabled,
+.mx_Field textarea:disabled + label {
+    background-color: transparent;
+    color: $greyed-fg-color;
+}
+
 .mx_Field input,
 .mx_Field select,
 .mx_Field textarea {

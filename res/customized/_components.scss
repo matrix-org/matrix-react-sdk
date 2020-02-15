@@ -15,6 +15,7 @@
 @import "./views/avatars/_MemberStatusMessageAvatar.scss";
 
 @import "./views/context_menus/_MessageContextMenu.scss";
+@import "./views/context_menus/_StatusMessageContextMenu.scss";
 
 @import "./views/dialogs/_InviteDialog.scss";
 @import "./views/dialogs/_SettingsDialog.scss";
@@ -37,6 +38,7 @@
 @import "./views/rooms/_BasicMessageComposer.scss";
 @import "./views/rooms/_EditMessageComposer.scss";
 @import "./views/rooms/_EventTile.scss";
+@import "./views/rooms/_MemberDeviceInfo.scss";
 @import "./views/rooms/_MemberInfo.scss";
 @import "./views/rooms/_MemberList.scss";
 @import "./views/rooms/_MessageComposer.scss";
