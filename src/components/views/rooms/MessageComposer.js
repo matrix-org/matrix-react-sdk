@@ -341,7 +341,7 @@ export default class MessageComposer extends React.Component {
                 </a>
             ) : '';
 
-            controls.push(<div className="mx_MessageComposer_replaced_wrapper">
+            controls.push(<div key="replaced_wrapper" className="mx_MessageComposer_replaced_wrapper">
                 <div className="mx_MessageComposer_replaced_valign">
                     <img className="mx_MessageComposer_roomReplaced_icon" src={require("../../../../res/img/room_replaced.svg")} />
                     <span className="mx_MessageComposer_roomReplaced_header">
