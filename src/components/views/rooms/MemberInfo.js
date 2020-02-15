@@ -800,7 +800,6 @@ export default createReactClass({
         const member = this.props.member;
 
         let ignoreButton = null;
-        let insertPillButton = null;
         let inviteUserButton = null;
         let readReceiptButton = null;
 
@@ -811,6 +810,7 @@ export default createReactClass({
             const ignoreClass = this.state.isIgnoring ? 'mx_RightPanel_headerButton mx_adminButton_unignore' : 'mx_RightPanel_headerButton mx_adminButton_ignore'
             ignoreButton = (
                 <AccessibleButton
+                    key="adminButton_ignore"
                     className={ignoreClass}
                     onClick={this.onIgnoreToggle}
                     title={ignoreLabel}
@@ -830,26 +830,12 @@ export default createReactClass({
                     });
                 };
 
-                const onInsertPillButton = function() {
-                    dis.dispatch({
-                        action: 'insert_mention',
-                        user_id: member.userId,
-                    });
-                };
-
                 readReceiptButton = (
                     <AccessibleButton
+                        key="adminButton_readRecipient"
                         onClick={onReadReceiptButton}
-                        className="mx_RightPanel_headerButton mx_adminButton_readReciepient"
+                        className="mx_RightPanel_headerButton mx_adminButton_readRecipient"
                         title={ _t('Jump to read receipt') }
-                    />
-                );
-
-                insertPillButton = (
-                    <AccessibleButton
-                        onClick={onInsertPillButton}
-                        className={"mx_RightPanel_headerButton mx_adminButton_mention"}
-                        title={ _t('Mention') }
                     />
                 );
             }
@@ -876,6 +862,7 @@ export default createReactClass({
 
                 inviteUserButton = (
                     <AccessibleButton
+                        key="adminButton_invite"
                         onClick={onInviteUserButton}
                         className="mx_RightPanel_headerButton mx_adminButton_invite"
                         title={ _t('Invite') }
@@ -884,23 +871,11 @@ export default createReactClass({
             }
         }
 
-        const shareUserButton = (
-            <AccessibleButton
-                onClick={this.onShareUserClick}
-                className="mx_RightPanel_headerButton mx_adminButton_share"
-                title={ _t('Share Link to User') }
-            />
-        );
-
-        return (
-            <div>
-                { readReceiptButton }
-                { shareUserButton }
-                { insertPillButton }
-                { ignoreButton }
-                { inviteUserButton }
-            </div>
-        );
+        // readReceiptButton
+        return [
+            ignoreButton,
+            inviteUserButton,
+        ];
     },
 
     render: function() {
@@ -986,6 +961,7 @@ export default createReactClass({
             const kickClass = membership === "invite" ? 'mx_RightPanel_headerButton mx_adminButton_invite' : 'mx_RightPanel_headerButton mx_adminButton_kick';
             kickButton = (
                 <AccessibleButton
+                    key="adminButton_kick"
                     className={kickClass}
                     onClick={this.onKick}
                     title={ kickLabel }
@@ -996,6 +972,7 @@ export default createReactClass({
         if (this.state.can.redactMessages) {
             redactButton = (
                 <AccessibleButton
+                    key="adminButton_removeMessages"
                     className="mx_RightPanel_headerButton mx_adminButton_removeMessages"
                     onClick={this.onRedactAllMessages}
                     title={ _t("Remove recent messages") }
@@ -1012,6 +989,7 @@ export default createReactClass({
             }
             banButton = (
                 <AccessibleButton
+                    key="adminButton_ban"
                     className={ banClass }
                     onClick={this.onBanOrUnban}
                     title={ label }
@@ -1023,6 +1001,7 @@ export default createReactClass({
             const muteClass = this.state.muted ? 'mx_RightPanel_headerButton mx_adminButton_unmute' : 'mx_RightPanel_headerButton mx_adminButton_mute';
             muteButton = (
                 <AccessibleButton
+                    key="adminButton_mute"
                     className={ muteClass }
                     onClick={this.onMuteToggle}
                     title={ muteLabel}
@@ -1034,6 +1013,7 @@ export default createReactClass({
             const giveOpClass = this.state.isTargetMod ? 'mx_RightPanel_headerButton mx_adminButton_mod' : 'mx_RightPanel_headerButton mx_adminButton_unmod';
             giveModButton = (
                 <AccessibleButton
+                    key="adminButton_mod"
                     className={giveOpClass}
                     onClick={this.onModToggle}
                     title={ giveOpLabel }
@@ -1054,16 +1034,14 @@ export default createReactClass({
 
         let adminTools;
         if (kickButton || banButton || muteButton || giveModButton || synapseDeactivateButton || redactButton) {
-            adminTools = (
-                <div>
-                    { muteButton }
-                    { kickButton }
-                    { banButton }
-                    { redactButton }
-                    { giveModButton }
-                    { synapseDeactivateButton }
-                </div>
-            );
+            adminTools = [
+                muteButton,
+                kickButton,
+                banButton,
+                redactButton,
+                giveModButton,
+                synapseDeactivateButton,
+            ];
         }
 
         const memberName = this.props.member.name;
@@ -1104,28 +1082,36 @@ export default createReactClass({
 
         let statusLabel = null;
         if (statusMessage) {
-            statusLabel = <span className="mx_MemberInfo_statusMessage">{ statusMessage }</span>;
+            const MemberStatusMessage = sdk.getComponent('avatars.MemberStatusMessage');
+            statusLabel = <div className="mx_MemberInfo_statusMessage">
+                <MemberStatusMessage member={this.props.member} message={statusMessage} />
+            </div>;
+
+            //statusLabel = <div className="mx_MemberInfo_statusMessage">{ statusMessage }</div>;
         }
 
         let roomMemberDetails = null;
+        let roomRoleSelector;
         let e2eIconElement;
 
         if (this.props.member.roomId) { // is in room
             const PowerSelector = sdk.getComponent('elements.PowerSelector');
-            roomMemberDetails = <div>
+            roomMemberDetails =
                 <div className="mx_MemberInfo_profileField">
-                    <PowerSelector
-                        value={parseInt(this.props.member.powerLevel)}
-                        maxValue={this.state.can.modifyLevelMax}
-                        disabled={!this.state.can.modifyLevel}
-                        usersDefault={powerLevelUsersDefault}
-                        onChange={this.onPowerChange} />
-                </div>
-                <div className="mx_MemberInfo_profileField">
-                    {presenceLabel}
+                    <span className={presenceState}>
+                        {presenceLabel}
+                    </span>
                     {statusLabel}
-                </div>
-            </div>;
+                </div>;
+
+            roomRoleSelector =
+                <PowerSelector
+                    value={parseInt(this.props.member.powerLevel)}
+                    maxValue={this.state.can.modifyLevelMax}
+                    disabled={!this.state.can.modifyLevel}
+                    usersDefault={powerLevelUsersDefault}
+                    onChange={this.onPowerChange}
+                />;
 
             const isEncrypted = this.context.isRoomEncrypted(this.props.member.roomId);
             if (this.state.e2eStatus && isEncrypted) {
@@ -1138,39 +1124,63 @@ export default createReactClass({
         let avatarElement;
         if (avatarUrl) {
             const httpUrl = this.context.mxcUrlToHttp(avatarUrl, 800, 800);
-            avatarElement = <div className="mx_MemberInfo_avatar">
-                <img src={httpUrl} />
-            </div>;
+            avatarElement = <img src={httpUrl} />;
         }
 
         let backButton;
         if (this.props.member.roomId) {
-            backButton = (<AccessibleButton className="mx_MemberInfo_cancel"
+            backButton = (<AccessibleButton
+                className="mx_MemberInfo_cancel"
                 onClick={this.onCancel}
                 title={_t('Close')}
             />);
         }
 
+        let mentionButton;
+        if (member.roomId) {
+            const onMentionClick = function() {
+                dis.dispatch({
+                    action: 'insert_mention',
+                    user_id: member.userId,
+                });
+            };
+
+            mentionButton = (
+                <AccessibleButton
+                    key="adminButton_mention"
+                    onClick={onMentionClick}
+                    title={ _t('Mention') }
+                >
+                    { memberName }
+                </AccessibleButton>
+            );
+        } else {
+            mentionButton = memberName;
+        }
+
         return (
             <div className="mx_MemberInfo" role="tabpanel">
-                <div className="mx_MemberInfo_name">
+                <div className="mx_MemberHeader">
                     { backButton }
-                    { e2eIconElement }
-                    <h2>{ memberName }</h2>
-                </div>
-                { avatarElement }
-                <div className="mx_MemberInfo_container">
-
-                    <div className="mx_MemberInfo_profile">
-                        <div className="mx_MemberInfo_profileField">
+                    <h2>
+                        { mentionButton }
+                    </h2>
+                    <abbr>
+                        <AccessibleButton
+                            key="adminButton_share"
+                            onClick={this.onShareUserClick}
+                            title={ _t('Share Link to User') }>
                             { this.props.member.userId }
-                        </div>
-                        { roomMemberDetails }
+                        </AccessibleButton>
+                    </abbr>
+                    <div className="mx_MemberInfo_avatar">
+                        { e2eIconElement }
+                        { avatarElement }
                     </div>
                 </div>
+                { roomMemberDetails }
                 <AutoHideScrollbar className="mx_MemberInfo_scrollContainer">
                     <div className="mx_MemberInfo_container">
-
 
                         { startChat }
 
@@ -1179,6 +1189,7 @@ export default createReactClass({
                         { spinner }
                     </div>
                 </AutoHideScrollbar>
+                { roomRoleSelector }
                 <div className="mx_adminTools">
                     { this._renderUserOptions() }
                     { adminTools }
