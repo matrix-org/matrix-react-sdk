@@ -101,7 +101,7 @@ export const SETTINGS = {
         isFeature: true,
         displayName: _td("Custom user status messages"),
         supportedLevels: LEVELS_FEATURE,
-        default: false,
+        default: true,
         controller: new CustomStatusController(),
     },
     "feature_custom_tags": {
