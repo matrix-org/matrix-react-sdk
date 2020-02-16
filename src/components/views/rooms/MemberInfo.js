@@ -687,6 +687,7 @@ export default createReactClass({
     _calculateCanPermissions: function(me, them, powerLevels) {
         const isMe = me.userId === them.userId;
         const can = {
+            addStatus: false,
             kick: false,
             ban: false,
             mute: false,
@@ -705,6 +706,7 @@ export default createReactClass({
             powerLevels.state_default
         );
 
+        can.addStatus = isMe;
         can.kick = me.powerLevel >= powerLevels.kick;
         can.ban = me.powerLevel >= powerLevels.ban;
         can.invite = me.powerLevel >= powerLevels.invite;
@@ -807,38 +809,19 @@ export default createReactClass({
         // same goes for jumping to read receipt
         if (member.userId !== cli.getUserId()) {
             const ignoreLabel = this.state.isIgnoring ? _t("Unignore") : _t("Ignore");
-            const ignoreClass = this.state.isIgnoring ? 'mx_RightPanel_headerButton mx_adminButton_unignore' : 'mx_RightPanel_headerButton mx_adminButton_ignore'
+            const ignoreClass = this.state.isIgnoring ? 'mx_RightPanel_userButton mx_userButton_unignore' : 'mx_RightPanel_userButton mx_userButton_ignore'
             ignoreButton = (
-                <AccessibleButton
-                    key="adminButton_ignore"
-                    className={ignoreClass}
-                    onClick={this.onIgnoreToggle}
-                    title={ignoreLabel}
-                />
-            );
-
-            if (member.roomId) {
-                const room = cli.getRoom(member.roomId);
-                const eventId = room.getEventReadUpTo(member.userId);
-
-                const onReadReceiptButton = function() {
-                    dis.dispatch({
-                        action: 'view_room',
-                        highlighted: true,
-                        event_id: eventId,
-                        room_id: member.roomId,
-                    });
-                };
-
-                readReceiptButton = (
+                <div className="mx_RoomTile">
                     <AccessibleButton
-                        key="adminButton_readRecipient"
-                        onClick={onReadReceiptButton}
-                        className="mx_RightPanel_headerButton mx_adminButton_readRecipient"
-                        title={ _t('Jump to read receipt') }
-                    />
-                );
-            }
+                        key="userButton_ignore"
+                        className={ignoreClass}
+                        onClick={this.onIgnoreToggle}
+                        title={ignoreLabel}
+                    >
+                        { ignoreLabel }
+                    </AccessibleButton>
+                </div>
+            );
 
             if (this.state.can.invite && (!member || !member.membership || member.membership === 'leave')) {
                 const roomId = member && member.roomId ? member.roomId : RoomViewStore.getRoomId();
@@ -861,21 +844,29 @@ export default createReactClass({
                 };
 
                 inviteUserButton = (
-                    <AccessibleButton
-                        key="adminButton_invite"
-                        onClick={onInviteUserButton}
-                        className="mx_RightPanel_headerButton mx_adminButton_invite"
-                        title={ _t('Invite') }
-                    />
+                    <div className="mx_RoomTile">
+                        <AccessibleButton
+                            key="userButton_invite"
+                            onClick={onInviteUserButton}
+                            className="mx_RightPanel_userButton mx_userButton_invite"
+                            title={ _t('Invite') }
+                        >
+                            { _t('Invite') }
+                        </AccessibleButton>
+                    </div>
                 );
             }
-        }
 
-        // readReceiptButton
-        return [
-            ignoreButton,
-            inviteUserButton,
-        ];
+            return (
+                <div className="mx_MemberInfo_container">
+                    <div>
+                        <h3>User options</h3>
+                        { ignoreButton }
+                        { inviteUserButton }
+                    </div>
+                </div>
+            );
+        }
     },
 
     render: function() {
@@ -927,19 +918,16 @@ export default createReactClass({
                 }
             }
 
-            const labelClasses = classNames({
-                mx_MemberInfo_createRoom_label: true,
-                mx_RoomTile_name: true,
-            });
-            let startNewChat = <AccessibleButton
-                className="mx_MemberInfo_createRoom"
-                onClick={this.onNewDMClick}
-            >
-                <div className="mx_RoomTile_avatar">
-                    <img src={require("../../../../res/img/create-big.svg")} width="26" height="26" />
+            let startNewChat = (
+                <div className="mx_RoomTile">
+                    <AccessibleButton
+                        className="mx_RightPanel_userButton mx_userButton_chat"
+                        onClick={this.onNewDMClick}
+                    >
+                        { _t("Start a chat") }
+                    </AccessibleButton>
                 </div>
-                <div className={labelClasses}><i>{ _t("Start a chat") }</i></div>
-            </AccessibleButton>;
+            );
 
             if (tiles.length > 0) startNewChat = null; // Don't offer a button for a new chat if we have one.
 
@@ -955,20 +943,6 @@ export default createReactClass({
             spinner = <Loader imgClassName="mx_ContextualMenu_spinner" />;
         }
 
-        if (this.state.can.kick) {
-            const membership = this.props.member.membership;
-            const kickLabel = membership === "invite" ? _t("Disinvite") : _t("Kick");
-            const kickClass = membership === "invite" ? 'mx_RightPanel_headerButton mx_adminButton_invite' : 'mx_RightPanel_headerButton mx_adminButton_kick';
-            kickButton = (
-                <AccessibleButton
-                    key="adminButton_kick"
-                    className={kickClass}
-                    onClick={this.onKick}
-                    title={ kickLabel }
-                />
-            );
-        }
-
         if (this.state.can.redactMessages) {
             redactButton = (
                 <AccessibleButton
@@ -980,34 +954,61 @@ export default createReactClass({
             );
         }
 
-        if (this.state.can.ban) {
-            let label = _t("Ban");
-            let banClass = 'mx_RightPanel_headerButton mx_adminButton_ban';
-            if (this.props.member.membership === 'ban') {
-                label = _t("Unban");
-                banClass = 'mx_RightPanel_headerButton mx_adminButton_unban';
+        // Admin cannot ban and mute himself only leave the chat.
+        if (this.props.member.userId === this.context.credentials.userId) {
+            kickButton = (
+                <AccessibleButton
+                    key="adminButton_leave"
+                    className="mx_RightPanel_headerButton mx_adminButton_leave"
+                    onClick={this.onLeaveClick}
+                />
+            );
+        } else {
+            if (this.state.can.kick) {
+                const membership = this.props.member.membership;
+                const kickLabel = membership === "invite" ? _t("Disinvite") : _t("Kick");
+                const kickClass = membership === "invite" ? 'mx_RightPanel_headerButton mx_adminButton_invite' : 'mx_RightPanel_headerButton mx_adminButton_kick';
+                kickButton = (
+                    <AccessibleButton
+                        key="adminButton_kick"
+                        className={kickClass}
+                        onClick={this.onKick}
+                        title={ kickLabel }
+                    />
+                );
             }
-            banButton = (
-                <AccessibleButton
-                    key="adminButton_ban"
-                    className={ banClass }
-                    onClick={this.onBanOrUnban}
-                    title={ label }
-                />
-            );
+
+            if (this.state.can.ban) {
+                let label = _t("Ban");
+                let banClass = 'mx_RightPanel_headerButton mx_adminButton_ban';
+                if (this.props.member.membership === 'ban') {
+                    label = _t("Unban");
+                    banClass = 'mx_RightPanel_headerButton mx_adminButton_unban';
+                }
+                banButton = (
+                    <AccessibleButton
+                        key="adminButton_ban"
+                        className={banClass}
+                        onClick={this.onBanOrUnban}
+                        title={label}
+                    />
+                );
+            }
+
+            if (this.state.can.mute) {
+                const muteLabel = this.state.muted ? _t("Unmute") : _t("Mute");
+                const muteClass = this.state.muted ? 'mx_RightPanel_headerButton mx_adminButton_unmute' : 'mx_RightPanel_headerButton mx_adminButton_mute';
+                muteButton = (
+                    <AccessibleButton
+                        key="adminButton_mute"
+                        className={muteClass}
+                        onClick={this.onMuteToggle}
+                        title={muteLabel}
+                    />
+                );
+            }
         }
-        if (this.state.can.mute) {
-            const muteLabel = this.state.muted ? _t("Unmute") : _t("Mute");
-            const muteClass = this.state.muted ? 'mx_RightPanel_headerButton mx_adminButton_unmute' : 'mx_RightPanel_headerButton mx_adminButton_mute';
-            muteButton = (
-                <AccessibleButton
-                    key="adminButton_mute"
-                    className={ muteClass }
-                    onClick={this.onMuteToggle}
-                    title={ muteLabel}
-                />
-            );
-        }
+
         if (this.state.can.toggleMod) {
             const giveOpLabel = this.state.isTargetMod ? _t("Revoke Moderator") : _t("Make Moderator");
             const giveOpClass = this.state.isTargetMod ? 'mx_RightPanel_headerButton mx_adminButton_mod' : 'mx_RightPanel_headerButton mx_adminButton_unmod';
@@ -1035,9 +1036,9 @@ export default createReactClass({
         let adminTools;
         if (kickButton || banButton || muteButton || giveModButton || synapseDeactivateButton || redactButton) {
             adminTools = [
-                muteButton,
                 kickButton,
                 banButton,
+                muteButton,
                 redactButton,
                 giveModButton,
                 synapseDeactivateButton,
@@ -1049,7 +1050,11 @@ export default createReactClass({
         let presenceState;
         let presenceLastActiveAgo;
         let presenceCurrentlyActive;
-        let statusMessage;
+
+        let statusMessage = '';
+        if (this.state.can.addStatus) {
+            statusMessage = 'Tagline here';
+        }
 
         if (this.props.member.user) {
             presenceState = this.props.member.user.presence;
@@ -1057,7 +1062,9 @@ export default createReactClass({
             presenceCurrentlyActive = this.props.member.user.currentlyActive;
 
             if (SettingsStore.isFeatureEnabled("feature_custom_status")) {
-                statusMessage = this.props.member.user._unstable_statusMessage;
+                if (this.props.member.user._unstable_statusMessage) {
+                    statusMessage = this.props.member.user._unstable_statusMessage;
+                }
             }
         }
 
@@ -1075,19 +1082,26 @@ export default createReactClass({
         let presenceLabel = null;
         if (showPresence) {
             const PresenceLabel = sdk.getComponent('rooms.PresenceLabel');
-            presenceLabel = <PresenceLabel activeAgo={presenceLastActiveAgo}
+            presenceLabel = <PresenceLabel
+                activeAgo={presenceLastActiveAgo}
                 currentlyActive={presenceCurrentlyActive}
-                presenceState={presenceState} />;
+                presenceState={presenceState}
+            />;
         }
 
         let statusLabel = null;
-        if (statusMessage) {
-            const MemberStatusMessage = sdk.getComponent('avatars.MemberStatusMessage');
-            statusLabel = <div className="mx_MemberInfo_statusMessage">
-                <MemberStatusMessage member={this.props.member} message={statusMessage} />
-            </div>;
 
-            //statusLabel = <div className="mx_MemberInfo_statusMessage">{ statusMessage }</div>;
+        if (this.state.can.addStatus) {
+            if (SettingsStore.isFeatureEnabled("feature_custom_status")) {
+                const MemberStatusMessage = sdk.getComponent('avatars.MemberStatusMessage');
+                statusLabel = <div className="mx_MemberInfo_statusMessage">
+                    <MemberStatusMessage member={this.props.member} message={statusMessage} />
+                </div>;
+            }
+        } else {
+            statusLabel = <div className="mx_MemberInfo_statusMessage">
+                { statusMessage }
+            </div>;
         }
 
         let roomMemberDetails = null;
@@ -1179,6 +1193,7 @@ export default createReactClass({
                     </div>
                 </div>
                 { roomMemberDetails }
+                { this._renderUserOptions() }
                 <AutoHideScrollbar className="mx_MemberInfo_scrollContainer">
                     <div className="mx_MemberInfo_container">
 
@@ -1191,7 +1206,6 @@ export default createReactClass({
                 </AutoHideScrollbar>
                 { roomRoleSelector }
                 <div className="mx_adminTools">
-                    { this._renderUserOptions() }
                     { adminTools }
                 </div>
             </div>
