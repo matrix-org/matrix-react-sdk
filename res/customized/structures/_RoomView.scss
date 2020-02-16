@@ -2,8 +2,31 @@
     margin-left: -1px
 }
 
-.mx_RoomView_statusAreaBox_line {
-    margin-left: 0;
+.mx_RoomView_statusAreaBox {
+    background-color: transparent;
+    background: linear-gradient(154.02deg, #4a419b 25%, #8277dd 100%);
+
+    .mx_RoomView_statusAreaBox_line {
+        margin-left: 0;
+    }
+
+    .mx_RoomView_callStatusBar {
+        .mx_RoomView_voipButton {
+            height: 40px;
+            width: 25px;
+            padding: 10px 10px 0;
+            margin: 0;
+            border-left: 1px solid #645BB5;
+        }
+    }
+
+    .mx_RoomStatusBar {
+        margin-left: 60px;
+
+        .mx_RoomStatusBar_indicator {
+            margin-left: -74px;
+        }
+    }
 }
 
 .mx_RoomView_MessageList li {
@@ -22,7 +45,7 @@
 }
 
 /* View for Sender */
-.mx_RoomView_MessageList li.mx_Sender:not(.mx_RoomMember):not(.mx_RoomTopic) {
+.mx_RoomView_MessageList li.mx_Sender:not(.mx_EventNotice) {
     float: right;
 
     .mx_EventTile {
@@ -84,7 +107,7 @@
 }
 
 /* View for Receiver */
-.mx_RoomView_MessageList li.mx_Receiver:not(.mx_RoomMember):not(.mx_RoomTopic) {
+.mx_RoomView_MessageList li.mx_Receiver:not(.mx_EventNotice) {
     float: left;
 
     .mx_EventTile {
@@ -146,8 +169,8 @@
 }
 
 /* View for Sender and Receiver */
-.mx_RoomView_MessageList li.mx_Sender:not(.mx_RoomMember):not(.mx_RoomTopic),
-.mx_RoomView_MessageList li.mx_Receiver:not(.mx_RoomMember):not(.mx_RoomTopic) {
+.mx_RoomView_MessageList li.mx_Sender:not(.mx_EventNotice),
+.mx_RoomView_MessageList li.mx_Receiver:not(.mx_EventNotice) {
     .mx_EventTile {
         padding-top: 25px;
         clear: both;
@@ -168,7 +191,7 @@
 
         .mx_EventUser {
             position: absolute;
-            top: 0;
+            top: 4px;
 
             .mx_SenderProfile {
                 text-overflow: initial;
@@ -210,6 +233,13 @@
         .mx_EventTile_line {
             background: transparent !important;
             border-radius: 0;
+
+            .mx_MImageBody {
+                .mx_MImageBody_thumbnail_container {
+                    position: relative;
+                    text-align: right;
+                }
+            }
         }
 
         .mx_EventUser {

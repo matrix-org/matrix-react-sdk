@@ -27,9 +27,13 @@
     .mx_EventTile_line {
         border: 1px solid #4a419b !important;
         background: linear-gradient(154.02deg, #4a419b 25%, #8277dd 100%) !important;
-        min-height: 30px;
         border-radius: 4px !important;
         text-align: center;
+
+        .mx_MessageActionBar {
+            top: 4px;
+            right: 4px;
+        }
     }
 }
 
@@ -67,7 +71,7 @@
     }
 }
 
-.mx_Sender:not(.mx_RoomMember):not(.mx_RoomTopic) {
+.mx_Sender:not(.mx_EventNotice) {
     .mx_EventTile .mx_EventTile_line {
         background-origin: border-box !important;
         border-right: 2px solid transparent !important;
@@ -110,4 +114,8 @@
 .mx_EventTile:hover.mx_EventTile_unverified .mx_EventTile_line > .mx_EventTile_e2eIcon,
 .mx_EventTile:hover.mx_EventTile_unknown .mx_EventTile_line > .mx_EventTile_e2eIcon {
     left: -8px;
+}
+
+.mx_EventTile .mx_MessageTimestamp {
+    visibility: visible;
 }

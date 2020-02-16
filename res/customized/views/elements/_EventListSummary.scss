@@ -1,5 +1,5 @@
 .mx_EventListSummary {
-    background: linear-gradient(90deg, rgba(247,247,247,1) 0%, rgba(243,243,243,1) 30%, rgba(239,239,239,1) 100%);
+    background: linear-gradient(to bottom, rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%);
     border: 1px solid $primary-hairline-color;
     border-radius: 4px;
     margin-bottom: 7px;
@@ -17,7 +17,7 @@
         }
 
         .mx_TextualEvent {
-            padding: 4px;
+            padding: 6px;
         }
     }
 
@@ -26,9 +26,10 @@
         margin-right: 30px;
         margin-left: 10px;
         min-height: 30px;
+        line-height: 18px;
 
         .mx_MessageActionBar {
-            top: 3px;
+            top: 2px;
             right: -23px;
         }
     }
@@ -44,17 +45,31 @@
             .mx_EventUser {
                 top: 10px !important;
                 right: 10px;
+
+                a:first-child {
+                    position: absolute;
+                    right: 45px;
+                    top: 9px
+                }
             }
 
             .mx_TextualEvent {
-                padding: 4px;
+                padding: 6px;
                 text-align: left;
             }
 
             .mx_EventTile_line {
                 padding: 0;
-                margin-right: 30px;
-                margin-left: 30px;
+                margin: 0 30px;
+                background: transparent;
+                border: 0;
+                border-radius: 0;
+                line-height: 18px;
+
+                .mx_MessageActionBar {
+                    top: 2px;
+                    right: -23px;
+                }
 
                 &:hover {
                     background-color: transparent !important;
@@ -80,39 +95,62 @@
     }
 }
 
-.mx_RoomTopic {
-    background: linear-gradient(90deg, rgba(247,247,247,1) 0%, rgba(243,243,243,1) 30%, rgba(239,239,239,1) 100%);
-    border: 1px solid $primary-hairline-color;
-    border-radius: 4px;
-    margin-bottom: 7px;
-    margin-top: 15px;
+.mx_RoomMember {
+    .mx_TextualEvent {
+        color: #644F92;
+    }
+}
+
+.mx_EventNotice {
+    margin-top: 0 !important;
 
     .mx_EventListSummary_line {
         margin-left: 0;
     }
 
     .mx_EventTile {
-        height: 100% !important;
+        position: relative;
         text-align: left;
         padding-top: 0 !important;
 
         .mx_EventUser {
             top: 10px !important;
             right: 10px;
+
+            a:first-child {
+                position: absolute;
+                right: 45px;
+                top: 9px;
+                z-index: 1;
+
+                .mx_MessageTimestamp {
+                    width: 46px;
+                }
+            }
         }
 
         .mx_TextualEvent {
-            padding: 4px;
+            padding: 6px;
             text-align: left;
         }
 
         .mx_EventTile_line {
-            padding: 0;
-            margin-right: 30px;
-            margin-left: 30px;
+            background: linear-gradient(to bottom, rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%);
+            border: 1px solid $primary-hairline-color;
+            border-radius: 4px;
+            margin-bottom: 7px;
+            margin-top: 0;
+            margin-right: 0;
+            padding: 0 30px;
+            line-height: 18px;
 
             &:hover {
-                background-color: transparent !important;
+                background-color: #fefefe !important;
+            }
+
+            .mx_MessageActionBar {
+                top: 2px;
+                right: 6px;
             }
         }
 
@@ -120,13 +158,14 @@
             left: 10px;
         }
 
-        &:hover {
-            background-color: #fefefe !important;
-
-            .mx_EventTile_line {
-                background-color: transparent !important;
-            }
+        .mx_EventTile_readAvatars {
+            top: 0;
+            right: 0;
         }
+    }
+
+    .mx_EventTile_selected > div > a > .mx_MessageTimestamp {
+        left: auto;
     }
 }
 

@@ -31,7 +31,7 @@
 }
 
 .mx_RightPanel_groupMembersButton::before {
-    mask-image: url('$(icons)/icons-people.svg');
+    mask-image: url('$(icons)/users.svg');
 }
 
 .mx_RightPanel_roomsButton::before {
@@ -66,6 +66,8 @@
 
 .mx_LeftPanel_explore {
     .mx_AccessibleButton {
+        color: #888888;
+
         &::before {
             position: absolute;
             content: "";
@@ -75,13 +77,15 @@
             top: 16px;
             width: 16px;
             height: 16px;
-            background-color: $notice-secondary-color;
+            background-color: #888888;
         }
     }
 }
 
 .mx_RightPanel_inviteUser {
     .mx_AccessibleButton {
+        color: #888888;
+
         &::before {
             position: absolute;
             content: "";
@@ -91,13 +95,12 @@
             top: 16px;
             width: 22px;
             height: 16px;
-            background-color: $notice-secondary-color;
+            background-color: #888888;
             mask-position: center;
             mask-repeat: no-repeat;
         }
     }
 }
-
 
 .mx_MyGroups_headerCard .mx_MyGroups_headerCard_button {
     &::before {
@@ -217,6 +220,14 @@
         mask-repeat: no-repeat;
         mask-size: contain;
     }
+}
+
+.mx_RoomHeader_expandButton::before {
+    mask-image: url('$(icons)/expand.svg');
+}
+
+.mx_RoomHeader_expandButton_expanded::before {
+    mask-image: url('$(icons)/compress.svg');
 }
 
 .mx_RoomHeader_settingsButton::before {
@@ -683,6 +694,10 @@
     mask-image: url('$(icons)/message/edit.svg');
 }
 
+.mx_MessageActionBar_removeButton::after {
+    mask-image: url('$(icons)/cancel.svg');
+}
+
 .mx_MessageActionBar_optionsButton::after {
     mask-size: auto;
     mask-image: url('$(icons)/message/more.svg');
@@ -807,7 +822,7 @@
 }
 
 .mx_RoomHeader_pinnedButton::before {
-    mask-image: url('$(icons)/icons-pin.svg');
+    mask-image: url('$(icons)/thumbtack.svg');
 }
 
 .mx_RoomTile_menuButton {
@@ -877,7 +892,8 @@
 }
 
 .mx_MessageComposer_hangup::before {
-    mask-image: url('$(icons)/hangup.svg');
+    mask-image: url('$(icons)/phone-slash.svg');
+    background-color: $accent-color !important;
 }
 
 .mx_MessageComposer_voicecall::before {
@@ -966,37 +982,126 @@
     transition: transform 0.2s ease-in;
 }
 
+.mx_RightPanel_userButton {
+    padding-left: 30px;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 9px;
+        left: 15px;
+        height: 20px;
+        width: 20px;
+        background-color: #888888;
+        mask-repeat: no-repeat;
+        mask-size: contain;
+    }
+}
+
+.mx_userButton_ignore::before {
+    mask-image: url('$(icons)/user-slash.svg');
+}
+
+.mx_userButton_ignore,
+.mx_userButton_chat {
+    font-size: 14px;
+}
+
+.mx_userButton_unignore {
+    color: $accent-color;
+    font-size: 14px;
+
+    &:before {
+        mask-image: url('$(icons)/user-slash.svg');
+        background-color: $accent-color;
+    }
+}
+
+.mx_userButton_chat::before {
+    top: 8px;
+    height: 18px;
+    width: 18px;
+    mask-image: url('$(icons)/comment-alt-lines.svg');
+}
+
+
 .mx_adminButton_mute::before {
-    mask-image: url('$(icons)/mute.svg');
+    mask-image: url('$(icons)/comment-alt-mute.svg');
 }
 
 .mx_adminButton_unmute::before {
-    mask-image: url('$(icons)/mute-off.svg');
-}
-
-.mx_adminButton_ignore::before {
-    mask-image: url('$(icons)/user.svg');
+    background-color: $accent-color;
 }
 
 .mx_adminButton_kick::before {
     mask-image: url('$(icons)/user-times.svg');
 }
 
-.mx_adminButton_invite::before {
-    mask-image: url('$(icons)/user-add.svg');
+.mx_adminButton_leave::before {
+    mask-image: url('$(icons)/arrow-alt-from-right.svg');
 }
 
 .mx_adminButton_ban::before {
-    mask-image: url('$(icons)/ban.svg');
+    mask-image: url('$(icons)/user-ban.svg');
 }
 
 .mx_adminButton_unban::before {
-    mask-image: url('$(icons)/ban-off.svg');
+    background-color: $accent-color;
 }
 
 .mx_adminButton_removeMessages::before {
     mask-image: url('$(icons)/remove-messages.svg');
 }
 
+.mx_RoomView_voipButton {
+    &:before {
+        content: '';
+        position: absolute;
+        top: 14px;
+        height: 20px;
+        width: 24px;
+        background-color: #ffffff;
+        mask-repeat: no-repeat;
+        mask-size: contain;
+        mask-position: center;
+    }
+}
+
+.mx_RoomView_Voip_VoiceOn::before {
+    mask-image: url('$(icons)/microphone.svg');
+}
+
+.mx_RoomView_Voip_VoiceOff::before {
+    mask-image: url('$(icons)/microphone-slash.svg');
+    background-color: #412c6f !important;
+}
+
+.mx_RoomView_Voip_VideoOn::before {
+    mask-image: url('$(icons)/video.svg');
+}
+
+.mx_RoomView_Voip_VideoOff::before {
+    mask-image: url('$(icons)/video-slash.svg');
+    background-color: #412c6f !important;
+}
+
+.mx_RoomView_Voip_ScreenExpand::before {
+    mask-image: url('$(icons)/expand.svg');
+}
+
+.mx_RoomStatusBar_callIndicator {
+    &:before {
+        content: '';
+        position: absolute;
+        top: 14px;
+        height: 20px;
+        width: 24px;
+        background-color: #ffffff;
+        mask-image: url('$(icons)/phone-square-alt.svg');
+        mask-repeat: no-repeat;
+        mask-size: contain;
+        mask-position: center;
+    }
+}
 
 

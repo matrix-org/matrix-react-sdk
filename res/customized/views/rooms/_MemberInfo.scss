@@ -75,7 +75,8 @@
     }
 
     .mx_PowerSelector {
-        .mx_Field_select {
+        .mx_Field_select,
+        .mx_Field_input {
             margin: 0;
             border-bottom: 0;
             border-left: 0;

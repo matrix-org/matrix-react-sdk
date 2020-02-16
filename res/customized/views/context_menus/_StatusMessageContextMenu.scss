@@ -22,14 +22,22 @@ input.mx_StatusMessageContextMenu_message {
 
 .mx_StatusMessageContextMenu_actionContainer {
     display: flex;
+    justify-content: flex-end;
+    order: 1;
+}
+
+.mx_StatusMessageContextMenu_actionContainer .mx_Spinner {
+    display: flex;
+    justify-content: flex-start;
+    order: 0;
 }
 
 .mx_StatusMessageContextMenu_submit,
 .mx_StatusMessageContextMenu_clear {
-    align-self: start;
+    justify-content: flex-end;
     font-size: 12px;
     padding: 6px 9px;
-    margin-right: 10px;
+    margin-right: 0;
     color: $button-primary-fg-color;
     background-color: $button-primary-bg-color;
     border: 1px solid $button-primary-border-color;
@@ -43,8 +51,4 @@ input.mx_StatusMessageContextMenu_message {
     color: $button-default-fg-color;
     background-color: $button-default-bg-color;
     border: 1px solid $button-default-border-color;
-}
-
-.mx_StatusMessageContextMenu_actionContainer .mx_Spinner {
-    justify-content: flex-start;
 }

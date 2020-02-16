@@ -1,0 +1,68 @@
+.mx_PinnedEventTile {
+    border-bottom: 1px solid $primary-hairline-color;
+    border-radius: 0;
+    padding: 6px 15px;
+    margin: 0;
+    width: auto;
+}
+
+.mx_PinnedEventTile:hover {
+    background-color: $event-selected-color;
+}
+
+.mx_PinnedEventTile .mx_PinnedEventTile_sender,
+.mx_PinnedEventTile .mx_PinnedEventTile_timestamp {
+    color: #868686;
+    font-size: 0.8em;
+    vertical-align: top;
+    display: inline-block;
+    padding-bottom: 3px;
+}
+
+.mx_PinnedEventTile .mx_PinnedEventTile_timestamp {
+    padding-left: 15px;
+    display: none;
+}
+
+.mx_PinnedEventTile .mx_PinnedEventTile_senderAvatar .mx_BaseAvatar {
+    float: left;
+    margin-right: 10px;
+}
+
+.mx_PinnedEventTile_actions {
+    float: right;
+    margin-right: 10px;
+    display: none;
+}
+
+.mx_PinnedEventTile:hover .mx_PinnedEventTile_timestamp {
+    display: inline-block;
+}
+
+.mx_PinnedEventTile:hover .mx_PinnedEventTile_actions {
+    display: block;
+}
+
+.mx_PinnedEventTile_unpinButton {
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.mx_PinnedEventTile_gotoButton {
+    display: inline-block;
+    font-size: 0.7em; // Smaller text to avoid conflicting with the layout
+}
+
+.mx_PinnedEventTile_message {
+    margin-left: 50px;
+    position: relative;
+    top: 0;
+    left: 0;
+
+    .mx_EventTile_content {
+        .mx_EventTile_body {
+            font-size: 14px;
+        }
+    }
+}

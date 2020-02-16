@@ -15,6 +15,16 @@
             }
         }
     }
+
+    h2 {
+        margin: 15px 0 0;
+        padding-left: 15px;
+        padding-bottom: 8px;
+        padding-top: 8px;
+        border-top: 1px solid $primary-hairline-color;
+        border-bottom: 1px solid $primary-hairline-color;
+        background: linear-gradient(90deg, rgb(247, 247, 247) 0%, rgb(255, 255, 255) 30%, rgb(249, 249, 249) 100%);
+    }
 }
 
 .mx_MemberList_invite span {

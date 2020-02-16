@@ -1,0 +1,20 @@
+.mx_PinnedEventsPanel {
+    border-top: 0;
+    border-right: 1px solid transparent;
+}
+
+.mx_PinnedEventsPanel_body {
+    max-height: 300px;
+    padding-bottom: 15px;
+}
+
+.mx_PinnedEventsPanel_header {
+    padding: 14px 0 14px 15px;
+    border-bottom: 1px solid $primary-hairline-color;
+    background: linear-gradient(90deg, rgb(247, 247, 247) 0%, rgb(255, 255, 255) 30%, rgb(249, 249, 249) 100%);
+    color: $roomheader-color;
+}
+
+.mx_PinnedEventsPanel_cancel {
+    margin: 16px 16px 12px 12px;
+}
