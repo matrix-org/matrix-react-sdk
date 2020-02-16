@@ -30,7 +30,26 @@ import {_t} from "../../languageHandler";
 import {haveTileForEvent} from "../views/rooms/EventTile";
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
-const continuedTypes = ['m.sticker', 'm.room.message', 'm.call.invite', 'm.call.hangup'];
+const continuedTypes = [
+    'm.sticker',
+    'm.room.message',
+    'm.room.power_levels',
+    'm.call.invite',
+    'm.call.hangup'
+];
+
+const noticeTypes = [
+    'm.room.member',
+    'm.room.topic',
+    'm.room.name',
+    'm.room.canonical_alias',
+    'm.room.aliases',
+    'm.room.join_rules',
+    'm.room.pinned_events',
+    'm.room.history_visibility',
+    'm.room.guest_access',
+    'm.room.power_levels'
+];
 
 const isMembershipChange = (e) => e.getType() === 'm.room.member' || e.getType() === 'm.room.third_party_invite';
 
@@ -606,6 +625,11 @@ export default class MessagePanel extends React.Component {
         if (typeof messageType !== 'undefined') {
             messageType = messageType.formatName();
             rowClass = rowClass + ' ' + messageType;
+        }
+
+        const noticeClass = noticeTypes.includes(mxEv.getType());
+        if (noticeClass) {
+            rowClass = rowClass + ' ' + 'mx_EventNotice';
         }
 
         // Dev note: `this._isUnmounting.bind(this)` is important - it ensures that
