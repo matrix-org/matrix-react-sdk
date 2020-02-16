@@ -25,6 +25,7 @@ export default class StatusMessageContextMenu extends React.Component {
     static propTypes = {
         // js-sdk User object. Not required because it might not exist.
         user: PropTypes.object,
+        onFinished: PropTypes.func,
     };
 
     constructor(props) {
@@ -64,6 +65,8 @@ export default class StatusMessageContextMenu extends React.Component {
             message: this.comittedStatusMessage,
             waiting: false,
         });
+
+        this.props.onFinished(true);
     };
 
     _onClearClick = (e) => {
@@ -77,7 +80,7 @@ export default class StatusMessageContextMenu extends React.Component {
         e.preventDefault();
         MatrixClientPeg.get()._unstable_setStatusMessage(this.state.message);
         this.setState({
-            waiting: true,
+            waiting: true
         });
     };
 
@@ -128,8 +131,8 @@ export default class StatusMessageContextMenu extends React.Component {
                 onChange={this._onStatusChange}
             />
             <div className="mx_StatusMessageContextMenu_actionContainer">
-                {actionButton}
                 {spinner}
+                {actionButton}
             </div>
         </form>;
 
