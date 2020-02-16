@@ -422,9 +422,6 @@ export default createReactClass({
                 }
             }, 50);
         }
-
-        // Post to the IFRAME that the chat has been loaded.
-        parent.postMessage('chatLoaded', '*');
     },
 
     shouldComponentUpdate: function(nextProps, nextState) {
@@ -1887,24 +1884,17 @@ export default createReactClass({
 
             if (call.type === "video") {
                 zoomButton = (
-                    <div className="mx_RoomView_voipButton" onClick={this.onFullscreenClick} title={_t("Fill screen")}>
-                        <TintableSvg src={require("../../../res/img/fullscreen.svg")} width="29" height="22" style={{ marginTop: 1, marginRight: 4 }} />
-                    </div>
+                    <div className={call.isLocalVideoMuted() ? "mx_RoomView_voipButton mx_RoomView_Voip_ScreenExpand" : "mx_RoomView_voipButton mx_RoomView_Voip_ScreenExpand"} onClick={this.onFullscreenClick} title={_t("Fill screen")}></div>
                 );
 
-                videoMuteButton =
-                    <div className="mx_RoomView_voipButton" onClick={this.onMuteVideoClick}>
-                        <TintableSvg src={call.isLocalVideoMuted() ? require("../../../res/img/video-unmute.svg") : require("../../../res/img/video-mute.svg")}
-                             alt={call.isLocalVideoMuted() ? _t("Click to unmute video") : _t("Click to mute video")}
-                             width="31" height="27" />
-                    </div>;
+                videoMuteButton = (
+                    <div className={call.isLocalVideoMuted() ? "mx_RoomView_voipButton mx_RoomView_Voip_VideoOff" : "mx_RoomView_voipButton mx_RoomView_Voip_VideoOn"} onClick={this.onMuteVideoClick}></div>
+                );
             }
-            voiceMuteButton =
-                <div className="mx_RoomView_voipButton" onClick={this.onMuteAudioClick}>
-                    <TintableSvg src={call.isMicrophoneMuted() ? require("../../../res/img/voice-unmute.svg") : require("../../../res/img/voice-mute.svg")}
-                         alt={call.isMicrophoneMuted() ? _t("Click to unmute audio") : _t("Click to mute audio")}
-                         width="21" height="26" />
-                </div>;
+
+            voiceMuteButton = (
+                <div className={call.isMicrophoneMuted() ? "mx_RoomView_voipButton mx_RoomView_Voip_VoiceOff" : "mx_RoomView_voipButton mx_RoomView_Voip_VoiceOn"} onClick={this.onMuteAudioClick}></div>
+            );
 
             // wrap the existing status bar into a 'callStatusBar' which adds more knobs.
             statusBar =
@@ -1913,7 +1903,6 @@ export default createReactClass({
                     { videoMuteButton }
                     { zoomButton }
                     { statusBar }
-                    <TintableSvg className="mx_RoomView_voipChevron" src={require("../../../res/img/voip-chevron.svg")} width="22" height="17" />
                 </div>;
         }
 
