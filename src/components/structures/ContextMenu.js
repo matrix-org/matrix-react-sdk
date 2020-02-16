@@ -48,10 +48,10 @@ const ARIA_MENU_ITEM_ROLES = new Set(["menuitem", "menuitemcheckbox", "menuitemr
 // this will allow the ContextMenu to manage its own focus using arrow keys as per the ARIA guidelines.
 export class ContextMenu extends React.Component {
     static propTypes = {
-        top: PropTypes.number,
-        bottom: PropTypes.number,
-        left: PropTypes.number,
-        right: PropTypes.number,
+        top: PropTypes.number || PropTypes.string,
+        bottom: PropTypes.number || PropTypes.string,
+        left: PropTypes.number || PropTypes.string,
+        right: PropTypes.number || PropTypes.string,
         menuWidth: PropTypes.number,
         menuHeight: PropTypes.number,
         chevronOffset: PropTypes.number,
@@ -232,8 +232,10 @@ export class ContextMenu extends React.Component {
 
         if (props.top) {
             position.top = props.top;
+            //position.bottom = 0;
         } else {
             position.bottom = props.bottom;
+            //position.top = 0;
         }
 
         if (props.left) {
@@ -433,6 +435,7 @@ export const aboveLeftOf = (elementRect, chevronFace="none") => {
     const buttonRight = elementRect.right + window.pageXOffset;
     const buttonBottom = elementRect.bottom + window.pageYOffset;
     const buttonTop = elementRect.top + window.pageYOffset;
+
     // Align the right edge of the menu to the right edge of the button
     menuOptions.right = window.innerWidth - buttonRight;
     // Align the menu vertically on whichever side of the button has more space available.
