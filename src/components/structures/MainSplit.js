@@ -64,6 +64,9 @@ export default class MainSplit extends React.Component {
     componentDidMount() {
         if (this.props.panel) {
             this._createResizer();
+
+            // Post to the IFRAME that the chat has been loaded.
+            parent.postMessage('chatLoaded', '*');
         }
     }
 
