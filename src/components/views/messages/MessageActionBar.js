@@ -26,8 +26,13 @@ import Modal from '../../../Modal';
 import {aboveLeftOf, ContextMenu, ContextMenuButton, useContextMenu} from '../../structures/ContextMenu';
 import { isContentActionable, canEditContent } from '../../../utils/EventUtils';
 import RoomContext from "../../../contexts/RoomContext";
+import {MatrixClientPeg} from "../../../MatrixClientPeg";
 
 const OptionsButton = ({mxEvent, getTile, getReplyThread, permalinkCreator, onFocusChange}) => {
+    if (mxEvent.getType() !== 'm.room.message') {
+        return '';
+    }
+
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
     useEffect(() => {
         onFocusChange(menuDisplayed);
@@ -154,11 +159,42 @@ export default class MessageActionBar extends React.PureComponent {
         });
     };
 
+    onRemoveClick = () => {
+        const ConfirmRedactDialog = sdk.getComponent("dialogs.ConfirmRedactDialog");
+        Modal.createTrackedDialog('Confirm Redact Dialog', '', ConfirmRedactDialog, {
+            onFinished: async (proceed) => {
+                if (!proceed) return;
+
+                const cli = MatrixClientPeg.get();
+                try {
+                    await cli.redactEvent(
+                        this.props.mxEvent.getRoomId(),
+                        this.props.mxEvent.getId(),
+                    );
+                } catch (e) {
+                    const code = e.errcode || e.statusCode;
+                    // only show the dialog if failing for something other than a network error
+                    // (e.g. no errcode or statusCode) as in that case the redactions end up in the
+                    // detached queue and we show the room status bar to allow retry
+                    if (typeof code !== "undefined") {
+                        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+                        // display error message stating you couldn't delete this.
+                        Modal.createTrackedDialog('You cannot delete this message', '', ErrorDialog, {
+                            title: _t('Error'),
+                            description: _t('You cannot delete this message. (%(code)s)', {code}),
+                        });
+                    }
+                }
+            },
+        }, 'mx_Dialog_confirmredact');
+    };
+
     render() {
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
 
         let reactButton;
         let replyButton;
+        let removeButton;
         let editButton;
 
         if (isContentActionable(this.props.mxEvent)) {
@@ -175,6 +211,7 @@ export default class MessageActionBar extends React.PureComponent {
                 />;
             }
         }
+
         if (canEditContent(this.props.mxEvent)) {
             editButton = <AccessibleButton
                 className="mx_MessageActionBar_maskButton mx_MessageActionBar_editButton"
@@ -183,11 +220,20 @@ export default class MessageActionBar extends React.PureComponent {
             />;
         }
 
+        if (this.props.mxEvent.event.type !== 'm.room.message') {
+            removeButton = <AccessibleButton
+                className="mx_MessageActionBar_maskButton mx_MessageActionBar_removeButton"
+                title={_t("Remove")}
+                onClick={this.onRemoveClick}
+            />;
+        }
+
         // aria-live=off to not have this read out automatically as navigating around timeline, gets repetitive.
         return <div className="mx_MessageActionBar" role="toolbar" aria-label={_t("Message Actions")} aria-live="off">
             {reactButton}
             {replyButton}
             {editButton}
+            {removeButton}
             <OptionsButton
                 mxEvent={this.props.mxEvent}
                 getReplyThread={this.props.getReplyThread}
