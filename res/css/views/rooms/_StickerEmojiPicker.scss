@@ -37,3 +37,29 @@
 .mx_Stickers_hideStickers {
     z-index: 2001;
 }
+
+.mx_StickerEmojiPicker_buttons {
+    display: flex;
+
+    .mx_StickerEmojiPicker_button {
+        display: flex;
+        flex: 1 1;
+        width: 153px;
+        height: 22px;
+        padding: 8px 8px 6px;
+        border-bottom: 2px solid $primary-hairline-color;
+        background-color: transparent;
+        border-radius: 4px 4px 0 0;
+        justify-content: center;
+    }
+
+    .mx_StickerEmojiPicker_button:hover,
+    .mx_StickerEmojiPicker_highlight {
+        border-bottom: 2px solid $accent-color;
+    }
+
+    &:first-child {
+        border-right: 1px solid $primary-hairline-color;
+    }
+}
+
