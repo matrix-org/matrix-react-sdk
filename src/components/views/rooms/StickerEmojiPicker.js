@@ -364,7 +364,7 @@ export default class StickerEmojiPicker extends React.Component {
                         className={this.state.showEmojisTab ? 'mx_StickerEmojiPicker_button mx_StickerEmojiPicker_highlight' : 'mx_StickerEmojiPicker_button'}
                         onClick={this._onTabSwitch}
                     >
-                        { _t("Emoticons") }
+                        { _t("Emoji") }
                     </AccessibleButton>
                     <AccessibleButton
                         className={this.state.showStickersTab ? 'mx_StickerEmojiPicker_button mx_StickerEmojiPicker_highlight' : 'mx_StickerEmojiPicker_button'}

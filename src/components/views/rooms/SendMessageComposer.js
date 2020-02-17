@@ -370,10 +370,11 @@ export default class SendMessageComposer extends React.Component {
         const {model} = this;
         const {partCreator} = model;
 
-        const emoticon = unicodeToShortcode(emoji);
+        //const emoticon = unicodeToShortcode(emoji); // Plain text "shortcode" emoji not (yet) supported only unicode.
         const caret = this._editorRef.getCaret();
         const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
-        const parts = parsePlainTextMessage(emoticon, partCreator);
+        const parts = parsePlainTextMessage(emoji, partCreator);
+
         // index is -1 if there are no parts but we only care for if this would be the part in position 0
 
         model.transform(() => {

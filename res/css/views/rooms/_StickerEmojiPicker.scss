@@ -40,16 +40,18 @@
 
 .mx_StickerEmojiPicker_buttons {
     border-top: 1px solid $primary-hairline-color;
+    display: flex;
 
     .mx_StickerEmojiPicker_button {
-        float: left;
-        width: 154px;
+        display: flex;
+        flex: 1 1;
+        width: 153px;
         height: 22px;
         padding: 8px 8px 6px;
-        border-bottom: 2px solid transparent;
+        border-bottom: 2px solid $primary-hairline-color;
         background-color: transparent;
         border-radius: 4px 4px 0 0;
-        text-align: center;
+        justify-content: center;
     }
 
     .mx_StickerEmojiPicker_button:hover,
