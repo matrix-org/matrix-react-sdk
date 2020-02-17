@@ -32,7 +32,7 @@ import BasicMessageComposer from "./BasicMessageComposer";
 import ReplyPreview from "./ReplyPreview";
 import RoomViewStore from '../../../stores/RoomViewStore';
 import ReplyThread from "../elements/ReplyThread";
-import {parseEvent} from '../../../editor/deserialize';
+import {parseEvent, parsePlainTextMessage} from '../../../editor/deserialize';
 import {findEditableEvent} from '../../../utils/EventUtils';
 import SendHistoryManager from "../../../SendHistoryManager";
 import {getCommand} from '../../../SlashCommands';
@@ -42,6 +42,7 @@ import {_t, _td} from '../../../languageHandler';
 import ContentMessages from '../../../ContentMessages';
 import {Key} from "../../../Keyboard";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import {unicodeToShortcode} from "../../../HtmlUtils";
 
 function addReplyToMessageContent(content, repliedToEvent, permalinkCreator) {
     const replyContent = ReplyThread.makeReplyMixIn(repliedToEvent);
@@ -359,8 +360,30 @@ export default class SendMessageComposer extends React.Component {
             case 'quote':
                 this._insertQuotedMessage(payload.event);
                 break;
+            case 'insert_emoji':
+                this._insertEmoji(payload.emoji);
+                break;
         }
     };
+
+    _insertEmoji(emoji) {
+        const {model} = this;
+        const {partCreator} = model;
+
+        const emoticon = unicodeToShortcode(emoji);
+        const caret = this._editorRef.getCaret();
+        const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
+        const parts = parsePlainTextMessage(emoticon, partCreator);
+        // index is -1 if there are no parts but we only care for if this would be the part in position 0
+
+        model.transform(() => {
+            const addedLen = model.insert(parts, position);
+            return model.positionForOffset(caret.offset + addedLen, true);
+        });
+
+        // refocus on composer, as we just clicked an emoji.
+        this._editorRef && this._editorRef.focus();
+    }
 
     _insertMention(userId) {
         const {model} = this;

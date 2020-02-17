@@ -346,6 +346,15 @@ export default class WidgetUtils {
     }
 
     /**
+     * Get active stickerpicker widgets (stickerpickers are user widgets by nature)
+     * @return {[object]} Array containing current / active stickerpicker widgets
+     */
+    static getStickerEmojiPickerWidgets() {
+        const widgets = WidgetUtils.getUserWidgetsArray();
+        return widgets.filter((widget) => widget.content && widget.content.type === "m.stickerpicker");
+    }
+
+    /**
      * Get all integration manager widgets for this user.
      * @returns {Object[]} An array of integration manager user widgets.
      */

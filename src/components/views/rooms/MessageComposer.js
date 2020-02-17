@@ -22,7 +22,7 @@ import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import * as sdk from '../../../index';
 import dis from '../../../dispatcher';
 import RoomViewStore from '../../../stores/RoomViewStore';
-import Stickerpicker from './Stickerpicker';
+import StickerEmojiPicker from './StickerEmojiPicker';
 import { makeRoomPermalink } from '../../../utils/permalinks/Permalinks';
 import ContentMessages from '../../../ContentMessages';
 import E2EIcon from './E2EIcon';
@@ -322,9 +322,16 @@ export default class MessageComposer extends React.Component {
                     key="controls_input"
                     room={this.props.room}
                     placeholder={this.renderPlaceholderText()}
-                    permalinkCreator={this.props.permalinkCreator} />,
-                <Stickerpicker key='stickerpicker_controls_button' room={this.props.room} />,
-                <UploadButton key="controls_upload" roomId={this.props.room.roomId} />,
+                    permalinkCreator={this.props.permalinkCreator}
+                />,
+                <StickerEmojiPicker
+                    key='stickerpicker_controls_button'
+                    room={this.props.room}
+                />,
+                <UploadButton
+                    key="controls_upload"
+                    roomId={this.props.room.roomId}
+                />,
                 callInProgress ? <HangupButton key="controls_hangup" roomId={this.props.room.roomId} /> : null,
                 callInProgress ? null : <CallButton key="controls_call" roomId={this.props.room.roomId} />,
                 callInProgress ? null : <VideoCallButton key="controls_videocall" roomId={this.props.room.roomId} />,

@@ -1,0 +1,64 @@
+.mx_Stickers_content {
+    overflow: hidden;
+}
+
+.mx_Stickers_content_container {
+    overflow: hidden;
+    height: 300px;
+}
+
+#mx_persistedElement_stickerPicker .mx_AppTileFullWidth {
+    height: unset;
+    box-sizing: border-box;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+}
+
+.mx_Stickers_contentPlaceholder {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.mx_Stickers_contentPlaceholder p {
+    max-width: 200px;
+}
+
+.mx_Stickers_addLink {
+    display: inline;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.mx_Stickers_hideStickers {
+    z-index: 2001;
+}
+
+.mx_StickerEmojiPicker_buttons {
+    border-top: 1px solid $primary-hairline-color;
+
+    .mx_StickerEmojiPicker_button {
+        float: left;
+        width: 154px;
+        height: 22px;
+        padding: 8px 8px 6px;
+        border-bottom: 2px solid transparent;
+        background-color: transparent;
+        border-radius: 4px 4px 0 0;
+        text-align: center;
+    }
+
+    .mx_StickerEmojiPicker_button:hover,
+    .mx_StickerEmojiPicker_highlight {
+        border-bottom: 2px solid $accent-color;
+    }
+
+    &:first-child {
+        border-right: 1px solid $primary-hairline-color;
+    }
+}
+
