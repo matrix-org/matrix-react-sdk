@@ -988,18 +988,14 @@
     &::before {
         content: '';
         position: absolute;
-        top: 9px;
+        top: 8px;
         left: 15px;
-        height: 20px;
-        width: 20px;
+        height: 18px;
+        width: 18px;
         background-color: #888888;
         mask-repeat: no-repeat;
         mask-size: contain;
     }
-}
-
-.mx_userButton_ignore::before {
-    mask-image: url('$(icons)/user-slash.svg');
 }
 
 .mx_userButton_ignore,
@@ -1007,12 +1003,16 @@
     font-size: 14px;
 }
 
+.mx_userButton_ignore::before {
+    mask-image: url('$(icons)/ban.svg');
+}
+
 .mx_userButton_unignore {
     color: $accent-color;
     font-size: 14px;
 
     &:before {
-        mask-image: url('$(icons)/user-slash.svg');
+        mask-image: url('$(icons)/unban.svg');
         background-color: $accent-color;
     }
 }
