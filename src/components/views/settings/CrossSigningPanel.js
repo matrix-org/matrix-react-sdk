@@ -128,7 +128,6 @@ export default class CrossSigningPanel extends React.PureComponent {
         }
 
         const enabled = (
-            crossSigningPublicKeysOnDevice &&
             crossSigningPrivateKeysInStorage &&
             secretStorageKeyInAccount
         );
