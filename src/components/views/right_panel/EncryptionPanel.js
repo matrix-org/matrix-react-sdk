@@ -23,14 +23,14 @@ import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import {ensureDMExists} from "../../../createRoom";
 import {useEventEmitter} from "../../../hooks/useEventEmitter";
 import Modal from "../../../Modal";
-import {PHASE_REQUESTED} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import {PHASE_REQUESTED, PHASE_UNSENT} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import * as sdk from "../../../index";
 import {_t} from "../../../languageHandler";
 
 // cancellation codes which constitute a key mismatch
 const MISMATCHES = ["m.key_mismatch", "m.user_error", "m.mismatched_sas"];
 
-const EncryptionPanel = ({verificationRequest, member, onClose}) => {
+const EncryptionPanel = ({verificationRequest, member, onClose, layout}) => {
     const [request, setRequest] = useState(verificationRequest);
     useEffect(() => {
         setRequest(verificationRequest);
@@ -69,14 +69,16 @@ const EncryptionPanel = ({verificationRequest, member, onClose}) => {
         const roomId = await ensureDMExists(cli, member.userId);
         const verificationRequest = await cli.requestVerificationDM(member.userId, roomId);
         setRequest(verificationRequest);
+        setPhase(verificationRequest.phase);
     }, [member.userId]);
 
-    const requested = request && (phase === PHASE_REQUESTED || phase === undefined);
+    const requested = request && (phase === PHASE_REQUESTED || phase === PHASE_UNSENT || phase === undefined);
     if (!request || requested) {
         return <EncryptionInfo onStartVerification={onStartVerification} member={member} pending={requested} />;
     } else {
         return (
             <VerificationPanel
+                layout={layout}
                 onClose={onClose}
                 member={member}
                 request={request}
@@ -89,6 +91,7 @@ EncryptionPanel.propTypes = {
     member: PropTypes.object.isRequired,
     onClose: PropTypes.func.isRequired,
     verificationRequest: PropTypes.object,
+    layout: PropTypes.string,
 };
 
 export default EncryptionPanel;
