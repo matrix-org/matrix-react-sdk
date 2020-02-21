@@ -30,7 +30,7 @@ export default class CrossSigningPanel extends React.PureComponent {
 
         this.state = {
             error: null,
-            crossSigningPublicKeysOnDevice: false,
+            crossSigningIdentityOnDevice: false,
             crossSigningPrivateKeysInStorage: false,
             secretStorageKeyInAccount: false,
         };
@@ -69,12 +69,12 @@ export default class CrossSigningPanel extends React.PureComponent {
         const cli = MatrixClientPeg.get();
         const crossSigning = cli._crypto._crossSigningInfo;
         const secretStorage = cli._crypto._secretStorage;
-        const crossSigningPublicKeysOnDevice = crossSigning.getId();
+        const crossSigningIdentityOnDevice = crossSigning.getId();
         const crossSigningPrivateKeysInStorage = await crossSigning.isStoredInSecretStorage(secretStorage);
         const secretStorageKeyInAccount = await secretStorage.hasKey();
 
         this.setState({
-            crossSigningPublicKeysOnDevice,
+            crossSigningIdentityOnDevice,
             crossSigningPrivateKeysInStorage,
             secretStorageKeyInAccount,
         });
@@ -117,7 +117,7 @@ export default class CrossSigningPanel extends React.PureComponent {
         const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
         const {
             error,
-            crossSigningPublicKeysOnDevice,
+            crossSigningIdentityOnDevice,
             crossSigningPrivateKeysInStorage,
             secretStorageKeyInAccount,
         } = this.state;
@@ -133,14 +133,16 @@ export default class CrossSigningPanel extends React.PureComponent {
         );
 
         let summarisedStatus;
-        if (enabled) {
-            summarisedStatus = <p>✅ {_t(
-                "Cross-signing and secret storage are enabled.",
-            )}</p>;
-        } else if (crossSigningPrivateKeysInStorage) {
+        if (enabled && !crossSigningIdentityOnDevice) {
+            /* Usre has secret storage enabled, cross-signing keys set up, but no local credentials */
             summarisedStatus = <p>{_t(
                 "Your account has a cross-signing identity in secret storage, but it " +
                 "is not yet trusted by this session.",
+            )}</p>;
+        } else if (enabled) {
+            /* User has secret storage enabled, cross-signing public keys set up, and local credentials */
+            summarisedStatus = <p>✅ {_t(
+                "Cross-signing and secret storage are enabled.",
             )}</p>;
         } else {
             summarisedStatus = <p>{_t(
@@ -170,11 +172,11 @@ export default class CrossSigningPanel extends React.PureComponent {
                     <summary>{_t("Advanced")}</summary>
                     <table className="mx_CrossSigningPanel_statusList"><tbody>
                         <tr>
-                            <td>{_t("Cross-signing public keys:")}</td>
-                            <td>{crossSigningPublicKeysOnDevice ? _t("in memory") : _t("not found")}</td>
+                            <td>{_t("Local cross-signing credentials:")}</td>
+                            <td>{crossSigningIdentityOnDevice ? _t("in memory") : _t("not found")}</td>
                         </tr>
                         <tr>
-                            <td>{_t("Cross-signing private keys:")}</td>
+                            <td>{_t("Account cross-signing credentials:")}</td>
                             <td>{crossSigningPrivateKeysInStorage ? _t("in secret storage") : _t("not found")}</td>
                         </tr>
                         <tr>
