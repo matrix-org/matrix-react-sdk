@@ -64,16 +64,16 @@ const useImageUrl = ({url, urls, idName, name, defaultToInitialLetter}) => {
     }, [url, ...(urls || [])]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const cli = useContext(MatrixClientContext);
-    const onClientSync = useCallback((syncState, prevState) => {
-        // Consider the client reconnected if there is no error with syncing.
-        // This means the state could be RECONNECTING, SYNCING, PREPARED or CATCHUP.
-        const reconnected = syncState !== "ERROR" && prevState !== syncState;
-        if (reconnected && urlsIndex > 0 ) { // Did we fall back?
-            // Start from the highest priority URL again
-            setIndex(0);
-        }
-    }, [urlsIndex]);
-    useEventEmitter(cli, "sync", onClientSync);
+    // const onClientSync = useCallback((syncState, prevState) => {
+    //     // Consider the client reconnected if there is no error with syncing.
+    //     // This means the state could be RECONNECTING, SYNCING, PREPARED or CATCHUP.
+    //     const reconnected = syncState !== "ERROR" && prevState !== syncState;
+    //     if (reconnected && urlsIndex > 0 ) { // Did we fall back?
+    //         // Start from the highest priority URL again
+    //         setIndex(0);
+    //     }
+    // }, [urlsIndex]);
+    // useEventEmitter(cli, "sync", onClientSync);
 
     const imageUrl = imageUrls[urlsIndex];
     return [imageUrl, imageUrl === defaultImageUrl, onError];

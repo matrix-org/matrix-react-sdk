@@ -205,9 +205,9 @@ export default createReactClass({
         }
 
         return (
-            <Velociraptor
-                    startStyles={this.state.startStyles}
-                    enterTransitionOpts={this.state.enterTransitionOpts} >
+            // <Velociraptor
+            //         startStyles={this.state.startStyles}
+            //         enterTransitionOpts={this.state.enterTransitionOpts} >
                 <MemberAvatar
                     member={this.props.member}
                     fallbackUserId={this.props.fallbackUserId}
@@ -218,7 +218,7 @@ export default createReactClass({
                     onClick={this.props.onClick}
                     inputRef={this._avatar}
                 />
-            </Velociraptor>
+            // </Velociraptor>
         );
     },
 });

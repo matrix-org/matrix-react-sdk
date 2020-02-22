@@ -237,7 +237,7 @@ export default createReactClass({
     componentDidMount: function() {
         /* We bind here rather than in the definition because otherwise we wind up with the
            method only being callable once every 500ms across all instances, which would be wrong */
-        this._updateE2eStatus = rate_limited_func(this._updateE2eStatus, 500);
+        //this._updateE2eStatus = rate_limited_func(this._updateE2eStatus, 500);
 
         const cli = MatrixClientPeg.get();
         cli.on("accountData", this.onAccountData);

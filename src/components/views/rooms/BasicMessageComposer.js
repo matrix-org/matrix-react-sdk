@@ -327,31 +327,31 @@ export default class BasicMessageEditor extends React.Component {
     }
 
     _onBlur = () => {
-        document.removeEventListener("selectionchange", this._onSelectionChange);
+        // document.removeEventListener("selectionchange", this._onSelectionChange);
     }
 
     _onFocus = () => {
-        document.addEventListener("selectionchange", this._onSelectionChange);
+        // document.addEventListener("selectionchange", this._onSelectionChange);
         // force to recalculate
         this._lastSelection = null;
         this._refreshLastCaretIfNeeded();
     }
 
     _onSelectionChange = () => {
-        this._refreshLastCaretIfNeeded();
-        const selection = document.getSelection();
-        if (this._hasTextSelected && selection.isCollapsed) {
-            this._hasTextSelected = false;
-            if (this._formatBarRef) {
-                this._formatBarRef.hide();
-            }
-        } else if (!selection.isCollapsed) {
-            this._hasTextSelected = true;
-            if (this._formatBarRef) {
-                const selectionRect = selection.getRangeAt(0).getBoundingClientRect();
-                this._formatBarRef.showAt(selectionRect);
-            }
-        }
+        // this._refreshLastCaretIfNeeded();
+        // const selection = document.getSelection();
+        // if (this._hasTextSelected && selection.isCollapsed) {
+        //     this._hasTextSelected = false;
+        //     if (this._formatBarRef) {
+        //         this._formatBarRef.hide();
+        //     }
+        // } else if (!selection.isCollapsed) {
+        //     this._hasTextSelected = true;
+        //     if (this._formatBarRef) {
+        //         const selectionRect = selection.getRangeAt(0).getBoundingClientRect();
+        //         this._formatBarRef.showAt(selectionRect);
+        //     }
+        // }
     }
 
     _onKeyDown = (event) => {
