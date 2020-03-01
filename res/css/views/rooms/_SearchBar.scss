@@ -25,6 +25,11 @@ limitations under the License.
         // font-size: $font-15px;
         flex: 1 1 0;
         margin-left: 22px;
+        position: relative;
+
+        .mx_Autocomplete {
+            transform: translateY(100%);
+        }
     }
 
     .mx_SearchBar_searchButton {

@@ -113,7 +113,7 @@ export default class SearchBar extends React.Component {
                 room={this.props.room}
                 url={makeUserPermalink(this.state.senderId)}
                 shouldShowPillAvatar={true}
-            />)
+            />);
         }
 
         return (
