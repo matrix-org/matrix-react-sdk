@@ -18,6 +18,8 @@ limitations under the License.
 import React, {createRef} from 'react';
 import AccessibleButton from "../elements/AccessibleButton";
 import Autocomplete from './Autocomplete';
+import Pill from '../elements/Pill';
+import {makeUserPermalink} from '../../../utils/permalinks/Permalinks';
 import classNames from "classnames";
 import { _t } from '../../../languageHandler';
 import {Key} from "../../../Keyboard";
@@ -106,7 +108,12 @@ export default class SearchBar extends React.Component {
 
         let senderPart;
         if (this.state.senderId) {
-            senderPart = "sender: " + this.state.senderId;
+            senderPart = (<Pill
+                type={Pill.TYPE_USER_MENTION}
+                room={this.props.room}
+                url={makeUserPermalink(this.state.senderId)}
+                shouldShowPillAvatar={true}
+            />)
         }
 
         return (
