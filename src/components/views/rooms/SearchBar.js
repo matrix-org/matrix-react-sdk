@@ -17,10 +17,13 @@ limitations under the License.
 
 import React, {createRef} from 'react';
 import AccessibleButton from "../elements/AccessibleButton";
+import Autocomplete from './Autocomplete';
 import classNames from "classnames";
 import { _t } from '../../../languageHandler';
 import {Key} from "../../../Keyboard";
 import DesktopBuildsNotice, {WarningKind} from "../elements/DesktopBuildsNotice";
+
+const SENDER_REGEX = /(?:^| )(@\w+)/;
 
 export default class SearchBar extends React.Component {
     constructor(props) {
@@ -30,6 +33,7 @@ export default class SearchBar extends React.Component {
 
         this.state = {
             scope: 'Room',
+            senderQuery: null,
         };
     }
 
@@ -59,7 +63,19 @@ export default class SearchBar extends React.Component {
     }
 
     onSearch = () => {
-        this.props.onSearch(this._search_term.current.value, this.state.scope);
+        this.props.onSearch(this._search_term.current.value, this.state.scope, this.state.senderId);
+    };
+
+    checkAutocomplete = (query) => {
+        this.setState({ senderQuery: this._search_term.current.value.match(SENDER_REGEX) });
+    };
+
+    confirmAutocomplete = (c) => {
+        const i = this.state.senderQuery.index;
+        const len = this.state.senderQuery[0].length;
+        this.setState({ senderId: c.completionId });
+        this._search_term.current.value = this._search_term.current.value.substring(0, i) +
+                                          this._search_term.current.value.substring(i + len);
     };
 
     render() {
@@ -73,19 +89,40 @@ export default class SearchBar extends React.Component {
             mx_SearchBar_unselected: this.state.scope !== 'All',
         });
 
+        let autoComplete;
+        if (this.state.senderQuery) {
+            const selection = {
+                beginning: true,
+                end: this.state.senderQuery[1].length,
+                start: this.state.senderQuery[1].length,
+            };
+            autoComplete = (<Autocomplete
+                query={this.state.senderQuery[1]}
+                onConfirm={this.confirmAutocomplete}
+                selection={selection}
+                room={this.props.room}
+            />);
+        }
+
+        let senderPart;
+        if (this.state.senderId) {
+            senderPart = "sender: " + this.state.senderId;
+        }
+
         return (
             <>
                 <div className="mx_SearchBar">
-                    <div className="mx_SearchBar_buttons" role="radiogroup">
-                        <AccessibleButton className={ thisRoomClasses } onClick={this.onThisRoomClick} aria-checked={this.state.scope === 'Room'} role="radio">
-                            {_t("This Room")}
-                        </AccessibleButton>
-                        <AccessibleButton className={ allRoomsClasses } onClick={this.onAllRoomsClick} aria-checked={this.state.scope === 'All'} role="radio">
-                            {_t("All Rooms")}
-                        </AccessibleButton>
-                    </div>
                     <div className="mx_SearchBar_input mx_textinput">
-                        <input ref={this._search_term} type="text" autoFocus={true} placeholder={_t("Search…")} onKeyDown={this.onSearchChange} />
+                        { autoComplete }
+                        { senderPart }
+                        <input
+                            ref={this._search_term}
+                            type="text"
+                            autoFocus={true}
+                            placeholder={_t("Search…")}
+                            onKeyDown={this.onSearchKeydown}
+                            onChange={this.checkAutocomplete}
+                        />
                         <AccessibleButton className={ searchButtonClasses } onClick={this.onSearch} />
                     </div>
                     <AccessibleButton className="mx_SearchBar_cancel" onClick={this.props.onCancelClick} />

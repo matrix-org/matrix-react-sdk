@@ -1239,7 +1239,7 @@ export default class RoomView extends React.Component<IProps, IState> {
             });
     }
 
-    private onSearch = (term: string, scope) => {
+    private onSearch = (term: string, scope, senderId) => {
         this.setState({
             searchTerm: term,
             searchScope: scope,
@@ -1263,7 +1263,7 @@ export default class RoomView extends React.Component<IProps, IState> {
         if (scope === "Room") roomId = this.state.room.roomId;
 
         debuglog("sending search request");
-        const searchPromise = eventSearch(term, roomId);
+        const searchPromise = eventSearch(term, roomId, senderId);
         this.handleSearchResult(searchPromise);
     };
 
@@ -1863,6 +1863,7 @@ export default class RoomView extends React.Component<IProps, IState> {
         } else if (this.state.searching) {
             hideCancel = true; // has own cancel
             aux = <SearchBar
+                room={this.state.room}
                 searchInProgress={this.state.searchInProgress}
                 onCancelClick={this.onCancelSearchClick}
                 onSearch={this.onSearch}
