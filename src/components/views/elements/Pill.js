@@ -66,6 +66,8 @@ class Pill extends React.Component {
         shouldShowPillAvatar: PropTypes.bool,
         // Whether to render this pill as if it were highlit by a selection
         isSelected: PropTypes.bool,
+        // Override onClick
+        onClick: PropTypes.func,
     };
 
     state = {
@@ -265,6 +267,10 @@ class Pill extends React.Component {
                 break;
         }
 
+        if (this.props.onClick) {
+            onClick = this.props.onClick;
+        }
+
         const classes = classNames("mx_Pill", pillClass, {
             "mx_UserPill_me": userId === MatrixClientPeg.get().getUserId(),
             "mx_UserPill_selected": this.props.isSelected,
@@ -272,7 +278,7 @@ class Pill extends React.Component {
 
         if (this.state.pillType) {
             return <MatrixClientContext.Provider value={this._matrixClient}>
-                { this.props.inMessage ?
+                { this.props.inMessage || this.props.onClick ?
                     <a className={classes} href={href} onClick={onClick} title={resource} data-offset-key={this.props.offsetKey}>
                         { avatar }
                         { linkText }
