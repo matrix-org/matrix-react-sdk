@@ -426,10 +426,28 @@ class RoomListStore extends Store {
         let foundBoundary = false;
         let pushedEntry = false;
 
+        // we won't have reached this point with a manually sorted tag so expect only Alphabetic and Recents sorting
+        const algorithm = getListAlgorithm(tag, this._state.algorithm);
+
+        let comparator;
+        switch (algorithm) {
+            case ALGO_RECENT:
+                comparator = (entryA, entryB) => this._recentsComparator(entryA, entryB, lastTimestampFn);
+                break;
+            case ALGO_ALPHABETIC:
+                comparator = this._lexicographicalComparator;
+                break;
+            default:
+                comparator = (a, b) => lastTimestampFn(a.room) >= lastTimestampFn(b.room);
+        }
+
+        let existingIndex = null; // remove this at the end to not mess up ordering
+        let i = -1;
         for (const entry of existingEntries) {
+            i++;
             // We insert our own record as needed, so don't let the old one through.
-            if (entry.room.roomId === room.roomId) {
-                continue;
+            if (existingIndex === null && entry.room.roomId === room.roomId) {
+                existingIndex = i;
             }
 
             // if the list is a recent list, and the room appears in this list, and we're
@@ -449,7 +467,7 @@ class RoomListStore extends Store {
                 // based on most recent timestamp.
                 const changedBoundary = entryCategoryIndex > targetCategoryIndex;
                 const currentCategory = entryCategoryIndex === targetCategoryIndex;
-                if (changedBoundary || (currentCategory && lastTimestampFn(room) >= lastTimestampFn(entry.room))) {
+                if (changedBoundary || (currentCategory && comparator({room}, entry) <= 0)) {
                     if (changedBoundary) {
                         // If we changed a boundary, then we've gone too far - go to the top of the last
                         // section instead.
@@ -466,6 +484,11 @@ class RoomListStore extends Store {
             newList.push(entry);
         }
 
+        // remove the existing entry after placing the new one to not cause ordering issues
+        if (existingIndex !== null) {
+            newList.splice(existingIndex, 1);
+        }
+
         if (!pushedEntry && desiredCategoryBoundaryIndex >= 0) {
             console.warn(`!! Room ${room.roomId} nearly lost: Ran off the end of ${tag}`);
             console.warn(`!! Inserting at position ${desiredCategoryBoundaryIndex} with category ${category}`);
@@ -478,12 +501,6 @@ class RoomListStore extends Store {
 
     _setRoomCategory(room, category) {
         if (!room) return; // This should only happen in tests
-
-        if (!this._state.orderImportantFirst) {
-            // XXX bail here early to avoid https://github.com/vector-im/riot-web/issues/9216
-            // this may mean that category updates are missed whilst not ordering by importance first
-            return;
-        }
 
         const listsClone = {};
 
@@ -527,20 +544,19 @@ class RoomListStore extends Store {
                     room, category, key, this._state.lists[key], listsClone[key], lastTimestamp);
 
                 if (!pushedEntry) {
-                    // This should rarely happen: _slotRoomIntoList has several checks which attempt
+                    // XXX: This should rarely happen: _slotRoomIntoList has several checks which attempt
                     // to make sure that a room is not lost in the list. If we do lose the room though,
-                    // we shouldn't throw it on the floor and forget about it. Instead, we should insert
-                    // it somewhere. We'll insert it at the top for a couple reasons: 1) it is probably
-                    // an important room for the user and 2) if this does happen, we'd want a bug report.
+                    // we shouldn't throw it on the floor and forget about it.
                     console.warn(`!! Room ${room.roomId} nearly lost: Failed to find a position`);
-                    console.warn(`!! Inserting at position 0 in the list and flagging as inserted`);
+                    console.warn(`!! Blowing away room lists and sorting them from scratch`);
                     console.warn("!! Additional info: ", {
                        category,
                        key,
                        upToIndex: listsClone[key].length,
                        expectedCount: this._state.lists[key].length,
                     });
-                    listsClone[key].splice(0, 0, {room, category});
+                    this._generateInitialRoomLists();
+                    return;
                 }
                 insertedIntoTags.push(key);
             }
