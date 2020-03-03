@@ -198,6 +198,10 @@ export default createReactClass({
 
     onScroll: function(ev) {
         debuglog("onScroll", this._getScrollNode().scrollTop);
+        if (this._resolveScrollEcho) {
+            this._resolveScrollEcho();
+            this._resolveScrollEcho = null;
+        }
         this._scrollTimeout.restart();
         this._saveScrollState();
         this.updatePreventShrinking();
@@ -678,6 +682,12 @@ export default createReactClass({
             debuglog("updateHeight getting straight to business, no scrolling going on.");
         }
 
+        if (this._promiseScrollEcho) {
+            debuglog("awaiting scroll echo of last _updateHeight");
+            await this._promiseScrollEcho;
+            this._promiseScrollEcho = null;
+        }
+
         // We might have unmounted since the timer finished, so abort if so.
         if (this.unmounted) {
             return;
@@ -713,6 +723,11 @@ export default createReactClass({
                 // yield out of date values and cause a jump
                 // when setting it
                 sn.scrollBy(0, topDiff);
+
+
+                this._promiseScrollEcho = new Promise(resolve => {
+                    this._resolveScrollEcho = resolve;
+                });
                 debuglog("updateHeight to", {newHeight, topDiff});
             }
         }
