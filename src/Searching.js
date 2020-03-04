@@ -140,7 +140,7 @@ async function combinedSearch(searchTerm, senderId = undefined) {
     return result;
 }
 
-async function localSearch(searchTerm, roomId = undefined, processResult = true) {
+async function localSearch(searchTerm, roomId = undefined, senderId = undefined, processResult = true) {
     const eventIndex = EventIndexPeg.get();
 
     const searchArgs = {
@@ -150,10 +150,15 @@ async function localSearch(searchTerm, roomId = undefined, processResult = true)
         limit: SEARCH_LIMIT,
         order_by_recency: true,
         room_id: undefined,
+        sender_id: undefined,
     };
 
     if (roomId !== undefined) {
         searchArgs.room_id = roomId;
+    }
+
+    if (senderId !== undefined) {
+        searchArgs.sender_id = senderId;
     }
 
     const localResult = await eventIndex.search(searchArgs);
@@ -168,7 +173,7 @@ async function localSearch(searchTerm, roomId = undefined, processResult = true)
     return result;
 }
 
-async function localSearchProcess(searchTerm, roomId = undefined) {
+async function localSearchProcess(searchTerm, roomId = undefined, senderId = undefined) {
     const emptyResult = {
         results: [],
         highlights: [],
@@ -176,7 +181,7 @@ async function localSearchProcess(searchTerm, roomId = undefined) {
 
     if (searchTerm === "") return emptyResult;
 
-    const result = await localSearch(searchTerm, roomId);
+    const result = await localSearch(searchTerm, roomId, senderId);
 
     emptyResult.seshatQuery = result.query;
 
@@ -540,7 +545,7 @@ function eventIndexSearch(term, roomId = undefined, senderId = undefined) {
         if (MatrixClientPeg.get().isRoomEncrypted(roomId)) {
             // The search is for a single encrypted room, use our local
             // search method.
-            searchPromise = localSearchProcess(term, roomId);
+            searchPromise = localSearchProcess(term, roomId, senderId);
         } else {
             // The search is for a single non-encrypted room, use the
             // server-side search.
