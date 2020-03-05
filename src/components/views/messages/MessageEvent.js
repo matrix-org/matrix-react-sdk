@@ -127,6 +127,7 @@ export default createReactClass({
             replacingEventId={this.props.replacingEventId}
             editState={this.props.editState}
             onMessageAllowed={this.onTileUpdate}
-            onHeightChanged={this.props.onHeightChanged} /> : null;
+            onHeightChanged={this.props.onHeightChanged}
+        /> : null;
     },
 });
