@@ -49,6 +49,10 @@ limitations under the License.
     text-overflow: ellipsis;
 }
 
+.mx_NetworkDropdown_networkoption::placeholder {
+    opacity: 0.6;
+}
+
 .mx_NetworkDropdown_networkoption img {
     margin: 5px;
     width: 25px;

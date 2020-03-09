@@ -44,7 +44,7 @@ export default class NetworkDropdown extends React.Component {
             expanded: false,
             selectedServer: server,
             selectedInstanceId: null,
-            includeAllNetworks: false,
+            includeAllNetworks: true,
         };
     }
 
@@ -111,7 +111,7 @@ export default class NetworkDropdown extends React.Component {
                 expanded: false,
                 selectedServer: e.target.value,
                 selectedNetwork: null,
-                includeAllNetworks: false,
+                includeAllNetworks: true,
             });
             this.props.onOptionChange(e.target.value, null);
         }
@@ -151,8 +151,9 @@ export default class NetworkDropdown extends React.Component {
         for (const server of servers) {
             options.push(this._makeMenuOption(server, null, true));
             if (server === MatrixClientPeg.getHomeserverName()) {
-                options.push(this._makeMenuOption(server, null, false));
-                if (this.props.protocols) {
+                if (Object.keys(this.props.protocols).length > 0) {
+                    options.push(this._makeMenuOption(server, null, false));
+
                     for (const proto of Object.keys(this.props.protocols)) {
                         if (!this.props.protocols[proto].instances) continue;
 
@@ -223,7 +224,7 @@ export default class NetworkDropdown extends React.Component {
             </div>;
             currentValue = <input type="text" className="mx_NetworkDropdown_networkoption"
                 ref={this.collectInputTextBox} onKeyUp={this.onInputKeyUp}
-                placeholder="matrix.org" // 'matrix.org' as an example of an HS name
+                placeholder="example.com" // an example of an HS name
             />;
         } else {
             const instance = instanceForInstanceId(this.props.protocols, this.state.selectedInstanceId);
