@@ -17,8 +17,8 @@ limitations under the License.
 
 import Skinner from './Skinner';
 
-export function loadSkin(skinObject) {
-    Skinner.load(skinObject);
+export async function loadSkin(skinObject) {
+    return Skinner.load(skinObject);
 }
 
 export function resetSkin() {

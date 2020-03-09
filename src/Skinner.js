@@ -58,7 +58,7 @@ class Skinner {
         return comp;
     }
 
-    load(skinObject) {
+    async load(skinObject) {
         if (this.components !== null) {
             throw new Error(
                 "Attempted to load a skin while a skin is already loaded"+
@@ -72,7 +72,10 @@ class Skinner {
         }
 
         // Now that we have a skin, load our components too
-        const idx = require("./component-index");
+        const idx = await import(
+            /* webpackChunkName: "component-index" */
+            /* webpackPreload: true */
+            "./component-index");
         if (!idx || !idx.components) throw new Error("Invalid react-sdk component index");
         for (const c in idx.components) {
             if (!this.components[c]) this.components[c] = idx.components[c];
