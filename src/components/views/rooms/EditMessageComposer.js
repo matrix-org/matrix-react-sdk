@@ -94,6 +94,7 @@ function createEditContent(model, editedEvent) {
         "m.new_content": newContent,
         "m.relates_to": {
             "rel_type": "m.replace",
+            // this event_id may be wrong, the caller may need to update it after remote echo
             "event_id": editedEvent.getId(),
         },
     }, contentBody);
@@ -188,7 +189,18 @@ export default class EditMessageComposer extends React.Component {
         if (this._isContentModified(newContent)) {
             const roomId = editedEvent.getRoomId();
             this._cancelPreviousPendingEdit();
-            this.context.sendMessage(roomId, editContent);
+
+            // this path is non-blocking so that we get to the dispatches which close the edit without remote echo
+            if (editedEvent.isSending()) {
+                // wait for the local echo of editedEvent to be updated with the actual eventId
+                const cli = this.context;
+                editedEvent.once("Event.localEventIdReplaced", (ev) => {
+                    editContent["m.relates_to"].event_id = ev.getId();
+                    cli.sendMessage(roomId, editContent);
+                });
+            } else {
+                this.context.sendMessage(roomId, editContent);
+            }
         }
 
         // close the event editing and focus composer
