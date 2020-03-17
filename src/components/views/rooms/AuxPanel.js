@@ -17,10 +17,11 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import MatrixClientPeg from "../../../MatrixClientPeg";
-import sdk from '../../../index';
+import createReactClass from 'create-react-class';
+import {MatrixClientPeg} from "../../../MatrixClientPeg";
+import * as sdk from '../../../index';
 import dis from "../../../dispatcher";
-import ObjectUtils from '../../../ObjectUtils';
+import * as ObjectUtils from '../../../ObjectUtils';
 import AppsDrawer from './AppsDrawer';
 import { _t } from '../../../languageHandler';
 import classNames from 'classnames';
@@ -28,7 +29,7 @@ import RateLimitedFunc from '../../../ratelimitedfunc';
 import SettingsStore from "../../../settings/SettingsStore";
 
 
-module.exports = React.createClass({
+export default createReactClass({
     displayName: 'AuxPanel',
 
     propTypes: {
@@ -57,10 +58,10 @@ module.exports = React.createClass({
         fullHeight: PropTypes.bool,
     },
 
-    defaultProps: {
+    getDefaultProps: () => ({
         showApps: true,
         hideAppsDrawer: false,
-    },
+    }),
 
     getInitialState: function() {
         return { counters: this._computeCounters() };
@@ -187,14 +188,15 @@ module.exports = React.createClass({
         }
 
         const callView = (
-            <CallView ref="callView" room={this.props.room}
+            <CallView
+                room={this.props.room}
                 ConferenceHandler={this.props.conferenceHandler}
                 onResize={this.props.onResize}
                 maxVideoHeight={this.props.maxHeight}
             />
         );
 
-        const appsDrawer = <AppsDrawer ref="appsDrawer"
+        const appsDrawer = <AppsDrawer
             room={this.props.room}
             userId={this.props.userId}
             maxHeight={this.props.maxHeight}
@@ -217,7 +219,7 @@ module.exports = React.createClass({
 
                 if (link) {
                     span = (
-                        <a href={link} target="_blank" rel="noopener">
+                        <a href={link} target="_blank" rel="noreferrer noopener">
                             { span }
                         </a>
                     );

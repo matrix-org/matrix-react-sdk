@@ -1,6 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017, 2018 New Vector Ltd
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -52,10 +53,10 @@ limitations under the License.
  * }
  */
 
-import MatrixClientPeg from './MatrixClientPeg';
+import {MatrixClientPeg} from './MatrixClientPeg';
 import PlatformPeg from './PlatformPeg';
 import Modal from './Modal';
-import sdk from './index';
+import * as sdk from './index';
 import { _t } from './languageHandler';
 import Matrix from 'matrix-js-sdk';
 import dis from './dispatcher';
@@ -63,7 +64,8 @@ import SdkConfig from './SdkConfig';
 import { showUnknownDeviceDialogForCalls } from './cryptodevices';
 import WidgetUtils from './utils/WidgetUtils';
 import WidgetEchoStore from './stores/WidgetEchoStore';
-import ScalarAuthClient from './ScalarAuthClient';
+import {IntegrationManagers} from "./integrations/IntegrationManagers";
+import SettingsStore, { SettingLevel } from './settings/SettingsStore';
 
 global.mxCalls = {
     //room_id: MatrixCall
@@ -78,13 +80,26 @@ function play(audioId) {
     // which listens?
     const audio = document.getElementById(audioId);
     if (audio) {
+        const playAudio = async () => {
+            try {
+                // This still causes the chrome debugger to break on promise rejection if
+                // the promise is rejected, even though we're catching the exception.
+                await audio.play();
+            } catch (e) {
+                // This is usually because the user hasn't interacted with the document,
+                // or chrome doesn't think so and is denying the request. Not sure what
+                // we can really do here...
+                // https://github.com/vector-im/riot-web/issues/7657
+                console.log("Unable to play audio clip", e);
+            }
+        };
         if (audioPromises[audioId]) {
             audioPromises[audioId] = audioPromises[audioId].then(()=>{
                 audio.load();
-                return audio.play();
+                return playAudio();
             });
         } else {
-            audioPromises[audioId] = audio.play();
+            audioPromises[audioId] = playAudio();
         }
     }
 }
@@ -117,15 +132,14 @@ function _reAttemptCall(call) {
 
 function _setCallListeners(call) {
     call.on("error", function(err) {
-        console.error("Call error: %s", err);
-        console.error(err.stack);
+        console.error("Call error:", err);
         if (err.code === 'unknown_devices') {
             const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
 
             Modal.createTrackedDialog('Call Failed', '', QuestionDialog, {
                 title: _t('Call Failed'),
                 description: _t(
-                    "There are unknown devices in this room: "+
+                    "There are unknown sessions in this room: "+
                     "if you proceed without verifying them, it will be "+
                     "possible for someone to eavesdrop on your call.",
                 ),
@@ -146,8 +160,15 @@ function _setCallListeners(call) {
                 },
             });
         } else {
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+            if (
+                MatrixClientPeg.get().getTurnServers().length === 0 &&
+                SettingsStore.getValue("fallbackICEServerAllowed") === null
+            ) {
+                _showICEFallbackPrompt();
+                return;
+            }
 
+            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog('Call Failed', '', ErrorDialog, {
                 title: _t('Call Failed'),
                 description: err.message,
@@ -197,7 +218,7 @@ function _setCallListeners(call) {
 
 function _setCallState(call, roomId, status) {
     console.log(
-        "Call state in %s changed to %s (%s)", roomId, status, (call ? call.call_state : "-"),
+        `Call state in ${roomId} changed to ${status} (${call ? call.call_state : "-"})`,
     );
     calls[roomId] = call;
 
@@ -215,6 +236,36 @@ function _setCallState(call, roomId, status) {
         room_id: roomId,
         state: status,
     });
+}
+
+function _showICEFallbackPrompt() {
+    const cli = MatrixClientPeg.get();
+    const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+    const code = sub => <code>{sub}</code>;
+    Modal.createTrackedDialog('No TURN servers', '', QuestionDialog, {
+        title: _t("Call failed due to misconfigured server"),
+        description: <div>
+            <p>{_t(
+                "Please ask the administrator of your homeserver " +
+                "(<code>%(homeserverDomain)s</code>) to configure a TURN server in " +
+                "order for calls to work reliably.",
+                { homeserverDomain: cli.getDomain() }, { code },
+            )}</p>
+            <p>{_t(
+                "Alternatively, you can try to use the public server at " +
+                "<code>turn.matrix.org</code>, but this will not be as reliable, and " +
+                "it will share your IP address with that server. You can also manage " +
+                "this in Settings.",
+                null, { code },
+            )}</p>
+        </div>,
+        button: _t('Try using turn.matrix.org'),
+        cancelButton: _t('OK'),
+        onFinished: (allow) => {
+            SettingsStore.setValue("fallbackICEServerAllowed", null, SettingLevel.DEVICE, allow);
+            cli.setFallbackICEServerAllowed(allow);
+        },
+    }, null, true);
 }
 
 function _onAction(payload) {
@@ -251,7 +302,7 @@ function _onAction(payload) {
     switch (payload.action) {
         case 'place_call':
             {
-                if (module.exports.getAnyActiveCall()) {
+                if (callHandler.getAnyActiveCall()) {
                     const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                     Modal.createTrackedDialog('Call Handler', 'Existing Call', ErrorDialog, {
                         title: _t('Existing Call'),
@@ -284,7 +335,7 @@ function _onAction(payload) {
                     });
                     return;
                 } else if (members.length === 2) {
-                    console.log("Place %s call in %s", payload.type, payload.room_id);
+                    console.info("Place %s call in %s", payload.type, payload.room_id);
                     const call = Matrix.createNewMatrixCall(MatrixClientPeg.get(), payload.room_id);
                     placeCall(call);
                 } else { // > 2
@@ -299,12 +350,12 @@ function _onAction(payload) {
             }
             break;
         case 'place_conference_call':
-            console.log("Place conference call in %s", payload.room_id);
+            console.info("Place conference call in %s", payload.room_id);
             _startCallApp(payload.room_id, payload.type);
             break;
         case 'incoming_call':
             {
-                if (module.exports.getAnyActiveCall()) {
+                if (callHandler.getAnyActiveCall()) {
                     // ignore multiple incoming calls. in future, we may want a line-1/line-2 setup.
                     // we avoid rejecting with "busy" in case the user wants to answer it on a different device.
                     // in future we could signal a "local busy" as a warning to the caller.
@@ -344,18 +395,22 @@ function _onAction(payload) {
 }
 
 async function _startCallApp(roomId, type) {
-    // check for a working intgrations manager. Technically we could put
+    // check for a working integration manager. Technically we could put
     // the state event in anyway, but the resulting widget would then not
     // work for us. Better that the user knows before everyone else in the
     // room sees it.
-    const scalarClient = new ScalarAuthClient();
+    const managers = IntegrationManagers.sharedInstance();
     let haveScalar = false;
-    try {
-        await scalarClient.connect();
-        haveScalar = scalarClient.hasCredentials();
-    } catch (e) {
-        // fall through
+    if (managers.hasManager()) {
+        try {
+            const scalarClient = managers.getPrimaryManager().getScalarClient();
+            await scalarClient.connect();
+            haveScalar = scalarClient.hasCredentials();
+        } catch (e) {
+            // ignore
+        }
     }
+
     if (!haveScalar) {
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
 
@@ -421,7 +476,8 @@ async function _startCallApp(roomId, type) {
         // URL, but this will at least allow the integration manager to not be hardcoded.
         widgetUrl = SdkConfig.get().integrations_jitsi_widget_url + '?' + queryString;
     } else {
-        widgetUrl = SdkConfig.get().integrations_rest_url + '/widgets/jitsi.html?' + queryString;
+        const apiUrl = IntegrationManagers.sharedInstance().getPrimaryManager().apiUrl;
+        widgetUrl = apiUrl + '/widgets/jitsi.html?' + queryString;
     }
 
     const widgetData = { widgetSessionId };
@@ -452,11 +508,22 @@ async function _startCallApp(roomId, type) {
 // with the dispatcher once
 if (!global.mxCallHandler) {
     dis.register(_onAction);
+    // add empty handlers for media actions, otherwise the media keys
+    // end up causing the audio elements with our ring/ringback etc
+    // audio clips in to play.
+    if (navigator.mediaSession) {
+        navigator.mediaSession.setActionHandler('play', function() {});
+        navigator.mediaSession.setActionHandler('pause', function() {});
+        navigator.mediaSession.setActionHandler('seekbackward', function() {});
+        navigator.mediaSession.setActionHandler('seekforward', function() {});
+        navigator.mediaSession.setActionHandler('previoustrack', function() {});
+        navigator.mediaSession.setActionHandler('nexttrack', function() {});
+    }
 }
 
 const callHandler = {
     getCallForRoom: function(roomId) {
-        let call = module.exports.getCall(roomId);
+        let call = callHandler.getCall(roomId);
         if (call) return call;
 
         if (ConferenceHandler) {
@@ -516,4 +583,4 @@ if (global.mxCallHandler === undefined) {
     global.mxCallHandler = callHandler;
 }
 
-module.exports = global.mxCallHandler;
+export default global.mxCallHandler;

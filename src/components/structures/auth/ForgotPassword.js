@@ -1,6 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017, 2018, 2019 New Vector Ltd
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,14 +17,16 @@ limitations under the License.
 */
 
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
-import sdk from '../../../index';
+import * as sdk from '../../../index';
 import Modal from "../../../Modal";
 import SdkConfig from "../../../SdkConfig";
 import PasswordReset from "../../../PasswordReset";
 import AutoDiscoveryUtils, {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
 import classNames from 'classnames';
+import AuthPage from "../../views/auth/AuthPage";
 
 // Phases
 // Show controls to configure server details
@@ -37,7 +40,7 @@ const PHASE_EMAIL_SENT = 3;
 // User has clicked the link in email and completed reset
 const PHASE_DONE = 4;
 
-module.exports = React.createClass({
+export default createReactClass({
     displayName: 'ForgotPassword',
 
     propTypes: {
@@ -62,10 +65,12 @@ module.exports = React.createClass({
             serverIsAlive: true,
             serverErrorIsFatal: false,
             serverDeadError: "",
+            serverRequiresIdServer: null,
         };
     },
 
     componentWillMount: function() {
+        this.reset = null;
         this._checkServerLiveliness(this.props.serverConfig);
     },
 
@@ -83,7 +88,14 @@ module.exports = React.createClass({
                 serverConfig.hsUrl,
                 serverConfig.isUrl,
             );
-            this.setState({serverIsAlive: true});
+
+            const pwReset = new PasswordReset(serverConfig.hsUrl, serverConfig.isUrl);
+            const serverRequiresIdServer = await pwReset.doesServerRequireIdServerParam();
+
+            this.setState({
+                serverIsAlive: true,
+                serverRequiresIdServer,
+            });
         } catch (e) {
             this.setState(AutoDiscoveryUtils.authComponentStateForError(e, "forgot_password"));
         }
@@ -94,7 +106,7 @@ module.exports = React.createClass({
             phase: PHASE_SENDING_EMAIL,
         });
         this.reset = new PasswordReset(this.props.serverConfig.hsUrl, this.props.serverConfig.isUrl);
-        this.reset.resetPassword(email, password).done(() => {
+        this.reset.resetPassword(email, password).then(() => {
             this.setState({
                 phase: PHASE_EMAIL_SENT,
             });
@@ -106,17 +118,18 @@ module.exports = React.createClass({
         });
     },
 
-    onVerify: function(ev) {
+    onVerify: async function(ev) {
         ev.preventDefault();
         if (!this.reset) {
             console.error("onVerify called before submitPasswordReset!");
             return;
         }
-        this.reset.checkEmailLinkClicked().done((res) => {
+        try {
+            await this.reset.checkEmailLinkClicked();
             this.setState({ phase: PHASE_DONE });
-        }, (err) => {
+        } catch (err) {
             this.showErrorDialog(err.message);
-        });
+        }
     },
 
     onSubmitForm: async function(ev) {
@@ -139,8 +152,8 @@ module.exports = React.createClass({
                     <div>
                         { _t(
                             "Changing your password will reset any end-to-end encryption keys " +
-                            "on all of your devices, making encrypted chat history unreadable. Set up " +
-                            "Key Backup or export your room keys from another device before resetting your " +
+                            "on all of your sessions, making encrypted chat history unreadable. Set up " +
+                            "Key Backup or export your room keys from another session before resetting your " +
                             "password.",
                         ) }
                     </div>,
@@ -199,6 +212,7 @@ module.exports = React.createClass({
             serverConfig={this.props.serverConfig}
             onServerConfigChange={this.props.onServerConfigChange}
             delayTimeMs={0}
+            showIdentityServerIfRequiredByHomeserver={true}
             onAfterSubmit={this.onServerDetailsNextPhaseClick}
             submitText={_t("Next")}
             submitClass="mx_Login_submit"
@@ -254,6 +268,22 @@ module.exports = React.createClass({
             >
                 {_t('Change')}
             </a>;
+        }
+
+        if (!this.props.serverConfig.isUrl && this.state.serverRequiresIdServer) {
+            return <div>
+                <h3>
+                    {yourMatrixAccountText}
+                    {editLink}
+                </h3>
+                {_t(
+                    "No identity server is configured: " +
+                    "add one in server settings to reset your password.",
+                )}
+                <a className="mx_AuthBody_changeFlow" onClick={this.onLoginClick} href="#">
+                    {_t('Sign in instead')}
+                </a>
+            </div>;
         }
 
         return <div>
@@ -328,7 +358,7 @@ module.exports = React.createClass({
         return <div>
             <p>{_t("Your password has been reset.")}</p>
             <p>{_t(
-                "You have been logged out of all devices and will no longer receive " +
+                "You have been logged out of all sessions and will no longer receive " +
                 "push notifications. To re-enable notifications, sign in again on each " +
                 "device.",
             )}</p>
@@ -338,7 +368,6 @@ module.exports = React.createClass({
     },
 
     render: function() {
-        const AuthPage = sdk.getComponent("auth.AuthPage");
         const AuthHeader = sdk.getComponent("auth.AuthHeader");
         const AuthBody = sdk.getComponent("auth.AuthBody");
 

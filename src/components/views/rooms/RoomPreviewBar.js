@@ -16,15 +16,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import sdk from '../../../index';
-import MatrixClientPeg from '../../../MatrixClientPeg';
+import createReactClass from 'create-react-class';
+import * as sdk from '../../../index';
+import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher';
 import classNames from 'classnames';
 import { _t } from '../../../languageHandler';
+import IdentityAuthClient from '../../../IdentityAuthClient';
 
 const MessageCase = Object.freeze({
     NotLoggedIn: "NotLoggedIn",
@@ -34,6 +34,8 @@ const MessageCase = Object.freeze({
     Kicked: "Kicked",
     Banned: "Banned",
     OtherThreePIDError: "OtherThreePIDError",
+    InvitedEmailNotFoundInAccount: "InvitedEmailNotFoundInAccount",
+    InvitedEmailNoIdentityServer: "InvitedEmailNoIdentityServer",
     InvitedEmailMismatch: "InvitedEmailMismatch",
     Invite: "Invite",
     ViewingRoom: "ViewingRoom",
@@ -41,12 +43,13 @@ const MessageCase = Object.freeze({
     OtherError: "OtherError",
 });
 
-module.exports = React.createClass({
+export default createReactClass({
     displayName: 'RoomPreviewBar',
 
     propTypes: {
         onJoinClick: PropTypes.func,
         onRejectClick: PropTypes.func,
+        onRejectAndIgnoreClick: PropTypes.func,
         onForgetClick: PropTypes.func,
         // if inviterName is specified, the preview bar will shown an invite to the room.
         // You should also specify onRejectClick if specifiying inviterName
@@ -66,6 +69,7 @@ module.exports = React.createClass({
         error: PropTypes.object,
 
         canPreview: PropTypes.bool,
+        previewLoading: PropTypes.bool,
         room: PropTypes.object,
 
         // When a spinner is present, a spinnerState can be specified to indicate the
@@ -103,21 +107,38 @@ module.exports = React.createClass({
         }
     },
 
-    _checkInvitedEmail: function() {
-        // If this is an invite and we've been told what email
-        // address was invited, fetch the user's list of Threepids
-        // so we can check them against the one that was invited
+    _checkInvitedEmail: async function() {
+        // If this is an invite and we've been told what email address was
+        // invited, fetch the user's account emails and discovery bindings so we
+        // can check them against the email that was invited.
         if (this.props.inviterName && this.props.invitedEmail) {
             this.setState({busy: true});
-            MatrixClientPeg.get().lookupThreePid(
-                'email', this.props.invitedEmail,
-            ).finally(() => {
-                this.setState({busy: false});
-            }).done((result) => {
+            try {
+                // Gather the account 3PIDs
+                const account3pids = await MatrixClientPeg.get().getThreePids();
+                this.setState({
+                    accountEmails: account3pids.threepids
+                        .filter(b => b.medium === 'email').map(b => b.address),
+                });
+                // If we have an IS connected, use that to lookup the email and
+                // check the bound MXID.
+                if (!MatrixClientPeg.get().getIdentityServerUrl()) {
+                    this.setState({busy: false});
+                    return;
+                }
+                const authClient = new IdentityAuthClient();
+                const identityAccessToken = await authClient.getAccessToken();
+                const result = await MatrixClientPeg.get().lookupThreePid(
+                    'email',
+                    this.props.invitedEmail,
+                    undefined /* callback */,
+                    identityAccessToken,
+                );
                 this.setState({invitedEmailMxid: result.mxid});
-            }, (err) => {
+            } catch (err) {
                 this.setState({threePidFetchError: err});
-            });
+            }
+            this.setState({busy: false});
         }
     },
 
@@ -150,6 +171,13 @@ module.exports = React.createClass({
             if (this.props.invitedEmail) {
                 if (this.state.threePidFetchError) {
                     return MessageCase.OtherThreePIDError;
+                } else if (
+                    this.state.accountEmails &&
+                    !this.state.accountEmails.includes(this.props.invitedEmail)
+                ) {
+                    return MessageCase.InvitedEmailNotFoundInAccount;
+                } else if (!MatrixClientPeg.get().getIdentityServerUrl()) {
+                    return MessageCase.InvitedEmailNoIdentityServer;
                 } else if (this.state.invitedEmailMxid != MatrixClientPeg.get().getUserId()) {
                     return MessageCase.InvitedEmailMismatch;
                 }
@@ -254,6 +282,9 @@ module.exports = React.createClass({
     },
 
     render: function() {
+        const Spinner = sdk.getComponent('elements.Spinner');
+        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
+
         let showSpinner = false;
         let darkStyle = false;
         let title;
@@ -262,6 +293,8 @@ module.exports = React.createClass({
         let primaryActionLabel;
         let secondaryActionHandler;
         let secondaryActionLabel;
+        let footer;
+        const extraComponents = [];
 
         const messageCase = this._getMessageCase();
         switch (messageCase) {
@@ -287,13 +320,21 @@ module.exports = React.createClass({
                 primaryActionHandler = this.onRegisterClick;
                 secondaryActionLabel = _t("Sign In");
                 secondaryActionHandler = this.onLoginClick;
+                if (this.props.previewLoading) {
+                    footer = (
+                        <div>
+                            <Spinner w={20} h={20}/>
+                            {_t("Loading room preview")}
+                        </div>
+                    );
+                }
                 break;
             }
             case MessageCase.Kicked: {
                 const {memberName, reason} = this._getKickOrBanInfo();
                 title = _t("You were kicked from %(roomName)s by %(memberName)s",
                     {memberName, roomName: this._roomName()});
-                subTitle = _t("Reason: %(reason)s", {reason});
+                subTitle = reason ? _t("Reason: %(reason)s", {reason}) : null;
 
                 if (this._joinRule() === "invite") {
                     primaryActionLabel = _t("Forget this room");
@@ -310,7 +351,7 @@ module.exports = React.createClass({
                 const {memberName, reason} = this._getKickOrBanInfo();
                 title = _t("You were banned from %(roomName)s by %(memberName)s",
                     {memberName, roomName: this._roomName()});
-                subTitle = _t("Reason: %(reason)s", {reason});
+                subTitle = reason ? _t("Reason: %(reason)s", {reason}) : null;
                 primaryActionLabel = _t("Forget this room");
                 primaryActionHandler = this.props.onForgetClick;
                 break;
@@ -319,8 +360,10 @@ module.exports = React.createClass({
                 title = _t("Something went wrong with your invite to %(roomName)s",
                     {roomName: this._roomName()});
                 const joinRule = this._joinRule();
-                const errCodeMessage = _t("%(errcode)s was returned while trying to valide your invite. You could try to pass this information on to a room admin.",
-                    {errcode: this.state.threePidFetchError.errcode},
+                const errCodeMessage = _t(
+                    "An error (%(errcode)s) was returned while trying to validate your " +
+                    "invite. You could try to pass this information on to a room admin.",
+                    {errcode: this.state.threePidFetchError.errcode || _t("unknown error code")},
                 );
                 switch (joinRule) {
                     case "invite":
@@ -328,6 +371,8 @@ module.exports = React.createClass({
                             _t("You can only join it with a working invite."),
                             errCodeMessage,
                         ];
+                        primaryActionLabel = _t("Try to join anyway");
+                        primaryActionHandler = this.props.onJoinClick;
                         break;
                     case "public":
                         subTitle = _t("You can still join it because this is a public room.");
@@ -342,25 +387,51 @@ module.exports = React.createClass({
                 }
                 break;
             }
+            case MessageCase.InvitedEmailNotFoundInAccount: {
+                title = _t(
+                    "This invite to %(roomName)s was sent to %(email)s which is not " +
+                    "associated with your account",
+                    {
+                        roomName: this._roomName(),
+                        email: this.props.invitedEmail,
+                    },
+                );
+                subTitle = _t(
+                    "Link this email with your account in Settings to receive invites " +
+                    "directly in Riot.",
+                );
+                primaryActionLabel = _t("Join the discussion");
+                primaryActionHandler = this.props.onJoinClick;
+                break;
+            }
+            case MessageCase.InvitedEmailNoIdentityServer: {
+                title = _t(
+                    "This invite to %(roomName)s was sent to %(email)s",
+                    {
+                        roomName: this._roomName(),
+                        email: this.props.invitedEmail,
+                    },
+                );
+                subTitle = _t(
+                    "Use an identity server in Settings to receive invites directly in Riot.",
+                );
+                primaryActionLabel = _t("Join the discussion");
+                primaryActionHandler = this.props.onJoinClick;
+                break;
+            }
             case MessageCase.InvitedEmailMismatch: {
-                title = _t("This invite to %(roomName)s wasn't sent to your account",
-                    {roomName: this._roomName()});
-                const joinRule = this._joinRule();
-                if (joinRule === "public") {
-                    subTitle = _t("You can still join it because this is a public room.");
-                    primaryActionLabel = _t("Join the discussion");
-                    primaryActionHandler = this.props.onJoinClick;
-                } else {
-                    subTitle = _t(
-                        "Sign in with a different account, ask for another invite, or " +
-                        "add the e-mail address %(email)s to this account.",
-                        {email: this.props.invitedEmail},
-                    );
-                    if (joinRule !== "invite") {
-                        primaryActionLabel = _t("Try to join anyway");
-                        primaryActionHandler = this.props.onJoinClick;
-                    }
-                }
+                title = _t(
+                    "This invite to %(roomName)s was sent to %(email)s",
+                    {
+                        roomName: this._roomName(),
+                        email: this.props.invitedEmail,
+                    },
+                );
+                subTitle = _t(
+                    "Share this email in Settings to receive invites directly in Riot.",
+                );
+                primaryActionLabel = _t("Join the discussion");
+                primaryActionHandler = this.props.onJoinClick;
                 break;
             }
             case MessageCase.Invite: {
@@ -383,19 +454,32 @@ module.exports = React.createClass({
                 if (isDM) {
                     title = _t("Do you want to chat with %(user)s?",
                         { user: inviteMember.name });
+                    subTitle = [
+                        avatar,
+                        _t("<userName/> wants to chat", {}, {userName: () => inviterElement}),
+                    ];
+                    primaryActionLabel = _t("Start chatting");
                 } else {
                     title = _t("Do you want to join %(roomName)s?",
                         { roomName: this._roomName() });
+                    subTitle = [
+                        avatar,
+                        _t("<userName/> invited you", {}, {userName: () => inviterElement}),
+                    ];
+                    primaryActionLabel = _t("Accept");
                 }
-                subTitle = [
-                    avatar,
-                    _t("<userName/> invited you", {}, {userName: () => inviterElement}),
-                ];
 
-                primaryActionLabel = _t("Accept");
                 primaryActionHandler = this.props.onJoinClick;
                 secondaryActionLabel = _t("Reject");
                 secondaryActionHandler = this.props.onRejectClick;
+
+                if (this.props.onRejectAndIgnoreClick) {
+                    extraComponents.push(
+                        <AccessibleButton kind="secondary" onClick={this.props.onRejectAndIgnoreClick} key="ignore">
+                            { _t("Reject & Ignore user") }
+                        </AccessibleButton>,
+                    );
+                }
                 break;
             }
             case MessageCase.ViewingRoom: {
@@ -425,15 +509,12 @@ module.exports = React.createClass({
                         "<issueLink>submit a bug report</issueLink>.",
                         { errcode: this.props.error.errcode },
                         { issueLink: label => <a href="https://github.com/vector-im/riot-web/issues/new/choose"
-                            target="_blank" rel="noopener">{ label }</a> },
+                            target="_blank" rel="noreferrer noopener">{ label }</a> },
                     ),
                 ];
                 break;
             }
         }
-
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-        const Spinner = sdk.getComponent('elements.Spinner');
 
         let subTitleElements;
         if (subTitle) {
@@ -482,7 +563,11 @@ module.exports = React.createClass({
                 </div>
                 <div className="mx_RoomPreviewBar_actions">
                     { secondaryButton }
+                    { extraComponents }
                     { primaryButton }
+                </div>
+                <div className="mx_RoomPreviewBar_footer">
+                    { footer }
                 </div>
             </div>
         );

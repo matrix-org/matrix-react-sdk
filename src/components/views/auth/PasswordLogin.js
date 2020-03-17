@@ -19,7 +19,7 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import sdk from '../../../index';
+import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
 import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
@@ -31,6 +31,7 @@ export default class PasswordLogin extends React.Component {
     static propTypes = {
         onSubmit: PropTypes.func.isRequired, // fn(username, password)
         onError: PropTypes.func,
+        onEditServerDetailsClick: PropTypes.func,
         onForgotPasswordClick: PropTypes.func, // fn()
         initialUsername: PropTypes.string,
         initialPhoneCountry: PropTypes.string,
@@ -201,6 +202,7 @@ export default class PasswordLogin extends React.Component {
                     value={this.state.username}
                     onChange={this.onUsernameChanged}
                     onBlur={this.onUsernameBlur}
+                    disabled={this.props.disableSubmit}
                     autoFocus
                 />;
             case PasswordLogin.LOGIN_FIELD_MXID:
@@ -215,6 +217,7 @@ export default class PasswordLogin extends React.Component {
                     value={this.state.username}
                     onChange={this.onUsernameChanged}
                     onBlur={this.onUsernameBlur}
+                    disabled={this.props.disableSubmit}
                     autoFocus
                 />;
             case PasswordLogin.LOGIN_FIELD_PHONE: {
@@ -239,6 +242,7 @@ export default class PasswordLogin extends React.Component {
                     prefix={phoneCountry}
                     onChange={this.onPhoneNumberChanged}
                     onBlur={this.onPhoneNumberBlur}
+                    disabled={this.props.disableSubmit}
                     autoFocus
                 />;
             }
@@ -257,6 +261,7 @@ export default class PasswordLogin extends React.Component {
 
     render() {
         const Field = sdk.getComponent('elements.Field');
+        const SignInToText = sdk.getComponent('views.auth.SignInToText');
 
         let forgotPasswordJsx;
 
@@ -273,33 +278,6 @@ export default class PasswordLogin extends React.Component {
             </span>;
         }
 
-        let signInToText = _t('Sign in to your Matrix account on %(serverName)s', {
-            serverName: this.props.serverConfig.hsName,
-        });
-        if (this.props.serverConfig.hsNameIsDifferent) {
-            const TextWithTooltip = sdk.getComponent("elements.TextWithTooltip");
-
-            signInToText = _t('Sign in to your Matrix account on <underlinedServerName />', {}, {
-                'underlinedServerName': () => {
-                    return <TextWithTooltip
-                        class="mx_Login_underlinedServerName"
-                        tooltip={this.props.serverConfig.hsUrl}
-                    >
-                        {this.props.serverConfig.hsName}
-                    </TextWithTooltip>;
-                },
-            });
-        }
-
-        let editLink = null;
-        if (this.props.onEditServerDetailsClick) {
-            editLink = <a className="mx_AuthBody_editServerDetails"
-                href="#" onClick={this.props.onEditServerDetailsClick}
-            >
-                {_t('Change')}
-            </a>;
-        }
-
         const pwFieldClass = classNames({
             error: this.props.loginIncorrect && !this.isLoginEmpty(), // only error password if error isn't top field
         });
@@ -312,11 +290,11 @@ export default class PasswordLogin extends React.Component {
                 <div className="mx_Login_type_container">
                     <label className="mx_Login_type_label">{ _t('Sign in with') }</label>
                     <Field
-                        className="mx_Login_type_dropdown"
                         id="mx_PasswordLogin_type"
                         element="select"
                         value={this.state.loginType}
                         onChange={this.onLoginTypeChange}
+                        disabled={this.props.disableSubmit}
                     >
                         <option
                             key={PasswordLogin.LOGIN_FIELD_MXID}
@@ -343,10 +321,8 @@ export default class PasswordLogin extends React.Component {
 
         return (
             <div>
-                <h3>
-                    {signInToText}
-                    {editLink}
-                </h3>
+                <SignInToText serverConfig={this.props.serverConfig}
+                    onEditServerDetailsClick={this.props.onEditServerDetailsClick} />
                 <form onSubmit={this.onSubmitForm}>
                     {loginType}
                     {loginField}
@@ -358,6 +334,7 @@ export default class PasswordLogin extends React.Component {
                         label={_t('Password')}
                         value={this.state.password}
                         onChange={this.onPasswordChanged}
+                        disabled={this.props.disableSubmit}
                     />
                     {forgotPasswordJsx}
                     <input className="mx_Login_submit"

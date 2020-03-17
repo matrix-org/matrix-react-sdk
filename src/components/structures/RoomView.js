@@ -23,27 +23,26 @@ limitations under the License.
 
 import shouldHideEvent from '../../shouldHideEvent';
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, {createRef} from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
-import Promise from 'bluebird';
-import filesize from 'filesize';
 import classNames from 'classnames';
 import { _t } from '../../languageHandler';
-import {RoomPermalinkCreator} from '../../matrix-to';
+import {RoomPermalinkCreator} from '../../utils/permalinks/Permalinks';
 
-import MatrixClientPeg from '../../MatrixClientPeg';
+import {MatrixClientPeg} from '../../MatrixClientPeg';
 import ContentMessages from '../../ContentMessages';
 import Modal from '../../Modal';
-import sdk from '../../index';
+import * as sdk from '../../index';
 import CallHandler from '../../CallHandler';
 import dis from '../../dispatcher';
 import Tinter from '../../Tinter';
 import rate_limited_func from '../../ratelimitedfunc';
-import ObjectUtils from '../../ObjectUtils';
+import * as ObjectUtils from '../../ObjectUtils';
 import * as Rooms from '../../Rooms';
+import eventSearch from '../../Searching';
 
-import { KeyCode, isOnlyCtrlOrCmdKeyEvent } from '../../Keyboard';
+import {isOnlyCtrlOrCmdKeyEvent, Key} from '../../Keyboard';
 
 import MainSplit from './MainSplit';
 import RightPanel from './RightPanel';
@@ -53,6 +52,9 @@ import WidgetEchoStore from '../../stores/WidgetEchoStore';
 import SettingsStore, {SettingLevel} from "../../settings/SettingsStore";
 import WidgetUtils from '../../utils/WidgetUtils';
 import AccessibleButton from "../views/elements/AccessibleButton";
+import RightPanelStore from "../../stores/RightPanelStore";
+import {haveTileForEvent} from "../views/rooms/EventTile";
+import RoomContext from "../../contexts/RoomContext";
 
 const DEBUG = false;
 let debuglog = function() {};
@@ -64,7 +66,7 @@ if (DEBUG) {
     debuglog = console.log.bind(console);
 }
 
-module.exports = React.createClass({
+export default createReactClass({
     displayName: 'RoomView',
     propTypes: {
         ConferenceHandler: PropTypes.any,
@@ -88,11 +90,8 @@ module.exports = React.createClass({
         //  * name (string) The room's name
         //  * avatarUrl (string) The mxc:// avatar URL for the room
         //  * inviterName (string) The display name of the person who
-        //  *                      invited us tovthe room
+        //  *                      invited us to the room
         oobData: PropTypes.object,
-
-        // is the RightPanel collapsed?
-        collapsedRhs: PropTypes.bool,
 
         // Servers the RoomView can use to try and assist joins
         viaServers: PropTypes.arrayOf(PropTypes.string),
@@ -156,6 +155,9 @@ module.exports = React.createClass({
             // We load this later by asking the js-sdk to suggest a version for us.
             // This object is the result of Room#getRecommendedVersion()
             upgradeRecommendation: null,
+
+            canReact: false,
+            canReply: false,
         };
     },
 
@@ -165,16 +167,21 @@ module.exports = React.createClass({
         MatrixClientPeg.get().on("Room.timeline", this.onRoomTimeline);
         MatrixClientPeg.get().on("Room.name", this.onRoomName);
         MatrixClientPeg.get().on("Room.accountData", this.onRoomAccountData);
+        MatrixClientPeg.get().on("RoomState.events", this.onRoomStateEvents);
         MatrixClientPeg.get().on("RoomState.members", this.onRoomStateMember);
         MatrixClientPeg.get().on("Room.myMembership", this.onMyMembership);
         MatrixClientPeg.get().on("accountData", this.onAccountData);
         MatrixClientPeg.get().on("crypto.keyBackupStatus", this.onKeyBackupStatus);
         MatrixClientPeg.get().on("deviceVerificationChanged", this.onDeviceVerificationChanged);
+        MatrixClientPeg.get().on("userTrustStatusChanged", this.onUserVerificationChanged);
         // Start listening for RoomViewStore updates
         this._roomStoreToken = RoomViewStore.addListener(this._onRoomViewStoreUpdate);
         this._onRoomViewStoreUpdate(true);
 
         WidgetEchoStore.on('update', this._onWidgetEchoStoreUpdate);
+
+        this._roomView = createRef();
+        this._searchResultsPanel = createRef();
     },
 
     _onRoomViewStoreUpdate: function(initial) {
@@ -321,7 +328,7 @@ module.exports = React.createClass({
             if (this.props.autoJoin) {
                 this.onJoinButtonClicked();
             } else if (!room && shouldPeek) {
-                console.log("Attempting to peek into room %s", roomId);
+                console.info("Attempting to peek into room %s", roomId);
                 this.setState({
                     peekLoading: true,
                     isPeeking: true, // this will change to false if peeking fails
@@ -335,7 +342,7 @@ module.exports = React.createClass({
                         peekLoading: false,
                     });
                     this._onRoomLoaded(room);
-                }, (err) => {
+                }).catch((err) => {
                     if (this.unmounted) {
                         return;
                     }
@@ -348,7 +355,7 @@ module.exports = React.createClass({
                     // This won't necessarily be a MatrixError, but we duck-type
                     // here and say if it's got an 'errcode' key with the right value,
                     // it means we can't peek.
-                    if (err.errcode == "M_GUEST_ACCESS_FORBIDDEN") {
+                    if (err.errcode === "M_GUEST_ACCESS_FORBIDDEN" || err.errcode === 'M_FORBIDDEN') {
                         // This is fine: the room just isn't peekable (we assume).
                         this.setState({
                             peekLoading: false,
@@ -358,8 +365,6 @@ module.exports = React.createClass({
                     }
                 });
             } else if (room) {
-                //viewing a previously joined room, try to lazy load members
-
                 // Stop peeking because we have joined this room previously
                 MatrixClientPeg.get().stopPeeking();
                 this.setState({isPeeking: false});
@@ -423,8 +428,8 @@ module.exports = React.createClass({
     },
 
     componentDidUpdate: function() {
-        if (this.refs.roomView) {
-            const roomView = ReactDOM.findDOMNode(this.refs.roomView);
+        if (this._roomView.current) {
+            const roomView = this._roomView.current;
             if (!roomView.ondrop) {
                 roomView.addEventListener('drop', this.onDrop);
                 roomView.addEventListener('dragover', this.onDragOver);
@@ -438,10 +443,10 @@ module.exports = React.createClass({
         // in render() prevents the ref from being set on first mount, so we try and
         // catch the messagePanel when it does mount. Because we only want the ref once,
         // we use a boolean flag to avoid duplicate work.
-        if (this.refs.messagePanel && !this.state.atEndOfLiveTimelineInit) {
+        if (this._messagePanel && !this.state.atEndOfLiveTimelineInit) {
             this.setState({
                 atEndOfLiveTimelineInit: true,
-                atEndOfLiveTimeline: this.refs.messagePanel.isAtEndOfLiveTimeline(),
+                atEndOfLiveTimeline: this._messagePanel.isAtEndOfLiveTimeline(),
             });
         }
     },
@@ -461,12 +466,12 @@ module.exports = React.createClass({
         // stop tracking room changes to format permalinks
         this._stopAllPermalinkCreators();
 
-        if (this.refs.roomView) {
+        if (this._roomView.current) {
             // disconnect the D&D event listeners from the room view. This
             // is really just for hygiene - we're going to be
             // deleted anyway, so it doesn't matter if the event listeners
             // don't get cleaned up.
-            const roomView = ReactDOM.findDOMNode(this.refs.roomView);
+            const roomView = this._roomView.current;
             roomView.removeEventListener('drop', this.onDrop);
             roomView.removeEventListener('dragover', this.onDragOver);
             roomView.removeEventListener('dragleave', this.onDragLeaveOrEnd);
@@ -478,11 +483,13 @@ module.exports = React.createClass({
             MatrixClientPeg.get().removeListener("Room.timeline", this.onRoomTimeline);
             MatrixClientPeg.get().removeListener("Room.name", this.onRoomName);
             MatrixClientPeg.get().removeListener("Room.accountData", this.onRoomAccountData);
+            MatrixClientPeg.get().removeListener("RoomState.events", this.onRoomStateEvents);
             MatrixClientPeg.get().removeListener("Room.myMembership", this.onMyMembership);
             MatrixClientPeg.get().removeListener("RoomState.members", this.onRoomStateMember);
             MatrixClientPeg.get().removeListener("accountData", this.onAccountData);
             MatrixClientPeg.get().removeListener("crypto.keyBackupStatus", this.onKeyBackupStatus);
             MatrixClientPeg.get().removeListener("deviceVerificationChanged", this.onDeviceVerificationChanged);
+            MatrixClientPeg.get().removeListener("userTrustStatusChanged", this.onUserVerificationChanged);
         }
 
         window.removeEventListener('beforeunload', this.onPageUnload);
@@ -522,15 +529,15 @@ module.exports = React.createClass({
         let handled = false;
         const ctrlCmdOnly = isOnlyCtrlOrCmdKeyEvent(ev);
 
-        switch (ev.keyCode) {
-            case KeyCode.KEY_D:
+        switch (ev.key) {
+            case Key.D:
                 if (ctrlCmdOnly) {
                     this.onMuteAudioClick();
                     handled = true;
                 }
                 break;
 
-            case KeyCode.KEY_E:
+            case Key.E:
                 if (ctrlCmdOnly) {
                     this.onMuteVideoClick();
                     handled = true;
@@ -546,6 +553,10 @@ module.exports = React.createClass({
 
     onAction: function(payload) {
         switch (payload.action) {
+            case 'after_right_panel_phase_change':
+                // We don't keep state on the right panel, so just re-render to update
+                this.forceUpdate();
+                break;
             case 'message_send_failed':
             case 'message_sent':
                 this._checkIfAlone(this.state.room);
@@ -557,7 +568,7 @@ module.exports = React.createClass({
                   payload.data.description || payload.data.name);
               break;
             case 'picture_snapshot':
-                return ContentMessages.sharedInstance().sendContentListToRoom(
+                ContentMessages.sharedInstance().sendContentListToRoom(
                     [payload.file], this.state.room.roomId, MatrixClientPeg.get(),
                 );
                 break;
@@ -597,6 +608,27 @@ module.exports = React.createClass({
                 this.setState({
                     showApps: payload.show,
                 });
+                break;
+            case 'reply_to_event':
+                if (this.state.searchResults && payload.event.getRoomId() === this.state.roomId && !this.unmounted) {
+                    this.onCancelSearchClick();
+                }
+                break;
+            case 'quote':
+                if (this.state.searchResults) {
+                    const roomId = payload.event.getRoomId();
+                    if (roomId === this.state.roomId) {
+                        this.onCancelSearchClick();
+                    }
+
+                    setImmediate(() => {
+                        dis.dispatch({
+                            action: 'view_room',
+                            room_id: roomId,
+                            deferred_action: payload,
+                        });
+                    });
+                }
                 break;
         }
     },
@@ -658,10 +690,10 @@ module.exports = React.createClass({
     },
 
     canResetTimeline: function() {
-        if (!this.refs.messagePanel) {
+        if (!this._messagePanel) {
             return true;
         }
-        return this.refs.messagePanel.canResetTimeline();
+        return this._messagePanel.canResetTimeline();
     },
 
     // called when state.room is first initialised (either at initial load,
@@ -672,6 +704,7 @@ module.exports = React.createClass({
         this._loadMembersIfJoined(room);
         this._calculateRecommendedVersion(room);
         this._updateE2EStatus(room);
+        this._updatePermissions(room);
     },
 
     _calculateRecommendedVersion: async function(room) {
@@ -743,11 +776,20 @@ module.exports = React.createClass({
         this._updateE2EStatus(room);
     },
 
-    _updateE2EStatus: function(room) {
-        if (!MatrixClientPeg.get().isRoomEncrypted(room.roomId)) {
+    onUserVerificationChanged: function(userId, _trustStatus) {
+        const room = this.state.room;
+        if (!room || !room.currentState.getMember(userId)) {
             return;
         }
-        if (!MatrixClientPeg.get().isCryptoEnabled()) {
+        this._updateE2EStatus(room);
+    },
+
+    _updateE2EStatus: async function(room) {
+        const cli = MatrixClientPeg.get();
+        if (!cli.isRoomEncrypted(room.roomId)) {
+            return;
+        }
+        if (!cli.isCryptoEnabled()) {
             // If crypto is not currently enabled, we aren't tracking devices at all,
             // so we don't know what the answer is. Let's error on the safe side and show
             // a warning for this case.
@@ -756,10 +798,50 @@ module.exports = React.createClass({
             });
             return;
         }
-        room.hasUnverifiedDevices().then((hasUnverifiedDevices) => {
-            this.setState({
-                e2eStatus: hasUnverifiedDevices ? "warning" : "verified",
+        if (!SettingsStore.isFeatureEnabled("feature_cross_signing")) {
+            room.hasUnverifiedDevices().then((hasUnverifiedDevices) => {
+                this.setState({
+                    e2eStatus: hasUnverifiedDevices ? "warning" : "verified",
+                });
             });
+            debuglog("e2e check is warning/verified only as cross-signing is off");
+            return;
+        }
+
+        // Duplication between here and _updateE2eStatus in RoomTile
+        /* At this point, the user has encryption on and cross-signing on */
+        const e2eMembers = await room.getEncryptionTargetMembers();
+        const verified = [];
+        const unverified = [];
+        e2eMembers.map(({userId}) => userId)
+            .filter((userId) => userId !== cli.getUserId())
+            .forEach((userId) => {
+                (cli.checkUserTrust(userId).isCrossSigningVerified() ?
+                verified : unverified).push(userId)
+            });
+
+        debuglog("e2e verified", verified, "unverified", unverified);
+
+        /* Check all verified user devices. */
+        /* Don't alarm if no other users are verified  */
+        const targets = (verified.length > 0) ? [...verified, cli.getUserId()] : verified;
+        for (const userId of targets) {
+            const devices = await cli.getStoredDevicesForUser(userId);
+            const anyDeviceNotVerified = devices.some(({deviceId}) => {
+                return !cli.checkDeviceTrust(userId, deviceId).isVerified();
+            });
+            if (anyDeviceNotVerified) {
+                this.setState({
+                    e2eStatus: "warning",
+                });
+                debuglog("e2e status set to warning as not all users trust all of their sessions." +
+                         " Aborted on user", userId);
+                return;
+            }
+        }
+
+        this.setState({
+            e2eStatus: unverified.length === 0 ? "verified" : "normal",
         });
     },
 
@@ -795,6 +877,15 @@ module.exports = React.createClass({
         }
     },
 
+    onRoomStateEvents: function(ev, state) {
+        // ignore if we don't have a room yet
+        if (!this.state.room || this.state.room.roomId !== state.roomId) {
+            return;
+        }
+
+        this._updatePermissions(this.state.room);
+    },
+
     onRoomStateMember: function(ev, state, member) {
         // ignore if we don't have a room yet
         if (!this.state.room) {
@@ -813,12 +904,23 @@ module.exports = React.createClass({
         if (room.roomId === this.state.roomId) {
             this.forceUpdate();
             this._loadMembersIfJoined(room);
+            this._updatePermissions(room);
+        }
+    },
+
+    _updatePermissions: function(room) {
+        if (room) {
+            const me = MatrixClientPeg.get().getUserId();
+            const canReact = room.getMyMembership() === "join" && room.currentState.maySendEvent("m.reaction", me);
+            const canReply = room.maySendMessage();
+
+            this.setState({canReact, canReply});
         }
     },
 
     // rate limited because a power level change will emit an event for every
     // member in the room.
-    _updateRoomMembers: new rate_limited_func(function(dueToMember) {
+    _updateRoomMembers: rate_limited_func(function(dueToMember) {
         // a member state changed in this room
         // refresh the conf call notification state
         this._updateConfCallNotification();
@@ -982,7 +1084,7 @@ module.exports = React.createClass({
     },
 
     onMessageListScroll: function(ev) {
-        if (this.refs.messagePanel.isAtEndOfLiveTimeline()) {
+        if (this._messagePanel.isAtEndOfLiveTimeline()) {
             this.setState({
                 numUnreadMessages: 0,
                 atEndOfLiveTimeline: true,
@@ -1037,7 +1139,7 @@ module.exports = React.createClass({
         }
 
         ContentMessages.sharedInstance().sendStickerContentToRoom(url, this.state.room.roomId, info, text, MatrixClientPeg.get())
-            .done(undefined, (error) => {
+            .then(undefined, (error) => {
                 if (error.name === "UnknownDeviceError") {
                     // Let the staus bar handle this
                     return;
@@ -1055,8 +1157,8 @@ module.exports = React.createClass({
 
         // if we already have a search panel, we need to tell it to forget
         // about its scroll state.
-        if (this.refs.searchResultsPanel) {
-            this.refs.searchResultsPanel.resetScrollState();
+        if (this._searchResultsPanel.current) {
+            this._searchResultsPanel.current.resetScrollState();
         }
 
         // make sure that we don't end up showing results from
@@ -1065,23 +1167,12 @@ module.exports = React.createClass({
         // todo: should cancel any previous search requests.
         this.searchId = new Date().getTime();
 
-        let filter;
-        if (scope === "Room") {
-            filter = {
-                // XXX: it's unintuitive that the filter for searching doesn't have the same shape as the v2 filter API :(
-                rooms: [
-                    this.state.room.roomId,
-                ],
-            };
-        }
+        let roomId;
+        if (scope === "Room") roomId = this.state.room.roomId;
 
         debuglog("sending search request");
-
-        const searchPromise = MatrixClientPeg.get().searchRoomEvents({
-            filter: filter,
-            term: term,
-        });
-        this._handleSearchResult(searchPromise).done();
+        const searchPromise = eventSearch(term, roomId);
+        this._handleSearchResult(searchPromise);
     },
 
     _handleSearchResult: function(searchPromise) {
@@ -1172,7 +1263,7 @@ module.exports = React.createClass({
         // once dynamic content in the search results load, make the scrollPanel check
         // the scroll offsets.
         const onHeightChanged = () => {
-            const scrollPanel = this.refs.searchResultsPanel;
+            const scrollPanel = this._searchResultsPanel.current;
             if (scrollPanel) {
                 scrollPanel.checkScroll();
             }
@@ -1187,7 +1278,7 @@ module.exports = React.createClass({
             const roomId = mxEv.getRoomId();
             const room = cli.getRoom(roomId);
 
-            if (!EventTile.haveTileForEvent(mxEv)) {
+            if (!haveTileForEvent(mxEv)) {
                 // XXX: can this ever happen? It will make the result count
                 // not match the displayed count.
                 continue;
@@ -1252,7 +1343,7 @@ module.exports = React.createClass({
     },
 
     onForgetClick: function() {
-        MatrixClientPeg.get().forget(this.state.room.roomId).done(function() {
+        MatrixClientPeg.get().forget(this.state.room.roomId).then(function() {
             dis.dispatch({ action: 'view_next_room' });
         }, function(err) {
             const errCode = err.errcode || _t("unknown error code");
@@ -1269,7 +1360,7 @@ module.exports = React.createClass({
         this.setState({
             rejecting: true,
         });
-        MatrixClientPeg.get().leave(this.state.roomId).done(function() {
+        MatrixClientPeg.get().leave(this.state.roomId).then(function() {
             dis.dispatch({ action: 'view_next_room' });
             self.setState({
                 rejecting: false,
@@ -1289,6 +1380,41 @@ module.exports = React.createClass({
                 rejectError: error,
             });
         });
+    },
+
+    onRejectAndIgnoreClick: async function() {
+        this.setState({
+            rejecting: true,
+        });
+
+        const cli = MatrixClientPeg.get();
+        try {
+            const myMember = this.state.room.getMember(cli.getUserId());
+            const inviteEvent = myMember.events.member;
+            const ignoredUsers = MatrixClientPeg.get().getIgnoredUsers();
+            ignoredUsers.push(inviteEvent.getSender()); // de-duped internally in the js-sdk
+            await cli.setIgnoredUsers(ignoredUsers);
+
+            await cli.leave(this.state.roomId);
+            dis.dispatch({ action: 'view_next_room' });
+            this.setState({
+                rejecting: false,
+            });
+        } catch (error) {
+            console.error("Failed to reject invite: %s", error);
+
+            const msg = error.message ? error.message : JSON.stringify(error);
+            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+            Modal.createTrackedDialog('Failed to reject invite', '', ErrorDialog, {
+                title: _t("Failed to reject invite"),
+                description: msg,
+            });
+
+            self.setState({
+                rejecting: false,
+                rejectError: error,
+            });
+        }
     },
 
     onRejectThreepidInviteButtonClicked: function(ev) {
@@ -1317,28 +1443,28 @@ module.exports = React.createClass({
 
     // jump down to the bottom of this room, where new events are arriving
     jumpToLiveTimeline: function() {
-        this.refs.messagePanel.jumpToLiveTimeline();
+        this._messagePanel.jumpToLiveTimeline();
         dis.dispatch({action: 'focus_composer'});
     },
 
     // jump up to wherever our read marker is
     jumpToReadMarker: function() {
-        this.refs.messagePanel.jumpToReadMarker();
+        this._messagePanel.jumpToReadMarker();
     },
 
     // update the read marker to match the read-receipt
     forgetReadMarker: function(ev) {
         ev.stopPropagation();
-        this.refs.messagePanel.forgetReadMarker();
+        this._messagePanel.forgetReadMarker();
     },
 
     // decide whether or not the top 'unread messages' bar should be shown
     _updateTopUnreadMessagesBar: function() {
-        if (!this.refs.messagePanel) {
+        if (!this._messagePanel) {
             return;
         }
 
-        const showBar = this.refs.messagePanel.canJumpToReadMarker();
+        const showBar = this._messagePanel.canJumpToReadMarker();
         if (this.state.showTopUnreadMessagesBar != showBar) {
             this.setState({showTopUnreadMessagesBar: showBar});
         }
@@ -1348,7 +1474,7 @@ module.exports = React.createClass({
     // restored when we switch back to it.
     //
     _getScrollState: function() {
-        const messagePanel = this.refs.messagePanel;
+        const messagePanel = this._messagePanel;
         if (!messagePanel) return null;
 
         // if we're following the live timeline, we want to return null; that
@@ -1365,7 +1491,8 @@ module.exports = React.createClass({
 
         const scrollState = messagePanel.getScrollState();
 
-        if (scrollState.stuckAtBottom) {
+        // getScrollState on TimelinePanel *may* return null, so guard against that
+        if (!scrollState || scrollState.stuckAtBottom) {
             // we don't really expect to be in this state, but it will
             // occasionally happen when no scroll state has been set on the
             // messagePanel (ie, we didn't have an initial event (so it's
@@ -1452,10 +1579,10 @@ module.exports = React.createClass({
      */
     handleScrollKey: function(ev) {
         let panel;
-        if (this.refs.searchResultsPanel) {
-            panel = this.refs.searchResultsPanel;
-        } else if (this.refs.messagePanel) {
-            panel = this.refs.messagePanel;
+        if (this._searchResultsPanel.current) {
+            panel = this._searchResultsPanel.current;
+        } else if (this._messagePanel) {
+            panel = this._messagePanel;
         }
 
         if (panel) {
@@ -1476,7 +1603,7 @@ module.exports = React.createClass({
     // this has to be a proper method rather than an unnamed function,
     // otherwise react calls it with null on each update.
     _gatherTimelinePanelRef: function(r) {
-        this.refs.messagePanel = r;
+        this._messagePanel = r;
         if (r) {
             console.log("updateTint from RoomView._gatherTimelinePanelRef");
             this.updateTint();
@@ -1504,7 +1631,6 @@ module.exports = React.createClass({
 
     render: function() {
         const RoomHeader = sdk.getComponent('rooms.RoomHeader');
-        const MessageComposer = sdk.getComponent('rooms.MessageComposer');
         const ForwardMessage = sdk.getComponent("rooms.ForwardMessage");
         const AuxPanel = sdk.getComponent("rooms.AuxPanel");
         const SearchBar = sdk.getComponent("rooms.SearchBar");
@@ -1515,18 +1641,23 @@ module.exports = React.createClass({
         const TimelinePanel = sdk.getComponent("structures.TimelinePanel");
         const RoomUpgradeWarningBar = sdk.getComponent("rooms.RoomUpgradeWarningBar");
         const RoomRecoveryReminder = sdk.getComponent("rooms.RoomRecoveryReminder");
+        const ErrorBoundary = sdk.getComponent("elements.ErrorBoundary");
 
         if (!this.state.room) {
             const loading = this.state.roomLoading || this.state.peekLoading;
             if (loading) {
                 return (
                     <div className="mx_RoomView">
-                        <RoomPreviewBar
-                            canPreview={false}
-                            error={this.state.roomLoadError}
-                            loading={loading}
-                            joining={this.state.joining}
-                        />
+                        <ErrorBoundary>
+                            <RoomPreviewBar
+                                canPreview={false}
+                                previewLoading={this.state.peekLoading}
+                                error={this.state.roomLoadError}
+                                loading={loading}
+                                joining={this.state.joining}
+                                oobData={this.props.oobData}
+                            />
+                        </ErrorBoundary>
                     </div>
                 );
             } else {
@@ -1544,18 +1675,20 @@ module.exports = React.createClass({
                 const roomAlias = this.state.roomAlias;
                 return (
                     <div className="mx_RoomView">
-                        <RoomPreviewBar onJoinClick={this.onJoinButtonClicked}
-                            onForgetClick={this.onForgetClick}
-                            onRejectClick={this.onRejectThreepidInviteButtonClicked}
-                            canPreview={false} error={this.state.roomLoadError}
-                            roomAlias={roomAlias}
-                            joining={this.state.joining}
-                            inviterName={inviterName}
-                            invitedEmail={invitedEmail}
-                            oobData={this.props.oobData}
-                            signUrl={this.props.thirdPartyInvite ? this.props.thirdPartyInvite.inviteSignUrl : null}
-                            room={this.state.room}
-                        />
+                        <ErrorBoundary>
+                            <RoomPreviewBar onJoinClick={this.onJoinButtonClicked}
+                                onForgetClick={this.onForgetClick}
+                                onRejectClick={this.onRejectThreepidInviteButtonClicked}
+                                canPreview={false} error={this.state.roomLoadError}
+                                roomAlias={roomAlias}
+                                joining={this.state.joining}
+                                inviterName={inviterName}
+                                invitedEmail={invitedEmail}
+                                oobData={this.props.oobData}
+                                signUrl={this.props.thirdPartyInvite ? this.props.thirdPartyInvite.inviteSignUrl : null}
+                                room={this.state.room}
+                            />
+                        </ErrorBoundary>
                     </div>
                 );
             }
@@ -1565,12 +1698,14 @@ module.exports = React.createClass({
         if (myMembership == 'invite') {
             if (this.state.joining || this.state.rejecting) {
                 return (
-                    <RoomPreviewBar
+                    <ErrorBoundary>
+                        <RoomPreviewBar
                             canPreview={false}
                             error={this.state.roomLoadError}
                             joining={this.state.joining}
                             rejecting={this.state.rejecting}
                         />
+                    </ErrorBoundary>
                 );
             } else {
                 const myUserId = MatrixClientPeg.get().credentials.userId;
@@ -1585,14 +1720,18 @@ module.exports = React.createClass({
                 // We have a regular invite for this room.
                 return (
                     <div className="mx_RoomView">
-                        <RoomPreviewBar onJoinClick={this.onJoinButtonClicked}
-                            onForgetClick={this.onForgetClick}
-                            onRejectClick={this.onRejectButtonClicked}
-                            inviterName={inviterName}
-                            canPreview={false}
-                            joining={this.state.joining}
-                            room={this.state.room}
-                        />
+                        <ErrorBoundary>
+                            <RoomPreviewBar
+                                onJoinClick={this.onJoinButtonClicked}
+                                onForgetClick={this.onForgetClick}
+                                onRejectClick={this.onRejectButtonClicked}
+                                onRejectAndIgnoreClick={this.onRejectAndIgnoreClick}
+                                inviterName={inviterName}
+                                canPreview={false}
+                                joining={this.state.joining}
+                                room={this.state.room}
+                            />
+                        </ErrorBoundary>
                     </div>
                 );
             }
@@ -1650,12 +1789,12 @@ module.exports = React.createClass({
         let aux = null;
         let previewBar;
         let hideCancel = false;
-        let hideRightPanel = false;
+        let forceHideRightPanel = false;
         if (this.state.forwardingEvent !== null) {
             aux = <ForwardMessage onCancelClick={this.onCancelClick} />;
         } else if (this.state.searching) {
             hideCancel = true; // has own cancel
-            aux = <SearchBar ref="search_bar" searchInProgress={this.state.searchInProgress} onCancelClick={this.onCancelSearchClick} onSearch={this.onSearch} />;
+            aux = <SearchBar searchInProgress={this.state.searchInProgress} onCancelClick={this.onCancelSearchClick} onSearch={this.onSearch} />;
         } else if (showRoomUpgradeBar) {
             aux = <RoomUpgradeWarningBar room={this.state.room} recommendation={roomVersionRecommendation} />;
             hideCancel = true;
@@ -1696,7 +1835,7 @@ module.exports = React.createClass({
                     </div>
                 );
             } else {
-                hideRightPanel = true;
+                forceHideRightPanel = true;
             }
         } else if (hiddenHighlightCount > 0) {
             aux = (
@@ -1711,7 +1850,7 @@ module.exports = React.createClass({
         }
 
         const auxPanel = (
-            <AuxPanel ref="auxPanel" room={this.state.room}
+            <AuxPanel room={this.state.room}
               fullHeight={false}
               userId={MatrixClientPeg.get().credentials.userId}
               conferenceHandler={this.props.ConferenceHandler}
@@ -1730,6 +1869,7 @@ module.exports = React.createClass({
             myMembership === 'join' && !this.state.searchResults
         );
         if (canSpeak) {
+            const MessageComposer = sdk.getComponent('rooms.MessageComposer');
             messageComposer =
                 <MessageComposer
                     room={this.state.room}
@@ -1797,7 +1937,7 @@ module.exports = React.createClass({
                 searchResultsPanel = (<div className="mx_RoomView_messagePanel mx_RoomView_messagePanelSearchSpinner" />);
             } else {
                 searchResultsPanel = (
-                    <ScrollPanel ref="searchResultsPanel"
+                    <ScrollPanel ref={this._searchResultsPanel}
                         className="mx_RoomView_messagePanel mx_RoomView_searchResultsPanel"
                         onFillRequest={this.onSearchResultsFillRequest}
                         resizeNotifier={this.props.resizeNotifier}
@@ -1818,9 +1958,10 @@ module.exports = React.createClass({
             highlightedEventId = this.state.initialEventId;
         }
 
-        // console.log("ShowUrlPreview for %s is %s", this.state.room.roomId, this.state.showUrlPreview);
+        // console.info("ShowUrlPreview for %s is %s", this.state.room.roomId, this.state.showUrlPreview);
         const messagePanel = (
-            <TimelinePanel ref={this._gatherTimelinePanelRef}
+            <TimelinePanel
+                ref={this._gatherTimelinePanelRef}
                 timelineSet={this.state.room.getUnfilteredTimelineSet()}
                 showReadReceipts={SettingsStore.getValue('showReadReceipts')}
                 manageReadReceipts={!this.state.isPeeking}
@@ -1840,7 +1981,8 @@ module.exports = React.createClass({
             />);
 
         let topUnreadMessagesBar = null;
-        if (this.state.showTopUnreadMessagesBar) {
+        // Do not show TopUnreadMessagesBar if we have search results showing, it makes no sense
+        if (this.state.showTopUnreadMessagesBar && !this.state.searchResults) {
             const TopUnreadMessagesBar = sdk.getComponent('rooms.TopUnreadMessagesBar');
             topUnreadMessagesBar = (<TopUnreadMessagesBar
                                        onScrollUpClick={this.jumpToReadMarker}
@@ -1848,7 +1990,8 @@ module.exports = React.createClass({
                                     />);
         }
         let jumpToBottom;
-        if (!this.state.atEndOfLiveTimeline) {
+        // Do not show JumpToBottomButton if we have search results showing, it makes no sense
+        if (!this.state.atEndOfLiveTimeline && !this.state.searchResults) {
             const JumpToBottomButton = sdk.getComponent('rooms.JumpToBottomButton');
             jumpToBottom = (<JumpToBottomButton
                 numUnreadMessages={this.state.numUnreadMessages}
@@ -1869,48 +2012,54 @@ module.exports = React.createClass({
             },
         );
 
-        const rightPanel = !hideRightPanel && this.state.room &&
-            <RightPanel roomId={this.state.room.roomId} resizeNotifier={this.props.resizeNotifier} />;
-        const collapsedRhs = hideRightPanel || this.props.collapsedRhs;
+        const showRightPanel = !forceHideRightPanel && this.state.room
+            && RightPanelStore.getSharedInstance().isOpenForRoom;
+        const rightPanel = showRightPanel
+            ? <RightPanel roomId={this.state.room.roomId} resizeNotifier={this.props.resizeNotifier} />
+            : null;
 
         return (
-            <main className={"mx_RoomView" + (inCall ? " mx_RoomView_inCall" : "")} ref="roomView">
-                <RoomHeader ref="header" room={this.state.room} searchInfo={searchInfo}
-                    oobData={this.props.oobData}
-                    inRoom={myMembership === 'join'}
-                    collapsedRhs={collapsedRhs}
-                    onSearchClick={this.onSearchClick}
-                    onSettingsClick={this.onSettingsClick}
-                    onPinnedClick={this.onPinnedClick}
-                    onCancelClick={(aux && !hideCancel) ? this.onCancelClick : null}
-                    onForgetClick={(myMembership === "leave") ? this.onForgetClick : null}
-                    onLeaveClick={(myMembership === "join") ? this.onLeaveClick : null}
-                    e2eStatus={this.state.e2eStatus}
-                />
-                <MainSplit
-                    panel={rightPanel}
-                    collapsedRhs={collapsedRhs}
-                    resizeNotifier={this.props.resizeNotifier}
-                >
-                    <div className={fadableSectionClasses}>
-                        { auxPanel }
-                        <div className="mx_RoomView_timeline">
-                            { topUnreadMessagesBar }
-                            { jumpToBottom }
-                            { messagePanel }
-                            { searchResultsPanel }
-                        </div>
-                        <div className={statusBarAreaClass}>
-                            <div className="mx_RoomView_statusAreaBox">
-                                <div className="mx_RoomView_statusAreaBox_line"></div>
-                                { statusBar }
+            <RoomContext.Provider value={this.state}>
+                <main className={"mx_RoomView" + (inCall ? " mx_RoomView_inCall" : "")} ref={this._roomView}>
+                    <ErrorBoundary>
+                        <RoomHeader
+                            room={this.state.room}
+                            searchInfo={searchInfo}
+                            oobData={this.props.oobData}
+                            inRoom={myMembership === 'join'}
+                            onSearchClick={this.onSearchClick}
+                            onSettingsClick={this.onSettingsClick}
+                            onPinnedClick={this.onPinnedClick}
+                            onCancelClick={(aux && !hideCancel) ? this.onCancelClick : null}
+                            onForgetClick={(myMembership === "leave") ? this.onForgetClick : null}
+                            onLeaveClick={(myMembership === "join") ? this.onLeaveClick : null}
+                            e2eStatus={this.state.e2eStatus}
+                        />
+                        <MainSplit
+                            panel={rightPanel}
+                            resizeNotifier={this.props.resizeNotifier}
+                        >
+                            <div className={fadableSectionClasses}>
+                                {auxPanel}
+                                <div className="mx_RoomView_timeline">
+                                    {topUnreadMessagesBar}
+                                    {jumpToBottom}
+                                    {messagePanel}
+                                    {searchResultsPanel}
+                                </div>
+                                <div className={statusBarAreaClass}>
+                                    <div className="mx_RoomView_statusAreaBox">
+                                        <div className="mx_RoomView_statusAreaBox_line" />
+                                        {statusBar}
+                                    </div>
+                                </div>
+                                {previewBar}
+                                {messageComposer}
                             </div>
-                        </div>
-                        { previewBar }
-                        { messageComposer }
-                    </div>
-                </MainSplit>
-            </main>
+                        </MainSplit>
+                    </ErrorBoundary>
+                </main>
+            </RoomContext.Provider>
         );
     },
 });

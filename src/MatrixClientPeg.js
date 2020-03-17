@@ -1,7 +1,8 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd.
-Copyright 2017 New Vector Ltd
+Copyright 2017, 2018, 2019 New Vector Ltd
+Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,22 +17,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
+import {MatrixClient, MemoryStore} from 'matrix-js-sdk';
 
-import Matrix from 'matrix-js-sdk';
-
-import utils from 'matrix-js-sdk/lib/utils';
-import EventTimeline from 'matrix-js-sdk/lib/models/event-timeline';
-import EventTimelineSet from 'matrix-js-sdk/lib/models/event-timeline-set';
-import sdk from './index';
+import * as utils from 'matrix-js-sdk/src/utils';
+import {EventTimeline} from 'matrix-js-sdk/src/models/event-timeline';
+import {EventTimelineSet} from 'matrix-js-sdk/src/models/event-timeline-set';
+import * as sdk from './index';
 import createMatrixClient from './utils/createMatrixClient';
 import SettingsStore from './settings/SettingsStore';
 import MatrixActionCreators from './actions/MatrixActionCreators';
-import {phasedRollOutExpiredForUser} from "./PhasedRollOut";
 import Modal from './Modal';
-import {verificationMethods} from 'matrix-js-sdk/lib/crypto';
+import {verificationMethods} from 'matrix-js-sdk/src/crypto';
 import MatrixClientBackedSettingsHandler from "./settings/handlers/MatrixClientBackedSettingsHandler";
 import * as StorageManager from './utils/StorageManager';
+import IdentityAuthClient from './IdentityAuthClient';
+import { crossSigningCallbacks } from './CrossSigningManager';
+import {SHOW_QR_CODE_METHOD} from "matrix-js-sdk/src/crypto/verification/QRCode";
 
 interface MatrixClientCreds {
     homeserverUrl: string,
@@ -48,7 +49,7 @@ interface MatrixClientCreds {
  * This module provides a singleton instance of this class so the 'current'
  * Matrix Client object is available easily.
  */
-class MatrixClientPeg {
+class _MatrixClientPeg {
     constructor() {
         this.matrixClient = null;
         this._justRegisteredUserId = null;
@@ -86,7 +87,7 @@ class MatrixClientPeg {
         MatrixActionCreators.stop();
     }
 
-    /*
+    /**
      * If we've registered a user ID we set this to the ID of the
      * user we've just registered. If they then go & log in, we
      * can send them to the welcome user (obviously this doesn't
@@ -98,7 +99,7 @@ class MatrixClientPeg {
         this._justRegisteredUserId = uid;
     }
 
-    /*
+    /**
      * Returns true if the current user has just been registered by this
      * client as determined by setJustRegisteredUserId()
      *
@@ -111,7 +112,7 @@ class MatrixClientPeg {
         );
     }
 
-    /**
+    /*
      * Replace this MatrixClientPeg's client with a client instance that has
      * homeserver / identity server URLs and active credentials
      */
@@ -120,7 +121,7 @@ class MatrixClientPeg {
         this._createClient(creds);
     }
 
-    async start() {
+    async assign() {
         for (const dbType of ['indexeddb', 'memory']) {
             try {
                 const promise = this.matrixClient.store.startup();
@@ -130,8 +131,8 @@ class MatrixClientPeg {
             } catch (err) {
                 if (dbType === 'indexeddb') {
                     console.error('Error starting matrixclient store - falling back to memory store', err);
-                    this.matrixClient.store = new Matrix.MemoryStore({
-                      localStorage: global.localStorage,
+                    this.matrixClient.store = new MemoryStore({
+                        localStorage: global.localStorage,
                     });
                 } else {
                     console.error('Failed to start memory store!', err);
@@ -172,6 +173,12 @@ class MatrixClientPeg {
         MatrixActionCreators.start(this.matrixClient);
         MatrixClientBackedSettingsHandler.matrixClient = this.matrixClient;
 
+        return opts;
+    }
+
+    async start() {
+        const opts = await this.assign();
+
         console.log(`MatrixClientPeg: really starting MatrixClient`);
         await this.get().startClient(opts);
         console.log(`MatrixClientPeg: MatrixClient started`);
@@ -188,12 +195,12 @@ class MatrixClientPeg {
         };
     }
 
-    /**
+    /*
      * Return the server name of the user's homeserver
      * Throws an error if unable to deduce the homeserver name
      * (eg. if the user is not logged in)
      */
-    getHomeServerName() {
+    getHomeserverName() {
         const matches = /^@.+:(.+)$/.exec(this.matrixClient.credentials.userId);
         if (matches === null || matches.length < 1) {
             throw new Error("Failed to derive homeserver name from user ID!");
@@ -202,9 +209,6 @@ class MatrixClientPeg {
     }
 
     _createClient(creds: MatrixClientCreds) {
-        const aggregateRelations = SettingsStore.isFeatureEnabled("feature_reactions");
-        const enableEdits = SettingsStore.isFeatureEnabled("feature_message_editing");
-
         const opts = {
             baseUrl: creds.homeserverUrl,
             idBaseUrl: creds.identityServerUrl,
@@ -213,9 +217,21 @@ class MatrixClientPeg {
             deviceId: creds.deviceId,
             timelineSupport: true,
             forceTURN: !SettingsStore.getValue('webRtcAllowPeerToPeer', false),
-            verificationMethods: [verificationMethods.SAS],
-            unstableClientRelationAggregation: aggregateRelations || enableEdits,
+            fallbackICEServerAllowed: !!SettingsStore.getValue('fallbackICEServerAllowed'),
+            verificationMethods: [
+                verificationMethods.SAS,
+                SHOW_QR_CODE_METHOD,
+                verificationMethods.RECIPROCATE_QR_CODE,
+            ],
+            unstableClientRelationAggregation: true,
+            identityServer: new IdentityAuthClient(),
         };
+
+        opts.cryptoCallbacks = {};
+        // These are always installed regardless of the labs flag so that
+        // cross-signing features can toggle on without reloading and also be
+        // accessed immediately after login.
+        Object.assign(opts.cryptoCallbacks, crossSigningCallbacks);
 
         this.matrixClient = createMatrixClient(opts);
 
@@ -235,6 +251,7 @@ class MatrixClientPeg {
 }
 
 if (!global.mxMatrixClientPeg) {
-    global.mxMatrixClientPeg = new MatrixClientPeg();
+    global.mxMatrixClientPeg = new _MatrixClientPeg();
 }
-export default global.mxMatrixClientPeg;
+
+export const MatrixClientPeg = global.mxMatrixClientPeg;

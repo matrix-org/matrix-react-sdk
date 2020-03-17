@@ -2,6 +2,7 @@
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
 Copyright 2018, 2019 New Vector Ltd
+Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,9 +18,10 @@ limitations under the License.
 */
 
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
-import sdk from '../../../index';
-import Email from '../../../email';
+import * as sdk from '../../../index';
+import * as Email from '../../../email';
 import { looksValid as phoneNumberLooksValid } from '../../../phonenumber';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
@@ -39,7 +41,7 @@ const PASSWORD_MIN_SCORE = 3; // safely unguessable: moderate protection from of
 /**
  * A pure UI component which displays a registration form.
  */
-module.exports = React.createClass({
+export default createReactClass({
     displayName: 'RegistrationForm',
 
     propTypes: {
@@ -54,6 +56,7 @@ module.exports = React.createClass({
         flows: PropTypes.arrayOf(PropTypes.object).isRequired,
         serverConfig: PropTypes.instanceOf(ValidatedServerConfig).isRequired,
         canSubmit: PropTypes.bool,
+        serverRequiresIdServer: PropTypes.bool,
     },
 
     getDefaultProps: function() {
@@ -69,10 +72,10 @@ module.exports = React.createClass({
             fieldValid: {},
             // The ISO2 country code selected in the phone number entry
             phoneCountry: this.props.defaultPhoneCountry,
-            username: "",
-            email: "",
-            phoneNumber: "",
-            password: "",
+            username: this.props.defaultUsername || "",
+            email: this.props.defaultEmail || "",
+            phoneNumber: this.props.defaultPhoneNumber || "",
+            password: this.props.defaultPassword || "",
             passwordConfirm: "",
             passwordComplexity: null,
             passwordSafe: false,
@@ -90,15 +93,26 @@ module.exports = React.createClass({
         }
 
         const self = this;
-        if (this.state.email == '') {
+        if (this.state.email === '') {
+            const haveIs = Boolean(this.props.serverConfig.isUrl);
+
+            let desc;
+            if (this.props.serverRequiresIdServer && !haveIs) {
+                desc = _t(
+                    "No identity server is configured so you cannot add an email address in order to " +
+                    "reset your password in the future.",
+                );
+            } else {
+                desc = _t(
+                    "If you don't specify an email address, you won't be able to reset your password. " +
+                    "Are you sure?",
+                );
+            }
+
             const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
             Modal.createTrackedDialog('If you don\'t specify an email address...', '', QuestionDialog, {
                 title: _t("Warning!"),
-                description:
-                    <div>
-                        { _t("If you don't specify an email address, you won't be able to reset your password. " +
-                            "Are you sure?") }
-                    </div>,
+                description: desc,
                 button: _t("Continue"),
                 onFinished: function(confirmed) {
                     if (confirmed) {
@@ -423,8 +437,32 @@ module.exports = React.createClass({
         });
     },
 
+    _showEmail() {
+        const haveIs = Boolean(this.props.serverConfig.isUrl);
+        if (
+            (this.props.serverRequiresIdServer && !haveIs) ||
+            !this._authStepIsUsed('m.login.email.identity')
+        ) {
+            return false;
+        }
+        return true;
+    },
+
+    _showPhoneNumber() {
+        const threePidLogin = !SdkConfig.get().disable_3pid_login;
+        const haveIs = Boolean(this.props.serverConfig.isUrl);
+        if (
+            !threePidLogin ||
+            (this.props.serverRequiresIdServer && !haveIs) ||
+            !this._authStepIsUsed('m.login.msisdn')
+        ) {
+            return false;
+        }
+        return true;
+    },
+
     renderEmail() {
-        if (!this._authStepIsUsed('m.login.email.identity')) {
+        if (!this._showEmail()) {
             return null;
         }
         const Field = sdk.getComponent('elements.Field');
@@ -436,7 +474,6 @@ module.exports = React.createClass({
             ref={field => this[FIELD_EMAIL] = field}
             type="text"
             label={emailPlaceholder}
-            defaultValue={this.props.defaultEmail}
             value={this.state.email}
             onChange={this.onEmailChange}
             onValidate={this.onEmailValidate}
@@ -449,8 +486,8 @@ module.exports = React.createClass({
             id="mx_RegistrationForm_password"
             ref={field => this[FIELD_PASSWORD] = field}
             type="password"
+            autoComplete="new-password"
             label={_t("Password")}
-            defaultValue={this.props.defaultPassword}
             value={this.state.password}
             onChange={this.onPasswordChange}
             onValidate={this.onPasswordValidate}
@@ -463,8 +500,8 @@ module.exports = React.createClass({
             id="mx_RegistrationForm_passwordConfirm"
             ref={field => this[FIELD_PASSWORD_CONFIRM] = field}
             type="password"
+            autoComplete="new-password"
             label={_t("Confirm")}
-            defaultValue={this.props.defaultPassword}
             value={this.state.passwordConfirm}
             onChange={this.onPasswordConfirmChange}
             onValidate={this.onPasswordConfirmValidate}
@@ -472,8 +509,7 @@ module.exports = React.createClass({
     },
 
     renderPhoneNumber() {
-        const threePidLogin = !SdkConfig.get().disable_3pid_login;
-        if (!threePidLogin || !this._authStepIsUsed('m.login.msisdn')) {
+        if (!this._showPhoneNumber()) {
             return null;
         }
         const CountryDropdown = sdk.getComponent('views.auth.CountryDropdown');
@@ -492,7 +528,6 @@ module.exports = React.createClass({
             ref={field => this[FIELD_PHONE_NUMBER] = field}
             type="text"
             label={phoneLabel}
-            defaultValue={this.props.defaultPhoneNumber}
             value={this.state.phoneNumber}
             prefix={phoneCountry}
             onChange={this.onPhoneNumberChange}
@@ -508,7 +543,6 @@ module.exports = React.createClass({
             type="text"
             autoFocus={true}
             label={_t("Username")}
-            defaultValue={this.props.defaultUsername}
             value={this.state.username}
             onChange={this.onUsernameChange}
             onValidate={this.onUsernameValidate}
@@ -547,6 +581,35 @@ module.exports = React.createClass({
             <input className="mx_Login_submit" type="submit" value={_t("Register")} disabled={!this.props.canSubmit} />
         );
 
+        let emailHelperText = null;
+        if (this._showEmail()) {
+            if (this._showPhoneNumber()) {
+                emailHelperText = <div>
+                    {_t(
+                        "Set an email for account recovery. " +
+                        "Use email or phone to optionally be discoverable by existing contacts.",
+                    )}
+                </div>;
+            } else {
+                emailHelperText = <div>
+                    {_t(
+                        "Set an email for account recovery. " +
+                        "Use email to optionally be discoverable by existing contacts.",
+                    )}
+                </div>;
+            }
+        }
+        const haveIs = Boolean(this.props.serverConfig.isUrl);
+        let noIsText = null;
+        if (this.props.serverRequiresIdServer && !haveIs) {
+            noIsText = <div>
+                {_t(
+                    "No identity server is configured so you cannot add an email address in order to " +
+                    "reset your password in the future.",
+                )}
+            </div>;
+        }
+
         return (
             <div>
                 <h3>
@@ -565,8 +628,8 @@ module.exports = React.createClass({
                         {this.renderEmail()}
                         {this.renderPhoneNumber()}
                     </div>
-                    {_t("Use an email address to recover your account.") + " "}
-                    {_t("Other users can invite you to rooms using your contact details.")}
+                    { emailHelperText }
+                    { noIsText }
                     { registerButton }
                 </form>
             </div>

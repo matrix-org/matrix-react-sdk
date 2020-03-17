@@ -1,5 +1,6 @@
 /*
 Copyright 2017 Vector Creations Ltd
+Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,25 +16,25 @@ limitations under the License.
 */
 
 import React from 'react';
-import PropTypes from 'prop-types';
-import sdk from '../../index';
+import createReactClass from 'create-react-class';
+import * as sdk from '../../index';
 import { _t } from '../../languageHandler';
 import dis from '../../dispatcher';
-import withMatrixClient from '../../wrappers/withMatrixClient';
 import AccessibleButton from '../views/elements/AccessibleButton';
+import MatrixClientContext from "../../contexts/MatrixClientContext";
 
-export default withMatrixClient(React.createClass({
+export default createReactClass({
     displayName: 'MyGroups',
-
-    propTypes: {
-        matrixClient: PropTypes.object.isRequired,
-    },
 
     getInitialState: function() {
         return {
             groups: null,
             error: null,
         };
+    },
+
+    statics: {
+        contextType: MatrixClientContext,
     },
 
     componentWillMount: function() {
@@ -45,7 +46,7 @@ export default withMatrixClient(React.createClass({
     },
 
     _fetch: function() {
-        this.props.matrixClient.getJoinedGroups().done((result) => {
+        this.context.getJoinedGroups().then((result) => {
             this.setState({groups: result.groups, error: null});
         }, (err) => {
             if (err.errcode === 'M_GUEST_ACCESS_FORBIDDEN') {
@@ -146,4 +147,4 @@ export default withMatrixClient(React.createClass({
             </div>
         </div>;
     },
-}));
+});
