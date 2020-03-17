@@ -1,5 +1,5 @@
 /*
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,25 +15,22 @@ limitations under the License.
 */
 
 import WidgetUtils from "../../../utils/WidgetUtils";
-
-const React = require('react');
-import PropTypes from 'prop-types';
-import sdk from "../../../index";
+import * as React from 'react';
+import * as sdk from "../../../index";
 import AppTile from "../elements/AppTile";
-const TextForEvent = require('../../../TextForEvent');
-import MatrixClientPeg from "../../../MatrixClientPeg";
+import {MatrixClientPeg} from "../../../MatrixClientPeg";
 
-export default class MWidgetBody extends React.Component {
-    static propTypes: {
-        mxEvent: PropTypes.object.isRequired, // MatrixEvent
-
-        // Passthroughs for TextualBody
-        highlights: PropTypes.array,
-        highlightLink: PropTypes.string,
-        showUrlPreview: PropTypes.bool,
-        onHeightChanged: PropTypes.func,
-        tileShape: PropTypes.string,
-    };
+export default class MWidgetBody extends React.Component<any, any> {
+    // static propTypes: {
+    //     mxEvent: PropTypes.object.isRequired, // MatrixEvent
+    //
+    //     // Passthroughs for TextualBody
+    //     highlights: PropTypes.array,
+    //     highlightLink: PropTypes.string,
+    //     showUrlPreview: PropTypes.bool,
+    //     onHeightChanged: PropTypes.func,
+    //     tileShape: PropTypes.string,
+    // };
 
     renderAsText() {
         const TextualBody = sdk.getComponent("messages.TextualBody");
@@ -66,11 +63,9 @@ export default class MWidgetBody extends React.Component {
         }
         if (!widgetUrl) return this.renderAsText();
 
-        const AppTile = sdk.getComponent("elements.AppTile");
-
         // XXX: Is this a secure enough widget ID?
         return <AppTile
-            id={this.props.mxEvent.getRoomId()+ "_" + this.props.mxEvent.getId()}
+            id={this.props.mxEvent.getRoomId() + "_" + this.props.mxEvent.getId()}
             url={widgetUrl}
             name={widgetInfo['name'] || "Widget"}
             room={MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId())}

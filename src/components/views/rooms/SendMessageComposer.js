@@ -42,6 +42,8 @@ import {_t, _td} from '../../../languageHandler';
 import ContentMessages from '../../../ContentMessages';
 import {Key} from "../../../Keyboard";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import WidgetUtils from "../../../utils/WidgetUtils";
+import SettingsStore from "../../../settings/SettingsStore";
 
 function addReplyToMessageContent(content, repliedToEvent, permalinkCreator) {
     const replyContent = ReplyThread.makeReplyMixIn(repliedToEvent);
@@ -247,6 +249,15 @@ export default class SendMessageComposer extends React.Component {
         }
 
         let shouldSend = true;
+
+        const inlineWidget = startsWith(this.model, "https://")
+            ? WidgetUtils.tryConvertInputToInlineWidget(textSerialize(this.model))
+            : null;
+        if (inlineWidget && SettingsStore.isFeatureEnabled("feature_inline_widgets")) {
+            console.log("Message can be an inline widget - sending widget");
+            this.context.sendMessage(this.props.room.roomId, inlineWidget);
+            shouldSend = false;
+        }
 
         if (!containsEmote(this.model) && this._isSlashCommand()) {
             const [cmd, commandText] = this._getSlashCommand();
