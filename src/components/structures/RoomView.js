@@ -131,6 +131,8 @@ export default createReactClass({
             isAlone: false,
             isPeeking: false,
             showingPinned: false,
+            showReadReceipts: true,
+            showRightPanel: RightPanelStore.getSharedInstance().isOpenForRoom,
 
             // error object, as from the matrix client/server API
             // If we failed to load information about the room,
@@ -176,12 +178,21 @@ export default createReactClass({
         MatrixClientPeg.get().on("userTrustStatusChanged", this.onUserVerificationChanged);
         // Start listening for RoomViewStore updates
         this._roomStoreToken = RoomViewStore.addListener(this._onRoomViewStoreUpdate);
+        this._rightPanelStoreToken = RightPanelStore.getSharedInstance().addListener(this._onRightPanelStoreUpdate);
         this._onRoomViewStoreUpdate(true);
 
         WidgetEchoStore.on('update', this._onWidgetEchoStoreUpdate);
+        this._showReadReceiptsWatchRef = SettingsStore.watchSetting("showReadReceipts", null,
+            this._onReadReceiptsChange);
 
         this._roomView = createRef();
         this._searchResultsPanel = createRef();
+    },
+
+    _onReadReceiptsChange: function() {
+        this.setState({
+            showReadReceipts: SettingsStore.getValue("showReadReceipts", this.state.roomId),
+        });
     },
 
     _onRoomViewStoreUpdate: function(initial) {
@@ -204,8 +215,10 @@ export default createReactClass({
             return;
         }
 
+        const roomId = RoomViewStore.getRoomId();
+
         const newState = {
-            roomId: RoomViewStore.getRoomId(),
+            roomId,
             roomAlias: RoomViewStore.getRoomAlias(),
             roomLoading: RoomViewStore.isRoomLoading(),
             roomLoadError: RoomViewStore.getRoomLoadError(),
@@ -214,7 +227,8 @@ export default createReactClass({
             isInitialEventHighlighted: RoomViewStore.isInitialEventHighlighted(),
             forwardingEvent: RoomViewStore.getForwardingEvent(),
             shouldPeek: RoomViewStore.shouldPeek(),
-            showingPinned: SettingsStore.getValue("PinnedEvents.isOpen", RoomViewStore.getRoomId()),
+            showingPinned: SettingsStore.getValue("PinnedEvents.isOpen", roomId),
+            showReadReceipts: SettingsStore.getValue("showReadReceipts", roomId),
         };
 
         // Temporary logging to diagnose https://github.com/vector-im/riot-web/issues/4307
@@ -405,21 +419,6 @@ export default createReactClass({
         this.onResize();
 
         document.addEventListener("keydown", this.onKeyDown);
-
-        // XXX: EVIL HACK to autofocus inviting on empty rooms.
-        // We use the setTimeout to avoid racing with focus_composer.
-        if (this.state.room &&
-            this.state.room.getJoinedMemberCount() == 1 &&
-            this.state.room.getLiveTimeline() &&
-            this.state.room.getLiveTimeline().getEvents() &&
-            this.state.room.getLiveTimeline().getEvents().length <= 6) {
-            const inviteBox = document.getElementById("mx_SearchableEntityList_query");
-            setTimeout(function() {
-                if (inviteBox) {
-                    inviteBox.focus();
-                }
-            }, 50);
-        }
     },
 
     shouldComponentUpdate: function(nextProps, nextState) {
@@ -503,8 +502,17 @@ export default createReactClass({
         if (this._roomStoreToken) {
             this._roomStoreToken.remove();
         }
+        // Remove RightPanelStore listener
+        if (this._rightPanelStoreToken) {
+            this._rightPanelStoreToken.remove();
+        }
 
         WidgetEchoStore.removeListener('update', this._onWidgetEchoStoreUpdate);
+
+        if (this._showReadReceiptsWatchRef) {
+            SettingsStore.unwatchSetting(this._showReadReceiptsWatchRef);
+            this._showReadReceiptsWatchRef = null;
+        }
 
         // cancel any pending calls to the rate_limited_funcs
         this._updateRoomMembers.cancelPendingCall();
@@ -512,6 +520,12 @@ export default createReactClass({
         // no need to do this as Dir & Settings are now overlays. It just burnt CPU.
         // console.log("Tinter.tint from RoomView.unmount");
         // Tinter.tint(); // reset colourscheme
+    },
+
+    _onRightPanelStoreUpdate: function() {
+        this.setState({
+            showRightPanel: RightPanelStore.getSharedInstance().isOpenForRoom,
+        });
     },
 
     onPageUnload(event) {
@@ -553,10 +567,6 @@ export default createReactClass({
 
     onAction: function(payload) {
         switch (payload.action) {
-            case 'after_right_panel_phase_change':
-                // We don't keep state on the right panel, so just re-render to update
-                this.forceUpdate();
-                break;
             case 'message_send_failed':
             case 'message_sent':
                 this._checkIfAlone(this.state.room);
@@ -1963,7 +1973,7 @@ export default createReactClass({
             <TimelinePanel
                 ref={this._gatherTimelinePanelRef}
                 timelineSet={this.state.room.getUnfilteredTimelineSet()}
-                showReadReceipts={SettingsStore.getValue('showReadReceipts')}
+                showReadReceipts={this.state.showReadReceipts}
                 manageReadReceipts={!this.state.isPeeking}
                 manageReadMarkers={!this.state.isPeeking}
                 hidden={hideMessagePanel}
@@ -2012,11 +2022,14 @@ export default createReactClass({
             },
         );
 
-        const showRightPanel = !forceHideRightPanel && this.state.room
-            && RightPanelStore.getSharedInstance().isOpenForRoom;
+        const showRightPanel = !forceHideRightPanel && this.state.room && this.state.showRightPanel;
         const rightPanel = showRightPanel
             ? <RightPanel roomId={this.state.room.roomId} resizeNotifier={this.props.resizeNotifier} />
             : null;
+
+        const timelineClasses = classNames("mx_RoomView_timeline", {
+            mx_RoomView_timeline_rr_enabled: this.state.showReadReceipts,
+        });
 
         return (
             <RoomContext.Provider value={this.state}>
@@ -2041,7 +2054,7 @@ export default createReactClass({
                         >
                             <div className={fadableSectionClasses}>
                                 {auxPanel}
-                                <div className="mx_RoomView_timeline">
+                                <div className={timelineClasses}>
                                     {topUnreadMessagesBar}
                                     {jumpToBottom}
                                     {messagePanel}
