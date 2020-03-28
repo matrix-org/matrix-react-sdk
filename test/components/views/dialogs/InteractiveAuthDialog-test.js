@@ -25,11 +25,12 @@ import {MatrixClientPeg} from '../../../../src/MatrixClientPeg';
 import * as test_utils from '../../../test-utils';
 import {sleep} from "../../../../src/utils/promise";
 
-const InteractiveAuthDialog = sdk.getComponent(
-    'views.dialogs.InteractiveAuthDialog',
-);
-
 describe('InteractiveAuthDialog', function() {
+    let InteractiveAuthDialog;
+    beforeAll(() => {
+        InteractiveAuthDialog = sdk.getComponent('views.dialogs.InteractiveAuthDialog');
+    });
+
     let parentDiv;
 
     beforeEach(function() {

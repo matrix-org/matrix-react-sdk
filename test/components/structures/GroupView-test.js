@@ -26,12 +26,14 @@ import Matrix from 'matrix-js-sdk';
 import * as TestUtils from '../../test-utils';
 const { waitForUpdate } = TestUtils;
 
-const GroupView = sdk.getComponent('structures.GroupView');
-const WrappedGroupView = TestUtils.wrapInMatrixClientContext(GroupView);
-
-const Spinner = sdk.getComponent('elements.Spinner');
-
 describe('GroupView', function() {
+    let Spinner;
+    let GroupView;
+    beforeAll(() => {
+        Spinner = sdk.getComponent('elements.Spinner');
+        GroupView = sdk.getComponent('structures.GroupView');
+    });
+
     let root;
     let rootElement;
     let httpBackend;
@@ -135,6 +137,7 @@ describe('GroupView', function() {
         groupIdEncoded = encodeURIComponent(groupId);
 
         rootElement = document.createElement('div');
+        const WrappedGroupView = TestUtils.wrapInMatrixClientContext(GroupView);
         root = ReactDOM.render(<WrappedGroupView groupId={groupId} />, rootElement);
     });
 

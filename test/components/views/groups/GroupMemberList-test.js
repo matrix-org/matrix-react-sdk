@@ -26,10 +26,12 @@ import Matrix from "matrix-js-sdk";
 import * as TestUtils from "../../../test-utils";
 const { waitForUpdate } = TestUtils;
 
-const GroupMemberList = sdk.getComponent("views.groups.GroupMemberList");
-const WrappedGroupMemberList = TestUtils.wrapInMatrixClientContext(GroupMemberList);
-
 describe("GroupMemberList", function() {
+    let GroupMemberList;
+    beforeAll(() => {
+        GroupMemberList = sdk.getComponent("views.groups.GroupMemberList");
+    });
+
     let root;
     let rootElement;
     let httpBackend;
@@ -97,6 +99,7 @@ describe("GroupMemberList", function() {
         groupIdEncoded = encodeURIComponent(groupId);
 
         rootElement = document.createElement("div");
+        const WrappedGroupMemberList = TestUtils.wrapInMatrixClientContext(GroupMemberList);
         root = ReactDOM.render(<WrappedGroupMemberList groupId={groupId} />, rootElement);
     });
 

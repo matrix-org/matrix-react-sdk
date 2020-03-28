@@ -20,14 +20,12 @@ import SettingsStore from "../../../src/settings/SettingsStore";
 import React from 'react';
 import createReactClass from 'create-react-class';
 import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
 const TestUtils = require('react-dom/test-utils');
 const expect = require('expect');
 import { EventEmitter } from "events";
 
 import sdk from '../../skinned-sdk';
 
-const MessagePanel = sdk.getComponent('structures.MessagePanel');
 import {MatrixClientPeg} from '../../../src/MatrixClientPeg';
 import Matrix from 'matrix-js-sdk';
 
@@ -55,6 +53,7 @@ const WrappedMessagePanel = createReactClass({
     },
 
     render: function() {
+        const MessagePanel = sdk.getComponent('structures.MessagePanel');
         return <MatrixClientContext.Provider value={client}>
             <RoomContext.Provider value={{ canReact: true, canReply: true }}>
                 <MessagePanel room={room} {...this.props} resizeNotifier={this.state.resizeNotifier} />
@@ -300,7 +299,7 @@ describe('MessagePanel', function() {
                 room: roomId,
                 user: alice,
                 content: {
-                    "join_rule": "invite"
+                    "join_rule": "invite",
                 },
                 ts: ts0 + 2,
             }),

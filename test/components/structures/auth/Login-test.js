@@ -21,10 +21,6 @@ import sdk from '../../../skinned-sdk';
 import SdkConfig from '../../../../src/SdkConfig';
 import {mkServerConfig} from "../../../test-utils";
 
-const Login = sdk.getComponent(
-    'structures.auth.Login',
-);
-
 describe('Login', function() {
     let parentDiv;
 
@@ -39,6 +35,7 @@ describe('Login', function() {
     });
 
     function render() {
+        const Login = sdk.getComponent('structures.auth.Login');
         return ReactDOM.render(<Login
             serverConfig={mkServerConfig("https://matrix.org", "https://vector.im")}
             onLoggedIn={() => {}}

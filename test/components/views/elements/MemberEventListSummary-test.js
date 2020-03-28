@@ -4,12 +4,15 @@ import ShallowRenderer from "react-test-renderer/shallow";
 import sdk from '../../../skinned-sdk';
 import * as testUtils from '../../../test-utils';
 
-// Give MELS a matrixClient in its child context
-const MemberEventListSummary = testUtils.wrapInMatrixClientContext(
-    sdk.getComponent('views.elements.MemberEventListSummary'),
-);
-
 describe('MemberEventListSummary', function() {
+    let MemberEventListSummary;
+    beforeAll(() => {
+        // Give MELS a matrixClient in its child context
+        MemberEventListSummary = testUtils.wrapInMatrixClientContext(
+            sdk.getComponent('views.elements.MemberEventListSummary'),
+        );
+    });
+
     // Generate dummy event tiles for use in simulating an expanded MELS
     const generateTiles = (events) => {
         return events.map((e) => {

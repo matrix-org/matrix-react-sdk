@@ -23,11 +23,14 @@ import {mkEvent, mkStubRoom} from "../../../test-utils";
 import {MatrixClientPeg} from "../../../../src/MatrixClientPeg";
 import * as languageHandler from "../../../../src/languageHandler";
 
-const TextualBody = sdk.getComponent("views.messages.TextualBody");
-
 configure({ adapter: new Adapter() });
 
 describe("<TextualBody />", () => {
+    let TextualBody;
+    beforeAll(() => {
+        TextualBody = sdk.getComponent("views.messages.TextualBody");
+    });
+
     afterEach(() => {
         MatrixClientPeg.matrixClient = null;
     });

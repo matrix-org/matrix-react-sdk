@@ -21,10 +21,6 @@ import sdk from '../../../skinned-sdk';
 import SdkConfig from '../../../../src/SdkConfig';
 import {mkServerConfig} from "../../../test-utils";
 
-const Registration = sdk.getComponent(
-    'structures.auth.Registration',
-);
-
 describe('Registration', function() {
     let parentDiv;
 
@@ -39,6 +35,7 @@ describe('Registration', function() {
     });
 
     function render() {
+        const Registration = sdk.getComponent('structures.auth.Registration');
         return ReactDOM.render(<Registration
             serverConfig={mkServerConfig("https://matrix.org", "https://vector.im")}
             makeRegistrationUrl={() => {}}
