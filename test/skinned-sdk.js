@@ -25,10 +25,8 @@ components['views.messages.MessageTimestamp'] = stubComponent({displayName: 'Mes
 components['views.messages.SenderProfile'] = stubComponent({displayName: 'SenderProfile'});
 components['views.rooms.SearchBar'] = stubComponent();
 
-export const prom = sdk.loadSkin({components});
-
 beforeAll(async () => {
-    await prom;
+    await sdk.loadSkin({components});
 });
 
 export default sdk;
