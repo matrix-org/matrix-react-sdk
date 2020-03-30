@@ -78,7 +78,7 @@ async function updatePublicRooms() {
 
     const promises = servers.map(server => {
         const opts = { limit: NUM_PUBLIC_ROOMS };
-        if (server != MatrixClientPeg.getHomeserverName()) {
+        if (server !== MatrixClientPeg.getHomeserverName()) {
             opts["server"] = server;
         }
 
@@ -186,7 +186,7 @@ export default class RoomProvider extends AutocompleteProvider {
         this.matcher.setObjects(matcherObjects);
     };
 
-    async getCompletions(query: string, selection: SelectionRange, force: boolean = false): Promise<Array<Completion>> {
+    async getCompletions(query: string, selection: SelectionRange, force = false): Promise<Array<Completion>> {
         const RoomAvatar = sdk.getComponent('views.avatars.RoomAvatar');
 
         let completions = [];

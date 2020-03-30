@@ -51,21 +51,21 @@ export default class AutocompleteProvider {
      * @param {boolean} force True if the user is forcing completion
      * @return {object} { command, range } where both objects fields are null if no match
      */
-    getCurrentCommand(query: string, selection: SelectionRange, force: boolean = false) {
+    getCurrentCommand(query: string, selection: SelectionRange, force = false) {
         let commandRegex = this.commandRegex;
 
         if (force && this.shouldForceComplete()) {
             commandRegex = this.forcedCommandRegex || /\S+/g;
         }
 
-        if (commandRegex == null) {
+        if (commandRegex === null) {
             return null;
         }
 
         commandRegex.lastIndex = 0;
 
         let match;
-        while ((match = commandRegex.exec(query)) != null) {
+        while ((match = commandRegex.exec(query)) !== null) {
             const start = match.index;
             const end = start + match[0].length;
             if (selection.start <= end && selection.end >= start) {
@@ -87,7 +87,7 @@ export default class AutocompleteProvider {
         };
     }
 
-    async getCompletions(query: string, selection: SelectionRange, force: boolean = false): Promise<Array<Completion>> {
+    async getCompletions(query: string, selection: SelectionRange, force = false): Promise<Array<Completion>> {
         return [];
     }
 
