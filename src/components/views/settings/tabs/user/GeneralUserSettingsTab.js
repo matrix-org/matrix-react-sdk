@@ -457,7 +457,6 @@ export default class GeneralUserSettingsTab extends React.Component {
                     })}
                 </Field>
                 {customThemeForm}
-                <SettingsFlag name="useCompactLayout" level={SettingLevel.ACCOUNT} />
             </div>
         );
     }
