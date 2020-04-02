@@ -602,6 +602,7 @@ div.mx_EventTile_notSent.mx_EventTile_redacted .mx_UnknownBody {
 
     .mx_EventTile .mx_SenderProfile {
         font-size: $font-13px;
+        padding-left: 0;
     }
 
     .mx_EventTile.mx_EventTile_emote {
@@ -652,6 +653,14 @@ div.mx_EventTile_notSent.mx_EventTile_redacted .mx_UnknownBody {
 
     .mx_RoomView_MessageList h2 {
         margin-top: 6px;
+    }
+
+    .mx_EventTile_content, .mx_ReplyThread, .mx_TextualEvent {
+        margin-left: -20px;
+    }
+
+    .mx_ReplyThread {
+        margin-bottom: 5px;
     }
 
     .mx_EventTile_content .markdown-body {

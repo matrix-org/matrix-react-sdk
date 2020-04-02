@@ -703,6 +703,14 @@ export default createReactClass({
             needsSenderProfile = true;
         }
 
+        const useCompactLayout = SettingsStore.getValue("useCompactLayout");
+
+        // Do not display avatar in compact layout. We do not touch to the
+        // SenderProfile since it depends on message groups.
+        if (useCompactLayout) {
+            avatarSize = 0;
+        }
+
         if (this.props.mxEvent.sender && avatarSize) {
             avatar = (
                     <div className="mx_EventTile_avatar">
