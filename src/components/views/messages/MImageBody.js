@@ -19,6 +19,7 @@ limitations under the License.
 import React, {createRef} from 'react';
 import PropTypes from 'prop-types';
 
+import classNames from 'classnames';
 import MFileBody from './MFileBody';
 import Modal from '../../../Modal';
 import * as sdk from '../../../index';
@@ -26,6 +27,7 @@ import { decryptFile } from '../../../utils/DecryptFile';
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import AccessibleButton from '../elements/AccessibleButton';
 
 export default class MImageBody extends React.Component {
     static propTypes = {
@@ -37,6 +39,9 @@ export default class MImageBody extends React.Component {
 
         /* the maximum image height to use */
         maxImageHeight: PropTypes.number,
+
+        /* for previously collapsed images */
+        startHidden: PropTypes.bool,
     };
 
     static contextType = MatrixClientContext;
@@ -51,6 +56,7 @@ export default class MImageBody extends React.Component {
         this.onClientSync = this.onClientSync.bind(this);
         this.onClick = this.onClick.bind(this);
         this._isGif = this._isGif.bind(this);
+        this._toggleCollapsed = this._toggleCollapsed.bind(this);
 
         this.state = {
             decryptedUrl: null,
@@ -62,6 +68,7 @@ export default class MImageBody extends React.Component {
             loadedImageDimensions: null,
             hover: false,
             showImage: SettingsStore.getValue("showImages"),
+            collapsed: props.startHidden,
         };
 
         this._image = createRef();
@@ -120,6 +127,10 @@ export default class MImageBody extends React.Component {
           content.info &&
           content.info.mimetype === "image/gif"
         );
+    }
+
+    _toggleCollapsed() {
+        this.setState({ collapsed: !this.state.collapsed });
     }
 
     onImageEnter(e) {
@@ -472,12 +483,27 @@ export default class MImageBody extends React.Component {
           thumbUrl = this._getThumbUrl();
         }
 
-        const thumbnail = this._messageContent(contentUrl, thumbUrl, content);
-        const fileBody = this.getFileBody();
+        const collapsed = this.state.collapsed;
+        const thumbnail = collapsed ? null : this._messageContent(contentUrl, thumbUrl, content);
+        const fileBody = collapsed ? null : this.getFileBody();
+        /* when image is showing, it covers the collapse button, &nbsp; prevents it from overlaping */
+        const fileName = collapsed ? content.body : <div>&nbsp;</div>;
+
+        const chevronClasses = classNames({
+            'mx_RoomSubList_chevron': true,
+            'mx_RoomSubList_chevronRight': collapsed,
+            'mx_RoomSubList_chevronLeft': !collapsed,
+        });
+        const chevron = (<div className={chevronClasses} />);
+        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
 
         return <span className="mx_MImageBody">
-            { thumbnail }
-            { fileBody }
+            <AccessibleButton className="mx_RoomSubList_label mx_AccessibleButton" onClick={ this._toggleCollapsed }>
+                {chevron}
+                <span>{fileName}</span>
+            </AccessibleButton>
+            {thumbnail}
+            {fileBody}
         </span>;
     }
 }
