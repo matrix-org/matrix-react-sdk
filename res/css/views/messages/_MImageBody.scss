@@ -107,7 +107,7 @@ limitations under the License.
     width: 10px;
     height: 6px;
     margin-left: 2px;
-    background-color: $roomsublist-label-fg-color;
+    background-color: $imagebody-label-fg-color;
 }
 
 .mx_MImageBody_chevronRight {
@@ -125,7 +125,7 @@ limitations under the License.
 .mx_MImageBody_label > span {
     flex: 1 1 auto;
     text-transform: uppercase;
-    color: $roomsublist-label-fg-color;
+    color: $imagebody-label-fg-color;
     font-weight: 700;
     font-size: $font-12px;
     margin-left: 8px;
