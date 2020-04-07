@@ -489,15 +489,14 @@ export default class MImageBody extends React.Component {
         const fileName = collapsed ? content.body : <div>&nbsp;</div>;
 
         const chevronClasses = classNames({
-            'mx_RoomSubList_chevron': true,
-            'mx_RoomSubList_chevronRight': collapsed,
-            'mx_RoomSubList_chevronLeft': !collapsed,
+            'mx_MImageBody_chevron': true,
+            'mx_MImageBody_chevronRight': collapsed,
         });
         const chevron = (<div className={chevronClasses} />);
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
 
         return <span className="mx_MImageBody">
-            <AccessibleButton className="mx_RoomSubList_label mx_AccessibleButton" onClick={ this._toggleCollapsed }>
+            <AccessibleButton className="mx_MImageBody_label mx_AccessibleButton" onClick={ this._toggleCollapsed }>
                 {chevron}
                 <span>{fileName}</span>
             </AccessibleButton>

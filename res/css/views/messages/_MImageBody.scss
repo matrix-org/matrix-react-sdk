@@ -98,3 +98,35 @@ limitations under the License.
 .mx_EventTile:hover .mx_HiddenImagePlaceholder {
     background-color: $primary-bg-color;
 }
+
+.mx_MImageBody_chevron {
+    pointer-events: none;
+    mask: url('$(res)/img/feather-customised/dropdown-arrow.svg');
+    mask-repeat: no-repeat;
+    transition: transform 0.2s ease-in;
+    width: 10px;
+    height: 6px;
+    margin-left: 2px;
+    background-color: $roomsublist-label-fg-color;
+}
+
+.mx_MImageBody_chevronRight {
+    transform: rotateZ(-90deg);
+}
+
+.mx_MImageBody_label {
+    flex: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+}
+
+.mx_MImageBody_label > span {
+    flex: 1 1 auto;
+    text-transform: uppercase;
+    color: $roomsublist-label-fg-color;
+    font-weight: 700;
+    font-size: $font-12px;
+    margin-left: 8px;
+}
