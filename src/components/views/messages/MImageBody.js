@@ -27,7 +27,6 @@ import { decryptFile } from '../../../utils/DecryptFile';
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import AccessibleButton from '../elements/AccessibleButton';
 
 export default class MImageBody extends React.Component {
     static propTypes = {
