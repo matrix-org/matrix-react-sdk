@@ -30,6 +30,7 @@ import SetupEncryptionBody from "./SetupEncryptionBody";
 export default class CompleteSecurity extends React.Component {
     static propTypes = {
         onFinished: PropTypes.func.isRequired,
+        ready: PropTypes.bool,
     };
 
     constructor() {
@@ -54,35 +55,47 @@ export default class CompleteSecurity extends React.Component {
     render() {
         const AuthPage = sdk.getComponent("auth.AuthPage");
         const CompleteSecurityBody = sdk.getComponent("auth.CompleteSecurityBody");
-        const {phase} = this.state;
-        let icon;
-        let title;
+        const Spinner = sdk.getComponent("elements.Spinner");
 
-        if (phase === PHASE_INTRO) {
-            icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning"></span>;
-            title = _t("Complete security");
-        } else if (phase === PHASE_DONE) {
-            icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_verified"></span>;
-            title = _t("Session verified");
-        } else if (phase === PHASE_CONFIRM_SKIP) {
-            icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning"></span>;
-            title = _t("Are you sure?");
-        } else if (phase === PHASE_BUSY) {
-            icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning"></span>;
-            title = _t("Complete security");
+        let header;
+        let body;
+        if (this.props.ready) {
+            const {phase} = this.state;
+            let icon;
+            let title;
+
+            if (phase === PHASE_INTRO) {
+                icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning"></span>;
+                title = _t("Complete security");
+            } else if (phase === PHASE_DONE) {
+                icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_verified"></span>;
+                title = _t("Session verified");
+            } else if (phase === PHASE_CONFIRM_SKIP) {
+                icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning"></span>;
+                title = _t("Are you sure?");
+            } else if (phase === PHASE_BUSY) {
+                icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning"></span>;
+                title = _t("Complete security");
+            } else {
+                throw new Error(`Unknown phase ${phase}`);
+            }
+
+            header = <h2 className="mx_CompleteSecurity_header">
+                {icon}
+                {title}
+            </h2>;
+            body = <SetupEncryptionBody onFinished={this.props.onFinished} />;
         } else {
-            throw new Error(`Unknown phase ${phase}`);
+            header = null;
+            body = <Spinner />;
         }
 
         return (
             <AuthPage>
                 <CompleteSecurityBody>
-                    <h2 className="mx_CompleteSecurity_header">
-                        {icon}
-                        {title}
-                    </h2>
+                    {header}
                     <div className="mx_CompleteSecurity_body">
-                        <SetupEncryptionBody onFinished={this.props.onFinished} />
+                        {body}
                     </div>
                 </CompleteSecurityBody>
             </AuthPage>

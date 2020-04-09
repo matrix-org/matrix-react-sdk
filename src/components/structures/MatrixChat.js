@@ -1964,7 +1964,7 @@ export default createReactClass({
             const CompleteSecurity = sdk.getComponent('structures.auth.CompleteSecurity');
             view = (
                 <CompleteSecurity
-                    onFinished={this.onCompleteSecurityE2eSetupFinished}
+                    onFinished={this.onCompleteSecurityE2eSetupFinished} ready={this.state.ready}
                 />
             );
         } else if (this.state.view === VIEWS.E2E_SETUP) {
