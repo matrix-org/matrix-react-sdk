@@ -210,6 +210,12 @@ export const SETTINGS = {
         default: true,
         invertedSettingName: 'hideDisplaynameChanges',
     },
+    "showCallRelatedMessages": {
+        supportedLevels: LEVELS_ROOM_SETTINGS,
+        displayName: _td('Show messages about call information'),
+        default: true,
+        invertedSettingName: 'hideCallRelatedMessages',
+    },
     "showReadReceipts": {
         supportedLevels: LEVELS_ROOM_SETTINGS,
         displayName: _td('Show read receipts sent by other users'),
