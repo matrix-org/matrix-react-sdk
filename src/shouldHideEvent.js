@@ -49,6 +49,9 @@ export default function shouldHideEvent(ev) {
     // Hide replacement events since they update the original tile (if enabled)
     if (ev.isRelation("m.replace")) return true;
 
+    // Hide call-related messages based on user preferences
+    if (ev.getType().startsWith("m.call") && !isEnabled('showCallRelatedMessages')) return true;
+
     const eventDiff = memberEventDiff(ev);
 
     if (eventDiff.isMemberEvent) {
