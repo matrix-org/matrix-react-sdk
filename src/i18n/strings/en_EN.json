@@ -406,6 +406,7 @@
     "Show join/leave messages (invites/kicks/bans unaffected)": "Show join/leave messages (invites/kicks/bans unaffected)",
     "Show avatar changes": "Show avatar changes",
     "Show display name changes": "Show display name changes",
+    "Show messages about call information": "Show messages about call information",
     "Show read receipts sent by other users": "Show read receipts sent by other users",
     "Show timestamps in 12 hour format (e.g. 2:30pm)": "Show timestamps in 12 hour format (e.g. 2:30pm)",
     "Always show message timestamps": "Always show message timestamps",
