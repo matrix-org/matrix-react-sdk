@@ -51,6 +51,8 @@ Settings are the different options a user may set or experience in the applicati
 }
 ```
 
+Note: The `invertedSettingName` key is only needed when migrating from legacy settings. Newer settings should not have it.
+
 Settings that support the config level can be set in the config file under the `settingDefaults` key (note that some settings, like the "theme" setting, are special cased in the config file):
 ```json
 {
