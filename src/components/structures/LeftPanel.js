@@ -225,6 +225,7 @@ const LeftPanel = createReactClass({
         const SearchBox = sdk.getComponent('structures.SearchBox');
         const CallPreview = sdk.getComponent('voip.CallPreview');
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
+        const VoiceChannelControls = sdk.getComponent('structures.VoiceChannelControls')
 
         const tagPanelEnabled = SettingsStore.getValue("TagPanel.enableTagPanel");
         let tagPanelContainer;
@@ -293,6 +294,7 @@ const LeftPanel = createReactClass({
                         collapsed={this.props.collapsed}
                         searchFilter={this.state.searchFilter}
                         ConferenceHandler={VectorConferenceHandler} />
+                    <VoiceChannelControls />
                 </aside>
             </div>
         );

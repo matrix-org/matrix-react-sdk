@@ -106,6 +106,7 @@ const TagPanel = createReactClass({
         const DNDTagTile = sdk.getComponent('elements.DNDTagTile');
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         const ActionButton = sdk.getComponent('elements.ActionButton');
+        const TagTile = sdk.getComponent('elements.TagTile');
         const TintableSvg = sdk.getComponent('elements.TintableSvg');
 
         const tags = this.state.orderedTags.map((tag, index) => {
@@ -133,11 +134,23 @@ const TagPanel = createReactClass({
             mx_TagPanel_items_selected: itemsSelected,
         });
 
+        const dividerStyle = {
+            display: 'block'
+        }
+
+        const homeTag = {
+            tag: "Home"
+        }
+
         return <div className={classes}>
             <div className="mx_TagPanel_clearButton_container">
                 { clearButton }
             </div>
             <div className="mx_TagPanel_divider" />
+            <div>
+                <TagTile {...homeTag} selected={!this.state.selectedTags.length}/>
+            </div>
+            <div className="mx_TagPanel_divider" style={dividerStyle} />
             <AutoHideScrollbar
                 className="mx_TagPanel_scroller"
                 // XXX: Use onMouseDown as a workaround for https://github.com/atlassian/react-beautiful-dnd/issues/273

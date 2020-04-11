@@ -42,7 +42,7 @@ export default createReactClass({
     propTypes: {
         // A string tag such as "m.favourite" or a group ID such as "+groupid:domain.bla"
         // For now, only group IDs are handled.
-        tag: PropTypes.string,
+        tag: PropTypes.string.isRequired,
     },
 
     statics: {

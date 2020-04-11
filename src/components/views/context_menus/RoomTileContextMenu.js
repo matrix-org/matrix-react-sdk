@@ -33,6 +33,7 @@ import RoomListActions from '../../../actions/RoomListActions';
 import RoomViewStore from '../../../stores/RoomViewStore';
 import {sleep} from "../../../utils/promise";
 import {MenuItem, MenuItemCheckbox, MenuItemRadio} from "../../structures/ContextMenu";
+import VoiceChannelUtils from '../../../VoiceChannelUtils'
 
 const RoomTagOption = ({active, onClick, src, srcSet, label}) => {
     const classes = classNames('mx_RoomTileContextMenu_tag_field', {
@@ -79,6 +80,7 @@ export default createReactClass({
             isFavourite: this.props.room.tags.hasOwnProperty("m.favourite"),
             isLowPriority: this.props.room.tags.hasOwnProperty("m.lowpriority"),
             isDirectMessage: Boolean(dmRoomMap.getUserIdForRoomId(this.props.room.roomId)),
+            hasActiveJitsiWidget: VoiceChannelUtils.canBeVoiceChannel(this.props.room.roomId),
         };
     },
 
@@ -186,6 +188,19 @@ export default createReactClass({
         if (this.props.onFinished) {
             this.props.onFinished();
         }
+    },
+
+    _onClickJoinAsChannel: function() {
+        const data = VoiceChannelUtils.getConferenceData(this.props.room.roomId)
+        if (!data) return
+        dis.dispatch({
+            action: 'join_channel',
+            room_Id: this.props.room.roomId,
+            confId: data.conferenceId,
+            jitsiDomain: data.domain
+        })
+        //Close context menu
+        this.props.onFinished ? this.props.onFinished() : null
     },
 
     _onClickForget: function() {
@@ -370,6 +385,14 @@ export default createReactClass({
                     onClick={this._onClickDM}
                     src={require("../../../../res/img/icon_context_person.svg")}
                     srcSet={require("../../../../res/img/icon_context_person_on.svg")}
+                />
+                <RoomTagOption
+                    //active={this.state.hasActiveJitsiWidget}
+                    disabled={!this.state.hasActiveJitsiWidget}
+                    label={_t('Join as Voice Channel')}
+                    onClick={this._onClickJoinAsChannel}
+                    src={require("../../../../res/img/sound-indicator.svg")}
+                    srcSet={require("../../../../res/img/sound-indicator.svg")}
                 />
             </div>
         );

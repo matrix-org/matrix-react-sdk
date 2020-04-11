@@ -82,7 +82,9 @@ export default createReactClass({
     },
 
     render: function() {
+        //Get call for currently viewed room
         const callForRoom = CallHandler.getCallForRoom(this.state.roomId);
+        //Call is active and are not viewing that room
         const showCall = (this.state.activeCall && this.state.activeCall.call_state === 'connected' && !callForRoom);
 
         if (showCall) {

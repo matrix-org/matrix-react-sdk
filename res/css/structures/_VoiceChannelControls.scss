@@ -1,0 +1,74 @@
+.mx_VoiceChannelControls {
+    // min-height: 100px;
+    border-top: 1px solid $panel-divider-color;
+    background-color: $primary-bg-color;
+}
+
+
+
+.mx_VoiceChannelControls_labelContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    // flex: 0 0 50%;
+    overflow: hidden;
+    transition: flex-basis 0.2s;
+    box-sizing: border-box;
+
+    .mx_VoiceChannelControls_button {
+        flex: 0 0 auto;
+        font-size: 14px;
+        margin: 4px;
+        width: 21px;
+        height: 26px;
+        padding: 5px;
+        font-weight: 600;
+        color: $notice-secondary-color;
+        position: relative;
+        border-radius: 4px;
+        // display: inline-block;
+    
+        &:hover {
+            background-color: $dark-panel-bg-color;
+        }
+    
+        &::before {
+            cursor: pointer;
+            mask-repeat: no-repeat;
+            mask-position: center center;
+            content: "";
+            width: 21px;
+            height: 26px;
+            background-color: $notice-secondary-color;
+            position: absolute;
+        }
+    }
+
+    .mx_VoiceChannelControls_button object {
+        pointer-events: none;
+    }
+}
+
+.mx_VoiceChannelControls_label {
+    flex: 1 0 auto;
+    margin: 0 7px;
+    font-size: 18px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-weight: 600;
+    line-height: 48px;
+    color: $notice-secondary-color;
+}
+
+.mx_VoiceChannelControls_muted::before {
+    mask: url('$(res)/img/voice-mute.svg')
+}
+
+.mx_VoiceChannelControls_unmuted::before {
+    mask: url('$(res)/img/voice-unmute.svg')
+}
+
+.mx_VoiceChannelControls_leave::before {
+    mask: url('$(res)/img/feather-customised/x.svg')
+}

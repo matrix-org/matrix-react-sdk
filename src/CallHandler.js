@@ -75,6 +75,11 @@ let ConferenceHandler = null;
 
 const audioPromises = {};
 
+//Singleton reference for methods in this file
+//Is assigned at export therefore cant be instantiated more than once
+//(unless it gets assigned again in here for some reason - don't do that)
+let callHandler;
+
 function play(audioId) {
     // TODO: Attach an invisible element for this instead
     // which listens?
@@ -469,26 +474,24 @@ async function _startCallApp(roomId, type) {
     });
 }
 
-// FIXME: Nasty way of making sure we only register
-// with the dispatcher once
-if (!global.mxCallHandler) {
-    dis.register(_onAction);
-    // add empty handlers for media actions, otherwise the media keys
-    // end up causing the audio elements with our ring/ringback etc
-    // audio clips in to play.
-    if (navigator.mediaSession) {
-        navigator.mediaSession.setActionHandler('play', function() {});
-        navigator.mediaSession.setActionHandler('pause', function() {});
-        navigator.mediaSession.setActionHandler('seekbackward', function() {});
-        navigator.mediaSession.setActionHandler('seekforward', function() {});
-        navigator.mediaSession.setActionHandler('previoustrack', function() {});
-        navigator.mediaSession.setActionHandler('nexttrack', function() {});
-    }
-}
+//Not exported - nothing should be able to create a new instance = never registering callback more than once
+class CallHandler {
 
-const callHandler = {
-    getCallForRoom: function(roomId) {
-        let call = callHandler.getCall(roomId);
+    constructor() {
+        if (navigator.mediaSession) {
+            navigator.mediaSession.setActionHandler('play', function() {});
+            navigator.mediaSession.setActionHandler('pause', function() {});
+            navigator.mediaSession.setActionHandler('seekbackward', function() {});
+            navigator.mediaSession.setActionHandler('seekforward', function() {});
+            navigator.mediaSession.setActionHandler('previoustrack', function() {});
+            navigator.mediaSession.setActionHandler('nexttrack', function() {});
+        };
+        console.log("Registering CallHandler callback");
+        dis.register(_onAction);
+    }
+
+    getCallForRoom = function(roomId) {
+        let call = this.getCall(roomId);
         if (call) return call;
 
         if (ConferenceHandler) {
@@ -497,13 +500,13 @@ const callHandler = {
         if (call) return call;
 
         return null;
-    },
+    }
 
-    getCall: function(roomId) {
+    getCall = function(roomId) {
         return calls[roomId] || null;
-    },
+    }
 
-    getAnyActiveCall: function() {
+    getAnyActiveCall = function() {
         const roomsWithCalls = Object.keys(calls);
         for (let i = 0; i < roomsWithCalls.length; i++) {
             if (calls[roomsWithCalls[i]] &&
@@ -512,7 +515,7 @@ const callHandler = {
             }
         }
         return null;
-    },
+    }
 
     /**
      * The conference handler is a module that deals with implementation-specific
@@ -532,20 +535,13 @@ const callHandler = {
      *
      * @param {object} confHandler The conference handler object
      */
-    setConferenceHandler: function(confHandler) {
+    setConferenceHandler = function(confHandler) {
         ConferenceHandler = confHandler;
-    },
+    }
 
-    getConferenceHandler: function() {
+    getConferenceHandler = function() {
         return ConferenceHandler;
-    },
+    }
 };
-// Only things in here which actually need to be global are the
-// calls list (done separately) and making sure we only register
-// with the dispatcher once (which uses this mechanism but checks
-// separately). This could be tidied up.
-if (global.mxCallHandler === undefined) {
-    global.mxCallHandler = callHandler;
-}
 
-export default global.mxCallHandler;
+export default callHandler = new CallHandler();

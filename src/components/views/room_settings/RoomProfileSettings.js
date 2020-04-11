@@ -20,6 +20,8 @@ import {_t} from "../../../languageHandler";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import Field from "../elements/Field";
 import * as sdk from "../../../index";
+import LabelledToggleSwitch from '../elements/LabelledToggleSwitch';
+import VoiceChannelUtils, {VoiceChannelStateKey, VoiceChannelState} from '../../../VoiceChannelUtils'
 
 // TODO: Merge with ProfileSettings?
 export default class RoomProfileSettings extends React.Component {
@@ -44,6 +46,10 @@ export default class RoomProfileSettings extends React.Component {
         const nameEvent = room.currentState.getStateEvents('m.room.name', '');
         const name = nameEvent && nameEvent.getContent() ? nameEvent.getContent()['name'] : '';
 
+        const voiceChannelEvent = room.currentState.getStateEvents(VoiceChannelStateKey, '');
+        const isVoiceChannel = VoiceChannelUtils.canBeVoiceChannel(props.roomId)
+        const canBeVoiceChannel = VoiceChannelUtils.canBeVoiceChannel(props.roomId)
+
         this.state = {
             originalDisplayName: name,
             displayName: name,
@@ -56,6 +62,9 @@ export default class RoomProfileSettings extends React.Component {
             canSetName: room.currentState.maySendStateEvent('m.room.name', client.getUserId()),
             canSetTopic: room.currentState.maySendStateEvent('m.room.topic', client.getUserId()),
             canSetAvatar: room.currentState.maySendStateEvent('m.room.avatar', client.getUserId()),
+            canBeVoiceChannel: canBeVoiceChannel,
+            originalIsVoiceChannel: isVoiceChannel,
+            isVoiceChannel: isVoiceChannel,
         };
 
         this._avatarUpload = createRef();
@@ -107,6 +116,12 @@ export default class RoomProfileSettings extends React.Component {
             newState.originalTopic = this.state.topic;
         }
 
+        //TODO: change to empty state content for disabled?
+        if (this.state.originalIsVoiceChannel !== this.state.isVoiceChannel) {
+            await client.sendStateEvent(this.props.roomId, VoiceChannelStateKey, {[VoiceChannelState.enabled]: this.state.isVoiceChannel}, '')
+            newState.originalIsVoiceChannel = this.state.isVoiceChannel
+        }
+
         this.setState(newState);
     };
 
@@ -146,6 +161,13 @@ export default class RoomProfileSettings extends React.Component {
         reader.readAsDataURL(file);
     };
 
+    _onVoiceChannelStateChange = (e) => {
+        this.setState({
+            isVoiceChannel: !this.state.isVoiceChannel,
+            enableProfileSave: true
+        })
+    }
+
     render() {
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         const AvatarSetting = sdk.getComponent('settings.AvatarSetting');
@@ -169,6 +191,12 @@ export default class RoomProfileSettings extends React.Component {
                         uploadAvatar={this.state.canSetAvatar ? this._uploadAvatar : undefined}
                         removeAvatar={this.state.canSetAvatar ? this._removeAvatar : undefined} />
                 </div>
+                <LabelledToggleSwitch
+                    value={this.state.isVoiceChannel}
+                    disabled={!this.state.canBeVoiceChannel}
+                    onChange={this._onVoiceChannelStateChange}
+                    label={_t('Is Voice Channel')}
+                />
                 <AccessibleButton onClick={this._saveProfile} kind="primary"
                                   disabled={!this.state.enableProfileSave}>
                     {_t("Save")}

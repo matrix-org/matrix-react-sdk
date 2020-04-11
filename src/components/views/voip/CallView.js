@@ -86,6 +86,7 @@ export default createReactClass({
         if (this.props.room) {
             const roomId = this.props.room.roomId;
             call = CallHandler.getCallForRoom(roomId) ||
+                //Deprectated?
                 (this.props.ConferenceHandler ?
                  this.props.ConferenceHandler.getConferenceCallForRoom(roomId) :
                  null

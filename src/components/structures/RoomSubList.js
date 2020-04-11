@@ -32,6 +32,7 @@ import RoomTile from "../views/rooms/RoomTile";
 import LazyRenderList from "../views/elements/LazyRenderList";
 import {_t} from "../../languageHandler";
 import {RovingTabIndexWrapper} from "../../accessibility/RovingTabIndex";
+import VoiceChannelUtils from '../../VoiceChannelUtils'
 
 // turn this on for drop & drag console debugging galore
 const debug = false;
@@ -41,6 +42,7 @@ export default class RoomSubList extends React.PureComponent {
     static debug = debug;
 
     static propTypes = {
+        //List of Room objects
         list: PropTypes.arrayOf(PropTypes.object).isRequired,
         label: PropTypes.string.isRequired,
         tagName: PropTypes.string,
