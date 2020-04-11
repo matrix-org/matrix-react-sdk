@@ -50,6 +50,7 @@ export default class PreferencesUserSettingsTab extends React.Component {
         'showJoinLeaves',
         'showAvatarChanges',
         'showDisplaynameChanges',
+        'showCallRelatedMessages',
         'showImages',
     ];
 
