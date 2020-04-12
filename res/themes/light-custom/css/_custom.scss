@@ -33,7 +33,9 @@ $togglesw-off-color: var(--accent-color-50pct);
 $username-variant3-color: var(--accent-color);
 //
 // --button-color
+$button-primary-fg-color: var(--button-color);
 $composer-button-color: var(--button-color);
+$dialog-close-fg-color: var(--button-color);
 $groupheader-button-color: var(--button-color);
 $header-divider-color: var(--button-color);
 $message-action-bar-border-color: var(--button-color);
