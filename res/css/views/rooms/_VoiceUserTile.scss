@@ -1,0 +1,46 @@
+
+.mx_VoiceTile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    height: 34px;
+    margin: 0;
+    padding: 0 8px 0 10px;
+    position: relative;
+}
+
+.mx_VoiceTile_nameContainer {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    vertical-align: middle;
+    min-width: 0;
+}
+
+.mx_VoiceTile_labelContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.mx_VoiceTile_name {
+    font-size: 14px;
+    padding: 0 4px;
+    color: $roomtile-name-color;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+.mx_VoiceTile_avatar_container {
+    position: relative;
+}
+
+.mx_VoiceTile_avatar {
+    flex: 0;
+    padding: 4px;
+    width: 24px;
+    vertical-align: middle;
+}

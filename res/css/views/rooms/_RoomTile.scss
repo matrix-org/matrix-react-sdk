@@ -85,6 +85,11 @@ limitations under the License.
     vertical-align: middle;
 }
 
+//Overwrites the base avatar class in order to allow for transparency within avatar images (voice channels)
+.mx_BaseAvatar_image {
+    background-color: transparent;
+}
+
 .mx_RoomTile_hasSubtext .mx_RoomTile_avatar {
     padding-top: 0;
     vertical-align: super;
@@ -96,6 +101,10 @@ limitations under the License.
     bottom: 0;
     right: -5px;
     z-index: 2;
+}
+
+.mx_RoomTile_voiceChannelUsers {
+    padding-left: 30px;
 }
 
 // Note we match .mx_E2EIcon to make sure this matches more tightly than just

@@ -8,7 +8,9 @@ import * as sdk from '../../index';
 import classNames from 'classnames';
 import SdkConfig from '../../SdkConfig'
 import dis from '../../dispatcher';
-//Need to import a singleton something what is it?
+import { MatrixClientPeg } from '../../MatrixClientPeg';
+import VoiceChannelUtils from '../../VoiceChannelUtils'
+//TODO: Need to import a singleton? something what is it?
 
 // var JitsiMeetExternalAPI;
 var activeChannel;
@@ -25,8 +27,9 @@ export default class VoiceChannelControls extends React.Component {
             isMicrophoneMuted: false,
             joined: false,
             joinError: false,
-            // js-sdk Room object
-            room: PropTypes.object,
+            roomId: null,
+            participantId: null,
+            showJitsiDebug: false
         };
         
     };
@@ -54,27 +57,28 @@ export default class VoiceChannelControls extends React.Component {
         switch (payload.action) {
             case 'join_channel':
             console.log('VoiceChannel recieved joinchannel event', payload)
-            this._joinChannel(payload.jitsiDomain, payload.confId)
+            this._joinChannel(payload.jitsiDomain, payload.confId, payload.roomId)
             break;
         }
     }
 
-    _joinChannel(jitsiDomain, roomName) {
+    _joinChannel(jitsiDomain, roomName, roomId) {
         console.log('Voice channel joining with', jitsiDomain, roomName)
         loaded = false;
+        this.state.roomId = roomId
         this.state.joinError = false
         if (!jitsiDomain) jitsiDomain = SdkConfig.get()['jitsi']['preferredDomain'] //TODO: Or fail to join if no domain?
         activeChannel = new JitsiMeetExternalAPI(jitsiDomain, {
-            width: 0,
-            height: 0,
+            width: '100%',
+            height: '200px',
             parentNode: document.querySelector('#jitsiVoiceChannelWrapper'),
             roomName: roomName,
             interfaceConfigOverwrite: {
-            SHOW_JITSI_WATERMARK: false,
-            SHOW_WATERMARK_FOR_GUESTS: false,
-            MAIN_TOOLBAR_BUTTONS: [],
-            VIDEO_LAYOUT_FIT: "height",
-        },
+                SHOW_JITSI_WATERMARK: false,
+                SHOW_WATERMARK_FOR_GUESTS: false,
+                MAIN_TOOLBAR_BUTTONS: [],
+                VIDEO_LAYOUT_FIT: "height"
+            },
             onload: this._onLoad
         })
         this.setState(this.state)
@@ -94,9 +98,11 @@ export default class VoiceChannelControls extends React.Component {
         //Try to leave jitsi gracefully
         this._channel('hangup')
         //Cleanup on this side
+        //Call a settimeout to give time for a graceful exit?
         this._close()
     }
 
+    //Click event for microphone button. Helps to keep microphone state consistent when changing voice channels
     _onMicClick = () => {
         console.log('Microphone muted:', this.state.isMicrophoneMuted);
         this.state.isMicrophoneMuted = !this.state.isMicrophoneMuted;
@@ -126,6 +132,7 @@ export default class VoiceChannelControls extends React.Component {
     ///*         Jitsi callback handlers         *///
     ///*******************************************///
 
+    //Jitsi widget loaded sucessfully. Not connected to conference yet
     _onLoad = () => {
         if (loaded) { //Has already loaded/jitsi failed to connect
         //TODO: Implement retry system
@@ -136,22 +143,58 @@ export default class VoiceChannelControls extends React.Component {
         }
         loaded = true;
         console.log('Channel loaded', activeChannel)
-        this.toggleMicMute(this.state.isMicrophoneMuted)
+        this._toggleMicMute(this.state.isMicrophoneMuted)
         this._register('readyToClose', this._close)
-        this._register('videoConferenceJoined', this._onJoin)
+        this._register('videoConferenceJoined', this._videoConferenceJoined)
         //TODO: register more flow control callbacks
         //state or props didnt change. need to update manually for connection data to update
+
+        //TODO: remove following testing flow
+        // const clientUserId = MatrixClientPeg.get().getUserId()
+        // if (clientUserId) {
+        //     const users = VoiceChannelUtils.getUsers(this.state.roomId)
+        //     const participants = Object.keys(users)
+        //     const participantId = Number(participants.length)
+        //     console.log('VCC participantid', participantId)
+        //     VoiceChannelUtils.addUser(this.state.roomId, {[participantId]: clientUserId})
+        //     this.state.participantId = participantId
+        //     this.setState(this.state)
+        // } 
+        console.log('VCC users',VoiceChannelUtils.getUsers(this.state.roomId))
+        
         this.forceUpdate()
     }
 
-    _onJoin = () => {
+    //User sucessfully joined jitsi conference
+    //Update this.state and room state
+    _videoConferenceJoined = (data) => {
+        const {roomName, id, displayName, avatarUrl} = data //Data recieved from jitsi API callback
+
+        //Update room info/state
+        const clientUserId = MatrixClientPeg.get().getUserId()
+        VoiceChannelUtils.addUser(this.state.roomId, {[id]: clientUserId})
+
+        //Update client to state to reflect succesful join
+        this.state.participantId = id
         this.state.joined = true
         this.setState(this.state)
+        //TODO: Remove logging
         console.log('Joined channel successfully')
     }
 
+    //User sucessfully left jitsi conference
+    _videoConferenceLeft = (data) => {
+        //const {roomName} = data
+        //Update room/channel state to reflect this
+        VoiceChannelUtils.removeUser(this.state.roomId, this.state.participantId)
+        VoiceChannelUtils.removeUser(this.state.roomId, 0)
+    }
+
+    //Conference is ready to close, safe to clean-up
     _close = () => {
+        VoiceChannelUtils.removeUser(this.state.roomId, this.state.participantId)
         console.log("Closing Voice Channel")
+        this.state.participantId = null
         if (activeChannel) {
             activeChannel.dispose()
             activeChannel = null
@@ -163,6 +206,11 @@ export default class VoiceChannelControls extends React.Component {
     }
 
     ///*******************************************///
+
+    _showDebugClick = () => {
+        this.state.showJitsiDebug = !this.state.showJitsiDebug
+        this.setState(this.state)
+    }
 
     render () {
 
@@ -193,9 +241,15 @@ export default class VoiceChannelControls extends React.Component {
             'mx_VoiceChannelControls_muted': !this.state.isMicrophoneMuted
         });
 
+        const wrapperStyle = {
+            display: this.state.showJitsiDebug ? 'block' : 'none',
+        }
+
+        //TODO: set jitsiwrapper to display: none
         return (
             <div className='mx_VoiceChannelControls'>
-                <div id="jitsiVoiceChannelWrapper"></div>
+                <div onClick={this._showDebugClick}>{this.state.showJitsiDebug ? 'Hide' : 'Show'} jitsi debug</div>
+                <div id="jitsiVoiceChannelWrapper" style={wrapperStyle}></div>
                 <div className='mx_VoiceChannelControls_labelContainer' >
                     <div className='mx_VoiceChannelControls_label'>
                         { channelState }

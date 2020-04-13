@@ -339,10 +339,11 @@ function _onAction(payload) {
                         description: _t('You cannot place a call with yourself.'),
                     });
                     return;
-                } else if (members.length === 2) {
-                    console.info("Place %s call in %s", payload.type, payload.room_id);
-                    const call = Matrix.createNewMatrixCall(MatrixClientPeg.get(), payload.room_id);
-                    placeCall(call);
+                //TODO: Reenable after testing
+                // } else if (members.length === 2) {
+                    // console.info("Place %s call in %s", payload.type, payload.room_id);
+                    // const call = Matrix.createNewMatrixCall(MatrixClientPeg.get(), payload.room_id);
+                    // placeCall(call);
                 } else { // > 2
                     dis.dispatch({
                         action: "place_conference_call",

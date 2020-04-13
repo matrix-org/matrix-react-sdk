@@ -35,6 +35,7 @@ import {_t} from "../../../languageHandler";
 import {RovingTabIndexWrapper} from "../../../accessibility/RovingTabIndex";
 import E2EIcon from './E2EIcon';
 import InviteOnlyIcon from './InviteOnlyIcon';
+import VoiceChannelUtils from '../../../VoiceChannelUtils'
 // eslint-disable-next-line camelcase
 import rate_limited_func from '../../../ratelimitedfunc';
 import { shieldStatusForRoom } from '../../../utils/ShieldUtils';
@@ -424,6 +425,7 @@ export default createReactClass({
 
         const avatarClasses = classNames({
             'mx_RoomTile_avatar': true,
+            'mx_BaseAvatar_image': VoiceChannelUtils.isVoiceChannel(this.props.room.roomId)
         });
 
         const badgeClasses = classNames({
@@ -543,9 +545,23 @@ export default createReactClass({
             e2eIcon = <E2EIcon status={this.state.e2eStatus} className="mx_RoomTile_e2eIcon" />;
         }
 
+        const VoiceUserTile = sdk.getComponent('rooms.VoiceUserTile')
+        const cli = MatrixClientPeg.get()
+        
+        const voiceChannelUsers = VoiceChannelUtils.isVoiceChannel(this.props.room.roomId) ? VoiceChannelUtils.getUsers(this.props.room.roomId) : null
+        let voiceChannelUserTiles = []
+        if (voiceChannelUsers) {
+            for (var participantId in voiceChannelUsers) {
+                const user = cli.getUser(voiceChannelUsers[participantId])
+                if (user) voiceChannelUserTiles.push(<VoiceUserTile key={participantId} user={user}/>)
+            }
+        }
+        // console.log('VC users tiles', room, voiceChannelUsers2)
+
         return <React.Fragment>
             <RovingTabIndexWrapper inputRef={this._roomTile}>
                 {({onFocus, isActive, ref}) =>
+                    <React.Fragment>
                     <AccessibleButton
                         onFocus={onFocus}
                         tabIndex={isActive ? 0 : -1}
@@ -578,7 +594,12 @@ export default createReactClass({
                         </div>
                         { /* { incomingCallBox } */ }
                         { tooltip }
+                        
                     </AccessibleButton>
+                    <div className='mx_RoomTile_voiceChannelUsers'>
+                            { voiceChannelUserTiles }
+                    </div>
+                    </React.Fragment>
                 }
             </RovingTabIndexWrapper>
 

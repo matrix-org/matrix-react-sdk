@@ -102,6 +102,40 @@ const TagPanel = createReactClass({
         dis.dispatch({action: 'deselect_tags'});
     },
 
+    _makeHomeTag() {
+        const AccessibleTooltipButton = sdk.getComponent("elements.AccessibleTooltipButton")
+        const BaseAvatar = sdk.getComponent('avatars.BaseAvatar')
+        const avatarHeight = 40
+        const name = 'Home'
+
+        const httpUrl = require('../../../../riot-web/res/vector-icons/favicon.ico')
+
+        const className = classNames({
+            mx_TagTile: true,
+            mx_TagTile_selected: !this.state.selectedTags.length,
+        })
+        const homeClick = (e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            dis.dispatch({
+                action: 'deselect_tags'
+            })
+        }
+        return <React.Fragment>
+            <AccessibleTooltipButton className={className} onClick={homeClick} title={name}>
+                <div className="mx_TagTile_avatar">
+                    <BaseAvatar
+                        name={name}
+                        idName={name}
+                        url={httpUrl}
+                        width={avatarHeight}
+                        height={avatarHeight}
+                    />
+                </div>
+            </AccessibleTooltipButton>
+        </React.Fragment>
+    },
+
     render() {
         const DNDTagTile = sdk.getComponent('elements.DNDTagTile');
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
@@ -138,8 +172,9 @@ const TagPanel = createReactClass({
             display: 'block'
         }
 
-        const homeTag = {
-            tag: "Home"
+        const homeTile = this._makeHomeTag()
+        const homeTileStyle = {
+            padding: '2px 0 9px 0'
         }
 
         return <div className={classes}>
@@ -147,8 +182,8 @@ const TagPanel = createReactClass({
                 { clearButton }
             </div>
             <div className="mx_TagPanel_divider" />
-            <div>
-                <TagTile {...homeTag} selected={!this.state.selectedTags.length}/>
+            <div style={homeTileStyle}>
+                { homeTile }
             </div>
             <div className="mx_TagPanel_divider" style={dividerStyle} />
             <AutoHideScrollbar

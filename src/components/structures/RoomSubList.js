@@ -193,6 +193,7 @@ export default class RoomSubList extends React.PureComponent {
     };
 
     onRoomTileClick = (roomId, ev) => {
+        if (VoiceChannelUtils.joinAsVoiceChannel(roomId)) return null
         dis.dispatch({
             action: 'view_room',
             show_room_tile: true, // to make sure the room gets scrolled into view
@@ -385,7 +386,10 @@ export default class RoomSubList extends React.PureComponent {
 
     setHeight = (height) => {
         if (this._subList.current) {
-            this._subList.current.style.height = `${height}px`;
+        //Make sub list work with users in voice channels
+        const numItems = this.props.list.map(r => (VoiceChannelUtils.isVoiceChannel(r.roomId) ? Object.keys(VoiceChannelUtils.getUsers(r.roomId)).length : 0))
+        const additionalHeightHack = numItems.length ? numItems.reduce((a,b) => a+b)*34 : 0
+            this._subList.current.style.height = `${height+additionalHeightHack}px`;
         }
         this._updateLazyRenderHeight(height);
     };

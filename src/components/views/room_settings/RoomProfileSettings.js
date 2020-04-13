@@ -46,8 +46,7 @@ export default class RoomProfileSettings extends React.Component {
         const nameEvent = room.currentState.getStateEvents('m.room.name', '');
         const name = nameEvent && nameEvent.getContent() ? nameEvent.getContent()['name'] : '';
 
-        const voiceChannelEvent = room.currentState.getStateEvents(VoiceChannelStateKey, '');
-        const isVoiceChannel = VoiceChannelUtils.canBeVoiceChannel(props.roomId)
+        const isVoiceChannel = VoiceChannelUtils.isVoiceChannel(props.roomId)
         const canBeVoiceChannel = VoiceChannelUtils.canBeVoiceChannel(props.roomId)
 
         this.state = {
@@ -118,7 +117,7 @@ export default class RoomProfileSettings extends React.Component {
 
         //TODO: change to empty state content for disabled?
         if (this.state.originalIsVoiceChannel !== this.state.isVoiceChannel) {
-            await client.sendStateEvent(this.props.roomId, VoiceChannelStateKey, {[VoiceChannelState.enabled]: this.state.isVoiceChannel}, '')
+            VoiceChannelUtils.updateState(this.props.roomId, {[VoiceChannelState.enabled]: this.state.isVoiceChannel})
             newState.originalIsVoiceChannel = this.state.isVoiceChannel
         }
 

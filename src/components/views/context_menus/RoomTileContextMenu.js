@@ -191,16 +191,17 @@ export default createReactClass({
     },
 
     _onClickJoinAsChannel: function() {
-        const data = VoiceChannelUtils.getConferenceData(this.props.room.roomId)
-        if (!data) return
-        dis.dispatch({
-            action: 'join_channel',
-            room_Id: this.props.room.roomId,
-            confId: data.conferenceId,
-            jitsiDomain: data.domain
-        })
+        VoiceChannelUtils.joinAsVoiceChannel(this.props.room.roomId)
+        
         //Close context menu
         this.props.onFinished ? this.props.onFinished() : null
+    },
+
+    _onClickViewChannel: function() {
+        dis.dispatch({
+            action: 'view_room',
+            room_id: this.props.room.roomId
+        });
     },
 
     _onClickForget: function() {
@@ -363,6 +364,14 @@ export default createReactClass({
     },
 
     _renderRoomTagMenu: function() {
+        const viewRoom = VoiceChannelUtils.isVoiceChannel(this.props.room.roomId) ? 
+                                <RoomTagOption
+                                    active={true}
+                                    label={_t('View Room messages')}
+                                    onClick={this._onClickViewChannel}
+                                />
+                            : null
+
         return (
             <div>
                 <RoomTagOption
@@ -387,13 +396,14 @@ export default createReactClass({
                     srcSet={require("../../../../res/img/icon_context_person_on.svg")}
                 />
                 <RoomTagOption
-                    //active={this.state.hasActiveJitsiWidget}
+                    active={this.state.hasActiveJitsiWidget}
                     disabled={!this.state.hasActiveJitsiWidget}
                     label={_t('Join as Voice Channel')}
                     onClick={this._onClickJoinAsChannel}
                     src={require("../../../../res/img/sound-indicator.svg")}
                     srcSet={require("../../../../res/img/sound-indicator.svg")}
                 />
+                { viewRoom }
             </div>
         );
     },

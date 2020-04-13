@@ -21,6 +21,7 @@ import {MatrixClientPeg} from "../../../../../MatrixClientPeg";
 import * as sdk from "../../../../..";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import Modal from "../../../../../Modal";
+import { VoiceChannelStateKey } from '../../../../../VoiceChannelUtils'
 
 const plEventsToLabels = {
     // These will be translated for us later.
@@ -34,6 +35,7 @@ const plEventsToLabels = {
     "m.room.encryption": _td("Enable room encryption"),
 
     "im.vector.modular.widgets": _td("Modify widgets"),
+    [VoiceChannelStateKey]: _td('Manipulate VoiceChannel State')
 };
 
 const plEventsToShow = {
@@ -48,6 +50,7 @@ const plEventsToShow = {
     "m.room.encryption": {isState: true},
 
     "im.vector.modular.widgets": {isState: true},
+    [VoiceChannelStateKey]: {isState: true}
 };
 
 // parse a string as an integer; if the input is undefined, or cannot be parsed
