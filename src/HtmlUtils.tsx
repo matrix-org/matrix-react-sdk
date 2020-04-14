@@ -98,7 +98,7 @@ export function processHtmlForSending(html: string): string {
     }
 
     let contentHTML = "";
-    for (let i=0; i < contentDiv.children.length; i++) {
+    for (let i = 0; i < contentDiv.children.length; i++) {
         const element = contentDiv.children[i];
         if (element.tagName.toLowerCase() === 'p') {
             contentHTML += element.innerHTML;
@@ -386,7 +386,7 @@ interface IOpts {
  * opts.forComposerQuote: optional param to lessen the url rewriting done by sanitization, for quoting into composer
  * opts.ref: React ref to attach to any React components returned (not compatible with opts.returnString)
  */
-export function bodyToHtml(content: {[key: string]: any}, highlights: string[], opts: IOpts={}) {
+export function bodyToHtml(content: {[key: string]: any}, highlights: string[], opts: IOpts = {}) {
     const isHtmlMessage = content.format === "org.matrix.custom.html" && content.formatted_body;
     let bodyHasEmoji = false;
 
@@ -454,7 +454,7 @@ export function bodyToHtml(content: {[key: string]: any}, highlights: string[], 
                     // their username. Permalinks (links in pills) can be any URL
                     // now, so we just check for an HTTP-looking thing.
                     (
-                        content.formatted_body == undefined ||
+                        content.formatted_body === undefined ||
                         (!content.formatted_body.includes("http:") &&
                         !content.formatted_body.includes("https:"))
                     );
