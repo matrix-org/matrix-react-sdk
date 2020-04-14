@@ -64,33 +64,43 @@ export async function verifyDevice(user, device) {
     if (!await enable4SIfNeeded()) {
         return;
     }
-    Modal.createTrackedDialog("Verification warning", "unverified session", UntrustedDeviceDialog, {
-        user,
-        device,
-        onFinished: async (action) => {
-            if (action === "sas") {
-                const cli = MatrixClientPeg.get();
-                const verificationRequestPromise = cli.legacyDeviceVerification(
-                    user.userId,
-                    device.deviceId,
-                    verificationMethods.SAS,
-                );
-                dis.dispatch({
-                    action: "set_right_panel_phase",
-                    phase: RIGHT_PANEL_PHASES.EncryptionPanel,
-                    refireParams: {member: user, verificationRequestPromise},
-                });
-            } else if (action === "legacy") {
-                const ManualDeviceKeyVerificationDialog = sdk.getComponent("dialogs.ManualDeviceKeyVerificationDialog");
-                Modal.createTrackedDialog("Legacy verify session", "legacy verify session",
-                    ManualDeviceKeyVerificationDialog,
-                    {
-                        userId: user.userId,
-                        device,
-                    },
-                );
-            }
-        },
+    return new Promise(resolve => {
+        Modal.createTrackedDialog("Verification warning", "unverified session", UntrustedDeviceDialog, {
+            user,
+            device,
+            onFinished: async (action) => {
+                if (action === "sas") {
+                    const cli = MatrixClientPeg.get();
+                    const verificationRequestPromise = cli.legacyDeviceVerification(
+                        user.userId,
+                        device.deviceId,
+                        verificationMethods.SAS,
+                    );
+                    dis.dispatch({
+                        action: "set_right_panel_phase",
+                        phase: RIGHT_PANEL_PHASES.EncryptionPanel,
+                        refireParams: {member: user, verificationRequestPromise},
+                    });
+                    const notPendingPromise = verificationRequestPromise.then(request => {
+                        return request.waitFor(r => !r.pending);
+                    });
+                    resolve(notPendingPromise);
+                } else if (action === "legacy") {
+                    const ManualDeviceKeyVerificationDialog =
+                        sdk.getComponent("dialogs.ManualDeviceKeyVerificationDialog");
+                    Modal.createTrackedDialog("Legacy verify session", "legacy verify session",
+                        ManualDeviceKeyVerificationDialog,
+                        {
+                            userId: user.userId,
+                            device,
+                            onFinished: resolve,
+                        },
+                    );
+                } else {
+                    resolve();
+                }
+            },
+        });
     });
 }
 
@@ -105,6 +115,10 @@ export async function legacyVerifyUser(user) {
         phase: RIGHT_PANEL_PHASES.EncryptionPanel,
         refireParams: {member: user, verificationRequestPromise},
     });
+    const notPendingPromise = verificationRequestPromise.then(request => {
+        return request.waitFor(r => !r.pending);
+    });
+    return notPendingPromise;
 }
 
 export async function verifyUser(user) {
