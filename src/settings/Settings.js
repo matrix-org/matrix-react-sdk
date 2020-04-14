@@ -536,4 +536,9 @@ export const SETTINGS = {
             MatrixClient.prototype.setCryptoTrustCrossSignedDevices, true,
         ),
     },
+    "attachColorToUsers": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td("Attach color to usernames and empty avatars"),
+        default: true,
+    },
 };

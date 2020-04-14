@@ -444,6 +444,7 @@
     "Keep secret storage passphrase in memory for this session": "Keep secret storage passphrase in memory for this session",
     "How fast should messages be downloaded.": "How fast should messages be downloaded.",
     "Manually verify all remote sessions": "Manually verify all remote sessions",
+    "Attach color to usernames and empty avatars": "Attach color to usernames and empty avatars",
     "Collecting app version information": "Collecting app version information",
     "Collecting logs": "Collecting logs",
     "Uploading report": "Uploading report",
