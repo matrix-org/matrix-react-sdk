@@ -2,7 +2,7 @@
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017, 2018 New Vector Ltd
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,11 +17,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
 import ReplyThread from "./components/views/elements/ReplyThread";
 
-import React from 'react';
+import * as React from 'react';
 import sanitizeHtml from 'sanitize-html';
 import * as linkify from 'linkifyjs';
 import linkifyMatrix from './linkify-matrix';
@@ -29,7 +27,7 @@ import _linkifyElement from 'linkifyjs/element';
 import _linkifyString from 'linkifyjs/string';
 import classNames from 'classnames';
 import {MatrixClientPeg} from './MatrixClientPeg';
-import url from 'url';
+import * as url from 'url';
 
 import EMOJIBASE_REGEX from 'emojibase-regex';
 import {tryTransformPermalinkToLocalHref} from "./utils/permalinks/Permalinks";
@@ -220,7 +218,7 @@ const transformTags = { // custom to matrix
     },
 };
 
-const sanitizeHtmlParams = {
+const sanitizeHtmlParams: {[key: string]: any} = {
     allowedTags: [
         'font', // custom to matrix for IRC-style font coloring
         'del', // for markdown
@@ -247,14 +245,16 @@ const sanitizeHtmlParams = {
 };
 
 // this is the same as the above except with less rewriting
-const composerSanitizeHtmlParams = Object.assign({}, sanitizeHtmlParams);
+const composerSanitizeHtmlParams: {[key: string]: any} = Object.assign({}, sanitizeHtmlParams);
 composerSanitizeHtmlParams.transformTags = {
     'code': transformTags['code'],
     '*': transformTags['*'],
 };
 
-class BaseHighlighter {
-    constructor(highlightClass, highlightLink) {
+abstract class BaseHighlighter {
+    protected highlightClass: string;
+    protected highlightLink: string;
+    constructor(highlightClass: string, highlightLink: string) {
         this.highlightClass = highlightClass;
         this.highlightLink = highlightLink;
     }
@@ -270,7 +270,8 @@ class BaseHighlighter {
      * returns a list of results (strings for HtmlHighligher, react nodes for
      * TextHighlighter).
      */
-    applyHighlights(safeSnippet, safeHighlights) {
+    applyHighlights(safeSnippet: string, safeHighlights: string[]) {
+        let subSnippet;
         let lastOffset = 0;
         let offset;
         let nodes = [];
@@ -279,7 +280,7 @@ class BaseHighlighter {
         while ((offset = safeSnippet.toLowerCase().indexOf(safeHighlight.toLowerCase(), lastOffset)) >= 0) {
             // handle preamble
             if (offset > lastOffset) {
-                var subSnippet = safeSnippet.substring(lastOffset, offset);
+                subSnippet = safeSnippet.substring(lastOffset, offset);
                 nodes = nodes.concat(this._applySubHighlights(subSnippet, safeHighlights));
             }
 
@@ -308,6 +309,8 @@ class BaseHighlighter {
             return [this._processSnippet(safeSnippet, false)];
         }
     }
+
+    abstract _processSnippet(snippet: string, highlight: boolean): React.ReactNode;
 }
 
 class HtmlHighlighter extends BaseHighlighter {
@@ -324,18 +327,16 @@ class HtmlHighlighter extends BaseHighlighter {
             return snippet;
         }
 
-        let span = "<span class=\""+this.highlightClass+"\">"
-            + snippet + "</span>";
-
+        let span = `<span class="${this.highlightClass}">${snippet}</span>`
         if (this.highlightLink) {
-            span = "<a href=\""+encodeURI(this.highlightLink)+"\">"
-                +span+"</a>";
+            span = `<a href="${encodeURI(this.highlightLink)}">${span}</a>`;
         }
         return span;
     }
 }
 
 class TextHighlighter extends BaseHighlighter {
+    protected _key: number;
     constructor(highlightClass, highlightLink) {
         super(highlightClass, highlightLink);
         this._key = 0;
@@ -364,7 +365,14 @@ class TextHighlighter extends BaseHighlighter {
     }
 }
 
-
+interface IOpts {
+    highlightLink?: string;
+    disableBigEmoji?: boolean;
+    stripReplyFallback?: boolean;
+    returnString?: boolean;
+    forComposerQuote?: boolean;
+    ref?: React.ElementRef<any>;
+}
 /* turn a matrix event body into html
  *
  * content: 'content' of the MatrixEvent
@@ -378,7 +386,7 @@ class TextHighlighter extends BaseHighlighter {
  * opts.forComposerQuote: optional param to lessen the url rewriting done by sanitization, for quoting into composer
  * opts.ref: React ref to attach to any React components returned (not compatible with opts.returnString)
  */
-export function bodyToHtml(content, highlights, opts={}) {
+export function bodyToHtml(content: {[key: string]: any}, highlights: string[], opts: IOpts={}) {
     const isHtmlMessage = content.format === "org.matrix.custom.html" && content.formatted_body;
     let bodyHasEmoji = false;
 
