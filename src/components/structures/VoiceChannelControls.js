@@ -99,7 +99,7 @@ export default class VoiceChannelControls extends React.Component {
         this._channel('hangup')
         //Cleanup on this side
         //Call a settimeout to give time for a graceful exit?
-        this._close()
+        //this._close()
     }
 
     //Click event for microphone button. Helps to keep microphone state consistent when changing voice channels
