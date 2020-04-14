@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import Modal from '../../../Modal';
+import {verifyDevice} from '../../../verification';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
@@ -89,20 +90,18 @@ export default createReactClass({
     },
 
 
-    _onVerifyClicked: function() {
-        const DeviceVerifyDialog = sdk.getComponent('views.dialogs.DeviceVerifyDialog');
-
-        console.log("KeyShareDialog: Starting verify dialog");
-        Modal.createTrackedDialog('Key Share', 'Starting dialog', DeviceVerifyDialog, {
-            userId: this.props.userId,
-            device: this.state.deviceInfo,
-            onFinished: (verified) => {
-                if (verified) {
-                    // can automatically share the keys now.
-                    this.props.onFinished(true);
-                }
-            },
-        }, null, /* priority = */ false, /* static = */ true);
+    _onVerifyClicked: async function() {
+        const user = this.props.matrixClient.getUser(this.props.userId);
+        if (user) {
+            console.log("KeyShareDialog: Starting verify dialog");
+            await verifyDevice(user, this.state.deviceInfo);
+            const deviceTrust = this.props.matrixClient
+                .checkDeviceTrust(this.props.userId, this.props.deviceId);
+            this.props.onFinished(deviceTrust.isVerified());
+        } else {
+            console.log("KeyShareDialog: could not get user to verify for ", this.props.userId);
+            this.props.onFinished(false);
+        }
     },
 
     _onShareClicked: function() {
