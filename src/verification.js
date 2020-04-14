@@ -59,7 +59,22 @@ function UntrustedDeviceDialog(props) {
         </div>
     </BaseDialog>;
 }
-
+/**
+ * This will verify an individual device in a way
+ * that is compatible with non-cross-singing clients
+ * (sending a m.key.verification.start event straight away),
+ * including older riots.
+ *
+ * If the verification succeeds,
+ * the trust will be local to this session,
+ * and not part of cross-signing.
+ *
+ * Only SAS and comparing fingerprints is supported.
+ *
+ * @param  {User | Member} user the user
+ * @param  {DeviceInfo} device the device
+ * @return {Promise} resolves when the verification has finished
+ */
 export async function verifyDevice(user, device) {
     if (!await enable4SIfNeeded()) {
         return;
@@ -104,6 +119,22 @@ export async function verifyDevice(user, device) {
     });
 }
 
+/**
+ * This will verify a user in a backwards-compatible way,
+ * by sending a to_device verification request to all devices
+ * we are aware of for the user.
+ *
+ * The result, if verification succeeds, will be that the device
+ * where the user accepts the verification request will be trusted,
+ * with the same limitations as `verifyDevice`
+ * (e.g. we won't sign the user's master key).
+ *
+ * This sends a `m.key.verification.request` event first, so all
+ * methods supported by both parties can be used.
+ *
+ * @param  {User | Member} user the user
+ * @return {Promise} resolves when the verification has finished
+ */
 export async function legacyVerifyUser(user) {
     if (!await enable4SIfNeeded()) {
         return;
@@ -121,6 +152,10 @@ export async function legacyVerifyUser(user) {
     return notPendingPromise;
 }
 
+/**
+ * Normal, cross-signing enabled, verification of a user.
+ * @param  {User | Member} user the user
+ */
 export async function verifyUser(user) {
     if (!await enable4SIfNeeded()) {
         return;
