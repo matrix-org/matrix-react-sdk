@@ -178,6 +178,7 @@ export default createReactClass({
             buttons = (
                 <DeviceVerifyButtons device={this.state.device}
                     userId={this.props.event.getSender()}
+                    onOpenNewDialog={this.props.onFinished}
                 />
             );
         }

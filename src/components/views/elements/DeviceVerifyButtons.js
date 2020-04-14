@@ -29,6 +29,7 @@ export default createReactClass({
     propTypes: {
         userId: PropTypes.string.isRequired,
         device: PropTypes.object.isRequired,
+        onOpenNewDialog: PropTypes.func.isRequired,
     },
 
     getInitialState: function() {
@@ -59,6 +60,7 @@ export default createReactClass({
         const cli = MatrixClientPeg.get();
         const user = cli.getUser(this.props.userId);
         if (user) {
+            this.props.onOpenNewDialog();
             verifyDevice(user, this.state.device);
         }
     },
