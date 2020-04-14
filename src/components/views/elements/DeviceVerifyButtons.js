@@ -18,8 +18,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
-import * as sdk from '../../../index';
-import Modal from '../../../Modal';
+import {verifyDevice} from '../../../verification';
 import { _t } from '../../../languageHandler';
 
 // XXX: This component is *not* cross-signing aware. Once everything is
@@ -57,11 +56,11 @@ export default createReactClass({
     },
 
     onVerifyClick: function() {
-        const DeviceVerifyDialog = sdk.getComponent('views.dialogs.DeviceVerifyDialog');
-        Modal.createTrackedDialog('Device Verify Dialog', '', DeviceVerifyDialog, {
-            userId: this.props.userId,
-            device: this.state.device,
-        }, null, /* priority = */ false, /* static = */ true);
+        const cli = MatrixClientPeg.get();
+        const user = cli.getUser(this.props.userId);
+        if (user) {
+            verifyDevice(user, this.state.device);
+        }
     },
 
     onUnverifyClick: function() {
