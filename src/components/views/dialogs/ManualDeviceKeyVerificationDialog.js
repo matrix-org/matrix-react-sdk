@@ -61,7 +61,7 @@ export default class ManualDeviceKeyVerificationDialog extends React.Component {
                 <p>
                     { text }
                 </p>
-                <div className="mx_DeviceVerifyDialog_cryptoSection">
+                <div className="mx_ManualDeviceKeyVerificationDialog_cryptoSection">
                     <ul>
                         <li><label>{ _t("Session name") }:</label> <span>{ this.props.device.getDisplayName() }</span></li>
                         <li><label>{ _t("Session ID") }:</label> <span><code>{ this.props.device.deviceId }</code></span></li>

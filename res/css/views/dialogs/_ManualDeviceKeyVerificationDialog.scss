@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_DeviceVerifyDialog_cryptoSection ul {
+.mx_ManualDeviceKeyVerificationDialog_cryptoSection ul {
     display: table;
 }
 
-.mx_DeviceVerifyDialog_cryptoSection li {
+.mx_ManualDeviceKeyVerificationDialog_cryptoSection li {
     display: table-row;
 }
 
-.mx_DeviceVerifyDialog_cryptoSection label,
-.mx_DeviceVerifyDialog_cryptoSection span {
+.mx_ManualDeviceKeyVerificationDialog_cryptoSection label,
+.mx_ManualDeviceKeyVerificationDialog_cryptoSection span {
     display: table-cell;
     padding-right: 1em;
 }
