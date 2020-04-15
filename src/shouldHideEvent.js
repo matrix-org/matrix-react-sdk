@@ -50,7 +50,7 @@ export default function shouldHideEvent(ev) {
     if (ev.isRelation("m.replace")) return true;
 
     // Hide call-related messages based on user preferences
-    if (ev.getType().startsWith("m.call") && !isEnabled('showCallRelatedMessages')) return true;
+    if (ev.getType().startsWith("m.call.") && !isEnabled('showCallRelatedMessages')) return true;
 
     const eventDiff = memberEventDiff(ev);
 
