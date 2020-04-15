@@ -822,15 +822,6 @@ export default createReactClass({
             });
             return;
         }
-        if (!SettingsStore.isFeatureEnabled("feature_cross_signing")) {
-            room.hasUnverifiedDevices().then((hasUnverifiedDevices) => {
-                this.setState({
-                    e2eStatus: hasUnverifiedDevices ? "warning" : "verified",
-                });
-            });
-            debuglog("e2e check is warning/verified only as cross-signing is off");
-            return;
-        }
 
         /* At this point, the user has encryption on and cross-signing on */
         this.setState({

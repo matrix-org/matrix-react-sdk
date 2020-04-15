@@ -1506,13 +1506,6 @@ export default createReactClass({
         });
 
         cli.on("crypto.verification.request", request => {
-            const isFlagOn = SettingsStore.isFeatureEnabled("feature_cross_signing");
-
-            if (!isFlagOn && !request.channel.deviceId) {
-                request.cancel({code: "m.invalid_message", reason: "This client has cross-signing disabled"});
-                return;
-            }
-
             if (request.verifier) {
                 const IncomingSasDialog = sdk.getComponent("views.dialogs.IncomingSasDialog");
                 Modal.createTrackedDialog('Incoming Verification', '', IncomingSasDialog, {
@@ -1550,14 +1543,12 @@ export default createReactClass({
             );
             cli.setGlobalBlacklistUnverifiedDevices(blacklistEnabled);
 
-            // With cross-signing enabled, we send to unknown devices
+            // With cross-signing, we send to unknown devices
             // without prompting. Any bad-device status the user should
             // be aware of will be signalled through the room shield
             // changing colour. More advanced behaviour will come once
             // we implement more settings.
-            cli.setGlobalErrorOnUnknownDevices(
-                !SettingsStore.isFeatureEnabled("feature_cross_signing"),
-            );
+            cli.setGlobalErrorOnUnknownDevices(false);
         }
     },
 
@@ -1919,12 +1910,8 @@ export default createReactClass({
         // whether cross-signing has been set up on the account.
         const masterKeyInStorage = !!cli.getAccountData("m.cross_signing.master");
         if (masterKeyInStorage) {
-            // Auto-enable cross-signing for the new session when key found in
-            // secret storage.
-            SettingsStore.setFeatureEnabled("feature_cross_signing", true);
             this.setStateForNewView({ view: VIEWS.COMPLETE_SECURITY });
         } else if (
-            SettingsStore.isFeatureEnabled("feature_cross_signing") &&
             await cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing")
         ) {
             // This will only work if the feature is set to 'enable' in the config,

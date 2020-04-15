@@ -321,15 +321,6 @@ export default createReactClass({
             return;
         }
 
-        // If cross-signing is off, the old behaviour is to scream at the user
-        // as if they've done something wrong, which they haven't
-        if (!SettingsStore.isFeatureEnabled("feature_cross_signing")) {
-            this.setState({
-                verified: E2E_STATE.WARNING,
-            }, this.props.onHeightChanged);
-            return;
-        }
-
         if (!this.context.checkUserTrust(mxEvent.getSender()).isCrossSigningVerified()) {
             this.setState({
                 verified: E2E_STATE.NORMAL,

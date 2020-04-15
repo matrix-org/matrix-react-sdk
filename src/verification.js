@@ -27,9 +27,6 @@ import {verificationMethods} from 'matrix-js-sdk/src/crypto';
 
 async function enable4SIfNeeded() {
     const cli = MatrixClientPeg.get();
-    if (!cli.isCryptoEnabled() || !SettingsStore.isFeatureEnabled("feature_cross_signing")) {
-        return false;
-    }
     const usk = cli.getCrossSigningId("user_signing");
     if (!usk) {
         await accessSecretStorage();

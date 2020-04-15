@@ -226,10 +226,7 @@ export async function ensureDMExists(client, userId) {
     if (existingDMRoom) {
         roomId = existingDMRoom.roomId;
     } else {
-        let encryption;
-        if (SettingsStore.isFeatureEnabled("feature_cross_signing")) {
-            encryption = canEncryptToAllUsers(client, [userId]);
-        }
+        let encryption = canEncryptToAllUsers(client, [userId]);
         roomId = await createRoom({encryption, dmUserId: userId, spinner: false, andView: false});
         await _waitForMember(client, roomId, userId);
     }

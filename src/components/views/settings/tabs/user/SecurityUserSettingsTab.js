@@ -269,17 +269,14 @@ export default class SecurityUserSettingsTab extends React.Component {
         // in having advanced details here once all flows are implemented, we
         // can remove this.
         const CrossSigningPanel = sdk.getComponent('views.settings.CrossSigningPanel');
-        let crossSigning;
-        if (SettingsStore.isFeatureEnabled("feature_cross_signing")) {
-            crossSigning = (
-                <div className='mx_SettingsTab_section'>
-                    <span className="mx_SettingsTab_subheading">{_t("Cross-signing")}</span>
-                    <div className='mx_SettingsTab_subsectionText'>
-                        <CrossSigningPanel />
-                    </div>
+        let crossSigning = (
+            <div className='mx_SettingsTab_section'>
+                <span className="mx_SettingsTab_subheading">{_t("Cross-signing")}</span>
+                <div className='mx_SettingsTab_subsectionText'>
+                    <CrossSigningPanel />
                 </div>
-            );
-        }
+            </div>
+        );
 
         const E2eAdvancedPanel = sdk.getComponent('views.settings.E2eAdvancedPanel');
 

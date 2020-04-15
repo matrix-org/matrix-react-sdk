@@ -62,15 +62,10 @@ const E2EIcon = ({isUser, status, className, size, onClick, hideTooltip}) => {
     }, className);
 
     let e2eTitle;
-    const crossSigning = useFeatureEnabled("feature_cross_signing");
-    if (crossSigning && isUser) {
+    if (isUser) {
         e2eTitle = crossSigningUserTitles[status];
-    } else if (crossSigning && !isUser) {
+    } else if (!isUser) {
         e2eTitle = crossSigningRoomTitles[status];
-    } else if (!crossSigning && isUser) {
-        e2eTitle = legacyUserTitles[status];
-    } else if (!crossSigning && !isUser) {
-        e2eTitle = legacyRoomTitles[status];
     }
 
     let style;

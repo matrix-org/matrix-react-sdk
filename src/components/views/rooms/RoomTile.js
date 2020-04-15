@@ -155,9 +155,6 @@ export default createReactClass({
         if (!cli.isRoomEncrypted(this.props.room.roomId)) {
             return;
         }
-        if (!SettingsStore.isFeatureEnabled("feature_cross_signing")) {
-            return;
-        }
 
         /* At this point, the user has encryption on and cross-signing on */
         this.setState({
@@ -486,17 +483,6 @@ export default createReactClass({
 
         let dmIndicator;
         let dmOnline;
-        /* Post-cross-signing we don't show DM indicators at all, instead relying on user
-           context to let them know when that is. */
-        if (dmUserId && !SettingsStore.isFeatureEnabled("feature_cross_signing")) {
-            dmIndicator = <img
-                src={require("../../../../res/img/icon_person.svg")}
-                className="mx_RoomTile_dm"
-                width="11"
-                height="13"
-                alt="dm"
-            />;
-        }
 
         const { room } = this.props;
         const member = room.getMember(dmUserId);
@@ -532,10 +518,8 @@ export default createReactClass({
         }
 
         let privateIcon = null;
-        if (SettingsStore.isFeatureEnabled("feature_cross_signing")) {
-            if (this.state.joinRule == "invite" && !dmUserId) {
-                privateIcon = <InviteOnlyIcon collapsedPanel={this.props.collapsed} />;
-            }
+        if (this.state.joinRule === "invite" && !dmUserId) {
+            privateIcon = <InviteOnlyIcon collapsedPanel={this.props.collapsed} />;
         }
 
         let e2eIcon = null;

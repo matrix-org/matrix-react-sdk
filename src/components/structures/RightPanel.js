@@ -219,55 +219,39 @@ export default class RightPanel extends React.Component {
                 break;
             case RIGHT_PANEL_PHASES.RoomMemberInfo:
             case RIGHT_PANEL_PHASES.EncryptionPanel:
-                if (SettingsStore.isFeatureEnabled("feature_cross_signing")) {
-                    const onClose = () => {
-                        dis.dispatch({
-                            action: "view_user",
-                            member: this.state.phase === RIGHT_PANEL_PHASES.EncryptionPanel ? this.state.member : null,
-                        });
-                    };
-                    panel = <UserInfo
-                        user={this.state.member}
-                        roomId={this.props.roomId}
-                        key={this.props.roomId || this.state.member.userId}
-                        onClose={onClose}
-                        phase={this.state.phase}
-                        verificationRequest={this.state.verificationRequest}
-                        verificationRequestPromise={this.state.verificationRequestPromise}
-                    />;
-                } else {
-                    panel = <MemberInfo
-                        member={this.state.member}
-                        key={this.props.roomId || this.state.member.userId}
-                    />;
-                }
+                const onClose = () => {
+                    dis.dispatch({
+                        action: "view_user",
+                        member: this.state.phase === RIGHT_PANEL_PHASES.EncryptionPanel ? this.state.member : null,
+                    });
+                };
+                panel = <UserInfo
+                    user={this.state.member}
+                    roomId={this.props.roomId}
+                    key={this.props.roomId || this.state.member.userId}
+                    onClose={onClose}
+                    phase={this.state.phase}
+                    verificationRequest={this.state.verificationRequest}
+                    verificationRequestPromise={this.state.verificationRequestPromise}
+                />;
                 break;
             case RIGHT_PANEL_PHASES.Room3pidMemberInfo:
                 panel = <ThirdPartyMemberInfo event={this.state.event} key={this.props.roomId} />;
                 break;
-            case RIGHT_PANEL_PHASES.GroupMemberInfo:
-                if (SettingsStore.isFeatureEnabled("feature_cross_signing")) {
-                    const onClose = () => {
-                        dis.dispatch({
-                            action: "view_user",
-                            member: null,
-                        });
-                    };
-                    panel = <UserInfo
-                        user={this.state.member}
-                        groupId={this.props.groupId}
-                        key={this.state.member.userId}
-                        onClose={onClose} />;
-                } else {
-                    panel = (
-                        <GroupMemberInfo
-                            groupMember={this.state.member}
-                            groupId={this.props.groupId}
-                            key={this.state.member.user_id}
-                        />
-                    );
-                }
+            case RIGHT_PANEL_PHASES.GroupMemberInfo:{
+                const onClose = () => {
+                    dis.dispatch({
+                        action: "view_user",
+                        member: null,
+                    });
+                };
+                panel = <UserInfo
+                    user={this.state.member}
+                    groupId={this.props.groupId}
+                    key={this.state.member.userId}
+                    onClose={onClose} />;
                 break;
+            }
             case RIGHT_PANEL_PHASES.GroupRoomInfo:
                 panel = <GroupRoomInfo
                     groupRoomId={this.state.groupRoomId}

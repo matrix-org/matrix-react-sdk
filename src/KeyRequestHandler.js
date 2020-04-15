@@ -34,80 +34,11 @@ export default class KeyRequestHandler {
     }
 
     handleKeyRequest(keyRequest) {
-        // Ignore own device key requests if cross-signing lab enabled
-        if (SettingsStore.isFeatureEnabled("feature_cross_signing")) {
-            return;
-        }
-
-        const userId = keyRequest.userId;
-        const deviceId = keyRequest.deviceId;
-        const requestId = keyRequest.requestId;
-
-        if (!this._pendingKeyRequests[userId]) {
-            this._pendingKeyRequests[userId] = Object.create(null);
-        }
-        if (!this._pendingKeyRequests[userId][deviceId]) {
-            this._pendingKeyRequests[userId][deviceId] = [];
-        }
-
-        // check if we already have this request
-        const requests = this._pendingKeyRequests[userId][deviceId];
-        if (requests.find((r) => r.requestId === requestId)) {
-            console.log("Already have this key request, ignoring");
-            return;
-        }
-
-        requests.push(keyRequest);
-
-        if (this._currentUser) {
-            // ignore for now
-            console.log("Key request, but we already have a dialog open");
-            return;
-        }
-
-        this._processNextRequest();
+        // Ignore own device key requests
     }
 
     handleKeyRequestCancellation(cancellation) {
-        // Ignore own device key requests if cross-signing lab enabled
-        if (SettingsStore.isFeatureEnabled("feature_cross_signing")) {
-            return;
-        }
-
-        // see if we can find the request in the queue
-        const userId = cancellation.userId;
-        const deviceId = cancellation.deviceId;
-        const requestId = cancellation.requestId;
-
-        if (userId === this._currentUser && deviceId === this._currentDevice) {
-            console.log(
-                "room key request cancellation for the user we currently have a"
-                + " dialog open for",
-            );
-            // TODO: update the dialog. For now, we just ignore the
-            // cancellation.
-            return;
-        }
-
-        if (!this._pendingKeyRequests[userId]) {
-            return;
-        }
-        const requests = this._pendingKeyRequests[userId][deviceId];
-        if (!requests) {
-            return;
-        }
-        const idx = requests.findIndex((r) => r.requestId === requestId);
-        if (idx < 0) {
-            return;
-        }
-        console.log("Forgetting room key request");
-        requests.splice(idx, 1);
-        if (requests.length === 0) {
-            delete this._pendingKeyRequests[userId][deviceId];
-            if (Object.keys(this._pendingKeyRequests[userId]).length === 0) {
-                delete this._pendingKeyRequests[userId];
-            }
-        }
+        // Ignore own device key requests
     }
 
     _processNextRequest() {
