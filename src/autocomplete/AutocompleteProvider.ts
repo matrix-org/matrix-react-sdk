@@ -2,6 +2,7 @@
 Copyright 2016 Aviral Dasgupta
 Copyright 2017 Vector Creations Ltd
 Copyright 2017, 2018 New Vector Ltd
+Copyright 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,10 +17,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import type {Completion, SelectionRange} from './Autocompleter';
+import * as React from 'react';
+
+import {Completion, SelectionRange} from './Autocompleter';
 
 export default class AutocompleteProvider {
+    commandRegex: RegExp;
+    forcedCommandRegex: RegExp;
+
     constructor(commandRegex?: RegExp, forcedCommandRegex?: RegExp) {
         if (commandRegex) {
             if (!commandRegex.global) {
@@ -46,21 +51,21 @@ export default class AutocompleteProvider {
      * @param {boolean} force True if the user is forcing completion
      * @return {object} { command, range } where both objects fields are null if no match
      */
-    getCurrentCommand(query: string, selection: SelectionRange, force: boolean = false) {
+    getCurrentCommand(query: string, selection: SelectionRange, force = false) {
         let commandRegex = this.commandRegex;
 
         if (force && this.shouldForceComplete()) {
             commandRegex = this.forcedCommandRegex || /\S+/g;
         }
 
-        if (commandRegex == null) {
+        if (commandRegex === null) {
             return null;
         }
 
         commandRegex.lastIndex = 0;
 
         let match;
-        while ((match = commandRegex.exec(query)) != null) {
+        while ((match = commandRegex.exec(query)) !== null) {
             const start = match.index;
             const end = start + match[0].length;
             if (selection.start <= end && selection.end >= start) {
@@ -82,7 +87,7 @@ export default class AutocompleteProvider {
         };
     }
 
-    async getCompletions(query: string, selection: SelectionRange, force: boolean = false): Array<Completion> {
+    async getCompletions(query: string, selection: SelectionRange, force = false): Promise<Array<Completion>> {
         return [];
     }
 
@@ -90,7 +95,7 @@ export default class AutocompleteProvider {
         return 'Default Provider';
     }
 
-    renderCompletions(completions: [React.Component]): ?React.Component {
+    renderCompletions(completions: [React.Component]): React.ReactNode {
         console.error('stub; should be implemented in subclasses');
         return null;
     }
