@@ -527,6 +527,20 @@ export default createReactClass({
     },
 
     /**
+     * Specify an amount to offset the default scroll amount by.
+     *
+     * @param {number} delta: Amount to offset default scroll. Positive values scroll down.
+     */
+    scrollOffset: function(delta) {
+        const scrollNode = this._getScrollNode();
+        if(!this.scrollState.stuckAtBottom) {
+            scrollNode.scrollBy(0, delta);
+        }
+        this._saveScrollState();
+        this.checkScroll();
+    },
+
+    /**
      * Scroll up/down in response to a scroll key
      * @param {object} ev the keyboard event
      */

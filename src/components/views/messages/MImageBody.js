@@ -56,6 +56,7 @@ export default class MImageBody extends React.Component {
         this.onClick = this.onClick.bind(this);
         this._isGif = this._isGif.bind(this);
         this._toggleCollapsed = this._toggleCollapsed.bind(this);
+        this._mapRange = this._mapRange.bind(this);
 
         this.state = {
             decryptedUrl: null,
@@ -130,6 +131,29 @@ export default class MImageBody extends React.Component {
 
     _toggleCollapsed() {
         this.setState({ collapsed: !this.state.collapsed });
+    }
+
+    _mapRange(val, in_start, in_end, out_start, out_end) {
+        return out_start + (out_end - out_start) * ((val - in_start) / (in_end - in_start));
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        const content = this.props.mxEvent.getContent();
+        if (this.state.collapsed != prevState.collapsed) {
+            // We need to scale the thumbnail size by an amount up to 20% to prevent
+            // the scroll bar from jumping when collapsing/uncollapsing an image.
+            // FIXME: This assumes a thumbnail height between 100 and 600. For images
+            // smaller than 100px there's not a real benefit to adjusting the scale.
+            // Regarding larger images, Synapse only supports 800x600 thumbnails for now.
+            // If that gets changed, up to 1200px for retina displays, then we'll need to
+            // add support here for that.
+            const scale = Math.abs(this._mapRange(content.info.thumbnail_info.h, 100, 600, 1.2, 0.8));
+            let scaledImgHeight = content.info.thumbnail_info.h * scale;
+            if(!this.state.collapsed) {
+                scaledImgHeight = -scaledImgHeight;
+            }
+            this.props.onHeightChanged(scaledImgHeight);
+        }
     }
 
     onImageEnter(e) {
