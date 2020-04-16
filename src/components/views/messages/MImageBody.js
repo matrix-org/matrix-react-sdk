@@ -133,8 +133,8 @@ export default class MImageBody extends React.Component {
         this.setState({ collapsed: !this.state.collapsed });
     }
 
-    _mapRange(val, in_start, in_end, out_start, out_end) {
-        return out_start + (out_end - out_start) * ((val - in_start) / (in_end - in_start));
+    _mapRange(val, inStart, inEnd, outStart, outEnd) {
+        return outStart + (outEnd - outStart) * ((val - inStart) / (inEnd - inStart));
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -149,7 +149,7 @@ export default class MImageBody extends React.Component {
             // add support here for that.
             const scale = Math.abs(this._mapRange(content.info.thumbnail_info.h, 100, 600, 1.2, 0.8));
             let scaledImgHeight = content.info.thumbnail_info.h * scale;
-            if(!this.state.collapsed) {
+            if (!this.state.collapsed) {
                 scaledImgHeight = -scaledImgHeight;
             }
             this.props.onHeightChanged(scaledImgHeight);
