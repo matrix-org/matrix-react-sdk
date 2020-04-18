@@ -180,6 +180,7 @@ export default class BugReportDialog extends React.Component {
                         onChange={this._onIssueUrlChange}
                         value={this.state.issueUrl}
                         placeholder="https://github.com/vector-im/riot-web/issues/..."
+                        alwaysShowPlaceholder
                     />
                     <Field
                         className="mx_BugReportDialog_field_input"
@@ -194,6 +195,7 @@ export default class BugReportDialog extends React.Component {
                             "the time, room IDs, user IDs, etc., " +
                             "please include those things here.",
                         )}
+                        alwaysShowPlaceholder
                     />
                     {progress}
                     {error}

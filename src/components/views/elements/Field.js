@@ -66,6 +66,8 @@ export default class Field extends React.PureComponent {
         tooltipClassName: PropTypes.string,
         // If specified, an additional class name to apply to the field container
         className: PropTypes.string,
+        // If specified, will always behave as it was focused and show placeholder, useful for descriptive placeholders
+        alwaysShowPlaceholder: PropTypes.bool,
         // All other props pass through to the <input>.
     };
 
@@ -167,7 +169,7 @@ export default class Field extends React.PureComponent {
     render() {
         const {
             element, prefix, postfix, className, onValidate, children,
-            tooltipContent, flagInvalid, tooltipClassName, list, ...inputProps} = this.props;
+            tooltipContent, flagInvalid, tooltipClassName, list, alwaysShowPlaceholder, ...inputProps} = this.props;
 
         const inputElement = element || "input";
 
@@ -198,7 +200,8 @@ export default class Field extends React.PureComponent {
             // If we have a prefix element, leave the label always at the top left and
             // don't animate it, as it looks a bit clunky and would add complexity to do
             // properly.
-            mx_Field_labelAlwaysTopLeft: prefix,
+            mx_Field_alwaysShowPlaceholder: alwaysShowPlaceholder,
+            mx_Field_labelAlwaysTopLeft: alwaysShowPlaceholder || prefix,
             mx_Field_valid: onValidate && this.state.valid === true,
             mx_Field_invalid: hasValidationFlag
                 ? flagInvalid

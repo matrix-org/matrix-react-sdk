@@ -88,10 +88,14 @@ limitations under the License.
     color: transparent;
 }
 
-.mx_Field input:placeholder-shown:focus::placeholder,
-.mx_Field textarea:placeholder-shown:focus::placeholder {
-    transition: color 0.25s ease-in 0.1s;
-    color: $greyed-fg-color;
+.mx_Field input:focus,
+.mx_Field textarea:focus,
+.mx_Field.mx_Field_alwaysShowPlaceholder input,
+.mx_Field.mx_Field_alwaysShowPlaceholder textarea {
+    &:placeholder-shown::placeholder {
+        transition: color 0.25s ease-in 0.1s;
+        color: $greyed-fg-color;
+    }
 }
 
 .mx_Field label {
