@@ -508,9 +508,8 @@ export default class MImageBody extends React.Component {
 
         const collapsed = this.state.collapsed;
         const thumbnail = collapsed ? null : this._messageContent(contentUrl, thumbUrl, content);
-        const fileBody = collapsed ? null : this.getFileBody();
-        /* when image is showing, it covers the collapse button, &nbsp; prevents it from overlaping */
-        const fileName = collapsed ? content.body : <div>&nbsp;</div>;
+        const fileBody = this.getFileBody();
+        const title = collapsed ? "Uncollapse" : "Collapse";
 
         const chevronClasses = classNames({
             'mx_MImageBody_chevron': true,
@@ -520,12 +519,13 @@ export default class MImageBody extends React.Component {
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
 
         return <span className="mx_MImageBody">
-            <AccessibleButton className="mx_MImageBody_label mx_AccessibleButton" onClick={ this._toggleCollapsed }>
+            <AccessibleButton className="mx_MImageBody_label"
+                onClick={ this._toggleCollapsed}
+                title={_t(title)}>
                 {chevron}
-                <span>{fileName}</span>
             </AccessibleButton>
-            {thumbnail}
             {fileBody}
+            {thumbnail}
         </span>;
     }
 }

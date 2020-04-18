@@ -2264,5 +2264,7 @@
     "Esc": "Esc",
     "Enter": "Enter",
     "Space": "Space",
-    "End": "End"
+    "End": "End",
+    "Collapse": "Collapse",
+    "Uncollapse": "Uncollapse"
 }
