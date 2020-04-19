@@ -139,7 +139,7 @@ $AppsDrawerBodyHeight: 273px;
     mask-repeat: no-repeat;
     mask-position: 0 center;
     mask-size: auto 12px;
-    background-color: $topleftmenu-color;
+    background-color: $accent-color;
     margin: 0 3px;
 }
 
@@ -155,10 +155,12 @@ $AppsDrawerBodyHeight: 273px;
 
 .mx_AppTileMenuBar_iconButton.mx_AppTileMenuBar_iconButton_popout {
     mask-image: url('$(res)/img/feather-customised/widget/external-link.svg');
+    background-color: $accent-color;
 }
 
 .mx_AppTileMenuBar_iconButton.mx_AppTileMenuBar_iconButton_menu {
     mask-image: url('$(res)/img/icon_context.svg');
+    background-color: $accent-color;
 }
 
 .mx_AppTileMenuBarWidgetDelete {
