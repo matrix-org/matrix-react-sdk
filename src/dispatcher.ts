@@ -17,7 +17,7 @@ limitations under the License.
 
 import {Dispatcher} from "flux";
 
-interface IPayload {
+export interface IPayload {
     action: string;
     [key: string]: any;
 }
