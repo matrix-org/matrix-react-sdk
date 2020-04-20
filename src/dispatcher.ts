@@ -15,11 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
+import {Dispatcher} from "flux";
 
-import flux from "flux";
+interface IPayload {
+    action: string;
+    [key: string]: any;
+}
 
-class MatrixDispatcher extends flux.Dispatcher {
+export class MatrixDispatcher extends Dispatcher<IPayload> {
     /**
      * @param {Object|function} payload Required. The payload to dispatch.
      *        If an Object, must contain at least an 'action' key.
@@ -29,7 +32,7 @@ class MatrixDispatcher extends flux.Dispatcher {
      *        an operation that the browser requires user interaction
      *        for.
      */
-    dispatch(payload, sync) {
+    dispatch(payload: IPayload | ((IPayload) => void), sync?: boolean) {
         // Allow for asynchronous dispatching by accepting payloads that have the
         // type `function (dispatch) {...}`
         if (typeof payload === 'function') {
@@ -52,7 +55,7 @@ class MatrixDispatcher extends flux.Dispatcher {
     }
 }
 
-if (global.mxDispatcher === undefined) {
-    global.mxDispatcher = new MatrixDispatcher();
+if (window.mxDispatcher === undefined) {
+    window.mxDispatcher = new MatrixDispatcher();
 }
-export default global.mxDispatcher;
+export default window.mxDispatcher;
