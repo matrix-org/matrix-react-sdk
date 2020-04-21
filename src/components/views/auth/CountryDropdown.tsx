@@ -30,7 +30,13 @@ for (const c of COUNTRIES) {
     COUNTRIES_BY_ISO2[c.iso2] = c;
 }
 
-function countryMatchesSearchQuery(query: string, country) {
+interface ICountry {
+    iso2: string;
+    name: string;
+    prefix: string;
+}
+
+function countryMatchesSearchQuery(query: string, country: ICountry) {
     // Remove '+' if present (when searching for a prefix)
     if (query[0] === '+') {
         query = query.slice(1);
@@ -40,12 +46,6 @@ function countryMatchesSearchQuery(query: string, country) {
     if (country.iso2 == query.toUpperCase()) return true;
     if (country.prefix.indexOf(query) !== -1) return true;
     return false;
-}
-
-interface ICountry {
-    iso2: string;
-    name: string;
-    prefix: string;
 }
 
 interface IProps {
