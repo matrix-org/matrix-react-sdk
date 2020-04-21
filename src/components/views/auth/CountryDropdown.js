@@ -22,6 +22,7 @@ import * as sdk from '../../../index';
 import { COUNTRIES } from '../../../phonenumber';
 import SdkConfig from "../../../SdkConfig";
 import { _t } from "../../../languageHandler";
+import {getEmojiFlag} from "countries-list";
 
 const COUNTRIES_BY_ISO2 = {};
 for (const c of COUNTRIES) {
@@ -80,7 +81,7 @@ export default class CountryDropdown extends React.Component {
     }
 
     _flagImgForIso2(iso2) {
-        return <img src={require(`../../../../res/img/flags/${iso2}.png`)} />;
+        return <div className="mx_Dropdown_option_emoji">{ getEmojiFlag(iso2) }</div>;
     }
 
     _getShortOption(iso2) {
