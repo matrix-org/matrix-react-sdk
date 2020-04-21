@@ -25,7 +25,7 @@ const PHONE_NUMBER_REGEXP = /^[0-9 -.]+$/;
  *     a national-format number.
  * @return True if the number could be a valid phone number, otherwise false.
  */
-export function looksValid(phoneNumber) {
+export function looksValid(phoneNumber: string) {
     return PHONE_NUMBER_REGEXP.test(phoneNumber);
 }
 
