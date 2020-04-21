@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import data from "countries-list/dist/minimal/countries.minimal.min.json";
+import {countries} from "countries-list";
 
 const PHONE_NUMBER_REGEXP = /^[0-9 -.]+$/;
 
@@ -31,8 +31,8 @@ export function looksValid(phoneNumber: string) {
     return PHONE_NUMBER_REGEXP.test(phoneNumber);
 }
 
-export const COUNTRIES = Object.keys(data).map(iso2 => {
-    const [enName, nativeName, phonePrefixes, continent, capital, currencyCode, languages] = data[iso2];
+export const COUNTRIES = Object.keys(countries).map(iso2 => {
+    const [enName, nativeName, phonePrefixes, continent, capital, currencyCode, languages] = countries[iso2];
     return {
         iso2,
         name: enName,
