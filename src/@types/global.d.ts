@@ -16,6 +16,7 @@ limitations under the License.
 
 import * as ModernizrStatic from "modernizr";
 import {MatrixDispatcher} from "../dispatcher";
+import {_MatrixClientPeg} from "../MatrixClientPeg";
 
 declare global {
     interface Window {
@@ -24,6 +25,7 @@ declare global {
             init: () => Promise<void>;
         };
         mxDispatcher: MatrixDispatcher;
+        mxMatrixClientPeg: _MatrixClientPeg;
     }
 
     // workaround for https://github.com/microsoft/TypeScript/issues/30933
@@ -38,5 +40,9 @@ declare global {
 
     interface StorageEstimate {
         usageDetails?: {[key: string]: number};
+    }
+
+    interface Navigator {
+        userLanguage?: string;
     }
 }

@@ -17,7 +17,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {MatrixClient, MemoryStore} from 'matrix-js-sdk';
+import {MatrixClient} from 'matrix-js-sdk/src/client';
+import {MemoryStore} from 'matrix-js-sdk/src/store/memory';
 
 import * as utils from 'matrix-js-sdk/src/utils';
 import {EventTimeline} from 'matrix-js-sdk/src/models/event-timeline';
@@ -34,7 +35,7 @@ import IdentityAuthClient from './IdentityAuthClient';
 import { crossSigningCallbacks } from './CrossSigningManager';
 import {SHOW_QR_CODE_METHOD} from "matrix-js-sdk/src/crypto/verification/QRCode";
 
-interface MatrixClientCreds {
+export interface IMatrixClientCreds {
     homeserverUrl: string,
     identityServerUrl: string,
     userId: string,
@@ -49,7 +50,16 @@ interface MatrixClientCreds {
  * This module provides a singleton instance of this class so the 'current'
  * Matrix Client object is available easily.
  */
-class _MatrixClientPeg {
+export class _MatrixClientPeg {
+    matrixClient: MatrixClient;
+    _justRegisteredUserId: boolean;
+    opts: {
+        initialSyncLimit: number;
+        pendingEventOrdering?: "detached" | "chronological";
+        lazyLoadMembers?: boolean;
+    };
+    _currentClientCreds: IMatrixClientCreds;
+
     constructor() {
         this.matrixClient = null;
         this._justRegisteredUserId = null;
@@ -116,9 +126,9 @@ class _MatrixClientPeg {
      * Replace this MatrixClientPeg's client with a client instance that has
      * homeserver / identity server URLs and active credentials
      */
-    replaceUsingCreds(creds: MatrixClientCreds) {
+    replaceUsingCreds(creds: IMatrixClientCreds) {
         this._currentClientCreds = creds;
-        this._createClient(creds);
+        this.createClient(creds);
     }
 
     async assign() {
@@ -132,7 +142,7 @@ class _MatrixClientPeg {
                 if (dbType === 'indexeddb') {
                     console.error('Error starting matrixclient store - falling back to memory store', err);
                     this.matrixClient.store = new MemoryStore({
-                        localStorage: global.localStorage,
+                        localStorage: window.localStorage,
                     });
                 } else {
                     console.error('Failed to start memory store!', err);
@@ -187,7 +197,7 @@ class _MatrixClientPeg {
         console.log(`MatrixClientPeg: MatrixClient started`);
     }
 
-    getCredentials(): MatrixClientCreds {
+    getCredentials(): IMatrixClientCreds {
         return {
             homeserverUrl: this.matrixClient.baseUrl,
             identityServerUrl: this.matrixClient.idBaseUrl,
@@ -211,7 +221,7 @@ class _MatrixClientPeg {
         return matches[1];
     }
 
-    _createClient(creds: MatrixClientCreds) {
+    private createClient(creds: IMatrixClientCreds) {
         const opts = {
             baseUrl: creds.homeserverUrl,
             idBaseUrl: creds.identityServerUrl,
@@ -228,9 +238,9 @@ class _MatrixClientPeg {
             ],
             unstableClientRelationAggregation: true,
             identityServer: new IdentityAuthClient(),
+            cryptoCallbacks: {},
         };
 
-        opts.cryptoCallbacks = {};
         // These are always installed regardless of the labs flag so that
         // cross-signing features can toggle on without reloading and also be
         // accessed immediately after login.
@@ -253,8 +263,8 @@ class _MatrixClientPeg {
     }
 }
 
-if (!global.mxMatrixClientPeg) {
-    global.mxMatrixClientPeg = new _MatrixClientPeg();
+if (!window.mxMatrixClientPeg) {
+    window.mxMatrixClientPeg = new _MatrixClientPeg();
 }
 
-export const MatrixClientPeg = global.mxMatrixClientPeg;
+export const MatrixClientPeg = window.mxMatrixClientPeg;

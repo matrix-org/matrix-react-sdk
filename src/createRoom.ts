@@ -15,6 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import {MatrixEvent} from "matrix-js-sdk/src/models/event";
+import {MatrixClient} from "matrix-js-sdk/src/client";
 import {MatrixClientPeg} from './MatrixClientPeg';
 import Modal from './Modal';
 import * as sdk from './index';
@@ -24,6 +26,30 @@ import * as Rooms from "./Rooms";
 import DMRoomMap from "./utils/DMRoomMap";
 import {getAddressType} from "./UserAddress";
 import SettingsStore from "./settings/SettingsStore";
+
+interface IInvite3Pid {
+    id_server: string;
+    id_access_token?: string;
+    medium: string;
+    address: string;
+}
+
+interface IOpts {
+    dmUserId?: string;
+    createOpts?: {
+        preset?: "trusted_private_chat" | "private_chat" | "public_chat";
+        visibility?: "public" | "private";
+        invite?: string[];
+        invite_3pid?: IInvite3Pid[];
+        is_direct?: boolean;
+        initial_state?: MatrixEvent[];
+    };
+    spinner?: boolean;
+    guestAccess?: boolean;
+    encryption?: boolean;
+    inlineErrors?: boolean;
+    andView?: boolean;
+}
 
 /**
  * Create a new room, and switch to it.
@@ -43,8 +69,7 @@ import SettingsStore from "./settings/SettingsStore";
  * @returns {Promise} which resolves to the room id, or null if the
  * action was aborted or failed.
  */
-export default function createRoom(opts) {
-    opts = opts || {};
+export default function createRoom(opts: IOpts = {}) {
     if (opts.spinner === undefined) opts.spinner = true;
     if (opts.guestAccess === undefined) opts.guestAccess = true;
     if (opts.encryption === undefined) opts.encryption = false;
@@ -165,7 +190,7 @@ export default function createRoom(opts) {
     });
 }
 
-export function findDMForUser(client, userId) {
+export function findDMForUser(client: MatrixClient, userId: string) {
     const roomIds = DMRoomMap.shared().getDMRoomsForUserId(userId);
     const rooms = roomIds.map(id => client.getRoom(id));
     const suitableDMRooms = rooms.filter(r => {
@@ -188,7 +213,7 @@ export function findDMForUser(client, userId) {
  * NOTE: this assumes you've just created the room and there's not been an opportunity
  * for other code to run, so we shouldn't miss RoomState.newMember when it comes by.
  */
-export async function _waitForMember(client, roomId, userId, opts = { timeout: 1500 }) {
+export async function _waitForMember(client: MatrixClient, roomId: string, userId: string, opts = { timeout: 1500 }) {
     const { timeout } = opts;
     let handler;
     return new Promise((resolve) => {
@@ -211,7 +236,7 @@ export async function _waitForMember(client, roomId, userId, opts = { timeout: 1
  * Ensure that for every user in a room, there is at least one device that we
  * can encrypt to.
  */
-export async function canEncryptToAllUsers(client, userIds) {
+export async function canEncryptToAllUsers(client: MatrixClient, userIds: string[]) {
     const usersDeviceMap = await client.downloadKeys(userIds);
     // { "@user:host": { "DEVICE": {...}, ... }, ... }
     return Object.values(usersDeviceMap).every((userDevices) =>
@@ -220,7 +245,7 @@ export async function canEncryptToAllUsers(client, userIds) {
     );
 }
 
-export async function ensureDMExists(client, userId) {
+export async function ensureDMExists(client: MatrixClient, userId: string) {
     const existingDMRoom = findDMForUser(client, userId);
     let roomId;
     if (existingDMRoom) {

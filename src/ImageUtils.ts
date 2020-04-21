@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
 /**
  * Returns the actual height that an image of dimensions (fullWidth, fullHeight)
  * will occupy if resized to fit inside a thumbnail bounding box of size
@@ -30,7 +28,7 @@ limitations under the License.
  * consume in the timeline, when performing scroll offset calcuations
  * (e.g. scroll locking)
  */
-export function thumbHeight(fullWidth, fullHeight, thumbWidth, thumbHeight) {
+export function thumbHeight(fullWidth: number, fullHeight: number, thumbWidth: number, thumbHeight: number) {
     if (!fullWidth || !fullHeight) {
         // Cannot calculate thumbnail height for image: missing w/h in metadata. We can't even
         // log this because it's spammy

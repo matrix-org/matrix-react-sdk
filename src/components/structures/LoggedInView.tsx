@@ -29,7 +29,7 @@ import { fixupColorFonts } from '../../utils/FontManager';
 import * as sdk from '../../index';
 import dis from '../../dispatcher';
 import sessionStore from '../../stores/SessionStore';
-import {MatrixClientPeg, MatrixClientCreds} from '../../MatrixClientPeg';
+import {MatrixClientPeg, IMatrixClientCreds} from '../../MatrixClientPeg';
 import SettingsStore from "../../settings/SettingsStore";
 import RoomListStore from "../../stores/RoomListStore";
 
@@ -56,7 +56,7 @@ function canElementReceiveInput(el) {
 
 interface IProps {
     matrixClient: MatrixClient;
-    onRegistered: (credentials: MatrixClientCreds) => Promise<MatrixClient>;
+    onRegistered: (credentials: IMatrixClientCreds) => Promise<MatrixClient>;
     viaServers?: string[];
     hideToSRUsers: boolean;
     resizeNotifier: ResizeNotifier;

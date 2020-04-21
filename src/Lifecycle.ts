@@ -18,6 +18,7 @@ limitations under the License.
 */
 
 import Matrix from 'matrix-js-sdk';
+import {MatrixError} from "matrix-js-sdk/src/http-api";
 
 import {MatrixClientPeg} from './MatrixClientPeg';
 import EventIndexPeg from './indexing/EventIndexPeg';
@@ -41,6 +42,16 @@ import {IntegrationManagers} from "./integrations/IntegrationManagers";
 import {Mjolnir} from "./mjolnir/Mjolnir";
 import DeviceListener from "./DeviceListener";
 import {Jitsi} from "./widgets/Jitsi";
+import { IMatrixClientCreds } from './MatrixClientPeg';
+
+export interface ILifecycleOpts {
+    fragmentQueryParams?: Record<string, string>;
+    enableGuest?: boolean;
+    guestHsUrl?: string;
+    guestIsUrl?: string;
+    ignoreGuest?: boolean;
+    defaultDeviceDisplayName: string;
+}
 
 /**
  * Called at startup, to attempt to build a logged-in Matrix session. It tries
@@ -75,11 +86,14 @@ import {Jitsi} from "./widgets/Jitsi";
  * @params {bool} opts.ignoreGuest: If the stored session is a guest account, ignore
  *     it and don't load it.
  *
+ * @param {string} opts.defaultDeviceDisplayName: The device display name to use for
+ *     new registrations
+ *
  * @returns {Promise} a promise which resolves when the above process completes.
  *     Resolves to `true` if we ended up starting a session, or `false` if we
  *     failed.
  */
-export async function loadSession(opts) {
+export async function loadSession(opts: ILifecycleOpts) {
     try {
         let enableGuest = opts.enableGuest || false;
         const guestHsUrl = opts.guestHsUrl;
@@ -124,7 +138,7 @@ export async function loadSession(opts) {
             // need to show the general failure dialog. Instead, just go back to welcome.
             return false;
         }
-        return _handleLoadSessionFailure(e);
+        return handleLoadSessionFailure(e, opts);
     }
 }
 
@@ -134,7 +148,7 @@ export async function loadSession(opts) {
  * is associated with them. The session is not loaded.
  * @returns {String} The persisted session's owner, if an owner exists. Null otherwise.
  */
-export function getStoredSessionOwner() {
+export function getStoredSessionOwner(): string | null {
     const {hsUrl, userId, accessToken} = getLocalStorageSessionVars();
     return hsUrl && userId && accessToken ? userId : null;
 }
@@ -143,7 +157,7 @@ export function getStoredSessionOwner() {
  * @returns {bool} True if the stored session is for a guest user or false if it is
  *     for a real user. If there is no stored session, return null.
  */
-export function getStoredSessionIsGuest() {
+export function getStoredSessionIsGuest(): boolean | null {
     const sessVars = getLocalStorageSessionVars();
     return sessVars.hsUrl && sessVars.userId && sessVars.accessToken ? sessVars.isGuest : null;
 }
@@ -158,7 +172,7 @@ export function getStoredSessionIsGuest() {
  * @returns {Promise} promise which resolves to true if we completed the token
  *    login, else false
  */
-export function attemptTokenLogin(queryParams, defaultDeviceDisplayName) {
+export function attemptTokenLogin(queryParams: Record<string, string>, defaultDeviceDisplayName: string) {
     if (!queryParams.loginToken) {
         return Promise.resolve(false);
     }
@@ -188,7 +202,7 @@ export function attemptTokenLogin(queryParams, defaultDeviceDisplayName) {
     });
 }
 
-export function handleInvalidStoreError(e) {
+export function handleInvalidStoreError(e: ReturnType<MatrixError>) {
     if (e.reason === Matrix.InvalidStoreError.TOGGLED_LAZY_LOADING) {
         return Promise.resolve().then(() => {
             const lazyLoadEnabled = e.value;
@@ -314,7 +328,7 @@ async function _restoreFromLocalStorage(opts) {
     }
 }
 
-async function _handleLoadSessionFailure(e) {
+async function handleLoadSessionFailure(e, opts: ILifecycleOpts) {
     console.error("Unable to load session", e);
 
     const SessionRestoreErrorDialog =
@@ -332,7 +346,7 @@ async function _handleLoadSessionFailure(e) {
     }
 
     // try, try again
-    return loadSession();
+    return loadSession(opts);
 }
 
 /**
@@ -344,11 +358,11 @@ async function _handleLoadSessionFailure(e) {
  * Also stops the old MatrixClient and clears old credentials/etc out of
  * storage before starting the new client.
  *
- * @param {MatrixClientCreds} credentials The credentials to use
+ * @param {IMatrixClientCreds} credentials The credentials to use
  *
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
-export function setLoggedIn(credentials) {
+export function setLoggedIn(credentials: IMatrixClientCreds) {
     stopMatrixClient();
     return _doSetLoggedIn(credentials, true);
 }
@@ -364,11 +378,11 @@ export function setLoggedIn(credentials) {
  * If the credentials belong to a different user from the session already stored,
  * the old session will be cleared automatically.
  *
- * @param {MatrixClientCreds} credentials The credentials to use
+ * @param {IMatrixClientCreds} credentials The credentials to use
  *
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
-export function hydrateSession(credentials) {
+export function hydrateSession(credentials: IMatrixClientCreds) {
     const oldUserId = MatrixClientPeg.get().getUserId();
     const oldDeviceId = MatrixClientPeg.get().getDeviceId();
 
@@ -388,7 +402,7 @@ export function hydrateSession(credentials) {
  * fires on_logging_in, optionally clears localstorage, persists new credentials
  * to localstorage, starts the new client.
  *
- * @param {MatrixClientCreds} credentials
+ * @param {IMatrixClientCreds} credentials
  * @param {Boolean} clearStorage
  *
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
@@ -478,7 +492,7 @@ function _showStorageEvictedDialog() {
 // `instanceof`. Babel 7 supports this natively in their class handling.
 class AbortLoginAndRebuildStorage extends Error { }
 
-function _persistCredentialsToLocalStorage(credentials) {
+function _persistCredentialsToLocalStorage(credentials: IMatrixClientCreds) {
     localStorage.setItem("mx_hs_url", credentials.homeserverUrl);
     if (credentials.identityServerUrl) {
         localStorage.setItem("mx_is_url", credentials.identityServerUrl);
@@ -566,7 +580,7 @@ export function isLoggingOut() {
  * @param {boolean} startSyncing True (default) to actually start
  * syncing the client.
  */
-async function startMatrixClient(startSyncing=true) {
+async function startMatrixClient(startSyncing = true) {
     console.log(`Lifecycle: Starting MatrixClient`);
 
     // dispatch this before starting the matrix client: it's used
@@ -662,7 +676,7 @@ async function _clearStorage() {
  * @param {boolean} unsetClient True (default) to abandon the client
  * on MatrixClientPeg after stopping.
  */
-export function stopMatrixClient(unsetClient=true) {
+export function stopMatrixClient(unsetClient = true) {
     Notifier.stop();
     UserActivity.sharedInstance().stop();
     TypingStore.sharedInstance().reset();

@@ -46,11 +46,11 @@ function getMonthsArray() {
     ];
 }
 
-function pad(n) {
+function pad(n: number): string {
     return (n < 10 ? '0' : '') + n;
 }
 
-function twelveHourTime(date, showSeconds=false) {
+function twelveHourTime(date: Date, showSeconds = false) {
     let hours = date.getHours() % 12;
     const minutes = pad(date.getMinutes());
     const ampm = date.getHours() >= 12 ? _t('PM') : _t('AM');
@@ -62,7 +62,7 @@ function twelveHourTime(date, showSeconds=false) {
     return `${hours}:${minutes}${ampm}`;
 }
 
-export function formatDate(date, showTwelveHour=false) {
+export function formatDate(date: Date, showTwelveHour = false) {
     const now = new Date();
     const days = getDaysArray();
     const months = getMonthsArray();
@@ -86,7 +86,7 @@ export function formatDate(date, showTwelveHour=false) {
     return formatFullDate(date, showTwelveHour);
 }
 
-export function formatFullDateNoTime(date) {
+export function formatFullDateNoTime(date: Date) {
     const days = getDaysArray();
     const months = getMonthsArray();
     return _t('%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s', {

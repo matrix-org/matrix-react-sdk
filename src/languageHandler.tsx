@@ -23,7 +23,7 @@ import React from 'react';
 import SettingsStore, {SettingLevel} from "./settings/SettingsStore";
 import PlatformPeg from "./PlatformPeg";
 
-// $webapp is a webpack resolve alias pointing to the output directory, see webpack config
+// @ts-ignore - $webapp is a webpack resolve alias pointing to the output directory, see webpack config
 import webpackLangJsonUrl from "$webapp/i18n/languages.json";
 
 const i18nFolder = 'i18n/';
@@ -37,14 +37,18 @@ counterpart.setSeparator('|');
 // Fall back to English
 counterpart.setFallbackLocale('en');
 
+interface TranslatableError extends Error {
+    translatedMessage?: string;
+}
+
 /**
  * Helper function to create an error which has an English message
  * with a translatedMessage property for use by the consumer.
  * @param {string} message Message to translate.
  * @returns {Error} The constructed error.
  */
-export function newTranslatableError(message) {
-    const error = new Error(message);
+export function newTranslatableError(message: string): TranslatableError {
+    const error: TranslatableError = new Error(message);
     error.translatedMessage = _t(message);
     return error;
 }
@@ -89,6 +93,14 @@ function safeCounterpartTranslate(text, options) {
     return translated;
 }
 
+interface IVariables {
+    [key: string]: string | number;
+}
+
+interface ITags {
+    [key: string]: (...string) => React.ReactNode;
+}
+
 /*
  * Translates text and optionally also replaces XML-ish elements in the text with e.g. React components
  * @param {string} text The untranslated text, e.g "click <a>here</a> now to %(foo)s".
@@ -105,7 +117,9 @@ function safeCounterpartTranslate(text, options) {
  *
  * @return a React <span> component if any non-strings were used in substitutions, otherwise a string
  */
-export function _t(text, variables, tags) {
+function _t(text: string, variables?: IVariables, tags?: undefined): string;
+function _t(text: string, variables?: IVariables, tags?: ITags): JSX.Element;
+function _t(text: string, variables?: IVariables, tags?): any {
     // Don't do substitutions in counterpart. We handle it ourselves so we can replace with React components
     // However, still pass the variables to counterpart so that it can choose the correct plural if count is given
     // It is enough to pass the count variable, but in the future counterpart might make use of other information too
@@ -128,6 +142,7 @@ export function _t(text, variables, tags) {
         return substituted;
     }
 }
+export { _t };
 
 /*
  * Similar to _t(), except only does substitutions, and no translation
@@ -141,8 +156,8 @@ export function _t(text, variables, tags) {
  *
  * @return a React <span> component if any non-strings were used in substitutions, otherwise a string
  */
-export function substitute(text, variables, tags) {
-    let result = text;
+export function substitute(text: string, variables?: IVariables, tags?: ITags) {
+    let result: string | JSX.Element = text;
 
     if (variables !== undefined) {
         const regexpMapping = {};
@@ -157,7 +172,7 @@ export function substitute(text, variables, tags) {
         for (const tag in tags) {
             regexpMapping[`(<${tag}>(.*?)<\\/${tag}>|<${tag}>|<${tag}\\s*\\/>)`] = tags[tag];
         }
-        result = replaceByRegexes(result, regexpMapping);
+        result = replaceByRegexes(result as string, regexpMapping);
     }
 
     return result;
@@ -172,7 +187,7 @@ export function substitute(text, variables, tags) {
  *
  * @return a React <span> component if any non-strings were used in substitutions, otherwise a string
  */
-export function replaceByRegexes(text, mapping) {
+export function replaceByRegexes(text: string, mapping: IVariables | ITags) {
     // We initially store our output as an array of strings and objects (e.g. React components).
     // This will then be converted to a string or a <span> at the end
     const output = [text];
@@ -189,7 +204,7 @@ export function replaceByRegexes(text, mapping) {
         // and everything after the match. Insert all three into the output. We need to do this because we can insert objects.
         // Otherwise there would be no need for the splitting and we could do simple replacement.
         let matchFoundSomewhere = false; // If we don't find a match anywhere we want to log it
-        for (const outputIndex in output) {
+        for (let outputIndex = 0; outputIndex < output.length; outputIndex++) {
             const inputText = output[outputIndex];
             if (typeof inputText !== 'string') { // We might have inserted objects earlier, don't try to replace them
                 continue;
@@ -216,7 +231,7 @@ export function replaceByRegexes(text, mapping) {
                 let replaced;
                 // If substitution is a function, call it
                 if (mapping[regexpString] instanceof Function) {
-                    replaced = mapping[regexpString].apply(null, capturedGroups);
+                    replaced = (mapping[regexpString] as (...string) => string | JSX.Element).apply(null, capturedGroups);
                 } else {
                     replaced = mapping[regexpString];
                 }
@@ -277,11 +292,11 @@ export function replaceByRegexes(text, mapping) {
 // Allow overriding the text displayed when no translation exists
 // Currently only used in unit tests to avoid having to load
 // the translations in riot-web
-export function setMissingEntryGenerator(f) {
+export function setMissingEntryGenerator(f: Parameters<typeof counterpart.setMissingEntryGenerator>[0]) {
     counterpart.setMissingEntryGenerator(f);
 }
 
-export function setLanguage(preferredLangs) {
+export function setLanguage(preferredLangs: string[]) {
     if (!Array.isArray(preferredLangs)) {
         preferredLangs = [preferredLangs];
     }
@@ -358,8 +373,8 @@ export function getLanguageFromBrowser() {
  * @param {string} language The input language string
  * @return {string[]} List of normalised languages
  */
-export function getNormalizedLanguageKeys(language) {
-    const languageKeys = [];
+export function getNormalizedLanguageKeys(language: string) {
+    const languageKeys: string[] = [];
     const normalizedLanguage = normalizeLanguageKey(language);
     const languageParts = normalizedLanguage.split('-');
     if (languageParts.length === 2 && languageParts[0] === languageParts[1]) {
@@ -380,11 +395,11 @@ export function getNormalizedLanguageKeys(language) {
  * @param {string} language The language string to be normalized
  * @returns {string} The normalized language string
  */
-export function normalizeLanguageKey(language) {
+export function normalizeLanguageKey(language: string) {
     return language.toLowerCase().replace("_", "-");
 }
 
-export function getCurrentLanguage() {
+export function getCurrentLanguage(): string {
     return counterpart.getLocale();
 }
 
@@ -396,7 +411,7 @@ export function getCurrentLanguage() {
  * @param {string[]} langs List of language codes to pick from
  * @returns {string} The most appropriate language code from langs
  */
-export function pickBestLanguage(langs) {
+export function pickBestLanguage(langs: string[]): string {
     const currentLang = getCurrentLanguage();
     const normalisedLangs = langs.map(normalizeLanguageKey);
 
@@ -408,13 +423,13 @@ export function pickBestLanguage(langs) {
 
     {
         // Failing that, a different dialect of the same language
-        const closeLangIndex = normalisedLangs.find((l) => l.substr(0, 2) === currentLang.substr(0, 2));
+        const closeLangIndex = normalisedLangs.findIndex((l) => l.substr(0, 2) === currentLang.substr(0, 2));
         if (closeLangIndex > -1) return langs[closeLangIndex];
     }
 
     {
         // Neither of those? Try an english variant.
-        const enIndex = normalisedLangs.find((l) => l.startsWith('en'));
+        const enIndex = normalisedLangs.findIndex((l) => l.startsWith('en'));
         if (enIndex > -1) return langs[enIndex];
     }
 
@@ -422,7 +437,10 @@ export function pickBestLanguage(langs) {
     return langs[0];
 }
 
-function getLangsJson() {
+function getLangsJson(): Promise<{[key: string]: {
+    fileName: string;
+    label: string;
+}}> {
     return new Promise(async (resolve, reject) => {
         let url;
         if (typeof(webpackLangJsonUrl) === 'string') { // in Jest this 'url' isn't a URL, so just fall through
@@ -443,7 +461,7 @@ function getLangsJson() {
     });
 }
 
-function weblateToCounterpart(inTrs) {
+function weblateToCounterpart(inTrs: object): object {
     const outTrs = {};
 
     for (const key of Object.keys(inTrs)) {
@@ -463,7 +481,7 @@ function weblateToCounterpart(inTrs) {
     return outTrs;
 }
 
-function getLanguage(langPath) {
+function getLanguage(langPath: string): Promise<object> {
     return new Promise((resolve, reject) => {
         request(
             { method: "GET", url: langPath },
