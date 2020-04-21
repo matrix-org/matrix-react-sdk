@@ -1,5 +1,6 @@
 /*
 Copyright 2017 Vector Creations Ltd
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,8 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 
 import * as sdk from '../../../index';
 
@@ -29,7 +30,7 @@ for (const c of COUNTRIES) {
     COUNTRIES_BY_ISO2[c.iso2] = c;
 }
 
-function countryMatchesSearchQuery(query, country) {
+function countryMatchesSearchQuery(query: string, country) {
     // Remove '+' if present (when searching for a prefix)
     if (query[0] === '+') {
         query = query.slice(1);
@@ -41,7 +42,38 @@ function countryMatchesSearchQuery(query, country) {
     return false;
 }
 
-export default class CountryDropdown extends React.Component {
+interface ICountry {
+    iso2: string;
+    name: string;
+    prefix: string;
+}
+
+interface IProps {
+    onOptionChange: (option: ICountry) => void;
+    className?: string;
+    value?: string;
+    isSmall?: boolean;
+    showPrefix?: boolean;
+    disabled?: boolean;
+}
+
+interface IState {
+    searchQuery: string;
+}
+
+export default class CountryDropdown extends React.PureComponent<IProps, IState> {
+    static propTypes = {
+        className: PropTypes.string,
+        isSmall: PropTypes.bool,
+        // if isSmall, show +44 in the selected value
+        showPrefix: PropTypes.bool,
+        onOptionChange: PropTypes.func.isRequired,
+        value: PropTypes.string,
+        disabled: PropTypes.bool,
+    };
+
+    private readonly defaultCountry: ICountry;
+
     constructor(props) {
         super(props);
         this._onSearchChange = this._onSearchChange.bind(this);
@@ -52,12 +84,11 @@ export default class CountryDropdown extends React.Component {
         const defaultCountryCode = SdkConfig.get()["defaultCountryCode"];
         if (defaultCountryCode) {
             const country = COUNTRIES.find(c => c.iso2 === defaultCountryCode.toUpperCase());
-            if (country) defaultCountry = country;
+            if (country) this.defaultCountry = country;
         }
 
         this.state = {
             searchQuery: '',
-            defaultCountry,
         };
     }
 
@@ -66,7 +97,7 @@ export default class CountryDropdown extends React.Component {
             // If no value is given, we start with the default
             // country selected, but our parent component
             // doesn't know this, therefore we do this.
-            this.props.onOptionChange(this.state.defaultCountry);
+            this.props.onOptionChange(this.defaultCountry);
         }
     }
 
@@ -129,8 +160,8 @@ export default class CountryDropdown extends React.Component {
         });
 
         // default value here too, otherwise we need to handle null / undefined
-        // values between mounting and the initial value propgating
-        const value = this.props.value || this.state.defaultCountry.iso2;
+        // values between mounting and the initial value propagating
+        const value = this.props.value || this.defaultCountry.iso2;
 
         return <Dropdown
             id="mx_CountryDropdown"
@@ -148,13 +179,3 @@ export default class CountryDropdown extends React.Component {
         </Dropdown>;
     }
 }
-
-CountryDropdown.propTypes = {
-    className: PropTypes.string,
-    isSmall: PropTypes.bool,
-    // if isSmall, show +44 in the selected value
-    showPrefix: PropTypes.bool,
-    onOptionChange: PropTypes.func.isRequired,
-    value: PropTypes.string,
-    disabled: PropTypes.bool,
-};
