@@ -21,6 +21,7 @@ import CommandProvider from './CommandProvider';
 import CommunityProvider from './CommunityProvider';
 import DuckDuckGoProvider from './DuckDuckGoProvider';
 import RoomProvider from './RoomProvider';
+import RoomDirectoryProvider from './RoomDirectoryProvider';
 import UserProvider from './UserProvider';
 import EmojiProvider from './EmojiProvider';
 import NotifProvider from './NotifProvider';
@@ -49,6 +50,7 @@ export interface ICompletion {
 const PROVIDERS = [
     UserProvider,
     RoomProvider,
+    RoomDirectoryProvider,
     EmojiProvider,
     NotifProvider,
     CommandProvider,

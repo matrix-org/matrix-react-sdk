@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import * as ModernizrStatic from "modernizr";
+import {MatrixDispatcher} from "../dispatcher";
 
 declare global {
     interface Window {
@@ -22,6 +23,7 @@ declare global {
         Olm: {
             init: () => Promise<void>;
         };
+        mxDispatcher: MatrixDispatcher;
     }
 
     // workaround for https://github.com/microsoft/TypeScript/issues/30933

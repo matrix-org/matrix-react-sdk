@@ -31,7 +31,7 @@ import {ICompletion, ISelectionRange} from "./Autocompleter";
 
 const ROOM_REGEX = /\B#\S*/g;
 
-function score(query: string, space: string) {
+export function score(query: string, space: string) {
     const index = space.indexOf(query);
     if (index === -1) {
         return Infinity;
@@ -47,6 +47,8 @@ function matcherObject(room: Room, displayedAlias: string, matchName = "") {
         displayedAlias,
     };
 }
+
+const RESULTS_LIMIT = 8;
 
 export default class RoomProvider extends AutocompleteProvider {
     matcher: QueryMatcher<Room>;
@@ -109,7 +111,7 @@ export default class RoomProvider extends AutocompleteProvider {
                 };
             })
             .filter((completion) => !!completion.completion && completion.completion.length > 0)
-            .slice(0, 4);
+            .slice(0, RESULTS_LIMIT);
         }
         return completions;
     }
