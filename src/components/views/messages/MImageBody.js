@@ -177,8 +177,8 @@ export default class MImageBody extends React.Component {
         // thumbnail resolution will be unnecessarily reduced.
         // custom timeline widths seems preferable.
         const pixelRatio = window.devicePixelRatio;
-        const thumbWidth = Math.round(800 * pixelRatio);
-        const thumbHeight = Math.round(600 * pixelRatio);
+        const thumbWidth = Math.round(200 * pixelRatio);
+        const thumbHeight = Math.round(200 * pixelRatio);
 
         const content = this.props.mxEvent.getContent();
         if (content.file !== undefined) {
@@ -354,7 +354,7 @@ export default class MImageBody extends React.Component {
         }
 
         // The maximum height of the thumbnail as it is rendered as an <img>
-        const maxHeight = Math.min(this.props.maxImageHeight || 600, infoHeight);
+        const maxHeight = Math.min(this.props.maxImageHeight || 200, infoHeight);
         // The maximum width of the thumbnail, as dictated by its natural
         // maximum height.
         const maxWidth = infoWidth * maxHeight / infoHeight;
