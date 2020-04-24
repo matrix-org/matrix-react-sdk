@@ -117,7 +117,7 @@
             fetchStatus.fold({
             pending: ({ bytesReceived, length }) => {
                 if (!bytesReceived) {
-                    return e('span', { className: "spinner" }, "⦶");
+                    return e('span', { className: "spinner" }, "\u29b5");
                 }
                 const kB = Math.floor(10 * bytesReceived / 1024) / 10;
                 if (!length) {
@@ -126,9 +126,9 @@
                 const percent = Math.floor(100 * bytesReceived / length);
                 return e('span', null, `Fetching (${kB}kB) ${percent}%`);
             },
-            success: () => e('span', null, `✓`),
+            success: () => e('span', null, "\u2713"),
             error: (reason) => {
-                return e('span', { className: 'error'}, `✗ ${reason}`);
+                return e('span', { className: 'error'}, `\u2717 ${reason}`);
             },
         }));
     }
@@ -145,7 +145,7 @@
         React.useEffect(() => {
             getBundleName().then((name) => {
                 if (bundle === "" && validateBundle(name) !== None) {
-                    setBundle(bundleName);
+                    setBundle(name);
                 }
             }, console.log.bind(console));
         }, []);
