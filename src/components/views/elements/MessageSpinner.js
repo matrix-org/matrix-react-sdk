@@ -21,6 +21,7 @@ export default createReactClass({
     displayName: 'MessageSpinner',
 
     render: function() {
+        const Spinner = sdk.getComponent('views.elements.Spinner');
         const w = this.props.w || 32;
         const h = this.props.h || 32;
         const imgClass = this.props.imgClassName || "";
@@ -28,7 +29,7 @@ export default createReactClass({
         return (
             <div className="mx_Spinner">
                 <div className="mx_Spinner_Msg">{ msg }</div>&nbsp;
-                <img src={require("../../../../res/img/spinner.gif")} width={w} height={h} className={imgClass} />
+                <Spinner w={w} h={h} className={imgClass} />
             </div>
         );
     },

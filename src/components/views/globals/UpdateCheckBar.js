@@ -57,7 +57,7 @@ export default createReactClass({
 
     render: function() {
         const message = this.getStatusText();
-        const warning = _t('Warning');
+        const Spinner = sdk.getComponent('views.elements.Spinner');
 
         if (!('getUpdateCheckStatusEnum' in PlatformPeg.get())) {
             return <div></div>;
@@ -73,7 +73,7 @@ export default createReactClass({
         if (doneStatuses.includes(this.props.status)) {
             image = <img className="mx_MatrixToolbar_warning" src={require("../../../../res/img/warning.svg")} width="24" height="23" alt="" />;
         } else {
-            image = <img className="mx_MatrixToolbar_warning" src={require("../../../../res/img/spinner.gif")} width="24" height="23" alt="" />;
+            image = <Spinner w={24} h={23}/>;
         }
 
         return (

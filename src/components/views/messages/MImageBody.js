@@ -365,12 +365,8 @@ export default class MImageBody extends React.Component {
 
         // e2e image hasn't been decrypted yet
         if (content.file !== undefined && this.state.decryptedUrl === null) {
-            placeholder = <img
-                src={require("../../../../res/img/spinner.gif")}
-                alt={content.body}
-                width="32"
-                height="32"
-            />;
+            const Spinner = sdk.getComponent('views.elements.Spinner');
+            placeholder = <Spinner alt={alt} />;
         } else if (!this.state.imgLoaded) {
             // Deliberately, getSpinner is left unimplemented here, MStickerBody overides
             placeholder = this.getPlaceholder();

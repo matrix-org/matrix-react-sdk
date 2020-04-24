@@ -26,8 +26,8 @@ export default createReactClass({
         const imgClass = this.props.imgClassName || "";
 
         return (
-            <div className="mx_InlineSpinner">
-                <img src={require("../../../../res/img/spinner.gif")} width={w} height={h} className={imgClass} />
+            <div className="mx_InlineSpinner mx_filterFlipColor">
+                <img src={require("../../../../res/img/spinner.svg")} width={w} height={h} className={imgClass} />
             </div>
         );
     },

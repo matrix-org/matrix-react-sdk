@@ -15,10 +15,22 @@ limitations under the License.
 */
 
 .mx_InlineSpinner {
-    display: inline;
+    /* inline display cannot be animated */
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+
+    animation-name: spin;
+    animation-duration:1s;
+    animation-iteration-count:infinite;
+    animation-timing-function:linear;
+}
+
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
 }
 
 .mx_InlineSpinner img {
-    margin: 0px 6px;
     vertical-align: -3px;
 }

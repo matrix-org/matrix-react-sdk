@@ -77,6 +77,7 @@ export default class MAudioBody extends React.Component {
 
     render() {
         const content = this.props.mxEvent.getContent();
+        const Spinner = sdk.getComponent('views.elements.Spinner');
 
         if (this.state.error !== null) {
             return (
@@ -94,7 +95,7 @@ export default class MAudioBody extends React.Component {
             // Not sure how tall the audio player is so not sure how tall it should actually be.
             return (
                 <span className="mx_MAudioBody">
-                    <img src={require("../../../../res/img/spinner.gif")} alt={content.body} width="16" height="16" />
+                    <Spinner w={16} h={16} alt={content.body} />
                 </span>
             );
         }

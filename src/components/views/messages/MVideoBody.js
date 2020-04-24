@@ -130,6 +130,7 @@ export default createReactClass({
 
     render: function() {
         const content = this.props.mxEvent.getContent();
+        const Spinner = sdk.getComponent('views.elements.Spinner');
 
         if (this.state.error !== null) {
             return (
@@ -147,7 +148,7 @@ export default createReactClass({
             return (
                 <span className="mx_MVideoBody">
                     <div className="mx_MImageBody_thumbnail mx_MImageBody_thumbnail_spinner">
-                        <img src={require("../../../../res/img/spinner.gif")} alt={content.body} width="16" height="16" />
+                        <Spinner w={16} h={16} alt={content.body} />
                     </div>
                 </span>
             );

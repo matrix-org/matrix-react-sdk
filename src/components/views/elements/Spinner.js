@@ -24,10 +24,11 @@ export default createReactClass({
     render: function() {
         const w = this.props.w || 32;
         const h = this.props.h || 32;
+        const alt = this.props.alt || "";
         const imgClass = this.props.imgClassName || "";
         return (
-            <div className="mx_Spinner">
-                <img src={require("../../../../res/img/spinner.gif")} width={w} height={h} className={imgClass} />
+            <div className="mx_Spinner mx_filterFlipColor">
+                <img src={require("../../../../res/img/spinner.svg")} width={w} height={h} alt={alt} className={imgClass} />
             </div>
         );
     },
