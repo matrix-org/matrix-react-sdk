@@ -1,5 +1,5 @@
 'use strict';
-(function (global) {
+(function(global) {
     class Optional {
         static from(value) {
             return value && Some.of(value) || None;

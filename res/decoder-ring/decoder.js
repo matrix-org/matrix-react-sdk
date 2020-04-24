@@ -1,6 +1,6 @@
 'use strict';
 
-(function (global) {
+(function(global) {
     const { Some, None, Success, Pending, FetchError } = global.Datatypes;
 
     class StartupError extends Error {}
@@ -11,12 +11,11 @@
             throw new StartupError(`Couldn't fetch index.html to prefill bundle; ${res.status} ${res.statusText}`);
         }
         const index = await res.text();
-        return index.split("\n").map((line) => 
-          line.match(/<script src="bundles\/([^/]+)\/bundle.js"/)
+        return index.split("\n").map((line) =>
+          line.match(/<script src="bundles\/([^/]+)\/bundle.js"/),
         )
         .filter((result) => result)
-        .map((result) => result[1])
-        [0];
+        .map((result) => result[1])[0];
     }
 
     function validateBundle(value) {
@@ -70,18 +69,14 @@
                     resultObservable.next(Success.of(buffer));
                     return;
                 }
-                if (!value) {
-                    console.log("empty chunk?", value);
-                    readNextChunk();
-                }
                 bytesReceived += value.length;
-                pendingSubject.next(Pending.of({bytesReceived, ...pendingContext}));
+                pendingSubject.next(Pending.of({...pendingContext, bytesReceived }));
                 /* string concatenation is apparently the most performant way to do this */
                 buffer += utf8Decoder.decode(value);
                 readNextChunk();
             });
         }
-        readNextChunk();        
+        readNextChunk();
         return rxjs.concat(throttledPending, resultObservable);
     }
 
@@ -129,12 +124,12 @@
                     return e('span', null, `Fetching (${kB}kB)`);
                 }
                 const percent = Math.floor(100 * bytesReceived / length);
-                return e('span', null, `Fetching (${kB}kB) ${percent}%`)
+                return e('span', null, `Fetching (${kB}kB) ${percent}%`);
             },
             success: () => e('span', null, `✓`),
             error: (reason) => {
-                return e('span', { className: 'error'}, `✗ ${reason}`)
-            }
+                return e('span', { className: 'error'}, `✗ ${reason}`);
+            },
         }));
     }
 
@@ -180,10 +175,10 @@
                 some: (value) => {
                     const subscription = bundleSubject(value)
                       .pipe(rxjs.operators.map(Some.of))
-                      .subscribe(setBundleFetchStatus)
+                      .subscribe(setBundleFetchStatus);
                     return () => subscription.unsubscribe();
                 },
-                none: () => setBundleFetchStatus(None)
+                none: () => setBundleFetchStatus(None),
             }),
         [bundle]);
 
@@ -201,10 +196,10 @@
                             return FetchError.of(e);
                         }
                     })),
-                    rxjs.operators.map(Some.of)
-                )
-            const subscription = observable.subscribe(setFileFetchStatus)
-            return () => subscription.unsubscribe()
+                    rxjs.operators.map(Some.of),
+                );
+            const subscription = observable.subscribe(setFileFetchStatus);
+            return () => subscription.unsubscribe();
         }, [bundle, file]);
 
         React.useEffect(() => {
@@ -216,12 +211,12 @@
                             const pLine = parseInt(line);
                             const pCol = parseInt(column);
                             sourceMap.SourceMapConsumer.with(value, undefined, (consumer) =>
-                                consumer.originalPositionFor({ line: pLine, column: pCol })
+                                consumer.originalPositionFor({ line: pLine, column: pCol }),
                             ).then((result) => setResult(Some.of(JSON.stringify(result))));
-                        }
+                        },
                     }),
-                none: () => setResult(None)
-            })
+                none: () => setResult(None),
+            });
         }, [fileFetchStatus, line, column]);
 
         return e('div', {},
@@ -247,7 +242,7 @@
                         required: true,
                         pattern: ".+\\.js",
                         onChange: onFileChange,
-                        value: file
+                        value: file,
                     }),
                     fileFetchStatus.fold({
                         some: (fetchStatus) => e(ProgressBar, { fetchStatus }),
@@ -261,7 +256,7 @@
                         required: true,
                         pattern: "[0-9]+",
                         onChange: onLineChange,
-                        value: line
+                        value: line,
                     }),
                 ),
                 e('div', { className: 'column' },
@@ -271,15 +266,15 @@
                         required: true,
                         pattern: "[0-9]+",
                         onChange: onColumnChange,
-                        value: column
+                        value: column,
                     }),
                 ),
             ),
             e('div', null,
                 result.fold({
                     none: () => "Select a bundle, file and line",
-                    some: (value) => e('pre', null, value)
-                })
+                    some: (value) => e('pre', null, value),
+                }),
             ),
         );
     }
