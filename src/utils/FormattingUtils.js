@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import { _t } from '../languageHandler';
+import SettingsStore from "../settings/SettingsStore";
 
 /**
  * formats numbers to fit into ~3 characters, suitable for badge counts
@@ -88,8 +89,14 @@ export function hashCode(str) {
 }
 
 export function getUserNameColorClass(userId) {
-    const colorNumber = (hashCode(userId) % 8) + 1;
-    return `mx_Username_color${colorNumber}`;
+    const attachColorToUsers = SettingsStore.getValue("attachColorToUsers");
+
+    if (attachColorToUsers) {
+        const colorNumber = (hashCode(userId) % 8) + 1;
+        return `mx_Username_color${colorNumber}`;
+    } else {
+        return `mx_Username_defaultColor`;
+    }
 }
 
 /**

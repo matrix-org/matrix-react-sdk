@@ -522,6 +522,10 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 
 // username colors
 // used by SenderProfile & RoomPreviewBar
+.mx_Username_defaultColor {
+    color: $username-variant3-color;
+}
+
 .mx_Username_color1 {
     color: $username-variant1-color;
 }

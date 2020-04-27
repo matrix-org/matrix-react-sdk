@@ -18,6 +18,7 @@ limitations under the License.
 import {MatrixClientPeg} from './MatrixClientPeg';
 import DMRoomMap from './utils/DMRoomMap';
 import {getHttpUriForMxc} from "matrix-js-sdk/src/content-repo";
+import SettingsStore from "./settings/SettingsStore";
 
 export function avatarUrlForMember(member, width, height, resizeMethod) {
     let url;
@@ -54,12 +55,22 @@ export function avatarUrlForUser(user, width, height, resizeMethod) {
 }
 
 export function defaultAvatarUrlForString(s) {
+    const attachColorToUsers = SettingsStore.getValue("attachColorToUsers");
     const images = ['03b381', '368bd6', 'ac3ba8'];
-    let total = 0;
-    for (let i = 0; i < s.length; ++i) {
-        total += s.charCodeAt(i);
+
+    // Used for every default avatar if no specific color is attached to users.
+    // Match mx_Username_defaultColor CSS class.
+    let selectedImage = ['03b381'];
+
+    if (attachColorToUsers) {
+        let total = 0;
+        for (let i = 0; i < s.length; ++i) {
+            total += s.charCodeAt(i);
+        }
+        selectedImage = images[total % images.length];
     }
-    return require('../res/img/' + images[total % images.length] + '.png');
+
+    return require('../res/img/' + selectedImage + '.png');
 }
 
 /**
