@@ -52,6 +52,7 @@ export default class DeviceListener {
         MatrixClientPeg.get().on('userTrustStatusChanged', this._onUserTrustStatusChanged);
         MatrixClientPeg.get().on('crossSigning.keysChanged', this._onCrossSingingKeysChanged);
         MatrixClientPeg.get().on('accountData', this._onAccountData);
+        MatrixClientPeg.get().on('sync', this._onSync);
         this._recheck();
     }
 
@@ -62,8 +63,12 @@ export default class DeviceListener {
             MatrixClientPeg.get().removeListener('userTrustStatusChanged', this._onUserTrustStatusChanged);
             MatrixClientPeg.get().removeListener('crossSigning.keysChanged', this._onCrossSingingKeysChanged);
             MatrixClientPeg.get().removeListener('accountData', this._onAccountData);
+            MatrixClientPeg.get().removeListener('sync', this._onSync);
         }
         this._dismissed.clear();
+        this._dismissedThisDeviceToast = false;
+        this._keyBackupInfo = null;
+        this._keyBackupFetchedAt = null;
     }
 
     dismissVerification(deviceId) {
@@ -109,6 +114,10 @@ export default class DeviceListener {
         }
     }
 
+    _onSync = (state, prevState) => {
+        if (state === 'PREPARED' && prevState === null) this._recheck();
+    }
+
     // The server doesn't tell us when key backup is set up, so we poll
     // & cache the result
     async _getKeyBackupInfo() {
@@ -124,11 +133,15 @@ export default class DeviceListener {
         const cli = MatrixClientPeg.get();
 
         if (
-            !SettingsStore.isFeatureEnabled("feature_cross_signing") ||
+            !SettingsStore.getValue("feature_cross_signing") ||
             !await cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing")
         ) return;
 
         if (!cli.isCryptoEnabled()) return;
+        // don't recheck until the initial sync is complete: lots of account data events will fire
+        // while the initial sync is processing and we don't need to recheck on each one of them
+        // (we add a listener on sync to do once check after the initial sync is done)
+        if (!cli.isInitialSyncComplete()) return;
 
         const crossSigningReady = await cli.isCrossSigningReady();
 
@@ -136,6 +149,8 @@ export default class DeviceListener {
             ToastStore.sharedInstance().dismissToast(THIS_DEVICE_TOAST_KEY);
         } else {
             if (!crossSigningReady) {
+                // make sure our keys are finished downlaoding
+                await cli.downloadKeys([cli.getUserId()]);
                 // cross signing isn't enabled - nag to enable it
                 // There are 3 different toasts for:
                 if (cli.getStoredCrossSigningForUser(cli.getUserId())) {
