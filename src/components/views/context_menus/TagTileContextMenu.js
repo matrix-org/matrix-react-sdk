@@ -20,7 +20,6 @@ import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher';
 import TagOrderActions from '../../../actions/TagOrderActions';
-import * as sdk from '../../../index';
 import {MenuItem} from "../../structures/ContextMenu";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
@@ -36,16 +35,7 @@ export default class TagTileContextMenu extends React.Component {
     constructor() {
         super();
 
-        this._onViewCommunityClick = this._onViewCommunityClick.bind(this);
         this._onRemoveClick = this._onRemoveClick.bind(this);
-    }
-
-    _onViewCommunityClick() {
-        dis.dispatch({
-            action: 'view_group',
-            group_id: this.props.tag,
-        });
-        this.props.onFinished();
     }
 
     _onRemoveClick() {
@@ -54,19 +44,7 @@ export default class TagTileContextMenu extends React.Component {
     }
 
     render() {
-        const TintableSvg = sdk.getComponent("elements.TintableSvg");
-
         return <div>
-            <MenuItem className="mx_TagTileContextMenu_item" onClick={this._onViewCommunityClick}>
-                <TintableSvg
-                    className="mx_TagTileContextMenu_item_icon"
-                    src={require("../../../../res/img/icons-groups.svg")}
-                    width="15"
-                    height="15"
-                />
-                { _t('View Community') }
-            </MenuItem>
-            <hr className="mx_TagTileContextMenu_separator" role="separator" />
             <MenuItem className="mx_TagTileContextMenu_item" onClick={this._onRemoveClick}>
                 <img className="mx_TagTileContextMenu_item_icon" src={require("../../../../res/img/icon_context_delete.svg")} width="15" height="15" alt="" />
                 { _t('Hide') }
