@@ -142,16 +142,6 @@ $roomheader-addroom-bg-color: var(--timeline-text-secondary-color);
 $settings-subsection-fg-color: var(--timeline-text-secondary-color);
 $tooltip-timeline-bg-color: var(--timeline-text-secondary-color);
 //
-// --username-color
-$username-variant1-color: var(--username-color-1, $username-variant1-color);
-$username-variant2-color: var(--username-color-2, $username-variant2-color);
-$username-variant3-color: var(--username-color-3, $username-variant3-color);
-$username-variant4-color: var(--username-color-4, $username-variant4-color);
-$username-variant5-color: var(--username-color-5, $username-variant5-color);
-$username-variant6-color: var(--username-color-6, $username-variant6-color);
-$username-variant7-color: var(--username-color-7, $username-variant7-color);
-$username-variant8-color: var(--username-color-8, $username-variant8-color);
-//
 // --warning-color
 $button-danger-bg-color: var(--warning-color);
 $button-danger-disabled-bg-color: var(--warning-color-50pct);
