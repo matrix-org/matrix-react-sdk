@@ -1,3 +1,16 @@
+/*
+ * Quick-n-dirty algebraic datatypes.
+ *
+ * These let us handle the possibility of failure without having to constantly write code to check for it.
+ * We can apply all of the transformations we need as if the data is present using `map`.
+ * If there's a None, or a FetchError, or a Pending, those are left untouched.
+ *
+ * I've used perhaps an odd bit of terminology from scalaz in `fold`.  This is basically a `switch` statement:
+ * You pass it a set of functions to handle the various different states of the datatype, and if it finds the
+ * function it'll call it on its value.
+ */
+
+
 class Optional {
     static from(value) {
         return value && Some.of(value) || None;

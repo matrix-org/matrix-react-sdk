@@ -1,5 +1,9 @@
 class StartupError extends Error {}
 
+/*
+ * We need to know the bundle path before we can fetch the sourcemap files.  In a production environment, we can guess
+ * it using this.
+ */
 async function getBundleName() {
     const res = await fetch("../index.html");
     if (!res.ok) {
@@ -18,8 +22,8 @@ function validateBundle(value) {
 }
 
 /* A custom fetcher that abandons immediately upon getting a response.
-    * The purpose of this is just to validate that the user entered a real bundle, and provide feedback.
-    */
+ * The purpose of this is just to validate that the user entered a real bundle, and provide feedback.
+ */
 const bundleCache = new Map();
 function bundleSubject(bundle) {
     if (!bundle.match(/^[0-9a-f]{20}$/)) throw new Error("Bad input");
@@ -43,12 +47,12 @@ function bundleSubject(bundle) {
 }
 
 /*
-    * Convert a ReadableStream of bytes into an Observable of a string
-    * The observable will emit a stream of Pending objects and will concatenate
-    * the number of bytes received with whatever pendingContext has been supplied.
-    * Finally, it will emit a Success containing the result.
-    * You'd use this on a Response.body.
-    */
+ * Convert a ReadableStream of bytes into an Observable of a string
+ * The observable will emit a stream of Pending objects and will concatenate
+ * the number of bytes received with whatever pendingContext has been supplied.
+ * Finally, it will emit a Success containing the result.
+ * You'd use this on a Response.body.
+ */
 function observeReadableStream(readableStream, pendingContext = {}) {
     let bytesReceived = 0;
     let buffer = "";
@@ -76,8 +80,10 @@ function observeReadableStream(readableStream, pendingContext = {}) {
 }
 
 /*
-    * A helper for fetching values, caching them and representing them as a subject that follows the state changes
-    */
+ * A wrapper which converts the browser's `fetch()` mechanism into an Observable.  The Observable then provides us with
+ * a stream of datatype values: first, a sequence of Pending objects that keep us up to date with the download progress,
+ * finally followed by either a Success or Failure object.  React then just has to render each of these appropriately.
+ */
 const fetchCache = new Map();
 function fetchAsSubject(endpoint) {
     if (fetchCache.has(endpoint)) {
@@ -104,30 +110,40 @@ function fetchAsSubject(endpoint) {
     return fetcher;
 }
 
-/* React stuff */
+/* ===================== */
+/* ==== React stuff ==== */
+/* ===================== */
+/* Rather than importing an entire build infrastructure, for now we just use React without JSX */
 const e = React.createElement;
 
+/*
+ * Provides user feedback given a FetchStatus object.
+ */
 function ProgressBar({ fetchStatus }) {
     return e('span', { className: "progress "},
         fetchStatus.fold({
-        pending: ({ bytesReceived, length }) => {
-            if (!bytesReceived) {
-                return e('span', { className: "spinner" }, "\u29b5");
-            }
-            const kB = Math.floor(10 * bytesReceived / 1024) / 10;
-            if (!length) {
-                return e('span', null, `Fetching (${kB}kB)`);
-            }
-            const percent = Math.floor(100 * bytesReceived / length);
-            return e('span', null, `Fetching (${kB}kB) ${percent}%`);
+            pending: ({ bytesReceived, length }) => {
+                if (!bytesReceived) {
+                    return e('span', { className: "spinner" }, "\u29b5");
+                }
+                const kB = Math.floor(10 * bytesReceived / 1024) / 10;
+                if (!length) {
+                    return e('span', null, `Fetching (${kB}kB)`);
+                }
+                const percent = Math.floor(100 * bytesReceived / length);
+                return e('span', null, `Fetching (${kB}kB) ${percent}%`);
+            },
+            success: () => e('span', null, "\u2713"),
+            error: (reason) => {
+                return e('span', { className: 'error'}, `\u2717 ${reason}`);
+            },
         },
-        success: () => e('span', null, "\u2713"),
-        error: (reason) => {
-            return e('span', { className: 'error'}, `\u2717 ${reason}`);
-        },
-    }));
+    ));
 }
 
+/*
+ * The main component.
+ */
 function BundlePicker() {
     const [bundle, setBundle] = React.useState("");
     const [file, setFile] = React.useState("");
@@ -137,6 +153,7 @@ function BundlePicker() {
     const [bundleFetchStatus, setBundleFetchStatus] = React.useState(None);
     const [fileFetchStatus, setFileFetchStatus] = React.useState(None);
 
+    /* At startup, try to fill in the bundle name for the user */
     React.useEffect(() => {
         getBundleName().then((name) => {
             if (bundle === "" && validateBundle(name) !== None) {
@@ -145,6 +162,10 @@ function BundlePicker() {
         }, console.log.bind(console));
     }, []);
 
+
+    /* ------------------------- */
+    /* Follow user state changes */
+    /* ------------------------- */
     const onBundleChange = React.useCallback((event) => {
         const value = event.target.value;
         setBundle(value);
@@ -165,6 +186,12 @@ function BundlePicker() {
         setColumn(value);
     }, []);
 
+
+    /* ------------------------------------------------ */
+    /* Plumb data-fetching observables through to React */
+    /* ------------------------------------------------ */
+
+    /* Whenever a valid bundle name is input, go see if it's a real bundle on the server */
     React.useEffect(() =>
         validateBundle(bundle).fold({
             some: (value) => {
@@ -177,6 +204,8 @@ function BundlePicker() {
         }),
     [bundle]);
 
+    /* Whenever a valid javascript file is input, see if it corresponds to a sourcemap file and initiate a fetch
+     * if so. */
     React.useEffect(() => {
         if (!file.match(/.\.js$/) || validateBundle(bundle) === None) {
             setFileFetchStatus(None);
@@ -197,9 +226,15 @@ function BundlePicker() {
         return () => subscription.unsubscribe();
     }, [bundle, file]);
 
+    /*
+     * Whenever we have a valid fetched sourcemap, and a valid line, attempt to find the original position from the
+     * sourcemap.
+     */
     React.useEffect(() => {
+        // `fold` dispatches on the datatype, like a switch statement
         fileFetchStatus.fold({
             some: (fetchStatus) =>
+                // `fold` just returns null for all of the cases that aren't `Success` objects here
                 fetchStatus.fold({
                     success: (value) => {
                         if (!line) return setResult(None);
@@ -214,6 +249,10 @@ function BundlePicker() {
         });
     }, [fileFetchStatus, line, column]);
 
+
+    /* ------ */
+    /* Render */
+    /* ------ */
     return e('div', {},
         e('div', { className: 'inputs' },
             e('div', { className: 'bundle' },
