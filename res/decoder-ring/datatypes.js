@@ -8,6 +8,14 @@
  * I've used perhaps an odd bit of terminology from scalaz in `fold`.  This is basically a `switch` statement:
  * You pass it a set of functions to handle the various different states of the datatype, and if it finds the
  * function it'll call it on its value.
+ *
+ * It's handy to have this in functional style when dealing with React as we can dispatch different ways of rendering
+ * really simply:
+ * ```
+ * bundleFetchStatus.fold({
+ *     some: (fetchStatus) => <ProgressBar fetchsStatus={fetchStatus} />,
+ * }),
+ * ```
  */
 
 
