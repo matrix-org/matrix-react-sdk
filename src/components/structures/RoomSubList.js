@@ -32,6 +32,7 @@ import RoomTile from "../views/rooms/RoomTile";
 import LazyRenderList from "../views/elements/LazyRenderList";
 import {_t} from "../../languageHandler";
 import {RovingTabIndexWrapper} from "../../accessibility/RovingTabIndex";
+import VoiceChannelUtils from '../../VoiceChannelUtils'
 
 // turn this on for drop & drag console debugging galore
 const debug = false;
@@ -41,6 +42,7 @@ export default class RoomSubList extends React.PureComponent {
     static debug = debug;
 
     static propTypes = {
+        //List of Room objects
         list: PropTypes.arrayOf(PropTypes.object).isRequired,
         label: PropTypes.string.isRequired,
         tagName: PropTypes.string,
@@ -191,6 +193,7 @@ export default class RoomSubList extends React.PureComponent {
     };
 
     onRoomTileClick = (roomId, ev) => {
+        if (VoiceChannelUtils.joinAsVoiceChannel(roomId)) return null
         dis.dispatch({
             action: 'view_room',
             show_room_tile: true, // to make sure the room gets scrolled into view
@@ -383,7 +386,10 @@ export default class RoomSubList extends React.PureComponent {
 
     setHeight = (height) => {
         if (this._subList.current) {
-            this._subList.current.style.height = `${height}px`;
+        //Make sub list work with users in voice channels
+        const numItems = this.props.list.map(r => (VoiceChannelUtils.isVoiceChannel(r.roomId) ? Object.keys(VoiceChannelUtils.getUsers(r.roomId)).length : 0))
+        const additionalHeightHack = numItems.length ? numItems.reduce((a,b) => a+b)*34 : 0
+            this._subList.current.style.height = `${height+additionalHeightHack}px`;
         }
         this._updateLazyRenderHeight(height);
     };

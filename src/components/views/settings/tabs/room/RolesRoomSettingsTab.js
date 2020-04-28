@@ -21,6 +21,7 @@ import {MatrixClientPeg} from "../../../../../MatrixClientPeg";
 import * as sdk from "../../../../..";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import Modal from "../../../../../Modal";
+import { VoiceChannelStateKey } from '../../../../../VoiceChannelUtils'
 
 const plEventsToLabels = {
     // These will be translated for us later.
@@ -35,6 +36,7 @@ const plEventsToLabels = {
 
     // TODO: Enable support for m.widget event type (https://github.com/vector-im/riot-web/issues/13111)
     "im.vector.modular.widgets": _td("Modify widgets"),
+    [VoiceChannelStateKey]: _td('Manipulate VoiceChannel State')
 };
 
 const plEventsToShow = {
@@ -50,6 +52,7 @@ const plEventsToShow = {
 
     // TODO: Enable support for m.widget event type (https://github.com/vector-im/riot-web/issues/13111)
     "im.vector.modular.widgets": {isState: true},
+    [VoiceChannelStateKey]: {isState: true}
 };
 
 // parse a string as an integer; if the input is undefined, or cannot be parsed

@@ -21,6 +21,7 @@ import Modal from '../../../Modal';
 import * as sdk from "../../../index";
 import * as Avatar from '../../../Avatar';
 import {getHttpUriForMxc} from "matrix-js-sdk/src/content-repo";
+import VoiceChannelUtils from "../../../VoiceChannelUtils";
 
 export default createReactClass({
     displayName: 'RoomAvatar',
@@ -98,6 +99,10 @@ export default createReactClass({
 
     getRoomAvatarUrl: function(props) {
         if (!props.room) return null;
+
+        if (VoiceChannelUtils.isVoiceChannel(props.room.roomId)) {
+            return require('../../../../res/img/sound-indicator.svg')
+        }
 
         return Avatar.avatarUrlForRoom(
             props.room,

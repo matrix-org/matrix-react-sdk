@@ -33,6 +33,7 @@ import RoomListActions from '../../../actions/RoomListActions';
 import RoomViewStore from '../../../stores/RoomViewStore';
 import {sleep} from "../../../utils/promise";
 import {MenuItem, MenuItemCheckbox, MenuItemRadio} from "../../structures/ContextMenu";
+import VoiceChannelUtils from '../../../VoiceChannelUtils'
 
 const RoomTagOption = ({active, onClick, src, srcSet, label}) => {
     const classes = classNames('mx_RoomTileContextMenu_tag_field', {
@@ -79,6 +80,7 @@ export default createReactClass({
             isFavourite: this.props.room.tags.hasOwnProperty("m.favourite"),
             isLowPriority: this.props.room.tags.hasOwnProperty("m.lowpriority"),
             isDirectMessage: Boolean(dmRoomMap.getUserIdForRoomId(this.props.room.roomId)),
+            hasActiveJitsiWidget: VoiceChannelUtils.canBeVoiceChannel(this.props.room.roomId),
         };
     },
 
@@ -186,6 +188,20 @@ export default createReactClass({
         if (this.props.onFinished) {
             this.props.onFinished();
         }
+    },
+
+    _onClickJoinAsChannel: function() {
+        VoiceChannelUtils.joinAsVoiceChannel(this.props.room.roomId)
+        
+        //Close context menu
+        this.props.onFinished ? this.props.onFinished() : null
+    },
+
+    _onClickViewChannel: function() {
+        dis.dispatch({
+            action: 'view_room',
+            room_id: this.props.room.roomId
+        });
     },
 
     _onClickForget: function() {
@@ -348,6 +364,14 @@ export default createReactClass({
     },
 
     _renderRoomTagMenu: function() {
+        const viewRoom = VoiceChannelUtils.isVoiceChannel(this.props.room.roomId) ? 
+                                <RoomTagOption
+                                    active={true}
+                                    label={_t('View Room messages')}
+                                    onClick={this._onClickViewChannel}
+                                />
+                            : null
+
         return (
             <div>
                 <RoomTagOption
@@ -371,6 +395,15 @@ export default createReactClass({
                     src={require("../../../../res/img/icon_context_person.svg")}
                     srcSet={require("../../../../res/img/icon_context_person_on.svg")}
                 />
+                <RoomTagOption
+                    active={this.state.hasActiveJitsiWidget}
+                    disabled={!this.state.hasActiveJitsiWidget}
+                    label={_t('Join as Voice Channel')}
+                    onClick={this._onClickJoinAsChannel}
+                    src={require("../../../../res/img/sound-indicator.svg")}
+                    srcSet={require("../../../../res/img/sound-indicator.svg")}
+                />
+                { viewRoom }
             </div>
         );
     },

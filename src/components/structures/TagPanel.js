@@ -102,10 +102,45 @@ const TagPanel = createReactClass({
         dis.dispatch({action: 'deselect_tags'});
     },
 
+    _makeHomeTag() {
+        const AccessibleTooltipButton = sdk.getComponent("elements.AccessibleTooltipButton")
+        const BaseAvatar = sdk.getComponent('avatars.BaseAvatar')
+        const avatarHeight = 40
+        const name = 'Home'
+
+        const httpUrl = require('../../../../riot-web/res/vector-icons/favicon.ico')
+
+        const className = classNames({
+            mx_TagTile: true,
+            mx_TagTile_selected: !this.state.selectedTags.length,
+        })
+        const homeClick = (e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            dis.dispatch({
+                action: 'deselect_tags'
+            })
+        }
+        return <React.Fragment>
+            <AccessibleTooltipButton className={className} onClick={homeClick} title={name}>
+                <div className="mx_TagTile_avatar">
+                    <BaseAvatar
+                        name={name}
+                        idName={name}
+                        url={httpUrl}
+                        width={avatarHeight}
+                        height={avatarHeight}
+                    />
+                </div>
+            </AccessibleTooltipButton>
+        </React.Fragment>
+    },
+
     render() {
         const DNDTagTile = sdk.getComponent('elements.DNDTagTile');
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         const ActionButton = sdk.getComponent('elements.ActionButton');
+        const TagTile = sdk.getComponent('elements.TagTile');
         const TintableSvg = sdk.getComponent('elements.TintableSvg');
 
         const tags = this.state.orderedTags.map((tag, index) => {
@@ -133,11 +168,24 @@ const TagPanel = createReactClass({
             mx_TagPanel_items_selected: itemsSelected,
         });
 
+        const dividerStyle = {
+            display: 'block'
+        }
+
+        const homeTile = this._makeHomeTag()
+        const homeTileStyle = {
+            padding: '2px 0 9px 0'
+        }
+
         return <div className={classes}>
             <div className="mx_TagPanel_clearButton_container">
                 { clearButton }
             </div>
             <div className="mx_TagPanel_divider" />
+            <div style={homeTileStyle}>
+                { homeTile }
+            </div>
+            <div className="mx_TagPanel_divider" style={dividerStyle} />
             <AutoHideScrollbar
                 className="mx_TagPanel_scroller"
                 // XXX: Use onMouseDown as a workaround for https://github.com/atlassian/react-beautiful-dnd/issues/273

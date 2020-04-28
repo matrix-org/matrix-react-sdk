@@ -1074,9 +1074,9 @@ export default class InviteDialog extends React.PureComponent {
             helpText = _t(
                 "Start a conversation with someone using their name, username (like <userId/>) or email address.",
                 {},
-                {userId: () => {
-                    return <a href={makeUserPermalink(userId)} rel="noreferrer noopener" target="_blank">{userId}</a>;
-                }},
+                {userId: () => 
+                    <a href={makeUserPermalink(userId)} rel="noreferrer noopener" target="_blank">{userId}</a>
+                },
             );
             buttonText = _t("Go");
             goButtonFn = this._startDm;
@@ -1084,10 +1084,10 @@ export default class InviteDialog extends React.PureComponent {
             title = _t("Invite to this room");
             helpText = _t(
                 "If you can't find someone, ask them for their username (e.g. @user:server.com) or " +
-                "<a>share this room</a>.", {},
-                {
-                    a: (sub) =>
-                        <a href={makeRoomPermalink(this.props.roomId)} rel="noreferrer noopener" target="_blank">{sub}</a>,
+                "<a>share this room</a>.", 
+                {},
+                {a: (sub) =>
+                    <a href={makeRoomPermalink(this.props.roomId)} rel="noreferrer noopener" target="_blank">{sub}</a>
                 },
             );
             buttonText = _t("Invite");
