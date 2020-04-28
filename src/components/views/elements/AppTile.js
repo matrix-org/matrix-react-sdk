@@ -39,6 +39,7 @@ import SettingsStore, {SettingLevel} from "../../../settings/SettingsStore";
 import {aboveLeftOf, ContextMenu, ContextMenuButton} from "../../structures/ContextMenu";
 import PersistedElement from "./PersistedElement";
 import {WidgetType} from "../../../widgets/WidgetType";
+import {setupScreenSharingRender} from "jitsi-meet-electron-utils";
 
 const ALLOWED_APP_URL_SCHEMES = ['https:', 'http:'];
 const ENABLE_REACT_PERF = false;
@@ -174,6 +175,35 @@ export default class AppTile extends React.Component {
 
         // Widget action listeners
         this.dispatcherRef = dis.register(this._onAction);
+    }
+
+    componentDidUpdate(): void {
+        setTimeout(() => {
+        console.log(this.state.joinedJitsi);
+        console.log(this._appFrame.current);
+        console.log(this.state.actuallyInJitsi);
+        if (this.state.joinedJitsi && this._appFrame.current && !this.state.actuallyInJitsi) {
+            // TODO: Less hacky/hardcoded
+            const meetApi = new JitsiMeetExternalAPI("jitsi.riot.im", {
+                width: "100%",
+                height: "100%",
+                parentNode: this._appFrame.current,
+                roomName: "TestingElectron",
+                interfaceConfigOverwrite: {
+                    SHOW_JITSI_WATERMARK: false,
+                    SHOW_WATERMARK_FOR_GUESTS: false,
+                    MAIN_TOOLBAR_BUTTONS: [],
+                    VIDEO_LAYOUT_FIT: "height",
+                },
+            });
+            this.setState({actuallyInJitsi: true});
+            setupScreenSharingRender(meetApi);
+
+            meetApi.on("readyToClose", () => {
+                this.setState({joinedJitsi: false, actuallyInJitsi: false});
+            });
+        }
+        }, 1000);
     }
 
     componentWillUnmount() {
@@ -423,6 +453,7 @@ export default class AppTile extends React.Component {
     _setupWidgetMessaging() {
         // FIXME: There's probably no reason to do this here: it should probably be done entirely
         // in ActiveWidgetStore.
+        if (!this._appFrame.current || !this._appFrame.current.contentWindow) return; // Nothing to do.
         const widgetMessaging = new WidgetMessaging(
             this.props.app.id, this._getRenderedUrl(), this.props.userWidget, this._appFrame.current.contentWindow);
         ActiveWidgetStore.setWidgetMessaging(this.props.app.id, widgetMessaging);
@@ -730,16 +761,28 @@ export default class AppTile extends React.Component {
                         </div>
                     );
                 } else {
+                    let frame = <iframe
+                        allow={iframeFeatures}
+                        ref={this._appFrame}
+                        src={this._getRenderedUrl()}
+                        allowFullScreen={true}
+                        sandbox={sandboxFlags}
+                        onLoad={this._onLoaded} />;
+                    if (WidgetType.JITSI.matches(this.props.app.type)) {
+                        if (this.state.joinedJitsi) {
+                            frame = <div id='mx_EmbeddedJitsi' ref={this._appFrame} />;
+                        } else {
+                            frame = <div>
+                                <AccessibleButton onClick={() => this.setState({joinedJitsi: true})}>
+                                    {_t("Join conference")}
+                                </AccessibleButton>
+                            </div>;
+                        }
+                    }
                     appTileBody = (
                         <div className={appTileBodyClass + (this.state.loading ? 'mx_AppLoading' : '')}>
                             { this.state.loading && loadingElement }
-                            <iframe
-                                allow={iframeFeatures}
-                                ref={this._appFrame}
-                                src={this._getRenderedUrl()}
-                                allowFullScreen={true}
-                                sandbox={sandboxFlags}
-                                onLoad={this._onLoaded} />
+                            {frame}
                         </div>
                     );
                     // if the widget would be allowed to remain on screen, we must put it in
