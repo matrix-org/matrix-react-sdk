@@ -18,6 +18,7 @@ limitations under the License.
 // --accent-color
 $accent-color: var(--accent-color);
 $accent-color-50pct: var(--accent-color-50pct);
+$accent-bg-color: var(--accent-color-15pct);
 $button-bg-color: var(--accent-color);
 $button-link-fg-color: var(--accent-color);
 $button-primary-bg-color: var(--accent-color);
@@ -48,6 +49,7 @@ $font-family: var(--font-family, $font-family);
 $monospace-font-family: var(--font-family-monospace, $monospace-font-family);
 //
 // --highlight-color
+$event-highlight-bg-color: var(--highlight-color);
 $event-selected-color: var(--highlight-color);
 $focus-bg-color: var(--highlight-color);
 $menu-selected-color: var(--highlight-color);
@@ -93,7 +95,6 @@ $roomtile-name-color: var(--roomlist-text-secondary-color);
 //
 // --sidebar-color
 $dialog-backdrop-color: var(--sidebar-color-50pct);
-$interactive-tooltip-bg-color: var(--sidebar-color);
 $tagpanel-bg-color: var(--sidebar-color);
 //
 // --timeline-background-color
@@ -103,6 +104,7 @@ $avatar-bg-color: var(--timeline-background-color);
 $button-secondary-bg-color: var(--timeline-background-color);
 $droptarget-bg-color: var(--timeline-background-color-50pct);
 $field-focused-label-bg-color: var(--timeline-background-color);
+$interactive-tooltip-fg-color: var(--timeline-background-color);
 $lightbox-border-color: var(--timeline-background-color);
 $menu-bg-color: var(--timeline-background-color);
 $message-action-bar-bg-color: var(--timeline-background-color);
@@ -133,6 +135,7 @@ $blockquote-fg-color: var(--timeline-text-secondary-color);
 $event-timestamp-color: var(--timeline-text-secondary-color);
 $greyed-fg-color: var(--timeline-text-secondary-color);
 $info-plinth-fg-color: var(--timeline-text-secondary-color);
+$interactive-tooltip-bg-color: var(--timeline-text-secondary-color);
 $light-fg-color: var(--timeline-text-secondary-color);
 $memberstatus-placeholder-color: var(--timeline-text-secondary-color);
 $notice-secondary-color: var(--timeline-text-secondary-color);
@@ -141,6 +144,16 @@ $preview-widget-fg-color: var(--timeline-text-secondary-color);
 $roomheader-addroom-bg-color: var(--timeline-text-secondary-color);
 $settings-subsection-fg-color: var(--timeline-text-secondary-color);
 $tooltip-timeline-bg-color: var(--timeline-text-secondary-color);
+//
+// --username-colors_n
+$username-variant1-color: var(--username-colors_1, $username-variant1-color);
+$username-variant2-color: var(--username-colors_2, $username-variant2-color);
+$username-variant3-color: var(--username-colors_3, $username-variant3-color);
+$username-variant4-color: var(--username-colors_4, $username-variant4-color);
+$username-variant5-color: var(--username-colors_5, $username-variant5-color);
+$username-variant6-color: var(--username-colors_6, $username-variant6-color);
+$username-variant7-color: var(--username-colors_7, $username-variant7-color);
+$username-variant8-color: var(--username-colors_8, $username-variant8-color);
 //
 // --warning-color
 $button-danger-bg-color: var(--warning-color);
