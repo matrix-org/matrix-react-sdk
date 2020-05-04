@@ -26,6 +26,7 @@ import ErrorDialog from "../dialogs/ErrorDialog";
 import AccessibleButton from "../elements/AccessibleButton";
 import Modal from "../../../Modal";
 import RoomPublishSetting from "./RoomPublishSetting";
+import { PublishedAliases } from "./PublishedAliases";
 
 class EditableAliasesList extends EditableItemList {
     constructor(props) {
@@ -305,6 +306,8 @@ export default class AliasSettings extends React.Component {
     render() {
         const localDomain = MatrixClientPeg.get().getDomain();
 
+        const room = MatrixClientPeg.get().getRoom(this.props.roomId);
+
         let found = false;
         const canonicalValue = this.state.canonicalAlias || "";
         const canonicalAliasSection = (
@@ -354,31 +357,7 @@ export default class AliasSettings extends React.Component {
 
         return (
             <div className='mx_AliasSettings'>
-                <span className='mx_SettingsTab_subheading'>{_t("Published Addresses")}</span>
-                <p>{_t("Published addresses can be used by anyone on any server to join your room. " +
-                    "To publish an address, it needs to be set as a local address first.")}</p>
-                {canonicalAliasSection}
-                <RoomPublishSetting roomId={this.props.roomId} canSetCanonicalAlias={this.props.canSetCanonicalAlias} />
-                <datalist id="mx_AliasSettings_altRecommendations">
-                    {this._getLocalNonAltAliases().map(alias => {
-                        return <option value={alias} key={alias} />;
-                    })};
-                </datalist>
-                <EditableAliasesList
-                    id="roomAltAliases"
-                    className={"mx_RoomSettings_altAliases"}
-                    items={this.state.altAliases}
-                    newItem={this.state.newAltAlias}
-                    onNewItemChanged={this.onNewAltAliasChanged}
-                    canRemove={this.props.canSetCanonicalAlias}
-                    canEdit={this.props.canSetCanonicalAlias}
-                    onItemAdded={this.onAltAliasAdded}
-                    onItemRemoved={this.onAltAliasDeleted}
-                    suggestionsListId="mx_AliasSettings_altRecommendations"
-                    itemsLabel={_t('Other published addresses:')}
-                    noItemsLabel={_t('No other published addresses yet, add one below')}
-                    placeholder={_t('New published address (e.g. #alias:server)')}
-                />
+                <PublishedAliases room={room} localAliases={this.state.localAliases} />
                 <span className='mx_SettingsTab_subheading mx_AliasSettings_localAliasHeader'>{_t("Local Addresses")}</span>
                 <p>{_t("Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)", {localDomain})}</p>
                 <details onToggle={this.onLocalAliasesToggled}>
