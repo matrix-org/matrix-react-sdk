@@ -607,6 +607,8 @@ div.mx_EventTile_notSent.mx_EventTile_redacted .mx_UnknownBody {
 
     .mx_EventTile .mx_SenderProfile {
         font-size: $font-13px;
+        font-size: 13px;
+        padding-left: 10px;
     }
 
     .mx_EventTile.mx_EventTile_emote {
@@ -632,6 +634,7 @@ div.mx_EventTile_notSent.mx_EventTile_redacted .mx_UnknownBody {
     .mx_EventTile_line, .mx_EventTile_reply {
         padding-top: 0px;
         padding-bottom: 0px;
+        padding-left: 45px;
     }
 
     .mx_EventTile_avatar {
@@ -657,6 +660,15 @@ div.mx_EventTile_notSent.mx_EventTile_redacted .mx_UnknownBody {
 
     .mx_RoomView_MessageList h2 {
         margin-top: 6px;
+    }
+
+    .mx_ReplyThread {
+        margin-bottom: 5px;
+        padding-left: 0;
+    }
+
+    .mx_ReplyThread_show {
+        padding-left: 10px;
     }
 
     .mx_EventTile_content .markdown-body {
