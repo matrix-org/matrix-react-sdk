@@ -217,6 +217,7 @@ export async function canEncryptToAllUsers(client, userIds) {
         usersDeviceMap = await client.downloadKeys(userIds);
     } catch (ex) {
        if (ex.httpStatus === 404) {
+            console.log("Got 404 when fetching keys for users, not encrypting room");
             // The endpoint to fetch keys doesn't exist: force unencrypted.
             // See: https://github.com/vector-im/riot-web/issues/13598
             return false;
