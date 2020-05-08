@@ -265,3 +265,31 @@ export async function accessSecretStorage(func = async () => { }, forceReset = f
         }
     }
 }
+
+export async function is4SEnabled() {
+    // TODO: detect if we have already bootstrapped 4S
+    // look at enable4SIfNeeded in verification, etc
+    return Promise.resolve(true);
+}
+
+export async function sanityCheck4SAndCrossSignSetup() {
+    const storageKey = "mx_4s_xsign_sanity_check";
+
+    const storedValid = window.localStorage.getItem(storageKey);
+    if (storedValid !== null) {
+        return storedValid === "true";
+    }
+
+    const cli = MatrixClientPeg.get();
+
+    let isValid = false;
+    const cacheValid = await cli.checkCrossSignKeysInCacheMatchPublishedKeys();
+    // TODO: show toast here before triggering prompt
+    if (cacheValid) {
+        isValid = await accessSecretStorage(() => {
+            return cli.checkCrossSignKeysIn4SMatchPublishedKeys();
+        });
+    }
+    window.localStorage.setItem(storageKey, isValid);
+    return isValid;
+}
