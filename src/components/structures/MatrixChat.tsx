@@ -48,6 +48,7 @@ import * as Lifecycle from '../../Lifecycle';
 import '../../stores/LifecycleStore';
 import PageTypes from '../../PageTypes';
 import { getHomePageUrl } from '../../utils/pages';
+import { is4SEnabled, sanityCheck4SAndCrossSignSetup } from '../../CrossSigningManager';
 
 import createRoom from "../../createRoom";
 import KeyRequestHandler from '../../KeyRequestHandler';
@@ -1366,6 +1367,26 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             if (state === "SYNCING" && prevState === "SYNCING") {
                 return;
             }
+
+            if (state === "SYNCING" && (prevState === "CATCHUP" || prevState === "PREPARED")) {
+                is4SEnabled().then(enabled => {
+                    if (enabled) {
+                        return sanityCheck4SAndCrossSignSetup().then(isValid => {
+                            if (!isValid) {
+                                ToastStore.sharedInstance().addOrReplaceToast({
+                                    key: 'cross-signing-corrupt',
+                                    title: _t("Your encryption upgrade failed"),
+                                    icon: "verification_warning",
+                                    props: {},
+                                    component: sdk.getComponent("toasts.ResetCrossSigningToast"),
+                                    priority: ToastStore.PRIORITY_REALTIME,
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+
             console.info("MatrixClient sync state => %s", state);
             if (state !== "PREPARED") { return; }
 
