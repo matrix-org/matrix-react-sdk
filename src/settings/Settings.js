@@ -229,6 +229,11 @@ export const SETTINGS = {
         displayName: _td('Enable automatic language detection for syntax highlighting'),
         default: false,
     },
+    "stripFileMetadata": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Strip metadata from file uploads'),
+        default: true,
+    },
     "Pill.shouldShowPillAvatar": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Show avatars in user and room mentions'),
