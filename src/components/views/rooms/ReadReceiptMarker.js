@@ -1,5 +1,6 @@
 /*
 Copyright 2016 OpenMarket Ltd
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,20 +15,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
-var React = require('react');
-var ReactDOM = require('react-dom');
-
-var sdk = require('../../../index');
-
-var Velociraptor = require('../../../Velociraptor');
-require('../../../VelocityBounce');
+import React, {createRef} from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
+import '../../../VelocityBounce';
 import { _t } from '../../../languageHandler';
+import {formatDate} from '../../../DateUtils';
+import Velociraptor from "../../../Velociraptor";
+import * as sdk from "../../../index";
+import toRem from "../../../utils/rem";
 
-import DateUtils from '../../../DateUtils';
-
-var bounce = false;
+let bounce = false;
 try {
     if (global.localStorage) {
         bounce = global.localStorage.getItem('avatar_bounce') == 'true';
@@ -35,40 +33,43 @@ try {
 } catch (e) {
 }
 
-module.exports = React.createClass({
+export default createReactClass({
     displayName: 'ReadReceiptMarker',
 
     propTypes: {
         // the RoomMember to show the RR for
-        member: React.PropTypes.object.isRequired,
+        member: PropTypes.object,
+        // userId to fallback the avatar to
+        // if the member hasn't been loaded yet
+        fallbackUserId: PropTypes.string.isRequired,
 
         // number of pixels to offset the avatar from the right of its parent;
         // typically a negative value.
-        leftOffset: React.PropTypes.number,
+        leftOffset: PropTypes.number,
 
         // true to hide the avatar (it will still be animated)
-        hidden: React.PropTypes.bool,
+        hidden: PropTypes.bool,
 
         // don't animate this RR into position
-        suppressAnimation: React.PropTypes.bool,
+        suppressAnimation: PropTypes.bool,
 
         // an opaque object for storing information about this user's RR in
         // this room
-        readReceiptInfo: React.PropTypes.object,
+        readReceiptInfo: PropTypes.object,
 
         // A function which is used to check if the parent panel is being
         // unmounted, to avoid unnecessary work. Should return true if we
         // are being unmounted.
-        checkUnmounting: React.PropTypes.func,
+        checkUnmounting: PropTypes.func,
 
         // callback for clicks on this RR
-        onClick: React.PropTypes.func,
+        onClick: PropTypes.func,
 
         // Timestamp when the receipt was read
-        timestamp: React.PropTypes.number,
+        timestamp: PropTypes.number,
 
         // True to show twelve hour format, false otherwise
-        showTwelveHour: React.PropTypes.bool,
+        showTwelveHour: PropTypes.bool,
     },
 
     getDefaultProps: function() {
@@ -87,10 +88,15 @@ module.exports = React.createClass({
         };
     },
 
+    // TODO: [REACT-WARNING] Replace component with real class, use constructor for refs
+    UNSAFE_componentWillMount: function() {
+        this._avatar = createRef();
+    },
+
     componentWillUnmount: function() {
         // before we remove the rr, store its location in the map, so that if
         // it reappears, it can be animated from the right place.
-        var rrInfo = this.props.readReceiptInfo;
+        const rrInfo = this.props.readReceiptInfo;
         if (!rrInfo) {
             return;
         }
@@ -102,7 +108,7 @@ module.exports = React.createClass({
             return;
         }
 
-        var avatarNode = ReactDOM.findDOMNode(this);
+        const avatarNode = this._avatar.current;
         rrInfo.top = avatarNode.offsetTop;
         rrInfo.left = avatarNode.offsetLeft;
         rrInfo.parent = avatarNode.offsetParent;
@@ -115,29 +121,39 @@ module.exports = React.createClass({
         }
 
         // treat new RRs as though they were off the top of the screen
-        var oldTop = -15;
+        let oldTop = -15;
 
-        var oldInfo = this.props.readReceiptInfo;
+        const oldInfo = this.props.readReceiptInfo;
         if (oldInfo && oldInfo.parent) {
             oldTop = oldInfo.top + oldInfo.parent.getBoundingClientRect().top;
         }
 
-        var newElement = ReactDOM.findDOMNode(this);
-        var startTopOffset = oldTop - newElement.offsetParent.getBoundingClientRect().top;
+        const newElement = this._avatar.current;
+        let startTopOffset;
+        if (!newElement.offsetParent) {
+            // this seems to happen sometimes for reasons I don't understand
+            // the docs for `offsetParent` say it may be null if `display` is
+            // `none`, but I can't see why that would happen.
+            console.warn(
+                `ReadReceiptMarker for ${this.props.fallbackUserId} in has no offsetParent`,
+            );
+            startTopOffset = 0;
+        } else {
+            startTopOffset = oldTop - newElement.offsetParent.getBoundingClientRect().top;
+        }
 
-        var startStyles = [];
-        var enterTransitionOpts = [];
+        const startStyles = [];
+        const enterTransitionOpts = [];
 
         if (oldInfo && oldInfo.left) {
             // start at the old height and in the old h pos
 
-            var leftOffset = oldInfo.left;
             startStyles.push({ top: startTopOffset+"px",
-                               left: oldInfo.left+"px" });
+                               left: toRem(oldInfo.left) });
 
-            var reorderTransitionOpts = {
+            const reorderTransitionOpts = {
                 duration: 100,
-                easing: 'easeOut'
+                easing: 'easeOut',
             };
 
             enterTransitionOpts.push(reorderTransitionOpts);
@@ -160,23 +176,34 @@ module.exports = React.createClass({
 
 
     render: function() {
-        var MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
+        const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
         if (this.state.suppressDisplay) {
-            return <div/>;
+            return <div ref={this._avatar} />;
         }
 
-        var style = {
-            left: this.props.leftOffset+'px',
+        const style = {
+            left: toRem(this.props.leftOffset),
             top: '0px',
             visibility: this.props.hidden ? 'hidden' : 'visible',
         };
 
         let title;
         if (this.props.timestamp) {
-            title = _t(
-                "Seen by %(userName)s at %(dateTime)s",
-                {userName: this.props.member.userId, dateTime: DateUtils.formatDate(new Date(this.props.timestamp), this.props.showTwelveHour)}
-            );
+            const dateString = formatDate(new Date(this.props.timestamp), this.props.showTwelveHour);
+            if (!this.props.member || this.props.fallbackUserId === this.props.member.rawDisplayName) {
+                title = _t(
+                    "Seen by %(userName)s at %(dateTime)s",
+                    {userName: this.props.fallbackUserId,
+                    dateTime: dateString},
+                );
+            } else {
+                title = _t(
+                    "Seen by %(displayName)s (%(userName)s) at %(dateTime)s",
+                    {displayName: this.props.member.rawDisplayName,
+                    userName: this.props.fallbackUserId,
+                    dateTime: dateString},
+                );
+            }
         }
 
         return (
@@ -185,11 +212,13 @@ module.exports = React.createClass({
                     enterTransitionOpts={this.state.enterTransitionOpts} >
                 <MemberAvatar
                     member={this.props.member}
+                    fallbackUserId={this.props.fallbackUserId}
                     aria-hidden="true"
                     width={14} height={14} resizeMethod="crop"
                     style={style}
                     title={title}
                     onClick={this.props.onClick}
+                    inputRef={this._avatar}
                 />
             </Velociraptor>
         );

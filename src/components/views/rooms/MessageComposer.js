@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2017, 2018 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,120 +14,75 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import React from 'react';
+import React, {createRef} from 'react';
+import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import CallHandler from '../../../CallHandler';
-import MatrixClientPeg from '../../../MatrixClientPeg';
-import Modal from '../../../Modal';
-import sdk from '../../../index';
+import {MatrixClientPeg} from '../../../MatrixClientPeg';
+import * as sdk from '../../../index';
 import dis from '../../../dispatcher';
-import Autocomplete from './Autocomplete';
-import UserSettingsStore from '../../../UserSettingsStore';
+import RoomViewStore from '../../../stores/RoomViewStore';
+import Stickerpicker from './Stickerpicker';
+import { makeRoomPermalink } from '../../../utils/permalinks/Permalinks';
+import ContentMessages from '../../../ContentMessages';
+import E2EIcon from './E2EIcon';
+import SettingsStore from "../../../settings/SettingsStore";
 
+function ComposerAvatar(props) {
+    const MemberStatusMessageAvatar = sdk.getComponent('avatars.MemberStatusMessageAvatar');
+    return <div className="mx_MessageComposer_avatar">
+        <MemberStatusMessageAvatar member={props.me} width={24} height={24} />
+    </div>;
+}
 
-export default class MessageComposer extends React.Component {
-    constructor(props, context) {
-        super(props, context);
-        this.onCallClick = this.onCallClick.bind(this);
-        this.onHangupClick = this.onHangupClick.bind(this);
-        this.onUploadClick = this.onUploadClick.bind(this);
-        this.onShowAppsClick = this.onShowAppsClick.bind(this);
-        this.onHideAppsClick = this.onHideAppsClick.bind(this);
-        this.onUploadFileSelected = this.onUploadFileSelected.bind(this);
-        this.uploadFiles = this.uploadFiles.bind(this);
-        this.onVoiceCallClick = this.onVoiceCallClick.bind(this);
-        this.onInputContentChanged = this.onInputContentChanged.bind(this);
-        this._onAutocompleteConfirm = this._onAutocompleteConfirm.bind(this);
-        this.onToggleFormattingClicked = this.onToggleFormattingClicked.bind(this);
-        this.onToggleMarkdownClicked = this.onToggleMarkdownClicked.bind(this);
-        this.onInputStateChanged = this.onInputStateChanged.bind(this);
-        this.onEvent = this.onEvent.bind(this);
+ComposerAvatar.propTypes = {
+    me: PropTypes.object.isRequired,
+};
 
-        this.state = {
-            autocompleteQuery: '',
-            selection: null,
-            inputState: {
-                style: [],
-                blockType: null,
-                isRichtextEnabled: UserSettingsStore.getSyncedSetting('MessageComposerInput.isRichTextEnabled', false),
-                wordCount: 0,
-            },
-            showFormatting: UserSettingsStore.getSyncedSetting('MessageComposer.showFormatting', false),
-        };
-    }
-
-    componentDidMount() {
-        // N.B. using 'event' rather than 'RoomEvents' otherwise the crypto handler
-        // for 'event' fires *after* 'RoomEvent', and our room won't have yet been
-        // marked as encrypted.
-        // XXX: fragile as all hell - fixme somehow, perhaps with a dedicated Room.encryption event or something.
-        MatrixClientPeg.get().on("event", this.onEvent);
-    }
-
-    componentWillUnmount() {
-        if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener("event", this.onEvent);
-        }
-    }
-
-    onEvent(event) {
-        if (event.getType() !== 'm.room.encryption') return;
-        if (event.getRoomId() !== this.props.room.roomId) return;
-        this.forceUpdate();
-    }
-
-    onUploadClick(ev) {
-        if (MatrixClientPeg.get().isGuest()) {
-            dis.dispatch({action: 'view_set_mxid'});
-            return;
-        }
-
-        this.refs.uploadInput.click();
-    }
-
-    onUploadFileSelected(files) {
-        this.uploadFiles(files.target.files);
-    }
-
-    uploadFiles(files) {
-        let QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-        let TintableSvg = sdk.getComponent("elements.TintableSvg");
-
-        let fileList = [];
-        for (let i=0; i<files.length; i++) {
-            fileList.push(<li key={i}>
-                <TintableSvg key={i} src="img/files.svg" width="16" height="16" /> {files[i].name || _t('Attachment')}
-            </li>);
-        }
-
-        Modal.createTrackedDialog('Upload Files confirmation', '', QuestionDialog, {
-            title: _t('Upload Files'),
-            description: (
-                <div>
-                    <p>{ _t('Are you sure you want to upload the following files?') }</p>
-                    <ul style={{listStyle: 'none', textAlign: 'left'}}>
-                        {fileList}
-                    </ul>
-                </div>
-            ),
-            onFinished: (shouldUpload) => {
-                if(shouldUpload) {
-                    // MessageComposer shouldn't have to rely on its parent passing in a callback to upload a file
-                    if (files) {
-                        for(let i=0; i<files.length; i++) {
-                            this.props.uploadFile(files[i]);
-                        }
-                    }
-                }
-
-                this.refs.uploadInput.value = null;
-            },
+function CallButton(props) {
+    const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
+    const onVoiceCallClick = (ev) => {
+        dis.dispatch({
+            action: 'place_call',
+            type: "voice",
+            room_id: props.roomId,
         });
-    }
+    };
 
-    onHangupClick() {
-        const call = CallHandler.getCallForRoom(this.props.room.roomId);
-        //var call = CallHandler.getAnyActiveCall();
+    return (<AccessibleButton className="mx_MessageComposer_button mx_MessageComposer_voicecall"
+            onClick={onVoiceCallClick}
+            title={_t('Voice call')}
+        />);
+}
+
+CallButton.propTypes = {
+    roomId: PropTypes.string.isRequired,
+};
+
+function VideoCallButton(props) {
+    const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
+    const onCallClick = (ev) => {
+        dis.dispatch({
+            action: 'place_call',
+            type: ev.shiftKey ? "screensharing" : "video",
+            room_id: props.roomId,
+        });
+    };
+
+    return <AccessibleButton className="mx_MessageComposer_button mx_MessageComposer_videocall"
+        onClick={onCallClick}
+        title={_t('Video call')}
+    />;
+}
+
+VideoCallButton.propTypes = {
+    roomId: PropTypes.string.isRequired,
+};
+
+function HangupButton(props) {
+    const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
+    const onHangupClick = () => {
+        const call = CallHandler.getCallForRoom(props.roomId);
         if (!call) {
             return;
         }
@@ -136,217 +92,275 @@ export default class MessageComposer extends React.Component {
             // (e.g. conferences which will hangup the 1:1 room instead)
             room_id: call.roomId,
         });
+    };
+    return (<AccessibleButton className="mx_MessageComposer_button mx_MessageComposer_hangup"
+            onClick={onHangupClick}
+            title={_t('Hangup')}
+        />);
+}
+
+HangupButton.propTypes = {
+    roomId: PropTypes.string.isRequired,
+};
+
+class UploadButton extends React.Component {
+    static propTypes = {
+        roomId: PropTypes.string.isRequired,
     }
 
-    // _startCallApp(isAudioConf) {
-        // dis.dispatch({
-        //     action: 'appsDrawer',
-        //     show: true,
-        // });
+    constructor(props) {
+        super(props);
+        this.onUploadClick = this.onUploadClick.bind(this);
+        this.onUploadFileInputChange = this.onUploadFileInputChange.bind(this);
 
-        // const appsStateEvents = this.props.room.currentState.getStateEvents('im.vector.modular.widgets', '');
-        // let appsStateEvent = {};
-        // if (appsStateEvents) {
-        //     appsStateEvent = appsStateEvents.getContent();
-        // }
-        // if (!appsStateEvent.videoConf) {
-        //     appsStateEvent.videoConf = {
-        //         type: 'jitsi',
-        //         // FIXME -- This should not be localhost
-        //         url: 'http://localhost:8000/jitsi.html',
-        //         data: {
-        //             confId: this.props.room.roomId.replace(/[^A-Za-z0-9]/g, '_') + Date.now(),
-        //             isAudioConf: isAudioConf,
-        //         },
-        //     };
-        //     MatrixClientPeg.get().sendStateEvent(
-        //         this.props.room.roomId,
-        //         'im.vector.modular.widgets',
-        //         appsStateEvent,
-        //         '',
-        //     ).then(() => console.log('Sent state'), (e) => console.error(e));
-        // }
-    // }
-
-    onCallClick(ev) {
-        // NOTE -- Will be replaced by Jitsi code (currently commented)
-        dis.dispatch({
-            action: 'place_call',
-            type: ev.shiftKey ? "screensharing" : "video",
-            room_id: this.props.room.roomId,
-        });
-        // this._startCallApp(false);
+        this._uploadInput = createRef();
     }
 
-    onVoiceCallClick(ev) {
-        // NOTE -- Will be replaced by Jitsi code (currently commented)
-        dis.dispatch({
-            action: 'place_call',
-            type: "voice",
-            room_id: this.props.room.roomId,
-        });
-        // this._startCallApp(true);
-    }
-
-    onShowAppsClick(ev) {
-        dis.dispatch({
-            action: 'appsDrawer',
-            show: true,
-        });
-    }
-
-    onHideAppsClick(ev) {
-        dis.dispatch({
-            action: 'appsDrawer',
-            show: false,
-        });
-    }
-
-    onInputContentChanged(content: string, selection: {start: number, end: number}) {
-        this.setState({
-            autocompleteQuery: content,
-            selection,
-        });
-    }
-
-    onInputStateChanged(inputState) {
-        this.setState({inputState});
-    }
-
-    _onAutocompleteConfirm(range, completion) {
-        if (this.messageComposerInput) {
-            this.messageComposerInput.setDisplayedCompletion(range, completion);
+    onUploadClick(ev) {
+        if (MatrixClientPeg.get().isGuest()) {
+            dis.dispatch({action: 'require_registration'});
+            return;
         }
+        this._uploadInput.current.click();
     }
 
-    onFormatButtonClicked(name: "bold" | "italic" | "strike" | "code" | "underline" | "quote" | "bullet" | "numbullet", event) {
-        event.preventDefault();
-        this.messageComposerInput.onFormatButtonClicked(name, event);
-    }
+    onUploadFileInputChange(ev) {
+        if (ev.target.files.length === 0) return;
 
-    onToggleFormattingClicked() {
-        UserSettingsStore.setSyncedSetting('MessageComposer.showFormatting', !this.state.showFormatting);
-        this.setState({showFormatting: !this.state.showFormatting});
-    }
+        // take a copy so we can safely reset the value of the form control
+        // (Note it is a FileList: we can't use slice or sesnible iteration).
+        const tfiles = [];
+        for (let i = 0; i < ev.target.files.length; ++i) {
+            tfiles.push(ev.target.files[i]);
+        }
 
-    onToggleMarkdownClicked(e) {
-        e.preventDefault(); // don't steal focus from the editor!
-        this.messageComposerInput.enableRichtext(!this.state.inputState.isRichtextEnabled);
+        ContentMessages.sharedInstance().sendContentListToRoom(
+            tfiles, this.props.roomId, MatrixClientPeg.get(),
+        );
+
+        // This is the onChange handler for a file form control, but we're
+        // not keeping any state, so reset the value of the form control
+        // to empty.
+        // NB. we need to set 'value': the 'files' property is immutable.
+        ev.target.value = '';
     }
 
     render() {
-        const me = this.props.room.getMember(MatrixClientPeg.get().credentials.userId);
         const uploadInputStyle = {display: 'none'};
-        const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
-        const TintableSvg = sdk.getComponent("elements.TintableSvg");
-        const MessageComposerInput = sdk.getComponent("rooms.MessageComposerInput");
-
-        const controls = [];
-
-        controls.push(
-            <div key="controls_avatar" className="mx_MessageComposer_avatar">
-                <MemberAvatar member={me} width={24} height={24} />
-            </div>,
+        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
+        return (
+            <AccessibleButton className="mx_MessageComposer_button mx_MessageComposer_upload"
+                onClick={this.onUploadClick}
+                title={_t('Upload file')}
+            >
+                <input
+                    ref={this._uploadInput}
+                    type="file"
+                    style={uploadInputStyle}
+                    multiple
+                    onChange={this.onUploadFileInputChange}
+                />
+            </AccessibleButton>
         );
+    }
+}
 
-        let e2eImg, e2eTitle, e2eClass;
-        const roomIsEncrypted = MatrixClientPeg.get().isRoomEncrypted(this.props.room.roomId);
-        if (roomIsEncrypted) {
-            // FIXME: show a /!\ if there are untrusted devices in the room...
-            e2eImg = 'img/e2e-verified.svg';
-            e2eTitle = _t('Encrypted room');
-            e2eClass = 'mx_MessageComposer_e2eIcon';
-        } else {
-            e2eImg = 'img/e2e-unencrypted.svg';
-            e2eTitle = _t('Unencrypted room');
-            e2eClass = 'mx_MessageComposer_e2eIcon mx_filterFlipColor';
+export default class MessageComposer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.onInputStateChanged = this.onInputStateChanged.bind(this);
+        this._onRoomStateEvents = this._onRoomStateEvents.bind(this);
+        this._onRoomViewStoreUpdate = this._onRoomViewStoreUpdate.bind(this);
+        this._onTombstoneClick = this._onTombstoneClick.bind(this);
+        this.renderPlaceholderText = this.renderPlaceholderText.bind(this);
+
+        this.state = {
+            isQuoting: Boolean(RoomViewStore.getQuotingEvent()),
+            tombstone: this._getRoomTombstone(),
+            canSendMessages: this.props.room.maySendMessage(),
+            showCallButtons: SettingsStore.getValue("showCallButtonsInComposer"),
+        };
+    }
+
+    componentDidMount() {
+        MatrixClientPeg.get().on("RoomState.events", this._onRoomStateEvents);
+        this._roomStoreToken = RoomViewStore.addListener(this._onRoomViewStoreUpdate);
+        this._waitForOwnMember();
+    }
+
+    _waitForOwnMember() {
+        // if we have the member already, do that
+        const me = this.props.room.getMember(MatrixClientPeg.get().getUserId());
+        if (me) {
+            this.setState({me});
+            return;
+        }
+        // Otherwise, wait for member loading to finish and then update the member for the avatar.
+        // The members should already be loading, and loadMembersIfNeeded
+        // will return the promise for the existing operation
+        this.props.room.loadMembersIfNeeded().then(() => {
+            const me = this.props.room.getMember(MatrixClientPeg.get().getUserId());
+            this.setState({me});
+        });
+    }
+
+    componentWillUnmount() {
+        if (MatrixClientPeg.get()) {
+            MatrixClientPeg.get().removeListener("RoomState.events", this._onRoomStateEvents);
+        }
+        if (this._roomStoreToken) {
+            this._roomStoreToken.remove();
+        }
+    }
+
+    _onRoomStateEvents(ev, state) {
+        if (ev.getRoomId() !== this.props.room.roomId) return;
+
+        if (ev.getType() === 'm.room.tombstone') {
+            this.setState({tombstone: this._getRoomTombstone()});
+        }
+        if (ev.getType() === 'm.room.power_levels') {
+            this.setState({canSendMessages: this.props.room.maySendMessage()});
+        }
+    }
+
+    _getRoomTombstone() {
+        return this.props.room.currentState.getStateEvents('m.room.tombstone', '');
+    }
+
+    _onRoomViewStoreUpdate() {
+        const isQuoting = Boolean(RoomViewStore.getQuotingEvent());
+        if (this.state.isQuoting === isQuoting) return;
+        this.setState({ isQuoting });
+    }
+
+    onInputStateChanged(inputState) {
+        // Merge the new input state with old to support partial updates
+        inputState = Object.assign({}, this.state.inputState, inputState);
+        this.setState({inputState});
+    }
+
+    _onTombstoneClick(ev) {
+        ev.preventDefault();
+
+        const replacementRoomId = this.state.tombstone.getContent()['replacement_room'];
+        const replacementRoom = MatrixClientPeg.get().getRoom(replacementRoomId);
+        let createEventId = null;
+        if (replacementRoom) {
+            const createEvent = replacementRoom.currentState.getStateEvents('m.room.create', '');
+            if (createEvent && createEvent.getId()) createEventId = createEvent.getId();
         }
 
-        controls.push(
-            <img key="e2eIcon" className={e2eClass} src={e2eImg} width="12" height="12"
-                alt={e2eTitle} title={e2eTitle}
-            />,
-        );
-        let callButton, videoCallButton, hangupButton, showAppsButton, hideAppsButton;
-        if (this.props.callState && this.props.callState !== 'ended') {
-            hangupButton =
-                <div key="controls_hangup" className="mx_MessageComposer_hangup" onClick={this.onHangupClick}>
-                    <img src="img/hangup.svg" alt={ _t('Hangup') } title={ _t('Hangup') } width="25" height="26"/>
-                </div>;
-        } else {
-            callButton =
-                <div key="controls_call" className="mx_MessageComposer_voicecall" onClick={this.onVoiceCallClick} title={ _t('Voice call') }>
-                    <TintableSvg src="img/icon-call.svg" width="35" height="35"/>
-                </div>;
-            videoCallButton =
-                <div key="controls_videocall" className="mx_MessageComposer_videocall" onClick={this.onCallClick} title={ _t('Video call') }>
-                    <TintableSvg src="img/icons-video.svg" width="35" height="35"/>
-                </div>;
-        }
+        const viaServers = [this.state.tombstone.getSender().split(':').splice(1).join(':')];
+        dis.dispatch({
+            action: 'view_room',
+            highlighted: true,
+            event_id: createEventId,
+            room_id: replacementRoomId,
+            auto_join: true,
 
-        // Apps
-        if (UserSettingsStore.isFeatureEnabled('matrix_apps')) {
-            if (this.props.showApps) {
-                hideAppsButton =
-                    <div key="controls_hide_apps" className="mx_MessageComposer_apps" onClick={this.onHideAppsClick} title={_t("Hide Apps")}>
-                        <TintableSvg src="img/icons-apps-active.svg" width="35" height="35"/>
-                    </div>;
+            // Try to join via the server that sent the event. This converts @something:example.org
+            // into a server domain by splitting on colons and ignoring the first entry ("@something").
+            via_servers: viaServers,
+            opts: {
+                // These are passed down to the js-sdk's /join call
+                viaServers: viaServers,
+            },
+        });
+    }
+
+    renderPlaceholderText() {
+        if (SettingsStore.getValue("feature_cross_signing")) {
+            if (this.state.isQuoting) {
+                if (this.props.e2eStatus) {
+                    return _t('Send an encrypted reply…');
+                } else {
+                    return _t('Send a reply…');
+                }
             } else {
-                showAppsButton =
-                    <div key="show_apps" className="mx_MessageComposer_apps" onClick={this.onShowAppsClick} title={_t("Show Apps")}>
-                        <TintableSvg src="img/icons-apps.svg" width="35" height="35"/>
-                    </div>;
+                if (this.props.e2eStatus) {
+                    return _t('Send an encrypted message…');
+                } else {
+                    return _t('Send a message…');
+                }
+            }
+        } else {
+            if (this.state.isQuoting) {
+                if (this.props.e2eStatus) {
+                    return _t('Send an encrypted reply…');
+                } else {
+                    return _t('Send a reply (unencrypted)…');
+                }
+            } else {
+                if (this.props.e2eStatus) {
+                    return _t('Send an encrypted message…');
+                } else {
+                    return _t('Send a message (unencrypted)…');
+                }
             }
         }
+    }
 
-        const canSendMessages = this.props.room.currentState.maySendMessage(
-            MatrixClientPeg.get().credentials.userId);
+    render() {
+        const controls = [
+            this.state.me ? <ComposerAvatar key="controls_avatar" me={this.state.me} /> : null,
+            this.props.e2eStatus ?
+                <E2EIcon key="e2eIcon" status={this.props.e2eStatus} className="mx_MessageComposer_e2eIcon" /> :
+                null,
+        ];
 
-        if (canSendMessages) {
+        if (!this.state.tombstone && this.state.canSendMessages) {
             // This also currently includes the call buttons. Really we should
             // check separately for whether we can call, but this is slightly
             // complex because of conference calls.
-            const uploadButton = (
-                <div key="controls_upload" className="mx_MessageComposer_upload"
-                        onClick={this.onUploadClick} title={ _t('Upload file') }>
-                    <TintableSvg src="img/icons-upload.svg" width="35" height="35"/>
-                    <input ref="uploadInput" type="file"
-                        style={uploadInputStyle}
-                        multiple
-                        onChange={this.onUploadFileSelected} />
-                </div>
-            );
 
-            const formattingButton = (
-                <img className="mx_MessageComposer_formatting"
-                     title={_t("Show Text Formatting Toolbar")}
-                     src="img/button-text-formatting.svg"
-                     onClick={this.onToggleFormattingClicked}
-                     style={{visibility: this.state.showFormatting ? 'hidden' : 'visible'}}
-                     key="controls_formatting" />
-            );
-
-            const placeholderText = roomIsEncrypted ?
-                _t('Send an encrypted message') + '…' : _t('Send a message (unencrypted)') + '…';
+            const SendMessageComposer = sdk.getComponent("rooms.SendMessageComposer");
+            const callInProgress = this.props.callState && this.props.callState !== 'ended';
 
             controls.push(
-                <MessageComposerInput
+                <SendMessageComposer
                     ref={(c) => this.messageComposerInput = c}
                     key="controls_input"
-                    onResize={this.props.onResize}
                     room={this.props.room}
-                    placeholder={placeholderText}
-                    onFilesPasted={this.uploadFiles}
-                    onContentChanged={this.onInputContentChanged}
-                    onInputStateChanged={this.onInputStateChanged} />,
-                formattingButton,
-                uploadButton,
-                hangupButton,
-                callButton,
-                videoCallButton,
-                showAppsButton,
-                hideAppsButton,
+                    placeholder={this.renderPlaceholderText()}
+                    permalinkCreator={this.props.permalinkCreator} />,
+                <Stickerpicker key='stickerpicker_controls_button' room={this.props.room} />,
+                <UploadButton key="controls_upload" roomId={this.props.room.roomId} />,
             );
+
+            if (this.state.showCallButtons) {
+                if (callInProgress) {
+                    controls.push(
+                        <HangupButton key="controls_hangup" roomId={this.props.room.roomId} />,
+                    );
+                } else {
+                    controls.push(
+                        <CallButton key="controls_call" roomId={this.props.room.roomId} />,
+                        <VideoCallButton key="controls_videocall" roomId={this.props.room.roomId} />,
+                    );
+                }
+            }
+        } else if (this.state.tombstone) {
+            const replacementRoomId = this.state.tombstone.getContent()['replacement_room'];
+
+            const continuesLink = replacementRoomId ? (
+                <a href={makeRoomPermalink(replacementRoomId)}
+                    className="mx_MessageComposer_roomReplaced_link"
+                    onClick={this._onTombstoneClick}
+                >
+                    {_t("The conversation continues here.")}
+                </a>
+            ) : '';
+
+            controls.push(<div className="mx_MessageComposer_replaced_wrapper" key="room_replaced">
+                <div className="mx_MessageComposer_replaced_valign">
+                    <img className="mx_MessageComposer_roomReplaced_icon" src={require("../../../../res/img/room_replaced.svg")} />
+                    <span className="mx_MessageComposer_roomReplaced_header">
+                        {_t("This room has been replaced and is no longer active.")}
+                    </span><br />
+                    { continuesLink }
+                </div>
+            </div>);
         } else {
             controls.push(
                 <div key="controls_error" className="mx_MessageComposer_noperm_error">
@@ -355,41 +369,11 @@ export default class MessageComposer extends React.Component {
             );
         }
 
-        const {style, blockType} = this.state.inputState;
-        const formatButtons = ["bold", "italic", "strike", "underline", "code", "quote", "bullet", "numbullet"].map(
-            (name) => {
-                const active = style.includes(name) || blockType === name;
-                const suffix = active ? '-o-n' : '';
-                const onFormatButtonClicked = this.onFormatButtonClicked.bind(this, name);
-                const className = 'mx_MessageComposer_format_button mx_filterFlipColor';
-                return <img className={className}
-                            title={ _t(name) }
-                            onMouseDown={onFormatButtonClicked}
-                            key={name}
-                            src={`img/button-text-${name}${suffix}.svg`}
-                            height="17" />;
-            },
-        );
-
         return (
-            <div className="mx_MessageComposer mx_fadable" style={{ opacity: this.props.opacity }}>
+            <div className="mx_MessageComposer">
                 <div className="mx_MessageComposer_wrapper">
                     <div className="mx_MessageComposer_row">
-                        {controls}
-                    </div>
-                </div>
-                <div className="mx_MessageComposer_formatbar_wrapper">
-                    <div className="mx_MessageComposer_formatbar" style={this.state.showFormatting ? {} : {display: 'none'}}>
-                        {formatButtons}
-                        <div style={{flex: 1}}></div>
-                        <img title={ this.state.inputState.isRichtextEnabled ? _t("Turn Markdown on") : _t("Turn Markdown off") }
-                             onMouseDown={this.onToggleMarkdownClicked}
-                            className="mx_MessageComposer_formatbar_markdown mx_filterFlipColor"
-                            src={`img/button-md-${!this.state.inputState.isRichtextEnabled}.png`} />
-                        <img title={ _t("Hide Text Formatting Toolbar") }
-                             onClick={this.onToggleFormattingClicked}
-                             className="mx_MessageComposer_formatbar_cancel mx_filterFlipColor"
-                             src="img/icon-text-cancel.svg" />
+                        { controls }
                     </div>
                 </div>
             </div>
@@ -398,22 +382,12 @@ export default class MessageComposer extends React.Component {
 }
 
 MessageComposer.propTypes = {
-    // a callback which is called when the height of the composer is
-    // changed due to a change in content.
-    onResize: React.PropTypes.func,
-
     // js-sdk Room object
-    room: React.PropTypes.object.isRequired,
+    room: PropTypes.object.isRequired,
 
     // string representing the current voip call state
-    callState: React.PropTypes.string,
-
-    // callback when a file to upload is chosen
-    uploadFile: React.PropTypes.func.isRequired,
-
-    // opacity for dynamic UI fading effects
-    opacity: React.PropTypes.number,
+    callState: PropTypes.string,
 
     // string representing the current room app drawer state
-    showApps: React.PropTypes.bool,
+    showApps: PropTypes.bool,
 };

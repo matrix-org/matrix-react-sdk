@@ -14,29 +14,125 @@
  limitations under the License.
  */
 
-'use strict';
-
 import React from 'react';
-import sdk from '../../../index';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
+import Flair from '../elements/Flair.js';
+import FlairStore from '../../../stores/FlairStore';
+import { _t } from '../../../languageHandler';
+import {getUserNameColorClass} from '../../../utils/FormattingUtils';
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
-export default function SenderProfile(props) {
-    const EmojiText = sdk.getComponent('elements.EmojiText');
-    const {mxEvent} = props;
-    const name = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
-    const {msgtype} = mxEvent.getContent();
+export default createReactClass({
+    displayName: 'SenderProfile',
+    propTypes: {
+        mxEvent: PropTypes.object.isRequired, // event whose sender we're showing
+        text: PropTypes.string, // Text to show. Defaults to sender name
+        onClick: PropTypes.func,
+    },
 
-    if (msgtype === 'm.emote') {
-        return <span />; // emote message must include the name so don't duplicate it
-    }
+    statics: {
+        contextType: MatrixClientContext,
+    },
 
-    return (
-        <EmojiText className="mx_SenderProfile" dir="auto"
-              onClick={props.onClick}>{`${name || ''} ${props.aux || ''}`}</EmojiText>
-    );
-}
+    getInitialState() {
+        return {
+            userGroups: null,
+            relatedGroups: [],
+        };
+    },
 
-SenderProfile.propTypes = {
-    mxEvent: React.PropTypes.object.isRequired, // event whose sender we're showing
-    aux: React.PropTypes.string, // stuff to go after the sender name, if anything
-    onClick: React.PropTypes.func,
-};
+    componentDidMount() {
+        this.unmounted = false;
+        this._updateRelatedGroups();
+
+        FlairStore.getPublicisedGroupsCached(
+            this.context, this.props.mxEvent.getSender(),
+        ).then((userGroups) => {
+            if (this.unmounted) return;
+            this.setState({userGroups});
+        });
+
+        this.context.on('RoomState.events', this.onRoomStateEvents);
+    },
+
+    componentWillUnmount() {
+        this.unmounted = true;
+        this.context.removeListener('RoomState.events', this.onRoomStateEvents);
+    },
+
+    onRoomStateEvents(event) {
+        if (event.getType() === 'm.room.related_groups' &&
+            event.getRoomId() === this.props.mxEvent.getRoomId()
+        ) {
+            this._updateRelatedGroups();
+        }
+    },
+
+    _updateRelatedGroups() {
+        if (this.unmounted) return;
+        const room = this.context.getRoom(this.props.mxEvent.getRoomId());
+        if (!room) return;
+
+        const relatedGroupsEvent = room.currentState.getStateEvents('m.room.related_groups', '');
+        this.setState({
+            relatedGroups: relatedGroupsEvent ? relatedGroupsEvent.getContent().groups || [] : [],
+        });
+    },
+
+    _getDisplayedGroups(userGroups, relatedGroups) {
+        let displayedGroups = userGroups || [];
+        if (relatedGroups && relatedGroups.length > 0) {
+            displayedGroups = relatedGroups.filter((groupId) => {
+                return displayedGroups.includes(groupId);
+            });
+        } else {
+            displayedGroups = [];
+        }
+        return displayedGroups;
+    },
+
+    render() {
+        const {mxEvent} = this.props;
+        const colorClass = getUserNameColorClass(mxEvent.getSender());
+        const name = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
+        const {msgtype} = mxEvent.getContent();
+
+        if (msgtype === 'm.emote') {
+            return <span />; // emote message must include the name so don't duplicate it
+        }
+
+        let flair = <div />;
+        if (this.props.enableFlair) {
+            const displayedGroups = this._getDisplayedGroups(
+                this.state.userGroups, this.state.relatedGroups,
+            );
+
+            flair = <Flair key='flair'
+                userId={mxEvent.getSender()}
+                groups={displayedGroups}
+            />;
+        }
+
+        const nameElem = name || '';
+
+        // Name + flair
+        const nameFlair = <span>
+            <span className={`mx_SenderProfile_name ${colorClass}`}>
+                { nameElem }
+            </span>
+            { flair }
+        </span>;
+
+        const content = this.props.text ?
+            <span className="mx_SenderProfile_aux">
+                { _t(this.props.text, { senderName: () => nameElem }) }
+            </span> : nameFlair;
+
+        return (
+            <div className="mx_SenderProfile" dir="auto" onClick={this.props.onClick}>
+                { content }
+            </div>
+        );
+    },
+});

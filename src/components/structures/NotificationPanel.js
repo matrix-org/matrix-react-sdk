@@ -1,5 +1,7 @@
 /*
 Copyright 2016 OpenMarket Ltd
+Copyright 2019 New Vector Ltd
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,18 +16,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-var React = require('react');
-var ReactDOM = require("react-dom");
+import React from 'react';
+import createReactClass from 'create-react-class';
 import { _t } from '../../languageHandler';
-var Matrix = require("matrix-js-sdk");
-var sdk = require('../../index');
-var MatrixClientPeg = require("../../MatrixClientPeg");
-var dis = require("../../dispatcher");
+import {MatrixClientPeg} from "../../MatrixClientPeg";
+import * as sdk from "../../index";
 
 /*
  * Component which shows the global notification list using a TimelinePanel
  */
-var NotificationPanel = React.createClass({
+const NotificationPanel = createReactClass({
     displayName: 'NotificationPanel',
 
     propTypes: {
@@ -33,33 +33,32 @@ var NotificationPanel = React.createClass({
 
     render: function() {
         // wrap a TimelinePanel with the jump-to-event bits turned off.
-        var TimelinePanel = sdk.getComponent("structures.TimelinePanel");
-        var Loader = sdk.getComponent("elements.Spinner");
+        const TimelinePanel = sdk.getComponent("structures.TimelinePanel");
+        const Loader = sdk.getComponent("elements.Spinner");
 
-        var timelineSet = MatrixClientPeg.get().getNotifTimelineSet();
+        const timelineSet = MatrixClientPeg.get().getNotifTimelineSet();
         if (timelineSet) {
             return (
-                <TimelinePanel key={"NotificationPanel_" + this.props.roomId}
-                    className="mx_NotificationPanel"
-                    manageReadReceipts={false}
-                    manageReadMarkers={false}
-                    timelineSet={timelineSet}
-                    showUrlPreview = { false }
-                    opacity={ this.props.opacity }
-                    tileShape="notif"
-                    empty={ _t('You have no visible notifications') }
-                />
+                <div className="mx_NotificationPanel" role="tabpanel">
+                    <TimelinePanel key={"NotificationPanel_" + this.props.roomId}
+                        manageReadReceipts={false}
+                        manageReadMarkers={false}
+                        timelineSet={timelineSet}
+                        showUrlPreview={false}
+                        tileShape="notif"
+                        empty={_t('You have no visible notifications')}
+                    />
+                </div>
             );
-        }
-        else {
+        } else {
             console.error("No notifTimelineSet available!");
             return (
-                <div className="mx_NotificationPanel">
-                    <Loader/>
+                <div className="mx_NotificationPanel" role="tabpanel">
+                    <Loader />
                 </div>
             );
         }
     },
 });
 
-module.exports = NotificationPanel;
+export default NotificationPanel;

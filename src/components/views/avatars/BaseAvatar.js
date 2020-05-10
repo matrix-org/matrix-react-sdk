@@ -1,5 +1,8 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2018 New Vector Ltd
+Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,27 +17,39 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
-var React = require('react');
-var AvatarLogic = require("../../../Avatar");
-import sdk from '../../../index';
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
+import * as AvatarLogic from '../../../Avatar';
+import SettingsStore from "../../../settings/SettingsStore";
 import AccessibleButton from '../elements/AccessibleButton';
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import toRem from "../../../utils/rem";
 
-module.exports = React.createClass({
+export default createReactClass({
     displayName: 'BaseAvatar',
 
     propTypes: {
-        name: React.PropTypes.string.isRequired, // The name (first initial used as default)
-        idName: React.PropTypes.string, // ID for generating hash colours
-        title: React.PropTypes.string, // onHover title text
-        url: React.PropTypes.string, // highest priority of them all, shortcut to set in urls[0]
-        urls: React.PropTypes.array, // [highest_priority, ... , lowest_priority]
-        width: React.PropTypes.number,
-        height: React.PropTypes.number,
+        name: PropTypes.string.isRequired, // The name (first initial used as default)
+        idName: PropTypes.string, // ID for generating hash colours
+        title: PropTypes.string, // onHover title text
+        url: PropTypes.string, // highest priority of them all, shortcut to set in urls[0]
+        urls: PropTypes.array, // [highest_priority, ... , lowest_priority]
+        width: PropTypes.number,
+        height: PropTypes.number,
         // XXX resizeMethod not actually used.
-        resizeMethod: React.PropTypes.string,
-        defaultToInitialLetter: React.PropTypes.bool // true to add default url
+        resizeMethod: PropTypes.string,
+        defaultToInitialLetter: PropTypes.bool, // true to add default url
+        inputRef: PropTypes.oneOfType([
+            // Either a function
+            PropTypes.func,
+            // Or the instance of a DOM native element
+            PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+        ]),
+    },
+
+    statics: {
+        contextType: MatrixClientContext,
     },
 
     getDefaultProps: function() {
@@ -42,7 +57,7 @@ module.exports = React.createClass({
             width: 40,
             height: 40,
             resizeMethod: 'crop',
-            defaultToInitialLetter: true
+            defaultToInitialLetter: true,
         };
     },
 
@@ -50,17 +65,27 @@ module.exports = React.createClass({
         return this._getState(this.props);
     },
 
-    componentWillReceiveProps: function(nextProps) {
+    componentDidMount() {
+        this.unmounted = false;
+        this.context.on('sync', this.onClientSync);
+    },
+
+    componentWillUnmount() {
+        this.unmounted = true;
+        this.context.removeListener('sync', this.onClientSync);
+    },
+
+    // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
+    UNSAFE_componentWillReceiveProps: function(nextProps) {
         // work out if we need to call setState (if the image URLs array has changed)
-        var newState = this._getState(nextProps);
-        var newImageUrls = newState.imageUrls;
-        var oldImageUrls = this.state.imageUrls;
+        const newState = this._getState(nextProps);
+        const newImageUrls = newState.imageUrls;
+        const oldImageUrls = this.state.imageUrls;
         if (newImageUrls.length !== oldImageUrls.length) {
             this.setState(newState); // detected a new entry
-        }
-        else {
+        } else {
             // check each one to see if they are the same
-            for (var i = 0; i < newImageUrls.length; i++) {
+            for (let i = 0; i < newImageUrls.length; i++) {
                 if (oldImageUrls[i] !== newImageUrls[i]) {
                     this.setState(newState); // detected a diff
                     break;
@@ -69,134 +94,143 @@ module.exports = React.createClass({
         }
     },
 
-    _getState: function(props) {
-        // work out the full set of urls to try to load. This is formed like so:
-        // imageUrls: [ props.url, props.urls, default image ]
+    onClientSync: function(syncState, prevState) {
+        if (this.unmounted) return;
 
-        var urls = props.urls || [];
-        if (props.url) {
-            urls.unshift(props.url); // put in urls[0]
-        }
-
-        var defaultImageUrl = null;
-        if (props.defaultToInitialLetter) {
-            defaultImageUrl = AvatarLogic.defaultAvatarUrlForString(
-                props.idName || props.name
-            );
-            urls.push(defaultImageUrl); // lowest priority
-        }
-        return {
-            imageUrls: urls,
-            defaultImageUrl: defaultImageUrl,
-            urlsIndex: 0
-        };
-    },
-
-    onError: function(ev) {
-        var nextIndex = this.state.urlsIndex + 1;
-        if (nextIndex < this.state.imageUrls.length) {
-            // try the next one
+        // Consider the client reconnected if there is no error with syncing.
+        // This means the state could be RECONNECTING, SYNCING, PREPARED or CATCHUP.
+        const reconnected = syncState !== "ERROR" && prevState !== syncState;
+        if (reconnected &&
+            // Did we fall back?
+            this.state.urlsIndex > 0
+        ) {
+            // Start from the highest priority URL again
             this.setState({
-                urlsIndex: nextIndex
+                urlsIndex: 0,
             });
         }
     },
 
-    /**
-     * returns the first (non-sigil) character of 'name',
-     * converted to uppercase
-     */
-    _getInitialLetter: function(name) {
-        if (name.length < 1) {
-            return undefined;
-        }
+    _getState: function(props) {
+        // work out the full set of urls to try to load. This is formed like so:
+        // imageUrls: [ props.url, props.urls, default image ]
 
-        var idx = 0;
-        var initial = name[0];
-        if ((initial === '@' || initial === '#') && name[1]) {
-            idx++;
-        }
+        let urls = [];
+        if (!SettingsStore.getValue("lowBandwidth")) {
+            urls = props.urls || [];
 
-        // string.codePointAt(0) would do this, but that isn't supported by
-        // some browsers (notably PhantomJS).
-        var chars = 1;
-        var first = name.charCodeAt(idx);
-
-        // check if it’s the start of a surrogate pair
-        if (first >= 0xD800 && first <= 0xDBFF && name[idx+1]) {
-            var second = name.charCodeAt(idx+1);
-            if (second >= 0xDC00 && second <= 0xDFFF) {
-                chars++;
+            if (props.url) {
+                urls.unshift(props.url); // put in urls[0]
             }
         }
 
-        var firstChar = name.substring(idx, idx+chars);
-        return firstChar.toUpperCase();
+        let defaultImageUrl = null;
+        if (props.defaultToInitialLetter) {
+            defaultImageUrl = AvatarLogic.defaultAvatarUrlForString(
+                props.idName || props.name,
+            );
+            urls.push(defaultImageUrl); // lowest priority
+        }
+
+        // deduplicate URLs
+        urls = Array.from(new Set(urls));
+
+        return {
+            imageUrls: urls,
+            defaultImageUrl: defaultImageUrl,
+            urlsIndex: 0,
+        };
+    },
+
+    onError: function(ev) {
+        const nextIndex = this.state.urlsIndex + 1;
+        if (nextIndex < this.state.imageUrls.length) {
+            // try the next one
+            this.setState({
+                urlsIndex: nextIndex,
+            });
+        }
     },
 
     render: function() {
-        const EmojiText = sdk.getComponent('elements.EmojiText');
-        var imageUrl = this.state.imageUrls[this.state.urlsIndex];
+        const imageUrl = this.state.imageUrls[this.state.urlsIndex];
 
         const {
             name, idName, title, url, urls, width, height, resizeMethod,
-            defaultToInitialLetter, onClick,
+            defaultToInitialLetter, onClick, inputRef,
             ...otherProps
         } = this.props;
 
         if (imageUrl === this.state.defaultImageUrl) {
-            const initialLetter = this._getInitialLetter(name);
+            const initialLetter = AvatarLogic.getInitialLetter(name);
             const textNode = (
-                <EmojiText className="mx_BaseAvatar_initial" aria-hidden="true"
-                    style={{ fontSize: (width * 0.65) + "px",
-                    width: width + "px",
-                    lineHeight: height + "px" }}
+                <span className="mx_BaseAvatar_initial" aria-hidden="true"
+                    style={{
+                        fontSize: toRem(width * 0.65),
+                        width: toRem(width),
+                        lineHeight: toRem(height),
+                    }}
                 >
-                    {initialLetter}
-                </EmojiText>
+                    { initialLetter }
+                </span>
             );
             const imgNode = (
                 <img className="mx_BaseAvatar_image" src={imageUrl}
                     alt="" title={title} onError={this.onError}
-                    width={width} height={height} />
+                    aria-hidden="true"
+                    style={{
+                        width: toRem(width),
+                        height: toRem(height)
+                    }} />
             );
             if (onClick != null) {
                 return (
                     <AccessibleButton element='span' className="mx_BaseAvatar"
-                        onClick={onClick} {...otherProps}
+                        onClick={onClick} inputRef={inputRef} {...otherProps}
                     >
-                        {textNode}
-                        {imgNode}
+                        { textNode }
+                        { imgNode }
                     </AccessibleButton>
                 );
             } else {
                 return (
-                    <span className="mx_BaseAvatar" {...otherProps}>
-                        {textNode}
-                        {imgNode}
+                    <span className="mx_BaseAvatar" ref={inputRef} {...otherProps}>
+                        { textNode }
+                        { imgNode }
                     </span>
                 );
             }
         }
         if (onClick != null) {
             return (
-                <AccessibleButton className="mx_BaseAvatar mx_BaseAvatar_image"
+                <AccessibleButton
+                    className="mx_BaseAvatar mx_BaseAvatar_image"
                     element='img'
                     src={imageUrl}
                     onClick={onClick}
                     onError={this.onError}
-                    width={width} height={height}
+                    style={{
+                        width: toRem(width),
+                        height: toRem(height),
+                    }}
                     title={title} alt=""
+                    inputRef={inputRef}
                     {...otherProps} />
             );
         } else {
             return (
-                <img className="mx_BaseAvatar mx_BaseAvatar_image" src={imageUrl}
+                <img
+                    className="mx_BaseAvatar mx_BaseAvatar_image"
+                    src={imageUrl}
                     onError={this.onError}
-                    width={width} height={height}
+                    style={{
+                        width: toRem(width),
+                        height: toRem(height),
+                    }}
                     title={title} alt=""
+                    ref={inputRef}
                     {...otherProps} />
             );
         }
-    }
+    },
 });

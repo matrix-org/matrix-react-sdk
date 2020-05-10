@@ -14,30 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import expect from 'expect';
-import Promise from 'bluebird';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactTestUtils from 'react-addons-test-utils';
-import sinon from 'sinon';
+import ReactTestUtils from 'react-dom/test-utils';
 import MatrixReactTestUtils from 'matrix-react-test-utils';
 
-import sdk from 'matrix-react-sdk';
-import MatrixClientPeg from '../../../../src/MatrixClientPeg';
+import sdk from '../../../skinned-sdk';
+import {MatrixClientPeg} from '../../../../src/MatrixClientPeg';
 
 import * as test_utils from '../../../test-utils';
+import {sleep} from "../../../../src/utils/promise";
 
 const InteractiveAuthDialog = sdk.getComponent(
-    'views.dialogs.InteractiveAuthDialog'
+    'views.dialogs.InteractiveAuthDialog',
 );
 
-describe('InteractiveAuthDialog', function () {
-    var parentDiv;
-    var sandbox;
+describe('InteractiveAuthDialog', function() {
+    let parentDiv;
 
     beforeEach(function() {
-        test_utils.beforeEach(this);
-        sandbox = test_utils.stubClient(sandbox);
+        test_utils.stubClient();
         parentDiv = document.createElement('div');
         document.body.appendChild(parentDiv);
     });
@@ -45,15 +41,14 @@ describe('InteractiveAuthDialog', function () {
     afterEach(function() {
         ReactDOM.unmountComponentAtNode(parentDiv);
         parentDiv.remove();
-        sandbox.restore();
     });
 
     it('Should successfully complete a password flow', function() {
-        const onFinished = sinon.spy();
-        const doRequest = sinon.stub().returns(Promise.resolve({a:1}));
+        const onFinished = jest.fn();
+        const doRequest = jest.fn().mockResolvedValue({a: 1});
 
         // tell the stub matrixclient to return a real userid
-        var client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.get();
         client.credentials = {userId: "@user:id"};
 
         const dlg = ReactDOM.render(
@@ -62,8 +57,8 @@ describe('InteractiveAuthDialog', function () {
                 authData={{
                     session: "sess",
                     flows: [
-                        {"stages":["m.login.password"]}
-                    ]
+                        {"stages": ["m.login.password"]},
+                    ],
                 }}
                 makeRequest={doRequest}
                 onFinished={onFinished}
@@ -72,7 +67,7 @@ describe('InteractiveAuthDialog', function () {
         // wait for a password box and a submit button
         return MatrixReactTestUtils.waitForRenderedDOMComponentWithTag(dlg, "form", 2).then((formNode) => {
             const inputNodes = ReactTestUtils.scryRenderedDOMComponentsWithTag(
-                dlg, "input"
+                dlg, "input",
             );
             let passwordNode;
             let submitNode;
@@ -83,8 +78,8 @@ describe('InteractiveAuthDialog', function () {
                     submitNode = node;
                 }
             }
-            expect(passwordNode).toExist();
-            expect(submitNode).toExist();
+            expect(passwordNode).toBeTruthy();
+            expect(submitNode).toBeTruthy();
 
             // submit should be disabled
             expect(submitNode.disabled).toBe(true);
@@ -96,24 +91,21 @@ describe('InteractiveAuthDialog', function () {
             expect(submitNode.disabled).toBe(false);
             ReactTestUtils.Simulate.submit(formNode, {});
 
-            expect(doRequest.callCount).toEqual(1);
-            expect(doRequest.calledWithExactly({
+            expect(doRequest).toHaveBeenCalledTimes(1);
+            expect(doRequest).toBeCalledWith(expect.objectContaining({
                 session: "sess",
                 type: "m.login.password",
                 password: "s3kr3t",
-                user: "@user:id",
-            })).toBe(true);
-
-            // there should now be a spinner
-            ReactTestUtils.findRenderedComponentWithType(
-                dlg, sdk.getComponent('elements.Spinner'),
-            );
-
+                identifier: {
+                    type: "m.id.user",
+                    user: "@user:id",
+                },
+            }));
             // let the request complete
-            return Promise.delay(1);
-        }).then(() => {
-            expect(onFinished.callCount).toEqual(1);
-            expect(onFinished.calledWithExactly(true, {a:1})).toBe(true);
+            return sleep(1);
+        }).then(sleep(1)).then(() => {
+            expect(onFinished).toBeCalledTimes(1);
+            expect(onFinished).toBeCalledWith(true, {a: 1});
         });
     });
 });

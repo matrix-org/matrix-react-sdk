@@ -1,0 +1,49 @@
+/*
+Copyright 2019 New Vector Ltd
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+.mx_E2EIcon {
+    width: 16px;
+    height: 16px;
+    margin: 0 9px;
+    position: relative;
+    display: block;
+}
+
+.mx_E2EIcon_warning::after,
+.mx_E2EIcon_normal::after,
+.mx_E2EIcon_verified::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.mx_E2EIcon_warning::after {
+    background-image: url('$(res)/img/e2e/warning.svg');
+}
+
+.mx_E2EIcon_normal::after {
+    background-image: url('$(res)/img/e2e/normal.svg');
+}
+
+.mx_E2EIcon_verified::after {
+    background-image: url('$(res)/img/e2e/verified.svg');
+}

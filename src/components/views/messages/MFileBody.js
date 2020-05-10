@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2018 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,28 +15,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
-import React from 'react';
+import React, {createRef} from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import filesize from 'filesize';
-import MatrixClientPeg from '../../../MatrixClientPeg';
-import sdk from '../../../index';
+import {MatrixClientPeg} from '../../../MatrixClientPeg';
+import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import {decryptFile} from '../../../utils/DecryptFile';
 import Tinter from '../../../Tinter';
 import request from 'browser-request';
 import Modal from '../../../Modal';
+import AccessibleButton from "../elements/AccessibleButton";
 
 
-// A cached tinted copy of "img/download.svg"
-var tintedDownloadImageURL;
+// A cached tinted copy of require("../../../../res/img/download.svg")
+let tintedDownloadImageURL;
 // Track a list of mounted MFileBody instances so that we can update
-// the "img/download.svg" when the tint changes.
-var nextMountId = 0;
+// the require("../../../../res/img/download.svg") when the tint changes.
+let nextMountId = 0;
 const mounts = {};
 
 /**
- * Updates the tinted copy of "img/download.svg" when the tint changes.
+ * Updates the tinted copy of require("../../../../res/img/download.svg") when the tint changes.
  */
 function updateTintedDownloadImage() {
     // Download the svg as an XML document.
@@ -44,7 +46,7 @@ function updateTintedDownloadImage() {
     // Also note that we can't use fetch here because fetch doesn't support
     // file URLs, which the download image will be if we're running from
     // the filesystem (like in an Electron wrapper).
-    request({uri: "img/download.svg"}, (err, response, body) => {
+    request({uri: require("../../../../res/img/download.svg")}, (err, response, body) => {
         if (err) return;
 
         const svg = new DOMParser().parseFromString(body, "image/svg+xml");
@@ -81,7 +83,7 @@ Tinter.registerTintable(updateTintedDownloadImage);
 // downloaded. This limit does not seem to apply when the url is used as
 // the source attribute of an image tag.
 //
-// Blob URLs are generated using window.URL.createObjectURL and unforuntately
+// Blob URLs are generated using window.URL.createObjectURL and unfortunately
 // for our purposes they inherit the origin of the page that created them.
 // This means that any scripts that run when the URL is viewed will be able
 // to access local storage.
@@ -92,72 +94,6 @@ Tinter.registerTintable(updateTintedDownloadImage);
 // The downside of using a second domain is that it complicates hosting,
 // the downside of using a sandboxed iframe is that the browers are overly
 // restrictive in what you are allowed to do with the generated URL.
-//
-// For now given how unusable the blobs generated in sandboxed iframes are we
-// default to using a renderer hosted on "usercontent.riot.im". This is
-// overridable so that people running their own version of the client can
-// choose a different renderer.
-//
-// To that end the first version of the blob generation will be the following
-// html:
-//
-//      <html><head><script>
-//      window.onmessage=function(e){eval("("+e.data.code+")")(e)}
-//      </script></head><body></body></html>
-//
-// This waits to receive a message event sent using the window.postMessage API.
-// When it receives the event it evals a javascript function in data.code and
-// runs the function passing the event as an argument.
-//
-// In particular it means that the rendering function can be written as a
-// ordinary javascript function which then is turned into a string using
-// toString().
-//
-const DEFAULT_CROSS_ORIGIN_RENDERER = "https://usercontent.riot.im/v1.html";
-
-/**
- * Render the attachment inside the iframe.
- * We can't use imported libraries here so this has to be vanilla JS.
- */
-function remoteRender(event) {
-    const data = event.data;
-
-    const img = document.createElement("img");
-    img.id = "img";
-    img.src = data.imgSrc;
-
-    const a = document.createElement("a");
-    a.id = "a";
-    a.rel = data.rel;
-    a.target = data.target;
-    a.download = data.download;
-    a.style = data.style;
-    a.href = window.URL.createObjectURL(data.blob);
-    a.appendChild(img);
-    a.appendChild(document.createTextNode(data.textContent));
-
-    const body = document.body;
-    // Don't display scrollbars if the link takes more than one line
-    // to display.
-    body.style = "margin: 0px; overflow: hidden";
-    body.appendChild(a);
-}
-
-/**
- * Update the tint inside the iframe.
- * We can't use imported libraries here so this has to be vanilla JS.
- */
-function remoteSetTint(event) {
-    const data = event.data;
-
-    const img = document.getElementById("img");
-    img.src = data.imgSrc;
-    img.style = data.imgStyle;
-
-    const a = document.getElementById("a");
-    a.style = data.style;
-}
-
 
 /**
  * Get the current CSS style for a DOMElement.
@@ -169,11 +105,11 @@ function computedStyle(element) {
         return "";
     }
     const style = window.getComputedStyle(element, null);
-    var cssText = style.cssText;
+    let cssText = style.cssText;
     if (cssText == "") {
         // Firefox doesn't implement ".cssText" for computed styles.
         // https://bugzilla.mozilla.org/show_bug.cgi?id=137687
-        for (var i = 0; i < style.length; i++) {
+        for (let i = 0; i < style.length; i++) {
             cssText += style[i] + ":";
             cssText += style.getPropertyValue(style[i]) + ";";
         }
@@ -181,7 +117,7 @@ function computedStyle(element) {
     return cssText;
 }
 
-module.exports = React.createClass({
+export default createReactClass({
     displayName: 'MFileBody',
 
     getInitialState: function() {
@@ -190,8 +126,15 @@ module.exports = React.createClass({
         };
     },
 
-    contextTypes: {
-        appConfig: React.PropTypes.object,
+    propTypes: {
+        /* the MatrixEvent to show */
+        mxEvent: PropTypes.object.isRequired,
+        /* already decrypted blob */
+        decryptedBlob: PropTypes.object,
+        /* called when the download link iframe is shown */
+        onHeightChanged: PropTypes.func,
+        /* the shape of the tile, used */
+        tileShape: PropTypes.string,
     },
 
     /**
@@ -202,7 +145,7 @@ module.exports = React.createClass({
      * @return {string} the human readable link text for the attachment.
      */
     presentableTextForFile: function(content) {
-        var linkText = _t("Attachment");
+        let linkText = _t("Attachment");
         if (content.body && content.body.length > 0) {
             // The content body should be the name of the file including a
             // file extension.
@@ -227,6 +170,13 @@ module.exports = React.createClass({
         return MatrixClientPeg.get().mxcUrlToHttp(content.url);
     },
 
+    // TODO: [REACT-WARNING] Replace component with real class, use constructor for refs
+    UNSAFE_componentWillMount: function() {
+        this._iframe = createRef();
+        this._dummyLink = createRef();
+        this._downloadImage = createRef();
+    },
+
     componentDidMount: function() {
         // Add this to the list of mounted components to receive notifications
         // when the tint changes.
@@ -235,24 +185,29 @@ module.exports = React.createClass({
         this.tint();
     },
 
+    componentDidUpdate: function(prevProps, prevState) {
+        if (this.props.onHeightChanged && !prevState.decryptedBlob && this.state.decryptedBlob) {
+            this.props.onHeightChanged();
+        }
+    },
+
     componentWillUnmount: function() {
         // Remove this from the list of mounted components
         delete mounts[this.id];
     },
 
     tint: function() {
-        // Update our tinted copy of "img/download.svg"
-        if (this.refs.downloadImage) {
-            this.refs.downloadImage.src = tintedDownloadImageURL;
+        // Update our tinted copy of require("../../../../res/img/download.svg")
+        if (this._downloadImage.current) {
+            this._downloadImage.current.src = tintedDownloadImageURL;
         }
-        if (this.refs.iframe) {
+        if (this._iframe.current) {
             // If the attachment is encrypted then the download image
             // will be inside the iframe so we wont be able to update
             // it directly.
-            this.refs.iframe.contentWindow.postMessage({
-                code: remoteSetTint.toString(),
+            this._iframe.current.contentWindow.postMessage({
                 imgSrc: tintedDownloadImageURL,
-                style: computedStyle(this.refs.dummyLink),
+                style: computedStyle(this._dummyLink.current),
             }, "*");
         }
     },
@@ -264,14 +219,16 @@ module.exports = React.createClass({
         const fileName = content.body && content.body.length > 0 ? content.body : _t("Attachment");
         const contentUrl = this._getContentUrl();
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+        const fileSize = content.info ? content.info.size : null;
+        const fileType = content.info ? content.info.mimetype : "application/octet-stream";
 
         if (isEncrypted) {
             if (this.state.decryptedBlob === null) {
                 // Need to decrypt the attachment
                 // Wait for the user to click on the link before downloading
                 // and decrypting the attachment.
-                var decrypting = false;
-                const decrypt = () => {
+                let decrypting = false;
+                const decrypt = (e) => {
                     if (decrypting) {
                         return false;
                     }
@@ -288,16 +245,17 @@ module.exports = React.createClass({
                         });
                     }).finally(() => {
                         decrypting = false;
-                        return;
                     });
                 };
 
+                // This button should actually Download because usercontent/ will try to click itself
+                // but it is not guaranteed between various browsers' settings.
                 return (
-                    <span className="mx_MFileBody" ref="body">
-                        <div className="mx_MImageBody_download">
-                            <a href="javascript:void(0)" onClick={decrypt}>
+                    <span className="mx_MFileBody">
+                        <div className="mx_MFileBody_download">
+                            <AccessibleButton onClick={decrypt}>
                                 { _t("Decrypt %(text)s", { text: text }) }
-                            </a>
+                            </AccessibleButton>
                         </div>
                     </span>
                 );
@@ -306,48 +264,94 @@ module.exports = React.createClass({
             // When the iframe loads we tell it to render a download link
             const onIframeLoad = (ev) => {
                 ev.target.contentWindow.postMessage({
-                    code: remoteRender.toString(),
                     imgSrc: tintedDownloadImageURL,
-                    style: computedStyle(this.refs.dummyLink),
+                    style: computedStyle(this._dummyLink.current),
                     blob: this.state.decryptedBlob,
                     // Set a download attribute for encrypted files so that the file
                     // will have the correct name when the user tries to download it.
                     // We can't provide a Content-Disposition header like we would for HTTP.
                     download: fileName,
-                    target: "_blank",
                     textContent: _t("Download %(text)s", { text: text }),
+                    // only auto-download if a user triggered this iframe explicitly
+                    auto: !this.props.decryptedBlob,
                 }, "*");
             };
 
-            // If the attachment is encryped then put the link inside an iframe.
-            let renderer_url = DEFAULT_CROSS_ORIGIN_RENDERER;
-            if (this.context.appConfig && this.context.appConfig.cross_origin_renderer_url) {
-                renderer_url = this.context.appConfig.cross_origin_renderer_url;
-            }
+            const url = "usercontent/"; // XXX: this path should probably be passed from the skin
+
+            // If the attachment is encrypted then put the link inside an iframe.
             return (
                 <span className="mx_MFileBody">
-                    <div className="mx_MImageBody_download">
+                    <div className="mx_MFileBody_download">
                         <div style={{display: "none"}}>
-                            {/*
+                            { /*
                               * Add dummy copy of the "a" tag
                               * We'll use it to learn how the download link
                               * would have been styled if it was rendered inline.
-                              */}
-                            <a ref="dummyLink"/>
+                              */ }
+                            <a ref={this._dummyLink} />
                         </div>
-                        <iframe src={renderer_url} onLoad={onIframeLoad} ref="iframe"/>
+                        <iframe
+                            src={`${url}?origin=${encodeURIComponent(window.location.origin)}`}
+                            onLoad={onIframeLoad}
+                            ref={this._iframe}
+                            sandbox="allow-scripts allow-downloads allow-downloads-without-user-activation" />
                     </div>
                 </span>
             );
         } else if (contentUrl) {
+            const downloadProps = {
+                target: "_blank",
+                rel: "noreferrer noopener",
+
+                // We set the href regardless of whether or not we intercept the download
+                // because we don't really want to convert the file to a blob eagerly, and
+                // still want "open in new tab" and "save link as" to work.
+                href: contentUrl,
+            };
+
+            // Blobs can only have up to 500mb, so if the file reports as being too large then
+            // we won't try and convert it. Likewise, if the file size is unknown then we'll assume
+            // it is too big. There is the risk of the reported file size and the actual file size
+            // being different, however the user shouldn't normally run into this problem.
+            const fileTooBig = typeof(fileSize) === 'number' ? fileSize > 524288000 : true;
+
+            if (["application/pdf"].includes(fileType) && !fileTooBig) {
+                // We want to force a download on this type, so use an onClick handler.
+                downloadProps["onClick"] = (e) => {
+                    console.log(`Downloading ${fileType} as blob (unencrypted)`);
+
+                    // Avoid letting the <a> do its thing
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // Start a fetch for the download
+                    // Based upon https://stackoverflow.com/a/49500465
+                    fetch(contentUrl).then((response) => response.blob()).then((blob) => {
+                        const blobUrl = URL.createObjectURL(blob);
+
+                        // We have to create an anchor to download the file
+                        const tempAnchor = document.createElement('a');
+                        tempAnchor.download = fileName;
+                        tempAnchor.href = blobUrl;
+                        document.body.appendChild(tempAnchor); // for firefox: https://stackoverflow.com/a/32226068
+                        tempAnchor.click();
+                        tempAnchor.remove();
+                    });
+                };
+            } else {
+                // Else we are hoping the browser will do the right thing
+                downloadProps["download"] = fileName;
+            }
+
             // If the attachment is not encrypted then we check whether we
             // are being displayed in the room timeline or in a list of
             // files in the right hand side of the screen.
             if (this.props.tileShape === "file_grid") {
                 return (
                     <span className="mx_MFileBody">
-                        <div className="mx_MImageBody_download">
-                            <a className="mx_ImageBody_downloadLink" href={contentUrl} download={fileName} target="_blank">
+                        <div className="mx_MFileBody_download">
+                            <a className="mx_MFileBody_downloadLink" {...downloadProps}>
                                 { fileName }
                             </a>
                             <div className="mx_MImageBody_size">
@@ -356,13 +360,12 @@ module.exports = React.createClass({
                         </div>
                     </span>
                 );
-            }
-            else {
+            } else {
                 return (
                     <span className="mx_MFileBody">
-                        <div className="mx_MImageBody_download">
-                            <a href={contentUrl} download={fileName} target="_blank" rel="noopener">
-                                <img src={tintedDownloadImageURL} width="12" height="14" ref="downloadImage"/>
+                        <div className="mx_MFileBody_download">
+                            <a {...downloadProps}>
+                                <img src={tintedDownloadImageURL} width="12" height="14" ref={this._downloadImage} />
                                 { _t("Download %(text)s", { text: text }) }
                             </a>
                         </div>
@@ -370,7 +373,7 @@ module.exports = React.createClass({
                 );
             }
         } else {
-            var extra = text ? (': ' + text) : '';
+            const extra = text ? (': ' + text) : '';
             return <span className="mx_MFileBody">
                 { _t("Invalid file%(extra)s", { extra: extra }) }
             </span>;

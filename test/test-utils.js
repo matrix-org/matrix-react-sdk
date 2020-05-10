@@ -1,33 +1,18 @@
 "use strict";
 
-import sinon from 'sinon';
-import Promise from 'bluebird';
-
-import peg from '../src/MatrixClientPeg';
+import React from 'react';
+import {MatrixClientPeg as peg} from '../src/MatrixClientPeg';
 import dis from '../src/dispatcher';
-import jssdk from 'matrix-js-sdk';
-const MatrixEvent = jssdk.MatrixEvent;
+import {makeType} from "../src/utils/TypeUtils";
+import {ValidatedServerConfig} from "../src/utils/AutoDiscoveryUtils";
+import ShallowRenderer from 'react-test-renderer/shallow';
+import MatrixClientContext from "../src/contexts/MatrixClientContext";
+import {MatrixEvent} from "matrix-js-sdk/src/models/event";
 
-/**
- * Perform common actions before each test case, e.g. printing the test case
- * name to stdout.
- * @param {Mocha.Context} context  The test context
- */
-export function beforeEach(context) {
-    var desc = context.currentTest.fullTitle();
-
-    console.log();
-
-    // this puts a mark in the chrome devtools timeline, which can help
-    // figure out what's been going on.
-    if (console.timeStamp) {
-        console.timeStamp(desc);
-    }
-
-    console.log(desc);
-    console.log(new Array(1 + desc.length).join("="));
-};
-
+export function getRenderer() {
+    // Old: ReactTestUtils.createRenderer();
+    return new ShallowRenderer();
+}
 
 /**
  * Stub out the MatrixClient, and configure the MatrixClientPeg object to
@@ -36,26 +21,21 @@ export function beforeEach(context) {
  * TODO: once the components are updated to get their MatrixClients from
  * the react context, we can get rid of this and just inject a test client
  * via the context instead.
- *
- * @returns {sinon.Sandbox}; remember to call sandbox.restore afterwards.
  */
 export function stubClient() {
-    var sandbox = sinon.sandbox.create();
-
-    var client = createTestClient();
+    const client = createTestClient();
 
     // stub out the methods in MatrixClientPeg
     //
     // 'sandbox.restore()' doesn't work correctly on inherited methods,
     // so we do this for each method
-    var methods = ['get', 'unset', 'replaceUsingCreds'];
-    for (var i = 0; i < methods.length; i++) {
-        sandbox.stub(peg, methods[i]);
+    const methods = ['get', 'unset', 'replaceUsingCreds'];
+    for (let i = 0; i < methods.length; i++) {
+        peg[methods[i]] = jest.spyOn(peg, methods[i]);
     }
     // MatrixClientPeg.get() is called a /lot/, so implement it with our own
     // fast stub function rather than a sinon stub
     peg.get = function() { return client; };
-    return sandbox;
 }
 
 /**
@@ -65,22 +45,27 @@ export function stubClient() {
  */
 export function createTestClient() {
     return {
-        getHomeserverUrl: sinon.stub(),
-        getIdentityServerUrl: sinon.stub(),
+        getHomeserverUrl: jest.fn(),
+        getIdentityServerUrl: jest.fn(),
+        getDomain: jest.fn().mockReturnValue("matrix.rog"),
+        getUserId: jest.fn().mockReturnValue("@userId:matrix.rog"),
 
-        getPushActionsForEvent: sinon.stub(),
-        getRoom: sinon.stub().returns(mkStubRoom()),
-        getRooms: sinon.stub().returns([]),
-        loginFlows: sinon.stub(),
-        on: sinon.stub(),
-        removeListener: sinon.stub(),
-        isRoomEncrypted: sinon.stub().returns(false),
-        peekInRoom: sinon.stub().returns(Promise.resolve(mkStubRoom())),
+        getPushActionsForEvent: jest.fn(),
+        getRoom: jest.fn().mockImplementation(mkStubRoom),
+        getRooms: jest.fn().mockReturnValue([]),
+        getVisibleRooms: jest.fn().mockReturnValue([]),
+        getGroups: jest.fn().mockReturnValue([]),
+        loginFlows: jest.fn(),
+        on: jest.fn(),
+        removeListener: jest.fn(),
+        isRoomEncrypted: jest.fn().mockReturnValue(false),
+        peekInRoom: jest.fn().mockResolvedValue(mkStubRoom()),
 
-        paginateEventTimeline: sinon.stub().returns(Promise.resolve()),
-        sendReadReceipt: sinon.stub().returns(Promise.resolve()),
-        getRoomIdForAlias: sinon.stub().returns(Promise.resolve()),
-        getProfileInfo: sinon.stub().returns(Promise.resolve({})),
+        paginateEventTimeline: jest.fn().mockResolvedValue(undefined),
+        sendReadReceipt: jest.fn().mockResolvedValue(undefined),
+        getRoomIdForAlias: jest.fn().mockResolvedValue(undefined),
+        getRoomDirectoryVisibility: jest.fn().mockResolvedValue(undefined),
+        getProfileInfo: jest.fn().mockResolvedValue({}),
         getAccountData: (type) => {
             return mkEvent({
                 type,
@@ -88,27 +73,13 @@ export function createTestClient() {
                 content: {},
             });
         },
-        setAccountData: sinon.stub(),
-        sendTyping: sinon.stub().returns(Promise.resolve({})),
-        sendTextMessage: () => Promise.resolve({}),
-        sendHtmlMessage: () => Promise.resolve({}),
+        mxcUrlToHttp: (mxc) => 'http://this.is.a.url/',
+        setAccountData: jest.fn(),
+        sendTyping: jest.fn().mockResolvedValue({}),
+        sendMessage: () => jest.fn().mockResolvedValue({}),
         getSyncState: () => "SYNCING",
         generateClientSecret: () => "t35tcl1Ent5ECr3T",
         isGuest: () => false,
-    };
-}
-
-export function createTestRtsClient(teamMap, sidMap) {
-    return {
-        getTeamsConfig() {
-            return Promise.resolve(Object.keys(teamMap).map((token) => teamMap[token]));
-        },
-        trackReferral(referrer, emailSid, clientSecret) {
-            return Promise.resolve({team_token: sidMap[emailSid]});
-        },
-        getTeam(teamToken) {
-            return Promise.resolve(teamMap[teamToken]);
-        },
     };
 }
 
@@ -128,7 +99,7 @@ export function mkEvent(opts) {
     if (!opts.type || !opts.content) {
         throw new Error("Missing .type or .content =>" + JSON.stringify(opts));
     }
-    var event = {
+    const event = {
         type: opts.type,
         room_id: opts.room,
         sender: opts.user,
@@ -139,14 +110,13 @@ export function mkEvent(opts) {
     };
     if (opts.skey) {
         event.state_key = opts.skey;
-    }
-    else if (["m.room.name", "m.room.topic", "m.room.create", "m.room.join_rules",
-         "m.room.power_levels", "m.room.topic",
+    } else if (["m.room.name", "m.room.topic", "m.room.create", "m.room.join_rules",
+         "m.room.power_levels", "m.room.topic", "m.room.history_visibility", "m.room.encryption",
          "com.example.state"].indexOf(opts.type) !== -1) {
         event.state_key = "";
     }
     return opts.event ? new MatrixEvent(event) : event;
-};
+}
 
 /**
  * Create an m.presence event.
@@ -157,7 +127,7 @@ export function mkPresence(opts) {
     if (!opts.user) {
         throw new Error("Missing user");
     }
-    var event = {
+    const event = {
         event_id: "$" + Math.random() + "-" + Math.random(),
         type: "m.presence",
         sender: opts.user,
@@ -165,11 +135,11 @@ export function mkPresence(opts) {
             avatar_url: opts.url,
             displayname: opts.name,
             last_active_ago: opts.ago,
-            presence: opts.presence || "offline"
-        }
+            presence: opts.presence || "offline",
+        },
     };
     return opts.event ? new MatrixEvent(event) : event;
-};
+}
 
 /**
  * Create an m.room.member event.
@@ -195,19 +165,19 @@ export function mkMembership(opts) {
         throw new Error("Missing .mship => " + JSON.stringify(opts));
     }
     opts.content = {
-        membership: opts.mship
+        membership: opts.mship,
     };
     if (opts.prevMship) {
         opts.prev_content = { membership: opts.prevMship };
     }
     if (opts.name) { opts.content.displayname = opts.name; }
     if (opts.url) { opts.content.avatar_url = opts.url; }
-    let e = mkEvent(opts);
+    const e = mkEvent(opts);
     if (opts.target) {
         e.target = opts.target;
     }
     return e;
-};
+}
 
 /**
  * Create an m.room.message event.
@@ -228,33 +198,59 @@ export function mkMessage(opts) {
     }
     opts.content = {
         msgtype: "m.text",
-        body: opts.msg
+        body: opts.msg,
     };
     return mkEvent(opts);
 }
 
 export function mkStubRoom(roomId = null) {
-    var stubTimeline = { getEvents: () => [] };
+    const stubTimeline = { getEvents: () => [] };
     return {
         roomId,
-        getReceiptsForEvent: sinon.stub().returns([]),
-        getMember: sinon.stub().returns({
+        getReceiptsForEvent: jest.fn().mockReturnValue([]),
+        getMember: jest.fn().mockReturnValue({
             userId: '@member:domain.bla',
             name: 'Member',
+            rawDisplayName: 'Member',
             roomId: roomId,
             getAvatarUrl: () => 'mxc://avatar.url/image.png',
         }),
-        getJoinedMembers: sinon.stub().returns([]),
+        getMembersWithMembership: jest.fn().mockReturnValue([]),
+        getJoinedMembers: jest.fn().mockReturnValue([]),
         getPendingEvents: () => [],
         getLiveTimeline: () => stubTimeline,
         getUnfilteredTimelineSet: () => null,
         getAccountData: () => null,
         hasMembershipState: () => null,
+        getVersion: () => '1',
+        shouldUpgradeToVersion: () => null,
+        getMyMembership: () => "join",
+        maySendMessage: jest.fn().mockReturnValue(true),
         currentState: {
-            getStateEvents: sinon.stub(),
+            getStateEvents: jest.fn(),
+            mayClientSendStateEvent: jest.fn().mockReturnValue(true),
+            maySendStateEvent: jest.fn().mockReturnValue(true),
+            maySendEvent: jest.fn().mockReturnValue(true),
             members: [],
         },
+        tags: {
+            "m.favourite": {
+                order: 0.5,
+            },
+        },
+        setBlacklistUnverifiedDevices: jest.fn(),
+        on: jest.fn(),
+        removeListener: jest.fn(),
     };
+}
+
+export function mkServerConfig(hsUrl, isUrl) {
+    return makeType(ValidatedServerConfig, {
+        hsUrl,
+        hsName: "TEST_ENVIRONMENT",
+        hsNameIsDifferent: false, // yes, we lie
+        isUrl,
+    });
 }
 
 export function getDispatchForStore(store) {
@@ -265,4 +261,48 @@ export function getDispatchForStore(store) {
         dis._callbacks[store._dispatchToken](payload);
         dis._isDispatching = false;
     };
+}
+
+export function wrapInMatrixClientContext(WrappedComponent) {
+    class Wrapper extends React.Component {
+        constructor(props) {
+            super(props);
+
+            this._matrixClient = peg.get();
+        }
+
+        render() {
+            return <MatrixClientContext.Provider value={this._matrixClient}>
+                <WrappedComponent ref={this.props.wrappedRef} {...this.props} />
+            </MatrixClientContext.Provider>;
+        }
+    }
+    return Wrapper;
+}
+
+/**
+ * Call fn before calling componentDidUpdate on a react component instance, inst.
+ * @param {React.Component} inst an instance of a React component.
+ * @param {number} updates Number of updates to wait for. (Defaults to 1.)
+ * @returns {Promise} promise that resolves when componentDidUpdate is called on
+ *                    given component instance.
+ */
+export function waitForUpdate(inst, updates = 1) {
+    return new Promise((resolve, reject) => {
+        const cdu = inst.componentDidUpdate;
+
+        console.log(`Waiting for ${updates} update(s)`);
+
+        inst.componentDidUpdate = (prevProps, prevState, snapshot) => {
+            updates--;
+            console.log(`Got update, ${updates} remaining`);
+
+            if (updates == 0) {
+                inst.componentDidUpdate = cdu;
+                resolve();
+            }
+
+            if (cdu) cdu(prevProps, prevState, snapshot);
+        };
+    });
 }

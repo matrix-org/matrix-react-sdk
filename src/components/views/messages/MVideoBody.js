@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,25 +15,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
 import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import MFileBody from './MFileBody';
-import MatrixClientPeg from '../../../MatrixClientPeg';
-import { decryptFile, readBlobAsDataUri } from '../../../utils/DecryptFile';
-import Promise from 'bluebird';
-import UserSettingsStore from '../../../UserSettingsStore';
+import {MatrixClientPeg} from '../../../MatrixClientPeg';
+import { decryptFile } from '../../../utils/DecryptFile';
 import { _t } from '../../../languageHandler';
+import SettingsStore from "../../../settings/SettingsStore";
 
-module.exports = React.createClass({
+export default createReactClass({
     displayName: 'MVideoBody',
 
     propTypes: {
         /* the MatrixEvent to show */
-        mxEvent: React.PropTypes.object.isRequired,
+        mxEvent: PropTypes.object.isRequired,
 
         /* called when the video has loaded */
-        onWidgetLoad: React.PropTypes.func.isRequired,
+        onHeightChanged: PropTypes.func.isRequired,
     },
 
     getInitialState: function() {
@@ -54,13 +54,12 @@ module.exports = React.createClass({
             // no scaling needs to be applied
             return 1;
         }
-        var widthMulti = thumbWidth / fullWidth;
-        var heightMulti = thumbHeight / fullHeight;
+        const widthMulti = thumbWidth / fullWidth;
+        const heightMulti = thumbHeight / fullHeight;
         if (widthMulti < heightMulti) {
             // width is the dominant dimension so scaling will be fixed on that
             return widthMulti;
-        }
-        else {
+        } else {
             // height is the dominant dimension so scaling will be fixed on that
             return heightMulti;
         }
@@ -89,26 +88,26 @@ module.exports = React.createClass({
     componentDidMount: function() {
         const content = this.props.mxEvent.getContent();
         if (content.file !== undefined && this.state.decryptedUrl === null) {
-            var thumbnailPromise = Promise.resolve(null);
-            if (content.info.thumbnail_file) {
+            let thumbnailPromise = Promise.resolve(null);
+            if (content.info && content.info.thumbnail_file) {
                 thumbnailPromise = decryptFile(
-                    content.info.thumbnail_file
+                    content.info.thumbnail_file,
                 ).then(function(blob) {
-                    return readBlobAsDataUri(blob);
+                    return URL.createObjectURL(blob);
                 });
             }
-            var decryptedBlob;
+            let decryptedBlob;
             thumbnailPromise.then((thumbnailUrl) => {
                 return decryptFile(content.file).then(function(blob) {
                     decryptedBlob = blob;
-                    return readBlobAsDataUri(blob);
+                    return URL.createObjectURL(blob);
                 }).then((contentUrl) => {
                     this.setState({
                         decryptedUrl: contentUrl,
                         decryptedThumbnailUrl: thumbnailUrl,
                         decryptedBlob: decryptedBlob,
                     });
-                    this.props.onWidgetLoad();
+                    this.props.onHeightChanged();
                 });
             }).catch((err) => {
                 console.warn("Unable to decrypt attachment: ", err);
@@ -116,7 +115,16 @@ module.exports = React.createClass({
                 this.setState({
                     error: err,
                 });
-            }).done();
+            });
+        }
+    },
+
+    componentWillUnmount: function() {
+        if (this.state.decryptedUrl) {
+            URL.revokeObjectURL(this.state.decryptedUrl);
+        }
+        if (this.state.decryptedThumbnailUrl) {
+            URL.revokeObjectURL(this.state.decryptedThumbnailUrl);
         }
     },
 
@@ -125,9 +133,9 @@ module.exports = React.createClass({
 
         if (this.state.error !== null) {
             return (
-                <span className="mx_MVideoBody" ref="body">
-                    <img src="img/warning.svg" width="16" height="16"/>
-                    {_t("Error decrypting video")}
+                <span className="mx_MVideoBody">
+                    <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
+                    { _t("Error decrypting video") }
                 </span>
             );
         }
@@ -137,14 +145,9 @@ module.exports = React.createClass({
             // The attachment is decrypted in componentDidMount.
             // For now add an img tag with a spinner.
             return (
-                <span className="mx_MVideoBody" ref="body">
-                    <div className="mx_MImageBody_thumbnail" ref="image" style={{
-                        "display": "flex",
-                        "align-items": "center",
-                        "justify-items": "center",
-                        "width": "100%",
-                    }}>
-                        <img src="img/spinner.gif" alt={content.body} width="16" height="16"/>
+                <span className="mx_MVideoBody">
+                    <div className="mx_MImageBody_thumbnail mx_MImageBody_thumbnail_spinner">
+                        <img src={require("../../../../res/img/spinner.gif")} alt={content.body} width="16" height="16" />
                     </div>
                 </span>
             );
@@ -152,7 +155,7 @@ module.exports = React.createClass({
 
         const contentUrl = this._getContentUrl();
         const thumbUrl = this._getThumbUrl();
-        const autoplay = UserSettingsStore.getSyncedSetting("autoplayGifsAndVideos", false);
+        const autoplay = SettingsStore.getValue("autoplayGifsAndVideos");
         let height = null;
         let width = null;
         let poster = null;

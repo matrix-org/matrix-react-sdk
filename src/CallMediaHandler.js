@@ -14,51 +14,74 @@
  limitations under the License.
 */
 
-import UserSettingsStore from './UserSettingsStore';
 import * as Matrix from 'matrix-js-sdk';
+import SettingsStore, {SettingLevel} from "./settings/SettingsStore";
 
 export default {
+    hasAnyLabeledDevices: async function() {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        return devices.some(d => !!d.label);
+    },
+
     getDevices: function() {
         // Only needed for Electron atm, though should work in modern browsers
         // once permission has been granted to the webapp
         return navigator.mediaDevices.enumerateDevices().then(function(devices) {
-            const audioIn = [];
-            const videoIn = [];
-
-            if (devices.some((device) => !device.label)) return false;
+            const audiooutput = [];
+            const audioinput = [];
+            const videoinput = [];
 
             devices.forEach((device) => {
                 switch (device.kind) {
-                    case 'audioinput': audioIn.push(device); break;
-                    case 'videoinput': videoIn.push(device); break;
+                    case 'audiooutput': audiooutput.push(device); break;
+                    case 'audioinput': audioinput.push(device); break;
+                    case 'videoinput': videoinput.push(device); break;
                 }
             });
 
             // console.log("Loaded WebRTC Devices", mediaDevices);
             return {
-                audioinput: audioIn,
-                videoinput: videoIn,
+                audiooutput,
+                audioinput,
+                videoinput,
             };
         }, (error) => { console.log('Unable to refresh WebRTC Devices: ', error); });
     },
 
     loadDevices: function() {
-    //     this.getDevices().then((devices) => {
-        const localSettings = UserSettingsStore.getLocalSettings();
-    //         // if deviceId is not found, automatic fallback is in spec
-    //         // recall previously stored inputs if any
-        Matrix.setMatrixCallAudioInput(localSettings['webrtc_audioinput']);
-        Matrix.setMatrixCallVideoInput(localSettings['webrtc_videoinput']);
-        // });
+        const audioOutDeviceId = SettingsStore.getValue("webrtc_audiooutput");
+        const audioDeviceId = SettingsStore.getValue("webrtc_audioinput");
+        const videoDeviceId = SettingsStore.getValue("webrtc_videoinput");
+
+        Matrix.setMatrixCallAudioOutput(audioOutDeviceId);
+        Matrix.setMatrixCallAudioInput(audioDeviceId);
+        Matrix.setMatrixCallVideoInput(videoDeviceId);
+    },
+
+    setAudioOutput: function(deviceId) {
+        SettingsStore.setValue("webrtc_audiooutput", null, SettingLevel.DEVICE, deviceId);
+        Matrix.setMatrixCallAudioOutput(deviceId);
     },
 
     setAudioInput: function(deviceId) {
-        UserSettingsStore.setLocalSetting('webrtc_audioinput', deviceId);
+        SettingsStore.setValue("webrtc_audioinput", null, SettingLevel.DEVICE, deviceId);
         Matrix.setMatrixCallAudioInput(deviceId);
     },
 
     setVideoInput: function(deviceId) {
-        UserSettingsStore.setLocalSetting('webrtc_videoinput', deviceId);
+        SettingsStore.setValue("webrtc_videoinput", null, SettingLevel.DEVICE, deviceId);
         Matrix.setMatrixCallVideoInput(deviceId);
+    },
+
+    getAudioOutput: function() {
+        return SettingsStore.getValueAt(SettingLevel.DEVICE, "webrtc_audiooutput");
+    },
+
+    getAudioInput: function() {
+        return SettingsStore.getValueAt(SettingLevel.DEVICE, "webrtc_audioinput");
+    },
+
+    getVideoInput: function() {
+        return SettingsStore.getValueAt(SettingLevel.DEVICE, "webrtc_videoinput");
     },
 };

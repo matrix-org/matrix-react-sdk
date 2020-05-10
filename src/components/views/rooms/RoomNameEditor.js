@@ -14,27 +14,36 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
-var React = require('react');
-var sdk = require('../../../index');
-var MatrixClientPeg = require('../../../MatrixClientPeg');
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
+import {MatrixClientPeg} from "../../../MatrixClientPeg";
+import * as sdk from "../../../index";
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
+export default createReactClass({
     displayName: 'RoomNameEditor',
 
     propTypes: {
-        room: React.PropTypes.object.isRequired,
+        room: PropTypes.object.isRequired,
     },
 
-    componentWillMount: function() {
-        var room = this.props.room;
-        var name = room.currentState.getStateEvents('m.room.name', '');
-        var myId = MatrixClientPeg.get().credentials.userId;
-        var defaultName = room.getDefaultRoomName(myId);
+    getInitialState: function() {
+        return {
+            name: null,
+        };
+    },
 
-        this._initialName = name ? name.getContent().name : '';
+    // TODO: [REACT-WARNING] Move this to constructor
+    UNSAFE_componentWillMount: function() {
+        const room = this.props.room;
+        const name = room.currentState.getStateEvents('m.room.name', '');
+        const myId = MatrixClientPeg.get().credentials.userId;
+        const defaultName = room.getDefaultRoomName(myId);
+
+        this.setState({
+            name: name ? name.getContent().name : '',
+        });
 
         this._placeholderName = _t("Unnamed Room");
         if (defaultName && defaultName !== 'Empty room') { // default name from JS SDK, needs no translation as we don't ever show it.
@@ -43,21 +52,28 @@ module.exports = React.createClass({
     },
 
     getRoomName: function() {
-        return this.refs.editor.getValue();
+        return this.state.name;
+    },
+
+    _onValueChanged: function(value, shouldSubmit) {
+        this.setState({
+            name: value,
+        });
     },
 
     render: function() {
-        var EditableText = sdk.getComponent("elements.EditableText");
+        const EditableText = sdk.getComponent("elements.EditableText");
 
         return (
                 <div className="mx_RoomHeader_name">
-                    <EditableText ref="editor"
-                         className="mx_RoomHeader_nametext mx_RoomHeader_editable"
-                         placeholderClassName="mx_RoomHeader_placeholder"
-                         placeholder={ this._placeholderName }
-                         blurToCancel={ false }
-                         initialValue={ this._initialName }
-                         dir="auto" />
+                    <EditableText
+                        className="mx_RoomHeader_nametext mx_RoomHeader_editable"
+                        placeholderClassName="mx_RoomHeader_placeholder"
+                        placeholder={this._placeholderName}
+                        blurToCancel={false}
+                        initialValue={this.state.name}
+                        onValueChanged={this._onValueChanged}
+                        dir="auto" />
                 </div>
         );
     },

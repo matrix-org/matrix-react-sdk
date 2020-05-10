@@ -15,8 +15,10 @@ limitations under the License.
 */
 
 import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import AccessibleButton from '../elements/AccessibleButton';
-import sdk from '../../../index';
+import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 
 // cancel button which is shared between room header and simple room header
@@ -25,8 +27,8 @@ export function CancelButton(props) {
 
     return (
         <AccessibleButton className='mx_RoomHeader_cancelButton' onClick={onClick}>
-            <img src="img/cancel.svg" className='mx_filterFlipColor'
-                width="18" height="18" alt={_t("Cancel")}/>
+            <img src={require("../../../../res/img/cancel.svg")} className='mx_filterFlipColor'
+                width="18" height="18" alt={_t("Cancel")} />
         </AccessibleButton>
     );
 }
@@ -35,15 +37,15 @@ export function CancelButton(props) {
  * A stripped-down room header used for things like the user settings
  * and room directory.
  */
-export default React.createClass({
+export default createReactClass({
     displayName: 'SimpleRoomHeader',
 
     propTypes: {
-        title: React.PropTypes.string,
-        onCancelClick: React.PropTypes.func,
+        title: PropTypes.string,
+        onCancelClick: PropTypes.func,
 
         // `src` to a TintableSvg. Optional.
-        icon: React.PropTypes.string,
+        icon: PropTypes.string,
     },
 
     render: function() {

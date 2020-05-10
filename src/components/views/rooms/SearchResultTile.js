@@ -1,5 +1,6 @@
 /*
 Copyright 2015 OpenMarket Ltd
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,54 +15,56 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
+import * as sdk from '../../../index';
+import {haveTileForEvent} from "./EventTile";
 
-var React = require('react');
-var sdk = require('../../../index');
-
-module.exports = React.createClass({
+export default createReactClass({
     displayName: 'SearchResult',
 
     propTypes: {
         // a matrix-js-sdk SearchResult containing the details of this result
-        searchResult: React.PropTypes.object.isRequired,
+        searchResult: PropTypes.object.isRequired,
 
         // a list of strings to be highlighted in the results
-        searchHighlights: React.PropTypes.array,
+        searchHighlights: PropTypes.array,
 
         // href for the highlights in this result
-        resultLink: React.PropTypes.string,
+        resultLink: PropTypes.string,
 
-        onWidgetLoad: React.PropTypes.func,
+        onHeightChanged: PropTypes.func,
     },
 
     render: function() {
-        var DateSeparator = sdk.getComponent('messages.DateSeparator');
-        var EventTile = sdk.getComponent('rooms.EventTile');
-        var result = this.props.searchResult;
-        var mxEv = result.context.getEvent();
-        var eventId = mxEv.getId();
+        const DateSeparator = sdk.getComponent('messages.DateSeparator');
+        const EventTile = sdk.getComponent('rooms.EventTile');
+        const result = this.props.searchResult;
+        const mxEv = result.context.getEvent();
+        const eventId = mxEv.getId();
 
-        var ts1 = mxEv.getTs();
-        var ret = [<DateSeparator key={ts1 + "-search"} ts={ts1}/>];
+        const ts1 = mxEv.getTs();
+        const ret = [<DateSeparator key={ts1 + "-search"} ts={ts1} />];
 
-        var timeline = result.context.getTimeline();
+        const timeline = result.context.getTimeline();
         for (var j = 0; j < timeline.length; j++) {
-            var ev = timeline[j];
+            const ev = timeline[j];
             var highlights;
-            var contextual = (j != result.context.getOurEventIndex());
+            const contextual = (j != result.context.getOurEventIndex());
             if (!contextual) {
                 highlights = this.props.searchHighlights;
             }
-            if (EventTile.haveTileForEvent(ev)) {
+            if (haveTileForEvent(ev)) {
                 ret.push(<EventTile key={eventId+"+"+j} mxEvent={ev} contextual={contextual} highlights={highlights}
+                          permalinkCreator={this.props.permalinkCreator}
                           highlightLink={this.props.resultLink}
-                          onWidgetLoad={this.props.onWidgetLoad} />);
+                          onHeightChanged={this.props.onHeightChanged} />);
             }
         }
         return (
             <li data-scroll-tokens={eventId+"+"+j}>
-                {ret}
+                { ret }
             </li>);
     },
 });

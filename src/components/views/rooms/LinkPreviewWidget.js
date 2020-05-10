@@ -1,5 +1,6 @@
 /*
 Copyright 2016 OpenMarket Ltd
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,37 +15,36 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
+import React, {createRef} from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
+import { AllHtmlEntities } from 'html-entities';
+import {linkifyElement} from '../../../HtmlUtils';
+import SettingsStore from "../../../settings/SettingsStore";
+import {MatrixClientPeg} from "../../../MatrixClientPeg";
+import * as sdk from "../../../index";
+import Modal from "../../../Modal";
+import * as ImageUtils from "../../../ImageUtils";
+import { _t } from "../../../languageHandler";
 
-var React = require('react');
-
-var sdk = require('../../../index');
-var MatrixClientPeg = require('../../../MatrixClientPeg');
-var ImageUtils = require('../../../ImageUtils');
-var Modal = require('../../../Modal');
-
-var linkify = require('linkifyjs');
-var linkifyElement = require('linkifyjs/element');
-var linkifyMatrix = require('../../../linkify-matrix');
-linkifyMatrix(linkify);
-
-module.exports = React.createClass({
+export default createReactClass({
     displayName: 'LinkPreviewWidget',
 
     propTypes: {
-        link: React.PropTypes.string.isRequired, // the URL being previewed
-        mxEvent: React.PropTypes.object.isRequired, // the Event associated with the preview
-        onCancelClick: React.PropTypes.func, // called when the preview's cancel ('hide') button is clicked
-        onWidgetLoad: React.PropTypes.func, // called when the preview's contents has loaded
+        link: PropTypes.string.isRequired, // the URL being previewed
+        mxEvent: PropTypes.object.isRequired, // the Event associated with the preview
+        onCancelClick: PropTypes.func, // called when the preview's cancel ('hide') button is clicked
+        onHeightChanged: PropTypes.func, // called when the preview's contents has loaded
     },
 
     getInitialState: function() {
         return {
-            preview: null
+            preview: null,
         };
     },
 
-    componentWillMount: function() {
+    // TODO: [REACT-WARNING] Replace component with real class, use constructor for refs
+    UNSAFE_componentWillMount: function() {
         this.unmounted = false;
         MatrixClientPeg.get().getUrlPreview(this.props.link, this.props.mxEvent.getTs()).then((res)=>{
             if (this.unmounted) {
@@ -52,22 +52,24 @@ module.exports = React.createClass({
             }
             this.setState(
                 { preview: res },
-                this.props.onWidgetLoad
+                this.props.onHeightChanged,
             );
         }, (error)=>{
-            console.error("Failed to get preview for " + this.props.link + " " + error);
-        }).done();
+            console.error("Failed to get URL preview: " + error);
+        });
+
+        this._description = createRef();
     },
 
     componentDidMount: function() {
-        if (this.refs.description) {
-            linkifyElement(this.refs.description, linkifyMatrix.options);
+        if (this._description.current) {
+            linkifyElement(this._description.current);
         }
     },
 
     componentDidUpdate: function() {
-        if (this.refs.description) {
-            linkifyElement(this.refs.description, linkifyMatrix.options);
+        if (this._description.current) {
+            linkifyElement(this._description.current);
         }
     },
 
@@ -76,17 +78,17 @@ module.exports = React.createClass({
     },
 
     onImageClick: function(ev) {
-        var p = this.state.preview;
+        const p = this.state.preview;
         if (ev.button != 0 || ev.metaKey) return;
         ev.preventDefault();
-        var ImageView = sdk.getComponent("elements.ImageView");
+        const ImageView = sdk.getComponent("elements.ImageView");
 
-        var src = p["og:image"];
+        let src = p["og:image"];
         if (src && src.startsWith("mxc://")) {
             src = MatrixClientPeg.get().mxcUrlToHttp(src);
         }
 
-        var params = {
+        const params = {
             src: src,
             width: p["og:image:width"],
             height: p["og:image:height"],
@@ -99,43 +101,53 @@ module.exports = React.createClass({
     },
 
     render: function() {
-        var p = this.state.preview;
+        const p = this.state.preview;
         if (!p || Object.keys(p).length === 0) {
-            return <div/>;
+            return <div />;
         }
 
         // FIXME: do we want to factor out all image displaying between this and MImageBody - especially for lightboxing?
-        var image = p["og:image"];
-        var imageMaxWidth = 100, imageMaxHeight = 100;
+        let image = p["og:image"];
+        if (!SettingsStore.getValue("showImages")) {
+            image = null; // Don't render a button to show the image, just hide it outright
+        }
+        const imageMaxWidth = 100; const imageMaxHeight = 100;
         if (image && image.startsWith("mxc://")) {
             image = MatrixClientPeg.get().mxcUrlToHttp(image, imageMaxWidth, imageMaxHeight);
         }
 
-        var thumbHeight = imageMaxHeight;
+        let thumbHeight = imageMaxHeight;
         if (p["og:image:width"] && p["og:image:height"]) {
             thumbHeight = ImageUtils.thumbHeight(p["og:image:width"], p["og:image:height"], imageMaxWidth, imageMaxHeight);
         }
 
-        var img;
+        let img;
         if (image) {
             img = <div className="mx_LinkPreviewWidget_image" style={{ height: thumbHeight }}>
-                    <img style={{ maxWidth: imageMaxWidth, maxHeight: imageMaxHeight }} src={ image } onClick={ this.onImageClick }/>
+                    <img style={{ maxWidth: imageMaxWidth, maxHeight: imageMaxHeight }} src={image} onClick={this.onImageClick} />
                   </div>;
         }
 
+        // The description includes &-encoded HTML entities, we decode those as React treats the thing as an
+        // opaque string. This does not allow any HTML to be injected into the DOM.
+        const description = AllHtmlEntities.decode(p["og:description"] || "");
+
+        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         return (
             <div className="mx_LinkPreviewWidget" >
                 { img }
                 <div className="mx_LinkPreviewWidget_caption">
-                    <div className="mx_LinkPreviewWidget_title"><a href={ this.props.link } target="_blank" rel="noopener">{ p["og:title"] }</a></div>
+                    <div className="mx_LinkPreviewWidget_title"><a href={this.props.link} target="_blank" rel="noreferrer noopener">{ p["og:title"] }</a></div>
                     <div className="mx_LinkPreviewWidget_siteName">{ p["og:site_name"] ? (" - " + p["og:site_name"]) : null }</div>
-                    <div className="mx_LinkPreviewWidget_description" ref="description">
-                        { p["og:description"] }
+                    <div className="mx_LinkPreviewWidget_description" ref={this._description}>
+                        { description }
                     </div>
                 </div>
-                <img className="mx_LinkPreviewWidget_cancel" src="img/cancel.svg" width="18" height="18"
-                     onClick={ this.props.onCancelClick }/>
+                <AccessibleButton className="mx_LinkPreviewWidget_cancel" onClick={this.props.onCancelClick} aria-label={_t("Close preview")}>
+                    <img className="mx_filterFlipColor" alt="" role="presentation"
+                        src={require("../../../../res/img/cancel.svg")} width="18" height="18" />
+                </AccessibleButton>
             </div>
         );
-    }
+    },
 });

@@ -15,13 +15,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Promise from 'bluebird';
-import React from 'react';
-import sdk from '../../../index';
-import MatrixClientPeg from '../../../MatrixClientPeg';
+import React, {createRef} from 'react';
+import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
+import * as sdk from '../../../index';
+import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import classnames from 'classnames';
-import KeyCode from '../../../KeyCode';
-import { _t, _tJsx } from '../../../languageHandler';
+import { Key } from '../../../Keyboard';
+import { _t } from '../../../languageHandler';
+import { SAFE_LOCALPART_REGEX } from '../../../Registration';
 
 // The amount of time to wait for further changes to the input username before
 // sending a request to the server
@@ -32,14 +34,14 @@ const USERNAME_CHECK_DEBOUNCE_MS = 250;
  *
  * On success, `onFinished(true, newDisplayName)` is called.
  */
-export default React.createClass({
+export default createReactClass({
     displayName: 'SetMxIdDialog',
     propTypes: {
-        onFinished: React.PropTypes.func.isRequired,
+        onFinished: PropTypes.func.isRequired,
         // Called when the user requests to register with a different homeserver
-        onDifferentServerClicked: React.PropTypes.func.isRequired,
+        onDifferentServerClicked: PropTypes.func.isRequired,
         // Called if the user wants to switch to login instead
-        onLoginClick: React.PropTypes.func.isRequired,
+        onLoginClick: PropTypes.func.isRequired,
     },
 
     getInitialState: function() {
@@ -60,8 +62,14 @@ export default React.createClass({
         };
     },
 
+    // TODO: [REACT-WARNING] Replace component with real class, use constructor for refs
+    UNSAFE_componentWillMount: function() {
+        this._input_value = createRef();
+        this._uiAuth = createRef();
+    },
+
     componentDidMount: function() {
-        this.refs.input_value.select();
+        this._input_value.current.select();
 
         this._matrixClient = MatrixClientPeg.get();
     },
@@ -94,24 +102,26 @@ export default React.createClass({
     },
 
     onKeyUp: function(ev) {
-        if (ev.keyCode === KeyCode.ENTER) {
+        if (ev.key === Key.ENTER) {
             this.onSubmit();
         }
     },
 
     onSubmit: function(ev) {
+        if (this._uiAuth.current) {
+            this._uiAuth.current.tryContinue();
+        }
         this.setState({
             doingUIAuth: true,
         });
     },
 
     _doUsernameCheck: function() {
-        // XXX: SPEC-1
-        // Check if username is valid
-        // Naive impl copied from https://github.com/matrix-org/matrix-react-sdk/blob/66c3a6d9ca695780eb6b662e242e88323053ff33/src/components/views/login/RegistrationForm.js#L190
-        if (encodeURIComponent(this.state.username) !== this.state.username) {
+        // We do a quick check ahead of the username availability API to ensure the
+        // user ID roughly looks okay from a Matrix perspective.
+        if (!SAFE_LOCALPART_REGEX.test(this.state.username)) {
             this.setState({
-                usernameError: _t('User names may only contain letters, numbers, dots, hyphens and underscores.'),
+                usernameError: _t("A username can only contain lower case letters, numbers and '=_-./'"),
             });
             return Promise.reject();
         }
@@ -189,9 +199,6 @@ export default React.createClass({
             return;
         }
 
-        // XXX Implement RTS /register here
-        const teamToken = null;
-
         this.props.onFinished(true, {
             userId: response.user_id,
             deviceId: response.device_id,
@@ -199,14 +206,12 @@ export default React.createClass({
             identityServerUrl: this._matrixClient.getIdentityServerUrl(),
             accessToken: response.access_token,
             password: this._generatedPassword,
-            teamToken: teamToken,
         });
     },
 
     render: function() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const InteractiveAuth = sdk.getComponent('structures.InteractiveAuth');
-        const Spinner = sdk.getComponent('elements.Spinner');
 
         let auth;
         if (this.state.doingUIAuth) {
@@ -216,6 +221,8 @@ export default React.createClass({
                 onAuthFinished={this._onUIAuthFinished}
                 inputs={{}}
                 poll={true}
+                ref={this._uiAuth}
+                continueIsManaged={true}
             />;
         }
         const inputClasses = classnames({
@@ -224,9 +231,8 @@ export default React.createClass({
         });
 
         let usernameIndicator = null;
-        let usernameBusyIndicator = null;
         if (this.state.usernameBusy) {
-            usernameBusyIndicator = <Spinner w="24" h="24"/>;
+            usernameIndicator = <div>{_t("Checking...")}</div>;
         } else {
             const usernameAvailable = this.state.username &&
                 this.state.usernameCheckSupport && !this.state.usernameError;
@@ -234,14 +240,14 @@ export default React.createClass({
                 "error": Boolean(this.state.usernameError),
                 "success": usernameAvailable,
             });
-            usernameIndicator = <div className={usernameIndicatorClasses}>
+            usernameIndicator = <div className={usernameIndicatorClasses} role="alert">
                 { usernameAvailable ? _t('Username available') : this.state.usernameError }
             </div>;
         }
 
         let authErrorIndicator = null;
         if (this.state.authError) {
-            authErrorIndicator = <div className="error">
+            authErrorIndicator = <div className="error" role="alert">
                 { this.state.authError }
             </div>;
         }
@@ -253,39 +259,36 @@ export default React.createClass({
             <BaseDialog className="mx_SetMxIdDialog"
                 onFinished={this.props.onFinished}
                 title={_t('To get started, please pick a username!')}
+                contentId='mx_Dialog_content'
             >
-                <div className="mx_Dialog_content">
+                <div className="mx_Dialog_content" id='mx_Dialog_content'>
                     <div className="mx_SetMxIdDialog_input_group">
-                        <input type="text" ref="input_value" value={this.state.username}
+                        <input type="text" ref={this._input_value} value={this.state.username}
                             autoFocus={true}
                             onChange={this.onValueChange}
                             onKeyUp={this.onKeyUp}
                             size="30"
                             className={inputClasses}
                         />
-                        { usernameBusyIndicator }
                     </div>
                     { usernameIndicator }
                     <p>
-                        { _tJsx(
+                        { _t(
                             'This will be your account name on the <span></span> ' +
                             'homeserver, or you can pick a <a>different server</a>.',
-                            [
-                                /<span><\/span>/,
-                                /<a>(.*?)<\/a>/,
-                            ],
-                            [
-                                (sub) => <span>{this.props.homeserverUrl}</span>,
-                                (sub) => <a href="#" onClick={this.props.onDifferentServerClicked}>{sub}</a>,
-                            ],
-                        )}
+                            {},
+                            {
+                                'span': <span>{ this.props.homeserverUrl }</span>,
+                                'a': (sub) => <a href="#" onClick={this.props.onDifferentServerClicked}>{ sub }</a>,
+                            },
+                        ) }
                     </p>
                     <p>
-                        { _tJsx(
+                        { _t(
                             'If you already have a Matrix account you can <a>log in</a> instead.',
-                            /<a>(.*?)<\/a>/,
-                            [(sub) => <a href="#" onClick={this.props.onLoginClick}>{sub}</a>],
-                        )}
+                            {},
+                            { 'a': (sub) => <a href="#" onClick={this.props.onLoginClick}>{ sub }</a> },
+                        ) }
                     </p>
                     { auth }
                     { authErrorIndicator }

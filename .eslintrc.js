@@ -5,22 +5,30 @@ const path = require('path');
 // but only if they come from a module that starts with eslint-config-
 // So we load the filename directly (and it could be in node_modules/
 // or or ../node_modules/ etc)
-const matrixJsSdkPath = path.dirname(require.resolve('matrix-js-sdk'));
+//
+// We add a `..` to the end because the js-sdk lives out of lib/, but the eslint
+// config is at the project root.
+const matrixJsSdkPath = path.join(path.dirname(require.resolve('matrix-js-sdk')), '..');
 
 module.exports = {
     parser: "babel-eslint",
     extends: [matrixJsSdkPath + "/.eslintrc.js"],
     plugins: [
       "react",
+      "react-hooks",
       "flowtype",
       "babel"
     ],
+    globals: {
+        LANGUAGES_FILE: "readonly",
+    },
     env: {
         es6: true,
     },
     parserOptions: {
         ecmaFeatures: {
             jsx: true,
+            legacyDecorators: true,
         }
     },
     rules: {
@@ -29,16 +37,43 @@ module.exports = {
         // so we replace it with a version that is class property aware
         "babel/no-invalid-this": "error",
 
+        // We appear to follow this most of the time, so let's enforce it instead
+        // of occasionally following it (or catching it in review)
+        "keyword-spacing": "error",
+
         /** react **/
         // This just uses the react plugin to help eslint known when
         // variables have been used in JSX
         "react/jsx-uses-vars": "error",
+        // Don't mark React as unused if we're using JSX
+        "react/jsx-uses-react": "error",
 
         // bind or arrow function in props causes performance issues
-        "react/jsx-no-bind": ["error", {
-            "ignoreRefs": true,
-        }],
+        // (but we currently use them in some places)
+        // It's disabled here, but we should using it sparingly.
+        "react/jsx-no-bind": "off",
         "react/jsx-key": ["error"],
+
+        // Components in JSX should always be defined.
+        "react/jsx-no-undef": "error",
+
+        // Assert no spacing in JSX curly brackets
+        // <Element prop={ consideredError} prop={notConsideredError} />
+        //
+        // https://github.com/yannickcr/eslint-plugin-react/blob/HEAD/docs/rules/jsx-curly-spacing.md
+        //
+        // Disabled for now - if anything we'd like to *enforce* spacing in JSX
+        // curly brackets for legibility, but in practice it's not clear that the
+        // consistency particularly improves legibility here. --Matthew
+        //
+        // "react/jsx-curly-spacing": ["error", {"when": "never", "children": {"when": "always"}}],
+
+        // Assert spacing before self-closing JSX tags, and no spacing before or
+        // after the closing slash, and no spacing after the opening bracket of
+        // the opening tag or closing tag.
+        //
+        // https://github.com/yannickcr/eslint-plugin-react/blob/HEAD/docs/rules/jsx-tag-spacing.md
+        "react/jsx-tag-spacing": ["error"],
 
         /** flowtype **/
         "flowtype/require-parameter-type": ["warn", {
@@ -64,16 +99,19 @@ module.exports = {
             // to JSX.
             ignorePattern: '^\\s*<',
             ignoreComments: true,
+            ignoreRegExpLiterals: true,
             code: 120,
         }],
         "valid-jsdoc": ["warn"],
         "new-cap": ["warn"],
         "key-spacing": ["warn"],
-        "arrow-parens": ["warn"],
         "prefer-const": ["warn"],
 
         // crashes currently: https://github.com/eslint/eslint/issues/6274
         "generator-star-spacing": "off",
+
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
     },
     settings: {
         flowtype: {

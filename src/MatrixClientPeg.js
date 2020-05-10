@@ -1,6 +1,8 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd.
+Copyright 2017, 2018, 2019 New Vector Ltd
+Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,12 +17,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
+import {MatrixClient, MemoryStore} from 'matrix-js-sdk';
 
-import utils from 'matrix-js-sdk/lib/utils';
-import EventTimeline from 'matrix-js-sdk/lib/models/event-timeline';
-import EventTimelineSet from 'matrix-js-sdk/lib/models/event-timeline-set';
+import * as utils from 'matrix-js-sdk/src/utils';
+import {EventTimeline} from 'matrix-js-sdk/src/models/event-timeline';
+import {EventTimelineSet} from 'matrix-js-sdk/src/models/event-timeline-set';
+import * as sdk from './index';
 import createMatrixClient from './utils/createMatrixClient';
+import SettingsStore from './settings/SettingsStore';
+import MatrixActionCreators from './actions/MatrixActionCreators';
+import Modal from './Modal';
+import {verificationMethods} from 'matrix-js-sdk/src/crypto';
+import MatrixClientBackedSettingsHandler from "./settings/handlers/MatrixClientBackedSettingsHandler";
+import * as StorageManager from './utils/StorageManager';
+import IdentityAuthClient from './IdentityAuthClient';
+import { crossSigningCallbacks } from './CrossSigningManager';
+import {SHOW_QR_CODE_METHOD} from "matrix-js-sdk/src/crypto/verification/QRCode";
 
 interface MatrixClientCreds {
     homeserverUrl: string,
@@ -37,9 +49,10 @@ interface MatrixClientCreds {
  * This module provides a singleton instance of this class so the 'current'
  * Matrix Client object is available easily.
  */
-class MatrixClientPeg {
+class _MatrixClientPeg {
     constructor() {
         this.matrixClient = null;
+        this._justRegisteredUserId = null;
 
         // These are the default options used when when the
         // client is started in 'start'. These can be altered
@@ -48,6 +61,9 @@ class MatrixClientPeg {
         this.opts = {
             initialSyncLimit: 20,
         };
+        // the credentials used to init the current client object.
+        // used if we tear it down & recreate it with a different store
+        this._currentClientCreds = null;
     }
 
     /**
@@ -67,47 +83,107 @@ class MatrixClientPeg {
 
     unset() {
         this.matrixClient = null;
+
+        MatrixActionCreators.stop();
     }
 
     /**
+     * If we've registered a user ID we set this to the ID of the
+     * user we've just registered. If they then go & log in, we
+     * can send them to the welcome user (obviously this doesn't
+     * guarentee they'll get a chat with the welcome user).
+     *
+     * @param {string} uid The user ID of the user we've just registered
+     */
+    setJustRegisteredUserId(uid) {
+        this._justRegisteredUserId = uid;
+    }
+
+    /**
+     * Returns true if the current user has just been registered by this
+     * client as determined by setJustRegisteredUserId()
+     *
+     * @returns {bool} True if user has just been registered
+     */
+    currentUserIsJustRegistered() {
+        return (
+            this.matrixClient &&
+            this.matrixClient.credentials.userId === this._justRegisteredUserId
+        );
+    }
+
+    /*
      * Replace this MatrixClientPeg's client with a client instance that has
-     * Home Server / Identity Server URLs and active credentials
+     * homeserver / identity server URLs and active credentials
      */
     replaceUsingCreds(creds: MatrixClientCreds) {
+        this._currentClientCreds = creds;
         this._createClient(creds);
     }
 
-    async start() {
+    async assign() {
+        for (const dbType of ['indexeddb', 'memory']) {
+            try {
+                const promise = this.matrixClient.store.startup();
+                console.log("MatrixClientPeg: waiting for MatrixClient store to initialise");
+                await promise;
+                break;
+            } catch (err) {
+                if (dbType === 'indexeddb') {
+                    console.error('Error starting matrixclient store - falling back to memory store', err);
+                    this.matrixClient.store = new MemoryStore({
+                        localStorage: global.localStorage,
+                    });
+                } else {
+                    console.error('Failed to start memory store!', err);
+                    throw err;
+                }
+            }
+        }
+
+        StorageManager.trackStores(this.matrixClient);
+
         // try to initialise e2e on the new client
         try {
             // check that we have a version of the js-sdk which includes initCrypto
-            if (this.matrixClient.initCrypto) {
+            if (!SettingsStore.getValue("lowBandwidth") && this.matrixClient.initCrypto) {
                 await this.matrixClient.initCrypto();
+                this.matrixClient.setCryptoTrustCrossSignedDevices(
+                    !SettingsStore.getValue('e2ee.manuallyVerifyAllSessions'),
+                );
+                StorageManager.setCryptoInitialised(true);
             }
-        } catch(e) {
+        } catch (e) {
+            if (e && e.name === 'InvalidCryptoStoreError') {
+                // The js-sdk found a crypto DB too new for it to use
+                const CryptoStoreTooNewDialog =
+                    sdk.getComponent("views.dialogs.CryptoStoreTooNewDialog");
+                Modal.createDialog(CryptoStoreTooNewDialog, {
+                    host: window.location.host,
+                });
+            }
             // this can happen for a number of reasons, the most likely being
             // that the olm library was missing. It's not fatal.
-            console.warn("Unable to initialise e2e: " + e);
+            console.warn("Unable to initialise e2e", e);
         }
 
         const opts = utils.deepCopy(this.opts);
         // the react sdk doesn't work without this, so don't allow
         opts.pendingEventOrdering = "detached";
+        opts.lazyLoadMembers = true;
 
-        try {
-            let promise = this.matrixClient.store.startup();
-            console.log(`MatrixClientPeg: waiting for MatrixClient store to initialise`);
-            await promise;
-        } catch(err) {
-            // log any errors when starting up the database (if one exists)
-            console.error(`Error starting matrixclient store: ${err}`);
-        }
+        // Connect the matrix client to the dispatcher and setting handlers
+        MatrixActionCreators.start(this.matrixClient);
+        MatrixClientBackedSettingsHandler.matrixClient = this.matrixClient;
 
-        // regardless of errors, start the client. If we did error out, we'll
-        // just end up doing a full initial /sync.
+        return opts;
+    }
+
+    async start() {
+        const opts = await this.assign();
 
         console.log(`MatrixClientPeg: really starting MatrixClient`);
-        this.get().startClient(opts);
+        await this.get().startClient(opts);
         console.log(`MatrixClientPeg: MatrixClient started`);
     }
 
@@ -122,30 +198,45 @@ class MatrixClientPeg {
         };
     }
 
-    /**
-     * Return the server name of the user's home server
-     * Throws an error if unable to deduce the home server name
+    /*
+     * Return the server name of the user's homeserver
+     * Throws an error if unable to deduce the homeserver name
      * (eg. if the user is not logged in)
      */
-    getHomeServerName() {
+    getHomeserverName() {
         const matches = /^@.+:(.+)$/.exec(this.matrixClient.credentials.userId);
         if (matches === null || matches.length < 1) {
-            throw new Error("Failed to derive home server name from user ID!");
+            throw new Error("Failed to derive homeserver name from user ID!");
         }
         return matches[1];
     }
 
     _createClient(creds: MatrixClientCreds) {
-        var opts = {
+        const opts = {
             baseUrl: creds.homeserverUrl,
             idBaseUrl: creds.identityServerUrl,
             accessToken: creds.accessToken,
             userId: creds.userId,
             deviceId: creds.deviceId,
             timelineSupport: true,
+            forceTURN: !SettingsStore.getValue('webRtcAllowPeerToPeer', false),
+            fallbackICEServerAllowed: !!SettingsStore.getValue('fallbackICEServerAllowed'),
+            verificationMethods: [
+                verificationMethods.SAS,
+                SHOW_QR_CODE_METHOD,
+                verificationMethods.RECIPROCATE_QR_CODE,
+            ],
+            unstableClientRelationAggregation: true,
+            identityServer: new IdentityAuthClient(),
         };
 
-        this.matrixClient = createMatrixClient(opts, this.indexedDbWorkerScript);
+        opts.cryptoCallbacks = {};
+        // These are always installed regardless of the labs flag so that
+        // cross-signing features can toggle on without reloading and also be
+        // accessed immediately after login.
+        Object.assign(opts.cryptoCallbacks, crossSigningCallbacks);
+
+        this.matrixClient = createMatrixClient(opts);
 
         // we're going to add eventlisteners for each matrix event tile, so the
         // potential number of event listeners is quite high.
@@ -153,8 +244,8 @@ class MatrixClientPeg {
 
         this.matrixClient.setGuest(Boolean(creds.guest));
 
-        var notifTimelineSet = new EventTimelineSet(null, {
-            timelineSupport: true
+        const notifTimelineSet = new EventTimelineSet(null, {
+            timelineSupport: true,
         });
         // XXX: what is our initial pagination token?! it somehow needs to be synchronised with /sync.
         notifTimelineSet.getLiveTimeline().setPaginationToken("", EventTimeline.BACKWARDS);
@@ -163,6 +254,7 @@ class MatrixClientPeg {
 }
 
 if (!global.mxMatrixClientPeg) {
-    global.mxMatrixClientPeg = new MatrixClientPeg();
+    global.mxMatrixClientPeg = new _MatrixClientPeg();
 }
-module.exports = global.mxMatrixClientPeg;
+
+export const MatrixClientPeg = global.mxMatrixClientPeg;

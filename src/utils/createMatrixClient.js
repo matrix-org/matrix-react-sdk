@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Matrix from 'matrix-js-sdk';
+import * as Matrix from 'matrix-js-sdk';
 
 const localStorage = window.localStorage;
 
@@ -23,7 +23,7 @@ const localStorage = window.localStorage;
 let indexedDB;
 try {
     indexedDB = window.indexedDB;
-} catch(e) {}
+} catch (e) {}
 
 /**
  * Create a new matrix client, with the persistent stores set up appropriately
@@ -39,22 +39,27 @@ try {
  * @returns {MatrixClient} the newly-created MatrixClient
  */
 export default function createMatrixClient(opts) {
-    const storeOpts = {};
-
-    if (localStorage) {
-        storeOpts.sessionStore = new Matrix.WebStorageSessionStore(localStorage);
-    }
+    const storeOpts = {
+        useAuthorizationHeader: true,
+    };
 
     if (indexedDB && localStorage) {
-        // FIXME: bodge to remove old database. Remove this after a few weeks.
-        indexedDB.deleteDatabase("matrix-js-sdk:default");
-
         storeOpts.store = new Matrix.IndexedDBStore({
             indexedDB: indexedDB,
             dbName: "riot-web-sync",
             localStorage: localStorage,
             workerScript: createMatrixClient.indexedDbWorkerScript,
         });
+    }
+
+    if (localStorage) {
+        storeOpts.sessionStore = new Matrix.WebStorageSessionStore(localStorage);
+    }
+
+    if (indexedDB) {
+        storeOpts.cryptoStore = new Matrix.IndexedDBCryptoStore(
+            indexedDB, "matrix-js-sdk:crypto",
+        );
     }
 
     opts = Object.assign(storeOpts, opts);

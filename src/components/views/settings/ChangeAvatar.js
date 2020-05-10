@@ -14,21 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-var React = require('react');
-var MatrixClientPeg = require("../../../MatrixClientPeg");
-var sdk = require('../../../index');
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
+import {MatrixClientPeg} from "../../../MatrixClientPeg";
+import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
+export default createReactClass({
     displayName: 'ChangeAvatar',
     propTypes: {
-        initialAvatarUrl: React.PropTypes.string,
-        room: React.PropTypes.object,
+        initialAvatarUrl: PropTypes.string,
+        room: PropTypes.object,
         // if false, you need to call changeAvatar.onFileSelected yourself.
-        showUploadSection: React.PropTypes.bool,
-        width: React.PropTypes.number,
-        height: React.PropTypes.number,
-        className: React.PropTypes.string
+        showUploadSection: PropTypes.bool,
+        width: PropTypes.number,
+        height: PropTypes.number,
+        className: PropTypes.string,
     },
 
     Phases: {
@@ -53,45 +55,72 @@ module.exports = React.createClass({
         };
     },
 
-    componentWillReceiveProps: function(newProps) {
+    componentDidMount: function() {
+        MatrixClientPeg.get().on("RoomState.events", this.onRoomStateEvents);
+    },
+
+    // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
+    UNSAFE_componentWillReceiveProps: function(newProps) {
         if (this.avatarSet) {
             // don't clobber what the user has just set
             return;
         }
         this.setState({
-            avatarUrl: newProps.initialAvatarUrl
+            avatarUrl: newProps.initialAvatarUrl,
         });
     },
 
+    componentWillUnmount: function() {
+        if (MatrixClientPeg.get()) {
+            MatrixClientPeg.get().removeListener("RoomState.events", this.onRoomStateEvents);
+        }
+    },
+
+    onRoomStateEvents: function(ev) {
+        if (!this.props.room) {
+            return;
+        }
+
+        if (ev.getRoomId() !== this.props.room.roomId || ev.getType() !== 'm.room.avatar'
+            || ev.getSender() !== MatrixClientPeg.get().getUserId()) {
+            return;
+        }
+
+        if (!ev.getContent().url) {
+            this.avatarSet = false;
+            this.setState({}); // force update
+        }
+    },
+
     setAvatarFromFile: function(file) {
-        var newUrl = null;
+        let newUrl = null;
 
         this.setState({
-            phase: this.Phases.Uploading
+            phase: this.Phases.Uploading,
         });
-        var self = this;
-        var httpPromise = MatrixClientPeg.get().uploadContent(file).then(function(url) {
+        const self = this;
+        const httpPromise = MatrixClientPeg.get().uploadContent(file).then(function(url) {
             newUrl = url;
             if (self.props.room) {
                 return MatrixClientPeg.get().sendStateEvent(
                     self.props.room.roomId,
                     'm.room.avatar',
                     {url: url},
-                    ''
+                    '',
                 );
             } else {
                 return MatrixClientPeg.get().setAvatarUrl(url);
             }
         });
 
-        httpPromise.done(function() {
+        httpPromise.then(function() {
             self.setState({
                 phase: self.Phases.Display,
-                avatarUrl: MatrixClientPeg.get().mxcUrlToHttp(newUrl)
+                avatarUrl: MatrixClientPeg.get().mxcUrlToHttp(newUrl),
             });
         }, function(error) {
             self.setState({
-                phase: self.Phases.Error
+                phase: self.Phases.Error,
             });
             self.onError(error);
         });
@@ -106,31 +135,31 @@ module.exports = React.createClass({
 
     onError: function(error) {
         this.setState({
-            errorText: _t("Failed to upload profile picture!")
+            errorText: _t("Failed to upload profile picture!"),
         });
     },
 
     render: function() {
-        var avatarImg;
+        let avatarImg;
         // Having just set an avatar we just display that since it will take a little
         // time to propagate through to the RoomAvatar.
         if (this.props.room && !this.avatarSet) {
-            var RoomAvatar = sdk.getComponent('avatars.RoomAvatar');
-            avatarImg = <RoomAvatar room={this.props.room} width={ this.props.width } height={ this.props.height } resizeMethod='crop' />;
+            const RoomAvatar = sdk.getComponent('avatars.RoomAvatar');
+            avatarImg = <RoomAvatar room={this.props.room} width={this.props.width} height={this.props.height} resizeMethod='crop' />;
         } else {
-            var BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
+            const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
             // XXX: FIXME: once we track in the JS what our own displayname is(!) then use it here rather than ?
             avatarImg = <BaseAvatar width={this.props.width} height={this.props.height} resizeMethod='crop'
-                        name='?' idName={ MatrixClientPeg.get().getUserIdLocalpart() } url={this.state.avatarUrl} />;
+                        name='?' idName={MatrixClientPeg.get().getUserIdLocalpart()} url={this.state.avatarUrl} />;
         }
 
-        var uploadSection;
+        let uploadSection;
         if (this.props.showUploadSection) {
             uploadSection = (
                 <div className={this.props.className}>
-                    {_t("Upload new:")}
-                    <input type="file" accept="image/*" onChange={this.onFileSelected}/>
-                    {this.state.errorText}
+                    { _t("Upload new:") }
+                    <input type="file" accept="image/*" onChange={this.onFileSelected} />
+                    { this.state.errorText }
                 </div>
             );
         }
@@ -141,9 +170,9 @@ module.exports = React.createClass({
                 return (
                     <div>
                         <div className={this.props.className}>
-                            {avatarImg}
+                            { avatarImg }
                         </div>
-                        {uploadSection}
+                        { uploadSection }
                     </div>
                 );
             case this.Phases.Uploading:
@@ -152,5 +181,5 @@ module.exports = React.createClass({
                     <Loader />
                 );
         }
-    }
+    },
 });

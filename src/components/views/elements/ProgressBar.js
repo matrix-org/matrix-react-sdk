@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,25 +15,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
+import React from "react";
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 
-var React = require('react');
-
-module.exports = React.createClass({
+export default createReactClass({
     displayName: 'ProgressBar',
     propTypes: {
-        value: React.PropTypes.number,
-        max: React.PropTypes.number
+        value: PropTypes.number,
+        max: PropTypes.number,
     },
 
     render: function() {
         // Would use an HTML5 progress tag but if that doesn't animate if you
         // use the HTML attributes rather than styles
-        var progressStyle = {
-            width: ((this.props.value / this.props.max) * 100)+"%"
+        const progressStyle = {
+            width: ((this.props.value / this.props.max) * 100)+"%",
         };
         return (
             <div className="mx_ProgressBar"><div className="mx_ProgressBar_fill" style={progressStyle}></div></div>
         );
-    }
+    },
 });

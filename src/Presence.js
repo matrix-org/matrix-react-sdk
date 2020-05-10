@@ -1,5 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2018 New Vector Ltd
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,24 +16,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-var MatrixClientPeg = require("./MatrixClientPeg");
-var dis = require("./dispatcher");
+import {MatrixClientPeg} from "./MatrixClientPeg";
+import dis from "./dispatcher";
+import Timer from './utils/Timer';
 
  // Time in ms after that a user is considered as unavailable/away
-var UNAVAILABLE_TIME_MS = 3 * 60 * 1000; // 3 mins
-var PRESENCE_STATES = ["online", "offline", "unavailable"];
+const UNAVAILABLE_TIME_MS = 3 * 60 * 1000; // 3 mins
+const PRESENCE_STATES = ["online", "offline", "unavailable"];
 
 class Presence {
-
+    constructor() {
+        this._activitySignal = null;
+        this._unavailableTimer = null;
+        this._onAction = this._onAction.bind(this);
+        this._dispatcherRef = null;
+    }
     /**
      * Start listening the user activity to evaluate his presence state.
-     * Any state change will be sent to the Home Server.
+     * Any state change will be sent to the homeserver.
      */
-    start() {
-        this.running = true;
-        if (undefined === this.state) {
-            this._resetTimer();
-            this.dispatcherRef = dis.register(this._onUserActivity.bind(this));
+    async start() {
+        this._unavailableTimer = new Timer(UNAVAILABLE_TIME_MS);
+        // the user_activity_start action starts the timer
+        this._dispatcherRef = dis.register(this._onAction);
+        while (this._unavailableTimer) {
+            try {
+                await this._unavailableTimer.finished();
+                this.setState("unavailable");
+            } catch (e) { /* aborted, stop got called */ }
         }
     }
 
@@ -39,13 +51,14 @@ class Presence {
      * Stop tracking user activity
      */
     stop() {
-        this.running = false;
-        if (this.timer) {
-            clearInterval(this.timer);
-            this.timer = undefined;
-            dis.unregister(this.dispatcherRef);
+        if (this._dispatcherRef) {
+            dis.unregister(this._dispatcherRef);
+            this._dispatcherRef = null;
         }
-        this.state = undefined;
+        if (this._unavailableTimer) {
+            this._unavailableTimer.abort();
+            this._unavailableTimer = null;
+        }
     }
 
     /**
@@ -56,62 +69,40 @@ class Presence {
         return this.state;
     }
 
+    _onAction(payload) {
+        if (payload.action === 'user_activity') {
+            this.setState("online");
+            this._unavailableTimer.restart();
+        }
+    }
+
     /**
      * Set the presence state.
-     * If the state has changed, the Home Server will be notified.
+     * If the state has changed, the homeserver will be notified.
      * @param {string} newState the new presence state (see PRESENCE enum)
      */
-    setState(newState) {
+    async setState(newState) {
         if (newState === this.state) {
             return;
         }
         if (PRESENCE_STATES.indexOf(newState) === -1) {
             throw new Error("Bad presence state: " + newState);
         }
-        if (!this.running) {
-            return;
-        }
-        var old_state = this.state;
+        const oldState = this.state;
         this.state = newState;
 
         if (MatrixClientPeg.get().isGuest()) {
             return; // don't try to set presence when a guest; it won't work.
         }
 
-        var self = this;
-        MatrixClientPeg.get().setPresence(this.state).done(function() {
-            console.log("Presence: %s", newState);
-        }, function(err) {
+        try {
+            await MatrixClientPeg.get().setPresence(this.state);
+            console.info("Presence: %s", newState);
+        } catch (err) {
             console.error("Failed to set presence: %s", err);
-            self.state = old_state;
-        });
-    }
-
-    /**
-     * Callback called when the user made no action on the page for UNAVAILABLE_TIME ms.
-     * @private
-     */
-    _onUnavailableTimerFire() {
-        this.setState("unavailable");
-    }
-
-    _onUserActivity() {
-        this._resetTimer();
-    }
-
-    /**
-     * Callback called when the user made an action on the page
-     * @private
-     */
-    _resetTimer() {
-        var self = this;
-        this.setState("online");
-        // Re-arm the timer
-        clearTimeout(this.timer);
-        this.timer = setTimeout(function() {
-            self._onUnavailableTimerFire();
-        }, UNAVAILABLE_TIME_MS);
+            this.state = oldState;
+        }
     }
 }
 
-module.exports = new Presence();
+export default new Presence();

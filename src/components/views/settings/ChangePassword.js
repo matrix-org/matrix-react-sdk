@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2018-2019 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,38 +15,38 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
-var React = require('react');
-var MatrixClientPeg = require("../../../MatrixClientPeg");
-var Modal = require("../../../Modal");
-var sdk = require("../../../index");
-
-import Promise from 'bluebird';
+import Field from "../elements/Field";
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
+import {MatrixClientPeg} from "../../../MatrixClientPeg";
+import dis from "../../../dispatcher";
 import AccessibleButton from '../elements/AccessibleButton';
 import { _t } from '../../../languageHandler';
+import * as sdk from "../../../index";
+import Modal from "../../../Modal";
 
 import sessionStore from '../../../stores/SessionStore';
 
-module.exports = React.createClass({
+export default createReactClass({
     displayName: 'ChangePassword',
+
     propTypes: {
-        onFinished: React.PropTypes.func,
-        onError: React.PropTypes.func,
-        onCheckPassword: React.PropTypes.func,
-        rowClassName: React.PropTypes.string,
-        rowLabelClassName: React.PropTypes.string,
-        rowInputClassName: React.PropTypes.string,
-        buttonClassName: React.PropTypes.string,
-        confirm: React.PropTypes.bool,
+        onFinished: PropTypes.func,
+        onError: PropTypes.func,
+        onCheckPassword: PropTypes.func,
+        rowClassName: PropTypes.string,
+        buttonClassName: PropTypes.string,
+        buttonKind: PropTypes.string,
+        confirm: PropTypes.bool,
         // Whether to autoFocus the new password input
-        autoFocusNewPasswordInput: React.PropTypes.bool,
+        autoFocusNewPasswordInput: PropTypes.bool,
     },
 
     Phases: {
         Edit: "edit",
         Uploading: "uploading",
-        Error: "error"
+        Error: "error",
     },
 
     getDefaultProps: function() {
@@ -55,11 +56,11 @@ module.exports = React.createClass({
             onCheckPassword: function(oldPass, newPass, confirmPass) {
                 if (newPass !== confirmPass) {
                     return {
-                        error: _t("New passwords don't match")
+                        error: _t("New passwords don't match"),
                     };
                 } else if (!newPass || newPass.length === 0) {
                     return {
-                        error: _t("Passwords can't be empty")
+                        error: _t("Passwords can't be empty"),
                     };
                 }
             },
@@ -71,10 +72,13 @@ module.exports = React.createClass({
         return {
             phase: this.Phases.Edit,
             cachedPassword: null,
+            oldPassword: "",
+            newPassword: "",
+            newPasswordConfirm: "",
         };
     },
 
-    componentWillMount: function() {
+    componentDidMount: function() {
         this._sessionStore = sessionStore;
         this._sessionStoreToken = this._sessionStore.addListener(
             this._setStateFromSessionStore,
@@ -109,18 +113,22 @@ module.exports = React.createClass({
             description:
                 <div>
                     { _t(
-                        'Changing password will currently reset any end-to-end encryption keys on all devices, ' +
+                        'Changing password will currently reset any end-to-end encryption keys on all sessions, ' +
                         'making encrypted chat history unreadable, unless you first export your room keys ' +
                         'and re-import them afterwards. ' +
-                        'In future this will be improved.'
-                    ) } (<a href="https://github.com/vector-im/riot-web/issues/2671">https://github.com/vector-im/riot-web/issues/2671</a>)
+                        'In future this will be improved.',
+                    ) }
+                    {' '}
+                    <a href="https://github.com/vector-im/riot-web/issues/2671" target="_blank" rel="noreferrer noopener">
+                        https://github.com/vector-im/riot-web/issues/2671
+                    </a>
                 </div>,
             button: _t("Continue"),
             extraButtons: [
                 <button className="mx_Dialog_primary"
                         onClick={this._onExportE2eKeysClicked}>
                     { _t('Export E2E room keys') }
-                </button>
+                </button>,
             ],
             onFinished: (confirmed) => {
                 if (confirmed) {
@@ -142,6 +150,9 @@ module.exports = React.createClass({
         });
 
         cli.setPassword(authDict, newPassword).then(() => {
+            // Notify SessionStore that the user's password was changed
+            dis.dispatch({action: 'password_changed'});
+
             if (this.props.shouldAskForEmail) {
                 return this._optionallySetEmail().then((confirmed) => {
                     this.props.onFinished({
@@ -156,38 +167,54 @@ module.exports = React.createClass({
         }).finally(() => {
             this.setState({
                 phase: this.Phases.Edit,
+                oldPassword: "",
+                newPassword: "",
+                newPasswordConfirm: "",
             });
-        }).done();
+        });
     },
 
     _optionallySetEmail: function() {
-        const deferred = Promise.defer();
         // Ask for an email otherwise the user has no way to reset their password
         const SetEmailDialog = sdk.getComponent("dialogs.SetEmailDialog");
-        Modal.createTrackedDialog('Do you want to set an email address?', '', SetEmailDialog, {
+        const modal = Modal.createTrackedDialog('Do you want to set an email address?', '', SetEmailDialog, {
             title: _t('Do you want to set an email address?'),
-            onFinished: (confirmed) => {
-                // ignore confirmed, setting an email is optional
-                deferred.resolve(confirmed);
-            },
         });
-        return deferred.promise;
+        return modal.finished.then(([confirmed]) => confirmed);
     },
 
     _onExportE2eKeysClicked: function() {
-        Modal.createTrackedDialogAsync('Export E2E Keys', 'Change Password', (cb) => {
-            require.ensure(['../../../async-components/views/dialogs/ExportE2eKeysDialog'], () => {
-                cb(require('../../../async-components/views/dialogs/ExportE2eKeysDialog'));
-            }, "e2e-export");
-        }, {
-            matrixClient: MatrixClientPeg.get(),
+        Modal.createTrackedDialogAsync('Export E2E Keys', 'Change Password',
+            import('../../../async-components/views/dialogs/ExportE2eKeysDialog'),
+            {
+                matrixClient: MatrixClientPeg.get(),
+            },
+        );
+    },
+
+    onChangeOldPassword(ev) {
+        this.setState({
+            oldPassword: ev.target.value,
         });
     },
 
-    onClickChange: function() {
-        const oldPassword = this.state.cachedPassword || this.refs.old_input.value;
-        const newPassword = this.refs.new_input.value;
-        const confirmPassword = this.refs.confirm_input.value;
+    onChangeNewPassword(ev) {
+        this.setState({
+            newPassword: ev.target.value,
+        });
+    },
+
+    onChangeNewPasswordConfirm(ev) {
+        this.setState({
+            newPasswordConfirm: ev.target.value,
+        });
+    },
+
+    onClickChange: function(ev) {
+        ev.preventDefault();
+        const oldPassword = this.state.cachedPassword || this.state.oldPassword;
+        const newPassword = this.state.newPassword;
+        const confirmPassword = this.state.newPasswordConfirm;
         const err = this.props.onCheckPassword(
             oldPassword, newPassword, confirmPassword,
         );
@@ -199,21 +226,23 @@ module.exports = React.createClass({
     },
 
     render: function() {
+        // TODO: Live validation on `new pw == confirm pw`
+
         const rowClassName = this.props.rowClassName;
-        const rowLabelClassName = this.props.rowLabelClassName;
-        const rowInputClassName = this.props.rowInputClassName;
         const buttonClassName = this.props.buttonClassName;
 
         let currentPassword = null;
         if (!this.state.cachedPassword) {
-            currentPassword = <div className={rowClassName}>
-                <div className={rowLabelClassName}>
-                    <label htmlFor="passwordold">Current password</label>
+            currentPassword = (
+                <div className={rowClassName}>
+                    <Field
+                        type="password"
+                        label={_t('Current password')}
+                        value={this.state.oldPassword}
+                        onChange={this.onChangeOldPassword}
+                    />
                 </div>
-                <div className={rowInputClassName}>
-                    <input id="passwordold" type="password" ref="old_input" />
-                </div>
-            </div>;
+            );
         }
 
         switch (this.state.phase) {
@@ -224,24 +253,25 @@ module.exports = React.createClass({
                     <form className={this.props.className} onSubmit={this.onClickChange}>
                         { currentPassword }
                         <div className={rowClassName}>
-                            <div className={rowLabelClassName}>
-                                <label htmlFor="password1">{ passwordLabel }</label>
-                            </div>
-                            <div className={rowInputClassName}>
-                                <input id="password1" type="password" ref="new_input" autoFocus={this.props.autoFocusNewPasswordInput} />
-                            </div>
+                            <Field
+                                type="password"
+                                label={passwordLabel}
+                                value={this.state.newPassword}
+                                autoFocus={this.props.autoFocusNewPasswordInput}
+                                onChange={this.onChangeNewPassword}
+                                autoComplete="new-password"
+                            />
                         </div>
                         <div className={rowClassName}>
-                            <div className={rowLabelClassName}>
-                                <label htmlFor="password2">{ _t('Confirm password') }</label>
-                            </div>
-                            <div className={rowInputClassName}>
-                                <input id="password2" type="password" ref="confirm_input" />
-                            </div>
+                            <Field
+                                type="password"
+                                label={_t("Confirm password")}
+                                value={this.state.newPasswordConfirm}
+                                onChange={this.onChangeNewPasswordConfirm}
+                                autoComplete="new-password"
+                            />
                         </div>
-                        <AccessibleButton className={buttonClassName}
-                                onClick={this.onClickChange}
-                                element="button">
+                        <AccessibleButton className={buttonClassName} kind={this.props.buttonKind} onClick={this.onClickChange}>
                             { _t('Change Password') }
                         </AccessibleButton>
                     </form>
@@ -254,5 +284,5 @@ module.exports = React.createClass({
                     </div>
                 );
         }
-    }
+    },
 });

@@ -20,50 +20,28 @@ limitations under the License.
  * to update the interface once for all of them.
  *
  * Note that the function must not take arguments, since the args
- * could be different for each invocarion of the function.
+ * could be different for each invocation of the function.
  *
  * The returned function has a 'cancelPendingCall' property which can be called
  * on unmount or similar to cancel any pending update.
  */
-module.exports = function(f, minIntervalMs) {
-    this.lastCall = 0;
-    this.scheduledCall = undefined;
 
-    var self = this;
-    var wrapper = function() {
-        var now = Date.now();
+import { throttle } from "lodash";
 
-        if (self.lastCall < now - minIntervalMs) {
-            f.apply(this);
-            self.lastCall = now;
-        } else if (self.scheduledCall === undefined) {
-            self.scheduledCall = setTimeout(
-                () => {
-                    self.scheduledCall = undefined;
-                    f.apply(this);
-                    self.lastCall = now;
-                },
-                (self.lastCall + minIntervalMs) - now
-            );
-        }
+export default function ratelimitedfunc(fn, time) {
+    const throttledFn = throttle(fn, time, {
+        leading: true,
+        trailing: true,
+    });
+    const _bind = throttledFn.bind;
+    throttledFn.bind = function() {
+        const boundFn = _bind.apply(throttledFn, arguments);
+        boundFn.cancelPendingCall = throttledFn.cancelPendingCall;
+        return boundFn;
     };
 
-    // add the cancelPendingCall property
-    wrapper.cancelPendingCall = function() {
-        if (self.scheduledCall) {
-            clearTimeout(self.scheduledCall);
-            self.scheduledCall = undefined;
-        }
+    throttledFn.cancelPendingCall = function() {
+        throttledFn.cancel();
     };
-
-    // make sure that cancelPendingCall is copied when react rebinds the
-    // wrapper
-    var _bind = wrapper.bind;
-    wrapper.bind = function() {
-        var rebound = _bind.apply(this, arguments);
-        rebound.cancelPendingCall = wrapper.cancelPendingCall;
-        return rebound;
-    };
-
-    return wrapper;
-};
+    return throttledFn;
+}

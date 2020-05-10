@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-var React = require("react");
-var Notifier = require("../../../Notifier");
-var dis = require("../../../dispatcher");
+import React from "react";
+import createReactClass from 'create-react-class';
+import Notifier from "../../../Notifier";
+import dis from "../../../dispatcher";
 import { _t } from '../../../languageHandler';
 
-module.exports = React.createClass({
+export default createReactClass({
     displayName: 'EnableNotificationsButton',
 
     componentDidMount: function() {
@@ -43,7 +43,7 @@ module.exports = React.createClass({
     },
 
     onClick: function() {
-        var self = this;
+        const self = this;
         if (!Notifier.supportsDesktopNotifications()) {
             return;
         }
@@ -61,15 +61,15 @@ module.exports = React.createClass({
         if (this.enabled()) {
             return (
                 <button className="mx_EnableNotificationsButton" onClick={this.onClick}>
-                    {_t("Disable Notifications")}
+                    { _t("Disable Notifications") }
                 </button>
             );
         } else {
             return (
                 <button className="mx_EnableNotificationsButton" onClick={this.onClick}>
-                    {_t("Enable Notifications")}
+                    { _t("Enable Notifications") }
                 </button>
             );
         }
-    }
+    },
 });

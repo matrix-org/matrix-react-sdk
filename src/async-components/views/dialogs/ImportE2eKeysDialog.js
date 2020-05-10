@@ -14,11 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, {createRef} from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 
-import * as Matrix from 'matrix-js-sdk';
+import { MatrixClient } from 'matrix-js-sdk';
 import * as MegolmExportEncryption from '../../../utils/MegolmExportEncryption';
-import sdk from '../../../index';
+import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 
 function readFileAsArrayBuffer(file) {
@@ -36,12 +38,12 @@ function readFileAsArrayBuffer(file) {
 const PHASE_EDIT = 1;
 const PHASE_IMPORTING = 2;
 
-export default React.createClass({
+export default createReactClass({
     displayName: 'ImportE2eKeysDialog',
 
     propTypes: {
-        matrixClient: React.PropTypes.instanceOf(Matrix.MatrixClient).isRequired,
-        onFinished: React.PropTypes.func.isRequired,
+        matrixClient: PropTypes.instanceOf(MatrixClient).isRequired,
+        onFinished: PropTypes.func.isRequired,
     },
 
     getInitialState: function() {
@@ -52,8 +54,12 @@ export default React.createClass({
         };
     },
 
-    componentWillMount: function() {
+    // TODO: [REACT-WARNING] Replace component with real class, use constructor for refs
+    UNSAFE_componentWillMount: function() {
         this._unmounted = false;
+
+        this._file = createRef();
+        this._passphrase = createRef();
     },
 
     componentWillUnmount: function() {
@@ -61,15 +67,15 @@ export default React.createClass({
     },
 
     _onFormChange: function(ev) {
-        const files = this.refs.file.files || [];
+        const files = this._file.current.files || [];
         this.setState({
-            enableSubmit: (this.refs.passphrase.value !== "" && files.length > 0),
+            enableSubmit: (this._passphrase.current.value !== "" && files.length > 0),
         });
     },
 
     _onFormSubmit: function(ev) {
         ev.preventDefault();
-        this._startImport(this.refs.file.files[0], this.refs.passphrase.value);
+        this._startImport(this._file.current.files[0], this._passphrase.current.value);
         return false;
     },
 
@@ -134,17 +140,20 @@ export default React.createClass({
                             ) }
                         </p>
                         <div className='error'>
-                            {this.state.errStr}
+                            { this.state.errStr }
                         </div>
                         <div className='mx_E2eKeysDialog_inputTable'>
                             <div className='mx_E2eKeysDialog_inputRow'>
                                <div className='mx_E2eKeysDialog_inputLabel'>
                                    <label htmlFor='importFile'>
-                                       {_t("File to import")}
+                                       { _t("File to import") }
                                    </label>
                                </div>
                                <div className='mx_E2eKeysDialog_inputCell'>
-                                   <input ref='file' id='importFile' type='file'
+                                   <input
+                                       ref={this._file}
+                                       id='importFile'
+                                       type='file'
                                        autoFocus={true}
                                        onChange={this._onFormChange}
                                        disabled={disableForm} />
@@ -153,14 +162,17 @@ export default React.createClass({
                             <div className='mx_E2eKeysDialog_inputRow'>
                                <div className='mx_E2eKeysDialog_inputLabel'>
                                    <label htmlFor='passphrase'>
-                                       {_t("Enter passphrase")}
+                                       { _t("Enter passphrase") }
                                    </label>
                                </div>
                                <div className='mx_E2eKeysDialog_inputCell'>
-                                   <input ref='passphrase' id='passphrase'
-                                       size='64' type='password'
+                                   <input
+                                       ref={this._passphrase}
+                                       id='passphrase'
+                                       size='64'
+                                       type='password'
                                        onChange={this._onFormChange}
-                                       disabled={disableForm}/>
+                                       disabled={disableForm} />
                                </div>
                             </div>
                         </div>
@@ -170,7 +182,7 @@ export default React.createClass({
                             disabled={!this.state.enableSubmit || disableForm}
                         />
                         <button onClick={this._onCancelClick} disabled={disableForm}>
-                            {_t("Cancel")}
+                            { _t("Cancel") }
                         </button>
                     </div>
                 </form>

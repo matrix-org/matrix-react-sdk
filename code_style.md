@@ -22,7 +22,7 @@ number throgh from the original code to the final application.
 General Style
 -------------
 - 4 spaces to indent, for consistency with Matrix Python.
-- 120 columns per line, but try to keep JavaScript code around the 80 column mark.
+- 120 columns per line, but try to keep JavaScript code around the 90 column mark.
   Inline JSX in particular can be nicer with more columns per line.
 - No trailing whitespace at end of lines.
 - Don't indent empty lines.
@@ -34,7 +34,7 @@ General Style
 - UpperCamelCase for class and type names
 - lowerCamelCase for functions and variables.
 - Single line ternary operators are fine.
-- UPPER_CAMEL_CASE for constants
+- UPPER_SNAKE_CASE for constants
 - Single quotes for strings by default, for consistency with most JavaScript styles:
 
   ```javascript
@@ -165,7 +165,6 @@ ECMAScript
 
 React
 -----
-- Use React.createClass rather than ES6 classes for components, as the boilerplate is way too heavy on ES6 currently.  ES7 might improve it.
 - Pull out functions in props to the class, generally as specific event handlers:
 
   ```jsx
@@ -174,11 +173,34 @@ React
   <Foo onClick={this.doStuff}> // Better
   <Foo onClick={this.onFooClick}> // Best, if onFooClick would do anything other than directly calling doStuff
   ```
-  
-  Not doing so is acceptable in a single case; in function-refs:
-  
-  ```jsx
-  <Foo ref={(self) => this.component = self}>
+
+- Prefer classes that extend `React.Component` (or `React.PureComponent`) instead of `React.createClass`
+  - You can avoid the need to bind handler functions by using [property initializers](https://reactjs.org/docs/react-component.html#constructor):
+
+  ```js
+  class Widget extends React.Component
+      onFooClick = () => {
+          ...
+      }
+  }
+  ```
+  - To define `propTypes`, use a static property:
+  ```js
+  class Widget extends React.Component
+      static propTypes = {
+          ...
+      }
+  }
+  ```
+  - If you need to specify initial component state, [assign it](https://reactjs.org/docs/react-component.html#constructor) to `this.state` in the constructor:
+  ```js
+  constructor(props) {
+    super(props);
+    // Don't call this.setState() here!
+    this.state = { counter: 0 };
+  }
   ```
 - Think about whether your component really needs state: are you duplicating
   information in component state that could be derived from the model?
+
+- Avoid things marked as Legacy or Deprecated in React 16 (e.g string refs and legacy contexts)

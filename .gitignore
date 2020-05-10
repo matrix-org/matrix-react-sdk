@@ -1,14 +1,13 @@
-npm-debug.log
+/.npmrc
+/*.log
+package-lock.json
 
 /node_modules
 /lib
 
-# version file and tarball created by 'npm pack'
+# version file and tarball created by `npm pack` / `yarn pack`
 /git-revision.txt
 /matrix-react-sdk-*.tgz
-
-# test reports created by karma
-/karma-reports
 
 /.idea
 /src/component-index.js

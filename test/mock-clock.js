@@ -1,5 +1,6 @@
 /*
 Copyright (c) 2008-2015 Pivotal Labs
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -25,7 +26,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * jasmine-core and exposed as a standalone module. The interface is just the
  * same as that of jasmine.clock. For example:
  *
- *    var mock_clock = require("mock-clock").clock();
+ *    var mock_clock = require("../../mock-clock").clock();
  *    mock_clock.install();
  *    setTimeout(function() {
  *        timerCallback();
@@ -37,28 +38,28 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  *    mock_clock.uninstall();
  *
- *  
+ *
  * The reason for C&Ping jasmine's clock here is that jasmine itself is
  * difficult to webpack, and we don't really want all of it. Sinon also has a
  * mock-clock implementation, but again, it is difficult to webpack.
  */
 
-var j$ = {};
+const j$ = {};
 
-j$.Clock = function () {
+j$.Clock = function() {
   function Clock(global, delayedFunctionSchedulerFactory, mockDate) {
-    var self = this,
+    let self = this,
       realTimingFunctions = {
         setTimeout: global.setTimeout,
         clearTimeout: global.clearTimeout,
         setInterval: global.setInterval,
-        clearInterval: global.clearInterval
+        clearInterval: global.clearInterval,
       },
       fakeTimingFunctions = {
         setTimeout: setTimeout,
         clearTimeout: clearTimeout,
         setInterval: setInterval,
-        clearInterval: clearInterval
+        clearInterval: clearInterval,
       },
       installed = false,
       delayedFunctionScheduler,
@@ -151,7 +152,7 @@ j$.Clock = function () {
     }
 
     function replace(dest, source) {
-      for (var prop in source) {
+      for (const prop in source) {
         dest[prop] = source[prop];
       }
     }
@@ -183,22 +184,22 @@ j$.Clock = function () {
 
 j$.DelayedFunctionScheduler = function() {
   function DelayedFunctionScheduler() {
-    var self = this;
-    var scheduledLookup = [];
-    var scheduledFunctions = {};
-    var currentTime = 0;
-    var delayedFnCount = 0;
+    const self = this;
+    const scheduledLookup = [];
+    const scheduledFunctions = {};
+    let currentTime = 0;
+    let delayedFnCount = 0;
 
     self.tick = function(millis) {
       millis = millis || 0;
-      var endTime = currentTime + millis;
+      const endTime = currentTime + millis;
 
       runScheduledFunctions(endTime);
       currentTime = endTime;
     };
 
     self.scheduleFunction = function(funcToCall, millis, params, recurring, timeoutKey, runAtMillis) {
-      var f;
+      let f;
       if (typeof(funcToCall) === 'string') {
         /* jshint evil: true */
         f = function() { return eval(funcToCall); };
@@ -211,13 +212,13 @@ j$.DelayedFunctionScheduler = function() {
       timeoutKey = timeoutKey || ++delayedFnCount;
       runAtMillis = runAtMillis || (currentTime + millis);
 
-      var funcToSchedule = {
+      const funcToSchedule = {
         runAtMillis: runAtMillis,
         funcToCall: f,
         recurring: recurring,
         params: params,
         timeoutKey: timeoutKey,
-        millis: millis
+        millis: millis,
       };
 
       if (runAtMillis in scheduledFunctions) {
@@ -225,7 +226,7 @@ j$.DelayedFunctionScheduler = function() {
       } else {
         scheduledFunctions[runAtMillis] = [funcToSchedule];
         scheduledLookup.push(runAtMillis);
-        scheduledLookup.sort(function (a, b) {
+        scheduledLookup.sort(function(a, b) {
           return a - b;
         });
       }
@@ -234,9 +235,9 @@ j$.DelayedFunctionScheduler = function() {
     };
 
     self.removeFunctionWithId = function(timeoutKey) {
-      for (var runAtMillis in scheduledFunctions) {
-        var funcs = scheduledFunctions[runAtMillis];
-        var i = indexOfFirstToPass(funcs, function (func) {
+      for (const runAtMillis in scheduledFunctions) {
+        const funcs = scheduledFunctions[runAtMillis];
+        const i = indexOfFirstToPass(funcs, function(func) {
           return func.timeoutKey === timeoutKey;
         });
 
@@ -258,9 +259,9 @@ j$.DelayedFunctionScheduler = function() {
     return self;
 
     function indexOfFirstToPass(array, testFn) {
-      var index = -1;
+      let index = -1;
 
-      for (var i = 0; i < array.length; ++i) {
+      for (let i = 0; i < array.length; ++i) {
         if (testFn(array[i])) {
           index = i;
           break;
@@ -271,8 +272,8 @@ j$.DelayedFunctionScheduler = function() {
     }
 
     function deleteFromLookup(key) {
-      var value = Number(key);
-      var i = indexOfFirstToPass(scheduledLookup, function (millis) {
+      const value = Number(key);
+      const i = indexOfFirstToPass(scheduledLookup, function(millis) {
         return millis === value;
       });
 
@@ -291,7 +292,7 @@ j$.DelayedFunctionScheduler = function() {
     }
 
     function forEachFunction(funcsToRun, callback) {
-      for (var i = 0; i < funcsToRun.length; ++i) {
+      for (let i = 0; i < funcsToRun.length; ++i) {
         callback(funcsToRun[i]);
       }
     }
@@ -304,7 +305,7 @@ j$.DelayedFunctionScheduler = function() {
       do {
         currentTime = scheduledLookup.shift();
 
-        var funcsToRun = scheduledFunctions[currentTime];
+        const funcsToRun = scheduledFunctions[currentTime];
         delete scheduledFunctions[currentTime];
 
         forEachFunction(funcsToRun, function(funcToRun) {
@@ -319,7 +320,7 @@ j$.DelayedFunctionScheduler = function() {
       } while (scheduledLookup.length > 0 &&
               // checking first if we're out of time prevents setTimeout(0)
               // scheduled in a funcToRun from forcing an extra iteration
-                 currentTime !== endTime  &&
+                 currentTime !== endTime &&
                  scheduledLookup[0] <= endTime);
     }
   }
@@ -330,8 +331,8 @@ j$.DelayedFunctionScheduler = function() {
 
 j$.MockDate = function() {
   function MockDate(global) {
-    var self = this;
-    var currentTime = 0;
+    const self = this;
+    let currentTime = 0;
 
     if (!global || !global.Date) {
       self.install = function() {};
@@ -340,7 +341,7 @@ j$.MockDate = function() {
       return self;
     }
 
-    var GlobalDate = global.Date;
+    const GlobalDate = global.Date;
 
     self.install = function(mockDate) {
       if (mockDate instanceof GlobalDate) {
@@ -411,10 +412,10 @@ j$.MockDate = function() {
   return MockDate;
 }();
 
-var clock = new j$.Clock(global, function () { return new j$.DelayedFunctionScheduler(); }, new j$.MockDate(global));
+const _clock = new j$.Clock(global, function() { return new j$.DelayedFunctionScheduler(); }, new j$.MockDate(global));
 
-module.exports.clock = function() {
-    return clock;
+export function clock() {
+    return _clock;
 }
 
 

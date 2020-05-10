@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import sdk from '../../../index';
+import * as sdk from '../../../index';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 
@@ -24,8 +24,8 @@ const CreateRoomButton = function(props) {
     return (
         <ActionButton action="view_create_room"
             mouseOverAction={props.callout ? "callout_create_room" : null}
-            label={ _t("Create new room") }
-            iconPath="img/icons-create-room.svg"
+            label={_t("Create new room")}
+            iconPath={require("../../../../res/img/icons-create-room.svg")}
             size={props.size}
             tooltip={props.tooltip}
         />

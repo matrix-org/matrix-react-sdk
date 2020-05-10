@@ -1,5 +1,7 @@
 /*
 Copyright 2017 Vector Creations Ltd
+Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,76 +17,72 @@ limitations under the License.
 */
 
 import React from 'react';
-import MatrixClientPeg from '../../../MatrixClientPeg';
-import { ContentRepo } from 'matrix-js-sdk';
-import { _t, _tJsx } from '../../../languageHandler';
-import sdk from '../../../index';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
+import {MatrixClientPeg} from '../../../MatrixClientPeg';
+import { _t } from '../../../languageHandler';
+import * as sdk from '../../../index';
 import Modal from '../../../Modal';
 import AccessibleButton from '../elements/AccessibleButton';
 
-module.exports = React.createClass({
+export default createReactClass({
     displayName: 'RoomAvatarEvent',
 
     propTypes: {
         /* the MatrixEvent to show */
-        mxEvent: React.PropTypes.object.isRequired,
+        mxEvent: PropTypes.object.isRequired,
     },
 
-    onAvatarClick: function(name) {
-        var httpUrl = MatrixClientPeg.get().mxcUrlToHttp(this.props.mxEvent.getContent().url);
-        var ImageView = sdk.getComponent("elements.ImageView");
-        var params = {
+    onAvatarClick: function() {
+        const cli = MatrixClientPeg.get();
+        const ev = this.props.mxEvent;
+        const httpUrl = cli.mxcUrlToHttp(ev.getContent().url);
+
+        const room = cli.getRoom(this.props.mxEvent.getRoomId());
+        const text = _t('%(senderDisplayName)s changed the avatar for %(roomName)s', {
+            senderDisplayName: ev.sender && ev.sender.name ? ev.sender.name : ev.getSender(),
+            roomName: room ? room.name : '',
+        });
+
+        const ImageView = sdk.getComponent("elements.ImageView");
+        const params = {
             src: httpUrl,
-            name: name,
+            name: text,
         };
         Modal.createDialog(ImageView, params, "mx_Dialog_lightbox");
     },
 
     render: function() {
-        var ev = this.props.mxEvent;
-        var senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
-        var BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
-
-        var room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
-        var name = _t('%(senderDisplayName)s changed the avatar for %(roomName)s', {
-                senderDisplayName: senderDisplayName,
-                roomName: room ? room.name : '',
-        });
+        const ev = this.props.mxEvent;
+        const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
+        const RoomAvatar = sdk.getComponent("avatars.RoomAvatar");
 
         if (!ev.getContent().url || ev.getContent().url.trim().length === 0) {
             return (
                 <div className="mx_TextualEvent">
-                    { _t('%(senderDisplayName)s removed the room avatar.', {senderDisplayName: senderDisplayName}) }
+                    { _t('%(senderDisplayName)s removed the room avatar.', {senderDisplayName}) }
                 </div>
             );
         }
 
-        var url = ContentRepo.getHttpUriForMxc(
-                    MatrixClientPeg.get().getHomeserverUrl(),
-                    ev.getContent().url,
-                    Math.ceil(14 * window.devicePixelRatio),
-                    Math.ceil(14 * window.devicePixelRatio),
-                    'crop'
-                );
+        const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
+        // Provide all arguments to RoomAvatar via oobData because the avatar is historic
+        const oobData = {
+            avatarUrl: ev.getContent().url,
+            name: room ? room.name : "",
+        };
 
-        // it sucks that _tJsx doesn't support normal _t substitutions :((
         return (
             <div className="mx_RoomAvatarEvent">
-                { _tJsx('$senderDisplayName changed the room avatar to <img/>',
-                         [
-                            /\$senderDisplayName/,
-                            /<img\/>/,
-                         ],
-                         [
-                            (sub) => senderDisplayName,
-                            (sub) =>
-                                <AccessibleButton key="avatar" className="mx_RoomAvatarEvent_avatar"
-                                                  onClick={ this.onAvatarClick.bind(this, name) }>
-                                    <BaseAvatar width={14} height={14} url={ url }
-                                                name={ name } />
-                                </AccessibleButton>,
-                         ]
-                    )
+                { _t('%(senderDisplayName)s changed the room avatar to <img/>',
+                    { senderDisplayName: senderDisplayName },
+                    {
+                        'img': () =>
+                            <AccessibleButton key="avatar" className="mx_RoomAvatarEvent_avatar"
+                                onClick={this.onAvatarClick}>
+                                <RoomAvatar width={14} height={14} oobData={oobData} />
+                            </AccessibleButton>,
+                    })
                 }
             </div>
         );

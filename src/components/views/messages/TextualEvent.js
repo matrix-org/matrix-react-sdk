@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,27 +15,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
+import * as TextForEvent from "../../../TextForEvent";
 
-var React = require('react');
-
-var TextForEvent = require('../../../TextForEvent');
-import sdk from '../../../index';
-
-module.exports = React.createClass({
+export default createReactClass({
     displayName: 'TextualEvent',
 
     propTypes: {
         /* the MatrixEvent to show */
-        mxEvent: React.PropTypes.object.isRequired,
+        mxEvent: PropTypes.object.isRequired,
     },
-    
+
     render: function() {
-        const EmojiText = sdk.getComponent('elements.EmojiText');
-        var text = TextForEvent.textForEvent(this.props.mxEvent);
+        const text = TextForEvent.textForEvent(this.props.mxEvent);
         if (text == null || text.length === 0) return null;
         return (
-            <EmojiText element="div" className="mx_TextualEvent">{text}</EmojiText>
+            <div className="mx_TextualEvent">{ text }</div>
         );
     },
 });

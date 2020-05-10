@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,27 +15,45 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
-import React from 'react';
+import React, {createRef} from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
+import classNames from 'classnames';
 
-import sdk from '../../../index';
+import * as sdk from '../../../index';
 import dis from '../../../dispatcher';
 
-module.exports = React.createClass({
+import SettingsStore from "../../../settings/SettingsStore";
+
+function getFullScreenElement() {
+    return (
+        document.fullscreenElement ||
+        document.mozFullScreenElement ||
+        document.webkitFullscreenElement ||
+        document.msFullscreenElement
+    );
+}
+
+export default createReactClass({
     displayName: 'VideoView',
 
     propTypes: {
         // maxHeight style attribute for the video element
-        maxHeight: React.PropTypes.number,
+        maxHeight: PropTypes.number,
 
         // a callback which is called when the user clicks on the video div
-        onClick: React.PropTypes.func,
+        onClick: PropTypes.func,
 
         // a callback which is called when the video element is resized due to
         // a change in video metadata
-        onResize: React.PropTypes.func,
+        onResize: PropTypes.func,
+    },
+
+    // TODO: [REACT-WARNING] Replace component with real class, use constructor for refs
+    UNSAFE_componentWillMount: function() {
+        this._local = createRef();
+        this._remote = createRef();
     },
 
     componentDidMount: function() {
@@ -46,7 +65,7 @@ module.exports = React.createClass({
     },
 
     getRemoteVideoElement: function() {
-        return ReactDOM.findDOMNode(this.refs.remote);
+        return ReactDOM.findDOMNode(this._remote.current);
     },
 
     getRemoteAudioElement: function() {
@@ -62,7 +81,7 @@ module.exports = React.createClass({
     },
 
     getLocalVideoElement: function() {
-        return ReactDOM.findDOMNode(this.refs.local);
+        return ReactDOM.findDOMNode(this._local.current);
     },
 
     setContainer: function(c) {
@@ -84,7 +103,7 @@ module.exports = React.createClass({
                         element.msRequestFullscreen
                     );
                     requestMethod.call(element);
-                } else {
+                } else if (getFullScreenElement()) {
                     const exitMethod = (
                         document.exitFullscreen ||
                         document.mozCancelFullScreen ||
@@ -104,19 +123,20 @@ module.exports = React.createClass({
         const VideoFeed = sdk.getComponent('voip.VideoFeed');
 
         // if we're fullscreen, we don't want to set a maxHeight on the video element.
-        const fullscreenElement = (document.fullscreenElement ||
-                 document.mozFullScreenElement ||
-                 document.webkitFullscreenElement);
-        const maxVideoHeight = fullscreenElement ? null : this.props.maxHeight;
-
+        const maxVideoHeight = getFullScreenElement() ? null : this.props.maxHeight;
+        const localVideoFeedClasses = classNames("mx_VideoView_localVideoFeed",
+            { "mx_VideoView_localVideoFeed_flipped":
+                SettingsStore.getValue('VideoView.flipVideoHorizontally'),
+            },
+        );
         return (
-            <div className="mx_VideoView" ref={this.setContainer} onClick={ this.props.onClick }>
+            <div className="mx_VideoView" ref={this.setContainer} onClick={this.props.onClick}>
                 <div className="mx_VideoView_remoteVideoFeed">
-                    <VideoFeed ref="remote" onResize={this.props.onResize}
+                    <VideoFeed ref={this._remote} onResize={this.props.onResize}
                         maxHeight={maxVideoHeight} />
                 </div>
-                <div className="mx_VideoView_localVideoFeed">
-                    <VideoFeed ref="local"/>
+                <div className={localVideoFeedClasses}>
+                    <VideoFeed ref={this._local} />
                 </div>
             </div>
         );

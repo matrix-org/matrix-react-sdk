@@ -1,6 +1,7 @@
 /*
 Copyright 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
+Copyright 2019 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,34 +16,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
-var React = require('react');
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import { _t } from '../../../languageHandler';
-var sdk = require('../../../index');
+import AccessibleButton from '../elements/AccessibleButton';
 
-module.exports = React.createClass({
+export default createReactClass({
     displayName: 'TopUnreadMessagesBar',
 
     propTypes: {
-        onScrollUpClick: React.PropTypes.func,
-        onCloseClick: React.PropTypes.func,
+        onScrollUpClick: PropTypes.func,
+        onCloseClick: PropTypes.func,
     },
 
     render: function() {
         return (
             <div className="mx_TopUnreadMessagesBar">
-                <div className="mx_TopUnreadMessagesBar_scrollUp"
-                        onClick={this.props.onScrollUpClick}>
-                    <img src="img/scrollto.svg" width="24" height="24"
-                        alt={ _t('Scroll to unread messages') }
-                        title={ _t('Scroll to unread messages') }/>
-                    { _t("Jump to first unread message.") }
-                </div>
-                <img className="mx_TopUnreadMessagesBar_close mx_filterFlipColor"
-                    src="img/cancel.svg" width="18" height="18"
-                    alt={_t("Close")} title={_t("Close")}
-                    onClick={this.props.onCloseClick} />
+                <AccessibleButton className="mx_TopUnreadMessagesBar_scrollUp"
+                    title={_t('Jump to first unread message.')}
+                    onClick={this.props.onScrollUpClick}>
+                </AccessibleButton>
+                <AccessibleButton className="mx_TopUnreadMessagesBar_markAsRead"
+                    title={_t('Mark all as read')}
+                    onClick={this.props.onCloseClick}>
+                </AccessibleButton>
             </div>
         );
     },

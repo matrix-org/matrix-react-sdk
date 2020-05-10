@@ -20,6 +20,7 @@ class Skinner {
     }
 
     getComponent(name) {
+        if (!name) throw new Error(`Invalid component name: ${name}`);
         if (this.components === null) {
             throw new Error(
                 "Attempted to get a component before a skin has been loaded."+
@@ -28,21 +29,31 @@ class Skinner {
                 " b) A component has called getComponent at the root level",
             );
         }
-        let comp = this.components[name];
-        // XXX: Temporarily also try 'views.' as we're currently
-        // leaving the 'views.' off views.
-        if (!comp) {
-            comp = this.components['views.'+name];
-        }
 
+        const doLookup = (components) => {
+            if (!components) return null;
+            let comp = components[name];
+            // XXX: Temporarily also try 'views.' as we're currently
+            // leaving the 'views.' off views.
+            if (!comp) {
+                comp = components['views.' + name];
+            }
+            return comp;
+        };
+
+        // Check the skin first
+        const comp = doLookup(this.components);
+
+        // Just return nothing instead of erroring - the consumer should be smart enough to
+        // handle this at this point.
         if (!comp) {
-            throw new Error("No such component: "+name);
+            return null;
         }
 
         // components have to be functions.
         const validType = typeof comp === 'function';
         if (!validType) {
-            throw new Error(`Not a valid component: ${name}.`);
+            throw new Error(`Not a valid component: ${name} (type = ${typeof(comp)}).`);
         }
         return comp;
     }
@@ -58,6 +69,13 @@ class Skinner {
         for (let i = 0; i < compKeys.length; ++i) {
             const comp = skinObject.components[compKeys[i]];
             this.addComponent(compKeys[i], comp);
+        }
+
+        // Now that we have a skin, load our components too
+        const idx = require("./component-index");
+        if (!idx || !idx.components) throw new Error("Invalid react-sdk component index");
+        for (const c in idx.components) {
+            if (!this.components[c]) this.components[c] = idx.components[c];
         }
     }
 
@@ -84,8 +102,11 @@ class Skinner {
 // behaviour with multiple copies of files etc. is erratic at best.
 // XXX: We can still end up with the same file twice in the resulting
 // JS bundle which is nonideal.
+// See https://derickbailey.com/2016/03/09/creating-a-true-singleton-in-node-js-with-es6-symbols/
+// or https://nodejs.org/api/modules.html#modules_module_caching_caveats
+// ("Modules are cached based on their resolved filename")
 if (global.mxSkinner === undefined) {
     global.mxSkinner = new Skinner();
 }
-module.exports = global.mxSkinner;
+export default global.mxSkinner;
 
