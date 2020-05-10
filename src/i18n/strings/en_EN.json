@@ -420,6 +420,7 @@
     "Always show encryption icons": "Always show encryption icons",
     "Show a reminder to enable Secure Message Recovery in encrypted rooms": "Show a reminder to enable Secure Message Recovery in encrypted rooms",
     "Enable automatic language detection for syntax highlighting": "Enable automatic language detection for syntax highlighting",
+    "Strip metadata from JPEG uploads": "Strip metadata from JPEG uploads",
     "Show avatars in user and room mentions": "Show avatars in user and room mentions",
     "Enable big emoji in chat": "Enable big emoji in chat",
     "Send typing notifications": "Send typing notifications",
