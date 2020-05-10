@@ -19,6 +19,7 @@ a.mx_Pill {
     white-space: nowrap;
     overflow: hidden;
     max-width: calc(100% - 1ch);
+    unicode-bidi: isolate;
 }
 
 .mx_Pill {
