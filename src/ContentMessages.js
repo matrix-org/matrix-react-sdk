@@ -25,6 +25,7 @@ import * as sdk from './index';
 import { _t } from './languageHandler';
 import Modal from './Modal';
 import RoomViewStore from './stores/RoomViewStore';
+import SettingsStore, {SettingLevel} from "./settings/SettingsStore";
 import encrypt from "browser-encrypt-attachment";
 import extractPngChunks from "png-chunks-extract";
 
@@ -269,7 +270,7 @@ function stripJpegMetadata(data) {
         offset += 2;
         while (offset < dv.byteLength) {
             if (app1 == 0xffe1) {
-                pieces[i] = { recess:recess, offset:offset-2 };
+                pieces[i] = { recess: recess, offset: offset - 2 };
                 recess = offset + dv.getUint16(offset);
                 i++;
             }
@@ -289,7 +290,23 @@ function stripJpegMetadata(data) {
         }
     }
 
-    return newPieces.length ? new Blob( newPieces, { type: 'image/jpeg' }) : data;
+    if (newPieces.length) {
+        // Concatenate the slices back together.
+        // XXX: is there a more efficient way of doing this?
+        // Turning them into a blob & back again is apparently slower.
+        // according to https://stackoverflow.com/a/24549974
+        let byteLength = 0;
+        newPieces.forEach(piece => { byteLength += piece.byteLength });
+        data = new Uint8Array(byteLength);
+        let offset = 0;
+        newPieces.forEach(piece => {
+            data.set(new Uint8Array(piece), offset);
+            offset += piece.byteLength;
+        });
+        data = data.buffer;
+    }
+
+    return data;
 }
 
 /**
@@ -306,11 +323,11 @@ function stripJpegMetadata(data) {
  *  If the file is encrypted then the object will have a "file" key.
  */
 function uploadFile(matrixClient, roomId, file, progressHandler) {
-    var readDataPromise;
+    let readDataPromise;
 
     // strip metadata where we can (n.b. we don't want to strip colorspace metadata)
     if (file.type === 'image/jpeg' &&
-        UserSettingsStore.getSyncedSetting('stripFileMetadata', false))
+        SettingsStore.getValueAt(SettingLevel.ACCOUNT, 'stripFileMetadata'))
     {
         readDataPromise = readFileAsArrayBuffer(file).then(function(data) {
             // fix up arraybuffer
@@ -318,13 +335,18 @@ function uploadFile(matrixClient, roomId, file, progressHandler) {
             return Promise.resolve(data);
         });
     }
+
     if (matrixClient.isRoomEncrypted(roomId)) {
         // If the room is encrypted then encrypt the file before uploading it.
         // First read the file into memory.
         let canceled = false;
         let uploadPromise;
         let encryptInfo;
-        const prom = readFileAsArrayBuffer(file).then(function(data) {
+
+        if (!readDataPromise) {
+            readDataPromise = readFileAsArrayBuffer(file);
+        }
+        const prom = readDataPromise.then(function(data) {
             if (canceled) throw new UploadCanceledError();
             // Then encrypt the file.
             return encrypt.encryptAttachment(data);
@@ -357,6 +379,8 @@ function uploadFile(matrixClient, roomId, file, progressHandler) {
         return prom;
     } else {
         let basePromise;
+        // N.B. that if we have no custom readPromise, we just upload the file
+        // rather than raw data, hence factoring out the concept of a basePromise
         if (readDataPromise) {
             basePromise = readDataPromise.then(function(data) {
                 return matrixClient.uploadContent(new Blob([data]), {
