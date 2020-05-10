@@ -23,7 +23,6 @@ import dis from './dispatcher';
 import {MatrixClientPeg} from './MatrixClientPeg';
 import * as sdk from './index';
 import { _t } from './languageHandler';
-
 import Modal from './Modal';
 import RoomViewStore from './stores/RoomViewStore';
 import encrypt from "browser-encrypt-attachment";
@@ -367,8 +366,8 @@ function uploadFile(matrixClient, roomId, file, progressHandler) {
         }
         else {
             basePromise = matrixClient.uploadContent(file, {
-            progressHandler,
-        });
+                progressHandler,
+            });
         }
         const promise1 = basePromise.then(function(url) {
             // If the attachment isn't encrypted then include the URL directly.
