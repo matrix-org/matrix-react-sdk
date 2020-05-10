@@ -327,7 +327,7 @@ function uploadFile(matrixClient, roomId, file, progressHandler) {
 
     // strip metadata where we can (n.b. we don't want to strip colorspace metadata)
     if (file.type === 'image/jpeg' &&
-        SettingsStore.getValueAt(SettingLevel.ACCOUNT, 'stripFileMetadata')) {
+        SettingsStore.getValueAt(SettingLevel.ACCOUNT, 'stripJpegMetadata')) {
         readDataPromise = readFileAsArrayBuffer(file).then(function(data) {
             // fix up arraybuffer
             data = stripJpegMetadata(data);

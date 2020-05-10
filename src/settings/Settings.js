@@ -229,9 +229,9 @@ export const SETTINGS = {
         displayName: _td('Enable automatic language detection for syntax highlighting'),
         default: false,
     },
-    "stripFileMetadata": {
+    "stripJpegMetadata": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Strip metadata from file uploads'),
+        displayName: _td('Strip metadata from JPEG uploads'),
         default: true,
     },
     "Pill.shouldShowPillAvatar": {
