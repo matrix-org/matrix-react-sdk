@@ -254,10 +254,11 @@ function readFileAsArrayBuffer(file) {
  * @return {ArrayBuffer} the stripped image data
  */
 function stripJpegMetadata(data) {
-    var dv = new DataView(data);
-    var offset = 0, recess = 0;
-    var pieces = [];
-    var i = 0;
+    const dv = new DataView(data);
+    let offset = 0;
+    let recess = 0;
+    const pieces = [];
+    let i = 0;
 
     const newPieces = [];
 
@@ -266,15 +267,14 @@ function stripJpegMetadata(data) {
     // this for privacy purposes rather than filesize.
     if (dv.getUint16(offset) == 0xffd8) {
         offset += 2;
-        var app1 = dv.getUint16(offset);
+        let app1 = dv.getUint16(offset);
         offset += 2;
         while (offset < dv.byteLength) {
             if (app1 == 0xffe1) {
                 pieces[i] = { recess: recess, offset: offset - 2 };
                 recess = offset + dv.getUint16(offset);
                 i++;
-            }
-            else if (app1 == 0xffda) {
+            } else if (app1 == 0xffda) {
                 break;
             }
             offset += dv.getUint16(offset);
@@ -296,7 +296,7 @@ function stripJpegMetadata(data) {
         // Turning them into a blob & back again is apparently slower.
         // according to https://stackoverflow.com/a/24549974
         let byteLength = 0;
-        newPieces.forEach(piece => { byteLength += piece.byteLength });
+        newPieces.forEach(piece => { byteLength += piece.byteLength; });
         data = new Uint8Array(byteLength);
         let offset = 0;
         newPieces.forEach(piece => {
@@ -327,8 +327,7 @@ function uploadFile(matrixClient, roomId, file, progressHandler) {
 
     // strip metadata where we can (n.b. we don't want to strip colorspace metadata)
     if (file.type === 'image/jpeg' &&
-        SettingsStore.getValueAt(SettingLevel.ACCOUNT, 'stripFileMetadata'))
-    {
+        SettingsStore.getValueAt(SettingLevel.ACCOUNT, 'stripFileMetadata')) {
         readDataPromise = readFileAsArrayBuffer(file).then(function(data) {
             // fix up arraybuffer
             data = stripJpegMetadata(data);
@@ -387,8 +386,7 @@ function uploadFile(matrixClient, roomId, file, progressHandler) {
                     progressHandler,
                 });
             });
-        }
-        else {
+        } else {
             basePromise = matrixClient.uploadContent(file, {
                 progressHandler,
             });
