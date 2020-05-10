@@ -382,7 +382,7 @@ function uploadFile(matrixClient, roomId, file, progressHandler) {
         // rather than raw data, hence factoring out the concept of a basePromise
         if (readDataPromise) {
             basePromise = readDataPromise.then(function(data) {
-                return matrixClient.uploadContent(new Blob([data]), {
+                return matrixClient.uploadContent(new Blob([data], { type: file.type }), {
                     progressHandler,
                 });
             });
