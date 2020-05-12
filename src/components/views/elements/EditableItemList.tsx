@@ -20,36 +20,46 @@ import {_t} from '../../../languageHandler.js';
 import Field from "./Field";
 import AccessibleButton from "./AccessibleButton";
 
-export class EditableItem extends React.Component {
+interface IEditableItemProps {
+    index: number,
+    value: string,
+    onRemove: (index: number) => void,
+}
+
+interface IEditableItemState {
+    verifyRemove: boolean,
+}
+
+export class EditableItem extends React.Component<IEditableItemProps, IEditableItemState> {
     static propTypes = {
         index: PropTypes.number,
         value: PropTypes.string,
         onRemove: PropTypes.func,
     };
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             verifyRemove: false,
         };
     }
 
-    _onRemove = (e) => {
+    _onRemove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.stopPropagation();
         e.preventDefault();
 
         this.setState({verifyRemove: true});
     };
 
-    _onDontRemove = (e) => {
+    _onDontRemove = (e: Event) => {
         e.stopPropagation();
         e.preventDefault();
 
         this.setState({verifyRemove: false});
     };
 
-    _onActuallyRemove = (e) => {
+    _onActuallyRemove = (e: Event) => {
         e.stopPropagation();
         e.preventDefault();
 
@@ -85,7 +95,26 @@ export class EditableItem extends React.Component {
     }
 }
 
-export default class EditableItemList extends React.Component {
+interface IProps {
+    id: string,
+    items: string[],
+    itemsLabel?: string,
+    noItemsLabel?: string,
+    placeholder?: string,
+    newItem?: string,
+    suggestionsListId?: string,
+
+    onItemAdded?: (item: string) => void,
+    onItemRemoved?: (index: number) => void,
+    onNewItemChanged?: (item: string) => void,
+
+    canEdit?: boolean,
+    canRemove?: boolean,
+
+    error?: string, // for the benefit of PublishedAliases
+}
+
+export default class EditableItemList extends React.Component<IProps> {
     static propTypes = {
         id: PropTypes.string.isRequired,
         items: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -102,18 +131,18 @@ export default class EditableItemList extends React.Component {
         canRemove: PropTypes.bool,
     };
 
-    _onItemAdded = (e) => {
+    _onItemAdded = (e: React.FormEvent<HTMLFormElement>) => {
         e.stopPropagation();
         e.preventDefault();
 
         if (this.props.onItemAdded) this.props.onItemAdded(this.props.newItem);
     };
 
-    _onItemRemoved = (index) => {
+    _onItemRemoved = (index: number) => {
         if (this.props.onItemRemoved) this.props.onItemRemoved(index);
     };
 
-    _onNewItemChanged = (e) => {
+    _onNewItemChanged = (e: any) => {
         if (this.props.onNewItemChanged) this.props.onNewItemChanged(e.target.value);
     };
 

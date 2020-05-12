@@ -25,20 +25,6 @@ import Field from "../elements/Field";
 import AccessibleButton from "../elements/AccessibleButton";
 import RoomPublishSetting from "./RoomPublishSetting";
 
-/*
-We kind of have three sources of truth here:
-1. what the user is trying to set the state to
-2. what we think the server state is
-3. what the latest room state update is
-
-when state changes, we then need to represent:
-1. i am trying to change this
-2. i have changed this but it's not synced back yet
-3. this is synced
-
-also state may be changed by someone else. how do we handle that?
-*/
-
 const UPDATE_ALT_ALIAS = 'update_alt_alias';
 const SYNCED_ALIASES = 'synced_aliases';
 const BEGIN_COMMIT = 'begin_commit';
@@ -92,6 +78,10 @@ interface AAbortCommit {
 
 type Action = AUpdateAlias | ASyncedAliases | ABeginCommit | AEndCommit | AAbortCommit;
 
+/*
+ * 'synced' represents the latest state event from the server.
+ * 'working' represents what we think the server state should be, based on what we've asked it to do
+ */
 export function reducer(state: State, action: Action): State {
     switch (action.type) {
         case UPDATE_ALT_ALIAS:
@@ -153,7 +143,10 @@ export function reducer(state: State, action: Action): State {
 /* This entire class exists so we can:
  * 1. Add a tooltip to the field
  * 2. Do validation
+ * TODO: Fixing up this, and AliasSettings, to not need a subclass is a very
+ * likely candidate for further cleanup
  */
+
 class EditableAltAliasList extends EditableItemList {
     _onAliasAdded = () => {
         this.props.onItemAdded(this.props.newItem);
@@ -196,6 +189,7 @@ export default function PublishedAliases({ room, localAliases }) {
     /*
      * Reasons why an alias change failed.
      * Note that if one of the errors listed here happens while adding an alias, we report it in a tooltip.
+     * Otherwise we report in a dialog box.
      */
     const errorReasons = {
         "M_BAD_ALIAS": _t("Room alias does not point to the room"),
@@ -265,6 +259,7 @@ export default function PublishedAliases({ room, localAliases }) {
             submitting: 'canonical',
         };
         dispatch(action);
+        /* State doesn't update until after this, but that doesn't mean we can't infer it */
         return submitChanges(reducer(state, action));
     }
 
@@ -285,7 +280,7 @@ export default function PublishedAliases({ room, localAliases }) {
     function onAddAlias(alias: string) {
         if (state.submitting) return;
         const fullAlias = alias.trim().startsWith("#") ? alias.trim() : "#" + alias.trim();
-        if (state.alt.working.some((existing) => existing == fullAlias)) {
+        if (state.alt.working.some((existing) => existing === fullAlias)) {
             /* If the user tries to submit something in the list, pretend we did a dispatch */
             dispatch({
                 type: UPDATE_ALT_ALIAS,
@@ -333,6 +328,9 @@ export default function PublishedAliases({ room, localAliases }) {
 
     /* Canonical aliases can be either existing local aliases or existing alt aliases */
     const canonicalSuggestions = Array.from(new Set([...state.alt.working, ...(localAliases || [])]));
+
+    /* A canonical alias may represent an alias that's not in the current alt aliases list.
+     * When this happens, we need to add it manually so the user can see it in the dropdown */
     const explicitlyInclude = (state.canonical.working && !canonicalSuggestions.includes(state.canonical.working));
 
     return (
@@ -361,7 +359,6 @@ export default function PublishedAliases({ room, localAliases }) {
             <EditableAltAliasList
                 canEdit={canSetCanonicalAlias}
                 canRemove={canSetCanonicalAlias || !!state.submitting}
-                className="mx_RoomSettings_altAliases"
                 error={error}
                 id="roomAltAliases"
                 items={state.alt.working}
