@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState, FunctionComponent} from "react";
 import Spinner from "./Spinner";
 
 /*
@@ -25,7 +25,12 @@ import Spinner from "./Spinner";
  * We have a short holdOver to allow the fade out to occur.
  */
 
-export default function OverlaySpinner({active, className, children}) {
+interface IProps {
+    active: boolean,
+    className?: string,
+};
+
+export const OverlaySpinner: FunctionComponent<IProps> = ({active, className, children}) => {
     const measured = useRef(null);
     const [state, setState] = useState({w: 0, h: 0});
 
@@ -83,3 +88,5 @@ export default function OverlaySpinner({active, className, children}) {
         </div>
     </div>);
 }
+
+export default OverlaySpinner;
