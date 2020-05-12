@@ -45,7 +45,54 @@ const BEGIN_COMMIT = 'begin_commit';
 const END_COMMIT = 'end_commit';
 const ABORT_COMMIT = 'abort_commit';
 
-export function reducer(state, action) {
+interface State {
+    alt: {
+        synced: string[],
+        working: string[],
+    },
+    canonical: {
+        synced: string,
+        working: string,
+    },
+    submitting: string | undefined,
+    regarding: string | undefined,
+    error: Error & { during?: string, errcode?: string } | undefined,
+    newAltAlias: string,
+};
+
+type Alts = string[];
+
+interface AUpdateAlias {
+    type: 'update_alt_alias',
+    value: string,
+};
+
+interface ASyncedAliases {
+    type: 'synced_aliases',
+    alt: Alts,
+    canonical: string | undefined,
+};
+
+interface ABeginCommit {
+    type: 'begin_commit',
+    submitting: 'add' | 'remove' | 'canonical',
+    alt?: Alts,
+    canonical?: string,
+    regarding?: string,
+}
+
+interface AEndCommit {
+    type: 'end_commit'
+}
+
+interface AAbortCommit {
+    type: 'abort_commit',
+    error: Error
+};
+
+type Action = AUpdateAlias | ASyncedAliases | ABeginCommit | AEndCommit | AAbortCommit;
+
+export function reducer(state: State, action: Action): State {
     switch (action.type) {
         case UPDATE_ALT_ALIAS:
             return {...state, newAltAlias: action.value, error: undefined};
@@ -140,8 +187,8 @@ class EditableAltAliasList extends EditableItemList {
     }
 }
 
-export function PublishedAliases({ room, localAliases }) {
-    const client = useContext(MatrixClientContext);
+export default function PublishedAliases({ room, localAliases }) {
+    const client: any = useContext(MatrixClientContext);
     const canSetCanonicalAlias = room.currentState.mayClientSendStateEvent("m.room.canonical_alias", client);
     const initialAltAliases = room.getAltAliases();
     const initialCanonicalAlias = room.getCanonicalAlias();
@@ -166,11 +213,11 @@ export function PublishedAliases({ room, localAliases }) {
         },
         newAltAlias: "",
         submitting: null,
-    });
+    } as State);
 
     /* This action dispatches a given state to the server.  Called after we've dispatched to update local state
      * to reflect the change that was made */
-    async function submitChanges(updatedState) {
+    async function submitChanges(updatedState: State) {
         if (updatedState === undefined) throw new Error("Unable to completeCommit: updatedState is undefined");
 
         const alt = updatedState.alt.working;
@@ -211,31 +258,31 @@ export function PublishedAliases({ room, localAliases }) {
         }
     }
 
-    async function onSetCanonical(canonical) {
-        const action = {
+    async function onSetCanonical(canonical: string) {
+        const action: ABeginCommit = {
             canonical,
             type: BEGIN_COMMIT,
             submitting: 'canonical',
         };
-        await dispatch(action);
+        dispatch(action);
         return submitChanges(reducer(state, action));
     }
 
-    async function onRemoveAlias(index) {
+    async function onRemoveAlias(index: number) {
         const alt = state.alt.working.slice();
         alt.splice(index, 1);
-        const action = {
+        const action: ABeginCommit = {
             alt,
             type: BEGIN_COMMIT,
             submitting: 'remove',
             regarding: state.alt.working[index],
         };
-        await dispatch(action);
+        dispatch(action);
         /* State doesn't update until after this, but that doesn't mean we can't infer it */
         return submitChanges(reducer(state, action));
     }
 
-    function onAddAlias(alias) {
+    function onAddAlias(alias: string) {
         if (state.submitting) return;
         const fullAlias = alias.trim().startsWith("#") ? alias.trim() : "#" + alias.trim();
         if (state.alt.working.some((existing) => existing == fullAlias)) {
@@ -247,7 +294,7 @@ export function PublishedAliases({ room, localAliases }) {
         } else {
             const alt = state.alt.working.slice();
             alt.push(fullAlias);
-            const action = {
+            const action: ABeginCommit = {
                 alt,
                 type: BEGIN_COMMIT,
                 submitting: 'add',
@@ -261,7 +308,7 @@ export function PublishedAliases({ room, localAliases }) {
 
     /* Any updates from the server need to be immediately reflected in the UI */
     useEffect(() => {
-        function handleEvent(event, state) {
+        function handleEvent(event: any) {
             if (event.getRoomId() !== room.roomId) return;
             if (event.getType() !== "m.room.canonical_alias") return;
 
@@ -280,9 +327,9 @@ export function PublishedAliases({ room, localAliases }) {
 
     /* Alternate aliases must be either an existing local alias, or an existing remote alias.  Suggest all existing
      * local aliases that are not already in the alt alias list. */
-    const altSuggestions = localAliases && localAliases.filter((alias) =>
+    const altSuggestions = localAliases && localAliases.filter((alias: string) =>
       !state.alt.working.includes(alias),
-    ).map((alias) => alias.replace(/^#/, '')); // strip the # for display
+    ).map((alias: string) => alias.replace(/^#/, '')); // strip the # for display
 
     /* Canonical aliases can be either existing local aliases or existing alt aliases */
     const canonicalSuggestions = Array.from(new Set([...state.alt.working, ...(localAliases || [])]));
@@ -294,7 +341,7 @@ export function PublishedAliases({ room, localAliases }) {
             <p>{_t("Published addresses can be used by anyone on any server to join your room. " +
                 "To publish an address, it needs to be set as a local address first.")}</p>
             <Field
-                onChange={(ev) => onSetCanonical(ev.target.value)}
+                onChange={(ev: Event) => onSetCanonical((ev.target as HTMLInputElement).value)}
                 value={state.canonical.working || ''}
                 disabled={!canSetCanonicalAlias || !!state.submitting}
                 element='select' id='canonicalAlias' label={_t('Main address')}
@@ -331,5 +378,3 @@ export function PublishedAliases({ room, localAliases }) {
             />
         </OverlaySpinner>);
 }
-
-export default undefined;
