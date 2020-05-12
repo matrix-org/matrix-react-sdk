@@ -136,9 +136,9 @@ export default class ReactionsRowButton extends React.PureComponent {
             <span className="mx_ReactionsRowButton_content" aria-hidden="true">
                 {content}
             </span>
-            <span className="mx_ReactionsRowButton_count" aria-hidden="true">
+            { count > 1 && <span className="mx_ReactionsRowButton_count" aria-hidden="true">
                 {count}
-            </span>
+            </span> }
             {tooltip}
         </AccessibleButton>;
     }

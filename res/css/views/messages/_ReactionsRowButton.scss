@@ -45,6 +45,9 @@ limitations under the License.
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        padding-right: 4px;
+    }
+
+    .mx_ReactionsRowButton_count {
+        padding-left: 4px;
     }
 }
