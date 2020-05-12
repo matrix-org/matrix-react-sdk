@@ -1,5 +1,5 @@
 /*
-Copyright 2020 New Vector Ltd
+Copyright 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -189,7 +189,7 @@ export function PublishedAliases({ room, localAliases }) {
             console.error(`Error updating aliases in ${room.roomId}`, err);
             dispatch({type: ABORT_COMMIT, error: err});
 
-            if (submitting == 'canonical') {
+            if (submitting === 'canonical') {
                 Modal.createTrackedDialog('Error updating main address', '', ErrorDialog, {
                     title: _t("Error updating main address"),
                     description: _t(
@@ -197,7 +197,7 @@ export function PublishedAliases({ room, localAliases }) {
                         "or a temporary failure occurred.",
                     ),
                 });
-            } else if (submitting != 'add' || !(errorReasons[err.errcode])) {
+            } else if (submitting !== 'add' || !(errorReasons[err.errcode])) {
                 /* Errors while adding aliases are reported inline */
                 /* Also show an error dialog if we don't have a specific, short message to show for a failed add */
                 Modal.createTrackedDialog('Error updating alternative addresses', '', ErrorDialog, {
@@ -293,9 +293,12 @@ export function PublishedAliases({ room, localAliases }) {
             <span className='mx_SettingsTab_subheading'>{_t("Published Addresses")}</span>
             <p>{_t("Published addresses can be used by anyone on any server to join your room. " +
                 "To publish an address, it needs to be set as a local address first.")}</p>
-            <Field onChange={(ev) => onSetCanonical(ev.target.value)} value={state.canonical.working || ''}
-                   disabled={!canSetCanonicalAlias || !!state.submitting}
-                   element='select' id='canonicalAlias' label={_t('Main address')}>
+            <Field
+                onChange={(ev) => onSetCanonical(ev.target.value)}
+                value={state.canonical.working || ''}
+                disabled={!canSetCanonicalAlias || !!state.submitting}
+                element='select' id='canonicalAlias' label={_t('Main address')}
+            >
                 <option value="" key="unset">{ _t('not specified') }</option>
                 {canonicalSuggestions.map((alias, i) =>
                   <option value={alias} key={i}>{alias}</option>)}
