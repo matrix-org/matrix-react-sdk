@@ -279,6 +279,7 @@ export default function PublishedAliases({ room, localAliases }) {
 
     function onAddAlias(alias: string) {
         if (state.submitting) return;
+        if (alias.trim().length === 0) return;
         const fullAlias = alias.trim().startsWith("#") ? alias.trim() : "#" + alias.trim();
         if (state.alt.working.some((existing) => existing === fullAlias)) {
             /* If the user tries to submit something in the list, pretend we did a dispatch */
@@ -339,10 +340,12 @@ export default function PublishedAliases({ room, localAliases }) {
             <p>{_t("Published addresses can be used by anyone on any server to join your room. " +
                 "To publish an address, it needs to be set as a local address first.")}</p>
             <Field
+                disabled={!canSetCanonicalAlias || !!state.submitting}
+                element='select'
+                id='canonicalAlias'
+                label={_t('Main address')}
                 onChange={(ev: Event) => onSetCanonical((ev.target as HTMLInputElement).value)}
                 value={state.canonical.working || ''}
-                disabled={!canSetCanonicalAlias || !!state.submitting}
-                element='select' id='canonicalAlias' label={_t('Main address')}
             >
                 <option value="" key="unset">{ _t('not specified') }</option>
                 {canonicalSuggestions.map((alias, i) =>
