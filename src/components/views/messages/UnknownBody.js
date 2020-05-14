@@ -1,4 +1,5 @@
 /*
+Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,22 +16,12 @@ limitations under the License.
 */
 
 import React from "react";
-import PropTypes from "prop-types";
-import {replaceableComponent} from "../../../../utils/replaceableComponent";
-import QRCode from "../QRCode";
 
-@replaceableComponent("views.elements.crypto.VerificationQRCode")
-export default class VerificationQRCode extends React.PureComponent {
-    static propTypes = {
-        qrCodeData: PropTypes.object.isRequired,
-    };
-
-    render() {
-        return (
-            <QRCode
-                data={[{data: this.props.qrCodeData.buffer, mode: 'byte'}]}
-                className="mx_VerificationQRCode"
-                width={196} />
-        );
-    }
-}
+export default ({mxEvent}) => {
+    const text = mxEvent.getContent().body;
+    return (
+        <span className="mx_UnknownBody">
+            { text }
+        </span>
+    );
+};

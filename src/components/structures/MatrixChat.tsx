@@ -623,7 +623,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 break;
             }
             case 'view_create_room':
-                this.createRoom();
+                this.createRoom(payload.public);
                 break;
             case 'view_create_group': {
                 const CreateGroupDialog = sdk.getComponent("dialogs.CreateGroupDialog");
@@ -1012,9 +1012,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }).close;
     }
 
-    private async createRoom() {
+    private async createRoom(defaultPublic = false) {
         const CreateRoomDialog = sdk.getComponent('dialogs.CreateRoomDialog');
-        const modal = Modal.createTrackedDialog('Create Room', '', CreateRoomDialog);
+        const modal = Modal.createTrackedDialog('Create Room', '', CreateRoomDialog, { defaultPublic });
 
         const [shouldCreate, opts] = await modal.finished;
         if (shouldCreate) {
@@ -1973,6 +1973,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     render() {
         // console.log(`Rendering MatrixChat with view ${this.state.view}`);
 
+        let fragmentAfterLogin = "";
+        if (this.props.initialScreenAfterLogin) {
+            fragmentAfterLogin = `/${this.props.initialScreenAfterLogin.screen}`;
+        }
+
         let view;
 
         if (this.state.view === Views.LOADING) {
@@ -2052,7 +2057,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             }
         } else if (this.state.view === Views.WELCOME) {
             const Welcome = sdk.getComponent('auth.Welcome');
-            view = <Welcome {...this.getServerProperties()} />;
+            view = <Welcome {...this.getServerProperties()} fragmentAfterLogin={fragmentAfterLogin} />;
         } else if (this.state.view === Views.REGISTER) {
             const Registration = sdk.getComponent('structures.auth.Registration');
             view = (
@@ -2091,6 +2096,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     defaultDeviceDisplayName={this.props.defaultDeviceDisplayName}
                     onForgotPasswordClick={this.onForgotPasswordClick}
                     onServerConfigChange={this.onServerConfigChange}
+                    fragmentAfterLogin={fragmentAfterLogin}
                     {...this.getServerProperties()}
                 />
             );
@@ -2100,6 +2106,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 <SoftLogout
                     realQueryParams={this.props.realQueryParams}
                     onTokenLoginCompleted={this.props.onTokenLoginCompleted}
+                    fragmentAfterLogin={fragmentAfterLogin}
                 />
             );
         } else {
