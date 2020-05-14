@@ -229,7 +229,7 @@ export const SETTINGS = {
         displayName: _td('Enable automatic language detection for syntax highlighting'),
         default: false,
     },
-    "stripJpegMetadata": {
+    "stripImageMetadata": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Strip metadata from JPEG uploads'),
         default: true,
