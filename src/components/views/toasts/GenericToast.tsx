@@ -21,10 +21,10 @@ import FormButton from "../elements/FormButton";
 interface IProps {
     description: ReactChild;
     acceptLabel: string;
-    rejectLabel: string;
+    rejectLabel?: string;
 
     onAccept();
-    onReject();
+    onReject?();
 }
 
 const GenericToast: React.FC<IProps> = ({description, acceptLabel, rejectLabel, onAccept, onReject}) => {
@@ -33,7 +33,7 @@ const GenericToast: React.FC<IProps> = ({description, acceptLabel, rejectLabel, 
             { description }
         </div>
         <div className="mx_Toast_buttons" aria-live="off">
-            <FormButton label={rejectLabel} kind="danger" onClick={onReject} />
+            {onReject && rejectLabel && <FormButton label={rejectLabel} kind="danger" onClick={onReject} /> }
             <FormButton label={acceptLabel} onClick={onAccept} />
         </div>
     </div>;
