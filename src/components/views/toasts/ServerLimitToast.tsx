@@ -33,10 +33,10 @@ export const showToast = (limitType: string, adminContact?: string, error?: bool
     } else {
         errorText = messageForResourceLimitError(limitType, adminContact, {
             'monthly_active_user': _td(
-                "This homeserver has hit its user limit so <b>some users will not be able to log in</b>.",
+                "Your homeserver has hit its user limit so <b>some users will not be able to log in</b>.",
             ),
             '': _td(
-                "This homeserver has exceeded one of its resource limits so " +
+                "Your homeserver has exceeded one of its resource limits so " +
                 "<b>some users will not be able to log in</b>.",
             ),
         },
@@ -44,7 +44,7 @@ export const showToast = (limitType: string, adminContact?: string, error?: bool
     }
 
     const contactText = messageForResourceLimitError(limitType, adminContact, {
-        '': _td("Please <a>contact your service administrator</a> to continue using the service."),
+        '': _td("Contact your <a>server admin</a>."),
     });
 
     ToastStore.sharedInstance().addOrReplaceToast({
