@@ -50,7 +50,7 @@ export const showToast = (limitType: string, adminContact?: string, error?: bool
     ToastStore.sharedInstance().addOrReplaceToast({
         key: TOAST_KEY,
         title: _t("Warning"),
-        priority: Priority.LOW,
+        priority: Priority.DEFAULT,
         component: GenericToast,
         props: {
             description: <React.Fragment>{errorText} {contactText}</React.Fragment>,
