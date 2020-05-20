@@ -17,8 +17,8 @@ limitations under the License.
 import { MatrixClientPeg } from './MatrixClientPeg';
 import SettingsStore from './settings/SettingsStore';
 import * as sdk from './index';
-import {_t, _td} from './languageHandler';
-import ToastStore from './stores/ToastStore';
+import {_td} from './languageHandler';
+import ToastStore, {Priority} from './stores/ToastStore';
 
 const KEY_BACKUP_POLL_INTERVAL = 5 * 60 * 1000;
 const THIS_DEVICE_TOAST_KEY = 'setupencryption';
@@ -267,7 +267,7 @@ export default class DeviceListener {
                 key: OTHER_DEVICES_TOAST_KEY,
                 title: _td("Review where you’re logged in"),
                 icon: "verification_warning",
-                priority: ToastStore.PRIORITY_LOW,
+                priority: Priority.LOW,
                 props: {
                     deviceIds: oldUnverifiedDeviceIds,
                 },

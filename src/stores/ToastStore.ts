@@ -18,21 +18,23 @@ import EventEmitter from 'events';
 
 export interface IToast {
     key: string;
-    priority?: 0 | 1 | 2;
+    priority?: Priority;
     title: string; // _td
     icon?: string;
     component: any;
     props?: any;
 }
 
+export enum Priority {
+    REALTIME = 0,
+    DEFAULT = 1,
+    LOW = 2,
+}
+
 /**
  * Holds the active toasts
  */
 export default class ToastStore extends EventEmitter {
-    static PRIORITY_REALTIME = 0;
-    static PRIORITY_DEFAULT = 1;
-    static PRIORITY_LOW = 2;
-
     static sharedInstance() {
         if (!window.mx_ToastStore) window.mx_ToastStore = new ToastStore();
         return window.mx_ToastStore;
@@ -54,7 +56,7 @@ export default class ToastStore extends EventEmitter {
      * @param {object} newToast The new toast
      */
     addOrReplaceToast(newToast) {
-        if (newToast.priority === undefined) newToast.priority = ToastStore.PRIORITY_DEFAULT;
+        if (newToast.priority === undefined) newToast.priority = Priority.DEFAULT;
 
         const oldIndex = this.toasts.findIndex(t => t.key === newToast.key);
         if (oldIndex === -1) {
@@ -68,8 +70,11 @@ export default class ToastStore extends EventEmitter {
     }
 
     dismissToast(key) {
+        const length = this.toasts.length;
         this.toasts = this.toasts.filter(t => t.key !== key);
-        this.emit('update');
+        if (length !== this.toasts.length) {
+            this.emit('update');
+        }
     }
 
     getToasts() {
