@@ -778,7 +778,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         if (Notifier.shouldShowToolbar()) {
             ToastStore.sharedInstance().addOrReplaceToast(DESKTOP_NOTIFICATIONS_TOAST);
         } else {
-            ToastStore.sharedInstance().dismissToast(DESKTOP_NOTIFICATIONS_TOAST_KEY)
+            ToastStore.sharedInstance().dismissToast(DESKTOP_NOTIFICATIONS_TOAST_KEY);
         }
     }
 
