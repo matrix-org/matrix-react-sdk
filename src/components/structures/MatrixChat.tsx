@@ -70,8 +70,8 @@ import { Action } from "../../dispatcher/actions";
 import {
     showToast as showNotificationsToast,
     hideToast as hideNotificationsToast,
-} from "../views/toasts/DesktopNotificationsToast";
-import {showToast as showAnalyticsToast, hideToast as hideAnalyticsToast} from "../views/toasts/AnalyticsToast";
+} from "../../toasts/DesktopNotificationsToast";
+import {showToast as showAnalyticsToast, hideToast as hideAnalyticsToast} from "../../toasts/AnalyticsToast";
 
 /** constants for MatrixChat.state.view */
 export enum Views {

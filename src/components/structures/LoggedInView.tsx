@@ -43,8 +43,8 @@ import HomePage from "./HomePage";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import PlatformPeg from "../../PlatformPeg";
 import ToastStore from "../../stores/ToastStore";
-import {showToast as showSetPasswordToast, hideToast as hideSetPasswordToast} from "../views/toasts/SetPasswordToast";
-import {showToast as showServerLimitToast, hideToast as hideServerLimitToast} from "../views/toasts/ServerLimitToast";
+import {showToast as showSetPasswordToast, hideToast as hideSetPasswordToast} from "../../toasts/SetPasswordToast";
+import {showToast as showServerLimitToast, hideToast as hideServerLimitToast} from "../../toasts/ServerLimitToast";
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
 // NB. this is just for server notices rather than pinned messages in general.
