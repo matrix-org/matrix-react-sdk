@@ -43,7 +43,7 @@ import HomePage from "./HomePage";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import PlatformPeg from "../../PlatformPeg";
 import ToastStore from "../../stores/ToastStore";
-import {TOAST as SET_PASSWORD_TOAST} from "../views/toasts/SetPasswordToast";
+import {showToast as showSetPasswordToast, hideToast as hideSetPasswordToast} from "../views/toasts/SetPasswordToast";
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
 // NB. this is just for server notices rather than pinned messages in general.
@@ -212,9 +212,9 @@ class LoggedInView extends React.PureComponent<IProps, IState> {
 
     _setStateFromSessionStore = () => {
         if (this._sessionStore.getCachedPassword()) {
-            ToastStore.sharedInstance().addOrReplaceToast(SET_PASSWORD_TOAST);
+            showSetPasswordToast();
         } else {
-            ToastStore.sharedInstance().dismissToast(SET_PASSWORD_TOAST.key);
+            hideSetPasswordToast();
         }
     };
 

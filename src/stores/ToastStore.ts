@@ -15,14 +15,15 @@ limitations under the License.
 */
 
 import EventEmitter from 'events';
+import React, {JSXElementConstructor} from "react";
 
-export interface IToast {
+export interface IToast<C extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>> {
     key: string;
     priority?: Priority;
     title: string; // _td
     icon?: string;
-    component: any;
-    props?: any;
+    component: C;
+    props?: React.ComponentProps<C>;
 }
 
 export enum Priority {
@@ -35,7 +36,7 @@ export enum Priority {
  * Holds the active toasts
  */
 export default class ToastStore extends EventEmitter {
-    private toasts: IToast[] = [];
+    private toasts: IToast<any>[] = [];
 
     static sharedInstance() {
         if (!window.mx_ToastStore) window.mx_ToastStore = new ToastStore();
@@ -55,7 +56,7 @@ export default class ToastStore extends EventEmitter {
      *
      * @param {object} newToast The new toast
      */
-    addOrReplaceToast(newToast) {
+    addOrReplaceToast<C extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>>(newToast: IToast<C>) {
         if (newToast.priority === undefined) newToast.priority = Priority.DEFAULT;
 
         const oldIndex = this.toasts.findIndex(t => t.key === newToast.key);

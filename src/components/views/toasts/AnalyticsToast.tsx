@@ -16,21 +16,20 @@ limitations under the License.
 
 import React from "react";
 
-import {_t, _td} from "../../../languageHandler";
-import FormButton from "../elements/FormButton";
-import {IToast, Priority} from "../../../stores/ToastStore";
+import {_t} from "../../../languageHandler";
+import ToastStore, {Priority} from "../../../stores/ToastStore";
 import dis from "../../../dispatcher/dispatcher";
 import Analytics from "../../../Analytics";
-import SdkConfig from "../../../SdkConfig";
 import AccessibleButton from "../elements/AccessibleButton";
+import GenericToast from "./GenericToast";
 
-const accept = () => {
+const onAccept = () => {
     dis.dispatch({
         action: 'accept_cookies',
     });
 };
 
-const reject = () => {
+const onReject = () => {
     dis.dispatch({
         action: "reject_cookies",
     });
@@ -42,11 +41,14 @@ const onUsageDataClicked = () => {
 
 const TOAST_KEY = "analytics";
 
-const AnalyticsToast: React.FC = () => {
-    const policyUrl = SdkConfig.get().piwik.policyUrl;
-    return <div>
-        <div className="mx_Toast_description">
-            { _t(
+export const showToast = (policyUrl?: string) => {
+    ToastStore.sharedInstance().addOrReplaceToast({
+        key: TOAST_KEY,
+        title: _t("Help us improve Riot"),
+        priority: Priority.LOW,
+        component: GenericToast,
+        props: {
+            description: _t(
                 "Send <UsageDataLink>anonymous usage data</UsageDataLink> which helps us improve Riot. " +
                 "This will use a <PolicyLink>cookie</PolicyLink>.",
                 {},
@@ -59,20 +61,15 @@ const AnalyticsToast: React.FC = () => {
                         <a target="_blank" href={policyUrl}>{ sub }</a>
                     ) : sub,
                 },
-            ) }
-        </div>
-        <div className="mx_Toast_buttons" aria-live="off">
-            <FormButton label={_t("No")} kind="danger" onClick={reject} />
-            <FormButton label={_t("I want to help")} onClick={accept} />
-        </div>
-    </div>;
+            ),
+            acceptLabel: _t("I want to help"),
+            onAccept,
+            rejectLabel: _t("No"),
+            onReject,
+        },
+    });
 };
 
-export default AnalyticsToast;
-
-export const TOAST: IToast = {
-    key: TOAST_KEY,
-    component: AnalyticsToast,
-    title: _td("Help us improve Riot"),
-    priority: Priority.LOW,
+export const hideToast = () => {
+    ToastStore.sharedInstance().dismissToast(TOAST_KEY);
 };

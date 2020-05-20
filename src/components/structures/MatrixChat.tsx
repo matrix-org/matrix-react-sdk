@@ -50,7 +50,7 @@ import { getHomePageUrl } from '../../utils/pages';
 
 import createRoom from "../../createRoom";
 import KeyRequestHandler from '../../KeyRequestHandler';
-import { _t, _td, getCurrentLanguage } from '../../languageHandler';
+import { _t, getCurrentLanguage } from '../../languageHandler';
 import SettingsStore, { SettingLevel } from "../../settings/SettingsStore";
 import ThemeController from "../../settings/controllers/ThemeController";
 import { startAnyRegistrationFlow } from "../../Registration.js";
@@ -67,8 +67,11 @@ import * as StorageManager from "../../utils/StorageManager";
 import type LoggedInViewType from "./LoggedInView";
 import { ViewUserPayload } from "../../dispatcher/payloads/ViewUserPayload";
 import { Action } from "../../dispatcher/actions";
-import {TOAST as DESKTOP_NOTIFICATIONS_TOAST} from "../views/toasts/DesktopNotificationsToast";
-import {TOAST as ANALYTICS_TOAST} from "../views/toasts/AnalyticsToast";
+import {
+    showToast as showNotificationsToast,
+    hideToast as hideNotificationsToast,
+} from "../views/toasts/DesktopNotificationsToast";
+import {showToast as showAnalyticsToast, hideToast as hideAnalyticsToast} from "../views/toasts/AnalyticsToast";
 
 /** constants for MatrixChat.state.view */
 export enum Views {
@@ -746,22 +749,22 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case 'accept_cookies':
                 SettingsStore.setValue("analyticsOptIn", null, SettingLevel.DEVICE, true);
                 SettingsStore.setValue("showCookieBar", null, SettingLevel.DEVICE, false);
-                ToastStore.sharedInstance().dismissToast(ANALYTICS_TOAST.key);
+                hideAnalyticsToast();
                 Analytics.enable();
                 break;
             case 'reject_cookies':
                 SettingsStore.setValue("analyticsOptIn", null, SettingLevel.DEVICE, false);
                 SettingsStore.setValue("showCookieBar", null, SettingLevel.DEVICE, false);
-                ToastStore.sharedInstance().dismissToast(ANALYTICS_TOAST.key);
+                hideAnalyticsToast();
                 break;
         }
     };
 
     private tryShowNotificationsToast() {
         if (Notifier.shouldShowToolbar()) {
-            ToastStore.sharedInstance().addOrReplaceToast(DESKTOP_NOTIFICATIONS_TOAST);
+            showNotificationsToast();
         } else {
-            ToastStore.sharedInstance().dismissToast(DESKTOP_NOTIFICATIONS_TOAST.key);
+            hideNotificationsToast();
         }
     }
 
@@ -1240,7 +1243,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         StorageManager.tryPersistStorage();
 
         if (SettingsStore.getValue("showCookieBar") && this.props.config.piwik && navigator.doNotTrack !== "1") {
-            ToastStore.sharedInstance().addOrReplaceToast(ANALYTICS_TOAST);
+            showAnalyticsToast(this.props.config.piwik && this.props.config.piwik.policyUrl);
         }
     }
 
@@ -1546,7 +1549,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             } else if (request.pending) {
                 ToastStore.sharedInstance().addOrReplaceToast({
                     key: 'verifreq_' + request.channel.transactionId,
-                    title: request.isSelfVerification ? _td("Self-verification request") : _td("Verification Request"),
+                    title: request.isSelfVerification ? _t("Self-verification request") : _t("Verification Request"),
                     icon: "verification",
                     props: {request},
                     component: sdk.getComponent("toasts.VerificationRequestToast"),
