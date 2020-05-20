@@ -57,7 +57,7 @@ export default class ToastContainer extends React.Component {
                 toastKey: key,
             });
             toast = (<div className={toastClasses}>
-                <h2>{title}{countIndicator}</h2>
+                <h2>{_t(title)}{countIndicator}</h2>
                 <div className="mx_Toast_body">{React.createElement(component, toastProps)}</div>
             </div>);
         }

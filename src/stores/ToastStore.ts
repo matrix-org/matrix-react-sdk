@@ -16,13 +16,13 @@ limitations under the License.
 
 import EventEmitter from 'events';
 
-interface IToast {
+export interface IToast {
     key: string;
     priority?: 0 | 1 | 2;
-    title?: string;
+    title: string; // _td
     icon?: string;
     component: any;
-    props: any;
+    props?: any;
 }
 
 /**

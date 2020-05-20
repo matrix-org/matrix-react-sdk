@@ -17,7 +17,7 @@ limitations under the License.
 import { MatrixClientPeg } from './MatrixClientPeg';
 import SettingsStore from './settings/SettingsStore';
 import * as sdk from './index';
-import { _t } from './languageHandler';
+import {_t, _td} from './languageHandler';
 import ToastStore from './stores/ToastStore';
 
 const KEY_BACKUP_POLL_INTERVAL = 5 * 60 * 1000;
@@ -198,7 +198,7 @@ export default class DeviceListener {
                     // Cross-signing on account but this device doesn't trust the master key (verify this session)
                     ToastStore.sharedInstance().addOrReplaceToast({
                         key: THIS_DEVICE_TOAST_KEY,
-                        title: _t("Verify this session"),
+                        title: _td("Verify this session"),
                         icon: "verification_warning",
                         props: {kind: 'verify_this_session'},
                         component: sdk.getComponent("toasts.SetupEncryptionToast"),
@@ -209,7 +209,7 @@ export default class DeviceListener {
                         // No cross-signing on account but key backup available (upgrade encryption)
                         ToastStore.sharedInstance().addOrReplaceToast({
                             key: THIS_DEVICE_TOAST_KEY,
-                            title: _t("Encryption upgrade available"),
+                            title: _td("Encryption upgrade available"),
                             icon: "verification_warning",
                             props: {kind: 'upgrade_encryption'},
                             component: sdk.getComponent("toasts.SetupEncryptionToast"),
@@ -218,7 +218,7 @@ export default class DeviceListener {
                         // No cross-signing or key backup on account (set up encryption)
                         ToastStore.sharedInstance().addOrReplaceToast({
                             key: THIS_DEVICE_TOAST_KEY,
-                            title: _t("Set up encryption"),
+                            title: _td("Set up encryption"),
                             icon: "verification_warning",
                             props: {kind: 'set_up_encryption'},
                             component: sdk.getComponent("toasts.SetupEncryptionToast"),
@@ -265,7 +265,7 @@ export default class DeviceListener {
         if (oldUnverifiedDeviceIds.size > 0) {
             ToastStore.sharedInstance().addOrReplaceToast({
                 key: OTHER_DEVICES_TOAST_KEY,
-                title: _t("Review where you’re logged in"),
+                title: _td("Review where you’re logged in"),
                 icon: "verification_warning",
                 priority: ToastStore.PRIORITY_LOW,
                 props: {
@@ -281,7 +281,7 @@ export default class DeviceListener {
         for (const deviceId of newUnverifiedDeviceIds) {
             ToastStore.sharedInstance().addOrReplaceToast({
                 key: toastKey(deviceId),
-                title: _t("New login. Was this you?"),
+                title: _td("New login. Was this you?"),
                 icon: "verification_warning",
                 props: { deviceId },
                 component: sdk.getComponent("toasts.UnverifiedSessionToast"),

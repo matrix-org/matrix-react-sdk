@@ -50,7 +50,7 @@ import { getHomePageUrl } from '../../utils/pages';
 
 import createRoom from "../../createRoom";
 import KeyRequestHandler from '../../KeyRequestHandler';
-import { _t, getCurrentLanguage } from '../../languageHandler';
+import { _t, _td, getCurrentLanguage } from '../../languageHandler';
 import SettingsStore, { SettingLevel } from "../../settings/SettingsStore";
 import ThemeController from "../../settings/controllers/ThemeController";
 import { startAnyRegistrationFlow } from "../../Registration.js";
@@ -1549,7 +1549,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             } else if (request.pending) {
                 ToastStore.sharedInstance().addOrReplaceToast({
                     key: 'verifreq_' + request.channel.transactionId,
-                    title: request.isSelfVerification ? _t("Self-verification request") : _t("Verification Request"),
+                    title: request.isSelfVerification ? _td("Self-verification request") : _td("Verification Request"),
                     icon: "verification",
                     props: {request},
                     component: sdk.getComponent("toasts.VerificationRequestToast"),
