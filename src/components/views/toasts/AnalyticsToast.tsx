@@ -22,6 +22,7 @@ import {IToast, Priority} from "../../../stores/ToastStore";
 import dis from "../../../dispatcher/dispatcher";
 import Analytics from "../../../Analytics";
 import SdkConfig from "../../../SdkConfig";
+import AccessibleButton from "../elements/AccessibleButton";
 
 const accept = () => {
     dis.dispatch({
@@ -35,9 +36,7 @@ const reject = () => {
     });
 };
 
-const onUsageDataClicked = e => {
-    e.stopPropagation();
-    e.preventDefault();
+const onUsageDataClicked = () => {
     Analytics.showDetailsModal();
 };
 
@@ -52,26 +51,19 @@ const AnalyticsToast: React.FC = () => {
                 "This will use a <PolicyLink>cookie</PolicyLink>.",
                 {},
                 {
-                    "UsageDataLink": (sub) => <a
-                        className="mx_MatrixToolbar_link"
-                        onClick={onUsageDataClicked}
-                    >
-                        { sub }
-                    </a>,
+                    "UsageDataLink": (sub) => (
+                        <AccessibleButton kind="link" onClick={onUsageDataClicked}>{ sub }</AccessibleButton>
+                    ),
                     // XXX: We need to link to the page that explains our cookies
-                    "PolicyLink": (sub) => policyUrl ? <a
-                        className="mx_MatrixToolbar_link"
-                        target="_blank"
-                        href={policyUrl}
-                    >
-                        { sub }
-                    </a> : sub,
+                    "PolicyLink": (sub) => policyUrl ? (
+                        <a target="_blank" href={policyUrl}>{ sub }</a>
+                    ) : sub,
                 },
             ) }
         </div>
         <div className="mx_Toast_buttons" aria-live="off">
             <FormButton label={_t("No")} kind="danger" onClick={reject} />
-            <FormButton label={_t("Yes, I want to help")} onClick={accept} />
+            <FormButton label={_t("I want to help")} onClick={accept} />
         </div>
     </div>;
 };
