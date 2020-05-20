@@ -30,9 +30,9 @@ const hideToast = () => {
     ToastStore.sharedInstance().dismissToast(TOAST_KEY);
 };
 
-export const TOAST_KEY = "set-password";
+const TOAST_KEY = "set-password";
 
-const DesktopNotificationsToast: React.FC = () => {
+const SetPasswordToast: React.FC = () => {
     return <div>
         <div className="mx_Toast_description">
             {_t("To return to your account in future you need to set a password")}
@@ -44,11 +44,11 @@ const DesktopNotificationsToast: React.FC = () => {
     </div>;
 };
 
-export default DesktopNotificationsToast;
+export default SetPasswordToast;
 
 export const TOAST: IToast = {
     key: TOAST_KEY,
-    component: DesktopNotificationsToast,
+    component: SetPasswordToast,
     title: _td("Set password"),
     priority: Priority.LOW,
 };

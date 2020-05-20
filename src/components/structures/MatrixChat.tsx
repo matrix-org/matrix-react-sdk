@@ -67,10 +67,8 @@ import * as StorageManager from "../../utils/StorageManager";
 import type LoggedInViewType from "./LoggedInView";
 import { ViewUserPayload } from "../../dispatcher/payloads/ViewUserPayload";
 import { Action } from "../../dispatcher/actions";
-import {
-    TOAST as DESKTOP_NOTIFICATIONS_TOAST,
-    TOAST_KEY as DESKTOP_NOTIFICATIONS_TOAST_KEY,
-} from "../views/toasts/DesktopNotificationsToast";
+import {TOAST as DESKTOP_NOTIFICATIONS_TOAST} from "../views/toasts/DesktopNotificationsToast";
+import {TOAST as ANALYTICS_TOAST} from "../views/toasts/AnalyticsToast";
 
 /** constants for MatrixChat.state.view */
 export enum Views {
@@ -177,7 +175,6 @@ interface IState {
     hasNewVersion: boolean;
     newVersionReleaseNotes?: string;
     checkingForUpdate?: string; // updateCheckStatusEnum
-    showCookieBar: boolean;
     // Parameters used in the registration dance with the IS
     register_client_secret?: string;
     register_session_id?: string;
@@ -232,8 +229,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             hasNewVersion: false,
             newVersionReleaseNotes: null,
             checkingForUpdate: null,
-
-            showCookieBar: false,
 
             hideToSRUsers: false,
 
@@ -333,12 +328,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
 
                 return this.loadSession();
-            });
-        }
-
-        if (SettingsStore.getValue("showCookieBar")) {
-            this.setState({
-                showCookieBar: true,
             });
         }
 
@@ -757,19 +746,13 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case 'accept_cookies':
                 SettingsStore.setValue("analyticsOptIn", null, SettingLevel.DEVICE, true);
                 SettingsStore.setValue("showCookieBar", null, SettingLevel.DEVICE, false);
-
-                this.setState({
-                    showCookieBar: false,
-                });
+                ToastStore.sharedInstance().dismissToast(ANALYTICS_TOAST.key);
                 Analytics.enable();
                 break;
             case 'reject_cookies':
                 SettingsStore.setValue("analyticsOptIn", null, SettingLevel.DEVICE, false);
                 SettingsStore.setValue("showCookieBar", null, SettingLevel.DEVICE, false);
-
-                this.setState({
-                    showCookieBar: false,
-                });
+                ToastStore.sharedInstance().dismissToast(ANALYTICS_TOAST.key);
                 break;
         }
     };
@@ -778,7 +761,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         if (Notifier.shouldShowToolbar()) {
             ToastStore.sharedInstance().addOrReplaceToast(DESKTOP_NOTIFICATIONS_TOAST);
         } else {
-            ToastStore.sharedInstance().dismissToast(DESKTOP_NOTIFICATIONS_TOAST_KEY);
+            ToastStore.sharedInstance().dismissToast(DESKTOP_NOTIFICATIONS_TOAST.key);
         }
     }
 
@@ -1255,6 +1238,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
 
         StorageManager.tryPersistStorage();
+
+        if (SettingsStore.getValue("showCookieBar") && this.props.config.piwik && navigator.doNotTrack !== "1") {
+            ToastStore.sharedInstance().addOrReplaceToast(ANALYTICS_TOAST);
+        }
     }
 
     private showScreenAfterLogin() {
@@ -2041,7 +2028,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                         onCloseAllSettings={this.onCloseAllSettings}
                         onRegistered={this.onRegistered}
                         currentRoomId={this.state.currentRoomId}
-                        showCookieBar={this.state.showCookieBar}
                     />
                 );
             } else {

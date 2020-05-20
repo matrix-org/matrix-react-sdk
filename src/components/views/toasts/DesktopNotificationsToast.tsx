@@ -29,7 +29,7 @@ const hideToast = () => {
     Notifier.setToolbarHidden(true);
 };
 
-export const TOAST_KEY = "desktop-notifications";
+const TOAST_KEY = "desktop-notifications";
 
 const DesktopNotificationsToast: React.FC = () => {
     return <div>

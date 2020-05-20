@@ -43,10 +43,7 @@ import HomePage from "./HomePage";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import PlatformPeg from "../../PlatformPeg";
 import ToastStore from "../../stores/ToastStore";
-import {
-    TOAST as SET_PASSWORD_TOAST,
-    TOAST_KEY as SET_PASSWORD_TOAST_KEY
-} from "../views/toasts/SetPasswordToast";
+import {TOAST as SET_PASSWORD_TOAST} from "../views/toasts/SetPasswordToast";
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
 // NB. this is just for server notices rather than pinned messages in general.
@@ -69,7 +66,6 @@ interface IProps {
     initialEventPixelOffset: number;
     leftDisabled: boolean;
     rightDisabled: boolean;
-    showCookieBar: boolean;
     hasNewVersion: boolean;
     page_type: string;
     autoJoin: boolean;
@@ -181,10 +177,7 @@ class LoggedInView extends React.PureComponent<IProps, IState> {
 
     componentDidUpdate(prevProps, prevState) {
         // attempt to guess when a banner was opened or closed
-        if (
-            (prevProps.showCookieBar !== this.props.showCookieBar) ||
-            (prevProps.hasNewVersion !== this.props.hasNewVersion)
-        ) {
+        if (prevProps.hasNewVersion !== this.props.hasNewVersion) {
             this.props.resizeNotifier.notifyBannersChanged();
         }
     }
@@ -221,7 +214,7 @@ class LoggedInView extends React.PureComponent<IProps, IState> {
         if (this._sessionStore.getCachedPassword()) {
             ToastStore.sharedInstance().addOrReplaceToast(SET_PASSWORD_TOAST);
         } else {
-            ToastStore.sharedInstance().dismissToast(SET_PASSWORD_TOAST_KEY);
+            ToastStore.sharedInstance().dismissToast(SET_PASSWORD_TOAST.key);
         }
     };
 
@@ -599,7 +592,6 @@ class LoggedInView extends React.PureComponent<IProps, IState> {
         const GroupView = sdk.getComponent('structures.GroupView');
         const MyGroups = sdk.getComponent('structures.MyGroups');
         const ToastContainer = sdk.getComponent('structures.ToastContainer');
-        const CookieBar = sdk.getComponent('globals.CookieBar');
         const NewVersionBar = sdk.getComponent('globals.NewVersionBar');
         const UpdateCheckBar = sdk.getComponent('globals.UpdateCheckBar');
         const ServerLimitBar = sdk.getComponent('globals.ServerLimitBar');
@@ -664,12 +656,6 @@ class LoggedInView extends React.PureComponent<IProps, IState> {
                 adminContact={usageLimitEvent.getContent().admin_contact}
                 limitType={usageLimitEvent.getContent().limit_type}
             />;
-        } else if (this.props.showCookieBar &&
-            this.props.config.piwik &&
-            navigator.doNotTrack !== "1"
-        ) {
-            const policyUrl = this.props.config.piwik.policyUrl || null;
-            topBar = <CookieBar policyUrl={policyUrl} />;
         } else if (this.props.hasNewVersion) {
             topBar = <NewVersionBar version={this.props.version} newVersion={this.props.newVersion}
                                     releaseNotes={this.props.newVersionReleaseNotes}
