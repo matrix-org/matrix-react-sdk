@@ -16,6 +16,15 @@ limitations under the License.
 
 import EventEmitter from 'events';
 
+interface IToast {
+    key: string;
+    priority?: 0 | 1 | 2;
+    title?: string;
+    icon?: string;
+    component: any;
+    props: any;
+}
+
 /**
  * Holds the active toasts
  */
@@ -25,18 +34,14 @@ export default class ToastStore extends EventEmitter {
     static PRIORITY_LOW = 2;
 
     static sharedInstance() {
-        if (!global.mx_ToastStore) global.mx_ToastStore = new ToastStore();
-        return global.mx_ToastStore;
+        if (!window.mx_ToastStore) window.mx_ToastStore = new ToastStore();
+        return window.mx_ToastStore;
     }
 
-    constructor() {
-        super();
-        this._dispatcherRef = null;
-        this._toasts = [];
-    }
+    private toasts: IToast[] = [];
 
     reset() {
-        this._toasts = [];
+        this.toasts = [];
     }
 
     /**
@@ -46,28 +51,28 @@ export default class ToastStore extends EventEmitter {
      * toasts stay at the top unless a higher priority one arrives (better to not change the
      * toast unless necessary).
      *
-     * @param {boject} newToast The new toast
+     * @param {object} newToast The new toast
      */
     addOrReplaceToast(newToast) {
         if (newToast.priority === undefined) newToast.priority = ToastStore.PRIORITY_DEFAULT;
 
-        const oldIndex = this._toasts.findIndex(t => t.key === newToast.key);
+        const oldIndex = this.toasts.findIndex(t => t.key === newToast.key);
         if (oldIndex === -1) {
-            let newIndex = this._toasts.length;
-            while (newIndex > 0 && this._toasts[newIndex - 1].priority > newToast.priority) --newIndex;
-            this._toasts.splice(newIndex, 0, newToast);
+            let newIndex = this.toasts.length;
+            while (newIndex > 0 && this.toasts[newIndex - 1].priority > newToast.priority) --newIndex;
+            this.toasts.splice(newIndex, 0, newToast);
         } else {
-            this._toasts[oldIndex] = newToast;
+            this.toasts[oldIndex] = newToast;
         }
         this.emit('update');
     }
 
     dismissToast(key) {
-        this._toasts = this._toasts.filter(t => t.key !== key);
+        this.toasts = this.toasts.filter(t => t.key !== key);
         this.emit('update');
     }
 
     getToasts() {
-        return this._toasts;
+        return this.toasts;
     }
 }
