@@ -67,7 +67,6 @@ interface IProps {
     showCookieBar: boolean;
     hasNewVersion: boolean;
     userHasGeneratedPassword: boolean;
-    showNotifierToolbar: boolean;
     page_type: string;
     autoJoin: boolean;
     thirdPartyInvite?: object;
@@ -183,8 +182,7 @@ class LoggedInView extends React.PureComponent<IProps, IState> {
         if (
             (prevProps.showCookieBar !== this.props.showCookieBar) ||
             (prevProps.hasNewVersion !== this.props.hasNewVersion) ||
-            (prevState.userHasGeneratedPassword !== this.state.userHasGeneratedPassword) ||
-            (prevProps.showNotifierToolbar !== this.props.showNotifierToolbar)
+            (prevState.userHasGeneratedPassword !== this.state.userHasGeneratedPassword)
         ) {
             this.props.resizeNotifier.notifyBannersChanged();
         }
@@ -598,7 +596,6 @@ class LoggedInView extends React.PureComponent<IProps, IState> {
         const GroupView = sdk.getComponent('structures.GroupView');
         const MyGroups = sdk.getComponent('structures.MyGroups');
         const ToastContainer = sdk.getComponent('structures.ToastContainer');
-        const MatrixToolbar = sdk.getComponent('globals.MatrixToolbar');
         const CookieBar = sdk.getComponent('globals.CookieBar');
         const NewVersionBar = sdk.getComponent('globals.NewVersionBar');
         const UpdateCheckBar = sdk.getComponent('globals.UpdateCheckBar');
@@ -679,8 +676,6 @@ class LoggedInView extends React.PureComponent<IProps, IState> {
             topBar = <UpdateCheckBar {...this.props.checkingForUpdate} />;
         } else if (this.state.userHasGeneratedPassword) {
             topBar = <PasswordNagBar />;
-        } else if (this.props.showNotifierToolbar) {
-            topBar = <MatrixToolbar />;
         }
 
         let bodyClasses = 'mx_MatrixChat';

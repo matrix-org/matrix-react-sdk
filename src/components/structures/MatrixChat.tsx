@@ -67,6 +67,10 @@ import * as StorageManager from "../../utils/StorageManager";
 import type LoggedInViewType from "./LoggedInView";
 import { ViewUserPayload } from "../../dispatcher/payloads/ViewUserPayload";
 import { Action } from "../../dispatcher/actions";
+import {
+    TOAST as DESKTOP_NOTIFICATIONS_TOAST,
+    TOAST_KEY as DESKTOP_NOTIFICATIONS_TOAST_KEY,
+} from "../views/toasts/DesktopNotificationsToast";
 
 /** constants for MatrixChat.state.view */
 export enum Views {
@@ -183,7 +187,6 @@ interface IState {
     hideToSRUsers: boolean;
     syncError?: Error;
     resizeNotifier: ResizeNotifier;
-    showNotifierToolbar: boolean;
     serverConfig?: ValidatedServerConfig;
     ready: boolean;
     thirdPartyInvite?: object;
@@ -236,7 +239,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
             syncError: null, // If the current syncing status is ERROR, the error object, otherwise null.
             resizeNotifier: new ResizeNotifier(),
-            showNotifierToolbar: false,
             ready: false,
         };
 
@@ -681,7 +683,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 break;
             case 'notifier_enabled':
-                this.setState({showNotifierToolbar: Notifier.shouldShowToolbar()});
+                this.tryShowNotificationsToast();
                 break;
             case 'hide_left_panel':
                 this.setState({
@@ -771,6 +773,14 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 break;
         }
     };
+
+    private tryShowNotificationsToast() {
+        if (Notifier.shouldShowToolbar()) {
+            ToastStore.sharedInstance().addOrReplaceToast(DESKTOP_NOTIFICATIONS_TOAST);
+        } else {
+            ToastStore.sharedInstance().dismissToast(DESKTOP_NOTIFICATIONS_TOAST_KEY)
+        }
+    }
 
     private setPage(pageType: string) {
         this.setState({
@@ -1375,8 +1385,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             dis.dispatch({action: 'focus_composer'});
             this.setState({
                 ready: true,
-                showNotifierToolbar: Notifier.shouldShowToolbar(),
             });
+            this.tryShowNotificationsToast();
         });
         cli.on('Call.incoming', function(call) {
             // we dispatch this synchronously to make sure that the event
