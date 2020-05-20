@@ -177,7 +177,6 @@ interface IState {
     newVersion?: string;
     hasNewVersion: boolean;
     newVersionReleaseNotes?: string;
-    checkingForUpdate?: string; // updateCheckStatusEnum
     // Parameters used in the registration dance with the IS
     register_client_secret?: string;
     register_session_id?: string;
@@ -231,7 +230,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
             hasNewVersion: false,
             newVersionReleaseNotes: null,
-            checkingForUpdate: null,
 
             hideToSRUsers: false,
 
@@ -1833,7 +1831,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             newVersion: latest,
             hasNewVersion: current !== latest,
             newVersionReleaseNotes: releaseNotes,
-            checkingForUpdate: null,
         });
     }
 

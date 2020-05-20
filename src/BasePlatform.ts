@@ -1,5 +1,3 @@
-// @flow
-
 /*
 Copyright 2016 Aviral Dasgupta
 Copyright 2016 OpenMarket Ltd
@@ -19,9 +17,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {MatrixClient} from "matrix-js-sdk";
+import {MatrixClient} from "matrix-js-sdk/src/client";
 import dis from './dispatcher/dispatcher';
 import BaseEventIndexManager from './indexing/BaseEventIndexManager';
+import {ActionPayload} from "./dispatcher/payloads";
 
 /**
  * Base class for classes that provide platform-specific functionality
@@ -30,21 +29,21 @@ import BaseEventIndexManager from './indexing/BaseEventIndexManager';
  * Instances of this class are provided by the application.
  */
 export default class BasePlatform {
-    constructor() {
-        this.notificationCount = 0;
-        this.errorDidOccur = false;
+    protected notificationCount: number = 0;
+    protected errorDidOccur: boolean = false;
 
-        dis.register(this._onAction.bind(this));
+    constructor() {
+        dis.register(this.onAction);
     }
 
-    _onAction(payload: Object) {
+    protected onAction = (payload: ActionPayload) => {
         switch (payload.action) {
             case 'on_client_not_viable':
             case 'on_logged_out':
                 this.setNotificationCount(0);
                 break;
         }
-    }
+    };
 
     // Used primarily for Analytics
     getHumanReadableName(): string {
@@ -85,6 +84,7 @@ export default class BasePlatform {
      * 'denied' otherwise.
      */
     requestNotificationPermission(): Promise<string> {
+        return Promise.resolve("reject");
     }
 
     displayNotification(title: string, msg: string, avatarUrl: string, room: Object) {
@@ -106,7 +106,7 @@ export default class BasePlatform {
      * with getUserMedia, return a string explaining why not.
      * Otherwise, return null.
      */
-    screenCaptureErrorString(): string {
+    screenCaptureErrorString(): string | null {
         return "Not implemented";
     }
 
@@ -123,11 +123,11 @@ export default class BasePlatform {
     }
 
     // XXX: Surely this should be a setting like any other?
-    async getAutoLaunchEnabled(): boolean {
+    async getAutoLaunchEnabled(): Promise<boolean> {
         return false;
     }
 
-    async setAutoLaunchEnabled(enabled: boolean): void {
+    async setAutoLaunchEnabled(enabled: boolean): Promise<void> {
         throw new Error("Unimplemented");
     }
 
@@ -135,11 +135,11 @@ export default class BasePlatform {
         return false;
     }
 
-    async getAutoHideMenuBarEnabled(): boolean {
+    async getAutoHideMenuBarEnabled(): Promise<boolean> {
         return false;
     }
 
-    async setAutoHideMenuBarEnabled(enabled: boolean): void {
+    async setAutoHideMenuBarEnabled(enabled: boolean): Promise<void> {
         throw new Error("Unimplemented");
     }
 
@@ -147,11 +147,11 @@ export default class BasePlatform {
         return false;
     }
 
-    async getMinimizeToTrayEnabled(): boolean {
+    async getMinimizeToTrayEnabled(): Promise<boolean> {
         return false;
     }
 
-    async setMinimizeToTrayEnabled(enabled: boolean): void {
+    async setMinimizeToTrayEnabled(enabled: boolean): Promise<void> {
         throw new Error("Unimplemented");
     }
 
