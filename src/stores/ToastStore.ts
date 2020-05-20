@@ -35,12 +35,12 @@ export enum Priority {
  * Holds the active toasts
  */
 export default class ToastStore extends EventEmitter {
+    private toasts: IToast[] = [];
+
     static sharedInstance() {
         if (!window.mx_ToastStore) window.mx_ToastStore = new ToastStore();
         return window.mx_ToastStore;
     }
-
-    private toasts: IToast[] = [];
 
     reset() {
         this.toasts = [];
