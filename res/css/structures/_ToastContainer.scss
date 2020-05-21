@@ -87,7 +87,13 @@ limitations under the License.
         }
 
         .mx_Toast_buttons {
+            float: right;
             display: flex;
+
+            .mx_FormButton {
+                min-width: 96px;
+                box-sizing: border-box;
+            }
         }
 
         .mx_Toast_description {
