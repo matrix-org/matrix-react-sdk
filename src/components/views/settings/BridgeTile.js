@@ -47,7 +47,7 @@ export default class BridgeTile extends React.PureComponent {
         const { channel, network, protocol } = content;
         const protocolName = protocol.displayname || protocol.id;
         const channelName = channel.displayname || channel.id;
-        const networkName = network ? network.displayname || network.id : protocolName;
+        const networkName = network ? network.displayname || network.id : null;
 
         let creator = null;
         if (content.creator) {
@@ -65,17 +65,17 @@ export default class BridgeTile extends React.PureComponent {
             user: <Pill
                 type={Pill.TYPE_USER_MENTION}
                 room={this.props.room}
-                url={makeUserPermalink(this.props.ev.getSender())}
+                url={makeUserPermalink(content.bridgebot || this.props.ev.getSender())}
                 shouldShowPillAvatar={true}
                 />,
         });
 
         let networkIcon;
 
-        if (protocol.avatar) {
+        if (protocol.avatar_url) {
             const avatarUrl = getHttpUriForMxc(
                 MatrixClientPeg.get().getHomeserverUrl(),
-                protocol.avatar, 64, 64, "crop",
+                protocol.avatar_url, 64, 64, "crop",
             );
 
             networkIcon = <BaseAvatar className="protocol-icon"
@@ -99,7 +99,7 @@ export default class BridgeTile extends React.PureComponent {
             <div className="column-data">
                 <h3>{protocolName}</h3>
                 <p className="workspace-channel-details">
-                    <span>{_t("Workspace: %(networkName)s", {networkName})}</span>
+                    {networkName ? <span>{_t("Workspace: %(networkName)s", {networkName})}</span> : null}
                     <span className="channel">{_t("Channel: %(channelName)s", {channelName})}</span>
                 </p>
                 <p className={metadataClassname}>
