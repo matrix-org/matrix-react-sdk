@@ -184,10 +184,13 @@ export default class EditMessageComposer extends React.Component {
         const editedEvent = this.props.editState.getEvent();
         const editContent = createEditContent(this.model, editedEvent);
         const newContent = editContent["m.new_content"];
+        const roomId = editedEvent.getRoomId();
 
-        // If content is modified then send an updated event into the room
-        if (this._isContentModified(newContent)) {
-            const roomId = editedEvent.getRoomId();
+        // If new content blank then redact message, otherwise if it has been modified
+        // send an updated event into the room
+        if (newContent.body == "") {
+            this.context.redactEvent(roomId, editedEvent.getId());
+        } else if (this._isContentModified(newContent)) {
             this._cancelPreviousPendingEdit();
             this.context.sendMessage(roomId, editContent);
         }
