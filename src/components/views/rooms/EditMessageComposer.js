@@ -189,6 +189,7 @@ export default class EditMessageComposer extends React.Component {
         // If new content blank then redact message, otherwise if it has been modified
         // send an updated event into the room
         if (newContent.body == "") {
+            this._cancelPreviousPendingEdit();
             this.context.redactEvent(roomId, editedEvent.getId());
         } else if (this._isContentModified(newContent)) {
             this._cancelPreviousPendingEdit();
