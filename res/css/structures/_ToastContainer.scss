@@ -96,6 +96,14 @@ limitations under the License.
             text-overflow: ellipsis;
             margin: 4px 0 11px 0;
             font-size: $font-12px;
+
+            p:last-child {
+                margin-bottom: 0;
+            }
+
+            p:first-child {
+                margin-top: 0;
+            }
         }
 
         .mx_Toast_deviceID {
