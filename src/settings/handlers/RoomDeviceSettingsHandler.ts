@@ -1,6 +1,7 @@
 /*
 Copyright 2017 Travis Ralston
 Copyright 2019 New Vector Ltd.
+Copyright 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,37 +17,36 @@ limitations under the License.
 */
 
 import SettingsHandler from "./SettingsHandler";
-import {SettingLevel} from "../SettingsStore";
+import { WatchManager } from "../WatchManager";
+import { SettingLevel } from "../models";
 
 /**
  * Gets and sets settings at the "room-device" level for the current device in a particular
  * room.
  */
 export default class RoomDeviceSettingsHandler extends SettingsHandler {
-    constructor(watchManager) {
+    constructor(private _watchers: WatchManager) {
         super();
-
-        this._watchers = watchManager;
     }
 
     getValue(settingName, roomId) {
         // Special case blacklist setting to use legacy values
         if (settingName === "blacklistUnverifiedDevices") {
-            const value = this._read("mx_local_settings");
-            if (value && value['blacklistUnverifiedDevicesPerRoom']) {
-                return value['blacklistUnverifiedDevicesPerRoom'][roomId];
+            const value2 = this.read("mx_local_settings");
+            if (value2 && value2['blacklistUnverifiedDevicesPerRoom']) {
+                return value2['blacklistUnverifiedDevicesPerRoom'][roomId];
             }
         }
 
-        const value = this._read(this._getKey(settingName, roomId));
+        const value = this.read(this.getKey(settingName, roomId));
         if (value) return value.value;
         return null;
     }
 
-    setValue(settingName, roomId, newValue) {
+    public setValue(settingName, roomId, newValue) {
         // Special case blacklist setting for legacy structure
         if (settingName === "blacklistUnverifiedDevices") {
-            let value = this._read("mx_local_settings");
+            let value = this.read("mx_local_settings");
             if (!value) value = {};
             if (!value["blacklistUnverifiedDevicesPerRoom"]) value["blacklistUnverifiedDevicesPerRoom"] = {};
             value["blacklistUnverifiedDevicesPerRoom"][roomId] = newValue;
@@ -56,31 +56,31 @@ export default class RoomDeviceSettingsHandler extends SettingsHandler {
         }
 
         if (newValue === null) {
-            localStorage.removeItem(this._getKey(settingName, roomId));
+            localStorage.removeItem(this.getKey(settingName, roomId));
         } else {
             newValue = JSON.stringify({value: newValue});
-            localStorage.setItem(this._getKey(settingName, roomId), newValue);
+            localStorage.setItem(this.getKey(settingName, roomId), newValue);
         }
 
         this._watchers.notifyUpdate(settingName, roomId, SettingLevel.ROOM_DEVICE, newValue);
         return Promise.resolve();
     }
 
-    canSetValue(settingName, roomId) {
+    public canSetValue(settingName, roomId) {
         return true; // It's their device, so they should be able to
     }
 
-    isSupported() {
+    public isSupported() {
         return localStorage !== undefined && localStorage !== null;
     }
 
-    _read(key) {
+    private read(key: string) {
         const rawValue = localStorage.getItem(key);
         if (!rawValue) return null;
         return JSON.parse(rawValue);
     }
 
-    _getKey(settingName, roomId) {
+    private getKey(settingName: string, roomId: string) {
         return "mx_setting_" + settingName + "_" + roomId;
     }
 }

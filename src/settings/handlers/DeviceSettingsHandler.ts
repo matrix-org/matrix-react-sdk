@@ -1,7 +1,7 @@
 /*
 Copyright 2017 Travis Ralston
 Copyright 2019 New Vector Ltd.
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,7 +18,8 @@ limitations under the License.
 
 import SettingsHandler from "./SettingsHandler";
 import {MatrixClientPeg} from "../../MatrixClientPeg";
-import {SettingLevel} from "../SettingsStore";
+import { SettingLevel } from "../models";
+import { WatchManager } from "../WatchManager";
 
 /**
  * Gets and sets settings at the "device" level for the current device.
@@ -31,15 +32,13 @@ export default class DeviceSettingsHandler extends SettingsHandler {
      * @param {string[]} featureNames The names of known features.
      * @param {WatchManager} watchManager The watch manager to notify updates to
      */
-    constructor(featureNames, watchManager) {
+    constructor(private featureNames: string[], private watchManager: WatchManager) {
         super();
-        this._featureNames = featureNames;
-        this._watchers = watchManager;
     }
 
-    getValue(settingName, roomId) {
-        if (this._featureNames.includes(settingName)) {
-            return this._readFeature(settingName);
+    public getValue(settingName, roomId) {
+        if (this.featureNames.includes(settingName)) {
+            return this.readFeature(settingName);
         }
 
         // Special case notifications
@@ -68,28 +67,28 @@ export default class DeviceSettingsHandler extends SettingsHandler {
             return val['value'];
         }
 
-        const settings = this._getSettings() || {};
+        const settings = this.getSettings() || {};
         return settings[settingName];
     }
 
-    setValue(settingName, roomId, newValue) {
-        if (this._featureNames.includes(settingName)) {
-            this._writeFeature(settingName, newValue);
+    public setValue(settingName, roomId, newValue) {
+        if (this.featureNames.includes(settingName)) {
+            this.writeFeature(settingName, newValue);
             return Promise.resolve();
         }
 
         // Special case notifications
         if (settingName === "notificationsEnabled") {
             localStorage.setItem("notifications_enabled", newValue);
-            this._watchers.notifyUpdate(settingName, null, SettingLevel.DEVICE, newValue);
+            this.watchManager.notifyUpdate(settingName, null, SettingLevel.DEVICE, newValue);
             return Promise.resolve();
         } else if (settingName === "notificationBodyEnabled") {
             localStorage.setItem("notifications_body_enabled", newValue);
-            this._watchers.notifyUpdate(settingName, null, SettingLevel.DEVICE, newValue);
+            this.watchManager.notifyUpdate(settingName, null, SettingLevel.DEVICE, newValue);
             return Promise.resolve();
         } else if (settingName === "audioNotificationsEnabled") {
             localStorage.setItem("audio_notifications_enabled", newValue);
-            this._watchers.notifyUpdate(settingName, null, SettingLevel.DEVICE, newValue);
+            this.watchManager.notifyUpdate(settingName, null, SettingLevel.DEVICE, newValue);
             return Promise.resolve();
         }
 
@@ -103,35 +102,27 @@ export default class DeviceSettingsHandler extends SettingsHandler {
             "lastRightPanelPhaseForGroup",
         ].includes(settingName)) {
             localStorage.setItem(`mx_${settingName}`, JSON.stringify({value: newValue}));
-            this._watchers.notifyUpdate(settingName, null, SettingLevel.DEVICE, newValue);
+            this.watchManager.notifyUpdate(settingName, null, SettingLevel.DEVICE, newValue);
             return Promise.resolve();
         }
 
-        const settings = this._getSettings() || {};
+        const settings = this.getSettings() || {};
         settings[settingName] = newValue;
         localStorage.setItem("mx_local_settings", JSON.stringify(settings));
-        this._watchers.notifyUpdate(settingName, null, SettingLevel.DEVICE, newValue);
+        this.watchManager.notifyUpdate(settingName, null, SettingLevel.DEVICE, newValue);
 
         return Promise.resolve();
     }
 
-    canSetValue(settingName, roomId) {
+    public canSetValue(settingName, roomId) {
         return true; // It's their device, so they should be able to
     }
 
-    isSupported() {
+    public isSupported() {
         return localStorage !== undefined && localStorage !== null;
     }
 
-    watchSetting(settingName, roomId, cb) {
-        this._watchers.watchSetting(settingName, roomId, cb);
-    }
-
-    unwatchSetting(cb) {
-        this._watchers.unwatchSetting(cb);
-    }
-
-    _getSettings() {
+    private getSettings() {
         const value = localStorage.getItem("mx_local_settings");
         if (!value) return null;
         return JSON.parse(value);
@@ -140,7 +131,7 @@ export default class DeviceSettingsHandler extends SettingsHandler {
     // Note: features intentionally don't use the same key as settings to avoid conflicts
     // and to be backwards compatible.
 
-    _readFeature(featureName) {
+    private readFeature(featureName) {
         if (MatrixClientPeg.get() && MatrixClientPeg.get().isGuest()) {
             // Guests should not have any labs features enabled.
             return false;
@@ -153,8 +144,8 @@ export default class DeviceSettingsHandler extends SettingsHandler {
         return null;
     }
 
-    _writeFeature(featureName, enabled) {
+    private writeFeature(featureName, enabled) {
         localStorage.setItem("mx_labs_feature_" + featureName, enabled);
-        this._watchers.notifyUpdate(featureName, null, SettingLevel.DEVICE, enabled);
+        this.watchManager.notifyUpdate(featureName, null, SettingLevel.DEVICE, enabled);
     }
 }

@@ -1,6 +1,7 @@
 /*
 Copyright 2017 Travis Ralston
 Copyright 2019 New Vector Ltd.
+Copyright 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,9 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {MatrixClientPeg} from '../../MatrixClientPeg';
+import { MatrixClientPeg } from '../../MatrixClientPeg';
 import MatrixClientBackedSettingsHandler from "./MatrixClientBackedSettingsHandler";
-import {SettingLevel} from "../SettingsStore";
+import { WatchManager } from "../WatchManager";
+import { SettingLevel } from "../models";
 
 const BREADCRUMBS_LEGACY_EVENT_TYPE = "im.vector.riot.breadcrumb_rooms";
 const BREADCRUMBS_EVENT_TYPE = "im.vector.setting.breadcrumbs";
@@ -30,60 +32,59 @@ const INTEG_PROVISIONING_EVENT_TYPE = "im.vector.setting.integration_provisionin
  * This handler does not make use of the roomId parameter.
  */
 export default class AccountSettingsHandler extends MatrixClientBackedSettingsHandler {
-    constructor(watchManager) {
+    constructor(private watchers: WatchManager) {
         super();
 
-        this._watchers = watchManager;
-        this._onAccountData = this._onAccountData.bind(this);
+        this.onAccountData = this.onAccountData.bind(this);
     }
 
-    initMatrixClient(oldClient, newClient) {
+    protected initMatrixClient(oldClient, newClient) {
         if (oldClient) {
-            oldClient.removeListener("accountData", this._onAccountData);
+            oldClient.removeListener("accountData", this.onAccountData);
         }
 
-        newClient.on("accountData", this._onAccountData);
+        newClient.on("accountData", this.onAccountData);
     }
 
-    _onAccountData(event) {
+    private onAccountData(event) {
         if (event.getType() === "org.matrix.preview_urls") {
             let val = event.getContent()['disable'];
-            if (typeof(val) !== "boolean") {
+            if (typeof (val) !== "boolean") {
                 val = null;
             } else {
                 val = !val;
             }
 
-            this._watchers.notifyUpdate("urlPreviewsEnabled", null, SettingLevel.ACCOUNT, val);
+            this.watchers.notifyUpdate("urlPreviewsEnabled", null, SettingLevel.ACCOUNT, val);
         } else if (event.getType() === "im.vector.web.settings") {
             // We can't really discern what changed, so trigger updates for everything
             for (const settingName of Object.keys(event.getContent())) {
                 const val = event.getContent()[settingName];
-                this._watchers.notifyUpdate(settingName, null, SettingLevel.ACCOUNT, val);
+                this.watchers.notifyUpdate(settingName, null, SettingLevel.ACCOUNT, val);
             }
         } else if (BREADCRUMBS_EVENT_TYPES.includes(event.getType())) {
-            this._notifyBreadcrumbsUpdate(event);
+            this.notifyBreadcrumbsUpdate(event);
         } else if (event.getType() === INTEG_PROVISIONING_EVENT_TYPE) {
             const val = event.getContent()['enabled'];
-            this._watchers.notifyUpdate("integrationProvisioning", null, SettingLevel.ACCOUNT, val);
+            this.watchers.notifyUpdate("integrationProvisioning", null, SettingLevel.ACCOUNT, val);
         }
     }
 
-    getValue(settingName, roomId) {
+    public getValue(settingName, roomId) {
         // Special case URL previews
         if (settingName === "urlPreviewsEnabled") {
-            const content = this._getSettings("org.matrix.preview_urls") || {};
+            const content = this.getSettings("org.matrix.preview_urls") || {};
 
             // Check to make sure that we actually got a boolean
-            if (typeof(content['disable']) !== "boolean") return null;
+            if (typeof (content['disable']) !== "boolean") return null;
             return !content['disable'];
         }
 
         // Special case for breadcrumbs
         if (settingName === "breadcrumb_rooms") {
-            let content = this._getSettings(BREADCRUMBS_EVENT_TYPE);
+            let content = this.getSettings(BREADCRUMBS_EVENT_TYPE);
             if (!content || !content['recent_rooms']) {
-                content = this._getSettings(BREADCRUMBS_LEGACY_EVENT_TYPE);
+                content = this.getSettings(BREADCRUMBS_LEGACY_EVENT_TYPE);
 
                 // This is a bit of a hack, but it makes things slightly easier
                 if (content) content['recent_rooms'] = content['rooms'];
@@ -94,11 +95,11 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
 
         // Special case integration manager provisioning
         if (settingName === "integrationProvisioning") {
-            const content = this._getSettings(INTEG_PROVISIONING_EVENT_TYPE);
+            const content = this.getSettings(INTEG_PROVISIONING_EVENT_TYPE);
             return content ? content['enabled'] : null;
         }
 
-        const settings = this._getSettings() || {};
+        const settings = this.getSettings() || {};
         let preferredValue = settings[settingName];
 
         if (preferredValue === null || preferredValue === undefined) {
@@ -111,49 +112,49 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
         return preferredValue;
     }
 
-    setValue(settingName, roomId, newValue) {
+    public setValue(settingName, roomId, newValue) {
         // Special case URL previews
         if (settingName === "urlPreviewsEnabled") {
-            const content = this._getSettings("org.matrix.preview_urls") || {};
-            content['disable'] = !newValue;
-            return MatrixClientPeg.get().setAccountData("org.matrix.preview_urls", content);
+            const content2 = this.getSettings("org.matrix.preview_urls") || {};
+            content2['disable'] = !newValue;
+            return MatrixClientPeg.get().setAccountData("org.matrix.preview_urls", content2);
         }
 
         // Special case for breadcrumbs
         if (settingName === "breadcrumb_rooms") {
             // We read the value first just to make sure we preserve whatever random keys might be present.
-            let content = this._getSettings(BREADCRUMBS_EVENT_TYPE);
-            if (!content || !content['recent_rooms']) {
-                content = this._getSettings(BREADCRUMBS_LEGACY_EVENT_TYPE);
+            let content2 = this.getSettings(BREADCRUMBS_EVENT_TYPE);
+            if (!content2 || !content2['recent_rooms']) {
+                content2 = this.getSettings(BREADCRUMBS_LEGACY_EVENT_TYPE);
             }
-            if (!content) content = {}; // If we still don't have content, make some
+            if (!content2) content2 = {}; // If we still don't have content, make some
 
-            content['recent_rooms'] = newValue;
-            return MatrixClientPeg.get().setAccountData(BREADCRUMBS_EVENT_TYPE, content);
+            content2['recent_rooms'] = newValue;
+            return MatrixClientPeg.get().setAccountData(BREADCRUMBS_EVENT_TYPE, content2);
         }
 
         // Special case integration manager provisioning
         if (settingName === "integrationProvisioning") {
-            const content = this._getSettings(INTEG_PROVISIONING_EVENT_TYPE) || {};
-            content['enabled'] = newValue;
-            return MatrixClientPeg.get().setAccountData(INTEG_PROVISIONING_EVENT_TYPE, content);
+            const content2 = this.getSettings(INTEG_PROVISIONING_EVENT_TYPE) || {};
+            content2['enabled'] = newValue;
+            return MatrixClientPeg.get().setAccountData(INTEG_PROVISIONING_EVENT_TYPE, content2);
         }
 
-        const content = this._getSettings() || {};
+        const content = this.getSettings() || {};
         content[settingName] = newValue;
         return MatrixClientPeg.get().setAccountData("im.vector.web.settings", content);
     }
 
-    canSetValue(settingName, roomId) {
+    public canSetValue(settingName, roomId) {
         return true; // It's their account, so they should be able to
     }
 
-    isSupported() {
+    public isSupported() {
         const cli = MatrixClientPeg.get();
         return cli !== undefined && cli !== null;
     }
 
-    _getSettings(eventType = "im.vector.web.settings") {
+    private getSettings(eventType = "im.vector.web.settings") {
         const cli = MatrixClientPeg.get();
         if (!cli) return null;
 
@@ -162,11 +163,11 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
         return event.getContent();
     }
 
-    _notifyBreadcrumbsUpdate(event) {
+    private notifyBreadcrumbsUpdate(event) {
         let val = [];
         if (event.getType() === BREADCRUMBS_LEGACY_EVENT_TYPE) {
             // This seems fishy - try and get the event for the new rooms
-            const newType = this._getSettings(BREADCRUMBS_EVENT_TYPE);
+            const newType = this.getSettings(BREADCRUMBS_EVENT_TYPE);
             if (newType) val = newType['recent_rooms'];
             else val = event.getContent()['rooms'];
         } else if (event.getType() === BREADCRUMBS_EVENT_TYPE) {
@@ -174,6 +175,6 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
         } else {
             return; // for sanity, not because we expect to be here.
         }
-        this._watchers.notifyUpdate("breadcrumb_rooms", null, SettingLevel.ACCOUNT, val || []);
+        this.watchers.notifyUpdate("breadcrumb_rooms", null, SettingLevel.ACCOUNT, val || []);
     }
 }

@@ -1,6 +1,7 @@
 /*
 Copyright 2017 Travis Ralston
 Copyright 2019 New Vector Ltd.
+Copyright 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,6 +17,7 @@ limitations under the License.
 */
 
 import SettingsHandler from "./SettingsHandler";
+import { SettingValue } from "../models";
 
 /**
  * A wrapper for a SettingsHandler that performs local echo on
@@ -23,47 +25,49 @@ import SettingsHandler from "./SettingsHandler";
  * handler as much as possible to ensure values are not stale.
  */
 export default class LocalEchoWrapper extends SettingsHandler {
+    private cache: {
+        [settingName: string]: {
+            [roomId: string]: SettingValue<any>;
+        };
+    } = {};
+
     /**
      * Creates a new local echo wrapper
      * @param {SettingsHandler} handler The handler to wrap
      */
-    constructor(handler) {
+    constructor(private handler: SettingsHandler) {
         super();
-        this._handler = handler;
-        this._cache = {
-            // settingName: { roomId: value }
-        };
     }
 
-    getValue(settingName, roomId) {
+    public getValue(settingName, roomId) {
         const cacheRoomId = roomId ? roomId : "UNDEFINED"; // avoid weird keys
-        const bySetting = this._cache[settingName];
+        const bySetting = this.cache[settingName];
         if (bySetting && bySetting.hasOwnProperty(cacheRoomId)) {
             return bySetting[roomId];
         }
 
-        return this._handler.getValue(settingName, roomId);
+        return this.handler.getValue(settingName, roomId);
     }
 
-    setValue(settingName, roomId, newValue) {
-        if (!this._cache[settingName]) this._cache[settingName] = {};
-        const bySetting = this._cache[settingName];
+    public setValue(settingName, roomId, newValue) {
+        if (!this.cache[settingName]) this.cache[settingName] = {};
+        const bySetting = this.cache[settingName];
 
         const cacheRoomId = roomId ? roomId : "UNDEFINED"; // avoid weird keys
         bySetting[cacheRoomId] = newValue;
 
-        const handlerPromise = this._handler.setValue(settingName, roomId, newValue);
+        const handlerPromise = this.handler.setValue(settingName, roomId, newValue);
         return Promise.resolve(handlerPromise).finally(() => {
             delete bySetting[cacheRoomId];
         });
     }
 
 
-    canSetValue(settingName, roomId) {
-        return this._handler.canSetValue(settingName, roomId);
+    public canSetValue(settingName, roomId) {
+        return this.handler.canSetValue(settingName, roomId);
     }
 
-    isSupported() {
-        return this._handler.isSupported();
+    public isSupported() {
+        return this.handler.isSupported();
     }
 }
