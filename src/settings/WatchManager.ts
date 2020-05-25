@@ -19,7 +19,7 @@ import { SettingLevel, SettingValue } from "./models";
 
 const NO_ROOM_ID: string = null; // a hack to work around TypeScript
 
-interface WatchCallbackFn {
+export interface WatchCallbackFn {
     <T>(inRoomId: string, atLevel: SettingLevel, newValueAtLevel: SettingValue<T>): void;
 }
 

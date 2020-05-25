@@ -40,6 +40,12 @@ const LEVELS_FEATURE = ['device', 'config'];
 const LEVELS_DEVICE_ONLY_SETTINGS = ['device'];
 const LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG = ['device', 'config'];
 
+export interface ISetting {
+    // TODO
+    controller?: any;
+    invertedSettingName?: string;
+}
+
 export const SETTINGS = {
     // EXAMPLE SETTING:
     // "my-setting": {

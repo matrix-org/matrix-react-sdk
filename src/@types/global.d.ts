@@ -16,11 +16,13 @@ limitations under the License.
 
 import * as ModernizrStatic from "modernizr";
 import { IMatrixClientPeg } from "../MatrixClientPeg";
+import SettingsStore from "../settings/SettingsStore";
 
 declare global {
     interface Window {
         Modernizr: ModernizrStatic;
         mxMatrixClientPeg: IMatrixClientPeg;
+        mxSettingsStore: SettingsStore;
         Olm: {
             init: () => Promise<void>;
         };
