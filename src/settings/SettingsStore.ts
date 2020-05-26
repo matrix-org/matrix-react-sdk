@@ -29,8 +29,13 @@ import dis from '../dispatcher/dispatcher';
 import { ISetting, SETTINGS } from "./Settings";
 import LocalEchoWrapper from "./handlers/LocalEchoWrapper";
 import { WatchCallbackFn, WatchManager } from "./WatchManager";
-import { SettingLevel, SettingValue } from "./models";
+import { SettingLevel as SL2, SettingValue } from "./models";
 import SettingsHandler from "./handlers/SettingsHandler";
+import { SettingsStore2 } from "./v2-settings/SettingsStore2";
+import { TestSetting } from "./v2-settings/settings/test";
+
+// TODO: Fix imports
+export const SettingLevel = SL2;
 
 const defaultWatchManager = new WatchManager();
 
@@ -81,7 +86,7 @@ export interface WatchedSettingCallbackFn {
      * @param {SettingLevel} atLevel The level at which the setting changed.
      * @param {SettingValue<T>} newValueAtLevel The new value at that particular setting level.
      * @param {SettingValue<T>} newValue The new value of the setting regardless of level.
-     */<T>(settingName: string, inRoomId: string, atLevel: SettingLevel, newValueAtLevel: SettingValue<T>, newValue: SettingValue<T>): void;
+     */<T>(settingName: string, inRoomId: string, atLevel: SL2, newValueAtLevel: SettingValue<T>, newValue: SettingValue<T>): void;
 }
 
 /**
@@ -326,7 +331,7 @@ export default class SettingsStore {
      * @param {boolean} excludeDefault True to disable using the default value.
      * @return {*} The value, or null if not found.
      */
-    public static getValueAt(level: SettingLevel, settingName: string, roomId: string = null, explicit = false, excludeDefault = false): SettingValue<any> {
+    public static getValueAt(level: SL2, settingName: string, roomId: string = null, explicit = false, excludeDefault = false): SettingValue<any> {
         // Verify that the setting is actually a setting
         const setting = SETTINGS[settingName];
         if (!setting) {
@@ -392,7 +397,7 @@ export default class SettingsStore {
     }
 
     // TODO: Define Setting type
-    private static getFinalValue(setting: ISetting, level: SettingLevel, roomId: string, calculatedValue: SettingValue<any>, calculatedAtLevel: SettingValue<any>) {
+    private static getFinalValue(setting: ISetting, level: SL2, roomId: string, calculatedValue: SettingValue<any>, calculatedAtLevel: SettingValue<any>) {
         let resultingValue = calculatedValue;
 
         if (setting.controller) {
@@ -414,7 +419,7 @@ export default class SettingsStore {
      * @param {*} value The new value of the setting, may be null.
      * @return {Promise} Resolves when the setting has been changed.
      */
-    public static async setValue<T>(settingName: string, roomId: string, level: SettingLevel, value: SettingValue<T>): Promise<any> {
+    public static async setValue<T>(settingName: string, roomId: string, level: SL2, value: SettingValue<T>): Promise<any> {
         // Verify that the setting is actually a setting
         const setting = SETTINGS[settingName];
         if (!setting) {
@@ -457,7 +462,7 @@ export default class SettingsStore {
      * check at.
      * @return {boolean} True if the user may set the setting, false otherwise.
      */
-    public static canSetValue(settingName: string, roomId: string, level: SettingLevel): boolean {
+    public static canSetValue(settingName: string, roomId: string, level: SL2): boolean {
         // Verify that the setting is actually a setting
         if (!SETTINGS[settingName]) {
             throw new Error("Setting '" + settingName + "' does not appear to be a setting.");
@@ -474,7 +479,7 @@ export default class SettingsStore {
      * to check the feasibility of.
      * @return {boolean} True if the level is supported, false otherwise.
      */
-    public static isLevelSupported(level: SettingLevel): boolean {
+    public static isLevelSupported(level: SL2): boolean {
         if (!LEVEL_HANDLERS[level]) return false;
         return LEVEL_HANDLERS[level].isSupported();
     }
@@ -571,10 +576,12 @@ export default class SettingsStore {
             doChecks(def.invertedSettingName);
         }
 
+        console.log(`--- Store2: ${SettingsStore2.getValue(TestSetting, roomId)}`);
+
         console.log(`--- END DEBUG`);
     }
 
-    private static getHandler(settingName: string, level: SettingLevel): SettingsHandler {
+    private static getHandler(settingName: string, level: SL2): SettingsHandler {
         const handlers = SettingsStore.getHandlers(settingName);
         if (!handlers[level]) return null;
         return handlers[level];

@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {MatrixClient} from 'matrix-js-sdk';
+import {MatrixClient} from 'matrix-js-sdk/src/client';
 
 import {_td} from '../languageHandler';
 import {
@@ -30,6 +30,7 @@ import PushToMatrixClientController from './controllers/PushToMatrixClientContro
 import ReloadOnChangeController from "./controllers/ReloadOnChangeController";
 import {RIGHT_PANEL_PHASES} from "../stores/RightPanelStorePhases";
 import FontSizeController from './controllers/FontSizeController';
+import { SettingLevel } from "./models";
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
 const LEVELS_ROOM_SETTINGS = ['device', 'room-device', 'room-account', 'account', 'config'];
@@ -182,6 +183,11 @@ export const SETTINGS = {
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("Show info about bridges in room settings"),
         default: false,
+    },
+    "test": {
+        displayName: _td("test"),
+        supportedLevels: [SettingLevel.DEVICE],
+        default: 1234,
     },
     "fontSize": {
         displayName: _td("Font size"),
