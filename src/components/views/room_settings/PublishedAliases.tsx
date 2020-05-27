@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useContext, useEffect, useReducer} from 'react';
+import React, {useContext, useEffect, useReducer, useRef} from 'react';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { _t } from '../../../languageHandler';
 import EditableItemList from "../elements/EditableItemList";
@@ -180,11 +180,23 @@ class EditableAltAliasList extends EditableItemList {
     }
 }
 
+function useIsMountedRef() {
+    const isMounted = useRef(null);
+    useEffect(() => {
+        isMounted.current = true;
+        return () => {
+            isMounted.current = false;
+        }
+    });
+    return isMounted;
+}
+
 export default function PublishedAliases({ room, localAliases }) {
     const client: any = useContext(MatrixClientContext);
     const canSetCanonicalAlias = room.currentState.mayClientSendStateEvent("m.room.canonical_alias", client);
     const initialAltAliases = room.getAltAliases();
     const initialCanonicalAlias = room.getCanonicalAlias();
+    const isMounted = useIsMountedRef();
 
     /*
      * Reasons why an alias change failed.
@@ -225,9 +237,13 @@ export default function PublishedAliases({ room, localAliases }) {
 
         try {
             await client.sendStateEvent(room.roomId, "m.room.canonical_alias", content, "");
-            dispatch({type: END_COMMIT});
+            if (isMounted.current) dispatch({type: END_COMMIT});
         } catch (err) {
             console.error(`Error updating aliases in ${room.roomId}`, err);
+
+            /* Don't throw up a dialog if the user closed the parent */
+            if (!isMounted.current) return;
+
             dispatch({type: ABORT_COMMIT, error: err});
 
             if (submitting === 'canonical') {
@@ -308,7 +324,7 @@ export default function PublishedAliases({ room, localAliases }) {
             if (event.getRoomId() !== room.roomId) return;
             if (event.getType() !== "m.room.canonical_alias") return;
 
-            dispatch({
+            if (isMounted.current) dispatch({
                 type: 'synced_aliases',
                 alt: room.getAltAliases(),
                 canonical: room.getCanonicalAlias(),
