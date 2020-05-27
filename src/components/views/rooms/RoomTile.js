@@ -21,7 +21,7 @@ import React, {createRef} from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import classNames from 'classnames';
-import dis from '../../../dispatcher';
+import dis from '../../../dispatcher/dispatcher';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import DMRoomMap from '../../../utils/DMRoomMap';
 import * as sdk from '../../../index';
@@ -432,9 +432,8 @@ export default createReactClass({
         });
 
         let name = this.state.roomName;
-        if (name == undefined || name == null) name = '';
+        if (typeof name !== 'string') name = '';
         name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
-
 
         let badge;
         if (badges) {

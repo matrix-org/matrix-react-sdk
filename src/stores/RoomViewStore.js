@@ -15,7 +15,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import dis from '../dispatcher';
+import dis from '../dispatcher/dispatcher';
 import {Store} from 'flux/utils';
 import {MatrixClientPeg} from '../MatrixClientPeg';
 import * as sdk from '../index';
@@ -272,9 +272,8 @@ class RoomViewStore extends Store {
                 err: err,
             });
             let msg = err.message ? err.message : JSON.stringify(err);
-            // XXX: We are relying on the error message returned by browsers here.
-            // This isn't great, but it does generalize the error being shown to users.
-            if (msg && msg.startsWith("CORS request rejected")) {
+            console.log("Failed to join room:", msg);
+            if (err.name === "ConnectionError") {
                 msg = _t("There was an error joining the room");
             }
             if (err.errcode === 'M_INCOMPATIBLE_ROOM_VERSION') {

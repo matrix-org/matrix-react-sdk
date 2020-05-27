@@ -165,7 +165,7 @@ class EditableAltAliasList extends EditableItemList {
                     className="mx_RoomAliasField"
                     type="text"
                     autoComplete="off"
-                    prefix={<span>#</span>}
+                    prefixComponent={<span>#</span>}
                     value={this.props.newItem || ""}
                     onChange={this._onNewItemChanged}
                     list={this.props.suggestionsListId}
@@ -344,7 +344,7 @@ export default function PublishedAliases({ room, localAliases }) {
                 element='select'
                 id='canonicalAlias'
                 label={_t('Main address')}
-                onChange={(ev: Event) => onSetCanonical((ev.target as HTMLInputElement).value)}
+                onChange={(ev: React.ChangeEvent<HTMLSelectElement>) => onSetCanonical(ev.target.value)}
                 value={state.canonical.working || ''}
             >
                 <option value="" key="unset">{ _t('not specified') }</option>
