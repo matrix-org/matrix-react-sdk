@@ -192,8 +192,8 @@ export default function PublishedAliases({ room, localAliases }) {
      * Otherwise we report in a dialog box.
      */
     const errorReasons = {
-        "M_BAD_ALIAS": _t("Room alias does not point to the room"),
-        "M_INVALID_PARAM": _t("The server rejected the room alias as invalid"),
+        "M_BAD_ALIAS": _t("Room address does not point to the room"),
+        "M_INVALID_PARAM": _t("The server rejected the room address as invalid"),
     };
 
     const [state, dispatch] = useReducer(reducer, {
@@ -373,7 +373,7 @@ export default function PublishedAliases({ room, localAliases }) {
                 onItemAdded={onAddAlias}
                 onItemRemoved={onRemoveAlias}
                 onNewItemChanged={(value) => dispatch({value, type: UPDATE_ALT_ALIAS})}
-                placeholder={_t('New published address (e.g. #alias:server)')}
+                placeholder={_t('New published address (e.g. #address:server)')}
                 suggestionsListId="mx_AliasSettings_altRecommendations"
             />
         </OverlaySpinner>);
