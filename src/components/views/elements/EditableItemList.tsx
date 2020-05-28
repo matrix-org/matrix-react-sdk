@@ -74,11 +74,11 @@ export class EditableItem extends React.Component<IEditableItemProps, IEditableI
                     <span className="mx_EditableItem_promptText">
                         {_t("Are you sure?")}
                     </span>
-                    <AccessibleButton onClick={this._onActuallyRemove} kind="primary_sm"
+                    <AccessibleButton onClick={this._onActuallyRemove} kind="link"
                                       className="mx_EditableItem_confirmBtn">
                         {_t("Yes")}
                     </AccessibleButton>
-                    <AccessibleButton onClick={this._onDontRemove} kind="danger_sm"
+                    <AccessibleButton onClick={this._onDontRemove} kind="link"
                                       className="mx_EditableItem_confirmBtn">
                         {_t("No")}
                     </AccessibleButton>
