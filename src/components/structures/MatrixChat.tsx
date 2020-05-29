@@ -32,7 +32,6 @@ import { DecryptionFailureTracker } from "../../DecryptionFailureTracker";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import PlatformPeg from "../../PlatformPeg";
 import SdkConfig from "../../SdkConfig";
-import * as RoomListSorter from "../../RoomListSorter";
 import dis from "../../dispatcher/dispatcher";
 import Notifier from '../../Notifier';
 
@@ -597,15 +596,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 break;
             }
-            // case 'view_prev_room':
-            //     this.viewNextRoom(-1);
-            //     break;
-            case 'view_next_room':
-                this.viewNextRoom(1);
-                break;
-            case 'view_recent_room':
-                this.viewRecentRoom(payload.index);
-                break;
             case Action.ViewUserSettings: {
                 const UserSettingsDialog = sdk.getComponent("dialogs.UserSettingsDialog");
                 Modal.createTrackedDialog('User settings', '', UserSettingsDialog, {},
@@ -782,46 +772,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         ThemeController.isLogin = true;
         this.themeWatcher.recheck();
         this.notifyNewScreen('register');
-    }
-
-    // TODO: Move to RoomViewStore
-    private viewNextRoom(roomIndexDelta: number) {
-        const allRooms = RoomListSorter.mostRecentActivityFirst(
-            MatrixClientPeg.get().getRooms(),
-        );
-        // If there are 0 rooms or 1 room, view the home page because otherwise
-        // if there are 0, we end up trying to index into an empty array, and
-        // if there is 1, we end up viewing the same room.
-        if (allRooms.length < 2) {
-            dis.dispatch({
-                action: 'view_home_page',
-            });
-            return;
-        }
-        let roomIndex = -1;
-        for (let i = 0; i < allRooms.length; ++i) {
-            if (allRooms[i].roomId === this.state.currentRoomId) {
-                roomIndex = i;
-                break;
-            }
-        }
-        roomIndex = (roomIndex + roomIndexDelta) % allRooms.length;
-        if (roomIndex < 0) roomIndex = allRooms.length - 1;
-        dis.dispatch({
-            action: 'view_room',
-            room_id: allRooms[roomIndex].roomId,
-        });
-    }
-
-    // TODO: Move to RoomViewStore
-    private viewRecentRoom(index: number) {
-        const roomIds = SettingsStore.getValue("breadcrumb_rooms");
-        if (roomIds && roomIds[index]) {
-            dis.dispatch({
-                action: 'view_room',
-                room_id: roomIds[index],
-            });
-        }
     }
 
     // switch view to the given room

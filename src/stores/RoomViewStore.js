@@ -22,6 +22,8 @@ import * as sdk from '../index';
 import Modal from '../Modal';
 import { _t } from '../languageHandler';
 import { getCachedRoomIDForAlias, storeRoomAliasInCache } from '../RoomAliasCache';
+import SettingsStore from "../settings/SettingsStore";
+import * as RoomListSorter from "../RoomListSorter";
 
 const INITIAL_STATE = {
     // Whether we're joining the currently viewed room (see isJoining())
@@ -153,6 +155,15 @@ class RoomViewStore extends Store {
                 }, /*className=*/null, /*isPriority=*/false, /*isStatic=*/true);
                 break;
             }
+            // case 'view_prev_room':
+            //     this._viewNextRoom(-1);
+            //     break;
+            case 'view_next_room':
+                this._viewNextRoom(1);
+                break;
+            case 'view_recent_room':
+                this._viewRecentRoom(payload.index);
+                break;
         }
     }
 
@@ -287,6 +298,42 @@ class RoomViewStore extends Store {
             joining: false,
             joinError: payload.err,
         });
+    }
+
+    _viewNextRoom(roomIndexDelta: number) {
+        const allRooms = RoomListSorter.mostRecentActivityFirst(MatrixClientPeg.get().getRooms());
+        // If there are 0 rooms or 1 room, view the home page because otherwise
+        // if there are 0, we end up trying to index into an empty array, and
+        // if there is 1, we end up viewing the same room.
+        if (allRooms.length < 2) {
+            dis.dispatch({
+                action: 'view_home_page',
+            });
+            return;
+        }
+        let roomIndex = -1;
+        for (let i = 0; i < allRooms.length; ++i) {
+            if (allRooms[i].roomId === this.getRoomId()) {
+                roomIndex = i;
+                break;
+            }
+        }
+        roomIndex = (roomIndex + roomIndexDelta) % allRooms.length;
+        if (roomIndex < 0) roomIndex = allRooms.length - 1;
+        dis.dispatch({
+            action: "view_room",
+            room_id: allRooms[roomIndex].roomId,
+        });
+    }
+
+    _viewRecentRoom(index: number) {
+        const roomIds = SettingsStore.getValue("breadcrumb_rooms");
+        if (roomIds && roomIds[index]) {
+            dis.dispatch({
+                action: "view_room",
+                room_id: roomIds[index],
+            });
+        }
     }
 
     reset() {
