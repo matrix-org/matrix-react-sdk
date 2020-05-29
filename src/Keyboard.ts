@@ -36,6 +36,17 @@ export const Key = {
     SHIFT: "Shift",
     CONTEXT_MENU: "ContextMenu",
 
+    DIGIT_0: "0",
+    DIGIT_1: "1",
+    DIGIT_2: "2",
+    DIGIT_3: "3",
+    DIGIT_4: "4",
+    DIGIT_5: "5",
+    DIGIT_6: "6",
+    DIGIT_7: "7",
+    DIGIT_8: "8",
+    DIGIT_9: "9",
+
     COMMA: ",",
     PERIOD: ".",
     LESS_THAN: "<",
@@ -71,6 +82,19 @@ export const Key = {
     X: "x",
     Y: "y",
     Z: "z",
+};
+
+export const DigitMap = {
+    [Key.DIGIT_0]: 0,
+    [Key.DIGIT_1]: 1,
+    [Key.DIGIT_2]: 2,
+    [Key.DIGIT_3]: 3,
+    [Key.DIGIT_4]: 4,
+    [Key.DIGIT_5]: 5,
+    [Key.DIGIT_6]: 6,
+    [Key.DIGIT_7]: 7,
+    [Key.DIGIT_8]: 8,
+    [Key.DIGIT_9]: 9,
 };
 
 export const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;

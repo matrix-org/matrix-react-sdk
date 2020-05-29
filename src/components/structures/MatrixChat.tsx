@@ -597,14 +597,14 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 break;
             }
-            case 'view_prev_room':
-                this.viewNextRoom(-1);
-                break;
+            // case 'view_prev_room':
+            //     this.viewNextRoom(-1);
+            //     break;
             case 'view_next_room':
                 this.viewNextRoom(1);
                 break;
-            case 'view_indexed_room':
-                this.viewIndexedRoom(payload.roomIndex);
+            case 'view_recent_room':
+                this.viewRecentRoom(payload.index);
                 break;
             case Action.ViewUserSettings: {
                 const UserSettingsDialog = sdk.getComponent("dialogs.UserSettingsDialog");
@@ -814,14 +814,12 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }
 
     // TODO: Move to RoomViewStore
-    private viewIndexedRoom(roomIndex: number) {
-        const allRooms = RoomListSorter.mostRecentActivityFirst(
-            MatrixClientPeg.get().getRooms(),
-        );
-        if (allRooms[roomIndex]) {
+    private viewRecentRoom(index: number) {
+        const roomIds = SettingsStore.getValue("breadcrumb_rooms");
+        if (roomIds && roomIds[index]) {
             dis.dispatch({
                 action: 'view_room',
-                room_id: allRooms[roomIndex].roomId,
+                room_id: roomIds[index],
             });
         }
     }

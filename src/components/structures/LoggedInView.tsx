@@ -22,7 +22,7 @@ import { MatrixClient } from 'matrix-js-sdk/src/client';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { DragDropContext } from 'react-beautiful-dnd';
 
-import {Key, isOnlyCtrlOrCmdKeyEvent, isOnlyCtrlOrCmdIgnoreShiftKeyEvent} from '../../Keyboard';
+import {Key, isOnlyCtrlOrCmdKeyEvent, isOnlyCtrlOrCmdIgnoreShiftKeyEvent, DigitMap} from '../../Keyboard';
 import PageTypes from '../../PageTypes';
 import CallMediaHandler from '../../CallMediaHandler';
 import { fixupColorFonts } from '../../utils/FontManager';
@@ -398,20 +398,6 @@ class LoggedInView extends React.PureComponent<IProps, IState> {
     };
 
     _onKeyDown = (ev) => {
-            /*
-            // Remove this for now as ctrl+alt = alt-gr so this breaks keyboards which rely on alt-gr for numbers
-            // Will need to find a better meta key if anyone actually cares about using this.
-            if (ev.altKey && ev.ctrlKey && ev.keyCode > 48 && ev.keyCode < 58) {
-                dis.dispatch({
-                    action: 'view_indexed_room',
-                    roomIndex: ev.keyCode - 49,
-                });
-                ev.stopPropagation();
-                ev.preventDefault();
-                return;
-            }
-            */
-
         let handled = false;
         const ctrlCmdOnly = isOnlyCtrlOrCmdKeyEvent(ev);
         const hasModifier = ev.altKey || ev.ctrlKey || ev.metaKey || ev.shiftKey;
@@ -479,6 +465,25 @@ class LoggedInView extends React.PureComponent<IProps, IState> {
                     dis.dispatch({
                         action: 'toggle_right_panel',
                         type: this.props.page_type === "room_view" ? "room" : "group",
+                    });
+                    handled = true;
+                }
+                break;
+
+            case Key.DIGIT_0:
+            case Key.DIGIT_1:
+            case Key.DIGIT_2:
+            case Key.DIGIT_3:
+            case Key.DIGIT_4:
+            case Key.DIGIT_5:
+            case Key.DIGIT_6:
+            case Key.DIGIT_7:
+            case Key.DIGIT_8:
+            case Key.DIGIT_9:
+                if (ev.altKey && !ev.ctrlKey && !ev.metaKey && !ev.shiftKey) {
+                    dis.dispatch({
+                        action: "view_recent_room",
+                        index: (DigitMap[ev.key] + 9) % 10, // offset 1234567890 into 0-9 index
                     });
                     handled = true;
                 }
