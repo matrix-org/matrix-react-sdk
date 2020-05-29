@@ -19,10 +19,9 @@ limitations under the License.
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { DragDropContext } from 'react-beautiful-dnd';
 
-import {Key, isOnlyCtrlOrCmdKeyEvent, isOnlyCtrlOrCmdIgnoreShiftKeyEvent, DigitMap} from '../../Keyboard';
+import {Key, isOnlyCtrlOrCmdKeyEvent, isOnlyCtrlOrCmdIgnoreShiftKeyEvent, digitKeyToNumber} from '../../Keyboard';
 import PageTypes from '../../PageTypes';
 import CallMediaHandler from '../../CallMediaHandler';
 import { fixupColorFonts } from '../../utils/FontManager';
@@ -483,7 +482,7 @@ class LoggedInView extends React.PureComponent<IProps, IState> {
                 if (ev.altKey && !ev.ctrlKey && !ev.metaKey && !ev.shiftKey) {
                     dis.dispatch({
                         action: "view_recent_room",
-                        index: (DigitMap[ev.key] + 9) % 10, // offset 1234567890 into 0-9 index
+                        index: (digitKeyToNumber(ev.key) + 9) % 10, // offset 1234567890 into 0-9 index
                     });
                     handled = true;
                 }

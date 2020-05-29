@@ -84,17 +84,10 @@ export const Key = {
     Z: "z",
 };
 
-export const DigitMap = {
-    [Key.DIGIT_0]: 0,
-    [Key.DIGIT_1]: 1,
-    [Key.DIGIT_2]: 2,
-    [Key.DIGIT_3]: 3,
-    [Key.DIGIT_4]: 4,
-    [Key.DIGIT_5]: 5,
-    [Key.DIGIT_6]: 6,
-    [Key.DIGIT_7]: 7,
-    [Key.DIGIT_8]: 8,
-    [Key.DIGIT_9]: 9,
+type Digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
+
+export const digitKeyToNumber = (digit: Digit): number => {
+    return digit.charCodeAt(0) - "0".charCodeAt(0);
 };
 
 export const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
