@@ -168,7 +168,7 @@ const shortcuts: Record<Categories, IShortcut[]> = {
                 key: Key.U,
             }],
             description: _td("Upload a file"),
-        }
+        },
     ],
 
     [Categories.ROOM_LIST]: [
@@ -257,6 +257,12 @@ const shortcuts: Record<Categories, IShortcut[]> = {
                 key: Key.SLASH,
             }],
             description: _td("Toggle this dialog"),
+        }, {
+            keybinds: [{
+                modifiers: [Modifiers.ALT],
+                key: "[number]",
+            }],
+            description: _td("Jump to recent room"),
         },
     ],
 
@@ -338,7 +344,9 @@ const Shortcut: React.FC<{
                         <kbd>{ modifierIcon[m] || _t(m) }</kbd>+
                     </React.Fragment>;
                 }) }
-                <kbd>{ text }</kbd>
+                <kbd className={text.startsWith("[") ? "mx_KeyboardShortcutsDialog_kbd_range" : undefined}>
+                    { text }
+                </kbd>
             </div>;
         }) }
     </div>;
