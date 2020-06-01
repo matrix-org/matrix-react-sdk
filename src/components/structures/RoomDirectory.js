@@ -648,5 +648,6 @@ export default createReactClass({
 // Similar to matrix-react-sdk's MatrixTools.getDisplayAliasForRoom
 // but works with the objects we get from the public room list
 function get_display_alias_for_room(room) {
-    return room.canonical_alias || (room.aliases ? room.aliases[0] : "");
+    // prefer aliases as this will load balance correctly on p2p whereas canonical alias is unchanging
+    return room.aliases ? room.aliases[0] : (room.canonical_alias ? room.canonical_alias : "");
 }
