@@ -19,7 +19,7 @@ limitations under the License.
 import React from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
-import { _t } from '../../../languageHandler';
+import { _t, _td } from '../../../languageHandler';
 import * as sdk from '../../../index';
 import Modal from "../../../Modal";
 import SdkConfig from "../../../SdkConfig";
@@ -33,12 +33,36 @@ import AuthPage from "../../views/auth/AuthPage";
 const PHASE_SERVER_DETAILS = 0;
 // Show the forgot password inputs
 const PHASE_FORGOT = 1;
+// Show the forgot  email adress looks correct
+const PHASE_FORGOT_EMAIL_OKAY = 2;
+// Same as above, plus password length is correct.
+const PHASE_FORGOT_PASSWORD_LENGTH_OKAY = 3;
+// Same as above, plus password contains a lowercase letter.
+const PHASE_FORGOT_PASSWORD_LOWERCASE_OKAY = 4;
+// Same as above, plus password contains an uppercase letter.
+const PHASE_FORGOT_PASSWORD_UPPERCASE_OKAY = 5;
+// Same as above, plus password contians a number.
+const PHASE_FORGOT_PASSWORD_NUMBER_OKAY = 6;
+// Same as above, plus password contians a special symbol.
+const PHASE_FORGOT_PASSWORD_SYMBOL_OKAY = 7;
+// Same as above, plus both password match
+const PHASE_FORGOT_CONFIRM_OKAY = 8;
 // Email is in the process of being sent
-const PHASE_SENDING_EMAIL = 2;
+const PHASE_SENDING_EMAIL = 9;
 // Email has been sent
-const PHASE_EMAIL_SENT = 3;
+const PHASE_EMAIL_SENT = 10;
 // User has clicked the link in email and completed reset
-const PHASE_DONE = 4;
+const PHASE_DONE = 11;
+
+const SEND_BUTTON_MSG = [
+    _td('Fill in your e-mail address.'),
+    _td('Create a new password more than 8 chars long.'),
+    _td('Password should contain a lower case letter.'),
+    _td('Password should contain an upper case letter.'),
+    _td('Password should contain a number.'),
+    _td('Password should contain a special character.'),
+    _td('Confirm your new password'),
+    _td('Press to send reset e-mail')];
 
 export default createReactClass({
     displayName: 'ForgotPassword',
@@ -56,6 +80,8 @@ export default createReactClass({
             email: "",
             password: "",
             password2: "",
+            // Setting to 0 makes it enables, everything else will disable
+            disabled: 1,
             errorText: null,
 
             // We perform liveliness checks later, but for now suppress the errors.
@@ -102,6 +128,79 @@ export default createReactClass({
         }
     },
 
+    // Quick check if at least one char before '@' and two TLD chars after '.' are present.
+    testPossiblyValidEmail: function(email) {
+        let atPos  = email.indexOf('@');
+        let dotPos = email.lastIndexOf('.');
+        let len    = email.length;
+        if ((atPos > 0) && (dotPos > 2) && (dotPos < (len-2)) && (atPos < (dotPos-1))) {
+            return 1
+        } else {
+            return 0
+        }
+    },
+
+    testNewPasswordLength: function(password) {
+        if (password.length >= 8) {
+            return 1
+        } else {
+            return 0
+        }
+    },
+
+    testNewPasswordContainsLowerCase: function(password) {
+        var pattern = /[a-z]/;
+        return pattern.test(password);
+    },
+
+    testNewPasswordContainsUpperCase: function(password) {
+        var pattern = /[A-Z]/;
+        return pattern.test(password);
+    },
+
+    testNewPasswordContainsNumber: function(password) {
+        var pattern = /[0-9]/;
+        return pattern.test(password);
+    },
+
+    testNewPasswordContainsSpecialChar: function (password) {
+        var pattern = /\W/;
+        return pattern.test(password);
+    },
+
+    testPasswordsAreEqual: function(password, password2) {
+        if (password === password2) {
+            return 1
+        } else {
+            return 0
+        }
+    },
+
+    getPhasePromotion: function(email,password,password2) {
+        if (!this.testPossiblyValidEmail(email)) {
+            return PHASE_FORGOT;
+        }
+        if (!this.testNewPasswordLength(password)) {
+            return PHASE_FORGOT_EMAIL_OKAY;
+        }
+        if (!this.testNewPasswordContainsLowerCase(password)) {
+            return PHASE_FORGOT_PASSWORD_LENGTH_OKAY;
+        }
+        if (!this.testNewPasswordContainsUpperCase(password)) {
+            return PHASE_FORGOT_PASSWORD_LOWERCASE_OKAY;
+        }
+        if (!this.testNewPasswordContainsNumber(password)) {
+            return PHASE_FORGOT_PASSWORD_UPPERCASE_OKAY;
+        }
+        if (!this.testNewPasswordContainsSpecialChar(password)) {
+            return PHASE_FORGOT_PASSWORD_NUMBER_OKAY;
+        }
+        if (!this.testPasswordsAreEqual(password,password2)) {
+            return PHASE_FORGOT_PASSWORD_SYMBOL_OKAY;
+        }
+        return PHASE_FORGOT_CONFIRM_OKAY;
+    },
+
     submitPasswordReset: function(email, password) {
         this.setState({
             phase: PHASE_SENDING_EMAIL,
@@ -139,38 +238,57 @@ export default createReactClass({
         // refresh the server errors, just in case the server came back online
         await this._checkServerLiveliness(this.props.serverConfig);
 
-        if (!this.state.email) {
-            this.showErrorDialog(_t('The email address linked to your account must be entered.'));
-        } else if (!this.state.password || !this.state.password2) {
-            this.showErrorDialog(_t('A new password must be entered.'));
-        } else if (this.state.password !== this.state.password2) {
-            this.showErrorDialog(_t('New passwords must match each other.'));
-        } else {
-            const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-            Modal.createTrackedDialog('Forgot Password Warning', '', QuestionDialog, {
-                title: _t('Warning!'),
-                description:
-                    <div>
-                        { _t(
-                            "Changing your password will reset any end-to-end encryption keys " +
-                            "on all of your sessions, making encrypted chat history unreadable. Set up " +
-                            "Key Backup or export your room keys from another session before resetting your " +
-                            "password.",
-                        ) }
-                    </div>,
-                button: _t('Continue'),
-                onFinished: (confirmed) => {
-                    if (confirmed) {
-                        this.submitPasswordReset(this.state.email, this.state.password);
-                    }
-                },
-            });
-        }
+        const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+        Modal.createTrackedDialog('Forgot Password Warning', '', QuestionDialog, {
+            title: _t('Warning!'),
+            description:
+                <div>
+                    { _t(
+                        "Changing your password will reset any end-to-end encryption keys " +
+                        "on all of your sessions, making encrypted chat history unreadable. Set up " +
+                        "Key Backup or export your room keys from another session before resetting your " +
+                        "password.",
+                    ) }
+                </div>,
+            button: _t('Continue'),
+            onFinished: (confirmed) => {
+                if (confirmed) {
+                    this.submitPasswordReset(this.state.email, this.state.password);
+                }
+            },
+        });
     },
 
-    onInputChanged: function(stateKey, ev) {
+    onEmailChanged: function(ev) {
+        let email = ev.target.value;
+        let phase = this.getPhasePromotion(email,this.state.password,this.state.password2)
+        let disabled = (phase == PHASE_FORGOT_CONFIRM_OKAY) ? 0 : 1;
         this.setState({
-            [stateKey]: ev.target.value,
+            "phase": phase,
+            "email": email,
+            "disabled": disabled,
+        });
+    },
+
+    onPasswordChanged: function(ev) {
+        let password = ev.target.value;
+        let phase = this.getPhasePromotion(this.state.email,password,this.state.password2)
+        let disabled = (phase == PHASE_FORGOT_CONFIRM_OKAY) ? 0 : 1;
+        this.setState({
+            "phase": phase,
+            "password": password,
+            "disabled": disabled,
+        });
+    },
+
+    onPasswordConfirmChanged: function(ev) {
+        let password2 = ev.target.value;
+        let phase = this.getPhasePromotion(this.state.email,this.state.password,password2)
+        let disabled = (phase == PHASE_FORGOT_CONFIRM_OKAY) ? 0 : 1;
+        this.setState({
+            "phase": phase,
+            "password2": password2,
+            "disabled": disabled,
         });
     },
 
@@ -301,7 +419,7 @@ export default createReactClass({
                         type="text"
                         label={_t('Email')}
                         value={this.state.email}
-                        onChange={this.onInputChanged.bind(this, "email")}
+                        onChange={this.onEmailChanged}
                         autoFocus
                     />
                 </div>
@@ -311,14 +429,14 @@ export default createReactClass({
                         type="password"
                         label={_t('Password')}
                         value={this.state.password}
-                        onChange={this.onInputChanged.bind(this, "password")}
+                        onChange={this.onPasswordChanged}
                     />
                     <Field
                         name="reset_password_confirm"
                         type="password"
                         label={_t('Confirm')}
                         value={this.state.password2}
-                        onChange={this.onInputChanged.bind(this, "password2")}
+                        onChange={this.onPasswordConfirmChanged}
                     />
                 </div>
                 <span>{_t(
@@ -327,8 +445,8 @@ export default createReactClass({
                 )}</span>
                 <input
                     className="mx_Login_submit"
-                    type="submit"
-                    value={_t('Send Reset Email')}
+                    type="submit" disabled={this.state.disabled}
+                    value={SEND_BUTTON_MSG[this.state.phase-PHASE_FORGOT]}
                 />
             </form>
             <a className="mx_AuthBody_changeFlow" onClick={this.onLoginClick} href="#">
@@ -375,6 +493,13 @@ export default createReactClass({
                 resetPasswordJsx = this.renderServerDetails();
                 break;
             case PHASE_FORGOT:
+            case PHASE_FORGOT_EMAIL_OKAY:
+            case PHASE_FORGOT_PASSWORD_LENGTH_OKAY:
+            case PHASE_FORGOT_PASSWORD_LOWERCASE_OKAY:
+            case PHASE_FORGOT_PASSWORD_UPPERCASE_OKAY:
+            case PHASE_FORGOT_PASSWORD_NUMBER_OKAY:
+            case PHASE_FORGOT_PASSWORD_SYMBOL_OKAY:
+            case PHASE_FORGOT_CONFIRM_OKAY:
                 resetPasswordJsx = this.renderForgot();
                 break;
             case PHASE_SENDING_EMAIL:
