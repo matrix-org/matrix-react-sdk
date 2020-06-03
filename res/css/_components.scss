@@ -61,7 +61,6 @@
 @import "./views/dialogs/_CreateGroupDialog.scss";
 @import "./views/dialogs/_CreateRoomDialog.scss";
 @import "./views/dialogs/_DeactivateAccountDialog.scss";
-@import "./views/dialogs/_DeviceVerifyDialog.scss";
 @import "./views/dialogs/_DevtoolsDialog.scss";
 @import "./views/dialogs/_GroupAddressPicker.scss";
 @import "./views/dialogs/_IncomingSasDialog.scss";
@@ -81,7 +80,6 @@
 @import "./views/dialogs/_SlashCommandHelpDialog.scss";
 @import "./views/dialogs/_TabbedIntegrationManagerDialog.scss";
 @import "./views/dialogs/_TermsDialog.scss";
-@import "./views/dialogs/_UnknownDeviceDialog.scss";
 @import "./views/dialogs/_UploadConfirmDialog.scss";
 @import "./views/dialogs/_UserSettingsDialog.scss";
 @import "./views/dialogs/_WidgetOpenIDPermissionsDialog.scss";
@@ -116,6 +114,7 @@
 @import "./views/elements/_RoomAliasField.scss";
 @import "./views/elements/_Slider.scss";
 @import "./views/elements/_Spinner.scss";
+@import "./views/elements/_StyledCheckbox.scss";
 @import "./views/elements/_SyntaxHighlight.scss";
 @import "./views/elements/_TextWithTooltip.scss";
 @import "./views/elements/_ToggleSwitch.scss";
@@ -166,7 +165,6 @@
 @import "./views/rooms/_InviteOnlyIcon.scss";
 @import "./views/rooms/_JumpToBottomButton.scss";
 @import "./views/rooms/_LinkPreviewWidget.scss";
-@import "./views/rooms/_MemberDeviceInfo.scss";
 @import "./views/rooms/_MemberInfo.scss";
 @import "./views/rooms/_MemberList.scss";
 @import "./views/rooms/_MessageComposer.scss";
