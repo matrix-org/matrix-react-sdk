@@ -27,6 +27,7 @@ import PasswordReset from "../../../PasswordReset";
 import AutoDiscoveryUtils, {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
 import classNames from 'classnames';
 import AuthPage from "../../views/auth/AuthPage";
+import * as Email from "../../../email";
 
 // Phases
 // Show controls to configure server details
@@ -128,18 +129,6 @@ export default createReactClass({
         }
     },
 
-    // Quick check if at least one char before '@' and two TLD chars after '.' are present.
-    testPossiblyValidEmail: function(email) {
-        let atPos  = email.indexOf('@');
-        let dotPos = email.lastIndexOf('.');
-        let len    = email.length;
-        if ((atPos > 0) && (dotPos > 2) && (dotPos < (len-2)) && (atPos < (dotPos-1))) {
-            return 1
-        } else {
-            return 0
-        }
-    },
-
     testNewPasswordLength: function(password) {
         if (password.length >= 8) {
             return 1
@@ -177,7 +166,7 @@ export default createReactClass({
     },
 
     getPhasePromotion: function(email,password,password2) {
-        if (!this.testPossiblyValidEmail(email)) {
+        if (!Email.looksValid(email)) {
             return PHASE_FORGOT;
         }
         if (!this.testNewPasswordLength(password)) {
