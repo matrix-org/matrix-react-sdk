@@ -509,11 +509,12 @@ export default class CreateSecretStorageDialog extends React.PureComponent {
             >{_t('Skip')}</button>;
         }
 
-        return <div>
-            <p>{_t(
-                "Create a Recovery Key to store encryption keys & secrets with your account data. " +
-                "If you lose access to this login you’ll need it to unlock your data.",
-            )}</p>
+        return <div className="mx_CreateSecretStorageDialog_recoveryKeyTitleContainer">
+            <img className="mx_CreateSecretStorageDialog_recoveryKeyTitleImage"
+                src={require('../../../../../res/img/feather-customised/recovery-key.svg')} alt=""
+            />
+            <p>{_t("Create a Recovery Key to store encryption keys & secrets with your account data.")}</p>
+            <p>{_t("If you lose access to this login you’ll need it to unlock your data.")}</p>
             <div className="mx_Dialog_buttons">
                 <DialogButtons primaryButton={_t('Continue')}
                     onPrimaryButtonClick={this._onIntroContinueClick}
@@ -596,14 +597,15 @@ export default class CreateSecretStorageDialog extends React.PureComponent {
         }
 
         let headerImage;
-        if (this._titleForPhase(this.state.phase)) {
-            headerImage = require("../../../../../res/img/e2e/normal.svg");
+        if (this._titleForPhase(this.state.phase) && this.state.phase !== PHASE_INTRO) {
+            headerImage = require("../../../../../res/img/feather-customised/recovery-key.svg");
         }
 
         return (
             <BaseDialog className='mx_CreateSecretStorageDialog'
                 onFinished={this.props.onFinished}
                 title={this._titleForPhase(this.state.phase)}
+                titleClass={this.state.phase === PHASE_INTRO ? 'mx_CreateSecretStorageDialog_centeredTitle' : ''}
                 headerImage={headerImage}
                 hasCancel={this.props.hasCancel}
                 fixedWidth={false}
