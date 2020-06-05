@@ -324,10 +324,14 @@ export default class MImageBody extends React.Component {
         let infoWidth;
         let infoHeight;
 
-        if (content && content.info && content.info.w && content.info.h) {
-            infoWidth = content.info.w;
-            infoHeight = content.info.h;
-        } else {
+        const info = content && content.info;
+        if (info && info.thumbnail_info && info.thumbnail_info.w && info.thumbnail_info.h) {
+            infoWidth = info.thumbnail_info.w;
+            infoHeight = info.thumbnail_info.h;
+        } else if (info && info.w && info.h) {
+            infoWidth = info.w;
+            infoHeight = info.h;
+        } else if (!this.state.loadedImageDimensions) {
             // Whilst the image loads, display nothing.
             //
             // Once loaded, use the loaded image dimensions stored in `loadedImageDimensions`.
@@ -409,7 +413,7 @@ export default class MImageBody extends React.Component {
                 { showPlaceholder &&
                     <div className="mx_MImageBody_thumbnail" style={{
                         // Constrain width here so that spinner appears central to the loaded thumbnail
-                        maxWidth: infoWidth + "px",
+                        maxWidth: maxWidth + "px",
                     }}>
                         <div className="mx_MImageBody_thumbnail_spinner">
                             { placeholder }
