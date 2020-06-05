@@ -41,6 +41,7 @@ export interface IMatrixClientCreds {
     deviceId: string,
     accessToken: string,
     guest: boolean,
+    pickleKey?: string,
 }
 
 // TODO: Move this to the js-sdk
@@ -48,6 +49,7 @@ export interface IOpts {
     initialSyncLimit?: number;
     pendingEventOrdering?: "detached" | "chronological";
     lazyLoadMembers?: boolean;
+    clientWellKnownPollPeriod?: number;
 }
 
 export interface IMatrixClientPeg {
@@ -197,9 +199,7 @@ class _MatrixClientPeg implements IMatrixClientPeg {
                 // The js-sdk found a crypto DB too new for it to use
                 const CryptoStoreTooNewDialog =
                     sdk.getComponent("views.dialogs.CryptoStoreTooNewDialog");
-                Modal.createDialog(CryptoStoreTooNewDialog, {
-                    host: window.location.host,
-                });
+                Modal.createDialog(CryptoStoreTooNewDialog);
             }
             // this can happen for a number of reasons, the most likely being
             // that the olm library was missing. It's not fatal.
@@ -210,6 +210,7 @@ class _MatrixClientPeg implements IMatrixClientPeg {
         // the react sdk doesn't work without this, so don't allow
         opts.pendingEventOrdering = "detached";
         opts.lazyLoadMembers = true;
+        opts.clientWellKnownPollPeriod = 2 * 60 * 60; // 2 hours
 
         // Connect the matrix client to the dispatcher and setting handlers
         MatrixActionCreators.start(this.matrixClient);
@@ -253,6 +254,7 @@ class _MatrixClientPeg implements IMatrixClientPeg {
             accessToken: creds.accessToken,
             userId: creds.userId,
             deviceId: creds.deviceId,
+            pickleKey: creds.pickleKey,
             timelineSupport: true,
             forceTURN: !SettingsStore.getValue('webRtcAllowPeerToPeer', false),
             fallbackICEServerAllowed: !!SettingsStore.getValue('fallbackICEServerAllowed'),

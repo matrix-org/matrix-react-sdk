@@ -164,6 +164,10 @@ export default createReactClass({
 
             canReact: false,
             canReply: false,
+
+            useIRCLayout: SettingsStore.getValue("feature_irc_ui"),
+
+            matrixClientIsReady: this.context && this.context.isInitialSyncComplete(),
         };
     },
 
@@ -193,6 +197,8 @@ export default createReactClass({
 
         this._roomView = createRef();
         this._searchResultsPanel = createRef();
+
+        this._layoutWatcherRef = SettingsStore.watchSetting("feature_irc_ui", null, this.onLayoutChange);
     },
 
     _onReadReceiptsChange: function() {
@@ -232,7 +238,8 @@ export default createReactClass({
             initialEventId: RoomViewStore.getInitialEventId(),
             isInitialEventHighlighted: RoomViewStore.isInitialEventHighlighted(),
             forwardingEvent: RoomViewStore.getForwardingEvent(),
-            shouldPeek: RoomViewStore.shouldPeek(),
+            // we should only peek once we have a ready client
+            shouldPeek: this.state.matrixClientIsReady && RoomViewStore.shouldPeek(),
             showingPinned: SettingsStore.getValue("PinnedEvents.isOpen", roomId),
             showReadReceipts: SettingsStore.getValue("showReadReceipts", roomId),
         };
@@ -532,6 +539,14 @@ export default createReactClass({
         // no need to do this as Dir & Settings are now overlays. It just burnt CPU.
         // console.log("Tinter.tint from RoomView.unmount");
         // Tinter.tint(); // reset colourscheme
+
+        SettingsStore.unwatchSetting(this._layoutWatcherRef);
+    },
+
+    onLayoutChange: function() {
+        this.setState({
+            useIRCLayout: SettingsStore.getValue("feature_irc_ui"),
+        });
     },
 
     _onRightPanelStoreUpdate: function() {
@@ -678,6 +693,16 @@ export default createReactClass({
                             room_id: roomId,
                             deferred_action: payload,
                         });
+                    });
+                }
+                break;
+            case 'sync_state':
+                if (!this.state.matrixClientIsReady) {
+                    this.setState({
+                        matrixClientIsReady: this.context && this.context.isInitialSyncComplete(),
+                    }, () => {
+                        // send another "initial" RVS update to trigger peeking if needed
+                        this._onRoomViewStoreUpdate(true);
                     });
                 }
                 break;
@@ -852,15 +877,6 @@ export default createReactClass({
             this.setState({
                 e2eStatus: "warning",
             });
-            return;
-        }
-        if (!SettingsStore.getValue("feature_cross_signing")) {
-            room.hasUnverifiedDevices().then((hasUnverifiedDevices) => {
-                this.setState({
-                    e2eStatus: hasUnverifiedDevices ? "warning" : "verified",
-                });
-            });
-            debuglog("e2e check is warning/verified only as cross-signing is off");
             return;
         }
 
@@ -1663,14 +1679,16 @@ export default createReactClass({
         const ErrorBoundary = sdk.getComponent("elements.ErrorBoundary");
 
         if (!this.state.room) {
-            const loading = this.state.roomLoading || this.state.peekLoading;
+            const loading = !this.state.matrixClientIsReady || this.state.roomLoading || this.state.peekLoading;
             if (loading) {
+                // Assume preview loading if we don't have a ready client or a room ID (still resolving the alias)
+                const previewLoading = !this.state.matrixClientIsReady || !this.state.roomId || this.state.peekLoading;
                 return (
                     <div className="mx_RoomView">
                         <ErrorBoundary>
                             <RoomPreviewBar
                                 canPreview={false}
-                                previewLoading={this.state.peekLoading}
+                                previewLoading={previewLoading && !this.state.roomLoadError}
                                 error={this.state.roomLoadError}
                                 loading={loading}
                                 joining={this.state.joining}
@@ -1695,7 +1713,8 @@ export default createReactClass({
                 return (
                     <div className="mx_RoomView">
                         <ErrorBoundary>
-                            <RoomPreviewBar onJoinClick={this.onJoinButtonClicked}
+                            <RoomPreviewBar
+                                onJoinClick={this.onJoinButtonClicked}
                                 onForgetClick={this.onForgetClick}
                                 onRejectClick={this.onRejectThreepidInviteButtonClicked}
                                 canPreview={false} error={this.state.roomLoadError}
@@ -1980,6 +1999,13 @@ export default createReactClass({
             highlightedEventId = this.state.initialEventId;
         }
 
+        const messagePanelClassNames = classNames(
+            "mx_RoomView_messagePanel",
+            {
+                "mx_IRCLayout": this.state.useIRCLayout,
+                "mx_GroupLayout": !this.state.useIRCLayout,
+            });
+
         // console.info("ShowUrlPreview for %s is %s", this.state.room.roomId, this.state.showUrlPreview);
         const messagePanel = (
             <TimelinePanel
@@ -1995,11 +2021,12 @@ export default createReactClass({
                 onScroll={this.onMessageListScroll}
                 onReadMarkerUpdated={this._updateTopUnreadMessagesBar}
                 showUrlPreview = {this.state.showUrlPreview}
-                className="mx_RoomView_messagePanel"
+                className={messagePanelClassNames}
                 membersLoaded={this.state.membersLoaded}
                 permalinkCreator={this._getPermalinkCreatorForRoom(this.state.room)}
                 resizeNotifier={this.props.resizeNotifier}
                 showReactions={true}
+                useIRCLayout={this.state.useIRCLayout}
             />);
 
         let topUnreadMessagesBar = null;
