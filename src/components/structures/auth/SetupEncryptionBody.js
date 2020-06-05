@@ -39,6 +39,11 @@ function keyHasPassphrase(keyInfo) {
     );
 }
 
+// Maximum acceptable size of a key file. It's 59 characters including the spaces we encode,
+// so this should be plenty and allow for people putting extra whitespace in the file because
+// maybe that's a thing people would do?
+const KEY_FILE_MAX_SIZE = 128;
+
 export default class SetupEncryptionBody extends React.Component {
     static propTypes = {
         onFinished: PropTypes.func.isRequired,
@@ -46,6 +51,9 @@ export default class SetupEncryptionBody extends React.Component {
 
     constructor() {
         super();
+
+        this._fileUpload = null;
+
         const store = SetupEncryptionStore.sharedInstance();
         store.on("update", this._onStoreUpdate);
         store.start();
@@ -83,6 +91,10 @@ export default class SetupEncryptionBody extends React.Component {
         store.stop();
     }
 
+    _collectFileUpload = n => {
+        this._fileUpload = n;
+    }
+
     _onResetClick = () => {
         const store = SetupEncryptionStore.sharedInstance();
         store.startKeyReset();
@@ -91,6 +103,22 @@ export default class SetupEncryptionBody extends React.Component {
     _onUseRecoveryKeyClick = async () => {
         const store = SetupEncryptionStore.sharedInstance();
         store.useRecoveryKey();
+    }
+
+    _onRecoveryKeyFileUploadClick = () => {
+        this._fileUpload.click();
+    }
+
+    _onRecoveryKeyFileChange = async e => {
+        if (e.target.files.length === 0) return;
+
+        const f = e.target.files[0];
+
+        if (f.size > KEY_FILE_MAX_SIZE) {
+            return;
+        }
+
+        this.setState({recoveryKey: await f.text()});
     }
 
     _onRecoveryKeyCancelClick() {
@@ -265,13 +293,28 @@ export default class SetupEncryptionBody extends React.Component {
             return <form onSubmit={this._onRecoveryKeyFormSubmit}>
                 <p>{keyPrompt}</p>
                 <div className="mx_CompleteSecurity_recoveryKeyEntry">
-                    <Field
-                        type="text"
-                        label={_t('Recovery Key')}
-                        value={this.state.recoveryKey}
-                        onChange={this._onRecoveryKeyChange}
-                        onValidate={this._onRecoveryKeyValidate}
-                    />
+                    <div className="mx_CompleteSecurity_recoveryKeyEntry_textInput">
+                        <Field
+                            type="text"
+                            label={_t('Recovery Key')}
+                            value={this.state.recoveryKey}
+                            onChange={this._onRecoveryKeyChange}
+                            onValidate={this._onRecoveryKeyValidate}
+                        />
+                    </div>
+                    <span className="mx_CompleteSecurity_recoveryKeyEntry_entryControlSeparatorText">
+                        {_t("or")}
+                    </span>
+                    <div>
+                        <input type="file"
+                            className="mx_CompleteSecurity_recoveryKeyEntry_fileInput"
+                            ref={this._collectFileUpload}
+                            onChange={this._onRecoveryKeyFileChange}
+                        />
+                        <AccessibleButton kind="primary" onClick={this._onRecoveryKeyFileUploadClick}>
+                            {_t("Upload")}
+                        </AccessibleButton>
+                    </div>
                 </div>
                 <div className="mx_CompleteSecurity_actionRow">
                     <AccessibleButton kind="secondary" onClick={this._onRecoveryKeyCancelClick}>

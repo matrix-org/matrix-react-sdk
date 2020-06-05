@@ -85,6 +85,23 @@ limitations under the License.
     color: $notice-secondary-color;
 }
 
+.mx_CompleteSecurity_recoveryKeyEntry {
+    display: flex;
+    align-items: center;
+}
+
+.mx_CompleteSecurity_recoveryKeyEntry_textInput {
+    flex-grow: 1;
+}
+
+.mx_CompleteSecurity_recoveryKeyEntry_entryControlSeparatorText {
+    margin: 16px;
+}
+
+.mx_CompleteSecurity_recoveryKeyEntry_fileInput {
+    display: none;
+}
+
 .mx_CompleteSecurity_actionRow {
     display: flex;
     justify-content: flex-end;
