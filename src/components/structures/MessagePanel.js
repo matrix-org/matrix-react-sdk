@@ -29,6 +29,7 @@ import SettingsStore from '../../settings/SettingsStore';
 import {_t} from "../../languageHandler";
 import {haveTileForEvent} from "../views/rooms/EventTile";
 import {textForEvent} from "../../TextForEvent";
+import IRCTimelineProfileResizer from "../views/elements/IRCTimelineProfileResizer";
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = ['m.sticker', 'm.room.message'];
@@ -107,10 +108,14 @@ export default class MessagePanel extends React.Component {
 
         // whether to show reactions for an event
         showReactions: PropTypes.bool,
+
+        // whether to use the irc layout
+        useIRCLayout: PropTypes.bool,
     };
 
-    constructor() {
-        super();
+    // Force props to be loaded for useIRCLayout
+    constructor(props) {
+        super(props);
 
         this.state = {
             // previous positions the read marker has been in, so we can
@@ -503,6 +508,7 @@ export default class MessagePanel extends React.Component {
     }
 
     _getTilesForEvent(prevEvent, mxEv, last) {
+        const TileErrorBoundary = sdk.getComponent('messages.TileErrorBoundary');
         const EventTile = sdk.getComponent('rooms.EventTile');
         const DateSeparator = sdk.getComponent('messages.DateSeparator');
         const ret = [];
@@ -577,25 +583,28 @@ export default class MessagePanel extends React.Component {
                 ref={this._collectEventNode.bind(this, eventId)}
                 data-scroll-tokens={scrollToken}
             >
-                <EventTile mxEvent={mxEv}
-                    continuation={continuation}
-                    isRedacted={mxEv.isRedacted()}
-                    replacingEventId={mxEv.replacingEventId()}
-                    editState={isEditing && this.props.editState}
-                    onHeightChanged={this._onHeightChanged}
-                    readReceipts={readReceipts}
-                    readReceiptMap={this._readReceiptMap}
-                    showUrlPreview={this.props.showUrlPreview}
-                    checkUnmounting={this._isUnmounting.bind(this)}
-                    eventSendStatus={mxEv.getAssociatedStatus()}
-                    tileShape={this.props.tileShape}
-                    isTwelveHour={this.props.isTwelveHour}
-                    permalinkCreator={this.props.permalinkCreator}
-                    last={last}
-                    isSelectedEvent={highlight}
-                    getRelationsForEvent={this.props.getRelationsForEvent}
-                    showReactions={this.props.showReactions}
-                />
+                <TileErrorBoundary mxEvent={mxEv}>
+                    <EventTile mxEvent={mxEv}
+                        continuation={continuation}
+                        isRedacted={mxEv.isRedacted()}
+                        replacingEventId={mxEv.replacingEventId()}
+                        editState={isEditing && this.props.editState}
+                        onHeightChanged={this._onHeightChanged}
+                        readReceipts={readReceipts}
+                        readReceiptMap={this._readReceiptMap}
+                        showUrlPreview={this.props.showUrlPreview}
+                        checkUnmounting={this._isUnmounting.bind(this)}
+                        eventSendStatus={mxEv.getAssociatedStatus()}
+                        tileShape={this.props.tileShape}
+                        isTwelveHour={this.props.isTwelveHour}
+                        permalinkCreator={this.props.permalinkCreator}
+                        last={last}
+                        isSelectedEvent={highlight}
+                        getRelationsForEvent={this.props.getRelationsForEvent}
+                        showReactions={this.props.showReactions}
+                        useIRCLayout={this.props.useIRCLayout}
+                    />
+                </TileErrorBoundary>
             </li>,
         );
 
@@ -762,6 +771,7 @@ export default class MessagePanel extends React.Component {
     }
 
     render() {
+        const ErrorBoundary = sdk.getComponent('elements.ErrorBoundary');
         const ScrollPanel = sdk.getComponent("structures.ScrollPanel");
         const WhoIsTypingTile = sdk.getComponent("rooms.WhoIsTypingTile");
         const Spinner = sdk.getComponent("elements.Spinner");
@@ -793,23 +803,35 @@ export default class MessagePanel extends React.Component {
             );
         }
 
+        let ircResizer = null;
+        if (this.props.useIRCLayout) {
+            ircResizer = <IRCTimelineProfileResizer
+                minWidth={20}
+                maxWidth={600}
+                roomId={this.props.room ? this.props.room.roomId : null}
+            />;
+        }
+
         return (
-            <ScrollPanel
-                ref={this._scrollPanel}
-                className={className}
-                onScroll={this.props.onScroll}
-                onResize={this.onResize}
-                onFillRequest={this.props.onFillRequest}
-                onUnfillRequest={this.props.onUnfillRequest}
-                style={style}
-                stickyBottom={this.props.stickyBottom}
-                resizeNotifier={this.props.resizeNotifier}
-            >
-                { topSpinner }
-                { this._getEventTiles() }
-                { whoIsTyping }
-                { bottomSpinner }
-            </ScrollPanel>
+            <ErrorBoundary>
+                <ScrollPanel
+                    ref={this._scrollPanel}
+                    className={className}
+                    onScroll={this.props.onScroll}
+                    onResize={this.onResize}
+                    onFillRequest={this.props.onFillRequest}
+                    onUnfillRequest={this.props.onUnfillRequest}
+                    style={style}
+                    stickyBottom={this.props.stickyBottom}
+                    resizeNotifier={this.props.resizeNotifier}
+                    fixedChildren={ircResizer}
+                >
+                    { topSpinner }
+                    { this._getEventTiles() }
+                    { whoIsTyping }
+                    { bottomSpinner }
+                </ScrollPanel>
+            </ErrorBoundary>
         );
     }
 }

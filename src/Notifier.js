@@ -21,11 +21,14 @@ import PlatformPeg from './PlatformPeg';
 import * as TextForEvent from './TextForEvent';
 import Analytics from './Analytics';
 import * as Avatar from './Avatar';
-import dis from './dispatcher';
+import dis from './dispatcher/dispatcher';
 import * as sdk from './index';
 import { _t } from './languageHandler';
 import Modal from './Modal';
 import SettingsStore, {SettingLevel} from "./settings/SettingsStore";
+import {
+    hideToast as hideNotificationsToast,
+} from "./toasts/DesktopNotificationsToast";
 
 /*
  * Dispatches:
@@ -37,6 +40,18 @@ import SettingsStore, {SettingLevel} from "./settings/SettingsStore";
 
 const MAX_PENDING_ENCRYPTED = 20;
 
+/*
+Override both the content body and the TextForEvent handler for specific msgtypes, in notifications.
+This is useful when the content body contains fallback text that would explain that the client can't handle a particular
+type of tile.
+*/
+const typehandlers = {
+    "m.key.verification.request": (event) => {
+        const name = (event.sender || {}).name;
+        return _t("%(name)s is requesting verification", { name });
+    },
+};
+
 const Notifier = {
     notifsByRoom: {},
 
@@ -46,6 +61,9 @@ const Notifier = {
     pendingEncryptedEventIds: [],
 
     notificationMessageForEvent: function(ev) {
+        if (typehandlers.hasOwnProperty(ev.getContent().msgtype)) {
+            return typehandlers[ev.getContent().msgtype](ev);
+        }
         return TextForEvent.textForEvent(ev);
     },
 
@@ -69,7 +87,9 @@ const Notifier = {
             title = room.name;
             // notificationMessageForEvent includes sender,
             // but we already have the sender here
-            if (ev.getContent().body) msg = ev.getContent().body;
+            if (ev.getContent().body && !typehandlers.hasOwnProperty(ev.getContent().msgtype)) {
+                msg = ev.getContent().body;
+            }
         } else if (ev.getType() === 'm.room.member') {
             // context is all in the message here, we don't need
             // to display sender info
@@ -78,7 +98,9 @@ const Notifier = {
             title = ev.sender.name + " (" + room.name + ")";
             // notificationMessageForEvent includes sender,
             // but we've just out sender in the title
-            if (ev.getContent().body) msg = ev.getContent().body;
+            if (ev.getContent().body && !typehandlers.hasOwnProperty(ev.getContent().msgtype)) {
+                msg = ev.getContent().body;
+            }
         }
 
         if (!this.isBodyEnabled()) {
@@ -259,12 +281,7 @@ const Notifier = {
 
         Analytics.trackEvent('Notifier', 'Set Toolbar Hidden', hidden);
 
-        // XXX: why are we dispatching this here?
-        // this is nothing to do with notifier_enabled
-        dis.dispatch({
-            action: "notifier_enabled",
-            value: this.isEnabled(),
-        });
+        hideNotificationsToast();
 
         // update the info to localStorage for persistent settings
         if (persistent && global.localStorage) {
