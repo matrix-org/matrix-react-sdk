@@ -34,6 +34,8 @@ limitations under the License.
 
     // Make sure the _thumbnail is positioned relative to the _container
     position: relative;
+
+    transition: max-height 0.2s ease-in-out;
 }
 
 .mx_MImageBody_thumbnail_spinner {

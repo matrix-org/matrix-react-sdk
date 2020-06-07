@@ -388,7 +388,7 @@ export default class MImageBody extends React.Component {
         }
 
         // The maximum height of the thumbnail as it is rendered as an <img>
-        const maxHeight = Math.min(this.props.maxImageHeight || 600, infoHeight);
+        const maxHeight = this.state.collapsed ? 0 : Math.min(this.props.maxImageHeight || 600, infoHeight);
         // The maximum width of the thumbnail, as dictated by its natural
         // maximum height.
         const maxWidth = infoWidth * maxHeight / infoHeight;
@@ -507,7 +507,7 @@ export default class MImageBody extends React.Component {
         }
 
         const collapsed = this.state.collapsed;
-        const thumbnail = collapsed ? null : this._messageContent(contentUrl, thumbUrl, content);
+        const thumbnail = this._messageContent(contentUrl, thumbUrl, content);
         const fileBody = this.getFileBody();
         const title = collapsed ? "Uncollapse" : "Collapse";
 
