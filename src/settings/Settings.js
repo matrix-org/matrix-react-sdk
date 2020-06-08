@@ -158,7 +158,7 @@ export const SETTINGS = {
     },
     "feature_compact_modern_layout": {
         isFeature: true,
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        supportedLevels: LEVELS_FEATURE,
         displayName: _td('Use compact timeline layout'),
         default: false,
     },

@@ -148,6 +148,8 @@ class LoggedInView extends React.PureComponent<IProps, IState> {
     protected readonly _sessionStoreToken: { remove: () => void };
     protected resizer: Resizer;
 
+    private _compactWatcherRef;
+
     constructor(props, context) {
         super(props, context);
 
@@ -177,6 +179,12 @@ class LoggedInView extends React.PureComponent<IProps, IState> {
         this._matrixClient.on("sync", this.onSync);
         this._matrixClient.on("RoomState.events", this.onRoomStateEvents);
 
+        this._compactWatcherRef = SettingsStore.watchSetting(
+            "feature_compact_modern_layout",
+            null,
+            this.onCompactModernLayoutChange
+        );
+
         fixupColorFonts();
 
         this._roomView = React.createRef();
@@ -194,6 +202,8 @@ class LoggedInView extends React.PureComponent<IProps, IState> {
         this._matrixClient.removeListener("accountData", this.onAccountData);
         this._matrixClient.removeListener("sync", this.onSync);
         this._matrixClient.removeListener("RoomState.events", this.onRoomStateEvents);
+
+        SettingsStore.unwatchSetting(this._compactWatcherRef);
         if (this._sessionStoreToken) {
             this._sessionStoreToken.remove();
         }
@@ -263,15 +273,16 @@ class LoggedInView extends React.PureComponent<IProps, IState> {
     }
 
     onAccountData = (event) => {
-        if (event.getType() === "im.vector.web.settings") {
-            this.setState({
-                useCompactLayout: event.getContent().useCompactLayout,
-            });
-        }
         if (event.getType() === "m.ignored_user_list") {
             dis.dispatch({action: "ignore_state_changed"});
         }
     };
+
+    onCompactModernLayoutChange = (settingName, roomId, level, newVal) => {
+        this.setState({
+            useCompactLayout: newVal,
+        });
+    }
 
     onSync = (syncState, oldSyncState, data) => {
         const oldErrCode = (
