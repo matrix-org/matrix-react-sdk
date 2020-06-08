@@ -260,7 +260,6 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                     })}
                 </Field>
                 {customThemeForm}
-                <SettingsFlag name="useCompactLayout" level={SettingLevel.ACCOUNT} />
            </div>
         );
     }

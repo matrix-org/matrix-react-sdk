@@ -156,6 +156,12 @@ export const SETTINGS = {
         default: false,
         isFeature: true,
     },
+    "feature_compact_modern_layout": {
+        isFeature: true,
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Use compact timeline layout'),
+        default: false,
+    },
     "mjolnirRooms": {
         supportedLevels: ['account'],
         default: [],
@@ -186,11 +192,6 @@ export const SETTINGS = {
         displayName: _td('Enable Emoji suggestions while typing'),
         default: true,
         invertedSettingName: 'MessageComposerInput.dontSuggestEmoji',
-    },
-    "useCompactLayout": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Use compact timeline layout'),
-        default: false,
     },
     "showRedactions": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
