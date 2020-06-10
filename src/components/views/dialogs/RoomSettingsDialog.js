@@ -24,6 +24,7 @@ import RolesRoomSettingsTab from "../settings/tabs/room/RolesRoomSettingsTab";
 import GeneralRoomSettingsTab from "../settings/tabs/room/GeneralRoomSettingsTab";
 import SecurityRoomSettingsTab from "../settings/tabs/room/SecurityRoomSettingsTab";
 import NotificationSettingsTab from "../settings/tabs/room/NotificationSettingsTab";
+import NotificationSettingsTab2 from "../settings/tabs/room/NotificationSettingsTab2";
 import BridgeSettingsTab from "../settings/tabs/room/BridgeSettingsTab";
 import * as sdk from "../../../index";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
@@ -84,7 +85,9 @@ export default class RoomSettingsDialog extends React.Component {
             ROOM_NOTIFICATIONS_TAB,
             _td("Notifications"),
             "mx_RoomSettingsDialog_notificationsIcon",
-            <NotificationSettingsTab roomId={this.props.roomId} />,
+            SettingsStore.isFeatureEnabled("feature_ftue_notifications") ?
+                <NotificationSettingsTab2 roomId={this.props.roomId} /> :
+                <NotificationSettingsTab roomId={this.props.roomId} />,
         ));
 
         if (SettingsStore.isFeatureEnabled("feature_bridge_state")) {

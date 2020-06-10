@@ -156,6 +156,12 @@ export const SETTINGS = {
         default: false,
         isFeature: true,
     },
+    "feature_ftue_notifications": {
+        isFeature: true,
+        displayName: _td("Enable new notifications controls"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "mjolnirRooms": {
         supportedLevels: ['account'],
         default: [],
