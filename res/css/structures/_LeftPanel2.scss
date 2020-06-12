@@ -81,9 +81,9 @@ $roomListMinimizedWidth: 50px;
             }
 
             .mx_LeftPanel2_breadcrumbsContainer {
-                // TODO: Improve CSS for breadcrumbs (currently shoved into the view rather than placed)
                 width: 100%;
                 overflow: hidden;
+                margin-top: 8px;
             }
         }
 
@@ -131,6 +131,45 @@ $roomListMinimizedWidth: 50px;
         .mx_LeftPanel2_actualRoomListContainer {
             flex-grow: 1; // fill the available space
             overflow-y: auto;
+            width: 100%;
+            max-width: 100%;
+
+            // Create a flexbox to trick the layout engine
+            display: flex;
+        }
+    }
+
+    // These styles override the defaults for the minimized (66px) layout
+    &.mx_LeftPanel2_minimized {
+        min-width: unset;
+
+        // We have to forcefully set the width to override the resizer's style attribute.
+        width: calc(68px + $tagPanelWidth) !important;
+
+        .mx_LeftPanel2_roomListContainer {
+            width: 68px;
+
+            .mx_LeftPanel2_userHeader {
+                .mx_LeftPanel2_headerRow {
+                    justify-content: center;
+                }
+
+                .mx_LeftPanel2_userAvatarContainer {
+                    margin-right: 0;
+                }
+            }
+
+            .mx_LeftPanel2_filterContainer {
+                // Organize the flexbox into a centered column layout
+                flex-direction: column;
+                justify-content: center;
+
+                .mx_LeftPanel2_exploreButton {
+                    margin-left: 0;
+                    margin-top: 8px;
+                    background-color: transparent;
+                }
+            }
         }
     }
 }

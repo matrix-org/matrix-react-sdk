@@ -21,12 +21,16 @@ import React, { createRef } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import classNames from "classnames";
 import { RovingTabIndexWrapper } from "../../../accessibility/RovingTabIndex";
-import AccessibleButton from "../../views/elements/AccessibleButton";
+import AccessibleButton, {ButtonEvent} from "../../views/elements/AccessibleButton";
 import RoomAvatar from "../../views/avatars/RoomAvatar";
 import dis from '../../../dispatcher/dispatcher';
 import { Key } from "../../../Keyboard";
 import ActiveRoomObserver from "../../../ActiveRoomObserver";
 import NotificationBadge, { INotificationState, NotificationColor, RoomNotificationState } from "./NotificationBadge";
+import { _t } from "../../../languageHandler";
+import { ContextMenu, ContextMenuButton } from "../../structures/ContextMenu";
+import { DefaultTagID, TagID } from "../../../stores/room-list/models";
+import { MessagePreviewStore } from "../../../stores/MessagePreviewStore";
 
 /*******************************************************************
  *   CAUTION                                                       *
@@ -39,6 +43,7 @@ import NotificationBadge, { INotificationState, NotificationColor, RoomNotificat
 interface IProps {
     room: Room;
     showMessagePreview: boolean;
+    isMinimized: boolean;
 
     // TODO: Allow falsifying counts (for invites and stuff)
     // TODO: Transparency? Was this ever used?
@@ -49,10 +54,12 @@ interface IState {
     hover: boolean;
     notificationState: INotificationState;
     selected: boolean;
+    generalMenuDisplayed: boolean;
 }
 
 export default class RoomTile2 extends React.Component<IProps, IState> {
-    private roomTile = createRef();
+    private roomTileRef: React.RefObject<HTMLDivElement> = createRef();
+    private generalMenuButtonRef: React.RefObject<HTMLButtonElement> = createRef();
 
     // TODO: Custom status
     // TODO: Lock icon
@@ -72,6 +79,7 @@ export default class RoomTile2 extends React.Component<IProps, IState> {
             hover: false,
             notificationState: new RoomNotificationState(this.props.room),
             selected: ActiveRoomObserver.activeRoomId === this.props.room.roomId,
+            generalMenuDisplayed: false,
         };
 
         ActiveRoomObserver.addListener(this.props.room.roomId, this.onActiveRoomUpdate);
@@ -105,6 +113,126 @@ export default class RoomTile2 extends React.Component<IProps, IState> {
         this.setState({selected: isActive});
     };
 
+    private onGeneralMenuOpenClick = (ev: InputEvent) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        this.setState({generalMenuDisplayed: true});
+    };
+
+    private onCloseGeneralMenu = (ev: InputEvent) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        this.setState({generalMenuDisplayed: false});
+    };
+
+    private onTagRoom = (ev: ButtonEvent, tagId: TagID) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        if (tagId === DefaultTagID.DM) {
+            // TODO: DM Flagging
+        } else {
+            // TODO: XOR favourites and low priority
+        }
+    };
+
+    private onLeaveRoomClick = (ev: ButtonEvent) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        dis.dispatch({
+            action: 'leave_room',
+            room_id: this.props.room.roomId,
+        });
+        this.setState({generalMenuDisplayed: false}); // hide the menu
+    };
+
+    private onOpenRoomSettings = (ev: ButtonEvent) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        dis.dispatch({
+            action: 'open_room_settings',
+            room_id: this.props.room.roomId,
+        });
+        this.setState({generalMenuDisplayed: false}); // hide the menu
+    };
+
+    private renderGeneralMenu(): React.ReactElement {
+        if (this.props.isMinimized) return null; // no menu when minimized
+
+        let contextMenu = null;
+        if (this.state.generalMenuDisplayed) {
+            // The context menu appears within the list, so use the room tile as a reference point
+            const elementRect = this.roomTileRef.current.getBoundingClientRect();
+            contextMenu = (
+                <ContextMenu
+                    chevronFace="none"
+                    left={elementRect.left}
+                    top={elementRect.top + elementRect.height + 8}
+                    onFinished={this.onCloseGeneralMenu}
+                >
+                    <div
+                        className="mx_IconizedContextMenu mx_IconizedContextMenu_compact mx_RoomTile2_contextMenu"
+                        style={{width: elementRect.width}}
+                    >
+                        <div className="mx_IconizedContextMenu_optionList">
+                            <ul>
+                                <li>
+                                    <AccessibleButton onClick={(e) => this.onTagRoom(e, DefaultTagID.Favourite)}>
+                                        <span className="mx_IconizedContextMenu_icon mx_RoomTile2_iconStar" />
+                                        <span>{_t("Favourite")}</span>
+                                    </AccessibleButton>
+                                </li>
+                                <li>
+                                    <AccessibleButton onClick={(e) => this.onTagRoom(e, DefaultTagID.LowPriority)}>
+                                        <span className="mx_IconizedContextMenu_icon mx_RoomTile2_iconArrowDown" />
+                                        <span>{_t("Low Priority")}</span>
+                                    </AccessibleButton>
+                                </li>
+                                <li>
+                                    <AccessibleButton onClick={(e) => this.onTagRoom(e, DefaultTagID.DM)}>
+                                        <span className="mx_IconizedContextMenu_icon mx_RoomTile2_iconUser" />
+                                        <span>{_t("Direct Chat")}</span>
+                                    </AccessibleButton>
+                                </li>
+                                <li>
+                                    <AccessibleButton onClick={this.onOpenRoomSettings}>
+                                        <span className="mx_IconizedContextMenu_icon mx_RoomTile2_iconSettings" />
+                                        <span>{_t("Settings")}</span>
+                                    </AccessibleButton>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="mx_IconizedContextMenu_optionList">
+                            <ul>
+                                <li className="mx_RoomTile2_contextMenu_redRow">
+                                    <AccessibleButton onClick={this.onLeaveRoomClick}>
+                                        <span className="mx_IconizedContextMenu_icon mx_RoomTile2_iconSignOut" />
+                                        <span>{_t("Leave Room")}</span>
+                                    </AccessibleButton>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </ContextMenu>
+            );
+        }
+
+        return (
+            <React.Fragment>
+                <ContextMenuButton
+                    className="mx_RoomTile2_menuButton"
+                    onClick={this.onGeneralMenuOpenClick}
+                    inputRef={this.generalMenuButtonRef}
+                    label={_t("Room options")}
+                    isExpanded={this.state.generalMenuDisplayed}
+                />
+                {contextMenu}
+            </React.Fragment>
+        )
+    }
+
     public render(): React.ReactElement {
         // TODO: Collapsed state
         // TODO: Invites
@@ -114,6 +242,8 @@ export default class RoomTile2 extends React.Component<IProps, IState> {
         const classes = classNames({
             'mx_RoomTile2': true,
             'mx_RoomTile2_selected': this.state.selected,
+            'mx_RoomTile2_hasMenuOpen': this.state.generalMenuDisplayed,
+            'mx_RoomTile2_minimized': this.props.isMinimized,
         });
 
         const badge = <NotificationBadge notification={this.state.notificationState} allowNoCount={true} />;
@@ -127,9 +257,18 @@ export default class RoomTile2 extends React.Component<IProps, IState> {
         // TODO: Tooltip?
 
         let messagePreview = null;
-        if (this.props.showMessagePreview) {
-            // TODO: Actually get the real message preview from state
-            messagePreview = <div className="mx_RoomTile2_messagePreview">I just ate a pie.</div>;
+        if (this.props.showMessagePreview && !this.props.isMinimized) {
+            // The preview store heavily caches this info, so should be safe to hammer.
+            const text = MessagePreviewStore.instance.getPreviewForRoom(this.props.room);
+
+            // Only show the preview if there is one to show.
+            if (text) {
+                messagePreview = (
+                    <div className="mx_RoomTile2_messagePreview">
+                        {text}
+                    </div>
+                );
+            }
         }
 
         const nameClasses = classNames({
@@ -138,10 +277,20 @@ export default class RoomTile2 extends React.Component<IProps, IState> {
             "mx_RoomTile2_nameHasUnreadEvents": this.state.notificationState.color >= NotificationColor.Bold,
         });
 
+        let nameContainer = (
+            <div className="mx_RoomTile2_nameContainer">
+                <div title={name} className={nameClasses} tabIndex={-1} dir="auto">
+                    {name}
+                </div>
+                {messagePreview}
+            </div>
+        );
+        if (this.props.isMinimized) nameContainer = null;
+
         const avatarSize = 32;
         return (
             <React.Fragment>
-                <RovingTabIndexWrapper inputRef={this.roomTile}>
+                <RovingTabIndexWrapper inputRef={this.roomTileRef}>
                     {({onFocus, isActive, ref}) =>
                         <AccessibleButton
                             onFocus={onFocus}
@@ -156,15 +305,11 @@ export default class RoomTile2 extends React.Component<IProps, IState> {
                             <div className="mx_RoomTile2_avatarContainer">
                                 <RoomAvatar room={this.props.room} width={avatarSize} height={avatarSize}/>
                             </div>
-                            <div className="mx_RoomTile2_nameContainer">
-                                <div title={name} className={nameClasses} tabIndex={-1} dir="auto">
-                                    {name}
-                                </div>
-                                {messagePreview}
-                            </div>
+                            {nameContainer}
                             <div className="mx_RoomTile2_badgeContainer">
                                 {badge}
                             </div>
+                            {this.renderGeneralMenu()}
                         </AccessibleButton>
                     }
                 </RovingTabIndexWrapper>

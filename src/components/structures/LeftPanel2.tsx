@@ -24,10 +24,12 @@ import RoomList2 from "../views/rooms/RoomList2";
 import { Action } from "../../dispatcher/actions";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import BaseAvatar from '../views/avatars/BaseAvatar';
-import RoomBreadcrumbs from "../views/rooms/RoomBreadcrumbs";
 import UserMenuButton from "./UserMenuButton";
 import RoomSearch from "./RoomSearch";
 import AccessibleButton from "../views/elements/AccessibleButton";
+import RoomBreadcrumbs2 from "../views/rooms/RoomBreadcrumbs2";
+import { BreadcrumbsStore } from "../../stores/BreadcrumbsStore";
+import { UPDATE_EVENT } from "../../stores/AsyncStore";
 
 /*******************************************************************
  *   CAUTION                                                       *
@@ -38,11 +40,12 @@ import AccessibleButton from "../views/elements/AccessibleButton";
  *******************************************************************/
 
 interface IProps {
-    // TODO: Support collapsed state
+    isMinimized: boolean;
 }
 
 interface IState {
     searchFilter: string; // TODO: Move search into room list?
+    showBreadcrumbs: boolean;
 }
 
 export default class LeftPanel2 extends React.Component<IProps, IState> {
@@ -58,7 +61,14 @@ export default class LeftPanel2 extends React.Component<IProps, IState> {
 
         this.state = {
             searchFilter: "",
+            showBreadcrumbs: BreadcrumbsStore.instance.visible,
         };
+
+        BreadcrumbsStore.instance.on(UPDATE_EVENT, this.onBreadcrumbsUpdate);
+    }
+
+    public componentWillUnmount() {
+        BreadcrumbsStore.instance.off(UPDATE_EVENT, this.onBreadcrumbsUpdate);
     }
 
     private onSearch = (term: string): void => {
@@ -67,6 +77,13 @@ export default class LeftPanel2 extends React.Component<IProps, IState> {
 
     private onExplore = () => {
         dis.fire(Action.ViewRoomDirectory);
+    };
+
+    private onBreadcrumbsUpdate = () => {
+        const newVal = BreadcrumbsStore.instance.visible;
+        if (newVal !== this.state.showBreadcrumbs) {
+            this.setState({showBreadcrumbs: newVal});
+        }
     };
 
     private renderHeader(): React.ReactNode {
@@ -84,6 +101,27 @@ export default class LeftPanel2 extends React.Component<IProps, IState> {
             displayName = myUser.rawDisplayName;
             avatarUrl = myUser.avatarUrl;
         }
+
+        let breadcrumbs;
+        if (this.state.showBreadcrumbs) {
+            breadcrumbs = (
+                <div className="mx_LeftPanel2_headerRow mx_LeftPanel2_breadcrumbsContainer">
+                    {this.props.isMinimized ? null : <RoomBreadcrumbs2 />}
+                </div>
+            );
+        }
+
+        let name = <span className="mx_LeftPanel2_userName">{displayName}</span>;
+        let buttons = (
+            <span className="mx_LeftPanel2_headerButtons">
+                <UserMenuButton />
+            </span>
+        );
+        if (this.props.isMinimized) {
+            name = null;
+            buttons = null;
+        }
+
         return (
             <div className="mx_LeftPanel2_userHeader">
                 <div className="mx_LeftPanel2_headerRow">
@@ -98,14 +136,10 @@ export default class LeftPanel2 extends React.Component<IProps, IState> {
                             className="mx_LeftPanel2_userAvatar"
                         />
                     </span>
-                    <span className="mx_LeftPanel2_userName">{displayName}</span>
-                    <span className="mx_LeftPanel2_headerButtons">
-                        <UserMenuButton />
-                    </span>
+                    {name}
+                    {buttons}
                 </div>
-                <div className="mx_LeftPanel2_headerRow mx_LeftPanel2_breadcrumbsContainer">
-                    <RoomBreadcrumbs />
-                </div>
+                {breadcrumbs}
             </div>
         );
     }
@@ -115,7 +149,7 @@ export default class LeftPanel2 extends React.Component<IProps, IState> {
 
         return (
             <div className="mx_LeftPanel2_filterContainer">
-                <RoomSearch onQueryUpdate={this.onSearch} />
+                <RoomSearch onQueryUpdate={this.onSearch} isMinimized={this.props.isMinimized} />
                 <AccessibleButton
                     tabIndex={-1}
                     className='mx_LeftPanel2_exploreButton'
@@ -141,13 +175,14 @@ export default class LeftPanel2 extends React.Component<IProps, IState> {
             searchFilter={this.state.searchFilter}
             onFocus={() => {/*TODO*/}}
             onBlur={() => {/*TODO*/}}
+            isMinimized={this.props.isMinimized}
         />;
 
-        // TODO: Breadcrumbs
         // TODO: Conference handling / calls
 
         const containerClasses = classNames({
             "mx_LeftPanel2": true,
+            "mx_LeftPanel2_minimized": this.props.isMinimized,
         });
 
         return (
