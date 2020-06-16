@@ -14,12 +14,56 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+$leftGutter: 32px;
+
 .mx_NotificationsTab {
     .mx_SettingsTab_section {
         margin-top: 40px;
 
         label {
             display: block;
+        }
+
+        .mx_Checkbox {
+            margin-bottom: 12px;
+        }
+
+        .mx_Checkbox_microCopy {
+            font-size: $font-11px;
+            color: $muted-fg-color;
+            margin-left: $leftGutter;
+        }
+
+        .mx_Field_textarea {
+            margin-left: $leftGutter;
+        }
+    }
+
+    .mx_NotificationsTab_appearanceAndSounds {
+        & :nth-child(2) {
+            float: left;
+        }
+
+        & :nth-child(3) {
+            float: right;
+            display: block;
+        }
+
+        br {
+            clear: both;
+        }
+
+        .mx_RoomTile2 {
+            margin-top: -10px;
+
+            &:hover {
+                background: none;
+                border-radius: inherit;
+            }
+
+            .mx_BaseAvatar_initial {
+                width: 100% !important;
+            }
         }
     }
 }

@@ -15,14 +15,16 @@ limitations under the License.
 */
 
 import React from "react";
+import classNames from "classnames";
 
 interface IProps {
     title: string;
     children: React.ReactNode;
+    className?: string;
 }
 
-const SettingsSection: React.FC<IProps> = ({title, children}) => {
-    return <div className="mx_SettingsTab_section mx_SettingsTab_subsectionText">
+const SettingsSection: React.FC<IProps> = ({title, children, className}) => {
+    return <div className={classNames("mx_SettingsTab_section mx_SettingsTab_subsectionText", className)}>
         <span className="mx_SettingsTab_subheading">{title}</span>
         {children}
     </div>;
