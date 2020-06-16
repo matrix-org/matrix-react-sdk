@@ -28,6 +28,7 @@ import AccessibleButton from "../../../elements/AccessibleButton";
 import {useStateToggle} from "../../../../../hooks/useStateToggle";
 import {useEventEmitter} from "../../../../../hooks/useEventEmitter";
 import DesktopNotifications from "../../notifications/DesktopNotifications";
+import StyledRadioButton from "../../../elements/StyledRadioButton";
 
 enum NotificationSettings {
     AllMessages = "all_messages", // .m.rule.message = notify
@@ -237,42 +238,38 @@ const NotificationUserSettingsTab2: React.FC = () => {
         </div>
 
         <SettingsSection title={_t("Notify me with")}>
-            <label>
-                <input
-                    type="radio"
-                    name="notifyMeWith"
-                    value={NotificationSettings.AllMessages}
-                    onChange={onNotifyMeWithChange}
-                    checked={notifyMeWith === NotificationSettings.AllMessages} />
+            <StyledRadioButton
+                onChange={onNotifyMeWithChange}
+                checked={notifyMeWith === NotificationSettings.AllMessages}
+                name="notifyMeWith"
+                value={NotificationSettings.AllMessages}
+            >
                 {_t("All messages")}
-            </label>
-            <label>
-                <input
-                    type="radio"
-                    name="notifyMeWith"
-                    value={NotificationSettings.DirectMessagesMentionsKeywords}
-                    onChange={onNotifyMeWithChange}
-                    checked={notifyMeWith === NotificationSettings.DirectMessagesMentionsKeywords} />
+            </StyledRadioButton>
+            <StyledRadioButton
+                onChange={onNotifyMeWithChange}
+                checked={notifyMeWith === NotificationSettings.DirectMessagesMentionsKeywords}
+                name="notifyMeWith"
+                value={NotificationSettings.DirectMessagesMentionsKeywords}
+            >
                 {_t("Direct messages, mentions & keywords")}
-            </label>
-            <label>
-                <input
-                    type="radio"
-                    name="notifyMeWith"
-                    value={NotificationSettings.MentionsKeywordsOnly}
-                    onChange={onNotifyMeWithChange}
-                    checked={notifyMeWith === NotificationSettings.MentionsKeywordsOnly} />
+            </StyledRadioButton>
+            <StyledRadioButton
+                onChange={onNotifyMeWithChange}
+                checked={notifyMeWith === NotificationSettings.MentionsKeywordsOnly}
+                name="notifyMeWith"
+                value={NotificationSettings.MentionsKeywordsOnly}
+            >
                 {_t("Mentions & keywords only")}
-            </label>
-            <label>
-                <input
-                    type="radio"
-                    name="notifyMeWith"
-                    value={NotificationSettings.Never}
-                    onChange={onNotifyMeWithChange}
-                    checked={notifyMeWith === NotificationSettings.Never} />
+            </StyledRadioButton>
+            <StyledRadioButton
+                onChange={onNotifyMeWithChange}
+                checked={notifyMeWith === NotificationSettings.Never}
+                name="notifyMeWith"
+                value={NotificationSettings.Never}
+            >
                 {_t("Never")}
-            </label>
+            </StyledRadioButton>
         </SettingsSection>
 
         <SettingsSection title={_t("Mentions & Keywords")}>

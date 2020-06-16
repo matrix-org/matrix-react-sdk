@@ -24,6 +24,11 @@ $leftGutter: 32px;
             display: block;
         }
 
+        .mx_RadioButton {
+            display: flex;
+            margin-bottom: 12px;
+        }
+
         .mx_Checkbox {
             margin-bottom: 12px;
         }

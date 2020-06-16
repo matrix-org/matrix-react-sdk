@@ -43,6 +43,7 @@ const DesktopNotifications = () => {
     let buttonText;
     if (desktopNotificationsEnabled) {
         copy = _t("System provided notifications are currently enabled.");
+        // todo make this text Red
         buttonText = _t("Disable");
     } else {
         copy = _t("System provided notifications are currently disabled.");
@@ -53,7 +54,11 @@ const DesktopNotifications = () => {
         <div>
             {copy} <AccessibleButton kind="link" onClick={onToggleNotificationsClick}>{buttonText}</AccessibleButton>
         </div>
-        <StyledCheckbox checked={notificationsBodyEnabled} onChange={onNotificationsBodyCheckboxChange}>
+        <StyledCheckbox
+            checked={notificationsBodyEnabled}
+            onChange={onNotificationsBodyCheckboxChange}
+            disabled={!desktopNotificationsEnabled}
+        >
             {_t("Receive OS provided notifications from your desktop application")}
         </StyledCheckbox>
     </SettingsSection>;
