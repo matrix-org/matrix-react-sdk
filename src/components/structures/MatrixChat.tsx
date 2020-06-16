@@ -72,6 +72,7 @@ import {
     hideToast as hideAnalyticsToast
 } from "../../toasts/AnalyticsToast";
 import {showToast as showNotificationsToast} from "../../toasts/DesktopNotificationsToast";
+import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
 
 /** constants for MatrixChat.state.view */
 export enum Views {
@@ -347,7 +348,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             Analytics.trackPageChange(durationMs);
         }
         if (this.focusComposer) {
-            dis.dispatch({action: 'focus_composer'});
+            dis.fire(Action.FocusComposer);
             this.focusComposer = false;
         }
     }
@@ -604,9 +605,12 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 this.viewIndexedRoom(payload.roomIndex);
                 break;
             case Action.ViewUserSettings: {
+                const tabPayload = payload as OpenToTabPayload;
                 const UserSettingsDialog = sdk.getComponent("dialogs.UserSettingsDialog");
-                Modal.createTrackedDialog('User settings', '', UserSettingsDialog, {},
-                    /*className=*/null, /*isPriority=*/false, /*isStatic=*/true);
+                Modal.createTrackedDialog('User settings', '', UserSettingsDialog,
+                    {initialTabId: tabPayload.initialTabId},
+                    /*className=*/null, /*isPriority=*/false, /*isStatic=*/true
+                );
 
                 // View the welcome or home page if we need something to look at
                 this.viewSomethingBehindModal();
@@ -620,7 +624,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 Modal.createTrackedDialog('Create Community', '', CreateGroupDialog);
                 break;
             }
-            case 'view_room_directory': {
+            case Action.ViewRoomDirectory: {
                 const RoomDirectory = sdk.getComponent("structures.RoomDirectory");
                 Modal.createTrackedDialog('Room directory', '', RoomDirectory, {},
                     'mx_RoomDirectory_dialogWrapper', false, true);
@@ -1363,7 +1367,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 showNotificationsToast();
             }
 
-            dis.dispatch({action: 'focus_composer'});
+            dis.fire(Action.FocusComposer);
             this.setState({
                 ready: true,
             });
@@ -1607,9 +1611,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 action: 'require_registration',
             });
         } else if (screen === 'directory') {
-            dis.dispatch({
-                action: 'view_room_directory',
-            });
+            dis.fire(Action.ViewRoomDirectory);
         } else if (screen === 'groups') {
             dis.dispatch({
                 action: 'view_my_groups',
@@ -1900,7 +1902,12 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             return setLoggedInPromise;
         }
 
-        if (await cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing")) {
+        // Test for the master cross-signing key in SSSS as a quick proxy for
+        // whether cross-signing has been set up on the account.
+        const masterKeyInStorage = !!cli.getAccountData("m.cross_signing.master");
+        if (masterKeyInStorage) {
+            this.setStateForNewView({ view: Views.COMPLETE_SECURITY });
+        } else if (await cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing")) {
             this.setStateForNewView({ view: Views.E2E_SETUP });
         } else {
             this.onLoggedIn();
@@ -1919,7 +1926,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         // console.log(`Rendering MatrixChat with view ${this.state.view}`);
 
         let fragmentAfterLogin = "";
-        if (this.props.initialScreenAfterLogin) {
+        if (this.props.initialScreenAfterLogin &&
+            // XXX: workaround for https://github.com/vector-im/riot-web/issues/11643 causing a login-loop
+            !["welcome", "login", "register"].includes(this.props.initialScreenAfterLogin.screen)
+        ) {
             fragmentAfterLogin = `/${this.props.initialScreenAfterLogin.screen}`;
         }
 
