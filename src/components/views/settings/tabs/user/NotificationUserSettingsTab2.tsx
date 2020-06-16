@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useContext, useState, useEffect, useCallback, useMemo} from "react";
+import React, {useContext, useState, useEffect, useCallback} from "react";
 import MatrixClient from "matrix-js-sdk/src/client";
 
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
@@ -204,7 +204,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
     const [pushRules, setPushRules] = useState<IPushRulesMap>(null);
     const [notifyMeWith, setNotifyMeWith] = useState<NotificationSettings>(null);
     useEffect(() => {
-        portRulesToNewAPI(rawPushRules).then(rules => {
+        Promise.resolve(rawPushRules).then(portRulesToNewAPI).then(rules => {
             const ruleMap = mapRuleset(rules.global);
             setNotifyMeWith(calculateNotifyMeWith(ruleMap));
             setPushRules(ruleMap);
