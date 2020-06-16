@@ -204,7 +204,11 @@ const NotificationUserSettingsTab2: React.FC = () => {
     const [pushRules, setPushRules] = useState<IPushRulesMap>(null);
     const [notifyMeWith, setNotifyMeWith] = useState<NotificationSettings>(null);
     useEffect(() => {
-        Promise.resolve(rawPushRules).then(portRulesToNewAPI).then(rules => {
+        if (!rawPushRules) {
+            setPushRules(null);
+            return;
+        }
+        Promise.resolve(rawPushRules.getContent()).then(portRulesToNewAPI).then(rules => {
             const ruleMap = mapRuleset(rules.global);
             setNotifyMeWith(calculateNotifyMeWith(ruleMap));
             setPushRules(ruleMap);
