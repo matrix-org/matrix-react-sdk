@@ -432,6 +432,10 @@ export const SETTINGS = {
         default: true,
         controller: new AudioNotificationsEnabledController(),
     },
+    "Notifications.alwaysShowBadgeCounts": {
+        supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
+        default: true,
+    },
     "enableWidgetScreenshots": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Enable widget screenshots on supported widgets'),

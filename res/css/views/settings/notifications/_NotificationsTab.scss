@@ -34,6 +34,7 @@ $leftGutter: 32px;
         }
 
         .mx_Checkbox_microCopy {
+            max-width: 256px;
             font-size: $font-11px;
             color: $muted-fg-color;
             margin-left: $leftGutter;
@@ -50,13 +51,14 @@ $leftGutter: 32px;
     }
 
     .mx_NotificationsTab_appearanceAndSounds {
-        & :nth-child(2) {
+        .mx_NotificationsTab_appearance_settings {
             float: left;
         }
 
-        & :nth-child(3) {
+        .mx_NotificationsTab_appearance_preview {
             float: right;
             display: block;
+            text-align: center;
         }
 
         br {
@@ -64,6 +66,7 @@ $leftGutter: 32px;
         }
 
         .mx_RoomTile2 {
+            width: 48px;
             margin-top: -10px;
 
             &:hover {
@@ -73,6 +76,12 @@ $leftGutter: 32px;
 
             .mx_BaseAvatar_initial {
                 width: 100% !important;
+            }
+
+            .mx_NotificationBadge_dot {
+                height: 16px;
+                width: 16px;
+                border-radius: 50%;
             }
         }
     }

@@ -27,8 +27,10 @@ import Field from "../../../elements/Field";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import {useStateToggle} from "../../../../../hooks/useStateToggle";
 import {useEventEmitter} from "../../../../../hooks/useEventEmitter";
+import {useSettingValue} from "../../../../../hooks/useSettings";
 import DesktopNotifications from "../../notifications/DesktopNotifications";
 import StyledRadioButton from "../../../elements/StyledRadioButton";
+import SettingsStore, {SettingLevel} from "../../../../../settings/SettingsStore";
 
 enum NotificationSettings {
     AllMessages = "all_messages", // .m.rule.message = notify
@@ -216,6 +218,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
         });
     }, [rawPushRules]);
 
+    const alwaysShowBadgeCounts = useSettingValue("Notifications.alwaysShowBadgeCounts");
 
     if (!pushRules) return null;
 
@@ -232,11 +235,9 @@ const NotificationUserSettingsTab2: React.FC = () => {
         avatarUrl = myUser.avatarUrl;
     }
 
-    const showCountsInBadges = true; // TODO wire up to the checkbox and into a Setting
-
     let appearancePreviewBadge;
     // TODO !showBadgeForMentions || !showBadgeForUnreadMessages
-    if (showCountsInBadges) {
+    if (alwaysShowBadgeCounts) {
         appearancePreviewBadge = (
             <div className="mx_NotificationBadge mx_NotificationBadge_visible mx_NotificationBadge_highlighted mx_NotificationBadge_2char">
                 <span className="mx_NotificationBadge_count">2</span>
@@ -249,6 +250,9 @@ const NotificationUserSettingsTab2: React.FC = () => {
             </div>
         );
     }
+    const onAlwaysShowBadgeCountsChange = ev => {
+        SettingsStore.setValue("Notifications.alwaysShowBadgeCounts", null, SettingLevel.ACCOUNT, ev.target.checked);
+    };
 
     return <div className="mx_SettingsTab mx_NotificationsTab">
         <div className="mx_SettingsTab_heading">{_t("Notifications")}</div>
@@ -313,16 +317,16 @@ const NotificationUserSettingsTab2: React.FC = () => {
         </SettingsSection>
 
         <SettingsSection title={_t("Appearance & Sounds")} className="mx_NotificationsTab_appearanceAndSounds">
-            <div className="mx_NotificationsTab_appearance">
-                <StyledCheckbox>
-                    {_t("Show a badge when I'm mentioned")}
+            <div className="mx_NotificationsTab_appearance_settings">
+                <StyledCheckbox checked={alwaysShowBadgeCounts} onChange={onAlwaysShowBadgeCountsChange}>
+                    {_t("Show number of messages in all badges")}
                 </StyledCheckbox>
-                <StyledCheckbox>
-                    {_t("Show counts in badges")}
-                </StyledCheckbox>
+                <div className="mx_Checkbox_microCopy">
+                    {_t("Riot will always display the numbered badges on direct messages, mentions and set keywords")}
+                </div>
             </div>
 
-            <div>
+            <div className="mx_NotificationsTab_appearance_preview">
                 <div className="mx_RoomTile2 mx_RoomTile2_minimized">
                     <div className="mx_RoomTile2_avatarContainer">
                         <BaseAvatar
