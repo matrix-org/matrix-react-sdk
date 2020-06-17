@@ -111,16 +111,6 @@ export default class Field extends React.PureComponent<IProps, IState> {
         this.id = this.props.id || getId();
     }
 
-    componentDidMount() {
-        this.validate({
-            focused: false,
-        });
-    }
-
-    componentDidUpdate() {
-        this.validateOnChange();
-    }
-
     public focus() {
         this.input.focus();
     }
@@ -139,7 +129,7 @@ export default class Field extends React.PureComponent<IProps, IState> {
     };
 
     private onChange = (ev) => {
-        //this.validateOnChange();
+        this.validateOnChange();
         // Parent component may have supplied its own `onChange` as well
         if (this.props.onChange) {
             this.props.onChange(ev);

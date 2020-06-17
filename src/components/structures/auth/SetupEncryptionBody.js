@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { debounce } from 'lodash';
+import classNames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
@@ -44,6 +46,9 @@ function keyHasPassphrase(keyInfo) {
 // maybe that's a thing people would do?
 const KEY_FILE_MAX_SIZE = 128;
 
+// Don't shout at the user that their key is invalid every time they type a key: wait a short time
+const VALIDATION_THROTTLE_MS = 200;
+
 export default class SetupEncryptionBody extends React.Component {
     static propTypes = {
         onFinished: PropTypes.func.isRequired,
@@ -65,10 +70,12 @@ export default class SetupEncryptionBody extends React.Component {
             verificationRequest: store.verificationRequest,
             backupInfo: store.backupInfo,
             recoveryKey: '',
+
             // whether the recovery key is a valid recovery key
             recoveryKeyValid: null,
             // whether the recovery key is the correct key or not
             recoveryKeyCorrect: null,
+            recoveryKeyFileError: null,
         };
     }
 
@@ -115,10 +122,31 @@ export default class SetupEncryptionBody extends React.Component {
         const f = e.target.files[0];
 
         if (f.size > KEY_FILE_MAX_SIZE) {
-            return;
+            this.setState({
+                recoveryKeyFileError: true,
+                recoveryKeyCorrect: false,
+                recoveryKeyValid: false,
+            });
+        } else {
+            const contents = await f.text();
+            // test it's within the base58 alphabet. We could be more strict here, eg. require the
+            // right number of characters, but it's really just to make sure that what we're reading is
+            // text because we'll put it in the text field.
+            if (/^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz\s]+$/.test(contents)) {
+                this.setState({
+                    recoveryKeyFileError: null,
+                    recoveryKey: contents.trim(),
+                });
+                this._validateRecoveryKey();
+            } else {
+                this.setState({
+                    recoveryKeyFileError: true,
+                    recoveryKeyCorrect: false,
+                    recoveryKeyValid: false,
+                    recoveryKey: '',
+                });
+            }
         }
-
-        this.setState({recoveryKey: await f.text()});
     }
 
     _onRecoveryKeyCancelClick() {
@@ -152,51 +180,66 @@ export default class SetupEncryptionBody extends React.Component {
     }
 
     _onRecoveryKeyChange = (e) => {
-        this.setState({recoveryKey: e.target.value});
+        this.setState({
+            recoveryKey: e.target.value,
+            recoveryKeyFileError: null,
+        });
+        // also clear the file upload control so that the user can upload the same file
+        // the did before (otherwise the onchange wouldn't fire)
+        this._fileUpload.value = null;
+
+
+        // We don't use Field's validation here because a) we want it in a separate place rather
+        // than in a tooltip and b) we want it to display feedback based on the uploaded file
+        // as well as the text box. Ideally we would refactor Field's validation logic so we could
+        // re-use some of it.
+        this._validateRecoveryKeyOnChange();
     }
 
-    _onRecoveryKeyValidate = async (fieldState) => {
-        const result = await this._validateRecoveryKey(fieldState);
-        this.setState({recoveryKeyValid: result.valid});
-        return result;
+    _validateRecoveryKeyOnChange = debounce(() => {
+        this._validateRecoveryKey();
+    }, VALIDATION_THROTTLE_MS);
+
+
+    async _validateRecoveryKey() {
+        if (this.state.recoveryKey === '') {
+            this.setState({
+                recoveryKeyValid: null,
+                recoveryKeyCorrect: null,
+            });
+            return;
+        }
+
+        try {
+            const decodedKey = decodeRecoveryKey(this.state.recoveryKey);
+            const correct = await MatrixClientPeg.get().checkSecretStorageKey(
+                decodedKey, SetupEncryptionStore.sharedInstance().keyInfo,
+            );
+            this.setState({
+                recoveryKeyValid: true,
+                recoveryKeyCorrect: correct,
+            });
+        } catch (e) {
+            this.setState({
+                recoveryKeyValid: false,
+                recoveryKeyCorrect: false,
+            });
+        }
     }
 
-    _validateRecoveryKey = withValidation({
-        rules: [
-            {
-                key: "required",
-                test: async (state) => {
-                    try {
-                        const decodedKey = decodeRecoveryKey(state.value);
-                        const correct = await MatrixClientPeg.get().checkSecretStorageKey(
-                            decodedKey, SetupEncryptionStore.sharedInstance().keyInfo,
-                        );
-                        this.setState({
-                            recoveryKeyValid: true,
-                            recoveryKeyCorrect: correct,
-                        });
-                        return correct;
-                    } catch (e) {
-                        this.setState({
-                            recoveryKeyValid: false,
-                            recoveryKeyCorrect: false,
-                        });
-                        return false;
-                    }
-                },
-                invalid: function() {
-                    if (this.state.recoveryKeyValid) {
-                        return _t("This isn't the recovery key for your account");
-                    } else {
-                        return _t("This isn't a valid recovery key");
-                    }
-                },
-                valid: function() {
-                    return _t("Looks good!");
-                },
-            },
-        ],
-    })
+    getKeyValidationText() {
+        if (this.state.recoveryKeyFileError) {
+            return _t("Wrong file type");
+        } else if (this.state.recoveryKeyCorrect) {
+            return _t("Looks good!");
+        } else if (this.state.recoveryKeyValid) {
+            return _t("Wrong Recovery Key");
+        } else if (this.state.recoveryKeyValid === null) {
+            return '';
+        } else {
+            return _t("Invalid Recovery Key");
+        }
+    }
 
     _onRecoveryKeyFormSubmit = (e) => {
         e.preventDefault();
@@ -289,6 +332,15 @@ export default class SetupEncryptionBody extends React.Component {
                 keyPrompt = _t("Enter your Recovery Key to continue.");
             }
 
+            const feedbackClasses = classNames({
+                'mx_CompleteSecurity_recoveryKeyFeedback': true,
+                'mx_CompleteSecurity_recoveryKeyFeedback_valid': this.state.recoveryKeyCorrect === true,
+                'mx_CompleteSecurity_recoveryKeyFeedback_invalid': this.state.recoveryKeyCorrect === false,
+            });
+            const recoveryKeyFeedback = <div className={feedbackClasses}>
+                {this.getKeyValidationText()}
+            </div>;
+
             const Field = sdk.getComponent('elements.Field');
             return <form onSubmit={this._onRecoveryKeyFormSubmit}>
                 <p>{keyPrompt}</p>
@@ -299,7 +351,6 @@ export default class SetupEncryptionBody extends React.Component {
                             label={_t('Recovery Key')}
                             value={this.state.recoveryKey}
                             onChange={this._onRecoveryKeyChange}
-                            onValidate={this._onRecoveryKeyValidate}
                         />
                     </div>
                     <span className="mx_CompleteSecurity_recoveryKeyEntry_entryControlSeparatorText">
@@ -316,6 +367,7 @@ export default class SetupEncryptionBody extends React.Component {
                         </AccessibleButton>
                     </div>
                 </div>
+                {recoveryKeyFeedback}
                 <div className="mx_CompleteSecurity_actionRow">
                     <AccessibleButton kind="secondary" onClick={this._onRecoveryKeyCancelClick}>
                         {_t("Cancel")}

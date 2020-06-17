@@ -98,6 +98,35 @@ limitations under the License.
     margin: 16px;
 }
 
+.mx_CompleteSecurity_recoveryKeyFeedback {
+    &::before {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        width: 14px;
+        height: 14px;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        margin-right: 5px;
+    }
+}
+
+.mx_CompleteSecurity_recoveryKeyFeedback_valid {
+    color: $input-valid-border-color;
+    &::before {
+        mask-image: url('$(res)/img/feather-customised/check.svg');
+        background-color: $input-valid-border-color;
+    }
+}
+
+.mx_CompleteSecurity_recoveryKeyFeedback_invalid {
+    color: $input-invalid-border-color;
+    &::before {
+        mask-image: url('$(res)/img/feather-customised/x.svg');
+        background-color: $input-invalid-border-color;
+    }
+}
+
 .mx_CompleteSecurity_recoveryKeyEntry_fileInput {
     display: none;
 }
