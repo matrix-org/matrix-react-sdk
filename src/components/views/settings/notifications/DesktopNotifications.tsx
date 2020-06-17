@@ -51,7 +51,7 @@ const DesktopNotifications = () => {
     }
 
     return <SettingsSection title={_t("Desktop notifications")}>
-        <div>
+        <div className="mx_NotificationsTab_desktopNotificationsToggle">
             {copy} <AccessibleButton kind="link" onClick={onToggleNotificationsClick}>{buttonText}</AccessibleButton>
         </div>
         <StyledCheckbox

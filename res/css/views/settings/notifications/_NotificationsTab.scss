@@ -42,6 +42,10 @@ $leftGutter: 32px;
         .mx_Field_textarea {
             margin-left: $leftGutter;
         }
+
+        .mx_AccessibleButton_kind_link {
+            padding: 0;
+        }
     }
 
     .mx_NotificationsTab_appearanceAndSounds {
@@ -70,5 +74,9 @@ $leftGutter: 32px;
                 width: 100% !important;
             }
         }
+    }
+
+    .mx_NotificationsTab_desktopNotificationsToggle {
+        margin-bottom: 8px;
     }
 }
