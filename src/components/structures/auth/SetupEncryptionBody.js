@@ -21,7 +21,6 @@ import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import * as sdk from '../../../index';
-import withValidation from '../../views/elements/Validation';
 import { decodeRecoveryKey } from 'matrix-js-sdk/src/crypto/recoverykey';
 import {
     SetupEncryptionStore,
