@@ -221,6 +221,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
 
     const onNotifyMeWithChange = ev => {
         setNotifyMeWith(ev.target.value);
+        // TODO update push rules
     };
 
     let displayName = cli.getUserId();
@@ -229,6 +230,24 @@ const NotificationUserSettingsTab2: React.FC = () => {
     if (myUser) {
         displayName = myUser.rawDisplayName;
         avatarUrl = myUser.avatarUrl;
+    }
+
+    const showCountsInBadges = true; // TODO wire up to the checkbox and into a Setting
+
+    let appearancePreviewBadge;
+    // TODO !showBadgeForMentions || !showBadgeForUnreadMessages
+    if (showCountsInBadges) {
+        appearancePreviewBadge = (
+            <div className="mx_NotificationBadge mx_NotificationBadge_visible mx_NotificationBadge_highlighted mx_NotificationBadge_2char">
+                <span className="mx_NotificationBadge_count">2</span>
+            </div>
+        );
+    } else {
+        appearancePreviewBadge = (
+            <div className="mx_NotificationBadge mx_NotificationBadge_visible mx_NotificationBadge_highlighted mx_NotificationBadge_dot">
+                <span className="mx_NotificationBadge_count" />
+            </div>
+        );
     }
 
     return <div className="mx_SettingsTab mx_NotificationsTab">
@@ -317,9 +336,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
                         />
                     </div>
                     <div className="mx_RoomTile2_badgeContainer">
-                        <div className="mx_NotificationBadge mx_NotificationBadge_visible mx_NotificationBadge_highlighted mx_NotificationBadge_2char">
-                            <span className="mx_NotificationBadge_count">2</span>
-                        </div>
+                        {appearancePreviewBadge}
                     </div>
                 </div>
                 <div>{_t("Preview")}</div>
