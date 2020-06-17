@@ -40,19 +40,21 @@ const DesktopNotifications = () => {
     };
 
     let copy;
+    let kind;
     let buttonText;
     if (desktopNotificationsEnabled) {
         copy = _t("System provided notifications are currently enabled.");
-        // todo make this text Red
+        kind = "link_danger";
         buttonText = _t("Disable");
     } else {
         copy = _t("System provided notifications are currently disabled.");
+        kind = "link";
         buttonText = _t("Enable");
     }
 
     return <SettingsSection title={_t("Desktop notifications")}>
         <div className="mx_NotificationsTab_desktopNotificationsToggle">
-            {copy} <AccessibleButton kind="link" onClick={onToggleNotificationsClick}>{buttonText}</AccessibleButton>
+            {copy} <AccessibleButton kind={kind} onClick={onToggleNotificationsClick}>{buttonText}</AccessibleButton>
         </div>
         <StyledCheckbox
             checked={notificationsBodyEnabled}

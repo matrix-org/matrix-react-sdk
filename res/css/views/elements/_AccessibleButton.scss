@@ -96,6 +96,11 @@ limitations under the License.
     background-color: $button-link-bg-color;
 }
 
+.mx_AccessibleButton_kind_link_danger {
+    color: $button-link-danger-fg-color;
+    background-color: $button-link-bg-color;
+}
+
 .mx_AccessibleButton_kind_link.mx_AccessibleButton_disabled {
     opacity: 0.4;
 }

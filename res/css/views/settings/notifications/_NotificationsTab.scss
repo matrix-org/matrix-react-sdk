@@ -43,7 +43,8 @@ $leftGutter: 32px;
             margin-left: $leftGutter;
         }
 
-        .mx_AccessibleButton_kind_link {
+        .mx_AccessibleButton_kind_link,
+        .mx_AccessibleButton_kind_link_danger {
             padding: 0;
         }
     }
