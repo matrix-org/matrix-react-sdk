@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-$leftGutter: 32px;
+$leftGutter: 28px;
 
 .mx_NotificationsTab {
     .mx_SettingsTab_section {
@@ -34,8 +34,7 @@ $leftGutter: 32px;
         }
 
         .mx_Checkbox_microCopy {
-            max-width: 256px;
-            font-size: $font-11px;
+            font-size: $font-12px;
             color: $muted-fg-color;
             margin-left: $leftGutter;
         }
@@ -43,50 +42,29 @@ $leftGutter: 32px;
         .mx_Field_textarea {
             margin-left: $leftGutter;
         }
-
-        .mx_AccessibleButton_kind_link,
-        .mx_AccessibleButton_kind_link_danger {
-            padding: 0;
-        }
     }
 
     .mx_NotificationsTab_appearanceAndSounds {
-        .mx_NotificationsTab_appearance_settings {
-            float: left;
-        }
-
-        .mx_NotificationsTab_appearance_preview {
-            float: right;
-            display: block;
-            text-align: center;
-        }
-
-        br {
-            clear: both;
-        }
-
-        .mx_RoomTile2 {
-            width: 48px;
-            margin-top: -10px;
-
-            &:hover {
-                background: none;
-                border-radius: inherit;
-            }
-
-            .mx_BaseAvatar_initial {
-                width: 100% !important;
-            }
-
-            .mx_NotificationBadge_dot {
-                height: 16px;
-                width: 16px;
-                border-radius: 50%;
-            }
+        .mx_NotificationBadge {
+            display: inline-flex;
+            margin-left: 2px;
+            margin-right: 2px;
         }
     }
 
-    .mx_NotificationsTab_desktopNotificationsToggle {
-        margin-bottom: 8px;
+    .mx_NotificationsTab_desktopNotificationsSection {
+        & > .mx_Checkbox:nth-child(3) {
+            margin-left: $leftGutter;
+        }
+    }
+
+    .mx_NotificationsTab_emailAddresses {
+        margin-top: 16px;
+        margin-left: $leftGutter;
+    }
+
+    .mx_AccessibleButton_kind_link {
+        padding: 0;
+        font-size: inherit;
     }
 }

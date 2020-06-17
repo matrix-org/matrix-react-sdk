@@ -31,6 +31,7 @@ import {useSettingValue} from "../../../../../hooks/useSettings";
 import DesktopNotifications from "../../notifications/DesktopNotifications";
 import StyledRadioButton from "../../../elements/StyledRadioButton";
 import SettingsStore, {SettingLevel} from "../../../../../settings/SettingsStore";
+import EmailNotifications from "../../notifications/EmailNotifications";
 
 enum NotificationSettings {
     AllMessages = "all_messages", // .m.rule.message = notify
@@ -227,28 +228,13 @@ const NotificationUserSettingsTab2: React.FC = () => {
         // TODO update push rules
     };
 
-    let displayName = cli.getUserId();
-    let avatarUrl: string = null;
-    const myUser = cli.getUser(cli.getUserId());
-    if (myUser) {
-        displayName = myUser.rawDisplayName;
-        avatarUrl = myUser.avatarUrl;
-    }
-
-    let appearancePreviewBadge;
-    // TODO !showBadgeForMentions || !showBadgeForUnreadMessages
+    let badgePreview;
     if (alwaysShowBadgeCounts) {
-        appearancePreviewBadge = (
-            <div className="mx_NotificationBadge mx_NotificationBadge_visible mx_NotificationBadge_highlighted mx_NotificationBadge_2char">
+        badgePreview = <React.Fragment>
+            (<div className="mx_NotificationBadge mx_NotificationBadge_visible mx_NotificationBadge_2char">
                 <span className="mx_NotificationBadge_count">2</span>
-            </div>
-        );
-    } else {
-        appearancePreviewBadge = (
-            <div className="mx_NotificationBadge mx_NotificationBadge_visible mx_NotificationBadge_highlighted mx_NotificationBadge_dot">
-                <span className="mx_NotificationBadge_count" />
-            </div>
-        );
+            </div>)
+        </React.Fragment>;
     }
     const onAlwaysShowBadgeCountsChange = ev => {
         SettingsStore.setValue("Notifications.alwaysShowBadgeCounts", null, SettingLevel.ACCOUNT, ev.target.checked);
@@ -308,7 +294,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
 
             <Field
                 element="textarea"
-                label={_t("Keywords")}
+                label={_t("New keyword")}
                 rows={5}
                 onChange={onChange}
                 value={""}
@@ -317,33 +303,11 @@ const NotificationUserSettingsTab2: React.FC = () => {
         </SettingsSection>
 
         <SettingsSection title={_t("Appearance & Sounds")} className="mx_NotificationsTab_appearanceAndSounds">
-            <div className="mx_NotificationsTab_appearance_settings">
-                <StyledCheckbox checked={alwaysShowBadgeCounts} onChange={onAlwaysShowBadgeCountsChange}>
-                    {_t("Show number of messages in all badges")}
-                </StyledCheckbox>
-                <div className="mx_Checkbox_microCopy">
-                    {_t("Riot will always display the numbered badges on direct messages, mentions and set keywords")}
-                </div>
-            </div>
-
-            <div className="mx_NotificationsTab_appearance_preview">
-                <div className="mx_RoomTile2 mx_RoomTile2_minimized">
-                    <div className="mx_RoomTile2_avatarContainer">
-                        <BaseAvatar
-                            idName={cli.getUserId()}
-                            name={displayName}
-                            url={avatarUrl}
-                            width={48}
-                            height={48}
-                            resizeMethod="crop"
-                            className="mx_LeftPanel2_userAvatar"
-                        />
-                    </div>
-                    <div className="mx_RoomTile2_badgeContainer">
-                        {appearancePreviewBadge}
-                    </div>
-                </div>
-                <div>{_t("Preview")}</div>
+            <StyledCheckbox checked={alwaysShowBadgeCounts} onChange={onAlwaysShowBadgeCountsChange}>
+                {_t("Show number of messages in all rooms")} {badgePreview}
+            </StyledCheckbox>
+            <div className="mx_Checkbox_microCopy">
+                {_t("Riot always displays the number of missed Direct Messages, mentions & keywords")}
             </div>
 
             <br />
@@ -357,14 +321,13 @@ const NotificationUserSettingsTab2: React.FC = () => {
             </StyledCheckbox>
         </SettingsSection>
 
+        <SettingsSection title={_t("Room notifications")}>
+            ...
+        </SettingsSection>
+
         <DesktopNotifications />
 
-        <SettingsSection title={_t("Email notifications")}>
-            <StyledCheckbox>
-                {_t("Receive a summary of missed notifications by email")}
-            </StyledCheckbox>
-            Email input????
-        </SettingsSection>
+        <EmailNotifications />
 
         <AdvancedNotificationsSection rules={[]} />
     </div>;

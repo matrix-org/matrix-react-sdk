@@ -17,16 +17,20 @@ limitations under the License.
 import React from "react";
 
 import SettingsSection from "../SettingsSection";
-import StyledCheckbox from "../../elements/StyledCheckbox";
 import {_t} from "../../../../languageHandler";
-import AccessibleButton from "../../elements/AccessibleButton";
 import {useSettingValue} from "../../../../hooks/useSettings";
 import SettingsStore, {SettingLevel} from "../../../../settings/SettingsStore";
+import StyledCheckbox from "../../elements/StyledCheckbox";
 
 const NOTIFICATIONS_ENABLED_KEY = "notificationsEnabled";
 const NOTIFICATIONS_BODY_ENABLED_KEY = "notificationBodyEnabled";
 
-const onNotificationsBodyCheckboxChange = (ev) => {
+const onNotificationsEnabledChange = (ev) => {
+    // error from this gets shown to the user in a modal
+    SettingsStore.setValue(NOTIFICATIONS_ENABLED_KEY, null, SettingLevel.DEVICE, ev.target.checked);
+};
+
+const onNotificationsBodyEnabledChange = (ev) => {
     SettingsStore.setValue(NOTIFICATIONS_BODY_ENABLED_KEY, null, SettingLevel.DEVICE, ev.target.checked);
 };
 
@@ -34,34 +38,23 @@ const DesktopNotifications = () => {
     const desktopNotificationsEnabled = useSettingValue(NOTIFICATIONS_ENABLED_KEY);
     const notificationsBodyEnabled = useSettingValue(NOTIFICATIONS_BODY_ENABLED_KEY);
 
-    const onToggleNotificationsClick = () => {
-        // error from this gets shown to the user in a modal
-        SettingsStore.setValue(NOTIFICATIONS_ENABLED_KEY, null, SettingLevel.DEVICE, !desktopNotificationsEnabled);
-    };
-
-    let copy;
-    let kind;
-    let buttonText;
-    if (desktopNotificationsEnabled) {
-        copy = _t("System provided notifications are currently enabled.");
-        kind = "link_danger";
-        buttonText = _t("Disable");
-    } else {
-        copy = _t("System provided notifications are currently disabled.");
-        kind = "link";
-        buttonText = _t("Enable");
-    }
-
-    return <SettingsSection title={_t("Desktop notifications")}>
-        <div className="mx_NotificationsTab_desktopNotificationsToggle">
-            {copy} <AccessibleButton kind={kind} onClick={onToggleNotificationsClick}>{buttonText}</AccessibleButton>
-        </div>
+    // TODO confirm with design that NOTIFICATIONS_BODY_ENABLED_KEY should be disabled when notifications are
+    return <SettingsSection
+        title={_t("Desktop notifications")}
+        className="mx_NotificationsTab_desktopNotificationsSection"
+    >
         <StyledCheckbox
-            checked={notificationsBodyEnabled}
-            onChange={onNotificationsBodyCheckboxChange}
+            checked={desktopNotificationsEnabled}
+            onChange={onNotificationsEnabledChange}
+        >
+            {_t("Enable desktop notifications")}
+        </StyledCheckbox>
+        <StyledCheckbox
+            checked={!notificationsBodyEnabled}
+            onChange={onNotificationsBodyEnabledChange}
             disabled={!desktopNotificationsEnabled}
         >
-            {_t("Receive OS provided notifications from your desktop application")}
+            {_t("Hide message contents")}
         </StyledCheckbox>
     </SettingsSection>;
 };
