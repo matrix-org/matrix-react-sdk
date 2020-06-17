@@ -102,11 +102,12 @@ limitations under the License.
     &::before {
         content: "";
         display: inline-block;
-        vertical-align: middle;
-        width: 14px;
-        height: 14px;
+        vertical-align: bottom;
+        width: 20px;
+        height: 20px;
         mask-repeat: no-repeat;
         mask-position: center;
+        mask-size: 20px;
         margin-right: 5px;
     }
 }
