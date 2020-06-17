@@ -56,7 +56,7 @@ export default class SetupEncryptionBody extends React.Component {
     constructor() {
         super();
 
-        this._fileUpload = null;
+        this._fileUpload = React.createRef();
 
         const store = SetupEncryptionStore.sharedInstance();
         store.on("update", this._onStoreUpdate);
@@ -97,10 +97,6 @@ export default class SetupEncryptionBody extends React.Component {
         store.stop();
     }
 
-    _collectFileUpload = n => {
-        this._fileUpload = n;
-    }
-
     _onResetClick = () => {
         const store = SetupEncryptionStore.sharedInstance();
         store.startKeyReset();
@@ -112,7 +108,7 @@ export default class SetupEncryptionBody extends React.Component {
     }
 
     _onRecoveryKeyFileUploadClick = () => {
-        this._fileUpload.click();
+        this._fileUpload.current.click();
     }
 
     _onRecoveryKeyFileChange = async e => {
@@ -185,7 +181,7 @@ export default class SetupEncryptionBody extends React.Component {
         });
         // also clear the file upload control so that the user can upload the same file
         // the did before (otherwise the onchange wouldn't fire)
-        this._fileUpload.value = null;
+        this._fileUpload.current.value = null;
 
 
         // We don't use Field's validation here because a) we want it in a separate place rather
@@ -358,7 +354,7 @@ export default class SetupEncryptionBody extends React.Component {
                     <div>
                         <input type="file"
                             className="mx_CompleteSecurity_recoveryKeyEntry_fileInput"
-                            ref={this._collectFileUpload}
+                            ref={this._fileUpload}
                             onChange={this._onRecoveryKeyFileChange}
                         />
                         <AccessibleButton kind="primary" onClick={this._onRecoveryKeyFileUploadClick}>
