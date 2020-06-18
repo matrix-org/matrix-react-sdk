@@ -434,7 +434,7 @@ export const SETTINGS = {
     },
     "Notifications.alwaysShowBadgeCounts": {
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
-        default: true,
+        default: false,
     },
     "enableWidgetScreenshots": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,

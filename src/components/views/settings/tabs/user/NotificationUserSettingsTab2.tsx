@@ -22,7 +22,6 @@ import {_t} from "../../../../../languageHandler";
 import StyledCheckbox from "../../../elements/StyledCheckbox";
 import SettingsSection from "../../SettingsSection";
 import {portRulesToNewAPI} from "../../../../../notifications";
-import BaseAvatar from "../../../avatars/BaseAvatar";
 import Field from "../../../elements/Field";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import {useStateToggle} from "../../../../../hooks/useStateToggle";
@@ -240,6 +239,10 @@ const NotificationUserSettingsTab2: React.FC = () => {
         SettingsStore.setValue("Notifications.alwaysShowBadgeCounts", null, SettingLevel.ACCOUNT, ev.target.checked);
     };
 
+    const mentionsKeywordsSectionDisabled = (
+        notifyMeWith === NotificationSettings.AllMessages || notifyMeWith === NotificationSettings.Never
+    );
+
     return <div className="mx_SettingsTab mx_NotificationsTab">
         <div className="mx_SettingsTab_heading">{_t("Notifications")}</div>
         <div className="mx_SettingsTab_subsectionText">
@@ -282,10 +285,10 @@ const NotificationUserSettingsTab2: React.FC = () => {
         </SettingsSection>
 
         <SettingsSection title={_t("Mentions & Keywords")}>
-            <StyledCheckbox>
+            <StyledCheckbox disabled={mentionsKeywordsSectionDisabled}>
                 {_t("Notify when someone mentions using @")}
             </StyledCheckbox>
-            <StyledCheckbox>
+            <StyledCheckbox disabled={mentionsKeywordsSectionDisabled}>
                 {_t("Notify when someone uses a keyword")}
             </StyledCheckbox>
             <div className="mx_Checkbox_microCopy">
@@ -298,7 +301,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
                 rows={5}
                 onChange={onChange}
                 value={""}
-                disabled={false}
+                disabled={mentionsKeywordsSectionDisabled}
             />
         </SettingsSection>
 
