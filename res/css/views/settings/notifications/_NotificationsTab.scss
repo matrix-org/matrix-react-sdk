@@ -53,6 +53,13 @@ $leftGutter: 28px;
         }
     }
 
+    .mx_NotificationsTab_roomNotifyMeOn {
+        .mx_Checkbox_microCopy {
+            margin-top: -4px;
+            margin-bottom: 12px;
+        }
+    }
+
     .mx_NotificationsTab_desktopNotificationsSection {
         & > .mx_Checkbox:nth-child(3) {
             margin-left: $leftGutter;

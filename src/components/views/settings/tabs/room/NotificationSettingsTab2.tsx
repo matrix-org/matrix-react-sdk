@@ -22,10 +22,21 @@ import StyledCheckbox from "../../../elements/StyledCheckbox";
 import SettingsSection from "../../SettingsSection";
 import StyledRadioButton from "../../../elements/StyledRadioButton";
 import { NotificationSettings } from "../user/NotificationUserSettingsTab2";
+import defaultDispatcher from "../../../../../dispatcher/dispatcher";
+import {OpenToTabPayload} from "../../../../../dispatcher/payloads/OpenToTabPayload";
+import {Action} from "../../../../../dispatcher/actions";
+import {USER_NOTIFICATIONS_TAB} from "../../../dialogs/UserSettingsDialog";
 
 interface IProps {
     roomId: string;
 }
+
+const goToNotificationSettings = () => {
+    defaultDispatcher.dispatch<OpenToTabPayload>({
+        action: Action.ViewUserSettings,
+        initialTabId: USER_NOTIFICATIONS_TAB,
+    });
+};
 
 const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
     const currentSound = "default";
@@ -39,8 +50,7 @@ const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
     const onChange = () => {};
     let notifyMeOn = NotificationSettings.MentionsKeywordsOnly;
 
-    // TODO add "(Default)" to Notify me on...
-    // TODO add microcopy "Manage keywords..."
+    // TODO add "(Default)" to Notify me on... based on account push rules
     // TODO verify copy for "Manage notifications in..."
     // TODO appearance & sounds section
 
@@ -50,7 +60,7 @@ const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
             {_t("Manage notifications in this room...")}
         </div>
 
-        <SettingsSection title={_t("Notify me on")}>
+        <SettingsSection title={_t("Notify me on")} className="mx_NotificationsTab_roomNotifyMeOn">
             <StyledRadioButton
                 onChange={onChange}
                 checked={notifyMeOn === NotificationSettings.AllMessages}
@@ -67,6 +77,11 @@ const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
             >
                 {_t("Mentions & keywords only")}
             </StyledRadioButton>
+            <div className="mx_Checkbox_microCopy">
+                {_t("Manage keywords in <a>Account Settings</a>", {}, {
+                    a: sub => <AccessibleButton kind="link" onClick={goToNotificationSettings}>{sub}</AccessibleButton>,
+                })}
+            </div>
             <StyledRadioButton
                 onChange={onChange}
                 checked={notifyMeOn === NotificationSettings.Never}
