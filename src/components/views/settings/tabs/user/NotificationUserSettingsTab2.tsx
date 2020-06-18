@@ -31,7 +31,8 @@ import EmailNotificationsSection from "../../notifications/EmailNotificationsSec
 import AppearanceSoundsSection from "../../notifications/AppearanceSoundsSection";
 import { useAccountData } from "../../../../../hooks/useAccountData";
 
-enum NotificationSettings {
+// TODO move these defs to some common module
+export enum NotificationSettings {
     AllMessages = "all_messages", // .m.rule.message = notify
     DirectMessagesMentionsKeywords = "dm_mentions_keywords", // .m.rule.message = mark_unread. This is the new default.
     MentionsKeywordsOnly = "mentions_keywords", // .m.rule.message = mark_unread; .m.rule.room_one_to_one = mark_unread

@@ -20,6 +20,8 @@ import {_t} from "../../../../../languageHandler";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import StyledCheckbox from "../../../elements/StyledCheckbox";
 import SettingsSection from "../../SettingsSection";
+import StyledRadioButton from "../../../elements/StyledRadioButton";
+import { NotificationSettings } from "../user/NotificationUserSettingsTab2";
 
 interface IProps {
     roomId: string;
@@ -35,49 +37,53 @@ const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
     let currentUploadedFile;
     let _soundUpload;
     const onChange = () => {};
-    let notifyMeOn;
+    let notifyMeOn = NotificationSettings.MentionsKeywordsOnly;
 
-    return <div className="mx_SettingsTab mx_RoomNotificationSettings">
+    // TODO add "(Default)" to Notify me on...
+    // TODO add microcopy "Manage keywords..."
+    // TODO verify copy for "Manage notifications in..."
+    // TODO appearance & sounds section
+
+    return <div className="mx_SettingsTab mx_NotificationsTab">
         <div className="mx_SettingsTab_heading">{_t("Notifications")}</div>
         <div className="mx_SettingsTab_subsectionText">
-            Manage notifications in this room...
+            {_t("Manage notifications in this room...")}
         </div>
 
         <SettingsSection title={_t("Notify me on")}>
-            <label>
-                <input
-                    type="radio"
-                    name="notifyMeOn"
-                    value="all_messages"
-                    onChange={onChange}
-                    checked={notifyMeOn === "all_messages"} />
+            <StyledRadioButton
+                onChange={onChange}
+                checked={notifyMeOn === NotificationSettings.AllMessages}
+                name="notifyMeOn"
+                value={NotificationSettings.AllMessages}
+            >
                 {_t("All messages")}
-            </label>
-            <label>
-                <input
-                    type="radio"
-                    name="notifyMeOn"
-                    value="mentions_keywords"
-                    onChange={onChange}
-                    checked={notifyMeOn === "mentions_keywords"} />
+            </StyledRadioButton>
+            <StyledRadioButton
+                onChange={onChange}
+                checked={notifyMeOn === NotificationSettings.MentionsKeywordsOnly}
+                name="notifyMeOn"
+                value={NotificationSettings.MentionsKeywordsOnly}
+            >
                 {_t("Mentions & keywords only")}
-            </label>
-            <label>
-                <input
-                    type="radio"
-                    name="notifyMeOn"
-                    value="never"
-                    onChange={onChange}
-                    checked={notifyMeOn === "never"} />
+            </StyledRadioButton>
+            <StyledRadioButton
+                onChange={onChange}
+                checked={notifyMeOn === NotificationSettings.Never}
+                name="notifyMeOn"
+                value={NotificationSettings.Never}
+            >
                 {_t("Never")}
-            </label>
+            </StyledRadioButton>
         </SettingsSection>
 
-        <SettingsSection title={"Room alerts"}>
+        <SettingsSection title={_t("Appearance & Sounds")}>
             <StyledCheckbox>
                 {_t("Room alerts")}
-                <div>{_t("Notify you when using @room")}</div>
             </StyledCheckbox>
+            <div className="mx_Checkbox_microCopy">
+                {_t("Notify you when using @room")}
+            </div>
         </SettingsSection>
 
         <SettingsSection title={"Sound alerts"}>
@@ -93,24 +99,6 @@ const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
                     onChange={onChange}
                     checked={currentSound === "sound1"} />
                 {_t("Bird Sound")}
-            </label>
-            <label>
-                <input
-                    type="radio"
-                    name="sound"
-                    value="sound2"
-                    onChange={onChange}
-                    checked={currentSound === "sound2"} />
-                {_t("Knock on wood")}
-            </label>
-            <label>
-                <input
-                    type="radio"
-                    name="sound"
-                    value="sound0"
-                    onChange={onChange}
-                    checked={currentSound === "sound0"} />
-                {_t("Use default")}
             </label>
         </SettingsSection>
 
