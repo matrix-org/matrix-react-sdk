@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useContext, useState, useEffect, useCallback} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import MatrixClient from "matrix-js-sdk/src/client";
 
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
@@ -25,12 +25,11 @@ import {portRulesToNewAPI} from "../../../../../notifications";
 import Field from "../../../elements/Field";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import {useStateToggle} from "../../../../../hooks/useStateToggle";
-import {useEventEmitter} from "../../../../../hooks/useEventEmitter";
-import {useSettingValue} from "../../../../../hooks/useSettings";
-import DesktopNotifications from "../../notifications/DesktopNotifications";
+import DesktopNotificationsSection from "../../notifications/DesktopNotificationsSection";
 import StyledRadioButton from "../../../elements/StyledRadioButton";
-import SettingsStore, {SettingLevel} from "../../../../../settings/SettingsStore";
-import EmailNotifications from "../../notifications/EmailNotifications";
+import EmailNotificationsSection from "../../notifications/EmailNotificationsSection";
+import AppearanceSoundsSection from "../../notifications/AppearanceSoundsSection";
+import { useAccountData } from "../../../../../hooks/useAccountData";
 
 enum NotificationSettings {
     AllMessages = "all_messages", // .m.rule.message = notify
@@ -186,18 +185,6 @@ const AdvancedNotificationsSection: React.FC = () => {
     </SettingsSection>;
 };
 
-const useAccountData = (cli: MatrixClient, eventType: string) => {
-    const [value, setValue] = useState(cli.getAccountData(eventType));
-
-    const handler = useCallback((event) => {
-        if (event.getType() !== eventType) return;
-        setValue(cli.getAccountData(eventType));
-    }, [cli, eventType]);
-    useEventEmitter(cli, "accountData", handler);
-
-    return value;
-};
-
 const NotificationUserSettingsTab2: React.FC = () => {
     const onChange = console.log;
 
@@ -218,25 +205,11 @@ const NotificationUserSettingsTab2: React.FC = () => {
         });
     }, [rawPushRules]);
 
-    const alwaysShowBadgeCounts = useSettingValue("Notifications.alwaysShowBadgeCounts");
-
     if (!pushRules) return null;
 
     const onNotifyMeWithChange = ev => {
         setNotifyMeWith(ev.target.value);
         // TODO update push rules
-    };
-
-    let badgePreview;
-    if (alwaysShowBadgeCounts) {
-        badgePreview = <React.Fragment>
-            (<div className="mx_NotificationBadge mx_NotificationBadge_visible mx_NotificationBadge_2char">
-                <span className="mx_NotificationBadge_count">2</span>
-            </div>)
-        </React.Fragment>;
-    }
-    const onAlwaysShowBadgeCountsChange = ev => {
-        SettingsStore.setValue("Notifications.alwaysShowBadgeCounts", null, SettingLevel.ACCOUNT, ev.target.checked);
     };
 
     const mentionsKeywordsSectionDisabled = (
@@ -305,32 +278,15 @@ const NotificationUserSettingsTab2: React.FC = () => {
             />
         </SettingsSection>
 
-        <SettingsSection title={_t("Appearance & Sounds")} className="mx_NotificationsTab_appearanceAndSounds">
-            <StyledCheckbox checked={alwaysShowBadgeCounts} onChange={onAlwaysShowBadgeCountsChange}>
-                {_t("Show number of messages in all rooms")} {badgePreview}
-            </StyledCheckbox>
-            <div className="mx_Checkbox_microCopy">
-                {_t("Riot always displays the number of missed Direct Messages, mentions & keywords")}
-            </div>
-
-            <br />
-            <br />
-
-            <StyledCheckbox>
-                {_t("Play a sound for all messages")}
-            </StyledCheckbox>
-            <StyledCheckbox>
-                {_t("Play a sound for mentions")}
-            </StyledCheckbox>
-        </SettingsSection>
+        <AppearanceSoundsSection />
 
         <SettingsSection title={_t("Room notifications")}>
             ...
         </SettingsSection>
 
-        <DesktopNotifications />
+        <DesktopNotificationsSection />
 
-        <EmailNotifications />
+        <EmailNotificationsSection />
 
         <AdvancedNotificationsSection rules={[]} />
     </div>;

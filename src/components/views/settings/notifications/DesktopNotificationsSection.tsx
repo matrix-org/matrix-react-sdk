@@ -34,7 +34,7 @@ const onNotificationsBodyEnabledChange = (ev) => {
     SettingsStore.setValue(NOTIFICATIONS_BODY_ENABLED_KEY, null, SettingLevel.DEVICE, ev.target.checked);
 };
 
-const DesktopNotifications = () => {
+const DesktopNotificationsSection: React.FC = () => {
     const desktopNotificationsEnabled = useSettingValue(NOTIFICATIONS_ENABLED_KEY);
     const notificationsBodyEnabled = useSettingValue(NOTIFICATIONS_BODY_ENABLED_KEY);
 
@@ -59,4 +59,4 @@ const DesktopNotifications = () => {
     </SettingsSection>;
 };
 
-export default DesktopNotifications;
+export default DesktopNotificationsSection;

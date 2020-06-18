@@ -77,7 +77,7 @@ const disablePusher = (cli: MatrixClient, pusher: IPusher) => {
     cli.setPusher(pusher);
 };
 
-const EmailNotifications = () => {
+const EmailNotificationsSection: React.FC = () => {
     const cli = useContext<MatrixClient>(MatrixClientContext);
     // TODO use sets
     const emails = useAsyncMemo<string[]>(() => {
@@ -107,7 +107,7 @@ const EmailNotifications = () => {
         }
     };
 
-    const effectivelyEnabled = enabled !== null ? enabled : pushers && pushers.length > 0;
+    const effectivelyEnabled = Boolean(enabled !== null ? enabled : pushers && pushers.length > 0);
 
     let emailsSection;
     if (emails && pushers) {
@@ -143,4 +143,4 @@ const EmailNotifications = () => {
     </SettingsSection>;
 };
 
-export default EmailNotifications;
+export default EmailNotificationsSection;
