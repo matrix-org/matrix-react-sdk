@@ -187,8 +187,43 @@ const AdvancedNotificationsSection: React.FC = () => {
     </SettingsSection>;
 };
 
-const NotificationUserSettingsTab2: React.FC = () => {
+interface IRadioGroupDefinition<T extends string> {
+    value: T;
+    label: string; // translated
+    microCopy?: string; // translated
+}
 
+interface IStyledRadioGroupProps<T extends string> {
+    name: string;
+    definitions: IRadioGroupDefinition<T>[];
+    value: T;
+    onChange(newValue: T): void;
+}
+
+export function StyledRadioGroup<T extends string>({name, definitions, value, onChange}: IStyledRadioGroupProps<T>) {
+    const _onChange = e => {
+        onChange(e.target.value);
+    };
+
+    return <React.Fragment>
+        {definitions.map(d => <React.Fragment>
+            <StyledRadioButton
+                key={d.value}
+                onChange={_onChange}
+                checked={d.value === value}
+                name={name}
+                value={d.value}
+            >
+                {d.label}
+            </StyledRadioButton>
+            {d.microCopy && <div className="mx_Checkbox_microCopy">
+                {d.microCopy}
+            </div>}
+        </React.Fragment>)}
+    </React.Fragment>;
+}
+
+const NotificationUserSettingsTab2: React.FC = () => {
     const cli = useContext<MatrixClient>(MatrixClientContext);
     const rawPushRules = useAccountData(cli, "m.push_rules");
 
@@ -208,8 +243,8 @@ const NotificationUserSettingsTab2: React.FC = () => {
 
     if (!pushRules) return null;
 
-    const onNotifyMeWithChange = ev => {
-        setNotifyMeWith(ev.target.value);
+    const onNotifyMeWithChange = value => {
+        setNotifyMeWith(value);
         // TODO update push rules
     };
 
@@ -224,38 +259,26 @@ const NotificationUserSettingsTab2: React.FC = () => {
         </div>
 
         <SettingsSection title={_t("Notify me with")}>
-            <StyledRadioButton
-                onChange={onNotifyMeWithChange}
-                checked={notifyMeWith === NotificationSettings.AllMessages}
+            <StyledRadioGroup
                 name="notifyMeWith"
-                value={NotificationSettings.AllMessages}
-            >
-                {_t("All messages")}
-            </StyledRadioButton>
-            <StyledRadioButton
+                value={notifyMeWith}
                 onChange={onNotifyMeWithChange}
-                checked={notifyMeWith === NotificationSettings.DirectMessagesMentionsKeywords}
-                name="notifyMeWith"
-                value={NotificationSettings.DirectMessagesMentionsKeywords}
-            >
-                {_t("Direct messages, mentions & keywords")}
-            </StyledRadioButton>
-            <StyledRadioButton
-                onChange={onNotifyMeWithChange}
-                checked={notifyMeWith === NotificationSettings.MentionsKeywordsOnly}
-                name="notifyMeWith"
-                value={NotificationSettings.MentionsKeywordsOnly}
-            >
-                {_t("Mentions & keywords only")}
-            </StyledRadioButton>
-            <StyledRadioButton
-                onChange={onNotifyMeWithChange}
-                checked={notifyMeWith === NotificationSettings.Never}
-                name="notifyMeWith"
-                value={NotificationSettings.Never}
-            >
-                {_t("Never")}
-            </StyledRadioButton>
+                definitions={[
+                    {
+                        value: NotificationSettings.AllMessages,
+                        label: _t("All messages"),
+                    }, {
+                        value: NotificationSettings.DirectMessagesMentionsKeywords,
+                        label: _t("Direct messages, mentions & keywords"),
+                    }, {
+                        value: NotificationSettings.MentionsKeywordsOnly,
+                        label: _t("Mentions & keywords only"),
+                    }, {
+                        value: NotificationSettings.Never,
+                        label: _t("Never"),
+                    },
+                ]}
+            />
         </SettingsSection>
 
         <MentionsKeywordsSection disabled={mentionsKeywordsSectionDisabled} />

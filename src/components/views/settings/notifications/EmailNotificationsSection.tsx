@@ -129,15 +129,23 @@ const EmailNotificationsSection: React.FC = () => {
         emailsSection = <Spinner />;
     }
 
-    // TODO need state for no email addresses
+    let microCopy;
+    if (emails && pushers && (emails.length || pushers.length)) {
+        microCopy = _t("Select which emails you want to send summaries to. Manage your emails in <a>General</a>.", {}, {
+            a: sub => <AccessibleButton kind="link" onClick={goToGeneralSettings}>{sub}</AccessibleButton>,
+        });
+    } else {
+        microCopy = _t("Set your email account in <a>General settings</a>.", {}, {
+            a: sub => <AccessibleButton kind="link" onClick={goToGeneralSettings}>{sub}</AccessibleButton>,
+        });
+    }
+
     return <SettingsSection title={_t("Email summary")}>
         <StyledCheckbox checked={effectivelyEnabled} onChange={onEnableChange}>
             {_t("Receive an email summary of missed notifications")}
         </StyledCheckbox>
         <div className="mx_Checkbox_microCopy">
-            {_t("Select which email you want to send summaries to. Manage your emails in <a>General</a>.", {}, {
-                a: sub => <AccessibleButton kind="link" onClick={goToGeneralSettings}>{sub}</AccessibleButton>,
-            })}
+            {microCopy}
         </div>
         { emailsSection }
     </SettingsSection>;

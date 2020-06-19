@@ -21,7 +21,7 @@ import AccessibleButton from "../../../elements/AccessibleButton";
 import StyledCheckbox from "../../../elements/StyledCheckbox";
 import SettingsSection from "../../SettingsSection";
 import StyledRadioButton from "../../../elements/StyledRadioButton";
-import { NotificationSettings } from "../user/NotificationUserSettingsTab2";
+import {NotificationSettings, StyledRadioGroup} from "../user/NotificationUserSettingsTab2";
 import defaultDispatcher from "../../../../../dispatcher/dispatcher";
 import {OpenToTabPayload} from "../../../../../dispatcher/payloads/OpenToTabPayload";
 import {Action} from "../../../../../dispatcher/actions";
@@ -61,35 +61,28 @@ const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
         </div>
 
         <SettingsSection title={_t("Notify me on")} className="mx_NotificationsTab_roomNotifyMeOn">
-            <StyledRadioButton
-                onChange={onChange}
-                checked={notifyMeOn === NotificationSettings.AllMessages}
+            <StyledRadioGroup
                 name="notifyMeOn"
-                value={NotificationSettings.AllMessages}
-            >
-                {_t("All messages")}
-            </StyledRadioButton>
-            <StyledRadioButton
+                value={notifyMeOn}
                 onChange={onChange}
-                checked={notifyMeOn === NotificationSettings.MentionsKeywordsOnly}
-                name="notifyMeOn"
-                value={NotificationSettings.MentionsKeywordsOnly}
-            >
-                {_t("Mentions & keywords only")}
-            </StyledRadioButton>
-            <div className="mx_Checkbox_microCopy">
-                {_t("Manage keywords in <a>Account Settings</a>", {}, {
-                    a: sub => <AccessibleButton kind="link" onClick={goToNotificationSettings}>{sub}</AccessibleButton>,
-                })}
-            </div>
-            <StyledRadioButton
-                onChange={onChange}
-                checked={notifyMeOn === NotificationSettings.Never}
-                name="notifyMeOn"
-                value={NotificationSettings.Never}
-            >
-                {_t("Never")}
-            </StyledRadioButton>
+                definitions={[
+                    {
+                        value: NotificationSettings.AllMessages,
+                        label: _t("All messages"),
+                    }, {
+                        value: NotificationSettings.MentionsKeywordsOnly,
+                        label: _t("Mentions & keywords only"),
+                        microCopy: _t("Manage keywords in <a>Account Settings</a>", {}, {
+                            a: sub => <AccessibleButton kind="link" onClick={goToNotificationSettings}>
+                                {sub}
+                            </AccessibleButton>,
+                        }),
+                    }, {
+                        value: NotificationSettings.Never,
+                        label: _t("Never"),
+                    },
+                ]}
+            />
         </SettingsSection>
 
         <SettingsSection title={_t("Appearance & Sounds")}>
