@@ -14,20 +14,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import React, {createRef} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
-import CallHandler from '../../../CallHandler';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import * as sdk from '../../../index';
 import dis from '../../../dispatcher/dispatcher';
 import RoomViewStore from '../../../stores/RoomViewStore';
-import Stickerpicker from './Stickerpicker';
 import { makeRoomPermalink } from '../../../utils/permalinks/Permalinks';
-import ContentMessages from '../../../ContentMessages';
 import E2EIcon from './E2EIcon';
+import MessageActions from "./MessageActions";
 import SettingsStore from "../../../settings/SettingsStore";
-import {aboveLeftOf, ContextMenu, ContextMenuButton, useContextMenu} from "../../structures/ContextMenu";
 
 function ComposerAvatar(props) {
     const MemberStatusMessageAvatar = sdk.getComponent('avatars.MemberStatusMessageAvatar');
@@ -39,169 +36,6 @@ function ComposerAvatar(props) {
 ComposerAvatar.propTypes = {
     me: PropTypes.object.isRequired,
 };
-
-function CallButton(props) {
-    const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-    const onVoiceCallClick = (ev) => {
-        dis.dispatch({
-            action: 'place_call',
-            type: "voice",
-            room_id: props.roomId,
-        });
-    };
-
-    return (<AccessibleButton className="mx_MessageComposer_button mx_MessageComposer_voicecall"
-            onClick={onVoiceCallClick}
-            title={_t('Voice call')}
-        />);
-}
-
-CallButton.propTypes = {
-    roomId: PropTypes.string.isRequired,
-};
-
-function VideoCallButton(props) {
-    const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-    const onCallClick = (ev) => {
-        dis.dispatch({
-            action: 'place_call',
-            type: ev.shiftKey ? "screensharing" : "video",
-            room_id: props.roomId,
-        });
-    };
-
-    return <AccessibleButton className="mx_MessageComposer_button mx_MessageComposer_videocall"
-        onClick={onCallClick}
-        title={_t('Video call')}
-    />;
-}
-
-VideoCallButton.propTypes = {
-    roomId: PropTypes.string.isRequired,
-};
-
-function HangupButton(props) {
-    const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-    const onHangupClick = () => {
-        const call = CallHandler.getCallForRoom(props.roomId);
-        if (!call) {
-            return;
-        }
-        dis.dispatch({
-            action: 'hangup',
-            // hangup the call for this room, which may not be the room in props
-            // (e.g. conferences which will hangup the 1:1 room instead)
-            room_id: call.roomId,
-        });
-    };
-    return (<AccessibleButton className="mx_MessageComposer_button mx_MessageComposer_hangup"
-            onClick={onHangupClick}
-            title={_t('Hangup')}
-        />);
-}
-
-HangupButton.propTypes = {
-    roomId: PropTypes.string.isRequired,
-};
-
-const EmojiButton = ({addEmoji}) => {
-    const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
-
-    let contextMenu;
-    if (menuDisplayed) {
-        const buttonRect = button.current.getBoundingClientRect();
-        const EmojiPicker = sdk.getComponent('emojipicker.EmojiPicker');
-        contextMenu = <ContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu} catchTab={false}>
-            <EmojiPicker onChoose={addEmoji} showQuickReactions={true} />
-        </ContextMenu>;
-    }
-
-    return <React.Fragment>
-        <ContextMenuButton className="mx_MessageComposer_button mx_MessageComposer_emoji"
-                           onClick={openMenu}
-                           isExpanded={menuDisplayed}
-                           label={_t('Emoji picker')}
-                           inputRef={button}
-        >
-
-        </ContextMenuButton>
-
-        { contextMenu }
-    </React.Fragment>;
-};
-
-class UploadButton extends React.Component {
-    static propTypes = {
-        roomId: PropTypes.string.isRequired,
-    }
-
-    constructor(props) {
-        super(props);
-        this.onUploadClick = this.onUploadClick.bind(this);
-        this.onUploadFileInputChange = this.onUploadFileInputChange.bind(this);
-
-        this._uploadInput = createRef();
-        this._dispatcherRef = dis.register(this.onAction);
-    }
-
-    componentWillUnmount() {
-        dis.unregister(this._dispatcherRef);
-    }
-
-    onAction = payload => {
-        if (payload.action === "upload_file") {
-            this.onUploadClick();
-        }
-    };
-
-    onUploadClick(ev) {
-        if (MatrixClientPeg.get().isGuest()) {
-            dis.dispatch({action: 'require_registration'});
-            return;
-        }
-        this._uploadInput.current.click();
-    }
-
-    onUploadFileInputChange(ev) {
-        if (ev.target.files.length === 0) return;
-
-        // take a copy so we can safely reset the value of the form control
-        // (Note it is a FileList: we can't use slice or sensible iteration).
-        const tfiles = [];
-        for (let i = 0; i < ev.target.files.length; ++i) {
-            tfiles.push(ev.target.files[i]);
-        }
-
-        ContentMessages.sharedInstance().sendContentListToRoom(
-            tfiles, this.props.roomId, MatrixClientPeg.get(),
-        );
-
-        // This is the onChange handler for a file form control, but we're
-        // not keeping any state, so reset the value of the form control
-        // to empty.
-        // NB. we need to set 'value': the 'files' property is immutable.
-        ev.target.value = '';
-    }
-
-    render() {
-        const uploadInputStyle = {display: 'none'};
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-        return (
-            <AccessibleButton className="mx_MessageComposer_button mx_MessageComposer_upload"
-                onClick={this.onUploadClick}
-                title={_t('Upload file')}
-            >
-                <input
-                    ref={this._uploadInput}
-                    type="file"
-                    style={uploadInputStyle}
-                    multiple
-                    onChange={this.onUploadFileInputChange}
-                />
-            </AccessibleButton>
-        );
-    }
-}
 
 export default class MessageComposer extends React.Component {
     constructor(props) {
@@ -323,13 +157,6 @@ export default class MessageComposer extends React.Component {
         }
     }
 
-    addEmoji(emoji) {
-        dis.dispatch({
-            action: "insert_emoji",
-            emoji,
-        });
-    }
-
     render() {
         const controls = [
             this.state.me ? <ComposerAvatar key="controls_avatar" me={this.state.me} /> : null,
@@ -344,7 +171,6 @@ export default class MessageComposer extends React.Component {
             // complex because of conference calls.
 
             const SendMessageComposer = sdk.getComponent("rooms.SendMessageComposer");
-            const callInProgress = this.props.callState && this.props.callState !== 'ended';
 
             controls.push(
                 <SendMessageComposer
@@ -353,23 +179,12 @@ export default class MessageComposer extends React.Component {
                     room={this.props.room}
                     placeholder={this.renderPlaceholderText()}
                     permalinkCreator={this.props.permalinkCreator} />,
-                <UploadButton key="controls_upload" roomId={this.props.room.roomId} />,
-                <EmojiButton key="emoji_button" addEmoji={this.addEmoji} />,
-                <Stickerpicker key="stickerpicker_controls_button" room={this.props.room} />,
+                <MessageActions
+                    key="message_actions"
+                    callState={this.props.callState}
+                    room={this.props.room}
+                    showCallButtons={this.state.showCallButtons} />,
             );
-
-            if (this.state.showCallButtons) {
-                if (callInProgress) {
-                    controls.push(
-                        <HangupButton key="controls_hangup" roomId={this.props.room.roomId} />,
-                    );
-                } else {
-                    controls.push(
-                        <CallButton key="controls_call" roomId={this.props.room.roomId} />,
-                        <VideoCallButton key="controls_videocall" roomId={this.props.room.roomId} />,
-                    );
-                }
-            }
         } else if (this.state.tombstone) {
             const replacementRoomId = this.state.tombstone.getContent()['replacement_room'];
 
