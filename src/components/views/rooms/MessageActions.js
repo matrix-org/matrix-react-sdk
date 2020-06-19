@@ -205,12 +205,10 @@ VideoCallButton.propTypes = {
     tabIndex: PropTypes.number,
 };
 
-/**
- * This component implements the Toolbar design pattern from the WAI-ARIA
- * Authoring Practices guidelines.
- *
- * https://www.w3.org/TR/wai-aria-practices-1.1/#toolbar
- */
+// This component implements the Toolbar design pattern from the WAI-ARIA
+// Authoring Practices guidelines.
+//
+// https://www.w3.org/TR/wai-aria-practices-1.1/#toolbar
 export default function MessageActions(props) {
     const callInProgress = props.callState && props.callState !== 'ended';
     const elRef = useRef(null);
