@@ -18,6 +18,7 @@ limitations under the License.
 import {MatrixClientPeg} from '../../MatrixClientPeg';
 import MatrixClientBackedSettingsHandler from "./MatrixClientBackedSettingsHandler";
 import {SettingLevel} from "../SettingsStore";
+import {findSettingDefinition, SETTINGS} from "../Settings";
 
 const BREADCRUMBS_LEGACY_EVENT_TYPE = "im.vector.riot.breadcrumb_rooms";
 const BREADCRUMBS_EVENT_TYPE = "im.vector.setting.breadcrumbs";
@@ -55,7 +56,7 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
             }
 
             this._watchers.notifyUpdate("urlPreviewsEnabled", null, SettingLevel.ACCOUNT, val);
-        } else if (event.getType() === "im.vector.web.settings") {
+        } else if (event.getType().startsWith("im.vector.web.settings")) {
             // We can't really discern what changed, so trigger updates for everything
             for (const settingName of Object.keys(event.getContent())) {
                 const val = event.getContent()[settingName];
@@ -98,7 +99,8 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
             return content ? content['enabled'] : null;
         }
 
-        const settings = this._getSettings() || {};
+        const eventType = this._getSettingEvent(findSettingDefinition(settingName));
+        const settings = this._getSettings(eventType) || {};
         let preferredValue = settings[settingName];
 
         if (preferredValue === null || preferredValue === undefined) {
@@ -139,9 +141,10 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
             return MatrixClientPeg.get().setAccountData(INTEG_PROVISIONING_EVENT_TYPE, content);
         }
 
-        const content = this._getSettings() || {};
+        const eventType = this._getSettingEvent(findSettingDefinition(settingName));
+        const content = this._getSettings(eventType) || {};
         content[settingName] = newValue;
-        return MatrixClientPeg.get().setAccountData("im.vector.web.settings", content);
+        return MatrixClientPeg.get().setAccountData(eventType, content);
     }
 
     canSetValue(settingName, roomId) {
@@ -153,7 +156,11 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
         return cli !== undefined && cli !== null;
     }
 
-    _getSettings(eventType = "im.vector.web.settings") {
+    _getSettingEvent(definition) {
+        return `im.vector.web.settings${definition.group ? `.${definition.group}` : ''}`;
+    }
+
+    _getSettings(eventType) {
         const cli = MatrixClientPeg.get();
         if (!cli) return null;
 

@@ -40,6 +40,16 @@ const LEVELS_FEATURE = ['device', 'config'];
 const LEVELS_DEVICE_ONLY_SETTINGS = ['device'];
 const LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG = ['device', 'config'];
 
+export const SETTING_GROUP_NOTIFICATIONS = "notifications";
+
+export function findSettingDefinition(name) {
+   if (!SETTINGS[name]) {
+       return Object.values(SETTINGS).find(s => s.invertedSettingName === name);
+   }
+
+   return SETTINGS[name];
+}
+
 export const SETTINGS = {
     // EXAMPLE SETTING:
     // "my-setting": {
@@ -85,6 +95,11 @@ export const SETTINGS = {
     //     // settings. The first element is treated as "most preferred". The "default"
     //     // level is always appended to the end.
     //     supportedLevelsAreOrdered: false,
+    //
+    //     // Optional flag to group the setting with its peers. This is typically used
+    //     // to reduce the number of updates caused by changing settings, as some settings
+    //     // can cause app-wide wake cycles, leading to all kinds of problems with performance.
+    //     group: "notifications",
     //
     //     // Optional value to invert a boolean setting's value. The string given will
     //     // be read as the setting's ID instead of the one provided as the key for the
@@ -156,6 +171,12 @@ export const SETTINGS = {
         displayName: _td('Use IRC layout'),
         default: false,
         isFeature: true,
+    },
+    // TODO: Wire up appropriately to UI (FTUE notifications)
+    "Notifications.alwaysShowBadgeCounts": {
+        supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
+        default: false,
+        group: SETTING_GROUP_NOTIFICATIONS,
     },
     "mjolnirRooms": {
         supportedLevels: ['account'],

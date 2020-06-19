@@ -18,6 +18,7 @@ limitations under the License.
 import {MatrixClientPeg} from '../../MatrixClientPeg';
 import MatrixClientBackedSettingsHandler from "./MatrixClientBackedSettingsHandler";
 import {SettingLevel} from "../SettingsStore";
+import {findSettingDefinition} from "../Settings";
 
 /**
  * Gets and sets settings at the "room" level.
@@ -50,7 +51,7 @@ export default class RoomSettingsHandler extends MatrixClientBackedSettingsHandl
             }
 
             this._watchers.notifyUpdate("urlPreviewsEnabled", roomId, SettingLevel.ROOM, val);
-        } else if (event.getType() === "im.vector.web.settings") {
+        } else if (event.getType().startsWith("im.vector.web.settings")) {
             // We can't really discern what changed, so trigger updates for everything
             for (const settingName of Object.keys(event.getContent())) {
                 this._watchers.notifyUpdate(settingName, roomId, SettingLevel.ROOM, event.getContent()[settingName]);
@@ -68,7 +69,9 @@ export default class RoomSettingsHandler extends MatrixClientBackedSettingsHandl
             return !content['disable'];
         }
 
-        const settings = this._getSettings(roomId) || {};
+        const definition = findSettingDefinition(settingName);
+        const group = definition.group ? definition.group : "";
+        const settings = this._getSettings(roomId, "im.vector.web.settings", group) || {};
         return settings[settingName];
     }
 
@@ -80,9 +83,11 @@ export default class RoomSettingsHandler extends MatrixClientBackedSettingsHandl
             return MatrixClientPeg.get().sendStateEvent(roomId, "org.matrix.room.preview_urls", content);
         }
 
-        const content = this._getSettings(roomId) || {};
+        const definition = findSettingDefinition(settingName);
+        const group = definition.group ? definition.group : "";
+        const content = this._getSettings(roomId, "im.vector.web.settings", group) || {};
         content[settingName] = newValue;
-        return MatrixClientPeg.get().sendStateEvent(roomId, "im.vector.web.settings", content, "");
+        return MatrixClientPeg.get().sendStateEvent(roomId, "im.vector.web.settings", content, group);
     }
 
     canSetValue(settingName, roomId) {
@@ -101,11 +106,12 @@ export default class RoomSettingsHandler extends MatrixClientBackedSettingsHandl
         return cli !== undefined && cli !== null;
     }
 
-    _getSettings(roomId, eventType = "im.vector.web.settings") {
+    _getSettings(roomId, eventType, group) {
         const room = MatrixClientPeg.get().getRoom(roomId);
         if (!room) return null;
 
-        const event = room.currentState.getStateEvents(eventType, "");
+        let event = room.currentState.getStateEvents(eventType, group);
+        if (Array.isArray(event)) event = event[0];
         if (!event || !event.getContent()) return null;
         return event.getContent();
     }
