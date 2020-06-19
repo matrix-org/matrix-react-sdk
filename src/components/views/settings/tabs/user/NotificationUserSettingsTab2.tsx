@@ -248,9 +248,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
         // TODO update push rules
     };
 
-    const mentionsKeywordsSectionDisabled = (
-        notifyMeWith === NotificationSettings.AllMessages || notifyMeWith === NotificationSettings.Never
-    );
+    const mentionsKeywordsSectionDisabled = notifyMeWith === NotificationSettings.Never;
 
     return <div className="mx_SettingsTab mx_NotificationsTab">
         <div className="mx_SettingsTab_heading">{_t("Notifications")}</div>
