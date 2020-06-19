@@ -18,7 +18,7 @@ limitations under the License.
 import {MatrixClientPeg} from '../../MatrixClientPeg';
 import MatrixClientBackedSettingsHandler from "./MatrixClientBackedSettingsHandler";
 import {SettingLevel} from "../SettingsStore";
-import {findSettingDefinition, SETTINGS} from "../Settings";
+import {findSettingDefinition} from "../Settings";
 
 const BREADCRUMBS_LEGACY_EVENT_TYPE = "im.vector.riot.breadcrumb_rooms";
 const BREADCRUMBS_EVENT_TYPE = "im.vector.setting.breadcrumbs";
