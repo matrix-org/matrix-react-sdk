@@ -15,6 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+.mx_MessageActions_wrapper {
+    display: flex;
+}
+
 .mx_MessageComposer_button {
     position: relative;
     margin-right: 12px;
@@ -58,5 +62,3 @@ limitations under the License.
 .mx_MessageComposer_stickers::before {
     mask-image: url('$(res)/img/feather-customised/sticker.custom.svg');
 }
-
-

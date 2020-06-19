@@ -1033,6 +1033,7 @@
     "Invited": "Invited",
     "Filter room members": "Filter room members",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (power %(powerLevelNumber)s)",
+    "Message actions": "Message actions",
     "Voice call": "Voice call",
     "Video call": "Video call",
     "Hangup": "Hangup",

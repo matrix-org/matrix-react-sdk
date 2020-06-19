@@ -14,10 +14,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import React, {createRef} from 'react';
+import React, {createRef, useCallback, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import CallHandler from '../../../CallHandler';
+import {Key} from '../../../Keyboard';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
 import * as sdk from '../../../index';
@@ -36,6 +37,7 @@ function CallButton(props) {
     };
 
     return (<AccessibleButton className="mx_MessageComposer_button mx_MessageComposer_voicecall"
+            tabIndex={props.tabIndex}
             onClick={onVoiceCallClick}
             title={_t('Voice call')}
         />);
@@ -43,9 +45,10 @@ function CallButton(props) {
 
 CallButton.propTypes = {
     roomId: PropTypes.string.isRequired,
+    tabIndex: PropTypes.number,
 };
 
-const EmojiButton = ({addEmoji}) => {
+const EmojiButton = ({addEmoji, tabIndex}) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 
     let contextMenu;
@@ -63,6 +66,7 @@ const EmojiButton = ({addEmoji}) => {
                            isExpanded={menuDisplayed}
                            label={_t('Emoji picker')}
                            inputRef={button}
+                           tabIndex={tabIndex}
         >
 
         </ContextMenuButton>
@@ -93,6 +97,7 @@ function HangupButton(props) {
         });
     };
     return (<AccessibleButton className="mx_MessageComposer_button mx_MessageComposer_hangup"
+            tabIndex={props.tabIndex}
             onClick={onHangupClick}
             title={_t('Hangup')}
         />);
@@ -100,11 +105,13 @@ function HangupButton(props) {
 
 HangupButton.propTypes = {
     roomId: PropTypes.string.isRequired,
+    tabIndex: PropTypes.tabIndex,
 };
 
 class UploadButton extends React.Component {
     static propTypes = {
         roomId: PropTypes.string.isRequired,
+        tabIndex: PropTypes.number,
     }
 
     constructor(props) {
@@ -160,6 +167,7 @@ class UploadButton extends React.Component {
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         return (
             <AccessibleButton className="mx_MessageComposer_button mx_MessageComposer_upload"
+                tabIndex={this.props.tabIndex}
                 onClick={this.onUploadClick}
                 title={_t('Upload file')}
             >
@@ -186,6 +194,7 @@ function VideoCallButton(props) {
     };
 
     return <AccessibleButton className="mx_MessageComposer_button mx_MessageComposer_videocall"
+        tabIndex={props.tabIndex}
         onClick={onCallClick}
         title={_t('Video call')}
     />;
@@ -193,32 +202,95 @@ function VideoCallButton(props) {
 
 VideoCallButton.propTypes = {
     roomId: PropTypes.string.isRequired,
+    tabIndex: PropTypes.number,
 };
 
+/**
+ * This component implements the Toolbar design pattern from the WAI-ARIA
+ * Authoring Practices guidelines.
+ *
+ * https://www.w3.org/TR/wai-aria-practices-1.1/#toolbar
+ */
 export default function MessageActions(props) {
     const callInProgress = props.callState && props.callState !== 'ended';
+    const elRef = useRef(null);
+    const [focused, setFocused] = useState('upload');
+    const tabIndex = (target) => target === focused ? 0 : -1;
     const controls = [
-        <UploadButton key="upload" roomId={props.room.roomId} />,
-        <EmojiButton key="emoji" addEmoji={addEmoji} />,
-        <Stickerpicker key="sticker" room={props.room} />,
+        <UploadButton key="upload"
+                      tabIndex={tabIndex('upload')}
+                      roomId={props.room.roomId} />,
+        <EmojiButton key="emoji"
+                     tabIndex={tabIndex('emoji')}
+                     addEmoji={addEmoji} />,
+        <Stickerpicker key="sticker"
+                       tabIndex={tabIndex('sticker')}
+                       room={props.room} />,
     ];
 
     if (props.showCallButtons) {
         if (callInProgress) {
             controls.push(
-                <HangupButton key="hangup" roomId={props.room.roomId} />,
+                <HangupButton key="hangup"
+                              tabIndex={tabIndex('hangup')}
+                              roomId={props.room.roomId} />,
             );
         } else {
             controls.push(
-                <CallButton key="call" roomId={props.room.roomId} />,
-                <VideoCallButton key="videocall" roomId={props.room.roomId} />,
+                <CallButton key="call"
+                            tabIndex={tabIndex('call')}
+                            roomId={props.room.roomId} />,
+                <VideoCallButton key="videocall"
+                                 tabIndex={tabIndex('videocall')}
+                                 roomId={props.room.roomId} />,
             );
         }
     }
 
+    // Serialize keys for use as a callback dependency. The serialized form
+    // (rather than the original data structure) must be used within the
+    // callback in order to satisfy the project's linter.
+    const keysString = controls.map(({key}) => key).join(',');
+    const handleKeyDown = useCallback(
+        (event) => {
+            const keys = keysString.split(',');
+            const current = keys.indexOf(focused);
+            let newIndex;
+
+            if (event.key === Key.ARROW_RIGHT) {
+                newIndex = (current + 1) % keys.length;
+            } else if (event.key === Key.ARROW_LEFT) {
+                newIndex = current ? current - 1 : keys.length - 1;
+            } else if (event.key === Key.HOME) {
+                newIndex = 0;
+            } else if (event.key === Key.END) {
+                newIndex = keys.length - 1;
+            } else {
+                return;
+            }
+
+            setFocused(keys[newIndex]);
+            elRef.current.children[newIndex].focus();
+            event.stopPropagation();
+        },
+        [keysString, focused],
+    );
+
+    useEffect(() => {
+        const el = elRef.current;
+        el.addEventListener('keydown', handleKeyDown, true);
+
+        return () => {
+            el.removeEventListener('keydown', handleKeyDown, true);
+        };
+    }, [handleKeyDown]);
+
     return (
-        <React.Fragment>
+        <div role="toolbar"
+             ref={elRef}
+             className="mx_MessageActions_wrapper"
+             aria-label={_t("Message actions")}>
             {controls}
-        </React.Fragment>
+        </div>
     );
 }

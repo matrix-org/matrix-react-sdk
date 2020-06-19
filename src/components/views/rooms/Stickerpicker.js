@@ -386,6 +386,7 @@ export default class Stickerpicker extends React.Component {
                     key="controls_hide_stickers"
                     className="mx_MessageComposer_button mx_MessageComposer_stickers mx_Stickers_hideStickers"
                     onClick={this._onHideStickersClick}
+                    tabIndex={this.props.tabIndex}
                     title={_t("Hide Stickers")}
                 >
                 </AccessibleButton>;
@@ -414,6 +415,7 @@ export default class Stickerpicker extends React.Component {
                     key="controls_show_stickers"
                     className="mx_MessageComposer_button mx_MessageComposer_stickers"
                     onClick={this._onShowStickersClick}
+                    tabIndex={this.props.tabIndex}
                     title={_t("Show Stickers")}
                 >
                 </AccessibleButton>;
