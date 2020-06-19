@@ -30,6 +30,7 @@ import StyledRadioButton from "../../../elements/StyledRadioButton";
 import EmailNotificationsSection from "../../notifications/EmailNotificationsSection";
 import AppearanceSoundsSection from "../../notifications/AppearanceSoundsSection";
 import { useAccountData } from "../../../../../hooks/useAccountData";
+import MentionsKeywordsSection from "../../notifications/MentionsKeywordsSection";
 
 // TODO move these defs to some common module
 export enum NotificationSettings {
@@ -187,7 +188,6 @@ const AdvancedNotificationsSection: React.FC = () => {
 };
 
 const NotificationUserSettingsTab2: React.FC = () => {
-    const onChange = console.log;
 
     const cli = useContext<MatrixClient>(MatrixClientContext);
     const rawPushRules = useAccountData(cli, "m.push_rules");
@@ -258,26 +258,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
             </StyledRadioButton>
         </SettingsSection>
 
-        <SettingsSection title={_t("Mentions & Keywords")}>
-            <StyledCheckbox disabled={mentionsKeywordsSectionDisabled}>
-                {_t("Notify when someone mentions using @")}
-            </StyledCheckbox>
-            <StyledCheckbox disabled={mentionsKeywordsSectionDisabled}>
-                {_t("Notify when someone uses a keyword")}
-            </StyledCheckbox>
-            <div className="mx_Checkbox_microCopy">
-                {_t("Enter keywords here, or use for spelling variations or nicknames")}
-            </div>
-
-            <Field
-                element="textarea"
-                label={_t("New keyword")}
-                rows={5}
-                onChange={onChange}
-                value={""}
-                disabled={mentionsKeywordsSectionDisabled}
-            />
-        </SettingsSection>
+        <MentionsKeywordsSection disabled={mentionsKeywordsSectionDisabled} />
 
         <AppearanceSoundsSection />
 

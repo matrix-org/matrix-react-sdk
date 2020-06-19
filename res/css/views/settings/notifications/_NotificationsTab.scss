@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 $leftGutter: 28px;
+$textareaWidth: 400px;
 
 .mx_NotificationsTab {
     .mx_SettingsTab_section {
@@ -42,6 +43,8 @@ $leftGutter: 28px;
 
         .mx_Field_textarea {
             margin-left: $leftGutter;
+            box-sizing: border-box;
+            width: $textareaWidth;
         }
     }
 
@@ -50,6 +53,81 @@ $leftGutter: 28px;
             display: inline-flex;
             margin-left: 2px;
             margin-right: 2px;
+        }
+    }
+
+    .mx_NotificationsTab_mentionsKeywords {
+        .mx_NotificationsTab_mentionsKeywords_editor {
+            margin-top: 16px;
+            flex: 1;
+            border: 1px solid $input-border-color;
+            border-radius: 4px;
+            padding-left: 8px;
+            min-height: 25px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            cursor: text;
+
+            margin-left: $leftGutter;
+            box-sizing: border-box;
+            width: $textareaWidth;
+
+            // Using a textarea for this element, to circumvent autofill
+            // Mostly copied from InviteDialog which copied from AddressPickerDialog
+            textarea,
+            textarea:focus {
+                height: 34px;
+                line-height: $font-34px;
+                font-size: $font-14px;
+                margin: 0 !important;
+                border: 0 !important;
+                outline: 0 !important;
+                resize: none;
+                overflow: hidden;
+                box-sizing: border-box;
+                word-wrap: nowrap;
+                padding-left: 8px; // to make the pill's text appear in the same place the textarea's was
+
+                // Roughly fill about 2/5ths of the available space. This is to try and 'fill' the
+                // remaining space after a bunch of pills, but is a bit hacky. Ideally we'd have
+                // support for "fill remaining width", but traditional tricks don't work with what
+                // we're pushing into this "field". Flexbox just makes things worse. The theory is
+                // that users won't need more than about 2/5ths of the input to find the person
+                // they're looking for.
+                width: 40%;
+            }
+        }
+
+        .mx_NotificationsTab_mentionsKeywords_keywordPill {
+            display: inline-block;
+            float: left;
+            position: relative;
+            top: 7px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+
+            border-radius: 12px;
+            height: 24px;
+            line-height: $font-24px;
+            padding-left: 8px;
+            padding-right: 8px;
+
+            background-color: rgba($accent-color, 0.12);
+            color: $accent-color;
+
+            &:hover {
+                background-color: $accent-color;
+                color: #FFFFFF; // this is fine without a var because it's for both themes
+            }
+
+            & > span {
+                vertical-align: top;
+            }
+
+            .mx_NotificationsTab_mentionsKeywords_removePill {
+                display: inline-block;
+                margin-left: 4px;
+            }
         }
     }
 
