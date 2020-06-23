@@ -22,7 +22,8 @@ import {useSettingValue} from "../../../../hooks/useSettings";
 import SettingsStore, {SettingLevel} from "../../../../settings/SettingsStore";
 import StyledCheckbox from "../../elements/StyledCheckbox";
 import { NotificationBadgeComponent } from "../../rooms/NotificationBadge";
-import {NotificationSettings, StyledRadioGroup} from "../tabs/user/NotificationUserSettingsTab2";
+import {StyledRadioGroup} from "../tabs/user/NotificationUserSettingsTab2";
+import { NotificationSettings } from "../../../../notifications/types";
 
 const ALWAYS_SHOW_BADGE_COUNTS_KEY = "Notifications.alwaysShowBadgeCounts";
 

@@ -19,7 +19,6 @@ import MatrixClient from "matrix-js-sdk/src/client";
 
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import {_t} from "../../../../../languageHandler";
-import StyledCheckbox from "../../../elements/StyledCheckbox";
 import SettingsSection from "../../SettingsSection";
 import {portRulesToNewAPI} from "../../../../../notifications";
 import Field from "../../../elements/Field";
@@ -31,94 +30,8 @@ import EmailNotificationsSection from "../../notifications/EmailNotificationsSec
 import AppearanceSoundsSection from "../../notifications/AppearanceSoundsSection";
 import { useAccountData } from "../../../../../hooks/useAccountData";
 import MentionsKeywordsSection from "../../notifications/MentionsKeywordsSection";
-
-// TODO move these defs to some common module
-export enum NotificationSettings {
-    AllMessages = "all_messages", // .m.rule.message = notify
-    DirectMessagesMentionsKeywords = "dm_mentions_keywords", // .m.rule.message = mark_unread. This is the new default.
-    MentionsKeywordsOnly = "mentions_keywords", // .m.rule.message = mark_unread; .m.rule.room_one_to_one = mark_unread
-    Never = "never", // .m.rule.master = enabled (dont_notify)
-}
-
-interface ISoundTweak {
-    set_tweak: "sound";
-    value: string;
-}
-interface IHighlightTweak {
-    set_tweak: "highlight";
-    value: boolean;
-}
-
-type Tweak = ISoundTweak | IHighlightTweak;
-
-enum Actions {
-    Notify = "notify",
-    DontNotify = "dont_notify", // no-op
-    Coalesce = "coalesce", // unused
-    MarkUnread = "mark_unread", // new
-}
-
-type Action = Actions | Tweak;
-
-// Push rule kinds in descending priority order
-enum Kind {
-    Override = "override",
-    ContentSpecific = "content",
-    RoomSpecific = "room",
-    SenderSpecific = "sender",
-    Underride = "underride",
-}
-
-interface IEventMatchCondition {
-    kind: "event_match";
-    key: string;
-    pattern: string;
-}
-
-interface IContainsDisplayNameCondition {
-    kind: "contains_display_name";
-}
-
-interface IRoomMemberCountCondition {
-    kind: "room_member_count";
-    is: string;
-}
-
-interface ISenderNotificationPermissionCondition {
-    kind: "sender_notification_permission";
-    key: string;
-}
-
-type Condition =
-    IEventMatchCondition |
-    IContainsDisplayNameCondition |
-    IRoomMemberCountCondition |
-    ISenderNotificationPermissionCondition;
-
-enum RuleIds {
-    MasterRule = ".m.rule.master", // The master rule (all notifications disabling)
-    MessageRule = ".m.rule.message",
-    EncryptedMessageRule = ".m.rule.encrypted",
-    RoomOneToOneRule = ".m.rule.room_one_to_one",
-    EncryptedRoomOneToOneRule = ".m.rule.room_one_to_one",
-}
-
-interface IPushRule {
-    enabled: boolean;
-    rule_id: RuleIds | string;
-    actions: Action[];
-    conditions: Condition[];
-    default: boolean;
-    kind: Kind;
-}
-
-interface IPushRulesMap {
-    override: Record<string, IPushRule>;
-    content: Record<string, IPushRule>;
-    room: Record<string, IPushRule>;
-    sender: Record<string, IPushRule>;
-    underride: Record<string, IPushRule>;
-}
+import { IPushRule, IPushRulesMap, RuleIds, NotificationSettings, Actions } from "../../../../../notifications/types";
+import RoomOverridesSection from "../../notifications/RoomOverridesSection";
 
 const mapRules = (rules: IPushRule[]): Record<string, IPushRule> => {
     const map: Record<string, IPushRule> = {};
@@ -283,9 +196,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
 
         <AppearanceSoundsSection />
 
-        <SettingsSection title={_t("Room notifications")}>
-            ...
-        </SettingsSection>
+        <RoomOverridesSection pushRules={pushRules} />
 
         <DesktopNotificationsSection />
 

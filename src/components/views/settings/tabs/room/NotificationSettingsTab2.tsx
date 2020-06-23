@@ -20,11 +20,12 @@ import {_t} from "../../../../../languageHandler";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import StyledCheckbox from "../../../elements/StyledCheckbox";
 import SettingsSection from "../../SettingsSection";
-import {NotificationSettings, StyledRadioGroup} from "../user/NotificationUserSettingsTab2";
+import {StyledRadioGroup} from "../user/NotificationUserSettingsTab2";
 import defaultDispatcher from "../../../../../dispatcher/dispatcher";
 import {OpenToTabPayload} from "../../../../../dispatcher/payloads/OpenToTabPayload";
 import {Action} from "../../../../../dispatcher/actions";
 import {USER_NOTIFICATIONS_TAB} from "../../../dialogs/UserSettingsDialog";
+import { NotificationSettings } from "../../../../../notifications/types";
 
 interface IProps {
     roomId: string;
