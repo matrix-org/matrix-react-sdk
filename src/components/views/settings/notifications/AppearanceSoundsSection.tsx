@@ -18,40 +18,17 @@ import React from "react";
 
 import SettingsSection from "../SettingsSection";
 import {_t} from "../../../../languageHandler";
-import {useSettingValue} from "../../../../hooks/useSettings";
-import SettingsStore, {SettingLevel} from "../../../../settings/SettingsStore";
-import StyledCheckbox from "../../elements/StyledCheckbox";
-import { NotificationBadgeComponent } from "../../rooms/NotificationBadge";
-import {StyledRadioGroup} from "../tabs/user/NotificationUserSettingsTab2";
-import { NotificationSettings } from "../../../../notifications/types";
+import {NotificationSettings} from "../../../../notifications/types";
+import AlwaysShowBadgeCountsOption from "./AlwaysShowBadgeCountsOption";
+import StyledRadioGroup from "../../elements/StyledRadioGroup";
 
-const ALWAYS_SHOW_BADGE_COUNTS_KEY = "Notifications.alwaysShowBadgeCounts";
-
-const onAlwaysShowBadgeCountsChange = ev => {
-    SettingsStore.setValue(ALWAYS_SHOW_BADGE_COUNTS_KEY, null, SettingLevel.ACCOUNT, ev.target.checked);
-};
-
-// TODO local echo
 // TODO wire up playSoundFor
 const AppearanceSoundsSection: React.FC = () => {
-    const alwaysShowBadgeCounts = useSettingValue(ALWAYS_SHOW_BADGE_COUNTS_KEY);
     const playSoundFor = NotificationSettings.MentionsKeywordsOnly;
     const onPlaySoundForChange = () => {};
 
-    let badgePreview;
-    if (alwaysShowBadgeCounts) {
-        badgePreview = <React.Fragment>
-            (<NotificationBadgeComponent symbol="2" hasCount={true} hasNotif={false} isEmpty={false} />)
-        </React.Fragment>;
-    }
-
     return <SettingsSection title={_t("Appearance & Sounds")} className="mx_NotificationsTab_appearanceAndSounds">
-        <StyledCheckbox checked={alwaysShowBadgeCounts} onChange={onAlwaysShowBadgeCountsChange}>
-            {_t("Show number of messages in all rooms")} {badgePreview}
-        </StyledCheckbox>
-        <div className="mx_Checkbox_microCopy">
-            {_t("Riot always displays the number of missed Direct Messages, mentions & keywords")}
-        </div>
+        <AlwaysShowBadgeCountsOption />
 
         <br />
         <br />
@@ -64,6 +41,9 @@ const AppearanceSoundsSection: React.FC = () => {
                 {
                     value: NotificationSettings.AllMessages,
                     label: _t("Play a sound for all messages"),
+                }, {
+                    value: NotificationSettings.DirectMessagesMentionsKeywords,
+                    label: _t("Play a sound for direct messages, mentions & keywords"),
                 }, {
                     value: NotificationSettings.MentionsKeywordsOnly,
                     label: _t("Play a sound for mentions & keywords"),

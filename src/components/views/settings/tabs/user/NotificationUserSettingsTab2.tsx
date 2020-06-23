@@ -25,13 +25,13 @@ import Field from "../../../elements/Field";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import {useStateToggle} from "../../../../../hooks/useStateToggle";
 import DesktopNotificationsSection from "../../notifications/DesktopNotificationsSection";
-import StyledRadioButton from "../../../elements/StyledRadioButton";
 import EmailNotificationsSection from "../../notifications/EmailNotificationsSection";
 import AppearanceSoundsSection from "../../notifications/AppearanceSoundsSection";
 import { useAccountData } from "../../../../../hooks/useAccountData";
 import MentionsKeywordsSection from "../../notifications/MentionsKeywordsSection";
 import { IPushRule, IPushRulesMap, RuleIds, NotificationSettings, Actions } from "../../../../../notifications/types";
 import RoomOverridesSection from "../../notifications/RoomOverridesSection";
+import StyledRadioGroup from "../../../elements/StyledRadioGroup";
 
 const mapRules = (rules: IPushRule[]): Record<string, IPushRule> => {
     const map: Record<string, IPushRule> = {};
@@ -99,42 +99,6 @@ const AdvancedNotificationsSection: React.FC = () => {
         </AccessibleButton>
     </SettingsSection>;
 };
-
-interface IRadioGroupDefinition<T extends string> {
-    value: T;
-    label: string; // translated
-    microCopy?: string; // translated
-}
-
-interface IStyledRadioGroupProps<T extends string> {
-    name: string;
-    definitions: IRadioGroupDefinition<T>[];
-    value: T;
-    onChange(newValue: T): void;
-}
-
-export function StyledRadioGroup<T extends string>({name, definitions, value, onChange}: IStyledRadioGroupProps<T>) {
-    const _onChange = e => {
-        onChange(e.target.value);
-    };
-
-    return <React.Fragment>
-        {definitions.map(d => <React.Fragment>
-            <StyledRadioButton
-                key={d.value}
-                onChange={_onChange}
-                checked={d.value === value}
-                name={name}
-                value={d.value}
-            >
-                {d.label}
-            </StyledRadioButton>
-            {d.microCopy && <div className="mx_Checkbox_microCopy">
-                {d.microCopy}
-            </div>}
-        </React.Fragment>)}
-    </React.Fragment>;
-}
 
 const NotificationUserSettingsTab2: React.FC = () => {
     const cli = useContext<MatrixClient>(MatrixClientContext);

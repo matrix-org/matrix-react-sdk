@@ -20,12 +20,13 @@ import {_t} from "../../../../../languageHandler";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import StyledCheckbox from "../../../elements/StyledCheckbox";
 import SettingsSection from "../../SettingsSection";
-import {StyledRadioGroup} from "../user/NotificationUserSettingsTab2";
 import defaultDispatcher from "../../../../../dispatcher/dispatcher";
 import {OpenToTabPayload} from "../../../../../dispatcher/payloads/OpenToTabPayload";
 import {Action} from "../../../../../dispatcher/actions";
 import {USER_NOTIFICATIONS_TAB} from "../../../dialogs/UserSettingsDialog";
 import { NotificationSettings } from "../../../../../notifications/types";
+import AlwaysShowBadgeCountsOption from "../../notifications/AlwaysShowBadgeCountsOption";
+import StyledRadioGroup from "../../../elements/StyledRadioGroup";
 
 interface IProps {
     roomId: string;
@@ -49,6 +50,8 @@ const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
     let _soundUpload;
     const onChange = () => {};
     let notifyMeOn = NotificationSettings.MentionsKeywordsOnly;
+    const playSoundFor = NotificationSettings.MentionsKeywordsOnly;
+    const onPlaySoundForChange = () => {};
 
     // TODO add "(Default)" to Notify me on... based on account push rules
     // TODO verify copy for "Manage notifications in..."
@@ -87,27 +90,32 @@ const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
 
         <SettingsSection title={_t("Appearance & Sounds")}>
             <StyledCheckbox>
-                {_t("Room alerts")}
-            </StyledCheckbox>
-            <div className="mx_Checkbox_microCopy">
                 {_t("Notify you when using @room")}
-            </div>
+            </StyledCheckbox>
+
+            <AlwaysShowBadgeCountsOption roomId={roomId} />
+
+            <StyledRadioGroup
+                name="playSoundFor"
+                value={playSoundFor}
+                onChange={onPlaySoundForChange}
+                definitions={[
+                    {
+                        value: NotificationSettings.AllMessages,
+                        label: _t("Play a sound for all messages"),
+                    }, {
+                        value: NotificationSettings.MentionsKeywordsOnly,
+                        label: _t("Play a sound for mentions & keywords"),
+                    }, {
+                        value: NotificationSettings.Never,
+                        label: _t("Never play a sound"),
+                    },
+                ]}
+            />
         </SettingsSection>
 
-        <SettingsSection title={"Sound alerts"}>
-            <StyledCheckbox>
-                {_t("Play a sound when receiving a notification")}
-            </StyledCheckbox>
-
-            <label>
-                <input
-                    type="radio"
-                    name="sound"
-                    value="sound1"
-                    onChange={onChange}
-                    checked={currentSound === "sound1"} />
-                {_t("Bird Sound")}
-            </label>
+        <SettingsSection title={"Custom sounds"}>
+            {_t("Bird Sound")}
         </SettingsSection>
 
         <hr />
