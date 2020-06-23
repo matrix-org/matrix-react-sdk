@@ -90,22 +90,38 @@ export default class NotificationBadge extends React.PureComponent<IProps, IStat
         let symbol = this.props.notification.symbol || formatMinimalBadgeCount(this.props.notification.count);
         if (isEmptyBadge) symbol = "";
 
-        const classes = classNames({
-            'mx_NotificationBadge': true,
-            'mx_NotificationBadge_visible': hasCount,
-            'mx_NotificationBadge_highlighted': hasNotif,
-            'mx_NotificationBadge_dot': isEmptyBadge,
-            'mx_NotificationBadge_2char': symbol.length > 0 && symbol.length < 3,
-            'mx_NotificationBadge_3char': symbol.length > 2,
-        });
-
-        return (
-            <div className={classes}>
-                <span className="mx_NotificationBadge_count">{symbol}</span>
-            </div>
-        );
+        return <NotificationBadgeComponent
+            hasNotif={hasNotif}
+            hasCount={hasCount}
+            isEmpty={isEmptyBadge}
+            symbol={symbol}
+        />;
     }
 }
+
+interface INotificationBadgeComponentProps {
+    symbol: string;
+    hasNotif: boolean;
+    hasCount: boolean;
+    isEmpty: boolean;
+}
+
+export const NotificationBadgeComponent: React.FC<INotificationBadgeComponentProps> = ({symbol, hasCount, hasNotif, isEmpty}) => {
+    const classes = classNames({
+        'mx_NotificationBadge': true,
+        'mx_NotificationBadge_visible': hasCount,
+        'mx_NotificationBadge_highlighted': hasNotif,
+        'mx_NotificationBadge_dot': isEmpty,
+        'mx_NotificationBadge_2char': symbol.length > 0 && symbol.length < 3,
+        'mx_NotificationBadge_3char': symbol.length > 2,
+    });
+
+    return (
+        <div className={classes}>
+            <span className="mx_NotificationBadge_count">{symbol}</span>
+        </div>
+    );
+};
 
 export class RoomNotificationState extends EventEmitter implements IDestroyable {
     private _symbol: string;

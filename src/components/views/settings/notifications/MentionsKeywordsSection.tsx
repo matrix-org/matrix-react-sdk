@@ -117,7 +117,10 @@ const MentionsKeywordsSection: React.FC<IProps> = ({disabled}) => {
 
     return <SettingsSection title={_t("Mentions & Keywords")} className="mx_NotificationsTab_mentionsKeywords">
         <StyledCheckbox>
-            {_t("Notify when someone mentions using @")}
+            {_t("Notify when someone mentions using your name")}
+        </StyledCheckbox>
+        <StyledCheckbox>
+            {_t("Notify when someone mentions using your username")}
         </StyledCheckbox>
         <StyledCheckbox disabled={disabled}>
             {_t("Notify when someone uses a keyword")}

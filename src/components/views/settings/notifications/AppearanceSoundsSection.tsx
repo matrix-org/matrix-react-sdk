@@ -21,6 +21,8 @@ import {_t} from "../../../../languageHandler";
 import {useSettingValue} from "../../../../hooks/useSettings";
 import SettingsStore, {SettingLevel} from "../../../../settings/SettingsStore";
 import StyledCheckbox from "../../elements/StyledCheckbox";
+import { NotificationBadgeComponent } from "../../rooms/NotificationBadge";
+import {NotificationSettings, StyledRadioGroup} from "../tabs/user/NotificationUserSettingsTab2";
 
 const ALWAYS_SHOW_BADGE_COUNTS_KEY = "Notifications.alwaysShowBadgeCounts";
 
@@ -28,15 +30,17 @@ const onAlwaysShowBadgeCountsChange = ev => {
     SettingsStore.setValue(ALWAYS_SHOW_BADGE_COUNTS_KEY, null, SettingLevel.ACCOUNT, ev.target.checked);
 };
 
+// TODO local echo
+// TODO wire up playSoundFor
 const AppearanceSoundsSection: React.FC = () => {
     const alwaysShowBadgeCounts = useSettingValue(ALWAYS_SHOW_BADGE_COUNTS_KEY);
+    const playSoundFor = NotificationSettings.MentionsKeywordsOnly;
+    const onPlaySoundForChange = () => {};
 
     let badgePreview;
     if (alwaysShowBadgeCounts) {
         badgePreview = <React.Fragment>
-            (<div className="mx_NotificationBadge mx_NotificationBadge_visible mx_NotificationBadge_2char">
-            <span className="mx_NotificationBadge_count">2</span>
-        </div>)
+            (<NotificationBadgeComponent symbol="2" hasCount={true} hasNotif={false} isEmpty={false} />)
         </React.Fragment>;
     }
 
@@ -51,12 +55,23 @@ const AppearanceSoundsSection: React.FC = () => {
         <br />
         <br />
 
-        <StyledCheckbox>
-            {_t("Play a sound for all messages")}
-        </StyledCheckbox>
-        <StyledCheckbox>
-            {_t("Play a sound for mentions")}
-        </StyledCheckbox>
+        <StyledRadioGroup
+            name="playSoundFor"
+            value={playSoundFor}
+            onChange={onPlaySoundForChange}
+            definitions={[
+                {
+                    value: NotificationSettings.AllMessages,
+                    label: _t("Play a sound for all messages"),
+                }, {
+                    value: NotificationSettings.MentionsKeywordsOnly,
+                    label: _t("Play a sound for mentions & keywords"),
+                }, {
+                    value: NotificationSettings.Never,
+                    label: _t("Never play a sound"),
+                },
+            ]}
+        />
     </SettingsSection>;
 };
 

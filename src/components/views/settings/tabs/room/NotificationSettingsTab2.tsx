@@ -20,7 +20,6 @@ import {_t} from "../../../../../languageHandler";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import StyledCheckbox from "../../../elements/StyledCheckbox";
 import SettingsSection from "../../SettingsSection";
-import StyledRadioButton from "../../../elements/StyledRadioButton";
 import {NotificationSettings, StyledRadioGroup} from "../user/NotificationUserSettingsTab2";
 import defaultDispatcher from "../../../../../dispatcher/dispatcher";
 import {OpenToTabPayload} from "../../../../../dispatcher/payloads/OpenToTabPayload";
