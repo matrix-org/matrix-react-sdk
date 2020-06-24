@@ -153,4 +153,42 @@ $textareaWidth: 400px;
         padding: 0;
         font-size: inherit;
     }
+
+    .mx_NotificationsTab_RoomOverrideTile {
+        margin-top: 16px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+
+        padding: 6px 12px;
+
+        &:hover {
+            background-color: $header-panel-bg-color;
+        }
+
+        & > * {
+            vertical-align: middle;
+        }
+
+        & > span:nth-child(2) {
+            margin-left: 16px;
+        }
+
+        .mx_AccessibleButton {
+            display: inline;
+            float: right;
+            line-height: 32px;
+        }
+    }
+}
+
+.mx_NotificationsTab_RoomOverrideTile_ContextMenu {
+    width: max-content;
+
+    .mx_AccessibleButton {
+        height: 32px;
+        padding: 8px;
+        margin-left: 32px;
+        margin-right: 40px;
+        line-height: 32px;
+    }
 }

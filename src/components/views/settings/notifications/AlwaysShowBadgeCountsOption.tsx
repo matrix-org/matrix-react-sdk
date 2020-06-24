@@ -16,14 +16,11 @@ limitations under the License.
 
 import React from "react";
 
-import SettingsSection from "../SettingsSection";
 import {_t} from "../../../../languageHandler";
 import {useSettingValue} from "../../../../hooks/useSettings";
 import SettingsStore, {SettingLevel} from "../../../../settings/SettingsStore";
 import StyledCheckbox from "../../elements/StyledCheckbox";
 import NotificationBadge, {NotificationColor, StaticNotificationState} from "../../rooms/NotificationBadge";
-import {StyledRadioGroup} from "../tabs/user/NotificationUserSettingsTab2";
-import {NotificationSettings} from "../../../../notifications/types";
 
 interface IProps {
     disabled?: boolean;
