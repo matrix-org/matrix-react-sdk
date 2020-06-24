@@ -49,9 +49,9 @@ const mapNotificationLevelToString = (level: NotificationSettings): string => {
     }
 };
 
-const inPlaceOf = (elementRect) => ({
-    right: window.innerWidth - elementRect.right - 50,
-    top: elementRect.top,
+const inPlaceOf = (elementRect, yOffset = 0) => ({
+    right: window.innerWidth - elementRect.right - 48,
+    top: elementRect.top + yOffset - 24,
     chevronOffset: 0,
     chevronFace: "none",
 });
@@ -61,19 +61,48 @@ const RoomOverrideTile: React.FC<IRoomOverrideTileProps> = ({roomId, rule}) => {
     const cli = useContext<MatrixClient>(MatrixClientContext);
     const room = cli.getRoom(roomId);
 
+    const def = NotificationSettings.AllMessages; // TODO
+    const level = NotificationSettings.MentionsKeywordsOnly; // TODO
+    let yOffset = 0;
+    if (level === NotificationSettings.MentionsKeywordsOnly) {
+        yOffset = -32;
+    } else if (level === NotificationSettings.Never) {
+        yOffset = -64;
+    }
+
+    const defaultTag = <span>({_t("default")})</span>;
+
     let contextMenu;
     if (menuDisplayed) {
         const buttonRect = button.current.getBoundingClientRect();
-        contextMenu = <ContextMenu {...inPlaceOf(buttonRect)} onFinished={closeMenu}>
+        contextMenu = <ContextMenu {...inPlaceOf(buttonRect, yOffset)} onFinished={closeMenu}>
             <div className="mx_NotificationsTab_RoomOverrideTile_ContextMenu">
-                <MenuItem onClick={() => {}}>
+                <MenuItem
+                    kind="link"
+                    className="mx_NotificationsTab_RoomOverrideTile_ContextMenu_allMessages"
+                    aria-selected={level === NotificationSettings.AllMessages}
+                    onClick={closeMenu}
+                >
                     {mapNotificationLevelToString(NotificationSettings.AllMessages)}
+                    {def === NotificationSettings.AllMessages ? defaultTag : undefined}
                 </MenuItem>
-                <MenuItem onClick={() => {}}>
+                <MenuItem
+                    kind="link"
+                    className="mx_NotificationsTab_RoomOverrideTile_ContextMenu_mentionsKeywords"
+                    aria-selected={level === NotificationSettings.MentionsKeywordsOnly}
+                    onClick={closeMenu}
+                >
                     {mapNotificationLevelToString(NotificationSettings.MentionsKeywordsOnly)}
+                    {def === NotificationSettings.MentionsKeywordsOnly ? defaultTag : undefined}
                 </MenuItem>
-                <MenuItem onClick={() => {}}>
+                <MenuItem
+                    kind="link"
+                    className="mx_NotificationsTab_RoomOverrideTile_ContextMenu_none"
+                    aria-selected={level === NotificationSettings.Never}
+                    onClick={closeMenu}
+                >
                     {mapNotificationLevelToString(NotificationSettings.Never)}
+                    {def === NotificationSettings.Never ? defaultTag : undefined}
                 </MenuItem>
             </div>
         </ContextMenu>;
@@ -89,7 +118,7 @@ const RoomOverrideTile: React.FC<IRoomOverrideTileProps> = ({roomId, rule}) => {
             inputRef={button}
             kind="link"
         >
-            {mapNotificationLevelToString(NotificationSettings.MentionsKeywordsOnly)}
+            {mapNotificationLevelToString(level)}
         </ContextMenuButton>
 
         {contextMenu}

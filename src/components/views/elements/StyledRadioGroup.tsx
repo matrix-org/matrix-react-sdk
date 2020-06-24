@@ -21,6 +21,7 @@ interface IRadioGroupDefinition<T extends string> {
     value: T;
     label: string; // translated
     microCopy?: string; // translated
+    disabled?: boolean;
 }
 
 interface IStyledRadioGroupProps<T extends string> {

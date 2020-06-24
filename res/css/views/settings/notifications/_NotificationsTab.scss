@@ -190,5 +190,64 @@ $textareaWidth: 400px;
         margin-left: 32px;
         margin-right: 40px;
         line-height: 32px;
+        position: relative;
+        color: $primary-fg-color;
+        text-align: left;
+
+        &::before {
+            content: '';
+            position: absolute;
+            height: 16px;
+            width: 16px;
+            left: -18px;
+            top: 16px;
+            background-color: $muted-fg-color;
+            mask-repeat: no-repeat;
+            mask-size: contain;
+        }
+
+        span {
+            margin-left: 4px;
+            font-size: $font-12px;
+            color: $muted-fg-color;
+        }
+
+        &[aria-selected="true"] {
+            color: $accent-color;
+
+            &::before {
+                background-color: $accent-color;
+            }
+
+            &::after {
+                background-color: $accent-color;
+                content: '';
+                position: absolute;
+                height: 16px;
+                width: 16px;
+                right: -21px;
+                top: 16px;
+                mask-repeat: no-repeat;
+                mask-size: contain;
+                mask-image: url('$(res)/img/feather-customised/check.svg');
+            }
+        }
+    }
+
+    .mx_AccessibleButton_kind_link {
+        font-size: inherit;
+        display: block;
+    }
+
+    .mx_NotificationsTab_RoomOverrideTile_ContextMenu_allMessages::before {
+        mask-image: url('$(res)/img/feather-customised/bell.svg');
+    }
+
+    .mx_NotificationsTab_RoomOverrideTile_ContextMenu_mentionsKeywords::before {
+        mask-image: url('$(res)/img/feather-customised/bell-notification.custom.svg');
+    }
+
+    .mx_NotificationsTab_RoomOverrideTile_ContextMenu_none::before {
+        mask-image: url('$(res)/img/feather-customised/bell-crossed.svg');
     }
 }
