@@ -140,10 +140,21 @@ const onResetAllRoomsClick = () => {
 };
 
 const RoomOverridesSection: React.FC<IProps> = ({pushRules}) => {
-    return <SettingsSection title={_t("Room notifications")}>
-        <div className="mx_SettingsTab_subsectionText">
+    const accountNotificationSetting = NotificationSettings.Never;
+
+    let description;
+    if (accountNotificationSetting === NotificationSettings.Never) {
+        description = <div className="mx_SettingsTab_errorText">
+            {_t(`Account notifications are set to "Never" and changes below will not apply.`)}
+        </div>;
+    } else {
+        description = <div className="mx_SettingsTab_subsectionText">
             {_t("Rooms listed below use custom notification settings")}
-        </div>
+        </div>;
+    }
+
+    return <SettingsSection title={_t("Room notifications")}>
+        {description}
 
         <div>
             <RoomOverrideTile roomId="!GNjEZxQKWMEgzEnuNa:matrix.org" rule={null} />

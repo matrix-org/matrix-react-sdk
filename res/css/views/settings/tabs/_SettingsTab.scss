@@ -38,6 +38,13 @@ limitations under the License.
     margin-top: 12px;
 }
 
+.mx_SettingsTab_errorText {
+    color: $notice-primary-color;
+    margin: 10px 100px 10px 0; // Align with the rest of the view
+    display: block;
+    font-size: 14px;
+}
+
 .mx_SettingsTab_subsectionText {
     color: $settings-subsection-fg-color;
     font-size: $font-14px;
