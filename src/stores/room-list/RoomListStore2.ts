@@ -142,6 +142,7 @@ export class RoomListStore2 extends AsyncStore<ActionPayload> {
 
         if (payload.action === 'setting_updated') {
             if (this.watchedSettings.includes(payload.settingName)) {
+                console.log("Regenerating room lists: Settings changed");
                 await this.readAndCacheSettingsFromStore();
 
                 await this.regenerateAllLists(); // regenerate the lists now
