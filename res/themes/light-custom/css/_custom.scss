@@ -54,6 +54,7 @@ $dialog-backdrop-color: var(--sidebar-color-50pct);
 //
 // --roomlist-background-color
 $header-panel-bg-color: var(--roomlist-background-color);
+$roomlist2-bg-color: var(--roomlist-background-color); // TODO: Remove the 2 when the new list takes over
 $reaction-row-button-bg-color: var(--roomlist-background-color);
 $panel-gradient: var(--roomlist-background-color-0pct), var(--roomlist-background-color);
 // these were #f2f5f8 instead of #f3f8fd, but close enough
@@ -89,6 +90,7 @@ $roomtile-selected-color: var(--roomlist-text-color);
 // --roomlist-text-secondary-color
 $roomsublist-label-fg-color: var(--roomlist-text-secondary-color);
 $roomtile-name-color: var(--roomlist-text-secondary-color);
+$roomtile2-preview-color: var(--roomlist-text-secondary-color); // TODO: Remove the 2 when the new list takes over
 //
 // --roomlist-separator-color
 $input-darker-bg-color: var(--roomlist-separator-color);
