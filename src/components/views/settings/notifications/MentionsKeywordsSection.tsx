@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, {useRef, useState} from "react";
+import classNames from "classnames";
 
 import SettingsSection from "../SettingsSection";
 import {_t} from "../../../../languageHandler";
@@ -27,35 +28,42 @@ interface IProps {
 }
 
 interface IKeywordsEditorProps {
+    disabled?: boolean;
     keywords: string[];
     setKeywords(keywords: string[]);
 }
 
 interface KeywordPill {
+    disabled?: boolean;
     keyword: string;
     onRemove(keyword: string);
 }
 
-const KeywordPill: React.FC<KeywordPill> = ({keyword, onRemove}) => {
+const KeywordPill: React.FC<KeywordPill> = ({disabled, keyword, onRemove}) => {
     const onClick = e => {
         // Stop the browser from highlighting text
         e.preventDefault();
         e.stopPropagation();
 
         onRemove(keyword);
+    };
+
+    let removeButton;
+    if (!disabled) {
+        removeButton = <AccessibleButton className="mx_NotificationsTab_mentionsKeywords_removePill" onClick={onClick}>
+            <img src={require("../../../../../res/img/icon-pill-remove.svg")} alt={_t("Remove")} width={8} height={8} />
+        </AccessibleButton>;
     }
 
     return (
         <span className="mx_NotificationsTab_mentionsKeywords_keywordPill">
             <span>{keyword}</span>
-            <AccessibleButton className="mx_NotificationsTab_mentionsKeywords_removePill" onClick={onClick}>
-                <img src={require("../../../../../res/img/icon-pill-remove.svg")} alt={_t("Remove")} width={8} height={8} />
-            </AccessibleButton>
+            {removeButton}
         </span>
     );
 };
 
-const KeywordsEditor: React.FC<IKeywordsEditorProps> = ({keywords, setKeywords}) => {
+const KeywordsEditor: React.FC<IKeywordsEditorProps> = ({disabled, keywords, setKeywords}) => {
     const ref = useRef<HTMLTextAreaElement>();
     const [value, setValue] = useState("");
 
@@ -90,7 +98,7 @@ const KeywordsEditor: React.FC<IKeywordsEditorProps> = ({keywords, setKeywords})
             addKeyword(e.target.value);
             setValue("");
         }
-    }
+    };
     const onBlur = e => {
         if (value) {
             addKeyword(e.target.value);
@@ -99,8 +107,9 @@ const KeywordsEditor: React.FC<IKeywordsEditorProps> = ({keywords, setKeywords})
     };
 
     return <div className="mx_NotificationsTab_mentionsKeywords_editor" onClick={onClick}>
-        {keywords.map(k => <KeywordPill key={k} keyword={k} onRemove={removeKeyword} />)}
+        {keywords.map(k => <KeywordPill key={k} disabled={disabled} keyword={k} onRemove={removeKeyword} />)}
         <textarea
+            disabled={disabled}
             rows={1}
             onKeyDown={onKeyDown}
             onChange={onChange}
@@ -116,20 +125,20 @@ const MentionsKeywordsSection: React.FC<IProps> = ({disabled}) => {
     const [keywords, setKeywords] = useState<string[]>(["foobar"]);
 
     return <SettingsSection title={_t("Mentions & Keywords")} className="mx_NotificationsTab_mentionsKeywords">
-        <StyledCheckbox>
+        <StyledCheckbox disabled={disabled}>
             {_t("Notify when someone mentions using your name")}
         </StyledCheckbox>
-        <StyledCheckbox>
+        <StyledCheckbox disabled={disabled}>
             {_t("Notify when someone mentions using your username")}
         </StyledCheckbox>
         <StyledCheckbox disabled={disabled}>
             {_t("Notify when someone uses a keyword")}
         </StyledCheckbox>
-        <div className="mx_Checkbox_microCopy">
+        <div className={classNames("mx_Checkbox_microCopy", {mx_Checkbox_microCopy_disabled: disabled})}>
             {_t("Enter keywords here, or use for spelling variations or nicknames")}
         </div>
 
-        <KeywordsEditor keywords={keywords} setKeywords={setKeywords} />
+        <KeywordsEditor keywords={keywords} setKeywords={setKeywords} disabled={disabled} />
     </SettingsSection>;
 };
 

@@ -158,9 +158,9 @@ const NotificationUserSettingsTab2: React.FC = () => {
 
         <MentionsKeywordsSection disabled={mentionsKeywordsSectionDisabled} />
 
-        <AppearanceSoundsSection />
+        <AppearanceSoundsSection notifyMeWith={notifyMeWith} />
 
-        <RoomOverridesSection pushRules={pushRules} />
+        <RoomOverridesSection notifyMeWith={notifyMeWith} pushRules={pushRules} />
 
         <DesktopNotificationsSection />
 

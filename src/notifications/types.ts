@@ -21,6 +21,17 @@ export enum NotificationSettings {
     Never = "never", // .m.rule.master = enabled (dont_notify)
 }
 
+const enumOrder = {
+    [NotificationSettings.Never]: 0,
+    [NotificationSettings.MentionsKeywordsOnly]: 1,
+    [NotificationSettings.DirectMessagesMentionsKeywords]: 2,
+    [NotificationSettings.AllMessages]: 3,
+};
+
+export const compareNotificationSettings = (a: NotificationSettings, b: NotificationSettings): number => {
+    return enumOrder[a] - enumOrder[b];
+};
+
 export interface ISoundTweak {
     set_tweak: "sound";
     value: string;

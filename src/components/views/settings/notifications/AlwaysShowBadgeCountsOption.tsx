@@ -23,7 +23,6 @@ import StyledCheckbox from "../../elements/StyledCheckbox";
 import NotificationBadge, {NotificationColor, StaticNotificationState} from "../../rooms/NotificationBadge";
 
 interface IProps {
-    disabled?: boolean;
     roomId?: string;
 }
 
@@ -35,7 +34,7 @@ const onAlwaysShowBadgeCountsChange = ev => {
 
 const exampleNotificationBadgeState = StaticNotificationState.forCount(2, NotificationColor.Grey);
 
-const AlwaysShowBadgeCountsOption: React.FC<IProps> = ({disabled, roomId}) => {
+const AlwaysShowBadgeCountsOption: React.FC<IProps> = ({roomId}) => {
     // TODO local echo
     const alwaysShowBadgeCounts = useSettingValue(ALWAYS_SHOW_BADGE_COUNTS_KEY, roomId);
 
@@ -53,9 +52,8 @@ const AlwaysShowBadgeCountsOption: React.FC<IProps> = ({disabled, roomId}) => {
         </React.Fragment>;
     }
 
-    // TODO grey out microCopy
     return <React.Fragment>
-        <StyledCheckbox checked={alwaysShowBadgeCounts} onChange={onAlwaysShowBadgeCountsChange} disabled={disabled}>
+        <StyledCheckbox checked={alwaysShowBadgeCounts} onChange={onAlwaysShowBadgeCountsChange}>
             {copy} {badgePreview}
         </StyledCheckbox>
         <div className="mx_Checkbox_microCopy">

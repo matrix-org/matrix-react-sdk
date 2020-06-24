@@ -28,10 +28,12 @@ import RoomAvatar from "../../avatars/RoomAvatar";
 import {ContextMenu, ContextMenuButton, MenuItem, useContextMenu} from "../../../structures/ContextMenu";
 
 interface IProps {
+    notifyMeWith: NotificationSettings;
     pushRules: IPushRulesMap;
 }
 
 interface IRoomOverrideTileProps {
+    defaultSetting: NotificationSettings;
     roomId: string;
     rule: IPushRule;
 }
@@ -56,12 +58,11 @@ const inPlaceOf = (elementRect, yOffset = 0) => ({
     chevronFace: "none",
 });
 
-const RoomOverrideTile: React.FC<IRoomOverrideTileProps> = ({roomId, rule}) => {
+const RoomOverrideTile: React.FC<IRoomOverrideTileProps> = ({defaultSetting, roomId, rule}) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
     const cli = useContext<MatrixClient>(MatrixClientContext);
     const room = cli.getRoom(roomId);
 
-    const def = NotificationSettings.AllMessages; // TODO
     const level = NotificationSettings.MentionsKeywordsOnly; // TODO
     let yOffset = 0;
     if (level === NotificationSettings.MentionsKeywordsOnly) {
@@ -84,7 +85,7 @@ const RoomOverrideTile: React.FC<IRoomOverrideTileProps> = ({roomId, rule}) => {
                     onClick={closeMenu}
                 >
                     {mapNotificationLevelToString(NotificationSettings.AllMessages)}
-                    {def === NotificationSettings.AllMessages ? defaultTag : undefined}
+                    {defaultSetting === NotificationSettings.AllMessages ? defaultTag : undefined}
                 </MenuItem>
                 <MenuItem
                     kind="link"
@@ -93,7 +94,7 @@ const RoomOverrideTile: React.FC<IRoomOverrideTileProps> = ({roomId, rule}) => {
                     onClick={closeMenu}
                 >
                     {mapNotificationLevelToString(NotificationSettings.MentionsKeywordsOnly)}
-                    {def === NotificationSettings.MentionsKeywordsOnly ? defaultTag : undefined}
+                    {defaultSetting === NotificationSettings.MentionsKeywordsOnly ? defaultTag : undefined}
                 </MenuItem>
                 <MenuItem
                     kind="link"
@@ -102,7 +103,7 @@ const RoomOverrideTile: React.FC<IRoomOverrideTileProps> = ({roomId, rule}) => {
                     onClick={closeMenu}
                 >
                     {mapNotificationLevelToString(NotificationSettings.Never)}
-                    {def === NotificationSettings.Never ? defaultTag : undefined}
+                    {defaultSetting === NotificationSettings.Never ? defaultTag : undefined}
                 </MenuItem>
             </div>
         </ContextMenu>;
@@ -139,13 +140,11 @@ const onResetAllRoomsClick = () => {
     });
 };
 
-const RoomOverridesSection: React.FC<IProps> = ({pushRules}) => {
-    const accountNotificationSetting = NotificationSettings.Never;
-
+const RoomOverridesSection: React.FC<IProps> = ({notifyMeWith, pushRules}) => {
     let description;
-    if (accountNotificationSetting === NotificationSettings.Never) {
+    if (notifyMeWith === NotificationSettings.Never) {
         description = <div className="mx_SettingsTab_errorText">
-            {_t(`Account notifications are set to "Never" and changes below will not apply.`)}
+            {_t("Account notifications are set to “Never” and changes below will not apply.")}
         </div>;
     } else {
         description = <div className="mx_SettingsTab_subsectionText">
@@ -157,9 +156,9 @@ const RoomOverridesSection: React.FC<IProps> = ({pushRules}) => {
         {description}
 
         <div>
-            <RoomOverrideTile roomId="!GNjEZxQKWMEgzEnuNa:matrix.org" rule={null} />
-            <RoomOverrideTile roomId="!GNjEZxQKWMEgzEnuNa:matrix.org" rule={null} />
-            <RoomOverrideTile roomId="!GNjEZxQKWMEgzEnuNa:matrix.org" rule={null} />
+            <RoomOverrideTile defaultSetting={notifyMeWith} roomId="!GNjEZxQKWMEgzEnuNa:matrix.org" rule={null} />
+            <RoomOverrideTile defaultSetting={notifyMeWith} roomId="!GNjEZxQKWMEgzEnuNa:matrix.org" rule={null} />
+            <RoomOverrideTile defaultSetting={notifyMeWith} roomId="!GNjEZxQKWMEgzEnuNa:matrix.org" rule={null} />
         </div>
 
         <AccessibleButton kind="link" onClick={onResetAllRoomsClick}>

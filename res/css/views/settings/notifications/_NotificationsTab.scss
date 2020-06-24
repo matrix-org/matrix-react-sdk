@@ -39,6 +39,10 @@ $textareaWidth: 400px;
             font-size: $font-12px;
             color: $muted-fg-color;
             margin-left: $leftGutter;
+
+            &.mx_Checkbox_microCopy_disabled {
+                opacity: 0.5;
+            }
         }
 
         .mx_Field_textarea {
@@ -48,13 +52,13 @@ $textareaWidth: 400px;
         }
     }
 
+    .mx_NotificationBadge {
+        vertical-align: middle;
+        display: inline-flex;
+        margin-left: 2px;
+        margin-right: 2px;
+    }
     .mx_NotificationsTab_appearanceAndSounds {
-        .mx_NotificationBadge {
-            vertical-align: middle;
-            display: inline-flex;
-            margin-left: 2px;
-            margin-right: 2px;
-        }
     }
 
     .mx_NotificationsTab_mentionsKeywords {
@@ -118,7 +122,7 @@ $textareaWidth: 400px;
 
             &:hover {
                 background-color: $accent-color;
-                color: #FFFFFF; // this is fine without a var because it's for both themes
+                color: #ffffff; // this is fine without a var because it's for both themes
             }
 
             & > span {
@@ -156,8 +160,8 @@ $textareaWidth: 400px;
     }
 
     .mx_NotificationsTab_RoomOverrideTile {
-        margin-top: 16px;
-        margin-bottom: 20px;
+        margin-top: 12px;
+        margin-bottom: 12px;
         border-radius: 8px;
 
         padding: 6px 12px;

@@ -19,7 +19,7 @@ import StyledRadioButton from "./StyledRadioButton";
 
 interface IRadioGroupDefinition<T extends string> {
     value: T;
-    label: string; // translated
+    label: React.ReactChild;
     microCopy?: string; // translated
     disabled?: boolean;
 }
@@ -45,6 +45,7 @@ function StyledRadioGroup<T extends string>({name, definitions, value, onChange}
                 checked={d.value === value}
                 name={name}
                 value={d.value}
+                disabled={d.disabled}
             >
                 {d.label}
             </StyledRadioButton>

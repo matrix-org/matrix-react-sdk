@@ -31,7 +31,8 @@ const onNotificationsEnabledChange = (ev) => {
 };
 
 const onNotificationsBodyEnabledChange = (ev) => {
-    SettingsStore.setValue(NOTIFICATIONS_BODY_ENABLED_KEY, null, SettingLevel.DEVICE, ev.target.checked);
+    // invert as we show the inverse of the underlying setting
+    SettingsStore.setValue(NOTIFICATIONS_BODY_ENABLED_KEY, null, SettingLevel.DEVICE, !ev.target.checked);
 };
 
 const DesktopNotificationsSection: React.FC = () => {
