@@ -27,6 +27,7 @@ import {USER_NOTIFICATIONS_TAB} from "../../../dialogs/UserSettingsDialog";
 import {NotificationSettings} from "../../../../../notifications/types";
 import AlwaysShowBadgeCountsOption from "../../notifications/AlwaysShowBadgeCountsOption";
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
+import CustomSoundSection from "../../notifications/CustomSoundsSection";
 
 interface IProps {
     roomId: string;
@@ -42,14 +43,6 @@ const goToNotificationSettings = () => {
 const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
     const defaultSetting = NotificationSettings.MentionsKeywordsOnly; // TODO
 
-    const currentSound = "default";
-    const uploadedFile = "";
-    const _clearSound = () => {};
-    const _onSoundUploadChanged = () => {};
-    const _triggerUploader = () => {};
-    const _onClickSaveSound = () => {};
-    let currentUploadedFile;
-    let _soundUpload;
     const onChange = () => {};
     let notifyMeOn = NotificationSettings.MentionsKeywordsOnly;
     const playSoundFor = NotificationSettings.MentionsKeywordsOnly;
@@ -136,38 +129,7 @@ const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
             />
         </SettingsSection>
 
-        <SettingsSection title={"Custom sounds"}>
-            {_t("Bird Sound")}
-        </SettingsSection>
-
-        <hr />
-
-        <div className='mx_SettingsTab_section mx_SettingsTab_subsectionText'>
-            <span className='mx_SettingsTab_subheading'>{_t("Sounds")}</span>
-            <div>
-                <span>{_t("Notification sound")}: <code>{currentSound}</code></span><br />
-                <AccessibleButton className="mx_NotificationSound_resetSound" disabled={currentSound === "default"} onClick={_clearSound} kind="primary">
-                    {_t("Reset")}
-                </AccessibleButton>
-            </div>
-            <div>
-                <h3>{_t("Set a new custom sound")}</h3>
-                <form autoComplete="off" noValidate={true}>
-                    <input ref={_soundUpload} className="mx_NotificationSound_soundUpload" type="file" onChange={_onSoundUploadChanged} accept="audio/*" />
-                </form>
-
-                {currentUploadedFile}
-
-                <AccessibleButton className="mx_NotificationSound_browse" onClick={_triggerUploader} kind="primary">
-                    {_t("Browse")}
-                </AccessibleButton>
-
-                <AccessibleButton className="mx_NotificationSound_save" disabled={uploadedFile === null} onClick={_onClickSaveSound} kind="primary">
-                    {_t("Save")}
-                </AccessibleButton>
-                <br />
-            </div>
-        </div>
+        <CustomSoundSection roomId={roomId} />
     </div>;
 };
 
