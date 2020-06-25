@@ -37,6 +37,7 @@ import AccessibleButton from "../elements/AccessibleButton";
 // TODO: this component also does a lot of direct poking into this.state, which
 // is VERY NAUGHTY.
 
+
 /**
  * Rules that Vector used to set in order to override the actions of default rules.
  * These are used to port peoples existing overrides to match the current API.
@@ -419,7 +420,8 @@ export default createReactClass({
 
                 if (vectorContentRulesPatterns.indexOf(keyword) < 0) {
                     if (self.state.vectorContentRules.vectorState !== PushRuleVectorState.OFF) {
-                        deferreds.push(cli.addPushRule('global', 'content', keyword, {
+                        deferreds.push(cli.addPushRule
+                        ('global', 'content', keyword, {
                            actions: PushRuleVectorState.actionsFor(pushRuleVectorStateKind),
                            pattern: keyword,
                         }));

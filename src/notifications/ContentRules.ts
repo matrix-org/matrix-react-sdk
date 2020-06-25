@@ -161,6 +161,7 @@ export class ContentRules {
     }
 
     static _getRuleActions(loud: boolean) {
+        // return loud ? StandardActions.ACTION_NOTIFY : StandardActions.ACTION_HIGHLIGHT_DEFAULT_SOUND;
         return PushRuleVectorState.actionsFor(loud ? State.Loud : State.On);
     }
 
