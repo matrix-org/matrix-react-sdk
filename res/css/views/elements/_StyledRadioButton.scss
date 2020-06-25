@@ -92,16 +92,6 @@ limitations under the License.
                 opacity: 0.5;
                 cursor: not-allowed;
             }
-
-            & + div {
-                border-color: $radio-circle-color;
-            }
-        }
-
-        &:checked:disabled {
-            & + div > div {
-                background-color: $radio-circle-color;
-            }
         }
     }
 }
