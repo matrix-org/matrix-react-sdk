@@ -121,8 +121,6 @@ export default class MessageActionBar extends React.PureComponent {
     componentDidMount() {
         this.props.mxEvent.on("Event.decrypted", this.onDecrypted);
         this.props.mxEvent.on("Event.beforeRedaction", this.onBeforeRedaction);
-
-        this.onKeyDown = this.onKeyDown.bind(this);
         this.elRef.current.addEventListener("keydown", this.onKeyDown, true);
     }
 
@@ -202,9 +200,13 @@ export default class MessageActionBar extends React.PureComponent {
         if (isContentActionable(this.props.mxEvent)) {
             if (this.context.canReact) {
                 buttons.push(
-                    <ReactButton mxEvent={this.props.mxEvent} reactions={this.props.reactions} onFocusChange={this.onFocusChange}
-                                tabIndex={this.tabIndex("react")}
-                                 key="react" />,
+                    <ReactButton
+                        mxEvent={this.props.mxEvent}
+                        reactions={this.props.reactions}
+                        onFocusChange={this.onFocusChange}
+                        tabIndex={this.tabIndex("react")}
+                        key="react"
+                    />,
                 );
             }
             if (this.context.canReply) {
@@ -249,8 +251,13 @@ export default class MessageActionBar extends React.PureComponent {
         }
 
         // aria-live=off to not have this read out automatically as navigating around timeline, gets repetitive.
-        return <div className="mx_MessageActionBar" role="toolbar" aria-label={_t("Message Actions")} aria-live="off"
-            ref={this.elRef}>
+        return <div
+            className="mx_MessageActionBar"
+            role="toolbar"
+            aria-label={_t("Message Actions")}
+            aria-live="off"
+            ref={this.elRef}
+        >
             {buttons}
         </div>;
     }
