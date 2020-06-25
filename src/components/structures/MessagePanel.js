@@ -517,10 +517,14 @@ export default class MessagePanel extends React.Component {
                     // replacing all of the DOM elements every time we paginate.
                     ret.push(...this._getTilesForEvent(prevEvent, mxEv, last));
                     prevEvent = mxEv;
-                }
 
-                const readMarker = this._readMarkerForEvent(eventId, i >= lastShownNonLocalEchoIndex);
-                if (readMarker) ret.push(readMarker);
+                    // Only consider drawing the read marker for events that also have a
+                    // tile. When scrolling to the read marker, we assume that if the read
+                    // marker node is present, then there is also an event tile with a
+                    // matching scroll token as well.
+                    const readMarker = this._readMarkerForEvent(eventId, i >= lastShownNonLocalEchoIndex);
+                    if (readMarker) ret.push(readMarker);
+                }
             }
         }
 
