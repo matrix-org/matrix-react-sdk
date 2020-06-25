@@ -43,28 +43,35 @@ interface ICustomSoundTileProps {
 const CUSTOM_NOTIFICATION_SOUND_KEY = "notificationSound";
 
 const CustomSoundTile: React.FC<ICustomSoundTileProps> = ({sound, onRemove}) => {
+    const audioRef = useRef<HTMLAudioElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
 
-    // TODO fix play/stop svgs
-    let playButton;
+    let buttonOnClick;
+    let buttonClassName;
     if (isPlaying) {
-        const onClick = () => {
-            // TODO play the audio
-            setIsPlaying(true);
-        };
-        playButton = <AccessibleButton className="mx_NotificationsTab_CustomSoundTile_play" onClick={onClick} />;
-    } else {
-        const onClick = () => {
-            // TODO stop the audio
+        buttonOnClick = () => {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
             setIsPlaying(false);
         };
-        playButton = <AccessibleButton className="mx_NotificationsTab_CustomSoundTile_stop" onClick={onClick} />;
+        buttonClassName = "mx_NotificationsTab_CustomSoundTile_stop";
+    } else {
+        buttonOnClick = () => {
+            audioRef.current.play();
+            setIsPlaying(true);
+        };
+        buttonClassName = "mx_NotificationsTab_CustomSoundTile_play";
     }
 
+    const onEnded = () => {
+        setIsPlaying(false);
+    };
+
     return <div className="mx_NotificationsTab_CustomSoundTile">
-        {playButton}
+        <AccessibleButton className={buttonClassName} onClick={buttonOnClick} />
         <span>{sound.name}</span>
         <AccessibleButton className="mx_NotificationsTab_CustomSoundTile_remove" onClick={onRemove} />
+        <audio ref={audioRef} src={sound.url} preload="auto" onEnded={onEnded} />
     </div>;
 };
 
@@ -88,6 +95,7 @@ const CustomSoundSection: React.FC<IProps> = ({roomId}) => {
 
         setBusy(true);
         const url = await MatrixClientPeg.get().uploadContent(file, {type});
+        setBusy(false);
 
         const sound = {
             name: file.name,
@@ -95,9 +103,9 @@ const CustomSoundSection: React.FC<IProps> = ({roomId}) => {
             size: file.size,
             url,
         };
-        setBusy(false);
-        setCustomSound(sound);
-        await SettingsStore.setValue(CUSTOM_NOTIFICATION_SOUND_KEY, roomId, SettingLevel.ROOM_ACCOUNT, sound);
+        // local echo as we cannot ask Notifier until the remote echo of the room account data update comes down sync
+        setCustomSound({...sound, url: MatrixClientPeg.get().mxcUrlToHttp(sound.url)});
+        SettingsStore.setValue(CUSTOM_NOTIFICATION_SOUND_KEY, roomId, SettingLevel.ROOM_ACCOUNT, sound);
     };
 
     let customSoundSection;
