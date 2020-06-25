@@ -36,6 +36,7 @@ import {
     IPushRulesMap,
     NotificationSetting,
     RuleIds,
+    IRuleSets,
 } from "../../../../../notifications/types";
 import RoomOverridesSection from "../../notifications/RoomOverridesSection";
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
@@ -111,22 +112,21 @@ const AdvancedNotificationsSection: React.FC<IAdvancedNotificationSectionProps> 
 
 const NotificationUserSettingsTab2: React.FC = () => {
     const cli = useContext<MatrixClient>(MatrixClientContext);
-    const rawPushRules = useAccountData(cli, "m.push_rules");
+    const pushRules = useAccountData<IRuleSets>(cli, "m.push_rules");
 
-    const [pushRules, setPushRules] = useState<IPushRulesMap>(null);
+    const [pushRulesMap, setPushRules] = useState<IPushRulesMap>(null);
     const [notifyMeWith, setNotifyMeWith] = useState<NotificationSetting>(null);
     useEffect(() => {
-        if (!rawPushRules) {
+        if (!pushRules) {
             setPushRules(null);
             return;
         }
-        const rules = rawPushRules.getContent();
-        const ruleMap = mapRuleset(rules.global);
+        const ruleMap = mapRuleset(pushRules.global);
         setNotifyMeWith(calculateNotifyMeWith(ruleMap));
         setPushRules(ruleMap);
-    }, [rawPushRules]);
+    }, [pushRules]);
 
-    const contentRules = ContentRules.parseContentRules(rawPushRules.getContent());
+    const contentRules = ContentRules.parseContentRules(pushRules);
     const [keywordsEnabled, setKeywordsEnabled] = useState(contentRules.vectorState !== State.Off);
 
     // TODO wire up playSoundFor
@@ -139,7 +139,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
         ContentRules.updateContentRules(cli, contentRules, keywordsEnabled, soundEnabled); // TODO error handling
     };
 
-    if (!pushRules) return null;
+    if (!pushRulesMap) return null;
 
     const onNotifyMeWithChange = value => {
         setNotifyMeWith(value);
@@ -191,7 +191,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
             onChange={onPlaySoundForChange}
         />
 
-        <RoomOverridesSection notifyMeWith={notifyMeWith} pushRules={pushRules} />
+        <RoomOverridesSection notifyMeWith={notifyMeWith} pushRules={pushRulesMap} />
 
         <DesktopNotificationsSection />
 
