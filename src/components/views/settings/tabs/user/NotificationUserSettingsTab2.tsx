@@ -21,9 +21,6 @@ import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import {_t} from "../../../../../languageHandler";
 import SettingsSection from "../../SettingsSection";
 import {ContentRules} from "../../../../../notifications";
-import Field from "../../../elements/Field";
-import AccessibleButton from "../../../elements/AccessibleButton";
-import {useStateToggle} from "../../../../../hooks/useStateToggle";
 import DesktopNotificationsSection from "../../notifications/DesktopNotificationsSection";
 import EmailNotificationsSection from "../../notifications/EmailNotificationsSection";
 import AppearanceSoundsSection from "../../notifications/AppearanceSoundsSection";
@@ -31,7 +28,7 @@ import {useAccountData} from "../../../../../hooks/useAccountData";
 import MentionsKeywordsSection from "../../notifications/MentionsKeywordsSection";
 import {
     Actions,
-    compareNotificationSettings, IExtendedPushRule,
+    compareNotificationSettings,
     IPushRule, IPushRuleSet,
     IPushRulesMap,
     NotificationSetting,
@@ -41,6 +38,7 @@ import {
 import RoomOverridesSection from "../../notifications/RoomOverridesSection";
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
 import {State} from "../../../../../notifications/PushRuleVectorState";
+import AdvancedNotificationsSection from "../../notifications/AdvancedNotificationsSection";
 
 const mapRules = (rules: IPushRule[]): Record<string, IPushRule> => {
     const map: Record<string, IPushRule> = {};
@@ -81,33 +79,6 @@ const calculateNotifyMeWith = (pushRules: IPushRulesMap): NotificationSetting =>
     }
 
     return NotificationSetting.DirectMessagesMentionsKeywords;
-};
-
-interface IAdvancedNotificationSectionProps {
-    rules: IExtendedPushRule[];
-}
-
-const AdvancedNotificationsSection: React.FC<IAdvancedNotificationSectionProps> = ({rules}) => {
-    const [expanded, toggleExpanded] = useStateToggle(false);
-
-    let children;
-    if (expanded) {
-        children = <React.Fragment>
-            <Field
-                element="textarea"
-                label={_t("Custom Rules")}
-                value={JSON.stringify(rules, null, 4)}
-                readOnly
-            />
-        </React.Fragment>;
-    }
-
-    return <SettingsSection title={_t("Advanced notifications")}>
-        {children}
-        <AccessibleButton kind="link" onClick={toggleExpanded}>
-            {expanded ? _t("Hide") : _t("Show more")}
-        </AccessibleButton>
-    </SettingsSection>;
 };
 
 const NotificationUserSettingsTab2: React.FC = () => {

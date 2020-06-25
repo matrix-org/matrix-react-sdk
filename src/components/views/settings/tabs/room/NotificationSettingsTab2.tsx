@@ -18,7 +18,6 @@ import React, { useState } from "react";
 
 import {_t} from "../../../../../languageHandler";
 import AccessibleButton from "../../../elements/AccessibleButton";
-import StyledCheckbox from "../../../elements/StyledCheckbox";
 import SettingsSection from "../../SettingsSection";
 import defaultDispatcher from "../../../../../dispatcher/dispatcher";
 import {OpenToTabPayload} from "../../../../../dispatcher/payloads/OpenToTabPayload";
@@ -28,6 +27,7 @@ import {compareNotificationSettings as compareSettings, NotificationSetting} fro
 import AlwaysShowBadgeCountsOption from "../../notifications/AlwaysShowBadgeCountsOption";
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
 import CustomSoundSection from "../../notifications/CustomSoundsSection";
+import AdvancedNotificationsSection from "../../notifications/AdvancedNotificationsSection";
 
 interface IProps {
     roomId: string;
@@ -87,11 +87,15 @@ const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
                             {_t("Mentions & keywords only")}
                             {defaultSetting === NotificationSetting.MentionsKeywordsOnly ? defaultTag : undefined}
                         </React.Fragment>,
-                        microCopy: _t("Manage keywords in <a>Account Settings</a>", {}, {
-                            a: sub => <AccessibleButton kind="link" onClick={goToNotificationSettings}>
-                                {sub}
-                            </AccessibleButton>,
-                        }),
+                        description: (
+                            <div className="mx_Checkbox_microCopy">
+                                {_t("Manage keywords in <a>Account Settings</a>", {}, {
+                                    a: sub => <AccessibleButton kind="link" onClick={goToNotificationSettings}>
+                                        {sub}
+                                    </AccessibleButton>,
+                                })}
+                            </div>
+                        ),
                     }, {
                         value: NotificationSetting.Never,
                         label: <React.Fragment>
@@ -131,6 +135,8 @@ const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
         </SettingsSection>
 
         <CustomSoundSection roomId={roomId} />
+
+        <AdvancedNotificationsSection rules={[]} />
     </div>;
 };
 
