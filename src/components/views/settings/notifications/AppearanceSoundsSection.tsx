@@ -14,27 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useState} from "react";
+import React from "react";
 
 import SettingsSection from "../SettingsSection";
 import {_t} from "../../../../languageHandler";
-import {compareNotificationSettings as compareSettings, NotificationSettings} from "../../../../notifications/types";
+import {compareNotificationSettings as compareSettings, NotificationSetting} from "../../../../notifications/types";
 import AlwaysShowBadgeCountsOption from "./AlwaysShowBadgeCountsOption";
 import StyledRadioGroup from "../../elements/StyledRadioGroup";
 
 interface IProps {
-    notifyMeWith: NotificationSettings;
+    notifyMeWith: NotificationSetting;
+    playSoundFor: NotificationSetting;
+    onChange(playSoundFor: NotificationSetting);
 }
 
-const AppearanceSoundsSection: React.FC<IProps> = ({notifyMeWith}) => {
-    // TODO wire up playSoundFor
-    const [playSoundFor, setPlaySoundFor] = useState<NotificationSettings>(NotificationSettings.MentionsKeywordsOnly);
-
-    const onPlaySoundForChange = value => {
-        setPlaySoundFor(value);
-        // TODO update push rules
-    };
-
+const AppearanceSoundsSection: React.FC<IProps> = ({notifyMeWith, playSoundFor, onChange}) => {
     return <SettingsSection title={_t("Appearance & Sounds")} className="mx_NotificationsTab_appearanceAndSounds">
         <AlwaysShowBadgeCountsOption />
 
@@ -44,22 +38,22 @@ const AppearanceSoundsSection: React.FC<IProps> = ({notifyMeWith}) => {
         <StyledRadioGroup
             name="playSoundFor"
             value={playSoundFor}
-            onChange={onPlaySoundForChange}
+            onChange={onChange}
             definitions={[
                 {
-                    value: NotificationSettings.AllMessages,
+                    value: NotificationSetting.AllMessages,
                     label: _t("Play a sound for all messages"),
-                    disabled: compareSettings(notifyMeWith, NotificationSettings.AllMessages) < 0,
+                    disabled: compareSettings(notifyMeWith, NotificationSetting.AllMessages) < 0,
                 }, {
-                    value: NotificationSettings.DirectMessagesMentionsKeywords,
+                    value: NotificationSetting.DirectMessagesMentionsKeywords,
                     label: _t("Play a sound for direct messages, mentions & keywords"),
-                    disabled: compareSettings(notifyMeWith, NotificationSettings.DirectMessagesMentionsKeywords) < 0,
+                    disabled: compareSettings(notifyMeWith, NotificationSetting.DirectMessagesMentionsKeywords) < 0,
                 }, {
-                    value: NotificationSettings.MentionsKeywordsOnly,
+                    value: NotificationSetting.MentionsKeywordsOnly,
                     label: _t("Play a sound for mentions & keywords"),
-                    disabled: compareSettings(notifyMeWith, NotificationSettings.MentionsKeywordsOnly) < 0,
+                    disabled: compareSettings(notifyMeWith, NotificationSetting.MentionsKeywordsOnly) < 0,
                 }, {
-                    value: NotificationSettings.Never,
+                    value: NotificationSetting.Never,
                     label: _t("Never play a sound"),
                 },
             ]}

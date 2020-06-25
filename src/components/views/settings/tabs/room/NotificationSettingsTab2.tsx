@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { useState } from "react";
 
 import {_t} from "../../../../../languageHandler";
 import AccessibleButton from "../../../elements/AccessibleButton";
@@ -24,7 +24,7 @@ import defaultDispatcher from "../../../../../dispatcher/dispatcher";
 import {OpenToTabPayload} from "../../../../../dispatcher/payloads/OpenToTabPayload";
 import {Action} from "../../../../../dispatcher/actions";
 import {USER_NOTIFICATIONS_TAB} from "../../../dialogs/UserSettingsDialog";
-import {NotificationSettings} from "../../../../../notifications/types";
+import {compareNotificationSettings as compareSettings, NotificationSetting} from "../../../../../notifications/types";
 import AlwaysShowBadgeCountsOption from "../../notifications/AlwaysShowBadgeCountsOption";
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
 import CustomSoundSection from "../../notifications/CustomSoundsSection";
@@ -41,24 +41,28 @@ const goToNotificationSettings = () => {
 };
 
 const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
-    const defaultSetting = NotificationSettings.MentionsKeywordsOnly; // TODO
+    const defaultSetting = NotificationSetting.MentionsKeywordsOnly; // TODO
+    const [notifyMeOn, setNotifyMeOn] = useState<NotificationSetting>(null);
 
-    const onChange = () => {};
-    let notifyMeOn = NotificationSettings.MentionsKeywordsOnly;
-    const playSoundFor = NotificationSettings.MentionsKeywordsOnly;
+    const onNotifyMeWithChange = value => {
+        setNotifyMeOn(value);
+        // TODO update push rules
+    };
+
+    const playSoundFor = NotificationSetting.MentionsKeywordsOnly;
     const onPlaySoundForChange = () => {};
 
     const defaultTag = ` (${_t("Default")})`;
 
     let description;
     // TODO fix errorTextIcon class to actually show an icon
-    if (defaultSetting === NotificationSettings.Never) {
+    if (defaultSetting === NotificationSetting.Never) {
         description = <div className="mx_SettingsTab_errorText mx_SettingsTab_errorTextIcon">
             {_t("Account notifications are set to “Never” and settings below will not apply.")}
         </div>;
     } else {
         description = <div className="mx_SettingsTab_subsectionText">
-            {_t("Manage notifications in this room...")}
+            {_t("Manage notifications...")}
         </div>;
     }
 
@@ -70,19 +74,19 @@ const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
             <StyledRadioGroup
                 name="notifyMeOn"
                 value={notifyMeOn}
-                onChange={onChange}
+                onChange={onNotifyMeWithChange}
                 definitions={[
                     {
-                        value: NotificationSettings.AllMessages,
+                        value: NotificationSetting.AllMessages,
                         label: <React.Fragment>
                             {_t("All messages")}
-                            {defaultSetting === NotificationSettings.AllMessages ? defaultTag : undefined}
+                            {defaultSetting === NotificationSetting.AllMessages ? defaultTag : undefined}
                         </React.Fragment>,
                     }, {
-                        value: NotificationSettings.MentionsKeywordsOnly,
+                        value: NotificationSetting.MentionsKeywordsOnly,
                         label: <React.Fragment>
                             {_t("Mentions & keywords only")}
-                            {defaultSetting === NotificationSettings.MentionsKeywordsOnly ? defaultTag : undefined}
+                            {defaultSetting === NotificationSetting.MentionsKeywordsOnly ? defaultTag : undefined}
                         </React.Fragment>,
                         microCopy: _t("Manage keywords in <a>Account Settings</a>", {}, {
                             a: sub => <AccessibleButton kind="link" onClick={goToNotificationSettings}>
@@ -90,10 +94,10 @@ const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
                             </AccessibleButton>,
                         }),
                     }, {
-                        value: NotificationSettings.Never,
+                        value: NotificationSetting.Never,
                         label: <React.Fragment>
                             {_t("Never")}
-                            {defaultSetting === NotificationSettings.Never ? defaultTag : undefined}
+                            {defaultSetting === NotificationSetting.Never ? defaultTag : undefined}
                         </React.Fragment>,
                     },
                 ]}
@@ -102,7 +106,7 @@ const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
 
         <SettingsSection title={_t("Appearance & Sounds")}>
             <StyledCheckbox>
-                {_t("Notify you when using @room")}
+                {_t("Notify when someone mentions using @room")}
             </StyledCheckbox>
 
             <AlwaysShowBadgeCountsOption roomId={roomId} />
@@ -116,13 +120,15 @@ const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
                 onChange={onPlaySoundForChange}
                 definitions={[
                     {
-                        value: NotificationSettings.AllMessages,
+                        value: NotificationSetting.AllMessages,
                         label: _t("Play a sound for all messages"),
+                        disabled: compareSettings(notifyMeOn, NotificationSetting.AllMessages) < 0,
                     }, {
-                        value: NotificationSettings.MentionsKeywordsOnly,
+                        value: NotificationSetting.MentionsKeywordsOnly,
                         label: _t("Play a sound for mentions & keywords"),
+                        disabled: compareSettings(notifyMeOn, NotificationSetting.MentionsKeywordsOnly) < 0,
                     }, {
-                        value: NotificationSettings.Never,
+                        value: NotificationSetting.Never,
                         label: _t("Never play a sound"),
                     },
                 ]}

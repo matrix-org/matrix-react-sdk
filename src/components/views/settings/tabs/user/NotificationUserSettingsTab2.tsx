@@ -14,24 +14,32 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useContext, useState, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import MatrixClient from "matrix-js-sdk/src/client";
 
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import {_t} from "../../../../../languageHandler";
 import SettingsSection from "../../SettingsSection";
-import {portRulesToNewAPI} from "../../../../../notifications";
+import {ContentRules, portRulesToNewAPI} from "../../../../../notifications";
 import Field from "../../../elements/Field";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import {useStateToggle} from "../../../../../hooks/useStateToggle";
 import DesktopNotificationsSection from "../../notifications/DesktopNotificationsSection";
 import EmailNotificationsSection from "../../notifications/EmailNotificationsSection";
 import AppearanceSoundsSection from "../../notifications/AppearanceSoundsSection";
-import { useAccountData } from "../../../../../hooks/useAccountData";
+import {useAccountData} from "../../../../../hooks/useAccountData";
 import MentionsKeywordsSection from "../../notifications/MentionsKeywordsSection";
-import { IPushRule, IPushRulesMap, RuleIds, NotificationSettings, Actions } from "../../../../../notifications/types";
+import {
+    Actions,
+    compareNotificationSettings, IExtendedPushRule,
+    IPushRule,
+    IPushRulesMap,
+    NotificationSetting,
+    RuleIds,
+} from "../../../../../notifications/types";
 import RoomOverridesSection from "../../notifications/RoomOverridesSection";
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
+import {State} from "../../../../../notifications/PushRuleVectorState";
 
 const mapRules = (rules: IPushRule[]): Record<string, IPushRule> => {
     const map: Record<string, IPushRule> = {};
@@ -49,10 +57,10 @@ const mapRuleset = (pushRules): IPushRulesMap => ({
     underride: mapRules(pushRules.underride),
 });
 
-const calculateNotifyMeWith = (pushRules: IPushRulesMap): NotificationSettings => {
+const calculateNotifyMeWith = (pushRules: IPushRulesMap): NotificationSetting => {
     const masterRule = pushRules.override[RuleIds.MasterRule];
     if (masterRule && masterRule.enabled) {
-        return NotificationSettings.Never;
+        return NotificationSetting.Never;
     }
 
     const messageRule = pushRules.underride[RuleIds.MessageRule];
@@ -60,36 +68,38 @@ const calculateNotifyMeWith = (pushRules: IPushRulesMap): NotificationSettings =
     // TODO
     if (messageRule) {
         if (messageRule.enabled && messageRule.actions.includes(Actions.Notify)) {
-            return NotificationSettings.AllMessages;
+            return NotificationSetting.AllMessages;
         }
         // TODO consider how to handle other messageRule states like disabled
         if (messageRule.actions.includes(Actions.MarkUnread)) {
             if (roomOneToOneRule.actions.includes(Actions.MarkUnread)) {
-                return NotificationSettings.MentionsKeywordsOnly;
+                return NotificationSetting.MentionsKeywordsOnly;
             } else {
-                return NotificationSettings.DirectMessagesMentionsKeywords;
+                return NotificationSetting.DirectMessagesMentionsKeywords;
             }
         }
     }
 
-    return NotificationSettings.DirectMessagesMentionsKeywords;
+    return NotificationSetting.DirectMessagesMentionsKeywords;
 };
 
-const AdvancedNotificationsSection: React.FC = () => {
+interface IAdvancedNotificationSectionProps {
+    rules: IExtendedPushRule[];
+}
+
+const AdvancedNotificationsSection: React.FC<IAdvancedNotificationSectionProps> = ({rules}) => {
     const [expanded, toggleExpanded] = useStateToggle(false);
 
     let children;
     if (expanded) {
-        children = <Field
-            element="textarea"
-            label={_t("Keywords")}
-            value='{"json": "yes"}'
-            readOnly
-        >
-            <div>{_t("Custom Rules")}</div>
-
-            <textarea />
-        </Field>;
+        children = <React.Fragment>
+            <Field
+                element="textarea"
+                label={_t("Custom Rules")}
+                value={JSON.stringify(rules, null, 4)}
+                readOnly
+            />
+        </React.Fragment>;
     }
 
     return <SettingsSection title={_t("Advanced notifications")}>
@@ -105,7 +115,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
     const rawPushRules = useAccountData(cli, "m.push_rules");
 
     const [pushRules, setPushRules] = useState<IPushRulesMap>(null);
-    const [notifyMeWith, setNotifyMeWith] = useState<NotificationSettings>(null);
+    const [notifyMeWith, setNotifyMeWith] = useState<NotificationSetting>(null);
     useEffect(() => {
         if (!rawPushRules) {
             setPushRules(null);
@@ -118,6 +128,19 @@ const NotificationUserSettingsTab2: React.FC = () => {
         });
     }, [rawPushRules]);
 
+    const contentRules = ContentRules.parseContentRules(rawPushRules.getContent());
+    const [keywordsEnabled, setKeywordsEnabled] = useState(contentRules.vectorState !== State.Off);
+
+    // TODO wire up playSoundFor
+    const [playSoundFor, setPlaySoundFor] = useState<NotificationSetting>(NotificationSetting.MentionsKeywordsOnly);
+
+    const onPlaySoundForChange = (value: NotificationSetting) => {
+        setPlaySoundFor(value);
+        // TODO update push rules including all keywords
+        const soundEnabled = compareNotificationSettings(value, NotificationSetting.Never) > 0;
+        ContentRules.updateContentRules(cli, contentRules, keywordsEnabled, soundEnabled); // TODO error handling
+    };
+
     if (!pushRules) return null;
 
     const onNotifyMeWithChange = value => {
@@ -125,7 +148,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
         // TODO update push rules
     };
 
-    const mentionsKeywordsSectionDisabled = notifyMeWith === NotificationSettings.Never;
+    const mentionsKeywordsSectionDisabled = notifyMeWith === NotificationSetting.Never;
 
     return <div className="mx_SettingsTab mx_NotificationsTab">
         <div className="mx_SettingsTab_heading">{_t("Notifications")}</div>
@@ -140,25 +163,35 @@ const NotificationUserSettingsTab2: React.FC = () => {
                 onChange={onNotifyMeWithChange}
                 definitions={[
                     {
-                        value: NotificationSettings.AllMessages,
+                        value: NotificationSetting.AllMessages,
                         label: _t("All messages"),
                     }, {
-                        value: NotificationSettings.DirectMessagesMentionsKeywords,
+                        value: NotificationSetting.DirectMessagesMentionsKeywords,
                         label: _t("Direct messages, mentions & keywords"),
                     }, {
-                        value: NotificationSettings.MentionsKeywordsOnly,
+                        value: NotificationSetting.MentionsKeywordsOnly,
                         label: _t("Mentions & keywords only"),
                     }, {
-                        value: NotificationSettings.Never,
+                        value: NotificationSetting.Never,
                         label: _t("Never"),
                     },
                 ]}
             />
         </SettingsSection>
 
-        <MentionsKeywordsSection disabled={mentionsKeywordsSectionDisabled} />
+        <MentionsKeywordsSection
+            disabled={mentionsKeywordsSectionDisabled}
+            contentRules={contentRules}
+            keywordsEnabled={keywordsEnabled}
+            setKeywordsEnabled={setKeywordsEnabled}
+            soundEnabled={compareNotificationSettings(playSoundFor, NotificationSetting.Never) > 0}
+        />
 
-        <AppearanceSoundsSection notifyMeWith={notifyMeWith} />
+        <AppearanceSoundsSection
+            notifyMeWith={notifyMeWith}
+            playSoundFor={playSoundFor}
+            onChange={onPlaySoundForChange}
+        />
 
         <RoomOverridesSection notifyMeWith={notifyMeWith} pushRules={pushRules} />
 
@@ -166,7 +199,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
 
         <EmailNotificationsSection />
 
-        <AdvancedNotificationsSection rules={[]} />
+        <AdvancedNotificationsSection rules={[...contentRules.externalRules]} />
     </div>;
 };
 

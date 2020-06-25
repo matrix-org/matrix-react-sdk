@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export enum NotificationSettings {
+export enum NotificationSetting {
     AllMessages = "all_messages", // .m.rule.message = notify
     DirectMessagesMentionsKeywords = "dm_mentions_keywords", // .m.rule.message = mark_unread. This is the new default.
     MentionsKeywordsOnly = "mentions_keywords", // .m.rule.message = mark_unread; .m.rule.room_one_to_one = mark_unread
@@ -22,13 +22,13 @@ export enum NotificationSettings {
 }
 
 const enumOrder = {
-    [NotificationSettings.Never]: 0,
-    [NotificationSettings.MentionsKeywordsOnly]: 1,
-    [NotificationSettings.DirectMessagesMentionsKeywords]: 2,
-    [NotificationSettings.AllMessages]: 3,
+    [NotificationSetting.Never]: 0,
+    [NotificationSetting.MentionsKeywordsOnly]: 1,
+    [NotificationSetting.DirectMessagesMentionsKeywords]: 2,
+    [NotificationSetting.AllMessages]: 3,
 };
 
-export const compareNotificationSettings = (a: NotificationSettings, b: NotificationSettings): number => {
+export const compareNotificationSettings = (a: NotificationSetting, b: NotificationSetting): number => {
     return enumOrder[a] - enumOrder[b];
 };
 
@@ -38,7 +38,7 @@ export interface ISoundTweak {
 }
 export interface IHighlightTweak {
     set_tweak: "highlight";
-    value: boolean;
+    value?: boolean;
 }
 
 export type Tweak = ISoundTweak | IHighlightTweak;
@@ -99,9 +99,22 @@ export interface IPushRule {
     enabled: boolean;
     rule_id: RuleIds | string;
     actions: Action[];
-    conditions: Condition[];
     default: boolean;
+    conditions?: Condition[]; // only applicable to `underride` and `override` rules
+    pattern?: string; // only applicable to `content` rules
+}
+
+// push rule extended with kind, used by ContentRules
+export interface IExtendedPushRule extends IPushRule {
     kind: Kind;
+}
+
+export interface IPushRuleSet {
+    override: IPushRule[];
+    content: IPushRule[];
+    room: IPushRule[];
+    sender: IPushRule[];
+    underride: IPushRule[];
 }
 
 export interface IPushRulesMap {

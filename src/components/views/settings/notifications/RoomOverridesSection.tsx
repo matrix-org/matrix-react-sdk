@@ -19,7 +19,7 @@ import {MatrixClient} from "matrix-js-sdk/src/client";
 
 import SettingsSection from "../SettingsSection";
 import {_t} from "../../../../languageHandler";
-import {IPushRule, IPushRulesMap, NotificationSettings} from "../../../../notifications/types";
+import {IPushRule, IPushRulesMap, NotificationSetting} from "../../../../notifications/types";
 import AccessibleButton from "../../elements/AccessibleButton";
 import QuestionDialog from "../../dialogs/QuestionDialog";
 import Modal from "../../../../Modal";
@@ -28,24 +28,24 @@ import RoomAvatar from "../../avatars/RoomAvatar";
 import {ContextMenu, ContextMenuButton, MenuItem, useContextMenu} from "../../../structures/ContextMenu";
 
 interface IProps {
-    notifyMeWith: NotificationSettings;
+    notifyMeWith: NotificationSetting;
     pushRules: IPushRulesMap;
 }
 
 interface IRoomOverrideTileProps {
-    defaultSetting: NotificationSettings;
+    defaultSetting: NotificationSetting;
     roomId: string;
     rule: IPushRule;
 }
 
-const mapNotificationLevelToString = (level: NotificationSettings): string => {
+const mapNotificationLevelToString = (level: NotificationSetting): string => {
     switch (level) {
-        case NotificationSettings.AllMessages:
+        case NotificationSetting.AllMessages:
             return _t("All Messages");
-        case NotificationSettings.DirectMessagesMentionsKeywords:
-        case NotificationSettings.MentionsKeywordsOnly:
+        case NotificationSetting.DirectMessagesMentionsKeywords:
+        case NotificationSetting.MentionsKeywordsOnly:
             return _t("Mentions & Keywords");
-        case NotificationSettings.Never:
+        case NotificationSetting.Never:
         default:
             return _t("None");
     }
@@ -63,11 +63,11 @@ const RoomOverrideTile: React.FC<IRoomOverrideTileProps> = ({defaultSetting, roo
     const cli = useContext<MatrixClient>(MatrixClientContext);
     const room = cli.getRoom(roomId);
 
-    const level = NotificationSettings.MentionsKeywordsOnly; // TODO
+    const level = NotificationSetting.MentionsKeywordsOnly; // TODO
     let yOffset = 0;
-    if (level === NotificationSettings.MentionsKeywordsOnly) {
+    if (level === NotificationSetting.MentionsKeywordsOnly) {
         yOffset = -32;
-    } else if (level === NotificationSettings.Never) {
+    } else if (level === NotificationSetting.Never) {
         yOffset = -64;
     }
 
@@ -81,29 +81,29 @@ const RoomOverrideTile: React.FC<IRoomOverrideTileProps> = ({defaultSetting, roo
                 <MenuItem
                     kind="link"
                     className="mx_NotificationsTab_RoomOverrideTile_ContextMenu_allMessages"
-                    aria-selected={level === NotificationSettings.AllMessages}
+                    aria-selected={level === NotificationSetting.AllMessages}
                     onClick={closeMenu}
                 >
-                    {mapNotificationLevelToString(NotificationSettings.AllMessages)}
-                    {defaultSetting === NotificationSettings.AllMessages ? defaultTag : undefined}
+                    {mapNotificationLevelToString(NotificationSetting.AllMessages)}
+                    {defaultSetting === NotificationSetting.AllMessages ? defaultTag : undefined}
                 </MenuItem>
                 <MenuItem
                     kind="link"
                     className="mx_NotificationsTab_RoomOverrideTile_ContextMenu_mentionsKeywords"
-                    aria-selected={level === NotificationSettings.MentionsKeywordsOnly}
+                    aria-selected={level === NotificationSetting.MentionsKeywordsOnly}
                     onClick={closeMenu}
                 >
-                    {mapNotificationLevelToString(NotificationSettings.MentionsKeywordsOnly)}
-                    {defaultSetting === NotificationSettings.MentionsKeywordsOnly ? defaultTag : undefined}
+                    {mapNotificationLevelToString(NotificationSetting.MentionsKeywordsOnly)}
+                    {defaultSetting === NotificationSetting.MentionsKeywordsOnly ? defaultTag : undefined}
                 </MenuItem>
                 <MenuItem
                     kind="link"
                     className="mx_NotificationsTab_RoomOverrideTile_ContextMenu_none"
-                    aria-selected={level === NotificationSettings.Never}
+                    aria-selected={level === NotificationSetting.Never}
                     onClick={closeMenu}
                 >
-                    {mapNotificationLevelToString(NotificationSettings.Never)}
-                    {defaultSetting === NotificationSettings.Never ? defaultTag : undefined}
+                    {mapNotificationLevelToString(NotificationSetting.Never)}
+                    {defaultSetting === NotificationSetting.Never ? defaultTag : undefined}
                 </MenuItem>
             </div>
         </ContextMenu>;
@@ -142,7 +142,7 @@ const onResetAllRoomsClick = () => {
 
 const RoomOverridesSection: React.FC<IProps> = ({notifyMeWith, pushRules}) => {
     let description;
-    if (notifyMeWith === NotificationSettings.Never) {
+    if (notifyMeWith === NotificationSetting.Never) {
         description = <div className="mx_SettingsTab_errorText">
             {_t("Account notifications are set to “Never” and changes below will not apply.")}
         </div>;
