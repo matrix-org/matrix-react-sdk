@@ -17,6 +17,12 @@ limitations under the License.
 
 import {Action, Actions} from "./types";
 
+interface IEncodedActions {
+    notify: boolean;
+    sound?: string;
+    highlight?: boolean;
+}
+
 export class NotificationUtils {
     // Encodes a dictionary of {
     //   "notify": true/false,
@@ -24,7 +30,7 @@ export class NotificationUtils {
     //   "highlight: true/false,
     // }
     // to a list of push actions.
-    static encodeActions(action: { notify: boolean; sound?: string; highlight?: boolean }) {
+    static encodeActions(action: IEncodedActions) {
         const notify = action.notify;
         const sound = action.sound;
         const highlight = action.highlight;
@@ -50,7 +56,7 @@ export class NotificationUtils {
     //   "highlight: true/false,
     // }
     // If the actions couldn't be decoded then returns null.
-    static decodeActions(actions: Action[]) {
+    static decodeActions(actions: Action[]): IEncodedActions {
         let notify = false;
         let sound = null;
         let highlight = false;
@@ -81,11 +87,7 @@ export class NotificationUtils {
             highlight = true;
         }
 
-        const result = {
-            notify,
-            highlight,
-            sound: undefined,
-        };
+        const result: IEncodedActions = { notify, highlight };
         if (sound !== null) {
             result.sound = sound;
         }

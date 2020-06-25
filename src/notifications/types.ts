@@ -104,7 +104,7 @@ export interface IPushRule {
     pattern?: string; // only applicable to `content` rules
 }
 
-// push rule extended with kind, used by ContentRules
+// push rule extended with kind, used by ContentRules and js-sdk's pushprocessor
 export interface IExtendedPushRule extends IPushRule {
     kind: Kind;
 }

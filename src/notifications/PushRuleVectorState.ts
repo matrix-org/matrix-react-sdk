@@ -30,7 +30,7 @@ export enum State {
 }
 
 export class PushRuleVectorState {
-    // Backwards compatibility (things should probably be using .states instead)
+    // Backwards compatibility (things should probably be using the enum above instead)
     static OFF = State.Off;
     static ON = State.On;
     static LOUD = State.Loud;
@@ -62,7 +62,7 @@ export class PushRuleVectorState {
      * category or in PushRuleVectorState.LOUD, regardless of its enabled
      * state. Returns null if it does not match these categories.
      */
-    static contentRuleVectorStateKind(rule: IPushRule) {
+    static contentRuleVectorStateKind(rule: IPushRule): State {
         const decoded = NotificationUtils.decodeActions(rule.actions);
 
         if (!decoded) {
