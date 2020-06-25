@@ -123,7 +123,6 @@ export interface IRuleSets {
 
 export interface IPushRulesMap {
     override: Record<string, IPushRule>;
-    content: Record<string, IPushRule>;
     room: Record<string, IPushRule>;
     sender: Record<string, IPushRule>;
     underride: Record<string, IPushRule>;

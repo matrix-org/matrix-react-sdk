@@ -32,7 +32,7 @@ import MentionsKeywordsSection from "../../notifications/MentionsKeywordsSection
 import {
     Actions,
     compareNotificationSettings, IExtendedPushRule,
-    IPushRule,
+    IPushRule, IPushRuleSet,
     IPushRulesMap,
     NotificationSetting,
     RuleIds,
@@ -49,9 +49,8 @@ const mapRules = (rules: IPushRule[]): Record<string, IPushRule> => {
     return map;
 };
 
-const mapRuleset = (pushRules): IPushRulesMap => ({
+const mapRuleset = (pushRules: IPushRuleSet): IPushRulesMap => ({
     override: mapRules(pushRules.override),
-    content: mapRules(pushRules.content),
     room: mapRules(pushRules.room),
     sender: mapRules(pushRules.sender),
     underride: mapRules(pushRules.underride),

@@ -141,6 +141,10 @@ const onResetAllRoomsClick = () => {
 };
 
 const RoomOverridesSection: React.FC<IProps> = ({notifyMeWith, pushRules}) => {
+    const rooms = [];
+    // skip section if there are no room overrides
+    if (rooms.length < 1) return null;
+
     let description;
     if (notifyMeWith === NotificationSetting.Never) {
         description = <div className="mx_SettingsTab_errorText">
@@ -156,9 +160,7 @@ const RoomOverridesSection: React.FC<IProps> = ({notifyMeWith, pushRules}) => {
         {description}
 
         <div>
-            <RoomOverrideTile defaultSetting={notifyMeWith} roomId="!GNjEZxQKWMEgzEnuNa:matrix.org" rule={null} />
-            <RoomOverrideTile defaultSetting={notifyMeWith} roomId="!GNjEZxQKWMEgzEnuNa:matrix.org" rule={null} />
-            <RoomOverrideTile defaultSetting={notifyMeWith} roomId="!GNjEZxQKWMEgzEnuNa:matrix.org" rule={null} />
+            {/*<RoomOverrideTile defaultSetting={notifyMeWith} roomId="!GNjEZxQKWMEgzEnuNa:matrix.org" rule={null} />*/}
         </div>
 
         <AccessibleButton kind="link" onClick={onResetAllRoomsClick}>
