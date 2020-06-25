@@ -14,25 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
+import classNames from "classnames";
+
 import StyledRadioButton from "./StyledRadioButton";
 
-interface IRadioGroupDefinition<T extends string> {
+interface IDefinition<T extends string> {
     value: T;
-    label: React.ReactChild;
-    microCopy?: string; // translated
+    className?: string;
     disabled?: boolean;
+    label: React.ReactChild;
+    description?: React.ReactChild;
 }
 
-interface IStyledRadioGroupProps<T extends string> {
+interface IProps<T extends string> {
     name: string;
-    definitions: IRadioGroupDefinition<T>[];
-    value: T;
-    onChange(newValue: T): void;
+    className?: string;
+    definitions: IDefinition<T>[];
+    value?: T; // if not provided no options will be selected
+    onChange(newValue: T);
 }
 
-// TODO allow disabling microCopy
-function StyledRadioGroup<T extends string>({name, definitions, value, onChange}: IStyledRadioGroupProps<T>) {
+function StyledRadioGroup<T extends string>({name, definitions, value, className, onChange}: IProps<T>) {
     const _onChange = e => {
         onChange(e.target.value);
     };
@@ -41,6 +44,7 @@ function StyledRadioGroup<T extends string>({name, definitions, value, onChange}
         {definitions.map(d => <React.Fragment>
             <StyledRadioButton
                 key={d.value}
+                className={classNames(className, d.className)}
                 onChange={_onChange}
                 checked={d.value === value}
                 name={name}
@@ -49,9 +53,7 @@ function StyledRadioGroup<T extends string>({name, definitions, value, onChange}
             >
                 {d.label}
             </StyledRadioButton>
-            {d.microCopy && <div className="mx_Checkbox_microCopy">
-                {d.microCopy}
-            </div>}
+            {d.description}
         </React.Fragment>)}
     </React.Fragment>;
 }
