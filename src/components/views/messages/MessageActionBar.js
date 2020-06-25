@@ -25,8 +25,9 @@ import dis from '../../../dispatcher/dispatcher';
 import {aboveLeftOf, ContextMenu, ContextMenuButton, useContextMenu} from '../../structures/ContextMenu';
 import { isContentActionable, canEditContent } from '../../../utils/EventUtils';
 import RoomContext from "../../../contexts/RoomContext";
+import {Key} from '../../../Keyboard';
 
-const OptionsButton = ({mxEvent, getTile, getReplyThread, permalinkCreator, onFocusChange}) => {
+const OptionsButton = ({mxEvent, getTile, getReplyThread, permalinkCreator, onFocusChange, tabIndex}) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
     useEffect(() => {
         onFocusChange(menuDisplayed);
@@ -58,13 +59,14 @@ const OptionsButton = ({mxEvent, getTile, getReplyThread, permalinkCreator, onFo
             onClick={openMenu}
             isExpanded={menuDisplayed}
             inputRef={button}
+            tabIndex={tabIndex}
         />
 
         { contextMenu }
     </React.Fragment>;
 };
 
-const ReactButton = ({mxEvent, reactions, onFocusChange}) => {
+const ReactButton = ({mxEvent, reactions, onFocusChange, tabIndex}) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
     useEffect(() => {
         onFocusChange(menuDisplayed);
@@ -86,12 +88,17 @@ const ReactButton = ({mxEvent, reactions, onFocusChange}) => {
             onClick={openMenu}
             isExpanded={menuDisplayed}
             inputRef={button}
+            tabIndex={tabIndex}
         />
 
         { contextMenu }
     </React.Fragment>;
 };
 
+// This component implements the Toolbar design pattern from the WAI-ARIA
+// Authoring Practices guidelines.
+//
+// https://www.w3.org/TR/wai-aria-practices-1.1/#toolbar
 export default class MessageActionBar extends React.PureComponent {
     static propTypes = {
         mxEvent: PropTypes.object.isRequired,
@@ -105,14 +112,24 @@ export default class MessageActionBar extends React.PureComponent {
 
     static contextType = RoomContext;
 
+    constructor(props) {
+        super(props);
+        this.elRef = React.createRef();
+        this.state = { focused: "options", buttonNames: [] };
+    }
+
     componentDidMount() {
         this.props.mxEvent.on("Event.decrypted", this.onDecrypted);
         this.props.mxEvent.on("Event.beforeRedaction", this.onBeforeRedaction);
+
+        this.onKeyDown = this.onKeyDown.bind(this);
+        this.elRef.current.addEventListener("keydown", this.onKeyDown, true);
     }
 
     componentWillUnmount() {
         this.props.mxEvent.removeListener("Event.decrypted", this.onDecrypted);
         this.props.mxEvent.removeListener("Event.beforeRedaction", this.onBeforeRedaction);
+        this.elRef.current.removeEventListener("keydown", this.onKeyDown, true);
     }
 
     onDecrypted = () => {
@@ -133,6 +150,37 @@ export default class MessageActionBar extends React.PureComponent {
         this.props.onFocusChange(focused);
     };
 
+    onKeyDown = (ev) => {
+        const {key} = ev;
+        const buttonNames = this.state.buttonNames;
+        const current = buttonNames.indexOf(this.state.focused);
+        let newIndex = null;
+
+        if (key === Key.ARROW_UP || key === Key.ARROW_DOWN) {
+            ev.target.click();
+        } else if (key === Key.ARROW_RIGHT) {
+            newIndex = (current + 1) % buttonNames.length;
+        } else if (key === Key.ARROW_LEFT) {
+            newIndex = current ? current - 1 : buttonNames.length - 1;
+        } else if (key === Key.HOME) {
+            newIndex = 0;
+        } else if (key === Key.END) {
+            newIndex = buttonNames.length - 1;
+        } else {
+            return;
+        }
+
+        if (newIndex !== null) {
+            this.setState({ focused: buttonNames[newIndex] });
+            this.elRef.current.children[newIndex].focus();
+        }
+
+        ev.stopPropagation();
+        ev.preventDefault();
+    };
+
+    tabIndex = (target) => target === this.state.focused ? 0 : -1;
+
     onReplyClick = (ev) => {
         dis.dispatch({
             action: 'reply_to_event',
@@ -149,45 +197,61 @@ export default class MessageActionBar extends React.PureComponent {
 
     render() {
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-
-        let reactButton;
-        let replyButton;
-        let editButton;
+        const buttons = [];
 
         if (isContentActionable(this.props.mxEvent)) {
             if (this.context.canReact) {
-                reactButton = (
-                    <ReactButton mxEvent={this.props.mxEvent} reactions={this.props.reactions} onFocusChange={this.onFocusChange} />
+                buttons.push(
+                    <ReactButton mxEvent={this.props.mxEvent} reactions={this.props.reactions} onFocusChange={this.onFocusChange}
+                                tabIndex={this.tabIndex("react")}
+                                 key="react" />,
                 );
             }
             if (this.context.canReply) {
-                replyButton = <AccessibleButton
-                    className="mx_MessageActionBar_maskButton mx_MessageActionBar_replyButton"
-                    title={_t("Reply")}
-                    onClick={this.onReplyClick}
-                />;
+                buttons.push(
+                    <AccessibleButton
+                        className="mx_MessageActionBar_maskButton mx_MessageActionBar_replyButton"
+                        title={_t("Reply")}
+                        onClick={this.onReplyClick}
+                        tabIndex={this.tabIndex("reply")}
+                        key="reply"
+                    />,
+                );
             }
         }
         if (canEditContent(this.props.mxEvent)) {
-            editButton = <AccessibleButton
-                className="mx_MessageActionBar_maskButton mx_MessageActionBar_editButton"
-                title={_t("Edit")}
-                onClick={this.onEditClick}
-            />;
+            buttons.push(
+                <AccessibleButton
+                    className="mx_MessageActionBar_maskButton mx_MessageActionBar_editButton"
+                    title={_t("Edit")}
+                    onClick={this.onEditClick}
+                    tabIndex={this.tabIndex("edit")}
+                    key="edit"
+                />,
+            );
         }
 
-        // aria-live=off to not have this read out automatically as navigating around timeline, gets repetitive.
-        return <div className="mx_MessageActionBar" role="toolbar" aria-label={_t("Message Actions")} aria-live="off">
-            {reactButton}
-            {replyButton}
-            {editButton}
+        buttons.push(
             <OptionsButton
                 mxEvent={this.props.mxEvent}
                 getReplyThread={this.props.getReplyThread}
                 getTile={this.props.getTile}
                 permalinkCreator={this.props.permalinkCreator}
                 onFocusChange={this.onFocusChange}
-            />
+                tabIndex={this.tabIndex("options")}
+                key="options"
+            />,
+        );
+
+        const newButtonNames = buttons.map((button) => button.key);
+        if (this.state.buttonNames.join() !== newButtonNames.join()) {
+            this.setState({buttonNames: newButtonNames});
+        }
+
+        // aria-live=off to not have this read out automatically as navigating around timeline, gets repetitive.
+        return <div className="mx_MessageActionBar" role="toolbar" aria-label={_t("Message Actions")} aria-live="off"
+            ref={this.elRef}>
+            {buttons}
         </div>;
     }
 }
