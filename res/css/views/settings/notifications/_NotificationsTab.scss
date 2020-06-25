@@ -196,52 +196,35 @@ $textareaWidth: 400px;
             display: inline;
 
             top: 8px;
-            border-radius: 50%;
-            background-color: $input-darker-bg-color;
             width: 16px;
             height: 16px;
-
-            &::before {
-                content: "";
-                position: absolute;
-                mask-repeat: no-repeat;
-                mask-position: center;
-                mask-size: contain;
-                background-color: $primary-fg-color;
-            }
-        }
-
-        .mx_NotificationsTab_CustomSoundTile_play {
-            &::before {
-                top: 2px;
-                left: 2px;
-                width: 12px;
-                height: 12px;
-                mask-image: url('$(res)/img/feather-customised/globe.svg'); // TODO
-            }
         }
 
         .mx_NotificationsTab_CustomSoundTile_stop {
-            &::before {
-                top: 2px;
-                left: 2px;
-                width: 12px;
-                height: 12px;
-                mask-image: url('$(res)/img/feather-customised/group.svg'); // TODO
+            svg {
+                position: absolute;
+                top: -2px;
+                left: -2px;
+            }
+
+            circle {
+                stroke-dasharray: 57;
+                stroke-dashoffset: 57;
+                stroke: $accent-color;
+                animation-name: stroke;
+                animation-timing-function: linear;
+            }
+
+            @keyframes stroke {
+                to {
+                    stroke-dashoffset: 0;
+                }
             }
         }
 
         .mx_NotificationsTab_CustomSoundTile_remove {
             right: 10px;
             display: none;
-
-            &::before {
-                top: 2px;
-                left: 2px;
-                width: 12px;
-                height: 12px;
-                mask-image: url('$(res)/img/feather-customised/x.svg');
-            }
         }
 
         span {

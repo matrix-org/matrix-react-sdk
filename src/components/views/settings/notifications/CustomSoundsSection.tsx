@@ -46,21 +46,46 @@ const CustomSoundTile: React.FC<ICustomSoundTileProps> = ({sound, onRemove}) => 
     const audioRef = useRef<HTMLAudioElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
 
-    let buttonOnClick;
-    let buttonClassName;
+    let button;
     if (isPlaying) {
-        buttonOnClick = () => {
+        const onClick = () => {
             audioRef.current.pause();
             audioRef.current.currentTime = 0;
             setIsPlaying(false);
         };
-        buttonClassName = "mx_NotificationsTab_CustomSoundTile_stop";
+        const time = audioRef.current.duration;
+        button = <AccessibleButton className="mx_NotificationsTab_CustomSoundTile_stop" onClick={onClick}>
+            <svg height="20" width="20">
+                <circle
+                    cx="-10"
+                    cy="10"
+                    r="9"
+                    stroke="#000000"
+                    strokeWidth="1.5"
+                    fillOpacity="0"
+                    style={{animationDuration: `${time}s`}}
+                    transform="rotate(270)"
+                />
+            </svg>
+            <img
+                width="16"
+                height="16"
+                src={require("../../../../../res/img/btn-stop.svg")}
+                alt={_t("Stop")} />
+        </AccessibleButton>;
     } else {
-        buttonOnClick = () => {
+        const onClick = () => {
             audioRef.current.play();
             setIsPlaying(true);
         };
-        buttonClassName = "mx_NotificationsTab_CustomSoundTile_play";
+        button = <AccessibleButton
+            onClick={onClick}
+            element="img"
+            width="16"
+            height="16"
+            src={require("../../../../../res/img/btn-play.svg")}
+            alt={_t("Play")}
+        />;
     }
 
     const onEnded = () => {
@@ -68,9 +93,17 @@ const CustomSoundTile: React.FC<ICustomSoundTileProps> = ({sound, onRemove}) => 
     };
 
     return <div className="mx_NotificationsTab_CustomSoundTile">
-        <AccessibleButton className={buttonClassName} onClick={buttonOnClick} />
+        {button}
         <span>{sound.name}</span>
-        <AccessibleButton className="mx_NotificationsTab_CustomSoundTile_remove" onClick={onRemove} />
+        <AccessibleButton
+            className="mx_NotificationsTab_CustomSoundTile_remove"
+            onClick={onRemove}
+            element="img"
+            width="16"
+            height="16"
+            src={require("../../../../../res/img/btn-x.svg")}
+            alt={_t("Remove")}
+        />
         <audio ref={audioRef} src={sound.url} preload="auto" onEnded={onEnded} />
     </div>;
 };
