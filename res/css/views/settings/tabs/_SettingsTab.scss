@@ -45,6 +45,37 @@ limitations under the License.
     font-size: 14px;
 }
 
+// This svg is a circle with a hole cut out of the middle but we want it to be contrasty so fill it white
+.mx_SettingsTab_errorTextIcon {
+    position: relative;
+    margin-left: 24px;
+
+    // white backdrop for the `!` bit of the svg
+    &::before {
+        content: '';
+        position: absolute;
+        height: 14px;
+        width: 14px;
+        left: -23px;
+        top: 1px;
+        background-color: #ffffff;
+        border-radius: 50%;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        height: 16px;
+        width: 16px;
+        left: -24px;
+        top: 0;
+        background-color: $notice-primary-color;
+        mask-repeat: no-repeat;
+        mask-size: contain;
+        mask-image: url('$(res)/img/warning-badge.svg');
+    }
+}
+
 .mx_SettingsTab_subsectionText {
     color: $settings-subsection-fg-color;
     font-size: $font-14px;

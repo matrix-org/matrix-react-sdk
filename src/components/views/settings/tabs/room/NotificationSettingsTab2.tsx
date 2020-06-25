@@ -55,7 +55,6 @@ const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
     const defaultTag = ` (${_t("Default")})`;
 
     let description;
-    // TODO fix errorTextIcon class to actually show an icon
     if (defaultSetting === NotificationSetting.Never) {
         description = <div className="mx_SettingsTab_errorText mx_SettingsTab_errorTextIcon">
             {_t("Account notifications are set to “Never” and settings below will not apply.")}
