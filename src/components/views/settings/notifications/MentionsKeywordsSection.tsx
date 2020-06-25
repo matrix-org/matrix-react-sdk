@@ -174,12 +174,16 @@ const MentionsKeywordsSection: React.FC<IProps> = ({disabled, contentRules, keyw
         ContentRules.updateContentRules(cli, contentRules, e.target.checked, soundEnabled).catch(onError);
     };
 
+    // TODO wire up these checkboxes
     return <SettingsSection title={_t("Mentions & Keywords")} className="mx_NotificationsTab_mentionsKeywords">
         <StyledCheckbox disabled={disabled}>
             {_t("Notify when someone mentions using your name")}
         </StyledCheckbox>
         <StyledCheckbox disabled={disabled}>
             {_t("Notify when someone mentions using your username")}
+        </StyledCheckbox>
+        <StyledCheckbox>
+            {_t("Notify when someone mentions using @room")}
         </StyledCheckbox>
         <StyledCheckbox disabled={disabled} checked={keywordsEnabled} onChange={onKeywordsEnabledChange}>
             {_t("Notify when someone uses a keyword")}

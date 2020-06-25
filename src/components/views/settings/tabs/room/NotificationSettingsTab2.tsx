@@ -104,10 +104,6 @@ const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
         </SettingsSection>
 
         <SettingsSection title={_t("Appearance & Sounds")}>
-            <StyledCheckbox>
-                {_t("Notify when someone mentions using @room")}
-            </StyledCheckbox>
-
             <AlwaysShowBadgeCountsOption roomId={roomId} />
 
             <br />
