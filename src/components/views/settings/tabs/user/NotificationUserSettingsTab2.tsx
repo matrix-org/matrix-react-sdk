@@ -20,7 +20,7 @@ import MatrixClient from "matrix-js-sdk/src/client";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import {_t} from "../../../../../languageHandler";
 import SettingsSection from "../../SettingsSection";
-import {ContentRules, portRulesToNewAPI} from "../../../../../notifications";
+import {ContentRules} from "../../../../../notifications";
 import Field from "../../../elements/Field";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import {useStateToggle} from "../../../../../hooks/useStateToggle";
@@ -121,11 +121,10 @@ const NotificationUserSettingsTab2: React.FC = () => {
             setPushRules(null);
             return;
         }
-        Promise.resolve(rawPushRules.getContent()).then(portRulesToNewAPI).then(rules => {
-            const ruleMap = mapRuleset(rules.global);
-            setNotifyMeWith(calculateNotifyMeWith(ruleMap));
-            setPushRules(ruleMap);
-        });
+        const rules = rawPushRules.getContent();
+        const ruleMap = mapRuleset(rules.global);
+        setNotifyMeWith(calculateNotifyMeWith(ruleMap));
+        setPushRules(ruleMap);
     }, [rawPushRules]);
 
     const contentRules = ContentRules.parseContentRules(rawPushRules.getContent());

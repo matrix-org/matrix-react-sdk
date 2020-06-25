@@ -22,10 +22,10 @@ import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import SettingsStore, {SettingLevel} from '../../../settings/SettingsStore';
 import Modal from '../../../Modal';
 import {
+    NotificationUtils,
     VectorPushRulesDefinitions,
     PushRuleVectorState,
     ContentRules,
-    portRulesToNewAPI,
 } from '../../../notifications';
 import SdkConfig from "../../../SdkConfig";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
@@ -36,6 +36,31 @@ import AccessibleButton from "../elements/AccessibleButton";
 
 // TODO: this component also does a lot of direct poking into this.state, which
 // is VERY NAUGHTY.
+
+/**
+ * Rules that Vector used to set in order to override the actions of default rules.
+ * These are used to port peoples existing overrides to match the current API.
+ * These can be removed and forgotten once everyone has moved to the new client.
+ */
+const LEGACY_RULES = {
+    "im.vector.rule.contains_display_name": ".m.rule.contains_display_name",
+    "im.vector.rule.room_one_to_one": ".m.rule.room_one_to_one",
+    "im.vector.rule.room_message": ".m.rule.message",
+    "im.vector.rule.invite_for_me": ".m.rule.invite_for_me",
+    "im.vector.rule.call": ".m.rule.call",
+    "im.vector.rule.notices": ".m.rule.suppress_notices",
+};
+
+function portLegacyActions(actions) {
+    const decoded = NotificationUtils.decodeActions(actions);
+    if (decoded !== null) {
+        return NotificationUtils.encodeActions(decoded);
+    } else {
+        // We don't recognise one of the actions here, so we don't try to
+        // canonicalise them.
+        return actions;
+    }
+}
 
 export default createReactClass({
     displayName: 'Notifications',
@@ -421,9 +446,46 @@ export default createReactClass({
         );
     },
 
+    // Check if any legacy im.vector rules need to be ported to the new API
+    // for overriding the actions of default rules.
+    _portRulesToNewAPI: function(rulesets) {
+        const needsUpdate = [];
+        const cli = MatrixClientPeg.get();
+
+        for (const kind in rulesets.global) {
+            const ruleset = rulesets.global[kind];
+            for (let i = 0; i < ruleset.length; ++i) {
+                const rule = ruleset[i];
+                if (rule.rule_id in LEGACY_RULES) {
+                    console.log("Porting legacy rule", rule);
+                    needsUpdate.push( function(kind, rule) {
+                        return cli.setPushRuleActions(
+                            'global', kind, LEGACY_RULES[rule.rule_id], portLegacyActions(rule.actions),
+                        ).then(() =>
+                            cli.deletePushRule('global', kind, rule.rule_id),
+                        ).catch( (e) => {
+                            console.warn(`Error when porting legacy rule: ${e}`);
+                        });
+                    }(kind, rule));
+                }
+            }
+        }
+
+        if (needsUpdate.length > 0) {
+            // If some of the rules need to be ported then wait for the porting
+            // to happen and then fetch the rules again.
+            return Promise.all(needsUpdate).then(() =>
+                cli.getPushRules(),
+            );
+        } else {
+            // Otherwise return the rules that we already have.
+            return rulesets;
+        }
+    },
+
     _refreshFromServer: function() {
         const self = this;
-        const pushRulesPromise = MatrixClientPeg.get().getPushRules().then(portRulesToNewAPI).then(function(rulesets) {
+        const pushRulesPromise = MatrixClientPeg.get().getPushRules().then(self._portRulesToNewAPI).then(function(rulesets) {
             /// XXX seriously? wtf is this?
             MatrixClientPeg.get().pushRules = rulesets;
 
@@ -691,7 +753,7 @@ export default createReactClass({
         if (this.state.masterPushRule) {
             masterPushRuleDiv = <LabelledToggleSwitch value={!this.state.masterPushRule.enabled}
                                                       onChange={this.onEnableNotificationsChange}
-                                                      label={_t('Enable notifications for this account')} />;
+                                                      label={_t('Enable notifications for this account')}/>;
         }
 
         let clearNotificationsButton;
