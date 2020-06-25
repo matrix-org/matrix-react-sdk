@@ -208,8 +208,8 @@ $textareaWidth: 400px;
             }
 
             circle {
-                stroke-dasharray: 57;
-                stroke-dashoffset: 57;
+                stroke-dasharray: 57; // ceil(Pi * diameter)
+                stroke-dashoffset: 57; // ceil(Pi * diameter)
                 stroke: $accent-color;
                 animation-name: stroke;
                 animation-timing-function: linear;
