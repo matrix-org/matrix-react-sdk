@@ -117,6 +117,10 @@ export interface IPushRuleSet {
     underride: IPushRule[];
 }
 
+export interface IRuleSets {
+    global: IPushRuleSet;
+}
+
 export interface IPushRulesMap {
     override: Record<string, IPushRule>;
     content: Record<string, IPushRule>;
