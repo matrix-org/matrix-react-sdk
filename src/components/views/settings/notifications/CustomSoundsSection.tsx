@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useState, useRef, useEffect, ChangeEvent} from "react";
+import React, {useState, useRef, useEffect, ChangeEvent, useContext} from "react";
+import {MatrixClient} from "matrix-js-sdk/src/client";
 
 import {_t} from "../../../../languageHandler";
 import AccessibleButton from "../../elements/AccessibleButton";
@@ -22,7 +23,8 @@ import SettingsSection from "../SettingsSection";
 import SettingsStore, {SettingLevel} from "../../../../settings/SettingsStore";
 import Notifier from "../../../../Notifier";
 import {MatrixClientPeg} from "../../../../MatrixClientPeg";
-import Spinner from "../../elements/Spinner";
+import MatrixClientContext from "../../../../contexts/MatrixClientContext";
+import ProgressBar from "../../elements/ProgressBar";
 
 interface IProps {
     roomId: string;
@@ -108,16 +110,25 @@ const CustomSoundTile: React.FC<ICustomSoundTileProps> = ({sound, onRemove}) => 
     </div>;
 };
 
+interface IProgess {
+    total: number;
+    loaded: number;
+}
+
 const CustomSoundSection: React.FC<IProps> = ({roomId}) => {
-    const [busy, setBusy] = useState(false);
+    const cli = useContext<MatrixClient>(MatrixClientContext);
     const soundUploadRef = useRef<HTMLInputElement>(null);
+
+    const [progress, setProgress] = useState<IProgess>(null);
     const [customSound, setCustomSound] = useState<ICustomSound>(Notifier.getSoundForRoom(roomId));
+
     useEffect(() => {
         setCustomSound(Notifier.getSoundForRoom(roomId));
     }, [roomId]);
 
     const onSoundUploadChange = async (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files[0];
+        if (!file) return;
 
         let type = file.type;
         if (type === "video/ogg") {
@@ -126,9 +137,15 @@ const CustomSoundSection: React.FC<IProps> = ({roomId}) => {
             type = "audio/ogg";
         }
 
-        setBusy(true);
-        const url = await MatrixClientPeg.get().uploadContent(file, {type});
-        setBusy(false);
+        setProgress({
+            total: 100, // unknown at this time
+            loaded: 0,
+        });
+        const url = await cli.uploadContent(file, {
+            type,
+            progressHandler: setProgress,
+        });
+        setProgress(null);
 
         const sound = {
             name: file.name,
@@ -142,10 +159,14 @@ const CustomSoundSection: React.FC<IProps> = ({roomId}) => {
     };
 
     let customSoundSection;
-    if (busy) {
-        customSoundSection = <Spinner />;
+    if (progress) {
+        customSoundSection = <React.Fragment>
+            {_t("Uploading...")}
+            <ProgressBar value={progress.loaded} max={progress.total} />
+        </React.Fragment>;
     } else if (customSound) {
         const clearSound = () => {
+            soundUploadRef.current.value = ""; // clear the upload input so user can re-upload same file if they wish
             SettingsStore.setValue(CUSTOM_NOTIFICATION_SOUND_KEY, roomId, SettingLevel.ROOM_ACCOUNT, null);
             setCustomSound(null);
         };
