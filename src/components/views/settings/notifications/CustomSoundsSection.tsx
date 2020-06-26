@@ -160,10 +160,10 @@ const CustomSoundSection: React.FC<IProps> = ({roomId}) => {
 
     let customSoundSection;
     if (progress) {
-        customSoundSection = <React.Fragment>
+        customSoundSection = <div className="mx_NotificationsTab_CustomSoundUpload">
             {_t("Uploading...")}
             <ProgressBar value={progress.loaded} max={progress.total} />
-        </React.Fragment>;
+        </div>;
     } else if (customSound) {
         const clearSound = () => {
             soundUploadRef.current.value = ""; // clear the upload input so user can re-upload same file if they wish
@@ -175,9 +175,11 @@ const CustomSoundSection: React.FC<IProps> = ({roomId}) => {
         const onClick = () => {
             soundUploadRef.current.click();
         };
-        customSoundSection = <AccessibleButton kind="link" onClick={onClick}>
-            {_t("Upload a custom sound")}
-        </AccessibleButton>;
+        customSoundSection = (
+            <AccessibleButton kind="link" onClick={onClick} className="mx_NotificationsTab_CustomSoundUpload">
+                {_t("Upload a custom sound")}
+            </AccessibleButton>
+        );
     }
 
     return <SettingsSection title={_t("Custom sounds")}>
