@@ -138,7 +138,7 @@ const CustomSoundSection: React.FC<IProps> = ({roomId}) => {
         }
 
         setProgress({
-            total: 100, // unknown at this time
+            total: file.size,
             loaded: 0,
         });
         const url = await cli.uploadContent(file, {
