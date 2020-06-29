@@ -36,6 +36,7 @@ import { ContextMenu, ContextMenuButton } from "../../structures/ContextMenu";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import { MessagePreviewStore } from "../../../stores/room-list/MessagePreviewStore";
 import RoomTileIcon from "./RoomTileIcon";
+import { getRoomNotifsState, MUTE } from "../../../RoomNotifs";
 
 /*******************************************************************
  *   CAUTION                                                       *
@@ -280,10 +281,16 @@ export default class RoomTile2 extends React.Component<IProps, IState> {
             "mx_RoomTile2_nameHasUnreadEvents": this.state.notificationState.color >= NotificationColor.Bold,
         });
 
+        let mutedIcon;
+        if (getRoomNotifsState(this.props.room.roomId) === MUTE) {
+            mutedIcon = <div className="mx_RoomTile2_name_mutedIcon" />;
+        }
+
         let nameContainer = (
             <div className="mx_RoomTile2_nameContainer">
-                <div title={name} className={nameClasses} tabIndex={-1} dir="auto">
-                    {name}
+                <div title={name} className={nameClasses} tabIndex={-1}>
+                    <span dir="auto">{name}</span>
+                    {mutedIcon}
                 </div>
                 {messagePreview}
             </div>

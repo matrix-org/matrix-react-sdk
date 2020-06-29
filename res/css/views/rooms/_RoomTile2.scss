@@ -64,6 +64,13 @@ limitations under the License.
         .mx_RoomTile2_name {
             font-size: $font-14px;
             line-height: $font-18px;
+            display: flex;
+
+            & > span {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
         }
 
         .mx_RoomTile2_name.mx_RoomTile2_nameHasUnreadEvents {
@@ -74,6 +81,26 @@ limitations under the License.
             font-size: $font-13px;
             line-height: $font-18px;
             color: $roomtile2-preview-color;
+        }
+
+        .mx_RoomTile2_name_mutedIcon {
+            $iconSize: 13px;
+
+            width: $iconSize;
+            height: $iconSize;
+            margin: auto 4px;
+
+            &::before {
+                content: '';
+                width: $iconSize;
+                height: $iconSize;
+                position: absolute;
+                mask-position: center;
+                mask-size: contain;
+                mask-repeat: no-repeat;
+                background: $roomtile2-preview-color;
+                mask-image: url('$(res)/img/feather-customised/sun.svg'); // TODO replace with correct svg
+            }
         }
 
         .mx_RoomTile2_nameWithPreview {
