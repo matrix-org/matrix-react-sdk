@@ -101,6 +101,7 @@ interface IState {
     [roomId: string]: Map<TagID | TAG_ANY, string | null>; // null indicates the preview is empty / irrelevant
 }
 
+// TODO: Use per-room dispatches if possible: https://github.com/vector-im/riot-web/issues/14035
 export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
     private static internalInstance = new MessagePreviewStore();
 

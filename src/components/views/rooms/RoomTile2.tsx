@@ -263,6 +263,7 @@ export default class RoomTile2 extends React.Component<IProps, IState> {
         let messagePreview = null;
         if (this.props.showMessagePreview && !this.props.isMinimized) {
             // The preview store heavily caches this info, so should be safe to hammer.
+            // XXX: this relies on the global re-render which is apparent in the app
             const text = MessagePreviewStore.instance.getPreviewForRoom(this.props.room, this.props.tag);
 
             // Only show the preview if there is one to show.
@@ -282,6 +283,7 @@ export default class RoomTile2 extends React.Component<IProps, IState> {
         });
 
         let mutedIcon;
+        // XXX: this relies on the global re-render which is apparent in the app
         if (getRoomNotifsState(this.props.room.roomId) === MUTE) {
             mutedIcon = <div className="mx_RoomTile2_name_mutedIcon" />;
         }
