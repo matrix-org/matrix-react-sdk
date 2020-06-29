@@ -113,8 +113,7 @@ export default class NotificationBadge extends React.PureComponent<IProps, IStat
 
         const hasNotif = this.props.notification.color >= NotificationColor.Red;
         const hasCount = this.props.notification.color >= NotificationColor.Grey;
-        const hasUnread = this.props.notification.color >= NotificationColor.Bold;
-        const couldBeEmpty = (!this.state.showCounts || hasUnread) && !hasNotif;
+        const couldBeEmpty = (!this.state.showCounts || hasCount) && !hasNotif;
         let isEmptyBadge = couldBeEmpty && (!this.state.showCounts || !hasCount);
         if (this.props.forceCount) {
             isEmptyBadge = false;
@@ -225,9 +224,7 @@ export class RoomNotificationState extends EventEmitter implements IDestroyable,
             // a badge for 'NaN' (which formats as 'NaNB' for NaN Billion).
             const trueCount = greyNotifs ? greyNotifs : (redNotifs ? redNotifs : 0);
 
-            // Note: we only set the symbol if we have an actual count. We don't want to show
-            // zero on badges.
-
+            // Note: we only set the symbol if we have an actual count. We don't want to show zero on badges.
             console.log("DEBUG NotificationBadge", this.room.roomId, {redNotifs, greyNotifs, trueCount});
             if (redNotifs > 0) {
                 this._color = NotificationColor.Red;
@@ -238,15 +235,7 @@ export class RoomNotificationState extends EventEmitter implements IDestroyable,
                 this._count = trueCount;
                 this._symbol = null; // symbol calculated by component
             } else {
-                // We don't have any notified messages, but we might have unread messages. Let's
-                // find out.
-                const hasUnread = Unread.doesRoomHaveUnreadMessages(this.room);
-                if (hasUnread) {
-                    this._color = NotificationColor.Bold;
-                } else {
-                    this._color = NotificationColor.None;
-                }
-
+                this._color = NotificationColor.None;
                 // no symbol or count for this state
                 this._count = 0;
                 this._symbol = null;

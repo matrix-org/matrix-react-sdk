@@ -37,10 +37,6 @@ export enum Category {
      */
     Grey = "GREY",
     /**
-     * The room has unread messages within (grey without the badge).
-     */
-    Bold = "BOLD",
-    /**
      * The room has no relevant unread messages within.
      */
     Idle = "IDLE",
@@ -59,7 +55,7 @@ interface ICategoryIndex {
 // Caution: changing this means you'll need to update a bunch of assumptions and
 // comments! Check the usage of Category carefully to figure out what needs changing
 // if you're going to change this array's order.
-const CATEGORY_ORDER = [Category.Red, Category.Grey, Category.Bold, Category.Idle];
+const CATEGORY_ORDER = [Category.Red, Category.Grey, Category.Idle];
 
 /**
  * An implementation of the "importance" algorithm for room list sorting. Where
@@ -95,7 +91,6 @@ export class ImportanceAlgorithm extends OrderingAlgorithm {
         const map: ICategorizedRoomMap = {
             [Category.Red]: [],
             [Category.Grey]: [],
-            [Category.Bold]: [],
             [Category.Idle]: [],
         };
         for (const room of rooms) {
@@ -117,11 +112,6 @@ export class ImportanceAlgorithm extends OrderingAlgorithm {
         let unread = room.getUnreadNotificationCount() > 0;
         if (unread) {
             return Category.Grey;
-        }
-
-        unread = Unread.doesRoomHaveUnreadMessages(room);
-        if (unread) {
-            return Category.Bold;
         }
 
         return Category.Idle;

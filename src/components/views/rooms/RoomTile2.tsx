@@ -286,7 +286,7 @@ export default class RoomTile2 extends React.Component<IProps, IState> {
         const nameClasses = classNames({
             "mx_RoomTile2_name": true,
             "mx_RoomTile2_nameWithPreview": !!messagePreview,
-            "mx_RoomTile2_nameHasUnreadEvents": this.state.notificationState.color >= NotificationColor.Bold,
+            "mx_RoomTile2_nameHasUnreadEvents": this.state.notificationState.color >= NotificationColor.Grey,
         });
 
         let nameContainer = (
