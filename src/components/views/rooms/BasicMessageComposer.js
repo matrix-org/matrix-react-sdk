@@ -40,6 +40,8 @@ import * as sdk from '../../../index';
 import {Key} from "../../../Keyboard";
 import {EMOTICON_TO_EMOJI} from "../../../emoji";
 import {CommandCategories, CommandMap, parseCommandString} from "../../../SlashCommands";
+import BridgeSettingsTab from '../settings/tabs/room/BridgeSettingsTab';
+import { _t } from '../../../languageHandler';
 
 const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s$');
 
@@ -87,6 +89,7 @@ export default class BasicMessageEditor extends React.Component {
         this.state = {
             autoComplete: null,
             showPillAvatar: SettingsStore.getValue("Pill.shouldShowPillAvatar"),
+            activeLimitationWarnings: [],
         };
         this._editorRef = null;
         this._autocompleteRef = null;
@@ -96,6 +99,18 @@ export default class BasicMessageEditor extends React.Component {
         this._hasTextSelected = false;
         this._emoticonSettingHandle = null;
         this._shouldShowPillAvatarSettingHandle = null;
+
+        const bridgeState = BridgeSettingsTab.getBridgeStateEvents(this.props.room.roomId);
+        this._bridgeLimits = bridgeState.map((b) => {
+            const { protocol, limitations } = b.getContent();
+            if (!limitations) {
+                return null;
+            }
+            return {
+                name: protocol.displayname || protocol.id,
+                limitations,
+            };
+        }).filter((l) => l !== null );
     }
 
     componentDidUpdate(prevProps) {
@@ -176,6 +191,8 @@ export default class BasicMessageEditor extends React.Component {
             }
         }
         TypingStore.sharedInstance().setSelfTyping(this.props.room.roomId, isTyping);
+
+        this._handleBridgeLimitations();
 
         if (this.props.onChange) {
             this.props.onChange();
@@ -610,6 +627,30 @@ export default class BasicMessageEditor extends React.Component {
         }
     }
 
+    _handleBridgeLimitations(msg) {
+        if (this._bridgeLimits.length === 0) {
+            return;
+        }
+        console.log(this.props.model.parts);
+        const currentMessageLength = this.props.model.parts.map((p) => p._text).join(" ").length;
+        const limitWarnings = [];
+        // We have some limiting factors
+        for (const bridge of this._bridgeLimits) {
+            const maxMsgLen = bridge.limitations["org.matrix.message-length"];
+            if (maxMsgLen && currentMessageLength > maxMsgLen.limit) {
+                limitWarnings.push(
+                    _t(
+                        "The %(name)s bridge warns that you should keep your messages below %(limit)s characters",
+                        {name: bridge.name, limit: maxMsgLen.limit},
+                    ),
+                );
+            }
+        }
+        this.setState({
+            activeLimitationWarnings: limitWarnings,
+        });
+    }
+
     render() {
         let autoComplete;
         if (this.state.autoComplete) {
@@ -642,8 +683,18 @@ export default class BasicMessageEditor extends React.Component {
 
         const {completionIndex} = this.state;
 
+        const limitationsWarning = this.state.activeLimitationWarnings.length ?
+        <div className="mx_BasicMessageComposer_AutoCompleteWrapper">
+            <div className="mx_LimitationWarning">
+                {this.state.activeLimitationWarnings.map((warning, key) => <p key={key}>
+                    ⚠️ {warning}
+                </p>)}
+            </div>
+        </div> : null;
+
         return (<div className={wrapperClasses}>
-            { autoComplete }
+            { limitationsWarning ? null : autoComplete }
+            { limitationsWarning }
             <MessageComposerFormatBar ref={ref => this._formatBarRef = ref} onAction={this._onFormatAction} shortcuts={shortcuts} />
             <div
                 className={classes}

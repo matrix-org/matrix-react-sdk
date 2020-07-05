@@ -44,7 +44,6 @@ import {Key} from "../../../Keyboard";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import RateLimitedFunc from '../../../ratelimitedfunc';
-import BridgeSettingsTab from '../settings/tabs/room/BridgeSettingsTab';
 
 function addReplyToMessageContent(content, repliedToEvent, permalinkCreator) {
     const replyContent = ReplyThread.makeReplyMixIn(repliedToEvent);
@@ -259,68 +258,6 @@ export default class SendMessageComposer extends React.Component {
         }
     }
 
-    async _handleBridgeLimitations(msg) {
-        const bridgeState = BridgeSettingsTab.getBridgeStateEvents(this.props.room.roomId);
-        const bridgeLimits = bridgeState.map((b) => {
-            const { protocol, limitations } = b.getContent();
-            if (!limitations) {
-                return null;
-            }
-            return {
-                name: protocol.displayname || protocol.id,
-                limitations,
-            };
-        }).filter((l) => l !== null );
-        console.log(bridgeLimits);
-        if (bridgeLimits.length === 0) {
-            return true;
-        }
-        const limitWarnings = [];
-        // We have some limiting factors
-        for (const bridge of bridgeLimits) {
-            const msgLen = bridge.limitations["org.matrix.message-length"];
-            if (msgLen && msg.body.length > msgLen.limit) {
-                limitWarnings.push({
-                    name: bridge.name,
-                    warningText: _t("The %(name)s bridge warns that you should keep your messages below %(limit)s characters", {name: bridge.name, limit: msgLen.limit}),
-                });
-            }
-        }
-        if (limitWarnings.length === 0) {
-            return true;
-        }
-        const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-        let neverWarn = false;
-        const modal = Modal.createTrackedDialog("Bridge limits", "", QuestionDialog, {
-            title: _t("Bridge limits"),
-            description: <div>
-                <p>
-                    { _t("Your message may be difficult to bridge to other platforms:") }
-                </p>
-                <ul>
-                    { limitWarnings.map((limit, i) =>
-                        <li key={`limit-${i}`}>{limit.warningText}</li>,
-                    )}
-                </ul>
-            </div>,
-            button: _t('Send Anyway'),
-            extraButtons: [
-                <button type="button"
-                    onClick={() => {
-                        // TODO: Actually implement this
-                        neverWarn = true;
-                        modal.close();
-                    }}
-                    key="send-anyway"
-                    // TODO: This is in the context of the room, or all of the room?
-                    // Also, all bridge warnings or just this one?
-                >{_t("Never warn me about this")}</button>,
-            ],
-        });
-        const [sendAnyway] = await modal.finished;
-        return neverWarn || sendAnyway;
-    }
-
     async _sendMessage() {
         if (this.model.isEmpty) {
             return;
@@ -362,10 +299,8 @@ export default class SendMessageComposer extends React.Component {
             }
         }
 
-        const content = shouldSend && createMessageContent(this.model, this.props.permalinkCreator);
-        shouldSend = shouldSend && await this._handleBridgeLimitations(content);
-        console.log("shouldSend", shouldSend);
         if (shouldSend) {
+            const content = createMessageContent(this.model, this.props.permalinkCreator);
             const isReply = !!RoomViewStore.getQuotingEvent();
             const {roomId} = this.props.room;
             this.context.sendMessage(roomId, content);

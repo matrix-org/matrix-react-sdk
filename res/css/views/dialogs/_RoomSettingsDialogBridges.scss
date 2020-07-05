@@ -24,7 +24,7 @@ limitations under the License.
     }
 }
 
-.mx_RoomSettingsDialog_BridgeList li {
+.mx_RoomSettingsDialog_BridgeList .mx_bridgeTile {
     list-style-type: none;
     padding: 5px;
     margin-bottom: 8px;
@@ -98,15 +98,12 @@ limitations under the License.
         .metadata {
             color: $muted-fg-color;
             overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            height: 2.5em;
             margin-bottom: 0;
         }
 
         .metadata.visible {
-            overflow-y: visible;
-            text-overflow: ellipsis;
-            white-space: normal;
+            height: auto;
         }
     }
 }
