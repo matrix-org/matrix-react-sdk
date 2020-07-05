@@ -44,7 +44,7 @@ export default createReactClass({
 
     propTypes: {
         onClick: PropTypes.func,
-
+        refreshSubList: PropTypes.func,
         room: PropTypes.object.isRequired,
         collapsed: PropTypes.bool.isRequired,
         unread: PropTypes.bool.isRequired,
@@ -385,7 +385,9 @@ export default createReactClass({
         this.setState({
             contextMenuPosition: null,
         });
-        this.props.refreshSubList();
+        if (this.props.refreshSubList) {
+            this.props.refreshSubList();
+        }
     },
 
     render: function() {

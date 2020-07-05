@@ -45,6 +45,7 @@ import EncryptionPanel from "./EncryptionPanel";
 import { useAsyncMemo } from '../../../hooks/useAsyncMemo';
 import { verifyUser, legacyVerifyUser, verifyDevice } from '../../../verification';
 import {Action} from "../../../dispatcher/actions";
+import UserInfoSharedRooms from "./UserInfoSharedRooms";
 
 const _disambiguateDevices = (devices) => {
     const names = Object.create(null);
@@ -1310,6 +1311,8 @@ const BasicUserInfo = ({room, member, groupId, devices, isRoomEncrypted}) => {
     const isMe = member.userId === cli.getUserId();
     const canVerify = homeserverSupportsCrossSigning && !userVerified && !isMe;
 
+    const isSharedRoomsFeatureEnabled = SettingsStore.isFeatureEnabled("feature_show_shared_rooms");
+
     const setUpdating = (updating) => {
         setPendingUpdateCount(count => count + (updating ? 1 : -1));
     };
@@ -1361,6 +1364,8 @@ const BasicUserInfo = ({room, member, groupId, devices, isRoomEncrypted}) => {
         </div> }
 
         { securitySection }
+        { isSharedRoomsFeatureEnabled &&!isMe && <UserInfoSharedRooms
+            userId={member.userId} /> }
         <UserOptionsSection
             devices={devices}
             canInvite={roomPermissions.canInvite}
