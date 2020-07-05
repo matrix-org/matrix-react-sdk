@@ -108,7 +108,7 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
 
     render(): React.ReactNode {
         let content;
-        
+
         if (this.state.roomIds && this.state.roomIds.length > 0) {
             content = this.state.roomIds.map((roomId) => this.renderRoomTile(roomId));
         } else if (this.state.roomIds) {
@@ -119,22 +119,22 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
             // We're still loading
             content = <Spinner/>;
         }
-        
+
         // Compact view: Show as a single line.
         if (this.props.compact && content.length) {
             if (content.length <= COMPACT_VIEW_SHOW_COUNT) {
-                return <p> {_t("You are both participating in <rooms></rooms>", {}, {rooms: content})} </p>   
+                return <p> {_t("You are both participating in <rooms></rooms>", {}, {rooms: content})} </p>;
             } else {
                 return <p> {_t("You are both participating in <rooms></rooms> and %(hidden)s more", {
                     hidden: content.length - COMPACT_VIEW_SHOW_COUNT,
                 }, {
                     rooms: content.slice(0, COMPACT_VIEW_SHOW_COUNT)
-                })}</p>   
+                })}</p>;
             }
         } else if (this.props.compact) {
             return content;
         }
-        
+
         // Normal view: Show as a list with a header
         return <div className="mx_UserInfoSharedRooms mx_UserInfo_container">
             <h3>{ _t("Shared Rooms") }</h3>

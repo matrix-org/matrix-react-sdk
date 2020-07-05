@@ -487,6 +487,7 @@ export default createReactClass({
                         </AccessibleButton>,
                     );
                 }
+
                 break;
             }
             case MessageCase.ViewingRoom: {
