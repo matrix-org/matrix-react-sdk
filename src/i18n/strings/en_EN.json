@@ -490,6 +490,7 @@
     "Use the improved room list (will refresh to apply changes)": "Use the improved room list (will refresh to apply changes)",
     "Support adding custom themes": "Support adding custom themes",
     "Enable IRC layout option in the appearance tab": "Enable IRC layout option in the appearance tab",
+    "Show rooms in common with another user in the member info panel": "Show rooms in common with another user in the member info panel",
     "Show info about bridges in room settings": "Show info about bridges in room settings",
     "Font size": "Font size",
     "Use custom size": "Use custom size",
