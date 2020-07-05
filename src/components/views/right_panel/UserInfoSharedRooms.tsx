@@ -20,15 +20,20 @@ import Spinner from "../elements/Spinner";
 import RoomTile from "../rooms/RoomTile";
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
+import Pill from '../../views/elements/Pill';
+import SpecPermalinkConstructor from '../../../utils/permalinks/SpecPermalinkConstructor';
 
 interface IProps {
     userId: string;
+    compact: boolean;
 }
 
 interface IState {
     roomIds?: [];
     error: boolean;
 }
+
+const COMPACT_VIEW_SHOW_COUNT = 3;
 
 export default class UserInfoSharedRooms extends React.PureComponent<IProps, IState> {
 
@@ -64,10 +69,29 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
         if (!room) {
             return <li key={roomId}>{roomId}</li>;
         }
-        const tombstone = room.getStateEvents("m.room.tombstone", "");
+        const tombstone = room.currentState.getStateEvents("m.room.tombstone", "");
         if (tombstone) {
             return null;
         }
+
+        if (this.props.compact) {
+            // XXX: This is inefficent as we only render COMPACT_VIEW_SHOW_COUNT rooms at a time, the other pills are wasted.
+            const alias = room.getCanonicalAlias();
+            if (!alias) {
+                // Without an alias, we get ugly room_ids.
+                return null;
+            }
+            return <a href={`#/room/${alias}`}><Pill
+                key={roomId}
+                type={Pill.TYPE_ROOM_MENTION}
+                room={room}
+                url={new SpecPermalinkConstructor().forRoom(alias)}
+                inMessage={false}
+                shouldShowPillAvatar={true}
+                isSelected={false}
+            /></a>;
+        }
+
         return <li key={roomId}>
             <RoomTile
                 onClick={this.onRoomTileClick.bind(undefined, [roomId])}
@@ -84,10 +108,9 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
 
     render(): React.ReactNode {
         let content;
+        
         if (this.state.roomIds && this.state.roomIds.length > 0) {
-            content = <ul>
-                {this.state.roomIds.map((roomId) => this.renderRoomTile(roomId))}
-            </ul>;
+            content = this.state.roomIds.map((roomId) => this.renderRoomTile(roomId));
         } else if (this.state.roomIds) {
             content = <p> {_t("You share no rooms in common with this user.")} </p>;
         } else if (this.state.error) {
@@ -96,6 +119,23 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
             // We're still loading
             content = <Spinner/>;
         }
+        
+        // Compact view: Show as a single line.
+        if (this.props.compact && content.length) {
+            if (content.length <= COMPACT_VIEW_SHOW_COUNT) {
+                return <p> {_t("You are both participating in <rooms></rooms>", {}, {rooms: content})} </p>   
+            } else {
+                return <p> {_t("You are both participating in <rooms></rooms> and %(hidden)s more", {
+                    hidden: content.length - COMPACT_VIEW_SHOW_COUNT,
+                }, {
+                    rooms: content.slice(0, COMPACT_VIEW_SHOW_COUNT)
+                })}</p>   
+            }
+        } else if (this.props.compact) {
+            return content;
+        }
+        
+        // Normal view: Show as a list with a header
         return <div className="mx_UserInfoSharedRooms mx_UserInfo_container">
             <h3>{ _t("Shared Rooms") }</h3>
             <ul>

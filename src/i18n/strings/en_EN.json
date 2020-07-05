@@ -1362,6 +1362,8 @@
     "Security": "Security",
     "You share no rooms in common with this user.": "You share no rooms in common with this user.",
     "There was an error fetching shared rooms with this user.": "There was an error fetching shared rooms with this user.",
+    "You are both participating in <rooms></rooms>": "You are both participating in <rooms></rooms>",
+    "You are both participating in <rooms></rooms> and %(hidden)s more": "You are both participating in <rooms></rooms> and %(hidden)s more",
     "Shared Rooms": "Shared Rooms",
     "The session you are trying to verify doesn't support scanning a QR code or emoji verification, which is what Riot supports. Try with a different client.": "The session you are trying to verify doesn't support scanning a QR code or emoji verification, which is what Riot supports. Try with a different client.",
     "Verify by scanning": "Verify by scanning",
