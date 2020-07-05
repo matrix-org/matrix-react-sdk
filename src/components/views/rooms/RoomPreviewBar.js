@@ -25,6 +25,8 @@ import dis from '../../../dispatcher/dispatcher';
 import classNames from 'classnames';
 import { _t } from '../../../languageHandler';
 import IdentityAuthClient from '../../../IdentityAuthClient';
+import SettingsStore from '../../../settings/SettingsStore';
+import UserInfoSharedRooms from '../right_panel/UserInfoSharedRooms';
 
 const MessageCase = Object.freeze({
     NotLoggedIn: "NotLoggedIn",
@@ -294,6 +296,7 @@ export default createReactClass({
         let secondaryActionHandler;
         let secondaryActionLabel;
         let footer;
+        let extraContext;
         const extraComponents = [];
 
         const messageCase = this._getMessageCase();
@@ -473,6 +476,10 @@ export default createReactClass({
                 secondaryActionLabel = _t("Reject");
                 secondaryActionHandler = this.props.onRejectClick;
 
+                if (SettingsStore.isFeatureEnabled("feature_show_shared_rooms")) {
+                    extraContext = <UserInfoSharedRooms userId={inviteMember.userId} compact={true} />;
+                }
+
                 if (this.props.onRejectAndIgnoreClick) {
                     extraComponents.push(
                         <AccessibleButton kind="secondary" onClick={this.props.onRejectAndIgnoreClick} key="ignore">
@@ -560,6 +567,7 @@ export default createReactClass({
                 <div className="mx_RoomPreviewBar_message">
                     { titleElement }
                     { subTitleElements }
+                    { extraContext }
                 </div>
                 <div className="mx_RoomPreviewBar_actions">
                     { secondaryButton }
