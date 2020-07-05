@@ -27,7 +27,7 @@ interface IProps {
 
 interface IState {
     roomIds?: [];
-    error: boolean,
+    error: boolean;
 }
 
 export default class UserInfoSharedRooms extends React.PureComponent<IProps, IState> {
@@ -43,7 +43,7 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
     async componentDidMount() {
         try {
             const roomIds = await MatrixClientPeg.get()._unstable_getSharedRooms(this.props.userId);
-            this.setState({roomIds});    
+            this.setState({roomIds});
         } catch (ex) {
             console.log(`Failed to get shared rooms for ${this.props.userId}`, ex);
             this.setState({ error: true });
@@ -56,39 +56,45 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
             show_room_tile: true, // to make sure the room gets scrolled into view
             room_id: roomId,
         });
-    };
+    }
 
     private renderRoomTile(roomId) {
         const peg = MatrixClientPeg.get();
         const room = peg.getRoom(roomId);
         if (!room) {
-            return roomId;
+            return <li key={roomId}>{roomId}</li>;
         }
-        return <RoomTile
-            onClick={this.onRoomTileClick.bind(undefined, [roomId])}
-            room={room}
-            collapsed={false}
-            unread={false}
-            highlight={false}
-            transparent={true}
-            isInvite={false}
-            incomingCall={false}
-        />
+        const tombstone = room.getStateEvents("m.room.tombstone", "");
+        if (tombstone) {
+            return null;
+        }
+        return <li key={roomId}>
+            <RoomTile
+                onClick={this.onRoomTileClick.bind(undefined, [roomId])}
+                room={room}
+                collapsed={false}
+                unread={false}
+                highlight={false}
+                transparent={true}
+                isInvite={false}
+                incomingCall={false}
+            />
+        </li>;
     }
 
     render(): React.ReactNode {
         let content;
         if (this.state.roomIds && this.state.roomIds.length > 0) {
             content = <ul>
-                {this.state.roomIds.map((roomId) => <li key={roomId}>{this.renderRoomTile(roomId)}</li>)}
+                {this.state.roomIds.map((roomId) => this.renderRoomTile(roomId))}
             </ul>;
         } else if (this.state.roomIds) {
-            content = <p> {_t("You share no rooms in common with this user.")} </p>
+            content = <p> {_t("You share no rooms in common with this user.")} </p>;
         } else if (this.state.error) {
-            content = <p> {_t("There was an error fetching shared rooms with this user.")} </p>
+            content = <p> {_t("There was an error fetching shared rooms with this user.")} </p>;
         } else {
             // We're still loading
-            content = <Spinner/>
+            content = <Spinner/>;
         }
         return <div className="mx_UserInfoSharedRooms mx_UserInfo_container">
             <h3>{ _t("Shared Rooms") }</h3>
