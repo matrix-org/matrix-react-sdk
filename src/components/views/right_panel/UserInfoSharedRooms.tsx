@@ -22,6 +22,7 @@ import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
 import Pill from '../../views/elements/Pill';
 import SpecPermalinkConstructor from '../../../utils/permalinks/SpecPermalinkConstructor';
+import { mostRecentActivityFirst } from '../../../RoomListSorter';
 
 interface IProps {
     userId: string;
@@ -66,9 +67,13 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
     private renderRoomTile(roomId) {
         const peg = MatrixClientPeg.get();
         const room = peg.getRoom(roomId);
+    private renderRoomTile(room) {
+        // If the room cannot be found, hide it.
         if (!room) {
-            return <li key={roomId}>{roomId}</li>;
+            return null;
         }
+
+        // If the room has been upgraded, hide it.
         const tombstone = room.currentState.getStateEvents("m.room.tombstone", "");
         if (tombstone) {
             return null;
@@ -78,11 +83,11 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
             // XXX: This is inefficent as we only render COMPACT_VIEW_SHOW_COUNT rooms at a time, the other pills are wasted.
             const alias = room.getCanonicalAlias();
             if (!alias) {
-                // Without an alias, we get ugly room_ids.
+                // Without an alias we get ugly room_ids, hide it.
                 return null;
             }
             return <a href={`#/room/${alias}`}><Pill
-                key={roomId}
+                key={room.roomId}
                 type={Pill.TYPE_ROOM_MENTION}
                 room={room}
                 url={new SpecPermalinkConstructor().forRoom(alias)}
@@ -92,9 +97,9 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
             /></a>;
         }
 
-        return <li key={roomId}>
+        return <li key={room.roomId}>
             <RoomTile
-                onClick={this.onRoomTileClick.bind(undefined, [roomId])}
+                onClick={this.onRoomTileClick.bind(undefined, [room.roomId])}
                 room={room}
                 collapsed={false}
                 unread={false}
@@ -106,11 +111,21 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
         </li>;
     }
 
+    private renderRoomTiles() {
+        const peg = MatrixClientPeg.get();
+        const orderedActiveRooms = mostRecentActivityFirst(this.state.roomIds.map(
+            (roomId) => peg.getRoom(roomId)
+        ));
+        
+        // We must remove the null values in order for the slice to work in render()
+        return orderedActiveRooms.map((room) => this.renderRoomTile(room)).filter((tile => tile !== null));
+    }
+
     render(): React.ReactNode {
         let content;
 
         if (this.state.roomIds && this.state.roomIds.length > 0) {
-            content = this.state.roomIds.map((roomId) => this.renderRoomTile(roomId));
+            content = this.renderRoomTiles();
         } else if (this.state.roomIds) {
             content = <p> {_t("You share no rooms in common with this user.")} </p>;
         } else if (this.state.error) {
