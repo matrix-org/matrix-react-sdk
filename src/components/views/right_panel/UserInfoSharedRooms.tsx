@@ -21,6 +21,7 @@ import RoomTile from "../rooms/RoomTile";
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
 import Pill from '../../views/elements/Pill';
+import AccessibleButton from '../../views/elements/AccessibleButton';
 import SpecPermalinkConstructor from '../../../utils/permalinks/SpecPermalinkConstructor';
 import { mostRecentActivityFirst } from '../../../RoomListSorter';
 
@@ -32,9 +33,10 @@ interface IProps {
 interface IState {
     roomIds?: [];
     error: boolean;
+    showAll: boolean,
 }
 
-const COMPACT_VIEW_SHOW_COUNT = 3;
+const LIMITED_VIEW_SHOW_COUNT = 3;
 
 export default class UserInfoSharedRooms extends React.PureComponent<IProps, IState> {
 
@@ -43,6 +45,7 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
 
         this.state = {
             error: false,
+            showAll: false,
         };
     }
 
@@ -64,9 +67,13 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
         });
     }
 
-    private renderRoomTile(roomId) {
-        const peg = MatrixClientPeg.get();
-        const room = peg.getRoom(roomId);
+    private onShowMoreClick() {
+        console.log("Showing more");
+        this.setState({
+            showAll: true,
+        });
+    }
+
     private renderRoomTile(room) {
         // If the room cannot be found, hide it.
         if (!room) {
@@ -123,9 +130,14 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
 
     render(): React.ReactNode {
         let content;
+        let realCount = 0;
 
         if (this.state.roomIds && this.state.roomIds.length > 0) {
             content = this.renderRoomTiles();
+            realCount = content.length;
+            if (!this.state.showAll) {
+                content = content.slice(0, LIMITED_VIEW_SHOW_COUNT);
+            }
         } else if (this.state.roomIds) {
             content = <p> {_t("You share no rooms in common with this user.")} </p>;
         } else if (this.state.error) {
@@ -137,25 +149,29 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
 
         // Compact view: Show as a single line.
         if (this.props.compact && content.length) {
-            if (content.length <= COMPACT_VIEW_SHOW_COUNT) {
+            if (realCount <= content.length) {
                 return <p> {_t("You are both participating in <rooms></rooms>", {}, {rooms: content})} </p>;
             } else {
                 return <p> {_t("You are both participating in <rooms></rooms> and %(hidden)s more", {
-                    hidden: content.length - COMPACT_VIEW_SHOW_COUNT,
+                    hidden: realCount - content.length,
                 }, {
-                    rooms: content.slice(0, COMPACT_VIEW_SHOW_COUNT)
+                    rooms: content
                 })}</p>;
             }
         } else if (this.props.compact) {
             return content;
         }
 
+        const canShowMore = !this.state.showAll && realCount > LIMITED_VIEW_SHOW_COUNT;
         // Normal view: Show as a list with a header
         return <div className="mx_UserInfoSharedRooms mx_UserInfo_container">
             <h3>{ _t("Shared Rooms") }</h3>
             <ul>
                 {content}
             </ul>
+            { canShowMore && <AccessibleButton className="mx_UserInfo_field" onClick={() => this.onShowMoreClick()}>
+                { _t("Show more") }
+                </AccessibleButton> }
         </div>;
     }
 }
