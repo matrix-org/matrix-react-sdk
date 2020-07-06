@@ -33,7 +33,7 @@ interface IProps {
 interface IState {
     roomIds?: [];
     error: boolean;
-    showAll: boolean,
+    showAll: boolean;
 }
 
 const LIMITED_VIEW_SHOW_COUNT = 3;
@@ -123,7 +123,7 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
         const orderedActiveRooms = mostRecentActivityFirst(this.state.roomIds.map(
             (roomId) => peg.getRoom(roomId)
         ));
-        
+
         // We must remove the null values in order for the slice to work in render()
         return orderedActiveRooms.map((room) => this.renderRoomTile(room)).filter((tile => tile !== null));
     }
