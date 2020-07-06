@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
-function tsOfNewestEvent(room) {
+function tsOfNewestEvent(room: any) {
     if (room.timeline.length) {
         return room.timeline[room.timeline.length - 1].getTs();
     } else {
@@ -24,7 +22,7 @@ function tsOfNewestEvent(room) {
     }
 }
 
-export function mostRecentActivityFirst(roomList) {
+export function mostRecentActivityFirst(roomList: any[]) {
     return roomList.sort(function(a, b) {
         return tsOfNewestEvent(b) - tsOfNewestEvent(a);
     });
