@@ -170,7 +170,7 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
                 {content}
             </ul>
             { canShowMore && <AccessibleButton className="mx_UserInfo_field" onClick={() => this.onShowMoreClick()}>
-                { _t("Show more") }
+                { _t("Show %(count)s more", { count: realCount - content.length}) }
                 </AccessibleButton> }
         </div>;
     }
