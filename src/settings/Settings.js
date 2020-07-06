@@ -159,12 +159,6 @@ export const SETTINGS = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_irc_ui": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Enable IRC layout option in the appearance tab'),
-        default: false,
-        isFeature: true,
-    },
     "mjolnirRooms": {
         supportedLevels: ['account'],
         default: [],

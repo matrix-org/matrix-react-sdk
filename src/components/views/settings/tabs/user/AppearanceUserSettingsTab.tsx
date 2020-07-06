@@ -440,7 +440,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                 </div>
                 {this.renderThemeSection()}
                 {SettingsStore.isFeatureEnabled("feature_font_scaling") ? this.renderFontSection() : null}
-                {SettingsStore.isFeatureEnabled("feature_irc_ui") ? this.renderLayoutSection() : null}
+                {this.renderLayoutSection()}
                 {this.renderAdvancedSection()}
             </div>
         );
