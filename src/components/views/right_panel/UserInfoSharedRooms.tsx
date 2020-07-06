@@ -49,10 +49,28 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
         };
     }
 
-    async componentDidMount() {
+    componentDidMount() {
+        return this.componentDidUpdate();
+    }
+
+    async componentDidUpdate(prevProps?: IProps) {
+        if (prevProps && prevProps.userId === this.props.userId) {
+            // Nothing to update.
+            return;
+        }
+
+        // Reset because this is a new user
+        this.setState({
+            error: false,
+            showAll: false,
+            roomIds: undefined,
+        });
+
         try {
             const roomIds = await MatrixClientPeg.get()._unstable_getSharedRooms(this.props.userId);
-            this.setState({roomIds});
+            this.setState({
+                roomIds,
+            });
         } catch (ex) {
             console.log(`Failed to get shared rooms for ${this.props.userId}`, ex);
             this.setState({ error: true });
