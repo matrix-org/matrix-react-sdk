@@ -155,7 +155,9 @@ export default class MessageActionBar extends React.PureComponent {
         let newIndex = null;
 
         if (key === Key.ARROW_UP || key === Key.ARROW_DOWN) {
-            ev.target.click();
+            if (ev.target.hasAttribute('aria-haspopup')) {
+                ev.target.click();
+            }
         } else if (key === Key.ARROW_RIGHT) {
             newIndex = (current + 1) % buttonNames.length;
         } else if (key === Key.ARROW_LEFT) {
