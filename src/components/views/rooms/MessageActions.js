@@ -216,31 +216,31 @@ export default function MessageActions(props) {
     const tabIndex = (target) => target === focused ? 0 : -1;
     const controls = [
         <UploadButton key="upload"
-                      tabIndex={tabIndex('upload')}
-                      roomId={props.room.roomId} />,
+            tabIndex={tabIndex('upload')}
+            roomId={props.room.roomId} />,
         <EmojiButton key="emoji"
-                     tabIndex={tabIndex('emoji')}
-                     addEmoji={addEmoji} />,
+            tabIndex={tabIndex('emoji')}
+            addEmoji={addEmoji} />,
         <Stickerpicker key="sticker"
-                       tabIndex={tabIndex('sticker')}
-                       room={props.room} />,
+            tabIndex={tabIndex('sticker')}
+            room={props.room} />,
     ];
 
     if (props.showCallButtons) {
         if (callInProgress) {
             controls.push(
                 <HangupButton key="hangup"
-                              tabIndex={tabIndex('hangup')}
-                              roomId={props.room.roomId} />,
+                    tabIndex={tabIndex('hangup')}
+                    roomId={props.room.roomId} />,
             );
         } else {
             controls.push(
                 <CallButton key="call"
-                            tabIndex={tabIndex('call')}
-                            roomId={props.room.roomId} />,
+                    tabIndex={tabIndex('call')}
+                    roomId={props.room.roomId} />,
                 <VideoCallButton key="videocall"
-                                 tabIndex={tabIndex('videocall')}
-                                 roomId={props.room.roomId} />,
+                    tabIndex={tabIndex('videocall')}
+                    roomId={props.room.roomId} />,
             );
         }
     }
