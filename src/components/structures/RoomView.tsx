@@ -1290,7 +1290,7 @@ export default class RoomView extends React.Component<IProps, IState> {
             // whether it was used by the search engine or not.
 
             let highlights = results.highlights;
-            if (highlights.indexOf(this.state.searchTerm) < 0) {
+            if (this.state.searchTerm !== "" && highlights.indexOf(this.state.searchTerm) < 0) {
                 highlights = highlights.concat(this.state.searchTerm);
             }
 

@@ -32,7 +32,6 @@ async function serverSideSearch(term, roomId = undefined, senderId = undefined) 
     const body = {
         search_categories: {
             room_events: {
-                search_term: term,
                 filter: filter,
                 order_by: "recent",
                 event_context: {
@@ -43,6 +42,8 @@ async function serverSideSearch(term, roomId = undefined, senderId = undefined) 
             },
         },
     };
+
+    if (term !== "") body.search_categories.room_events.search_term = term;
 
     const response = await client.search({body: body});
 
@@ -178,8 +179,6 @@ async function localSearchProcess(searchTerm, roomId = undefined, senderId = und
         results: [],
         highlights: [],
     };
-
-    if (searchTerm === "") return emptyResult;
 
     const result = await localSearch(searchTerm, roomId, senderId);
 
