@@ -239,7 +239,6 @@ export default createReactClass({
         // when scrolled all the way down. E.g. Chrome 72 on debian.
         // so check difference <= 1;
         return Math.abs(sn.scrollHeight - (sn.scrollTop + sn.clientHeight)) <= 1;
-
     },
 
     // returns the vertical height in the given direction that can be removed from
@@ -529,6 +528,20 @@ export default createReactClass({
         const delta = mult * scrollNode.clientHeight * 0.5;
         scrollNode.scrollBy(0, delta);
         this._saveScrollState();
+    },
+
+    /**
+     * Specify an amount to offset the default scroll amount by.
+     *
+     * @param {number} delta: Amount to offset default scroll. Positive values scroll down.
+     */
+    scrollOffset: function(delta) {
+        const scrollNode = this._getScrollNode();
+        if (!this.scrollState.stuckAtBottom) {
+            scrollNode.scrollBy(0, delta);
+        }
+        this._saveScrollState();
+        this.checkScroll();
     },
 
     /**

@@ -19,6 +19,7 @@ limitations under the License.
 import React, {createRef} from 'react';
 import PropTypes from 'prop-types';
 
+import classNames from 'classnames';
 import MFileBody from './MFileBody';
 import Modal from '../../../Modal';
 import * as sdk from '../../../index';
@@ -38,6 +39,9 @@ export default class MImageBody extends React.Component {
 
         /* the maximum image height to use */
         maxImageHeight: PropTypes.number,
+
+        /* for previously collapsed images */
+        startHidden: PropTypes.bool,
     };
 
     static contextType = MatrixClientContext;
@@ -52,6 +56,8 @@ export default class MImageBody extends React.Component {
         this.onClientSync = this.onClientSync.bind(this);
         this.onClick = this.onClick.bind(this);
         this._isGif = this._isGif.bind(this);
+        this._toggleCollapsed = this._toggleCollapsed.bind(this);
+        this._mapRange = this._mapRange.bind(this);
 
         this.state = {
             decryptedUrl: null,
@@ -63,6 +69,7 @@ export default class MImageBody extends React.Component {
             loadedImageDimensions: null,
             hover: false,
             showImage: SettingsStore.getValue("showImages"),
+            collapsed: props.startHidden,
         };
 
         this._image = createRef();
@@ -121,6 +128,33 @@ export default class MImageBody extends React.Component {
           content.info &&
           content.info.mimetype === "image/gif"
         );
+    }
+
+    _toggleCollapsed() {
+        this.setState({ collapsed: !this.state.collapsed });
+    }
+
+    _mapRange(val, inStart, inEnd, outStart, outEnd) {
+        return outStart + (outEnd - outStart) * ((val - inStart) / (inEnd - inStart));
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        const content = this.props.mxEvent.getContent();
+        if (this.state.collapsed != prevState.collapsed) {
+            // We need to scale the thumbnail size by an amount up to 20% to prevent
+            // the scroll bar from jumping when collapsing/uncollapsing an image.
+            // FIXME: This assumes a thumbnail height between 100 and 600. For images
+            // smaller than 100px there's not a real benefit to adjusting the scale.
+            // Regarding larger images, Synapse only supports 800x600 thumbnails for now.
+            // If that gets changed, up to 1200px for retina displays, then we'll need to
+            // add support here for that.
+            const scale = Math.abs(this._mapRange(content.info.thumbnail_info.h, 100, 600, 1.2, 0.8));
+            let scaledImgHeight = content.info.thumbnail_info.h * scale;
+            if (!this.state.collapsed) {
+                scaledImgHeight = -scaledImgHeight;
+            }
+            this.props.onHeightChanged(scaledImgHeight);
+        }
     }
 
     onImageEnter(e) {
@@ -355,7 +389,7 @@ export default class MImageBody extends React.Component {
         }
 
         // The maximum height of the thumbnail as it is rendered as an <img>
-        const maxHeight = Math.min(this.props.maxImageHeight || 600, infoHeight);
+        const maxHeight = this.state.collapsed ? 0 : Math.min(this.props.maxImageHeight || 600, infoHeight);
         // The maximum width of the thumbnail, as dictated by its natural
         // maximum height.
         const maxWidth = infoWidth * maxHeight / infoHeight;
@@ -468,12 +502,26 @@ export default class MImageBody extends React.Component {
           thumbUrl = this._getThumbUrl();
         }
 
+        const collapsed = this.state.collapsed;
         const thumbnail = this._messageContent(contentUrl, thumbUrl, content);
         const fileBody = this.getFileBody();
+        const title = collapsed ? "Uncollapse" : "Collapse";
+
+        const chevronClasses = classNames({
+            'mx_MImageBody_chevron': true,
+            'mx_MImageBody_chevronRight': collapsed,
+        });
+        const chevron = (<div className={chevronClasses} />);
+        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
 
         return <span className="mx_MImageBody">
-            { thumbnail }
-            { fileBody }
+            <AccessibleButton className="mx_MImageBody_label"
+                onClick={ this._toggleCollapsed}
+                title={_t(title)}>
+                {chevron}
+            </AccessibleButton>
+            {fileBody}
+            {thumbnail}
         </span>;
     }
 }

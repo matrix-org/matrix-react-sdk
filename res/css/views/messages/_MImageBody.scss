@@ -34,6 +34,8 @@ limitations under the License.
 
     // Make sure the _thumbnail is positioned relative to the _container
     position: relative;
+
+    transition: max-height 0.2s ease-in-out;
 }
 
 .mx_MImageBody_thumbnail_spinner {
@@ -97,4 +99,26 @@ limitations under the License.
 
 .mx_EventTile:hover .mx_HiddenImagePlaceholder {
     background-color: $primary-bg-color;
+}
+
+.mx_MImageBody_chevron {
+    pointer-events: none;
+    mask: url('$(res)/img/feather-customised/dropdown-arrow.svg');
+    mask-repeat: no-repeat;
+    transition: transform 0.2s ease-in;
+    width: 10px;
+    height: 6px;
+    margin-left: 2px;
+    background-color: $imagebody-label-fg-color;
+}
+
+.mx_MImageBody_chevronRight {
+    transform: rotateZ(-90deg);
+}
+
+.mx_MImageBody_label {
+    cursor: pointer;
+    display: inline-block;
+    align-items: center;
+    padding: 3px 6px;
 }
