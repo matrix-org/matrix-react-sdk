@@ -301,9 +301,9 @@ export default class SendMessageComposer extends React.Component {
         }
 
         if (shouldSend) {
+            const content = createMessageContent(this.model, this.props.permalinkCreator);
             const isReply = !!RoomViewStore.getQuotingEvent();
             const {roomId} = this.props.room;
-            const content = createMessageContent(this.model, this.props.permalinkCreator);
             this.context.sendMessage(roomId, content);
             if (isReply) {
                 // Clear reply_to_event as we put the message into the queue

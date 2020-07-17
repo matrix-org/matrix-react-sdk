@@ -42,6 +42,21 @@ export default class BridgeTile extends React.PureComponent {
         });
     }
 
+    _getLimitations() {
+        const limitations = this.props.ev.getContent().limitations || {};
+        const textualLimits = [];
+        const contentLengthLimitations = limitations["org.matrix.message-length"];
+        if (contentLengthLimitations) {
+            textualLimits.push({
+                key: "org.matrix.message-length",
+                text: _t("Messages should be limited to under <characters /> characters.", {}, {
+                    characters: <strong>{contentLengthLimitations.limit}</strong>,
+                }),
+            });
+        }
+        return textualLimits;
+    }
+
     render() {
         const content = this.props.ev.getContent();
         const { channel, network, protocol } = content;
@@ -90,9 +105,10 @@ export default class BridgeTile extends React.PureComponent {
             networkIcon = <div class="noProtocolIcon"></div>;
         }
 
+        const limits = this._getLimitations();
         const id = this.props.ev.getId();
         const metadataClassname = "metadata" + (this.state.visible ? " visible" : "");
-        return (<li key={id}>
+        return (<li className="mx_bridgeTile" key={id}>
             <div className="column-icon">
                 {networkIcon}
             </div>
@@ -102,9 +118,16 @@ export default class BridgeTile extends React.PureComponent {
                     <span>{_t("Workspace: %(networkName)s", {networkName})}</span>
                     <span className="channel">{_t("Channel: %(channelName)s", {channelName})}</span>
                 </p>
-                <p className={metadataClassname}>
-                    {creator} {bot}
-                </p>
+                <div className={metadataClassname}>
+                    { limits.length > 0 ? <div>
+                        <p> {_t("This bridge has some limitations that you may need to be aware of:")} </p>
+                        <ul>
+                            { limits.map((limit => <li key={limit.key}>{limit.text}</li>)) }
+                        </ul>
+                    </div> : null }
+                    <p>{creator}</p>
+                    <p>{bot}</p>
+                </div>
                 <AccessibleButton className="mx_showMore" kind="secondary" onClick={this._toggleVisible.bind(this)}>
                     { this.state.visible ? _t("Show less") : _t("Show more") }
                 </AccessibleButton>
