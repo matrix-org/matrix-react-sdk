@@ -27,15 +27,18 @@ export default createReactClass({
         const h = this.props.h || 16;
         const imgClass = this.props.imgClassName || "";
 
+        let divClass;
         let imageSource;
         if (SettingsStore.isFeatureEnabled('feature_new_spinner')) {
-            imageSource = require("../../../../res/img/spinner.svg");
+            divClass = "mx_InlineSpinner mx_Spinner_spin";
+            imageSource = require("../../../../res/img/element-logo.svg");
         } else {
+            divClass = "mx_InlineSpinner";
             imageSource = require("../../../../res/img/spinner.gif");
         }
 
         return (
-            <div className="mx_InlineSpinner">
+            <div className={divClass}>
                 <img
                     src={imageSource}
                     width={w}

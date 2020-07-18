@@ -21,15 +21,18 @@ import {_t} from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 
 const Spinner = ({w = 32, h = 32, imgClassName, message}) => {
+    let divClass;
     let imageSource;
     if (SettingsStore.isFeatureEnabled('feature_new_spinner')) {
-        imageSource = require("../../../../res/img/spinner.svg");
+        divClass = "mx_Spinner mx_Spinner_spin";
+        imageSource = require("../../../../res/img/element-logo.svg");
     } else {
+        divClass = "mx_Spinner";
         imageSource = require("../../../../res/img/spinner.gif");
     }
 
     return (
-        <div className="mx_Spinner">
+        <div className={divClass}>
             { message && <React.Fragment><div className="mx_Spinner_Msg">{ message}</div>&nbsp;</React.Fragment> }
             <img
                 src={imageSource}
