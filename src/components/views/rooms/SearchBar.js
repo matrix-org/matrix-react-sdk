@@ -15,28 +15,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {createRef} from 'react';
+import React from 'react';
 import AccessibleButton from "../elements/AccessibleButton";
-import Autocomplete from './Autocomplete';
-import Pill from '../elements/Pill';
-import {makeUserPermalink} from '../../../utils/permalinks/Permalinks';
+import EditorModel from '../../../editor/model';
+import {PartCreator} from '../../../editor/parts';
+import BasicMessageComposer from "./BasicMessageComposer";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import classNames from "classnames";
 import { _t } from '../../../languageHandler';
 import {Key} from "../../../Keyboard";
 import DesktopBuildsNotice, {WarningKind} from "../elements/DesktopBuildsNotice";
 
-const SENDER_REGEX = /(?:^| )(@\w+)/;
-
 export default class SearchBar extends React.Component {
-    constructor(props) {
-        super(props);
+    static contextType = MatrixClientContext;
 
-        this._search_term = createRef();
+    constructor(props, context) {
+        super(props, context);
 
         this.state = {
             scope: 'Room',
-            senderQuery: null,
         };
+
+        const partCreator = new PartCreator(this.props.room, this.context);
+        const parts = [];
+        this.model = new EditorModel(parts, partCreator);
     }
 
     onThisRoomClick = () => {
@@ -47,10 +49,11 @@ export default class SearchBar extends React.Component {
         this.setState({ scope: 'All' }, () => this._searchIfQuery());
     };
 
-    onSearchChange = (e) => {
+    onSearchKeydown = (e) => {
         switch (e.key) {
             case Key.ENTER:
                 this.onSearch();
+                e.preventDefault();
                 break;
             case Key.ESCAPE:
                 this.props.onCancelClick();
@@ -59,30 +62,35 @@ export default class SearchBar extends React.Component {
     };
 
     _searchIfQuery() {
-        if (this._search_term.current.value) {
+        if (this.model._parts.length > 0) {
             this.onSearch();
         }
     }
 
     onSearch = () => {
-        this.props.onSearch(this._search_term.current.value, this.state.scope, this.state.senderId);
-    };
-
-    checkAutocomplete = (query) => {
-        this.setState({ senderQuery: this._search_term.current.value.match(SENDER_REGEX) });
-    };
-
-    confirmAutocomplete = (c) => {
-        const i = this.state.senderQuery.index;
-        const len = this.state.senderQuery[0].length;
-        this.setState({ senderId: c.completionId });
-        this._search_term.current.value = this._search_term.current.value.substring(0, i) +
-                                          this._search_term.current.value.substring(i + len);
-    };
-
-    removeSender: function() {
-        this.setState({ senderId: undefined });
-    },
+            const searchTerm = [];
+            const senders = [];
+            const rooms = [];
+            for (let i = 0; i < this.model._parts.length; i++) {
+                if (typeof this.model._parts[i].member !== 'undefined') {
+                    senders.push(this.model._parts[i].resourceId);
+                    continue;
+                }
+                if (typeof this.model._parts[i].room !== 'undefined') {
+                    rooms.push(this.model._parts[i].room.roomId);
+                    continue;
+                }
+                const text = this.model._parts[i]._text.trim();
+                if (text !== '') {
+                    searchTerm.push(text);
+                }
+            }
+            let sender;
+            if (senders.length > 0) {
+                sender = senders[0];
+            }
+            this.props.onSearch(searchTerm.join(' '), this.state.scope, sender);
+        };
 
     render() {
         const searchButtonClasses = classNames("mx_SearchBar_searchButton", {
@@ -95,46 +103,11 @@ export default class SearchBar extends React.Component {
             mx_SearchBar_unselected: this.state.scope !== 'All',
         });
 
-        let autoComplete;
-        if (this.state.senderQuery) {
-            const selection = {
-                beginning: true,
-                end: this.state.senderQuery[1].length,
-                start: this.state.senderQuery[1].length,
-            };
-            autoComplete = (<Autocomplete
-                query={this.state.senderQuery[1]}
-                onConfirm={this.confirmAutocomplete}
-                selection={selection}
-                room={this.props.room}
-            />);
-        }
-
-        let senderPart;
-        if (this.state.senderId) {
-            senderPart = (<Pill
-                type={Pill.TYPE_USER_MENTION}
-                room={this.props.room}
-                url={makeUserPermalink(this.state.senderId)}
-                shouldShowPillAvatar={true}
-                onClick={this.removeSender}
-            />);
-        }
-
         return (
             <>
                 <div className="mx_SearchBar">
-                    <div className="mx_SearchBar_input mx_textinput">
-                        { autoComplete }
-                        { senderPart }
-                        <input
-                            ref={this._search_term}
-                            type="text"
-                            autoFocus={true}
-                            placeholder={_t("Search…")}
-                            onKeyDown={this.onSearchKeydown}
-                            onChange={this.checkAutocomplete}
-                        />
+                    <div className="mx_SearchBar_input mx_textinput" onKeyDown={this.onSearchKeydown}>
+                        <BasicMessageComposer model={this.model} room={this.props.room} />
                         <AccessibleButton className={ searchButtonClasses } onClick={this.onSearch} />
                     </div>
                     <AccessibleButton className="mx_SearchBar_cancel" onClick={this.props.onCancelClick} />
