@@ -19,7 +19,7 @@ import { MatrixClientPeg } from '../MatrixClientPeg';
 import Modal from '../Modal';
 import DeviceListener from '../DeviceListener';
 import NewSessionReviewDialog from '../components/views/dialogs/NewSessionReviewDialog';
-import ToastStore from "../stores/ToastStore";
+import ToastStore, {Priority} from "../stores/ToastStore";
 import GenericToast from "../components/views/toasts/GenericToast";
 
 function toastKey(deviceId: string) {
@@ -61,7 +61,7 @@ export const showToast = (deviceId: string) => {
             onReject,
         },
         component: GenericToast,
-        priority: 80,
+        priority: Priority.VerifyNewLogin,
     });
 };
 

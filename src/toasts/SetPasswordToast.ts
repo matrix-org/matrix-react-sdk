@@ -18,7 +18,7 @@ import { _t } from "../languageHandler";
 import Modal from "../Modal";
 import SetPasswordDialog from "../components/views/dialogs/SetPasswordDialog";
 import GenericToast from "../components/views/toasts/GenericToast";
-import ToastStore from "../stores/ToastStore";
+import ToastStore, {Priority} from "../stores/ToastStore";
 
 const onAccept = () => {
     Modal.createTrackedDialog('Set Password Dialog', 'Password Nag Bar', SetPasswordDialog);
@@ -38,7 +38,7 @@ export const showToast = () => {
             onReject: hideToast, // it'll return on reload
         },
         component: GenericToast,
-        priority: 60,
+        priority: Priority.LegacySetPassword,
     });
 };
 

@@ -17,10 +17,23 @@ limitations under the License.
 import EventEmitter from "events";
 import React, {JSXElementConstructor} from "react";
 
+// Enum to express priorities to enforce uniqueness, descending order
+export enum Priority {
+    DownloadCompleted,
+    VerificationRequest,
+    VerifyNewLogin,
+    ServerLimit,
+    LegacySetPassword,
+    ReviewExistingSessions,
+    DesktopNotificationsPrompt,
+    UpdatePendingPrompt,
+    Rebrand,
+    AnalyticsPrompt,
+}
+
 export interface IToast<C extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>> {
     key: string;
-    // higher priority number will be shown on top of lower priority
-    priority: number;
+    priority: Priority;
     title: string;
     icon?: string;
     component: C;
@@ -59,7 +72,7 @@ export default class ToastStore extends EventEmitter {
         const oldIndex = this.toasts.findIndex(t => t.key === newToast.key);
         if (oldIndex === -1) {
             let newIndex = this.toasts.length;
-            while (newIndex > 0 && this.toasts[newIndex - 1].priority < newToast.priority) --newIndex;
+            while (newIndex > 0 && this.toasts[newIndex - 1].priority >= newToast.priority) --newIndex;
             this.toasts.splice(newIndex, 0, newToast);
         } else {
             this.toasts[oldIndex] = newToast;

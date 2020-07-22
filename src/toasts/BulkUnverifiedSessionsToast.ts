@@ -19,7 +19,7 @@ import dis from "../dispatcher/dispatcher";
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import DeviceListener from '../DeviceListener';
 import GenericToast from "../components/views/toasts/GenericToast";
-import ToastStore from "../stores/ToastStore";
+import ToastStore, {Priority} from "../stores/ToastStore";
 
 const TOAST_KEY = "reviewsessions";
 
@@ -49,7 +49,7 @@ export const showToast = (deviceIds: Set<string>) => {
             onReject,
         },
         component: GenericToast,
-        priority: 50,
+        priority: Priority.ReviewExistingSessions,
     });
 };
 

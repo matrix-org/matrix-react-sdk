@@ -19,7 +19,7 @@ import React from "react";
 import { _t } from "../languageHandler";
 import SdkConfig from "../SdkConfig";
 import GenericToast from "../components/views/toasts/GenericToast";
-import ToastStore from "../stores/ToastStore";
+import ToastStore, {Priority} from "../stores/ToastStore";
 import QuestionDialog from "../components/views/dialogs/QuestionDialog";
 import ChangelogDialog from "../components/views/dialogs/ChangelogDialog";
 import PlatformPeg from "../PlatformPeg";
@@ -89,7 +89,7 @@ export const showToast = (version: string, newVersion: string, releaseNotes?: st
             onReject,
         },
         component: GenericToast,
-        priority: 20,
+        priority: Priority.UpdatePendingPrompt,
     });
 };
 

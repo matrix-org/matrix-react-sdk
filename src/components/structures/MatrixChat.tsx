@@ -63,15 +63,12 @@ import ThemeWatcher from "../../settings/watchers/ThemeWatcher";
 import { FontWatcher } from '../../settings/watchers/FontWatcher';
 import { storeRoomAliasInCache } from '../../RoomAliasCache';
 import { defer, IDeferred } from "../../utils/promise";
-import ToastStore from "../../stores/ToastStore";
+import ToastStore, {Priority} from "../../stores/ToastStore";
 import * as StorageManager from "../../utils/StorageManager";
 import type LoggedInViewType from "./LoggedInView";
 import { ViewUserPayload } from "../../dispatcher/payloads/ViewUserPayload";
 import { Action } from "../../dispatcher/actions";
-import {
-    showToast as showAnalyticsToast,
-    hideToast as hideAnalyticsToast
-} from "../../toasts/AnalyticsToast";
+import { showToast as showAnalyticsToast,  hideToast as hideAnalyticsToast } from "../../toasts/AnalyticsToast";
 import {showToast as showNotificationsToast} from "../../toasts/DesktopNotificationsToast";
 import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
 import ErrorDialog from "../views/dialogs/ErrorDialog";
@@ -1533,7 +1530,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     icon: "verification",
                     props: {request},
                     component: sdk.getComponent("toasts.VerificationRequestToast"),
-                    priority: 90,
+                    priority: Priority.VerificationRequest,
                 });
             }
         });

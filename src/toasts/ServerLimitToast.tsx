@@ -18,7 +18,7 @@ import React from "react";
 
 import { _t, _td } from "../languageHandler";
 import GenericToast from "../components/views/toasts/GenericToast";
-import ToastStore from "../stores/ToastStore";
+import ToastStore, {Priority} from "../stores/ToastStore";
 import {messageForResourceLimitError} from "../utils/ErrorUtils";
 
 const TOAST_KEY = "serverlimit";
@@ -41,7 +41,7 @@ export const showToast = (limitType: string, adminContact?: string, syncError?: 
             onAccept: hideToast,
         },
         component: GenericToast,
-        priority: 70,
+        priority: Priority.ServerLimit,
     });
 };
 

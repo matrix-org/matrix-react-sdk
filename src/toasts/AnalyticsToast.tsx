@@ -22,7 +22,7 @@ import dis from "../dispatcher/dispatcher";
 import Analytics from "../Analytics";
 import AccessibleButton from "../components/views/elements/AccessibleButton";
 import GenericToast from "../components/views/toasts/GenericToast";
-import ToastStore from "../stores/ToastStore";
+import ToastStore, {Priority} from "../stores/ToastStore";
 
 const onAccept = () => {
     dis.dispatch({
@@ -70,7 +70,7 @@ export const showToast = (policyUrl?: string) => {
             onReject,
         },
         component: GenericToast,
-        priority: 10,
+        priority: Priority.AnalyticsPrompt,
     });
 };
 

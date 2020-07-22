@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import SdkConfig from "./SdkConfig";
-import ToastStore from "./stores/ToastStore";
+import ToastStore, {Priority} from "./stores/ToastStore";
 import GenericToast from "./components/views/toasts/GenericToast";
 import RebrandDialog from "./components/views/dialogs/RebrandDialog";
 import { RebrandDialogKind } from "./components/views/dialogs/RebrandDialog";
@@ -159,7 +159,7 @@ export default class RebrandListener {
                     onAccept: nagToast ? this.onNagToastLearnMore : this.onOneTimeToastLearnMore,
                 },
                 component: GenericToast,
-                priority: 20,
+                priority: Priority.Rebrand,
             });
         } else {
             ToastStore.sharedInstance().dismissToast(TOAST_KEY);

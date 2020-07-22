@@ -17,7 +17,7 @@ limitations under the License.
 import { _t } from "../languageHandler";
 import Notifier from "../Notifier";
 import GenericToast from "../components/views/toasts/GenericToast";
-import ToastStore from "../stores/ToastStore";
+import ToastStore, {Priority} from "../stores/ToastStore";
 
 const onAccept = () => {
     Notifier.setEnabled(true);
@@ -41,7 +41,7 @@ export const showToast = () => {
             onReject,
         },
         component: GenericToast,
-        priority: 30,
+        priority: Priority.DesktopNotificationsPrompt,
     });
 };
 
