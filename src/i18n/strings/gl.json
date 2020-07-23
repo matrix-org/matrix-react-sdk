@@ -1309,7 +1309,7 @@
     "This bridge is managed by <user />.": "Esta ponte está xestionada por <user />.",
     "Workspace: %(networkName)s": "Espazo de traballo: %(networkName)s",
     "Channel: %(channelName)s": "Canal: %(channelName)s",
-    "Show less": "Mostrar menos",
+    "Show fewer": "Mostrar menos",
     "Show more": "Mostrar máis",
     "Changing password will currently reset any end-to-end encryption keys on all sessions, making encrypted chat history unreadable, unless you first export your room keys and re-import them afterwards. In future this will be improved.": "Ao cambiar o contrasinal vas restablecer todas as chaves de cifrado extremo-a-extremo en tódalas sesións, facendo que o historial de conversa cifrado non sexa lexible, a menos que primeiro exportes todas as chaves das salas e as importes posteriormente. No futuro melloraremos o procedemento.",
     "Your homeserver does not support cross-signing.": "O teu servidor non soporta a sinatura cruzada.",

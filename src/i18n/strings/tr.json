@@ -1412,7 +1412,7 @@
     "Review": "Gözden Geçirme",
     "Workspace: %(networkName)s": "Çalışma alanı: %(networkName)s",
     "Channel: %(channelName)s": "Kanal: %(channelName)s",
-    "Show less": "Daha az göster",
+    "Show fewer": "Daha az göster",
     "Show more": "Daha fazla göster",
     "in memory": "hafızada",
     "in secret storage": "sır deposunda",

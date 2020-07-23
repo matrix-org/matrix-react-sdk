@@ -883,7 +883,7 @@
     "From %(deviceName)s (%(deviceId)s)": "Seadmest %(deviceName)s (%(deviceId)s)",
     "Decline (%(counter)s)": "Lükka tagasi (%(counter)s)",
     "Accept <policyLink /> to continue:": "Jätkamiseks nõustu <policyLink />'ga:",
-    "Show less": "Näita vähem",
+    "Show fewer": "Näita vähem",
     "Show more": "Näita rohkem",
     "Warning!": "Hoiatus!",
     "Do you want to set an email address?": "Kas sa soovid seadistada e-posti aadressi?",

@@ -1842,7 +1842,7 @@
     "This bridge was provisioned by <user />.": "Мостът е настроен от <user />.",
     "Workspace: %(networkName)s": "Работна област: %(networkName)s",
     "Channel: %(channelName)s": "Канал: %(channelName)s",
-    "Show less": "Покажи по-малко",
+    "Show fewer": "Покажи по-малко",
     "Changing password will currently reset any end-to-end encryption keys on all sessions, making encrypted chat history unreadable, unless you first export your room keys and re-import them afterwards. In future this will be improved.": "Промяната на паролата в момента би нулирало всички ключове за шифроване-от-край-до-край, правейки историята на чата нечетима, освен ако първо не експортирате ключовете, а след промяната на паролата ги импортирате. В бъдеще, това ще бъде подобрено.",
     "Your homeserver does not support cross-signing.": "Сървърът ви не поддържа кръстосано-подписване.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Профилът ви има самоличност за кръстосано подписване в секретно складиране, но все още не е доверено от тази сесия.",

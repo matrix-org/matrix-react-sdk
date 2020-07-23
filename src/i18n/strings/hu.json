@@ -1795,7 +1795,7 @@
     "This bridge was provisioned by <user />.": "Ezt a hidat az alábbi felhasználó készítette: <user />.",
     "Workspace: %(networkName)s": "Munkahely: %(networkName)s",
     "Channel: %(channelName)s": "Csatorna: %(channelName)s",
-    "Show less": "Kevesebbet mutat",
+    "Show fewer": "Kevesebbet mutat",
     "Securely cache encrypted messages locally for them to appear in search results, using ": "A titkosított üzenetek kereséséhez azokat biztonságos módon helyileg kell tárolnod, felhasználva: ",
     " to store messages from ": " üzenetek eltárolásához innen ",
     "rooms.": "szobák.",

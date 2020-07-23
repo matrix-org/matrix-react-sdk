@@ -655,7 +655,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                 // we have all tiles visible - add a button to show less
                 let showLessText = (
                     <span className='mx_RoomSublist_showNButtonText'>
-                        {_t("Show less")}
+                        {_t("Show fewer")}
                     </span>
                 );
                 if (this.props.isMinimized) showLessText = null;

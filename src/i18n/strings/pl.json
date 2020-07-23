@@ -1284,7 +1284,7 @@
     "%(num)s hours ago": "%(num)s godzin temu",
     "%(num)s days ago": "%(num)s dni temu",
     "Later": "Później",
-    "Show less": "Pokaż mniej",
+    "Show fewer": "Pokaż mniej",
     "Show more": "Pokaż więcej",
     "Clear notifications": "Wyczyść powiadomienia",
     "Theme added!": "Dodano motyw!",

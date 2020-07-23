@@ -106,7 +106,7 @@ export default class BridgeTile extends React.PureComponent {
                     {creator} {bot}
                 </p>
                 <AccessibleButton className="mx_showMore" kind="secondary" onClick={this._toggleVisible.bind(this)}>
-                    { this.state.visible ? _t("Show less") : _t("Show more") }
+                    { this.state.visible ? _t("Show fewer") : _t("Show more") }
                 </AccessibleButton>
             </div>
         </li>);

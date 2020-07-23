@@ -1275,7 +1275,7 @@
     "Show all": "すべて表示",
     "Message deleted": "メッセージが削除されました",
     "Message deleted by %(name)s": "%(name)s によってメッセージが削除されました",
-    "Show less": "詳細を非表示",
+    "Show fewer": "詳細を非表示",
     "Show more": "詳細を表示",
     "Backup has a <validity>valid</validity> signature from this user": "バックアップには、このユーザーによる<validity>有効</validity>な署名があります",
     "Backup has a <validity>invalid</validity> signature from this user": "バックアップには、このユーザーによる<validity>無効</validity>な署名があります",

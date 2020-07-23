@@ -382,7 +382,7 @@ export default class AliasSettings extends React.Component {
                 <span className='mx_SettingsTab_subheading mx_AliasSettings_localAliasHeader'>{_t("Local Addresses")}</span>
                 <p>{_t("Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)", {localDomain})}</p>
                 <details onToggle={this.onLocalAliasesToggled}>
-                    <summary>{ this.state.detailsOpen ? _t('Show less') : _t("Show more")}</summary>
+                    <summary>{ this.state.detailsOpen ? _t('Show fewer') : _t("Show more")}</summary>
                     {localAliasesList}
                 </details>
             </div>

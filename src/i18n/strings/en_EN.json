@@ -620,7 +620,7 @@
     "This bridge is managed by <user />.": "This bridge is managed by <user />.",
     "Workspace: %(networkName)s": "Workspace: %(networkName)s",
     "Channel: %(channelName)s": "Channel: %(channelName)s",
-    "Show less": "Show less",
+    "Show fewer": "Show fewer",
     "Show more": "Show more",
     "Failed to upload profile picture!": "Failed to upload profile picture!",
     "Upload new:": "Upload new:",

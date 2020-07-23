@@ -1670,7 +1670,7 @@
     "This bridge is managed by <user />.": "Diese Brücke wird von <user /> verwaltet.",
     "Workspace: %(networkName)s": "Arbeitsbereich: %(networkName)s",
     "Channel: %(channelName)s": "Kanal: %(channelName)s",
-    "Show less": "Weniger zeigen",
+    "Show fewer": "Weniger zeigen",
     "<b>Warning</b>: You should only set up key backup from a trusted computer.": "<b>Achtung</b>: Du solltest die Schlüsselsicherung nur auf einem vertrauenswürdigen Gerät einrichten.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won’t be able to read all of your secure messages in any session.": "Melde dich an um die ausschließlich in dieser Sitzung gespeicherten Verschlüsselungsschlüssel wiederherzustellen. Du benötigst sie, um deine verschlüsselten Nachrichten in jeder Sitzung zu lesen.",
     "Forgotten your password?": "Passwort vergessen?",

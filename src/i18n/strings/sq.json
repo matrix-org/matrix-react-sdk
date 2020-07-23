@@ -1821,7 +1821,7 @@
     "This bridge was provisioned by <user />.": "Kjo urë është dhënë nga <user />.",
     "Workspace: %(networkName)s": "Hapësirë pune: %(networkName)s",
     "Channel: %(channelName)s": "Kanal: %(channelName)s",
-    "Show less": "Shfaq më pak",
+    "Show fewer": "Shfaq më pak",
     "Changing password will currently reset any end-to-end encryption keys on all sessions, making encrypted chat history unreadable, unless you first export your room keys and re-import them afterwards. In future this will be improved.": "Ndryshimi i fjalëkalimit do të sjellë zerimin e çfarëdo kyçesh fshehtëzimi skaj-më-skaj në krejt sesionet, duke e bërë të palexueshëm historikun e fshehtëzuar të bisedave, hiq rastin kur i eksportoni më parë kyçet tuaj të dhomës dhe i ri-importoni ata më pas. Në të ardhmen kjo do të përmirësohet.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Llogaria juaj ka një identitet <em>cross-signing</em> në depozitë të fshehtë, por s’është ende i besuar në këtë sesion.",
     "in memory": "në kujtesë",

@@ -1811,7 +1811,7 @@
     "This bridge was provisioned by <user />.": "Cette passerelle a été fournie par <user />.",
     "Workspace: %(networkName)s": "Espace de travail : %(networkName)s",
     "Channel: %(channelName)s": "Canal : %(channelName)s",
-    "Show less": "En voir moins",
+    "Show fewer": "En voir moins",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Ce salon transmet les messages vers les plateformes suivantes. <a>En savoir plus.</a>",
     "This room isn’t bridging messages to any platforms. <a>Learn more.</a>": "Ce salon ne transmet les messages à aucune plateforme. <a>En savoir plus.</a>",
     "Bridges": "Passerelles",

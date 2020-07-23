@@ -1755,7 +1755,7 @@
     "This bridge is managed by <user />.": "Toto propojení spravuje <user />.",
     "Workspace: %(networkName)s": "Workspace: %(networkName)s",
     "Channel: %(channelName)s": "Kanál: %(channelName)s",
-    "Show less": "Skrýt detaily",
+    "Show fewer": "Skrýt detaily",
     "Show more": "Více",
     "Changing password will currently reset any end-to-end encryption keys on all sessions, making encrypted chat history unreadable, unless you first export your room keys and re-import them afterwards. In future this will be improved.": "Změna hesla resetuje šifrovací klíče pro všechny vaše relace. Pokud si nejdřív nevyexportujete klíče místností a po změně je znovu neimportujete, nedostanete se k historickým zprávám. V budoucnu se toto zjednoduší.",
     "Cross-signing and secret storage are enabled.": "Cross-signing a bezpečné úložiště jsou zapnuté.",

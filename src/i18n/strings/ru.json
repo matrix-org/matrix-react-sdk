@@ -1672,7 +1672,7 @@
     "This bridge is managed by <user />.": "Этот мост управляется <user />.",
     "Workspace: %(networkName)s": "Рабочая область: %(networkName)s",
     "Channel: %(channelName)s": "Канал: %(channelName)s",
-    "Show less": "Показать меньше",
+    "Show fewer": "Показать меньше",
     "Show more": "Показать больше",
     "Changing password will currently reset any end-to-end encryption keys on all sessions, making encrypted chat history unreadable, unless you first export your room keys and re-import them afterwards. In future this will be improved.": "Если вы не экспортируете ключи для этой комнаты и не импортируете их в будущем, смена пароля приведёт к сбросу всех ключей сквозного шифрования и сделает невозможным чтение истории чата. В будущем это будет улучшено.",
     "Whether you're using %(brand)s on a device where touch is the primary input mechanism": "Используете ли вы %(brand)s на устройстве с тач-дисплеем в качестве основного способа ввода",
