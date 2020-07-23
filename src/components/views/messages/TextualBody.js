@@ -36,6 +36,7 @@ import {isPermalinkHost} from "../../../utils/permalinks/Permalinks";
 import {toRightOf} from "../../structures/ContextMenu";
 import {copyPlaintext} from "../../../utils/strings";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
+import {getUserNameColorClass} from '../../../utils/FormattingUtils';
 
 export default createReactClass({
     displayName: 'TextualBody',
@@ -437,11 +438,12 @@ export default createReactClass({
 
         switch (content.msgtype) {
             case "m.emote":
+                const colorClass = getUserNameColorClass(mxEvent.getSender());
                 return (
                     <span className="mx_MEmoteBody mx_EventTile_content">
                         *&nbsp;
                         <span
-                            className="mx_MEmoteBody_sender"
+                            className={`mx_MEmoteBody_sender ${colorClass}`}
                             onClick={this.onEmoteSenderClick}
                         >
                             { mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender() }
