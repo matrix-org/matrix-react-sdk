@@ -268,7 +268,7 @@ const getMismatchedNotifyMeWith = (pushRules: PushRuleMap, value: NotificationSe
     }
 };
 
-export const upsertServerPushRule = (cli: MatrixClient, rule: IExtendedPushRule, enabled: boolean, actions: ActionType[]) => {
+export const updateServerPushRule = (cli: MatrixClient, rule: IExtendedPushRule, enabled: boolean, actions: ActionType[]) => {
     const promises: Promise<any>[] = [];
 
     if (rule.enabled !== enabled) {
@@ -284,14 +284,14 @@ export const upsertServerPushRule = (cli: MatrixClient, rule: IExtendedPushRule,
 
 export const writeNotifyMeWith = (cli: MatrixClient, pushRules: PushRuleMap, value: NotificationSetting) => {
     if (value === NotificationSetting.Never) {
-        return upsertServerPushRule(cli, pushRules.get(RuleId.Master), true, []);
+        return updateServerPushRule(cli, pushRules.get(RuleId.Master), true, []);
     }
 
     return Promise.all([
-        upsertServerPushRule(cli, pushRules.get(RuleId.Master), false, []),
-        upsertServerPushRule(cli, pushRules.get(RuleId.RoomOneToOne),
+        updateServerPushRule(cli, pushRules.get(RuleId.Master), false, []),
+        updateServerPushRule(cli, pushRules.get(RuleId.RoomOneToOne),
             value !== NotificationSetting.MentionsKeywordsOnly, [Action.Notify, DefaultSoundTweak]),
-        upsertServerPushRule(cli, pushRules.get(RuleId.Message),
+        updateServerPushRule(cli, pushRules.get(RuleId.Message),
             value === NotificationSetting.AllMessages, [Action.Notify]),
     ]);
 };
