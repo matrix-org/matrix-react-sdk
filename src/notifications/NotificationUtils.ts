@@ -15,9 +15,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {ActionType, Action, IExtendedPushRule, IPushRuleSet, NotificationSetting, RuleId} from "./types";
+import MatrixClient from "matrix-js-sdk/src/client";
+
+import {
+    Action,
+    ActionType,
+    DefaultSoundTweak,
+    IExtendedPushRule,
+    IPushRuleSet,
+    NotificationSetting,
+    RuleId
+} from "./types";
 import {EventEmitter} from "events";
 import {objectDiff} from "../utils/objects";
+import {SCOPE} from "./ContentRules";
+import {arrayHasDiff} from "../utils/arrays";
 
 interface IEncodedActions {
     notify: boolean;
@@ -110,14 +122,18 @@ const notifyMeWithDmMentionsKeywordsRules = [
 
 const notifyMeWithMentionsKeywordsRules = [
     RuleId.Encrypted,
-    RuleId.ContainsUserName,
-    RuleId.ContainsDisplayName,
-    RuleId.InviteForMe, // TODO Maybe?
-];
 
-// TODO handle
-// RuleId.SuppressNotices;
-// RuleId.SuppressEdits;
+    RuleId.InviteForMe, // TODO Maybe?
+
+    // These have their own toggles:
+    // RuleId.ContainsUserName,
+    // RuleId.ContainsDisplayName,
+    // RuleId.RoomNotif,
+
+    // TODO handle
+    // RuleId.SuppressNotices;
+    // RuleId.SuppressEdits;
+];
 
 export class PushRuleMap extends EventEmitter implements Partial<Map<string, IExtendedPushRule>> {
     private map: Map<string, IExtendedPushRule>;
@@ -250,4 +266,32 @@ const getMismatchedNotifyMeWith = (pushRules: PushRuleMap, value: NotificationSe
             ].filter(rule => !rule.enabled || !rule.actions.includes(Action.Notify));
 
     }
+};
+
+export const upsertServerPushRule = (cli: MatrixClient, rule: IExtendedPushRule, enabled: boolean, actions: ActionType[]) => {
+    const promises: Promise<any>[] = [];
+
+    if (rule.enabled !== enabled) {
+        promises.push(cli.setPushRuleEnabled(SCOPE, rule.kind, rule.rule_id, enabled));
+    }
+
+    if (arrayHasDiff(rule.actions, actions)) {
+        promises.push(cli.setPushRuleActions(SCOPE, rule.kind, rule.rule_id, actions));
+    }
+
+    return Promise.all(promises);
+};
+
+export const writeNotifyMeWith = (cli: MatrixClient, pushRules: PushRuleMap, value: NotificationSetting) => {
+    if (value === NotificationSetting.Never) {
+        return upsertServerPushRule(cli, pushRules.get(RuleId.Master), true, []);
+    }
+
+    return Promise.all([
+        upsertServerPushRule(cli, pushRules.get(RuleId.Master), false, []),
+        upsertServerPushRule(cli, pushRules.get(RuleId.RoomOneToOne),
+            value !== NotificationSetting.MentionsKeywordsOnly, [Action.Notify, DefaultSoundTweak]),
+        upsertServerPushRule(cli, pushRules.get(RuleId.Message),
+            value === NotificationSetting.AllMessages, [Action.Notify]),
+    ]);
 };
