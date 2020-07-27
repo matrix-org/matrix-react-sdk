@@ -43,6 +43,11 @@ export interface IHighlightTweak {
     value?: boolean;
 }
 
+export const DefaultSoundTweak: ISoundTweak = {
+    set_tweak: "sound",
+    value: "default",
+};
+
 export type Tweak = ISoundTweak | IHighlightTweak;
 
 export enum Action {

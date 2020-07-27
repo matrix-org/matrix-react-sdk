@@ -28,9 +28,12 @@ import {useAccountData} from "../../../../../hooks/useAccountData";
 import MentionsKeywordsSection from "../../notifications/MentionsKeywordsSection";
 import {
     Action,
+    ActionType,
     compareNotificationSettings,
+    DefaultSoundTweak,
     IExtendedPushRule,
     IRuleSets,
+    Kind,
     NotificationSetting,
     RuleId,
 } from "../../../../../notifications/types";
@@ -39,6 +42,8 @@ import StyledRadioGroup from "../../../elements/StyledRadioGroup";
 import {State} from "../../../../../notifications/PushRuleVectorState";
 import AdvancedNotificationsSection from "../../notifications/AdvancedNotificationsSection";
 import {PushRuleMap} from "../../../../../notifications/NotificationUtils";
+import {SCOPE} from "../../../../../notifications/ContentRules";
+import {arrayHasDiff} from "../../../../../utils/arrays";
 
 const notifyMeWithAllRules = [
     RuleId.Message,
@@ -85,6 +90,34 @@ const calculateNotifyMeWith = (pushRules: PushRuleMap): NotificationSetting => {
     return NotificationSetting.Never; // no?
 };
 
+const upsertServerPushRule = (cli: MatrixClient, rule: IExtendedPushRule, enabled: boolean, actions: ActionType[]) => {
+    const promises: Promise<any>[] = [];
+
+    if (rule.enabled !== enabled) {
+        promises.push(cli.setPushRuleEnabled(SCOPE, rule.kind, rule.rule_id, enabled));
+    }
+
+    if (arrayHasDiff(rule.actions, actions)) {
+        promises.push(cli.setPushRuleActions(SCOPE, rule.kind, rule.rule_id, actions));
+    }
+
+    return Promise.all(promises);
+};
+
+const writeNotifyMeWith = (cli: MatrixClient, pushRules: PushRuleMap, value: NotificationSetting) => {
+    if (value === NotificationSetting.Never) {
+        return upsertServerPushRule(cli, pushRules.get(RuleId.Master), true, []);
+    }
+
+    return Promise.all([
+        upsertServerPushRule(cli, pushRules.get(RuleId.Master), false, []),
+        upsertServerPushRule(cli, pushRules.get(RuleId.RoomOneToOne),
+            value !== NotificationSetting.MentionsKeywordsOnly, [Action.Notify, DefaultSoundTweak]),
+        upsertServerPushRule(cli, pushRules.get(RuleId.Message),
+            value === NotificationSetting.AllMessages, [Action.Notify]),
+    ]);
+};
+
 const getMismatchedNotifyMeWith = (pushRules: PushRuleMap, value: NotificationSetting): IExtendedPushRule[] => {
     return []; // TODO
 };
@@ -120,9 +153,11 @@ const NotificationUserSettingsTab2: React.FC = () => {
 
     if (!pushRulesMap) return null;
 
-    const onNotifyMeWithChange = value => {
+    const onNotifyMeWithChange = (value: NotificationSetting) => {
         setNotifyMeWith(value);
-        // TODO update push rules
+        writeNotifyMeWith(cli, pushRulesMap, value).catch(e => {
+            console.log(e); // TODO error handling
+        });
     };
 
     const mentionsKeywordsSectionDisabled = notifyMeWith === NotificationSetting.Never;

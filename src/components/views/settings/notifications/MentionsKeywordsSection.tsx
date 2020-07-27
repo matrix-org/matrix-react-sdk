@@ -184,6 +184,7 @@ const PushRuleCheckbox: React.FC<IPushRuleCheckboxProps> = ({pushRules, ruleId, 
                     await cli.setPushRuleActions(SCOPE, rule.kind, rule.rule_id, [...rule.actions, action]);
                 }
             } catch (e) {
+                console.log(e);
                 // TODO error handling
             }
         })();
@@ -198,7 +199,8 @@ const MentionsKeywordsSection: React.FC<IProps> = ({disabled, contentRules, push
     const cli = useContext<MatrixClient>(MatrixClientContext);
     let rules = pushRules.getKeywordRules();
     if (keywordsEnabled) {
-        // TODO we need to show a warning here
+        // TODO we need to show a warning here if we filtered any keyword rules out
+        // or if any keyword rules have mismatched actions/additional conditions
         // filter out any disabled rules
         rules = rules.filter(r => r.enabled);
     }
