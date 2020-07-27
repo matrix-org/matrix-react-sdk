@@ -759,7 +759,6 @@ const TimelinePanel = createReactClass({
             // to zero: it may not do this if we send an RR for somewhere before the end.
             if (this.isAtEndOfLiveTimeline()) {
                 this.props.timelineSet.room.setUnreadNotificationCount('total', 0);
-                this.props.timelineSet.room.setUnreadNotificationCount('unread', 0);
                 this.props.timelineSet.room.setUnreadNotificationCount('highlight', 0);
                 dis.dispatch({
                     action: 'on_room_read',
