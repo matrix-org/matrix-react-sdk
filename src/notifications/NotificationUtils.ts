@@ -16,6 +16,8 @@ limitations under the License.
 */
 
 import {ActionType, Action, IExtendedPushRule, IPushRuleSet} from "./types";
+import {EventEmitter} from "events";
+import {objectDiff} from "../utils/objects";
 
 interface IEncodedActions {
     notify: boolean;
@@ -95,9 +97,54 @@ export class NotificationUtils {
     }
 }
 
-export class PushRuleMap extends Map<string, IExtendedPushRule> {
-    constructor(public readonly rules: IPushRuleSet) {
-        super(Object.values(rules).flat(1).reverse().map(r => [r.rule_id, r]));
+export const EVENT_KEYWORDS_CHANGED = Symbol("event-keywords-changed");
+
+export class PushRuleMap extends EventEmitter implements Partial<Map<string, IExtendedPushRule>> {
+    private map: Map<string, IExtendedPushRule>;
+
+    constructor(private _rules: IPushRuleSet) {
+        super();
+        this.setPushRules(_rules);
+    }
+
+    public get rules() {
+        return  this._rules;
+    }
+
+    public setPushRules(rules: IPushRuleSet) {
+        // tag them with kind so they make sense when flattened
+        Object.keys(rules).forEach(kind => {
+            rules[kind].forEach(rule => {
+                rule.kind = kind;
+            });
+        });
+
+        this.map = new Map(Object.values(rules).flat(1).reverse().map(r => [r.rule_id, r]));
+        const oldRules = this.rules;
+        this._rules = rules;
+
+        const contentRuleChanges = objectDiff(oldRules.content, rules.content);
+
+        const changedRules = new Set<string>();
+        [
+            contentRuleChanges,
+            objectDiff(oldRules.override, rules.override),
+            objectDiff(oldRules.room, rules.room),
+            objectDiff(oldRules.sender, rules.sender),
+            objectDiff(oldRules.underride, rules.underride),
+        ].forEach(diff => {
+            diff.added.forEach(k => changedRules.add(k));
+            diff.removed.forEach(k => changedRules.add(k));
+            diff.changed.forEach(k => changedRules.add(k));
+        });
+
+        [...changedRules].forEach(k => {
+            this.emit(k, this.map.get(k));
+        });
+
+        if (contentRuleChanges.added.length || contentRuleChanges.removed.length || contentRuleChanges.changed.length) {
+            this.emit(EVENT_KEYWORDS_CHANGED);
+        }
     }
 
     hasEnabledRuleWithAction(ruleId: string, action: ActionType) {
@@ -109,5 +156,13 @@ export class PushRuleMap extends Map<string, IExtendedPushRule> {
     // TODO this is different than it used to be
     getKeywordRules(): IExtendedPushRule[] {
         return this.rules.content.filter(r => !r.rule_id.startsWith("."));
+    }
+
+    get(key: string): IExtendedPushRule | undefined {
+        return this.map.get(key);
+    }
+
+    has(key: string): boolean {
+        return this.map.has(key);
     }
 }

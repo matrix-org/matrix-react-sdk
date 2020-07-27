@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useRef, useState, useContext} from "react";
+import React, {useCallback, useContext, useRef, useState} from "react";
 import classNames from "classnames";
 import {MatrixClient} from "matrix-js-sdk/src/client";
 
@@ -26,12 +26,16 @@ import {Key} from "../../../../Keyboard";
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import Modal from "../../../../Modal";
 import ErrorDialog from "../../dialogs/ErrorDialog";
-import {ContentRules, IContentRules} from "../../../../notifications/ContentRules";
+import {ContentRules, IContentRules, SCOPE} from "../../../../notifications/ContentRules";
+import {PushRuleMap} from "../../../../notifications/NotificationUtils";
+import {Action, ActionType, IExtendedPushRule, RuleId} from "../../../../notifications/types";
+import {useEventEmitter} from "../../../../hooks/useEventEmitter";
 
 
 interface IProps {
     disabled?: boolean;
-    contentRules: IContentRules;
+    contentRules: IContentRules; // TODO consolidate into PushRuleMap
+    pushRules: PushRuleMap;
     keywordsEnabled: boolean;
     soundEnabled: boolean;
     setKeywordsEnabled(enabled: boolean);
@@ -144,10 +148,57 @@ const onError = (error) => {
     });
 };
 
-const MentionsKeywordsSection: React.FC<IProps> = ({disabled, contentRules, keywordsEnabled, setKeywordsEnabled, soundEnabled}) => {
+interface IPushRuleCheckboxProps {
+    pushRules: PushRuleMap;
+    ruleId: RuleId | string;
+    disabled?: boolean;
+    action: ActionType;
+    label: string;
+}
+
+const ruleMatchesAction = (rule: IExtendedPushRule, action: ActionType) => {
+    return rule.enabled && rule.actions.includes(action);
+};
+
+const PushRuleCheckbox: React.FC<IPushRuleCheckboxProps> = ({pushRules, ruleId, action, disabled, label}) => {
+    const cli = useContext(MatrixClientContext);
+    const [checked, setChecked] = useState(ruleMatchesAction(pushRules.get(ruleId), action));
+
+    const handler = useCallback((rule: IExtendedPushRule) => {
+        setChecked(ruleMatchesAction(rule, action));
+    }, [action]);
+    useEventEmitter(pushRules, ruleId, handler);
+
+    const onChange = useCallback(() => {
+        const enabled = !checked;
+        // local echo
+        setChecked(enabled);
+
+        const rule = pushRules.get(ruleId);
+        (async () => {
+            try {
+                if (rule.enabled !== enabled) {
+                    await cli.setPushRuleEnabled(SCOPE, rule.kind, ruleId, enabled);
+                }
+                if (enabled && !rule.actions.includes(action)) {
+                    await cli.setPushRuleActions(SCOPE, rule.kind, rule.rule_id, [...rule.actions, action]);
+                }
+            } catch (e) {
+                // TODO error handling
+            }
+        })();
+    }, [cli, checked, pushRules, ruleId, action]);
+
+    return <StyledCheckbox disabled={disabled} checked={checked} onChange={onChange}>
+        { label }
+    </StyledCheckbox>
+};
+
+const MentionsKeywordsSection: React.FC<IProps> = ({disabled, contentRules, pushRules, keywordsEnabled, setKeywordsEnabled, soundEnabled}) => {
     const cli = useContext<MatrixClient>(MatrixClientContext);
-    let rules = contentRules.rules;
+    let rules = pushRules.getKeywordRules();
     if (keywordsEnabled) {
+        // TODO we need to show a warning here
         // filter out any disabled rules
         rules = rules.filter(r => r.enabled);
     }
@@ -174,17 +225,29 @@ const MentionsKeywordsSection: React.FC<IProps> = ({disabled, contentRules, keyw
         ContentRules.updateContentRules(cli, contentRules, e.target.checked, soundEnabled).catch(onError);
     };
 
-    // TODO wire up these checkboxes
     return <SettingsSection title={_t("Mentions & Keywords")} className="mx_NotificationsTab_mentionsKeywords">
-        <StyledCheckbox disabled={disabled}>
-            {_t("Notify when someone mentions using your name")}
-        </StyledCheckbox>
-        <StyledCheckbox disabled={disabled}>
-            {_t("Notify when someone mentions using your username")}
-        </StyledCheckbox>
-        <StyledCheckbox>
-            {_t("Notify when someone mentions using @room")}
-        </StyledCheckbox>
+        <PushRuleCheckbox
+            disabled={disabled}
+            pushRules={pushRules}
+            ruleId={RuleId.ContainsDisplayName}
+            action={Action.Notify}
+            label={_t("Notify when someone mentions using your name")}
+        />
+        <PushRuleCheckbox
+            disabled={disabled}
+            pushRules={pushRules}
+            ruleId={RuleId.ContainsUserName}
+            action={Action.Notify}
+            label={_t("Notify when someone mentions using your username")}
+        />
+        <PushRuleCheckbox
+            disabled={disabled}
+            pushRules={pushRules}
+            ruleId={RuleId.RoomNotif}
+            action={Action.Notify}
+            label={_t("Notify when someone mentions using @room")}
+        />
+
         <StyledCheckbox disabled={disabled} checked={keywordsEnabled} onChange={onKeywordsEnabledChange}>
             {_t("Notify when someone uses a keyword")}
         </StyledCheckbox>

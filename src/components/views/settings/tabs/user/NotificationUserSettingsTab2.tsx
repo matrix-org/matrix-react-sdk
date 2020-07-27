@@ -158,6 +158,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
 
         <MentionsKeywordsSection
             disabled={mentionsKeywordsSectionDisabled}
+            pushRules={pushRulesMap}
             contentRules={contentRules}
             keywordsEnabled={keywordsEnabled}
             setKeywordsEnabled={setKeywordsEnabled}
