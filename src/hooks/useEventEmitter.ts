@@ -20,7 +20,7 @@ import {EventEmitter} from "events";
 type Handler = (...args: any[]) => void;
 
 // Hook to wrap event emitter on and removeListener in hook lifecycle
-export const useEventEmitter = (emitter: EventEmitter, eventName: string, handler: Handler) => {
+export const useEventEmitter = (emitter: EventEmitter, eventName: string | symbol, handler: Handler) => {
     // Create a ref that stores handler
     const savedHandler = useRef<Handler>();
 

@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {ActionType, Action, IExtendedPushRule, IPushRuleSet} from "./types";
+import {ActionType, Action, IExtendedPushRule, IPushRuleSet, NotificationSetting, RuleId} from "./types";
 import {EventEmitter} from "events";
 import {objectDiff} from "../utils/objects";
 
@@ -98,17 +98,42 @@ export class NotificationUtils {
 }
 
 export const EVENT_KEYWORDS_CHANGED = Symbol("event-keywords-changed");
+export const EVENT_NOTIFY_ME_WITH_CHANGED = Symbol("notify-me-with-changed");
+
+const notifyMeWithAllRules = [
+    RuleId.Message,
+];
+
+const notifyMeWithDmMentionsKeywordsRules = [
+    RuleId.RoomOneToOne,
+];
+
+const notifyMeWithMentionsKeywordsRules = [
+    RuleId.Encrypted,
+    RuleId.ContainsUserName,
+    RuleId.ContainsDisplayName,
+    RuleId.InviteForMe, // TODO Maybe?
+];
+
+// TODO handle
+// RuleId.SuppressNotices;
+// RuleId.SuppressEdits;
 
 export class PushRuleMap extends EventEmitter implements Partial<Map<string, IExtendedPushRule>> {
     private map: Map<string, IExtendedPushRule>;
+    private _notifyMeWith: NotificationSetting = null;
 
-    constructor(private _rules: IPushRuleSet) {
+    constructor(private _rules?: IPushRuleSet) {
         super();
         this.setPushRules(_rules);
     }
 
     public get rules() {
-        return  this._rules;
+        return this._rules;
+    }
+
+    public get notifyMeWith() {
+        return this._notifyMeWith;
     }
 
     public setPushRules(rules: IPushRuleSet) {
@@ -120,8 +145,15 @@ export class PushRuleMap extends EventEmitter implements Partial<Map<string, IEx
         });
 
         this.map = new Map(Object.values(rules).flat(1).reverse().map(r => [r.rule_id, r]));
+
         const oldRules = this.rules;
+        const oldNotifyMeWidth = this._notifyMeWith;
         this._rules = rules;
+        this._notifyMeWith = this.calculateNotifyMeWith();
+
+        if (oldNotifyMeWidth !== this._notifyMeWith) {
+            this.emit(EVENT_NOTIFY_ME_WITH_CHANGED, this._notifyMeWith);
+        }
 
         const contentRuleChanges = objectDiff(oldRules.content, rules.content);
 
@@ -147,22 +179,75 @@ export class PushRuleMap extends EventEmitter implements Partial<Map<string, IEx
         }
     }
 
-    hasEnabledRuleWithAction(ruleId: string, action: ActionType) {
+    private calculateNotifyMeWith = (): NotificationSetting => {
+        if (this.get(RuleId.Master).enabled) {
+            return NotificationSetting.Never;
+        }
+
+        if (notifyMeWithAllRules.some(id => this.hasEnabledRuleWithAction(id, Action.Notify))) {
+            return NotificationSetting.AllMessages;
+        }
+
+        if (notifyMeWithDmMentionsKeywordsRules.some(id => this.hasEnabledRuleWithAction(id, Action.Notify))) {
+            return NotificationSetting.DirectMessagesMentionsKeywords;
+        }
+
+        if (notifyMeWithMentionsKeywordsRules.some(id => this.hasEnabledRuleWithAction(id, Action.Notify))) {
+            return NotificationSetting.MentionsKeywordsOnly;
+        }
+        if (this.getKeywordRules().some(r => r.enabled && r.actions.includes(Action.Notify))) {
+            return NotificationSetting.MentionsKeywordsOnly;
+        }
+
+        return NotificationSetting.Never; // no?
+    };
+
+    public hasEnabledRuleWithAction(ruleId: string, action: ActionType) {
         if (!this.has(ruleId)) return false;
         const rule = this.get(ruleId);
         return rule.enabled && rule.actions.includes(action);
     }
 
     // TODO this is different than it used to be
-    getKeywordRules(): IExtendedPushRule[] {
+    public getKeywordRules(): IExtendedPushRule[] {
         return this.rules.content.filter(r => !r.rule_id.startsWith("."));
     }
 
-    get(key: string): IExtendedPushRule | undefined {
+    public get(key: string): IExtendedPushRule | undefined {
         return this.map.get(key);
     }
 
-    has(key: string): boolean {
+    public has(key: string): boolean {
         return this.map.has(key);
     }
 }
+
+const getMismatchedNotifyMeWith = (pushRules: PushRuleMap, value: NotificationSetting): IExtendedPushRule[] => {
+    // TODO allow keywords to be disabled
+
+    switch (value) {
+        case NotificationSetting.Never:
+            if (pushRules.get(RuleId.Master).enabled) {
+                return [];
+            }
+            return []; // TODO
+
+        case NotificationSetting.AllMessages:
+            return notifyMeWithAllRules.map(id => pushRules.get(id)).filter(rule => {
+                return !rule.enabled || !rule.actions.includes(Action.Notify);
+            });
+
+        case NotificationSetting.MentionsKeywordsOnly:
+            return [
+                ...notifyMeWithMentionsKeywordsRules.map(id => pushRules.get(id)),
+                ...pushRules.getKeywordRules(),
+            ].filter(rule => !rule.enabled || !rule.actions.includes(Action.Notify));
+
+        case NotificationSetting.DirectMessagesMentionsKeywords:
+            return [
+                ...notifyMeWithDmMentionsKeywordsRules.map(id => pushRules.get(id)),
+                ...pushRules.getKeywordRules(),
+            ].filter(rule => !rule.enabled || !rule.actions.includes(Action.Notify));
+
+    }
+};

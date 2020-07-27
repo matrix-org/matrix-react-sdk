@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import MatrixClient from "matrix-js-sdk/src/client";
 
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
@@ -33,7 +33,6 @@ import {
     DefaultSoundTweak,
     IExtendedPushRule,
     IRuleSets,
-    Kind,
     NotificationSetting,
     RuleId,
 } from "../../../../../notifications/types";
@@ -41,54 +40,10 @@ import RoomOverridesSection from "../../notifications/RoomOverridesSection";
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
 import {State} from "../../../../../notifications/PushRuleVectorState";
 import AdvancedNotificationsSection from "../../notifications/AdvancedNotificationsSection";
-import {PushRuleMap} from "../../../../../notifications/NotificationUtils";
+import {EVENT_NOTIFY_ME_WITH_CHANGED, PushRuleMap} from "../../../../../notifications/NotificationUtils";
 import {SCOPE} from "../../../../../notifications/ContentRules";
 import {arrayHasDiff} from "../../../../../utils/arrays";
-
-const notifyMeWithAllRules = [
-    RuleId.Message,
-];
-
-const notifyMeWithDmMentionsKeywordsRules = [
-    RuleId.RoomOneToOne,
-];
-
-const notifyMeWithMentionsKeywordsRules = [
-    RuleId.Encrypted,
-    RuleId.ContainsUserName,
-    RuleId.ContainsDisplayName,
-    // TODO Maybe?
-    RuleId.InviteForMe,
-    // TODO all keyword content rules =(
-];
-
-// TODO handle
-// RuleId.SuppressNotices;
-// RuleId.SuppressEdits;
-
-const calculateNotifyMeWith = (pushRules: PushRuleMap): NotificationSetting => {
-    const masterRule = pushRules.get(RuleId.Master);
-    if (masterRule && masterRule.enabled) {
-        return NotificationSetting.Never;
-    }
-
-    if (notifyMeWithAllRules.some(id => pushRules.hasEnabledRuleWithAction(id, Action.Notify))) {
-        return NotificationSetting.AllMessages;
-    }
-
-    if (notifyMeWithDmMentionsKeywordsRules.some(id => pushRules.hasEnabledRuleWithAction(id, Action.Notify))) {
-        return NotificationSetting.DirectMessagesMentionsKeywords;
-    }
-
-    if (notifyMeWithMentionsKeywordsRules.some(id => pushRules.hasEnabledRuleWithAction(id, Action.Notify))) {
-        return NotificationSetting.MentionsKeywordsOnly;
-    }
-    if (pushRules.getKeywordRules().some(r => r.enabled && r.actions.includes(Action.Notify))) {
-        return NotificationSetting.MentionsKeywordsOnly;
-    }
-
-    return NotificationSetting.Never; // no?
-};
+import {useEventEmitter} from "../../../../../hooks/useEventEmitter";
 
 const upsertServerPushRule = (cli: MatrixClient, rule: IExtendedPushRule, enabled: boolean, actions: ActionType[]) => {
     const promises: Promise<any>[] = [];
@@ -118,25 +73,18 @@ const writeNotifyMeWith = (cli: MatrixClient, pushRules: PushRuleMap, value: Not
     ]);
 };
 
-const getMismatchedNotifyMeWith = (pushRules: PushRuleMap, value: NotificationSetting): IExtendedPushRule[] => {
-    return []; // TODO
-};
-
 const NotificationUserSettingsTab2: React.FC = () => {
     const cli = useContext<MatrixClient>(MatrixClientContext);
     const pushRules = useAccountData<IRuleSets>(cli, "m.push_rules");
 
-    const [pushRulesMap, setPushRules] = useState<PushRuleMap>(null);
-    const [notifyMeWith, setNotifyMeWith] = useState<NotificationSetting>(null);
+    const pushRulesMap = useRef(new PushRuleMap(pushRules.global));
+
     useEffect(() => {
-        if (!pushRules) {
-            setPushRules(null);
-            return;
-        }
-        const ruleMap = new PushRuleMap(pushRules.global);
-        setNotifyMeWith(calculateNotifyMeWith(ruleMap));
-        setPushRules(ruleMap);
+        pushRulesMap.current.setPushRules(pushRules.global);
     }, [pushRules]);
+
+    const [notifyMeWith, setNotifyMeWith] = useState<NotificationSetting>(pushRulesMap.current.notifyMeWith);
+    useEventEmitter(pushRulesMap.current, EVENT_NOTIFY_ME_WITH_CHANGED, setNotifyMeWith);
 
     const contentRules = ContentRules.parseContentRules(pushRules);
     const [keywordsEnabled, setKeywordsEnabled] = useState(contentRules.vectorState !== State.Off);
@@ -155,7 +103,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
 
     const onNotifyMeWithChange = (value: NotificationSetting) => {
         setNotifyMeWith(value);
-        writeNotifyMeWith(cli, pushRulesMap, value).catch(e => {
+        writeNotifyMeWith(cli, pushRulesMap.current, value).catch(e => {
             console.log(e); // TODO error handling
         });
     };
@@ -193,7 +141,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
 
         <MentionsKeywordsSection
             disabled={mentionsKeywordsSectionDisabled}
-            pushRules={pushRulesMap}
+            pushRules={pushRulesMap.current}
             contentRules={contentRules}
             keywordsEnabled={keywordsEnabled}
             setKeywordsEnabled={setKeywordsEnabled}
@@ -206,7 +154,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
             onChange={onPlaySoundForChange}
         />
 
-        <RoomOverridesSection notifyMeWith={notifyMeWith} pushRules={pushRulesMap} />
+        <RoomOverridesSection notifyMeWith={notifyMeWith} pushRules={pushRulesMap.current} />
 
         <DesktopNotificationsSection />
 
