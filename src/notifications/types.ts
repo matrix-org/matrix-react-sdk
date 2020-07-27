@@ -45,14 +45,13 @@ export interface IHighlightTweak {
 
 export type Tweak = ISoundTweak | IHighlightTweak;
 
-export enum Actions {
+export enum Action {
     Notify = "notify",
     DontNotify = "dont_notify", // no-op
     Coalesce = "coalesce", // unused
-    MarkUnread = "mark_unread", // new
 }
 
-export type Action = Actions | Tweak;
+export type ActionType = Action | Tweak;
 
 // Push rule kinds in descending priority order
 export enum Kind {
@@ -89,19 +88,32 @@ export type Condition =
     IRoomMemberCountCondition |
     ISenderNotificationPermissionCondition;
 
-export enum RuleIds {
-    MasterRule = ".m.rule.master", // The master rule (all notifications disabling)
-    MessageRule = ".m.rule.message",
-    EncryptedMessageRule = ".m.rule.encrypted",
-    RoomOneToOneRule = ".m.rule.room_one_to_one",
-    EncryptedRoomOneToOneRule = ".m.rule.room_one_to_one",
+export enum RuleId {
+    EncryptedRoomOneToOne = ".m.rule.room_one_to_one", // TODO being removed
+
+    // overrides
+    Master = ".m.rule.master", // The master rule (all notifications disabling)
+    SuppressNotices = ".m.rule.suppress_notices",
+    SuppressEdits = ".m.rule.suppress_edits",
+    InviteForMe = ".m.invite_for_me",
+    // omits .m.rule.member_event
+    ContainsDisplayName = ".m.rule.contains_display_name",
+    Tombstone = ".m.rule.tombstone",
+    RoomNotif = ".m.rule.roomnotif",
+    // content
+    ContainsUserName = ".m.rule.contains_user_name",
+    // underride
+    Call = ".m.rule.call",
+    RoomOneToOne = ".m.rule.room_one_to_one",
+    Message = ".m.rule.message",
+    Encrypted = ".m.rule.encrypted",
 }
 
 export interface IPushRule {
     enabled: boolean;
     // eslint-disable-next-line camelcase
-    rule_id: RuleIds | string;
-    actions: Action[];
+    rule_id: RuleId | string;
+    actions: ActionType[];
     default: boolean;
     conditions?: Condition[]; // only applicable to `underride` and `override` rules
     pattern?: string; // only applicable to `content` rules
@@ -113,20 +125,13 @@ export interface IExtendedPushRule extends IPushRule {
 }
 
 export interface IPushRuleSet {
-    override: IPushRule[];
-    content: IPushRule[];
-    room: IPushRule[];
-    sender: IPushRule[];
-    underride: IPushRule[];
+    override: IExtendedPushRule[];
+    content: IExtendedPushRule[];
+    room: IExtendedPushRule[];
+    sender: IExtendedPushRule[];
+    underride: IExtendedPushRule[];
 }
 
 export interface IRuleSets {
     global: IPushRuleSet;
-}
-
-export interface IPushRulesMap {
-    override: Record<string, IPushRule>;
-    room: Record<string, IPushRule>;
-    sender: Record<string, IPushRule>;
-    underride: Record<string, IPushRule>;
 }

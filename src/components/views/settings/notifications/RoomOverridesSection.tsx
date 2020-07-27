@@ -19,17 +19,18 @@ import {MatrixClient} from "matrix-js-sdk/src/client";
 
 import SettingsSection from "../SettingsSection";
 import {_t} from "../../../../languageHandler";
-import {IPushRule, IPushRulesMap, NotificationSetting} from "../../../../notifications/types";
+import {IPushRule, NotificationSetting} from "../../../../notifications/types";
 import AccessibleButton from "../../elements/AccessibleButton";
 import QuestionDialog from "../../dialogs/QuestionDialog";
 import Modal from "../../../../Modal";
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import RoomAvatar from "../../avatars/RoomAvatar";
-import {ContextMenu, ContextMenuButton, MenuItem, useContextMenu} from "../../../structures/ContextMenu";
+import {ChevronFace, ContextMenu, ContextMenuButton, MenuItem, useContextMenu} from "../../../structures/ContextMenu";
+import {PushRuleMap} from "../../../../notifications/NotificationUtils";
 
 interface IProps {
     notifyMeWith: NotificationSetting;
-    pushRules: IPushRulesMap;
+    pushRules: PushRuleMap;
 }
 
 interface IRoomOverrideTileProps {
@@ -55,7 +56,7 @@ const inPlaceOf = (elementRect, yOffset = 0) => ({
     right: window.innerWidth - elementRect.right - 48,
     top: elementRect.top + yOffset - 24,
     chevronOffset: 0,
-    chevronFace: "none",
+    chevronFace: ChevronFace.None,
 });
 
 const RoomOverrideTile: React.FC<IRoomOverrideTileProps> = ({defaultSetting, roomId, rule}) => {

@@ -20,7 +20,9 @@ import {_t} from "../../../../languageHandler";
 import {useSettingValue} from "../../../../hooks/useSettings";
 import SettingsStore, {SettingLevel} from "../../../../settings/SettingsStore";
 import StyledCheckbox from "../../elements/StyledCheckbox";
-import NotificationBadge, {NotificationColor, StaticNotificationState} from "../../rooms/NotificationBadge";
+import NotificationBadge from "../../rooms/NotificationBadge";
+import {NotificationColor} from "../../../../stores/notifications/NotificationColor";
+import {StaticNotificationState} from "../../../../stores/notifications/StaticNotificationState";
 
 interface IProps {
     roomId?: string;

@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {Action, Actions} from "./types";
+import {ActionType, Action, IExtendedPushRule, IPushRuleSet} from "./types";
 
 interface IEncodedActions {
     notify: boolean;
@@ -35,7 +35,7 @@ export class NotificationUtils {
         const sound = action.sound;
         const highlight = action.highlight;
         if (notify) {
-            const actions: Action[] = [Actions.Notify];
+            const actions: ActionType[] = [Action.Notify];
             if (sound) {
                 actions.push({"set_tweak": "sound", "value": sound});
             }
@@ -46,7 +46,7 @@ export class NotificationUtils {
             }
             return actions;
         } else {
-            return [Actions.DontNotify];
+            return [Action.DontNotify];
         }
     }
 
@@ -56,16 +56,16 @@ export class NotificationUtils {
     //   "highlight: true/false,
     // }
     // If the actions couldn't be decoded then returns null.
-    static decodeActions(actions: Action[]): IEncodedActions {
+    static decodeActions(actions: ActionType[]): IEncodedActions {
         let notify = false;
         let sound = null;
         let highlight = false;
 
         for (let i = 0; i < actions.length; ++i) {
             const action = actions[i];
-            if (action === Actions.Notify) {
+            if (action === Action.Notify) {
                 notify = true;
-            } else if (action === Actions.DontNotify) {
+            } else if (action === Action.DontNotify) {
                 notify = false;
             } else if (typeof action === "object") {
                 if (action.set_tweak === "sound") {
@@ -92,5 +92,22 @@ export class NotificationUtils {
             result.sound = sound;
         }
         return result;
+    }
+}
+
+export class PushRuleMap extends Map<string, IExtendedPushRule> {
+    constructor(public readonly rules: IPushRuleSet) {
+        super(Object.values(rules).flat(1).reverse().map(r => [r.rule_id, r]));
+    }
+
+    hasEnabledRuleWithAction(ruleId: string, action: ActionType) {
+        if (!this.has(ruleId)) return false;
+        const rule = this.get(ruleId);
+        return rule.enabled && rule.actions.includes(action);
+    }
+
+    // TODO this is different than it used to be
+    getKeywordRules(): IExtendedPushRule[] {
+        return this.rules.content.filter(r => !r.rule_id.startsWith("."));
     }
 }

@@ -27,72 +27,80 @@ import AppearanceSoundsSection from "../../notifications/AppearanceSoundsSection
 import {useAccountData} from "../../../../../hooks/useAccountData";
 import MentionsKeywordsSection from "../../notifications/MentionsKeywordsSection";
 import {
-    Actions,
+    Action,
     compareNotificationSettings,
-    IPushRule, IPushRuleSet,
-    IPushRulesMap,
-    NotificationSetting,
-    RuleIds,
+    IExtendedPushRule,
     IRuleSets,
+    NotificationSetting,
+    RuleId,
 } from "../../../../../notifications/types";
 import RoomOverridesSection from "../../notifications/RoomOverridesSection";
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
 import {State} from "../../../../../notifications/PushRuleVectorState";
 import AdvancedNotificationsSection from "../../notifications/AdvancedNotificationsSection";
+import {PushRuleMap} from "../../../../../notifications/NotificationUtils";
 
-const mapRules = (rules: IPushRule[]): Record<string, IPushRule> => {
-    const map: Record<string, IPushRule> = {};
-    rules.forEach(rule => {
-        map[rule.rule_id] = rule;
-    });
-    return map;
-};
+const notifyMeWithAllRules = [
+    RuleId.Message,
+];
 
-const mapRuleset = (pushRules: IPushRuleSet): IPushRulesMap => ({
-    override: mapRules(pushRules.override),
-    room: mapRules(pushRules.room),
-    sender: mapRules(pushRules.sender),
-    underride: mapRules(pushRules.underride),
-});
+const notifyMeWithDmMentionsKeywordsRules = [
+    RuleId.RoomOneToOne,
+];
 
-const calculateNotifyMeWith = (pushRules: IPushRulesMap): NotificationSetting => {
-    const masterRule = pushRules.override[RuleIds.MasterRule];
+const notifyMeWithMentionsKeywordsRules = [
+    RuleId.Encrypted,
+    RuleId.ContainsUserName,
+    RuleId.ContainsDisplayName,
+    // TODO Maybe?
+    RuleId.InviteForMe,
+    // TODO all keyword content rules =(
+];
+
+// TODO handle
+// RuleId.SuppressNotices;
+// RuleId.SuppressEdits;
+
+const calculateNotifyMeWith = (pushRules: PushRuleMap): NotificationSetting => {
+    const masterRule = pushRules.get(RuleId.Master);
     if (masterRule && masterRule.enabled) {
         return NotificationSetting.Never;
     }
 
-    const messageRule = pushRules.underride[RuleIds.MessageRule];
-    const roomOneToOneRule = pushRules.underride[RuleIds.RoomOneToOneRule];
-    // TODO
-    if (messageRule) {
-        if (messageRule.enabled && messageRule.actions.includes(Actions.Notify)) {
-            return NotificationSetting.AllMessages;
-        }
-        // TODO consider how to handle other messageRule states like disabled
-        if (messageRule.actions.includes(Actions.MarkUnread)) {
-            if (roomOneToOneRule.actions.includes(Actions.MarkUnread)) {
-                return NotificationSetting.MentionsKeywordsOnly;
-            } else {
-                return NotificationSetting.DirectMessagesMentionsKeywords;
-            }
-        }
+    if (notifyMeWithAllRules.some(id => pushRules.hasEnabledRuleWithAction(id, Action.Notify))) {
+        return NotificationSetting.AllMessages;
     }
 
-    return NotificationSetting.DirectMessagesMentionsKeywords;
+    if (notifyMeWithDmMentionsKeywordsRules.some(id => pushRules.hasEnabledRuleWithAction(id, Action.Notify))) {
+        return NotificationSetting.DirectMessagesMentionsKeywords;
+    }
+
+    if (notifyMeWithMentionsKeywordsRules.some(id => pushRules.hasEnabledRuleWithAction(id, Action.Notify))) {
+        return NotificationSetting.MentionsKeywordsOnly;
+    }
+    if (pushRules.getKeywordRules().some(r => r.enabled && r.actions.includes(Action.Notify))) {
+        return NotificationSetting.MentionsKeywordsOnly;
+    }
+
+    return NotificationSetting.Never; // no?
+};
+
+const getMismatchedNotifyMeWith = (pushRules: PushRuleMap, value: NotificationSetting): IExtendedPushRule[] => {
+    return []; // TODO
 };
 
 const NotificationUserSettingsTab2: React.FC = () => {
     const cli = useContext<MatrixClient>(MatrixClientContext);
     const pushRules = useAccountData<IRuleSets>(cli, "m.push_rules");
 
-    const [pushRulesMap, setPushRules] = useState<IPushRulesMap>(null);
+    const [pushRulesMap, setPushRules] = useState<PushRuleMap>(null);
     const [notifyMeWith, setNotifyMeWith] = useState<NotificationSetting>(null);
     useEffect(() => {
         if (!pushRules) {
             setPushRules(null);
             return;
         }
-        const ruleMap = mapRuleset(pushRules.global);
+        const ruleMap = new PushRuleMap(pushRules.global);
         setNotifyMeWith(calculateNotifyMeWith(ruleMap));
         setPushRules(ruleMap);
     }, [pushRules]);

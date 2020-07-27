@@ -84,7 +84,8 @@ export class RoomNotificationState extends NotificationState implements IDestroy
             this._count = 1; // not used, technically
         } else {
             const redNotifs = RoomNotifs.getUnreadNotificationCount(this.room, 'highlight');
-            const greyNotifs = RoomNotifs.getUnreadNotificationCount(this.room, 'total');
+            const greyNotifs = RoomNotifs.getUnreadNotificationCount(this.room, 'unread');
+            const totalNotifs = RoomNotifs.getUnreadNotificationCount(this.room, 'total');
 
             // For a 'true count' we pick the grey notifications first because they include the
             // red notifications. If we don't have a grey count for some reason we use the red
@@ -95,6 +96,7 @@ export class RoomNotificationState extends NotificationState implements IDestroy
             // Note: we only set the symbol if we have an actual count. We don't want to show
             // zero on badges.
 
+            console.log("DEBUG NotificationBadge", this.room.roomId, {redNotifs, greyNotifs, trueCount});
             if (redNotifs > 0) {
                 this._color = NotificationColor.Red;
                 this._count = trueCount;

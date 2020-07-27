@@ -75,4 +75,9 @@ declare global {
     interface PromiseConstructor {
         allSettled<T>(promises: Promise<T>[]): Promise<Array<ISettledFulfilled<T> | ISettledRejected>>;
     }
+
+    interface Array<T> {
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat
+        flat(depth?: number): T[];
+    }
 }
