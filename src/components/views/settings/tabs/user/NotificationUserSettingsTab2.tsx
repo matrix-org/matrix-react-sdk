@@ -38,20 +38,27 @@ import {
 } from "../../../../../notifications/NotificationUtils";
 import {useEventEmitter} from "../../../../../hooks/useEventEmitter";
 
-const NotificationUserSettingsTab2: React.FC = () => {
+const usePushRuleMap = () => {
     const cli = useContext<MatrixClient>(MatrixClientContext);
     const pushRules = useAccountData<IRuleSets>(cli, "m.push_rules");
 
-    const pushRulesMap = useRef(new PushRuleMap(pushRules.global));
+    const pushRuleMap = useRef(new PushRuleMap(pushRules.global));
 
     useEffect(() => {
-        pushRulesMap.current.setPushRules(pushRules.global);
+        pushRuleMap.current.setPushRules(pushRules.global);
     }, [pushRules]);
 
-    const [notifyMeWith, setNotifyMeWith] = useState<NotificationSetting>(pushRulesMap.current.notifyMeWith);
-    useEventEmitter(pushRulesMap.current, EVENT_NOTIFY_ME_WITH_CHANGED, setNotifyMeWith);
+    return pushRuleMap.current;
+};
 
-    const contentRules = ContentRules.parseContentRules(pushRules);
+const NotificationUserSettingsTab2: React.FC = () => {
+    const cli = useContext<MatrixClient>(MatrixClientContext);
+    const pushRuleMap = usePushRuleMap();
+
+    const [notifyMeWith, setNotifyMeWith] = useState<NotificationSetting>(pushRuleMap.notifyMeWith);
+    useEventEmitter(pushRuleMap, EVENT_NOTIFY_ME_WITH_CHANGED, setNotifyMeWith);
+
+    const contentRules = ContentRules.parseContentRules({ global: pushRuleMap.rules }); // TODO replace
     const [keywordsEnabled, setKeywordsEnabled] = useState(contentRules.vectorState !== State.Off);
 
     // TODO wire up playSoundFor
@@ -64,11 +71,11 @@ const NotificationUserSettingsTab2: React.FC = () => {
         ContentRules.updateContentRules(cli, contentRules, keywordsEnabled, soundEnabled); // TODO error handling
     };
 
-    if (!pushRulesMap) return null;
+    if (!pushRuleMap) return null;
 
     const onNotifyMeWithChange = (value: NotificationSetting) => {
         setNotifyMeWith(value);
-        writeNotifyMeWith(cli, pushRulesMap.current, value).catch(e => {
+        writeNotifyMeWith(cli, pushRuleMap, value).catch(e => {
             console.log(e); // TODO error handling
         });
     };
@@ -106,7 +113,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
 
         <MentionsKeywordsSection
             disabled={mentionsKeywordsSectionDisabled}
-            pushRules={pushRulesMap.current}
+            pushRules={pushRuleMap}
             contentRules={contentRules}
             keywordsEnabled={keywordsEnabled}
             setKeywordsEnabled={setKeywordsEnabled}
@@ -119,7 +126,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
             onChange={onPlaySoundForChange}
         />
 
-        <RoomOverridesSection notifyMeWith={notifyMeWith} pushRules={pushRulesMap.current} />
+        <RoomOverridesSection notifyMeWith={notifyMeWith} pushRules={pushRuleMap} />
 
         <DesktopNotificationsSection />
 
