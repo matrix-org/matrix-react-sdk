@@ -30,7 +30,6 @@ import {compareNotificationSettings, IRuleSets, NotificationSetting} from "../..
 import RoomOverridesSection from "../../notifications/RoomOverridesSection";
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
 import {State} from "../../../../../notifications/PushRuleVectorState";
-import AdvancedNotificationsSection from "../../notifications/AdvancedNotificationsSection";
 import {
     EVENT_NOTIFY_ME_WITH_CHANGED,
     PushRuleMap,
@@ -131,8 +130,6 @@ const NotificationUserSettingsTab2: React.FC = () => {
         <DesktopNotificationsSection />
 
         <EmailNotificationsSection />
-
-        <AdvancedNotificationsSection rules={[...contentRules.externalRules]} />
     </div>;
 };
 

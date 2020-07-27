@@ -27,7 +27,6 @@ import {compareNotificationSettings as compareSettings, NotificationSetting} fro
 import AlwaysShowBadgeCountsOption from "../../notifications/AlwaysShowBadgeCountsOption";
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
 import CustomSoundSection from "../../notifications/CustomSoundsSection";
-import AdvancedNotificationsSection from "../../notifications/AdvancedNotificationsSection";
 
 interface IProps {
     roomId: string;
@@ -135,8 +134,6 @@ const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
         </SettingsSection>
 
         <CustomSoundSection roomId={roomId} />
-
-        <AdvancedNotificationsSection rules={[]} />
     </div>;
 };
 
