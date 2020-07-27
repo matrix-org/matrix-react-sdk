@@ -33,10 +33,12 @@ export const compareNotificationSettings = (a: NotificationSetting, b: Notificat
 };
 
 export interface ISoundTweak {
+    // eslint-disable-next-line camelcase
     set_tweak: "sound";
     value: string;
 }
 export interface IHighlightTweak {
+    // eslint-disable-next-line camelcase
     set_tweak: "highlight";
     value?: boolean;
 }
@@ -97,6 +99,7 @@ export enum RuleIds {
 
 export interface IPushRule {
     enabled: boolean;
+    // eslint-disable-next-line camelcase
     rule_id: RuleIds | string;
     actions: Action[];
     default: boolean;

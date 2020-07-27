@@ -24,7 +24,7 @@ export interface IToast<C extends keyof JSX.IntrinsicElements | JSXElementConstr
     title: string;
     icon?: string;
     component: C;
-    props?: React.ComponentProps<C>;
+    props?: Omit<React.ComponentProps<C>, "toastKey">; // toastKey is injected by ToastContainer
 }
 
 /**
@@ -37,8 +37,8 @@ export default class ToastStore extends EventEmitter {
     private countSeen = 0;
 
     static sharedInstance() {
-        if (!window.mx_ToastStore) window.mx_ToastStore = new ToastStore();
-        return window.mx_ToastStore;
+        if (!window.mxToastStore) window.mxToastStore = new ToastStore();
+        return window.mxToastStore;
     }
 
     reset() {

@@ -18,7 +18,7 @@ limitations under the License.
 import {MatrixClient} from "matrix-js-sdk/src/client";
 
 import {PushRuleVectorState, State} from "./PushRuleVectorState";
-import {IExtendedPushRule, IPushRuleSet, IRuleSets} from "./types";
+import {IExtendedPushRule, IRuleSets} from "./types";
 
 export interface IContentRules {
     vectorState: State;
