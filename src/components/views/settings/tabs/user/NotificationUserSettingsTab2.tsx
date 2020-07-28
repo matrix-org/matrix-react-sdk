@@ -20,18 +20,17 @@ import MatrixClient from "matrix-js-sdk/src/client";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import {_t} from "../../../../../languageHandler";
 import SettingsSection from "../../SettingsSection";
-import {ContentRules} from "../../../../../notifications";
 import DesktopNotificationsSection from "../../notifications/DesktopNotificationsSection";
 import EmailNotificationsSection from "../../notifications/EmailNotificationsSection";
 import AppearanceSoundsSection from "../../notifications/AppearanceSoundsSection";
 import {useAccountData} from "../../../../../hooks/useAccountData";
 import MentionsKeywordsSection from "../../notifications/MentionsKeywordsSection";
-import {compareNotificationSettings, IRuleSets, NotificationSetting} from "../../../../../notifications/types";
+import {Action, compareNotificationSettings, IRuleSets, NotificationSetting} from "../../../../../notifications/types";
 import RoomOverridesSection from "../../notifications/RoomOverridesSection";
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
-import {State} from "../../../../../notifications/PushRuleVectorState";
 import {
-    EVENT_NOTIFY_ME_WITH_CHANGED,
+    EVENT_KEYWORDS_CHANGED,
+    EVENT_NOTIFY_ME_WITH_CHANGED, EVENT_PLAY_SOUND_FOR_CHANGED,
     PushRuleMap,
     writeNotifyMeWith
 } from "../../../../../notifications/NotificationUtils";
@@ -57,24 +56,34 @@ const NotificationUserSettingsTab2: React.FC = () => {
     const [notifyMeWith, setNotifyMeWith] = useState<NotificationSetting>(pushRuleMap.notifyMeWith);
     useEventEmitter(pushRuleMap, EVENT_NOTIFY_ME_WITH_CHANGED, setNotifyMeWith);
 
-    const contentRules = ContentRules.parseContentRules({ global: pushRuleMap.rules }); // TODO replace
-    const [keywordsEnabled, setKeywordsEnabled] = useState(contentRules.vectorState !== State.Off);
+    const [playSoundFor, setPlaySoundFor] = useState<NotificationSetting>(pushRuleMap.playSoundFor);
+    useEventEmitter(pushRuleMap, EVENT_PLAY_SOUND_FOR_CHANGED, setPlaySoundFor);
 
-    // TODO wire up playSoundFor
-    const [playSoundFor, setPlaySoundFor] = useState<NotificationSetting>(NotificationSetting.MentionsKeywordsOnly);
-
-    const onPlaySoundForChange = (value: NotificationSetting) => {
-        setPlaySoundFor(value);
-        // TODO update push rules including all keywords
-        const soundEnabled = compareNotificationSettings(value, NotificationSetting.Never) > 0;
-        ContentRules.updateContentRules(cli, contentRules, keywordsEnabled, soundEnabled); // TODO error handling
-    };
-
-    if (!pushRuleMap) return null;
+    const [keywordsEnabled, setKeywordsEnabled] = useState(pushRuleMap.getKeywordRules().some(rule => {
+        return rule.enabled && rule.actions.includes(Action.Notify);
+    }));
+    useEventEmitter(pushRuleMap, EVENT_KEYWORDS_CHANGED, () => {
+        setKeywordsEnabled(pushRuleMap.getKeywordRules().some(rule => {
+            return rule.enabled && rule.actions.includes(Action.Notify);
+        }));
+    });
 
     const onNotifyMeWithChange = (value: NotificationSetting) => {
-        setNotifyMeWith(value);
+        setNotifyMeWith(value); // local echo
+
         writeNotifyMeWith(cli, pushRuleMap, value).catch(e => {
+            console.log(e); // TODO error handling
+        });
+    };
+
+    const onPlaySoundForChange = (value: NotificationSetting) => {
+        setPlaySoundFor(value); // local echo
+
+        const soundEnabled = compareNotificationSettings(value, NotificationSetting.Never) > 0;
+        pushRuleMap.updateSoundRules(cli, value).catch(e => {
+            console.log(e); // TODO error handling
+        });
+        pushRuleMap.updateKeywordRules(cli, keywordsEnabled, soundEnabled).catch(e => {
             console.log(e); // TODO error handling
         });
     };
@@ -113,7 +122,6 @@ const NotificationUserSettingsTab2: React.FC = () => {
         <MentionsKeywordsSection
             disabled={mentionsKeywordsSectionDisabled}
             pushRules={pushRuleMap}
-            contentRules={contentRules}
             keywordsEnabled={keywordsEnabled}
             setKeywordsEnabled={setKeywordsEnabled}
             soundEnabled={compareNotificationSettings(playSoundFor, NotificationSetting.Never) > 0}

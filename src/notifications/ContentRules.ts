@@ -15,8 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {MatrixClient} from "matrix-js-sdk/src/client";
-
 import {PushRuleVectorState, State} from "./PushRuleVectorState";
 import {IExtendedPushRule, IRuleSets} from "./types";
 
@@ -140,58 +138,5 @@ export class ContentRules {
             }
         }
         return contentRules;
-    }
-
-    static updateContentRules(cli: MatrixClient, contentRules: IContentRules, enabled: boolean, loud: boolean) {
-        const rules = contentRules.rules;
-        return Promise.all(rules.map(async (rule) => {
-            if (enabled) {
-                const actions = this._getRuleActions(loud);
-                if (rule.actions.length !== actions.length) { // TODO
-                    await cli.setPushRuleActions(SCOPE, rule.kind, rule.rule_id, actions);
-                }
-
-                if (contentRules.vectorState === PushRuleVectorState.OFF) {
-                    await cli.setPushRuleEnabled(SCOPE, rule.kind, rule.rule_id, true);
-                }
-            } else {
-                await cli.setPushRuleEnabled(SCOPE, rule.kind, rule.rule_id, false);
-            }
-        }));
-    }
-
-    static _getRuleActions(loud: boolean) {
-        // return loud ? StandardActions.ACTION_NOTIFY : StandardActions.ACTION_HIGHLIGHT_DEFAULT_SOUND;
-        return PushRuleVectorState.actionsFor(loud ? State.Loud : State.On);
-    }
-
-    static async addKeywordRule(cli: MatrixClient, contentRules: IContentRules, keyword: string, enabled: boolean, loud: boolean) {
-        // If the keyword is part of `externalContentRules`,
-        // remove the rule before recreating it in the right Vector path
-        const matchingExternalRule = contentRules.externalRules.find(r => r.pattern === keyword);
-        if (matchingExternalRule) {
-            await cli.deletePushRule(SCOPE, matchingExternalRule.kind, matchingExternalRule.rule_id);
-        }
-
-        await cli.addPushRule(SCOPE, KIND, keyword, {
-            actions: this._getRuleActions(loud),
-            pattern: keyword,
-        });
-
-        if (!enabled) {
-            await cli.setPushRuleEnabled(SCOPE, KIND, keyword, false);
-        }
-    }
-
-    static async removeKeywordRule(cli: MatrixClient, contentRules: IContentRules, keyword: string) {
-        const matchingContentRule = contentRules.rules.find(r => r.pattern === keyword);
-        if (matchingContentRule) {
-            await cli.deletePushRule(SCOPE, matchingContentRule.kind, matchingContentRule.rule_id);
-        }
-
-        const matchingExternalRule = contentRules.externalRules.find(r => r.pattern === keyword);
-        if (matchingExternalRule) {
-            await cli.deletePushRule(SCOPE, matchingExternalRule.kind, matchingExternalRule.rule_id);
-        }
     }
 }

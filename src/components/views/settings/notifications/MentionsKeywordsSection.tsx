@@ -34,7 +34,6 @@ import {useEventEmitter} from "../../../../hooks/useEventEmitter";
 
 interface IProps {
     disabled?: boolean;
-    contentRules: IContentRules; // TODO consolidate into PushRuleMap
     pushRules: PushRuleMap;
     keywordsEnabled: boolean;
     soundEnabled: boolean;
@@ -195,7 +194,7 @@ const PushRuleCheckbox: React.FC<IPushRuleCheckboxProps> = ({pushRules, ruleId, 
     </StyledCheckbox>
 };
 
-const MentionsKeywordsSection: React.FC<IProps> = ({disabled, contentRules, pushRules, keywordsEnabled, setKeywordsEnabled, soundEnabled}) => {
+const MentionsKeywordsSection: React.FC<IProps> = ({disabled, pushRules, keywordsEnabled, setKeywordsEnabled, soundEnabled}) => {
     const cli = useContext<MatrixClient>(MatrixClientContext);
     let rules = pushRules.getKeywordRules();
     if (keywordsEnabled) {
@@ -213,18 +212,18 @@ const MentionsKeywordsSection: React.FC<IProps> = ({disabled, contentRules, push
     }
 
     const addKeyword = (keyword: string) => {
-        ContentRules.addKeywordRule(cli, contentRules, keyword, keywordsEnabled, soundEnabled).catch(onError);
+        pushRules.addKeywordRule(cli, keyword, keywordsEnabled, soundEnabled).catch(onError);
     };
 
     const removeKeyword = (keyword: string) => {
-        ContentRules.removeKeywordRule(cli, contentRules, keyword).catch(onError);
+        pushRules.removeKeywordRule(cli, keyword).catch(onError);
     };
 
     const onKeywordsEnabledChange = e => {
         setKeywordsEnabled(e.target.checked);
 
         if (keywords.length < 1) return;
-        ContentRules.updateContentRules(cli, contentRules, e.target.checked, soundEnabled).catch(onError);
+        pushRules.updateKeywordRules(cli, e.target.checked, soundEnabled).catch(onError);
     };
 
     return <SettingsSection title={_t("Mentions & Keywords")} className="mx_NotificationsTab_mentionsKeywords">

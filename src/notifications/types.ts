@@ -32,21 +32,32 @@ export const compareNotificationSettings = (a: NotificationSetting, b: Notificat
     return enumOrder[a] - enumOrder[b];
 };
 
+export enum TweakType {
+    Sound = "sound",
+    Highlight = "highlight",
+}
+
 export interface ISoundTweak {
     // eslint-disable-next-line camelcase
-    set_tweak: "sound";
+    set_tweak: TweakType.Sound;
     value: string;
 }
+
+export const SoundTweak = (value = "default"): ISoundTweak => ({
+    set_tweak: TweakType.Sound,
+    value,
+});
+
 export interface IHighlightTweak {
     // eslint-disable-next-line camelcase
-    set_tweak: "highlight";
+    set_tweak: TweakType.Highlight;
     value?: boolean;
 }
 
-export const DefaultSoundTweak: ISoundTweak = {
-    set_tweak: "sound",
-    value: "default",
-};
+export const HighlightTweak = (value = true): IHighlightTweak => ({
+    set_tweak: TweakType.Highlight,
+    value,
+});
 
 export type Tweak = ISoundTweak | IHighlightTweak;
 
@@ -100,7 +111,7 @@ export enum RuleId {
     Master = ".m.rule.master", // The master rule (all notifications disabling)
     SuppressNotices = ".m.rule.suppress_notices",
     SuppressEdits = ".m.rule.suppress_edits",
-    InviteForMe = ".m.invite_for_me",
+    InviteForMe = ".m.rule.invite_for_me",
     // omits .m.rule.member_event
     ContainsDisplayName = ".m.rule.contains_display_name",
     Tombstone = ".m.rule.tombstone",

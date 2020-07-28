@@ -20,15 +20,19 @@ import MatrixClient from "matrix-js-sdk/src/client";
 import {
     Action,
     ActionType,
-    DefaultSoundTweak,
+    compareNotificationSettings,
+    HighlightTweak,
     IExtendedPushRule,
     IPushRuleSet,
     NotificationSetting,
-    RuleId
+    RuleId,
+    SoundTweak,
+    Tweak,
+    TweakType
 } from "./types";
 import {EventEmitter} from "events";
 import {objectDiff} from "../utils/objects";
-import {SCOPE} from "./ContentRules";
+import {KIND, SCOPE} from "./ContentRules";
 import {arrayHasDiff} from "../utils/arrays";
 
 interface IEncodedActions {
@@ -51,12 +55,12 @@ export class NotificationUtils {
         if (notify) {
             const actions: ActionType[] = [Action.Notify];
             if (sound) {
-                actions.push({"set_tweak": "sound", "value": sound});
+                actions.push(SoundTweak(sound));
             }
             if (highlight) {
-                actions.push({"set_tweak": "highlight"});
+                actions.push(HighlightTweak());
             } else {
-                actions.push({"set_tweak": "highlight", "value": false});
+                actions.push(HighlightTweak(false));
             }
             return actions;
         } else {
@@ -111,6 +115,7 @@ export class NotificationUtils {
 
 export const EVENT_KEYWORDS_CHANGED = Symbol("event-keywords-changed");
 export const EVENT_NOTIFY_ME_WITH_CHANGED = Symbol("notify-me-with-changed");
+export const EVENT_PLAY_SOUND_FOR_CHANGED = Symbol("play-sound-for-changed");
 
 const notifyMeWithAllRules = [
     RuleId.Message,
@@ -138,6 +143,7 @@ const notifyMeWithMentionsKeywordsRules = [
 export class PushRuleMap extends EventEmitter implements Partial<Map<string, IExtendedPushRule>> {
     private map: Map<string, IExtendedPushRule>;
     private _notifyMeWith: NotificationSetting = null;
+    private _playSoundFor: NotificationSetting = null;
 
     constructor(private _rules?: IPushRuleSet) {
         super();
@@ -152,6 +158,10 @@ export class PushRuleMap extends EventEmitter implements Partial<Map<string, IEx
         return this._notifyMeWith;
     }
 
+    public get playSoundFor() {
+        return this._playSoundFor;
+    }
+
     public setPushRules(rules: IPushRuleSet) {
         // tag them with kind so they make sense when flattened
         Object.keys(rules).forEach(kind => {
@@ -163,12 +173,18 @@ export class PushRuleMap extends EventEmitter implements Partial<Map<string, IEx
         this.map = new Map(Object.values(rules).flat(1).reverse().map(r => [r.rule_id, r]));
 
         const oldRules = this.rules;
-        const oldNotifyMeWidth = this._notifyMeWith;
         this._rules = rules;
-        this._notifyMeWith = this.calculateNotifyMeWith();
 
+        const oldNotifyMeWidth = this._notifyMeWith;
+        this._notifyMeWith = this.calculateNotifyMeWith();
         if (oldNotifyMeWidth !== this._notifyMeWith) {
             this.emit(EVENT_NOTIFY_ME_WITH_CHANGED, this._notifyMeWith);
+        }
+
+        const oldPlaySoundFor = this._playSoundFor;
+        this._playSoundFor = this.calculatePlaySoundFor();
+        if (oldPlaySoundFor !== this._playSoundFor) {
+            this.emit(EVENT_PLAY_SOUND_FOR_CHANGED, this._playSoundFor);
         }
 
         const contentRuleChanges = objectDiff(oldRules.content, rules.content);
@@ -195,7 +211,7 @@ export class PushRuleMap extends EventEmitter implements Partial<Map<string, IEx
         }
     }
 
-    private calculateNotifyMeWith = (): NotificationSetting => {
+    private calculateNotifyMeWith(): NotificationSetting {
         if (this.get(RuleId.Master).enabled) {
             return NotificationSetting.Never;
         }
@@ -211,17 +227,140 @@ export class PushRuleMap extends EventEmitter implements Partial<Map<string, IEx
         if (notifyMeWithMentionsKeywordsRules.some(id => this.hasEnabledRuleWithAction(id, Action.Notify))) {
             return NotificationSetting.MentionsKeywordsOnly;
         }
-        if (this.getKeywordRules().some(r => r.enabled && r.actions.includes(Action.Notify))) {
+        // if (this.getKeywordRules().some(r => r.enabled && r.actions.includes(Action.Notify))) {
+        //     return NotificationSetting.MentionsKeywordsOnly;
+        // }
+
+        return NotificationSetting.Never; // no?
+    }
+
+    private calculatePlaySoundFor(): NotificationSetting {
+        if (this.get(RuleId.Master).enabled) {
+            return NotificationSetting.Never;
+        }
+
+        if (notifyMeWithAllRules.some(id => this.hasEnabledRuleWithTweak(id, TweakType.Sound))) {
+            return NotificationSetting.AllMessages;
+        }
+
+        if (notifyMeWithDmMentionsKeywordsRules.some(id => this.hasEnabledRuleWithTweak(id, TweakType.Sound))) {
+            return NotificationSetting.DirectMessagesMentionsKeywords;
+        }
+
+        if (notifyMeWithMentionsKeywordsRules.some(id => this.hasEnabledRuleWithTweak(id, TweakType.Sound))) {
+            return NotificationSetting.MentionsKeywordsOnly;
+        }
+        if (this.getKeywordRules().some(r => r.enabled && r.actions.some(a => (<Tweak>a).set_tweak === TweakType.Sound))) {
             return NotificationSetting.MentionsKeywordsOnly;
         }
 
         return NotificationSetting.Never; // no?
-    };
+    }
+
+    private static getKeywordActions(loud: boolean) {
+        const actions: ActionType[] = [Action.Notify, HighlightTweak()];
+        if (loud) {
+            actions.push(SoundTweak());
+        }
+        return actions;
+    }
+
+    public async addKeywordRule(cli: MatrixClient, keyword: string, enabled: boolean, loud: boolean) {
+        const actions = PushRuleMap.getKeywordActions(loud);
+
+        const matchingRule = this.getKeywordRules().find(r => r.pattern === keyword);
+        if (matchingRule) {
+            return updatePushRule(cli, matchingRule, enabled, actions);
+        }
+
+        await cli.addPushRule(SCOPE, KIND, keyword, {
+            pattern: keyword,
+            actions,
+        });
+
+        if (!enabled) {
+            await cli.setPushRuleEnabled(SCOPE, KIND, keyword, false);
+        }
+    }
+
+    public async removeKeywordRule(cli: MatrixClient, keyword: string) {
+        const matchingRule = this.getKeywordRules().find(r => r.pattern === keyword);
+        if (matchingRule) {
+            await cli.deletePushRule(SCOPE, matchingRule.kind, matchingRule.rule_id);
+        }
+    }
+
+    public async updateKeywordRules(cli: MatrixClient, enabled: boolean, loud: boolean) {
+        const actions = PushRuleMap.getKeywordActions(loud);
+        const rules = this.getKeywordRules();
+        return Promise.all(rules.map(async (rule) => updatePushRule(cli, rule, enabled, actions)));
+    }
+
+    public async setSoundTweakInRule(cli: MatrixClient, rule: IExtendedPushRule, loud: boolean, sound?: string) {
+        let actions = rule.actions.filter(a => (<Tweak>a).set_tweak !== TweakType.Sound);
+        if (loud) {
+            actions.push(SoundTweak(sound));
+        }
+
+        return updatePushRule(cli, rule, undefined, actions);
+    }
+
+    public async updateSoundRules(cli: MatrixClient, volume: NotificationSetting) {
+        const promises: Promise<any>[] = [];
+
+        const notifyMeWithAllRulesLoud = compareNotificationSettings(volume, NotificationSetting.AllMessages) >= 0;
+        promises.push(...notifyMeWithAllRules.map(id => {
+            return this.setSoundTweakInRule(cli, this.get(id), notifyMeWithAllRulesLoud);
+        }));
+
+        const notifyMeWithDmMentionsKeywordsRulesLoud =
+            compareNotificationSettings(volume, NotificationSetting.DirectMessagesMentionsKeywords) >= 0;
+        promises.push(...notifyMeWithDmMentionsKeywordsRules.map(id => {
+            return this.setSoundTweakInRule(cli, this.get(id), notifyMeWithDmMentionsKeywordsRulesLoud);
+        }));
+
+        const notifyMeWithMentionsKeywordsRulesLoud =
+            compareNotificationSettings(volume, NotificationSetting.MentionsKeywordsOnly) >= 0;
+        promises.push(...notifyMeWithMentionsKeywordsRules.map(id => {
+            return this.setSoundTweakInRule(cli, this.get(id), notifyMeWithMentionsKeywordsRulesLoud);
+        }));
+
+        return Promise.all(promises);
+    }
+
+    public async updateRules(cli: MatrixClient, volume: NotificationSetting) {
+        const promises: Promise<any>[] = [];
+
+        const notifyMeWithAllRulesLoud = compareNotificationSettings(volume, NotificationSetting.AllMessages) >= 0;
+        promises.push(...notifyMeWithAllRules.map(id => {
+            return this.setSoundTweakInRule(cli, this.get(id), notifyMeWithAllRulesLoud);
+        }));
+
+        const notifyMeWithDmMentionsKeywordsRulesLoud =
+            compareNotificationSettings(volume, NotificationSetting.DirectMessagesMentionsKeywords) >= 0;
+        promises.push(...notifyMeWithDmMentionsKeywordsRules.map(id => {
+            return this.setSoundTweakInRule(cli, this.get(id), notifyMeWithDmMentionsKeywordsRulesLoud);
+        }));
+
+        const notifyMeWithMentionsKeywordsRulesLoud =
+            compareNotificationSettings(volume, NotificationSetting.MentionsKeywordsOnly) >= 0;
+        promises.push(...notifyMeWithMentionsKeywordsRules.map(id => {
+            return this.setSoundTweakInRule(cli, this.get(id), notifyMeWithMentionsKeywordsRulesLoud);
+        }));
+
+        return Promise.all(promises);
+    }
 
     public hasEnabledRuleWithAction(ruleId: string, action: ActionType) {
         if (!this.has(ruleId)) return false;
         const rule = this.get(ruleId);
         return rule.enabled && rule.actions.includes(action);
+    }
+
+    public hasEnabledRuleWithTweak(ruleId: string, tweakType: TweakType) {
+        if (!this.has(ruleId)) return false;
+        const rule = this.get(ruleId);
+        return rule.enabled && rule.actions.some(a => (<Tweak>a).set_tweak === tweakType);
     }
 
     // TODO this is different than it used to be
@@ -268,14 +407,14 @@ const getMismatchedNotifyMeWith = (pushRules: PushRuleMap, value: NotificationSe
     }
 };
 
-export const updateServerPushRule = (cli: MatrixClient, rule: IExtendedPushRule, enabled: boolean, actions: ActionType[]) => {
+export const updatePushRule = (cli: MatrixClient, rule: IExtendedPushRule, enabled?: boolean, actions?: ActionType[]) => {
     const promises: Promise<any>[] = [];
 
-    if (rule.enabled !== enabled) {
+    if (enabled !== undefined && rule.enabled !== enabled) {
         promises.push(cli.setPushRuleEnabled(SCOPE, rule.kind, rule.rule_id, enabled));
     }
 
-    if (arrayHasDiff(rule.actions, actions)) {
+    if (actions !== undefined && arrayHasDiff(rule.actions, actions)) {
         promises.push(cli.setPushRuleActions(SCOPE, rule.kind, rule.rule_id, actions));
     }
 
@@ -284,14 +423,14 @@ export const updateServerPushRule = (cli: MatrixClient, rule: IExtendedPushRule,
 
 export const writeNotifyMeWith = (cli: MatrixClient, pushRules: PushRuleMap, value: NotificationSetting) => {
     if (value === NotificationSetting.Never) {
-        return updateServerPushRule(cli, pushRules.get(RuleId.Master), true, []);
+        return updatePushRule(cli, pushRules.get(RuleId.Master), true, []);
     }
 
     return Promise.all([
-        updateServerPushRule(cli, pushRules.get(RuleId.Master), false, []),
-        updateServerPushRule(cli, pushRules.get(RuleId.RoomOneToOne),
-            value !== NotificationSetting.MentionsKeywordsOnly, [Action.Notify, DefaultSoundTweak]),
-        updateServerPushRule(cli, pushRules.get(RuleId.Message),
+        updatePushRule(cli, pushRules.get(RuleId.Master), false, []),
+        updatePushRule(cli, pushRules.get(RuleId.RoomOneToOne),
+            value !== NotificationSetting.MentionsKeywordsOnly, [Action.Notify, SoundTweak()]),
+        updatePushRule(cli, pushRules.get(RuleId.Message),
             value === NotificationSetting.AllMessages, [Action.Notify]),
     ]);
 };
