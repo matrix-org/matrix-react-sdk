@@ -615,7 +615,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 break;
             }
             case 'view_create_room':
-                this.createRoom(payload.public);
+                this.createRoom(payload.public || SdkConfig.get().create_room_default_public);
                 break;
             case 'view_create_group': {
                 const CreateGroupDialog = sdk.getComponent("dialogs.CreateGroupDialog");
