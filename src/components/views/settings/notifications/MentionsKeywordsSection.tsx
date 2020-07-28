@@ -26,7 +26,7 @@ import {Key} from "../../../../Keyboard";
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import Modal from "../../../../Modal";
 import ErrorDialog from "../../dialogs/ErrorDialog";
-import {ContentRules, IContentRules, SCOPE} from "../../../../notifications/ContentRules";
+import {SCOPE} from "../../../../notifications/ContentRules";
 import {PushRuleMap} from "../../../../notifications/NotificationUtils";
 import {Action, ActionType, IExtendedPushRule, RuleId} from "../../../../notifications/types";
 import {useEventEmitter} from "../../../../hooks/useEventEmitter";
@@ -125,7 +125,11 @@ const KeywordsEditor: React.FC<IKeywordsEditorProps> = ({disabled, initialKeywor
         }
     };
 
-    return <div className="mx_NotificationsTab_mentionsKeywords_editor" onClick={onClick}>
+    const classes = classNames("mx_NotificationsTab_mentionsKeywords_editor", {
+        mx_NotificationsTab_mentionsKeywords_editor_disabled: disabled,
+    })
+
+    return <div className={classes} onClick={onClick}>
         {keywords.map(k => <KeywordPill key={k} disabled={disabled} keyword={k} onRemove={_removeKeyword} />)}
         <textarea
             disabled={disabled}
@@ -194,17 +198,10 @@ const PushRuleCheckbox: React.FC<IPushRuleCheckboxProps> = ({pushRules, ruleId, 
     </StyledCheckbox>
 };
 
-const MentionsKeywordsSection: React.FC<IProps> = ({disabled, pushRules, keywordsEnabled, setKeywordsEnabled, soundEnabled}) => {
+const MentionsKeywordsSection: React.FC<IProps> = ({disabled, keywordsEnabled, setKeywordsEnabled, pushRules, soundEnabled}) => {
     const cli = useContext<MatrixClient>(MatrixClientContext);
-    let rules = pushRules.getKeywordRules();
-    if (keywordsEnabled) {
-        // TODO we need to show a warning here if we filtered any keyword rules out
-        // or if any keyword rules have mismatched actions/additional conditions
-        // filter out any disabled rules
-        rules = rules.filter(r => r.enabled);
-    }
-
-    const keywords = Array.from(new Set(rules.map(r => r.pattern)));
+    // TODO show warning if any of the rules have mismatched actions
+    const keywords = Array.from(new Set(pushRules.getKeywordRules().map(r => r.pattern)));
     if (keywords.length) {
         // As keeping the order of per-word push rules hs side is a bit tricky to code,
         // display the keywords in alphabetical order to the user
@@ -212,7 +209,8 @@ const MentionsKeywordsSection: React.FC<IProps> = ({disabled, pushRules, keyword
     }
 
     const addKeyword = (keyword: string) => {
-        pushRules.addKeywordRule(cli, keyword, keywordsEnabled, soundEnabled).catch(onError);
+        setKeywordsEnabled(true); // local echo
+        pushRules.addKeywordRule(cli, keyword, true, soundEnabled).catch(onError);
     };
 
     const removeKeyword = (keyword: string) => {
@@ -220,12 +218,11 @@ const MentionsKeywordsSection: React.FC<IProps> = ({disabled, pushRules, keyword
     };
 
     const onKeywordsEnabledChange = e => {
-        setKeywordsEnabled(e.target.checked);
-
-        if (keywords.length < 1) return;
+        setKeywordsEnabled(e.target.checked); // local echo
         pushRules.updateKeywordRules(cli, e.target.checked, soundEnabled).catch(onError);
     };
 
+    const keywordsDisabled = disabled || !keywordsEnabled;
     return <SettingsSection title={_t("Mentions & Keywords")} className="mx_NotificationsTab_mentionsKeywords">
         <PushRuleCheckbox
             disabled={disabled}
@@ -252,7 +249,7 @@ const MentionsKeywordsSection: React.FC<IProps> = ({disabled, pushRules, keyword
         <StyledCheckbox disabled={disabled} checked={keywordsEnabled} onChange={onKeywordsEnabledChange}>
             {_t("Notify when someone uses a keyword")}
         </StyledCheckbox>
-        <div className={classNames("mx_Checkbox_microCopy", {mx_Checkbox_microCopy_disabled: disabled})}>
+        <div className={classNames("mx_Checkbox_microCopy", {mx_Checkbox_microCopy_disabled: keywordsDisabled})}>
             {_t("Enter keywords here, or use for spelling variations or nicknames")}
         </div>
 
@@ -260,7 +257,7 @@ const MentionsKeywordsSection: React.FC<IProps> = ({disabled, pushRules, keyword
             initialKeywords={keywords}
             addKeyword={addKeyword}
             removeKeyword={removeKeyword}
-            disabled={disabled}
+            disabled={keywordsDisabled}
         />
     </SettingsSection>;
 };

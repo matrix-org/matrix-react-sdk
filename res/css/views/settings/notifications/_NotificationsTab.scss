@@ -105,6 +105,12 @@ $textareaWidth: 400px;
             }
         }
 
+        .mx_Checkbox_microCopy_disabled,
+        .mx_NotificationsTab_mentionsKeywords_editor_disabled,
+        .mx_NotificationsTab_mentionsKeywords_editor_disabled textarea {
+            cursor: not-allowed;
+        }
+
         .mx_NotificationsTab_mentionsKeywords_keywordPill {
             display: inline-block;
             float: left;

@@ -25,7 +25,7 @@ import EmailNotificationsSection from "../../notifications/EmailNotificationsSec
 import AppearanceSoundsSection from "../../notifications/AppearanceSoundsSection";
 import {useAccountData} from "../../../../../hooks/useAccountData";
 import MentionsKeywordsSection from "../../notifications/MentionsKeywordsSection";
-import {Action, compareNotificationSettings, IRuleSets, NotificationSetting} from "../../../../../notifications/types";
+import {compareNotificationSettings, IRuleSets, NotificationSetting} from "../../../../../notifications/types";
 import RoomOverridesSection from "../../notifications/RoomOverridesSection";
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
 import {
@@ -59,14 +59,8 @@ const NotificationUserSettingsTab2: React.FC = () => {
     const [playSoundFor, setPlaySoundFor] = useState<NotificationSetting>(pushRuleMap.playSoundFor);
     useEventEmitter(pushRuleMap, EVENT_PLAY_SOUND_FOR_CHANGED, setPlaySoundFor);
 
-    const [keywordsEnabled, setKeywordsEnabled] = useState(pushRuleMap.getKeywordRules().some(rule => {
-        return rule.enabled && rule.actions.includes(Action.Notify);
-    }));
-    useEventEmitter(pushRuleMap, EVENT_KEYWORDS_CHANGED, () => {
-        setKeywordsEnabled(pushRuleMap.getKeywordRules().some(rule => {
-            return rule.enabled && rule.actions.includes(Action.Notify);
-        }));
-    });
+    const [keywordsEnabled, setKeywordsEnabled] = useState(pushRuleMap.keywordsEnabled);
+    useEventEmitter(pushRuleMap, EVENT_KEYWORDS_CHANGED, setKeywordsEnabled);
 
     const onNotifyMeWithChange = (value: NotificationSetting) => {
         setNotifyMeWith(value); // local echo

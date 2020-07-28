@@ -144,6 +144,7 @@ export class PushRuleMap extends EventEmitter implements Partial<Map<string, IEx
     private map: Map<string, IExtendedPushRule>;
     private _notifyMeWith: NotificationSetting = null;
     private _playSoundFor: NotificationSetting = null;
+    private _keywordsEnabled: boolean;
 
     constructor(private _rules?: IPushRuleSet) {
         super();
@@ -160,6 +161,10 @@ export class PushRuleMap extends EventEmitter implements Partial<Map<string, IEx
 
     public get playSoundFor() {
         return this._playSoundFor;
+    }
+
+    public get keywordsEnabled() {
+        return this._keywordsEnabled;
     }
 
     public setPushRules(rules: IPushRuleSet) {
@@ -206,8 +211,9 @@ export class PushRuleMap extends EventEmitter implements Partial<Map<string, IEx
             this.emit(k, this.map.get(k));
         });
 
+        this._keywordsEnabled = this.calculateKeywordRulesEnabled();
         if (contentRuleChanges.added.length || contentRuleChanges.removed.length || contentRuleChanges.changed.length) {
-            this.emit(EVENT_KEYWORDS_CHANGED);
+            this.emit(EVENT_KEYWORDS_CHANGED, this._keywordsEnabled);
         }
     }
 
@@ -328,29 +334,6 @@ export class PushRuleMap extends EventEmitter implements Partial<Map<string, IEx
         return Promise.all(promises);
     }
 
-    public async updateRules(cli: MatrixClient, volume: NotificationSetting) {
-        const promises: Promise<any>[] = [];
-
-        const notifyMeWithAllRulesLoud = compareNotificationSettings(volume, NotificationSetting.AllMessages) >= 0;
-        promises.push(...notifyMeWithAllRules.map(id => {
-            return this.setSoundTweakInRule(cli, this.get(id), notifyMeWithAllRulesLoud);
-        }));
-
-        const notifyMeWithDmMentionsKeywordsRulesLoud =
-            compareNotificationSettings(volume, NotificationSetting.DirectMessagesMentionsKeywords) >= 0;
-        promises.push(...notifyMeWithDmMentionsKeywordsRules.map(id => {
-            return this.setSoundTweakInRule(cli, this.get(id), notifyMeWithDmMentionsKeywordsRulesLoud);
-        }));
-
-        const notifyMeWithMentionsKeywordsRulesLoud =
-            compareNotificationSettings(volume, NotificationSetting.MentionsKeywordsOnly) >= 0;
-        promises.push(...notifyMeWithMentionsKeywordsRules.map(id => {
-            return this.setSoundTweakInRule(cli, this.get(id), notifyMeWithMentionsKeywordsRulesLoud);
-        }));
-
-        return Promise.all(promises);
-    }
-
     public hasEnabledRuleWithAction(ruleId: string, action: ActionType) {
         if (!this.has(ruleId)) return false;
         const rule = this.get(ruleId);
@@ -366,6 +349,14 @@ export class PushRuleMap extends EventEmitter implements Partial<Map<string, IEx
     // TODO this is different than it used to be
     public getKeywordRules(): IExtendedPushRule[] {
         return this.rules.content.filter(r => !r.rule_id.startsWith("."));
+    }
+
+    private calculateKeywordRulesEnabled(): boolean {
+        const keywordRules = this.getKeywordRules();
+        // if there are no keyword rules, say they are enabled eagerly
+        return keywordRules.length < 1 || keywordRules.some(rule => {
+            return rule.enabled && rule.actions.includes(Action.Notify);
+        });
     }
 
     public get(key: string): IExtendedPushRule | undefined {
