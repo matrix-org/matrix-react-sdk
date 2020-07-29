@@ -743,10 +743,13 @@ const RoomAdminToolsContainer = ({room, children, member, startUpdating, stopUpd
     let muteButton;
     let redactButton;
 
-    const editPowerLevel = (
-        (powerLevels.events ? powerLevels.events["m.room.power_levels"] : null) ||
-        powerLevels.state_default
-    );
+    let editPowerLevel = (powerLevels.events ? powerLevels.events["m.room.power_levels"] : null);
+    if (editPowerLevel == null) {
+        editPowerLevel = powerLevels.state_default;
+    }
+    if (editPowerLevel == null) {
+        editPowerLevel = 50;
+    }
 
     // if these do not exist in the event then they should default to 50 as per the spec
     const {
@@ -929,10 +932,14 @@ function useRoomPermissions(cli, room, user) {
 
         let modifyLevelMax = -1;
         if (canAffectUser) {
-            const editPowerLevel = (
-                (powerLevels.events ? powerLevels.events["m.room.power_levels"] : null) ||
-                powerLevels.state_default
-            );
+            let editPowerLevel = (powerLevels.events ? powerLevels.events["m.room.power_levels"] : null);
+            if (editPowerLevel == null) {
+                editPowerLevel = powerLevels.state_default;
+            }
+            if (editPowerLevel == null) {
+                editPowerLevel = 50;
+            }
+
             if (me.powerLevel >= editPowerLevel && (isMe || me.powerLevel > them.powerLevel)) {
                 modifyLevelMax = me.powerLevel;
             }
