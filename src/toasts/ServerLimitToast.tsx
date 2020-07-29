@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 
 import { _t, _td } from "../languageHandler";
-import GenericToast from "../components/views/toasts/GenericToast";
+import GenericToast from "./GenericToast";
 import ToastStore from "../stores/ToastStore";
 import {messageForResourceLimitError} from "../utils/ErrorUtils";
 

@@ -21,7 +21,7 @@ import DeviceListener from "../DeviceListener";
 import SetupEncryptionDialog from "../components/views/dialogs/SetupEncryptionDialog";
 import { accessSecretStorage } from "../CrossSigningManager";
 import ToastStore from "../stores/ToastStore";
-import GenericToast from "../components/views/toasts/GenericToast";
+import GenericToast from "./GenericToast";
 
 const TOAST_KEY = "setupencryption";
 

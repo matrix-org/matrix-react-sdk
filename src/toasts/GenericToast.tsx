@@ -16,8 +16,8 @@ limitations under the License.
 
 import React, {ReactNode} from "react";
 
-import FormButton from "../elements/FormButton";
-import {XOR} from "../../../@types/common";
+import FormButton from "../components/views/elements/FormButton";
+import {XOR} from "../@types/common";
 
 export interface IProps {
     description: ReactNode;

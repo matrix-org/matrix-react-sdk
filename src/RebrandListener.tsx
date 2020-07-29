@@ -16,11 +16,11 @@ limitations under the License.
 
 import SdkConfig from "./SdkConfig";
 import ToastStore from "./stores/ToastStore";
-import GenericToast from "./components/views/toasts/GenericToast";
 import RebrandDialog from "./components/views/dialogs/RebrandDialog";
 import { RebrandDialogKind } from "./components/views/dialogs/RebrandDialog";
 import Modal from './Modal';
 import { _t } from './languageHandler';
+import GenericToast from "./toasts/GenericToast";
 
 const TOAST_KEY = 'rebrand';
 const NAG_INTERVAL = 24 * 60 * 60 * 1000;

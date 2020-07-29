@@ -18,7 +18,7 @@ import { _t } from '../languageHandler';
 import dis from "../dispatcher/dispatcher";
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import DeviceListener from '../DeviceListener';
-import GenericToast from "../components/views/toasts/GenericToast";
+import GenericToast from "./GenericToast";
 import ToastStore from "../stores/ToastStore";
 
 const TOAST_KEY = "reviewsessions";

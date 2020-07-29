@@ -17,7 +17,7 @@ limitations under the License.
 import { _t } from "../languageHandler";
 import Modal from "../Modal";
 import SetPasswordDialog from "../components/views/dialogs/SetPasswordDialog";
-import GenericToast from "../components/views/toasts/GenericToast";
+import GenericToast from "./GenericToast";
 import ToastStore from "../stores/ToastStore";
 
 const onAccept = () => {

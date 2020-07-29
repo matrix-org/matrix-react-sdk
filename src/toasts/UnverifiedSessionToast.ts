@@ -20,7 +20,7 @@ import Modal from '../Modal';
 import DeviceListener from '../DeviceListener';
 import NewSessionReviewDialog from '../components/views/dialogs/NewSessionReviewDialog';
 import ToastStore from "../stores/ToastStore";
-import GenericToast from "../components/views/toasts/GenericToast";
+import GenericToast from "./GenericToast";
 
 function toastKey(deviceId: string) {
     return "unverified_session_" + deviceId;
