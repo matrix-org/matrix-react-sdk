@@ -34,6 +34,26 @@ export default class SearchBar extends React.Component {
         const partCreator = new PartCreator(this.props.room, this.context);
         const parts = [];
         this.model = new EditorModel(parts, partCreator);
+        this.state = {
+            roomIds: [],
+            rooms: [],
+        };
+    }
+
+    onChange = () => {
+        const roomIdMap = {};
+        const roomIds = [];
+        const rooms = [];
+        for (let i = 0; i < this.model._parts.length; i++) {
+            if (typeof this.model._parts[i].room !== 'undefined') {
+                roomIdMap[this.model._parts[i].room.roomId] = true;
+            }
+        }
+        for (const roomId in roomIdMap) {
+            roomIds.push(roomId);
+            rooms.push(this.context.getRoom(roomId));
+        }
+        this.setState({roomIds, rooms});
     }
 
     onSearchKeydown = (e) => {
@@ -50,15 +70,13 @@ export default class SearchBar extends React.Component {
 
     onSearch = () => {
             const searchTerm = [];
-            const senderIds = [];
-            const roomIds = [];
+            const senderIdMap = {};
             for (let i = 0; i < this.model._parts.length; i++) {
                 if (typeof this.model._parts[i].member !== 'undefined') {
-                    senderIds.push(this.model._parts[i].resourceId);
+                    senderIdMap[this.model._parts[i].resourceId] = true;
                     continue;
                 }
                 if (typeof this.model._parts[i].room !== 'undefined') {
-                    roomIds.push(this.model._parts[i].room.roomId);
                     continue;
                 }
                 const text = this.model._parts[i]._text.trim();
@@ -66,7 +84,7 @@ export default class SearchBar extends React.Component {
                     searchTerm.push(text);
                 }
             }
-            this.props.onSearch(searchTerm.join(' '), roomIds, senderIds);
+            this.props.onSearch(searchTerm.join(' '), this.state.roomIds, Object.keys(senderIdMap));
     };
 
     render() {
@@ -78,7 +96,7 @@ export default class SearchBar extends React.Component {
             <>
                 <div className="mx_SearchBar">
                     <div className="mx_SearchBar_input mx_textinput" onKeyDown={this.onSearchKeydown}>
-                        <BasicMessageComposer model={this.model} rooms={[this.props.room]} />
+                        <BasicMessageComposer model={this.model} rooms={this.state.rooms} onChange={this.onChange} />
                         <AccessibleButton className={ searchButtonClasses } onClick={this.onSearch} />
                     </div>
                     <AccessibleButton className="mx_SearchBar_cancel" onClick={this.props.onCancelClick} />
