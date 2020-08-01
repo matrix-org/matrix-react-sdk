@@ -63,7 +63,7 @@ export interface SearchArgs {
     after_limit: number;
     order_by_recency: boolean;
     room_id?: string;
-    sender_id?: string;
+    sender_ids?: [string];
 }
 
 export interface EventAndProfile {

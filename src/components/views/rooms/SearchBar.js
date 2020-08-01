@@ -69,11 +69,11 @@ export default class SearchBar extends React.Component {
 
     onSearch = () => {
             const searchTerm = [];
-            const senders = [];
+            const senderIds = [];
             const rooms = [];
             for (let i = 0; i < this.model._parts.length; i++) {
                 if (typeof this.model._parts[i].member !== 'undefined') {
-                    senders.push(this.model._parts[i].resourceId);
+                    senderIds.push(this.model._parts[i].resourceId);
                     continue;
                 }
                 if (typeof this.model._parts[i].room !== 'undefined') {
@@ -85,12 +85,8 @@ export default class SearchBar extends React.Component {
                     searchTerm.push(text);
                 }
             }
-            let sender;
-            if (senders.length > 0) {
-                sender = senders[0];
-            }
-            this.props.onSearch(searchTerm.join(' '), this.state.scope, sender);
-        };
+            this.props.onSearch(searchTerm.join(' '), this.state.scope, senderIds);
+    };
 
     render() {
         const searchButtonClasses = classNames("mx_SearchBar_searchButton", {

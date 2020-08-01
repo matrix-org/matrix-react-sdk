@@ -1239,7 +1239,7 @@ export default class RoomView extends React.Component<IProps, IState> {
             });
     }
 
-    private onSearch = (term: string, scope, senderId) => {
+    private onSearch = (term: string, scope, senderIds) => {
         this.setState({
             searchTerm: term,
             searchScope: scope,
@@ -1263,7 +1263,7 @@ export default class RoomView extends React.Component<IProps, IState> {
         if (scope === "Room") roomId = this.state.room.roomId;
 
         debuglog("sending search request");
-        const searchPromise = eventSearch(term, roomId, senderId);
+        const searchPromise = eventSearch(term, roomId, senderIds);
         this.handleSearchResult(searchPromise);
     };
 
