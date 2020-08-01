@@ -26,11 +26,11 @@ import {ICompletion, ISelectionRange} from "./Autocompleter";
 const AT_ROOM_REGEX = /@\S*/g;
 
 export default class NotifProvider extends AutocompleteProvider {
-    room: Room;
+    rooms: Room[];
 
-    constructor(room) {
+    constructor(rooms) {
         super(AT_ROOM_REGEX);
-        this.room = room;
+        this.rooms = rooms;
     }
 
     async getCompletions(query: string, selection: ISelectionRange, force= false): Promise<ICompletion[]> {
@@ -38,7 +38,10 @@ export default class NotifProvider extends AutocompleteProvider {
 
         const client = MatrixClientPeg.get();
 
-        if (!this.room.currentState.mayTriggerNotifOfType('room', client.credentials.userId)) return [];
+        if (
+            this.rooms.length > 0 &&
+            !this.rooms[0].currentState.mayTriggerNotifOfType('room', client.credentials.userId)
+        ) return [];
 
         const {command, range} = this.getCurrentCommand(query, selection, force);
         if (command && command[0] && '@room'.startsWith(command[0]) && command[0].length > 1) {
@@ -49,7 +52,7 @@ export default class NotifProvider extends AutocompleteProvider {
                 suffix: ' ',
                 component: (
                     <PillCompletion title="@room" description={_t("Notify the whole room")}>
-                        <RoomAvatar width={24} height={24} room={this.room} />
+                        <RoomAvatar width={24} height={24} room={this.rooms[0]} />
                     </PillCompletion>
                 ),
                 range,

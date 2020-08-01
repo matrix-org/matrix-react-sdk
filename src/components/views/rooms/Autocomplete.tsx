@@ -36,8 +36,8 @@ interface IProps {
     // method invoked when selected (if any) completion changes
     onSelectionChange?: (ICompletion, number) => void;
     selection: ISelectionRange;
-    // The room in which we're autocompleting
-    room: Room;
+    // The rooms in which we're autocompleting
+    rooms: Room[];
 }
 
 interface IState {
@@ -58,7 +58,7 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
     constructor(props) {
         super(props);
 
-        this.autocompleter = new Autocompleter(props.room);
+        this.autocompleter = new Autocompleter(props.rooms);
 
         this.state = {
             // list of completionResults, each containing completions
@@ -83,10 +83,24 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
         this.applyNewProps();
     }
 
-    private applyNewProps(oldQuery?: string, oldRoom?: Room) {
-        if (oldRoom && this.props.room.roomId !== oldRoom.roomId) {
-            this.autocompleter.destroy();
-            this.autocompleter = new Autocompleter(this.props.room);
+    private applyNewProps(oldQuery?: string, oldRooms?: Room[]) {
+        if (oldRooms) {
+            let changed = false;
+            if (this.props.rooms.length === oldRooms.length) {
+                for (let i = 0; i < oldRooms.length; i++) {
+                    if (!this.props.rooms.includes(oldRooms[0])) {
+                        changed = true;
+                        break;
+                    }
+                }
+            } else {
+                changed = true;
+            }
+
+            if (changed) {
+                this.autocompleter.destroy();
+                this.autocompleter = new Autocompleter(this.props.rooms);
+            }
         }
 
         // Query hasn't changed so don't try to complete it
@@ -251,7 +265,7 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
     }
 
     componentDidUpdate(prevProps: IProps) {
-        this.applyNewProps(prevProps.query, prevProps.room);
+        this.applyNewProps(prevProps.query, prevProps.rooms);
         // this is the selected completion, so scroll it into view if needed
         const selectedCompletion = this.refs[`completion${this.state.selectionOffset}`] as HTMLElement;
 

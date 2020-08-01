@@ -273,7 +273,7 @@ export default class EditMessageComposer extends React.Component {
             <BasicMessageComposer
                 ref={this._setEditorRef}
                 model={this.model}
-                room={this._getRoom()}
+                rooms={[this._getRoom()]}
                 initialCaret={this.props.editState.getCaret()}
                 label={_t("Edit message")}
                 onChange={this._onChange}

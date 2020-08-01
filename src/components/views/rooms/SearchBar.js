@@ -78,7 +78,7 @@ export default class SearchBar extends React.Component {
             <>
                 <div className="mx_SearchBar">
                     <div className="mx_SearchBar_input mx_textinput" onKeyDown={this.onSearchKeydown}>
-                        <BasicMessageComposer model={this.model} room={this.props.room} />
+                        <BasicMessageComposer model={this.model} rooms={[this.props.room]} />
                         <AccessibleButton className={ searchButtonClasses } onClick={this.onSearch} />
                     </div>
                     <AccessibleButton className="mx_SearchBar_cancel" onClick={this.props.onCancelClick} />

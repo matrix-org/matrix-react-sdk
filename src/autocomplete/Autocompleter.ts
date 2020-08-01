@@ -66,13 +66,13 @@ export interface IProviderCompletions {
 }
 
 export default class Autocompleter {
-    room: Room;
+    rooms: Room[];
     providers: AutocompleteProvider[];
 
-    constructor(room: Room) {
-        this.room = room;
+    constructor(rooms: Room[]) {
+        this.rooms = rooms;
         this.providers = PROVIDERS.map((Prov) => {
-            return new Prov(room);
+            return new Prov(rooms);
         });
     }
 
