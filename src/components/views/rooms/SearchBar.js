@@ -22,7 +22,6 @@ import {PartCreator} from '../../../editor/parts';
 import BasicMessageComposer from "./BasicMessageComposer";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import classNames from "classnames";
-import { _t } from '../../../languageHandler';
 import {Key} from "../../../Keyboard";
 import DesktopBuildsNotice, {WarningKind} from "../elements/DesktopBuildsNotice";
 
@@ -32,22 +31,10 @@ export default class SearchBar extends React.Component {
     constructor(props, context) {
         super(props, context);
 
-        this.state = {
-            scope: 'Room',
-        };
-
         const partCreator = new PartCreator(this.props.room, this.context);
         const parts = [];
         this.model = new EditorModel(parts, partCreator);
     }
-
-    onThisRoomClick = () => {
-        this.setState({ scope: 'Room' }, () => this._searchIfQuery());
-    };
-
-    onAllRoomsClick = () => {
-        this.setState({ scope: 'All' }, () => this._searchIfQuery());
-    };
 
     onSearchKeydown = (e) => {
         switch (e.key) {
@@ -61,23 +48,17 @@ export default class SearchBar extends React.Component {
         }
     };
 
-    _searchIfQuery() {
-        if (this.model._parts.length > 0) {
-            this.onSearch();
-        }
-    }
-
     onSearch = () => {
             const searchTerm = [];
             const senderIds = [];
-            const rooms = [];
+            const roomIds = [];
             for (let i = 0; i < this.model._parts.length; i++) {
                 if (typeof this.model._parts[i].member !== 'undefined') {
                     senderIds.push(this.model._parts[i].resourceId);
                     continue;
                 }
                 if (typeof this.model._parts[i].room !== 'undefined') {
-                    rooms.push(this.model._parts[i].room.roomId);
+                    roomIds.push(this.model._parts[i].room.roomId);
                     continue;
                 }
                 const text = this.model._parts[i]._text.trim();
@@ -85,18 +66,12 @@ export default class SearchBar extends React.Component {
                     searchTerm.push(text);
                 }
             }
-            this.props.onSearch(searchTerm.join(' '), this.state.scope, senderIds);
+            this.props.onSearch(searchTerm.join(' '), roomIds, senderIds);
     };
 
     render() {
         const searchButtonClasses = classNames("mx_SearchBar_searchButton", {
             mx_SearchBar_searching: this.props.searchInProgress,
-        });
-        const thisRoomClasses = classNames("mx_SearchBar_button", {
-            mx_SearchBar_unselected: this.state.scope !== 'Room',
-        });
-        const allRoomsClasses = classNames("mx_SearchBar_button", {
-            mx_SearchBar_unselected: this.state.scope !== 'All',
         });
 
         return (

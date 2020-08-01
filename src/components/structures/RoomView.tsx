@@ -134,8 +134,8 @@ export interface IState {
     numUnreadMessages: number;
     draggingFile: boolean;
     searching: boolean;
+    searchMultiRoom?: boolean;
     searchTerm?: string;
-    searchScope?: "All" | "Room";
     searchResults?: XOR<{}, {
         count: number;
         highlights: string[];
@@ -1239,10 +1239,10 @@ export default class RoomView extends React.Component<IProps, IState> {
             });
     }
 
-    private onSearch = (term: string, scope, senderIds) => {
+    private onSearch = (term: string, roomIds, senderIds) => {
         this.setState({
             searchTerm: term,
-            searchScope: scope,
+            searchMultiRoom: roomIds.length === 0 || roomIds.length > 1,
             searchResults: {},
             searchHighlights: [],
         });
@@ -1259,11 +1259,8 @@ export default class RoomView extends React.Component<IProps, IState> {
         // todo: should cancel any previous search requests.
         this.searchId = new Date().getTime();
 
-        let roomId;
-        if (scope === "Room") roomId = this.state.room.roomId;
-
         debuglog("sending search request");
-        const searchPromise = eventSearch(term, roomId, senderIds);
+        const searchPromise = eventSearch(term, roomIds, senderIds);
         this.handleSearchResult(searchPromise);
     };
 
@@ -1380,7 +1377,7 @@ export default class RoomView extends React.Component<IProps, IState> {
                 continue;
             }
 
-            if (this.state.searchScope === 'All') {
+            if (this.state.searchMultiRoom) {
                 if (roomId !== lastRoomId) {
                     ret.push(<li key={mxEv.getId() + "-room"}>
                         <h2>{ _t("Room") }: { room.name }</h2>
