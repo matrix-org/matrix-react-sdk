@@ -22,17 +22,12 @@ const SEARCH_LIMIT = 10;
 async function serverSideSearch(term, roomIds = undefined, senderIds = undefined) {
     const client = MatrixClientPeg.get();
 
-    const filter = {
-        limit: SEARCH_LIMIT,
-    };
-
-    if (roomIds !== undefined && roomIds.length > 0) filter.rooms = roomIds;
-    if (senderIds !== undefined && senderIds.length > 0) filter.senders = senderIds;
-
     const body = {
         search_categories: {
             room_events: {
-                filter: filter,
+                filter: {
+                    limit: SEARCH_LIMIT,
+                },
                 order_by: "recent",
                 event_context: {
                     before_limit: 1,
@@ -44,6 +39,12 @@ async function serverSideSearch(term, roomIds = undefined, senderIds = undefined
     };
 
     if (term !== "") body.search_categories.room_events.search_term = term;
+    if (roomIds !== undefined && roomIds.length > 0) {
+        body.search_categories.room_events.filter.rooms = roomIds;
+    }
+    if (senderIds !== undefined && senderIds.length > 0) {
+        body.search_categories.room_events.filter.senders = senderIds;
+    }
 
     const response = await client.search({body: body});
 
