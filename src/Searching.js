@@ -150,17 +150,9 @@ async function localSearch(searchTerm, roomId = undefined, senderId = undefined,
         after_limit: 1,
         limit: SEARCH_LIMIT,
         order_by_recency: true,
-        room_id: undefined,
-        sender_id: undefined,
+        room_id: roomId,
+        sender_id: senderId,
     };
-
-    if (roomId !== undefined) {
-        searchArgs.room_id = roomId;
-    }
-
-    if (senderId !== undefined) {
-        searchArgs.sender_id = senderId;
-    }
 
     const localResult = await eventIndex.search(searchArgs);
 
