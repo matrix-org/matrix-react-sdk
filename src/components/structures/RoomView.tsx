@@ -1941,7 +1941,7 @@ export default class RoomView extends React.Component<IProps, IState> {
             />;
         }
 
-        let messageComposer; let searchInfo;
+        let messageComposer; let searchCount;
         const canSpeak = (
             // joined and not showing search results
             myMembership === 'join' && !this.state.searchResults
@@ -1960,14 +1960,8 @@ export default class RoomView extends React.Component<IProps, IState> {
                 />;
         }
 
-        // TODO: Why aren't we storing the term/scope/count in this format
-        // in this.state if this is what RoomHeader desires?
         if (this.state.searchResults) {
-            searchInfo = {
-                searchTerm: this.state.searchTerm,
-                searchScope: this.state.searchScope,
-                searchCount: this.state.searchResults.count,
-            };
+            searchCount = this.state.searchResults.count;
         }
 
         if (inCall) {
@@ -2130,7 +2124,7 @@ export default class RoomView extends React.Component<IProps, IState> {
                     <ErrorBoundary>
                         <RoomHeader
                             room={this.state.room}
-                            searchInfo={searchInfo}
+                            searchCount={searchCount}
                             oobData={this.props.oobData}
                             inRoom={myMembership === 'join'}
                             onSearchClick={this.onSearchClick}

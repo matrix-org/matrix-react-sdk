@@ -148,11 +148,10 @@ export default class RoomHeader extends React.Component {
 
         // don't display the search count until the search completes and
         // gives us a valid (possibly zero) searchCount.
-        if (this.props.searchInfo &&
-            this.props.searchInfo.searchCount !== undefined &&
-            this.props.searchInfo.searchCount !== null) {
+        if (this.props.searchCount !== undefined &&
+            this.props.searchCount !== null) {
             searchStatus = <div className="mx_RoomHeader_searchStatus">&nbsp;
-                { _t("(~%(count)s results)", { count: this.props.searchInfo.searchCount }) }
+                { _t("(~%(count)s results)", { count: this.props.searchCount }) }
             </div>;
         }
 
