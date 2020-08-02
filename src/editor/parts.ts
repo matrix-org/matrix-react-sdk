@@ -451,11 +451,18 @@ interface IAutocompleteCreator {
 
 export class PartCreator {
     protected readonly autoCompleteCreator: IAutocompleteCreator;
+    protected readonly disableSuffix: boolean;
 
-    constructor(private room: Room, private client: MatrixClient, autoCompleteCreator: AutoCompleteCreator = null) {
+    constructor(
+        private room: Room,
+        private client: MatrixClient,
+        autoCompleteCreator: AutoCompleteCreator = null,
+        disableSuffix: boolean,
+    ) {
         // pre-create the creator as an object even without callback so it can already be passed
         // to PillCandidatePart (e.g. while deserializing) and set later on
         this.autoCompleteCreator = {create: autoCompleteCreator && autoCompleteCreator(this)};
+        this.disableSuffix = disableSuffix;
     }
 
     setAutoCompleteCreator(autoCompleteCreator: AutoCompleteCreator) {
@@ -533,7 +540,7 @@ export class PartCreator {
 
     createMentionParts(partIndex: number, displayName: string, userId: string) {
         const pill = this.userPill(displayName, userId);
-        const postfix = this.plain(partIndex === 0 ? ": " : " ");
+        const postfix = this.plain(partIndex === 0 && !this.disableSuffix ? ": " : " ");
         return [pill, postfix];
     }
 }

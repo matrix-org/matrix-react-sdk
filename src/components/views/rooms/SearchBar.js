@@ -31,7 +31,7 @@ export default class SearchBar extends React.Component {
     constructor(props, context) {
         super(props, context);
 
-        const partCreator = new PartCreator(this.props.room, this.context);
+        const partCreator = new PartCreator(this.props.room, this.context, null, true);
         const parts = [];
         this.model = new EditorModel(parts, partCreator);
         this.state = {
