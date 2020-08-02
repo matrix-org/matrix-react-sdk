@@ -69,6 +69,10 @@ export default class SearchBar extends React.Component {
     };
 
     onSearch = () => {
+        if (this.model.autoComplete !== null) {
+            this.model.autoComplete.getAutocompleterComponent().hide();
+        }
+        if (this.model._parts.length > 0) {
             const searchTerm = [];
             const senderIdMap = {};
             for (let i = 0; i < this.model._parts.length; i++) {
@@ -85,6 +89,7 @@ export default class SearchBar extends React.Component {
                 }
             }
             this.props.onSearch(searchTerm.join(' '), this.state.roomIds, Object.keys(senderIdMap));
+        }
     };
 
     render() {
