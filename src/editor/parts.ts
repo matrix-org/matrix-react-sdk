@@ -500,7 +500,7 @@ export class PartCreator {
             case Type.RoomPill:
                 return this.roomPill(part.text);
             case Type.UserPill:
-                return this.userPill(part.text, part.resourceId);
+                return this.userPill(part.text, part.resourceId, null);
         }
     }
 
@@ -533,13 +533,13 @@ export class PartCreator {
         return new AtRoomPillPart(text, this.room);
     }
 
-    userPill(displayName: string, userId: string) {
-        const member = this.room.getMember(userId);
+    userPill(displayName: string, userId: string, member: RoomMember) {
+        if (member === null) member = this.room.getMember(userId);
         return new UserPillPart(userId, displayName, member);
     }
 
-    createMentionParts(partIndex: number, displayName: string, userId: string) {
-        const pill = this.userPill(displayName, userId);
+    createMentionParts(partIndex: number, displayName: string, userId: string, member: RoomMember) {
+        const pill = this.userPill(displayName, userId, member);
         const postfix = this.plain(partIndex === 0 && !this.disableSuffix ? ": " : " ");
         return [pill, postfix];
     }

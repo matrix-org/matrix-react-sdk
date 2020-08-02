@@ -128,7 +128,12 @@ export default class AutocompleteWrapperModel {
                 // not using suffix here, because we also need to calculate
                 // the suffix when clicking a display name to insert a mention,
                 // which happens in createMentionParts
-                return this.partCreator.createMentionParts(this.partIndex, text, completionId);
+                return this.partCreator.createMentionParts(
+                    this.partIndex,
+                    text,
+                    completionId,
+                    completion.component.props.children.props.member,
+                );
             case "command":
                 // command needs special handling for auto complete, but also renders as plain texts
                 return [(this.partCreator as CommandPartCreator).command(text)];

@@ -46,7 +46,7 @@ function parseLink(a: HTMLAnchorElement, partCreator: PartCreator) {
     const prefix = resourceId ? resourceId[0] : undefined; // First character of ID
     switch (prefix) {
         case "@":
-            return partCreator.userPill(a.textContent, resourceId);
+            return partCreator.userPill(a.textContent, resourceId, null);
         case "#":
             return partCreator.roomPill(resourceId);
         default: {
