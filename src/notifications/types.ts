@@ -43,7 +43,7 @@ export interface ISoundTweak {
     value: string;
 }
 
-export const SoundTweak = (value = "default"): ISoundTweak => ({
+export const soundTweak = (value = "default"): ISoundTweak => ({
     set_tweak: TweakType.Sound,
     value,
 });
@@ -54,7 +54,7 @@ export interface IHighlightTweak {
     value?: boolean;
 }
 
-export const HighlightTweak = (value = true): IHighlightTweak => ({
+export const highlightTweak = (value = true): IHighlightTweak => ({
     set_tweak: TweakType.Highlight,
     value,
 });

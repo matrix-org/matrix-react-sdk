@@ -27,14 +27,13 @@ import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import Modal from "../../../../Modal";
 import ErrorDialog from "../../dialogs/ErrorDialog";
 import {SCOPE} from "../../../../notifications/ContentRules";
-import {PushRuleMap} from "../../../../notifications/NotificationUtils";
 import {Action, ActionType, IExtendedPushRule, RuleId} from "../../../../notifications/types";
 import {useEventEmitter} from "../../../../hooks/useEventEmitter";
+import {NotificationSettingStore} from "../../../../stores/notifications/NotificationSettingStore";
 
 
 interface IProps {
     disabled?: boolean;
-    pushRules: PushRuleMap;
     keywordsEnabled: boolean;
     soundEnabled: boolean;
     setKeywordsEnabled(enabled: boolean);
@@ -152,7 +151,6 @@ const onError = (error) => {
 };
 
 interface IPushRuleCheckboxProps {
-    pushRules: PushRuleMap;
     ruleId: RuleId | string;
     disabled?: boolean;
     action: ActionType;
@@ -163,21 +161,22 @@ const ruleMatchesAction = (rule: IExtendedPushRule, action: ActionType) => {
     return rule.enabled && rule.actions.includes(action);
 };
 
-const PushRuleCheckbox: React.FC<IPushRuleCheckboxProps> = ({pushRules, ruleId, action, disabled, label}) => {
+const PushRuleCheckbox: React.FC<IPushRuleCheckboxProps> = ({ruleId, action, disabled, label}) => {
     const cli = useContext(MatrixClientContext);
-    const [checked, setChecked] = useState(ruleMatchesAction(pushRules.get(ruleId), action));
+    const store = NotificationSettingStore.instance;
+    const [checked, setChecked] = useState(ruleMatchesAction(store.get(ruleId), action));
 
     const handler = useCallback((rule: IExtendedPushRule) => {
         setChecked(ruleMatchesAction(rule, action));
     }, [action]);
-    useEventEmitter(pushRules, ruleId, handler);
+    useEventEmitter(store, ruleId, handler);
 
     const onChange = useCallback(() => {
         const enabled = !checked;
         // local echo
         setChecked(enabled);
 
-        const rule = pushRules.get(ruleId);
+        const rule = store.get(ruleId);
         (async () => {
             try {
                 if (rule.enabled !== enabled) {
@@ -191,17 +190,18 @@ const PushRuleCheckbox: React.FC<IPushRuleCheckboxProps> = ({pushRules, ruleId, 
                 // TODO error handling
             }
         })();
-    }, [cli, checked, pushRules, ruleId, action]);
+    }, [cli, checked, ruleId, action]);
 
     return <StyledCheckbox disabled={disabled} checked={checked} onChange={onChange}>
         { label }
     </StyledCheckbox>
 };
 
-const MentionsKeywordsSection: React.FC<IProps> = ({disabled, keywordsEnabled, setKeywordsEnabled, pushRules, soundEnabled}) => {
+const MentionsKeywordsSection: React.FC<IProps> = ({disabled, keywordsEnabled, setKeywordsEnabled, soundEnabled}) => {
     const cli = useContext<MatrixClient>(MatrixClientContext);
+    const store = NotificationSettingStore.instance;
     // TODO show warning if any of the rules have mismatched actions
-    const keywords = Array.from(new Set(pushRules.getKeywordRules().map(r => r.pattern)));
+    const keywords = Array.from(new Set(store.getKeywordRules().map(r => r.pattern)));
     if (keywords.length) {
         // As keeping the order of per-word push rules hs side is a bit tricky to code,
         // display the keywords in alphabetical order to the user
@@ -210,37 +210,34 @@ const MentionsKeywordsSection: React.FC<IProps> = ({disabled, keywordsEnabled, s
 
     const addKeyword = (keyword: string) => {
         setKeywordsEnabled(true); // local echo
-        pushRules.addKeywordRule(cli, keyword, true, soundEnabled).catch(onError);
+        store.addKeywordRule(cli, keyword, true, soundEnabled).catch(onError);
     };
 
     const removeKeyword = (keyword: string) => {
-        pushRules.removeKeywordRule(cli, keyword).catch(onError);
+        store.removeKeywordRule(cli, keyword).catch(onError);
     };
 
     const onKeywordsEnabledChange = e => {
         setKeywordsEnabled(e.target.checked); // local echo
-        pushRules.updateKeywordRules(cli, e.target.checked, soundEnabled).catch(onError);
+        store.updateKeywordRules(cli, e.target.checked, soundEnabled).catch(onError);
     };
 
     const keywordsDisabled = disabled || !keywordsEnabled;
     return <SettingsSection title={_t("Mentions & Keywords")} className="mx_NotificationsTab_mentionsKeywords">
         <PushRuleCheckbox
             disabled={disabled}
-            pushRules={pushRules}
             ruleId={RuleId.ContainsDisplayName}
             action={Action.Notify}
             label={_t("Notify when someone mentions using your name")}
         />
         <PushRuleCheckbox
             disabled={disabled}
-            pushRules={pushRules}
             ruleId={RuleId.ContainsUserName}
             action={Action.Notify}
             label={_t("Notify when someone mentions using your username")}
         />
         <PushRuleCheckbox
             disabled={disabled}
-            pushRules={pushRules}
             ruleId={RuleId.RoomNotif}
             action={Action.Notify}
             label={_t("Notify when someone mentions using @room")}

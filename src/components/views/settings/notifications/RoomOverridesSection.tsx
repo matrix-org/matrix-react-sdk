@@ -26,11 +26,9 @@ import Modal from "../../../../Modal";
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import RoomAvatar from "../../avatars/RoomAvatar";
 import {ChevronFace, ContextMenu, ContextMenuButton, MenuItem, useContextMenu} from "../../../structures/ContextMenu";
-import {PushRuleMap} from "../../../../notifications/NotificationUtils";
 
 interface IProps {
     notifyMeWith: NotificationSetting;
-    pushRules: PushRuleMap;
 }
 
 interface IRoomOverrideTileProps {
@@ -141,7 +139,7 @@ const onResetAllRoomsClick = () => {
     });
 };
 
-const RoomOverridesSection: React.FC<IProps> = ({notifyMeWith, pushRules}) => {
+const RoomOverridesSection: React.FC<IProps> = ({notifyMeWith}) => {
     const rooms = [];
     // skip section if there are no room overrides
     if (rooms.length < 1) return null;

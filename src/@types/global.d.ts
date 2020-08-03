@@ -25,6 +25,7 @@ import { PlatformPeg } from "../PlatformPeg";
 import RoomListLayoutStore from "../stores/room-list/RoomListLayoutStore";
 import {IntegrationManagers} from "../integrations/IntegrationManagers";
 import {ModalManager} from "../Modal";
+import {NotificationSettingStore} from "../stores/notifications/NotificationSettingStore";
 
 declare global {
     interface Window {
@@ -41,6 +42,7 @@ declare global {
         mxRoomListStore: RoomListStoreClass;
         mxRoomListLayoutStore: RoomListLayoutStore;
         mxPlatformPeg: PlatformPeg;
+        mxNotificationSettingStore: NotificationSettingStore;
         mxIntegrationManagers: typeof IntegrationManagers;
         singletonModalManager: ModalManager;
     }

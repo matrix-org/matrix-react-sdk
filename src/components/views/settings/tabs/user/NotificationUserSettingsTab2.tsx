@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useState} from "react";
 import MatrixClient from "matrix-js-sdk/src/client";
 
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
@@ -23,49 +23,36 @@ import SettingsSection from "../../SettingsSection";
 import DesktopNotificationsSection from "../../notifications/DesktopNotificationsSection";
 import EmailNotificationsSection from "../../notifications/EmailNotificationsSection";
 import AppearanceSoundsSection from "../../notifications/AppearanceSoundsSection";
-import {useAccountData} from "../../../../../hooks/useAccountData";
 import MentionsKeywordsSection from "../../notifications/MentionsKeywordsSection";
-import {compareNotificationSettings, IRuleSets, NotificationSetting} from "../../../../../notifications/types";
+import {compareNotificationSettings, NotificationSetting} from "../../../../../notifications/types";
 import RoomOverridesSection from "../../notifications/RoomOverridesSection";
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
-import {
-    EVENT_KEYWORDS_CHANGED,
-    EVENT_NOTIFY_ME_WITH_CHANGED, EVENT_PLAY_SOUND_FOR_CHANGED,
-    PushRuleMap,
-    writeNotifyMeWith
-} from "../../../../../notifications/NotificationUtils";
+import {writeNotifyMeWith} from "../../../../../notifications/NotificationUtils";
 import {useEventEmitter} from "../../../../../hooks/useEventEmitter";
-
-const usePushRuleMap = () => {
-    const cli = useContext<MatrixClient>(MatrixClientContext);
-    const pushRules = useAccountData<IRuleSets>(cli, "m.push_rules");
-
-    const pushRuleMap = useRef(new PushRuleMap(pushRules.global));
-
-    useEffect(() => {
-        pushRuleMap.current.setPushRules(pushRules.global);
-    }, [pushRules]);
-
-    return pushRuleMap.current;
-};
+import {
+    NotificationSettingStore,
+    EVENT_NOTIFY_ME_WITH_CHANGED,
+    EVENT_PLAY_SOUND_FOR_CHANGED,
+    EVENT_KEYWORDS_CHANGED,
+} from "../../../../../stores/notifications/NotificationSettingStore";
 
 const NotificationUserSettingsTab2: React.FC = () => {
     const cli = useContext<MatrixClient>(MatrixClientContext);
-    const pushRuleMap = usePushRuleMap();
 
-    const [notifyMeWith, setNotifyMeWith] = useState<NotificationSetting>(pushRuleMap.notifyMeWith);
-    useEventEmitter(pushRuleMap, EVENT_NOTIFY_ME_WITH_CHANGED, setNotifyMeWith);
+    const pushRules = NotificationSettingStore.instance;
+    const [notifyMeWith, setNotifyMeWith] = useState<NotificationSetting>(pushRules.notifyMeWith);
+    useEventEmitter(pushRules, EVENT_NOTIFY_ME_WITH_CHANGED, setNotifyMeWith);
 
-    const [playSoundFor, setPlaySoundFor] = useState<NotificationSetting>(pushRuleMap.playSoundFor);
-    useEventEmitter(pushRuleMap, EVENT_PLAY_SOUND_FOR_CHANGED, setPlaySoundFor);
+    const [playSoundFor, setPlaySoundFor] = useState<NotificationSetting>(pushRules.playSoundFor);
+    useEventEmitter(pushRules, EVENT_PLAY_SOUND_FOR_CHANGED, setPlaySoundFor);
 
-    const [keywordsEnabled, setKeywordsEnabled] = useState(pushRuleMap.keywordsEnabled);
-    useEventEmitter(pushRuleMap, EVENT_KEYWORDS_CHANGED, setKeywordsEnabled);
+    const [keywordsEnabled, setKeywordsEnabled] = useState(pushRules.keywordsEnabled);
+    useEventEmitter(pushRules, EVENT_KEYWORDS_CHANGED, setKeywordsEnabled);
 
     const onNotifyMeWithChange = (value: NotificationSetting) => {
         setNotifyMeWith(value); // local echo
 
-        writeNotifyMeWith(cli, pushRuleMap, value).catch(e => {
+        writeNotifyMeWith(cli, value).catch(e => {
             console.log(e); // TODO error handling
         });
     };
@@ -74,10 +61,10 @@ const NotificationUserSettingsTab2: React.FC = () => {
         setPlaySoundFor(value); // local echo
 
         const soundEnabled = compareNotificationSettings(value, NotificationSetting.Never) > 0;
-        pushRuleMap.updateSoundRules(cli, value).catch(e => {
+        pushRules.updateSoundRules(cli, value).catch(e => {
             console.log(e); // TODO error handling
         });
-        pushRuleMap.updateKeywordRules(cli, keywordsEnabled, soundEnabled).catch(e => {
+        pushRules.updateKeywordRules(cli, keywordsEnabled, soundEnabled).catch(e => {
             console.log(e); // TODO error handling
         });
     };
@@ -113,21 +100,20 @@ const NotificationUserSettingsTab2: React.FC = () => {
             />
         </SettingsSection>
 
-        <MentionsKeywordsSection
-            disabled={mentionsKeywordsSectionDisabled}
-            pushRules={pushRuleMap}
-            keywordsEnabled={keywordsEnabled}
-            setKeywordsEnabled={setKeywordsEnabled}
-            soundEnabled={compareNotificationSettings(playSoundFor, NotificationSetting.Never) > 0}
-        />
-
         <AppearanceSoundsSection
             notifyMeWith={notifyMeWith}
             playSoundFor={playSoundFor}
             onChange={onPlaySoundForChange}
         />
 
-        <RoomOverridesSection notifyMeWith={notifyMeWith} pushRules={pushRuleMap} />
+        <MentionsKeywordsSection
+            disabled={mentionsKeywordsSectionDisabled}
+            keywordsEnabled={keywordsEnabled}
+            setKeywordsEnabled={setKeywordsEnabled}
+            soundEnabled={compareNotificationSettings(playSoundFor, NotificationSetting.Never) > 0}
+        />
+
+        <RoomOverridesSection notifyMeWith={notifyMeWith} />
 
         <DesktopNotificationsSection />
 
