@@ -21,10 +21,10 @@ import {
     Action,
     ActionType,
     highlightTweak,
-    IExtendedPushRule,
+    PushRule,
     NotificationSetting,
     RuleId,
-    soundTweak,
+    soundTweak, roundRoomNotificationSetting,
 } from "./types";
 import {SCOPE} from "./ContentRules";
 import {arrayHasDiff} from "../utils/arrays";
@@ -116,7 +116,7 @@ export const getKeywordActions = (loud: boolean) => {
     return actions;
 };
 
-const getMismatchedNotifyMeWith = (value: NotificationSetting): IExtendedPushRule[] => {
+const getMismatchedNotifyMeWith = (value: NotificationSetting): PushRule[] => {
     // TODO allow keywords to be disabled
 
     const store = NotificationSettingStore.instance;
@@ -147,7 +147,7 @@ const getMismatchedNotifyMeWith = (value: NotificationSetting): IExtendedPushRul
     }
 };
 
-export const updatePushRule = (cli: MatrixClient, rule: IExtendedPushRule, enabled?: boolean, actions?: ActionType[]) => {
+export const updatePushRule = (cli: MatrixClient, rule: PushRule, enabled?: boolean, actions?: ActionType[]) => {
     const promises: Promise<any>[] = [];
 
     if (enabled !== undefined && rule.enabled !== enabled) {
@@ -175,4 +175,8 @@ export const writeNotifyMeWith = (cli: MatrixClient, value: NotificationSetting)
         updatePushRule(cli, store.get(RuleId.Message),
             value === NotificationSetting.AllMessages, [Action.Notify]),
     ]);
+};
+
+export const possibleRoomSoundOverrides = (value: NotificationSetting) => {
+    const rounded = roundRoomNotificationSetting(value);
 };

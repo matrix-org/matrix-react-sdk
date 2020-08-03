@@ -14,12 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import DMRoomMap from "../utils/DMRoomMap";
+
 export enum NotificationSetting {
-    AllMessages = "all_messages", // .m.rule.message = notify
-    DirectMessagesMentionsKeywords = "dm_mentions_keywords", // .m.rule.message = mark_unread. This is the new default.
-    MentionsKeywordsOnly = "mentions_keywords", // .m.rule.message = mark_unread; .m.rule.room_one_to_one = mark_unread
-    Never = "never", // .m.rule.master = enabled (dont_notify)
+    AllMessages = "all_messages",
+    DirectMessagesMentionsKeywords = "dm_mentions_keywords",
+    MentionsKeywordsOnly = "mentions_keywords",
+    Never = "never",
 }
+
+export type RoomNotificationSetting =
+    NotificationSetting.AllMessages | NotificationSetting.MentionsKeywordsOnly | NotificationSetting.Never;
+
+export const roundRoomNotificationSetting = (roomId: string, level: NotificationSetting): RoomNotificationSetting => {
+    if (level === NotificationSetting.DirectMessagesMentionsKeywords) {
+        if (DMRoomMap.shared().getUserIdForRoomId(roomId)) {
+            return NotificationSetting.AllMessages;
+        } else {
+            return NotificationSetting.MentionsKeywordsOnly;
+        }
+    }
+    return level;
+};
 
 const enumOrder = {
     [NotificationSetting.Never]: 0,
@@ -125,27 +141,36 @@ export enum RuleId {
     Encrypted = ".m.rule.encrypted",
 }
 
-export interface IPushRule {
-    enabled: boolean;
+interface IBasePushRule {
     // eslint-disable-next-line camelcase
     rule_id: RuleId | string;
     actions: ActionType[];
+    enabled: boolean;
     default: boolean;
-    conditions?: Condition[]; // only applicable to `underride` and `override` rules
-    pattern?: string; // only applicable to `content` rules
 }
 
-// push rule extended with kind, used by ContentRules and js-sdk's pushprocessor
-export interface IExtendedPushRule extends IPushRule {
-    kind: Kind;
+export interface IPushRuleWithConditions extends IBasePushRule {
+    kind: Kind.Override | Kind.Underride;
+    conditions: Condition[];
 }
+
+export interface IPushRuleWithPattern extends IBasePushRule {
+    kind: Kind.ContentSpecific;
+    pattern: string;
+}
+
+export interface IPushRule extends IBasePushRule {
+    kind: Kind.RoomSpecific | Kind.SenderSpecific;
+}
+
+export type PushRule = IPushRuleWithConditions | IPushRuleWithPattern | IPushRule;
 
 export interface IPushRuleSet {
-    override: IExtendedPushRule[];
-    content: IExtendedPushRule[];
-    room: IExtendedPushRule[];
-    sender: IExtendedPushRule[];
-    underride: IExtendedPushRule[];
+    override: IPushRuleWithConditions[];
+    content: IPushRuleWithPattern[];
+    room: IPushRule[];
+    sender: IPushRule[];
+    underride: IPushRuleWithConditions[];
 }
 
 export interface IRuleSets {

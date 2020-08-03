@@ -18,9 +18,11 @@ import React from "react";
 
 import SettingsSection from "../SettingsSection";
 import {_t} from "../../../../languageHandler";
+import SettingsStore, {SettingLevel} from "../../../../settings/SettingsStore";
 import {compareNotificationSettings as compareSettings, NotificationSetting} from "../../../../notifications/types";
-import AlwaysShowBadgeCountsOption from "./AlwaysShowBadgeCountsOption";
 import StyledRadioGroup from "../../elements/StyledRadioGroup";
+import StyledCheckbox from "../../elements/StyledCheckbox";
+import {useSettingValue} from "../../../../hooks/useSettings";
 
 interface IProps {
     notifyMeWith: NotificationSetting;
@@ -28,13 +30,17 @@ interface IProps {
     onChange(playSoundFor: NotificationSetting);
 }
 
-const AppearanceSoundsSection: React.FC<IProps> = ({notifyMeWith, playSoundFor, onChange}) => {
-    return <SettingsSection title={_t("Appearance & Sounds")} className="mx_NotificationsTab_appearanceAndSounds">
-        <AlwaysShowBadgeCountsOption />
+const AUDIBLE_NOTIFICATIONS_ENABLED_KEY = "audioNotificationsEnabled";
 
-        <br />
-        <br />
+const onMuteAudioForThisSessionChange = ev => {
+    SettingsStore.setValue(AUDIBLE_NOTIFICATIONS_ENABLED_KEY, null, SettingLevel.DEVICE, !ev.target.checked);
+};
 
+const SoundsSection: React.FC<IProps> = ({notifyMeWith, playSoundFor, onChange}) => {
+    // TODO local echo
+    const muteAudio = !useSettingValue(AUDIBLE_NOTIFICATIONS_ENABLED_KEY);
+
+    return <SettingsSection title={_t("Play a sound for")} className="mx_NotificationsTab_appearanceAndSounds">
         <StyledRadioGroup
             name="playSoundFor"
             value={playSoundFor}
@@ -42,23 +48,29 @@ const AppearanceSoundsSection: React.FC<IProps> = ({notifyMeWith, playSoundFor, 
             definitions={[
                 {
                     value: NotificationSetting.AllMessages,
-                    label: _t("Play a sound for all messages"),
+                    label: _t("All messages"),
                     disabled: compareSettings(notifyMeWith, NotificationSetting.AllMessages) < 0,
                 }, {
                     value: NotificationSetting.DirectMessagesMentionsKeywords,
-                    label: _t("Play a sound for direct messages, mentions & keywords"),
+                    label: _t("Direct messages, mentions & keywords"),
                     disabled: compareSettings(notifyMeWith, NotificationSetting.DirectMessagesMentionsKeywords) < 0,
                 }, {
                     value: NotificationSetting.MentionsKeywordsOnly,
-                    label: _t("Play a sound for mentions & keywords"),
+                    label: _t("Mentions & keywords"),
                     disabled: compareSettings(notifyMeWith, NotificationSetting.MentionsKeywordsOnly) < 0,
                 }, {
                     value: NotificationSetting.Never,
-                    label: _t("Never play a sound"),
+                    label: _t("Never"),
                 },
             ]}
         />
+
+        <br />
+
+        <StyledCheckbox checked={muteAudio} onChange={onMuteAudioForThisSessionChange}>
+            {_t("Mute audio for this session")}
+        </StyledCheckbox>
     </SettingsSection>;
 };
 
-export default AppearanceSoundsSection;
+export default SoundsSection;

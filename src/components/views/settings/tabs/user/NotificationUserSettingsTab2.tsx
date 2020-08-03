@@ -22,7 +22,7 @@ import {_t} from "../../../../../languageHandler";
 import SettingsSection from "../../SettingsSection";
 import DesktopNotificationsSection from "../../notifications/DesktopNotificationsSection";
 import EmailNotificationsSection from "../../notifications/EmailNotificationsSection";
-import AppearanceSoundsSection from "../../notifications/AppearanceSoundsSection";
+import SoundsSection from "../../notifications/SoundsSection";
 import MentionsKeywordsSection from "../../notifications/MentionsKeywordsSection";
 import {compareNotificationSettings, NotificationSetting} from "../../../../../notifications/types";
 import RoomOverridesSection from "../../notifications/RoomOverridesSection";
@@ -35,6 +35,7 @@ import {
     EVENT_PLAY_SOUND_FOR_CHANGED,
     EVENT_KEYWORDS_CHANGED,
 } from "../../../../../stores/notifications/NotificationSettingStore";
+import AppearanceSection from "../../notifications/AppearanceSection";
 
 const NotificationUserSettingsTab2: React.FC = () => {
     const cli = useContext<MatrixClient>(MatrixClientContext);
@@ -100,11 +101,13 @@ const NotificationUserSettingsTab2: React.FC = () => {
             />
         </SettingsSection>
 
-        <AppearanceSoundsSection
+        <SoundsSection
             notifyMeWith={notifyMeWith}
             playSoundFor={playSoundFor}
             onChange={onPlaySoundForChange}
         />
+
+        <AppearanceSection />
 
         <MentionsKeywordsSection
             disabled={mentionsKeywordsSectionDisabled}

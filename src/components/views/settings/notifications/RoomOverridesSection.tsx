@@ -19,7 +19,7 @@ import {MatrixClient} from "matrix-js-sdk/src/client";
 
 import SettingsSection from "../SettingsSection";
 import {_t} from "../../../../languageHandler";
-import {IPushRule, NotificationSetting} from "../../../../notifications/types";
+import {PushRule, NotificationSetting} from "../../../../notifications/types";
 import AccessibleButton from "../../elements/AccessibleButton";
 import QuestionDialog from "../../dialogs/QuestionDialog";
 import Modal from "../../../../Modal";
@@ -34,7 +34,7 @@ interface IProps {
 interface IRoomOverrideTileProps {
     defaultSetting: NotificationSetting;
     roomId: string;
-    rule: IPushRule;
+    rule: PushRule;
 }
 
 const mapNotificationLevelToString = (level: NotificationSetting): string => {
