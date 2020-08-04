@@ -20,11 +20,11 @@ import {_t} from "../../../../languageHandler";
 import Field from "../../elements/Field";
 import AccessibleButton from "../../elements/AccessibleButton";
 import {useStateToggle} from "../../../../hooks/useStateToggle";
-import {IExtendedPushRule} from "../../../../notifications/types";
+import {PushRule} from "../../../../notifications/types";
 import SettingsSection from "../SettingsSection";
 
 interface IProps {
-    rules: IExtendedPushRule[];
+    rules: PushRule[];
 }
 
 const AdvancedNotificationsSection: React.FC<IProps> = ({rules = []}) => {

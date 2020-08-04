@@ -50,9 +50,10 @@ import {mapKeyChanges} from "../../utils/maps";
 export const EVENT_KEYWORDS_CHANGED = Symbol("event-keywords-changed");
 export const EVENT_NOTIFY_ME_WITH_CHANGED = Symbol("notify-me-with-changed");
 export const EVENT_PLAY_SOUND_FOR_CHANGED = Symbol("play-sound-for-changed");
-export const c_EVENT_ROOM_NOTIFY_OVERRIDE_CHANGED = (roomId: string) => `event-room-notify-override-changed:${roomId}`;
-export const c_EVENT_ROOM_SOUND_OVERRIDE_CHANGED = (roomId: string) => `event-room-sound-override-changed:${roomId}`;
-export const c_EVENT_ROOM_OVERRIDE_CHANGED = (roomId: string) => `event-room-override-changed:${roomId}`;
+export const EVENT_ROOM_OVERRIDE_CHANGED = Symbol("room-override-changed");
+export const getEventRoomNotifyOverrideChanged = (roomId: string) => `event-room-notify-override-changed:${roomId}`;
+export const getEventRoomSoundOverrideChanged = (roomId: string) => `event-room-sound-override-changed:${roomId}`;
+export const getEventRoomOverrideChanged = (roomId: string) => `event-room-override-changed:${roomId}`;
 
 const notifyMeWithAllRules = [
     RuleId.Message,
@@ -80,6 +81,7 @@ const notifyMeWithMentionsKeywordsRules = [
 interface IState {
 }
 
+// TODO consider using the lock whilst performing updates so the UI doesn't flicker and dropping any updates whilst locked
 export class NotificationSettingStore extends AsyncStoreWithClient<IState> {
     private ruleMap: Map<string, PushRule>;
     private _notifyMeWith: NotificationSetting = null;
@@ -199,15 +201,22 @@ export class NotificationSettingStore extends AsyncStoreWithClient<IState> {
         const roomSoundChanges = mapKeyChanges(oldRoomSoundOverrides, this.roomSoundOverrides);
 
         roomNotifyChanges.forEach(roomId => {
-            this.emit(c_EVENT_ROOM_NOTIFY_OVERRIDE_CHANGED(roomId), this.roomNotifyOverrides.get(roomId));
+            this.emit(getEventRoomNotifyOverrideChanged(roomId), this.roomNotifyOverrides.get(roomId));
         });
         roomSoundChanges.forEach(roomId => {
-            this.emit(c_EVENT_ROOM_SOUND_OVERRIDE_CHANGED(roomId), this.roomSoundOverrides.get(roomId));
+            this.emit(getEventRoomSoundOverrideChanged(roomId), this.roomSoundOverrides.get(roomId));
         });
 
         new Set([...roomNotifyChanges, ...roomSoundChanges]).forEach(roomId => {
-            this.emit(c_EVENT_ROOM_OVERRIDE_CHANGED(roomId));
+            this.emit(getEventRoomOverrideChanged(roomId), [
+                this.roomNotifyOverrides.get(roomId),
+                this.roomSoundOverrides.get(roomId),
+            ]);
         });
+
+        if (roomNotifyChanges.length > 0 || roomSoundChanges.length > 0) {
+            this.emit(EVENT_ROOM_OVERRIDE_CHANGED);
+        }
     }
 
     private calculateNotifyMeWith(): NotificationSetting {
@@ -382,6 +391,21 @@ export class NotificationSettingStore extends AsyncStoreWithClient<IState> {
         return keywordRules.length < 1 || keywordRules.some(rule => {
             return rule.enabled && rule.actions.includes(Action.Notify);
         });
+    }
+
+    public getRoomNotifyOverride(roomId: string): RoomNotificationSetting | undefined {
+        return this.roomNotifyOverrides.get(roomId);
+    }
+
+    public getRoomSoundOverride(roomId: string): RoomNotificationSetting | undefined {
+        return this.roomSoundOverrides.get(roomId);
+    }
+
+    public getOverridenRooms(): string[] {
+        return Array.from(new Set([
+            ...this.roomNotifyOverrides.keys(),
+            ...this.roomSoundOverrides.keys(),
+        ]));
     }
 
     public get(key: string): PushRule | undefined {

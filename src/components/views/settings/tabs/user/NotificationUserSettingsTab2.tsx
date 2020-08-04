@@ -116,7 +116,7 @@ const NotificationUserSettingsTab2: React.FC = () => {
             soundEnabled={compareNotificationSettings(playSoundFor, NotificationSetting.Never) > 0}
         />
 
-        <RoomOverridesSection notifyMeWith={notifyMeWith} />
+        <RoomOverridesSection notifyMeWith={notifyMeWith} playSoundFor={playSoundFor} />
 
         <DesktopNotificationsSection />
 

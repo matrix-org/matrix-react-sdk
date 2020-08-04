@@ -14,27 +14,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useContext} from "react";
+import React, {useContext, useRef, useState} from "react";
 import {MatrixClient} from "matrix-js-sdk/src/client";
 
 import SettingsSection from "../SettingsSection";
 import {_t} from "../../../../languageHandler";
-import {PushRule, NotificationSetting} from "../../../../notifications/types";
+import {NotificationSetting, roundRoomNotificationSetting} from "../../../../notifications/types";
 import AccessibleButton from "../../elements/AccessibleButton";
 import QuestionDialog from "../../dialogs/QuestionDialog";
 import Modal from "../../../../Modal";
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import RoomAvatar from "../../avatars/RoomAvatar";
 import {ChevronFace, ContextMenu, ContextMenuButton, MenuItem, useContextMenu} from "../../../structures/ContextMenu";
+import {
+    getEventRoomOverrideChanged,
+    NotificationSettingStore,
+} from "../../../../stores/notifications/NotificationSettingStore";
+import {useEventEmitter} from "../../../../hooks/useEventEmitter";
 
 interface IProps {
     notifyMeWith: NotificationSetting;
+    playSoundFor: NotificationSetting;
 }
 
 interface IRoomOverrideTileProps {
-    defaultSetting: NotificationSetting;
+    notifyMeWith: NotificationSetting;
+    playSoundFor: NotificationSetting;
     roomId: string;
-    rule: PushRule;
 }
 
 const mapNotificationLevelToString = (level: NotificationSetting): string => {
@@ -50,59 +56,64 @@ const mapNotificationLevelToString = (level: NotificationSetting): string => {
     }
 };
 
-const inPlaceOf = (elementRect, yOffset = 0) => ({
+const inPlaceOf = (elementRect) => ({
     right: window.innerWidth - elementRect.right - 48,
-    top: elementRect.top + yOffset - 24,
+    top: elementRect.top - 24,
     chevronOffset: 0,
     chevronFace: ChevronFace.None,
 });
 
-const RoomOverrideTile: React.FC<IRoomOverrideTileProps> = ({defaultSetting, roomId, rule}) => {
+const RoomOverrideTile: React.FC<IRoomOverrideTileProps> = ({notifyMeWith, playSoundFor, roomId}) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
     const cli = useContext<MatrixClient>(MatrixClientContext);
     const room = cli.getRoom(roomId);
+    const store = NotificationSettingStore.instance;
 
-    const level = NotificationSetting.MentionsKeywordsOnly; // TODO
-    let yOffset = 0;
-    if (level === NotificationSetting.MentionsKeywordsOnly) {
-        yOffset = -32;
-    } else if (level === NotificationSetting.Never) {
-        yOffset = -64;
-    }
+    const [[notifyLevelOverride, soundLevelOverride], setOverrides] = useState([
+        store.getRoomNotifyOverride(roomId),
+        store.getRoomSoundOverride(roomId),
+    ]);
+    useEventEmitter(store, getEventRoomOverrideChanged(roomId), setOverrides);
+
+    const roundedNotifyMeWith = roundRoomNotificationSetting(roomId, notifyMeWith);
+    const roundedPlaySoundFor = roundRoomNotificationSetting(roomId, playSoundFor);
+
+    const notifyLevel = notifyLevelOverride || roundedNotifyMeWith;
+    const soundLevel = soundLevelOverride || roundedPlaySoundFor;
 
     const defaultTag = <span>({_t("default")})</span>;
 
     let contextMenu;
     if (menuDisplayed) {
         const buttonRect = button.current.getBoundingClientRect();
-        contextMenu = <ContextMenu {...inPlaceOf(buttonRect, yOffset)} onFinished={closeMenu}>
+        contextMenu = <ContextMenu {...inPlaceOf(buttonRect)} onFinished={closeMenu}>
             <div className="mx_NotificationsTab_RoomOverrideTile_ContextMenu">
                 <MenuItem
                     kind="link"
                     className="mx_NotificationsTab_RoomOverrideTile_ContextMenu_allMessages"
-                    aria-selected={level === NotificationSetting.AllMessages}
+                    aria-selected={notifyLevel === NotificationSetting.AllMessages}
                     onClick={closeMenu}
                 >
                     {mapNotificationLevelToString(NotificationSetting.AllMessages)}
-                    {defaultSetting === NotificationSetting.AllMessages ? defaultTag : undefined}
+                    {roundedNotifyMeWith === NotificationSetting.AllMessages ? defaultTag : undefined}
                 </MenuItem>
                 <MenuItem
                     kind="link"
                     className="mx_NotificationsTab_RoomOverrideTile_ContextMenu_mentionsKeywords"
-                    aria-selected={level === NotificationSetting.MentionsKeywordsOnly}
+                    aria-selected={notifyLevel === NotificationSetting.MentionsKeywordsOnly}
                     onClick={closeMenu}
                 >
                     {mapNotificationLevelToString(NotificationSetting.MentionsKeywordsOnly)}
-                    {defaultSetting === NotificationSetting.MentionsKeywordsOnly ? defaultTag : undefined}
+                    {roundedNotifyMeWith === NotificationSetting.MentionsKeywordsOnly ? defaultTag : undefined}
                 </MenuItem>
                 <MenuItem
                     kind="link"
                     className="mx_NotificationsTab_RoomOverrideTile_ContextMenu_none"
-                    aria-selected={level === NotificationSetting.Never}
+                    aria-selected={notifyLevel === NotificationSetting.Never}
                     onClick={closeMenu}
                 >
                     {mapNotificationLevelToString(NotificationSetting.Never)}
-                    {defaultSetting === NotificationSetting.Never ? defaultTag : undefined}
+                    {roundedNotifyMeWith === NotificationSetting.Never ? defaultTag : undefined}
                 </MenuItem>
             </div>
         </ContextMenu>;
@@ -118,7 +129,7 @@ const RoomOverrideTile: React.FC<IRoomOverrideTileProps> = ({defaultSetting, roo
             inputRef={button}
             kind="link"
         >
-            {mapNotificationLevelToString(level)}
+            {mapNotificationLevelToString(notifyLevel)}
         </ContextMenuButton>
 
         {contextMenu}
@@ -139,8 +150,16 @@ const onResetAllRoomsClick = () => {
     });
 };
 
-const RoomOverridesSection: React.FC<IProps> = ({notifyMeWith}) => {
-    const rooms = [];
+const RoomOverridesSection: React.FC<IProps> = ({notifyMeWith, playSoundFor}) => {
+    const store = NotificationSettingStore.instance;
+    // const [rooms, setRooms] = useState(store.getOverridenRooms());
+    // useEventEmitter(store, EVENT_ROOM_OVERRIDE_CHANGED, () => {
+    //     setRooms(store.getOverridenRooms());
+    // });
+
+    // only fetch the list of overriden rooms once so it doesn't change after user clears overrides
+    const rooms = useRef(store.getOverridenRooms()).current;
+
     // skip section if there are no room overrides
     if (rooms.length < 1) return null;
 
@@ -155,12 +174,16 @@ const RoomOverridesSection: React.FC<IProps> = ({notifyMeWith}) => {
         </div>;
     }
 
+    // TODO we need to pass both default settings
+    const tiles = rooms.map(roomId => {
+        return (
+            <RoomOverrideTile key={roomId} notifyMeWith={notifyMeWith} playSoundFor={playSoundFor} roomId={roomId} />
+        );
+    });
+
     return <SettingsSection title={_t("Room notifications")}>
         {description}
-
-        <div>
-            {/*<RoomOverrideTile defaultSetting={notifyMeWith} roomId="!GNjEZxQKWMEgzEnuNa:matrix.org" rule={null} />*/}
-        </div>
+        {tiles}
 
         <AccessibleButton kind="link" onClick={onResetAllRoomsClick}>
             {_t("Reset all rooms")}
