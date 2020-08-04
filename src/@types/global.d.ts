@@ -25,6 +25,7 @@ import { PlatformPeg } from "../PlatformPeg";
 import RoomListLayoutStore from "../stores/room-list/RoomListLayoutStore";
 import {IntegrationManagers} from "../integrations/IntegrationManagers";
 import {ModalManager} from "../Modal";
+import SettingsStore from "../settings/SettingsStore";
 import {NotificationSettingStore} from "../stores/notifications/NotificationSettingStore";
 
 declare global {
@@ -45,6 +46,7 @@ declare global {
         mxNotificationSettingStore: NotificationSettingStore;
         mxIntegrationManagers: typeof IntegrationManagers;
         singletonModalManager: ModalManager;
+        mxSettingsStore: SettingsStore;
     }
 
     // workaround for https://github.com/microsoft/TypeScript/issues/30933
