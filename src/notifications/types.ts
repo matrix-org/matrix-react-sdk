@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import DMRoomMap from "../utils/DMRoomMap";
+import {MatrixClientPeg} from "../MatrixClientPeg";
 
 export enum NotificationSetting {
     AllMessages = "all_messages",
@@ -28,7 +28,9 @@ export type RoomNotificationSetting =
 
 export const roundRoomNotificationSetting = (roomId: string, level: NotificationSetting): RoomNotificationSetting => {
     if (level === NotificationSetting.DirectMessagesMentionsKeywords) {
-        if (DMRoomMap.shared().getUserIdForRoomId(roomId)) {
+        // XXX: Push Rules considers DMs very differently to us
+        // if (DMRoomMap.shared().getUserIdForRoomId(roomId)) {
+        if (MatrixClientPeg.get().getRoom(roomId).getJoinedMemberCount() === 2) {
             return NotificationSetting.AllMessages;
         } else {
             return NotificationSetting.MentionsKeywordsOnly;

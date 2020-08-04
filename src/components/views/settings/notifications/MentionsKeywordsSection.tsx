@@ -27,7 +27,7 @@ import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import Modal from "../../../../Modal";
 import ErrorDialog from "../../dialogs/ErrorDialog";
 import {SCOPE} from "../../../../notifications/ContentRules";
-import {Action, ActionType, RuleId} from "../../../../notifications/types";
+import {Action, ActionType, PushRule, RuleId} from "../../../../notifications/types";
 import {useEventEmitter} from "../../../../hooks/useEventEmitter";
 import {NotificationSettingStore} from "../../../../stores/notifications/NotificationSettingStore";
 
@@ -157,7 +157,7 @@ interface IPushRuleCheckboxProps {
     label: string;
 }
 
-const ruleMatchesAction = (rule: IExtendedPushRule, action: ActionType) => {
+const ruleMatchesAction = (rule: PushRule, action: ActionType) => {
     return rule.enabled && rule.actions.includes(action);
 };
 
@@ -166,7 +166,7 @@ const PushRuleCheckbox: React.FC<IPushRuleCheckboxProps> = ({ruleId, action, dis
     const store = NotificationSettingStore.instance;
     const [checked, setChecked] = useState(ruleMatchesAction(store.get(ruleId), action));
 
-    const handler = useCallback((rule: IExtendedPushRule) => {
+    const handler = useCallback((rule: PushRule) => {
         setChecked(ruleMatchesAction(rule, action));
     }, [action]);
     useEventEmitter(store, ruleId, handler);
