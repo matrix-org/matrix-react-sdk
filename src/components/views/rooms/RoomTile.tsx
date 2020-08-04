@@ -26,14 +26,7 @@ import dis from '../../../dispatcher/dispatcher';
 import { Key } from "../../../Keyboard";
 import ActiveRoomObserver from "../../../ActiveRoomObserver";
 import { _t } from "../../../languageHandler";
-import {
-    ChevronFace,
-    ContextMenu,
-    ContextMenuTooltipButton,
-    MenuItemRadio,
-    MenuItemCheckbox,
-    MenuItem,
-} from "../../structures/ContextMenu";
+import { ChevronFace, ContextMenuTooltipButton, MenuItemRadio } from "../../structures/ContextMenu";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import { MessagePreviewStore, ROOM_PREVIEW_CHANGED } from "../../../stores/room-list/MessagePreviewStore";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
@@ -55,6 +48,11 @@ import {ActionPayload} from "../../../dispatcher/payloads";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 import { NOTIFICATION_STATE_UPDATE, NotificationState } from "../../../stores/notifications/NotificationState";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
+import IconizedContextMenu, {
+    IconizedContextMenuCheckbox,
+    IconizedContextMenuOption,
+    IconizedContextMenuOptionList
+} from "../context_menus/IconizedContextMenu";
 
 interface IProps {
     room: Room;
@@ -339,38 +337,39 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
 
         let contextMenu = null;
         if (this.state.notificationsMenuPosition) {
-            contextMenu = (
-                <ContextMenu {...contextMenuBelow(this.state.notificationsMenuPosition)} onFinished={this.onCloseNotificationsMenu}>
-                    <div className="mx_IconizedContextMenu mx_IconizedContextMenu_compact mx_RoomTile_contextMenu">
-                        <div className="mx_IconizedContextMenu_optionList">
-                            <NotifOption
-                                label={_t("Use default")}
-                                active={state === ALL_MESSAGES}
-                                iconClassName="mx_RoomTile_iconBell"
-                                onClick={this.onClickAllNotifs}
-                            />
-                            <NotifOption
-                                label={_t("All messages")}
-                                active={state === ALL_MESSAGES_LOUD}
-                                iconClassName="mx_RoomTile_iconBellDot"
-                                onClick={this.onClickAlertMe}
-                            />
-                            <NotifOption
-                                label={_t("Mentions & Keywords")}
-                                active={state === MENTIONS_ONLY}
-                                iconClassName="mx_RoomTile_iconBellMentions"
-                                onClick={this.onClickMentions}
-                            />
-                            <NotifOption
-                                label={_t("None")}
-                                active={state === MUTE}
-                                iconClassName="mx_RoomTile_iconBellCrossed"
-                                onClick={this.onClickMute}
-                            />
-                        </div>
-                    </div>
-                </ContextMenu>
-            );
+            contextMenu = <IconizedContextMenu
+                {...contextMenuBelow(this.state.notificationsMenuPosition)}
+                onFinished={this.onCloseNotificationsMenu}
+                className="mx_RoomTile_contextMenu"
+                compact
+            >
+                <IconizedContextMenuOptionList first>
+                    <NotifOption
+                        label={_t("Use default")}
+                        active={state === ALL_MESSAGES}
+                        iconClassName="mx_RoomTile_iconBell"
+                        onClick={this.onClickAllNotifs}
+                    />
+                    <NotifOption
+                        label={_t("All messages")}
+                        active={state === ALL_MESSAGES_LOUD}
+                        iconClassName="mx_RoomTile_iconBellDot"
+                        onClick={this.onClickAlertMe}
+                    />
+                    <NotifOption
+                        label={_t("Mentions & Keywords")}
+                        active={state === MENTIONS_ONLY}
+                        iconClassName="mx_RoomTile_iconBellMentions"
+                        onClick={this.onClickMentions}
+                    />
+                    <NotifOption
+                        label={_t("None")}
+                        active={state === MUTE}
+                        iconClassName="mx_RoomTile_iconBellCrossed"
+                        onClick={this.onClickMute}
+                    />
+                </IconizedContextMenuOptionList>
+            </IconizedContextMenu>;
         }
 
         const classes = classNames("mx_RoomTile_notificationsButton", {
@@ -404,18 +403,20 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
 
         let contextMenu = null;
         if (this.state.generalMenuPosition && this.props.tag === DefaultTagID.Archived) {
-            contextMenu = (
-                <ContextMenu {...contextMenuBelow(this.state.generalMenuPosition)} onFinished={this.onCloseGeneralMenu}>
-                    <div className="mx_IconizedContextMenu mx_IconizedContextMenu_compact mx_RoomTile_contextMenu">
-                        <div className="mx_IconizedContextMenu_optionList mx_RoomTile_contextMenu_redRow">
-                            <MenuItem onClick={this.onForgetRoomClick} label={_t("Leave Room")}>
-                                <span className="mx_IconizedContextMenu_icon mx_RoomTile_iconSignOut" />
-                                <span className="mx_IconizedContextMenu_label">{_t("Forget Room")}</span>
-                            </MenuItem>
-                        </div>
-                    </div>
-                </ContextMenu>
-            );
+            contextMenu = <IconizedContextMenu
+                {...contextMenuBelow(this.state.generalMenuPosition)}
+                onFinished={this.onCloseGeneralMenu}
+                className="mx_RoomTile_contextMenu"
+                compact
+            >
+                <IconizedContextMenuOptionList red>
+                    <IconizedContextMenuOption
+                        iconClassName="mx_RoomTile_iconSignOut"
+                        label={_t("Forget Room")}
+                        onClick={this.onForgetRoomClick}
+                    />
+                </IconizedContextMenuOptionList>
+            </IconizedContextMenu>;
         } else if (this.state.generalMenuPosition) {
             const roomTags = RoomListStore.instance.getTagsForRoom(this.props.room);
 
@@ -425,42 +426,40 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             const isLowPriority = roomTags.includes(DefaultTagID.LowPriority);
             const lowPriorityLabel = _t("Low Priority");
 
-            contextMenu = (
-                <ContextMenu {...contextMenuBelow(this.state.generalMenuPosition)} onFinished={this.onCloseGeneralMenu}>
-                    <div className="mx_IconizedContextMenu mx_IconizedContextMenu_compact mx_RoomTile_contextMenu">
-                        <div className="mx_IconizedContextMenu_optionList">
-                            <MenuItemCheckbox
-                                className={isFavorite ? "mx_RoomTile_contextMenu_activeRow" : ""}
-                                onClick={(e) => this.onTagRoom(e, DefaultTagID.Favourite)}
-                                active={isFavorite}
-                                label={favouriteLabel}
-                            >
-                                <span className="mx_IconizedContextMenu_icon mx_RoomTile_iconStar" />
-                                <span className="mx_IconizedContextMenu_label">{favouriteLabel}</span>
-                            </MenuItemCheckbox>
-                            <MenuItemCheckbox
-                                className={isLowPriority ? "mx_RoomTile_contextMenu_activeRow" : ""}
-                                onClick={(e) => this.onTagRoom(e, DefaultTagID.LowPriority)}
-                                active={isLowPriority}
-                                label={lowPriorityLabel}
-                            >
-                                <span className="mx_IconizedContextMenu_icon mx_RoomTile_iconArrowDown" />
-                                <span className="mx_IconizedContextMenu_label">{lowPriorityLabel}</span>
-                            </MenuItemCheckbox>
-                            <MenuItem onClick={this.onOpenRoomSettings} label={_t("Settings")}>
-                                <span className="mx_IconizedContextMenu_icon mx_RoomTile_iconSettings" />
-                                <span className="mx_IconizedContextMenu_label">{_t("Settings")}</span>
-                            </MenuItem>
-                        </div>
-                        <div className="mx_IconizedContextMenu_optionList mx_RoomTile_contextMenu_redRow">
-                            <MenuItem onClick={this.onLeaveRoomClick} label={_t("Leave Room")}>
-                                <span className="mx_IconizedContextMenu_icon mx_RoomTile_iconSignOut" />
-                                <span className="mx_IconizedContextMenu_label">{_t("Leave Room")}</span>
-                            </MenuItem>
-                        </div>
-                    </div>
-                </ContextMenu>
-            );
+            contextMenu = <IconizedContextMenu
+                {...contextMenuBelow(this.state.generalMenuPosition)}
+                onFinished={this.onCloseGeneralMenu}
+                className="mx_RoomTile_contextMenu"
+                compact
+            >
+                <IconizedContextMenuOptionList>
+                    <IconizedContextMenuCheckbox
+                        onClick={(e) => this.onTagRoom(e, DefaultTagID.Favourite)}
+                        active={isFavorite}
+                        label={favouriteLabel}
+                        iconClassName="mx_RoomTile_iconStar"
+                    />
+                    <IconizedContextMenuCheckbox
+                        onClick={(e) => this.onTagRoom(e, DefaultTagID.LowPriority)}
+                        active={isLowPriority}
+                        label={lowPriorityLabel}
+                        iconClassName="mx_RoomTile_iconArrowDown"
+                    />
+
+                    <IconizedContextMenuOption
+                        onClick={this.onOpenRoomSettings}
+                        label={_t("Settings")}
+                        iconClassName="mx_RoomTile_iconSettings"
+                    />
+                </IconizedContextMenuOptionList>
+                <IconizedContextMenuOptionList red>
+                    <IconizedContextMenuOption
+                        onClick={this.onLeaveRoomClick}
+                        label={_t("Leave Room")}
+                        iconClassName="mx_RoomTile_iconSignOut"
+                    />
+                </IconizedContextMenuOptionList>
+            </IconizedContextMenu>;
         }
 
         return (
