@@ -48,30 +48,30 @@ export const compareNotificationSettings = (a: NotificationSetting, b: Notificat
     return enumOrder[a] - enumOrder[b];
 };
 
-export enum TweakType {
+export enum TweakKind {
     Sound = "sound",
     Highlight = "highlight",
 }
 
 export interface ISoundTweak {
     // eslint-disable-next-line camelcase
-    set_tweak: TweakType.Sound;
+    set_tweak: TweakKind.Sound;
     value: string;
 }
 
 export const soundTweak = (value = "default"): ISoundTweak => ({
-    set_tweak: TweakType.Sound,
+    set_tweak: TweakKind.Sound,
     value,
 });
 
 export interface IHighlightTweak {
     // eslint-disable-next-line camelcase
-    set_tweak: TweakType.Highlight;
+    set_tweak: TweakKind.Highlight;
     value?: boolean;
 }
 
 export const highlightTweak = (value = true): IHighlightTweak => ({
-    set_tweak: TweakType.Highlight,
+    set_tweak: TweakKind.Highlight,
     value,
 });
 
@@ -94,23 +94,34 @@ export enum Kind {
     Underride = "underride",
 }
 
-export interface IEventMatchCondition {
-    kind: "event_match";
+export enum ConditionKind {
+    EventMatch = "event_match",
+    ContainsDisplayName = "contains_display_name",
+    RoomMemberCount = "room_member_count",
+    SenderNotificationPermission = "sender_notification_permission",
+}
+
+interface IBaseCondition {
+    kind: ConditionKind;
+}
+
+export interface IEventMatchCondition extends IBaseCondition {
+    kind: ConditionKind.EventMatch;
     key: string;
     pattern: string;
 }
 
-export interface IContainsDisplayNameCondition {
-    kind: "contains_display_name";
+export interface IContainsDisplayNameCondition extends IBaseCondition {
+    kind: ConditionKind.ContainsDisplayName;
 }
 
-export interface IRoomMemberCountCondition {
-    kind: "room_member_count";
+export interface IRoomMemberCountCondition extends IBaseCondition {
+    kind: ConditionKind.RoomMemberCount;
     is: string;
 }
 
-export interface ISenderNotificationPermissionCondition {
-    kind: "sender_notification_permission";
+export interface ISenderNotificationPermissionCondition extends IBaseCondition {
+    kind: ConditionKind.SenderNotificationPermission;
     key: string;
 }
 

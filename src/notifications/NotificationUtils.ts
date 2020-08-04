@@ -24,7 +24,7 @@ import {
     PushRule,
     NotificationSetting,
     RuleId,
-    soundTweak, roundRoomNotificationSetting,
+    soundTweak, roundRoomNotificationSetting, IPushRuleWithConditions, Condition, ConditionKind, TweakKind,
 } from "./types";
 import {SCOPE} from "./ContentRules";
 import {arrayHasDiff} from "../utils/arrays";
@@ -147,6 +147,26 @@ const getMismatchedNotifyMeWith = (value: NotificationSetting): PushRule[] => {
     }
 };
 
+export const ruleHasCondition = (rule: IPushRuleWithConditions, target: Condition) => {
+    return rule.conditions.some(c => {
+        switch (target.kind) {
+            case ConditionKind.EventMatch:
+                return c.kind === target.kind && c.key === target.key && c.pattern === target.pattern;
+            case ConditionKind.ContainsDisplayName:
+                return c.kind === target.kind;
+            case ConditionKind.RoomMemberCount:
+                return c.kind === target.kind && c.is === target.is;
+            case ConditionKind.SenderNotificationPermission:
+                return c.kind === target.kind && c.key === target.key;
+        }
+    });
+};
+
+export const actionIsTweakOfKind = (action: ActionType, kind: TweakKind) => {
+    if (typeof action !== "object") return false;
+    return action.set_tweak === kind;
+}
+
 export const updatePushRule = (cli: MatrixClient, rule: PushRule, enabled?: boolean, actions?: ActionType[]) => {
     const promises: Promise<any>[] = [];
 
@@ -167,16 +187,16 @@ export const writeNotifyMeWith = (cli: MatrixClient, value: NotificationSetting)
         return updatePushRule(cli, store.get(RuleId.Master), true, []);
     }
 
-    // TODO if selecting ALL_MESSAGES, set noisy to that too
     return Promise.all([
         updatePushRule(cli, store.get(RuleId.Master), false, []),
         updatePushRule(cli, store.get(RuleId.RoomOneToOne),
             value !== NotificationSetting.MentionsKeywordsOnly, [Action.Notify, soundTweak()]),
         updatePushRule(cli, store.get(RuleId.Message),
-            value === NotificationSetting.AllMessages, [Action.Notify]),
+            // we add sound tweak additionally here so that when changing your notifyMeWith the sound follows
+            value === NotificationSetting.AllMessages, [Action.Notify, soundTweak()]),
     ]);
 };
 
 export const possibleRoomSoundOverrides = (value: NotificationSetting) => {
-    const rounded = roundRoomNotificationSetting(value);
+    const rounded = roundRoomNotificationSetting(roomId, value);
 };

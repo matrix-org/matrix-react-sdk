@@ -24,27 +24,35 @@ import {
     Action,
     ActionType,
     compareNotificationSettings,
-    PushRule,
+    ConditionKind,
     IPushRuleSet,
+    IPushRuleWithPattern,
     IRuleSets,
+    Kind,
     NotificationSetting,
+    PushRule,
     RoomNotificationSetting,
     RuleId,
     soundTweak,
     Tweak,
-    TweakType, IPushRuleWithPattern,
+    TweakKind,
 } from "../../notifications/types";
 import {objectKeyChanges} from "../../utils/objects";
 import {KIND, SCOPE} from "../../notifications/ContentRules";
-import {getKeywordActions, updatePushRule} from "../../notifications/NotificationUtils";
+import {
+    actionIsTweakOfKind,
+    getKeywordActions,
+    ruleHasCondition,
+    updatePushRule,
+} from "../../notifications/NotificationUtils";
 import {mapKeyChanges} from "../../utils/maps";
 
 export const EVENT_KEYWORDS_CHANGED = Symbol("event-keywords-changed");
 export const EVENT_NOTIFY_ME_WITH_CHANGED = Symbol("notify-me-with-changed");
 export const EVENT_PLAY_SOUND_FOR_CHANGED = Symbol("play-sound-for-changed");
-export const cEVENT_ROOM_NOTIFY_OVERRIDE_CHANGED = (roomId: string) => `event-room-notify-override-changed:${roomId}`;
-export const cEVENT_ROOM_SOUND_OVERRIDE_CHANGED = (roomId: string) => `event-room-sound-override-changed:${roomId}`;
-export const cEVENT_ROOM_OVERRIDE_CHANGED = (roomId: string) => `event-room-override-changed:${roomId}`;
+export const c_EVENT_ROOM_NOTIFY_OVERRIDE_CHANGED = (roomId: string) => `event-room-notify-override-changed:${roomId}`;
+export const c_EVENT_ROOM_SOUND_OVERRIDE_CHANGED = (roomId: string) => `event-room-sound-override-changed:${roomId}`;
+export const c_EVENT_ROOM_OVERRIDE_CHANGED = (roomId: string) => `event-room-override-changed:${roomId}`;
 
 const notifyMeWithAllRules = [
     RuleId.Message,
@@ -77,7 +85,13 @@ export class NotificationSettingStore extends AsyncStoreWithClient<IState> {
     private _notifyMeWith: NotificationSetting = null;
     private _playSoundFor: NotificationSetting = null;
     private _keywordsEnabled: boolean;
-    private _rules = {} as IPushRuleSet;
+    private _rules: IPushRuleSet = {
+        override: [],
+        content: [],
+        room: [],
+        sender: [],
+        underride: [],
+    };
     private roomNotifyOverrides: Map<string, RoomNotificationSetting> = new Map();
     private roomSoundOverrides: Map<string, RoomNotificationSetting> = new Map();
 
@@ -132,9 +146,11 @@ export class NotificationSettingStore extends AsyncStoreWithClient<IState> {
 
     private setPushRules(rules: IPushRuleSet) {
         // tag them with kind so they make sense when flattened
-        Object.keys(rules).forEach(kind => {
-            rules[kind].forEach(rule => {
+        Object.keys(rules).forEach((kind: Kind) => {
+            rules[kind].forEach((rule: PushRule) => {
                 rule.kind = kind;
+                // Filter out `dont_notify` as it is a no-op and simplifies later checks
+                rule.actions = rule.actions.filter(a => a !== Action.DontNotify);
             });
         });
 
@@ -176,22 +192,21 @@ export class NotificationSettingStore extends AsyncStoreWithClient<IState> {
         }
 
         const oldRoomNotifyOverrides = this.roomNotifyOverrides;
-        this.roomNotifyOverrides = this.calculateRoomNotifyOverrides();
         const oldRoomSoundOverrides = this.roomSoundOverrides;
-        this.roomSoundOverrides = this.calculateRoomSoundOverrides();
+        [this.roomNotifyOverrides, this.roomSoundOverrides] = this.calculateRoomOverrides();
 
         const roomNotifyChanges = mapKeyChanges(oldRoomNotifyOverrides, this.roomNotifyOverrides);
         const roomSoundChanges = mapKeyChanges(oldRoomSoundOverrides, this.roomSoundOverrides);
 
         roomNotifyChanges.forEach(roomId => {
-            this.emit(cEVENT_ROOM_NOTIFY_OVERRIDE_CHANGED(roomId), this.roomNotifyOverrides.get(roomId));
+            this.emit(c_EVENT_ROOM_NOTIFY_OVERRIDE_CHANGED(roomId), this.roomNotifyOverrides.get(roomId));
         });
         roomSoundChanges.forEach(roomId => {
-            this.emit(cEVENT_ROOM_SOUND_OVERRIDE_CHANGED(roomId), this.roomSoundOverrides.get(roomId));
+            this.emit(c_EVENT_ROOM_SOUND_OVERRIDE_CHANGED(roomId), this.roomSoundOverrides.get(roomId));
         });
 
         new Set([...roomNotifyChanges, ...roomSoundChanges]).forEach(roomId => {
-            this.emit(cEVENT_ROOM_OVERRIDE_CHANGED(roomId));
+            this.emit(c_EVENT_ROOM_OVERRIDE_CHANGED(roomId));
         });
     }
 
@@ -220,31 +235,66 @@ export class NotificationSettingStore extends AsyncStoreWithClient<IState> {
             return NotificationSetting.Never;
         }
 
-        if (notifyMeWithAllRules.some(id => this.hasEnabledRuleWithTweak(id, TweakType.Sound))) {
+        if (notifyMeWithAllRules.some(id => this.hasEnabledRuleWithTweak(id, TweakKind.Sound))) {
             return NotificationSetting.AllMessages;
         }
 
-        if (notifyMeWithDmMentionsKeywordsRules.some(id => this.hasEnabledRuleWithTweak(id, TweakType.Sound))) {
+        if (notifyMeWithDmMentionsKeywordsRules.some(id => this.hasEnabledRuleWithTweak(id, TweakKind.Sound))) {
             return NotificationSetting.DirectMessagesMentionsKeywords;
         }
 
-        if (notifyMeWithMentionsKeywordsRules.some(id => this.hasEnabledRuleWithTweak(id, TweakType.Sound))) {
+        if (notifyMeWithMentionsKeywordsRules.some(id => this.hasEnabledRuleWithTweak(id, TweakKind.Sound))) {
             return NotificationSetting.MentionsKeywordsOnly;
         }
         const keywordRules = this.getKeywordRules();
-        if (keywordRules.some(r => r.enabled && r.actions.some(a => (<Tweak>a).set_tweak === TweakType.Sound))) {
+        if (keywordRules.some(r => r.enabled && r.actions.some(a => (<Tweak>a).set_tweak === TweakKind.Sound))) {
             return NotificationSetting.MentionsKeywordsOnly;
         }
 
         return NotificationSetting.Never; // no? - TODO this will have a knock on effect of disabling UI elements
     }
 
-    private calculateRoomNotifyOverrides(): Map<string, RoomNotificationSetting> {
-        // TODO
-    }
+    private calculateRoomOverrides(): [Map<string, RoomNotificationSetting>, Map<string, RoomNotificationSetting>] {
+        const notifyOverrides = new Map<string, RoomNotificationSetting>();
+        const soundOverrides = new Map<string, RoomNotificationSetting>();
 
-    private calculateRoomSoundOverrides(): Map<string, RoomNotificationSetting> {
-        // TODO
+        this.rules.underride.forEach(rule => {
+            if (rule.enabled && rule.rule_id[0] === "!" && ruleHasCondition(rule, {
+                kind: ConditionKind.EventMatch,
+                pattern: rule.rule_id,
+                key: "room_id",
+            }) && ruleHasCondition(rule, {
+                kind: ConditionKind.EventMatch,
+                pattern: "*",
+                key: "content.body",
+            }) && rule.actions.includes(Action.Notify)) {
+                notifyOverrides.set(rule.rule_id, NotificationSetting.AllMessages);
+                if (rule.actions.some(action => actionIsTweakOfKind(action, TweakKind.Sound))) {
+                    soundOverrides.set(rule.rule_id, NotificationSetting.AllMessages);
+                }
+            }
+        });
+
+        this.rules.room.forEach(rule => {
+            if (rule.enabled && rule.rule_id[0] === "!" && rule.actions.length < 1) {
+                notifyOverrides.set(rule.rule_id, NotificationSetting.MentionsKeywordsOnly);
+                if (rule.actions.some(action => actionIsTweakOfKind(action, TweakKind.Sound))) {
+                    soundOverrides.set(rule.rule_id, NotificationSetting.AllMessages);
+                }
+            }
+        });
+
+        this.rules.override.forEach(rule => {
+            if (rule.enabled && rule.rule_id[0] === "!" && ruleHasCondition(rule, {
+                kind: ConditionKind.EventMatch,
+                pattern: rule.rule_id,
+                key: "room_id",
+            }) && rule.actions.length < 1) {
+                notifyOverrides.set(rule.rule_id, NotificationSetting.Never);
+            }
+        });
+
+        return [notifyOverrides, soundOverrides];
     }
 
     public async addKeywordRule(cli: MatrixClient, keyword: string, enabled: boolean, loud: boolean) {
@@ -279,7 +329,7 @@ export class NotificationSettingStore extends AsyncStoreWithClient<IState> {
     }
 
     public async setSoundTweakInRule(cli: MatrixClient, rule: PushRule, loud: boolean, sound?: string) {
-        const actions = rule.actions.filter(a => (<Tweak>a).set_tweak !== TweakType.Sound);
+        const actions = rule.actions.filter(a => (<Tweak>a).set_tweak !== TweakKind.Sound);
         if (loud) {
             actions.push(soundTweak(sound));
         }
@@ -316,7 +366,7 @@ export class NotificationSettingStore extends AsyncStoreWithClient<IState> {
         return rule.enabled && rule.actions.includes(action);
     }
 
-    public hasEnabledRuleWithTweak(ruleId: string, tweakType: TweakType) {
+    public hasEnabledRuleWithTweak(ruleId: string, tweakType: TweakKind) {
         if (!this.has(ruleId)) return false;
         const rule = this.get(ruleId);
         return rule.enabled && rule.actions.some(a => (<Tweak>a).set_tweak === tweakType);

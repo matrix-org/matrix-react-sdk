@@ -27,7 +27,7 @@ import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import Modal from "../../../../Modal";
 import ErrorDialog from "../../dialogs/ErrorDialog";
 import {SCOPE} from "../../../../notifications/ContentRules";
-import {Action, ActionType, IExtendedPushRule, RuleId} from "../../../../notifications/types";
+import {Action, ActionType, RuleId} from "../../../../notifications/types";
 import {useEventEmitter} from "../../../../hooks/useEventEmitter";
 import {NotificationSettingStore} from "../../../../stores/notifications/NotificationSettingStore";
 
