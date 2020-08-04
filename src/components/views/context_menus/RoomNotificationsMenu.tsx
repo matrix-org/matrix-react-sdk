@@ -25,6 +25,7 @@ import {
 import {NotificationSetting, RoomNotificationSetting} from "../../../notifications/types";
 import {_t} from "../../../languageHandler";
 import IconizedContextMenu, {IconizedContextMenuOptionList, IconizedContextMenuRadio} from "./IconizedContextMenu";
+import {labelForSetting} from "../../../notifications/NotificationUtils";
 
 interface IProps {
     options?: RoomNotificationSetting[];
@@ -36,18 +37,6 @@ interface IProps {
     onCloseMenu?(): void;
     onChange(newValue: RoomNotificationSetting): void;
 }
-
-const mapNotificationLevelToString = (level: RoomNotificationSetting): string => {
-    switch (level) {
-        case NotificationSetting.AllMessages:
-            return _t("All Messages");
-        case NotificationSetting.MentionsKeywordsOnly:
-            return _t("Mentions & Keywords");
-        case NotificationSetting.Never:
-        default:
-            return _t("None");
-    }
-};
 
 const mapNotificationLevelToIconClass = (level: RoomNotificationSetting): string => {
     switch (level) {
@@ -111,7 +100,7 @@ const RoomNotificationsMenu: React.FC<IProps> = ({
                     // TODO mark setting === defaultValue
                     return <IconizedContextMenuRadio
                         key={setting}
-                        label={mapNotificationLevelToString(setting)}
+                        label={labelForSetting(setting)}
                         active={setting === value}
                         iconClassName={mapNotificationLevelToIconClass(setting)}
                         onClick={onClick}
@@ -130,7 +119,7 @@ const RoomNotificationsMenu: React.FC<IProps> = ({
             <ContextMenuTooltipButton
                 className={classes}
                 onClick={openMenu}
-                title={label || mapNotificationLevelToString(value)}
+                title={label || labelForSetting(value)}
                 isExpanded={menuDisplayed}
                 tabIndex={tabIndex}
                 inputRef={handle}
