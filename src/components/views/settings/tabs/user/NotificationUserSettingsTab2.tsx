@@ -27,13 +27,13 @@ import MentionsKeywordsSection from "../../notifications/MentionsKeywordsSection
 import {compareNotificationSettings, NotificationSetting} from "../../../../../notifications/types";
 import RoomOverridesSection from "../../notifications/RoomOverridesSection";
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
-import {writeNotifyMeWith} from "../../../../../notifications/NotificationUtils";
+import {labelForSetting, writeNotifyMeWith} from "../../../../../notifications/NotificationUtils";
 import {useEventEmitter} from "../../../../../hooks/useEventEmitter";
 import {
-    NotificationSettingStore,
+    EVENT_KEYWORDS_CHANGED,
     EVENT_NOTIFY_ME_WITH_CHANGED,
     EVENT_PLAY_SOUND_FOR_CHANGED,
-    EVENT_KEYWORDS_CHANGED,
+    NotificationSettingStore,
 } from "../../../../../stores/notifications/NotificationSettingStore";
 import AppearanceSection from "../../notifications/AppearanceSection";
 
@@ -86,16 +86,16 @@ const NotificationUserSettingsTab2: React.FC = () => {
                 definitions={[
                     {
                         value: NotificationSetting.AllMessages,
-                        label: _t("All messages"),
+                        label: labelForSetting(NotificationSetting.AllMessages),
                     }, {
                         value: NotificationSetting.DirectMessagesMentionsKeywords,
-                        label: _t("Direct messages, mentions & keywords"),
+                        label: labelForSetting(NotificationSetting.DirectMessagesMentionsKeywords),
                     }, {
                         value: NotificationSetting.MentionsKeywordsOnly,
-                        label: _t("Mentions & keywords only"),
+                        label: labelForSetting(NotificationSetting.MentionsKeywordsOnly),
                     }, {
                         value: NotificationSetting.Never,
-                        label: _t("Never"),
+                        label: labelForSetting(NotificationSetting.Never),
                     },
                 ]}
             />

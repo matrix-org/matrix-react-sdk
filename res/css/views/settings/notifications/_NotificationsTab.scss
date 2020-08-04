@@ -167,12 +167,37 @@ $textareaWidth: 400px;
         font-size: inherit;
     }
 
-    .mx_NotificationsTab_RoomOverrideTile {
-        margin-top: 12px;
-        margin-bottom: 12px;
-        border-radius: 8px;
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 20px 0;
+    }
 
-        padding: 6px 12px;
+    .mx_NotificationsTab_RoomOverrideTile {
+        td {
+            padding: 10px 0;
+        }
+
+        td:first-child {
+            border-radius: 8px 0 0 8px;
+            padding-left: 10px;
+        }
+        td:last-child {
+            border-radius: 0 8px 8px 0;
+            padding: 10px;
+        }
+
+        td:not(:first-child) {
+            text-align: center;
+        }
+
+        .mx_BaseAvatar {
+            margin-right: 12px;
+
+            &, & + span {
+                vertical-align: middle;
+            }
+        }
 
         &:hover {
             background-color: $header-panel-bg-color;
@@ -187,9 +212,8 @@ $textareaWidth: 400px;
         }
 
         .mx_AccessibleButton {
-            display: inline;
-            float: right;
             line-height: 32px;
+            margin: 0 auto;
         }
     }
 
@@ -291,12 +315,6 @@ $textareaWidth: 400px;
             mask-size: contain;
         }
 
-        span {
-            margin-left: 4px;
-            font-size: $font-12px;
-            color: $muted-fg-color;
-        }
-
         &[aria-selected="true"] {
             color: $accent-color;
 
@@ -325,14 +343,14 @@ $textareaWidth: 400px;
     }
 
     .mx_NotificationsTab_RoomOverrideTile_ContextMenu_allMessages::before {
-        mask-image: url('$(res)/img/feather-customised/bell.svg');
+        mask-image: url('$(res)/img/element-icons/roomlist/notifications-default.svg');
     }
 
     .mx_NotificationsTab_RoomOverrideTile_ContextMenu_mentionsKeywords::before {
-        mask-image: url('$(res)/img/feather-customised/bell-notification.custom.svg');
+        mask-image: url('$(res)/img/element-icons/roomlist/notifications-dm.svg');
     }
 
     .mx_NotificationsTab_RoomOverrideTile_ContextMenu_none::before {
-        mask-image: url('$(res)/img/feather-customised/bell-crossed.svg');
+        mask-image: url('$(res)/img/element-icons/roomlist/notifications-off.svg');
     }
 }

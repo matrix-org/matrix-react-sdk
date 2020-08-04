@@ -18,11 +18,13 @@ import React from "react";
 
 import SettingsSection from "../SettingsSection";
 import {_t} from "../../../../languageHandler";
-import SettingsStore, {SettingLevel} from "../../../../settings/SettingsStore";
+import SettingsStore from "../../../../settings/SettingsStore";
+import {SettingLevel} from "../../../../settings/SettingLevel";
 import {compareNotificationSettings as compareSettings, NotificationSetting} from "../../../../notifications/types";
 import StyledRadioGroup from "../../elements/StyledRadioGroup";
 import StyledCheckbox from "../../elements/StyledCheckbox";
 import {useSettingValue} from "../../../../hooks/useSettings";
+import {labelForSetting} from "../../../../notifications/NotificationUtils";
 
 interface IProps {
     notifyMeWith: NotificationSetting;
@@ -48,19 +50,19 @@ const SoundsSection: React.FC<IProps> = ({notifyMeWith, playSoundFor, onChange})
             definitions={[
                 {
                     value: NotificationSetting.AllMessages,
-                    label: _t("All messages"),
+                    label: labelForSetting(NotificationSetting.AllMessages),
                     disabled: compareSettings(notifyMeWith, NotificationSetting.AllMessages) < 0,
                 }, {
                     value: NotificationSetting.DirectMessagesMentionsKeywords,
-                    label: _t("Direct messages, mentions & keywords"),
+                    label: labelForSetting(NotificationSetting.DirectMessagesMentionsKeywords),
                     disabled: compareSettings(notifyMeWith, NotificationSetting.DirectMessagesMentionsKeywords) < 0,
                 }, {
                     value: NotificationSetting.MentionsKeywordsOnly,
-                    label: _t("Mentions & keywords"),
+                    label: labelForSetting(NotificationSetting.MentionsKeywordsOnly),
                     disabled: compareSettings(notifyMeWith, NotificationSetting.MentionsKeywordsOnly) < 0,
                 }, {
                     value: NotificationSetting.Never,
-                    label: _t("Never"),
+                    label: labelForSetting(NotificationSetting.Never),
                 },
             ]}
         />

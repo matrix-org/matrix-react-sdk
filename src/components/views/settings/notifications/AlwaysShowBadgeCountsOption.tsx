@@ -18,7 +18,8 @@ import React from "react";
 
 import {_t} from "../../../../languageHandler";
 import {useSettingValue} from "../../../../hooks/useSettings";
-import SettingsStore, {SettingLevel} from "../../../../settings/SettingsStore";
+import SettingsStore from "../../../../settings/SettingsStore";
+import {SettingLevel} from "../../../../settings/SettingLevel";
 import StyledCheckbox from "../../elements/StyledCheckbox";
 import NotificationBadge from "../../rooms/NotificationBadge";
 import {NotificationColor} from "../../../../stores/notifications/NotificationColor";

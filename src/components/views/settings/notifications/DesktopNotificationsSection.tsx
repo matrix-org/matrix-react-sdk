@@ -19,7 +19,8 @@ import React from "react";
 import SettingsSection from "../SettingsSection";
 import {_t} from "../../../../languageHandler";
 import {useSettingValue} from "../../../../hooks/useSettings";
-import SettingsStore, {SettingLevel} from "../../../../settings/SettingsStore";
+import SettingsStore from "../../../../settings/SettingsStore";
+import {SettingLevel} from "../../../../settings/SettingLevel";
 import StyledCheckbox from "../../elements/StyledCheckbox";
 
 const NOTIFICATIONS_ENABLED_KEY = "notificationsEnabled";

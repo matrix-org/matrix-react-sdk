@@ -20,15 +20,20 @@ import MatrixClient from "matrix-js-sdk/src/client";
 import {
     Action,
     ActionType,
+    Condition,
+    ConditionKind,
     highlightTweak,
-    PushRule,
+    IPushRuleWithConditions,
     NotificationSetting,
+    PushRule, RoomNotificationSetting,
     RuleId,
-    soundTweak, roundRoomNotificationSetting, IPushRuleWithConditions, Condition, ConditionKind, TweakKind,
+    soundTweak,
+    TweakKind,
 } from "./types";
 import {SCOPE} from "./ContentRules";
 import {arrayHasDiff} from "../utils/arrays";
 import {NotificationSettingStore} from "../stores/notifications/NotificationSettingStore";
+import {_t} from "../languageHandler";
 
 interface IEncodedActions {
     notify: boolean;
@@ -197,6 +202,29 @@ export const writeNotifyMeWith = (cli: MatrixClient, value: NotificationSetting)
     ]);
 };
 
-export const possibleRoomSoundOverrides = (value: NotificationSetting) => {
-    const rounded = roundRoomNotificationSetting(roomId, value);
+export const possibleRoomSoundOptions = (roomId: string, value: RoomNotificationSetting): RoomNotificationSetting[] => {
+    if (value === NotificationSetting.AllMessages) {
+        return [
+            NotificationSetting.AllMessages,
+            NotificationSetting.MentionsKeywordsOnly,
+        ];
+    }
+
+    return [
+        NotificationSetting.AllMessages,
+        value,
+    ];
 };
+
+export const labelForSetting = (setting: NotificationSetting): string => {
+    switch (setting) {
+        case NotificationSetting.AllMessages:
+            return _t("All messages");
+        case NotificationSetting.DirectMessagesMentionsKeywords:
+            return _t("Direct messages, mentions & keywords");
+        case NotificationSetting.MentionsKeywordsOnly:
+            return _t("Mentions & keywords only");
+        case NotificationSetting.Never:
+            return _t("Never");
+    }
+}

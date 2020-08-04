@@ -53,6 +53,7 @@ export const IconizedContextMenuRadio: React.FC<IRadioProps> = ({
     iconClassName,
     active,
     className,
+    children,
     ...props
 }) => {
     return <MenuItemRadio
@@ -65,6 +66,7 @@ export const IconizedContextMenuRadio: React.FC<IRadioProps> = ({
     >
         <span className={classNames("mx_IconizedContextMenu_icon", iconClassName)} />
         <span className="mx_IconizedContextMenu_label">{label}</span>
+        {children}
         {active && <span className="mx_IconizedContextMenu_icon mx_IconizedContextMenu_checked" />}
     </MenuItemRadio>;
 };
@@ -74,6 +76,7 @@ export const IconizedContextMenuCheckbox: React.FC<ICheckboxProps> = ({
     iconClassName,
     active,
     className,
+    children,
     ...props
 }) => {
     return <MenuItemCheckbox
@@ -86,6 +89,7 @@ export const IconizedContextMenuCheckbox: React.FC<ICheckboxProps> = ({
     >
         <span className={classNames("mx_IconizedContextMenu_icon", iconClassName)} />
         <span className="mx_IconizedContextMenu_label">{label}</span>
+        {children}
         {active && <span className="mx_IconizedContextMenu_icon mx_IconizedContextMenu_checked" />}
     </MenuItemCheckbox>;
 };
