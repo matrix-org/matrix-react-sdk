@@ -378,7 +378,7 @@ export const Notifier = {
         if (actions.notify && this.isEnabled()) {
             this._displayPopupNotification(ev, room);
         }
-        if (actions.tweaks.sound && this.isAudioEnabled()) {
+        if (actions.tweaks && actions.tweaks.sound && this.isAudioEnabled()) {
             PlatformPeg.get().loudNotification(ev, room);
             this._playAudioNotification(ev, room);
         }
