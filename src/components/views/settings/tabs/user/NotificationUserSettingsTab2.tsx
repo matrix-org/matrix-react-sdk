@@ -27,7 +27,7 @@ import MentionsKeywordsSection from "../../notifications/MentionsKeywordsSection
 import {compareNotificationSettings, NotificationSetting} from "../../../../../notifications/types";
 import RoomOverridesSection from "../../notifications/RoomOverridesSection";
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
-import {labelForSetting, writeNotifyMeWith} from "../../../../../notifications/NotificationUtils";
+import {labelForSetting, writeNotifyMeWith} from "../../../../../notifications/NotificationUtils2";
 import {useEventEmitter} from "../../../../../hooks/useEventEmitter";
 import {
     EVENT_KEYWORDS_CHANGED,

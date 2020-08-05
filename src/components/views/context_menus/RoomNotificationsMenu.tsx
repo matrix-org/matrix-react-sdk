@@ -25,7 +25,7 @@ import {
 import {NotificationSetting, RoomNotificationSetting} from "../../../notifications/types";
 import {_t} from "../../../languageHandler";
 import IconizedContextMenu, {IconizedContextMenuOptionList, IconizedContextMenuRadio} from "./IconizedContextMenu";
-import {labelForSetting} from "../../../notifications/NotificationUtils";
+import {labelForSetting} from "../../../notifications/NotificationUtils2";
 
 interface IProps {
     options?: RoomNotificationSetting[];

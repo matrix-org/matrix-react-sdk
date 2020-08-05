@@ -35,7 +35,7 @@ import {
 } from "../../../../../stores/notifications/NotificationSettingStore";
 import {useEventEmitter} from "../../../../../hooks/useEventEmitter";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
-import {labelForSetting, possibleRoomSoundOptions} from "../../../../../notifications/NotificationUtils";
+import {labelForSetting, possibleRoomSoundOptions} from "../../../../../notifications/NotificationUtils2";
 
 interface IProps {
     roomId: string;

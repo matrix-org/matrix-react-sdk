@@ -24,7 +24,7 @@ import {compareNotificationSettings as compareSettings, NotificationSetting} fro
 import StyledRadioGroup from "../../elements/StyledRadioGroup";
 import StyledCheckbox from "../../elements/StyledCheckbox";
 import {useSettingValue} from "../../../../hooks/useSettings";
-import {labelForSetting} from "../../../../notifications/NotificationUtils";
+import {labelForSetting} from "../../../../notifications/NotificationUtils2";
 
 interface IProps {
     notifyMeWith: NotificationSetting;

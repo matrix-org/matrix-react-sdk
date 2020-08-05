@@ -44,7 +44,7 @@ import {
     getKeywordActions,
     ruleHasCondition,
     updatePushRule,
-} from "../../notifications/NotificationUtils";
+} from "../../notifications/NotificationUtils2";
 import {mapKeyChanges} from "../../utils/maps";
 
 export const EVENT_KEYWORDS_CHANGED = Symbol("event-keywords-changed");
