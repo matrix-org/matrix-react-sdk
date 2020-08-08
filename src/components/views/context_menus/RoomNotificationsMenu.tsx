@@ -94,7 +94,9 @@ const RoomNotificationsMenu: React.FC<IProps> = ({
         >
             <IconizedContextMenuOptionList first>
                 {options.map(setting => {
-                    const onClick = () => {
+                    const onClick = (ev: React.MouseEvent) => {
+                        ev.preventDefault();
+                        ev.stopPropagation();
                         onChange(setting);
                     };
                     // TODO mark setting === defaultValue

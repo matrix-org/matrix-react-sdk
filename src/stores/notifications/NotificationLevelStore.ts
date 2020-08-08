@@ -14,24 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import {MatrixEvent} from "matrix-js-sdk/src/models/event";
 
-import { ActionPayload } from "../../dispatcher/payloads";
+import {ActionPayload} from "../../dispatcher/payloads";
 import defaultDispatcher from "../../dispatcher/dispatcher";
-import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
+import {AsyncStoreWithClient} from "../AsyncStoreWithClient";
 import {
     Action,
     ActionType,
     compareNotificationSettings,
-    ConditionKind,
+    Condition,
+    eventMatch,
     IPushRuleSet,
     IPushRuleWithPattern,
     IRuleSets,
     Kind,
+    KIND_ORDER,
     NotificationSetting,
     PushRule,
     RoomNotificationSetting,
+    roundRoomNotificationSetting,
     RuleId,
     soundTweak,
     Tweak,
@@ -82,7 +84,7 @@ interface IState {
 }
 
 // TODO consider using the lock whilst performing updates so the UI doesn't flicker and dropping any updates whilst locked
-export class NotificationSettingStore extends AsyncStoreWithClient<IState> {
+export class NotificationLevelStore extends AsyncStoreWithClient<IState> {
     private ruleMap: Map<string, PushRule>;
     private _notifyMeWith: NotificationSetting = null;
     private _playSoundFor: NotificationSetting = null;
@@ -97,14 +99,14 @@ export class NotificationSettingStore extends AsyncStoreWithClient<IState> {
     private roomNotifyOverrides: Map<string, RoomNotificationSetting> = new Map();
     private roomSoundOverrides: Map<string, RoomNotificationSetting> = new Map();
 
-    private static internalInstance = new NotificationSettingStore();
+    private static internalInstance = new NotificationLevelStore();
 
     private constructor() {
         super(defaultDispatcher, {});
     }
 
-    public static get instance(): NotificationSettingStore {
-        return NotificationSettingStore.internalInstance;
+    public static get instance(): NotificationLevelStore {
+        return NotificationLevelStore.internalInstance;
     }
 
     protected async onNotReady() {
@@ -156,7 +158,8 @@ export class NotificationSettingStore extends AsyncStoreWithClient<IState> {
             });
         });
 
-        this.ruleMap = new Map(Object.values(rules).flat(1).reverse().map(r => [r.rule_id, r]));
+        const rulesInOrder: PushRule[] = KIND_ORDER.map(k => rules[k]).flat(1);
+        this.ruleMap = new Map(rulesInOrder.reverse().map(r => [r.rule_id, r]));
 
         const oldRules = this.rules;
         this._rules = rules;
@@ -268,15 +271,10 @@ export class NotificationSettingStore extends AsyncStoreWithClient<IState> {
         const soundOverrides = new Map<string, RoomNotificationSetting>();
 
         this.rules.underride.forEach(rule => {
-            if (rule.enabled && rule.rule_id[0] === "!" && ruleHasCondition(rule, {
-                kind: ConditionKind.EventMatch,
-                pattern: rule.rule_id,
-                key: "room_id",
-            }) && ruleHasCondition(rule, {
-                kind: ConditionKind.EventMatch,
-                pattern: "*",
-                key: "content.body",
-            }) && rule.actions.includes(Action.Notify)) {
+            if (rule.enabled && rule.rule_id[0] === "!" && rule.actions.includes(Action.Notify) &&
+                ruleHasCondition(rule, eventMatch("room_id", rule.rule_id)) &&
+                ruleHasCondition(rule, eventMatch("content.body", "*"))
+            ) {
                 notifyOverrides.set(rule.rule_id, NotificationSetting.AllMessages);
                 if (rule.actions.some(action => actionIsTweakOfKind(action, TweakKind.Sound))) {
                     soundOverrides.set(rule.rule_id, NotificationSetting.AllMessages);
@@ -294,11 +292,9 @@ export class NotificationSettingStore extends AsyncStoreWithClient<IState> {
         });
 
         this.rules.override.forEach(rule => {
-            if (rule.enabled && rule.rule_id[0] === "!" && ruleHasCondition(rule, {
-                kind: ConditionKind.EventMatch,
-                pattern: rule.rule_id,
-                key: "room_id",
-            }) && rule.actions.length < 1) {
+            if (rule.enabled && rule.rule_id[0] === "!" && rule.actions.length < 1 &&
+                ruleHasCondition(rule, eventMatch("room_id", rule.rule_id))
+            ) {
                 notifyOverrides.set(rule.rule_id, NotificationSetting.Never);
             }
         });
@@ -306,64 +302,110 @@ export class NotificationSettingStore extends AsyncStoreWithClient<IState> {
         return [notifyOverrides, soundOverrides];
     }
 
-    public async addKeywordRule(cli: MatrixClient, keyword: string, enabled: boolean, loud: boolean) {
+    public setRoomOverride = async (
+        roomId: string,
+        notify: RoomNotificationSetting,
+        sound?: RoomNotificationSetting,
+    ) => {
+        const notifyOverride = this.getRoomNotifyOverride(roomId);
+        const soundOverride = this.getRoomSoundOverride(roomId);
+
+        const newSoundOverride = sound || soundOverride || roundRoomNotificationSetting(roomId, this._playSoundFor);
+        const existingRule = this.get(roomId);
+
+        let actions: ActionType[] = [];
+        let kind: Kind;
+        let conditions: Condition[];
+
+        switch (notify) {
+            case NotificationSetting.AllMessages:
+                kind = Kind.Underride;
+                // TODO we should generate these
+                conditions = [
+                    eventMatch("room_id", roomId),
+                    eventMatch("content.body", "*"),
+                ];
+                actions = [Action.Notify];
+                break;
+            case NotificationSetting.MentionsKeywordsOnly:
+                kind = Kind.RoomSpecific;
+                break;
+            case NotificationSetting.Never:
+                kind = Kind.Override;
+                // TODO we should generate this
+                conditions = [eventMatch("room_id", roomId)];
+                break;
+        }
+
+        // TODO sound
+
+        // addPushRule is actually an UPSERT
+        await this.matrixClient.addPushRule(SCOPE, kind, roomId, { actions, conditions });
+
+        // if we are updating an existing rule, ensure it is enabled.
+        if (existingRule) {
+            await updatePushRule(this.matrixClient, existingRule, true);
+        }
+    };
+
+    public async addKeywordRule(keyword: string, enabled: boolean, loud: boolean) {
         const actions = getKeywordActions(loud);
 
         const matchingRule = this.getKeywordRules().find(r => r.pattern === keyword);
         if (matchingRule) {
-            return updatePushRule(cli, matchingRule, enabled, actions);
+            return updatePushRule(this.matrixClient, matchingRule, enabled, actions);
         }
 
-        await cli.addPushRule(SCOPE, KIND, keyword, {
+        await this.matrixClient.addPushRule(SCOPE, KIND, keyword, {
             pattern: keyword,
             actions,
         });
 
         if (!enabled) {
-            await cli.setPushRuleEnabled(SCOPE, KIND, keyword, false);
+            await this.matrixClient.setPushRuleEnabled(SCOPE, KIND, keyword, false);
         }
     }
 
-    public async removeKeywordRule(cli: MatrixClient, keyword: string) {
+    public async removeKeywordRule(keyword: string) {
         const matchingRule = this.getKeywordRules().find(r => r.pattern === keyword);
         if (matchingRule) {
-            await cli.deletePushRule(SCOPE, matchingRule.kind, matchingRule.rule_id);
+            await this.matrixClient.deletePushRule(SCOPE, matchingRule.kind, matchingRule.rule_id);
         }
     }
 
-    public async updateKeywordRules(cli: MatrixClient, enabled: boolean, loud: boolean) {
+    public async updateKeywordRules(enabled: boolean, loud: boolean) {
         const actions = getKeywordActions(loud);
         const rules = this.getKeywordRules();
-        return Promise.all(rules.map(async (rule) => updatePushRule(cli, rule, enabled, actions)));
+        return Promise.all(rules.map(async (rule) => updatePushRule(this.matrixClient, rule, enabled, actions)));
     }
 
-    public async setSoundTweakInRule(cli: MatrixClient, rule: PushRule, loud: boolean, sound?: string) {
+    public async setSoundTweakInRule(rule: PushRule, loud: boolean, sound?: string) {
         const actions = rule.actions.filter(a => (<Tweak>a).set_tweak !== TweakKind.Sound);
         if (loud) {
             actions.push(soundTweak(sound));
         }
 
-        return updatePushRule(cli, rule, undefined, actions);
+        return updatePushRule(this.matrixClient, rule, undefined, actions);
     }
 
-    public async updateSoundRules(cli: MatrixClient, volume: NotificationSetting) {
+    public async updateSoundRules(volume: NotificationSetting) {
         const promises: Promise<any>[] = [];
 
         const notifyMeWithAllRulesLoud = compareNotificationSettings(volume, NotificationSetting.AllMessages) >= 0;
         promises.push(...notifyMeWithAllRules.map(id => {
-            return this.setSoundTweakInRule(cli, this.get(id), notifyMeWithAllRulesLoud);
+            return this.setSoundTweakInRule(this.get(id), notifyMeWithAllRulesLoud);
         }));
 
         const notifyMeWithDmMentionsKeywordsRulesLoud =
             compareNotificationSettings(volume, NotificationSetting.DirectMessagesMentionsKeywords) >= 0;
         promises.push(...notifyMeWithDmMentionsKeywordsRules.map(id => {
-            return this.setSoundTweakInRule(cli, this.get(id), notifyMeWithDmMentionsKeywordsRulesLoud);
+            return this.setSoundTweakInRule(this.get(id), notifyMeWithDmMentionsKeywordsRulesLoud);
         }));
 
         const notifyMeWithMentionsKeywordsRulesLoud =
             compareNotificationSettings(volume, NotificationSetting.MentionsKeywordsOnly) >= 0;
         promises.push(...notifyMeWithMentionsKeywordsRules.map(id => {
-            return this.setSoundTweakInRule(cli, this.get(id), notifyMeWithMentionsKeywordsRulesLoud);
+            return this.setSoundTweakInRule(this.get(id), notifyMeWithMentionsKeywordsRulesLoud);
         }));
 
         return Promise.all(promises);
@@ -417,4 +459,4 @@ export class NotificationSettingStore extends AsyncStoreWithClient<IState> {
     }
 }
 
-window.mxNotificationSettingStore = NotificationSettingStore.instance;
+window.mxNotificationSettingStore = NotificationLevelStore.instance;

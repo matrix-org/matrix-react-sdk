@@ -33,14 +33,14 @@ import {
     EVENT_KEYWORDS_CHANGED,
     EVENT_NOTIFY_ME_WITH_CHANGED,
     EVENT_PLAY_SOUND_FOR_CHANGED,
-    NotificationSettingStore,
-} from "../../../../../stores/notifications/NotificationSettingStore";
+    NotificationLevelStore,
+} from "../../../../../stores/notifications/NotificationLevelStore";
 import AppearanceSection from "../../notifications/AppearanceSection";
 
 const NotificationUserSettingsTab2: React.FC = () => {
     const cli = useContext<MatrixClient>(MatrixClientContext);
 
-    const pushRules = NotificationSettingStore.instance;
+    const pushRules = NotificationLevelStore.instance;
     const [notifyMeWith, setNotifyMeWith] = useState<NotificationSetting>(pushRules.notifyMeWith);
     useEventEmitter(pushRules, EVENT_NOTIFY_ME_WITH_CHANGED, setNotifyMeWith);
 
@@ -62,10 +62,10 @@ const NotificationUserSettingsTab2: React.FC = () => {
         setPlaySoundFor(value); // local echo
 
         const soundEnabled = compareNotificationSettings(value, NotificationSetting.Never) > 0;
-        pushRules.updateSoundRules(cli, value).catch(e => {
+        pushRules.updateSoundRules(value).catch(e => {
             console.log(e); // TODO error handling
         });
-        pushRules.updateKeywordRules(cli, keywordsEnabled, soundEnabled).catch(e => {
+        pushRules.updateKeywordRules(keywordsEnabled, soundEnabled).catch(e => {
             console.log(e); // TODO error handling
         });
     };
@@ -74,9 +74,6 @@ const NotificationUserSettingsTab2: React.FC = () => {
 
     return <div className="mx_SettingsTab mx_NotificationsTab">
         <div className="mx_SettingsTab_heading">{_t("Notifications")}</div>
-        <div className="mx_SettingsTab_subsectionText">
-            {_t("Manage notifications across all rooms...")}
-        </div>
 
         <SettingsSection title={_t("Notify me with")}>
             <StyledRadioGroup

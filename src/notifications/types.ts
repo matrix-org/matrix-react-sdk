@@ -96,6 +96,8 @@ export enum Kind {
     Underride = "underride",
 }
 
+export const KIND_ORDER = [Kind.Override, Kind.ContentSpecific, Kind.RoomSpecific, Kind.SenderSpecific, Kind.Underride];
+
 export enum ConditionKind {
     EventMatch = "event_match",
     ContainsDisplayName = "contains_display_name",
@@ -112,6 +114,12 @@ export interface IEventMatchCondition extends IBaseCondition {
     key: string;
     pattern: string;
 }
+
+export const eventMatch = (key: string, pattern: string): IEventMatchCondition => ({
+    kind: ConditionKind.EventMatch,
+    key,
+    pattern,
+});
 
 export interface IContainsDisplayNameCondition extends IBaseCondition {
     kind: ConditionKind.ContainsDisplayName;

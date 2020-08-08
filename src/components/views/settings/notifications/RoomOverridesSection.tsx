@@ -27,8 +27,8 @@ import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import RoomAvatar from "../../avatars/RoomAvatar";
 import {
     getEventRoomOverrideChanged,
-    NotificationSettingStore,
-} from "../../../../stores/notifications/NotificationSettingStore";
+    NotificationLevelStore,
+} from "../../../../stores/notifications/NotificationLevelStore";
 import {useEventEmitter} from "../../../../hooks/useEventEmitter";
 import RoomNotificationsMenu from "../../context_menus/RoomNotificationsMenu";
 
@@ -46,7 +46,7 @@ interface IRoomOverrideProps {
 const RoomOverride: React.FC<IRoomOverrideProps> = ({notifyMeWith, playSoundFor, roomId}) => {
     const cli = useContext<MatrixClient>(MatrixClientContext);
     const room = cli.getRoom(roomId);
-    const store = NotificationSettingStore.instance;
+    const store = NotificationLevelStore.instance;
 
     const [[notifyLevelOverride, soundLevelOverride], setOverrides] = useState([
         store.getRoomNotifyOverride(roomId),
@@ -105,7 +105,7 @@ const onResetAllRoomsClick = () => {
 };
 
 const RoomOverridesSection: React.FC<IProps> = ({notifyMeWith, playSoundFor}) => {
-    const store = NotificationSettingStore.instance;
+    const store = NotificationLevelStore.instance;
     // TODO define whether the room reset function removes that room from the UI
     // const [rooms, setRooms] = useState(store.getOverridenRooms());
     // useEventEmitter(store, EVENT_ROOM_OVERRIDE_CHANGED, () => {

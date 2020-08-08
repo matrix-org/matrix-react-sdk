@@ -27,7 +27,7 @@ import defaultDispatcher from '../../../dispatcher/dispatcher';
 import { Key } from "../../../Keyboard";
 import ActiveRoomObserver from "../../../ActiveRoomObserver";
 import { _t } from "../../../languageHandler";
-import { ChevronFace, ContextMenuTooltipButton, MenuItemRadio } from "../../structures/ContextMenu";
+import { ContextMenuTooltipButton } from "../../structures/ContextMenu";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import { MessagePreviewStore, ROOM_PREVIEW_CHANGED } from "../../../stores/room-list/MessagePreviewStore";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
@@ -56,8 +56,12 @@ import IconizedContextMenu, {
     IconizedContextMenuRadio,
 } from "../context_menus/IconizedContextMenu";
 import RoomNotificationsMenu, { contextMenuBelow } from "../context_menus/RoomNotificationsMenu";
-import { roundRoomNotificationSetting } from "../../../notifications/types";
-import { NotificationSettingStore } from "../../../stores/notifications/NotificationSettingStore";
+import {RoomNotificationSetting, roundRoomNotificationSetting} from "../../../notifications/types";
+import {
+    EVENT_NOTIFY_ME_WITH_CHANGED,
+    NotificationLevelStore,
+    getEventRoomNotifyOverrideChanged
+} from "../../../stores/notifications/NotificationLevelStore";
 import SettingsStore from "../../../settings/SettingsStore";
 
 interface IProps {
@@ -74,6 +78,8 @@ interface IState {
     notificationsMenuPosition: PartialDOMRect;
     generalMenuPosition: PartialDOMRect;
     messagePreview?: string;
+    roomNotificationLevel?: RoomNotificationSetting;
+    defaultNotificationLevel?: RoomNotificationSetting;
 }
 
 const messagePreviewId = (roomId: string) => `mx_RoomTile_messagePreview_${roomId}`;
@@ -103,7 +109,23 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         this.notificationState.on(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
         this.roomProps = EchoChamber.forRoom(this.props.room);
         this.roomProps.on(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
+
+        if (SettingsStore.isFeatureEnabled("feature_ftue_notifications")) {
+            const store = NotificationLevelStore.instance;
+            store.on(EVENT_NOTIFY_ME_WITH_CHANGED, this.onRoomNotificationLevelChange);
+            store.on(getEventRoomNotifyOverrideChanged(this.props.room.roomId), this.onRoomNotificationLevelChange);
+            this.onRoomNotificationLevelChange(); // seed the state
+        }
     }
+
+    private onRoomNotificationLevelChange = () => {
+        const store = NotificationLevelStore.instance;
+        const rounded = roundRoomNotificationSetting(this.props.room.roomId, store.notifyMeWith);
+        this.setState({
+            defaultNotificationLevel: rounded,
+            roomNotificationLevel: store.getRoomNotifyOverride(this.props.room.roomId) || rounded,
+        })
+    };
 
     private onNotificationUpdate = () => {
         this.forceUpdate(); // notification state changed - update
@@ -193,6 +215,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
 
     private onCloseNotificationsMenu = () => {
         this.setState({notificationsMenuPosition: null});
+    };
+
+    private onChangeNotificationsMenu = (level: RoomNotificationSetting) => {
+        NotificationLevelStore.instance.setRoomOverride(this.props.room.roomId, level).catch(e => {
+            console.log(e);
+        });
     };
 
     private onGeneralMenuOpenClick = (ev: React.MouseEvent) => {
@@ -306,17 +334,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         }
 
         if (SettingsStore.isFeatureEnabled("feature_ftue_notifications")) {
-            const store = NotificationSettingStore.instance;
-            const rounded = roundRoomNotificationSetting(this.props.room.roomId, store.notifyMeWith);
-            const value = store.getRoomNotifyOverride(this.props.room.roomId) || rounded;
-
-            // TODO wire up setter
             return <RoomNotificationsMenu
-                value={value}
-                defaultValue={rounded}
+                value={this.state.roomNotificationLevel}
+                defaultValue={this.state.defaultNotificationLevel}
                 onOpenMenu={this.onNotificationsMenuOpenClick}
                 onCloseMenu={this.onCloseNotificationsMenu}
-                onChange={(foo => console.log("DEBUG foo", foo))} // TODO
+                onChange={this.onChangeNotificationsMenu}
                 tabIndex={isActive ? 0 : -1}
                 label={_t("Notification options")}
             />;

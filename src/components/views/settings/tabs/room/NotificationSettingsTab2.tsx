@@ -31,8 +31,8 @@ import CustomSoundSection from "../../notifications/CustomSoundsSection";
 import {
     EVENT_NOTIFY_ME_WITH_CHANGED,
     EVENT_PLAY_SOUND_FOR_CHANGED,
-    NotificationSettingStore,
-} from "../../../../../stores/notifications/NotificationSettingStore";
+    NotificationLevelStore,
+} from "../../../../../stores/notifications/NotificationLevelStore";
 import {useEventEmitter} from "../../../../../hooks/useEventEmitter";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import {labelForSetting, possibleRoomSoundOptions} from "../../../../../notifications/NotificationUtils2";
@@ -51,7 +51,7 @@ const goToNotificationSettings = () => {
 const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
     const cli = useContext<MatrixClient>(MatrixClientContext);
 
-    const pushRules = NotificationSettingStore.instance;
+    const pushRules = NotificationLevelStore.instance;
     const [accountNotifyMeWith, setAccountNotifyMeWith] = useState<NotificationSetting>(pushRules.notifyMeWith);
     useEventEmitter(pushRules, EVENT_NOTIFY_ME_WITH_CHANGED, setAccountNotifyMeWith);
     const roundedNotifyMeWith = roundRoomNotificationSetting(roomId, accountNotifyMeWith);
@@ -76,10 +76,6 @@ const NotificationSettingsTab2: React.FC<IProps> = ({roomId}) => {
     if (accountNotifyMeWith === NotificationSetting.Never) {
         description = <div className="mx_SettingsTab_errorText mx_SettingsTab_errorTextIcon">
             {_t("Account notifications are set to “Never” and settings below will not apply.")}
-        </div>;
-    } else {
-        description = <div className="mx_SettingsTab_subsectionText">
-            {_t("Manage notifications...")}
         </div>;
     }
 

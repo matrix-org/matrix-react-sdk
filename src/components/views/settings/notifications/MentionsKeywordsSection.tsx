@@ -29,7 +29,7 @@ import ErrorDialog from "../../dialogs/ErrorDialog";
 import {SCOPE} from "../../../../notifications/ContentRules";
 import {Action, ActionType, PushRule, RuleId} from "../../../../notifications/types";
 import {useEventEmitter} from "../../../../hooks/useEventEmitter";
-import {NotificationSettingStore} from "../../../../stores/notifications/NotificationSettingStore";
+import {NotificationLevelStore} from "../../../../stores/notifications/NotificationLevelStore";
 
 
 interface IProps {
@@ -163,7 +163,7 @@ const ruleMatchesAction = (rule: PushRule, action: ActionType) => {
 
 const PushRuleCheckbox: React.FC<IPushRuleCheckboxProps> = ({ruleId, action, disabled, label}) => {
     const cli = useContext(MatrixClientContext);
-    const store = NotificationSettingStore.instance;
+    const store = NotificationLevelStore.instance;
     const [checked, setChecked] = useState(ruleMatchesAction(store.get(ruleId), action));
 
     const handler = useCallback((rule: PushRule) => {
@@ -199,7 +199,7 @@ const PushRuleCheckbox: React.FC<IPushRuleCheckboxProps> = ({ruleId, action, dis
 
 const MentionsKeywordsSection: React.FC<IProps> = ({disabled, keywordsEnabled, setKeywordsEnabled, soundEnabled}) => {
     const cli = useContext<MatrixClient>(MatrixClientContext);
-    const store = NotificationSettingStore.instance;
+    const store = NotificationLevelStore.instance;
     // TODO show warning if any of the rules have mismatched actions
     const keywords = Array.from(new Set(store.getKeywordRules().map(r => r.pattern)));
     if (keywords.length) {
@@ -210,16 +210,16 @@ const MentionsKeywordsSection: React.FC<IProps> = ({disabled, keywordsEnabled, s
 
     const addKeyword = (keyword: string) => {
         setKeywordsEnabled(true); // local echo
-        store.addKeywordRule(cli, keyword, true, soundEnabled).catch(onError);
+        store.addKeywordRule(keyword, true, soundEnabled).catch(onError);
     };
 
     const removeKeyword = (keyword: string) => {
-        store.removeKeywordRule(cli, keyword).catch(onError);
+        store.removeKeywordRule(keyword).catch(onError);
     };
 
     const onKeywordsEnabledChange = e => {
         setKeywordsEnabled(e.target.checked); // local echo
-        store.updateKeywordRules(cli, e.target.checked, soundEnabled).catch(onError);
+        store.updateKeywordRules(e.target.checked, soundEnabled).catch(onError);
     };
 
     const keywordsDisabled = disabled || !keywordsEnabled;

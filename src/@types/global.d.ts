@@ -26,7 +26,7 @@ import RoomListLayoutStore from "../stores/room-list/RoomListLayoutStore";
 import {IntegrationManagers} from "../integrations/IntegrationManagers";
 import {ModalManager} from "../Modal";
 import SettingsStore from "../settings/SettingsStore";
-import {NotificationSettingStore} from "../stores/notifications/NotificationSettingStore";
+import {NotificationLevelStore} from "../stores/notifications/NotificationLevelStore";
 
 declare global {
     interface Window {
@@ -43,7 +43,7 @@ declare global {
         mxRoomListStore: RoomListStoreClass;
         mxRoomListLayoutStore: RoomListLayoutStore;
         mxPlatformPeg: PlatformPeg;
-        mxNotificationSettingStore: NotificationSettingStore;
+        mxNotificationSettingStore: NotificationLevelStore;
         mxIntegrationManagers: typeof IntegrationManagers;
         singletonModalManager: ModalManager;
         mxSettingsStore: SettingsStore;
@@ -82,6 +82,6 @@ declare global {
 
     interface Array<T> {
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat
-        flat(depth?: number): T[];
+        flat(depth?: number): T;
     }
 }

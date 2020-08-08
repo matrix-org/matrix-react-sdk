@@ -25,14 +25,15 @@ import {
     highlightTweak,
     IPushRuleWithConditions,
     NotificationSetting,
-    PushRule, RoomNotificationSetting,
+    PushRule,
+    RoomNotificationSetting,
     RuleId,
     soundTweak,
     TweakKind,
 } from "./types";
 import {SCOPE} from "./ContentRules";
 import {arrayHasDiff} from "../utils/arrays";
-import {NotificationSettingStore} from "../stores/notifications/NotificationSettingStore";
+import {NotificationLevelStore} from "../stores/notifications/NotificationLevelStore";
 import {_t} from "../languageHandler";
 
 export const getKeywordActions = (loud: boolean) => {
@@ -46,7 +47,7 @@ export const getKeywordActions = (loud: boolean) => {
 const getMismatchedNotifyMeWith = (value: NotificationSetting): PushRule[] => {
     // TODO allow keywords to be disabled
 
-    const store = NotificationSettingStore.instance;
+    const store = NotificationLevelStore.instance;
     switch (value) {
         case NotificationSetting.Never:
             if (store.get(RuleId.Master).enabled) {
@@ -109,7 +110,7 @@ export const updatePushRule = (cli: MatrixClient, rule: PushRule, enabled?: bool
 };
 
 export const writeNotifyMeWith = (cli: MatrixClient, value: NotificationSetting) => {
-    const store = NotificationSettingStore.instance;
+    const store = NotificationLevelStore.instance;
     if (value === NotificationSetting.Never) {
         return updatePushRule(cli, store.get(RuleId.Master), true, []);
     }
