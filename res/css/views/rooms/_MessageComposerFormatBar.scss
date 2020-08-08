@@ -16,7 +16,7 @@ limitations under the License.
 
 .mx_MessageComposerFormatBar {
     display: none;
-    width: calc(26px * 5);
+    width: calc(27px * 5);
     height: 24px;
     position: absolute;
     cursor: pointer;
@@ -36,7 +36,6 @@ limitations under the License.
         display: inline-block;
         position: relative;
         border: 1px solid $message-action-bar-border-color;
-        margin-left: -1px;
 
         &:hover {
             border-color: $message-action-bar-hover-border-color;
