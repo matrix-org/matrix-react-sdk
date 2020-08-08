@@ -39,7 +39,6 @@ import {
     Tweak,
     TweakKind,
 } from "../../notifications/types";
-import {objectKeyChanges} from "../../utils/objects";
 import {KIND, SCOPE} from "../../notifications/ContentRules";
 import {
     actionIsTweakOfKind,
@@ -48,6 +47,7 @@ import {
     updatePushRule,
 } from "../../notifications/NotificationUtils2";
 import {mapKeyChanges} from "../../utils/maps";
+import {arrayChanges} from "../../utils/arrays";
 
 export const EVENT_KEYWORDS_CHANGED = Symbol("event-keywords-changed");
 export const EVENT_NOTIFY_ME_WITH_CHANGED = Symbol("notify-me-with-changed");
@@ -176,15 +176,15 @@ export class NotificationLevelStore extends AsyncStoreWithClient<IState> {
             this.emit(EVENT_PLAY_SOUND_FOR_CHANGED, this._playSoundFor);
         }
 
-        const contentRuleChanges = objectKeyChanges(oldRules.content, rules.content);
+        const contentRuleChanges = arrayChanges(oldRules.content, rules.content);
 
         const changedRules = new Set<string>();
         [
             contentRuleChanges,
-            objectKeyChanges(oldRules.override, rules.override),
-            objectKeyChanges(oldRules.room, rules.room),
-            objectKeyChanges(oldRules.sender, rules.sender),
-            objectKeyChanges(oldRules.underride, rules.underride),
+            arrayChanges(oldRules.override, rules.override),
+            arrayChanges(oldRules.room, rules.room),
+            arrayChanges(oldRules.sender, rules.sender),
+            arrayChanges(oldRules.underride, rules.underride),
         ].forEach(diff => diff.forEach(k => changedRules.add(k)));
 
         [...changedRules].forEach(k => {

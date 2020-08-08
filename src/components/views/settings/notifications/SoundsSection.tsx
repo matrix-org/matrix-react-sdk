@@ -42,7 +42,7 @@ const SoundsSection: React.FC<IProps> = ({notifyMeWith, playSoundFor, onChange})
     // TODO local echo
     const muteAudio = !useSettingValue(AUDIBLE_NOTIFICATIONS_ENABLED_KEY);
 
-    return <SettingsSection title={_t("Play a sound for")} className="mx_NotificationsTab_appearanceAndSounds">
+    return <SettingsSection title={_t("Play a sound for")} className="mx_NotificationsTab_sounds">
         <StyledRadioGroup
             name="playSoundFor"
             value={playSoundFor}

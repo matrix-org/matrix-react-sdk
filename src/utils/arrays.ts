@@ -77,6 +77,18 @@ export function arrayDiff<T>(a: T[], b: T[]): { added: T[], removed: T[] } {
 }
 
 /**
+ * Gets all the changes (added, removed) between two arrays.
+ * Triple equals is used to compare values, not in-depth tree checking.
+ * @param a The first array. Must be defined.
+ * @param b The second array. Must be defined.
+ * @returns The values which have been added or removed between the two arrays.
+ */
+export function arrayChanges<T>(a: T[], b: T[]): T[] {
+    const diff = arrayDiff(a, b);
+    return arrayMerge(diff.removed, diff.added);
+}
+
+/**
  * Returns the union of two arrays.
  * @param a The first array. Must be defined.
  * @param b The second array. Must be defined.

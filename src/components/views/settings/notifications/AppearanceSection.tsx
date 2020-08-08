@@ -21,7 +21,7 @@ import {_t} from "../../../../languageHandler";
 import AlwaysShowBadgeCountsOption from "./AlwaysShowBadgeCountsOption";
 
 const SoundsSection: React.FC = () => {
-    return <SettingsSection title={_t("Appearance")} className="mx_NotificationsTab_appearanceAndSounds">
+    return <SettingsSection title={_t("Appearance")} className="mx_NotificationsTab_appearance">
         <AlwaysShowBadgeCountsOption />
     </SettingsSection>;
 };
