@@ -116,7 +116,7 @@ export function getHandlerTile(ev) {
         const forwardMeta = ev.getWireContent()["net.maunium.msc2730.forwarded"];
         const forwardVerification = ev.getUnsigned()["net.maunium.msc2730.forwarded"] || {};
         if (forwardMeta && forwardVerification.valid) {
-            return "messages.ForwardedEventTile"
+            return "messages.ForwardedEventTile";
         }
     }
 

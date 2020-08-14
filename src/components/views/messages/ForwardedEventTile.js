@@ -20,20 +20,20 @@ import { MatrixEvent } from "matrix-js-sdk";
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import * as sdk from "../../../index";
 import * as Avatar from '../../../Avatar';
-import SettingsStore from "../../../settings/SettingsStore"
+import SettingsStore from "../../../settings/SettingsStore";
 
 const AVATAR_SIZE = 32;
 
 export default class ForwardedEventTile extends React.Component {
     static propTypes = {
         mxEvent: PropTypes.instanceOf(MatrixEvent).isRequired,
-    }
+    };
 
     constructor(props) {
         super(props);
         const contentCopy = {...props.mxEvent.getWireContent()};
         const forwardMeta = contentCopy["net.maunium.msc2730.forwarded"];
-        delete contentCopy["net.maunium.msc2730.forwarded"]
+        delete contentCopy["net.maunium.msc2730.forwarded"];
         const forwardVerification = props.mxEvent.getUnsigned()["net.maunium.msc2730.forwarded"] || {};
         this.state = {
             evt: new MatrixEvent({
@@ -46,25 +46,25 @@ export default class ForwardedEventTile extends React.Component {
                 name: forwardMeta.sender,
                 getAvatarUrl: (..._) => null,
             },
-        }
+        };
         if (forwardMeta.unsigned && forwardMeta.unsigned.displayname) {
-            this.state.senderProfile.name = forwardMeta.unsigned.displayname
-            this.state.senderProfile.getAvatarUrl = (..._) =>  forwardMeta.unsigned.avatar_url;
+            this.state.senderProfile.name = forwardMeta.unsigned.displayname;
+            this.state.senderProfile.getAvatarUrl = (..._) => forwardMeta.unsigned.avatar_url;
         }
     }
 
     async componentDidMount() {
         const client = MatrixClientPeg.get();
         const profileInfo = await client.getProfileInfo(this.state.evt.getSender());
-        const avatar_url = Avatar.avatarUrlForUser(
+        const avatarUrl = Avatar.avatarUrlForUser(
             {avatarUrl: profileInfo.avatar_url},
             AVATAR_SIZE, AVATAR_SIZE, "crop");
         this.setState({
             senderProfile: {
                 name: profileInfo.displayname,
-                getAvatarUrl: (..._) => avatar_url,
-            }
-        })
+                getAvatarUrl: (..._) => avatarUrl,
+            },
+        });
     }
 
     render() {
@@ -72,7 +72,7 @@ export default class ForwardedEventTile extends React.Component {
         this.state.evt.sender = {
             ...this.state.senderProfile,
             userId: this.state.evt.getSender(),
-        }
+        };
         return <blockquote className="mx_ForwardedEvent" key={this.props.mxEvent.getId()}>
             <EventTile
                 mxEvent={this.state.evt}
