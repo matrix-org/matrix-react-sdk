@@ -17,7 +17,7 @@ limitations under the License.
 import { EventStatus } from 'matrix-js-sdk';
 import {MatrixClientPeg} from '../MatrixClientPeg';
 import shouldHideEvent from "../shouldHideEvent";
-import SettingsStore from "../settings/SettingsStore"
+import SettingsStore from "../settings/SettingsStore";
 /**
  * Returns whether an event should allow actions like reply, reactions, edit, etc.
  * which effectively checks whether it's a regular message that has been sent and that we
