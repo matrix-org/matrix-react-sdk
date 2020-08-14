@@ -727,6 +727,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case 'send_event':
                 this.onSendEvent(payload.room_id, payload.event);
                 break;
+            case 'send_forward':
+                this.onForwardEvent(payload.room_id, payload.event);
+                break;
             case 'aria_hide_main_app':
                 this.setState({
                     hideToSRUsers: true,
@@ -1825,6 +1828,20 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
 
         cli.sendEvent(roomId, event.getType(), event.getContent()).then(() => {
+            dis.dispatch({action: 'message_sent'});
+        }, (err) => {
+            dis.dispatch({action: 'message_send_failed'});
+        });
+    }
+
+    onForwardEvent(roomId: string, event: MatrixEvent) {
+        const cli = MatrixClientPeg.get();
+        if (!cli) {
+            dis.dispatch({action: 'message_send_failed'});
+            return;
+        }
+
+        cli._unstable_forwardEvent(event.getRoomId(), event.getId(), roomId).then(() => {
             dis.dispatch({action: 'message_sent'});
         }, (err) => {
             dis.dispatch({action: 'message_send_failed'});

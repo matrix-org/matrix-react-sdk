@@ -452,6 +452,7 @@
     "Show message previews for reactions in all rooms": "Show message previews for reactions in all rooms",
     "Enable advanced debugging for the room list": "Enable advanced debugging for the room list",
     "Show info about bridges in room settings": "Show info about bridges in room settings",
+    "Include original metadata when forwarding messages": "Include original metadata when forwarding messages",
     "Font size": "Font size",
     "Use custom size": "Use custom size",
     "Enable Emoji suggestions while typing": "Enable Emoji suggestions while typing",

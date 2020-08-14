@@ -45,6 +45,16 @@ export function isContentActionable(mxEvent) {
     return false;
 }
 
+export function isContentForwardable(mxEvent) {
+    const isSent = !mxEvent.status || mxEvent.status === EventStatus.SENT;
+    const isForwarded = !!mxEvent.getWireContent()["net.maunium.msc2730.forwarded"];
+    let isValidForward = false;
+    if (isForwarded) {
+        isValidForward = mxEvent.getUnsigned()["net.maunium.msc2730.forwarded"]?.["valid"];
+    }
+    return isSent && !mxEvent.isRedacted() && !mxEvent.isRedaction() && !mxEvent.isState() && (!isForwarded || isValidForward);
+}
+
 export function canEditContent(mxEvent) {
     if (mxEvent.status === EventStatus.CANCELLED || mxEvent.getType() !== "m.room.message" || mxEvent.isRedacted()) {
         return false;

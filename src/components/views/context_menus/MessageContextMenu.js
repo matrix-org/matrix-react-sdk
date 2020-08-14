@@ -30,7 +30,7 @@ import Modal from '../../../Modal';
 import Resend from '../../../Resend';
 import SettingsStore from '../../../settings/SettingsStore';
 import { isUrlPermitted } from '../../../HtmlUtils';
-import { isContentActionable } from '../../../utils/EventUtils';
+import { isContentActionable, isContentForwardable } from "../../../utils/EventUtils"
 import {MenuItem} from "../../structures/ContextMenu";
 
 function canCancel(eventStatus) {
@@ -366,13 +366,15 @@ export default createReactClass({
             );
         }
 
-        if (isContentActionable(mxEvent)) {
+        if (SettingsStore.isFeatureEnabled("feature_verifiable_forwarded_events") ? isContentForwardable(mxEvent) : isContentActionable(mxEvent)) {
             forwardButton = (
                 <MenuItem className="mx_MessageContextMenu_field" onClick={this.onForwardClick}>
                     { _t('Forward Message') }
                 </MenuItem>
             );
+        }
 
+        if (isContentActionable(mxEvent)) {
             if (this.state.canPin) {
                 pinButton = (
                     <MenuItem className="mx_MessageContextMenu_field" onClick={this.onPinClick}>
