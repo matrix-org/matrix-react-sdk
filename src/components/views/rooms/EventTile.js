@@ -111,6 +111,15 @@ export function getHandlerTile(ev) {
         }
     }
 
+    // TODO make sure server supports verifying forwards somewhere before trusting
+    if (SettingsStore.isFeatureEnabled("feature_verifiable_forwarded_events")) {
+        const forwardMeta = ev.getWireContent()["net.maunium.msc2730.forwarded"];
+        const forwardVerification = ev.getUnsigned()["net.maunium.msc2730.forwarded"] || {};
+        if (forwardMeta && forwardVerification.valid) {
+            return "messages.ForwardedEventTile"
+        }
+    }
+
     return ev.isState() ? stateEventTileTypes[type] : eventTileTypes[type];
 }
 
