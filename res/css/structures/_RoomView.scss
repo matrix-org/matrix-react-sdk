@@ -18,6 +18,7 @@ limitations under the License.
     word-wrap: break-word;
     display: flex;
     flex-direction: column;
+    min-width: 350px;
 }
 
 .mx_RoomView_fileDropTarget {
