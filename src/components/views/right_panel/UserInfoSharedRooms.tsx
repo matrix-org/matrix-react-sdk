@@ -17,13 +17,12 @@ limitations under the License.
 import React from 'react';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import Spinner from "../elements/Spinner";
-import RoomTile from "../rooms/RoomTile";
 import { _t } from '../../../languageHandler';
-import dis from '../../../dispatcher/dispatcher';
 import Pill from '../../views/elements/Pill';
 import AccessibleButton from '../../views/elements/AccessibleButton';
 import SpecPermalinkConstructor from '../../../utils/permalinks/SpecPermalinkConstructor';
 import { mostRecentActivityFirst } from '../../../RoomListSorter';
+import UserInfoRoomTile from "../elements/UserInfoRoomTile";
 
 interface IProps {
     userId: string;
@@ -77,14 +76,6 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
         }
     }
 
-    private onRoomTileClick(roomId) {
-        dis.dispatch({
-            action: 'view_room',
-            show_room_tile: true, // to make sure the room gets scrolled into view
-            room_id: roomId,
-        });
-    }
-
     private onShowMoreClick() {
         console.log("Showing more");
         this.setState({
@@ -123,16 +114,7 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
         }
 
         return <li key={room.roomId}>
-            <RoomTile
-                onClick={this.onRoomTileClick.bind(undefined, [room.roomId])}
-                room={room}
-                collapsed={false}
-                unread={false}
-                highlight={false}
-                transparent={true}
-                isInvite={false}
-                incomingCall={false}
-            />
+            <UserInfoRoomTile room={room}/>
         </li>;
     }
 
