@@ -23,7 +23,7 @@ import classNames from "classnames";
 import AccessibleButton from "../../views/elements/AccessibleButton";
 import ActiveRoomObserver from "../../../ActiveRoomObserver";
 import { _t } from "../../../languageHandler";
-import { TagID } from "../../../stores/room-list/models";
+import { TagID, DefaultTagID } from "../../../stores/room-list/models";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import dis from '../../../dispatcher/dispatcher';
@@ -73,8 +73,8 @@ export default class UserInfoRoomTile extends React.PureComponent<IProps, IState
         const roomAvatar = <DecoratedRoomAvatar
             room={this.props.room}
             avatarSize={32}
-            tag={this.props.tag}
-            displayBadge={this.props.isMinimized}
+            tag={DefaultTagID.Untagged}
+            displayBadge={false}
         />;
 
         let badge: React.ReactNode;
@@ -91,19 +91,11 @@ export default class UserInfoRoomTile extends React.PureComponent<IProps, IState
             </div>
         );
 
-        if (this.props.isMinimized) nameContainer = null;
-
         let ariaLabel = name;
         let ariaDescribedBy: string;
 
         const props: Partial<React.ComponentProps<typeof AccessibleTooltipButton>> = {};
         let Button: React.ComponentType<React.ComponentProps<typeof AccessibleButton>> = AccessibleButton;
-        if (this.props.isMinimized) {
-            Button = AccessibleTooltipButton;
-            props.title = name;
-            // force the tooltip to hide whilst we are showing the context menu
-            props.forceHide = !!this.state.generalMenuPosition;
-        }
 
         return (
             <React.Fragment>
