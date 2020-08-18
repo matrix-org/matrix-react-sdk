@@ -50,15 +50,14 @@ import PageTypes from '../../PageTypes';
 import { getHomePageUrl } from '../../utils/pages';
 
 import createRoom from "../../createRoom";
-import { _t, getCurrentLanguage } from '../../languageHandler';
-import SettingsStore, { SettingLevel } from "../../settings/SettingsStore";
+import {_t, _td, getCurrentLanguage} from '../../languageHandler';
+import SettingsStore from "../../settings/SettingsStore";
 import ThemeController from "../../settings/controllers/ThemeController";
 import { startAnyRegistrationFlow } from "../../Registration.js";
 import { messageForSyncError } from '../../utils/ErrorUtils';
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../utils/AutoDiscoveryUtils";
 import DMRoomMap from '../../utils/DMRoomMap';
-import { countRoomsWithNotif } from '../../RoomNotifs';
 import ThemeWatcher from "../../settings/watchers/ThemeWatcher";
 import { FontWatcher } from '../../settings/watchers/FontWatcher';
 import { storeRoomAliasInCache } from '../../RoomAliasCache';
@@ -74,6 +73,9 @@ import {
 } from "../../toasts/AnalyticsToast";
 import {showToast as showNotificationsToast} from "../../toasts/DesktopNotificationsToast";
 import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
+import ErrorDialog from "../views/dialogs/ErrorDialog";
+import { RoomNotificationStateStore } from "../../stores/notifications/RoomNotificationStateStore";
+import { SettingLevel } from "../../settings/SettingLevel";
 
 /** constants for MatrixChat.state.view */
 export enum Views {
@@ -413,7 +415,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             return;
         }
         this.pageChanging = true;
-        performance.mark('riot_MatrixChat_page_change_start');
+        performance.mark('element_MatrixChat_page_change_start');
     }
 
     stopPageChangeTimer() {
@@ -425,15 +427,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             return;
         }
         this.pageChanging = false;
-        performance.mark('riot_MatrixChat_page_change_stop');
+        performance.mark('element_MatrixChat_page_change_stop');
         performance.measure(
-            'riot_MatrixChat_page_change_delta',
-            'riot_MatrixChat_page_change_start',
-            'riot_MatrixChat_page_change_stop',
+            'element_MatrixChat_page_change_delta',
+            'element_MatrixChat_page_change_start',
+            'element_MatrixChat_page_change_stop',
         );
-        performance.clearMarks('riot_MatrixChat_page_change_start');
-        performance.clearMarks('riot_MatrixChat_page_change_stop');
-        const measurement = performance.getEntriesByName('riot_MatrixChat_page_change_delta').pop();
+        performance.clearMarks('element_MatrixChat_page_change_start');
+        performance.clearMarks('element_MatrixChat_page_change_stop');
+        const measurement = performance.getEntriesByName('element_MatrixChat_page_change_delta').pop();
 
         // In practice, sometimes the entries list is empty, so we get no measurement
         if (!measurement) return null;
@@ -460,7 +462,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
     onAction = (payload) => {
         // console.log(`MatrixClientPeg.onAction: ${payload.action}`);
-        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
 
         // Start the onboarding process for certain actions
@@ -554,6 +555,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case 'leave_room':
                 this.leaveRoom(payload.room_id);
                 break;
+            case 'forget_room':
+                this.forgetRoom(payload.room_id);
+                break;
             case 'reject_invite':
                 Modal.createTrackedDialog('Reject invitation', '', QuestionDialog, {
                     title: _t('Reject invitation'),
@@ -596,14 +600,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 break;
             }
-            case 'view_prev_room':
-                this.viewNextRoom(-1);
-                break;
             case 'view_next_room':
                 this.viewNextRoom(1);
-                break;
-            case 'view_indexed_room':
-                this.viewIndexedRoom(payload.roomIndex);
                 break;
             case Action.ViewUserSettings: {
                 const tabPayload = payload as OpenToTabPayload;
@@ -678,12 +676,16 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case 'hide_left_panel':
                 this.setState({
                     collapseLhs: true,
+                }, () => {
+                    this.state.resizeNotifier.notifyLeftHandleResized();
                 });
                 break;
             case 'focus_room_filter': // for CtrlOrCmd+K to work by expanding the left panel first
             case 'show_left_panel':
                 this.setState({
                     collapseLhs: false,
+                }, () => {
+                    this.state.resizeNotifier.notifyLeftHandleResized();
                 });
                 break;
             case 'panel_disable': {
@@ -810,19 +812,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             action: 'view_room',
             room_id: allRooms[roomIndex].roomId,
         });
-    }
-
-    // TODO: Move to RoomViewStore
-    private viewIndexedRoom(roomIndex: number) {
-        const allRooms = RoomListSorter.mostRecentActivityFirst(
-            MatrixClientPeg.get().getRooms(),
-        );
-        if (allRooms[roomIndex]) {
-            dis.dispatch({
-                action: 'view_room',
-                room_id: allRooms[roomIndex].roomId,
-            });
-        }
     }
 
     // switch view to the given room
@@ -1079,7 +1068,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
     private leaveRoom(roomId: string) {
         const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         const roomToLeave = MatrixClientPeg.get().getRoom(roomId);
         const warnings = this.leaveRoomWarnings(roomId);
 
@@ -1140,6 +1128,21 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     });
                 }
             },
+        });
+    }
+
+    private forgetRoom(roomId: string) {
+        MatrixClientPeg.get().forget(roomId).then(() => {
+            // Switch to another room view if we're currently viewing the historical room
+            if (this.state.currentRoomId === roomId) {
+                dis.dispatch({ action: "view_next_room" });
+            }
+        }).catch((err) => {
+            const errCode = err.errcode || _td("unknown error code");
+            Modal.createTrackedDialog("Failed to forget room", '', ErrorDialog, {
+                title: _t("Failed to forget room %(errCode)s", {errCode}),
+                description: ((err && err.message) ? err.message : _t("Operation failed")),
+            });
         });
     }
 
@@ -1320,7 +1323,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         // state (each of which can be 10s of MBs) for each DISJOINT timeline. This is
         // particularly noticeable when there are lots of 'limited' /sync responses
         // such as when laptops unsleep.
-        // https://github.com/vector-im/riot-web/issues/3307#issuecomment-282895568
+        // https://github.com/vector-im/element-web/issues/3307#issuecomment-282895568
         cli.setCanResetTimelineCallback((roomId) => {
             console.log("Request to reset timeline in room ", roomId, " viewing:", this.state.currentRoomId);
             if (roomId !== this.state.currentRoomId) {
@@ -1391,7 +1394,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 return;
             }
 
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog('Signed out', '', ErrorDialog, {
                 title: _t('Signed Out'),
                 description: _t('For security, this session has been signed out. Please sign in again.'),
@@ -1461,19 +1463,20 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             }
         });
         cli.on("crypto.warning", (type) => {
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             switch (type) {
                 case 'CRYPTO_WARNING_OLD_VERSION_DETECTED':
+                    const brand = SdkConfig.get().brand;
                     Modal.createTrackedDialog('Crypto migrated', '', ErrorDialog, {
                         title: _t('Old cryptography data detected'),
                         description: _t(
-                            "Data from an older version of Riot has been detected. " +
+                            "Data from an older version of %(brand)s has been detected. " +
                             "This will have caused end-to-end cryptography to malfunction " +
                             "in the older version. End-to-end encrypted messages exchanged " +
                             "recently whilst using the older version may not be decryptable " +
                             "in this version. This may also cause messages exchanged with this " +
                             "version to fail. If you experience problems, log out and back in " +
                             "again. To retain message history, export and re-import your keys.",
+                            { brand },
                         ),
                     });
                     break;
@@ -1658,7 +1661,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             // of the app, we coerce the eventId to be undefined where applicable.
             if (!eventId) eventId = undefined;
 
-            // TODO: Handle encoded room/event IDs: https://github.com/vector-im/riot-web/issues/9149
+            // TODO: Handle encoded room/event IDs: https://github.com/vector-im/element-web/issues/9149
 
             // FIXME: sort_out caseConsistency
             const thirdPartyInvite = {
@@ -1838,25 +1841,24 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         } else {
             subtitle = `${this.subTitleStatus} ${subtitle}`;
         }
-        document.title = `${SdkConfig.get().brand || 'Riot'} ${subtitle}`;
+        document.title = `${SdkConfig.get().brand} ${subtitle}`;
     }
 
     updateStatusIndicator(state: string, prevState: string) {
-        // only count visible rooms to not torment the user with notification counts in rooms they can't see
-        // it will include highlights from the previous version of the room internally
-        const notifCount = countRoomsWithNotif(MatrixClientPeg.get().getVisibleRooms()).count;
+        const notificationState = RoomNotificationStateStore.instance.globalState;
+        const numUnreadRooms = notificationState.numUnreadStates; // we know that states === rooms here
 
         if (PlatformPeg.get()) {
             PlatformPeg.get().setErrorStatus(state === 'ERROR');
-            PlatformPeg.get().setNotificationCount(notifCount);
+            PlatformPeg.get().setNotificationCount(numUnreadRooms);
         }
 
         this.subTitleStatus = '';
         if (state === "ERROR") {
             this.subTitleStatus += `[${_t("Offline")}] `;
         }
-        if (notifCount > 0) {
-            this.subTitleStatus += `[${notifCount}]`;
+        if (numUnreadRooms > 0) {
+            this.subTitleStatus += `[${numUnreadRooms}]`;
         }
 
         this.setPageSubtitle();
@@ -1933,7 +1935,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         let fragmentAfterLogin = "";
         const initialScreenAfterLogin = this.props.initialScreenAfterLogin;
         if (initialScreenAfterLogin &&
-            // XXX: workaround for https://github.com/vector-im/riot-web/issues/11643 causing a login-loop
+            // XXX: workaround for https://github.com/vector-im/element-web/issues/11643 causing a login-loop
             !["welcome", "login", "register", "start_sso", "start_cas"].includes(initialScreenAfterLogin.screen)
         ) {
             fragmentAfterLogin = `/${initialScreenAfterLogin.screen}`;

@@ -46,11 +46,6 @@ export enum Action {
     ViewRoomDirectory = "view_room_directory",
 
     /**
-     * Sets the current tooltip. Should be use with ViewTooltipPayload.
-     */
-    ViewTooltip = "view_tooltip",
-
-    /**
      * Forces the theme to reload. No additional payload information required.
      */
     RecheckTheme = "recheck_theme",
@@ -79,4 +74,24 @@ export enum Action {
      * Sets a system font. Should be used with UpdateSystemFontPayload
      */
     UpdateSystemFont = "update_system_font",
+
+    /**
+     * Changes room based on room list order and payload parameters. Should be used with ViewRoomDeltaPayload.
+     */
+    ViewRoomDelta = "view_room_delta",
+
+    /**
+     * Sets the phase for the right panel. Should be used with SetRightPanelPhasePayload.
+     */
+    SetRightPanelPhase = "set_right_panel_phase",
+
+    /**
+     * Toggles the right panel. Should be used with ToggleRightPanelPayload.
+     */
+    ToggleRightPanel = "toggle_right_panel",
+
+    /**
+     * Trigged after the phase of the right panel is set. Should be used with AfterRightPanelPhaseChangePayload.
+     */
+    AfterRightPanelPhaseChange = "after_right_panel_phase_change",
 }

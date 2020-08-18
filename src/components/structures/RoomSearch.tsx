@@ -24,21 +24,13 @@ import { throttle } from 'lodash';
 import { Key } from "../../Keyboard";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import { Action } from "../../dispatcher/actions";
-
-// TODO: Remove banner on launch: https://github.com/vector-im/riot-web/issues/14231
-
-/*******************************************************************
- *   CAUTION                                                       *
- *******************************************************************
- * This is a work in progress implementation and isn't complete or *
- * even useful as a component. Please avoid using it until this    *
- * warning disappears.                                             *
- *******************************************************************/
+import RoomListStore from "../../stores/room-list/RoomListStore";
+import { NameFilterCondition } from "../../stores/room-list/filters/NameFilterCondition";
 
 interface IProps {
-    onQueryUpdate: (newQuery: string) => void;
     isMinimized: boolean;
-    onVerticalArrow(ev: React.KeyboardEvent);
+    onVerticalArrow(ev: React.KeyboardEvent): void;
+    onEnter(ev: React.KeyboardEvent): boolean;
 }
 
 interface IState {
@@ -49,6 +41,7 @@ interface IState {
 export default class RoomSearch extends React.PureComponent<IProps, IState> {
     private dispatcherRef: string;
     private inputRef: React.RefObject<HTMLInputElement> = createRef();
+    private searchFilter: NameFilterCondition = new NameFilterCondition();
 
     constructor(props: IProps) {
         super(props);
@@ -59,6 +52,21 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
         };
 
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
+    }
+
+    public componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>): void {
+        if (prevState.query !== this.state.query) {
+            const hadSearch = !!this.searchFilter.search.trim();
+            const haveSearch = !!this.state.query.trim();
+            this.searchFilter.search = this.state.query;
+            if (!hadSearch && haveSearch) {
+                // started a new filter - add the condition
+                RoomListStore.instance.addFilter(this.searchFilter);
+            } else if (hadSearch && !haveSearch) {
+                // cleared a filter - remove the condition
+                RoomListStore.instance.removeFilter(this.searchFilter);
+            } // else the filter hasn't changed enough for us to care here
+        }
     }
 
     public componentWillUnmount() {
@@ -81,30 +89,20 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
 
     private openSearch = () => {
         defaultDispatcher.dispatch({action: "show_left_panel"});
+        defaultDispatcher.dispatch({action: "focus_room_filter"});
     };
 
     private onChange = () => {
         if (!this.inputRef.current) return;
         this.setState({query: this.inputRef.current.value});
-        this.onSearchUpdated();
     };
-
-    // it wants this at the top of the file, but we know better
-    // tslint:disable-next-line
-    private onSearchUpdated = throttle(
-        () => {
-            // We can't use the state variable because it can lag behind the input.
-            // The lag is most obvious when deleting/clearing text with the keyboard.
-            this.props.onQueryUpdate(this.inputRef.current.value);
-        }, 200, {trailing: true, leading: true},
-    );
 
     private onFocus = (ev: React.FocusEvent<HTMLInputElement>) => {
         this.setState({focused: true});
         ev.target.select();
     };
 
-    private onBlur = () => {
+    private onBlur = (ev: React.FocusEvent<HTMLInputElement>) => {
         this.setState({focused: false});
     };
 
@@ -114,13 +112,22 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
             defaultDispatcher.fire(Action.FocusComposer);
         } else if (ev.key === Key.ARROW_UP || ev.key === Key.ARROW_DOWN) {
             this.props.onVerticalArrow(ev);
+        } else if (ev.key === Key.ENTER) {
+            const shouldClear = this.props.onEnter(ev);
+            if (shouldClear) {
+                // wrap in set immediate to delay it so that we don't clear the filter & then change room
+                setImmediate(() => {
+                    this.clearInput();
+                });
+            }
         }
     };
 
     public render(): React.ReactNode {
         const classes = classNames({
             'mx_RoomSearch': true,
-            'mx_RoomSearch_expanded': this.state.query || this.state.focused,
+            'mx_RoomSearch_hasQuery': this.state.query,
+            'mx_RoomSearch_focused': this.state.focused,
             'mx_RoomSearch_minimized': this.props.isMinimized,
         });
 
@@ -149,7 +156,8 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
         let clearButton = (
             <AccessibleButton
                 tabIndex={-1}
-                className='mx_RoomSearch_clearButton'
+                title={_t("Clear filter")}
+                className="mx_RoomSearch_clearButton"
                 onClick={this.clearInput}
             />
         );
@@ -157,8 +165,8 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
         if (this.props.isMinimized) {
             icon = (
                 <AccessibleButton
-                    tabIndex={-1}
-                    className='mx_RoomSearch_icon'
+                    title={_t("Search rooms")}
+                    className="mx_RoomSearch_icon"
                     onClick={this.openSearch}
                 />
             );

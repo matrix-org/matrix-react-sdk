@@ -25,7 +25,7 @@ module.exports = async function toastScenarios(alice, bob) {
     alice.log.done();
 
     alice.log.step(`accepts analytics toast`);
-    await acceptToast(alice, "Help us improve Riot");
+    await acceptToast(alice, "Help us improve Element");
     alice.log.done();
 
     alice.log.step(`checks no remaining toasts`);
@@ -39,7 +39,7 @@ module.exports = async function toastScenarios(alice, bob) {
     bob.log.done();
 
     bob.log.step(`reject analytics toast`);
-    await rejectToast(bob, "Help us improve Riot");
+    await rejectToast(bob, "Help us improve Element");
     bob.log.done();
 
     bob.log.step(`checks no remaining toasts`);

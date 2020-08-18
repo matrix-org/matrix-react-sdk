@@ -38,7 +38,7 @@ const HomePage = () => {
     }
 
     const brandingConfig = config.branding;
-    let logoUrl = "themes/riot/img/logos/riot-logo.svg";
+    let logoUrl = "themes/element/img/logos/element-logo.svg";
     if (brandingConfig && brandingConfig.authHeaderLogoUrl) {
         logoUrl = brandingConfig.authHeaderLogoUrl;
     }
@@ -46,8 +46,8 @@ const HomePage = () => {
     const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
     return <AutoHideScrollbar className="mx_HomePage mx_HomePage_default">
         <div className="mx_HomePage_default_wrapper">
-            <img src={logoUrl} alt="Riot" />
-            <h1>{ _t("Welcome to %(appName)s", { appName: config.brand || "Riot" }) }</h1>
+            <img src={logoUrl} alt={config.brand || "Element"} />
+            <h1>{ _t("Welcome to %(appName)s", { appName: config.brand || "Element" }) }</h1>
             <h4>{ _t("Liberate your communication") }</h4>
             <div className="mx_HomePage_default_buttons">
                 <AccessibleButton onClick={onClickSendDm} className="mx_HomePage_button_sendDm">

@@ -25,12 +25,8 @@ import { Room } from "matrix-js-sdk/src/models/room";
  * additional behavioural changes are present.
  */
 export class NaturalAlgorithm extends OrderingAlgorithm {
-
     public constructor(tagId: TagID, initialSortingAlgorithm: SortAlgorithm) {
         super(tagId, initialSortingAlgorithm);
-
-        // TODO: Remove debug: https://github.com/vector-im/riot-web/issues/14035
-        console.log(`[RoomListDebug] Constructed a NaturalAlgorithm for ${tagId}`);
     }
 
     public async setRooms(rooms: Room[]): Promise<any> {
@@ -50,13 +46,21 @@ export class NaturalAlgorithm extends OrderingAlgorithm {
             if (cause === RoomUpdateCause.NewRoom) {
                 this.cachedOrderedRooms.push(room);
             } else if (cause === RoomUpdateCause.RoomRemoved) {
-                const idx = this.cachedOrderedRooms.indexOf(room);
-                if (idx >= 0) this.cachedOrderedRooms.splice(idx, 1);
+                const idx = this.getRoomIndex(room);
+                if (idx >= 0) {
+                    this.cachedOrderedRooms.splice(idx, 1);
+                } else {
+                    console.warn(`Tried to remove unknown room from ${this.tagId}: ${room.roomId}`);
+                }
             }
 
-            // TODO: Optimize this to avoid useless operations: https://github.com/vector-im/riot-web/issues/14035
+            // TODO: Optimize this to avoid useless operations: https://github.com/vector-im/element-web/issues/14457
             // For example, we can skip updates to alphabetic (sometimes) and manually ordered tags
-            this.cachedOrderedRooms = await sortRoomsWithAlgorithm(this.cachedOrderedRooms, this.tagId, this.sortingAlgorithm);
+            this.cachedOrderedRooms = await sortRoomsWithAlgorithm(
+                this.cachedOrderedRooms,
+                this.tagId,
+                this.sortingAlgorithm,
+            );
 
             return true;
         } finally {

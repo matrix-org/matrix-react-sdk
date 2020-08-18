@@ -19,7 +19,6 @@ limitations under the License.
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { DragDropContext } from 'react-beautiful-dnd';
 
 import {Key, isOnlyCtrlOrCmdKeyEvent, isOnlyCtrlOrCmdIgnoreShiftKeyEvent} from '../../Keyboard';
@@ -41,7 +40,6 @@ import * as KeyboardShortcuts from "../../accessibility/KeyboardShortcuts";
 import HomePage from "./HomePage";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import PlatformPeg from "../../PlatformPeg";
-import { RoomListStoreTempProxy } from "../../stores/room-list/RoomListStoreTempProxy";
 import { DefaultTagID } from "../../stores/room-list/models";
 import {
     showToast as showSetPasswordToast,
@@ -52,7 +50,12 @@ import {
     hideToast as hideServerLimitToast
 } from "../../toasts/ServerLimitToast";
 import { Action } from "../../dispatcher/actions";
-import LeftPanel2 from "./LeftPanel2";
+import LeftPanel from "./LeftPanel";
+import CallContainer from '../views/voip/CallContainer';
+import { ViewRoomDeltaPayload } from "../../dispatcher/payloads/ViewRoomDeltaPayload";
+import RoomListStore from "../../stores/room-list/RoomListStore";
+import NonUrgentToastContainer from "./NonUrgentToastContainer";
+import { ToggleRightPanelPayload } from "../../dispatcher/payloads/ToggleRightPanelPayload";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -307,8 +310,8 @@ class LoggedInView extends React.Component<IProps, IState> {
     };
 
     onRoomStateEvents = (ev, state) => {
-        const roomLists = RoomListStoreTempProxy.getRoomLists();
-        if (roomLists[DefaultTagID.ServerNotice] && roomLists[DefaultTagID.ServerNotice].some(r => r.roomId === ev.getRoomId())) {
+        const serverNoticeList = RoomListStore.instance.orderedLists[DefaultTagID.ServerNotice];
+        if (serverNoticeList && serverNoticeList.some(r => r.roomId === ev.getRoomId())) {
             this._updateServerNoticeEvents();
         }
     };
@@ -327,11 +330,11 @@ class LoggedInView extends React.Component<IProps, IState> {
     }
 
     _updateServerNoticeEvents = async () => {
-        const roomLists = RoomListStoreTempProxy.getRoomLists();
-        if (!roomLists[DefaultTagID.ServerNotice]) return [];
+        const serverNoticeList = RoomListStore.instance.orderedLists[DefaultTagID.ServerNotice];
+        if (!serverNoticeList) return [];
 
         const events = [];
-        for (const room of roomLists[DefaultTagID.ServerNotice]) {
+        for (const room of serverNoticeList) {
             const pinStateEvent = room.currentState.getStateEvents("m.room.pinned_events", "");
 
             if (!pinStateEvent || !pinStateEvent.getContent().pinned) continue;
@@ -409,20 +412,6 @@ class LoggedInView extends React.Component<IProps, IState> {
     };
 
     _onKeyDown = (ev) => {
-            /*
-            // Remove this for now as ctrl+alt = alt-gr so this breaks keyboards which rely on alt-gr for numbers
-            // Will need to find a better meta key if anyone actually cares about using this.
-            if (ev.altKey && ev.ctrlKey && ev.keyCode > 48 && ev.keyCode < 58) {
-                dis.dispatch({
-                    action: 'view_indexed_room',
-                    roomIndex: ev.keyCode - 49,
-                });
-                ev.stopPropagation();
-                ev.preventDefault();
-                return;
-            }
-            */
-
         let handled = false;
         const ctrlCmdOnly = isOnlyCtrlOrCmdKeyEvent(ev);
         const hasModifier = ev.altKey || ev.ctrlKey || ev.metaKey || ev.shiftKey;
@@ -474,8 +463,8 @@ class LoggedInView extends React.Component<IProps, IState> {
             case Key.ARROW_UP:
             case Key.ARROW_DOWN:
                 if (ev.altKey && !ev.ctrlKey && !ev.metaKey) {
-                    dis.dispatch({
-                        action: 'view_room_delta',
+                    dis.dispatch<ViewRoomDeltaPayload>({
+                        action: Action.ViewRoomDelta,
                         delta: ev.key === Key.ARROW_UP ? -1 : 1,
                         unread: ev.shiftKey,
                     });
@@ -485,8 +474,8 @@ class LoggedInView extends React.Component<IProps, IState> {
 
             case Key.PERIOD:
                 if (ctrlCmdOnly && (this.props.page_type === "room_view" || this.props.page_type === "group_view")) {
-                    dis.dispatch({
-                        action: 'toggle_right_panel',
+                    dis.dispatch<ToggleRightPanelPayload>({
+                        action: Action.ToggleRightPanel,
                         type: this.props.page_type === "room_view" ? "room" : "group",
                     });
                     handled = true;
@@ -607,7 +596,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         const maxRadius = 5; // People shouldn't be straying too far, hopefully
 
         // Note: we track how far the user moved their mouse to help
-        // combat against https://github.com/vector-im/riot-web/issues/7158
+        // combat against https://github.com/vector-im/element-web/issues/7158
 
         if (distance < maxRadius) {
             // This is probably a real click, and not a drag
@@ -620,7 +609,6 @@ class LoggedInView extends React.Component<IProps, IState> {
     };
 
     render() {
-        const LeftPanel = sdk.getComponent('structures.LeftPanel');
         const RoomView = sdk.getComponent('structures.RoomView');
         const UserView = sdk.getComponent('structures.UserView');
         const GroupView = sdk.getComponent('structures.GroupView');
@@ -674,22 +662,12 @@ class LoggedInView extends React.Component<IProps, IState> {
             bodyClasses += ' mx_MatrixChat_useCompactLayout';
         }
 
-        let leftPanel = (
+        const leftPanel = (
             <LeftPanel
+                isMinimized={this.props.collapseLhs || false}
                 resizeNotifier={this.props.resizeNotifier}
-                collapsed={this.props.collapseLhs || false}
-                disabled={this.props.leftDisabled}
             />
         );
-        if (SettingsStore.isFeatureEnabled("feature_new_room_list")) {
-            // TODO: Supply props like collapsed and disabled to LeftPanel2
-            leftPanel = (
-                <LeftPanel2
-                    isMinimized={this.props.collapseLhs || false}
-                    resizeNotifier={this.props.resizeNotifier}
-                />
-            );
-        }
 
         return (
             <MatrixClientContext.Provider value={this._matrixClient}>
@@ -710,6 +688,8 @@ class LoggedInView extends React.Component<IProps, IState> {
                         </div>
                     </DragDropContext>
                 </div>
+                <CallContainer />
+                <NonUrgentToastContainer />
             </MatrixClientContext.Provider>
         );
     }

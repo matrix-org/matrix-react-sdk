@@ -14,43 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EventEmitter } from "events";
-import { INotificationState, NOTIFICATION_STATE_UPDATE } from "./INotificationState";
 import { NotificationColor } from "./NotificationColor";
 import { IDestroyable } from "../../utils/IDestroyable";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
-import { EffectiveMembership, getEffectiveMembership } from "../room-list/membership";
+import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
 import { readReceiptChangeIsFor } from "../../utils/read-receipts";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import * as RoomNotifs from '../../RoomNotifs';
 import * as Unread from '../../Unread';
+import { NotificationState } from "./NotificationState";
 
-export class RoomNotificationState extends EventEmitter implements IDestroyable, INotificationState {
-    private _symbol: string;
-    private _count: number;
-    private _color: NotificationColor;
-
-    constructor(private room: Room) {
+export class RoomNotificationState extends NotificationState implements IDestroyable {
+    constructor(public readonly room: Room) {
         super();
         this.room.on("Room.receipt", this.handleReadReceipt);
         this.room.on("Room.timeline", this.handleRoomEventUpdate);
         this.room.on("Room.redaction", this.handleRoomEventUpdate);
+        this.room.on("Room.myMembership", this.handleMembershipUpdate);
         MatrixClientPeg.get().on("Event.decrypted", this.handleRoomEventUpdate);
         MatrixClientPeg.get().on("accountData", this.handleAccountDataUpdate);
         this.updateNotificationState();
-    }
-
-    public get symbol(): string {
-        return this._symbol;
-    }
-
-    public get count(): number {
-        return this._count;
-    }
-
-    public get color(): NotificationColor {
-        return this._color;
     }
 
     private get roomIsInvite(): boolean {
@@ -58,9 +42,11 @@ export class RoomNotificationState extends EventEmitter implements IDestroyable,
     }
 
     public destroy(): void {
+        super.destroy();
         this.room.removeListener("Room.receipt", this.handleReadReceipt);
         this.room.removeListener("Room.timeline", this.handleRoomEventUpdate);
         this.room.removeListener("Room.redaction", this.handleRoomEventUpdate);
+        this.room.removeListener("Room.myMembership", this.handleMembershipUpdate);
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener("Event.decrypted", this.handleRoomEventUpdate);
             MatrixClientPeg.get().removeListener("accountData", this.handleAccountDataUpdate);
@@ -70,6 +56,10 @@ export class RoomNotificationState extends EventEmitter implements IDestroyable,
     private handleReadReceipt = (event: MatrixEvent, room: Room) => {
         if (!readReceiptChangeIsFor(event, MatrixClientPeg.get())) return; // not our own - ignore
         if (room.roomId !== this.room.roomId) return; // not for us - ignore
+        this.updateNotificationState();
+    };
+
+    private handleMembershipUpdate = () => {
         this.updateNotificationState();
     };
 
@@ -87,7 +77,7 @@ export class RoomNotificationState extends EventEmitter implements IDestroyable,
     };
 
     private updateNotificationState() {
-        const before = {count: this.count, symbol: this.symbol, color: this.color};
+        const snapshot = this.snapshot();
 
         if (RoomNotifs.getRoomNotifsState(this.room.roomId) === RoomNotifs.MUTE) {
             // When muted we suppress all notification states, even if we have context on them.
@@ -136,9 +126,6 @@ export class RoomNotificationState extends EventEmitter implements IDestroyable,
         }
 
         // finally, publish an update if needed
-        const after = {count: this.count, symbol: this.symbol, color: this.color};
-        if (JSON.stringify(before) !== JSON.stringify(after)) {
-            this.emit(NOTIFICATION_STATE_UPDATE);
-        }
+        this.emitIfUpdated(snapshot);
     }
 }

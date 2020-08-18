@@ -18,6 +18,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { FILTER_CHANGED, FilterPriority, IFilterCondition } from "./IFilterCondition";
 import { EventEmitter } from "events";
 import { removeHiddenChars } from "matrix-js-sdk/src/utils";
+import { throttle } from "lodash";
 
 /**
  * A filter condition for the room list which reveals rooms of a particular
@@ -41,10 +42,12 @@ export class NameFilterCondition extends EventEmitter implements IFilterConditio
 
     public set search(val: string) {
         this._search = val;
-        // TODO: Remove debug: https://github.com/vector-im/riot-web/issues/14035
-        console.log("Updating filter for room name search:", this._search);
-        this.emit(FILTER_CHANGED);
+        this.callUpdate();
     }
+
+    private callUpdate = throttle(() => {
+        this.emit(FILTER_CHANGED);
+    }, 200, {trailing: true, leading: true});
 
     public isVisible(room: Room): boolean {
         const lcFilter = this.search.toLowerCase();

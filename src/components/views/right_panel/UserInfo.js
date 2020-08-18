@@ -40,7 +40,7 @@ import E2EIcon from "../rooms/E2EIcon";
 import {useEventEmitter} from "../../../hooks/useEventEmitter";
 import {textualPowerLevel} from '../../../Roles';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import {RIGHT_PANEL_PHASES} from "../../../stores/RightPanelStorePhases";
+import {RightPanelPhases} from "../../../stores/RightPanelStorePhases";
 import EncryptionPanel from "./EncryptionPanel";
 import { useAsyncMemo } from '../../../hooks/useAsyncMemo';
 import { verifyUser, legacyVerifyUser, verifyDevice } from '../../../verification';
@@ -551,7 +551,9 @@ const RedactMessagesButton = ({member}) => {
         let eventsToRedact = [];
         while (timeline) {
             eventsToRedact = timeline.getEvents().reduce((events, event) => {
-                if (event.getSender() === userId && !event.isRedacted() && !event.isRedaction()) {
+                if (event.getSender() === userId && !event.isRedacted() && !event.isRedaction() &&
+                    event.getType() !== "m.room.create"
+                ) {
                     return events.concat(event);
                 } else {
                     return events;
@@ -1288,11 +1290,11 @@ const BasicUserInfo = ({room, member, groupId, devices, isRoomEncrypted}) => {
     );
 
     // only display the devices list if our client supports E2E
-    const _enableDevices = cli.isCryptoEnabled();
+    const cryptoEnabled = cli.isCryptoEnabled();
 
     let text;
     if (!isRoomEncrypted) {
-        if (!_enableDevices) {
+        if (!cryptoEnabled) {
             text = _t("This client does not support end-to-end encryption.");
         } else if (room) {
             text = _t("Messages in this room are not end-to-end encrypted.");
@@ -1306,10 +1308,10 @@ const BasicUserInfo = ({room, member, groupId, devices, isRoomEncrypted}) => {
     let verifyButton;
     const homeserverSupportsCrossSigning = useHomeserverSupportsCrossSigning(cli);
 
-    const userTrust = cli.checkUserTrust(member.userId);
-    const userVerified = userTrust.isCrossSigningVerified();
+    const userTrust = cryptoEnabled && cli.checkUserTrust(member.userId);
+    const userVerified = cryptoEnabled && userTrust.isCrossSigningVerified();
     const isMe = member.userId === cli.getUserId();
-    const canVerify = homeserverSupportsCrossSigning && !userVerified && !isMe;
+    const canVerify = cryptoEnabled && homeserverSupportsCrossSigning && !userVerified && !isMe;
 
     const isSharedRoomsFeatureEnabled = SettingsStore.isFeatureEnabled("feature_show_shared_rooms");
 
@@ -1348,10 +1350,10 @@ const BasicUserInfo = ({room, member, groupId, devices, isRoomEncrypted}) => {
             <h3>{ _t("Security") }</h3>
             <p>{ text }</p>
             { verifyButton }
-            <DevicesSection
+            { cryptoEnabled && <DevicesSection
                 loading={showDeviceListSpinner}
                 devices={devices}
-                userId={member.userId} />
+                userId={member.userId} /> }
         </div>
     );
 
@@ -1485,7 +1487,7 @@ const UserInfoHeader = ({onClose, member, e2eStatus}) => {
     </React.Fragment>;
 };
 
-const UserInfo = ({user, groupId, roomId, onClose, phase=RIGHT_PANEL_PHASES.RoomMemberInfo, ...props}) => {
+const UserInfo = ({user, groupId, roomId, onClose, phase=RightPanelPhases.RoomMemberInfo, ...props}) => {
     const cli = useContext(MatrixClientContext);
 
     // Load room if we are given a room id and memoize it
@@ -1505,8 +1507,8 @@ const UserInfo = ({user, groupId, roomId, onClose, phase=RIGHT_PANEL_PHASES.Room
 
     let content;
     switch (phase) {
-        case RIGHT_PANEL_PHASES.RoomMemberInfo:
-        case RIGHT_PANEL_PHASES.GroupMemberInfo:
+        case RightPanelPhases.RoomMemberInfo:
+        case RightPanelPhases.GroupMemberInfo:
             content = (
                 <BasicUserInfo
                     room={room}
@@ -1516,7 +1518,7 @@ const UserInfo = ({user, groupId, roomId, onClose, phase=RIGHT_PANEL_PHASES.Room
                     isRoomEncrypted={isRoomEncrypted} />
             );
             break;
-        case RIGHT_PANEL_PHASES.EncryptionPanel:
+        case RightPanelPhases.EncryptionPanel:
             classes.push("mx_UserInfo_smallAvatar");
             content = (
                 <EncryptionPanel {...props} member={member} onClose={onClose} isRoomEncrypted={isRoomEncrypted} />

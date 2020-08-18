@@ -53,6 +53,10 @@ export default abstract class BasePlatform {
         this.startUpdateCheck = this.startUpdateCheck.bind(this);
     }
 
+    abstract async getConfig(): Promise<{}>;
+
+    abstract getDefaultDeviceDisplayName(): string;
+
     protected onAction = (payload: ActionPayload) => {
         switch (payload.action) {
             case 'on_client_not_viable':
@@ -150,6 +154,14 @@ export default abstract class BasePlatform {
     abstract displayNotification(title: string, msg: string, avatarUrl: string, room: Object);
 
     loudNotification(ev: Event, room: Object) {
+    }
+
+    clearNotification(notif: Notification) {
+        // Some browsers don't support this, e.g Safari on iOS
+        // https://developer.mozilla.org/en-US/docs/Web/API/Notification/close
+        if (notif.close) {
+            notif.close();
+        }
     }
 
     /**

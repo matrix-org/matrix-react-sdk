@@ -16,15 +16,16 @@ limitations under the License.
 */
 
 import React from 'react';
-import classnames from 'classnames';
+import classNames from 'classnames';
 
 import AccessibleButton from "./AccessibleButton";
-import {IProps} from "./AccessibleButton";
 import Tooltip from './Tooltip';
 
-interface ITooltipProps extends IProps {
+interface ITooltipProps extends React.ComponentProps<typeof AccessibleButton> {
     title: string;
+    tooltip?: React.ReactNode;
     tooltipClassName?: string;
+    forceHide?: boolean;
 }
 
 interface IState {
@@ -39,32 +40,42 @@ export default class AccessibleTooltipButton extends React.PureComponent<IToolti
         };
     }
 
+    componentDidUpdate(prevProps: Readonly<ITooltipProps>) {
+        if (!prevProps.forceHide && this.props.forceHide && this.state.hover) {
+            this.setState({
+                hover: false,
+            });
+        }
+    }
+
     onMouseOver = () => {
+        if (this.props.forceHide) return;
         this.setState({
             hover: true,
         });
     };
 
-    onMouseOut = () => {
+    onMouseLeave = () => {
         this.setState({
             hover: false,
         });
     };
 
     render() {
-        const {title, children, ...props} = this.props;
-        const tooltipClassName = classnames(
-            "mx_AccessibleTooltipButton_tooltip",
-            this.props.tooltipClassName,
-        );
+        const {title, tooltip, children, tooltipClassName, ...props} = this.props;
 
         const tip = this.state.hover ? <Tooltip
             className="mx_AccessibleTooltipButton_container"
-            tooltipClassName={tooltipClassName}
-            label={title}
+            tooltipClassName={classNames("mx_AccessibleTooltipButton_tooltip", tooltipClassName)}
+            label={tooltip || title}
         /> : <div />;
         return (
-            <AccessibleButton {...props} onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut} aria-label={title}>
+            <AccessibleButton
+                {...props}
+                onMouseOver={this.onMouseOver}
+                onMouseLeave={this.onMouseLeave}
+                aria-label={title}
+            >
                 { children }
                 { tip }
             </AccessibleButton>
