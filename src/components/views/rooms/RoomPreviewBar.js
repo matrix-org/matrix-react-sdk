@@ -479,7 +479,7 @@ export default createReactClass({
                 secondaryActionLabel = _t("Reject");
                 secondaryActionHandler = this.props.onRejectClick;
 
-                if (SettingsStore.isFeatureEnabled("feature_show_shared_rooms")) {
+                if (SettingsStore.getValue("feature_show_shared_rooms")) {
                     extraContext = <UserInfoSharedRooms userId={inviteMember.userId} compact={true} />;
                 }
 

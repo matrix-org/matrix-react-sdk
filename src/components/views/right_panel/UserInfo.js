@@ -1313,7 +1313,7 @@ const BasicUserInfo = ({room, member, groupId, devices, isRoomEncrypted}) => {
     const isMe = member.userId === cli.getUserId();
     const canVerify = cryptoEnabled && homeserverSupportsCrossSigning && !userVerified && !isMe;
 
-    const isSharedRoomsFeatureEnabled = SettingsStore.isFeatureEnabled("feature_show_shared_rooms");
+    const isSharedRoomsFeatureEnabled = SettingsStore.getValue("feature_show_shared_rooms");
 
     const setUpdating = (updating) => {
         setPendingUpdateCount(count => count + (updating ? 1 : -1));

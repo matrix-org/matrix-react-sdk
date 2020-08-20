@@ -177,7 +177,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: false,
     },
     "feature_show_shared_rooms": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        supportedLevels: LEVELS_FEATURE,
         displayName: _td('Show rooms in common with another user in the member info panel'),
         default: false,
         isFeature: true,
