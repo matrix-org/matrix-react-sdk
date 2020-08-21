@@ -1,5 +1,5 @@
 /*
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,14 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {Dispatch, SetStateAction, useState} from "react";
+import React from "react";
+import classNames from "classnames";
 
-// Hook to simplify toggling of a boolean state value
-// Returns value, method to toggle boolean value and method to set the boolean value
-export const useStateToggle = (initialValue: boolean): [boolean, () => void, Dispatch<SetStateAction<boolean>>] => {
-    const [value, setValue] = useState(initialValue);
-    const toggleValue = () => {
-        setValue(!value);
-    };
-    return [value, toggleValue, setValue];
+interface IProps {
+    title: string;
+    children: React.ReactNode;
+    className?: string;
+}
+
+const SettingsSection: React.FC<IProps> = ({title, children, className}) => {
+    return <div className={classNames("mx_SettingsTab_section mx_SettingsTab_subsectionText", className)}>
+        <span className="mx_SettingsTab_subheading">{title}</span>
+        {children}
+    </div>;
 };
+
+export default SettingsSection;

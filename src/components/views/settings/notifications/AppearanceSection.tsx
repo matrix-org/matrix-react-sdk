@@ -1,5 +1,5 @@
 /*
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,14 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {Dispatch, SetStateAction, useState} from "react";
+import React from "react";
 
-// Hook to simplify toggling of a boolean state value
-// Returns value, method to toggle boolean value and method to set the boolean value
-export const useStateToggle = (initialValue: boolean): [boolean, () => void, Dispatch<SetStateAction<boolean>>] => {
-    const [value, setValue] = useState(initialValue);
-    const toggleValue = () => {
-        setValue(!value);
-    };
-    return [value, toggleValue, setValue];
+import SettingsSection from "../SettingsSection";
+import {_t} from "../../../../languageHandler";
+import AlwaysShowBadgeCountsOption from "./AlwaysShowBadgeCountsOption";
+
+const SoundsSection: React.FC = () => {
+    return <SettingsSection title={_t("Appearance")} className="mx_NotificationsTab_appearance">
+        <AlwaysShowBadgeCountsOption />
+    </SettingsSection>;
 };
+
+export default SoundsSection;

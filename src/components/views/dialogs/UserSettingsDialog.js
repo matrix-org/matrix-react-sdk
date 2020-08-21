@@ -25,6 +25,7 @@ import LabsUserSettingsTab from "../settings/tabs/user/LabsUserSettingsTab";
 import AppearanceUserSettingsTab from "../settings/tabs/user/AppearanceUserSettingsTab";
 import SecurityUserSettingsTab from "../settings/tabs/user/SecurityUserSettingsTab";
 import NotificationUserSettingsTab from "../settings/tabs/user/NotificationUserSettingsTab";
+import NotificationUserSettingsTab2 from "../settings/tabs/user/NotificationUserSettingsTab2";
 import PreferencesUserSettingsTab from "../settings/tabs/user/PreferencesUserSettingsTab";
 import VoiceUserSettingsTab from "../settings/tabs/user/VoiceUserSettingsTab";
 import HelpUserSettingsTab from "../settings/tabs/user/HelpUserSettingsTab";
@@ -96,7 +97,8 @@ export default class UserSettingsDialog extends React.Component {
             USER_NOTIFICATIONS_TAB,
             _td("Notifications"),
             "mx_UserSettingsDialog_bellIcon",
-            <NotificationUserSettingsTab />,
+            SettingsStore.isFeatureEnabled("feature_ftue_notifications") ?
+                <NotificationUserSettingsTab2 /> : <NotificationUserSettingsTab />,
         ));
         tabs.push(new Tab(
             USER_PREFERENCES_TAB,

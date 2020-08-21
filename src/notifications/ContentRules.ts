@@ -16,12 +16,12 @@ limitations under the License.
 */
 
 import {PushRuleVectorState, State} from "./PushRuleVectorState";
-import {IExtendedPushRule, IRuleSets} from "./types";
+import {PushRule, IRuleSets} from "./types";
 
 export interface IContentRules {
     vectorState: State;
-    rules: IExtendedPushRule[];
-    externalRules: IExtendedPushRule[];
+    rules: PushRule[];
+    externalRules: PushRule[];
 }
 
 export const SCOPE = "global";
@@ -96,7 +96,7 @@ export class ContentRules {
     }
 
     static _categoriseContentRules(rulesets: IRuleSets) {
-        const contentRules: Record<"on"|"on_but_disabled"|"loud"|"loud_but_disabled"|"other", IExtendedPushRule[]> = {
+        const contentRules: Record<"on"|"on_but_disabled"|"loud"|"loud_but_disabled"|"other", PushRule[]> = {
             on: [],
             on_but_disabled: [],
             loud: [],

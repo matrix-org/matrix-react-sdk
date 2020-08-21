@@ -75,7 +75,8 @@ limitations under the License.
         }
     }
 
-    .mx_RoomTile_notificationsButton {
+    .mx_RoomTile_notificationsButton,
+    .mx_RoomNotificationsMenu_handle {
         margin-left: 4px; // spacing between buttons
     }
 
@@ -101,31 +102,15 @@ limitations under the License.
 
     // The context menu buttons are hidden by default
     .mx_RoomTile_menuButton,
-    .mx_RoomTile_notificationsButton {
-        width: 20px;
-        min-width: 20px; // yay flex
-        height: 20px;
-        margin-top: auto;
-        margin-bottom: auto;
-        position: relative;
+    .mx_RoomTile_notificationsButton,
+    .mx_RoomNotificationsMenu_handle {
         display: none;
-
-        &::before {
-            top: 2px;
-            left: 2px;
-            content: '';
-            width: 16px;
-            height: 16px;
-            position: absolute;
-            mask-position: center;
-            mask-size: contain;
-            mask-repeat: no-repeat;
-            background: $primary-fg-color;
-        }
     }
 
     // If the room has an overriden notification setting then we always show the notifications menu button
-    .mx_RoomTile_notificationsButton.mx_RoomTile_notificationsButton_show {
+    .mx_RoomTile_notificationsButton.mx_RoomTile_notificationsButton_show,
+    // do the same for the new FTUE notifications menus
+    .mx_RoomNotificationsMenu_handle.mx_RoomNotificationsMenu_iconBellCrossed {
         display: block;
     }
 
@@ -145,6 +130,7 @@ limitations under the License.
             }
 
             .mx_RoomTile_notificationsButton,
+            .mx_RoomNotificationsMenu_handle,
             .mx_RoomTile_menuButton {
                 display: block;
             }
@@ -162,34 +148,42 @@ limitations under the License.
     }
 }
 
-// We use these both in context menus and the room tiles
-.mx_RoomTile_iconBell::before {
-    mask-image: url('$(res)/img/element-icons/notifications.svg');
-}
-.mx_RoomTile_iconBellDot::before {
-    mask-image: url('$(res)/img/element-icons/roomlist/notifications-default.svg');
-}
-.mx_RoomTile_iconBellCrossed::before {
-    mask-image: url('$(res)/img/element-icons/roomlist/notifications-off.svg');
-}
-.mx_RoomTile_iconBellMentions::before {
-    mask-image: url('$(res)/img/element-icons/roomlist/notifications-dm.svg');
+.mx_RoomTile_menuButton,
+.mx_RoomTile_notificationsButton,
+.mx_RoomNotificationsMenu_handle { // TODO tidy this up
+    width: 20px;
+    min-width: 20px; // yay flex
+    height: 20px;
+    margin-top: auto;
+    margin-bottom: auto;
+    position: relative;
+
+    &::before {
+        top: 2px;
+        left: 2px;
+        content: '';
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        mask-position: center;
+        mask-size: contain;
+        mask-repeat: no-repeat;
+        background: $primary-fg-color;
+    }
 }
 
-.mx_RoomTile_contextMenu {
-    .mx_RoomTile_iconStar::before {
-        mask-image: url('$(res)/img/element-icons/roomlist/favorite.svg');
-    }
+.mx_RoomTile_iconStar::before {
+    mask-image: url('$(res)/img/element-icons/roomlist/favorite.svg');
+}
 
-    .mx_RoomTile_iconArrowDown::before {
-        mask-image: url('$(res)/img/element-icons/roomlist/low-priority.svg');
-    }
+.mx_RoomTile_iconArrowDown::before {
+    mask-image: url('$(res)/img/element-icons/roomlist/low-priority.svg');
+}
 
-    .mx_RoomTile_iconSettings::before {
-        mask-image: url('$(res)/img/element-icons/settings.svg');
-    }
+.mx_RoomTile_iconSettings::before {
+    mask-image: url('$(res)/img/element-icons/settings.svg');
+}
 
-    .mx_RoomTile_iconSignOut::before {
-        mask-image: url('$(res)/img/element-icons/leave.svg');
-    }
+.mx_RoomTile_iconSignOut::before {
+    mask-image: url('$(res)/img/element-icons/leave.svg');
 }

@@ -27,11 +27,16 @@ import defaultDispatcher from '../../../dispatcher/dispatcher';
 import { Key } from "../../../Keyboard";
 import ActiveRoomObserver from "../../../ActiveRoomObserver";
 import { _t } from "../../../languageHandler";
-import { ChevronFace, ContextMenuTooltipButton, MenuItemRadio } from "../../structures/ContextMenu";
+import { ContextMenuTooltipButton } from "../../structures/ContextMenu";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import { MessagePreviewStore, ROOM_PREVIEW_CHANGED } from "../../../stores/room-list/MessagePreviewStore";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
-import { ALL_MESSAGES, ALL_MESSAGES_LOUD, MENTIONS_ONLY, MUTE, } from "../../../RoomNotifs";
+import {
+    ALL_MESSAGES,
+    ALL_MESSAGES_LOUD,
+    MENTIONS_ONLY,
+    MUTE,
+} from "../../../RoomNotifs";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import NotificationBadge from "./NotificationBadge";
 import { Volume } from "../../../RoomNotifsTypes";
@@ -47,8 +52,17 @@ import { PROPERTY_UPDATED } from "../../../stores/local-echo/GenericEchoChamber"
 import IconizedContextMenu, {
     IconizedContextMenuCheckbox,
     IconizedContextMenuOption,
-    IconizedContextMenuOptionList, IconizedContextMenuRadio
+    IconizedContextMenuOptionList,
+    IconizedContextMenuRadio,
 } from "../context_menus/IconizedContextMenu";
+import RoomNotificationsMenu, { contextMenuBelow } from "../context_menus/RoomNotificationsMenu";
+import {RoomNotificationSetting, roundRoomNotificationSetting} from "../../../notifications/types";
+import {
+    EVENT_NOTIFY_ME_WITH_CHANGED,
+    NotificationLevelStore,
+    getEventRoomNotifyOverrideChanged
+} from "../../../stores/notifications/NotificationLevelStore";
+import SettingsStore from "../../../settings/SettingsStore";
 
 interface IProps {
     room: Room;
@@ -64,17 +78,11 @@ interface IState {
     notificationsMenuPosition: PartialDOMRect;
     generalMenuPosition: PartialDOMRect;
     messagePreview?: string;
+    roomNotificationLevel?: RoomNotificationSetting;
+    defaultNotificationLevel?: RoomNotificationSetting;
 }
 
 const messagePreviewId = (roomId: string) => `mx_RoomTile_messagePreview_${roomId}`;
-
-const contextMenuBelow = (elementRect: PartialDOMRect) => {
-    // align the context menu's icons with the icon which opened the context menu
-    const left = elementRect.left + window.pageXOffset - 9;
-    const top = elementRect.bottom + window.pageYOffset + 17;
-    const chevronFace = ChevronFace.None;
-    return {left, top, chevronFace};
-};
 
 export default class RoomTile extends React.PureComponent<IProps, IState> {
     private dispatcherRef: string;
@@ -101,7 +109,23 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         this.notificationState.on(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
         this.roomProps = EchoChamber.forRoom(this.props.room);
         this.roomProps.on(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
+
+        if (SettingsStore.isFeatureEnabled("feature_ftue_notifications")) {
+            const store = NotificationLevelStore.instance;
+            store.on(EVENT_NOTIFY_ME_WITH_CHANGED, this.onRoomNotificationLevelChange);
+            store.on(getEventRoomNotifyOverrideChanged(this.props.room.roomId), this.onRoomNotificationLevelChange);
+            this.onRoomNotificationLevelChange(); // seed the state
+        }
     }
+
+    private onRoomNotificationLevelChange = () => {
+        const store = NotificationLevelStore.instance;
+        const rounded = roundRoomNotificationSetting(this.props.room.roomId, store.notifyMeWith);
+        this.setState({
+            defaultNotificationLevel: rounded,
+            roomNotificationLevel: store.getRoomNotifyOverride(this.props.room.roomId) || rounded,
+        })
+    };
 
     private onNotificationUpdate = () => {
         this.forceUpdate(); // notification state changed - update
@@ -197,6 +221,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
 
     private onCloseNotificationsMenu = () => {
         this.setState({notificationsMenuPosition: null});
+    };
+
+    private onChangeNotificationsMenu = (level: RoomNotificationSetting) => {
+        NotificationLevelStore.instance.setRoomOverride(this.props.room.roomId, level).catch(e => {
+            console.log(e);
+        });
     };
 
     private onGeneralMenuOpenClick = (ev: React.MouseEvent) => {
@@ -311,6 +341,18 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             return null;
         }
 
+        if (SettingsStore.isFeatureEnabled("feature_ftue_notifications")) {
+            return <RoomNotificationsMenu
+                value={this.state.roomNotificationLevel}
+                defaultValue={this.state.defaultNotificationLevel}
+                onOpenMenu={this.onNotificationsMenuOpenClick}
+                onCloseMenu={this.onCloseNotificationsMenu}
+                onChange={this.onChangeNotificationsMenu}
+                tabIndex={isActive ? 0 : -1}
+                label={_t("Notification options")}
+            />;
+        }
+
         const state = this.roomProps.notificationVolume;
 
         let contextMenu = null;
@@ -325,25 +367,25 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                     <IconizedContextMenuRadio
                         label={_t("Use default")}
                         active={state === ALL_MESSAGES}
-                        iconClassName="mx_RoomTile_iconBell"
+                        iconClassName="mx_RoomNotificationsMenu_iconBell"
                         onClick={this.onClickAllNotifs}
                     />
                     <IconizedContextMenuRadio
                         label={_t("All messages")}
                         active={state === ALL_MESSAGES_LOUD}
-                        iconClassName="mx_RoomTile_iconBellDot"
+                        iconClassName="mx_RoomNotificationsMenu_iconBellDot"
                         onClick={this.onClickAlertMe}
                     />
                     <IconizedContextMenuRadio
                         label={_t("Mentions & Keywords")}
                         active={state === MENTIONS_ONLY}
-                        iconClassName="mx_RoomTile_iconBellMentions"
+                        iconClassName="mx_RoomNotificationsMenu_iconBellMentions"
                         onClick={this.onClickMentions}
                     />
                     <IconizedContextMenuRadio
                         label={_t("None")}
                         active={state === MUTE}
-                        iconClassName="mx_RoomTile_iconBellCrossed"
+                        iconClassName="mx_RoomNotificationsMenu_iconBellCrossed"
                         onClick={this.onClickMute}
                     />
                 </IconizedContextMenuOptionList>
@@ -352,10 +394,10 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
 
         const classes = classNames("mx_RoomTile_notificationsButton", {
             // Show bell icon for the default case too.
-            mx_RoomTile_iconBell: state === ALL_MESSAGES,
-            mx_RoomTile_iconBellDot: state === ALL_MESSAGES_LOUD,
-            mx_RoomTile_iconBellMentions: state === MENTIONS_ONLY,
-            mx_RoomTile_iconBellCrossed: state === MUTE,
+            mx_RoomNotificationsMenu_iconBell: state === ALL_MESSAGES,
+            mx_RoomNotificationsMenu_iconBellDot: state === ALL_MESSAGES_LOUD,
+            mx_RoomNotificationsMenu_iconBellMentions: state === MENTIONS_ONLY,
+            mx_RoomNotificationsMenu_iconBellCrossed: state === MUTE,
 
             // Only show the icon by default if the room is overridden to muted.
             // TODO: [FTUE Notifications] Probably need to detect global mute state

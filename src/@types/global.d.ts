@@ -27,6 +27,7 @@ import {ModalManager} from "../Modal";
 import SettingsStore from "../settings/SettingsStore";
 import {ActiveRoomObserver} from "../ActiveRoomObserver";
 import {Notifier} from "../Notifier";
+import {NotificationLevelStore} from "../stores/notifications/NotificationLevelStore";
 
 declare global {
     interface Window {
@@ -43,6 +44,7 @@ declare global {
         mxRoomListLayoutStore: RoomListLayoutStore;
         mxActiveRoomObserver: ActiveRoomObserver;
         mxPlatformPeg: PlatformPeg;
+        mxNotificationSettingStore: NotificationLevelStore;
         mxIntegrationManagers: typeof IntegrationManagers;
         singletonModalManager: ModalManager;
         mxSettingsStore: SettingsStore;
@@ -77,5 +79,10 @@ declare global {
 
     interface HTMLAudioElement {
         type?: string;
+    }
+
+    interface Array<T> {
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat
+        flat(depth?: number): T;
     }
 }

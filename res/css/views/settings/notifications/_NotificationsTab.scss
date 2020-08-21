@@ -1,0 +1,354 @@
+/*
+Copyright 2020 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+$leftGutter: 28px;
+$textareaWidth: 400px;
+
+.mx_NotificationsTab {
+    .mx_SettingsTab_section {
+        color: $primary-fg-color;
+
+        margin-top: 40px;
+        margin-bottom: 64px;
+
+        label {
+            display: block;
+        }
+
+        .mx_RadioButton {
+            display: flex;
+            margin-bottom: 12px;
+        }
+
+        .mx_Checkbox {
+            margin-bottom: 12px;
+        }
+
+        .mx_Checkbox_microCopy {
+            font-size: $font-12px;
+            color: $muted-fg-color;
+            margin-left: $leftGutter;
+
+            &.mx_Checkbox_microCopy_disabled {
+                opacity: 0.5;
+            }
+        }
+
+        .mx_Field_textarea {
+            margin-left: $leftGutter;
+            box-sizing: border-box;
+            width: $textareaWidth;
+        }
+    }
+
+    .mx_NotificationBadge {
+        vertical-align: middle;
+        display: inline-flex;
+        margin-left: 2px;
+        margin-right: 2px;
+    }
+
+    .mx_NotificationsTab_mentionsKeywords {
+        .mx_NotificationsTab_mentionsKeywords_editor {
+            margin-top: 16px;
+            flex: 1;
+            border: 1px solid $input-border-color;
+            border-radius: 4px;
+            padding-left: 8px;
+            min-height: 25px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            cursor: text;
+
+            margin-left: $leftGutter;
+            box-sizing: border-box;
+            width: $textareaWidth;
+
+            // Using a textarea for this element, to circumvent autofill
+            // Mostly copied from InviteDialog which copied from AddressPickerDialog
+            textarea,
+            textarea:focus {
+                height: 34px;
+                line-height: $font-34px;
+                font-size: $font-14px;
+                margin: 0 !important;
+                border: 0 !important;
+                outline: 0 !important;
+                resize: none;
+                overflow: hidden;
+                box-sizing: border-box;
+                word-wrap: nowrap;
+                padding-left: 8px; // to make the pill's text appear in the same place the textarea's was
+
+                // Roughly fill about 2/5ths of the available space. This is to try and 'fill' the
+                // remaining space after a bunch of pills, but is a bit hacky. Ideally we'd have
+                // support for "fill remaining width", but traditional tricks don't work with what
+                // we're pushing into this "field". Flexbox just makes things worse. The theory is
+                // that users won't need more than about 2/5ths of the input to find the person
+                // they're looking for.
+                width: 40%;
+            }
+        }
+
+        .mx_Checkbox_microCopy_disabled,
+        .mx_NotificationsTab_mentionsKeywords_editor_disabled,
+        .mx_NotificationsTab_mentionsKeywords_editor_disabled textarea {
+            cursor: not-allowed;
+        }
+
+        .mx_NotificationsTab_mentionsKeywords_keywordPill {
+            display: inline-block;
+            float: left;
+            position: relative;
+            top: 7px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+
+            border-radius: 12px;
+            height: 24px;
+            line-height: $font-24px;
+            padding-left: 8px;
+            padding-right: 8px;
+
+            background-color: rgba($accent-color, 0.12);
+            color: $accent-color;
+
+            &:hover {
+                background-color: $accent-color;
+                color: #ffffff; // this is fine without a var because it's for both themes
+            }
+
+            & > span {
+                vertical-align: top;
+            }
+
+            .mx_NotificationsTab_mentionsKeywords_removePill {
+                display: inline-block;
+                margin-left: 4px;
+            }
+        }
+    }
+
+    .mx_NotificationsTab_roomNotifyMeOn {
+        .mx_Checkbox_microCopy {
+            margin-top: -4px;
+            margin-bottom: 12px;
+        }
+    }
+
+    .mx_NotificationsTab_desktopNotificationsSection {
+        & > .mx_Checkbox:nth-child(3) {
+            margin-left: $leftGutter;
+        }
+    }
+
+    .mx_NotificationsTab_emailAddresses {
+        margin-top: 16px;
+        margin-left: $leftGutter;
+    }
+
+    .mx_AccessibleButton_kind_link {
+        padding: 0;
+        font-size: inherit;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 20px 0;
+    }
+
+    .mx_NotificationsTab_RoomOverrideTile {
+        td {
+            padding: 10px 0;
+        }
+
+        td:first-child {
+            border-radius: 8px 0 0 8px;
+            padding-left: 10px;
+        }
+        td:last-child {
+            border-radius: 0 8px 8px 0;
+            padding: 10px;
+        }
+
+        td:not(:first-child) {
+            text-align: center;
+        }
+
+        .mx_BaseAvatar {
+            margin-right: 12px;
+
+            &, & + span {
+                vertical-align: middle;
+            }
+        }
+
+        &:hover {
+            background-color: $header-panel-bg-color;
+        }
+
+        & > * {
+            vertical-align: middle;
+        }
+
+        & > span:nth-child(2) {
+            margin-left: 16px;
+        }
+
+        .mx_AccessibleButton {
+            line-height: 32px;
+            margin: 0 auto;
+        }
+    }
+
+    .mx_ProgressBar {
+        margin-left: 10px;
+        vertical-align: middle;
+    }
+
+    .mx_NotificationsTab_CustomSoundUpload {
+        padding: 6px 10px;
+    }
+
+    .mx_NotificationsTab_CustomSoundTile {
+        border-radius: 4px;
+        padding: 6px 10px;
+        position: relative;
+        width: 300px;
+
+        .mx_AccessibleButton {
+            position: absolute;
+            display: inline;
+
+            top: 8px;
+            width: 16px;
+            height: 16px;
+        }
+
+        .mx_NotificationsTab_CustomSoundTile_stop {
+            svg {
+                position: absolute;
+                top: -2px;
+                left: -2px;
+            }
+
+            circle {
+                $numDashes: 57; // ceil(Pi * diameter)
+                stroke-dasharray: $numDashes;
+                stroke-dashoffset: $numDashes;
+                stroke: $accent-color;
+                animation-name: stroke;
+                animation-timing-function: linear;
+            }
+
+            @keyframes stroke {
+                to {
+                    stroke-dashoffset: 0;
+                }
+            }
+        }
+
+        .mx_NotificationsTab_CustomSoundTile_remove {
+            right: 10px;
+            display: none;
+        }
+
+        span {
+            margin-left: 28px;
+            margin-right: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
+
+        &:hover,
+        &:focus-within,
+        &.focus-visible:focus {
+            background-color: rgba($input-darker-bg-color, .3);
+
+            .mx_NotificationsTab_CustomSoundTile_remove {
+                display: inline;
+            }
+        }
+    }
+}
+
+.mx_NotificationsTab_RoomOverrideTile_ContextMenu {
+    width: max-content;
+
+    .mx_AccessibleButton {
+        height: 32px;
+        padding: 8px;
+        margin-left: 32px;
+        margin-right: 40px;
+        line-height: 32px;
+        position: relative;
+        color: $primary-fg-color;
+        text-align: left;
+
+        &::before {
+            content: '';
+            position: absolute;
+            height: 16px;
+            width: 16px;
+            left: -18px;
+            top: 16px;
+            background-color: $muted-fg-color;
+            mask-repeat: no-repeat;
+            mask-size: contain;
+        }
+
+        &[aria-selected="true"] {
+            color: $accent-color;
+
+            &::before {
+                background-color: $accent-color;
+            }
+
+            &::after {
+                background-color: $accent-color;
+                content: '';
+                position: absolute;
+                height: 16px;
+                width: 16px;
+                right: -21px;
+                top: 16px;
+                mask-repeat: no-repeat;
+                mask-size: contain;
+                mask-image: url('$(res)/img/feather-customised/check.svg');
+            }
+        }
+    }
+
+    .mx_AccessibleButton_kind_link {
+        font-size: inherit;
+        display: block;
+    }
+
+    .mx_NotificationsTab_RoomOverrideTile_ContextMenu_allMessages::before {
+        mask-image: url('$(res)/img/element-icons/roomlist/notifications-default.svg');
+    }
+
+    .mx_NotificationsTab_RoomOverrideTile_ContextMenu_mentionsKeywords::before {
+        mask-image: url('$(res)/img/element-icons/roomlist/notifications-dm.svg');
+    }
+
+    .mx_NotificationsTab_RoomOverrideTile_ContextMenu_none::before {
+        mask-image: url('$(res)/img/element-icons/roomlist/notifications-off.svg');
+    }
+}
