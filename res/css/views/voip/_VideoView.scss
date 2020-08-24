@@ -21,11 +21,13 @@ limitations under the License.
 }
 
 .mx_VideoView video {
-    width: 100%;
+    height: 100%;
 }
 
 .mx_VideoView_remoteVideoFeed {
     width: 100%;
+    height: 100%;
+    text-align: -webkit-center;
     background-color: #000;
     z-index: 50;
 }
