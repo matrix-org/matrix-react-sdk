@@ -20,18 +20,19 @@ import dis from "../../dispatcher/dispatcher";
 import { UpdateSystemFontPayload } from "../../dispatcher/payloads/UpdateSystemFontPayload";
 import { Action } from "../../dispatcher/actions";
 import { SettingLevel } from "../SettingLevel";
+import debounce from 'lodash/debounce';
 
 export default class UseSystemFontController extends SettingController {
     constructor() {
         super();
     }
 
-    public onChange(level: SettingLevel, roomId: string, newValue: any) {
+    public onChange = debounce((level: SettingLevel, roomId: string, newValue: any) => {
         // Dispatch font size change so that everything open responds to the change.
         dis.dispatch<UpdateSystemFontPayload>({
             action: Action.UpdateSystemFont,
             useSystemFont: newValue,
             font: SettingsStore.getValue("systemFont"),
         });
-    }
+    }, 3000);
 }
