@@ -1242,7 +1242,7 @@ export default class RoomView extends React.Component<IProps, IState> {
     private onSearch = (term: string, roomIds, senderIds) => {
         this.setState({
             searchTerm: term,
-            searchMultiRoom: roomIds.length === 0 || roomIds.length > 1,
+            searchMultiRoom: roomIds === undefined || roomIds.length > 1,
             searchResults: {},
             searchHighlights: [],
         });

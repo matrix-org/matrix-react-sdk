@@ -26,6 +26,8 @@ async function serverSideSearch(term, roomIds = undefined, senderIds = undefined
         search_categories: {
             room_events: {
                 filter: {
+                    rooms: roomIds,
+                    senders: senderIds,
                     limit: SEARCH_LIMIT,
                 },
                 order_by: "recent",
@@ -39,12 +41,6 @@ async function serverSideSearch(term, roomIds = undefined, senderIds = undefined
     };
 
     if (term !== "") body.search_categories.room_events.search_term = term;
-    if (roomIds !== undefined && roomIds.length > 0) {
-        body.search_categories.room_events.filter.rooms = roomIds;
-    }
-    if (senderIds !== undefined && senderIds.length > 0) {
-        body.search_categories.room_events.filter.senders = senderIds;
-    }
 
     const response = await client.search({body: body});
 

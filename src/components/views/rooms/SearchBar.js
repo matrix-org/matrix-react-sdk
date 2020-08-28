@@ -75,6 +75,8 @@ export default class SearchBar extends React.Component {
         if (this.model._parts.length > 0) {
             const searchTerm = [];
             const senderIdMap = {};
+            let senderIds;
+            let roomIds;
             for (let i = 0; i < this.model._parts.length; i++) {
                 if (typeof this.model._parts[i].member !== 'undefined') {
                     senderIdMap[this.model._parts[i].resourceId] = true;
@@ -88,7 +90,10 @@ export default class SearchBar extends React.Component {
                     searchTerm.push(text);
                 }
             }
-            this.props.onSearch(searchTerm.join(' '), this.state.roomIds, Object.keys(senderIdMap));
+            const senderIdArray = Object.keys(senderIdMap);
+            if (this.state.roomIds.length > 0) roomIds = this.state.roomIds;
+            if (senderIdArray.length > 0) senderIds = senderIdArray;
+            this.props.onSearch(searchTerm.join(' '), roomIds, senderIds);
         }
     };
 
