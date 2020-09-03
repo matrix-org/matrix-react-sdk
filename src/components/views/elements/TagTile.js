@@ -30,6 +30,7 @@ import GroupStore from '../../../stores/GroupStore';
 import TagOrderStore from '../../../stores/TagOrderStore';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AccessibleButton from "./AccessibleButton";
+import SettingsStore from "../../../settings/SettingsStore";
 
 // A class for a child of TagPanel (possibly wrapped in a DNDTagTile) that represents
 // a thing to click on for the user to filter the visible rooms in the RoomList to:
@@ -46,6 +47,7 @@ export default createReactClass({
         contextMenuButtonRef: PropTypes.object,
         openMenu: PropTypes.func,
         menuDisplayed: PropTypes.bool,
+        selected: PropTypes.bool,
     },
 
     statics: {
@@ -112,6 +114,7 @@ export default createReactClass({
     },
 
     onMouseOver: function() {
+        if (SettingsStore.getValue("feature_communities_v2_prototypes")) return;
         this.setState({ hover: true });
     },
 
@@ -123,6 +126,7 @@ export default createReactClass({
         // Prevent the TagTile onClick event firing as well
         e.stopPropagation();
         e.preventDefault();
+        if (SettingsStore.getValue("feature_communities_v2_prototypes")) return;
         this.setState({ hover: false });
         this.props.openMenu();
     },
