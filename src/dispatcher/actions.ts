@@ -36,7 +36,62 @@ export enum Action {
 
     /**
      * Open the user settings. No additional payload information required.
+     * Optionally can include an OpenToTabPayload.
      */
     ViewUserSettings = "view_user_settings",
-}
 
+    /**
+     * Opens the room directory. No additional payload information required.
+     */
+    ViewRoomDirectory = "view_room_directory",
+
+    /**
+     * Forces the theme to reload. No additional payload information required.
+     */
+    RecheckTheme = "recheck_theme",
+
+    /**
+     * Provide status information for an ongoing update check. Should be used with a CheckUpdatesPayload.
+     */
+    CheckUpdates = "check_updates",
+
+    /**
+     * Focuses the user's cursor to the composer. No additional payload information required.
+     */
+    FocusComposer = "focus_composer",
+
+    /**
+     * Opens the user menu (previously known as the top left menu). No additional payload information required.
+     */
+    ToggleUserMenu = "toggle_user_menu",
+
+    /**
+     * Sets the apps root font size. Should be used with UpdateFontSizePayload
+     */
+    UpdateFontSize = "update_font_size",
+
+    /**
+     * Sets a system font. Should be used with UpdateSystemFontPayload
+     */
+    UpdateSystemFont = "update_system_font",
+
+    /**
+     * Changes room based on room list order and payload parameters. Should be used with ViewRoomDeltaPayload.
+     */
+    ViewRoomDelta = "view_room_delta",
+
+    /**
+     * Sets the phase for the right panel. Should be used with SetRightPanelPhasePayload.
+     */
+    SetRightPanelPhase = "set_right_panel_phase",
+
+    /**
+     * Toggles the right panel. Should be used with ToggleRightPanelPayload.
+     */
+    ToggleRightPanel = "toggle_right_panel",
+
+    /**
+     * Trigged after the phase of the right panel is set. Should be used with AfterRightPanelPhaseChangePayload.
+     */
+    AfterRightPanelPhaseChange = "after_right_panel_phase_change",
+}

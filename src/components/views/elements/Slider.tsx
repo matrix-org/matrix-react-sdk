@@ -45,7 +45,7 @@ export default class Slider extends React.Component<IProps> {
     // non linear slider.
     private offset(values: number[], value: number): number {
         // the index of the first number greater than value.
-        let closest = values.reduce((prev, curr) => {
+        const closest = values.reduce((prev, curr) => {
             return (value > curr ? prev + 1 : prev);
         }, 0);
 
@@ -65,20 +65,19 @@ export default class Slider extends React.Component<IProps> {
 
         const intervalWidth = 1 / (values.length - 1);
 
-        const linearInterpolation = (value - closestLessValue) / (closestGreaterValue - closestLessValue)
+        const linearInterpolation = (value - closestLessValue) / (closestGreaterValue - closestLessValue);
 
-        return 100 * (closest - 1 + linearInterpolation) * intervalWidth
-
+        return 100 * (closest - 1 + linearInterpolation) * intervalWidth;
     }
 
     render(): React.ReactNode {
-        const dots = this.props.values.map(v =>
-            <Dot active={v <= this.props.value}
-                 label={this.props.displayFunc(v)}
-                 onClick={this.props.disabled ? () => {} : () => this.props.onSelectionChange(v)}
-                 key={v}
-                 disabled={this.props.disabled}
-            />);
+        const dots = this.props.values.map(v => <Dot
+            active={v <= this.props.value}
+            label={this.props.displayFunc(v)}
+            onClick={this.props.disabled ? () => {} : () => this.props.onSelectionChange(v)}
+            key={v}
+            disabled={this.props.disabled}
+        />);
 
         let selection = null;
 
@@ -87,13 +86,13 @@ export default class Slider extends React.Component<IProps> {
             selection = <div className="mx_Slider_selection">
                 <div className="mx_Slider_selectionDot" style={{left: "calc(-0.55em + " + offset + "%)"}} />
                 <hr style={{width: offset + "%"}} />
-            </div>
+            </div>;
         }
 
         return <div className="mx_Slider">
             <div>
                 <div className="mx_Slider_bar">
-                    <hr onClick={this.props.disabled ? () => {} : this.onClick.bind(this)}/>
+                    <hr onClick={this.props.disabled ? () => {} : this.onClick.bind(this)} />
                     { selection }
                 </div>
                 <div className="mx_Slider_dotContainer">
@@ -115,13 +114,13 @@ export default class Slider extends React.Component<IProps> {
 
 interface IDotProps {
     // Callback for behavior onclick
-    onClick: () => void,
+    onClick: () => void;
 
     // Whether the dot should appear active
-    active: boolean,
+    active: boolean;
 
     // The label on the dot
-    label: string,
+    label: string;
 
     // Whether the slider is disabled
     disabled: boolean;
@@ -129,7 +128,7 @@ interface IDotProps {
 
 class Dot extends React.PureComponent<IDotProps> {
     render(): React.ReactNode {
-        let className = "mx_Slider_dot"
+        let className = "mx_Slider_dot";
         if (!this.props.disabled && this.props.active) {
             className += " mx_Slider_dotActive";
         }

@@ -76,7 +76,7 @@ export default class WidgetMessaging {
                     console.error(err._error);
                 }
                 // Potential XSS attack if 'msg' is not appropriately sanitized,
-                // as it is untrusted input by our parent window (which we assume is Riot).
+                // as it is untrusted input by our parent window (which we assume is Element).
                 // We can't aggressively sanitize [A-z0-9] since it might be a translation.
                 throw new Error(msg);
             }
@@ -93,6 +93,17 @@ export default class WidgetMessaging {
         return this.messageToWidget({
             api: OUTBOUND_API_NAME,
             action: KnownWidgetActions.ClientReady,
+        });
+    }
+
+    /**
+     * Tells the widget that it should terminate now.
+     * @returns {Promise<*>} Resolves when widget has acknowledged the message.
+     */
+    terminate() {
+        return this.messageToWidget({
+            api: OUTBOUND_API_NAME,
+            action: KnownWidgetActions.Terminate,
         });
     }
 

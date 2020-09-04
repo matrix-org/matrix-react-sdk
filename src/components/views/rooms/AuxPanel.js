@@ -17,7 +17,6 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import * as sdk from '../../../index';
 import dis from "../../../dispatcher/dispatcher";
@@ -28,12 +27,11 @@ import classNames from 'classnames';
 import RateLimitedFunc from '../../../ratelimitedfunc';
 import SettingsStore from "../../../settings/SettingsStore";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
+import CallView from "../voip/CallView";
 
 
-export default createReactClass({
-    displayName: 'AuxPanel',
-
-    propTypes: {
+export default class AuxPanel extends React.Component {
+    static propTypes = {
         // js-sdk room object
         room: PropTypes.object.isRequired,
         userId: PropTypes.string.isRequired,
@@ -57,42 +55,46 @@ export default createReactClass({
         // content in a way that is likely to make it change size.
         onResize: PropTypes.func,
         fullHeight: PropTypes.bool,
-    },
+    };
 
-    getDefaultProps: () => ({
+    static defaultProps = {
         showApps: true,
         hideAppsDrawer: false,
-    }),
+    };
 
-    getInitialState: function() {
-        return { counters: this._computeCounters() };
-    },
+    constructor(props) {
+        super(props);
 
-    componentDidMount: function() {
+        this.state = {
+            counters: this._computeCounters(),
+        };
+    }
+
+    componentDidMount() {
         const cli = MatrixClientPeg.get();
         cli.on("RoomState.events", this._rateLimitedUpdate);
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         const cli = MatrixClientPeg.get();
         if (cli) {
             cli.removeListener("RoomState.events", this._rateLimitedUpdate);
         }
-    },
+    }
 
-    shouldComponentUpdate: function(nextProps, nextState) {
+    shouldComponentUpdate(nextProps, nextState) {
         return (!ObjectUtils.shallowEqual(this.props, nextProps) ||
                 !ObjectUtils.shallowEqual(this.state, nextState));
-    },
+    }
 
-    componentDidUpdate: function(prevProps, prevState) {
+    componentDidUpdate(prevProps, prevState) {
         // most changes are likely to cause a resize
         if (this.props.onResize) {
             this.props.onResize();
         }
-    },
+    }
 
-    onConferenceNotificationClick: function(ev, type) {
+    onConferenceNotificationClick = (ev, type) => {
         dis.dispatch({
             action: 'place_call',
             type: type,
@@ -100,18 +102,18 @@ export default createReactClass({
         });
         ev.stopPropagation();
         ev.preventDefault();
-    },
+    };
 
-    _rateLimitedUpdate: new RateLimitedFunc(function() {
-        if (SettingsStore.isFeatureEnabled("feature_state_counters")) {
+    _rateLimitedUpdate = new RateLimitedFunc(() => {
+        if (SettingsStore.getValue("feature_state_counters")) {
             this.setState({counters: this._computeCounters()});
         }
-    }, 500),
+    }, 500);
 
-    _computeCounters: function() {
+    _computeCounters() {
         let counters = [];
 
-        if (this.props.room && SettingsStore.isFeatureEnabled("feature_state_counters")) {
+        if (this.props.room && SettingsStore.getValue("feature_state_counters")) {
             const stateEvs = this.props.room.currentState.getStateEvents('re.jki.counter');
             stateEvs.sort((a, b) => {
                 return a.getStateKey() < b.getStateKey();
@@ -139,19 +141,9 @@ export default createReactClass({
         }
 
         return counters;
-    },
+    }
 
-    _onScroll: function(rect) {
-        if (this.props.onResize) {
-            this.props.onResize();
-        }
-
-        /* Force refresh of PersistedElements which may be partially hidden */
-        window.dispatchEvent(new Event('resize'));
-    },
-
-    render: function() {
-        const CallView = sdk.getComponent("voip.CallView");
+    render() {
         const TintableSvg = sdk.getComponent("elements.TintableSvg");
 
         let fileDropTarget = null;
@@ -215,7 +207,7 @@ export default createReactClass({
         />;
 
         let stateViews = null;
-        if (this.state.counters && SettingsStore.isFeatureEnabled("feature_state_counters")) {
+        if (this.state.counters && SettingsStore.getValue("feature_state_counters")) {
             let counters = [];
 
             this.state.counters.forEach((counter, idx) => {
@@ -274,7 +266,7 @@ export default createReactClass({
         }
 
         return (
-            <AutoHideScrollbar className={classes} style={style} onScroll={this._onScroll}>
+            <AutoHideScrollbar className={classes} style={style} >
                 { stateViews }
                 { appsDrawer }
                 { fileDropTarget }
@@ -283,5 +275,5 @@ export default createReactClass({
                 { this.props.children }
             </AutoHideScrollbar>
         );
-    },
-});
+    }
+}

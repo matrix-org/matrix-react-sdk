@@ -19,15 +19,15 @@ import dis from "./dispatcher/dispatcher";
 import Modal from './Modal';
 import * as sdk from './index';
 import { _t } from './languageHandler';
-import {RIGHT_PANEL_PHASES} from "./stores/RightPanelStorePhases";
+import {RightPanelPhases} from "./stores/RightPanelStorePhases";
 import {findDMForUser} from './createRoom';
 import {accessSecretStorage} from './CrossSigningManager';
-import SettingsStore from './settings/SettingsStore';
 import {verificationMethods} from 'matrix-js-sdk/src/crypto';
+import {Action} from './dispatcher/actions';
 
 async function enable4SIfNeeded() {
     const cli = MatrixClientPeg.get();
-    if (!cli.isCryptoEnabled() || !SettingsStore.getValue("feature_cross_signing")) {
+    if (!cli.isCryptoEnabled()) {
         return false;
     }
     const usk = cli.getCrossSigningId("user_signing");
@@ -92,8 +92,8 @@ export async function verifyDevice(user, device) {
                     verificationMethods.SAS,
                 );
                 dis.dispatch({
-                    action: "set_right_panel_phase",
-                    phase: RIGHT_PANEL_PHASES.EncryptionPanel,
+                    action: Action.SetRightPanelPhase,
+                    phase: RightPanelPhases.EncryptionPanel,
                     refireParams: {member: user, verificationRequestPromise},
                 });
             } else if (action === "legacy") {
@@ -121,8 +121,8 @@ export async function legacyVerifyUser(user) {
     }
     const verificationRequestPromise = cli.requestVerification(user.userId);
     dis.dispatch({
-        action: "set_right_panel_phase",
-        phase: RIGHT_PANEL_PHASES.EncryptionPanel,
+        action: Action.SetRightPanelPhase,
+        phase: RightPanelPhases.EncryptionPanel,
         refireParams: {member: user, verificationRequestPromise},
     });
 }
@@ -133,8 +133,8 @@ export async function verifyUser(user) {
     }
     const existingRequest = pendingVerificationRequestForUser(user);
     dis.dispatch({
-        action: "set_right_panel_phase",
-        phase: RIGHT_PANEL_PHASES.EncryptionPanel,
+        action: Action.SetRightPanelPhase,
+        phase: RightPanelPhases.EncryptionPanel,
         refireParams: {
             member: user,
             verificationRequest: existingRequest,

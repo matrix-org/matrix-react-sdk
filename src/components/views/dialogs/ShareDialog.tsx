@@ -29,6 +29,9 @@ import {RoomPermalinkCreator, makeGroupPermalink, makeUserPermalink} from "../..
 import * as ContextMenu from "../../structures/ContextMenu";
 import {toRightOf} from "../../structures/ContextMenu";
 import {copyPlaintext, selectText} from "../../../utils/strings";
+import StyledCheckbox from '../elements/StyledCheckbox';
+import AccessibleTooltipButton from '../elements/AccessibleTooltipButton';
+import { IDialogProps } from "./IDialogProps";
 
 const socials = [
     {
@@ -58,8 +61,7 @@ const socials = [
     },
 ];
 
-interface IProps {
-    onFinished: () => void;
+interface IProps extends IDialogProps {
     target: Room | User | Group | RoomMember | MatrixEvent;
     permalinkCreator: RoomPermalinkCreator;
 }
@@ -168,13 +170,12 @@ export default class ShareDialog extends React.PureComponent<IProps, IState> {
             const events = this.props.target.getLiveTimeline().getEvents();
             if (events.length > 0) {
                 checkbox = <div>
-                    <input type="checkbox"
-                           id="mx_ShareDialog_checkbox"
-                           checked={this.state.linkSpecificEvent}
-                           onChange={this.onLinkSpecificEventCheckboxClick} />
-                    <label htmlFor="mx_ShareDialog_checkbox">
+                    <StyledCheckbox
+                        checked={this.state.linkSpecificEvent}
+                        onChange={this.onLinkSpecificEventCheckboxClick}
+                    >
                         { _t('Link to most recent message') }
-                    </label>
+                    </StyledCheckbox>
                 </div>;
             }
         } else if (this.props.target instanceof User || this.props.target instanceof RoomMember) {
@@ -184,13 +185,12 @@ export default class ShareDialog extends React.PureComponent<IProps, IState> {
         } else if (this.props.target instanceof MatrixEvent) {
             title = _t('Share Room Message');
             checkbox = <div>
-                <input type="checkbox"
-                       id="mx_ShareDialog_checkbox"
-                       checked={this.state.linkSpecificEvent}
-                       onClick={this.onLinkSpecificEventCheckboxClick} />
-                <label htmlFor="mx_ShareDialog_checkbox">
+                <StyledCheckbox
+                    checked={this.state.linkSpecificEvent}
+                    onClick={this.onLinkSpecificEventCheckboxClick}
+                >
                     { _t('Link to selected message') }
-                </label>
+                </StyledCheckbox>
             </div>;
         }
 
@@ -198,23 +198,26 @@ export default class ShareDialog extends React.PureComponent<IProps, IState> {
         const encodedUrl = encodeURIComponent(matrixToUrl);
 
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-        return <BaseDialog title={title}
-                           className='mx_ShareDialog'
-                           contentId='mx_Dialog_content'
-                           onFinished={this.props.onFinished}
+        return <BaseDialog
+            title={title}
+            className='mx_ShareDialog'
+            contentId='mx_Dialog_content'
+            onFinished={this.props.onFinished}
         >
             <div className="mx_ShareDialog_content">
                 <div className="mx_ShareDialog_matrixto">
-                    <a href={matrixToUrl}
-                       onClick={ShareDialog.onLinkClick}
-                       className="mx_ShareDialog_matrixto_link"
+                    <a
+                        href={matrixToUrl}
+                        onClick={ShareDialog.onLinkClick}
+                        className="mx_ShareDialog_matrixto_link"
                     >
                         { matrixToUrl }
                     </a>
-                    <a href={matrixToUrl} className="mx_ShareDialog_matrixto_copy" onClick={this.onCopyClick}>
-                        { _t('COPY') }
-                        <div>&nbsp;</div>
-                    </a>
+                    <AccessibleTooltipButton
+                        title={_t("Copy")}
+                        onClick={this.onCopyClick}
+                        className="mx_ShareDialog_matrixto_copy"
+                    />
                 </div>
                 { checkbox }
                 <hr />

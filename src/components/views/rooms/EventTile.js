@@ -20,7 +20,6 @@ limitations under the License.
 import ReplyThread from "../elements/ReplyThread";
 import React, {createRef} from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import classNames from "classnames";
 import { _t, _td } from '../../../languageHandler';
 import * as TextForEvent from "../../../TextForEvent";
@@ -60,7 +59,7 @@ const stateEventTileTypes = {
     'm.room.power_levels': 'messages.TextualEvent',
     'm.room.pinned_events': 'messages.TextualEvent',
     'm.room.server_acl': 'messages.TextualEvent',
-    // TODO: Enable support for m.widget event type (https://github.com/vector-im/riot-web/issues/13111)
+    // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
     'im.vector.modular.widgets': 'messages.TextualEvent',
     'm.room.tombstone': 'messages.TextualEvent',
     'm.room.join_rules': 'messages.TextualEvent',
@@ -104,7 +103,7 @@ export function getHandlerTile(ev) {
     // fall back to showing hidden events, if we're viewing hidden events
     // XXX: This is extremely a hack. Possibly these components should have an interface for
     // declining to render?
-    if (type === "m.key.verification.cancel" && SettingsStore.getValue("showHiddenEventsInTimeline")) {
+    if (type === "m.key.verification.cancel" || type === "m.key.verification.done") {
         const MKeyVerificationConclusion = sdk.getComponent("messages.MKeyVerificationConclusion");
         if (!MKeyVerificationConclusion.prototype._shouldRender.call(null, ev, ev.request)) {
             return;
@@ -127,10 +126,8 @@ const MAX_READ_AVATARS = 5;
 // |    '--------------------------------------'              |
 // '----------------------------------------------------------'
 
-export default createReactClass({
-    displayName: 'EventTile',
-
-    propTypes: {
+export default class EventTile extends React.Component {
+    static propTypes = {
         /* the MatrixEvent to show */
         mxEvent: PropTypes.object.isRequired,
 
@@ -209,17 +206,19 @@ export default createReactClass({
 
         // whether to use the irc layout
         useIRCLayout: PropTypes.bool,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            // no-op function because onHeightChanged is optional yet some sub-components assume its existence
-            onHeightChanged: function() {},
-        };
-    },
+    static defaultProps = {
+        // no-op function because onHeightChanged is optional yet some sub-components assume its existence
+        onHeightChanged: function() {},
+    };
 
-    getInitialState: function() {
-        return {
+    static contextType = MatrixClientContext;
+
+    constructor(props, context) {
+        super(props, context);
+
+        this.state = {
             // Whether the action bar is focused.
             actionBarFocused: false,
             // Whether all read receipts are being displayed. If not, only display
@@ -232,23 +231,21 @@ export default createReactClass({
             // The Relations model from the JS SDK for reactions to `mxEvent`
             reactions: this.getReactions(),
         };
-    },
 
-    statics: {
-        contextType: MatrixClientContext,
-    },
-
-    // TODO: [REACT-WARNING] Replace component with real class, use constructor for refs
-    UNSAFE_componentWillMount: function() {
         // don't do RR animations until we are mounted
         this._suppressReadReceiptAnimation = true;
-        this._verifyEvent(this.props.mxEvent);
 
         this._tile = createRef();
         this._replyThread = createRef();
-    },
+    }
 
-    componentDidMount: function() {
+    // TODO: [REACT-WARNING] Move into constructor
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillMount() {
+        this._verifyEvent(this.props.mxEvent);
+    }
+
+    componentDidMount() {
         this._suppressReadReceiptAnimation = false;
         const client = this.context;
         client.on("deviceVerificationChanged", this.onDeviceVerificationChanged);
@@ -257,26 +254,27 @@ export default createReactClass({
         if (this.props.showReactions) {
             this.props.mxEvent.on("Event.relationsCreated", this._onReactionsCreated);
         }
-    },
+    }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    UNSAFE_componentWillReceiveProps: function(nextProps) {
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillReceiveProps(nextProps) {
         // re-check the sender verification as outgoing events progress through
         // the send process.
         if (nextProps.eventSendStatus !== this.props.eventSendStatus) {
             this._verifyEvent(nextProps.mxEvent);
         }
-    },
+    }
 
-    shouldComponentUpdate: function(nextProps, nextState) {
+    shouldComponentUpdate(nextProps, nextState) {
         if (!ObjectUtils.shallowEqual(this.state, nextState)) {
             return true;
         }
 
         return !this._propsEqual(this.props, nextProps);
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         const client = this.context;
         client.removeListener("deviceVerificationChanged", this.onDeviceVerificationChanged);
         client.removeListener("userTrustStatusChanged", this.onUserVerificationChanged);
@@ -284,77 +282,85 @@ export default createReactClass({
         if (this.props.showReactions) {
             this.props.mxEvent.removeListener("Event.relationsCreated", this._onReactionsCreated);
         }
-    },
+    }
 
     /** called when the event is decrypted after we show it.
      */
-    _onDecrypted: function() {
+    _onDecrypted = () => {
         // we need to re-verify the sending device.
         // (we call onHeightChanged in _verifyEvent to handle the case where decryption
         // has caused a change in size of the event tile)
         this._verifyEvent(this.props.mxEvent);
         this.forceUpdate();
-    },
+    };
 
-    onDeviceVerificationChanged: function(userId, device) {
+    onDeviceVerificationChanged = (userId, device) => {
         if (userId === this.props.mxEvent.getSender()) {
             this._verifyEvent(this.props.mxEvent);
         }
-    },
+    };
 
-    onUserVerificationChanged: function(userId, _trustStatus) {
+    onUserVerificationChanged = (userId, _trustStatus) => {
         if (userId === this.props.mxEvent.getSender()) {
             this._verifyEvent(this.props.mxEvent);
         }
-    },
+    };
 
-    _verifyEvent: async function(mxEvent) {
+    async _verifyEvent(mxEvent) {
         if (!mxEvent.isEncrypted()) {
             return;
         }
 
-        // If we directly trust the device, short-circuit here
-        const verified = await this.context.isEventSenderVerified(mxEvent);
-        if (verified) {
-            this.setState({
-                verified: E2E_STATE.VERIFIED,
-            }, () => {
-                // Decryption may have caused a change in size
-                this.props.onHeightChanged();
-            });
-            return;
-        }
+        const encryptionInfo = this.context.getEventEncryptionInfo(mxEvent);
+        const senderId = mxEvent.getSender();
+        const userTrust = this.context.checkUserTrust(senderId);
 
-        // If cross-signing is off, the old behaviour is to scream at the user
-        // as if they've done something wrong, which they haven't
-        if (!SettingsStore.getValue("feature_cross_signing")) {
+        if (encryptionInfo.mismatchedSender) {
+            // something definitely wrong is going on here
             this.setState({
                 verified: E2E_STATE.WARNING,
-            }, this.props.onHeightChanged);
+            }, this.props.onHeightChanged); // Decryption may have caused a change in size
             return;
         }
 
-        if (!this.context.checkUserTrust(mxEvent.getSender()).isCrossSigningVerified()) {
+        if (!userTrust.isCrossSigningVerified()) {
+            // user is not verified, so default to everything is normal
             this.setState({
                 verified: E2E_STATE.NORMAL,
-            }, this.props.onHeightChanged);
+            }, this.props.onHeightChanged); // Decryption may have caused a change in size
             return;
         }
 
-        const eventSenderTrust = await this.context.checkEventSenderTrust(mxEvent);
+        const eventSenderTrust = encryptionInfo.sender && this.context.checkDeviceTrust(
+            senderId, encryptionInfo.sender.deviceId,
+        );
         if (!eventSenderTrust) {
             this.setState({
                 verified: E2E_STATE.UNKNOWN,
-            }, this.props.onHeightChanged); // Decryption may have cause a change in size
+            }, this.props.onHeightChanged); // Decryption may have caused a change in size
+            return;
+        }
+
+        if (!eventSenderTrust.isVerified()) {
+            this.setState({
+                verified: E2E_STATE.WARNING,
+            }, this.props.onHeightChanged); // Decryption may have caused a change in size
+            return;
+        }
+
+        if (!encryptionInfo.authenticated) {
+            this.setState({
+                verified: E2E_STATE.UNAUTHENTICATED,
+            }, this.props.onHeightChanged); // Decryption may have caused a change in size
             return;
         }
 
         this.setState({
-            verified: eventSenderTrust.isVerified() ? E2E_STATE.VERIFIED : E2E_STATE.WARNING,
+            verified: E2E_STATE.VERIFIED,
         }, this.props.onHeightChanged); // Decryption may have caused a change in size
-    },
+    }
 
-    _propsEqual: function(objA, objB) {
+    _propsEqual(objA, objB) {
         const keysA = Object.keys(objA);
         const keysB = Object.keys(objB);
 
@@ -400,10 +406,10 @@ export default createReactClass({
             }
         }
         return true;
-    },
+    }
 
-    shouldHighlight: function() {
-        const actions = this.context.getPushActionsForEvent(this.props.mxEvent);
+    shouldHighlight() {
+        const actions = this.context.getPushActionsForEvent(this.props.mxEvent.replacingEvent() || this.props.mxEvent);
         if (!actions || !actions.tweaks) { return false; }
 
         // don't show self-highlights from another of our clients
@@ -412,15 +418,15 @@ export default createReactClass({
         }
 
         return actions.tweaks.highlight;
-    },
+    }
 
-    toggleAllReadAvatars: function() {
+    toggleAllReadAvatars = () => {
         this.setState({
             allReadAvatars: !this.state.allReadAvatars,
         });
-    },
+    };
 
-    getReadAvatars: function() {
+    getReadAvatars() {
         // return early if there are no read receipts
         if (!this.props.readReceipts || this.props.readReceipts.length === 0) {
             return (<span className="mx_EventTile_readAvatars" />);
@@ -486,17 +492,17 @@ export default createReactClass({
             { remText }
             { avatars }
         </span>;
-    },
+    }
 
-    onSenderProfileClick: function(event) {
+    onSenderProfileClick = event => {
         const mxEvent = this.props.mxEvent;
         dis.dispatch({
             action: 'insert_mention',
             user_id: mxEvent.getSender(),
         });
-    },
+    };
 
-    onRequestKeysClick: function() {
+    onRequestKeysClick = () => {
         this.setState({
             // Indicate in the UI that the keys have been requested (this is expected to
             // be reset if the component is mounted in the future).
@@ -507,11 +513,11 @@ export default createReactClass({
         // is received for the request with the required keys, the event could be
         // decrypted successfully.
         this.context.cancelAndResendEventRoomKeyRequest(this.props.mxEvent);
-    },
+    };
 
-    onPermalinkClicked: function(e) {
+    onPermalinkClicked = e => {
         // This allows the permalink to be opened in a new tab/window or copied as
-        // matrix.to, but also for it to enable routing within Riot when clicked.
+        // matrix.to, but also for it to enable routing within Element when clicked.
         e.preventDefault();
         dis.dispatch({
             action: 'view_room',
@@ -519,9 +525,9 @@ export default createReactClass({
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
         });
-    },
+    };
 
-    _renderE2EPadlock: function() {
+    _renderE2EPadlock() {
         const ev = this.props.mxEvent;
 
         // event could not be decrypted
@@ -535,6 +541,8 @@ export default createReactClass({
                 return; // no icon if we've not even cross-signed the user
             } else if (this.state.verified === E2E_STATE.VERIFIED) {
                 return; // no icon for verified
+            } else if (this.state.verified === E2E_STATE.UNAUTHENTICATED) {
+                return (<E2ePadlockUnauthenticated />);
             } else if (this.state.verified === E2E_STATE.UNKNOWN) {
                 return (<E2ePadlockUnknown />);
             } else {
@@ -560,23 +568,19 @@ export default createReactClass({
 
         // no padlock needed
         return null;
-    },
+    }
 
-    onActionBarFocusChange(focused) {
+    onActionBarFocusChange = focused => {
         this.setState({
             actionBarFocused: focused,
         });
-    },
+    };
 
-    getTile() {
-        return this._tile.current;
-    },
+    getTile = () => this._tile.current;
 
-    getReplyThread() {
-        return this._replyThread.current;
-    },
+    getReplyThread = () => this._replyThread.current;
 
-    getReactions() {
+    getReactions = () => {
         if (
             !this.props.showReactions ||
             !this.props.getRelationsForEvent
@@ -585,16 +589,16 @@ export default createReactClass({
         }
         const eventId = this.props.mxEvent.getId();
         if (!eventId) {
-            // XXX: Temporary diagnostic logging for https://github.com/vector-im/riot-web/issues/11120
+            // XXX: Temporary diagnostic logging for https://github.com/vector-im/element-web/issues/11120
             console.error("EventTile attempted to get relations for an event without an ID");
             // Use event's special `toJSON` method to log key data.
             console.log(JSON.stringify(this.props.mxEvent, null, 4));
-            console.trace("Stacktrace for https://github.com/vector-im/riot-web/issues/11120");
+            console.trace("Stacktrace for https://github.com/vector-im/element-web/issues/11120");
         }
         return this.props.getRelationsForEvent(eventId, "m.annotation", "m.reaction");
-    },
+    };
 
-    _onReactionsCreated(relationType, eventType) {
+    _onReactionsCreated = (relationType, eventType) => {
         if (relationType !== "m.annotation" || eventType !== "m.reaction") {
             return;
         }
@@ -602,9 +606,9 @@ export default createReactClass({
         this.setState({
             reactions: this.getReactions(),
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const MessageTimestamp = sdk.getComponent('messages.MessageTimestamp');
         const SenderProfile = sdk.getComponent('messages.SenderProfile');
         const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
@@ -674,6 +678,9 @@ export default createReactClass({
             mx_EventTile_bad: isEncryptionFailure,
             mx_EventTile_emote: msgtype === 'm.emote',
         });
+
+        // If the tile is in the Sending state, don't speak the message.
+        const ariaLive = (this.props.eventSendStatus !== null) ? 'off' : undefined;
 
         let permalink = "#";
         if (this.props.permalinkCreator) {
@@ -802,12 +809,14 @@ export default createReactClass({
 
         const groupTimestamp = !this.props.useIRCLayout ? linkedTimestamp : null;
         const ircTimestamp = this.props.useIRCLayout ? linkedTimestamp : null;
+        const groupPadlock = !this.props.useIRCLayout && !isBubbleMessage && this._renderE2EPadlock();
+        const ircPadlock = this.props.useIRCLayout && !isBubbleMessage && this._renderE2EPadlock();
 
         switch (this.props.tileShape) {
             case 'notif': {
                 const room = this.context.getRoom(this.props.mxEvent.getRoomId());
                 return (
-                    <div className={classes}>
+                    <div className={classes} aria-live={ariaLive} aria-atomic="true">
                         <div className="mx_EventTile_roomName">
                             <a href={permalink} onClick={this.onPermalinkClicked}>
                                 { room ? room.name : '' }
@@ -833,7 +842,7 @@ export default createReactClass({
             }
             case 'file_grid': {
                 return (
-                    <div className={classes}>
+                    <div className={classes} aria-live={ariaLive} aria-atomic="true">
                         <div className="mx_EventTile_line">
                             <EventTileType ref={this._tile}
                                            mxEvent={this.props.mxEvent}
@@ -869,13 +878,14 @@ export default createReactClass({
                     );
                 }
                 return (
-                    <div className={classes}>
+                    <div className={classes} aria-live={ariaLive} aria-atomic="true">
                         { ircTimestamp }
                         { avatar }
                         { sender }
+                        { ircPadlock }
                         <div className="mx_EventTile_reply">
                             { groupTimestamp }
-                            { !isBubbleMessage && this._renderE2EPadlock() }
+                            { groupPadlock }
                             { thread }
                             <EventTileType ref={this._tile}
                                            mxEvent={this.props.mxEvent}
@@ -898,15 +908,16 @@ export default createReactClass({
 
                 // tab-index=-1 to allow it to be focusable but do not add tab stop for it, primarily for screen readers
                 return (
-                    <div className={classes} tabIndex={-1}>
+                    <div className={classes} tabIndex={-1} aria-live={ariaLive} aria-atomic="true">
                         { ircTimestamp }
                         <div className="mx_EventTile_msgOption">
                             { readAvatars }
                         </div>
                         { sender }
+                        { ircPadlock }
                         <div className="mx_EventTile_line">
                             { groupTimestamp }
-                            { !isBubbleMessage && this._renderE2EPadlock() }
+                            { groupPadlock }
                             { thread }
                             <EventTileType ref={this._tile}
                                            mxEvent={this.props.mxEvent}
@@ -930,8 +941,8 @@ export default createReactClass({
                 );
             }
         }
-    },
-});
+    }
+}
 
 // XXX this'll eventually be dynamic based on the fields once we have extensible event types
 const messageTypes = ['m.room.message', 'm.sticker'];
@@ -978,6 +989,12 @@ function E2ePadlockUnencrypted(props) {
 function E2ePadlockUnknown(props) {
     return (
         <E2ePadlock title={_t("Encrypted by a deleted session")} icon="unknown" {...props} />
+    );
+}
+
+function E2ePadlockUnauthenticated(props) {
+    return (
+        <E2ePadlock title={_t("The authenticity of this encrypted message can't be guaranteed on this device.")} icon="unauthenticated" {...props} />
     );
 }
 

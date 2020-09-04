@@ -23,8 +23,7 @@ import AutocompleteProvider from './AutocompleteProvider';
 import QueryMatcher from './QueryMatcher';
 import {PillCompletion} from './Components';
 import {ICompletion, ISelectionRange} from './Autocompleter';
-import _uniq from 'lodash/uniq';
-import _sortBy from 'lodash/sortBy';
+import {uniq, sortBy} from 'lodash';
 import SettingsStore from "../settings/SettingsStore";
 import { shortcodeToUnicode } from '../HtmlUtils';
 import { EMOJI, IEmoji } from '../emoji';
@@ -34,7 +33,8 @@ import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 const LIMIT = 20;
 
 // Match for ascii-style ";-)" emoticons or ":wink:" shortcodes provided by emojibase
-const EMOJI_REGEX = new RegExp('(' + EMOTICON_REGEX.source + '|:[+-\\w]*:?)$', 'g');
+// anchored to only match from the start of parts otherwise it'll show emoji suggestions whilst typing matrix IDs
+const EMOJI_REGEX = new RegExp('(' + EMOTICON_REGEX.source + '|(?:^|\\s):[+-\\w]*:?)$', 'g');
 
 interface IEmojiShort {
     emoji: IEmoji;
@@ -69,7 +69,7 @@ export default class EmojiProvider extends AutocompleteProvider {
 
     constructor() {
         super(EMOJI_REGEX);
-        this.matcher = new QueryMatcher(EMOJI_SHORTNAMES, {
+        this.matcher = new QueryMatcher<IEmojiShort>(EMOJI_SHORTNAMES, {
             keys: ['emoji.emoticon', 'shortname'],
             funcs: [
                 (o) => o.emoji.shortcodes.length > 1 ? o.emoji.shortcodes.slice(1).map(s => `:${s}:`).join(" ") : "", // aliases
@@ -114,16 +114,16 @@ export default class EmojiProvider extends AutocompleteProvider {
             }
             // Finally, sort by original ordering
             sorters.push((c) => c._orderBy);
-            completions = _sortBy(_uniq(completions), sorters);
+            completions = sortBy(uniq(completions), sorters);
 
             completions = completions.map(({shortname}) => {
                 const unicode = shortcodeToUnicode(shortname);
                 return {
                     completion: unicode,
                     component: (
-                        <PillCompletion title={shortname} aria-label={unicode} initialComponent={
-                            <span style={{maxWidth: '1em'}}>{ unicode }</span>
-                        } />
+                        <PillCompletion title={shortname} aria-label={unicode}>
+                            <span>{ unicode }</span>
+                        </PillCompletion>
                     ),
                     range,
                 };
@@ -138,7 +138,11 @@ export default class EmojiProvider extends AutocompleteProvider {
 
     renderCompletions(completions: React.ReactNode[]): React.ReactNode {
         return (
-            <div className="mx_Autocomplete_Completion_container_pill" role="listbox" aria-label={_t("Emoji Autocomplete")}>
+            <div
+                className="mx_Autocomplete_Completion_container_pill"
+                role="listbox"
+                aria-label={_t("Emoji Autocomplete")}
+            >
                 { completions }
             </div>
         );

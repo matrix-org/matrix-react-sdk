@@ -30,30 +30,11 @@ limitations under the License.
     cursor: pointer;
 }
 
-.mx_TagPanel .mx_TagPanel_clearButton_container {
-    /* Constant height within flex mx_TagPanel */
-    height: 70px;
-    width: 60px;
-
-    flex: none;
-
-    justify-content: center;
-    align-items: flex-start;
-
-    display: none;
-}
-
-.mx_TagPanel .mx_TagPanel_clearButton object {
-    /* Same as .mx_SearchBox padding-top */
-    margin-top: 24px;
-    pointer-events: none;
-}
-
 .mx_TagPanel .mx_TagPanel_divider {
     height: 0px;
-    width: 42px;
-    border-bottom: 1px solid $panel-divider-color;
-    display: none;
+    width: 90%;
+    border: none;
+    border-bottom: 1px solid $tagpanel-divider-color;
 }
 
 .mx_TagPanel .mx_TagPanel_scroller {
@@ -66,28 +47,71 @@ limitations under the License.
     flex-direction: column;
     align-items: center;
 
-    height: 100%;
+    padding-top: 6px;
 }
 .mx_TagPanel .mx_TagPanel_tagTileContainer > div {
-    height: 40px;
-    padding: 10px 0 9px 0;
+    margin: 6px 0;
 }
 
 .mx_TagPanel .mx_TagTile {
-    margin: 9px 0;
     // opacity: 0.5;
     position: relative;
 }
+
+.mx_TagPanel .mx_TagTile.mx_TagTile_prototype {
+    padding: 3px;
+}
+
 .mx_TagPanel .mx_TagTile:focus,
 .mx_TagPanel .mx_TagTile:hover,
 .mx_TagPanel .mx_TagTile.mx_TagTile_selected {
     // opacity: 1;
 }
 
+.mx_TagPanel .mx_TagTile.mx_TagTile_selected_prototype {
+    background-color: $primary-bg-color;
+    border-radius: 6px;
+}
+
+.mx_TagTile_selected_prototype {
+    .mx_TagTile_homeIcon::before {
+        background-color: $primary-fg-color; // dark-on-light
+    }
+}
+
+.mx_TagTile:not(.mx_TagTile_selected_prototype) .mx_TagTile_homeIcon {
+    background-color: $roomheader-addroom-bg-color;
+    border-radius: 48px;
+
+    &::before {
+        background-color: $roomheader-addroom-fg-color;
+    }
+}
+
+.mx_TagTile_homeIcon {
+    width: 32px;
+    height: 32px;
+    position: relative;
+
+    &::before {
+        mask-image: url('$(res)/img/element-icons/home.svg');
+        mask-position: center;
+        mask-repeat: no-repeat;
+        mask-size: 21px;
+        content: '';
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        top: calc(50% - 16px);
+        left: calc(50% - 16px);
+    }
+}
+
 .mx_TagPanel .mx_TagTile_plus {
     margin-bottom: 12px;
-    height: 40px;
-    width: 40px;
+    height: 32px;
+    width: 32px;
     border-radius: 20px;
     background-color: $roomheader-addroom-bg-color;
     position: relative;
@@ -110,13 +134,12 @@ limitations under the License.
 
 .mx_TagPanel .mx_TagTile.mx_TagTile_selected::before {
     content: '';
-    height: calc(100% + 16px);
+    height: 100%;
     background-color: $accent-color;
-    width: 5px;
+    width: 4px;
     position: absolute;
-    left: -15px;
+    left: -12px;
     border-radius: 0 3px 3px 0;
-    top: -8px; // (16px from height / 2)
 }
 
 .mx_TagPanel .mx_TagTile.mx_AccessibleButton:focus {
@@ -159,7 +182,7 @@ limitations under the License.
     font-weight: 600;
     font-size: $font-14px;
     padding: 0 5px;
-    background-color: $roomtile-name-color;
+    background-color: $muted-fg-color;
 }
 
 .mx_TagTile_badgeHighlight {

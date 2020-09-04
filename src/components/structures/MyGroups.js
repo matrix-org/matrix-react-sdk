@@ -1,6 +1,7 @@
 /*
 Copyright 2017 Vector Creations Ltd
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,37 +17,31 @@ limitations under the License.
 */
 
 import React from 'react';
-import createReactClass from 'create-react-class';
 import * as sdk from '../../index';
 import { _t } from '../../languageHandler';
+import SdkConfig from '../../SdkConfig';
 import dis from '../../dispatcher/dispatcher';
 import AccessibleButton from '../views/elements/AccessibleButton';
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import AutoHideScrollbar from "./AutoHideScrollbar";
 
-export default createReactClass({
-    displayName: 'MyGroups',
+export default class MyGroups extends React.Component {
+    static contextType = MatrixClientContext;
 
-    getInitialState: function() {
-        return {
-            groups: null,
-            error: null,
-        };
-    },
+    state = {
+        groups: null,
+        error: null,
+    };
 
-    statics: {
-        contextType: MatrixClientContext,
-    },
-
-    componentDidMount: function() {
+    componentDidMount() {
         this._fetch();
-    },
+    }
 
-    _onCreateGroupClick: function() {
+    _onCreateGroupClick = () => {
         dis.dispatch({action: 'view_create_group'});
-    },
+    };
 
-    _fetch: function() {
+    _fetch() {
         this.context.getJoinedGroups().then((result) => {
             this.setState({groups: result.groups, error: null});
         }, (err) => {
@@ -57,9 +52,10 @@ export default createReactClass({
             }
             this.setState({groups: null, error: err});
         });
-    },
+    }
 
-    render: function() {
+    render() {
+        const brand = SdkConfig.get().brand;
         const Loader = sdk.getComponent("elements.Spinner");
         const SimpleRoomHeader = sdk.getComponent('rooms.SimpleRoomHeader');
         const GroupTile = sdk.getComponent("groups.GroupTile");
@@ -77,7 +73,8 @@ export default createReactClass({
                     <div className="mx_MyGroups_microcopy">
                         <p>
                             { _t(
-                                "Did you know: you can use communities to filter your Riot.im experience!",
+                                "Did you know: you can use communities to filter your %(brand)s experience!",
+                                { brand },
                             ) }
                         </p>
                         <p>
@@ -145,5 +142,5 @@ export default createReactClass({
                 { content }
             </div>
         </div>;
-    },
-});
+    }
+}
