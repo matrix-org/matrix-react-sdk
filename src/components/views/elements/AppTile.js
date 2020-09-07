@@ -311,7 +311,7 @@ export default class AppTile extends React.Component {
             this.props.onEditClick();
         } else {
             // TODO: Open the right manager for the widget
-            if (SettingsStore.isFeatureEnabled("feature_many_integration_managers")) {
+            if (SettingsStore.getValue("feature_many_integration_managers")) {
                 IntegrationManagers.sharedInstance().openAll(
                     this.props.room,
                     'type_' + this.props.app.type,
@@ -735,7 +735,7 @@ export default class AppTile extends React.Component {
 
         // Additional iframe feature pemissions
         // (see - https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-permissions-in-cross-origin-iframes and https://wicg.github.io/feature-policy/)
-        const iframeFeatures = "microphone; camera; encrypted-media; autoplay;";
+        const iframeFeatures = "microphone; camera; encrypted-media; autoplay; display-capture;";
 
         const appTileBodyClass = 'mx_AppTileBody' + (this.props.miniMode ? '_mini  ' : ' ');
 

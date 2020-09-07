@@ -46,6 +46,7 @@ import { useAsyncMemo } from '../../../hooks/useAsyncMemo';
 import { verifyUser, legacyVerifyUser, verifyDevice } from '../../../verification';
 import {Action} from "../../../dispatcher/actions";
 import UserInfoSharedRooms from "./UserInfoSharedRooms";
+import {useIsEncrypted} from "../../../hooks/useIsEncrypted";
 
 const _disambiguateDevices = (devices) => {
     const names = Object.create(null);
@@ -123,18 +124,6 @@ async function openDMForUser(matrixClient, userId) {
     }
 
     createRoom(createRoomOptions);
-}
-
-function useIsEncrypted(cli, room) {
-    const [isEncrypted, setIsEncrypted] = useState(room ? cli.isRoomEncrypted(room.roomId) : undefined);
-
-    const update = useCallback((event) => {
-        if (event.getType() === "m.room.encryption") {
-            setIsEncrypted(cli.isRoomEncrypted(room.roomId));
-        }
-    }, [cli, room]);
-    useEventEmitter(room ? room.currentState : undefined, "RoomState.events", update);
-    return isEncrypted;
 }
 
 function useHasCrossSigningKeys(cli, member, canVerify, setUpdating) {
@@ -1433,7 +1422,7 @@ const UserInfoHeader = ({onClose, member, e2eStatus}) => {
         presenceLastActiveAgo = member.user.lastActiveAgo;
         presenceCurrentlyActive = member.user.currentlyActive;
 
-        if (SettingsStore.isFeatureEnabled("feature_custom_status")) {
+        if (SettingsStore.getValue("feature_custom_status")) {
             statusMessage = member.user._unstable_statusMessage;
         }
     }
@@ -1490,7 +1479,7 @@ const UserInfoHeader = ({onClose, member, e2eStatus}) => {
 const UserInfo = ({user, groupId, roomId, onClose, phase=RightPanelPhases.RoomMemberInfo, ...props}) => {
     const cli = useContext(MatrixClientContext);
 
-    // Load room if we are given a room id and memoize it
+    // Load room if we are given a room id and memoize it - this can be undefined for User Info/Group Member Info
     const room = useMemo(() => roomId ? cli.getRoom(roomId) : null, [cli, roomId]);
     // fetch latest room member if we have a room, so we don't show historical information, falling back to user
     const member = useMemo(() => room ? (room.getMember(user.userId) || user) : user, [room, user]);

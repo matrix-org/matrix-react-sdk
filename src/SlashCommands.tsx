@@ -43,7 +43,7 @@ import SdkConfig from "./SdkConfig";
 import { ensureDMExists } from "./createRoom";
 import { ViewUserPayload } from "./dispatcher/payloads/ViewUserPayload";
 import { Action } from "./dispatcher/actions";
-import { EffectiveMembership, getEffectiveMembership } from "./utils/membership";
+import { EffectiveMembership, getEffectiveMembership, leaveRoomBehaviour } from "./utils/membership";
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
 interface HTMLInputEvent extends Event {
@@ -147,6 +147,19 @@ export const Commands = [
         description: _td('Prepends ¯\\_(ツ)_/¯ to a plain-text message'),
         runFn: function(roomId, args) {
             let message = '¯\\_(ツ)_/¯';
+            if (args) {
+                message = message + ' ' + args;
+            }
+            return success(MatrixClientPeg.get().sendTextMessage(roomId, message));
+        },
+        category: CommandCategories.messages,
+    }),
+    new Command({
+        command: 'lenny',
+        args: '<message>',
+        description: _td('Prepends ( ͡° ͜ʖ ͡°) to a plain-text message'),
+        runFn: function(roomId, args) {
+            let message = '( ͡° ͜ʖ ͡°)';
             if (args) {
                 message = message + ' ' + args;
             }
@@ -601,11 +614,7 @@ export const Commands = [
             }
 
             if (!targetRoomId) targetRoomId = roomId;
-            return success(
-                cli.leaveRoomChain(targetRoomId).then(function() {
-                    dis.dispatch({action: 'view_next_room'});
-                }),
-            );
+            return success(leaveRoomBehaviour(targetRoomId));
         },
         category: CommandCategories.actions,
     }),
@@ -864,12 +873,12 @@ export const Commands = [
                                 _t('WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session' +
                                     ' %(deviceId)s is "%(fprint)s" which does not match the provided key ' +
                                     '"%(fingerprint)s". This could mean your communications are being intercepted!',
-                                    {
-                                        fprint,
-                                        userId,
-                                        deviceId,
-                                        fingerprint,
-                                    }));
+                                {
+                                    fprint,
+                                    userId,
+                                    deviceId,
+                                    fingerprint,
+                                }));
                         }
 
                         await cli.setDeviceVerified(userId, deviceId, true);
@@ -883,7 +892,7 @@ export const Commands = [
                                     {
                                         _t('The signing key you provided matches the signing key you received ' +
                                             'from %(userId)s\'s session %(deviceId)s. Session marked as verified.',
-                                            {userId, deviceId})
+                                        {userId, deviceId})
                                     }
                                 </p>
                             </div>,

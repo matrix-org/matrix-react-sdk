@@ -377,8 +377,8 @@ export default class LeftPanel extends React.Component<IProps, IState> {
     public render(): React.ReactNode {
         const tagPanel = !this.state.showTagPanel ? null : (
             <div className="mx_LeftPanel_tagPanelContainer">
-                <TagPanel/>
-                {SettingsStore.isFeatureEnabled("feature_custom_tags") ? <CustomRoomTagPanel /> : null}
+                <TagPanel />
+                {SettingsStore.getValue("feature_custom_tags") ? <CustomRoomTagPanel /> : null}
             </div>
         );
 

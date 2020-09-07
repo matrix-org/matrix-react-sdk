@@ -27,10 +27,13 @@ import {ModalManager} from "../Modal";
 import SettingsStore from "../settings/SettingsStore";
 import {ActiveRoomObserver} from "../ActiveRoomObserver";
 import {Notifier} from "../Notifier";
+import type {Renderer} from "react-dom";
+import RightPanelStore from "../stores/RightPanelStore";
 
 declare global {
     interface Window {
         Modernizr: ModernizrStatic;
+        matrixChat: ReturnType<Renderer>;
         mxMatrixClientPeg: IMatrixClientPeg;
         Olm: {
             init: () => Promise<void>;
@@ -47,6 +50,7 @@ declare global {
         singletonModalManager: ModalManager;
         mxSettingsStore: SettingsStore;
         mxNotifier: typeof Notifier;
+        mxRightPanelStore: RightPanelStore;
     }
 
     interface Document {

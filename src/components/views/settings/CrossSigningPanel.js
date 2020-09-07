@@ -19,8 +19,9 @@ import React from 'react';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 import * as sdk from '../../../index';
-import { accessSecretStorage } from '../../../CrossSigningManager';
+import { accessSecretStorage } from '../../../SecurityManager';
 import Modal from '../../../Modal';
+import Spinner from '../elements/Spinner';
 
 export default class CrossSigningPanel extends React.PureComponent {
     constructor(props) {
@@ -89,6 +90,7 @@ export default class CrossSigningPanel extends React.PureComponent {
         const homeserverSupportsCrossSigning =
             await cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing");
         const crossSigningReady = await cli.isCrossSigningReady();
+        const secretStorageReady = await cli.isSecretStorageReady();
 
         this.setState({
             crossSigningPublicKeysOnDevice,
@@ -101,6 +103,7 @@ export default class CrossSigningPanel extends React.PureComponent {
             secretStorageKeyInAccount,
             homeserverSupportsCrossSigning,
             crossSigningReady,
+            secretStorageReady,
         });
     }
 
@@ -151,6 +154,7 @@ export default class CrossSigningPanel extends React.PureComponent {
             secretStorageKeyInAccount,
             homeserverSupportsCrossSigning,
             crossSigningReady,
+            secretStorageReady,
         } = this.state;
 
         let errorSection;
@@ -160,20 +164,24 @@ export default class CrossSigningPanel extends React.PureComponent {
 
         let summarisedStatus;
         if (homeserverSupportsCrossSigning === undefined) {
-            const InlineSpinner = sdk.getComponent('views.elements.InlineSpinner');
-            summarisedStatus = <p><InlineSpinner /></p>;
+            summarisedStatus = <Spinner />;
         } else if (!homeserverSupportsCrossSigning) {
             summarisedStatus = <p>{_t(
                 "Your homeserver does not support cross-signing.",
             )}</p>;
-        } else if (crossSigningReady) {
+        } else if (crossSigningReady && secretStorageReady) {
             summarisedStatus = <p>✅ {_t(
-                "Cross-signing and secret storage are enabled.",
+                "Cross-signing and secret storage are ready for use.",
+            )}</p>;
+        } else if (crossSigningReady && !secretStorageReady) {
+            summarisedStatus = <p>✅ {_t(
+                "Cross-signing is ready for use, but secret storage is " +
+                "currently not being used to backup your keys.",
             )}</p>;
         } else if (crossSigningPrivateKeysInStorage) {
             summarisedStatus = <p>{_t(
-                "Your account has a cross-signing identity in secret storage, but it " +
-                "is not yet trusted by this session.",
+                "Your account has a cross-signing identity in secret storage, " +
+                "but it is not yet trusted by this session.",
             )}</p>;
         } else {
             summarisedStatus = <p>{_t(
