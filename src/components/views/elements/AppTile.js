@@ -42,6 +42,7 @@ import {WidgetType} from "../../../widgets/WidgetType";
 import {Capability} from "../../../widgets/WidgetApi";
 import {sleep} from "../../../utils/promise";
 import {SettingLevel} from "../../../settings/SettingLevel";
+import SdkConfig from '../../../SdkConfig';
 
 const ALLOWED_APP_URL_SCHEMES = ['https:', 'http:'];
 const ENABLE_REACT_PERF = false;
@@ -100,6 +101,12 @@ export default class AppTile extends React.Component {
     _getNewState(newProps) {
         // This is a function to make the impact of calling SettingsStore slightly less
         const hasPermissionToLoad = () => {
+            const allowlist = SdkConfig.get()['widget_domain_allowlist'];
+            if (allowlist) {
+                const parsedUrl = new URL(newProps.app.url);
+                if (allowlist.includes(parsedUrl.host)) return true;
+            }
+
             const currentlyAllowedWidgets = SettingsStore.getValue("allowedWidgets", newProps.room.roomId);
             return !!currentlyAllowedWidgets[newProps.app.eventId];
         };
