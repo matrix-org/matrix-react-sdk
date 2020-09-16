@@ -27,6 +27,7 @@ import {Action} from "./dispatcher/actions";
 import {hideToast as hideUpdateToast} from "./toasts/UpdateToast";
 import {MatrixClientPeg} from "./MatrixClientPeg";
 import {idbLoad, idbSave, idbDelete} from "./utils/StorageManager";
+import SdkConfig from "./SdkConfig";
 
 export const SSO_HOMESERVER_URL_KEY = "mx_sso_hs_url";
 export const SSO_ID_SERVER_URL_KEY = "mx_sso_is_url";
@@ -259,7 +260,13 @@ export default abstract class BasePlatform {
             localStorage.setItem(SSO_ID_SERVER_URL_KEY, mxClient.getIdentityServerUrl());
         }
         const callbackUrl = this.getSSOCallbackUrl(fragmentAfterLogin);
-        window.location.href = mxClient.getSsoLoginUrl(callbackUrl.toString(), loginType, idpId); // redirect to SSO
+        const url = new URL(mxClient.getSsoLoginUrl(callbackUrl.toString(), loginType, idpId));
+        const kdpHint = SdkConfig.get()['kdp_hint']; // or window.location.hostname
+        const params = new URLSearchParams(url.search);
+        params.set("kdp_hint", kdpHint);
+        url.search = params.toString();
+
+        window.location.href = url.href; // Redirect to SSO including the kdp_hint
     }
 
     onKeyDown(ev: KeyboardEvent): boolean {
