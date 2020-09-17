@@ -26,6 +26,7 @@ import Modal from '../Modal';
 import { _t } from '../languageHandler';
 import { getCachedRoomIDForAlias, storeRoomAliasInCache } from '../RoomAliasCache';
 import {ActionPayload} from "../dispatcher/payloads";
+import SettingsStore from "../settings/SettingsStore";
 
 const INITIAL_STATE = {
     // Whether we're joining the currently viewed room (see isJoining())
@@ -194,8 +195,10 @@ class RoomViewStore extends Store<ActionPayload> {
             }
 
             if (this.state.forwardingEvent) {
+                const action = SettingsStore.isFeatureEnabled("feature_verifiable_forwarded_events")
+                    ? 'send_forward' : 'send_event'
                 dis.dispatch({
-                    action: 'send_event',
+                    action: action,
                     room_id: newState.roomId,
                     event: this.state.forwardingEvent,
                 });
