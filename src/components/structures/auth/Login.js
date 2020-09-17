@@ -605,34 +605,10 @@ export default class LoginComponent extends React.Component {
     };
 
     _renderSsoStep = loginType => {
-        const SignInToText = sdk.getComponent('views.auth.SignInToText');
-
-        let onEditServerDetailsClick = null;
-        // If custom URLs are allowed, wire up the server details edit link.
-        if (PHASES_ENABLED && !SdkConfig.get()['disable_custom_urls']) {
-            onEditServerDetailsClick = this.onEditServerDetailsClick;
-        }
-        // XXX: This link does *not* have a target="_blank" because single sign-on relies on
-        // redirecting the user back to a URI once they're logged in. On the web, this means
-        // we use the same window and redirect back to Element. On Electron, this actually
-        // opens the SSO page in the Electron app itself due to
-        // https://github.com/electron/electron/issues/8841 and so happens to work.
-        // If this bug gets fixed, it will break SSO since it will open the SSO page in the
-        // user's browser, let them log into their SSO provider, then redirect their browser
-        // to vector://vector which, of course, will not work.
-        return (
-            <div>
-                <SignInToText serverConfig={this.props.serverConfig}
-                    onEditServerDetailsClick={onEditServerDetailsClick} />
-
-                <SSOButton
-                    className="mx_Login_sso_link mx_Login_submit"
-                    matrixClient={this._loginLogic.createTemporaryClient()}
-                    loginType={loginType}
-                    fragmentAfterLogin={this.props.fragmentAfterLogin}
-                />
-            </div>
-        );
+        /* Hacked to jump straight to SSO */
+        const matrixClient = this._loginLogic.createTemporaryClient();
+        const fragmentAfterLogin = this.props.fragmentAfterLogin;
+        PlatformPeg.get().startSingleSignOn(matrixClient, loginType, fragmentAfterLogin);
     };
 
     render() {
