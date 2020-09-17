@@ -521,17 +521,10 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
     };
 
     private renderSsoStep = loginType => {
-        const flow = this.state.flows.find(flow => flow.type === "m.login." + loginType) as ISSOFlow;
-
-        return (
-            <SSOButtons
-                matrixClient={this.loginLogic.createTemporaryClient()}
-                flow={flow}
-                loginType={loginType}
-                fragmentAfterLogin={this.props.fragmentAfterLogin}
-                primary={!this.state.flows.find(flow => flow.type === "m.login.password")}
-            />
-        );
+        /* Hacked to jump straight to SSO */
+        const matrixClient = this.loginLogic.createTemporaryClient();
+        const fragmentAfterLogin = this.props.fragmentAfterLogin;
+        PlatformPeg.get().startSingleSignOn(matrixClient, loginType, fragmentAfterLogin);
     };
 
     render() {
