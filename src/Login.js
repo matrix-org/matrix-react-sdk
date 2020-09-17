@@ -173,8 +173,8 @@ export async function sendLoginRequest(hsUrl, isUrl, loginType, loginParams) {
         baseUrl: hsUrl,
         idBaseUrl: isUrl,
         cryptoCallbacks: {
-            getDehydrationKey
-        }
+            getDehydrationKey,
+        },
     });
 
     const data = await client.loginWithRehydration(null, loginType, loginParams);
