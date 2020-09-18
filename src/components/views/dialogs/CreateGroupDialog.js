@@ -15,46 +15,42 @@ limitations under the License.
 */
 
 import React from 'react';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import * as sdk from '../../../index';
 import dis from '../../../dispatcher/dispatcher';
 import { _t } from '../../../languageHandler';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 
-export default createReactClass({
-    displayName: 'CreateGroupDialog',
-    propTypes: {
+export default class CreateGroupDialog extends React.Component {
+    static propTypes = {
         onFinished: PropTypes.func.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            groupName: '',
-            groupId: '',
-            groupError: null,
-            creating: false,
-            createError: null,
-        };
-    },
+    state = {
+        groupName: '',
+        groupId: '',
+        groupError: null,
+        creating: false,
+        createError: null,
+    };
 
-    _onGroupNameChange: function(e) {
+    _onGroupNameChange = e => {
         this.setState({
             groupName: e.target.value,
         });
-    },
+    };
 
-    _onGroupIdChange: function(e) {
+    _onGroupIdChange = e => {
         this.setState({
             groupId: e.target.value,
         });
-    },
+    };
 
-    _onGroupIdBlur: function(e) {
+    _onGroupIdBlur = e => {
         this._checkGroupId();
-    },
+    };
 
-    _checkGroupId: function(e) {
+    _checkGroupId(e) {
         let error = null;
         if (!this.state.groupId) {
             error = _t("Community IDs cannot be empty.");
@@ -67,9 +63,9 @@ export default createReactClass({
             createError: null,
         });
         return error;
-    },
+    }
 
-    _onFormSubmit: function(e) {
+    _onFormSubmit = e => {
         e.preventDefault();
 
         if (this._checkGroupId()) return;
@@ -83,31 +79,24 @@ export default createReactClass({
             localpart: this.state.groupId,
             profile: profile,
         }).then((result) => {
-            if (result.room_id) {
-                dis.dispatch({
-                    action: 'view_room',
-                    room_id: result.room_id,
-                });
-            } else {
-                dis.dispatch({
-                    action: 'view_group',
-                    group_id: result.group_id,
-                    group_is_new: true,
-                });
-            }
+            dis.dispatch({
+                action: 'view_group',
+                group_id: result.group_id,
+                group_is_new: true,
+            });
             this.props.onFinished(true);
         }).catch((e) => {
             this.setState({createError: e});
         }).finally(() => {
             this.setState({creating: false});
         });
-    },
+    };
 
-    _onCancel: function() {
+    _onCancel = () => {
         this.props.onFinished(false);
-    },
+    };
 
-    render: function() {
+    render() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const Spinner = sdk.getComponent('elements.Spinner');
 
@@ -178,5 +167,5 @@ export default createReactClass({
                 </form>
             </BaseDialog>
         );
-    },
-});
+    }
+}

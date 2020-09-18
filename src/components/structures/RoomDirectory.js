@@ -17,7 +17,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import createReactClass from 'create-react-class';
 import {MatrixClientPeg} from "../../MatrixClientPeg";
 import * as sdk from "../../index";
 import dis from "../../dispatcher/dispatcher";
@@ -42,16 +41,16 @@ function track(action) {
     Analytics.trackEvent('RoomDirectory', action);
 }
 
-export default createReactClass({
-    displayName: 'RoomDirectory',
-
-    propTypes: {
+export default class RoomDirectory extends React.Component {
+    static propTypes = {
         onFinished: PropTypes.func.isRequired,
-    },
+    };
 
-    getInitialState: function() {
+    constructor(props) {
+        super(props);
+
         const selectedCommunityId = TagOrderStore.getSelectedTags()[0];
-        return {
+        this.state = {
             publicRooms: [],
             loading: true,
             protocolsLoading: true,
@@ -64,20 +63,17 @@ export default createReactClass({
                 : null,
             communityName: null,
         };
-    },
 
-    // TODO: [REACT-WARNING] Move this to constructor
-    UNSAFE_componentWillMount: function() {
         this._unmounted = false;
         this.nextBatch = null;
         this.filterTimeout = null;
         this.scrollPanel = null;
         this.protocols = null;
 
-        this.setState({protocolsLoading: true});
+        this.state.protocolsLoading = true;
         if (!MatrixClientPeg.get()) {
             // We may not have a client yet when invoked from welcome page
-            this.setState({protocolsLoading: false});
+            this.state.protocolsLoading = false;
             return;
         }
 
@@ -106,25 +102,27 @@ export default createReactClass({
             });
         } else {
             // We don't use the protocols in the communities v2 prototype experience
-            this.setState({protocolsLoading: false});
+            this.state.protocolsLoading = false;
 
             // Grab the profile info async
             FlairStore.getGroupProfileCached(MatrixClientPeg.get(), this.state.selectedCommunityId).then(profile => {
                 this.setState({communityName: profile.name});
             });
         }
+    }
 
+    componentDidMount() {
         this.refreshRoomList();
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         if (this.filterTimeout) {
             clearTimeout(this.filterTimeout);
         }
         this._unmounted = true;
-    },
+    }
 
-    refreshRoomList: function() {
+    refreshRoomList = () => {
         if (this.state.selectedCommunityId) {
             this.setState({
                 publicRooms: GroupStore.getGroupRooms(this.state.selectedCommunityId).map(r => {
@@ -158,9 +156,9 @@ export default createReactClass({
             loading: true,
         });
         this.getMoreRooms();
-    },
+    };
 
-    getMoreRooms: function() {
+    getMoreRooms() {
         if (this.state.selectedCommunityId) return Promise.resolve(); // no more rooms
         if (!MatrixClientPeg.get()) return Promise.resolve();
 
@@ -233,7 +231,7 @@ export default createReactClass({
                 ),
             });
         });
-    },
+    }
 
     /**
      * A limited interface for removing rooms from the directory.
@@ -242,7 +240,7 @@ export default createReactClass({
      * HS admins to do this through the RoomSettings interface, but
      * this needs SPEC-417.
      */
-    removeFromDirectory: function(room) {
+    removeFromDirectory(room) {
         const alias = get_display_alias_for_room(room);
         const name = room.name || alias || _t('Unnamed room');
 
@@ -284,18 +282,18 @@ export default createReactClass({
                 });
             },
         });
-    },
+    }
 
-    onRoomClicked: function(room, ev) {
+    onRoomClicked = (room, ev) => {
         if (ev.shiftKey && !this.state.selectedCommunityId) {
             ev.preventDefault();
             this.removeFromDirectory(room);
         } else {
             this.showRoom(room);
         }
-    },
+    };
 
-    onOptionChange: function(server, instanceId) {
+    onOptionChange = (server, instanceId) => {
         // clear next batch so we don't try to load more rooms
         this.nextBatch = null;
         this.setState({
@@ -313,15 +311,15 @@ export default createReactClass({
         // find the five gitter ones, at which point we do not want
         // to render all those rooms when switching back to 'all networks'.
         // Easiest to just blow away the state & re-fetch.
-    },
+    };
 
-    onFillRequest: function(backwards) {
+    onFillRequest = (backwards) => {
         if (backwards || !this.nextBatch) return Promise.resolve(false);
 
         return this.getMoreRooms();
-    },
+    };
 
-    onFilterChange: function(alias) {
+    onFilterChange = (alias) => {
         this.setState({
             filterString: alias || null,
         });
@@ -337,9 +335,9 @@ export default createReactClass({
             this.filterTimeout = null;
             this.refreshRoomList();
         }, 700);
-    },
+    };
 
-    onFilterClear: function() {
+    onFilterClear = () => {
         // update immediately
         this.setState({
             filterString: null,
@@ -348,9 +346,9 @@ export default createReactClass({
         if (this.filterTimeout) {
             clearTimeout(this.filterTimeout);
         }
-    },
+    };
 
-    onJoinFromSearchClick: function(alias) {
+    onJoinFromSearchClick = (alias) => {
         // If we don't have a particular instance id selected, just show that rooms alias
         if (!this.state.instanceId || this.state.instanceId === ALL_ROOMS) {
             // If the user specified an alias without a domain, add on whichever server is selected
@@ -391,9 +389,9 @@ export default createReactClass({
                 });
             });
         }
-    },
+    };
 
-    onPreviewClick: function(ev, room) {
+    onPreviewClick = (ev, room) => {
         this.props.onFinished();
         dis.dispatch({
             action: 'view_room',
@@ -401,9 +399,9 @@ export default createReactClass({
             should_peek: true,
         });
         ev.stopPropagation();
-    },
+    };
 
-    onViewClick: function(ev, room) {
+    onViewClick = (ev, room) => {
         this.props.onFinished();
         dis.dispatch({
             action: 'view_room',
@@ -411,26 +409,26 @@ export default createReactClass({
             should_peek: false,
         });
         ev.stopPropagation();
-    },
+    };
 
-    onJoinClick: function(ev, room) {
+    onJoinClick = (ev, room) => {
         this.showRoom(room, null, true);
         ev.stopPropagation();
-    },
+    };
 
-    onCreateRoomClick: function(room) {
+    onCreateRoomClick = room => {
         this.props.onFinished();
         dis.dispatch({
             action: 'view_create_room',
             public: true,
         });
-    },
+    };
 
-    showRoomAlias: function(alias, autoJoin=false) {
+    showRoomAlias(alias, autoJoin=false) {
         this.showRoom(null, alias, autoJoin);
-    },
+    }
 
-    showRoom: function(room, room_alias, autoJoin=false) {
+    showRoom(room, room_alias, autoJoin=false) {
         this.props.onFinished();
         const payload = {
             action: 'view_room',
@@ -474,7 +472,7 @@ export default createReactClass({
             payload.room_id = room.room_id;
         }
         dis.dispatch(payload);
-    },
+    }
 
     getRow(room) {
         const client = MatrixClientPeg.get();
@@ -540,22 +538,22 @@ export default createReactClass({
                 <td className="mx_RoomDirectory_join">{joinOrViewButton}</td>
             </tr>
         );
-    },
+    }
 
-    collectScrollPanel: function(element) {
+    collectScrollPanel = (element) => {
         this.scrollPanel = element;
-    },
+    };
 
-    _stringLooksLikeId: function(s, field_type) {
+    _stringLooksLikeId(s, field_type) {
         let pat = /^#[^\s]+:[^\s]/;
         if (field_type && field_type.regexp) {
             pat = new RegExp(field_type.regexp);
         }
 
         return pat.test(s);
-    },
+    }
 
-    _getFieldsForThirdPartyLocation: function(userInput, protocol, instance) {
+    _getFieldsForThirdPartyLocation(userInput, protocol, instance) {
         // make an object with the fields specified by that protocol. We
         // require that the values of all but the last field come from the
         // instance. The last is the user input.
@@ -569,20 +567,20 @@ export default createReactClass({
         }
         fields[requiredFields[requiredFields.length - 1]] = userInput;
         return fields;
-    },
+    }
 
     /**
      * called by the parent component when PageUp/Down/etc is pressed.
      *
      * We pass it down to the scroll panel.
      */
-    handleScrollKey: function(ev) {
+    handleScrollKey = ev => {
         if (this.scrollPanel) {
             this.scrollPanel.handleScrollKey(ev);
         }
-    },
+    };
 
-    render: function() {
+    render() {
         const Loader = sdk.getComponent("elements.Spinner");
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
@@ -712,8 +710,8 @@ export default createReactClass({
                 </div>
             </BaseDialog>
         );
-    },
-});
+    }
+}
 
 // Similar to matrix-react-sdk's MatrixTools.getDisplayAliasForRoom
 // but works with the objects we get from the public room list
