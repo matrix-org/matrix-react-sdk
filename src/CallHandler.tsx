@@ -396,9 +396,19 @@ export default class CallHandler {
                         });
                         return;
                     } else if (members.length === 2) {
-                        console.info("Place %s call in %s", payload.type, payload.room_id);
+                        const maySendCallEvents = ['m.call.invite', 'm.call.candidates', 'm.call.hangup'].every(
+                            event => room.currentState.maySendEvent(event, MatrixClientPeg.get().getUserId()),
+                        );
 
-                        this.placeCall(payload.room_id, payload.type, payload.local_element, payload.remote_element);
+                        if (maySendCallEvents) {
+                            console.info("Place %s call in %s", payload.type, payload.room_id);
+                            this.placeCall(payload.room_id, payload.type, payload.local_element,
+                                payload.remote_element);
+                        } else {
+                            Modal.createTrackedDialog('Call Handler', 'Not authorized to place call', ErrorDialog, {
+                                description: _t('You are not authorized to start a call.'),
+                            });
+                        }
                     } else { // > 2
                         dis.dispatch({
                             action: "place_conference_call",
