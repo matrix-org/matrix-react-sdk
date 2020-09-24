@@ -334,6 +334,7 @@ export default class InviteDialog extends React.PureComponent {
             numRecentsShown: INITIAL_ROOMS_SHOWN,
             suggestions: this._buildSuggestions(alreadyInvited),
             numSuggestionsShown: INITIAL_ROOMS_SHOWN,
+            beSoleRoomAdmin: false,
             serverResultsMixin: [], // { user: DirectoryMember, userId: string }[], like recents and suggestions
             threepidResultsMixin: [], // { user: ThreepidMember, userId: string}[], like recents and suggestions
             canUseIdentityServer: !!MatrixClientPeg.get().getIdentityServerUrl(),
@@ -543,6 +544,21 @@ export default class InviteDialog extends React.PureComponent {
         return false;
     }
 
+    _getPowerlevelContentOverride(targetIds) {
+        if (!this.state.beSoleRoomAdmin) {
+            return null;
+        }
+        const contentOverride = {
+            'users': {
+                [MatrixClientPeg.get().getUserId()]: 100,
+            },
+        };
+        targetIds.forEach(id => {
+            contentOverride['users'][id] = 0;
+        });
+        return contentOverride;
+    }
+
     _convertFilter(): Member[] {
         // Check to see if there's anything to convert first
         if (!this.state.filterText || !this.state.filterText.includes('@')) return this.state.targets || [];
@@ -564,6 +580,7 @@ export default class InviteDialog extends React.PureComponent {
         this.setState({busy: true});
         const targets = this._convertFilter();
         const targetIds = targets.map(t => t.userId);
+        const powerLevelContentOverride = this._getPowerlevelContentOverride(targetIds);
 
         // Check if there is already a DM with these people and reuse it if possible.
         const existingRoom = DMRoomMap.shared().getDMRoomForIdentifiers(targetIds);
@@ -579,6 +596,10 @@ export default class InviteDialog extends React.PureComponent {
         }
 
         const createRoomOptions = {inlineErrors: true};
+
+        if (powerLevelContentOverride) {
+            createRoomOptions['createOpts'] = { 'power_level_content_override': powerLevelContentOverride };
+        }
 
         if (privateShouldBeEncrypted()) {
             // Check whether all users have uploaded device keys before.
@@ -1078,6 +1099,7 @@ export default class InviteDialog extends React.PureComponent {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
         const Spinner = sdk.getComponent("elements.Spinner");
+        const LabelledToggleSwitch = sdk.getComponent('views.elements.LabelledToggleSwitch');
 
         let spinner = null;
         if (this.state.busy) {
@@ -1089,6 +1111,7 @@ export default class InviteDialog extends React.PureComponent {
         let helpText;
         let buttonText;
         let goButtonFn;
+        let extraSettings = '';
 
         const identityServersEnabled = SettingsStore.getValue(UIFeature.IdentityServer);
 
@@ -1148,6 +1171,13 @@ export default class InviteDialog extends React.PureComponent {
             }
             buttonText = _t("Go");
             goButtonFn = this._startDm;
+            extraSettings = (<LabelledToggleSwitch
+                label={_t(
+                    "Make me the sole administrator of the new room",
+                )}
+                onChange={ beSoleRoomAdmin => this.setState({beSoleRoomAdmin}) }
+                value={this.state.beSoleRoomAdmin}
+            />);
         } else { // KIND_INVITE
             title = _t("Invite to this room");
 
@@ -1207,6 +1237,7 @@ export default class InviteDialog extends React.PureComponent {
                     </div>
                     {this._renderIdentityServerWarning()}
                     <div className='error'>{this.state.errorText}</div>
+                    {extraSettings}
                     <div className='mx_InviteDialog_userSections'>
                         {this._renderSection('recents')}
                         {this._renderSection('suggestions')}

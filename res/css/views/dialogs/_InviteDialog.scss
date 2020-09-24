@@ -218,13 +218,30 @@ limitations under the License.
     // Prevent the dialog from jumping around randomly when elements change.
     height: 590px;
     padding-left: 20px; // the design wants some padding on the left
+
+    .mx_SettingsFlag {
+        display: flex;
+        margin-top: 20px;
+        padding-right: 45px;
+    }
+
+    .mx_SettingsFlag_label {
+        flex: 1 1 0;
+        min-width: 0;
+        font-weight: 600;
+    }
+
+    .mx_ToggleSwitch {
+        flex: 0 0 auto;
+        margin-left: 30px;
+    }
 }
 
 .mx_InviteDialog_userSections {
     margin-top: 10px;
     overflow-y: auto;
     padding-right: 45px;
-    height: 455px; // mx_InviteDialog's height minus some for the upper elements
+    height: 405px; // mx_InviteDialog's height minus some for the upper elements
 }
 
 // Right margin for the design. We could apply this to the whole dialog, but then the scrollbar
