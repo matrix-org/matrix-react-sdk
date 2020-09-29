@@ -73,6 +73,12 @@ export const Notifier = {
 
     _displayPopupNotification: function(ev: MatrixEvent, room: Room) {
         const plaf = PlatformPeg.get();
+        if (!plaf) {
+            return;
+        }
+        if (!plaf.supportsNotifications() || !plaf.maySendNotifications()) {
+            return;
+        }
         if (!plaf) return;
 
         if (global.document.hasFocus()) {
@@ -265,6 +271,8 @@ export const Notifier = {
         const plaf = PlatformPeg.get();
         if (!plaf) return false;
         if (!plaf.supportsNotifications()) return false;
+        if (!plaf.maySendNotifications()) return false;
+
 
         return true; // possible, but not necessarily enabled
     },
@@ -372,12 +380,13 @@ export const Notifier = {
         const plaf = PlatformPeg.get();
         if (!plaf) return;
 
-        const maySend = await plaf.maySendNotifications();
+        const maySend = plaf.maySendNotifications();
         if (actions && actions.notify && maySend) {
-            if (await this.isEnabled()) {
+            if (this.isEnabled()) {
                 return this._displayPopupNotification(ev, room);
             }
-            if (actions.tweaks.sound && this.isAudioEnabled()) {
+            const dnd = await plaf.isDoNotDisturbEnabled();
+            if (actions.tweaks.sound && this.isAudioEnabled() && !dnd) {
                 PlatformPeg.get().loudNotification(ev, room);
                 this._playAudioNotification(ev, room);
             }
