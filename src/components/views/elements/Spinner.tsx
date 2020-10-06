@@ -20,17 +20,25 @@ import PropTypes from "prop-types";
 import {_t} from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 
-const Spinner = ({w = 32, h = 32, imgClassName, message}) => {
-    let imageSource;
-    if (SettingsStore.getValue('feature_new_spinner')) {
-        imageSource = require("../../../../res/img/spinner.svg");
-    } else {
-        imageSource = require("../../../../res/img/spinner.gif");
-    }
+interface IProps {
+    /** The width of the spinner. */
+    w?: number;
+
+    /** The height of the spinner. */
+    h?: number;
+
+    imgClassName?: string;
+    message?: React.ReactNode;
+}
+
+const Spinner = ({w = 32, h = 32, imgClassName, message}: IProps) => {
+    let imageSource = SettingsStore.getValue('feature_new_spinner')
+        ? require("../../../../res/img/spinner.svg")
+        : require("../../../../res/img/spinner.gif");
 
     return (
         <div className="mx_Spinner">
-            { message && <React.Fragment><div className="mx_Spinner_Msg">{ message}</div>&nbsp;</React.Fragment> }
+            { message && <><div className="mx_Spinner_Msg">{ message }</div>&nbsp;</> }
             <img
                 src={imageSource}
                 width={w}
