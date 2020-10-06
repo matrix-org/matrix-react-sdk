@@ -19,7 +19,7 @@ limitations under the License.
 import { _t } from '../../../languageHandler';
 import React from 'react';
 
-export default function AuthFooter () {
+export default function AuthFooter() {
     return (
         <div className="mx_AuthFooter">
             <a href="https://matrix.org" target="_blank" rel="noreferrer noopener">

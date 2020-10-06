@@ -22,7 +22,7 @@ interface IProps {
     children?: React.ReactNode;
 }
 
-export default function AuthBody (props: IProps) {
+export default function AuthBody(props: IProps) {
     return (
         <div className="mx_AuthBody">
             { props.children }

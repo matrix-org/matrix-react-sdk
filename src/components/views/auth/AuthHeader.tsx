@@ -23,7 +23,7 @@ interface IProps {
     disableLanguageSelector: boolean;
 }
 
-export default function AuthHeader (props: IProps) {
+export default function AuthHeader(props: IProps) {
     const AuthHeaderLogo = sdk.getComponent('auth.AuthHeaderLogo');
     const LanguageSelector = sdk.getComponent('views.auth.LanguageSelector');
 
@@ -36,5 +36,5 @@ export default function AuthHeader (props: IProps) {
 }
 
 AuthHeader.propTypes = {
-    disableLanguageSelector: PropTypes.bool
+    disableLanguageSelector: PropTypes.bool,
 };

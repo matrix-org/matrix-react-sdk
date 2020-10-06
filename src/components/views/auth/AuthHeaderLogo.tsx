@@ -18,7 +18,7 @@ limitations under the License.
 
 import React from 'react';
 
-export default function AuthHeaderLogo () {
+export default function AuthHeaderLogo() {
     return (
         <div className="mx_AuthHeaderLogo">
             Matrix

@@ -23,7 +23,7 @@ interface IProps {
     children?: React.ReactNode;
 }
 
-export default function AuthPage (props: IProps) {
+export default function AuthPage(props: IProps) {
     const AuthFooter = sdk.getComponent('auth.AuthFooter');
 
     return (
