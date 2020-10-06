@@ -26,7 +26,7 @@ interface IProps {
 
 }
 
-export function SignInText (props: IProps) {
+export function SignInText(props: IProps) {
     let signInToText: string | React.ReactNode = _t('Sign in to your Matrix account on %(serverName)s', {
         serverName: props.serverConfig.hsName,
     });
@@ -42,12 +42,12 @@ export function SignInText (props: IProps) {
                 >
                     {props.serverConfig.hsName}
                 </TextWithTooltip>
-            )
+            ),
         });
     }
 
     const editLink = props.onEditServerDetailsClick ? (
-        <a 
+        <a
             className="mx_AuthBody_editServerDetails"
             href="#" onClick={props.onEditServerDetailsClick}
         >
