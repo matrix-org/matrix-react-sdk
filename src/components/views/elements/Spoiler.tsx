@@ -24,10 +24,10 @@ interface IProps {
     contentHtml: string;
 }
 
-export default function Spinner (props: IProps) {
+export default function Spinner(props: IProps) {
     const [visible, setVisible] = React.useState(false);
 
-    function toggleVisible (event: React.MouseEvent) {
+    function toggleVisible(event: React.MouseEvent) {
         if (visible) {
             event.preventDefault();
             event.stopPropagation();
@@ -36,7 +36,7 @@ export default function Spinner (props: IProps) {
         setVisible(!visible);
     }
 
-    const reason = props.reason ? 
+    const reason = props.reason ?
         <span className="mx_EventTile_spoiler_reason">{"(" + props.reason + ")"}</span> : null;
 
     // React doesn't allow appending a DOM node as child.

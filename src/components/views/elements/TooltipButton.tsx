@@ -25,7 +25,7 @@ interface IProps {
 export default function TooltipButton(props: IProps) {
     const [hover, setHover] = React.useState(false);
     const Tooltip = sdk.getComponent("elements.Tooltip");
-    
+
     const tip = hover ? <Tooltip
         className="mx_TooltipButton_container"
         tooltipClassName="mx_TooltipButton_helpText"
@@ -33,9 +33,9 @@ export default function TooltipButton(props: IProps) {
     /> : <div />;
 
     return (
-        <div 
-            className="mx_TooltipButton" 
-            onMouseOver={() => setHover(true)} 
+        <div
+            className="mx_TooltipButton"
+            onMouseOver={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
         >
             ?

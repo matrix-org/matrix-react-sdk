@@ -24,7 +24,7 @@ import MatrixChat from '../../structures/MatrixChat';
 
 interface IProps {
     matrixClient: MatrixChat;
-    
+
     /** The type of Single Sign-On to use. */
     loginType: 'sso' | 'cas';
 
@@ -32,8 +32,8 @@ interface IProps {
     fragmentAfterLogin?: string;
 }
 
-export default function SSOButton ({matrixClient, loginType, fragmentAfterLogin, ...props}: IProps) {
-    function onClick () {
+export default function SSOButton({matrixClient, loginType, fragmentAfterLogin, ...props}: IProps) {
+    function onClick() {
         PlatformPeg.get().startSingleSignOn(matrixClient, loginType, fragmentAfterLogin);
     }
 
@@ -42,7 +42,7 @@ export default function SSOButton ({matrixClient, loginType, fragmentAfterLogin,
             {_t("Sign in with single sign-on")}
         </AccessibleButton>
     );
-};
+}
 
 SSOButton.propTypes = {
     matrixClient: PropTypes.object.isRequired, // does not use context as may use a temporary client

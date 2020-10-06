@@ -19,7 +19,7 @@ import React from 'react';
 import { _t } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
 
-export function CustomServerDialog () {
+export function CustomServerDialog() {
     const brand = SdkConfig.get().brand;
     return (
         <div className="mx_ErrorDialog">

@@ -22,7 +22,7 @@ interface IProps {
     children?: React.ReactNode;
 }
 
-export default function CompleteSecurityBody (props: IProps) {
+export default function CompleteSecurityBody(props: IProps) {
     return (
         <div className="mx_CompleteSecurityBody">
             { props.children }

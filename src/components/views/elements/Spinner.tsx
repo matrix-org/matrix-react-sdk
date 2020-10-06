@@ -32,7 +32,7 @@ interface IProps {
 }
 
 const Spinner = ({w = 32, h = 32, imgClassName, message}: IProps) => {
-    let imageSource = SettingsStore.getValue('feature_new_spinner')
+    const imageSource = SettingsStore.getValue('feature_new_spinner')
         ? require("../../../../res/img/spinner.svg")
         : require("../../../../res/img/spinner.gif");
 
