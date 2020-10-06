@@ -19,7 +19,11 @@ import React from 'react';
 import { _t } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
 
-export function CustomServerDialog() {
+interface IProps {
+    onFinished: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+}
+
+export function CustomServerDialog(props: IProps) {
     const brand = SdkConfig.get().brand;
     return (
         <div className="mx_ErrorDialog">
@@ -36,7 +40,7 @@ export function CustomServerDialog() {
                 )}</p>
             </div>
             <div className="mx_Dialog_buttons">
-                <button onClick={this.props.onFinished} autoFocus={true}>
+                <button onClick={props.onFinished} autoFocus={true}>
                     { _t("Dismiss") }
                 </button>
             </div>
