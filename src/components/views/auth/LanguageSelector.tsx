@@ -22,21 +22,27 @@ import * as sdk from '../../../index';
 import React from 'react';
 import {SettingLevel} from "../../../settings/SettingLevel";
 
-function onChange(newLang) {
-    if (getCurrentLanguage() !== newLang) {
-        SettingsStore.setValue("language", null, SettingLevel.DEVICE, newLang);
+interface IProps {
+    disabled: boolean;
+}
+
+function onChange(newLanguage: string) {
+    if (getCurrentLanguage() !== newLanguage) {
+        SettingsStore.setValue("language", null, SettingLevel.DEVICE, newLanguage);
         PlatformPeg.get().reload();
     }
 }
 
-export default function LanguageSelector({disabled}) {
+export default function LanguageSelector({disabled}: IProps) {
     if (SdkConfig.get()['disable_login_language_selector']) return <div />;
-
     const LanguageDropdown = sdk.getComponent('views.elements.LanguageDropdown');
-    return <LanguageDropdown
-        className="mx_AuthBody_language"
-        onOptionChange={onChange}
-        value={getCurrentLanguage()}
-        disabled={disabled}
-    />;
+
+    return (
+        <LanguageDropdown
+            className="mx_AuthBody_language"
+            onOptionChange={onChange}
+            value={getCurrentLanguage()}
+            disabled={disabled}
+        />
+    );
 }
