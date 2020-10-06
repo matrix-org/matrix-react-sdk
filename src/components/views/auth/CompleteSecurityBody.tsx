@@ -18,10 +18,14 @@ limitations under the License.
 
 import React from 'react';
 
-export default class CompleteSecurityBody extends React.PureComponent {
-    render() {
-        return <div className="mx_CompleteSecurityBody">
-            { this.props.children }
-        </div>;
-    }
+interface IProps {
+    children?: React.ReactNode;
+}
+
+export default function CompleteSecurityBody (props: IProps) {
+    return (
+        <div className="mx_CompleteSecurityBody">
+            { props.children }
+        </div>
+    );
 }
