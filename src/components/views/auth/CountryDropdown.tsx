@@ -101,16 +101,16 @@ export default function CountryDropdown(props: IProps) {
     const defaultCountryCode = SdkConfig.get()["defaultCountryCode"];
     const defaultCountry = defaultCountryCode ? COUNTRIES_BY_ISO2[defaultCountryCode] : COUNTRIES[0];
     const [searchQuery, setSearchQuery] = React.useState('');
-    const { onOptionChange } = props;
+    const { onOptionChange, value: baseValue } = props;
 
     React.useEffect(() => {
-        if (props.value) {
+        if (baseValue) {
             // If no value is given, we start with the default
             // country selected, but our parent component
             // doesn't know this, therefore we do this.
-            props.onOptionChange(defaultCountry);
+            onOptionChange(defaultCountry);
         }
-    }, [onOptionChange, defaultCountry]);
+    }, [onOptionChange, defaultCountry, baseValue]);
 
     let [displayedCountries, setDisplayedCountries] = React.useState<Country[]>([]);
 
