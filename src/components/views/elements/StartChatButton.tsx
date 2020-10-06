@@ -19,8 +19,17 @@ import * as sdk from '../../../index';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 
-const StartChatButton = function(props) {
+export interface IProps {
+    size: string;
+    tooltip: boolean;
+
+    /** If selected, on mouse over, a "Start Chat" callout appears. */
+    callout?: boolean;
+}
+
+export default function StartChatButton(props: IProps) {
     const ActionButton = sdk.getComponent('elements.ActionButton');
+
     return (
         <ActionButton action="view_create_chat"
             mouseOverAction={props.callout ? "callout_start_chat" : null}
@@ -30,11 +39,9 @@ const StartChatButton = function(props) {
             tooltip={props.tooltip}
         />
     );
-};
+}
 
 StartChatButton.propTypes = {
     size: PropTypes.string,
     tooltip: PropTypes.bool,
 };
-
-export default StartChatButton;
