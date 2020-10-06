@@ -52,7 +52,7 @@ export const TYPES: Record<'FREE' | 'PREMIUM' | 'ADVANCED', ServerType> = {
             hsName: "matrix.org",
             hsNameIsDifferent: false,
             isUrl: "https://vector.im",
-        }
+        },
     },
     PREMIUM: {
         id: PREMIUM,
@@ -96,10 +96,10 @@ export interface IProps {
     onChange: (type: ServerTypeKey) => void;
 }
 
-export default function ServerTypeSelector (props: IProps) {
+export default function ServerTypeSelector(props: IProps) {
     const [selected, setSelected] = useState(props.selected);
 
-    function updateSelectedType (type: ServerTypeKey) {
+    function updateSelectedType(type: ServerTypeKey) {
         if (selected === type) {
             return;
         }
@@ -111,7 +111,7 @@ export default function ServerTypeSelector (props: IProps) {
         }
     }
 
-    function onClick (event: ButtonEvent) {
+    function onClick(event: ButtonEvent) {
         const type = (event.currentTarget as EventTarget & HTMLDivElement).dataset.id;
 
         event.stopPropagation();
@@ -132,17 +132,17 @@ export default function ServerTypeSelector (props: IProps) {
 
         return (
             <div className={classes} key={id} >
-            <div className="mx_ServerTypeSelector_label">
-                {label()}
-            </div>
-            <AccessibleButton onClick={onClick} data-id={id}>
-                <div className="mx_ServerTypeSelector_logo">
-                    {logo()}
+                <div className="mx_ServerTypeSelector_label">
+                    {label()}
                 </div>
-                <div className="mx_ServerTypeSelector_description">
-                    {description()}
-                </div>
-            </AccessibleButton>
+                <AccessibleButton onClick={onClick} data-id={id}>
+                    <div className="mx_ServerTypeSelector_logo">
+                        {logo()}
+                    </div>
+                    <div className="mx_ServerTypeSelector_description">
+                        {description()}
+                    </div>
+                </AccessibleButton>
             </div>
         );
     });
