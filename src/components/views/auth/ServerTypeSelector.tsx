@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import * as sdk from '../../../index';
 import classnames from 'classnames';
 import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
-import {makeType} from "../../../utils/TypeUtils";
+import { ButtonEvent } from '../elements/AccessibleButton';
 
 const MODULAR_URL = 'https://element.io/matrix-services' +
     '?utm_source=element-web&utm_medium=web&utm_campaign=element-web-authentication';
@@ -29,18 +29,30 @@ export const FREE = 'Free';
 export const PREMIUM = 'Premium';
 export const ADVANCED = 'Advanced';
 
-export const TYPES = {
+export type ServerTypeID = 'Free' | 'Premium' | 'Advanced';
+export type ServerTypeKey = 'FREE' | 'PREMIUM' | 'ADVANCED';
+
+export interface ServerType {
+    id: ServerTypeID;
+    label: () => string | React.ReactNode;
+    logo: () => string | React.ReactNode;
+    description: () => string | React.ReactNode;
+    serverConfig?: ValidatedServerConfig;
+    identityServerUrl?: string;
+}
+
+export const TYPES: Record<'FREE' | 'PREMIUM' | 'ADVANCED', ServerType> = {
     FREE: {
         id: FREE,
         label: () => _t('Free'),
         logo: () => <img src={require('../../../../res/img/matrix-org-bw-logo.svg')} />,
         description: () => _t('Join millions for free on the largest public server'),
-        serverConfig: makeType(ValidatedServerConfig, {
+        serverConfig: {
             hsUrl: "https://matrix-client.matrix.org",
             hsName: "matrix.org",
             hsNameIsDifferent: false,
             isUrl: "https://vector.im",
-        }),
+        }
     },
     PREMIUM: {
         id: PREMIUM,
@@ -79,75 +91,70 @@ export function getTypeFromServerConfig(config) {
     }
 }
 
-export default class ServerTypeSelector extends React.PureComponent {
-    static propTypes = {
-        // The default selected type.
-        selected: PropTypes.string,
-        // Handler called when the selected type changes.
-        onChange: PropTypes.func.isRequired,
-    };
+export interface IProps {
+    selected: string;
+    onChange: (type: ServerTypeKey) => void;
+}
 
-    constructor(props) {
-        super(props);
+export default function ServerTypeSelector (props: IProps) {
+    const [selected, setSelected] = useState(props.selected);
 
-        const {
-            selected,
-        } = props;
-
-        this.state = {
-            selected,
-        };
-    }
-
-    updateSelectedType(type) {
-        if (this.state.selected === type) {
+    function updateSelectedType (type: ServerTypeKey) {
+        if (selected === type) {
             return;
         }
-        this.setState({
-            selected: type,
-        });
-        if (this.props.onChange) {
-            this.props.onChange(type);
+
+        setSelected(type);
+
+        if (props.onChange) {
+            props.onChange(type);
         }
     }
 
-    onClick = (e) => {
-        e.stopPropagation();
-        const type = e.currentTarget.dataset.id;
-        this.updateSelectedType(type);
-    };
+    function onClick (event: ButtonEvent) {
+        const type = (event.currentTarget as EventTarget & HTMLDivElement).dataset.id;
 
-    render() {
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
+        event.stopPropagation();
+        updateSelectedType(type as ServerTypeKey);
+    }
 
-        const serverTypes = [];
-        for (const type of Object.values(TYPES)) {
-            const { id, label, logo, description } = type;
-            const classes = classnames(
-                "mx_ServerTypeSelector_type",
-                `mx_ServerTypeSelector_type_${id}`,
-                {
-                    "mx_ServerTypeSelector_type_selected": id === this.state.selected,
-                },
-            );
+    const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
 
-            serverTypes.push(<div className={classes} key={id} >
-                <div className="mx_ServerTypeSelector_label">
-                    {label()}
+    const serverTypes = Object.values(TYPES).map(type => {
+        const { id, label, logo, description } = type;
+        const classes = classnames(
+            "mx_ServerTypeSelector_type",
+            `mx_ServerTypeSelector_type_${id}`,
+            {
+                "mx_ServerTypeSelector_type_selected": id === selected,
+            },
+        );
+
+        return (
+            <div className={classes} key={id} >
+            <div className="mx_ServerTypeSelector_label">
+                {label()}
+            </div>
+            <AccessibleButton onClick={onClick} data-id={id}>
+                <div className="mx_ServerTypeSelector_logo">
+                    {logo()}
                 </div>
-                <AccessibleButton onClick={this.onClick} data-id={id}>
-                    <div className="mx_ServerTypeSelector_logo">
-                        {logo()}
-                    </div>
-                    <div className="mx_ServerTypeSelector_description">
-                        {description()}
-                    </div>
-                </AccessibleButton>
-            </div>);
-        }
+                <div className="mx_ServerTypeSelector_description">
+                    {description()}
+                </div>
+            </AccessibleButton>
+            </div>
+        );
+    });
 
-        return <div className="mx_ServerTypeSelector">
-            {serverTypes}
-        </div>;
-    }
+    return <div className="mx_ServerTypeSelector">
+        {serverTypes}
+    </div>;
 }
+
+ServerTypeSelector.propTypes = {
+    // The default selected type.
+    selected: PropTypes.string,
+    // Handler called when the selected type changes.
+    onChange: PropTypes.func.isRequired,
+};
