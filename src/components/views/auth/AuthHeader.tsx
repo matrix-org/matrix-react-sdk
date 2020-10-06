@@ -19,20 +19,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as sdk from '../../../index';
 
-export default class AuthHeader extends React.Component {
-    static propTypes = {
-        disableLanguageSelector: PropTypes.bool,
-    };
-
-    render() {
-        const AuthHeaderLogo = sdk.getComponent('auth.AuthHeaderLogo');
-        const LanguageSelector = sdk.getComponent('views.auth.LanguageSelector');
-
-        return (
-            <div className="mx_AuthHeader">
-                <AuthHeaderLogo />
-                <LanguageSelector disabled={this.props.disableLanguageSelector} />
-            </div>
-        );
-    }
+interface IProps {
+    disableLanguageSelector: boolean;
 }
+
+export default function AuthHeader (props: IProps) {
+    const AuthHeaderLogo = sdk.getComponent('auth.AuthHeaderLogo');
+    const LanguageSelector = sdk.getComponent('views.auth.LanguageSelector');
+
+    return (
+        <div className="mx_AuthHeader">
+            <AuthHeaderLogo />
+            <LanguageSelector disabled={props.disableLanguageSelector} />
+        </div>
+    );
+}
+
+AuthHeader.propTypes = {
+    disableLanguageSelector: PropTypes.bool
+};

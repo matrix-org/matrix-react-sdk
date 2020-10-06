@@ -16,22 +16,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { _t } from '../../../languageHandler';
 import React from 'react';
-import * as sdk from '../../../index';
-import {replaceableComponent} from "../../../utils/replaceableComponent";
 
-@replaceableComponent("views.auth.AuthPage")
-export default class AuthPage extends React.PureComponent {
-    render() {
-        const AuthFooter = sdk.getComponent('auth.AuthFooter');
-
-        return (
-            <div className="mx_AuthPage">
-                <div className="mx_AuthPage_modal">
-                    {this.props.children}
-                </div>
-                <AuthFooter />
-            </div>
-        );
-    }
+export default function AuthFooter () {
+    return (
+        <div className="mx_AuthFooter">
+            <a href="https://matrix.org" target="_blank" rel="noreferrer noopener">
+                { _t("powered by Matrix") }
+            </a>
+        </div>
+    );
 }

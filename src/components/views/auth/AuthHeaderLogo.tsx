@@ -18,10 +18,10 @@ limitations under the License.
 
 import React from 'react';
 
-export default class AuthBody extends React.PureComponent {
-    render() {
-        return <div className="mx_AuthBody">
-            { this.props.children }
-        </div>;
-    }
+export default function AuthHeaderLogo () {
+    return (
+        <div className="mx_AuthHeaderLogo">
+            Matrix
+        </div>
+    );
 }

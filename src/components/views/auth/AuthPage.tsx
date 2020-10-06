@@ -1,5 +1,7 @@
 /*
+Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2019 New Vector Ltd
+Copyright 2019 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,14 +16,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-'use strict';
-
 import React from 'react';
+import * as sdk from '../../../index';
 
-export default class AuthHeaderLogo extends React.PureComponent {
-    render() {
-        return <div className="mx_AuthHeaderLogo">
-            Matrix
-        </div>;
-    }
+interface IProps {
+    children?: React.ReactNode;
+}
+
+export default function AuthPage (props: IProps) {
+    const AuthFooter = sdk.getComponent('auth.AuthFooter');
+
+    return (
+        <div className="mx_AuthPage">
+            <div className="mx_AuthPage_modal">
+                { props.children }
+            </div>
+            <AuthFooter />
+        </div>
+    );
 }
