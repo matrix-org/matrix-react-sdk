@@ -31,19 +31,23 @@ export const LOGIN_FIELD_PHONE = "login_field_phone";
 
 export type LoginType = 'login_field_email' | 'login_field_mxid' | 'login_field_phone';
 
-const defaultHandler = () => { };
+interface Country {
+    iso2: string;
+    name: string;
+    prefix: string;
+}
 
 interface IProps {
     onSubmit: (formUsername: string, formPhoneCountry: string, formPhoneNumber: string, password: string) => void;
-    onError
+    onError: (error: null | string) => void;
     onEditServerDetailsClick
     onForgotPasswordClick: (event?: ButtonEvent) => void;
-    onUsernameChanged
-    onPhoneCountryChanged
-    onPhoneNumberChanged
-    onPasswordChanged
-    onUsernameBlur
-    onPhoneNumberBlur
+    onUsernameChanged: (newUsername: void) => void;
+    onPhoneCountryChanged: (Country: string) => void;
+    onPhoneNumberChanged: (newPhoneNumber: string) => void;
+    onPasswordChanged: (newPassword: string) => void;
+    onUsernameBlur: (username: string) => void;
+    onPhoneNumberBlur: (phoneNumber: string) => void;
 
     initialUsername?: string;
     initialPhoneCountry?: string;
@@ -60,29 +64,27 @@ export default function PasswordLogin(props: IProps) {
     const [password, setPassword] = React.useState(props.initialPassword ?? '');
     const [phoneCountry, setPhoneCountry] = React.useState(props.initialPhoneCountry ?? '');
     const [phoneNumber, setPhoneNumber] = React.useState(props.initialPhoneNumber ?? '');
-    const [phonePrefix, setPhonePrefix] = React.useState('');
     const [loginType, setLoginType] = React.useState<LoginType>(LOGIN_FIELD_MXID);
 
-    function onUsernameChanged(ev) {
-        setUsername(ev.target.value);
-        props.onUsernameChanged?.(ev.target.value);
+    function onUsernameChanged(event) {
+        setUsername(event.target.value);
+        props.onUsernameChanged?.(event.target.value);
     }
 
     function onUsernameBlur(ev) {
         props.onUsernameBlur?.(ev.target.value);
     }
 
-    function onLoginTypeChange(ev) {
+    function onLoginTypeChanged(ev: React.ChangeEvent<HTMLInputElement>) {
         const loginType = ev.target.value;
         // Send a null error to clear any error messages.
-        this.props.onError?.(null);
-        setLoginType(loginType);
+        props.onError?.(null);
+        setLoginType(loginType as LoginType);
         setUsername('');
     }
 
-    function onPhoneCountryChanged(country) {
+    function onPhoneCountryChanged(country: Country) {
         setPhoneCountry(country.iso2);
-        setPhonePrefix(country.prefix);
         props.onPhoneCountryChanged?.(country.iso2);
     }
 
@@ -109,7 +111,8 @@ export default function PasswordLogin(props: IProps) {
     function onSubmitForm(ev) {
         ev.preventDefault();
 
-        const formUsername = (loginType === LOGIN_FIELD_MXID || loginType === LOGIN_FIELD_EMAIL) ? username : null; // XXX: Synapse breaks if you send null here:
+        // XXX: Synapse breaks if you send null here:
+        const formUsername = (loginType === LOGIN_FIELD_MXID || loginType === LOGIN_FIELD_EMAIL) ? username : null;
         const formPhoneCountry = loginType === LOGIN_FIELD_PHONE ? phoneCountry : null;
         const formPhoneNumber = loginType === LOGIN_FIELD_PHONE ? phoneNumber : null;
         const error = getErrors({ loginType, username, phoneNumber, password });
@@ -123,7 +126,7 @@ export default function PasswordLogin(props: IProps) {
             formUsername,
             formPhoneCountry,
             formPhoneNumber,
-            password
+            password,
         );
     }
 
@@ -134,17 +137,40 @@ export default function PasswordLogin(props: IProps) {
             case LOGIN_FIELD_EMAIL:
                 classes = { error: props.loginIncorrect && !username };
                 return (
-                    <EmailLoginField {...props} className={classNames(classes)} username={username} autoFocus={autoFocus} />
+                    <EmailLoginField
+                        {...props}
+                        className={classNames(classes)}
+                        username={username}
+                        autoFocus={autoFocus}
+                        onBlur={onUsernameBlur}
+                        onChange={onUsernameChanged}
+                    />
                 );
             case LOGIN_FIELD_MXID:
                 classes = { error: props.loginIncorrect && !username };
                 return (
-                    <MXIDLoginField {...props} autoFocus={autoFocus} className={classNames(classes)} username={username} />
+                    <MXIDLoginField
+                        {...props}
+                        autoFocus={autoFocus}
+                        className={classNames(classes)}
+                        username={username}
+                        onBlur={onUsernameBlur}
+                    />
                 );
             case LOGIN_FIELD_PHONE: {
                 classes = { error: props.loginIncorrect && !phoneNumber };
                 return (
-                    <PhoneLoginField {...props} username={username} autoFocus={autoFocus} className={classNames(classes)} phoneNumber={phoneNumber} />
+                    <PhoneLoginField
+                        {...props}
+                        username={username}
+                        autoFocus={autoFocus}
+                        className={classNames(classes)}
+                        phoneNumber={phoneNumber}
+                        phoneCountry={phoneCountry}
+                        onBlur={onPhoneNumberBlur}
+                        onPhoneNumberChange={onPhoneNumberChanged}
+                        onPhoneCountryChange={onPhoneCountryChanged}
+                    />
                 );
             }
         }
@@ -171,12 +197,20 @@ export default function PasswordLogin(props: IProps) {
     // this is for when auto server discovery remounts us when the user tries to tab from username to password
     const autoFocusPassword = !isLoginEmpty();
     const loginField = renderLoginField(loginType, !autoFocusPassword);
-    const loginTypeSelector = !SdkConfig.get().disable_3pid_login && <LoginTypeSelector onLoginTypeChange={onLoginTypeChange} loginType={loginType} {...props} />;
+    const loginTypeSelector = !SdkConfig.get().disable_3pid_login && (
+        <LoginTypeSelector
+            onChange={onLoginTypeChanged}
+            loginType={loginType}
+            {...props}
+        />
+    );
 
     return (
         <div>
-            <SignInToText serverConfig={props.serverConfig}
-                onEditServerDetailsClick={props.onEditServerDetailsClick} />
+            <SignInToText
+                serverConfig={props.serverConfig}
+                onEditServerDetailsClick={props.onEditServerDetailsClick}
+            />
             <form onSubmit={onSubmitForm}>
                 {loginTypeSelector}
                 {loginField}
@@ -190,7 +224,12 @@ export default function PasswordLogin(props: IProps) {
                     disabled={props.disableSubmit}
                     autoFocus={autoFocusPassword}
                 />
-                {!!props.onForgotPasswordClick && <ForgotPassword onForgotPasswordClick={onForgotPasswordClick} disabled={props.busy} />}
+                {!!props.onForgotPasswordClick && (
+                    <ForgotPassword
+                        onClick={onForgotPasswordClick}
+                        disabled={props.busy}
+                    />
+                )}
                 {!props.busy && <input className="mx_Login_submit"
                     type="submit"
                     value={_t('Sign in')}
@@ -201,21 +240,31 @@ export default function PasswordLogin(props: IProps) {
     );
 }
 
-interface IEmailLoginFieldProps {
-    className?: string;
-    onUsernameChanged?: (newUsername: string) => void;
-    onUsernameBlur?: (username: string) => void;
-    disableSubmit?: boolean;
-    username: string;
-    autoFocus: boolean;
-}
+PasswordLogin.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    onError: PropTypes.func,
+    onEditServerDetailsClick: PropTypes.func,
+    onForgotPasswordClick: PropTypes.func,
+    initialUsername: PropTypes.string,
+    initialPhoneCountry: PropTypes.string,
+    initialPhoneNumber: PropTypes.string,
+    initialPassword: PropTypes.string,
+    onUsernameChanged: PropTypes.func,
+    onPhoneCountryChanged: PropTypes.func,
+    onPhoneNumberChanged: PropTypes.func,
+    onPasswordChanged: PropTypes.func,
+    loginIncorrect: PropTypes.bool,
+    disableSubmit: PropTypes.bool,
+    serverConfig: PropTypes.instanceOf(ValidatedServerConfig).isRequired,
+    busy: PropTypes.bool,
+};
 
 interface IPhoneLoginFieldProps {
     className?: string;
-    onUsernameChanged?: (newUsername: string) => void;
-    onUsernameBlur?: (username: string) => void;
-    onPhoneNumberChanged: (newPhoneNumber: string) => void;
-    onPhoneNumberBlur: (phoneNumber: string) => void;
+    onBlur?: (username: string) => void;
+    onPhoneNumberChange: (newPhoneNumber: string) => void;
+    onPhoneCountryChange: (newPhoneCountry: Country) => void;
+    phoneCountry: string;
     disableSubmit?: boolean;
     username: string;
     autoFocus: boolean;
@@ -226,12 +275,13 @@ function PhoneLoginField(props: IPhoneLoginFieldProps) {
     const CountryDropdown = sdk.getComponent('views.auth.CountryDropdown');
     const Field = sdk.getComponent('elements.Field');
 
-    const phoneCountry = (
+    const phoneCountryComponent = (
         <CountryDropdown
-            value={this.state.phoneCountry}
+            value={props.phoneCountry}
             isSmall={true}
             showPrefix={true}
-            onOptionChange={this.onPhoneCountryChanged}
+            onOptionChange={props.onPhoneCountryChange}
+            {...props}
         />
     );
 
@@ -242,14 +292,23 @@ function PhoneLoginField(props: IPhoneLoginFieldProps) {
             key="phone_input"
             type="text"
             label={_t("Phone")}
-            value={this.state.phoneNumber}
-            prefixComponent={phoneCountry}
-            onChange={props.onPhoneNumberChanged}
-            onBlur={props.onPhoneNumberBlur}
+            value={props.phoneNumber}
+            prefixComponent={phoneCountryComponent}
+            onChange={props.onPhoneNumberChange}
+            onBlur={props.onBlur}
             disabled={props.disableSubmit}
             autoFocus={props.autoFocus}
         />
     );
+}
+
+interface IEmailLoginFieldProps {
+    className?: string;
+    onChange?: (newUsername: string) => void;
+    onBlur?: (username: string) => void;
+    disableSubmit?: boolean;
+    username: string;
+    autoFocus: boolean;
 }
 
 /** UI component that renders the email login field. */
@@ -265,8 +324,8 @@ function EmailLoginField(props: IEmailLoginFieldProps) {
             label={_t("Email")}
             placeholder="joe@example.com"
             value={props.username}
-            onChange={props.onUsernameChanged}
-            onBlur={props.onUsernameBlur}
+            onChange={props.onChange}
+            onBlur={props.onBlur}
             disabled={props.disableSubmit}
             autoFocus={props.autoFocus}
         />
@@ -277,8 +336,8 @@ interface IMXIDLoginFieldProps {
     autoFocus: boolean;
     className?: string;
     username: string;
-    onUsernameChanged?: (newUsername: string) => void;
-    onUsernameBlur?: (username: string) => void;
+    onChange?: (newUsername: string) => void;
+    onBlur?: (username: string) => void;
     disableSubmit?: boolean;
 }
 
@@ -294,8 +353,8 @@ function MXIDLoginField(props: IMXIDLoginFieldProps) {
             type="text"
             label={_t("Username")}
             value={props.username}
-            onChange={props.onUsernameChanged}
-            onBlur={props.onUsernameBlur}
+            onChange={props.onChange}
+            onBlur={props.onBlur}
             disabled={props.disableSubmit}
             autoFocus={props.autoFocus}
         />
@@ -304,7 +363,7 @@ function MXIDLoginField(props: IMXIDLoginFieldProps) {
 
 interface IForgotPasswordProps {
     disabled: boolean;
-    onForgotPasswordClick: (event?: ButtonEvent) => void;
+    onClick: (event?: ButtonEvent) => void;
 }
 
 function ForgotPassword(props: IForgotPasswordProps) {
@@ -316,7 +375,7 @@ function ForgotPassword(props: IForgotPasswordProps) {
                         className="mx_Login_forgot"
                         disabled={props.disabled}
                         kind="link"
-                        onClick={props.onForgotPasswordClick}
+                        onClick={props.onClick}
                     >
                         {sub}
                     </AccessibleButton>
@@ -327,7 +386,7 @@ function ForgotPassword(props: IForgotPasswordProps) {
 }
 
 interface ILoginTypeSelectorProps {
-    onLoginTypeChange: (event: React.ChangeEvent) => void;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     loginType: string;
     disableSubmit?: boolean;
 }
@@ -341,7 +400,7 @@ function LoginTypeSelector(props: ILoginTypeSelectorProps) {
             <Field
                 element="select"
                 value={props.loginType}
-                onChange={props.onLoginTypeChange}
+                onChange={props.onChange}
                 disabled={props.disableSubmit}
             >
                 <option
@@ -368,7 +427,17 @@ function LoginTypeSelector(props: ILoginTypeSelectorProps) {
 }
 
 /** Check the password form for any errors. */
-function getErrors({ loginType, username, phoneNumber, password }: { loginType: LoginType, username: string, phoneNumber: string, password: string }) {
+function getErrors({
+    loginType,
+    username,
+    phoneNumber,
+    password,
+}: {
+    loginType: LoginType,
+    username: string,
+    phoneNumber: string,
+    password: string
+}) {
     if (!password) {
         return _t('The password field must not be blank.');
     }
