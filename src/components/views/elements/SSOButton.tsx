@@ -20,11 +20,22 @@ import PropTypes from 'prop-types';
 import PlatformPeg from "../../../PlatformPeg";
 import AccessibleButton from "./AccessibleButton";
 import {_t} from "../../../languageHandler";
+import MatrixChat from '../../structures/MatrixChat';
 
-const SSOButton = ({matrixClient, loginType, fragmentAfterLogin, ...props}) => {
-    const onClick = () => {
+interface IProps {
+    matrixClient: MatrixChat;
+    
+    /** The type of Single Sign-On to use. */
+    loginType: 'sso' | 'cas';
+
+    /** The hash to pass to the app, during the SSO callback. */
+    fragmentAfterLogin?: string;
+}
+
+export default function SSOButton ({matrixClient, loginType, fragmentAfterLogin, ...props}: IProps) {
+    function onClick () {
         PlatformPeg.get().startSingleSignOn(matrixClient, loginType, fragmentAfterLogin);
-    };
+    }
 
     return (
         <AccessibleButton {...props} kind="primary" onClick={onClick}>
@@ -38,5 +49,3 @@ SSOButton.propTypes = {
     loginType: PropTypes.oneOf(["sso", "cas"]), // defaults to "sso" in base-apis
     fragmentAfterLogin: PropTypes.string,
 };
-
-export default SSOButton;
