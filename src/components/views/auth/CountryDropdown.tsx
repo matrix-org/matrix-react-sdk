@@ -101,6 +101,7 @@ export default function CountryDropdown(props: IProps) {
     const defaultCountryCode = SdkConfig.get()["defaultCountryCode"];
     const defaultCountry = defaultCountryCode ? COUNTRIES_BY_ISO2[defaultCountryCode] : COUNTRIES[0];
     const [searchQuery, setSearchQuery] = React.useState('');
+    const { onOptionChange } = props;
 
     React.useEffect(() => {
         if (props.value) {
@@ -109,11 +110,7 @@ export default function CountryDropdown(props: IProps) {
             // doesn't know this, therefore we do this.
             props.onOptionChange(defaultCountry);
         }
-    }, []);
-
-    function onOptionChange(iso2: string) {
-        props.onOptionChange(COUNTRIES_BY_ISO2[iso2]);
-    }
+    }, [onOptionChange, defaultCountry]);
 
     let [displayedCountries, setDisplayedCountries] = React.useState<Country[]>([]);
 
@@ -145,14 +142,14 @@ export default function CountryDropdown(props: IProps) {
 
     const options = displayedCountries.map((country) => (
         // Now it's time to take the options and render them.
-        <CountryDropdownOption {...props} value={value} country={country} />
+        <CountryDropdownOption {...props} value={value} country={country} key={country.iso2} />
     ));
 
     return (
         <Dropdown
             id="mx_CountryDropdown"
             className={props.className + " mx_CountryDropdown"}
-            onOptionChange={onOptionChange}
+            onOptionChange={(iso2) => onOptionChange(COUNTRIES_BY_ISO2[iso2])}
             onSearchChange={(search) => setSearchQuery(search)}
             menuWidth={298}
             getShortOption={iso2 => <ShortOption {...props} value={iso2} />}
