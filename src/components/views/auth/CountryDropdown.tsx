@@ -22,8 +22,6 @@ import * as sdk from '../../../index';
 import {COUNTRIES, getEmojiFlag} from '../../../phonenumber';
 import SdkConfig from "../../../SdkConfig";
 import { _t } from "../../../languageHandler";
-import { Interface } from 'readline';
-import { ValuesOf } from '../../../@types/common';
 
 const COUNTRIES_BY_ISO2: Record<string, Country> = {};
 
@@ -47,6 +45,8 @@ interface IProps {
 
     /** Whether or not to append a numeral prefix to the value. */
     isSmall?: boolean;
+
+    disabled?: true;
 }
 
 function countryMatchesSearchQuery(query, country) {
@@ -62,7 +62,7 @@ function countryMatchesSearchQuery(query, country) {
 }
 
 /** UI component that renders an emoji container for the dropdown. */
-function FlagImgForIso2({ value }: IProps) {
+function FlagImgForISO2({ value }: IProps) {
     return (
         <div className="mx_Dropdown_option_emoji">{ getEmojiFlag(value) }</div>
     );
@@ -77,26 +77,26 @@ function ShortOption(props: IProps) {
     const countryPrefix = props.showPrefix ? '+' + COUNTRIES_BY_ISO2[props.value].prefix : null;
     return (
         <span className="mx_CountryDropdown_shortOption">
-            <FlagImgForIso2 {...props} />
+            <FlagImgForISO2 {...props} />
             { countryPrefix }
         </span>
     );
 }
 
 /** UI component that renders an option in the country dropdown. */
-function CountryDropdownOption (props: IProps & { country: Country }) {
+function CountryDropdownOption(props: IProps & { country: Country }) {
     const { country } = props;
 
     return (
         <div className="mx_CountryDropdown_option" key={country.iso2}>
-            { <FlagImgForIso2 {...props} /> }
+            { <FlagImgForISO2 {...props} /> }
             { props.country.name } (+{ country.prefix })
         </div>
     );
 }
 
 /** UI component that renders a country dropdown. */
-export default function CountryDropdown (props: IProps) {
+export default function CountryDropdown(props: IProps) {
     const Dropdown = sdk.getComponent('elements.Dropdown');
     const defaultCountryCode = SdkConfig.get()["defaultCountryCode"];
     const defaultCountry = defaultCountryCode ? COUNTRIES_BY_ISO2[defaultCountryCode] : COUNTRIES[0];
@@ -111,16 +111,16 @@ export default function CountryDropdown (props: IProps) {
         }
     }, []);
 
-    function onOptionChange (iso2: string) {
+    function onOptionChange(iso2: string) {
         props.onOptionChange(COUNTRIES_BY_ISO2[iso2]);
     }
 
     let [displayedCountries, setDisplayedCountries] = React.useState<Country[]>([]);
 
-    if (this.state.searchQuery) {
+    if (searchQuery) {
         // If we have a search query, we'll filter through the list of countries and render the result.
         setDisplayedCountries(COUNTRIES.filter(
-            (country: Country) => countryMatchesSearchQuery(searchQuery, country)
+            (country: Country) => countryMatchesSearchQuery(searchQuery, country),
         ));
 
         if (
@@ -151,14 +151,14 @@ export default function CountryDropdown (props: IProps) {
     return (
         <Dropdown
             id="mx_CountryDropdown"
-            className={this.props.className + " mx_CountryDropdown"}
-            onOptionChange={this._onOptionChange}
-            onSearchChange={this._onSearchChange}
+            className={props.className + " mx_CountryDropdown"}
+            onOptionChange={onOptionChange}
+            onSearchChange={(search) => setSearchQuery(search)}
             menuWidth={298}
-            getShortOption={this._getShortOption}
+            getShortOption={iso2 => <ShortOption {...props} value={iso2} />}
             value={value}
             searchEnabled={true}
-            disabled={this.props.disabled}
+            disabled={props.disabled}
             label={_t("Country Dropdown")}
         >
             { options }
