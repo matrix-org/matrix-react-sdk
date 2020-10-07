@@ -34,7 +34,3 @@ export default function AuthHeader(props: IProps) {
         </div>
     );
 }
-
-AuthHeader.propTypes = {
-    disableLanguageSelector: PropTypes.bool,
-};
