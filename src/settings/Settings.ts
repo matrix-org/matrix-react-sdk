@@ -331,11 +331,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td('Mirror local video feed'),
         default: false,
     },
-    "TagPanel.enableTagPanel": {
+    "GroupFilterPanel.enableGroupFilterPanel": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Enable Community Filter Panel'),
         default: true,
-        invertedSettingName: 'TagPanel.disableTagPanel',
+        invertedSettingName: 'GroupFilterPanel.disableGroupFilterPanel',
     },
     "theme": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,

@@ -21,7 +21,7 @@ $tagPanelWidth: 56px; // only applies in this file, used for calculations
     min-width: 260px;
     max-width: 50%;
 
-    // Create a row-based flexbox for the TagPanel and the room list
+    // Create a row-based flexbox for the GroupFilterPanel and the room list
     display: flex;
 
     .mx_LeftPanel_tagPanelContainer {
@@ -30,13 +30,13 @@ $tagPanelWidth: 56px; // only applies in this file, used for calculations
         flex-basis: $tagPanelWidth;
         height: 100%;
 
-        // Create another flexbox so the TagPanel fills the container
+        // Create another flexbox so the GroupFilterPanel fills the container
         display: flex;
 
-        // TagPanel handles its own CSS
+        // GroupFilterPanel handles its own CSS
     }
 
-    &:not(.mx_LeftPanel_hasTagPanel) {
+    &:not(.mx_LeftPanel_hasGroupFilterPanel) {
         .mx_LeftPanel_roomListContainer {
             width: 100%;
         }
@@ -169,10 +169,10 @@ $tagPanelWidth: 56px; // only applies in this file, used for calculations
         min-width: unset;
 
         // We have to forcefully set the width to override the resizer's style attribute.
-        &.mx_LeftPanel_hasTagPanel {
+        &.mx_LeftPanel_hasGroupFilterPanel {
             width: calc(68px + $tagPanelWidth) !important;
         }
-        &:not(.mx_LeftPanel_hasTagPanel) {
+        &:not(.mx_LeftPanel_hasGroupFilterPanel) {
             width: 68px !important;
         }
 

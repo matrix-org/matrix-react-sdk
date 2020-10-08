@@ -22,7 +22,7 @@ import dis from '../../dispatcher/dispatcher';
 import classNames from 'classnames';
 import * as FormattingUtils from '../../utils/FormattingUtils';
 
-class CustomRoomTagPanel extends React.Component {
+class CustomRoomGroupFilterPanel extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -47,13 +47,13 @@ class CustomRoomTagPanel extends React.Component {
             return (<CustomRoomTagTile tag={tag} key={tag.name} />);
         });
 
-        const classes = classNames('mx_CustomRoomTagPanel', {
-            mx_CustomRoomTagPanel_empty: this.state.tags.length === 0,
+        const classes = classNames('mx_CustomRoomGroupFilterPanel', {
+            mx_CustomRoomGroupFilterPanel_empty: this.state.tags.length === 0,
         });
 
         return (<div className={classes}>
-            <div className="mx_CustomRoomTagPanel_divider" />
-            <AutoHideScrollbar className="mx_CustomRoomTagPanel_scroller">
+            <div className="mx_CustomRoomGroupFilterPanel_divider" />
+            <AutoHideScrollbar className="mx_CustomRoomGroupFilterPanel_scroller">
                 {tags}
             </AutoHideScrollbar>
         </div>);
@@ -72,7 +72,7 @@ class CustomRoomTagTile extends React.Component {
         const tag = this.props.tag;
         const avatarHeight = 40;
         const className = classNames({
-            "CustomRoomTagPanel_tileSelected": tag.selected,
+            "CustomRoomGroupFilterPanel_tileSelected": tag.selected,
         });
         const name = tag.name;
         const badgeNotifState = tag.badgeNotifState;
@@ -101,4 +101,4 @@ class CustomRoomTagTile extends React.Component {
     }
 }
 
-export default CustomRoomTagPanel;
+export default CustomRoomGroupFilterPanel;

@@ -997,7 +997,7 @@ Changes in [2.7.0-rc.1](https://github.com/matrix-org/matrix-react-sdk/releases/
    [\#4347](https://github.com/matrix-org/matrix-react-sdk/pull/4347)
  * Revert "Prevent PersistedElements overflowing scrolled areas"
    [\#4682](https://github.com/matrix-org/matrix-react-sdk/pull/4682)
- * Remove unused TagPanelButtons
+ * Remove unused GroupFilterPanelButtons
    [\#4680](https://github.com/matrix-org/matrix-react-sdk/pull/4680)
  * Pass roomId to IRCTimelineProfileResizer
    [\#4679](https://github.com/matrix-org/matrix-react-sdk/pull/4679)
@@ -2331,7 +2331,7 @@ Changes in [2.1.0-rc.1](https://github.com/matrix-org/matrix-react-sdk/releases/
    [\#4027](https://github.com/matrix-org/matrix-react-sdk/pull/4027)
  * Fix verification toast to close at 0s
    [\#3998](https://github.com/matrix-org/matrix-react-sdk/pull/3998)
- * Fix listener leak in TagPanel
+ * Fix listener leak in GroupFilterPanel
    [\#4026](https://github.com/matrix-org/matrix-react-sdk/pull/4026)
  * Update from Weblate
    [\#4025](https://github.com/matrix-org/matrix-react-sdk/pull/4025)
@@ -7153,7 +7153,7 @@ Changes in [0.12.0-rc.2](https://github.com/matrix-org/matrix-react-sdk/releases
 ===============================================================================================================
 [Full Changelog](https://github.com/matrix-org/matrix-react-sdk/compare/v0.12.0-rc.1...v0.12.0-rc.2)
 
- * Take TagPanel out of labs
+ * Take GroupFilterPanel out of labs
    [\#1805](https://github.com/matrix-org/matrix-react-sdk/pull/1805)
 
 Changes in [0.12.0-rc.1](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v0.12.0-rc.1) (2018-03-19)
@@ -7176,7 +7176,7 @@ Changes in [0.12.0-rc.1](https://github.com/matrix-org/matrix-react-sdk/releases
    [\#1796](https://github.com/matrix-org/matrix-react-sdk/pull/1796)
  * Fix syntax fail
    [\#1794](https://github.com/matrix-org/matrix-react-sdk/pull/1794)
- * Use TintableSvg for TagPanel clear filter button
+ * Use TintableSvg for GroupFilterPanel clear filter button
    [\#1793](https://github.com/matrix-org/matrix-react-sdk/pull/1793)
  * Fix missing space between "...is a" and user ID
    [\#1792](https://github.com/matrix-org/matrix-react-sdk/pull/1792)
@@ -7196,7 +7196,7 @@ Changes in [0.12.0-rc.1](https://github.com/matrix-org/matrix-react-sdk/releases
    [\#1783](https://github.com/matrix-org/matrix-react-sdk/pull/1783)
  * Workaround for atlassian/react-beautiful-dnd#273
    [\#1782](https://github.com/matrix-org/matrix-react-sdk/pull/1782)
- * Add setting to disable TagPanel
+ * Add setting to disable GroupFilterPanel
    [\#1781](https://github.com/matrix-org/matrix-react-sdk/pull/1781)
  * [DO NOT MERGE] Tests proven to fail
    [\#1780](https://github.com/matrix-org/matrix-react-sdk/pull/1780)
@@ -7240,7 +7240,7 @@ Changes in [0.12.0-rc.1](https://github.com/matrix-org/matrix-react-sdk/releases
    [\#1747](https://github.com/matrix-org/matrix-react-sdk/pull/1747)
  * Remove RoomListStore listener
    [\#1752](https://github.com/matrix-org/matrix-react-sdk/pull/1752)
- * Implement GroupTile avatar dragging to TagPanel
+ * Implement GroupTile avatar dragging to GroupFilterPanel
    [\#1751](https://github.com/matrix-org/matrix-react-sdk/pull/1751)
  * Fix custom tags not being ordered manually
    [\#1750](https://github.com/matrix-org/matrix-react-sdk/pull/1750)
@@ -7254,7 +7254,7 @@ Changes in [0.12.0-rc.1](https://github.com/matrix-org/matrix-react-sdk/releases
    [\#1748](https://github.com/matrix-org/matrix-react-sdk/pull/1748)
  * Move RoomList state to RoomListStore
    [\#1719](https://github.com/matrix-org/matrix-react-sdk/pull/1719)
- * Move groups button to TagPanel
+ * Move groups button to GroupFilterPanel
    [\#1744](https://github.com/matrix-org/matrix-react-sdk/pull/1744)
  * Add seconds to timestamp on hover
    [\#1738](https://github.com/matrix-org/matrix-react-sdk/pull/1738)
@@ -7314,7 +7314,7 @@ Changes in [0.12.0-rc.1](https://github.com/matrix-org/matrix-react-sdk/releases
    [\#1709](https://github.com/matrix-org/matrix-react-sdk/pull/1709)
  * Ignore remote echos caused by this client
    [\#1708](https://github.com/matrix-org/matrix-react-sdk/pull/1708)
- * Replace TagPanel react-dnd with react-beautiful-dnd
+ * Replace GroupFilterPanel react-dnd with react-beautiful-dnd
    [\#1705](https://github.com/matrix-org/matrix-react-sdk/pull/1705)
  * Only set selected tags state when updating rooms
    [\#1704](https://github.com/matrix-org/matrix-react-sdk/pull/1704)
@@ -7364,7 +7364,7 @@ Changes in [0.12.0-rc.1](https://github.com/matrix-org/matrix-react-sdk/releases
    [\#1686](https://github.com/matrix-org/matrix-react-sdk/pull/1686)
  * Remove unused selectedRoom prop
    [\#1690](https://github.com/matrix-org/matrix-react-sdk/pull/1690)
- * Fix shift and shift-ctrl click in TagPanel
+ * Fix shift and shift-ctrl click in GroupFilterPanel
    [\#1684](https://github.com/matrix-org/matrix-react-sdk/pull/1684)
  * skip direct chats which either you or the target have left
    [\#1344](https://github.com/matrix-org/matrix-react-sdk/pull/1344)
@@ -7375,7 +7375,7 @@ Changes in [0.12.0-rc.1](https://github.com/matrix-org/matrix-react-sdk/releases
    [\#1685](https://github.com/matrix-org/matrix-react-sdk/pull/1685)
  * Dedupe requests to fetch group profile data
    [\#1666](https://github.com/matrix-org/matrix-react-sdk/pull/1666)
- * Get Group profile from TagTile instead of TagPanel
+ * Get Group profile from TagTile instead of GroupFilterPanel
    [\#1667](https://github.com/matrix-org/matrix-react-sdk/pull/1667)
  *  Fix leaking of GroupStore listeners in RoomList
    [\#1664](https://github.com/matrix-org/matrix-react-sdk/pull/1664)
@@ -7388,13 +7388,13 @@ Changes in [0.12.0-rc.1](https://github.com/matrix-org/matrix-react-sdk/releases
  * Fix issue with preview of phone number on register and waiting for sms code
    confirmation code
    [\#1670](https://github.com/matrix-org/matrix-react-sdk/pull/1670)
- * Attempt to improve TagPanel performance
+ * Attempt to improve GroupFilterPanel performance
    [\#1647](https://github.com/matrix-org/matrix-react-sdk/pull/1647)
  * Fix one variant of a scroll jump that occurs when decrypting an m.text
    [\#1656](https://github.com/matrix-org/matrix-react-sdk/pull/1656)
  * Avoid NPEs by using ref method for collecting loggedInView in MatrixChat
    [\#1665](https://github.com/matrix-org/matrix-react-sdk/pull/1665)
- * DnD Ordered TagPanel
+ * DnD Ordered GroupFilterPanel
    [\#1653](https://github.com/matrix-org/matrix-react-sdk/pull/1653)
  * Update widget title on edit.
    [\#1663](https://github.com/matrix-org/matrix-react-sdk/pull/1663)
@@ -7422,7 +7422,7 @@ Changes in [0.12.0-rc.1](https://github.com/matrix-org/matrix-react-sdk/releases
    [\#1641](https://github.com/matrix-org/matrix-react-sdk/pull/1641)
  * Don't show group when clicking tag panel
    [\#1642](https://github.com/matrix-org/matrix-react-sdk/pull/1642)
- * Implement TagPanel (or LeftLeftPanel) for group filtering
+ * Implement GroupFilterPanel (or LeftLeftPanel) for group filtering
    [\#1639](https://github.com/matrix-org/matrix-react-sdk/pull/1639)
  * Implement UI for using bulk device deletion API
    [\#1638](https://github.com/matrix-org/matrix-react-sdk/pull/1638)

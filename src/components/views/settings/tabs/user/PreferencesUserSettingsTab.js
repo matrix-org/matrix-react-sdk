@@ -54,7 +54,7 @@ export default class PreferencesUserSettingsTab extends React.Component {
     static ADVANCED_SETTINGS = [
         'alwaysShowEncryptionIcons',
         'Pill.shouldShowPillAvatar',
-        'TagPanel.enableTagPanel',
+        'GroupFilterPanel.enableGroupFilterPanel',
         'promptBeforeInviteUnknownUsers',
         // Start automatically after startup (electron-only)
         // Autocomplete delay (niche text box)

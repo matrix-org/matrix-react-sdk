@@ -21,32 +21,32 @@ limitations under the License.
     flex-direction: column;
 }
 
-.mx_CustomRoomTagPanel {
+.mx_CustomRoomGroupFilterPanel {
     background-color: $tagpanel-bg-color;
     max-height: 40vh;
 }
 
-.mx_CustomRoomTagPanel_scroller {
+.mx_CustomRoomGroupFilterPanel_scroller {
     max-height: inherit;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.mx_CustomRoomTagPanel .mx_AccessibleButton {
+.mx_CustomRoomGroupFilterPanel .mx_AccessibleButton {
     margin: 0 auto;
     width: 40px;
     padding: 10px 0 9px 0;
     position: relative;
 }
 
-.mx_CustomRoomTagPanel .mx_BaseAvatar_image {
+.mx_CustomRoomGroupFilterPanel .mx_BaseAvatar_image {
     box-sizing: border-box;
     width: 40px;
     height: 40px;
 }
 
-.mx_CustomRoomTagPanel .mx_AccessibleButton.CustomRoomTagPanel_tileSelected::before {
+.mx_CustomRoomGroupFilterPanel .mx_AccessibleButton.CustomRoomGroupFilterPanel_tileSelected::before {
     content: '';
     height: 56px;
     background-color: $accent-color-alt;
