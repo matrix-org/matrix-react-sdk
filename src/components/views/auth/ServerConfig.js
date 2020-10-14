@@ -26,6 +26,7 @@ import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
 import SdkConfig from "../../../SdkConfig";
 import { createClient } from 'matrix-js-sdk/src/matrix';
 import classNames from 'classnames';
+import InfoDialog from "../dialogs/InfoDialog";
 
 /*
  * A pure UI component which displays the HS and IS to use.
@@ -211,16 +212,37 @@ export default class ServerConfig extends React.PureComponent {
         return setTimeout(fn.bind(this), this.props.delayTimeMs);
     }
 
-    showHelpPopup = () => {
-        const CustomServerDialog = sdk.getComponent('auth.CustomServerDialog');
-        Modal.createTrackedDialog('Custom Server Dialog', '', CustomServerDialog);
+    showHsHelpPopup = () => {
+        Modal.createTrackedDialog('What does this mean?', 'HS', InfoDialog, {
+            title: _t("Homeserver URL"),
+            description: _t(
+                "You can use the custom server options to sign into other " +
+                "Matrix servers by specifying a different homeserver URL. This " +
+                "allows you to use %(brand)s with an existing Matrix account on a " +
+                "different homeserver.",
+                { brand: SdkConfig.get().brand },
+            ),
+            button: _t("Dismiss"),
+        });
+    };
+
+    showIsHelpPopup = () => {
+        Modal.createTrackedDialog('What does this mean?', 'IS', InfoDialog, {
+            title: _t("Identity Server URL"),
+            description: _t(
+                "The optional identity server is responsible for allowing you " +
+                "to find people by their e-mail address.",
+                { brand: SdkConfig.get().brand },
+            ),
+            button: _t("Dismiss"),
+        });
     };
 
     _renderHomeserverSection() {
         const Field = sdk.getComponent('elements.Field');
         return <div>
             {_t("Enter your custom homeserver URL <a>What does this mean?</a>", {}, {
-                a: sub => <a className="mx_ServerConfig_help" href="#" onClick={this.showHelpPopup}>
+                a: sub => <a className="mx_ServerConfig_help" href="#" onClick={this.showHsHelpPopup}>
                     {sub}
                 </a>,
             })}
@@ -244,7 +266,7 @@ export default class ServerConfig extends React.PureComponent {
         });
         return <div className={classes}>
             {_t("Enter your custom identity server URL <a>What does this mean?</a>", {}, {
-                a: sub => <a className="mx_ServerConfig_help" href="#" onClick={this.showHelpPopup}>
+                a: sub => <a className="mx_ServerConfig_help" href="#" onClick={this.showIsHelpPopup}>
                     {sub}
             </a>,
             })}
