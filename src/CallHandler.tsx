@@ -65,7 +65,6 @@ import dis from './dispatcher/dispatcher';
 import WidgetUtils from './utils/WidgetUtils';
 import WidgetEchoStore from './stores/WidgetEchoStore';
 import SettingsStore from './settings/SettingsStore';
-import {generateHumanReadableId} from "./utils/NamingUtils";
 import {Jitsi} from "./widgets/Jitsi";
 import {WidgetType} from "./widgets/WidgetType";
 import {SettingLevel} from "./settings/SettingLevel";
@@ -78,6 +77,7 @@ import WidgetStore from "./stores/WidgetStore";
 import { WidgetMessagingStore } from "./stores/widgets/WidgetMessagingStore";
 import { ElementWidgetActions } from "./stores/widgets/ElementWidgetActions";
 import { MatrixCall, CallErrorCode, CallState, CallEvent, CallParty } from "matrix-js-sdk/lib/webrtc/call";
+import { OwnProfileStore } from "./stores/OwnProfileStore";
 
 enum AudioID {
     Ring = 'ringAudio',
@@ -470,8 +470,21 @@ export default class CallHandler {
             // https://github.com/matrix-org/prosody-mod-auth-matrix-user-verification
             confId = base32.stringify(Buffer.from(roomId), { pad: false });
         } else {
-            // Create a random human readable conference ID
-            confId = `JitsiConference${generateHumanReadableId()}`;
+            // Create a legible and human-readable conference ID (which is used as the conference
+            // room). Avoid using word generators because they are often unhelpful:
+            // see https://github.com/vector-im/element-web/issues/15205
+            const roomName = room.name || room.roomId;
+            const now = new Date();
+            const nowTime = `${now.getHours()}-${now.getMinutes()}-${now.getSeconds()}`; // colons can't be used
+            const userName = OwnProfileStore.instance.displayName || MatrixClientPeg.get().getUserId();
+
+            // Note: we stick the user's in the conference ID to avoid conflicts/malicious attempts to
+            // get into the call. For example, if someone were to find out that Element Internal has
+            // a call at 10:05:02 every day, they would also need to know who started it. In practice,
+            // the seconds being included in the time are likely good enough.
+
+            // We also just strip off any unsupported characters
+            confId = `${roomName} at ${nowTime} with ${userName}`.replace(/[^a-zA-Z\-_0-9 ]/g, '');
         }
 
         let widgetUrl = WidgetUtils.getLocalJitsiWrapperUrl({auth: jitsiAuth});
