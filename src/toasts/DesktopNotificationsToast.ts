@@ -30,19 +30,20 @@ const onReject = () => {
 const TOAST_KEY = "desktopnotifications";
 
 export const showToast = () => {
-    ToastStore.sharedInstance().addOrReplaceToast({
-        key: TOAST_KEY,
-        title: _t("Notifications"),
-        props: {
-            description: _t("You are not receiving desktop notifications"),
-            acceptLabel: _t("Enable them now"),
-            onAccept,
-            rejectLabel: _t("Close"),
-            onReject,
-        },
-        component: GenericToast,
-        priority: 30,
-    });
+    return null; // TravisR - notifications are not possible for this deployment.
+    // ToastStore.sharedInstance().addOrReplaceToast({
+    //     key: TOAST_KEY,
+    //     title: _t("Notifications"),
+    //     props: {
+    //         description: _t("You are not receiving desktop notifications"),
+    //         acceptLabel: _t("Enable them now"),
+    //         onAccept,
+    //         rejectLabel: _t("Close"),
+    //         onReject,
+    //     },
+    //     component: GenericToast,
+    //     priority: 30,
+    // });
 };
 
 export const hideToast = () => {
