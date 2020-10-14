@@ -368,13 +368,14 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     /> */}
                     { feedbackButton }
                 </IconizedContextMenuOptionList>
-                <IconizedContextMenuOptionList red>
-                    <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconSignOut"
-                        label={_t("Sign out")}
-                        onClick={this.onSignOutClick}
-                    />
-                </IconizedContextMenuOptionList>
+                {/*TravisR - No logout link for this deployment*/}
+                {/*<IconizedContextMenuOptionList red>*/}
+                {/*    <IconizedContextMenuOption*/}
+                {/*        iconClassName="mx_UserMenu_iconSignOut"*/}
+                {/*        label={_t("Sign out")}*/}
+                {/*        onClick={this.onSignOutClick}*/}
+                {/*    />*/}
+                {/*</IconizedContextMenuOptionList>*/}
             </React.Fragment>
         );
         let secondarySection = null;
@@ -442,13 +443,14 @@ export default class UserMenu extends React.Component<IProps, IState> {
                         />
                         { feedbackButton }
                     </IconizedContextMenuOptionList>
-                    <IconizedContextMenuOptionList red>
-                        <IconizedContextMenuOption
-                            iconClassName="mx_UserMenu_iconSignOut"
-                            label={_t("Sign out")}
-                            onClick={this.onSignOutClick}
-                        />
-                    </IconizedContextMenuOptionList>
+                    {/*TravisR - No logout link for this deployment*/}
+                    {/*<IconizedContextMenuOptionList red>*/}
+                    {/*    <IconizedContextMenuOption*/}
+                    {/*        iconClassName="mx_UserMenu_iconSignOut"*/}
+                    {/*        label={_t("Sign out")}*/}
+                    {/*        onClick={this.onSignOutClick}*/}
+                    {/*    />*/}
+                    {/*</IconizedContextMenuOptionList>*/}
                 </React.Fragment>
             )
         } else if (MatrixClientPeg.get().isGuest()) {
