@@ -1974,7 +1974,7 @@
     "Homeserver URL": "Homeserver URL",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.",
     "Identity Server URL": "Identity Server URL",
-    "The optional identity server is responsible for allowing you to find people by their e-mail address.": "The optional identity server is responsible for allowing you to find people by their e-mail address.",
+    "The optional identity server is responsible for allowing you to find people by their e-mail address and phone number.": "The optional identity server is responsible for allowing you to find people by their e-mail address and phone number.",
     "Enter your custom homeserver URL <a>What does this mean?</a>": "Enter your custom homeserver URL <a>What does this mean?</a>",
     "Enter your custom identity server URL <a>What does this mean?</a>": "Enter your custom identity server URL <a>What does this mean?</a>",
     "Other servers": "Other servers",

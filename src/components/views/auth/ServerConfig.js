@@ -226,12 +226,12 @@ export default class ServerConfig extends React.PureComponent {
         });
     };
 
-    showIsHelpPopup = () => {
+    showIdentityServerHelpPopup = () => {
         Modal.createTrackedDialog('What does this mean?', 'IS', InfoDialog, {
             title: _t("Identity Server URL"),
             description: _t(
                 "The optional identity server is responsible for allowing you " +
-                "to find people by their e-mail address.",
+                "to find people by their e-mail address and phone number.",
                 { brand: SdkConfig.get().brand },
             ),
             button: _t("Dismiss"),
@@ -266,7 +266,7 @@ export default class ServerConfig extends React.PureComponent {
         });
         return <div className={classes}>
             {_t("Enter your custom identity server URL <a>What does this mean?</a>", {}, {
-                a: sub => <a className="mx_ServerConfig_help" href="#" onClick={this.showIsHelpPopup}>
+                a: sub => <a className="mx_ServerConfig_help" href="#" onClick={this.showIdentityServerHelpPopup}>
                     {sub}
             </a>,
             })}
