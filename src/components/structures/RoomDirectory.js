@@ -35,7 +35,7 @@ import GroupStore from "../../stores/GroupStore";
 import FlairStore from "../../stores/FlairStore";
 
 const MAX_NAME_LENGTH = 80;
-const MAX_TOPIC_LENGTH = 160;
+const MAX_TOPIC_LENGTH = 800;
 
 function track(action) {
     Analytics.trackEvent('RoomDirectory', action);
@@ -70,10 +70,10 @@ export default class RoomDirectory extends React.Component {
         this.scrollPanel = null;
         this.protocols = null;
 
-        this.setState({protocolsLoading: true});
+        this.state.protocolsLoading = true;
         if (!MatrixClientPeg.get()) {
             // We may not have a client yet when invoked from welcome page
-            this.setState({protocolsLoading: false});
+            this.state.protocolsLoading = false;
             return;
         }
 
@@ -102,14 +102,16 @@ export default class RoomDirectory extends React.Component {
             });
         } else {
             // We don't use the protocols in the communities v2 prototype experience
-            this.setState({protocolsLoading: false});
+            this.state.protocolsLoading = false;
 
             // Grab the profile info async
             FlairStore.getGroupProfileCached(MatrixClientPeg.get(), this.state.selectedCommunityId).then(profile => {
                 this.setState({communityName: profile.name});
             });
         }
+    }
 
+    componentDidMount() {
         this.refreshRoomList();
     }
 
@@ -390,22 +392,12 @@ export default class RoomDirectory extends React.Component {
     };
 
     onPreviewClick = (ev, room) => {
-        this.props.onFinished();
-        dis.dispatch({
-            action: 'view_room',
-            room_id: room.room_id,
-            should_peek: true,
-        });
+        this.showRoom(room, null, false, true);
         ev.stopPropagation();
     };
 
     onViewClick = (ev, room) => {
-        this.props.onFinished();
-        dis.dispatch({
-            action: 'view_room',
-            room_id: room.room_id,
-            should_peek: false,
-        });
+        this.showRoom(room);
         ev.stopPropagation();
     };
 
@@ -426,11 +418,12 @@ export default class RoomDirectory extends React.Component {
         this.showRoom(null, alias, autoJoin);
     }
 
-    showRoom(room, room_alias, autoJoin=false) {
+    showRoom(room, room_alias, autoJoin = false, shouldPeek = false) {
         this.props.onFinished();
         const payload = {
             action: 'view_room',
             auto_join: autoJoin,
+            should_peek: shouldPeek,
         };
         if (room) {
             // Don't let the user view a room they won't be able to either
@@ -455,6 +448,7 @@ export default class RoomDirectory extends React.Component {
             };
 
             if (this.state.roomServer) {
+                payload.via_servers = [this.state.roomServer];
                 payload.opts = {
                     viaServers: [this.state.roomServer],
                 };
@@ -503,6 +497,9 @@ export default class RoomDirectory extends React.Component {
         }
 
         let topic = room.topic || '';
+        // Additional truncation based on line numbers is done via CSS,
+        // but to ensure that the DOM is not polluted with a huge string
+        // we give it a hard limit before rendering.
         if (topic.length > MAX_TOPIC_LENGTH) {
             topic = `${topic.substring(0, MAX_TOPIC_LENGTH)}...`;
         }
