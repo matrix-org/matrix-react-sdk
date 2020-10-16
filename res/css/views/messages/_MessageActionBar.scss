@@ -68,7 +68,7 @@ limitations under the License.
     width: 30px;
 
     /** Hack to get the buttons opaque. */
-    background-color: $primary-bg-color;
+    background: $primary-bg-color;
 
     &:not(:last-child) {
         /** Insert spaces between the action buttons. */
