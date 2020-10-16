@@ -27,7 +27,7 @@ limitations under the License.
     top: -26px;
     right: 8px;
     user-select: none;
-    // Ensure the action bar appears above over things, like the read marker.
+    /* Ensure the action bar appears above over things, like the read marker. */
     z-index: 1;
 
     // Adds a previous event safe area so that you can't accidentally hover the
@@ -51,31 +51,29 @@ limitations under the License.
         white-space: nowrap;
         display: inline-block;
         position: relative;
-        border: 1px solid $message-action-bar-border-color;
+        border: 1.5px solid $message-action-bar-border-color;
         margin-left: -1px;
 
         &:hover {
             border-color: $message-action-bar-hover-border-color;
             z-index: 1;
         }
-
-        &:first-child {
-            border-radius: 3px 0 0 3px;
-        }
-
-        &:last-child {
-            border-radius: 0 3px 3px 0;
-        }
-
-        &:only-child {
-            border-radius: 3px;
-        }
     }
 }
 
 
 .mx_MessageActionBar_maskButton {
-    width: 27px;
+    border-radius: 25px;
+    height: 30px;
+    width: 30px;
+
+    /** Hack to get the buttons opaque. */
+    background-color: $primary-bg-color;
+
+    &:not(:last-child) {
+        /** Insert spaces between the action buttons. */
+        margin-right: 5px;
+    }
 }
 
 .mx_MessageActionBar_maskButton::after {
