@@ -369,11 +369,14 @@ const UserOptionsSection: React.FC<{
                 });
             };
 
-            readReceiptButton = (
-                <AccessibleButton onClick={onReadReceiptButton} className="mx_UserInfo_field">
-                    { _t('Jump to read receipt') }
-                </AccessibleButton>
-            );
+            const room = cli.getRoom(member.roomId);
+            if (room?.getEventReadUpTo(member.userId)) {
+                readReceiptButton = (
+                    <AccessibleButton onClick={onReadReceiptButton} className="mx_UserInfo_field">
+                        { _t('Jump to read receipt') }
+                    </AccessibleButton>
+                );
+            }
 
             insertPillButton = (
                 <AccessibleButton onClick={onInsertPillButton} className={"mx_UserInfo_field"}>
@@ -798,6 +801,11 @@ const RoomAdminToolsContainer: React.FC<IBaseRoomProps> = ({
     } = powerLevels;
 
     const me = room.getMember(cli.getUserId());
+    if (!me) {
+        // we aren't in the room, so return no admin tooling
+        return <div />;
+    }
+
     const isMe = me.userId === member.userId;
     const canAffectUser = member.powerLevel < me.powerLevel || isMe;
 

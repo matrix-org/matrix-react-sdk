@@ -50,6 +50,7 @@ export default class AppTile extends React.Component {
         // The key used for PersistedElement
         this._persistKey = 'widget_' + this.props.app.id;
         this._sgWidget = new StopGapWidget(this.props);
+        this._sgWidget.on("preparing", this._onWidgetPrepared);
         this._sgWidget.on("ready", this._onWidgetReady);
         this.iframe = null; // ref to the iframe (callback style)
 
@@ -142,6 +143,7 @@ export default class AppTile extends React.Component {
             this._sgWidget.stop();
         }
         this._sgWidget = new StopGapWidget(newProps);
+        this._sgWidget.on("preparing", this._onWidgetPrepared);
         this._sgWidget.on("ready", this._onWidgetReady);
         this._startWidget();
     }
@@ -238,10 +240,14 @@ export default class AppTile extends React.Component {
             this.iframe.src = 'about:blank';
         }
 
+        if (WidgetType.JITSI.matches(this.props.app.type)) {
+            dis.dispatch({action: 'hangup_conference'});
+        }
+
         // Delete the widget from the persisted store for good measure.
         PersistedElement.destroyElement(this._persistKey);
 
-        this._sgWidget.stop();
+        this._sgWidget.stop({forceDestroy: true});
     }
 
     /* If user has permission to modify widgets, delete the widget,
@@ -295,8 +301,11 @@ export default class AppTile extends React.Component {
         this._revokeWidgetPermission();
     }
 
-    _onWidgetReady = () => {
+    _onWidgetPrepared = () => {
         this.setState({loading: false});
+    };
+
+    _onWidgetReady = () => {
         if (WidgetType.JITSI.matches(this.props.app.type)) {
             this._sgWidget.widgetApi.transport.send(ElementWidgetActions.ClientReady, {});
         }
@@ -382,6 +391,9 @@ export default class AppTile extends React.Component {
             if (this.props.show) {
                 // if we were being shown, end the widget as we're about to be minimized.
                 this._endWidgetActions();
+            } else {
+                // restart the widget actions
+                this._resetWidget(this.props);
             }
             dis.dispatch({
                 action: 'appsDrawer',
@@ -563,8 +575,8 @@ export default class AppTile extends React.Component {
             const canUserModify = this._canUserModify();
             const showEditButton = Boolean(this._sgWidget.isManagedByManager && canUserModify);
             const showDeleteButton = (this.props.showDelete === undefined || this.props.showDelete) && canUserModify;
-            const showPictureSnapshotButton = this._sgWidget.widgetApi.hasCapability(MatrixCapabilities.Screenshots)
-                && this.props.show;
+            const showPictureSnapshotButton = this.props.show && this._sgWidget.widgetApi &&
+                this._sgWidget.widgetApi.hasCapability(MatrixCapabilities.Screenshots);
 
             const WidgetContextMenu = sdk.getComponent('views.context_menus.WidgetContextMenu');
             contextMenu = (

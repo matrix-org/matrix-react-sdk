@@ -119,6 +119,7 @@ export default class WidgetStore extends AsyncStoreWithClient<IState> {
     }
 
     private loadRoomWidgets(room: Room) {
+        if (!room) return;
         const roomInfo = this.roomMap.get(room.roomId);
         roomInfo.widgets = [];
         this.generateApps(room).forEach(app => {
@@ -170,7 +171,7 @@ export default class WidgetStore extends AsyncStoreWithClient<IState> {
         const roomId = this.getRoomId(widgetId);
         const roomInfo = this.getRoom(roomId);
         return roomInfo && Object.keys(roomInfo.pinned).filter(k => {
-            return roomInfo.widgets.some(app => app.id === k);
+            return roomInfo.pinned[k] && roomInfo.widgets.some(app => app.id === k);
         }).length < 2;
     }
 

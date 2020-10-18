@@ -1,9 +1,6 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017 Vector Creations Ltd
-Copyright 2017, 2018 New Vector Ltd
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2015 - 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,7 +17,6 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import {Room} from "matrix-js-sdk/src/models/room";
 
 import * as sdk from '../../index';
@@ -162,7 +158,7 @@ export default class RightPanel extends React.Component {
     }
 
     onRoomStateMember(ev, state, member) {
-        if (member.roomId !== this.props.room.roomId) {
+        if (!this.props.room || member.roomId !== this.props.room.roomId) {
             return;
         }
         // redraw the badge on the membership list
@@ -307,14 +303,8 @@ export default class RightPanel extends React.Component {
                 break;
         }
 
-        const classes = classNames("mx_RightPanel", "mx_fadable", {
-            "collapsed": this.props.collapsed,
-            "mx_fadable_faded": this.props.disabled,
-            "dark-panel": true,
-        });
-
         return (
-            <aside className={classes} id="mx_RightPanel">
+            <aside className="mx_RightPanel dark-panel" id="mx_RightPanel">
                 { panel }
             </aside>
         );

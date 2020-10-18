@@ -26,7 +26,7 @@
 @import "./structures/_ScrollPanel.scss";
 @import "./structures/_SearchBox.scss";
 @import "./structures/_TabbedView.scss";
-@import "./structures/_TagPanel.scss";
+@import "./structures/_GroupFilterPanel.scss";
 @import "./structures/_ToastContainer.scss";
 @import "./structures/_UploadBar.scss";
 @import "./structures/_UserMenu.scss";
@@ -81,8 +81,6 @@
 @import "./views/dialogs/_RoomUpgradeWarningDialog.scss";
 @import "./views/dialogs/_ServerOfflineDialog.scss";
 @import "./views/dialogs/_SetEmailDialog.scss";
-@import "./views/dialogs/_SetMxIdDialog.scss";
-@import "./views/dialogs/_SetPasswordDialog.scss";
 @import "./views/dialogs/_SettingsDialog.scss";
 @import "./views/dialogs/_ShareDialog.scss";
 @import "./views/dialogs/_SlashCommandHelpDialog.scss";

@@ -657,8 +657,7 @@ export default class EventTile extends React.Component {
         // source tile when there's no regular tile for an event and also for
         // replace relations (which otherwise would display as a confusing
         // duplicate of the thing they are replacing).
-        const useSource = !tileHandler || this.props.mxEvent.isRelation("m.replace");
-        if (useSource && SettingsStore.getValue("showHiddenEventsInTimeline")) {
+        if (SettingsStore.getValue("showHiddenEventsInTimeline") && !haveTileForEvent(this.props.mxEvent)) {
             tileHandler = "messages.ViewSourceEvent";
             // Reuse info message avatar and sender profile styling
             isInfoMessage = true;
@@ -918,6 +917,7 @@ export default class EventTile extends React.Component {
                                            highlights={this.props.highlights}
                                            highlightLink={this.props.highlightLink}
                                            onHeightChanged={this.props.onHeightChanged}
+                                           replacingEventId={this.props.replacingEventId}
                                            showUrlPreview={false} />
                         </div>
                     </div>

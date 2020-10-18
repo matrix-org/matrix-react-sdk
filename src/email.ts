@@ -1,5 +1,5 @@
 /*
-Copyright 2017 Vector Creations Ltd
+Copyright 2016 OpenMarket Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,21 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_SetPasswordDialog_change_password input {
-    border-radius: 3px;
-    border: 1px solid $input-border-color;
-    padding: 9px;
-    color: $primary-fg-color;
-    background-color: $primary-bg-color;
-    font-size: $font-15px;
-    max-width: 280px;
-    margin-bottom: 10px;
-}
+const EMAIL_ADDRESS_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
-.mx_SetPasswordDialog_change_password_button {
-    margin-top: 68px;
-}
-
-.mx_SetPasswordDialog .mx_Dialog_content {
-    margin-bottom: 0px;
+export function looksValid(email: string): boolean {
+    return EMAIL_ADDRESS_REGEX.test(email);
 }
