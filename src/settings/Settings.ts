@@ -288,6 +288,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td('Autoplay GIFs and videos'),
         default: false,
     },
+    "enableMarkdown": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Format messages with Markdown'),
+        default: true
+    },
     "enableSyntaxHighlightLanguageDetection": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Enable automatic language detection for syntax highlighting'),

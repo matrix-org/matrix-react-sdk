@@ -42,6 +42,7 @@ import {Key} from "../../../Keyboard";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import RateLimitedFunc from '../../../ratelimitedfunc';
 import {Action} from "../../../dispatcher/actions";
+import SettingsStore from '../../../settings/SettingsStore';
 
 function addReplyToMessageContent(content, repliedToEvent, permalinkCreator) {
     const replyContent = ReplyThread.makeReplyMixIn(repliedToEvent);
@@ -74,7 +75,7 @@ export function createMessageContent(model, permalinkCreator, replyToEvent) {
         msgtype: isEmote ? "m.emote" : "m.text",
         body: body,
     };
-    const formattedBody = htmlSerializeIfNeeded(model, {forceHTML: !!replyToEvent});
+    const formattedBody = SettingsStore.getValue("enableMarkdown") && htmlSerializeIfNeeded(model, {forceHTML: !!replyToEvent});
     if (formattedBody) {
         content.format = "org.matrix.custom.html";
         content.formatted_body = formattedBody;
