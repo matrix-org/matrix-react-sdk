@@ -67,6 +67,7 @@ interface IState {
     notificationsMenuPosition: PartialDOMRect;
     generalMenuPosition: PartialDOMRect;
     messagePreview?: string;
+    windowFocused?: boolean;
 }
 
 const messagePreviewId = (roomId: string) => `mx_RoomTile_messagePreview_${roomId}`;
@@ -95,6 +96,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
 
             // generatePreview() will return nothing if the user has previews disabled
             messagePreview: this.generatePreview(),
+
+            windowFocused: true,
         };
 
         ActiveRoomObserver.addListener(this.props.room.roomId, this.onActiveRoomUpdate);
@@ -105,11 +108,21 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         this.roomProps = EchoChamber.forRoom(this.props.room);
         this.roomProps.on(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
         CommunityPrototypeStore.instance.on(UPDATE_EVENT, this.onCommunityUpdate);
+        window.addEventListener('blur', this.onWindowBlur);
+        window.addEventListener('focus', this.onWindowFocus);
     }
 
     private onNotificationUpdate = () => {
         this.forceUpdate(); // notification state changed - update
     };
+
+    private onWindowBlur = () => {
+        this.setState({windowFocused: false, generalMenuPosition: undefined});
+    }
+
+    private onWindowFocus = () => {
+        this.setState({windowFocused: true, generalMenuPosition: undefined});
+    }
 
     private onRoomPropertyUpdate = (property: CachedRoomKey) => {
         if (property === CachedRoomKey.NotificationVolume) this.onNotificationUpdate();
@@ -117,7 +130,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
     };
 
     private get showContextMenu(): boolean {
-        return this.props.tag !== DefaultTagID.Invite;
+        return this.props.tag !== DefaultTagID.Invite && this.state.windowFocused;
     }
 
     private get showMessagePreview(): boolean {
@@ -145,6 +158,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         MessagePreviewStore.instance.off(ROOM_PREVIEW_CHANGED, this.onRoomPreviewChanged);
         this.notificationState.off(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
         CommunityPrototypeStore.instance.off(UPDATE_EVENT, this.onCommunityUpdate);
+        window.removeEventListener('blur', this.onWindowBlur);
+        window.removeEventListener('focus', this.onWindowFocus);
     }
 
     private onAction = (payload: ActionPayload) => {
