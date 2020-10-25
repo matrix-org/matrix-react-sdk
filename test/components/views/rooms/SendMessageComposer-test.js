@@ -29,6 +29,8 @@ import {MatrixClientPeg} from "../../../../src/MatrixClientPeg";
 import {sleep} from "../../../../src/utils/promise";
 import SpecPermalinkConstructor from "../../../../src/utils/permalinks/SpecPermalinkConstructor";
 import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
+import SettingsStore from "../../../../src/settings/SettingsStore";
+import { SettingLevel } from "../../../../src/settings/SettingLevel";
 
 jest.mock("../../../../src/stores/RoomViewStore");
 
@@ -49,6 +51,27 @@ describe('<SendMessageComposer/>', () => {
                 msgtype: "m.text",
             });
         });
+
+        it("does not send markdown when markdown is disabled", () => {
+            const getValueSpy = jest.spyOn(SettingsStore, 'getValue').mockImplementation(settingName => {
+                return settingName === 'enableMarkdown' ? false : undefined
+            })
+
+            const model = new EditorModel([], createPartCreator(), createRenderer());
+            model.update("hello *world*", "insertText", {offset: 13, atNodeEnd: true});
+
+            const content = createMessageContent(model, permalinkCreator);
+
+            expect(content).toEqual({
+                body: "hello *world*",
+                msgtype: "m.text",
+                format: "org.matrix.custom.html",
+                formatted_body: "hello <em>world</em>",
+            });
+
+            // Put it back so we don't mess with the other Markdown-dependent tests.
+            getValueSpy.mockRestore();
+        })
 
         it("sends markdown messages correctly", () => {
             const model = new EditorModel([], createPartCreator(), createRenderer());
