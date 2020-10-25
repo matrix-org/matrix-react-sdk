@@ -84,7 +84,9 @@ function createEditContent(model, editedEvent) {
         body: `${plainPrefix} * ${body}`,
     };
 
-    const formattedBody = SettingsStore.getValue('enableMarkdown') && htmlSerializeIfNeeded(model, {forceHTML: isReply});
+    const formattedBody = SettingsStore.getValue('enableMarkdown') &&
+        htmlSerializeIfNeeded(model, {forceHTML: isReply});
+
     if (formattedBody) {
         newContent.format = "org.matrix.custom.html";
         newContent.formatted_body = formattedBody;

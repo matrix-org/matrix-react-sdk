@@ -291,7 +291,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "enableMarkdown": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Format messages with Markdown'),
-        default: true
+        default: true,
     },
     "enableSyntaxHighlightLanguageDetection": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
