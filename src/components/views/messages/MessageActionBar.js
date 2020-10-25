@@ -28,6 +28,7 @@ import { isContentActionable, canEditContent } from '../../../utils/EventUtils';
 import RoomContext from "../../../contexts/RoomContext";
 import Toolbar from "../../../accessibility/Toolbar";
 import {RovingAccessibleTooltipButton, useRovingTabIndex} from "../../../accessibility/RovingTabIndex";
+import classNames from 'classnames';
 
 const OptionsButton = ({mxEvent, getTile, getReplyThread, permalinkCreator, onFocusChange}) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
@@ -110,6 +111,7 @@ export default class MessageActionBar extends React.PureComponent {
         getTile: PropTypes.func,
         getReplyThread: PropTypes.func,
         onFocusChange: PropTypes.func,
+        standoff: PropTypes.bool
     };
 
     static contextType = RoomContext;
@@ -172,6 +174,10 @@ export default class MessageActionBar extends React.PureComponent {
         let replyButton;
         let editButton;
 
+        const className = classNames('mx_MessageActionBar', {
+            'mx_MessageActionBar_disableStandoff': this.props.standoff
+        });
+
         if (isContentActionable(this.props.mxEvent)) {
             if (this.context.canReact) {
                 reactButton = (
@@ -195,7 +201,7 @@ export default class MessageActionBar extends React.PureComponent {
         }
 
         // aria-live=off to not have this read out automatically as navigating around timeline, gets repetitive.
-        return <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
+        return <Toolbar className={className} aria-label={_t("Message Actions")} aria-live="off">
             {reactButton}
             {replyButton}
             {editButton}
