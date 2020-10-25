@@ -1,4 +1,3 @@
-import { func } from "prop-types";
 import { MatrixEvent } from "../indexing/BaseEventIndexManager";
 
 /** A list of event types that require standoff in MessageActionBar.
@@ -9,10 +8,10 @@ const eventTypesWithActionBarStandoff = [
     'm.sticker',
     'm.video',
     'm.key.verification.request',
-    'm.room.encryption'
+    'm.room.encryption',
 ];
 
-export function eventRequiresActionBarStandoff (event: MatrixEvent) {
+export function eventRequiresActionBarStandoff(event: MatrixEvent) {
     return eventTypesWithActionBarStandoff.includes(event.type)
         || event.type === 'm.room.message' && (event.content as any)?.msgtype === 'm.image';
 }

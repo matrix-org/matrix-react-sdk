@@ -111,7 +111,7 @@ export default class MessageActionBar extends React.PureComponent {
         getTile: PropTypes.func,
         getReplyThread: PropTypes.func,
         onFocusChange: PropTypes.func,
-        standoff: PropTypes.bool
+        standoff: PropTypes.bool,
     };
 
     static contextType = RoomContext;
@@ -175,7 +175,7 @@ export default class MessageActionBar extends React.PureComponent {
         let editButton;
 
         const className = classNames('mx_MessageActionBar', {
-            'mx_MessageActionBar_disableStandoff': this.props.standoff
+            'mx_MessageActionBar_disableStandoff': this.props.standoff,
         });
 
         if (isContentActionable(this.props.mxEvent)) {
