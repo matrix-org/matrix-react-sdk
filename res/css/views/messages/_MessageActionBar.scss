@@ -23,7 +23,7 @@ limitations under the License.
     height: 24px;
     line-height: $font-24px;
     border-radius: 4px;
-    top: -26px;
+    top: -18px;
     right: 8px;
     user-select: none;
     /* Ensure the action bar appears above over things, like the read marker. */
@@ -63,8 +63,8 @@ limitations under the License.
 
 .mx_MessageActionBar_maskButton {
     border-radius: 25px;
-    height: 30px;
-    width: 30px;
+    height: 25px;
+    width: 25px;
 
     /** Hack to get the buttons opaque. */
     background: $primary-bg-color;
