@@ -36,6 +36,7 @@ import {E2E_STATE} from "./E2EIcon";
 import {toRem} from "../../../utils/units";
 import {WidgetType} from "../../../widgets/WidgetType";
 import RoomAvatar from "../avatars/RoomAvatar";
+import { eventRequiresActionBarStandoff } from '../../../utils/ActionBarStandoff';
 
 const eventTileTypes = {
     'm.room.message': 'messages.MessageEvent',
@@ -775,6 +776,7 @@ export default class EventTile extends React.Component {
             getTile={this.getTile}
             getReplyThread={this.getReplyThread}
             onFocusChange={this.onActionBarFocusChange}
+            standoff={eventRequiresActionBarStandoff(this.props.mxEvent.event)}
         /> : undefined;
 
         const timestamp = this.props.mxEvent.getTs() ?
