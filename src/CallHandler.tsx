@@ -78,6 +78,7 @@ import WidgetStore from "./stores/WidgetStore";
 import { WidgetMessagingStore } from "./stores/widgets/WidgetMessagingStore";
 import { ElementWidgetActions } from "./stores/widgets/ElementWidgetActions";
 import { MatrixCall, CallErrorCode, CallState, CallEvent, CallParty } from "matrix-js-sdk/lib/webrtc/call";
+import Analytics from './Analytics';
 
 enum AudioID {
     Ring = 'ringAudio',
@@ -191,6 +192,7 @@ export default class CallHandler {
         call.on(CallEvent.Error, (err) => {
             if (!this.matchesCallForThisRoom(call)) return;
 
+            Analytics.trackEvent('voip', 'callError', 'error', err);
             console.error("Call error:", err);
             if (
                 MatrixClientPeg.get().getTurnServers().length === 0 &&
@@ -207,6 +209,8 @@ export default class CallHandler {
         });
         call.on(CallEvent.Hangup, () => {
             if (!this.matchesCallForThisRoom(call)) return;
+
+            Analytics.trackEvent('voip', 'callHangup');
 
             this.removeCallForRoom(call.roomId);
         });
@@ -232,15 +236,37 @@ export default class CallHandler {
                     this.play(AudioID.Ringback);
                     break;
                 case CallState.Ended:
+                    Analytics.trackEvent('voip', 'callEnded', 'hangupReason', call.hangupReason);
                     this.removeCallForRoom(call.roomId);
                     if (oldState === CallState.InviteSent && (
                         call.hangupParty === CallParty.Remote ||
                         (call.hangupParty === CallParty.Local && call.hangupReason === CallErrorCode.InviteTimeout)
                     )) {
                         this.play(AudioID.Busy);
-                        Modal.createTrackedDialog('Call Handler', 'Call Timeout', ErrorDialog, {
-                            title: _t('Call Timeout'),
-                            description: _t('The remote side failed to pick up') + '.',
+                        let title;
+                        let description;
+                        if (call.hangupReason === CallErrorCode.UserHangup) {
+                            title = _t("Call Declined");
+                            description = _t("The other party declined the call.");
+                        } else if (call.hangupReason === CallErrorCode.InviteTimeout) {
+                            title = _t("Call Failed");
+                            // XXX: full stop appended as some relic here, but these
+                            // strings need proper input from design anyway, so let's
+                            // not change this string until we have a proper one.
+                            description = _t('The remote side failed to pick up') + '.';
+                        } else {
+                            title = _t("Call Failed");
+                            description = _t("The call could not be established");
+                        }
+
+                        Modal.createTrackedDialog('Call Handler', 'Call Failed', ErrorDialog, {
+                            title, description,
+                        });
+                    } else if (call.hangupReason === CallErrorCode.AnsweredElsewhere) {
+                        this.play(AudioID.Busy);
+                        Modal.createTrackedDialog('Call Handler', 'Call Failed', ErrorDialog, {
+                            title: _t("Answered Elsewhere"),
+                            description: _t("The call was answered on another device."),
                         });
                     } else {
                         this.play(AudioID.CallEnd);
@@ -314,6 +340,7 @@ export default class CallHandler {
         roomId: string, type: PlaceCallType,
         localElement: HTMLVideoElement, remoteElement: HTMLVideoElement,
     ) {
+        Analytics.trackEvent('voip', 'placeCall', 'type', type);
         const call = Matrix.createNewMatrixCall(MatrixClientPeg.get(), roomId);
         this.calls.set(roomId, call);
         this.setCallListeners(call);
@@ -391,6 +418,7 @@ export default class CallHandler {
                 break;
             case 'place_conference_call':
                 console.info("Place conference call in %s", payload.room_id);
+                Analytics.trackEvent('voip', 'placeConferenceCall');
                 this.startCallApp(payload.room_id, payload.type);
                 break;
             case 'end_conference':
@@ -417,15 +445,21 @@ export default class CallHandler {
                     }
 
                     const call = payload.call as MatrixCall;
+                    Analytics.trackEvent('voip', 'receiveCall', 'type', call.type);
                     this.calls.set(call.roomId, call)
                     this.setCallListeners(call);
                 }
                 break;
             case 'hangup':
+            case 'reject':
                 if (!this.calls.get(payload.room_id)) {
                     return; // no call to hangup
                 }
-                this.calls.get(payload.room_id).hangup(CallErrorCode.UserHangup, false)
+                if (payload.action === 'reject') {
+                    this.calls.get(payload.room_id).reject();
+                } else {
+                    this.calls.get(payload.room_id).hangup(CallErrorCode.UserHangup, false);
+                }
                 this.removeCallForRoom(payload.room_id);
                 break;
             case 'answer':
