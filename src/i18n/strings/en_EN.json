@@ -475,6 +475,7 @@
     "Show timestamps in 12 hour format (e.g. 2:30pm)": "Show timestamps in 12 hour format (e.g. 2:30pm)",
     "Always show message timestamps": "Always show message timestamps",
     "Autoplay GIFs and videos": "Autoplay GIFs and videos",
+    "Format your messages with Markdown": "Format your messages with Markdown",
     "Enable automatic language detection for syntax highlighting": "Enable automatic language detection for syntax highlighting",
     "Show avatars in user and room mentions": "Show avatars in user and room mentions",
     "Enable big emoji in chat": "Enable big emoji in chat",
