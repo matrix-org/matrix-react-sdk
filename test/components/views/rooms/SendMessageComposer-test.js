@@ -30,7 +30,6 @@ import {sleep} from "../../../../src/utils/promise";
 import SpecPermalinkConstructor from "../../../../src/utils/permalinks/SpecPermalinkConstructor";
 import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
 import SettingsStore from "../../../../src/settings/SettingsStore";
-import { SettingLevel } from "../../../../src/settings/SettingLevel";
 
 jest.mock("../../../../src/stores/RoomViewStore");
 
@@ -54,7 +53,7 @@ describe('<SendMessageComposer/>', () => {
 
         it("does not send markdown when markdown is disabled", () => {
             const getValueSpy = jest.spyOn(SettingsStore, 'getValue').mockImplementation(settingName => {
-                return settingName === 'enableMarkdown' ? false : undefined
+                return settingName === 'enableMarkdown' ? false : undefined;
             });
 
             const model = new EditorModel([], createPartCreator(), createRenderer());
@@ -64,12 +63,12 @@ describe('<SendMessageComposer/>', () => {
 
             expect(content).toEqual({
                 body: "hello *world*",
-                msgtype: "m.text"
+                msgtype: "m.text",
             });
 
             // Put it back so we don't mess with the other Markdown-dependent tests.
             getValueSpy.mockRestore();
-        })
+        });
 
         it("sends markdown messages correctly", () => {
             const model = new EditorModel([], createPartCreator(), createRenderer());
