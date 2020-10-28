@@ -755,6 +755,7 @@
     "Algorithm:": "Algorithm:",
     "Your keys are <b>not being backed up from this session</b>.": "Your keys are <b>not being backed up from this session</b>.",
     "Back up your keys before signing out to avoid losing them.": "Back up your keys before signing out to avoid losing them.",
+    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.",
     "well formed": "well formed",
     "unexpected type": "unexpected type",
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Recovery Key.": "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Recovery Key.",
