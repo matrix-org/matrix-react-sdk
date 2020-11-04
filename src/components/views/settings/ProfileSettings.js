@@ -93,6 +93,7 @@ export default class ProfileSettings extends React.Component {
                 await client.setAvatarUrl(""); // use empty string as Synapse 500s on undefined
             }
         } catch (err) {
+            logger.error("Failed to save profile", err);
             Modal.createTrackedDialog('Failed to save profile', '', ErrorDialog, {
                 title: _t("Failed to save your profile"),
                 description: ((err && err.message) ? err.message : _t("The operation could not be completed")),
