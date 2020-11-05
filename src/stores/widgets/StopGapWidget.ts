@@ -298,18 +298,18 @@ export class StopGapWidget extends EventEmitter {
             ActiveWidgetStore.setRoomId(this.mockWidget.id, this.appTileProps.room.roomId);
         }
 
-        if (WidgetType.JITSI.matches(this.mockWidget.type)) {
-            this.messaging.on("action:set_always_on_screen",
-                (ev: CustomEvent<IStickyActionRequest>) => {
-                    if (this.messaging.hasCapability(MatrixCapabilities.AlwaysOnScreen)) {
-                        CountlyAnalytics.instance.trackJoinCall(this.appTileProps.room.roomId, true, true);
-                        ActiveWidgetStore.setWidgetPersistence(this.mockWidget.id, ev.detail.data.value);
-                        ev.preventDefault();
-                        this.messaging.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{}); // ack
-                    }
-                },
-            );
-        } else if (WidgetType.STICKERPICKER.matches(this.mockWidget.type)) {
+        this.messaging.on("action:set_always_on_screen",
+            (ev: CustomEvent<IStickyActionRequest>) => {
+                if (this.messaging.hasCapability(MatrixCapabilities.AlwaysOnScreen)) {
+                    CountlyAnalytics.instance.trackJoinCall(this.appTileProps.room.roomId, true, true);
+                    ActiveWidgetStore.setWidgetPersistence(this.mockWidget.id, ev.detail.data.value);
+                    ev.preventDefault();
+                    this.messaging.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{}); // ack
+                }
+            },
+        );
+
+        if (WidgetType.STICKERPICKER.matches(this.mockWidget.type)) {
             this.messaging.on(`action:${ElementWidgetActions.OpenIntegrationManager}`,
                 (ev: CustomEvent<IWidgetApiRequest>) => {
                     // Acknowledge first

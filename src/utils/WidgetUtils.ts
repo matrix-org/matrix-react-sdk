@@ -445,14 +445,11 @@ export default class WidgetUtils {
     static getCapWhitelistForAppTypeInRoomId(appType: string, roomId: string): Capability[] {
         const enableScreenshots = SettingsStore.getValue("enableWidgetScreenshots", roomId);
 
-        const capWhitelist = enableScreenshots ? [MatrixCapabilities.Screenshots] : [];
+        const capWhitelist = [];
 
-        // Obviously anyone that can add a widget can claim it's a jitsi widget,
-        // so this doesn't really offer much over the set of domains we load
-        // widgets from at all, but it probably makes sense for sanity.
-        if (WidgetType.JITSI.matches(appType)) {
-            capWhitelist.push(MatrixCapabilities.AlwaysOnScreen);
-        }
+        if (enableScreenshots) capWhitelist.push(MatrixCapabilities.Screenshots)
+
+        capWhitelist.push(MatrixCapabilities.AlwaysOnScreen);
 
         return capWhitelist;
     }
