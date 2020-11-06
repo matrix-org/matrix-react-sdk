@@ -79,26 +79,15 @@ export default class PasswordLogin extends React.Component {
             phoneNumber: this.props.initialPhoneNumber,
             loginType: PasswordLogin.LOGIN_FIELD_MXID,
         };
-
-        this.onForgotPasswordClick = this.onForgotPasswordClick.bind(this);
-        this.onSubmitForm = this.onSubmitForm.bind(this);
-        this.onUsernameChanged = this.onUsernameChanged.bind(this);
-        this.onUsernameBlur = this.onUsernameBlur.bind(this);
-        this.onLoginTypeChange = this.onLoginTypeChange.bind(this);
-        this.onPhoneCountryChanged = this.onPhoneCountryChanged.bind(this);
-        this.onPhoneNumberChanged = this.onPhoneNumberChanged.bind(this);
-        this.onPhoneNumberBlur = this.onPhoneNumberBlur.bind(this);
-        this.onPasswordChanged = this.onPasswordChanged.bind(this);
-        this.isLoginEmpty = this.isLoginEmpty.bind(this);
     }
 
-    onForgotPasswordClick(ev) {
+    onForgotPasswordClick = (ev) => {
         ev.preventDefault();
         ev.stopPropagation();
         this.props.onForgotPasswordClick();
     }
 
-    onSubmitForm(ev) {
+    onSubmitForm = (ev) => {
         ev.preventDefault();
 
         let username = ''; // XXX: Synapse breaks if you send null here:
@@ -146,12 +135,12 @@ export default class PasswordLogin extends React.Component {
         );
     }
 
-    onUsernameChanged(ev) {
+    onUsernameChanged = (ev) => {
         this.setState({username: ev.target.value});
         this.props.onUsernameChanged(ev.target.value);
     }
 
-    onUsernameFocus() {
+    onUsernameFocus = () => {
         if (this.state.loginType === PasswordLogin.LOGIN_FIELD_MXID) {
             CountlyAnalytics.instance.track("onboarding_login_mxid_focus");
         } else {
@@ -159,7 +148,7 @@ export default class PasswordLogin extends React.Component {
         }
     }
 
-    onUsernameBlur(ev) {
+    onUsernameBlur = (ev) => {
         if (this.state.loginType === PasswordLogin.LOGIN_FIELD_MXID) {
             CountlyAnalytics.instance.track("onboarding_login_mxid_blur");
         } else {
@@ -168,7 +157,7 @@ export default class PasswordLogin extends React.Component {
         this.props.onUsernameBlur(ev.target.value);
     }
 
-    onLoginTypeChange(ev) {
+    onLoginTypeChange = (ev) => {
         const loginType = ev.target.value;
         this.props.onError(null); // send a null error to clear any error messages
         this.setState({
@@ -178,7 +167,7 @@ export default class PasswordLogin extends React.Component {
         CountlyAnalytics.instance.track("onboarding_login_type_changed", { loginType });
     }
 
-    onPhoneCountryChanged(country) {
+    onPhoneCountryChanged = (country) =>{
         this.setState({
             phoneCountry: country.iso2,
             phonePrefix: country.prefix,
@@ -186,21 +175,21 @@ export default class PasswordLogin extends React.Component {
         this.props.onPhoneCountryChanged(country.iso2);
     }
 
-    onPhoneNumberChanged(ev) {
+    onPhoneNumberChanged = (ev) => {
         this.setState({phoneNumber: ev.target.value});
         this.props.onPhoneNumberChanged(ev.target.value);
     }
 
-    onPhoneNumberFocus() {
+    onPhoneNumberFocus = () => {
         CountlyAnalytics.instance.track("onboarding_login_phone_number_focus");
     }
 
-    onPhoneNumberBlur(ev) {
+    onPhoneNumberBlur = (ev) => {
         this.props.onPhoneNumberBlur(ev.target.value);
         CountlyAnalytics.instance.track("onboarding_login_phone_number_blur");
     }
 
-    onPasswordChanged(ev) {
+    onPasswordChanged = (ev) => {
         this.setState({password: ev.target.value});
         this.props.onPasswordChanged(ev.target.value);
     }
@@ -271,7 +260,7 @@ export default class PasswordLogin extends React.Component {
         }
     }
 
-    isLoginEmpty() {
+    isLoginEmpty = () => {
         switch (this.state.loginType) {
             case PasswordLogin.LOGIN_FIELD_EMAIL:
             case PasswordLogin.LOGIN_FIELD_MXID:
