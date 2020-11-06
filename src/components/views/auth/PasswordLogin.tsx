@@ -26,10 +26,41 @@ import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
 import AccessibleButton from "../elements/AccessibleButton";
 import CountlyAnalytics from "../../../CountlyAnalytics";
 
+interface IProps {
+    onError: (error: string) => void;
+    onEditServerDetailsClick: () => void | null,
+    onUsernameChanged: (username: string) => void;
+    onUsernameBlur: (blur: string) => void;
+    onPasswordChanged: (password: string) => void;
+    onPhoneCountryChanged: (country: any) => void;
+    onPhoneNumberChanged: (number: string) => void;
+    onPhoneNumberBlur: (blur: string) => void;
+    onForgotPasswordClick: () => void;
+    onSubmit: (username: string, phoneCountry: string, phoneNumber: string, password: string) => void;
+
+    initialUsername: string;
+    initialPassword: string;
+    initialPhoneCountry: string;
+    initialPhoneNumber: string;
+    loginIncorrect: boolean;
+    disableSubmit: boolean;
+    busy?: boolean;
+    serverConfig?: any;
+}
+
+interface IState {
+    username: string;
+    password: string;
+    phoneCountry: string;
+    phoneNumber: string;
+    phonePrefix?: string;
+    loginType: string;
+}
+
 /**
  * A pure UI component which displays a username/password form.
  */
-export default class PasswordLogin extends React.Component {
+export default class PasswordLogin extends React.Component<IProps, IState> {
     static propTypes = {
         onSubmit: PropTypes.func.isRequired, // fn(username, password)
         onError: PropTypes.func,
@@ -93,7 +124,7 @@ export default class PasswordLogin extends React.Component {
         let username = ''; // XXX: Synapse breaks if you send null here:
         let phoneCountry = null;
         let phoneNumber = null;
-        let error;
+        let error: string;
 
         switch (this.state.loginType) {
             case PasswordLogin.LOGIN_FIELD_EMAIL:
@@ -135,7 +166,7 @@ export default class PasswordLogin extends React.Component {
         );
     }
 
-    onUsernameChanged = (ev) => {
+    onUsernameChanged = (ev: any) => {
         this.setState({username: ev.target.value});
         this.props.onUsernameChanged(ev.target.value);
     }
@@ -148,7 +179,7 @@ export default class PasswordLogin extends React.Component {
         }
     }
 
-    onUsernameBlur = (ev) => {
+    onUsernameBlur = (ev: any) => {
         if (this.state.loginType === PasswordLogin.LOGIN_FIELD_MXID) {
             CountlyAnalytics.instance.track("onboarding_login_mxid_blur");
         } else {
@@ -167,7 +198,7 @@ export default class PasswordLogin extends React.Component {
         CountlyAnalytics.instance.track("onboarding_login_type_changed", { loginType });
     }
 
-    onPhoneCountryChanged = (country) =>{
+    onPhoneCountryChanged = (country: {iso2: string, name: string, prefix: string}) =>{
         this.setState({
             phoneCountry: country.iso2,
             phonePrefix: country.prefix,
@@ -197,7 +228,7 @@ export default class PasswordLogin extends React.Component {
     renderLoginField(loginType, autoFocus) {
         const Field = sdk.getComponent('elements.Field');
 
-        const classes = {};
+        const classes: { error?: boolean } = {};
 
         switch (loginType) {
             case PasswordLogin.LOGIN_FIELD_EMAIL:
