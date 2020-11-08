@@ -36,6 +36,7 @@ import {Analytics} from "../Analytics";
 import CountlyAnalytics from "../CountlyAnalytics";
 import UserActivity from "../UserActivity";
 import {ModalWidgetStore} from "../stores/ModalWidgetStore";
+import {ConsoleLogger, IndexedDBLogStore} from "../rageshake/rageshake";
 
 declare global {
     interface Window {
@@ -64,6 +65,9 @@ declare global {
         mxCountlyAnalytics: typeof CountlyAnalytics;
         mxUserActivity: UserActivity;
         mxModalWidgetStore: ModalWidgetStore;
+        mxRageInitPromise: Promise<void>;
+        mxRageLogger: ConsoleLogger;
+        mxRageStore: IndexedDBLogStore;
     }
 
     interface Document {
