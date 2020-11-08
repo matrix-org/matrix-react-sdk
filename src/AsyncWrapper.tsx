@@ -15,21 +15,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, {ComponentType} from "react";
+
 import * as sdk from './index';
-import PropTypes from 'prop-types';
 import { _t } from './languageHandler';
+
+type Component = ComponentType & {default: ComponentType};
+
+interface IProps {
+    prom: Promise<Component>;
+    onFinished(v: boolean): void;
+}
+
+interface IState {
+    component?: ComponentType;
+    error?: Error;
+}
 
 /**
  * Wrap an asynchronous loader function with a react component which shows a
  * spinner until the real component loads.
  */
-export default class AsyncWrapper extends React.Component {
-    static propTypes = {
-        /** A promise which resolves with the real component
-         */
-        prom: PropTypes.object.isRequired,
-    };
+export default class AsyncWrapper extends React.PureComponent<IProps, IState> {
+    private unmounted = false;
 
     state = {
         component: null,
@@ -37,12 +45,12 @@ export default class AsyncWrapper extends React.Component {
     };
 
     componentDidMount() {
-        this._unmounted = false;
+        this.unmounted = false;
         // XXX: temporary logging to try to diagnose
         // https://github.com/vector-im/element-web/issues/3148
         console.log('Starting load of AsyncWrapper for modal');
         this.props.prom.then((result) => {
-            if (this._unmounted) {
+            if (this.unmounted) {
                 return;
             }
             // Take the 'default' member if it's there, then we support
@@ -57,10 +65,10 @@ export default class AsyncWrapper extends React.Component {
     }
 
     componentWillUnmount() {
-        this._unmounted = true;
+        this.unmounted = true;
     }
 
-    _onWrapperCancelClick = () => {
+    private onWrapperCancelClick = () => {
         this.props.onFinished(false);
     };
 
@@ -76,7 +84,7 @@ export default class AsyncWrapper extends React.Component {
             >
                 {_t("Unable to load! Check your network connectivity and try again.")}
                 <DialogButtons primaryButton={_t("Dismiss")}
-                    onPrimaryButtonClick={this._onWrapperCancelClick}
+                    onPrimaryButtonClick={this.onWrapperCancelClick}
                     hasCancel={false}
                 />
             </BaseDialog>;
