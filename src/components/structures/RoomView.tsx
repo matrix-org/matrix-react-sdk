@@ -38,7 +38,7 @@ import CallHandler from '../../CallHandler';
 import dis from '../../dispatcher/dispatcher';
 import Tinter from '../../Tinter';
 import rateLimitedFunc from '../../ratelimitedfunc';
-import * as ObjectUtils from '../../ObjectUtils';
+import {shallowEqual} from '../../utils/objects';
 import * as Rooms from '../../Rooms';
 import eventSearch, {searchPagination} from '../../Searching';
 import {isOnlyCtrlOrCmdIgnoreShiftKeyEvent, isOnlyCtrlOrCmdKeyEvent, Key} from '../../Keyboard';
@@ -515,8 +515,7 @@ export default class RoomView extends React.Component<IProps, IState> {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return (!ObjectUtils.shallowEqual(this.props, nextProps) ||
-                !ObjectUtils.shallowEqual(this.state, nextState));
+        return (!shallowEqual(this.props, nextProps) || !shallowEqual(this.state, nextState));
     }
 
     componentDidUpdate() {

@@ -19,7 +19,7 @@ import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import { Room } from 'matrix-js-sdk/src/models/room'
 import * as sdk from '../../../index';
 import dis from "../../../dispatcher/dispatcher";
-import * as ObjectUtils from '../../../ObjectUtils';
+import {shallowEqual} from '../../../utils/objects';
 import AppsDrawer from './AppsDrawer';
 import { _t } from '../../../languageHandler';
 import classNames from 'classnames';
@@ -89,8 +89,7 @@ export default class AuxPanel extends React.Component<IProps, IState> {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return (!ObjectUtils.shallowEqual(this.props, nextProps) ||
-                !ObjectUtils.shallowEqual(this.state, nextState));
+        return (!shallowEqual(this.props, nextProps) || !shallowEqual(this.state, nextState));
     }
 
     componentDidUpdate(prevProps, prevState) {

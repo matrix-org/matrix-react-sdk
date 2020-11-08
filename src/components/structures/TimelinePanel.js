@@ -25,7 +25,7 @@ import {EventTimeline} from "matrix-js-sdk";
 import * as Matrix from "matrix-js-sdk";
 import { _t } from '../../languageHandler';
 import {MatrixClientPeg} from "../../MatrixClientPeg";
-import * as ObjectUtils from "../../ObjectUtils";
+import {shallowEqual} from "../../utils/objects";
 import UserActivity from "../../UserActivity";
 import Modal from "../../Modal";
 import dis from "../../dispatcher/dispatcher";
@@ -260,7 +260,7 @@ class TimelinePanel extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (!ObjectUtils.shallowEqual(this.props, nextProps)) {
+        if (!shallowEqual(this.props, nextProps)) {
             if (DEBUG) {
                 console.group("Timeline.shouldComponentUpdate: props change");
                 console.log("props before:", this.props);
@@ -270,7 +270,7 @@ class TimelinePanel extends React.Component {
             return true;
         }
 
-        if (!ObjectUtils.shallowEqual(this.state, nextState)) {
+        if (!shallowEqual(this.state, nextState)) {
             if (DEBUG) {
                 console.group("Timeline.shouldComponentUpdate: state change");
                 console.log("state before:", this.state);

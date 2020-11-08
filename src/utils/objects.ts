@@ -138,3 +138,36 @@ export function objectKeyChanges<O extends {}>(a: O, b: O): (keyof O)[] {
 export function objectClone<O extends {}>(obj: O): O {
     return JSON.parse(JSON.stringify(obj));
 }
+
+/**
+ * Shallow-compare two objects for equality: each key and value must be identical
+ * @param {Object} objA First object to compare against the second
+ * @param {Object} objB Second object to compare against the first
+ * @return {boolean} whether the two objects have same key=values
+ */
+export function shallowEqual(objA, objB) {
+    if (objA === objB) {
+        return true;
+    }
+
+    if (typeof objA !== 'object' || objA === null ||
+        typeof objB !== 'object' || objB === null) {
+        return false;
+    }
+
+    const keysA = Object.keys(objA);
+    const keysB = Object.keys(objB);
+
+    if (keysA.length !== keysB.length) {
+        return false;
+    }
+
+    for (let i = 0; i < keysA.length; i++) {
+        const key = keysA[i];
+        if (!objB.hasOwnProperty(key) || objA[key] !== objB[key]) {
+            return false;
+        }
+    }
+
+    return true;
+}

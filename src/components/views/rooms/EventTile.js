@@ -30,7 +30,7 @@ import {EventStatus} from 'matrix-js-sdk';
 import {formatTime} from "../../../DateUtils";
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import {ALL_RULE_TYPES} from "../../../mjolnir/BanList";
-import * as ObjectUtils from "../../../ObjectUtils";
+import {shallowEqual} from "../../../utils/objects";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import {E2E_STATE} from "./E2EIcon";
 import {toRem} from "../../../utils/units";
@@ -290,7 +290,7 @@ export default class EventTile extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (!ObjectUtils.shallowEqual(this.state, nextState)) {
+        if (!shallowEqual(this.state, nextState)) {
             return true;
         }
 
