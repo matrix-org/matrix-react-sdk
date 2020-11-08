@@ -1,5 +1,5 @@
 /*
-Copyright 2018 New Vector Ltd
+Copyright 2018, 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,10 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import {MatrixEvent} from "matrix-js-sdk/src/models/event";
+import {MatrixError} from "matrix-js-sdk/src/http-api";
+
 export class DecryptionFailure {
-    constructor(failedEventId, errorCode) {
-        this.failedEventId = failedEventId;
-        this.errorCode = errorCode;
+    public ts: number;
+
+    constructor(public failedEventId: string, public errorCode: string) {
         this.ts = Date.now();
     }
 }
@@ -26,22 +29,25 @@ export class DecryptionFailureTracker {
     // Array of items of type DecryptionFailure. Every `CHECK_INTERVAL_MS`, this list
     // is checked for failures that happened > `GRACE_PERIOD_MS` ago. Those that did
     // are accumulated in `failureCounts`.
-    failures = [];
+    private failures: DecryptionFailure[] = [];
 
     // A histogram of the number of failures that will be tracked at the next tracking
     // interval, split by failure error code.
-    failureCounts = {
+    private failureCounts: Record<string, number> = {
         // [errorCode]: 42
     };
 
     // Event IDs of failures that were tracked previously
-    trackedEventHashMap = {
+    private trackedEventHashMap: Record<string, boolean> = {
         // [eventId]: true
     };
 
     // Set to an interval ID when `start` is called
-    checkInterval = null;
-    trackInterval = null;
+    private checkInterval: number = null;
+    private trackInterval: number = null;
+
+    private readonly trackDecryptionFailure: (count: number, errorCode: string) => void;
+    private readonly mapErrorCode: (code: string) => string;
 
     // Spread the load on `Analytics` by tracking at a low frequency, `TRACK_INTERVAL_MS`.
     static TRACK_INTERVAL_MS = 60000;
@@ -67,7 +73,10 @@ export class DecryptionFailureTracker {
      * @param {function?} errorCodeMapFn The function used to map error codes to the
      * trackedErrorCode. If not provided, the `.code` of errors will be used.
      */
-    constructor(fn, errorCodeMapFn) {
+    constructor(
+        fn: DecryptionFailureTracker["trackDecryptionFailure"],
+        errorCodeMapFn: DecryptionFailureTracker["mapErrorCode"],
+    ) {
         if (!fn || typeof fn !== 'function') {
             throw new Error('DecryptionFailureTracker requires tracking function');
         }
@@ -76,8 +85,8 @@ export class DecryptionFailureTracker {
             throw new Error('DecryptionFailureTracker second constructor argument should be a function');
         }
 
-        this._trackDecryptionFailure = fn;
-        this._mapErrorCode = errorCodeMapFn;
+        this.trackDecryptionFailure = fn;
+        this.mapErrorCode = errorCodeMapFn;
     }
 
     // loadTrackedEventHashMap() {
@@ -88,7 +97,7 @@ export class DecryptionFailureTracker {
     //     localStorage.setItem('mx-decryption-failure-event-id-hashes', JSON.stringify(this.trackedEventHashMap));
     // }
 
-    eventDecrypted(e, err) {
+    public eventDecrypted(e: MatrixEvent, err: MatrixError) {
         if (err) {
             this.addDecryptionFailure(new DecryptionFailure(e.getId(), err.code));
         } else {
@@ -97,24 +106,24 @@ export class DecryptionFailureTracker {
         }
     }
 
-    addDecryptionFailure(failure) {
+    private addDecryptionFailure(failure: DecryptionFailure) {
         this.failures.push(failure);
     }
 
-    removeDecryptionFailuresForEvent(e) {
+    private removeDecryptionFailuresForEvent(e: MatrixEvent) {
         this.failures = this.failures.filter((f) => f.failedEventId !== e.getId());
     }
 
     /**
      * Start checking for and tracking failures.
      */
-    start() {
-        this.checkInterval = setInterval(
+    public start() {
+        this.checkInterval = window.setInterval(
             () => this.checkFailures(Date.now()),
             DecryptionFailureTracker.CHECK_INTERVAL_MS,
         );
 
-        this.trackInterval = setInterval(
+        this.trackInterval = window.setInterval(
             () => this.trackFailures(),
             DecryptionFailureTracker.TRACK_INTERVAL_MS,
         );
@@ -123,9 +132,9 @@ export class DecryptionFailureTracker {
     /**
      * Clear state and stop checking for and tracking failures.
      */
-    stop() {
-        clearInterval(this.checkInterval);
-        clearInterval(this.trackInterval);
+    public stop() {
+        window.clearInterval(this.checkInterval);
+        window.clearInterval(this.trackInterval);
 
         this.failures = [];
         this.failureCounts = {};
@@ -136,7 +145,7 @@ export class DecryptionFailureTracker {
      * tracked. Only mark one failure per event ID.
      * @param {number} nowTs the timestamp that represents the time now.
      */
-    checkFailures(nowTs) {
+    private checkFailures(nowTs: number) {
         const failuresGivenGrace = [];
         const failuresNotReady = [];
         while (this.failures.length > 0) {
@@ -175,10 +184,10 @@ export class DecryptionFailureTracker {
 
         const dedupedFailures = dedupedFailuresMap.values();
 
-        this._aggregateFailures(dedupedFailures);
+        this.aggregateFailures(dedupedFailures);
     }
 
-    _aggregateFailures(failures) {
+    private aggregateFailures(failures: DecryptionFailure[]) {
         for (const failure of failures) {
             const errorCode = failure.errorCode;
             this.failureCounts[errorCode] = (this.failureCounts[errorCode] || 0) + 1;
@@ -189,12 +198,12 @@ export class DecryptionFailureTracker {
      * If there are failures that should be tracked, call the given trackDecryptionFailure
      * function with the number of failures that should be tracked.
      */
-    trackFailures() {
+    private trackFailures() {
         for (const errorCode of Object.keys(this.failureCounts)) {
             if (this.failureCounts[errorCode] > 0) {
-                const trackedErrorCode = this._mapErrorCode ? this._mapErrorCode(errorCode) : errorCode;
+                const trackedErrorCode = this.mapErrorCode ? this.mapErrorCode(errorCode) : errorCode;
 
-                this._trackDecryptionFailure(this.failureCounts[errorCode], trackedErrorCode);
+                this.trackDecryptionFailure(this.failureCounts[errorCode], trackedErrorCode);
                 this.failureCounts[errorCode] = 0;
             }
         }
