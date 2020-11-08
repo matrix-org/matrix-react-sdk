@@ -19,12 +19,13 @@ import React, {ComponentType} from "react";
 
 import * as sdk from './index';
 import { _t } from './languageHandler';
+import {XOR} from "./@types/common";
 
-type Component = ComponentType & {default: ComponentType};
+type Component = XOR<ComponentType, {default: ComponentType}>;
 
 interface IProps {
     prom: Promise<Component>;
-    onFinished(v: boolean): void;
+    onFinished(...args: any[]): void;
 }
 
 interface IState {
@@ -56,7 +57,7 @@ export default class AsyncWrapper extends React.PureComponent<IProps, IState> {
             // Take the 'default' member if it's there, then we support
             // passing in just an import()ed module, since ES6 async import
             // always returns a module *namespace*.
-            const component = result.default ? result.default : result;
+            const component = result.default ? result.default : result as ComponentType;
             this.setState({component});
         }).catch((e) => {
             console.warn('AsyncWrapper promise failed', e);
