@@ -1,7 +1,6 @@
 /*
-Copyright 2016 OpenMarket Ltd
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2016, 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,17 +16,17 @@ limitations under the License.
 */
 
 import React, {useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
 
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import {instanceForInstanceId} from '../../../utils/DirectoryUtils';
 import {
+    ChevronFace,
     ContextMenu,
-    useContextMenu,
     ContextMenuButton,
-    MenuItemRadio,
-    MenuItem,
     MenuGroup,
+    MenuItem,
+    MenuItemRadio,
+    useContextMenu,
 } from "../../structures/ContextMenu";
 import {_t} from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
@@ -36,16 +35,17 @@ import * as sdk from "../../../index";
 import Modal from "../../../Modal";
 import SettingsStore from "../../../settings/SettingsStore";
 import withValidation from "../elements/Validation";
+import {SettingLevel} from "../../../settings/SettingLevel";
 
 export const ALL_ROOMS = Symbol("ALL_ROOMS");
 
 const SETTING_NAME = "room_directory_servers";
 
-const inPlaceOf = (elementRect) => ({
+const inPlaceOf = (elementRect: DOMRect) => ({
     right: window.innerWidth - elementRect.right,
     top: elementRect.top,
     chevronOffset: 0,
-    chevronFace: "none",
+    chevronFace: ChevronFace.None,
 });
 
 const validServer = withValidation({
@@ -76,14 +76,27 @@ const validServer = withValidation({
     ],
 });
 
+interface IProps {
+    protocols: Record<string, {
+        instances: {
+            // eslint-disable-next-line camelcase
+            instance_id: string | symbol;
+            desc: string;
+        }[];
+    }>;
+    selectedServerName: string;
+    selectedInstanceId: string | symbol;
+    onOptionChange(serverName: string, instanceId?: string): void;
+}
+
 // This dropdown sources homeservers from three places:
 // + your currently connected homeserver
 // + homeservers in config.json["roomDirectory"]
 // + homeservers in SettingsStore["room_directory_servers"]
 // if a server exists in multiple, only keep the top-most entry.
 
-const NetworkDropdown = ({onOptionChange, protocols = {}, selectedServerName, selectedInstanceId}) => {
-    const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu();
+const NetworkDropdown = ({onOptionChange, protocols = {}, selectedServerName, selectedInstanceId}: IProps) => {
+    const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLDivElement>();
     const _userDefinedServers = useSettingValue(SETTING_NAME);
     const [userDefinedServers, _setUserDefinedServers] = useState(_userDefinedServers);
 
@@ -96,7 +109,7 @@ const NetworkDropdown = ({onOptionChange, protocols = {}, selectedServerName, se
 
     const setUserDefinedServers = servers => {
         _setUserDefinedServers(servers);
-        SettingsStore.setValue(SETTING_NAME, null, "account", servers);
+        SettingsStore.setValue(SETTING_NAME, null, SettingLevel.ACCOUNT, servers);
     };
     // keep local echo up to date with external changes
     useEffect(() => {
@@ -110,10 +123,10 @@ const NetworkDropdown = ({onOptionChange, protocols = {}, selectedServerName, se
         const roomDirectory = config.roomDirectory || {};
 
         const hsName = MatrixClientPeg.getHomeserverName();
-        const configServers = new Set(roomDirectory.servers);
+        const configServers = new Set<string>(roomDirectory.servers);
 
         // configured servers take preference over user-defined ones, if one occurs in both ignore the latter one.
-        const removableServers = new Set(userDefinedServers.filter(s => !configServers.has(s) && s !== hsName));
+        const removableServers = new Set<string>(userDefinedServers.filter(s => !configServers.has(s) && s !== hsName));
         const servers = [
             // we always show our connected HS, this takes precedence over it being configured or user-defined
             hsName,
@@ -189,7 +202,7 @@ const NetworkDropdown = ({onOptionChange, protocols = {}, selectedServerName, se
                     setUserDefinedServers(servers.filter(s => s !== server));
 
                     // the selected server is being removed, reset to our HS
-                    if (serverSelected === server) {
+                    if (serverSelected) {
                         onOptionChange(hsName, undefined);
                     }
                 };
@@ -280,11 +293,6 @@ const NetworkDropdown = ({onOptionChange, protocols = {}, selectedServerName, se
     return <div className="mx_NetworkDropdown" ref={handle}>
         {content}
     </div>;
-};
-
-NetworkDropdown.propTypes = {
-    onOptionChange: PropTypes.func.isRequired,
-    protocols: PropTypes.object,
 };
 
 export default NetworkDropdown;
