@@ -1,6 +1,5 @@
 /*
-Copyright 2016 OpenMarket Ltd
-Copyright 2018, 2019 New Vector Ltd
+Copyright 2016, 2018, 2019, 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import React, {ChangeEventHandler, createRef, ReactEventHandler} from 'react';
+import {MatrixEvent} from "matrix-js-sdk/src/models/event";
+
 import EditableItemList from "../elements/EditableItemList";
-import React, {createRef} from 'react';
-import PropTypes from 'prop-types';
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import * as sdk from "../../../index";
 import { _t } from '../../../languageHandler';
@@ -26,47 +26,47 @@ import ErrorDialog from "../dialogs/ErrorDialog";
 import AccessibleButton from "../elements/AccessibleButton";
 import Modal from "../../../Modal";
 import RoomPublishSetting from "./RoomPublishSetting";
+import RoomAliasField from "../elements/RoomAliasField";
 
-class EditableAliasesList extends EditableItemList {
-    constructor(props) {
-        super(props);
+interface IEditableAliasesListProps {
+    domain?: string;
+}
 
-        this._aliasField = createRef();
-    }
+class EditableAliasesList extends EditableItemList<IEditableAliasesListProps> {
+    private aliasField = createRef<RoomAliasField>();
 
-    _onAliasAdded = async () => {
-        await this._aliasField.current.validate({ allowEmpty: false });
+    private onAliasAdded = async () => {
+        await this.aliasField.current.validate({ allowEmpty: false });
 
-        if (this._aliasField.current.isValid) {
+        if (this.aliasField.current.isValid) {
             if (this.props.onItemAdded) this.props.onItemAdded(this.props.newItem);
             return;
         }
 
-        this._aliasField.current.focus();
-        this._aliasField.current.validate({ allowEmpty: false, focused: true });
+        this.aliasField.current.focus();
+        this.aliasField.current.validate({ allowEmpty: false, focused: true });
     };
 
-    _renderNewItemField() {
+    protected renderNewItemField() {
         // if we don't need the RoomAliasField,
-        // we don't need to overriden version of _renderNewItemField
+        // we don't need to overriden version of renderNewItemField
         if (!this.props.domain) {
-            return super._renderNewItemField();
+            return super.renderNewItemField();
         }
-        const RoomAliasField = sdk.getComponent('views.elements.RoomAliasField');
-        const onChange = (alias) => this._onNewItemChanged({target: {value: alias}});
+        const onChange = (alias) => this.onNewItemChanged({target: {value: alias}});
         return (
             <form
-                onSubmit={this._onAliasAdded}
+                onSubmit={this.onAliasAdded}
                 autoComplete="off"
                 noValidate={true}
                 className="mx_EditableItemList_newItem"
             >
                 <RoomAliasField
-                    ref={this._aliasField}
+                    ref={this.aliasField}
                     onChange={onChange}
                     value={this.props.newItem || ""}
                     domain={this.props.domain} />
-                <AccessibleButton onClick={this._onAliasAdded} kind="primary">
+                <AccessibleButton onClick={this.onAliasAdded} kind="primary">
                     { _t("Add") }
                 </AccessibleButton>
             </form>
@@ -74,14 +74,25 @@ class EditableAliasesList extends EditableItemList {
     }
 }
 
-export default class AliasSettings extends React.Component {
-    static propTypes = {
-        roomId: PropTypes.string.isRequired,
-        canSetCanonicalAlias: PropTypes.bool.isRequired,
-        canSetAliases: PropTypes.bool.isRequired,
-        canonicalAliasEvent: PropTypes.object, // MatrixEvent
-    };
+interface IProps {
+    roomId: string;
+    canSetCanonicalAlias: boolean;
+    canSetAliases: boolean;
+    canonicalAliasEvent?: MatrixEvent;
+}
 
+interface IState {
+    altAliases: string[];
+    localAliases: string[];
+    canonicalAlias?: string;
+    updatingCanonicalAlias: boolean;
+    localAliasesLoading: boolean;
+    detailsOpen: boolean;
+    newAlias?: string;
+    newAltAlias?: string;
+}
+
+export default class AliasSettings extends React.Component<IProps, IState> {
     static defaultProps = {
         canSetAliases: false,
         canSetCanonicalAlias: false,
@@ -91,7 +102,7 @@ export default class AliasSettings extends React.Component {
     constructor(props) {
         super(props);
 
-        const state = {
+        const state: IState = {
             altAliases: [], // [ #alias:domain.tld, ... ]
             localAliases: [], // [ #alias:my-hs.tld, ... ]
             canonicalAlias: null, // #canonical:domain.tld
@@ -120,7 +131,7 @@ export default class AliasSettings extends React.Component {
         }
     }
 
-    async loadLocalAliases() {
+    private async loadLocalAliases() {
         this.setState({ localAliasesLoading: true });
         try {
             const cli = MatrixClientPeg.get();
@@ -137,7 +148,7 @@ export default class AliasSettings extends React.Component {
         }
     }
 
-    changeCanonicalAlias(alias) {
+    private changeCanonicalAlias(alias: string) {
         if (!this.props.canSetCanonicalAlias) return;
 
         const oldAlias = this.state.canonicalAlias;
@@ -168,7 +179,7 @@ export default class AliasSettings extends React.Component {
         });
     }
 
-    changeAltAliases(altAliases) {
+    private changeAltAliases(altAliases: string[]) {
         if (!this.props.canSetCanonicalAlias) return;
 
         this.setState({
@@ -179,7 +190,7 @@ export default class AliasSettings extends React.Component {
         const eventContent = {};
 
         if (this.state.canonicalAlias) {
-            eventContent.alias = this.state.canonicalAlias;
+            eventContent["alias"] = this.state.canonicalAlias;
         }
         if (altAliases) {
             eventContent["alt_aliases"] = altAliases;
@@ -200,11 +211,11 @@ export default class AliasSettings extends React.Component {
         });
     }
 
-    onNewAliasChanged = (value) => {
+    private onNewAliasChanged = (value: string) => {
         this.setState({newAlias: value});
     };
 
-    onLocalAliasAdded = (alias) => {
+    private onLocalAliasAdded = (alias: string) => {
         if (!alias || alias.length === 0) return; // ignore attempts to create blank aliases
 
         const localDomain = MatrixClientPeg.get().getDomain();
@@ -230,7 +241,7 @@ export default class AliasSettings extends React.Component {
         });
     };
 
-    onLocalAliasDeleted = (index) => {
+    private onLocalAliasDeleted = (index: number) => {
         const alias = this.state.localAliases[index];
         // TODO: In future, we should probably be making sure that the alias actually belongs
         // to this room. See https://github.com/vector-im/element-web/issues/7353
@@ -259,22 +270,22 @@ export default class AliasSettings extends React.Component {
         });
     };
 
-    onLocalAliasesToggled = (event) => {
+    private onLocalAliasesToggled: ReactEventHandler<HTMLDetailsElement> = (event) => {
         // expanded
-        if (event.target.open) {
+        if (event.currentTarget.open) {
             // if local aliases haven't been preloaded yet at component mount
             if (!this.props.canSetCanonicalAlias && this.state.localAliases.length === 0) {
                 this.loadLocalAliases();
             }
         }
-        this.setState({detailsOpen: event.target.open});
+        this.setState({detailsOpen: event.currentTarget.open});
     };
 
-    onCanonicalAliasChange = (event) => {
+    private onCanonicalAliasChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
         this.changeCanonicalAlias(event.target.value);
     };
 
-    onNewAltAliasChanged = (value) => {
+    private onNewAltAliasChanged = (value: string) => {
         this.setState({newAltAlias: value});
     }
 
@@ -308,9 +319,14 @@ export default class AliasSettings extends React.Component {
         let found = false;
         const canonicalValue = this.state.canonicalAlias || "";
         const canonicalAliasSection = (
-            <Field onChange={this.onCanonicalAliasChange} value={canonicalValue}
-                   disabled={this.state.updatingCanonicalAlias || !this.props.canSetCanonicalAlias}
-                   element='select' id='canonicalAlias' label={_t('Main address')}>
+            <Field
+                onChange={this.onCanonicalAliasChange}
+                value={canonicalValue}
+                disabled={this.state.updatingCanonicalAlias || !this.props.canSetCanonicalAlias}
+                element='select'
+                id='canonicalAlias'
+                label={_t('Main address')}
+            >
                 <option value="" key="unset">{ _t('not specified') }</option>
                 {
                     this._getAliases().map((alias, i) => {
@@ -324,9 +340,9 @@ export default class AliasSettings extends React.Component {
                 }
                 {
                     found || !this.state.canonicalAlias ? '' :
-                    <option value={ this.state.canonicalAlias } key='arbitrary'>
-                        { this.state.canonicalAlias }
-                    </option>
+                        <option value={ this.state.canonicalAlias } key='arbitrary'>
+                            { this.state.canonicalAlias }
+                        </option>
                 }
             </Field>
         );
@@ -379,8 +395,13 @@ export default class AliasSettings extends React.Component {
                     noItemsLabel={_t('No other published addresses yet, add one below')}
                     placeholder={_t('New published address (e.g. #alias:server)')}
                 />
-                <span className='mx_SettingsTab_subheading mx_AliasSettings_localAliasHeader'>{_t("Local Addresses")}</span>
-                <p>{_t("Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)", {localDomain})}</p>
+                <span className='mx_SettingsTab_subheading mx_AliasSettings_localAliasHeader'>
+                    {_t("Local Addresses")}
+                </span>
+                <p>
+                    {_t("Set addresses for this room so users can find this room through " +
+                        "your homeserver (%(localDomain)s)", {localDomain})}
+                </p>
                 <details onToggle={this.onLocalAliasesToggled}>
                     <summary>{ this.state.detailsOpen ? _t('Show less') : _t("Show more")}</summary>
                     {localAliasesList}
