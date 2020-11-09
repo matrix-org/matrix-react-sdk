@@ -30,6 +30,7 @@ import withValidation from '../elements/Validation';
 import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
 import PassphraseField from "./PassphraseField";
 import CountlyAnalytics from "../../../CountlyAnalytics";
+import { IlagState } from "../../../LifeCycle";
 
 const FIELD_EMAIL = 'field_email';
 const FIELD_PHONE_NUMBER = 'field_phone_number';
@@ -52,6 +53,7 @@ export default class RegistrationForm extends React.Component {
         defaultPassword: PropTypes.string,
         onRegisterClick: PropTypes.func.isRequired, // onRegisterClick(Object) => ?Promise
         onEditServerDetailsClick: PropTypes.func,
+        ilag: PropTypes.instanceOf(IlagState),
         flows: PropTypes.arrayOf(PropTypes.object).isRequired,
         serverConfig: PropTypes.instanceOf(ValidatedServerConfig).isRequired,
         canSubmit: PropTypes.bool,
@@ -509,27 +511,84 @@ export default class RegistrationForm extends React.Component {
         />;
     }
 
-    render() {
-        let yourMatrixAccountText = _t('Create your Matrix account on %(serverName)s', {
-            serverName: this.props.serverConfig.hsName,
-        });
-        if (this.props.serverConfig.hsNameIsDifferent) {
-            const TextWithTooltip = sdk.getComponent("elements.TextWithTooltip");
+    renderAvatar() {
+        return
+            <input
+                type="file"
+                ref={uploadRef}
+                className="mx_ProfileSettings_avatarUpload"
+                onChange={async (ev) => {
+                    // TODO
+                }}
+                accept="image/*"
+            />
+    }
 
-            yourMatrixAccountText = _t('Create your Matrix account on <underlinedServerName />', {}, {
-                'underlinedServerName': () => {
-                    return <TextWithTooltip
-                        class="mx_Login_underlinedServerName"
-                        tooltip={this.props.serverConfig.hsUrl}
-                    >
-                        {this.props.serverConfig.hsName}
-                    </TextWithTooltip>;
-                },
+    render() {
+        let yourMatrixAccountText;
+        if (this.props.ilag == IlagState.None) {
+            yourMatrixAccountText = _t('Create your Matrix account on %(serverName)s', {
+                serverName: this.props.serverConfig.hsName,
             });
+            if (this.props.serverConfig.hsNameIsDifferent) {
+                const TextWithTooltip = sdk.getComponent("elements.TextWithTooltip");
+
+                yourMatrixAccountText = _t('Create your Matrix account on <underlinedServerName />', {}, {
+                    'underlinedServerName': () => {
+                        return <TextWithTooltip
+                            class="mx_Login_underlinedServerName"
+                            tooltip={this.props.serverConfig.hsUrl}
+                        >
+                            {this.props.serverConfig.hsName}
+                        </TextWithTooltip>;
+                    },
+                });
+            }
+        }
+        else if (this.props.ilag == IlagState.Username) {
+            yourMatrixAccountText = _t('Pick a user name on %(serverName)s', {
+                serverName: this.props.serverConfig.hsName,
+            });
+            if (this.props.serverConfig.hsNameIsDifferent) {
+                const TextWithTooltip = sdk.getComponent("elements.TextWithTooltip");
+
+                yourMatrixAccountText = _t('Pick a user name on <underlinedServerName />', {}, {
+                    'underlinedServerName': () => {
+                        return <TextWithTooltip
+                            class="mx_Login_underlinedServerName"
+                            tooltip={this.props.serverConfig.hsUrl}
+                        >
+                            {this.props.serverConfig.hsName}
+                        </TextWithTooltip>;
+                    },
+                });
+            }
+        }
+        else if (this.props.ilag == IlagState.Password) {
+            yourMatrixAccountText = _t('Claim %(userName)s on %(serverName)s', {
+                userName: this.state.username,
+                serverName: this.props.serverConfig.hsName,
+            });
+            if (this.props.serverConfig.hsNameIsDifferent) {
+                const TextWithTooltip = sdk.getComponent("elements.TextWithTooltip");
+
+                yourMatrixAccountText = _t('Claim %(userName)s on <underlinedServerName />', {
+                    userName: this.state.username,
+                }, {
+                    'underlinedServerName': () => {
+                        return <TextWithTooltip
+                            class="mx_Login_underlinedServerName"
+                            tooltip={this.props.serverConfig.hsUrl}
+                        >
+                            {this.props.serverConfig.hsName}
+                        </TextWithTooltip>;
+                    },
+                });
+            }
         }
 
         let editLink = null;
-        if (this.props.onEditServerDetailsClick) {
+        if (this.props.onEditServerDetailsClick && this.props.ilag != IlagState.Password) {
             editLink = <a className="mx_AuthBody_editServerDetails"
                 href="#" onClick={this.props.onEditServerDetailsClick}
             >
@@ -537,8 +596,9 @@ export default class RegistrationForm extends React.Component {
             </a>;
         }
 
+        const submitLabel = this.props.ilag == IlagState.Username ? _t("Continue") : _t("Register");
         const registerButton = (
-            <input className="mx_Login_submit" type="submit" value={_t("Register")} disabled={!this.props.canSubmit} />
+            <input className="mx_Login_submit" type="submit" value={ submitLabel } disabled={!this.props.canSubmit} />
         );
 
         let emailHelperText = null;
@@ -577,19 +637,26 @@ export default class RegistrationForm extends React.Component {
                     {editLink}
                 </h3>
                 <form onSubmit={this.onSubmit}>
-                    <div className="mx_AuthBody_fieldRow">
-                        {this.renderUsername()}
-                    </div>
-                    <div className="mx_AuthBody_fieldRow">
-                        {this.renderPassword()}
-                        {this.renderPasswordConfirm()}
-                    </div>
-                    <div className="mx_AuthBody_fieldRow">
-                        {this.renderEmail()}
-                        {this.renderPhoneNumber()}
-                    </div>
-                    { emailHelperText }
-                    { noIsText }
+                    { (this.props.ilag == IlagState.None || this.props.ilag == IlagState.Username) ?
+                        <div className="mx_AuthBody_fieldRow">
+                            {this.renderUsername()}
+                            {this.renderAvatar()}
+                        </div> : ''
+                    }
+                    { (this.props.ilag == IlagState.None || this.props.ilag == IlagState.Password) ?
+                        <div>
+                            <div className="mx_AuthBody_fieldRow">
+                                {this.renderPassword()}
+                                {this.renderPasswordConfirm()}
+                            </div>
+                            <div className="mx_AuthBody_fieldRow">
+                                {this.renderEmail()}
+                                {this.renderPhoneNumber()}
+                            </div>
+                            { emailHelperText }
+                            { noIsText }
+                        </div> : ''
+                    }
                     { registerButton }
                 </form>
             </div>

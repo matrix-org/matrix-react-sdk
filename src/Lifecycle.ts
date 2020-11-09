@@ -61,6 +61,12 @@ interface ILoadSessionOpts {
     fragmentQueryParams?: Record<string, string>;
 }
 
+export enum IlagState {
+    None = "NONE",
+    Username = "USERNAME",
+    Password = "PASSWORD",
+}
+
 /**
  * Called at startup, to attempt to build a logged-in Matrix session. It tries
  * a number of things:

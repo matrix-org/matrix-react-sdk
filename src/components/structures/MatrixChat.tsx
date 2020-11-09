@@ -45,6 +45,7 @@ import { showRoomInviteDialog, showStartChatInviteDialog } from '../../RoomInvit
 import * as Rooms from '../../Rooms';
 import linkifyMatrix from "../../linkify-matrix";
 import * as Lifecycle from '../../Lifecycle';
+import { IlagState } from '../../Lifecycle';
 // LifecycleStore is not used but does listen to and dispatch actions
 import '../../stores/LifecycleStore';
 import PageTypes from '../../PageTypes';
@@ -673,6 +674,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case 'view_home_page':
                 this.viewHome(payload.justRegistered);
                 break;
+            case 'view_set_mxid':
+                this.viewSetMxId();
+                break;
             case 'view_start_chat_or_reuse':
                 this.chatCreateOrReuse(payload.user_id);
                 break;
@@ -981,6 +985,66 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             this.setState({currentUserId: userId});
             this.setPage(PageTypes.UserView);
         });
+    }
+
+    private viewSetMxId(payload) {
+        const Registration = sdk.getComponent("structures.auth.Registration");
+        const modal = Modal.createTrackedDialog('Choose a user name', '', Registration, {
+            title: _t("Choose a user name"),
+            ilag: IlagState.Username,
+
+            // clientSecret={this.state.register_client_secret}
+            // sessionId={this.state.register_session_id}
+            // idSid={this.state.register_id_sid}
+            // email={email}
+            brand: this.props.config.brand,
+            makeRegistrationUrl: this.makeRegistrationUrl,
+            onLoggedIn: this.onRegisterFlowComplete,
+            onLoginClick: this.onLoginClick,
+            onServerConfigChange: this.onServerConfigChange,
+            defaultDeviceDisplayName: this.props.defaultDeviceDisplayName,
+            ...this.getServerProperties(),
+
+            onFinished: (proceed) => {
+                console.log("viewSetMxId finished with " + proceed);
+                // if (proceed) {
+                //     dis.dispatch({action: 'start_registration', screenAfterLogin: options.screen_after});
+                // } else if (options.go_home_on_cancel) {
+                //     dis.dispatch({action: 'view_home_page'});
+                // } else if (options.go_welcome_on_cancel) {
+                //     dis.dispatch({action: 'view_welcome_page'});
+                // }
+            },
+        });
+/*
+        const SetMxIdDialog = sdk.getComponent('views.dialogs.SetMxIdDialog');
+        const close = Modal.createTrackedDialog('Set MXID', '', SetMxIdDialog, {
+            homeserverUrl: MatrixClientPeg.get().getHomeserverUrl(),
+            onFinished: (submitted, credentials) => {
+                if (!submitted) {
+                    dis.dispatch({
+                        action: 'cancel_after_sync_prepared',
+                    });
+                    if (payload.go_home_on_cancel) {
+                        dis.dispatch({
+                            action: 'view_home_page',
+                        });
+                    }
+                    return;
+                }
+                MatrixClientPeg.setJustRegisteredUserId(credentials.user_id);
+                this.onRegistered(credentials);
+            },
+            onDifferentServerClicked: (ev) => {
+                dis.dispatch({action: 'start_registration'});
+                close();
+            },
+            onLoginClick: (ev) => {
+                dis.dispatch({action: 'start_login'});
+                close();
+            },
+        }).close;
+*/
     }
 
     private async createRoom(defaultPublic = false) {

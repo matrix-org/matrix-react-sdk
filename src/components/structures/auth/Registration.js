@@ -28,10 +28,12 @@ import * as ServerType from '../../views/auth/ServerTypeSelector';
 import AutoDiscoveryUtils, {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
 import classNames from "classnames";
 import * as Lifecycle from '../../../Lifecycle';
+import { IlagState } from '../../../Lifecycle';
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import AuthPage from "../../views/auth/AuthPage";
 import Login from "../../../Login";
 import dis from "../../../dispatcher/dispatcher";
+import {randomString} from "matrix-js-sdk/src/randomstring";
 
 // Phases
 // Show controls to configure server details
@@ -51,6 +53,8 @@ export default class Registration extends React.Component {
         //   for operations like uploading cross-signing keys).
         onLoggedIn: PropTypes.func.isRequired,
 
+        // what "incremental landing as guest" we're doing, if any.
+        ilag: PropTypes.instanceOf(IlagState),
         clientSecret: PropTypes.string,
         sessionId: PropTypes.string,
         makeRegistrationUrl: PropTypes.func.isRequired,
@@ -62,6 +66,10 @@ export default class Registration extends React.Component {
         onLoginClick: PropTypes.func.isRequired,
         onServerConfigChange: PropTypes.func.isRequired,
         defaultDeviceDisplayName: PropTypes.string,
+    };
+
+    static defaultProps = {
+        ilag: IlagState.None,
     };
 
     constructor(props) {
@@ -80,6 +88,7 @@ export default class Registration extends React.Component {
             // persist for the duration of the registration process.
             formVals: {
                 email: this.props.email,
+                password: this.props.ilag == IlagState.Username ? randomString(16) : undefined,
             },
             // true if we're waiting for the user to complete
             // user-interactive auth
@@ -601,6 +610,7 @@ export default class Registration extends React.Component {
                 defaultPassword={this.state.formVals.password}
                 onRegisterClick={this.onFormSubmit}
                 onEditServerDetailsClick={onEditServerDetailsClick}
+                ilag={this.props.ilag}
                 flows={this.state.flows}
                 serverConfig={this.props.serverConfig}
                 canSubmit={!this.state.serverErrorIsFatal}
@@ -687,7 +697,11 @@ export default class Registration extends React.Component {
             </div>;
         } else {
             body = <div>
-                <h2>{ _t('Create your account') }</h2>
+                <h2>{ 
+                    this.props.ilag == IlagState.None ? _t('Create your account') :
+                    this.props.ilag == IlagState.Username ? _t('Pick a user name to continue') :
+                    this.props.ilag == IlagState.Password ? _t('Claim your account') : ''
+                }</h2>
                 { errorText }
                 { serverDeadSection }
                 { this.renderServerComponent() }
@@ -697,13 +711,22 @@ export default class Registration extends React.Component {
             </div>;
         }
 
-        return (
-            <AuthPage>
-                <AuthHeader />
+        if (this.props.ilag == IlagState.None) {
+            return (
+                <AuthPage>
+                    <AuthHeader />
+                    <AuthBody>
+                        { body }
+                    </AuthBody>
+                </AuthPage>
+            );
+        }
+        else {
+            return(
                 <AuthBody>
                     { body }
                 </AuthBody>
-            </AuthPage>
-        );
+            );
+        }
     }
 }
