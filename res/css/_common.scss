@@ -269,6 +269,21 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
     max-width: 704px;
 }
 
+.mx_Dialog_positioner {
+    // wedge the flexbox open to the specified height
+    // without constraining the mx_Dialog within it.
+    // height is set manually by the style attribute.
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.mx_Dialog_positioner .mx_Dialog {
+    // overflow the positioning box so we can change height
+    // without changing y-offset
+    position: absolute;
+}
+
 .mx_Dialog_staticWrapper .mx_Dialog {
     z-index: 4010;
 }

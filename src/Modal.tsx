@@ -33,6 +33,8 @@ export interface IModal<T extends any[]> {
     className?: string;
     beforeClosePromise?: Promise<boolean>;
     closeReason?: string;
+    // if set, layout the modal as if it were this number of pixels high, no matter how high it really is
+    height?: number;
     onBeforeClose?(reason?: string): Promise<boolean>;
     onFinished(...args: T): void;
     close(...args: T): void;
@@ -51,6 +53,7 @@ interface IProps<T extends any[]> {
 
 interface IOptions<T extends any[]> {
     onBeforeClose?: IModal<T>["onBeforeClose"];
+    height?: number;
 }
 
 type ParametersWithoutFirst<T extends (...args: any) => any> = T extends (a: any, ...args: infer P) => any ? P : never;
@@ -159,6 +162,7 @@ export class ModalManager {
             beforeClosePromise: null,
             closeReason: null,
             className,
+            height: options.height,
 
             // these will be set below but we need an object reference to pass to getCloseFn before we can do that
             elem: null,
@@ -339,11 +343,19 @@ export class ModalManager {
         if (this.staticModal) {
             const classes = classNames("mx_Dialog_wrapper mx_Dialog_staticWrapper", this.staticModal.className);
 
+            let dialogDiv = <div className="mx_Dialog">
+                { this.staticModal.elem }
+            </div>;
+
+            if (this.staticModal.height) {
+                dialogDiv = <div className="mx_Dialog_positioner" style={{ height: this.staticModal.height }}>
+                    { dialogDiv }
+                </div>;
+            }
+
             const staticDialog = (
                 <div className={classes}>
-                    <div className="mx_Dialog">
-                        { this.staticModal.elem }
-                    </div>
+                    { dialogDiv }
                     <div className="mx_Dialog_background mx_Dialog_staticBackground" onClick={this.onBackgroundClick} />
                 </div>
             );
@@ -360,11 +372,19 @@ export class ModalManager {
                 mx_Dialog_wrapperWithStaticUnder: this.staticModal,
             });
 
+            let dialogDiv = <div className="mx_Dialog">
+                { modal.elem }
+            </div>;
+
+            if (modal.height) {
+                dialogDiv = <div className="mx_Dialog_positioner" style={{ height: modal.height }}>
+                    { dialogDiv }
+                </div>;
+            }
+
             const dialog = (
                 <div className={classes}>
-                    <div className="mx_Dialog">
-                        {modal.elem}
-                    </div>
+                    { dialogDiv }
                     <div className="mx_Dialog_background" onClick={this.onBackgroundClick} />
                 </div>
             );
