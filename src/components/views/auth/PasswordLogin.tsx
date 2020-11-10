@@ -17,14 +17,15 @@ limitations under the License.
 */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
-import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import CountlyAnalytics from "../../../CountlyAnalytics";
+import CountryDropdown from "../auth/CountryDropdown";
+import SignInToText from "../auth/SignInToText";
+import Field from "../elements/Field";
+import { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
 
 interface IProps {
     onError: (error: string) => void;
@@ -45,7 +46,13 @@ interface IProps {
     loginIncorrect: boolean;
     disableSubmit: boolean;
     busy?: boolean;
-    serverConfig?: any;
+    serverConfig?: ValidatedServerConfig;
+}
+
+enum LoginType {
+    LOGIN_FIELD_EMAIL = "login_field_email",
+    LOGIN_FIELD_MXID = "login_field_mxid",
+    LOGIN_FIELD_PHONE = "login_field_phone",
 }
 
 interface IState {
@@ -54,32 +61,13 @@ interface IState {
     phoneCountry: string;
     phoneNumber: string;
     phonePrefix?: string;
-    loginType: string;
+    loginType: LoginType;
 }
 
 /**
  * A pure UI component which displays a username/password form.
  */
 export default class PasswordLogin extends React.Component<IProps, IState> {
-    static propTypes = {
-        onSubmit: PropTypes.func.isRequired, // fn(username, password)
-        onError: PropTypes.func,
-        onEditServerDetailsClick: PropTypes.func,
-        onForgotPasswordClick: PropTypes.func, // fn()
-        initialUsername: PropTypes.string,
-        initialPhoneCountry: PropTypes.string,
-        initialPhoneNumber: PropTypes.string,
-        initialPassword: PropTypes.string,
-        onUsernameChanged: PropTypes.func,
-        onPhoneCountryChanged: PropTypes.func,
-        onPhoneNumberChanged: PropTypes.func,
-        onPasswordChanged: PropTypes.func,
-        loginIncorrect: PropTypes.bool,
-        disableSubmit: PropTypes.bool,
-        serverConfig: PropTypes.instanceOf(ValidatedServerConfig).isRequired,
-        busy: PropTypes.bool,
-    };
-
     static defaultProps = {
         onError: function() {},
         onEditServerDetailsClick: null,
@@ -97,49 +85,45 @@ export default class PasswordLogin extends React.Component<IProps, IState> {
         disableSubmit: false,
     };
 
-    static LOGIN_FIELD_EMAIL = "login_field_email";
-    static LOGIN_FIELD_MXID = "login_field_mxid";
-    static LOGIN_FIELD_PHONE = "login_field_phone";
-
-    constructor(props) {
+    constructor(props: IProps) {
         super(props);
         this.state = {
             username: this.props.initialUsername,
             password: this.props.initialPassword,
             phoneCountry: this.props.initialPhoneCountry,
             phoneNumber: this.props.initialPhoneNumber,
-            loginType: PasswordLogin.LOGIN_FIELD_MXID,
+            loginType: LoginType.LOGIN_FIELD_MXID,
         };
     }
 
-    onForgotPasswordClick = (ev) => {
+    onForgotPasswordClick = (ev: ButtonEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
         this.props.onForgotPasswordClick();
     }
 
-    onSubmitForm = (ev) => {
+    onSubmitForm = (ev: React.FormEvent<HTMLFormElement>) => {
         ev.preventDefault();
 
         let username = ''; // XXX: Synapse breaks if you send null here:
-        let phoneCountry = null;
-        let phoneNumber = null;
-        let error: string;
+        let phoneCountry = '';
+        let phoneNumber = '';
+        let error = '';
 
         switch (this.state.loginType) {
-            case PasswordLogin.LOGIN_FIELD_EMAIL:
+            case LoginType.LOGIN_FIELD_EMAIL:
                 username = this.state.username;
                 if (!username) {
                     error = _t('The email field must not be blank.');
                 }
                 break;
-            case PasswordLogin.LOGIN_FIELD_MXID:
+            case LoginType.LOGIN_FIELD_MXID:
                 username = this.state.username;
                 if (!username) {
                     error = _t('The username field must not be blank.');
                 }
                 break;
-            case PasswordLogin.LOGIN_FIELD_PHONE:
+            case LoginType.LOGIN_FIELD_PHONE:
                 phoneCountry = this.state.phoneCountry;
                 phoneNumber = this.state.phoneNumber;
                 if (!phoneNumber) {
@@ -166,21 +150,21 @@ export default class PasswordLogin extends React.Component<IProps, IState> {
         );
     }
 
-    onUsernameChanged = (ev: any) => {
+    onUsernameChanged = (ev: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({username: ev.target.value});
         this.props.onUsernameChanged(ev.target.value);
     }
 
     onUsernameFocus = () => {
-        if (this.state.loginType === PasswordLogin.LOGIN_FIELD_MXID) {
+        if (this.state.loginType === LoginType.LOGIN_FIELD_MXID) {
             CountlyAnalytics.instance.track("onboarding_login_mxid_focus");
         } else {
             CountlyAnalytics.instance.track("onboarding_login_email_focus");
         }
     }
 
-    onUsernameBlur = (ev: any) => {
-        if (this.state.loginType === PasswordLogin.LOGIN_FIELD_MXID) {
+    onUsernameBlur = (ev: React.ChangeEvent<HTMLInputElement>) => {
+        if (this.state.loginType === LoginType.LOGIN_FIELD_MXID) {
             CountlyAnalytics.instance.track("onboarding_login_mxid_blur");
         } else {
             CountlyAnalytics.instance.track("onboarding_login_email_blur");
@@ -188,8 +172,8 @@ export default class PasswordLogin extends React.Component<IProps, IState> {
         this.props.onUsernameBlur(ev.target.value);
     }
 
-    onLoginTypeChange = (ev) => {
-        const loginType = ev.target.value;
+    onLoginTypeChange = (ev: React.ChangeEvent<HTMLSelectElement>) => {
+        const loginType = ev.target.value as LoginType;
         this.props.onError(null); // send a null error to clear any error messages
         this.setState({
             loginType: loginType,
@@ -206,7 +190,7 @@ export default class PasswordLogin extends React.Component<IProps, IState> {
         this.props.onPhoneCountryChanged(country.iso2);
     }
 
-    onPhoneNumberChanged = (ev) => {
+    onPhoneNumberChanged = (ev: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({phoneNumber: ev.target.value});
         this.props.onPhoneNumberChanged(ev.target.value);
     }
@@ -215,23 +199,21 @@ export default class PasswordLogin extends React.Component<IProps, IState> {
         CountlyAnalytics.instance.track("onboarding_login_phone_number_focus");
     }
 
-    onPhoneNumberBlur = (ev) => {
+    onPhoneNumberBlur = (ev: React.ChangeEvent<HTMLInputElement>) => {
         this.props.onPhoneNumberBlur(ev.target.value);
         CountlyAnalytics.instance.track("onboarding_login_phone_number_blur");
     }
 
-    onPasswordChanged = (ev) => {
+    onPasswordChanged = (ev: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({password: ev.target.value});
         this.props.onPasswordChanged(ev.target.value);
     }
 
-    renderLoginField(loginType, autoFocus) {
-        const Field = sdk.getComponent('elements.Field');
-
+    renderLoginField(loginType: LoginType, autoFocus: boolean) {
         const classes: { error?: boolean } = {};
 
         switch (loginType) {
-            case PasswordLogin.LOGIN_FIELD_EMAIL:
+            case LoginType.LOGIN_FIELD_EMAIL:
                 classes.error = this.props.loginIncorrect && !this.state.username;
                 return <Field
                     className={classNames(classes)}
@@ -247,7 +229,7 @@ export default class PasswordLogin extends React.Component<IProps, IState> {
                     disabled={this.props.disableSubmit}
                     autoFocus={autoFocus}
                 />;
-            case PasswordLogin.LOGIN_FIELD_MXID:
+            case LoginType.LOGIN_FIELD_MXID:
                 classes.error = this.props.loginIncorrect && !this.state.username;
                 return <Field
                     className={classNames(classes)}
@@ -262,8 +244,7 @@ export default class PasswordLogin extends React.Component<IProps, IState> {
                     disabled={this.props.disableSubmit}
                     autoFocus={autoFocus}
                 />;
-            case PasswordLogin.LOGIN_FIELD_PHONE: {
-                const CountryDropdown = sdk.getComponent('views.auth.CountryDropdown');
+            case LoginType.LOGIN_FIELD_PHONE: {
                 classes.error = this.props.loginIncorrect && !this.state.phoneNumber;
 
                 const phoneCountry = <CountryDropdown
@@ -293,18 +274,15 @@ export default class PasswordLogin extends React.Component<IProps, IState> {
 
     isLoginEmpty = () => {
         switch (this.state.loginType) {
-            case PasswordLogin.LOGIN_FIELD_EMAIL:
-            case PasswordLogin.LOGIN_FIELD_MXID:
+            case LoginType.LOGIN_FIELD_EMAIL:
+            case LoginType.LOGIN_FIELD_MXID:
                 return !this.state.username;
-            case PasswordLogin.LOGIN_FIELD_PHONE:
+            case LoginType.LOGIN_FIELD_PHONE:
                 return !this.state.phoneCountry || !this.state.phoneNumber;
         }
     }
 
     render() {
-        const Field = sdk.getComponent('elements.Field');
-        const SignInToText = sdk.getComponent('views.auth.SignInToText');
-
         let forgotPasswordJsx;
 
         if (this.props.onForgotPasswordClick) {
@@ -345,20 +323,20 @@ export default class PasswordLogin extends React.Component<IProps, IState> {
                         disabled={this.props.disableSubmit}
                     >
                         <option
-                            key={PasswordLogin.LOGIN_FIELD_MXID}
-                            value={PasswordLogin.LOGIN_FIELD_MXID}
+                            key={LoginType.LOGIN_FIELD_MXID}
+                            value={LoginType.LOGIN_FIELD_MXID}
                         >
                             {_t('Username')}
                         </option>
                         <option
-                            key={PasswordLogin.LOGIN_FIELD_EMAIL}
-                            value={PasswordLogin.LOGIN_FIELD_EMAIL}
+                            key={LoginType.LOGIN_FIELD_EMAIL}
+                            value={LoginType.LOGIN_FIELD_EMAIL}
                         >
                             {_t('Email address')}
                         </option>
                         <option
-                            key={PasswordLogin.LOGIN_FIELD_PHONE}
-                            value={PasswordLogin.LOGIN_FIELD_PHONE}
+                            key={LoginType.LOGIN_FIELD_PHONE}
+                            value={LoginType.LOGIN_FIELD_PHONE}
                         >
                             {_t('Phone')}
                         </option>
