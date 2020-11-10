@@ -283,7 +283,7 @@ export default class PasswordLogin extends React.Component<IProps, IState> {
     }
 
     render() {
-        let forgotPasswordJsx;
+        let forgotPasswordJsx: JSX.Element | undefined;
 
         if (this.props.onForgotPasswordClick) {
             forgotPasswordJsx = <span>
@@ -311,7 +311,7 @@ export default class PasswordLogin extends React.Component<IProps, IState> {
         const autoFocusPassword = !this.isLoginEmpty();
         const loginField = this.renderLoginField(this.state.loginType, !autoFocusPassword);
 
-        let loginType;
+        let loginType: JSX.Element | undefined;
         if (!SdkConfig.get().disable_3pid_login) {
             loginType = (
                 <div className="mx_Login_type_container">
