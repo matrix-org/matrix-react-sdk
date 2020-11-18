@@ -147,6 +147,15 @@ export default abstract class BasePlatform {
     }
 
     /**
+     * Returns true if the application currently has permission
+     * to display notifications. Otherwise false.
+     * @returns {Promise<boolean>} whether the application has permission to display notifications
+     */
+    async isDoNotDisturbEnabled(): Promise<boolean> {
+        return false;
+    }
+
+    /**
      * Requests permission to send notifications. Returns
      * a promise that is resolved when the user has responded
      * to the request. The promise has a single string argument

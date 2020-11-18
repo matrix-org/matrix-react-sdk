@@ -80,6 +80,8 @@ export const Notifier = {
         if (!plaf.supportsNotifications() || !plaf.maySendNotifications()) {
             return;
         }
+        if (!plaf) return;
+
         if (global.document.hasFocus()) {
             return;
         }
@@ -272,6 +274,7 @@ export const Notifier = {
         if (!plaf.supportsNotifications()) return false;
         if (!plaf.maySendNotifications()) return false;
 
+
         return true; // possible, but not necessarily enabled
     },
 
@@ -372,14 +375,19 @@ export const Notifier = {
         }
     },
 
-    _evaluateEvent: function(ev) {
+    _evaluateEvent: async function(ev) {
         const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
         const actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
-        if (actions && actions.notify) {
+        const plaf = PlatformPeg.get();
+        if (!plaf) return;
+
+        const maySend = plaf.maySendNotifications();
+        if (actions && actions.notify && maySend) {
             if (this.isEnabled()) {
-                this._displayPopupNotification(ev, room);
+                return this._displayPopupNotification(ev, room);
             }
-            if (actions.tweaks.sound && this.isAudioEnabled()) {
+            const dnd = await plaf.isDoNotDisturbEnabled();
+            if (actions.tweaks.sound && this.isAudioEnabled() && !dnd) {
                 PlatformPeg.get().loudNotification(ev, room);
                 this._playAudioNotification(ev, room);
             }
