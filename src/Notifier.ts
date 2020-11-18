@@ -375,14 +375,13 @@ export const Notifier = {
     _evaluateEvent: function(ev) {
         const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
         const actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
-        if (actions && actions.notify) {
-            if (this.isEnabled()) {
-                this._displayPopupNotification(ev, room);
-            }
-            if (actions.tweaks.sound && this.isAudioEnabled()) {
-                PlatformPeg.get().loudNotification(ev, room);
-                this._playAudioNotification(ev, room);
-            }
+
+        if (actions.notify && this.isEnabled()) {
+            this._displayPopupNotification(ev, room);
+        }
+        if (actions.tweaks && actions.tweaks.sound && this.isAudioEnabled()) {
+            PlatformPeg.get().loudNotification(ev, room);
+            this._playAudioNotification(ev, room);
         }
     },
 };
