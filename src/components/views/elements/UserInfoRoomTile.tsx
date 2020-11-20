@@ -98,7 +98,7 @@ export default class UserInfoRoomTile extends React.PureComponent<IProps, IState
         let Button: React.ComponentType<React.ComponentProps<typeof AccessibleButton>> = AccessibleButton;
 
         return (
-            <React.Fragment>
+            <>
                 <Button
                     {...props}
                     className={classes}
@@ -112,7 +112,7 @@ export default class UserInfoRoomTile extends React.PureComponent<IProps, IState
                     {nameContainer}
                     {badge}
                 </Button>
-            </React.Fragment>
+            </>
         );
     }
 }
