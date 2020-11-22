@@ -358,7 +358,7 @@ export default class AliasSettings extends React.Component {
                 <p>{_t("Published addresses can be used by anyone on any server to join your room. " +
                     "To publish an address, it needs to be set as a local address first.")}</p>
                 {canonicalAliasSection}
-                <RoomPublishSetting roomId={this.props.roomId} canSetCanonicalAlias={this.props.canSetCanonicalAlias} />
+                <RoomPublishSetting roomId={this.props.roomId} canSetAliases={this.props.canSetAliases} />
                 <datalist id="mx_AliasSettings_altRecommendations">
                     {this._getLocalNonAltAliases().map(alias => {
                         return <option value={alias} key={alias} />;
