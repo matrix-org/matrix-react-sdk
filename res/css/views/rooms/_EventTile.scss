@@ -297,6 +297,8 @@ $left-gutter: 64px;
 
 /* De-zalgoing */
 .mx_EventTile_body {
+    text-align: start;
+    display: block;
     overflow-y: hidden;
 }
 
