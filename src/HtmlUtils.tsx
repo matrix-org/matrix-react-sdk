@@ -475,13 +475,13 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
     });
 
     return isDisplayedWithHtml ?
-        <span
+        <div
             key="body"
             ref={opts.ref}
             className={className}
             dangerouslySetInnerHTML={{ __html: safeBody }}
             dir="auto"
-        /> : <span key="body" ref={opts.ref} className={className} dir="auto">{ strippedBody }</span>;
+        /> : <div key="body" ref={opts.ref} className={className} dir="auto">{ strippedBody }</div>;
 }
 
 /**

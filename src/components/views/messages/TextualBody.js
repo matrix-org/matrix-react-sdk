@@ -437,7 +437,7 @@ export default class TextualBody extends React.Component {
         switch (content.msgtype) {
             case "m.emote":
                 return (
-                    <span className="mx_MEmoteBody mx_EventTile_content">
+                    <div className="mx_MEmoteBody mx_EventTile_content">
                         *&nbsp;
                         <span
                             className="mx_MEmoteBody_sender"
@@ -448,14 +448,14 @@ export default class TextualBody extends React.Component {
                         &nbsp;
                         { body }
                         { widgets }
-                    </span>
+                    </div>
                 );
             case "m.notice":
                 return (
-                    <span className="mx_MNoticeBody mx_EventTile_content">
+                    <div className="mx_MNoticeBody mx_EventTile_content">
                         { body }
                         { widgets }
-                    </span>
+                    </div>
                 );
             default: // including "m.text"
                 return (
