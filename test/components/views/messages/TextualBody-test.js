@@ -53,7 +53,7 @@ describe("<TextualBody />", () => {
         const wrapper = mount(<TextualBody mxEvent={ev} />);
         expect(wrapper.text()).toBe("* sender winks");
         const content = wrapper.find(".mx_EventTile_body");
-        expect(content.html()).toBe('<span class="mx_EventTile_body" dir="auto">winks</span>');
+        expect(content.html()).toBe('<div class="mx_EventTile_body" dir="auto">winks</div>');
     });
 
     it("renders m.notice correctly", () => {
@@ -77,7 +77,7 @@ describe("<TextualBody />", () => {
         const wrapper = mount(<TextualBody mxEvent={ev} />);
         expect(wrapper.text()).toBe(ev.getContent().body);
         const content = wrapper.find(".mx_EventTile_body");
-        expect(content.html()).toBe(`<span class="mx_EventTile_body" dir="auto">${ ev.getContent().body }</span>`);
+        expect(content.html()).toBe(`<div class="mx_EventTile_body" dir="auto">${ ev.getContent().body }</div>`);
     });
 
     describe("renders plain-text m.text correctly", () => {
@@ -104,7 +104,7 @@ describe("<TextualBody />", () => {
             const wrapper = mount(<TextualBody mxEvent={ev} />);
             expect(wrapper.text()).toBe(ev.getContent().body);
             const content = wrapper.find(".mx_EventTile_body");
-            expect(content.html()).toBe(`<span class="mx_EventTile_body" dir="auto">${ ev.getContent().body }</span>`);
+            expect(content.html()).toBe(`<div class="mx_EventTile_body" dir="auto">${ ev.getContent().body }</div>`);
         });
 
         // If pills were rendered within a Portal/same shadow DOM then it'd be easier to test
@@ -123,9 +123,9 @@ describe("<TextualBody />", () => {
             const wrapper = mount(<TextualBody mxEvent={ev} />);
             expect(wrapper.text()).toBe(ev.getContent().body);
             const content = wrapper.find(".mx_EventTile_body");
-            expect(content.html()).toBe('<span class="mx_EventTile_body" dir="auto">' +
+            expect(content.html()).toBe('<div class="mx_EventTile_body" dir="auto">' +
                 'Visit <a href="https://matrix.org/" class="linkified" target="_blank" rel="noreferrer noopener">' +
-                'https://matrix.org/</a></span>');
+                'https://matrix.org/</a></div>');
         });
     });
 
@@ -159,8 +159,8 @@ describe("<TextualBody />", () => {
             const wrapper = mount(<TextualBody mxEvent={ev} />);
             expect(wrapper.text()).toBe("foo baz bar del u");
             const content = wrapper.find(".mx_EventTile_body");
-            expect(content.html()).toBe('<span class="mx_EventTile_body markdown-body" dir="auto">' +
-                ev.getContent().formatted_body + '</span>');
+            expect(content.html()).toBe('<div class="mx_EventTile_body markdown-body" dir="auto">' +
+                ev.getContent().formatted_body + '</div>');
         });
 
         it("spoilers get injected properly into the DOM", () => {
@@ -180,12 +180,12 @@ describe("<TextualBody />", () => {
             const wrapper = mount(<TextualBody mxEvent={ev} />);
             expect(wrapper.text()).toBe("Hey (movie) the movie was awesome");
             const content = wrapper.find(".mx_EventTile_body");
-            expect(content.html()).toBe('<span class="mx_EventTile_body markdown-body" dir="auto">' +
+            expect(content.html()).toBe('<div class="mx_EventTile_body markdown-body" dir="auto">' +
                 'Hey <span>' +
                 '<span class="mx_EventTile_spoiler">' +
                 '<span class="mx_EventTile_spoiler_reason">(movie)</span>&nbsp;' +
                 '<span class="mx_EventTile_spoiler_content"><span>the movie was awesome</span></span>' +
-                '</span></span></span>');
+                '</span></span></div>');
         });
 
         // If pills were rendered within a Portal/same shadow DOM then it'd be easier to test
@@ -206,12 +206,12 @@ describe("<TextualBody />", () => {
             const wrapper = mount(<TextualBody mxEvent={ev} />);
             expect(wrapper.text()).toBe("Hey Member");
             const content = wrapper.find(".mx_EventTile_body");
-            expect(content.html()).toBe('<span class="mx_EventTile_body markdown-body" dir="auto">' +
+            expect(content.html()).toBe('<div class="mx_EventTile_body markdown-body" dir="auto">' +
                 'Hey <span>' +
                 '<a class="mx_Pill mx_UserPill" title="@user:server">' +
                 '<img class="mx_BaseAvatar mx_BaseAvatar_image" src="mxc://avatar.url/image.png" ' +
                 'style="width: 16px; height: 16px;" title="@member:domain.bla" alt="" aria-hidden="true">Member</a>' +
-                '</span></span>');
+                '</span></div>');
         });
     });
 
