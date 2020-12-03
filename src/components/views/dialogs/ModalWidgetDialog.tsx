@@ -44,6 +44,7 @@ interface IProps {
     widgetDefinition: IModalWidgetOpenRequestData;
     sourceWidgetId: string;
     onFinished(success: boolean, data?: IModalWidgetReturnData): void;
+    onCompleted?(): void;
 }
 
 interface IState {
@@ -93,6 +94,7 @@ export default class ModalWidgetDialog extends React.PureComponent<IProps, IStat
         this.state.messaging.once("ready", this.onReady);
         this.state.messaging.on(`action:${WidgetApiFromWidgetAction.CloseModalWidget}`, this.onWidgetClose);
         this.state.messaging.on(`action:${WidgetApiFromWidgetAction.SetModalButtonEnabled}`, this.onButtonEnableToggle);
+        this.state.messaging.on(`action:${WidgetApiFromWidgetAction.Completed}`, this.onCompleted);
     };
 
     private onWidgetClose = (ev: CustomEvent<IModalWidgetCloseRequest>) => {

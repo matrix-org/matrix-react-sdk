@@ -57,18 +57,17 @@ export default class HostingSignupDialog extends React.PureComponent<IProps, ISt
     //             // noinspection JSIgnoredPromiseFromCall
     //             this.sendAccountDetails();
     //             break;
-    //         case 'setup_complete':
-    //             // Set as completed but let the user close the modal themselves
-    //             // so they have time to finish reading any information
-    //             this.setState({
-    //                 completed: true,
-    //             });
-    //             break;
     //         case 'close_dialog':
     //             this.onFinished(true);
     //             break;
     //     }
     // }
+
+    private onCompleted = () => {
+        this.setState({
+            completed: true,
+        });
+    }
 
     private onFinished = (result: boolean) => {
         if (result || this.state.completed) {
@@ -118,6 +117,7 @@ export default class HostingSignupDialog extends React.PureComponent<IProps, ISt
     public render(): React.ReactNode {
         return (
             <ModalWidgetDialog
+                onCompleted={this.onCompleted}
                 onFinished={this.onFinished}
                 sourceWidgetId='hosting_signup_dialog'
                 widgetDefinition={this.state.widgetData}
