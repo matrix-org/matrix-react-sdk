@@ -17,9 +17,11 @@ limitations under the License.
 import * as React from "react";
 import * as sdk from '../../../index';
 import Modal from "../../../Modal";
+import ModalWidgetDialog from "./ModalWidgetDialog";
 import SdkConfig from "../../../SdkConfig";
 import { _t } from "../../../languageHandler";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { IModalWidgetOpenRequestData } from "matrix-widget-api";
+// import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 interface IProps {
     requestClose(): void;
@@ -28,49 +30,45 @@ interface IProps {
 interface IState {
     completed: boolean;
     error: string;
+    widgetData: IModalWidgetOpenRequestData;
 }
 
 export default class HostingSignupDialog extends React.PureComponent<IProps, IState> {
-    iframeRef;
-    hostingSignupUrl: string;
-
     constructor(props: IProps) {
         super(props);
 
         this.state = {
             completed: false,
             error: null,
+            widgetData: {
+                type: 'm.custom',
+                url: SdkConfig.get().hosting_signup.url,
+                name: _t("Set up your own personal Element host"),
+            },
         };
-
-        this.iframeRef = React.createRef();
-        this.hostingSignupUrl = SdkConfig.get().hosting_signup.url;
     }
 
-    private messageHandler = (message) => {
-        if (!this.hostingSignupUrl.startsWith(message.origin)) {
-            return;
-        }
-        switch (message.data.action) {
-            case 'account_credentials_request':
-                // noinspection JSIgnoredPromiseFromCall
-                this.sendAccountDetails();
-                break;
-            case 'setup_complete':
-                // Set as completed but let the user close the modal themselves
-                // so they have time to finish reading any information
-                this.setState({
-                    completed: true,
-                });
-                break;
-            case 'openid_credentials_request':
-                // noinspection JSIgnoredPromiseFromCall
-                this.fetchOpenIDToken();
-                break;
-            case 'close_dialog':
-                this.onFinished(true);
-                break;
-        }
-    }
+    // private messageHandler = (message) => {
+    //     if (!this.state.widgetData.url.startsWith(message.origin)) {
+    //         return;
+    //     }
+    //     switch (message.data.action) {
+    //         case 'account_credentials_request':
+    //             // noinspection JSIgnoredPromiseFromCall
+    //             this.sendAccountDetails();
+    //             break;
+    //         case 'setup_complete':
+    //             // Set as completed but let the user close the modal themselves
+    //             // so they have time to finish reading any information
+    //             this.setState({
+    //                 completed: true,
+    //             });
+    //             break;
+    //         case 'close_dialog':
+    //             this.onFinished(true);
+    //             break;
+    //     }
+    // }
 
     private onFinished = (result: boolean) => {
         if (result || this.state.completed) {
@@ -91,68 +89,40 @@ export default class HostingSignupDialog extends React.PureComponent<IProps, ISt
         }
     }
 
-    private sendMessage = (message) => {
-        this.iframeRef.contentWindow.postMessage(
-            message,
-            this.hostingSignupUrl,
-        )
-    }
+    // private sendMessage = (message) => {
+    //     this.iframeRef.contentWindow.postMessage(
+    //         message,
+    //         this.state.widgetData.url,
+    //     )
+    // }
 
-    private async fetchOpenIDToken() {
-        const token = await MatrixClientPeg.get().getOpenIdToken();
-        if (token && token.access_token) {
-            this.sendMessage({
-                action: 'openid_credentials',
-                tokenData: token,
-            });
-        } else {
-            this.setState({
-                error: _t("Failed to connect to your homeserver. Please close this dialog and try again."),
-            });
-        }
-    }
-
-    private async sendAccountDetails() {
-        this.sendMessage({
-            action: 'account_credentials',
-            credentials: {
-                accessToken: await MatrixClientPeg.get().getAccessToken(),
-                serverName: await MatrixClientPeg.get().getDomain(),
-                userLocalpart: await MatrixClientPeg.get().getUserIdLocalpart(),
-            },
-        });
-    }
-
-    public componentDidMount() {
-        window.addEventListener("message", this.messageHandler);
-    }
-
-    public componentWillUnmount() {
-        window.removeEventListener("message", this.messageHandler);
-    }
+    // private async sendAccountDetails() {
+    //     this.sendMessage({
+    //         action: 'account_credentials',
+    //         credentials: {
+    //             accessToken: await MatrixClientPeg.get().getAccessToken(),
+    //             serverName: await MatrixClientPeg.get().getDomain(),
+    //             userLocalpart: await MatrixClientPeg.get().getUserIdLocalpart(),
+    //         },
+    //     });
+    // }
+    //
+    // public componentDidMount() {
+    //     window.addEventListener("message", this.messageHandler);
+    // }
+    //
+    // public componentWillUnmount() {
+    //     window.removeEventListener("message", this.messageHandler);
+    // }
 
     public render(): React.ReactNode {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         return (
-            <BaseDialog
-                className="mx_HostingSignupBaseDialog"
+            <ModalWidgetDialog
                 onFinished={this.onFinished}
-                title={_t("Set up your own personal Element host")}
-                hasCancel={true}
-                fixedWidth={false}
+                sourceWidgetId='hosting_signup_dialog'
+                widgetDefinition={this.state.widgetData}
             >
-                <div className="mx_HostingSignupDialog_container">
-                    <iframe
-                        src={this.hostingSignupUrl}
-                        ref={ref => this.iframeRef = ref}
-                    />
-                    {this.state.error &&
-                        <div>
-                            {this.state.error}
-                        </div>
-                    }
-                </div>
-            </BaseDialog>
+            </ModalWidgetDialog>
         );
     }
 }
