@@ -144,7 +144,7 @@ export default class DevicesPanel extends React.Component {
                 },
             };
             const signOutDevs = this.state.devices.filter(dev => this.state.selectedDevices.includes(dev.device_id));
-            const signOutDevsDiv = 
+            const signOutDevsDiv =
                 <div className="mx_DevicesPanel mx_DevicesPanel_signout_devices">
                     <div className="mx_DevicesPanel_header">
                         <div className="mx_DevicesPanel_deviceId">{ _t("ID") }</div>

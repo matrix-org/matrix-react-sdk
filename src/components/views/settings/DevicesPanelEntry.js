@@ -87,7 +87,7 @@ export default class DevicesPanelEntry extends React.Component {
                     { lastSeen }
                 </div>
                 {
-                    this.props.editable ? 
+                    this.props.editable ?
                         <StyledCheckbox onChange={this.onDeviceToggled} checked={this.props.selected} />
                     : null
                 }
