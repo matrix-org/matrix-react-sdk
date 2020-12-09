@@ -73,17 +73,24 @@ export default class DevicesPanelEntry extends React.Component {
                     { device.device_id }
                 </div>
                 <div className="mx_DevicesPanel_deviceName">
-                    <EditableTextContainer initialValue={device.display_name}
-                        onSubmit={this._onDisplayNameChanged}
-                        placeholder={device.device_id}
-                    />
+                {
+                    this.props.editable ?
+                        <EditableTextContainer initialValue={device.display_name}
+                            onSubmit={this._onDisplayNameChanged}
+                            placeholder={device.device_id}
+                        />
+                        :
+                        device.display_name
+                }
                 </div>
                 <div className="mx_DevicesPanel_lastSeen">
                     { lastSeen }
                 </div>
-                <div className="mx_DevicesPanel_deviceButtons">
-                    <StyledCheckbox onChange={this.onDeviceToggled} checked={this.props.selected} />
-                </div>
+                {
+                    this.props.editable ? 
+                        <StyledCheckbox onChange={this.onDeviceToggled} checked={this.props.selected} />
+                    : null
+                }
             </div>
         );
     }

@@ -41,7 +41,7 @@ export default class DevicesPanel extends React.Component {
 
         this._renderDevice = this._renderDevice.bind(this);
         this._onDeviceSelectionToggled = this._onDeviceSelectionToggled.bind(this);
-        this._onDeleteClick = this._onDeleteClick.bind(this);
+        this._onSignOutClick = this._onSignOutClick.bind(this);
     }
 
     componentDidMount() {
@@ -109,12 +109,12 @@ export default class DevicesPanel extends React.Component {
         });
     }
 
-    _onDeleteClick() {
+    _onSignOutClick() {
         this.setState({
             deleting: true,
         });
 
-        this._makeDeleteRequest(null).catch((error) => {
+        this._makeSignOutRequest(null).catch((error) => {
             if (this._unmounted) { return; }
             if (error.httpStatus !== 401 || !error.data || !error.data.flows) {
                 // doesn't look like an interactive-auth failure
@@ -143,11 +143,22 @@ export default class DevicesPanel extends React.Component {
                     continueKind: "danger",
                 },
             };
-            Modal.createTrackedDialog('Delete Device Dialog', '', InteractiveAuthDialog, {
-                title: _t("Authentication"),
+            const signOutDevs = this.state.devices.filter(dev => this.state.selectedDevices.includes(dev.device_id));
+            const signOutDevsDiv = 
+                <div className="mx_DevicesPanel mx_DevicesPanel_signout_devices">
+                    <div className="mx_DevicesPanel_header">
+                        <div className="mx_DevicesPanel_deviceId">{ _t("ID") }</div>
+                        <div className="mx_DevicesPanel_deviceName">{ _t("Public Name") }</div>
+                        <div className="mx_DevicesPanel_deviceLastSeen">{ _t("Last seen") }</div>
+                    </div>
+                    { signOutDevs.map(dev => this._renderDevice(dev, false)) }
+                </div>;
+            Modal.createTrackedDialog('Sign Out Device Dialog', '', InteractiveAuthDialog, {
+                title: _t("Session Sign Out"),
+                body: signOutDevsDiv,
                 matrixClient: MatrixClientPeg.get(),
                 authData: error.data,
-                makeRequest: this._makeDeleteRequest.bind(this),
+                makeRequest: this._makeSignOutRequest.bind(this),
                 aestheticsForStagePhases: {
                     [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
                     [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
@@ -163,7 +174,7 @@ export default class DevicesPanel extends React.Component {
         });
     }
 
-    _makeDeleteRequest(auth) {
+    _makeSignOutRequest(auth) {
         return MatrixClientPeg.get().deleteMultipleDevices(this.state.selectedDevices, auth).then(
             () => {
                 // Remove the deleted devices from `devices`, reset selection to []
@@ -177,13 +188,14 @@ export default class DevicesPanel extends React.Component {
         );
     }
 
-    _renderDevice(device) {
+    _renderDevice(device, editable) {
         const DevicesPanelEntry = sdk.getComponent('settings.DevicesPanelEntry');
         return <DevicesPanelEntry
             key={device.device_id}
             device={device}
             selected={this.state.selectedDevices.includes(device.device_id)}
             onDeviceToggled={this._onDeviceSelectionToggled}
+            editable = {editable}
         />;
     }
 
@@ -209,24 +221,27 @@ export default class DevicesPanel extends React.Component {
 
         devices.sort(this._deviceCompare);
 
-        const deleteButton = this.state.deleting ?
+        const signOutButton = this.state.deleting?
             <Spinner w={22} h={22} /> :
-            <AccessibleButton onClick={this._onDeleteClick} kind="danger_sm">
-               { _t("Delete %(count)s sessions", {count: this.state.selectedDevices.length}) }
+            <AccessibleButton onClick={this._onSignOutClick} kind="danger"
+                disabled={this.state.selectedDevices.length === 0}>
+               { _t("Sign out") }
             </AccessibleButton>;
 
         const classes = classNames(this.props.className, "mx_DevicesPanel");
         return (
-            <div className={classes}>
-                <div className="mx_DevicesPanel_header">
-                    <div className="mx_DevicesPanel_deviceId">{ _t("ID") }</div>
-                    <div className="mx_DevicesPanel_deviceName">{ _t("Public Name") }</div>
-                    <div className="mx_DevicesPanel_deviceLastSeen">{ _t("Last seen") }</div>
-                    <div className="mx_DevicesPanel_deviceButtons">
-                        { this.state.selectedDevices.length > 0 ? deleteButton : null }
+            <div>
+                <div className={classes}>
+                    <div className="mx_DevicesPanel_header">
+                        <div className="mx_DevicesPanel_deviceId">{ _t("ID") }</div>
+                        <div className="mx_DevicesPanel_deviceName">{ _t("Public Name") }</div>
+                        <div className="mx_DevicesPanel_deviceLastSeen">{ _t("Last seen") }</div>
                     </div>
+                    { devices.map(dev => this._renderDevice(dev, true)) }
                 </div>
-                { devices.map(this._renderDevice) }
+                <div className="mx_DevicesPanel_deviceButtons">
+                    { signOutButton }
+                </div>
             </div>
         );
     }

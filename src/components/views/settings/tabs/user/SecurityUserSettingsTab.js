@@ -387,7 +387,8 @@ export default class SecurityUserSettingsTab extends React.Component {
                 {warning}
                 <div className="mx_SettingsTab_heading">{_t("Where you’re logged in")}</div>
                 <div className="mx_SettingsTab_section">
-                    <span>
+                    <div className='mx_SettingsTab_subsectionText'>
+                    <p>
                         {_t(
                             "Manage the names of and sign out of your sessions below or " +
                             "<a>verify them in your User Profile</a>.", {},
@@ -397,9 +398,10 @@ export default class SecurityUserSettingsTab extends React.Component {
                                 </AccessibleButton>,
                             },
                         )}
-                    </span>
-                    <div className='mx_SettingsTab_subsectionText'>
-                        {_t("A session's public name is visible to people you communicate with")}
+                    </p>
+                    <p>
+                        {_t("A session's public name is visible to people you communicate with.")}
+                        </p>
                         <DevicesPanel />
                     </div>
                 </div>
