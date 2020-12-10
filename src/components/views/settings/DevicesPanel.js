@@ -195,7 +195,7 @@ export default class DevicesPanel extends React.Component {
             device={device}
             selected={this.state.selectedDevices.includes(device.device_id)}
             onDeviceToggled={this._onDeviceSelectionToggled}
-            editable = {editable}
+            editable={editable}
         />;
     }
 

@@ -79,8 +79,7 @@ export default class DevicesPanelEntry extends React.Component {
                             onSubmit={this._onDisplayNameChanged}
                             placeholder={device.device_id}
                         />
-                        :
-                        device.display_name
+                        : device.display_name
                 }
                 </div>
                 <div className="mx_DevicesPanel_lastSeen">
