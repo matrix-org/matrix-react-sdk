@@ -114,7 +114,7 @@ export default class DevicesPanel extends React.Component {
             deleting: true,
         });
 
-        this._makeSignOutRequest(null).catch((error) => {
+        this._makeDeleteRequest(null).catch((error) => {
             if (this._unmounted) { return; }
             if (error.httpStatus !== 401 || !error.data || !error.data.flows) {
                 // doesn't look like an interactive-auth failure
@@ -158,7 +158,7 @@ export default class DevicesPanel extends React.Component {
                 body: signOutDevsDiv,
                 matrixClient: MatrixClientPeg.get(),
                 authData: error.data,
-                makeRequest: this._makeSignOutRequest.bind(this),
+                makeRequest: this._makeDeleteRequest.bind(this),
                 aestheticsForStagePhases: {
                     [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
                     [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
@@ -174,7 +174,7 @@ export default class DevicesPanel extends React.Component {
         });
     }
 
-    _makeSignOutRequest(auth) {
+    _makeDeleteRequest(auth) {
         return MatrixClientPeg.get().deleteMultipleDevices(this.state.selectedDevices, auth).then(
             () => {
                 // Remove the deleted devices from `devices`, reset selection to []
@@ -223,8 +223,11 @@ export default class DevicesPanel extends React.Component {
 
         const signOutButton = this.state.deleting?
             <Spinner w={22} h={22} /> :
-            <AccessibleButton onClick={this._onSignOutClick} kind="danger"
-                disabled={this.state.selectedDevices.length === 0}>
+            <AccessibleButton
+                onClick={this._onSignOutClick}
+                kind="danger"
+                disabled={this.state.selectedDevices.length === 0}
+            >
                { _t("Sign out") }
             </AccessibleButton>;
 
