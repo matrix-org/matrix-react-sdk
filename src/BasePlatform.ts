@@ -227,6 +227,18 @@ export default abstract class BasePlatform {
         throw new Error("Unimplemented");
     }
 
+    supportsTrayIconBlink(): boolean {
+        return false;
+    }
+
+    async getTrayIconBlinkEnabled(): Promise<boolean> {
+        return false;
+    }
+
+    async setTrayIconBlinkEnabled(enabled: boolean): Promise<void> {
+        throw new Error("Unimplemented");
+    }
+
     /**
      * Get our platform specific EventIndexManager.
      *

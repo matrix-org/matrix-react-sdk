@@ -36,6 +36,7 @@ import { isMac } from '../Keyboard';
 import UIFeatureController from "./controllers/UIFeatureController";
 import { UIFeature } from "./UIFeature";
 import { OrderedMultiController } from "./controllers/OrderedMultiController";
+import TrayiconBlinkController from './controllers/TrayiconBlinkController';
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
 const LEVELS_ROOM_SETTINGS = [
@@ -116,7 +117,14 @@ export interface ISetting {
     invertedSettingName?: string;
 }
 
-export const SETTINGS: {[setting: string]: ISetting} = {
+export const SETTINGS: { [setting: string]: ISetting } = {
+    "feature_trayicon_blink": {
+        isFeature: true,
+        displayName: _td("Blink tray icon on new notifications"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+        controller: new TrayiconBlinkController(),
+    },
     "feature_latex_maths": {
         isFeature: true,
         displayName: _td("Render LaTeX maths in messages"),
