@@ -37,6 +37,7 @@ import {E2E_STATE} from "./E2EIcon";
 import {toRem} from "../../../utils/units";
 import {WidgetType} from "../../../widgets/WidgetType";
 import RoomAvatar from "../avatars/RoomAvatar";
+import {ContextMenu, ChevronFace} from '../../structures/ContextMenu';
 
 const eventTileTypes = {
     'm.room.message': 'messages.MessageEvent',
@@ -230,6 +231,9 @@ export default class EventTile extends React.Component {
 
         // whether or not to show flair at all
         enableFlair: PropTypes.bool,
+
+        /* position of the context menu */
+        contextMenuPosition: PropTypes.object,
     };
 
     static defaultProps = {
@@ -254,6 +258,8 @@ export default class EventTile extends React.Component {
             previouslyRequestedKeys: false,
             // The Relations model from the JS SDK for reactions to `mxEvent`
             reactions: this.getReactions(),
+
+            contextMenuPosition: null,
         };
 
         // don't do RR animations until we are mounted
@@ -632,6 +638,54 @@ export default class EventTile extends React.Component {
         });
     };
 
+    renderMenu() {
+        let contextMenu = null;
+        if (this.state.contextMenuPosition) {
+            const MessageContextMenu = sdk.getComponent('context_menus.MessageContextMenu');
+
+            const tile = this.getTile && this.getTile();
+            const replyThread = this.getReplyThread && this.getReplyThread();
+
+            contextMenu = (
+                <ContextMenu
+                    chevronFace={ChevronFace.None}
+                    onFinished={this.onCloseMenu}
+                    left={this.state.contextMenuPosition.left}
+                    top={this.state.contextMenuPosition.top + this.state.contextMenuPosition.height}>
+                    <MessageContextMenu
+                        mxEvent={this.props.mxEvent}
+                        permalinkCreator={this.props.permalinkCreator}
+                        eventTileOps={tile && tile.getEventTileOps ? tile.getEventTileOps() : undefined}
+                        collapseReplyThread={replyThread && replyThread.canCollapse() ? replyThread.collapse : undefined}
+                        onFinished={this.onCloseMenu}
+                    />
+                </ContextMenu>
+            );
+        }
+
+        return (
+            <React.Fragment>
+                { contextMenu }
+            </React.Fragment>
+        );
+    }
+
+    onContextMenu = (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        this.setState({
+            contextMenuPosition: {
+                left: ev.clientX,
+                top: ev.clientY,
+                height: 0,
+            },
+        });
+    };
+
+    onCloseMenu = () => {
+        this.setState({contextMenuPosition: null});
+    }
+
     render() {
         const MessageTimestamp = sdk.getComponent('messages.MessageTimestamp');
         const SenderProfile = sdk.getComponent('messages.SenderProfile');
@@ -852,7 +906,8 @@ export default class EventTile extends React.Component {
             case 'notif': {
                 const room = this.context.getRoom(this.props.mxEvent.getRoomId());
                 return (
-                    <div className={classes} aria-live={ariaLive} aria-atomic="true">
+                    <div className={classes} aria-live={ariaLive} aria-atomic="true" onContextMenu={this.onContextMenu}>
+                        {this.renderMenu()}
                         <div className="mx_EventTile_roomName">
                             <RoomAvatar room={room} width={28} height={28} />
                             <a href={permalink} onClick={this.onPermalinkClicked}>
@@ -879,7 +934,8 @@ export default class EventTile extends React.Component {
             }
             case 'file_grid': {
                 return (
-                    <div className={classes} aria-live={ariaLive} aria-atomic="true">
+                    <div className={classes} aria-live={ariaLive} aria-atomic="true" onContextMenu={this.onContextMenu}>
+                        {this.renderMenu()}
                         <div className="mx_EventTile_line">
                             <EventTileType ref={this._tile}
                                            mxEvent={this.props.mxEvent}
@@ -915,7 +971,7 @@ export default class EventTile extends React.Component {
                     );
                 }
                 return (
-                    <div className={classes} aria-live={ariaLive} aria-atomic="true">
+                    <div className={classes} aria-live={ariaLive} aria-atomic="true" onContextMenu={this.onContextMenu}>
                         { ircTimestamp }
                         { avatar }
                         { sender }
@@ -946,7 +1002,8 @@ export default class EventTile extends React.Component {
 
                 // tab-index=-1 to allow it to be focusable but do not add tab stop for it, primarily for screen readers
                 return (
-                    <div className={classes} tabIndex={-1} aria-live={ariaLive} aria-atomic="true">
+                    <div className={classes} tabIndex={-1} aria-live={ariaLive} aria-atomic="true" onContextMenu={this.onContextMenu}>
+                        {this.renderMenu()}
                         { ircTimestamp }
                         <div className="mx_EventTile_msgOption">
                             { readAvatars }
