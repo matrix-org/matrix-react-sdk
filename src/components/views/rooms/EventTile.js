@@ -231,9 +231,6 @@ export default class EventTile extends React.Component {
 
         // whether or not to show flair at all
         enableFlair: PropTypes.bool,
-
-        /* position of the context menu */
-        contextMenuPosition: PropTypes.object,
     };
 
     static defaultProps = {
