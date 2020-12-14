@@ -655,6 +655,7 @@ export default class EventTile extends React.Component {
                         eventTileOps={tile && tile.getEventTileOps ? tile.getEventTileOps() : undefined}
                         collapseReplyThread={replyThread && replyThread.canCollapse() ? replyThread.collapse : undefined}
                         onFinished={this.onCloseMenu}
+                        rightClick={true}
                     />
                 </ContextMenu>
             );

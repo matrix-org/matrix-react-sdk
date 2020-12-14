@@ -29,9 +29,12 @@ import Modal from '../../../Modal';
 import Resend from '../../../Resend';
 import SettingsStore from '../../../settings/SettingsStore';
 import { isUrlPermitted } from '../../../HtmlUtils';
-import { isContentActionable } from '../../../utils/EventUtils';
+import { isContentActionable, canEditContent } from '../../../utils/EventUtils';
 import {MenuItem} from "../../structures/ContextMenu";
 import {EventType} from "matrix-js-sdk/src/@types/event";
+import {useRovingTabIndex} from "../../../accessibility/RovingTabIndex";
+import {aboveLeftOf, ContextMenu, useContextMenu} from '../../structures/ContextMenu';
+import RoomContext from "../../../contexts/RoomContext";
 
 function canCancel(eventStatus) {
     return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
@@ -50,12 +53,17 @@ export default class MessageContextMenu extends React.Component {
 
         /* callback called when the menu is dismissed */
         onFinished: PropTypes.func,
+
+        /* if true show react button */
+        rightClick: PropTypes.bool,
     };
 
     state = {
         canRedact: false,
         canPin: false,
     };
+
+    static contextType = RoomContext;
 
     componentDidMount() {
         MatrixClientPeg.get().on('RoomMember.powerLevel', this._checkPermissions);
@@ -286,6 +294,22 @@ export default class MessageContextMenu extends React.Component {
         return this._getReactions(e => e.status === EventStatus.NOT_SENT);
     }
 
+    onEditClick = (ev) => {
+        dis.dispatch({
+            action: 'edit_event',
+            event: this.props.mxEvent,
+        });
+        this.closeMenu();
+    };
+
+    onReplyClick = (ev) => {
+        dis.dispatch({
+            action: 'reply_to_event',
+            event: this.props.mxEvent,
+        });
+        this.closeMenu();
+    };
+
     render() {
         const cli = MatrixClientPeg.get();
         const me = cli.getUserId();
@@ -312,6 +336,9 @@ export default class MessageContextMenu extends React.Component {
         let externalURLButton;
         let quoteButton;
         let collapseReplyThread;
+        let reactButton;
+        let replyButton;
+        let editButton;
 
         // status is SENT before remote-echo, null after
         const isSent = !eventStatus || eventStatus === EventStatus.SENT;
@@ -468,8 +495,32 @@ export default class MessageContextMenu extends React.Component {
             );
         }
 
+        if (this.props.rightClick) {
+            if (isContentActionable(this.props.mxEvent)) {
+                if (this.context.canReact) {
+                    reactButton = <ReactButton
+                        mxEvent={this.props.mxEvent}
+                        onCloseContextMenu={this.closeMenu}
+                    />;
+                }
+                if (this.context.canReply) {
+                    replyButton = <MenuItem className="mx_MessageContextMenu_field" onClick={this.onReplyClick}>
+                        {_t("Reply")}
+                    </MenuItem>;
+                }
+            }
+            if (canEditContent(this.props.mxEvent)) {
+                editButton = <MenuItem className="mx_MessageContextMenu_field" onClick={this.onEditClick}>
+                    {_t("Edit")}
+                </MenuItem>;
+            }
+        }
+
         return (
             <div className="mx_MessageContextMenu">
+                { reactButton }
+                { replyButton }
+                { editButton }
                 { resendButton }
                 { resendEditButton }
                 { resendReactionsButton }
@@ -490,3 +541,29 @@ export default class MessageContextMenu extends React.Component {
         );
     }
 }
+
+const ReactButton = ({mxEvent, onCloseContextMenu}) => {
+    const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
+    const ref = useRovingTabIndex(button)[2];
+
+    const closeReactionPicker = () => {
+        closeMenu();
+        onCloseContextMenu();
+    };
+
+    let reactionPicker;
+    if (menuDisplayed) {
+        const buttonRect = button.current.getBoundingClientRect();
+        const ReactionPicker = sdk.getComponent('emojipicker.ReactionPicker');
+        reactionPicker = <ContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu} managed={false}>
+            <ReactionPicker mxEvent={mxEvent} onFinished={closeReactionPicker} />
+        </ContextMenu>;
+    }
+
+    return <React.Fragment>
+        <MenuItem className="mx_MessageContextMenu_field" onClick={openMenu} inputRef={ref}>
+            {_t("React")}
+        </MenuItem>
+        { reactionPicker }
+    </React.Fragment>;
+};
