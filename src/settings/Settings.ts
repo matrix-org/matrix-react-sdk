@@ -117,6 +117,12 @@ export interface ISetting {
 }
 
 export const SETTINGS: {[setting: string]: ISetting} = {
+    "feature_latex_maths": {
+        isFeature: true,
+        displayName: _td("Render LaTeX maths in messages"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "feature_communities_v2_prototypes": {
         isFeature: true,
         displayName: _td(
@@ -558,13 +564,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         // This is a tri-state value, where `null` means "prompt the user".
         default: null,
     },
-    "sendReadReceipts": {
-        supportedLevels: LEVELS_ROOM_SETTINGS,
-        displayName: _td(
-            "Send read receipts for messages (requires compatible homeserver to disable)",
-        ),
-        default: true,
-    },
     "showImages": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("Show previews/thumbnails for images"),
@@ -627,6 +626,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("Enable experimental, compact IRC style layout"),
         default: false,
+    },
+    "showChatEffects": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td("Show chat effects"),
+        default: true,
     },
     "Widgets.pinned": {
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
