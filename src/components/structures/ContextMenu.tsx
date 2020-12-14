@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {CSSProperties, useRef, useState} from "react";
+import React, {CSSProperties, RefObject, useRef, useState} from "react";
 import ReactDOM from "react-dom";
 import classNames from "classnames";
 
@@ -398,7 +398,7 @@ export const toRightOf = (elementRect: DOMRect, chevronOffset = 12) => {
 };
 
 // Placement method for <ContextMenu /> to position context menu right-aligned and flowing to the left of elementRect
-export const aboveLeftOf = (elementRect: DOMRect, chevronFace = ChevronFace.None) => {
+export const aboveLeftOf = (elementRect: DOMRect, chevronFace = ChevronFace.None, vPadding = 0) => {
     const menuOptions: IPosition & { chevronFace: ChevronFace } = { chevronFace };
 
     const buttonRight = elementRect.right + window.pageXOffset;
@@ -408,16 +408,17 @@ export const aboveLeftOf = (elementRect: DOMRect, chevronFace = ChevronFace.None
     menuOptions.right = window.innerWidth - buttonRight;
     // Align the menu vertically on whichever side of the button has more space available.
     if (buttonBottom < window.innerHeight / 2) {
-        menuOptions.top = buttonBottom;
+        menuOptions.top = buttonBottom + vPadding;
     } else {
-        menuOptions.bottom = window.innerHeight - buttonTop;
+        menuOptions.bottom = (window.innerHeight - buttonTop) + vPadding;
     }
 
     return menuOptions;
 };
 
-export const useContextMenu = () => {
-    const button = useRef(null);
+type ContextMenuTuple<T> = [boolean, RefObject<T>, () => void, () => void, (val: boolean) => void];
+export const useContextMenu = <T extends any = HTMLElement>(): ContextMenuTuple<T> => {
+    const button = useRef<T>(null);
     const [isOpen, setIsOpen] = useState(false);
     const open = () => {
         setIsOpen(true);

@@ -24,6 +24,7 @@ import {ActionPayload} from "./dispatcher/payloads";
 import {CheckUpdatesPayload} from "./dispatcher/payloads/CheckUpdatesPayload";
 import {Action} from "./dispatcher/actions";
 import {hideToast as hideUpdateToast} from "./toasts/UpdateToast";
+import {MatrixClientPeg} from "./MatrixClientPeg";
 
 export const SSO_HOMESERVER_URL_KEY = "mx_sso_hs_url";
 export const SSO_ID_SERVER_URL_KEY = "mx_sso_is_url";
@@ -105,6 +106,9 @@ export default abstract class BasePlatform {
      * @param newVersion the version string to check
      */
     protected shouldShowUpdate(newVersion: string): boolean {
+        // If the user registered on this client in the last 24 hours then do not show them the update toast
+        if (MatrixClientPeg.userRegisteredWithinLastHours(24)) return false;
+
         try {
             const [version, deferUntil] = JSON.parse(localStorage.getItem(UPDATE_DEFER_KEY));
             return newVersion !== version || Date.now() > deferUntil;
@@ -244,15 +248,16 @@ export default abstract class BasePlatform {
      * @param {MatrixClient} mxClient the matrix client using which we should start the flow
      * @param {"sso"|"cas"} loginType the type of SSO it is, CAS/SSO.
      * @param {string} fragmentAfterLogin the hash to pass to the app during sso callback.
+     * @param {string} idpId The ID of the Identity Provider being targeted, optional.
      */
-    startSingleSignOn(mxClient: MatrixClient, loginType: "sso" | "cas", fragmentAfterLogin: string) {
+    startSingleSignOn(mxClient: MatrixClient, loginType: "sso" | "cas", fragmentAfterLogin: string, idpId?: string) {
         // persist hs url and is url for when the user is returned to the app with the login token
         localStorage.setItem(SSO_HOMESERVER_URL_KEY, mxClient.getHomeserverUrl());
         if (mxClient.getIdentityServerUrl()) {
             localStorage.setItem(SSO_ID_SERVER_URL_KEY, mxClient.getIdentityServerUrl());
         }
         const callbackUrl = this.getSSOCallbackUrl(fragmentAfterLogin);
-        window.location.href = mxClient.getSsoLoginUrl(callbackUrl.toString(), loginType); // redirect to SSO
+        window.location.href = mxClient.getSsoLoginUrl(callbackUrl.toString(), loginType, idpId); // redirect to SSO
     }
 
     onKeyDown(ev: KeyboardEvent): boolean {

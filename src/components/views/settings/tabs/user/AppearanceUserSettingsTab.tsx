@@ -36,6 +36,7 @@ import EventTilePreview from '../../../elements/EventTilePreview';
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
 import classNames from 'classnames';
 import { SettingLevel } from "../../../../../settings/SettingLevel";
+import {UIFeature} from "../../../../../settings/UIFeature";
 
 interface IProps {
 }
@@ -386,12 +387,14 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
     };
 
     private renderAdvancedSection() {
+        if (!SettingsStore.getValue(UIFeature.AdvancedSettings)) return null;
+
         const brand = SdkConfig.get().brand;
         const toggle = <div
             className="mx_AppearanceUserSettingsTab_AdvancedToggle"
             onClick={() => this.setState({showAdvanced: !this.state.showAdvanced})}
         >
-            {this.state.showAdvanced ? "Hide advanced" : "Show advanced"}
+            {this.state.showAdvanced ? _t("Hide advanced") : _t("Show advanced")}
         </div>;
 
         let advanced: React.ReactNode;

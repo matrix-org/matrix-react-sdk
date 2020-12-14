@@ -42,7 +42,7 @@ for (const key of Object.keys(SETTINGS)) {
     if (SETTINGS[key].invertedSettingName) {
         // Invert now so that the rest of the system will invert it back
         // to what was intended.
-        invertedDefaultSettings[key] = !SETTINGS[key].default;
+        invertedDefaultSettings[SETTINGS[key].invertedSettingName] = !SETTINGS[key].default;
     }
 }
 
@@ -255,6 +255,17 @@ export default class SettingsStore {
     public static isFeature(settingName: string) {
         if (!SETTINGS[settingName]) return false;
         return SETTINGS[settingName].isFeature;
+    }
+
+    /**
+     * Determines if a setting is enabled.
+     * If a setting is disabled then it should be hidden from the user.
+     * @param {string} settingName The setting to look up.
+     * @return {boolean} True if the setting is enabled.
+     */
+    public static isEnabled(settingName: string): boolean {
+        if (!SETTINGS[settingName]) return false;
+        return SETTINGS[settingName].controller ? !SETTINGS[settingName].controller.settingDisabled : true;
     }
 
     /**

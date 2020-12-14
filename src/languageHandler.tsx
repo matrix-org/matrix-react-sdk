@@ -27,6 +27,7 @@ import PlatformPeg from "./PlatformPeg";
 // @ts-ignore - $webapp is a webpack resolve alias pointing to the output directory, see webpack config
 import webpackLangJsonUrl from "$webapp/i18n/languages.json";
 import { SettingLevel } from "./settings/SettingLevel";
+import {retry} from "./utils/promise";
 
 const i18nFolder = 'i18n/';
 
@@ -95,12 +96,14 @@ function safeCounterpartTranslate(text: string, options?: object) {
     return translated;
 }
 
-interface IVariables {
+export interface IVariables {
     count?: number;
     [key: string]: number | string;
 }
 
 type Tags = Record<string, (sub: string) => React.ReactNode>;
+
+export type TranslatedString = string | React.ReactNode;
 
 /*
  * Translates text and optionally also replaces XML-ish elements in the text with e.g. React components
@@ -120,7 +123,7 @@ type Tags = Record<string, (sub: string) => React.ReactNode>;
  */
 export function _t(text: string, variables?: IVariables): string;
 export function _t(text: string, variables: IVariables, tags: Tags): React.ReactNode;
-export function _t(text: string, variables?: IVariables, tags?: Tags): string | React.ReactNode {
+export function _t(text: string, variables?: IVariables, tags?: Tags): TranslatedString {
     // Don't do substitutions in counterpart. We handle it ourselves so we can replace with React components
     // However, still pass the variables to counterpart so that it can choose the correct plural if count is given
     // It is enough to pass the count variable, but in the future counterpart might make use of other information too
@@ -327,7 +330,7 @@ export function setLanguage(preferredLangs: string | string[]) {
             console.error("Unable to find an appropriate language");
         }
 
-        return getLanguage(i18nFolder + availLangs[langToUse].fileName);
+        return getLanguageRetry(i18nFolder + availLangs[langToUse].fileName);
     }).then((langData) => {
         counterpart.registerTranslations(langToUse, langData);
         counterpart.setLocale(langToUse);
@@ -336,7 +339,7 @@ export function setLanguage(preferredLangs: string | string[]) {
 
         // Set 'en' as fallback language:
         if (langToUse !== "en") {
-            return getLanguage(i18nFolder + availLangs['en'].fileName);
+            return getLanguageRetry(i18nFolder + availLangs['en'].fileName);
         }
     }).then((langData) => {
         if (langData) counterpart.registerTranslations('en', langData);
@@ -482,7 +485,15 @@ function weblateToCounterpart(inTrs: object): object {
     return outTrs;
 }
 
-function getLanguage(langPath: string): object {
+async function getLanguageRetry(langPath: string, num = 3): Promise<object> {
+    return retry(() => getLanguage(langPath), num, e => {
+        console.log("Failed to load i18n", langPath);
+        console.error(e);
+        return true; // always retry
+    });
+}
+
+function getLanguage(langPath: string): Promise<object> {
     return new Promise((resolve, reject) => {
         request(
             { method: "GET", url: langPath },

@@ -21,8 +21,9 @@ import { _t } from '../../../languageHandler';
 import Pill from '../../views/elements/Pill';
 import AccessibleButton from '../../views/elements/AccessibleButton';
 import SpecPermalinkConstructor from '../../../utils/permalinks/SpecPermalinkConstructor';
-import { mostRecentActivityFirst } from '../../../RoomListSorter';
 import UserInfoRoomTile from "../elements/UserInfoRoomTile";
+import { RecentAlgorithm } from '../../../stores/room-list/algorithms/tag-sorting/RecentAlgorithm';
+import { Room } from "matrix-js-sdk/src/models/room";
 
 interface IProps {
     userId: string;
@@ -30,7 +31,8 @@ interface IProps {
 }
 
 interface IState {
-    roomIds?: [];
+    roomIds?: string[];
+    rooms: Room[];
     error: boolean;
     showAll: boolean;
 }
@@ -38,13 +40,15 @@ interface IState {
 const LIMITED_VIEW_SHOW_COUNT = 3;
 
 export default class UserInfoSharedRooms extends React.PureComponent<IProps, IState> {
+    algorithm: RecentAlgorithm = new RecentAlgorithm();
 
     constructor(props: IProps) {
         super(props);
-
+        this.algorithm = new RecentAlgorithm();
         this.state = {
             error: false,
             showAll: false,
+            rooms: [],
         };
     }
 
@@ -66,9 +70,15 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
         });
 
         try {
+            const peg = MatrixClientPeg.get();
+
             const roomIds = await MatrixClientPeg.get()._unstable_getSharedRooms(this.props.userId);
             this.setState({
                 roomIds,
+                rooms: await this.algorithm.sortRooms(
+                    this.state.roomIds.map(roomId => peg.getRoom(roomId)),
+                    "noTagId",
+                ),
             });
         } catch (ex) {
             console.log(`Failed to get shared rooms for ${this.props.userId}`, ex);
@@ -114,16 +124,12 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
         }
 
         return <li key={room.roomId}>
-            <UserInfoRoomTile room={room}/>
+            <UserInfoRoomTile room={room} />
         </li>;
     }
 
     private renderRoomTiles() {
-        const peg = MatrixClientPeg.get();
-        const orderedActiveRooms = mostRecentActivityFirst(this.state.roomIds.map(
-            (roomId) => peg.getRoom(roomId)
-        ));
-
+        const orderedActiveRooms = this.state.roomIds;
         // We must remove the null values in order for the slice to work in render()
         return orderedActiveRooms.map((room) => this.renderRoomTile(room)).filter((tile => tile !== null));
     }
@@ -144,7 +150,7 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
             content = <p> {_t("There was an error fetching shared rooms with this user.")} </p>;
         } else {
             // We're still loading
-            content = <Spinner/>;
+            content = <Spinner />;
         }
 
         // Compact view: Show as a single line.
@@ -155,7 +161,7 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
                 return <p> {_t("You are both participating in <rooms></rooms> and %(hidden)s more", {
                     hidden: realCount - content.length,
                 }, {
-                    rooms: content
+                    rooms: content,
                 })}</p>;
             }
         } else if (this.props.compact) {
@@ -171,7 +177,7 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
             </ul>
             { canShowMore && <AccessibleButton className="mx_UserInfo_field" onClick={() => this.onShowMoreClick()}>
                 { _t("Show %(count)s more", { count: realCount - content.length}) }
-                </AccessibleButton> }
+            </AccessibleButton> }
         </div>;
     }
 }

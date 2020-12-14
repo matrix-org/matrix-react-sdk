@@ -35,6 +35,7 @@ import Timer from '../../utils/Timer';
 import shouldHideEvent from '../../shouldHideEvent';
 import EditorStateTransfer from '../../utils/EditorStateTransfer';
 import {haveTileForEvent} from "../views/rooms/EventTile";
+import {UIFeature} from "../../settings/UIFeature";
 
 const PAGINATE_SIZE = 20;
 const INITIAL_SIZE = 20;
@@ -104,8 +105,8 @@ class TimelinePanel extends React.Component {
         // shape property to be passed to EventTiles
         tileShape: PropTypes.string,
 
-        // placeholder text to use if the timeline is empty
-        empty: PropTypes.string,
+        // placeholder to use if the timeline is empty
+        empty: PropTypes.node,
 
         // whether to show reactions for an event
         showReactions: PropTypes.bool,
@@ -714,26 +715,22 @@ class TimelinePanel extends React.Component {
             }
             this.lastRMSentEventId = this.state.readMarkerEventId;
 
-            const roomId = this.props.timelineSet.room.roomId;
-            const hiddenRR = !SettingsStore.getValue("sendReadReceipts", roomId);
-
             debuglog('TimelinePanel: Sending Read Markers for ',
                 this.props.timelineSet.room.roomId,
                 'rm', this.state.readMarkerEventId,
                 lastReadEvent ? 'rr ' + lastReadEvent.getId() : '',
-                ' hidden:' + hiddenRR,
             );
             MatrixClientPeg.get().setRoomReadMarkers(
                 this.props.timelineSet.room.roomId,
                 this.state.readMarkerEventId,
                 lastReadEvent, // Could be null, in which case no RR is sent
-                {hidden: hiddenRR},
+                {},
             ).catch((e) => {
                 // /read_markers API is not implemented on this HS, fallback to just RR
                 if (e.errcode === 'M_UNRECOGNIZED' && lastReadEvent) {
                     return MatrixClientPeg.get().sendReadReceipt(
                         lastReadEvent,
-                        {hidden: hiddenRR},
+                        {},
                     ).catch((e) => {
                         console.error(e);
                         this.lastRRSentEventId = undefined;
@@ -1446,6 +1443,7 @@ class TimelinePanel extends React.Component {
                 editState={this.state.editState}
                 showReactions={this.props.showReactions}
                 useIRCLayout={this.props.useIRCLayout}
+                enableFlair={SettingsStore.getValue(UIFeature.Flair)}
             />
         );
     }
