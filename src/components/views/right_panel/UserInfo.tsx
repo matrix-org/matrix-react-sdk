@@ -1381,7 +1381,7 @@ const BasicUserInfo: React.FC<{
 
         { securitySection }
         { isSharedRoomsFeatureEnabled &&!isMe && <UserInfoSharedRooms
-            userId={member.userId} /> }
+            userId={member.userId} compact={false} /> }
         <UserOptionsSection
             canInvite={roomPermissions.canInvite}
             isIgnored={isIgnored}

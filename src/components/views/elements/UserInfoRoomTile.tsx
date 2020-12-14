@@ -22,8 +22,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import classNames from "classnames";
 import AccessibleButton from "../../views/elements/AccessibleButton";
 import ActiveRoomObserver from "../../../ActiveRoomObserver";
-import { _t } from "../../../languageHandler";
-import { TagID, DefaultTagID } from "../../../stores/room-list/models";
+import { DefaultTagID } from "../../../stores/room-list/models";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import dis from '../../../dispatcher/dispatcher';
@@ -83,7 +82,7 @@ export default class UserInfoRoomTile extends React.PureComponent<IProps, IState
         if (typeof name !== 'string') name = '';
         name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
 
-        let nameContainer = (
+        const nameContainer = (
             <div className="mx_RoomTile_nameContainer">
                 <div title={name} className={"mx_RoomTile_name"} tabIndex={-1} dir="auto">
                     {name}
@@ -91,11 +90,11 @@ export default class UserInfoRoomTile extends React.PureComponent<IProps, IState
             </div>
         );
 
-        let ariaLabel = name;
+        const ariaLabel = name;
         let ariaDescribedBy: string;
 
         const props: Partial<React.ComponentProps<typeof AccessibleTooltipButton>> = {};
-        let Button: React.ComponentType<React.ComponentProps<typeof AccessibleButton>> = AccessibleButton;
+        const Button: React.ComponentType<React.ComponentProps<typeof AccessibleButton>> = AccessibleButton;
 
         return (
             <>

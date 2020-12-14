@@ -24,6 +24,7 @@ import SpecPermalinkConstructor from '../../../utils/permalinks/SpecPermalinkCon
 import UserInfoRoomTile from "../elements/UserInfoRoomTile";
 import { RecentAlgorithm } from '../../../stores/room-list/algorithms/tag-sorting/RecentAlgorithm';
 import { Room } from "matrix-js-sdk/src/models/room";
+import { DefaultTagID } from "../../../stores/room-list/models";
 
 interface IProps {
     userId: string;
@@ -76,7 +77,7 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
             this.setState({
                 rooms: await this.algorithm.sortRooms(
                     rooms,
-                    "noTagId",
+                    DefaultTagID.Untagged,
                 ),
             });
         } catch (ex) {
