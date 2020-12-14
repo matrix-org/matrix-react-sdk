@@ -642,6 +642,7 @@ export default class EventTile extends React.Component {
 
             const tile = this.getTile && this.getTile();
             const replyThread = this.getReplyThread && this.getReplyThread();
+            const collapseReplyThread = replyThread && replyThread.canCollapse() ? replyThread.collapse : undefined;
 
             contextMenu = (
                 <ContextMenu
@@ -653,7 +654,7 @@ export default class EventTile extends React.Component {
                         mxEvent={this.props.mxEvent}
                         permalinkCreator={this.props.permalinkCreator}
                         eventTileOps={tile && tile.getEventTileOps ? tile.getEventTileOps() : undefined}
-                        collapseReplyThread={replyThread && replyThread.canCollapse() ? replyThread.collapse : undefined}
+                        collapseReplyThread={collapseReplyThread}
                         onFinished={this.onCloseMenu}
                         rightClick={true}
                     />
