@@ -904,7 +904,7 @@ export default class EventTile extends React.Component {
             case 'notif': {
                 const room = this.context.getRoom(this.props.mxEvent.getRoomId());
                 return (
-                    <div className={classes} aria-live={ariaLive} aria-atomic="true" onContextMenu={this.onContextMenu}>
+                    <div className={classes} aria-live={ariaLive} aria-atomic="true">
                         {this.renderMenu()}
                         <div className="mx_EventTile_roomName">
                             <RoomAvatar room={room} width={28} height={28} />
@@ -919,7 +919,7 @@ export default class EventTile extends React.Component {
                                 { timestamp }
                             </a>
                         </div>
-                        <div className="mx_EventTile_line">
+                        <div className="mx_EventTile_line" onContextMenu={this.onContextMenu} >
                             <EventTileType ref={this._tile}
                                            mxEvent={this.props.mxEvent}
                                            highlights={this.props.highlights}
@@ -932,9 +932,9 @@ export default class EventTile extends React.Component {
             }
             case 'file_grid': {
                 return (
-                    <div className={classes} aria-live={ariaLive} aria-atomic="true" onContextMenu={this.onContextMenu}>
+                    <div className={classes} aria-live={ariaLive} aria-atomic="true">
                         {this.renderMenu()}
-                        <div className="mx_EventTile_line">
+                        <div className="mx_EventTile_line" onContextMenu={this.onContextMenu}>
                             <EventTileType ref={this._tile}
                                            mxEvent={this.props.mxEvent}
                                            highlights={this.props.highlights}
@@ -969,12 +969,12 @@ export default class EventTile extends React.Component {
                     );
                 }
                 return (
-                    <div className={classes} aria-live={ariaLive} aria-atomic="true" onContextMenu={this.onContextMenu}>
+                    <div className={classes} aria-live={ariaLive} aria-atomic="true">
                         { ircTimestamp }
                         { avatar }
                         { sender }
                         { ircPadlock }
-                        <div className="mx_EventTile_reply">
+                        <div className="mx_EventTile_reply" onContextMenu={this.onContextMenu}>
                             { groupTimestamp }
                             { groupPadlock }
                             { thread }
@@ -1000,7 +1000,7 @@ export default class EventTile extends React.Component {
 
                 // tab-index=-1 to allow it to be focusable but do not add tab stop for it, primarily for screen readers
                 return (
-                    <div className={classes} tabIndex={-1} aria-live={ariaLive} aria-atomic="true" onContextMenu={this.onContextMenu}>
+                    <div className={classes} tabIndex={-1} aria-live={ariaLive} aria-atomic="true">
                         {this.renderMenu()}
                         { ircTimestamp }
                         <div className="mx_EventTile_msgOption">
@@ -1008,7 +1008,7 @@ export default class EventTile extends React.Component {
                         </div>
                         { sender }
                         { ircPadlock }
-                        <div className="mx_EventTile_line">
+                        <div className="mx_EventTile_line" onContextMenu={this.onContextMenu}>
                             { groupTimestamp }
                             { groupPadlock }
                             { thread }
