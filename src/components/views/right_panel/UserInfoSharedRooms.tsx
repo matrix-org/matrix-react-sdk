@@ -31,7 +31,6 @@ interface IProps {
 }
 
 interface IState {
-    roomIds?: string[];
     rooms: Room[];
     error: boolean;
     showAll: boolean;
@@ -66,7 +65,7 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
         this.setState({
             error: false,
             showAll: false,
-            roomIds: undefined,
+            rooms: [],
         });
 
         try {
@@ -74,9 +73,8 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
 
             const roomIds = await MatrixClientPeg.get()._unstable_getSharedRooms(this.props.userId);
             this.setState({
-                roomIds,
                 rooms: await this.algorithm.sortRooms(
-                    this.state.roomIds.map(roomId => peg.getRoom(roomId)),
+                    roomIds.map(roomId => peg.getRoom(roomId)),
                     "noTagId",
                 ),
             });
@@ -129,7 +127,7 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
     }
 
     private renderRoomTiles() {
-        const orderedActiveRooms = this.state.roomIds;
+        const orderedActiveRooms = this.state.rooms;
         // We must remove the null values in order for the slice to work in render()
         return orderedActiveRooms.map((room) => this.renderRoomTile(room)).filter((tile => tile !== null));
     }
@@ -138,13 +136,13 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
         let content;
         let realCount = 0;
 
-        if (this.state.roomIds && this.state.roomIds.length > 0) {
+        if (this.state.rooms && this.state.rooms.length > 0) {
             content = this.renderRoomTiles();
             realCount = content.length;
             if (!this.state.showAll) {
                 content = content.slice(0, LIMITED_VIEW_SHOW_COUNT);
             }
-        } else if (this.state.roomIds) {
+        } else if (this.state.rooms) {
             content = <p> {_t("You share no rooms in common with this user.")} </p>;
         } else if (this.state.error) {
             content = <p> {_t("There was an error fetching shared rooms with this user.")} </p>;
