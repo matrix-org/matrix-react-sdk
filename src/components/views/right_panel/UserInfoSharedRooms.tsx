@@ -72,9 +72,10 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
             const peg = MatrixClientPeg.get();
 
             const roomIds = await MatrixClientPeg.get()._unstable_getSharedRooms(this.props.userId);
+            const rooms = roomIds.map(roomId => peg.getRoom(roomId)).filter(room => room !== null);
             this.setState({
                 rooms: await this.algorithm.sortRooms(
-                    roomIds.map(roomId => peg.getRoom(roomId)),
+                    rooms,
                     "noTagId",
                 ),
             });
@@ -91,12 +92,7 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
         });
     }
 
-    private renderRoomTile(room) {
-        // If the room cannot be found, hide it.
-        if (!room) {
-            return null;
-        }
-
+    private renderRoomTile(room: Room) {
         // If the room has been upgraded, hide it.
         const tombstone = room.currentState.getStateEvents("m.room.tombstone", "");
         if (tombstone) {
@@ -104,7 +100,7 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
         }
 
         if (this.props.compact) {
-            // XXX: This is inefficent as we only render COMPACT_VIEW_SHOW_COUNT rooms at a time, the other pills are wasted.
+            // XXX: This is inefficent as we only render LIMITED_VIEW_SHOW_COUNT rooms at a time, the other pills are wasted.
             const alias = room.getCanonicalAlias();
             if (!alias) {
                 // Without an alias we get ugly room_ids, hide it.
@@ -127,9 +123,8 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
     }
 
     private renderRoomTiles() {
-        const orderedActiveRooms = this.state.rooms;
         // We must remove the null values in order for the slice to work in render()
-        return orderedActiveRooms.map((room) => this.renderRoomTile(room)).filter((tile => tile !== null));
+        return this.state.rooms.map((room) => this.renderRoomTile(room)).filter((tile => tile !== null));
     }
 
     render(): React.ReactNode {
