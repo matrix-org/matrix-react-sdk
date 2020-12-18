@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Room} from "matrix-js-sdk/src/models/room";
 
 import {useEventEmitter} from "../../../hooks/useEventEmitter";
@@ -29,6 +29,9 @@ const RoomName = ({ room, children }: IProps): JSX.Element => {
     useEventEmitter(room, "Room.name", () => {
         setName(room?.name);
     });
+    useEffect(() => {
+        setName(room?.name);
+    }, [room]);
 
     if (children) return children(name);
     return name || "";

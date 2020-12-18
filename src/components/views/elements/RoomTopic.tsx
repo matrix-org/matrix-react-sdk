@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {EventType} from "matrix-js-sdk/src/@types/event";
 import {Room} from "matrix-js-sdk/src/models/room";
 
@@ -26,13 +26,16 @@ interface IProps {
     children?(topic: string, ref: (element: HTMLElement) => void): JSX.Element;
 }
 
-const getTopic = room => room?.currentState?.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic;
+export const getTopic = room => room?.currentState?.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic;
 
 const RoomTopic = ({ room, children }: IProps): JSX.Element => {
     const [topic, setTopic] = useState(getTopic(room));
     useEventEmitter(room.currentState, "RoomState.events", () => {
         setTopic(getTopic(room));
     });
+    useEffect(() => {
+        setTopic(getTopic(room));
+    }, [room]);
 
     const ref = e => e && linkifyElement(e);
     if (children) return children(topic, ref);
