@@ -122,6 +122,7 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
     }
 
     private async appendRoom(room: Room) {
+        if (room.isSpaceRoom()) return; // hide space rooms from breadcrumbs
         let updated = false;
         const rooms = (this.state.rooms || []).slice(); // cheap clone
 
