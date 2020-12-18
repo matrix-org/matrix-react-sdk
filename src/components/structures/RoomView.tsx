@@ -112,6 +112,7 @@ interface IProps {
 
     autoJoin?: boolean;
     resizeNotifier: ResizeNotifier;
+    justCreated?: boolean;
 
     // Called with the credentials of a registered user (if they were a ROU that transitioned to PWLU)
     onRegistered?(credentials: IMatrixClientCreds): void;

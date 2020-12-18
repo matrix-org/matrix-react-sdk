@@ -142,6 +142,8 @@ interface IRoomInfo {
     oob_data?: object;
     via_servers?: string[];
     threepid_invite?: IThreepidInvite;
+
+    justCreated?: boolean;
 }
 /* eslint-enable camelcase */
 
@@ -199,6 +201,7 @@ interface IState {
     viaServers?: string[];
     pendingInitialSync?: boolean;
     justRegistered?: boolean;
+    roomJustCreated?: boolean;
 }
 
 export default class MatrixChat extends React.PureComponent<IProps, IState> {
@@ -870,6 +873,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 roomOobData: roomInfo.oob_data,
                 viaServers: roomInfo.via_servers,
                 ready: true,
+                roomJustCreated: roomInfo.justCreated || false,
             }, () => {
                 this.notifyNewScreen('room/' + presentedId, replaceLast);
             });

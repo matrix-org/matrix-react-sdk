@@ -90,6 +90,7 @@ interface IProps {
     currentGroupId?: string;
     currentGroupIsNew?: boolean;
     justRegistered?: boolean;
+    roomJustCreated?: boolean;
 }
 
 interface IUsageLimit {
@@ -574,6 +575,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                     viaServers={this.props.viaServers}
                     key={this.props.currentRoomId || 'roomview'}
                     resizeNotifier={this.props.resizeNotifier}
+                    justCreated={this.props.roomJustCreated}
                 />;
                 break;
 

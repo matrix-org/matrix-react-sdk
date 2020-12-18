@@ -205,6 +205,7 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
                 // so we are expecting the room to come down the sync
                 // stream, if it hasn't already.
                 joining: true,
+                justCreated: true,
             });
         }
         CountlyAnalytics.instance.trackRoomCreate(startTime, roomId);
