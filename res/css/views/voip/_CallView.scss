@@ -131,7 +131,7 @@ limitations under the License.
     background-position: center;
     filter: blur(20px);
     &::after {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         width: 100%;
@@ -155,10 +155,10 @@ limitations under the License.
         display: block;
         margin-left: auto;
         margin-right: auto;
-        content: '';
+        content: "";
         width: 40px;
         height: 40px;
-        background-image: url('$(res)/img/voip/paused.svg');
+        background-image: url("$(res)/img/voip/paused.svg");
         background-position: center;
         background-size: cover;
     }
@@ -187,7 +187,7 @@ limitations under the License.
 
 .mx_CallView_header_secondaryCallInfo {
     &::before {
-        content: '·';
+        content: "·";
         margin-left: 6px;
         margin-right: 6px;
     }
@@ -203,7 +203,7 @@ limitations under the License.
     cursor: pointer;
 
     &::before {
-        content: '';
+        content: "";
         display: inline-block;
         height: 20px;
         width: 20px;
@@ -217,13 +217,13 @@ limitations under the License.
 
 .mx_CallView_header_button_fullscreen {
     &::before {
-        mask-image: url('$(res)/img/element-icons/call/fullscreen.svg');
+        mask-image: url("$(res)/img/element-icons/call/fullscreen.svg");
     }
 }
 
 .mx_CallView_header_button_expand {
     &::before {
-        mask-image: url('$(res)/img/element-icons/call/expand.svg');
+        mask-image: url("$(res)/img/element-icons/call/expand.svg");
     }
 }
 
@@ -262,7 +262,7 @@ limitations under the License.
     vertical-align: middle;
 
     &::before {
-        content: '';
+        content: "";
         display: inline-block;
         vertical-align: top;
 
@@ -272,7 +272,7 @@ limitations under the License.
         mask-repeat: no-repeat;
         mask-size: contain;
         mask-position: center;
-        mask-image: url('$(res)/img/element-icons/call/voice-call.svg');
+        mask-image: url("$(res)/img/element-icons/call/voice-call.svg");
     }
 }
 
@@ -296,9 +296,8 @@ limitations under the License.
     margin-left: 8px;
     margin-right: 8px;
 
-
     &::before {
-        content: '';
+        content: "";
         display: inline-block;
 
         height: 48px;
@@ -318,38 +317,38 @@ limitations under the License.
 
 .mx_CallView_callControls_button_micOn {
     &::before {
-        background-image: url('$(res)/img/voip/mic-on.svg');
+        background-image: url("$(res)/img/voip/mic-on.svg");
     }
 }
 
 .mx_CallView_callControls_button_micOff {
     &::before {
-        background-image: url('$(res)/img/voip/mic-off.svg');
+        background-image: url("$(res)/img/voip/mic-off.svg");
     }
 }
 
 .mx_CallView_callControls_button_vidOn {
     &::before {
-        background-image: url('$(res)/img/voip/vid-on.svg');
+        background-image: url("$(res)/img/voip/vid-on.svg");
     }
 }
 
 .mx_CallView_callControls_button_vidOff {
     &::before {
-        background-image: url('$(res)/img/voip/vid-off.svg');
+        background-image: url("$(res)/img/voip/vid-off.svg");
     }
 }
 
 .mx_CallView_callControls_button_hangup {
     &::before {
-        background-image: url('$(res)/img/voip/hangup.svg');
+        background-image: url("$(res)/img/voip/hangup.svg");
     }
 }
 
 .mx_CallView_callControls_button_more {
     margin-left: auto;
     &::before {
-        background-image: url('$(res)/img/voip/more.svg');
+        background-image: url("$(res)/img/voip/more.svg");
     }
 }
 
