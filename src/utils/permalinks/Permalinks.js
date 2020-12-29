@@ -121,6 +121,10 @@ export class RoomPermalinkCreator {
         this._started = false;
     }
 
+    get serverCandidates() {
+        return this._serverCandidates;
+    }
+
     isStarted() {
         return this._started;
     }
