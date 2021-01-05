@@ -14,9 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {MatrixClientPeg} from "../../MatrixClientPeg";
 import isIp from "is-ip";
-import * as utils from 'matrix-js-sdk/src/utils';
+import * as utils from "matrix-js-sdk/src/utils";
+import {Room} from "matrix-js-sdk/src/models/room";
+
+import {MatrixClientPeg} from "../../MatrixClientPeg";
 import SpecPermalinkConstructor, {baseUrl as matrixtoBaseUrl} from "./SpecPermalinkConstructor";
 import PermalinkConstructor, {PermalinkParts} from "./PermalinkConstructor";
 import ElementPermalinkConstructor from "./ElementPermalinkConstructor";
@@ -438,3 +440,9 @@ function isHostnameIpAddress(hostname) {
 
     return isIp(hostname);
 }
+
+export const calculateRoomVia = (room: Room) => {
+    const permalinkCreator = new RoomPermalinkCreator(room);
+    permalinkCreator.load();
+    return permalinkCreator.serverCandidates;
+};
