@@ -15,13 +15,18 @@ limitations under the License.
 */
 
 import React, { createRef } from "react";
+import { Room } from "matrix-js-sdk/src/models/room";
+import classNames from "classnames";
+import * as fbEmitter from "fbemitter";
+
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import defaultDispatcher from "../../dispatcher/dispatcher";
+import dis from "../../dispatcher/dispatcher";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { Action } from "../../dispatcher/actions";
 import { _t } from "../../languageHandler";
 import { ContextMenuButton } from "./ContextMenu";
-import {USER_NOTIFICATIONS_TAB, USER_SECURITY_TAB} from "../views/dialogs/UserSettingsDialog";
+import { USER_NOTIFICATIONS_TAB, USER_SECURITY_TAB } from "../views/dialogs/UserSettingsDialog";
 import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
 import FeedbackDialog from "../views/dialogs/FeedbackDialog";
 import Modal from "../../Modal";
@@ -31,11 +36,10 @@ import {getCustomTheme} from "../../theme";
 import {getHostingLink} from "../../utils/HostingLink";
 import AccessibleButton, {ButtonEvent} from "../views/elements/AccessibleButton";
 import SdkConfig from "../../SdkConfig";
-import {getHomePageUrl} from "../../utils/pages";
+import { getHomePageUrl } from "../../utils/pages";
 import { OwnProfileStore } from "../../stores/OwnProfileStore";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import BaseAvatar from '../views/avatars/BaseAvatar';
-import classNames from "classnames";
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import { SettingLevel } from "../../settings/SettingLevel";
 import IconizedContextMenu, {
@@ -43,14 +47,20 @@ import IconizedContextMenu, {
     IconizedContextMenuOptionList,
 } from "../views/context_menus/IconizedContextMenu";
 import { CommunityPrototypeStore } from "../../stores/CommunityPrototypeStore";
-import * as fbEmitter from "fbemitter";
 import GroupFilterOrderStore from "../../stores/GroupFilterOrderStore";
-import { showCommunityInviteDialog } from "../../RoomInvite";
-import dis from "../../dispatcher/dispatcher";
+import { showCommunityInviteDialog, showSpaceInviteDialog } from "../../RoomInvite";
 import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
 import ErrorDialog from "../views/dialogs/ErrorDialog";
+import InfoDialog from "../views/dialogs/InfoDialog";
 import EditCommunityPrototypeDialog from "../views/dialogs/EditCommunityPrototypeDialog";
-import {UIFeature} from "../../settings/UIFeature";
+import { UIFeature } from "../../settings/UIFeature";
+import SpaceStore, { UPDATE_SELECTED_SPACE } from "../../stores/SpaceStore";
+import RoomName from "../views/elements/RoomName";
+import RoomAvatar from "../views/avatars/RoomAvatar";
+import { OpenSpaceSettingsPayload } from "../../dispatcher/payloads/OpenSpaceSettingsPayload";
+import { SetRightPanelPhasePayload } from "../../dispatcher/payloads/SetRightPanelPhasePayload";
+import SpacePublicShare from "../views/spaces/SpacePublicShare";
+import { showSpaceSettings } from "../../utils/space";
 
 interface IProps {
     isMinimized: boolean;
@@ -62,6 +72,8 @@ interface IState {
     contextMenuPosition: PartialDOMRect;
     isDarkTheme: boolean;
 }
+
+const avatarSize = 32; // should match border-radius of the avatar
 
 export default class UserMenu extends React.Component<IProps, IState> {
     private dispatcherRef: string;
@@ -270,6 +282,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         if (!this.state.contextMenuPosition) return null;
 
         const prototypeCommunityName = CommunityPrototypeStore.instance.getSelectedCommunityName();
+        const userId = MatrixClientPeg.get().getUserId();
 
         let topSection;
         const signupLink = getHostingLink("user-context-menu");
@@ -332,7 +345,18 @@ export default class UserMenu extends React.Component<IProps, IState> {
             />;
         }
 
-        let primaryHeader = (
+        const displayName = OwnProfileStore.instance.displayName || userId;
+        const avatarUrl = OwnProfileStore.instance.getHttpAvatarUrl(avatarSize);
+        let primaryHeader = <React.Fragment>
+            <BaseAvatar
+                idName={userId}
+                name={displayName}
+                url={avatarUrl}
+                width={avatarSize}
+                height={avatarSize}
+                resizeMethod="crop"
+                className="mx_UserMenu_contextMenu_userAvatar"
+            />
             <div className="mx_UserMenu_contextMenu_name">
                 <span className="mx_UserMenu_contextMenu_displayName">
                     {OwnProfileStore.instance.displayName}
@@ -341,7 +365,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     {MatrixClientPeg.get().getUserId()}
                 </span>
             </div>
-        );
+        </React.Fragment>;
+
         let primaryOptionList = (
             <React.Fragment>
                 <IconizedContextMenuOptionList>
@@ -368,7 +393,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     /> */}
                     { feedbackButton }
                 </IconizedContextMenuOptionList>
-                <IconizedContextMenuOptionList red>
+                <IconizedContextMenuOptionList red first>
                     <IconizedContextMenuOption
                         iconClassName="mx_UserMenu_iconSignOut"
                         label={_t("Sign out")}
@@ -501,8 +526,6 @@ export default class UserMenu extends React.Component<IProps, IState> {
     };
 
     public render() {
-        const avatarSize = 32; // should match border-radius of the avatar
-
         const userId = MatrixClientPeg.get().getUserId();
         const displayName = OwnProfileStore.instance.displayName || userId;
         const avatarUrl = OwnProfileStore.instance.getHttpAvatarUrl(avatarSize);
