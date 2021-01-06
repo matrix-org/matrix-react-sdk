@@ -60,6 +60,8 @@ import QuestionDialog from "../dialogs/QuestionDialog";
 import ConfirmUserActionDialog from "../dialogs/ConfirmUserActionDialog";
 import InfoDialog from "../dialogs/InfoDialog";
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import RoomAvatar from "../avatars/RoomAvatar";
+import RoomName from "../elements/RoomName";
 
 interface IDevice {
     deviceId: string;
@@ -301,7 +303,8 @@ const UserOptionsSection: React.FC<{
     member: RoomMember;
     isIgnored: boolean;
     canInvite: boolean;
-}> = ({member, isIgnored, canInvite}) => {
+    isSpace?: boolean;
+}> = ({member, isIgnored, canInvite, isSpace}) => {
     const cli = useContext(MatrixClientContext);
 
     let ignoreButton = null;
@@ -341,7 +344,7 @@ const UserOptionsSection: React.FC<{
             </AccessibleButton>
         );
 
-        if (member.roomId) {
+        if (member.roomId && !isSpace) {
             const onReadReceiptButton = function() {
                 const room = cli.getRoom(member.roomId);
                 dis.dispatch({
@@ -433,14 +436,18 @@ const UserOptionsSection: React.FC<{
     );
 };
 
-const warnSelfDemote = async () => {
+const warnSelfDemote = async (isSpace) => {
     const {finished} = Modal.createTrackedDialog('Demoting Self', '', QuestionDialog, {
         title: _t("Demote yourself?"),
         description:
             <div>
-                { _t("You will not be able to undo this change as you are demoting yourself, " +
-                    "if you are the last privileged user in the room it will be impossible " +
-                    "to regain privileges.") }
+                { isSpace
+                    ? _t("You will not be able to undo this change as you are demoting yourself, " +
+                        "if you are the last privileged user in the space it will be impossible " +
+                        "to regain privileges.")
+                    : _t("You will not be able to undo this change as you are demoting yourself, " +
+                        "if you are the last privileged user in the room it will be impossible " +
+                        "to regain privileges.") }
             </div>,
         button: _t("Demote"),
     });
@@ -716,7 +723,7 @@ const MuteToggleButton: React.FC<IBaseRoomProps> = ({member, room, powerLevels, 
         // if muting self, warn as it may be irreversible
         if (target === cli.getUserId()) {
             try {
-                if (!(await warnSelfDemote())) return;
+                if (!(await warnSelfDemote(room?.isSpaceRoom()))) return;
             } catch (e) {
                 console.error("Failed to warn about self demotion: ", e);
                 return;
@@ -805,7 +812,7 @@ const RoomAdminToolsContainer: React.FC<IBaseRoomProps> = ({
     if (canAffectUser && me.powerLevel >= kickPowerLevel) {
         kickButton = <RoomKickButton member={member} startUpdating={startUpdating} stopUpdating={stopUpdating} />;
     }
-    if (me.powerLevel >= redactPowerLevel) {
+    if (me.powerLevel >= redactPowerLevel && !room.isSpaceRoom()) {
         redactButton = (
             <RedactMessagesButton member={member} startUpdating={startUpdating} stopUpdating={stopUpdating} />
         );
@@ -1084,7 +1091,7 @@ const PowerLevelEditor: React.FC<{
         } else if (myUserId === target) {
             // If we are changing our own PL it can only ever be decreasing, which we cannot reverse.
             try {
-                if (!(await warnSelfDemote())) return;
+                if (!(await warnSelfDemote(room?.isSpaceRoom()))) return;
             } catch (e) {
                 console.error("Failed to warn about self demotion: ", e);
             }
@@ -1314,12 +1321,10 @@ const BasicUserInfo: React.FC<{
     if (!isRoomEncrypted) {
         if (!cryptoEnabled) {
             text = _t("This client does not support end-to-end encryption.");
-        } else if (room) {
+        } else if (room && !room.isSpaceRoom()) {
             text = _t("Messages in this room are not end-to-end encrypted.");
-        } else {
-            // TODO what to render for GroupMember
         }
-    } else {
+    } else if (!room.isSpaceRoom()) {
         text = _t("Messages in this room are end-to-end encrypted.");
     }
 
@@ -1380,7 +1385,9 @@ const BasicUserInfo: React.FC<{
         <UserOptionsSection
             canInvite={roomPermissions.canInvite}
             isIgnored={isIgnored}
-            member={member} />
+            member={member}
+            isSpace={room?.isSpaceRoom()}
+        />
 
         { adminToolsContainer }
 
@@ -1497,7 +1504,7 @@ interface IProps {
     user: Member;
     groupId?: string;
     room?: Room;
-    phase: RightPanelPhases.RoomMemberInfo | RightPanelPhases.GroupMemberInfo;
+    phase: RightPanelPhases.RoomMemberInfo | RightPanelPhases.GroupMemberInfo | RightPanelPhases.SpaceMemberInfo;
     onClose(): void;
 }
 
@@ -1538,6 +1545,7 @@ const UserInfo: React.FC<Props> = ({
     switch (phase) {
         case RightPanelPhases.RoomMemberInfo:
         case RightPanelPhases.GroupMemberInfo:
+        case RightPanelPhases.SpaceMemberInfo:
             content = (
                 <BasicUserInfo
                     room={room}
@@ -1574,7 +1582,18 @@ const UserInfo: React.FC<Props> = ({
         }
     }
 
-    const header = <UserInfoHeader member={member} e2eStatus={e2eStatus} />;
+    let scopeHeader;
+    if (room?.isSpaceRoom()) {
+        scopeHeader = <div className="mx_RightPanel_scopeHeader">
+            <RoomAvatar room={room} height={32} width={32} />
+            <RoomName room={room} />
+        </div>;
+    }
+
+    const header = <React.Fragment>
+        { scopeHeader }
+        <UserInfoHeader member={member} e2eStatus={e2eStatus} />
+    </React.Fragment>;
     return <BaseCard
         className={classes.join(" ")}
         header={header}
