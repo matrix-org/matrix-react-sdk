@@ -160,6 +160,12 @@ limitations under the License.
             margin-right: 0;
         }
     }
+
+    &.mx_RoomTile_space {
+        .mx_BaseAvatar_image {
+            border-radius: 8px;
+        }
+    }
 }
 
 // We use these both in context menus and the room tiles

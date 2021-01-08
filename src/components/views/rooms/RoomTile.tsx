@@ -469,6 +469,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             'mx_RoomTile_selected': this.state.selected,
             'mx_RoomTile_hasMenuOpen': !!(this.state.generalMenuPosition || this.state.notificationsMenuPosition),
             'mx_RoomTile_minimized': this.props.isMinimized,
+            'mx_RoomTile_space': this.props.room?.isSpaceRoom(), // this'll be a Space invite
         });
 
         let roomProfile: IRoomProfile = {displayName: null, avatarMxc: null};

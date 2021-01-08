@@ -251,8 +251,8 @@ export default class RightPanel extends React.Component {
                 break;
             case RightPanelPhases.SpaceMemberList:
                 panel = <MemberList
-                    roomId={this.state.space.roomId}
-                    key={this.state.space.roomId}
+                    roomId={this.state.space ? this.state.space.roomId : roomId}
+                    key={this.state.space ? this.state.space.roomId : roomId}
                     onClose={this.onClose}
                 />;
                 break;

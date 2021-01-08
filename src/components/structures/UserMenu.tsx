@@ -71,6 +71,7 @@ type PartialDOMRect = Pick<DOMRect, "width" | "left" | "top" | "height">;
 interface IState {
     contextMenuPosition: PartialDOMRect;
     isDarkTheme: boolean;
+    selectedSpace?: Room;
 }
 
 const avatarSize = 32; // should match border-radius of the avatar
@@ -90,6 +91,9 @@ export default class UserMenu extends React.Component<IProps, IState> {
         };
 
         OwnProfileStore.instance.on(UPDATE_EVENT, this.onProfileUpdate);
+        if (SettingsStore.getValue("feature_spaces")) {
+            SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
+        }
     }
 
     private get hasHomePage(): boolean {
@@ -107,6 +111,9 @@ export default class UserMenu extends React.Component<IProps, IState> {
         if (this.dispatcherRef) defaultDispatcher.unregister(this.dispatcherRef);
         OwnProfileStore.instance.off(UPDATE_EVENT, this.onProfileUpdate);
         this.tagStoreRef.remove();
+        if (SettingsStore.getValue("feature_spaces")) {
+            SpaceStore.instance.off(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
+        }
     }
 
     private onTagStoreUpdate = () => {
@@ -125,6 +132,10 @@ export default class UserMenu extends React.Component<IProps, IState> {
         // the store triggered an update, so force a layout update. We don't
         // have any state to store here for that to magically happen.
         this.forceUpdate();
+    };
+
+    private onSelectedSpaceUpdate = async (selectedSpace?: Room) => {
+        this.setState({ selectedSpace });
     };
 
     private onThemeChanged = () => {
@@ -232,6 +243,73 @@ export default class UserMenu extends React.Component<IProps, IState> {
         ev.stopPropagation();
 
         defaultDispatcher.dispatch({action: 'view_home_page'});
+        this.setState({contextMenuPosition: null}); // also close the menu
+    };
+
+    private onSpaceHomeClick = (ev: ButtonEvent) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        defaultDispatcher.dispatch({
+            action: "view_room",
+            room_id: this.state.selectedSpace.roomId,
+        });
+        this.setState({contextMenuPosition: null}); // also close the menu
+    };
+
+    private onSpaceInviteClick = (ev: ButtonEvent) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        if (this.state.selectedSpace.getJoinRule() === "public") {
+            const modal = Modal.createTrackedDialog("Space Invite", "User Menu", InfoDialog, {
+                title: _t("Invite members"),
+                description: <React.Fragment>
+                    <span>{ _t("Share your public space") }</span>
+                    <SpacePublicShare space={this.state.selectedSpace} onFinished={() => modal.close()} />
+                </React.Fragment>,
+                fixedWidth: false,
+                button: false,
+                className: "mx_UserMenu_sharePublicSpace",
+                hasCloseButton: true,
+            });
+        } else {
+            showSpaceInviteDialog(this.state.selectedSpace.roomId);
+        }
+        this.setState({contextMenuPosition: null}); // also close the menu
+    };
+
+    private onSpaceSettingsClick = (ev: ButtonEvent) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        defaultDispatcher.dispatch<OpenSpaceSettingsPayload>({
+            action: Action.OpenSpaceSettings,
+            space: this.state.selectedSpace,
+        });
+        this.setState({contextMenuPosition: null}); // also close the menu
+    };
+
+    private onSpaceLeaveClick = (ev: ButtonEvent) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        defaultDispatcher.dispatch({
+            action: "leave_room",
+            room_id: this.state.selectedSpace.roomId,
+        });
+        this.setState({contextMenuPosition: null}); // also close the menu
+    };
+
+    private onSpaceMembersClick = (ev: ButtonEvent) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
+            action: Action.SetRightPanelPhase,
+            phase: RightPanelPhases.SpaceMemberList,
+            refireParams: { space: this.state.selectedSpace },
+        });
         this.setState({contextMenuPosition: null}); // also close the menu
     };
 
@@ -404,7 +482,74 @@ export default class UserMenu extends React.Component<IProps, IState> {
         );
         let secondarySection = null;
 
-        if (prototypeCommunityName) {
+        if (this.state.selectedSpace) {
+            let inviteOption;
+            if (this.state.selectedSpace.canInvite(userId)) {
+                inviteOption = (
+                    <IconizedContextMenuOption
+                        iconClassName="mx_UserMenu_iconInvite"
+                        label={_t("Invite")}
+                        onClick={this.onSpaceInviteClick}
+                    />
+                );
+            }
+
+            let settingsOption;
+            let leaveOption;
+            if (showSpaceSettings(MatrixClientPeg.get(), this.state.selectedSpace)) {
+                settingsOption = (
+                    <IconizedContextMenuOption
+                        iconClassName="mx_UserMenu_iconSettings"
+                        label={_t("Settings")}
+                        aria-label={_t("Space settings")}
+                        onClick={this.onSpaceSettingsClick}
+                    />
+                );
+            } else {
+                leaveOption = (
+                    <IconizedContextMenuOption
+                        iconClassName="mx_UserMenu_iconLeave"
+                        label={_t("Leave space")}
+                        aria-label={_t("Leave space")}
+                        onClick={this.onSpaceLeaveClick}
+                    />
+                );
+            }
+
+            secondarySection = <React.Fragment>
+                <div className="mx_UserMenu_contextMenu_header mx_UserMenu_contextMenu_secondaryHeader">
+                    <RoomAvatar
+                        room={this.state.selectedSpace}
+                        height={avatarSize}
+                        width={avatarSize}
+                        className="mx_UserMenu_contextMenu_spaceAvatar"
+                    />
+                    <div className="mx_UserMenu_contextMenu_name">
+                        <span className="mx_UserMenu_contextMenu_displayName">
+                            { this.state.selectedSpace.name }
+                        </span>
+                    </div>
+                </div>
+
+                <IconizedContextMenuOptionList first>
+                    <IconizedContextMenuOption
+                        iconClassName="mx_UserMenu_iconHome"
+                        label={_t("Space Home")}
+                        onClick={this.onSpaceHomeClick}
+                    />
+                    { settingsOption }
+                    <IconizedContextMenuOption
+                        iconClassName="mx_UserMenu_iconMembers"
+                        label={_t("Members")}
+                        onClick={this.onSpaceMembersClick}
+                    />
+                    { inviteOption }
+                </IconizedContextMenuOptionList>
+                { leaveOption && <IconizedContextMenuOptionList red first>
+                    { leaveOption }
+                </IconizedContextMenuOptionList> }
+            </React.Fragment>;
+        } else if (prototypeCommunityName) {
             const communityId = CommunityPrototypeStore.instance.getSelectedCommunityId();
             primaryHeader = (
                 <div className="mx_UserMenu_contextMenu_name">
@@ -540,7 +685,17 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 {/* masked image in CSS */}
             </span>
         );
-        if (prototypeCommunityName) {
+        if (this.state.selectedSpace) {
+            name = (
+                <div className="mx_UserMenu_doubleName">
+                    <span className="mx_UserMenu_userName">{displayName}</span>
+                    <RoomName room={this.state.selectedSpace}>
+                        {(roomName) => <span className="mx_UserMenu_subUserName">{roomName}</span>}
+                    </RoomName>
+                </div>
+            );
+            menuName = _t("Space and user menu");
+        } else if (prototypeCommunityName) {
             name = (
                 <div className="mx_UserMenu_doubleName">
                     <span className="mx_UserMenu_userName">{prototypeCommunityName}</span>

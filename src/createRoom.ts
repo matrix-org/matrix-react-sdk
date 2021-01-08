@@ -30,17 +30,19 @@ import { getE2EEWellKnown } from "./utils/WellKnownUtils";
 import GroupStore from "./stores/GroupStore";
 import CountlyAnalytics from "./CountlyAnalytics";
 import { isJoinedOrNearlyJoined } from "./utils/membership";
+import SpaceStore from "./stores/SpaceStore";
+import {makeRoomParentEvent} from "./utils/space";
 
 // we define a number of interfaces which take their names from the js-sdk
 /* eslint-disable camelcase */
 
 // TODO move these interfaces over to js-sdk once it has been typescripted enough to accept them
-enum Visibility {
+export enum Visibility {
     Public = "public",
     Private = "private",
 }
 
-enum Preset {
+export enum Preset {
     PrivateChat = "private_chat",
     TrustedPrivateChat = "trusted_private_chat",
     PublicChat = "public_chat",
@@ -53,7 +55,7 @@ interface Invite3PID {
     address: string;
 }
 
-interface IStateEvent {
+export interface IStateEvent {
     type: string;
     state_key?: string; // defaults to an empty string
     content: object;
@@ -74,7 +76,7 @@ interface ICreateOpts {
     power_level_content_override?: object;
 }
 
-interface IOpts {
+export interface IOpts {
     dmUserId?: string;
     createOpts?: ICreateOpts;
     spinner?: boolean;
@@ -83,6 +85,7 @@ interface IOpts {
     inlineErrors?: boolean;
     andView?: boolean;
     associatedWithCommunity?: string;
+    parentSpace?: Room;
 }
 
 /**
@@ -174,6 +177,10 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
         });
     }
 
+    if (opts.parentSpace) {
+        opts.createOpts.initial_state.push(makeRoomParentEvent(opts.parentSpace));
+    }
+
     let modal;
     if (opts.spinner) modal = Modal.createDialog(Loader, null, 'mx_Dialog_spinner');
 
@@ -188,6 +195,9 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
             return Promise.resolve();
         }
     }).then(() => {
+        if (opts.parentSpace) {
+            return SpaceStore.instance.addRoomToSpace(opts.parentSpace, roomId, [client.getDomain()]);
+        }
         if (opts.associatedWithCommunity) {
             return GroupStore.addRoomToGroup(opts.associatedWithCommunity, roomId, false);
         }

@@ -216,6 +216,15 @@ limitations under the License.
             }
         }
 
+        .mx_UserMenu_contextMenu_spaceAvatar {
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        img.mx_UserMenu_contextMenu_spaceAvatar, .mx_UserMenu_contextMenu_spaceAvatar > img {
+            border-radius: 8px;
+        }
+
         .mx_UserMenu_contextMenu_userAvatar {
             margin-right: 8px;
         }
@@ -335,4 +344,8 @@ limitations under the License.
     .mx_UserMenu_iconInvite::before {
         mask-image: url('$(res)/img/element-icons/room/invite.svg');
     }
+}
+
+.mx_UserMenu_sharePublicSpace {
+    margin: 0;
 }

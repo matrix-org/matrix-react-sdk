@@ -94,4 +94,9 @@ export enum Action {
      * Trigged after the phase of the right panel is set. Should be used with AfterRightPanelPhaseChangePayload.
      */
     AfterRightPanelPhaseChange = "after_right_panel_phase_change",
+
+    /**
+     * Opens the Space setting modal. Should be used with OpenSpaceSettingsPayload.
+     */
+    OpenSpaceSettings = "open_space_settings",
 }
