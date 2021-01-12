@@ -22,6 +22,7 @@ import {_t} from "../../../languageHandler";
 import RoomAvatar from "../avatars/RoomAvatar";
 import {useContextMenu} from "../../structures/ContextMenu";
 import SpaceCreateMenu from "./SpaceCreateMenu";
+import SpaceTreeLevel from "./SpaceTreeLevel";
 import {useEventEmitter} from "../../../hooks/useEventEmitter";
 import SpaceStore, {HOME_SPACE, UPDATE_SELECTED_SPACE, UPDATE_TOP_LEVEL_SPACES} from "../../../stores/SpaceStore";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
@@ -167,18 +168,7 @@ const SpacePanel = () => {
                         tooltip={_t("Home")}
                         notificationState={SpaceStore.instance.getNotificationState(HOME_SPACE)}
                     />
-
-                    { spaces.map(room => (
-                        <SpaceButton
-                            key={room.roomId}
-                            onClick={() => SpaceStore.instance.setActiveSpace(room)}
-                            selected={activeSpace === room}
-                            tooltip={room.name}
-                            space={room}
-                            notificationState={SpaceStore.instance.getNotificationState(room.roomId)}
-                        />
-                    ))}
-
+                    <SpaceTreeLevel spaces={spaces} activeSpaces={activeSpace ? [activeSpace] : []} />
                     <SpaceButton
                         className={newClasses}
                         tooltip={menuDisplayed ? _t("Cancel") : _t("Create a space")}

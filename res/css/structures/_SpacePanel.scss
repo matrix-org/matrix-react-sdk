@@ -14,11 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-$spacePanelWidth: 56px; // only applies in this file, used for calculations
+$spacePanelWidth: 200px; // only applies in this file, used for calculations
+$topLevelHeight: 32px;
+$nestedHeight: 24px;
 
 .mx_SpacePanel {
-    flex-grow: 0;
-    flex-shrink: 0;
+    flex: 0 0 $spacePanelWidth;
     background-color: $groupFilterPanel-bg-color;
 
     // Create another flexbox so the Panel fills the container
@@ -26,23 +27,35 @@ $spacePanelWidth: 56px; // only applies in this file, used for calculations
     flex-direction: column;
     overflow-y: auto;
 
+    ul {
+        list-style: none;
+        padding: 0;
+        padding-left: 16px;
+    }
+
     .mx_AutoHideScrollbar {
         padding: 16px 12px;
     }
 
     .mx_SpaceButton {
-        height: 32px;
-        min-height: 32px; // prevent being squished by the flexbox
-        width: 32px;
         border-radius: 8px;
         position: relative;
         margin-bottom: 16px;
+        display: flex;
+        height: $nestedHeight;
+        align-items: center;
+
+        .mx_SpaceButton_name {
+            flex: 1;
+            margin-left: 8px;
+            white-space: nowrap;
+        }
 
         &.mx_SpaceButton_active {
             &::before {
                 position: absolute;
                 content: '';
-                height: 32px;
+                height: $nestedHeight;
                 width: 4px;
                 top: 0;
                 left: -12px;
@@ -52,11 +65,14 @@ $spacePanelWidth: 56px; // only applies in this file, used for calculations
         }
 
         &.mx_SpaceButton_home, &.mx_SpaceButton_new {
+            width: $topLevelHeight;
+            height: $topLevelHeight;
+
             &::after {
                 position: absolute;
                 content: '';
-                width: 32px;
-                height: 32px;
+                width: $topLevelHeight;
+                height: $topLevelHeight;
                 top: 0;
                 left: 0;
                 mask-position: center;
@@ -104,4 +120,21 @@ $spacePanelWidth: 56px; // only applies in this file, used for calculations
             top: -4px;
         }
     }
+
+
+    /* root space buttons are bigger and not indented */
+    & > .mx_AutoHideScrollbar {
+        & > .mx_SpaceButton {
+            height: $topLevelHeight;
+
+            &.mx_SpaceButton_active::before {
+                height: $topLevelHeight;
+            }
+        }
+
+        & > ul {
+            padding-left: 0;
+        }
+    }
+
 }
