@@ -72,6 +72,9 @@ export default abstract class BasePlatform {
     // Used primarily for Analytics
     abstract getHumanReadableName(): string;
 
+    registerServiceWorker(): void {
+    }
+
     setNotificationCount(count: number) {
         this.notificationCount = count;
     }
