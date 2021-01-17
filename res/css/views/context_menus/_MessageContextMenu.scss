@@ -23,6 +23,10 @@ limitations under the License.
     padding: 3px 6px 3px 6px;
     cursor: pointer;
     white-space: nowrap;
+
+    &:hover {
+        background-color: $menu-selected-color;
+    }
 }
 
 .mx_MessageContextMenu_field.mx_MessageContextMenu_fieldSet {
