@@ -27,16 +27,18 @@ import SpaceStore, {HOME_SPACE, UPDATE_SELECTED_SPACE, UPDATE_TOP_LEVEL_SPACES} 
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import {SpaceNotificationState} from "../../../stores/notifications/SpaceNotificationState";
 import NotificationBadge from "../rooms/NotificationBadge";
-import {RovingAccessibleTooltipButton} from "../../../accessibility/RovingTabIndex";
+import {RovingAccessibleButton} from "../../../accessibility/roving/RovingAccessibleButton";
 
 interface IItemProps {
     space?: Room;
+    activeSpaces: Room[];
+    isNested?: boolean;
 }
 
 const SpaceItem: React.FC<IItemProps> = ({
     space,
     activeSpaces,
-    isNested
+    isNested,
 }) => {
     const isActive = activeSpaces.includes(space);
     const classes = classNames("mx_SpaceButton", {
@@ -44,7 +46,11 @@ const SpaceItem: React.FC<IItemProps> = ({
     });
     const notificationState = SpaceStore.instance.getNotificationState(space.roomId);
     const childSpaces = SpaceStore.instance.getChildSpaces(space.roomId);
-    const childItems = childSpaces ? <SpaceTreeLevel spaces={childSpaces} activeSpaces={activeSpaces} isNested={true} /> : null;
+    const childItems = childSpaces ? <SpaceTreeLevel
+        spaces={childSpaces}
+        activeSpaces={activeSpaces}
+        isNested={true}
+    /> : null;
     let notifBadge;
     if (notificationState) {
         notifBadge = <NotificationBadge forceCount={false} notification={notificationState} />;
@@ -53,12 +59,12 @@ const SpaceItem: React.FC<IItemProps> = ({
     const avatarSize = isNested ? 24 : 32;
     return (
         <li>
-            <RovingAccessibleTooltipButton className={classes}
+            <RovingAccessibleButton className={classes}
                 onClick={() => SpaceStore.instance.setActiveSpace(space)}>
                 <RoomAvatar width={avatarSize} height={avatarSize} room={space} />
                 <span className="mx_SpaceButton_name">{ space.name }</span>
                 { notifBadge }
-            </RovingAccessibleTooltipButton>
+            </RovingAccessibleButton>
             { childItems }
         </li>
     );
@@ -67,6 +73,7 @@ const SpaceItem: React.FC<IItemProps> = ({
 interface ITreeLevelProps {
     spaces: Room[];
     activeSpaces: Room[];
+    isNested?: boolean;
 }
 
 const SpaceTreeLevel: React.FC<ITreeLevelProps> = ({

@@ -22,6 +22,7 @@ import Sizer from "../sizer";
 export interface ICollapseConfig extends IConfig {
     toggleSize: number;
     onCollapsed?(collapsed: boolean, id: string, element: HTMLElement): void;
+    isItemCollapsed(element: HTMLElement): boolean;
 }
 
 class CollapseItem extends ResizeItem<ICollapseConfig> {
