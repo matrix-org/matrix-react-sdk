@@ -414,7 +414,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
 
         const containerClasses = classNames({
             "mx_LeftPanel": true,
-            "mx_LeftPanel_hasGroupFilterPanel": !!leftLeftPanel,
             "mx_LeftPanel_minimized": this.props.isMinimized,
         });
 
