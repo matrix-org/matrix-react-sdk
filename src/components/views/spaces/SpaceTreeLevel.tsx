@@ -18,14 +18,8 @@ import React from "react";
 import classNames from "classnames";
 import {Room} from "matrix-js-sdk/src/models/room";
 
-import {_t} from "../../../languageHandler";
 import RoomAvatar from "../avatars/RoomAvatar";
-import {useContextMenu} from "../../structures/ContextMenu";
-import SpaceCreateMenu from "./SpaceCreateMenu";
-import {useEventEmitter} from "../../../hooks/useEventEmitter";
-import SpaceStore, {HOME_SPACE, UPDATE_SELECTED_SPACE, UPDATE_TOP_LEVEL_SPACES} from "../../../stores/SpaceStore";
-import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
-import {SpaceNotificationState} from "../../../stores/notifications/SpaceNotificationState";
+import SpaceStore from "../../../stores/SpaceStore";
 import NotificationBadge from "../rooms/NotificationBadge";
 import {RovingAccessibleButton} from "../../../accessibility/roving/RovingAccessibleButton";
 
