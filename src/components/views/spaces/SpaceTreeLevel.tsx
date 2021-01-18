@@ -56,7 +56,7 @@ const SpaceItem: React.FC<IItemProps> = ({
             <RovingAccessibleTooltipButton className={classes}
                 onClick={() => SpaceStore.instance.setActiveSpace(space)}>
                 <RoomAvatar width={avatarSize} height={avatarSize} room={space} />
-                <span class="mx_SpaceButton_name">{ space.name }</span>
+                <span className="mx_SpaceButton_name">{ space.name }</span>
                 { notifBadge }
             </RovingAccessibleTooltipButton>
             { childItems }
