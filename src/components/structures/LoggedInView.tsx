@@ -211,7 +211,14 @@ class LoggedInView extends React.Component<IProps, IState> {
     _createResizer() {
         let size;
         const collapseConfig: ICollapseConfig = {
-            toggleSize: 260 - 50,
+            // TODO: the space panel currently does not have a fixed width,
+            // just the headers at each level have a max-width of 150px
+            // Taking 222px for the space panel for now,
+            // so this will look slightly off for now,
+            // depending on the depth of your space tree.
+            // To fix this, we'll need to turn toggleSize
+            // into a callback so it can be measured when starting the resize operation
+            toggleSize: 222 + 68,
             onCollapsed: (collapsed) => {
                 if (collapsed) {
                     dis.dispatch({action: "hide_left_panel"}, true);
@@ -230,6 +237,9 @@ class LoggedInView extends React.Component<IProps, IState> {
             onResizeStop: () => {
                 window.localStorage.setItem("mx_lhs_size", '' + size);
                 this.props.resizeNotifier.stopResizing();
+            },
+            isItemCollapsed: domNode => {
+                return domNode.classList.contains("mx_LeftPanel_minimized");
             },
         };
         const resizer = new Resizer(this._resizeContainer.current, CollapseDistributor, collapseConfig);
