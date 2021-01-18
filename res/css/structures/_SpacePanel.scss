@@ -14,12 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-$spacePanelWidth: 200px; // only applies in this file, used for calculations
 $topLevelHeight: 32px;
 $nestedHeight: 24px;
 
 .mx_SpacePanel {
-    flex: 0 0 $spacePanelWidth;
+    flex: 0 0 auto;
     background-color: $groupFilterPanel-bg-color;
 
     // Create another flexbox so the Panel fills the container
@@ -49,6 +48,10 @@ $nestedHeight: 24px;
             flex: 1;
             margin-left: 8px;
             white-space: nowrap;
+            display: block;
+            max-width: 150px;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
 
         &.mx_SpaceButton_active {
