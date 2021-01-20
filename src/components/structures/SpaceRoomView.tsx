@@ -48,13 +48,12 @@ import {RightPanelPhases} from "../../stores/RightPanelStorePhases";
 import {SetRightPanelPhasePayload} from "../../dispatcher/payloads/SetRightPanelPhasePayload";
 import {useStateArray} from "../../hooks/useStateArray";
 import SpacePublicShare from "../views/spaces/SpacePublicShare";
-import {makeRoomParentEvent, showAddExistingRooms, showCreateNewRoom, showSpaceSettings} from "../../utils/space";
+import {showAddExistingRooms, showCreateNewRoom, shouldShowSpaceSettings} from "../../utils/space";
 
 interface IProps {
     space: Room;
     justCreated?: boolean;
     resizeNotifier: ResizeNotifier;
-    // TODO optionals?
     onJoinButtonClicked(): void;
     onRejectButtonClicked(): void;
 }
@@ -148,7 +147,7 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
     }
 
     let settingsButton;
-    if (showSpaceSettings(cli, space)) {
+    if (shouldShowSpaceSettings(cli, space)) {
         settingsButton = <AccessibleButton className="mx_SpaceRoomView_landing_settingsButton" onClick={() => {
             defaultDispatcher.dispatch<OpenSpaceSettingsPayload>({
                 action: Action.OpenSpaceSettings,
@@ -202,7 +201,8 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
 };
 
 const SpaceSetupFirstRooms = ({ space, title, description, onFinished }) => {
-    const cli = useContext(MatrixClientContext);
+    const [busy, setBusy] = useState(false);
+    const [error, setError] = useState("");
     const numFields = 3;
     const placeholders = [_t("#general"), _t("#random"), _t("#support")];
     const [roomNames, setRoomName] = useStateArray("", numFields);
@@ -219,35 +219,45 @@ const SpaceSetupFirstRooms = ({ space, title, description, onFinished }) => {
         />;
     });
 
-    const onNextClick = () => {
-        roomNames.map(name => name.trim()).filter(Boolean).forEach(name => {
-            createRoom({
-                createOpts: {
-                    preset: space.getJoinRule() === "public" ? Preset.PublicChat : Preset.PrivateChat,
-                    name,
-                    initial_state: [makeRoomParentEvent(space, true)],
-                },
-                spinner: false,
-                encryption: false,
-                andView: false,
-                inlineErrors: false, // TODO error handling?
-            }).then(roomId => {
-                return SpaceStore.instance.addRoomToSpace(space, roomId, [cli.getDomain()]);
-            });
-        });
-        // TODO spinner? local echo?
-        onFinished();
+    const onNextClick = async () => {
+        setError("");
+        setBusy(true);
+        try {
+            await Promise.all(roomNames.map(name => name.trim()).filter(Boolean).map(name => {
+                return createRoom({
+                    createOpts: {
+                        preset: space.getJoinRule() === "public" ? Preset.PublicChat : Preset.PrivateChat,
+                        name,
+                    },
+                    spinner: false,
+                    encryption: false,
+                    andView: false,
+                    inlineErrors: true,
+                    parentSpace: space,
+                });
+            }));
+            onFinished();
+        } catch (e) {
+            console.error("Failed to create initial space rooms", e);
+            setError(_t("Failed to create initial space rooms"));
+        }
+        setBusy(false);
     };
 
     return <div>
         <h1>{ title }</h1>
         <div className="mx_SpaceRoomView_description">{ description }</div>
 
+        { error && <div className="mx_SpaceRoomView_errorText">{ error }</div> }
         { fields }
 
         <div className="mx_SpaceRoomView_buttons">
             <AccessibleButton onClick={onFinished} kind="link">{_t("Skip for now")}</AccessibleButton>
-            <FormButton label={_t("Next")} onClick={onNextClick} />
+            <FormButton
+                label={busy ? _t("Creating rooms...") : _t("Next")}
+                disabled={busy}
+                onClick={onNextClick}
+            />
         </div>
     </div>;
 };
@@ -387,7 +397,6 @@ const SpaceSetupPrivateInvite = ({ space, onFinished }) => {
     </div>;
 };
 
-// TODO instrumentation
 export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
     static contextType = MatrixClientContext;
 
@@ -404,6 +413,7 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
         const showSetup = this.props.justCreated && this.context.getUserId() === this.creator;
 
         if (showSetup) {
+            // TODO fix race condition between this rendering the state events being loaded into the room state obj
             phase = this.props.space.getJoinRule() === "public" ? Phase.PublicCreateRooms : Phase.PrivateScope;
         }
 

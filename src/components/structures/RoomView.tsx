@@ -1836,7 +1836,6 @@ export default class RoomView extends React.Component<IProps, IState> {
         }
 
         if (this.state.room?.isSpaceRoom()) {
-            // TODO contextually pass these props
             return <SpaceRoomView
                 space={this.state.room}
                 justCreated={this.props.justCreated}

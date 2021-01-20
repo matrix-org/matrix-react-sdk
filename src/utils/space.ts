@@ -24,7 +24,7 @@ import AddExistingToSpaceDialog from "../components/views/dialogs/AddExistingToS
 import CreateRoomDialog from "../components/views/dialogs/CreateRoomDialog";
 import createRoom, {IOpts} from "../createRoom";
 
-export const showSpaceSettings = (cli: MatrixClient, space: Room) => {
+export const shouldShowSpaceSettings = (cli: MatrixClient, space: Room) => {
     const userId = cli.getUserId();
     return space.getMyMembership() === "join"
         && (space.currentState.maySendStateEvent(EventType.RoomAvatar, userId)
@@ -48,7 +48,6 @@ export const showAddExistingRooms = (cli: MatrixClient, space: Room) => {
 };
 
 export const showCreateNewRoom = async (cli: MatrixClient, space: Room) => {
-    // TODO add copy to say "... in this space"
     const modal = Modal.createTrackedDialog<[boolean, IOpts]>(
         "Space Landing",
         "Create Room",
@@ -60,7 +59,7 @@ export const showCreateNewRoom = async (cli: MatrixClient, space: Room) => {
     );
     const [shouldCreate, opts] = await modal.finished;
     if (shouldCreate) {
-        createRoom(opts);
+        await createRoom(opts);
     }
 };
 
