@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {throttle} from "lodash";
+import {throttle, sortBy} from "lodash";
 import {EventType} from "matrix-js-sdk/src/@types/event";
 import {Room} from "matrix-js-sdk/src/models/room";
 import {MatrixEvent} from "matrix-js-sdk/src/models/event";
@@ -131,7 +131,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         return room?.currentState.getStateEvent(EventType.SpaceParent)
             .filter(ev => {
                 const content = ev.getContent();
-                if (!content || content.via) return false;
+                if (!content?.via) return false;
                 // TODO apply permissions check to verify that the parent mapping is valid
                 if (canonicalOnly && !content?.canonical) return false;
                 return true;
@@ -142,11 +142,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
     public getCanonicalParent(roomId: string): Room | null {
         const parents = this.getParents(roomId, true);
-        // TODO lexicographic sort on roomId
-        return parents.sort()?.[0] || null;
+        return sortBy(parents, r => r.roomId)?.[0] || null;
     }
-
-    //////////////////////////////////////////////////////////////////////
 
     public getSpaces = () => {
         return this.matrixClient.getRooms().filter(r => r.isSpaceRoom() && r.getMyMembership() === "join");
