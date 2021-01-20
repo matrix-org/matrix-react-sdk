@@ -96,6 +96,18 @@ export enum Action {
     AfterRightPanelPhaseChange = "after_right_panel_phase_change",
 
     /**
+     * Opens the modal dial pad
+     */
+    OpenDialPad = "open_dial_pad",
+
+    /**
+     * Fired when CallHandler has checked for PSTN protocol support
+     * payload: none
+     * XXX: Is an action the right thing for this?
+     */
+    PstnSupportUpdated = "pstn_support_updated",
+
+    /**
      * Opens the Space setting modal. Should be used with OpenSpaceSettingsPayload.
      */
     OpenSpaceSettings = "open_space_settings",
