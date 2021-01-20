@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Room} from "matrix-js-sdk/src/models/room";
 import {MatrixClient} from "matrix-js-sdk/src/client";
 import {EventType} from "matrix-js-sdk/src/@types/event";
@@ -32,6 +32,7 @@ import FormButton from "../elements/FormButton";
 import Modal from "../../../Modal";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import {allSettled} from "../../../utils/promise";
+import {useDispatcher} from "../../../hooks/useDispatcher";
 
 interface IProps extends IDialogProps {
     matrixClient: MatrixClient;
@@ -39,18 +40,10 @@ interface IProps extends IDialogProps {
 }
 
 const SpaceSettingsDialog: React.FC<IProps> = ({ matrixClient: cli, space, onFinished }) => {
-    // TODO close dialog when leaving space
-    useEffect(() => {
-        const dispatcherRef = defaultDispatcher.register((payload) => {
-            // When view changes below us, close the space settings
-            // whilst the modal is open this can only be triggered when someone hits Leave Space
-            if (payload.action === "view_home_page") {
-                onFinished(false);
-            }
-        });
-        return () => {
-            defaultDispatcher.unregister(dispatcherRef);
-        };
+    useDispatcher(defaultDispatcher, ({action, ...params}) => {
+        if (action === "after_leave_room" && params.room_id === space.roomId) {
+            onFinished(false);
+        }
     });
 
     const [busy, setBusy] = useState(false);
@@ -60,7 +53,7 @@ const SpaceSettingsDialog: React.FC<IProps> = ({ matrixClient: cli, space, onFin
 
     const [newAvatar, setNewAvatar] = useState<File>(null); // undefined means to remove avatar
     const canSetAvatar = space.currentState.maySendStateEvent(EventType.RoomAvatar, userId);
-    const avatarChanged = !newAvatar;
+    const avatarChanged = newAvatar === undefined;
 
     const [name, setName] = useState<string>(space.name);
     const canSetName = space.currentState.maySendStateEvent(EventType.RoomName, userId);
@@ -100,12 +93,8 @@ const SpaceSettingsDialog: React.FC<IProps> = ({ matrixClient: cli, space, onFin
         setBusy(false);
         const failures = results.filter(r => r.status === "rejected");
         if (failures.length > 0) {
-            // TODO better i18n?
-            let error = _t("Failed to save space settings:");
-            failures.forEach((failure: ISettledRejected) => {
-                error += " " + failure.reason;
-            });
-            setError(error);
+            console.error("Failed to save space settings: ", failures);
+            setError(_t("Failed to save space settings."));
         }
     };
 
