@@ -51,10 +51,25 @@ const SpaceItem: React.FC<IItemProps> = ({
     }
 
     const avatarSize = isNested ? 24 : 32;
+
+    function toggleCollapse(evt) {
+        const li = evt.target.parentElement.parentElement;
+        li.classList.toggle("collapsed");
+        // don't bubble up so encapsulating button for space
+        // doesn't get triggered
+        evt.stopPropagation();
+    }
+
+    const toggleCollapseButton = childSpaces && childSpaces.length ?
+        <button className="mx_SpaceButton_toggleCollapse" onClick={toggleCollapse}></button> : null;
+
     return (
-        <li>
+        <li className={classNames({collapsed: !isNested, hasSubSpaces: childSpaces && childSpaces.length})}>
             <RovingAccessibleButton className={classes}
-                onClick={() => SpaceStore.instance.setActiveSpace(space)}>
+                onClick={() => SpaceStore.instance.setActiveSpace(space)}
+                role="treeitem"
+            >
+                { toggleCollapseButton }
                 <RoomAvatar width={avatarSize} height={avatarSize} room={space} />
                 <span className="mx_SpaceButton_name">{ space.name }</span>
                 { notifBadge }
@@ -75,7 +90,7 @@ const SpaceTreeLevel: React.FC<ITreeLevelProps> = ({
     activeSpaces,
     isNested,
 }) => {
-    return <ul>
+    return <ul className="mx_SpaceTreeLevel">
         {spaces.map(s => {
             return (<SpaceItem
                 key={s.roomId}

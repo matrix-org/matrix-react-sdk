@@ -36,6 +36,20 @@ $nestedHeight: 24px;
         padding: 16px 12px;
     }
 
+    li.collapsed {
+        & > .mx_SpaceButton > .mx_SpaceButton_toggleCollapse {
+            transform: rotate(-90deg);
+        }
+
+        & > .mx_SpaceTreeLevel {
+            display: none;
+        }
+    }
+
+    li:not(.hasSubSpaces) > .mx_SpaceButton  {
+        padding-left: 24px;
+    }
+
     .mx_SpaceButton {
         border-radius: 8px;
         position: relative;
@@ -52,6 +66,16 @@ $nestedHeight: 24px;
             max-width: 150px;
             text-overflow: ellipsis;
             overflow: hidden;
+        }
+
+        .mx_SpaceButton_toggleCollapse {
+            width: 24px;
+            height: 24px;
+            mask-position: center;
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            background-color: $roomlist-header-color;
+            mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
         }
 
         &.mx_SpaceButton_active {
