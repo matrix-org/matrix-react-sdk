@@ -117,7 +117,6 @@ const AddExistingToSpaceDialog: React.FC<IProps> = ({ matrixClient: cli, space, 
         </div>
     </React.Fragment>;
 
-    // TODO sort the lists?
     return <BaseDialog
         title={title}
         className="mx_AddExistingToSpaceDialog"
@@ -194,15 +193,14 @@ const AddExistingToSpaceDialog: React.FC<IProps> = ({ matrixClient: cli, space, 
                 label={busy ? _t("Adding rooms...") : _t("Add rooms")}
                 disabled={busy || selectedToAdd.size < 1}
                 onClick={async () => {
-                    // TODO improve busy state
                     setBusy(true);
                     try {
-                        await allSettled(Array.from(selectedToAdd).map((selectedRoom) =>
-                            SpaceStore.instance.addRoomToSpace(space, selectedRoom.roomId, calculateRoomVia(selectedRoom))));
+                        await allSettled(Array.from(selectedToAdd).map((room) =>
+                            SpaceStore.instance.addRoomToSpace(space, room.roomId, calculateRoomVia(room))));
                         onFinished(true);
                     } catch (e) {
-                        console.error(e);
-                        setError("" + e); // TODO
+                        console.error("Failed to add rooms to space", e);
+                        setError(_t("Failed to add rooms to space"));
                     }
                     setBusy(false);
                 }}
