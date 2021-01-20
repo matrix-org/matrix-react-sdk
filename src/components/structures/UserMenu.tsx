@@ -55,12 +55,13 @@ import InfoDialog from "../views/dialogs/InfoDialog";
 import EditCommunityPrototypeDialog from "../views/dialogs/EditCommunityPrototypeDialog";
 import { UIFeature } from "../../settings/UIFeature";
 import SpaceStore, { UPDATE_SELECTED_SPACE } from "../../stores/SpaceStore";
+import RoomViewStore from "../../stores/RoomViewStore";
 import RoomName from "../views/elements/RoomName";
 import RoomAvatar from "../views/avatars/RoomAvatar";
 import { OpenSpaceSettingsPayload } from "../../dispatcher/payloads/OpenSpaceSettingsPayload";
 import { SetRightPanelPhasePayload } from "../../dispatcher/payloads/SetRightPanelPhasePayload";
 import SpacePublicShare from "../views/spaces/SpacePublicShare";
-import { showSpaceSettings } from "../../utils/space";
+import { shouldShowSpaceSettings } from "../../utils/space";
 
 interface IProps {
     isMinimized: boolean;
@@ -305,6 +306,13 @@ export default class UserMenu extends React.Component<IProps, IState> {
         ev.preventDefault();
         ev.stopPropagation();
 
+        if (!RoomViewStore.getRoomId()) {
+            defaultDispatcher.dispatch({
+                action: "view_room",
+                room_id: this.state.selectedSpace.roomId,
+            }, true);
+        }
+
         defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
             action: Action.SetRightPanelPhase,
             phase: RightPanelPhases.SpaceMemberList,
@@ -496,7 +504,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
 
             let settingsOption;
             let leaveOption;
-            if (showSpaceSettings(MatrixClientPeg.get(), this.state.selectedSpace)) {
+            if (shouldShowSpaceSettings(MatrixClientPeg.get(), this.state.selectedSpace)) {
                 settingsOption = (
                     <IconizedContextMenuOption
                         iconClassName="mx_UserMenu_iconSettings"
@@ -508,7 +516,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
             } else {
                 leaveOption = (
                     <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconLeave"
+                        iconClassName="mx_UserMenu_iconSignOut"
                         label={_t("Leave space")}
                         aria-label={_t("Leave space")}
                         onClick={this.onSpaceLeaveClick}
