@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import {throttle} from "lodash";
 import {EventType} from "matrix-js-sdk/src/@types/event";
 import {Room} from "matrix-js-sdk/src/models/room";
 import {MatrixEvent} from "matrix-js-sdk/src/models/event";
@@ -45,12 +46,9 @@ const ACTIVE_SPACE_LS_KEY = "mx_active_space";
 
 export const HOME_SPACE = Symbol("home-space");
 
-// TODO verify/fix leaving spaces un-attaching any rooms that were bound via them
-// TODO use throttles where possible to decouple from the critical path - or delta updates for everything
-// TODO when leaving a space reset active to HOME_SPACE
 export const UPDATE_TOP_LEVEL_SPACES = Symbol("top-level-spaces");
 export const UPDATE_SELECTED_SPACE = Symbol("selected-space");
-// Space Room ID/HOME_SPACE will be emitted when a Space's children change (recursive)
+// Space Room ID/HOME_SPACE will be emitted when a Space's children change
 
 const partitionSpacesAndRooms = (arr: Room[]): [Room[], Room[]] => { // [spaces, rooms]
     return arr.reduce((result, room: Room) => {
@@ -70,34 +68,31 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         if (!SettingsStore.getValue("feature_spaces")) return;
     }
 
-    // TODO docs
+    // The spaces representing the roots of the various tree-like hierarchies
     private rootSpaces: Room[] = [];
-    private orphanedRooms: Room[] = [];
+    // The list of rooms not present in any currently joined spaces
+    private orphanedRooms = new Set<string>();
+    // Map from room ID to set of spaces which list it as a child
     private parentMap = new EnhancedMap<string, Set<Room>>();
+    // Map from space key to SpaceNotificationState instance representing that space
     private notificationStateMap = new Map<SpaceKey, SpaceNotificationState>();
-
-    // Map from top level space ID/HOME_SPACE to Set of room IDs that should be shown as part of that filter
+    // Map from space key to Set of room IDs that should be shown as part of that space's filter
     private spaceFilteredRooms = new Map<string | symbol, Set<string>>();
-    // if selectedSpace is not in parentSpaces then show it on top of the list and peek it
-    // if null then `Home` is selected
-    private selectedSpace?: Room = null; // TODO use HOME_SPACE and keys here?
-
-    // Map from room ID to ordered list of spaces we are in which contain it
-    // If we are in the canonical parent space of the room then that'll be entry [0]
-    // private roomSpaceMap = new Map<string, Room[]>(); // TODO do we want the advanced behaviour
+    // The space currently selected in the Space Panel - if null then `Home` is selected
+    private _activeSpace?: Room = null;
 
     public get spacePanelSpaces(): Room[] {
         return this.rootSpaces;
     }
 
     public get activeSpace(): Room | null {
-        return this.selectedSpace || null;
+        return this._activeSpace || null;
     }
 
-    public setActiveSpace(space: Room) {
+    public setActiveSpace(space: Room | null) {
         if (space === this.activeSpace) return;
 
-        this.selectedSpace = space;
+        this._activeSpace = space;
         this.emit(UPDATE_SELECTED_SPACE, this.activeSpace);
 
         // persist space selected
@@ -108,14 +103,19 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         }
     }
 
-    public addRoomToSpace(space: Room, roomId: string, via: string[]) {
-        return this.matrixClient.sendStateEvent(space.roomId, EventType.SpaceChild, { present: true, via }, roomId);
+    public addRoomToSpace(space: Room, roomId: string, via: string[], autoJoin = false) {
+        return this.matrixClient.sendStateEvent(space.roomId, EventType.SpaceChild, {
+            via,
+            auto_join: autoJoin,
+        }, roomId);
     }
 
     private getChildren(spaceId: string): Room[] {
         const room = this.matrixClient?.getRoom(spaceId);
-        return room?.currentState.getStateEvents(EventType.SpaceChild).map(ev =>
-            this.matrixClient.getRoom(ev.getStateKey())).filter(Boolean) || [];
+        return room?.currentState.getStateEvents(EventType.SpaceChild)
+            .filter(ev => ev.getContent()?.via)
+            .map(ev => this.matrixClient.getRoom(ev.getStateKey()))
+            .filter(Boolean) || [];
     }
 
     public getChildRooms(spaceId: string): Room[] {
@@ -124,6 +124,26 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
     public getChildSpaces(spaceId: string): Room[] {
         return this.getChildren(spaceId).filter(r => r.isSpaceRoom());
+    }
+
+    public getParents(roomId: string, canonicalOnly = false): Room[] {
+        const room = this.matrixClient?.getRoom(roomId);
+        return room?.currentState.getStateEvent(EventType.SpaceParent)
+            .filter(ev => {
+                const content = ev.getContent();
+                if (!content || content.via) return false;
+                // TODO apply permissions check to verify that the parent mapping is valid
+                if (canonicalOnly && !content?.canonical) return false;
+                return true;
+            })
+            .map(ev => this.matrixClient.getRoom(ev.getStateKey()))
+            .filter(Boolean) || [];
+    }
+
+    public getCanonicalParent(roomId: string): Room | null {
+        const parents = this.getParents(roomId, true);
+        // TODO lexicographic sort on roomId
+        return parents.sort()?.[0] || null;
     }
 
     //////////////////////////////////////////////////////////////////////
@@ -136,34 +156,16 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         return this.spaceFilteredRooms.get(space?.roomId || HOME_SPACE) || new Set();
     };
 
-    //////////////////////////////////////////////////////////////////////
-
-    // private bubbleUpdate = (space: Room) => {
-    //     // TODO
-    //     const updated = new Set<Room>();
-    //     const stack = [space];
-    //     while (stack.length) { // iter dfs
-    //         const op = stack.pop();
-    //         this.emit(op.roomId);
-    //         updated.add(op);
-    //
-    //         if (this.parentMap.has(op)) {
-    //             stack.push(...this.parentMap.get(op));
-    //         }
-    //     }
-    // };
-
-    public rebuild = () => { // exported for tests
+    public rebuild = throttle(() => { // exported for tests
         const visibleRooms = this.matrixClient.getVisibleRooms();
 
+        // TODO sort space nodes to ensure the cycle breaking heuristic is deterministic
         const spaces = this.getSpaces();
         const unseenChildren = new Set<Room>([...visibleRooms, ...spaces]);
 
         const backrefs = new EnhancedMap<string, Set<string>>();
 
-        // TODO handle cleaning up links when a Room is removed on room membership
-        // TODO sort the nodes (spaces) into a consistent order so that the cycle prevention is consistent
-        // TODO pre-process the tree, resolve top level spaces and orphaned rooms, prevent cycles
+        // TODO handle cleaning up links when a Space is removed
         spaces.forEach(space => {
             const children = this.getChildren(space.roomId);
             children.forEach(child => {
@@ -171,23 +173,64 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
                 backrefs.getOrCreate(child.roomId, new Set()).add(space.roomId);
             });
-
-            // const [childSpaces, childRooms] = partitionSpacesAndRooms(children);
         });
 
-        // TODO we aren't using orphanedRooms yet, but its a nice optimization for HOME_SPACE ish
-        [this.rootSpaces, this.orphanedRooms] = partitionSpacesAndRooms(Array.from(unseenChildren));
+        const [rootSpaces, orphanedRooms] = partitionSpacesAndRooms(Array.from(unseenChildren));
+
+        // untested algorithm to handle full-cycles
+        const detachedNodes = new Set<Room>(spaces);
+        // if the currently selected space no longer exists, remove its selection
+        if (this._activeSpace && detachedNodes.has(this._activeSpace)) {
+            this.setActiveSpace(null);
+        }
+
+        const markTreeChildren = (rootSpace: Room, unseen: Set<Room>) => {
+            const stack = [rootSpace];
+            while (stack.length) {
+                const op = stack.pop();
+                unseen.delete(op);
+                this.getChildSpaces(op.roomId).forEach(space => {
+                    if (unseen.has(space)) {
+                        stack.push(space);
+                    }
+                });
+            }
+        };
+
+        rootSpaces.forEach(rootSpace => {
+            markTreeChildren(rootSpace, detachedNodes);
+        });
+
+        // Handle spaces forming fully cyclical relationships.
+        // In order, assume each detachedNode is a root unless it has already
+        // been claimed as the child of prior detached node.
+        // Work from a copy of the detachedNodes set as it will be mutated as part of this operation.
+        Array.from(detachedNodes).forEach(detachedNode => {
+            if (!detachedNodes.has(detachedNode)) return;
+            // declare this detached node a new root, find its children, without ever looping back to it
+            detachedNodes.delete(detachedNode);
+            rootSpaces.push(detachedNode);
+            markTreeChildren(detachedNode, detachedNodes);
+
+            // TODO only consider a detached node a root space if it has no *parents other than the ones forming cycles
+        });
+
+        // TODO neither of these handle an A->B->C->A with an additional C->D
+        // detachedNodes.forEach(space => {
+        //     rootSpaces.push(space);
+        // });
+
+        this.orphanedRooms = new Set(orphanedRooms);
+        this.rootSpaces = rootSpaces;
         this.parentMap = backrefs;
 
         this.onRoomsUpdate(); // TODO only do this if a change has happened
         this.emit(UPDATE_TOP_LEVEL_SPACES, this.spacePanelSpaces);
-    }
+    }, 100, {trailing: true, leading: true});
 
     onSpaceUpdate = () => {
         this.rebuild();
     }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
 
     private showInHomeSpace = (room: Room) => {
         return !this.parentMap.get(room.roomId)?.size // put all orphaned rooms in the Home Space
@@ -200,31 +243,21 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     private onRoomUpdate = (room: Room) => {
         if (this.showInHomeSpace(room)) {
             this.spaceFilteredRooms.get(HOME_SPACE)?.add(room.roomId);
-        } else {
+        } else if (!this.orphanedRooms.has(room.roomId)) {
             this.spaceFilteredRooms.get(HOME_SPACE)?.delete(room.roomId);
         }
     };
 
-    private onRoomsUpdate = () => {
+    private onRoomsUpdate = throttle(() => {
         // TODO resolve some updates as deltas
         const visibleRooms = this.matrixClient.getVisibleRooms();
-
-        // TODO ideally we could delta update this map instead of building it from scratch each time
-        // this.roomSpaceMap = new Map();
-        // [...visibleRooms, ...this.getSpaces()].forEach(room => {
-        //     const spacesContainingRoom = this.topLevelSpaces.filter(space => this.getChildRooms(space).includes(room));
-        //     if (spacesContainingRoom.length > 0) {
-        //         this.roomSpaceMap.set(room.roomId, spacesContainingRoom);
-        //     }
-        // });
 
         const oldFilteredRooms = this.spaceFilteredRooms;
         this.spaceFilteredRooms = new Map();
 
         // put all invites (rooms & spaces) in the Home Space only
         const invites = this.matrixClient.getRooms().filter(r => r.isSpaceRoom() && r.getMyMembership() === "invite");
-        const inviteRoomIds = new Set<string>(invites.map(space => space.roomId)); // TODO use this to filter invites out of other spaces
-        this.spaceFilteredRooms.set(HOME_SPACE, inviteRoomIds);
+        this.spaceFilteredRooms.set(HOME_SPACE, new Set<string>(invites.map(space => space.roomId)));
 
         visibleRooms.forEach(room => {
             if (this.showInHomeSpace(room)) {
@@ -233,8 +266,15 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         });
 
         this.rootSpaces.forEach(s => {
+            // traverse each space tree in DFS to build up the supersets as you go up,
+            // reusing results from like subtrees.
             const fn = (spaceId: string, parentPath: Set<string>): Set<string> => {
                 if (parentPath.has(spaceId)) return; // prevent cycles
+
+                // reuse existing results if multiple similar branches exist
+                if (this.spaceFilteredRooms.has(spaceId)) {
+                    return this.spaceFilteredRooms.get(spaceId);
+                }
 
                 const [childSpaces, childRooms] = partitionSpacesAndRooms(this.getChildren(spaceId));
                 const roomIds = new Set(childRooms.map(r => r.roomId));
@@ -272,37 +312,14 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             const rooms = this.matrixClient.getRooms().filter(room => roomIds.has(room.roomId));
             this.getNotificationState(s)?.setRooms(rooms);
         });
-    };
-
-    // private onSpaceUpdate = () => {
-    //     const spaces = this.getSpaces();
-    //     // TODO build a tree of spaces and don't assume all spaces are top-level
-    //     this.topLevelSpaces = spaces.map(space => {
-    //         const children = space.currentState.getStateEvents(EventType.SpaceChild).map(ev => {
-    //             // TODO maybe we should just store roomIds so that we don't have to update them as often
-    //             return this.matrixClient.getRoom(ev.getStateKey());
-    //         }).filter(Boolean);
-    //         const [childSpaces, rooms] = children.reduce((result, room: Room) => {
-    //             result[room.isSpaceRoom() ? 0 : 1].push(room);
-    //             return result;
-    //         }, [[], []]);
-    //
-    //         return { space, childSpaces, rooms };
-    //     });
-    //
-    //     if (1) { // TODO detect changes
-    //         this.onRoomsUpdate();
-    //     }
-    //
-    //     this.emit(UPDATE_TOP_LEVEL_SPACES, this.spacePanelSpaces);
-    // };
+    }, 100, {trailing: true, leading: true});
 
     private onRoom = (room: Room) => {
         if (room?.isSpaceRoom()) {
             this.onSpaceUpdate();
             this.emit(room.roomId);
         } else {
-            this.onRoomsUpdate();
+            this.onRoomUpdate(room);
         }
     };
 
@@ -313,7 +330,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         if (ev.getType() === EventType.SpaceChild && room.isSpaceRoom()) {
             this.onSpaceUpdate();
             this.emit(room.roomId);
-        } else if (ev.getType() === EventType.RoomParent) {
+        } else if (ev.getType() === EventType.SpaceParent) {
+            // TODO rebuild the space parent and not the room - check permissions?
             // TODO confirm this after implementing parenting behaviour
             if (room.isSpaceRoom()) {
                 this.onSpaceUpdate();
@@ -393,12 +411,13 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 break;
             case "view_room": {
                 const room = this.matrixClient?.getRoom(payload.room_id);
+
                 if (room?.getMyMembership() === "join") {
                     if (room.isSpaceRoom()) {
                         this.setActiveSpace(room);
-                    } else if (!this.spaceFilteredRooms.get(this.selectedSpace?.roomId || HOME_SPACE).has(room.roomId)) {
-                        // const space = this.roomSpaceMap.get(room.roomId)?.[0];
-                        const space = Array.from(this.parentMap.get(room.roomId) || [])[0];
+                    } else if (!this.spaceFilteredRooms.get(this._activeSpace?.roomId || HOME_SPACE).has(room.roomId)) {
+                        const canonicalParent = this.getCanonicalParent(room.roomId);
+                        const space = canonicalParent || Array.from(this.parentMap.get(room.roomId) || [])[0];
                         if (space) {
                             this.setActiveSpace(space);
                         }
@@ -406,6 +425,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 }
                 break;
             }
+            case "after_leave_room":
+                if (this._activeSpace && payload.room_id === this._activeSpace.roomId) {
+                    this.setActiveSpace(null);
+                }
+                break;
         }
     }
 
