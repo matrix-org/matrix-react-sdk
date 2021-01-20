@@ -87,7 +87,7 @@ $nestedHeight: 24px;
             background-color: #ffffff;
 
             &::after {
-                background-color: #3F3D3D;
+                background-color: #3f3d3d;
                 mask-image: url('$(res)/img/element-icons/home.svg');
                 mask-size: 18px;
             }
@@ -139,5 +139,4 @@ $nestedHeight: 24px;
             padding-left: 0;
         }
     }
-
 }
