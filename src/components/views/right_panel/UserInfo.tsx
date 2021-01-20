@@ -1571,7 +1571,7 @@ const UserInfo: React.FC<Props> = ({
     let previousPhase: RightPanelPhases;
     // We have no previousPhase for when viewing a UserInfo from a Group or without a Room at this time
     if (room) {
-        previousPhase = RightPanelPhases.RoomMemberList;
+        previousPhase = room.isSpaceRoom() ? RightPanelPhases.SpaceMemberList : RightPanelPhases.RoomMemberList;
     }
 
     let closeLabel = undefined;
