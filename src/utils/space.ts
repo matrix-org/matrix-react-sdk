@@ -64,11 +64,11 @@ export const showCreateNewRoom = async (cli: MatrixClient, space: Room) => {
     }
 };
 
-export const makeRoomParentEvent = (room: Room, isDefault = false) => ({
-    type: EventType.RoomParent,
+export const makeRoomParentEvent = (room: Room, canonical = false) => ({
+    type: EventType.SpaceParent,
     content: {
-        "room_id": room.roomId,
         "via": calculateRoomVia(room),
-        "default": isDefault,
+        "canonical": canonical,
     },
+    state_key: room.roomId,
 });

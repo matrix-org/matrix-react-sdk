@@ -178,7 +178,7 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
     }
 
     if (opts.parentSpace) {
-        opts.createOpts.initial_state.push(makeRoomParentEvent(opts.parentSpace));
+        opts.createOpts.initial_state.push(makeRoomParentEvent(opts.parentSpace, true));
     }
 
     let modal;
