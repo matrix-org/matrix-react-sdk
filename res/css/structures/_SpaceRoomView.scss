@@ -70,10 +70,8 @@ $SpaceRoomViewInnerWidth: 428px;
     }
 
     .mx_SpaceRoomView_landing {
-        .mx_BaseAvatar {
-            > img {
-                border-radius: 12px;
-            }
+        .mx_BaseAvatar_image {
+            border-radius: 12px;
         }
 
         .mx_SpaceRoomView_landing_name {
@@ -96,7 +94,7 @@ $SpaceRoomViewInnerWidth: 428px;
                     content: '';
                     width: 24px;
                     height: 24px;
-                    top: 0;
+                    bottom: -4px;
                     left: 0;
                     mask-position: center;
                     mask-repeat: no-repeat;
