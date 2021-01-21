@@ -53,7 +53,7 @@ const SpaceSettingsDialog: React.FC<IProps> = ({ matrixClient: cli, space, onFin
 
     const [newAvatar, setNewAvatar] = useState<File>(null); // undefined means to remove avatar
     const canSetAvatar = space.currentState.maySendStateEvent(EventType.RoomAvatar, userId);
-    const avatarChanged = newAvatar === undefined;
+    const avatarChanged = newAvatar !== null;
 
     const [name, setName] = useState<string>(space.name);
     const canSetName = space.currentState.maySendStateEvent(EventType.RoomName, userId);
@@ -74,7 +74,9 @@ const SpaceSettingsDialog: React.FC<IProps> = ({ matrixClient: cli, space, onFin
         const promises = [];
 
         if (avatarChanged) {
-            promises.push(cli.sendStateEvent(space.roomId, EventType.RoomAvatar, { url: newAvatar }, ""));
+            promises.push(cli.sendStateEvent(space.roomId, EventType.RoomAvatar, {
+                url: await cli.uploadContent(newAvatar),
+            }, ""));
         }
 
         if (nameChanged) {
