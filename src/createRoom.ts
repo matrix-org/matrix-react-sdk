@@ -17,6 +17,7 @@ limitations under the License.
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import Modal from './Modal';
@@ -179,6 +180,12 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
 
     if (opts.parentSpace) {
         opts.createOpts.initial_state.push(makeRoomParentEvent(opts.parentSpace, true));
+        opts.createOpts.initial_state.push({
+            type: EventType.RoomHistoryVisibility,
+            content: {
+                "history_visibility": opts.createOpts.visibility === Visibility.Public ? "world_readable" : "invited",
+            },
+        });
     }
 
     let modal;
