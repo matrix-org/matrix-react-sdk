@@ -29,17 +29,22 @@ interface IItemProps {
     isNested?: boolean;
 }
 
-const SpaceItem: React.FC<IItemProps> = ({
+export const SpaceItem: React.FC<IItemProps> = ({
     space,
     activeSpaces,
     isNested,
 }) => {
+    const childSpaces = SpaceStore.instance.getChildSpaces(space.roomId);
     const isActive = activeSpaces.includes(space);
+    const itemClasses = classNames({
+        "mx_SpaceItem": true,
+        "collapsed": !isNested,   // default to collapsed
+        "hasSubSpaces": childSpaces && childSpaces.length,
+    });
     const classes = classNames("mx_SpaceButton", {
         mx_SpaceButton_active: isActive,
     });
     const notificationState = SpaceStore.instance.getNotificationState(space.roomId);
-    const childSpaces = SpaceStore.instance.getChildSpaces(space.roomId);
     const childItems = childSpaces ? <SpaceTreeLevel
         spaces={childSpaces}
         activeSpaces={activeSpaces}
@@ -63,8 +68,9 @@ const SpaceItem: React.FC<IItemProps> = ({
     const toggleCollapseButton = childSpaces && childSpaces.length ?
         <button className="mx_SpaceButton_toggleCollapse" onClick={toggleCollapse}></button> : null;
 
+
     return (
-        <li className={classNames({collapsed: !isNested, hasSubSpaces: childSpaces && childSpaces.length})}>
+        <li className={itemClasses}>
             <RovingAccessibleButton className={classes}
                 onClick={() => SpaceStore.instance.setActiveSpace(space)}
                 role="treeitem"

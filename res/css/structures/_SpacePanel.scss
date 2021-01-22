@@ -16,6 +16,8 @@ limitations under the License.
 
 $topLevelHeight: 32px;
 $nestedHeight: 24px;
+$gutterSize: 21px;
+$activeStripeSize: 4px;
 
 .mx_SpacePanel {
     flex: 0 0 auto;
@@ -27,16 +29,25 @@ $nestedHeight: 24px;
     overflow-y: auto;
 
     ul {
+        margin: 0;
         list-style: none;
         padding: 0;
         padding-left: 16px;
     }
 
     .mx_AutoHideScrollbar {
-        padding: 16px 12px;
+        padding: 16px 12px 16px 0;
     }
 
-    li.collapsed {
+    .mx_SpaceButton_toggleCollapse {
+        cursor: pointer;
+    }
+
+    .mx_SpaceItem {
+        position: relative;
+    }
+
+    .mx_SpaceItem.collapsed {
         & > .mx_SpaceButton > .mx_SpaceButton_toggleCollapse {
             transform: rotate(-90deg);
         }
@@ -46,8 +57,18 @@ $nestedHeight: 24px;
         }
     }
 
-    li:not(.hasSubSpaces) > .mx_SpaceButton  {
-        padding-left: 24px;
+    .mx_SpaceItem:not(.hasSubSpaces) > .mx_SpaceButton  {
+        margin-left: $gutterSize;
+
+        &.mx_SpaceButton_active {
+            &::before {
+                left: -$gutterSize;
+            }
+        }
+    }
+
+    .mx_SpacePanel_newWrapper {
+        margin-left: $gutterSize;
     }
 
     .mx_SpaceButton {
@@ -55,7 +76,6 @@ $nestedHeight: 24px;
         position: relative;
         margin-bottom: 16px;
         display: flex;
-        height: $nestedHeight;
         align-items: center;
 
         .mx_SpaceButton_name {
@@ -69,10 +89,11 @@ $nestedHeight: 24px;
         }
 
         .mx_SpaceButton_toggleCollapse {
-            width: 24px;
-            height: 24px;
+            width: calc($gutterSize - $activeStripeSize);
+            margin-left: $activeStripeSize;
+            height: $gutterSize;
             mask-position: center;
-            mask-size: contain;
+            mask-size: 21px;
             mask-repeat: no-repeat;
             background-color: $roomlist-header-color;
             mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
@@ -82,10 +103,10 @@ $nestedHeight: 24px;
             &::before {
                 position: absolute;
                 content: '';
-                height: $nestedHeight;
-                width: 4px;
+                width: $activeStripeSize;
                 top: 0;
-                left: -12px;
+                left: 0;
+                bottom: 0;
                 background-color: $accent-color;
                 border-radius: 0 4px 4px 0;
             }
