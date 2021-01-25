@@ -83,7 +83,6 @@ const SpaceCreateMenu = ({ onFinished }) => {
                     initial_state: initialState,
                     power_level_content_override: {
                         // Only allow Admins to write to the timeline to prevent hidden sync spam
-                        // TODO decide if this should be >100
                         events_default: 100,
                     },
                 },
@@ -92,6 +91,7 @@ const SpaceCreateMenu = ({ onFinished }) => {
                 andView: true,
                 inlineErrors: true,
             });
+
             onFinished();
         } catch (e) {
             console.error(e);

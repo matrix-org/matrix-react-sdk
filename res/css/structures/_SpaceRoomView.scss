@@ -70,6 +70,8 @@ $SpaceRoomViewInnerWidth: 428px;
     }
 
     .mx_SpaceRoomView_landing {
+        overflow-y: auto; // TODO better scrolling
+
         .mx_BaseAvatar_image {
             border-radius: 12px;
         }
