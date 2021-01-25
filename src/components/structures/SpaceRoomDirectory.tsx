@@ -41,7 +41,7 @@ interface IProps {
 }
 
 /* eslint-disable camelcase */
-interface ISpaceSummaryRoom {
+export interface ISpaceSummaryRoom {
     canonical_alias?: string;
     aliases: string[];
     avatar_url?: string;
@@ -55,7 +55,7 @@ interface ISpaceSummaryRoom {
     room_type: string;
 }
 
-interface ISpaceSummaryEvent {
+export interface ISpaceSummaryEvent {
     room_id: string;
     event_id: string;
     origin_server_ts: number;
@@ -87,11 +87,11 @@ const SubSpace: React.FC<ISubspaceProps> = ({ space, editing, event, onRemoveFro
             <RoomAvatar oobData={oobData} width={24} height={24} />
             { space.name }
 
-            <FormButton kind="danger" onClick={onRemoveFromSpaceClick} label={_t("Remove from Space")} />
+            {/*<FormButton kind="danger" onClick={onRemoveFromSpaceClick} label={_t("Remove from Space")} />
             <StyledCheckbox
                 checked={event.getContent().auto_join}
                 onChange={() => {}}
-            />
+            />*/}
         </div>
         <div className="mx_SpaceRoomDirectory_subspace_children">
             { children }
@@ -165,7 +165,7 @@ const RoomTile = ({ room, event, editing, onRemoveFromSpaceClick, onPreviewClick
     </div>;
 };
 
-const showRoom = (room: ISpaceSummaryRoom, autoJoin = false) => {
+export const showRoom = (room: ISpaceSummaryRoom, autoJoin = false) => {
     // Don't let the user view a room they won't be able to either peek or join:
     // fail earlier so they don't have to click back to the directory.
     if (MatrixClientPeg.get().isGuest()) {
@@ -191,7 +191,7 @@ const showRoom = (room: ISpaceSummaryRoom, autoJoin = false) => {
     });
 };
 
-const HierarchyLevel = ({ spaceId, rooms, editing, relations, parents, onPreviewClick, onJoinClick }) => {
+export const HierarchyLevel = ({ spaceId, rooms, editing, relations, parents, onPreviewClick, onJoinClick }) => {
     const cli = MatrixClientPeg.get();
     const space = cli.getRoom(spaceId);
     const [subspaces, childRooms] = relations.get(spaceId).reduce((result, roomId: string) => {

@@ -48,6 +48,10 @@ import {SetRightPanelPhasePayload} from "../../dispatcher/payloads/SetRightPanel
 import {useStateArray} from "../../hooks/useStateArray";
 import SpacePublicShare from "../views/spaces/SpacePublicShare";
 import {showAddExistingRooms, showCreateNewRoom, shouldShowSpaceSettings} from "../../utils/space";
+import {HierarchyLevel, ISpaceSummaryEvent, ISpaceSummaryRoom, showRoom} from "./SpaceRoomDirectory";
+import {useAsyncMemo} from "../../hooks/useAsyncMemo";
+import {EnhancedMap} from "../../utils/maps";
+import AutoHideScrollbar from "./AutoHideScrollbar";
 
 interface IProps {
     space: Room;
@@ -157,6 +161,49 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
         </AccessibleButton>;
     }
 
+    const [roomsMap, relations] = useAsyncMemo(async () => {
+        try {
+            const data = await cli.getSpaceSummary(space.roomId, undefined, true);
+
+            const parentChildRelations = new EnhancedMap<string, string[]>();
+            data.events.map((ev: ISpaceSummaryEvent) => {
+                if (ev.type === EventType.SpaceChild) {
+                    parentChildRelations.getOrCreate(ev.room_id, []).push(ev.state_key);
+                }
+            });
+
+            const roomsMap = new Map<string, ISpaceSummaryRoom>(data.rooms.map(r => [r.room_id, r]));
+            return [roomsMap, parentChildRelations];
+        } catch (e) {
+            console.error(e); // TODO
+        }
+
+        return [];
+    }, [space], []);
+
+    let previewRooms;
+    if (roomsMap) {
+        previewRooms = <AutoHideScrollbar className="mx_SpaceRoomDirectory_list">
+            <div className="mx_SpaceRoomDirectory_roomCount">
+                <h3>{_t("Rooms")}</h3>
+                <span>{ roomsMap.size }</span>
+            </div>
+            <HierarchyLevel
+                spaceId={space.roomId}
+                rooms={roomsMap}
+                editing={false}
+                relations={relations}
+                parents={new Set()}
+                onPreviewClick={roomId => {
+                    showRoom(roomsMap.get(roomId), false);
+                }}
+                onJoinClick={roomId => {
+                    showRoom(roomsMap.get(roomId), true);
+                }}
+            />
+        </AutoHideScrollbar>;
+    }
+
     return <div className="mx_SpaceRoomView_landing">
         <RoomAvatar room={space} height={80} width={80} viewAvatarOnClick={true} />
         <div className="mx_SpaceRoomView_landing_name">
@@ -196,6 +243,8 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
             { addRoomButtons }
             { settingsButton }
         </div>
+
+        { previewRooms }
     </div>;
 };
 
