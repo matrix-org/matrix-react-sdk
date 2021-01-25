@@ -79,6 +79,7 @@ import Notifier from "../../Notifier";
 import {showToast as showNotificationsToast} from "../../toasts/DesktopNotificationsToast";
 import { RoomNotificationStateStore } from "../../stores/notifications/RoomNotificationStateStore";
 import SpaceRoomView from "./SpaceRoomView";
+import {IOpts} from "../../createRoom";
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -113,7 +114,7 @@ interface IProps {
 
     autoJoin?: boolean;
     resizeNotifier: ResizeNotifier;
-    justCreated?: boolean;
+    justCreatedOpts?: IOpts;
 
     // Called with the credentials of a registered user (if they were a ROU that transitioned to PWLU)
     onRegistered?(credentials: IMatrixClientCreds): void;
@@ -1838,7 +1839,7 @@ export default class RoomView extends React.Component<IProps, IState> {
         if (this.state.room?.isSpaceRoom()) {
             return <SpaceRoomView
                 space={this.state.room}
-                justCreated={this.props.justCreated}
+                justCreatedOpts={this.props.justCreatedOpts}
                 resizeNotifier={this.props.resizeNotifier}
                 onJoinButtonClicked={this.onJoinButtonClicked}
                 onRejectButtonClicked={this.props.threepidInvite

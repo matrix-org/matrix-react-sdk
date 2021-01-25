@@ -27,9 +27,8 @@ import RoomTopic from "../views/elements/RoomTopic";
 import FormButton from "../views/elements/FormButton";
 import {inviteMultipleToRoom, showSpaceInviteDialog} from "../../RoomInvite";
 import {useRoomMembers} from "../../hooks/useRoomMembers";
-import createRoom, {Preset} from "../../createRoom";
+import createRoom, {IOpts, Preset} from "../../createRoom";
 import Field from "../views/elements/Field";
-import SpaceStore from "../../stores/SpaceStore";
 import {useEventEmitter} from "../../hooks/useEventEmitter";
 import StyledRadioGroup from "../views/elements/StyledRadioGroup";
 import withValidation from "../views/elements/Validation";
@@ -52,7 +51,7 @@ import {showAddExistingRooms, showCreateNewRoom, shouldShowSpaceSettings} from "
 
 interface IProps {
     space: Room;
-    justCreated?: boolean;
+    justCreatedOpts?: IOpts;
     resizeNotifier: ResizeNotifier;
     onJoinButtonClicked(): void;
     onRejectButtonClicked(): void;
@@ -410,11 +409,11 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
         let phase = Phase.Landing;
 
         this.creator = this.props.space.currentState.getStateEvents(EventType.RoomCreate, "")?.getSender();
-        const showSetup = this.props.justCreated && this.context.getUserId() === this.creator;
+        const showSetup = this.props.justCreatedOpts && this.context.getUserId() === this.creator;
 
         if (showSetup) {
-            // TODO fix race condition between this rendering the state events being loaded into the room state obj
-            phase = this.props.space.getJoinRule() === "public" ? Phase.PublicCreateRooms : Phase.PrivateScope;
+            phase = this.props.justCreatedOpts.createOpts.preset === Preset.PublicChat
+                ? Phase.PublicCreateRooms : Phase.PrivateScope;
         }
 
         this.state = {

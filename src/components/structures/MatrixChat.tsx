@@ -48,7 +48,7 @@ import * as Lifecycle from '../../Lifecycle';
 import '../../stores/LifecycleStore';
 import PageTypes from '../../PageTypes';
 
-import createRoom from "../../createRoom";
+import createRoom, {IOpts} from "../../createRoom";
 import {_t, _td, getCurrentLanguage} from '../../languageHandler';
 import SettingsStore from "../../settings/SettingsStore";
 import ThemeController from "../../settings/controllers/ThemeController";
@@ -81,6 +81,8 @@ import ThreepidInviteStore, { IThreepidInvite, IThreepidInviteWireFormat } from 
 import {UIFeature} from "../../settings/UIFeature";
 import { CommunityPrototypeStore } from "../../stores/CommunityPrototypeStore";
 import DialPadModal from "../views/voip/DialPadModal";
+import SpaceStore from "../../stores/SpaceStore";
+import SpaceRoomDirectory from "./SpaceRoomDirectory";
 
 /** constants for MatrixChat.state.view */
 export enum Views {
@@ -144,7 +146,7 @@ interface IRoomInfo {
     via_servers?: string[];
     threepid_invite?: IThreepidInvite;
 
-    justCreated?: boolean;
+    justCreatedOpts?: IOpts;
 }
 /* eslint-enable camelcase */
 
@@ -202,7 +204,7 @@ interface IState {
     viaServers?: string[];
     pendingInitialSync?: boolean;
     justRegistered?: boolean;
-    roomJustCreated?: boolean;
+    roomJustCreatedOpts?: IOpts;
 }
 
 export default class MatrixChat extends React.PureComponent<IProps, IState> {
@@ -877,7 +879,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 roomOobData: roomInfo.oob_data,
                 viaServers: roomInfo.via_servers,
                 ready: true,
-                roomJustCreated: roomInfo.justCreated || false,
+                roomJustCreatedOpts: roomInfo.justCreatedOpts,
             }, () => {
                 this.notifyNewScreen('room/' + presentedId, replaceLast);
             });

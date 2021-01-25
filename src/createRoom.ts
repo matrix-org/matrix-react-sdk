@@ -213,6 +213,9 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
         // room has been created, so we race here with the client knowing that
         // the room exists, causing things like
         // https://github.com/vector-im/vector-web/issues/1813
+        // Even if we were to block on the echo, servers tend to split the room
+        // state over multiple syncs so we can't atomically know when we have the
+        // entire thing.
         if (opts.andView) {
             dis.dispatch({
                 action: 'view_room',
@@ -222,7 +225,7 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
                 // so we are expecting the room to come down the sync
                 // stream, if it hasn't already.
                 joining: true,
-                justCreated: true,
+                justCreatedOpts: opts,
             });
         }
         CountlyAnalytics.instance.trackRoomCreate(startTime, roomId);
