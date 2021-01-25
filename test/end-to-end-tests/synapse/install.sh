@@ -18,15 +18,21 @@ fi
 cd $BASE_DIR
 mkdir -p $SERVER_DIR
 cd $SERVER_DIR
+
+# Print version for some confidence we have the right pip install script
+python3 --version
+
+# We need a newer version of Python than Buildkite agents currently have to run
+# modern Synapse
+sudo apt update
+sudo apt install python
+
 virtualenv -p python3 env
 source env/bin/activate
 
-# Print version for some confidence we have the right pip install script
-python --version
-
 # Having been bitten by pip SSL fail too many times, I don't trust the existing pip
 # to be able to --upgrade itself, so grab a new one fresh from source.
-curl https://bootstrap.pypa.io/3.4/get-pip.py -o get-pip.py
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python get-pip.py
 
 pip install --upgrade setuptools
