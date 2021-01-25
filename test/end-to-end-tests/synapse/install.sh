@@ -26,7 +26,7 @@ python --version
 
 # Having been bitten by pip SSL fail too many times, I don't trust the existing pip
 # to be able to --upgrade itself, so grab a new one fresh from source.
-curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+curl https://bootstrap.pypa.io/3.4/get-pip.py -o get-pip.py
 python get-pip.py
 
 pip install --upgrade setuptools
