@@ -22,7 +22,7 @@ import {_t} from "../../../languageHandler";
 import RoomAvatar from "../avatars/RoomAvatar";
 import {useContextMenu} from "../../structures/ContextMenu";
 import SpaceCreateMenu from "./SpaceCreateMenu";
-import SpaceTreeLevel from "./SpaceTreeLevel";
+import {SpaceItem} from "./SpaceTreeLevel";
 import {useEventEmitter} from "../../../hooks/useEventEmitter";
 import SpaceStore, {HOME_SPACE, UPDATE_SELECTED_SPACE, UPDATE_TOP_LEVEL_SPACES} from "../../../stores/SpaceStore";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
@@ -156,24 +156,31 @@ const SpacePanel = () => {
         }
     };
 
+    const activeSpaces = activeSpace ? [activeSpace] : [];
     // TODO drag and drop for re-arranging order
     return <RovingTabIndexProvider handleHomeEnd={true} onKeyDown={onKeyDown}>
         {({onKeyDownHandler}) => (
             <div className="mx_SpacePanel" onKeyDown={onKeyDownHandler}>
                 <AutoHideScrollbar>
-                    <SpaceButton
-                        className="mx_SpaceButton_home"
-                        onClick={() => SpaceStore.instance.setActiveSpace(null)}
-                        selected={!activeSpace}
-                        tooltip={_t("Home")}
-                        notificationState={SpaceStore.instance.getNotificationState(HOME_SPACE)}
-                    />
-                    <SpaceTreeLevel spaces={spaces} activeSpaces={activeSpace ? [activeSpace] : []} />
-                    <SpaceButton
-                        className={newClasses}
-                        tooltip={menuDisplayed ? _t("Cancel") : _t("Create a space")}
-                        onClick={menuDisplayed ? closeMenu : openMenu}
-                    />
+                    <ul className="mx_SpaceTreeLevel">
+                        <li className="mx_SpaceItem">
+                            <SpaceButton
+                                className="mx_SpaceButton_home"
+                                onClick={() => SpaceStore.instance.setActiveSpace(null)}
+                                selected={!activeSpace}
+                                tooltip={_t("Home")}
+                                notificationState={SpaceStore.instance.getNotificationState(HOME_SPACE)}
+                            />
+                        </li>
+                        { spaces.map(s => <SpaceItem key={s.roomId} space={s} activeSpaces={activeSpaces} />) }
+                    </ul>
+                    <div className="mx_SpacePanel_newWrapper">
+                        <SpaceButton
+                            className={newClasses}
+                            tooltip={menuDisplayed ? _t("Cancel") : _t("Create a space")}
+                            onClick={menuDisplayed ? closeMenu : openMenu}
+                        />
+                    </div>
                 </AutoHideScrollbar>
 
                 { contextMenu }

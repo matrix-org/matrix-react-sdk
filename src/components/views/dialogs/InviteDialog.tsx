@@ -48,8 +48,8 @@ import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 
 export const KIND_DM = "dm";
 export const KIND_INVITE = "invite";
-export const KIND_CALL_TRANSFER = "call_transfer";
 export const KIND_SPACE_INVITE = "space_invite";
+export const KIND_CALL_TRANSFER = "call_transfer";
 
 const INITIAL_ROOMS_SHOWN = 3; // Number of rooms to show at first
 const INCREMENT_ROOMS_SHOWN = 5; // Number of rooms to add when 'show more' is clicked

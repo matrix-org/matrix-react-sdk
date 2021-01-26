@@ -36,6 +36,7 @@ import {Analytics} from "../Analytics";
 import CountlyAnalytics from "../CountlyAnalytics";
 import UserActivity from "../UserActivity";
 import {ModalWidgetStore} from "../stores/ModalWidgetStore";
+import { WidgetLayoutStore } from "../stores/widgets/WidgetLayoutStore";
 import {SpaceStoreClass} from "../stores/SpaceStore";
 
 declare global {
@@ -60,6 +61,7 @@ declare global {
         mxNotifier: typeof Notifier;
         mxRightPanelStore: RightPanelStore;
         mxWidgetStore: WidgetStore;
+        mxWidgetLayoutStore: WidgetLayoutStore;
         mxCallHandler: CallHandler;
         mxAnalytics: Analytics;
         mxCountlyAnalytics: typeof CountlyAnalytics;

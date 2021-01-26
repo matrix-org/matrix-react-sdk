@@ -63,7 +63,7 @@ export const showCreateNewRoom = async (cli: MatrixClient, space: Room) => {
     }
 };
 
-export const makeRoomParentEvent = (room: Room, canonical = false) => ({
+export const makeSpaceParentEvent = (room: Room, canonical = false) => ({
     type: EventType.SpaceParent,
     content: {
         "via": calculateRoomVia(room),

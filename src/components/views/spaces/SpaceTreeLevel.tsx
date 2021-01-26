@@ -29,39 +29,73 @@ interface IItemProps {
     isNested?: boolean;
 }
 
-const SpaceItem: React.FC<IItemProps> = ({
-    space,
-    activeSpaces,
-    isNested,
-}) => {
-    const isActive = activeSpaces.includes(space);
-    const classes = classNames("mx_SpaceButton", {
-        mx_SpaceButton_active: isActive,
-    });
-    const notificationState = SpaceStore.instance.getNotificationState(space.roomId);
-    const childSpaces = SpaceStore.instance.getChildSpaces(space.roomId);
-    const childItems = childSpaces ? <SpaceTreeLevel
-        spaces={childSpaces}
-        activeSpaces={activeSpaces}
-        isNested={true}
-    /> : null;
-    let notifBadge;
-    if (notificationState) {
-        notifBadge = <NotificationBadge forceCount={false} notification={notificationState} />;
+interface IItemState {
+    collapsed: boolean;
+}
+
+export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            collapsed: !props.isNested,   // default to collapsed for root items
+        };
     }
 
-    const avatarSize = isNested ? 24 : 32;
-    return (
-        <li>
-            <RovingAccessibleButton className={classes}
-                onClick={() => SpaceStore.instance.setActiveSpace(space)}>
-                <RoomAvatar width={avatarSize} height={avatarSize} room={space} />
-                <span className="mx_SpaceButton_name">{ space.name }</span>
-                { notifBadge }
-            </RovingAccessibleButton>
-            { childItems }
-        </li>
-    );
+    toggleCollapse(evt) {
+        this.setState({collapsed: !this.state.collapsed});
+        // don't bubble up so encapsulating button for space
+        // doesn't get triggered
+        evt.stopPropagation();
+    }
+
+    render() {
+        const {space, activeSpaces, isNested} = this.props;
+
+        const childSpaces = SpaceStore.instance.getChildSpaces(space.roomId);
+        const isActive = activeSpaces.includes(space);
+        const itemClasses = classNames({
+            "mx_SpaceItem": true,
+            "collapsed": this.state.collapsed,
+            "hasSubSpaces": childSpaces && childSpaces.length,
+        });
+        const classes = classNames("mx_SpaceButton", {
+            mx_SpaceButton_active: isActive,
+        });
+        const notificationState = SpaceStore.instance.getNotificationState(space.roomId);
+        const childItems = childSpaces && !this.state.collapsed ? <SpaceTreeLevel
+            spaces={childSpaces}
+            activeSpaces={activeSpaces}
+            isNested={true}
+        /> : null;
+        let notifBadge;
+        if (notificationState) {
+            notifBadge = <NotificationBadge forceCount={false} notification={notificationState} />;
+        }
+
+        const avatarSize = isNested ? 24 : 32;
+
+        const toggleCollapseButton = childSpaces && childSpaces.length ?
+            <button
+                className="mx_SpaceButton_toggleCollapse"
+                onClick={evt => this.toggleCollapse(evt)}
+            ></button> : null;
+
+        return (
+            <li className={itemClasses}>
+                <RovingAccessibleButton className={classes}
+                    onClick={() => SpaceStore.instance.setActiveSpace(space)}
+                    role="treeitem"
+                >
+                    { toggleCollapseButton }
+                    <RoomAvatar width={avatarSize} height={avatarSize} room={space} />
+                    <span className="mx_SpaceButton_name">{ space.name }</span>
+                    { notifBadge }
+                </RovingAccessibleButton>
+                { childItems }
+            </li>
+        );
+    }
 }
 
 interface ITreeLevelProps {
@@ -75,7 +109,7 @@ const SpaceTreeLevel: React.FC<ITreeLevelProps> = ({
     activeSpaces,
     isNested,
 }) => {
-    return <ul>
+    return <ul className="mx_SpaceTreeLevel">
         {spaces.map(s => {
             return (<SpaceItem
                 key={s.roomId}

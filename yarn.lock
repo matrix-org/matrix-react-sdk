@@ -6559,8 +6559,8 @@ mathml-tag-names@^2.0.1:
   integrity sha512-APMBEanjybaPzUrfqU0IMU5I0AswKMH7k8OTLs0vvV4KZpExkTkY87nR/zpbuTPj+gARop7aGUbl11pnDfW6xg==
 
 "matrix-js-sdk@github:matrix-org/matrix-js-sdk#develop":
-  version "9.5.0"
-  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/214a9df3823e602400b24d9a81cfc7b7df0a863b"
+  version "9.5.1"
+  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/7cfbd0da95edc66671e166aa83145b5e17ca76fc"
   dependencies:
     "@babel/runtime" "^7.12.5"
     another-json "^0.2.0"
@@ -6568,7 +6568,7 @@ mathml-tag-names@^2.0.1:
     bs58 "^4.0.1"
     content-type "^1.0.4"
     loglevel "^1.7.1"
-    qs "^6.9.4"
+    qs "^6.9.6"
     request "^2.88.2"
     unhomoglyph "^1.0.6"
 
@@ -7664,6 +7664,11 @@ qs@^6.9.4:
   version "6.9.4"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.4.tgz#9090b290d1f91728d3c22e54843ca44aea5ab687"
   integrity sha512-A1kFqHekCTM7cz0udomYUoYNWjBebHm/5wzU/XqrBRBNWectVH0QIiN+NEcZ0Dte5hvzHwbr8+XQmguPhJ6WdQ==
+
+qs@^6.9.6:
+  version "6.9.6"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.6.tgz#26ed3c8243a431b2924aca84cc90471f35d5a0ee"
+  integrity sha512-TIRk4aqYLNoJUbd+g2lEdz5kLWIuTMRagAXxl78Q0RiVjAOugHmeKNGdd3cwo/ktpf9aL9epCfFqWDEKysUlLQ==
 
 qs@~6.5.2:
   version "6.5.2"
