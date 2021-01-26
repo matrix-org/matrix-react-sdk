@@ -225,11 +225,11 @@ export const HierarchyLevel = ({
 }: IHierarchyLevelProps) => {
     const cli = MatrixClientPeg.get();
     const space = cli.getRoom(spaceId);
-    const [subspaces, childRooms] = relations.get(spaceId).reduce((result, roomId: string) => {
+    const [subspaces, childRooms] = relations.get(spaceId)?.reduce((result, roomId: string) => {
         if (!rooms.has(roomId)) return result; // TODO wat
         result[rooms.get(roomId).room_type === RoomType.Space ? 0 : 1].push(roomId);
         return result;
-    }, [[], []]);
+    }, [[], []]) || [[], []];
 
     // Don't render this subspace if it has no rooms we can show
     // TODO this is broken - as a space may have subspaces we still need to show
