@@ -29,7 +29,11 @@ interface IItemProps {
     isNested?: boolean;
 }
 
-export class SpaceItem extends React.PureComponent<IItemProps> {
+interface IItemState {
+    collapsed: boolean;
+}
+
+export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
     constructor(props) {
         super(props);
 
