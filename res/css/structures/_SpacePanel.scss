@@ -89,7 +89,7 @@ $activeStripeSize: 4px;
         }
 
         .mx_SpaceButton_toggleCollapse {
-            width: calc($gutterSize - $activeStripeSize);
+            width: $gutterSize - $activeStripeSize;
             margin-left: $activeStripeSize;
             height: $gutterSize;
             mask-position: center;
