@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {Dispatch, SetStateAction, useState} from "react";
+import React, {useState} from "react";
 import classNames from "classnames";
 import {Room} from "matrix-js-sdk/src/models/room";
 import {MatrixClient} from "matrix-js-sdk/src/client";
@@ -197,8 +197,8 @@ const AddExistingToSpaceDialog: React.FC<IProps> = ({ matrixClient: cli, space, 
                     // TODO improve busy state
                     setBusy(true);
                     try {
-                        await allSettled(Array.from(selectedToAdd).map((selectedRoom) =>
-                            SpaceStore.instance.addRoomToSpace(space, selectedRoom.roomId, calculateRoomVia(selectedRoom))));
+                        await allSettled(Array.from(selectedToAdd).map((room) =>
+                            SpaceStore.instance.addRoomToSpace(space, room.roomId, calculateRoomVia(room))));
                         onFinished(true);
                     } catch (e) {
                         console.error(e);

@@ -57,7 +57,7 @@ $activeStripeSize: 4px;
         }
     }
 
-    .mx_SpaceItem:not(.hasSubSpaces) > .mx_SpaceButton  {
+    .mx_SpaceItem:not(.hasSubSpaces) > .mx_SpaceButton {
         margin-left: $gutterSize;
 
         &.mx_SpaceButton_active {
@@ -132,7 +132,7 @@ $activeStripeSize: 4px;
             background-color: #ffffff;
 
             &::after {
-                background-color: #3F3D3D;
+                background-color: #3f3d3d;
                 mask-image: url('$(res)/img/element-icons/home.svg');
                 mask-size: 18px;
             }
@@ -184,5 +184,4 @@ $activeStripeSize: 4px;
             padding-left: 0;
         }
     }
-
 }

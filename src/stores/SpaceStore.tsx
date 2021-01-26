@@ -78,9 +78,9 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
     // Map from top level space ID/HOME_SPACE to Set of room IDs that should be shown as part of that filter
     private spaceFilteredRooms = new Map<string | symbol, Set<string>>();
-    // if selectedSpace is not in parentSpaces then show it on top of the list and peek it
+    // if _activeSpace is not in parentSpaces then show it on top of the list and peek it
     // if null then `Home` is selected
-    private selectedSpace?: Room = null; // TODO use HOME_SPACE and keys here?
+    private _activeSpace?: Room = null; // TODO use HOME_SPACE and keys here?
 
     // Map from room ID to ordered list of spaces we are in which contain it
     // If we are in the canonical parent space of the room then that'll be entry [0]
@@ -91,13 +91,13 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     }
 
     public get activeSpace(): Room | null {
-        return this.selectedSpace || null;
+        return this._activeSpace || null;
     }
 
     public setActiveSpace(space: Room) {
         if (space === this.activeSpace) return;
 
-        this.selectedSpace = space;
+        this._activeSpace = space;
         this.emit(UPDATE_SELECTED_SPACE, this.activeSpace);
 
         // persist space selected
@@ -313,7 +313,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         if (ev.getType() === EventType.SpaceChild && room.isSpaceRoom()) {
             this.onSpaceUpdate();
             this.emit(room.roomId);
-        } else if (ev.getType() === EventType.RoomParent) {
+        } else if (ev.getType() === EventType.SpaceParent) {
             // TODO confirm this after implementing parenting behaviour
             if (room.isSpaceRoom()) {
                 this.onSpaceUpdate();
@@ -396,7 +396,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 if (room?.getMyMembership() === "join") {
                     if (room.isSpaceRoom()) {
                         this.setActiveSpace(room);
-                    } else if (!this.spaceFilteredRooms.get(this.selectedSpace?.roomId || HOME_SPACE).has(room.roomId)) {
+                    } else if (!this.spaceFilteredRooms.get(this._activeSpace?.roomId || HOME_SPACE).has(room.roomId)) {
                         // const space = this.roomSpaceMap.get(room.roomId)?.[0];
                         const space = Array.from(this.parentMap.get(room.roomId) || [])[0];
                         if (space) {

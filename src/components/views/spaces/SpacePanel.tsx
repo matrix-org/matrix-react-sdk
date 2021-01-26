@@ -22,7 +22,7 @@ import {_t} from "../../../languageHandler";
 import RoomAvatar from "../avatars/RoomAvatar";
 import {useContextMenu} from "../../structures/ContextMenu";
 import SpaceCreateMenu from "./SpaceCreateMenu";
-import SpaceTreeLevel, {SpaceItem} from "./SpaceTreeLevel";
+import {SpaceItem} from "./SpaceTreeLevel";
 import {useEventEmitter} from "../../../hooks/useEventEmitter";
 import SpaceStore, {HOME_SPACE, UPDATE_SELECTED_SPACE, UPDATE_TOP_LEVEL_SPACES} from "../../../stores/SpaceStore";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";

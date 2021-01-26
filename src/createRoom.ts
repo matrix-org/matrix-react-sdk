@@ -31,7 +31,7 @@ import GroupStore from "./stores/GroupStore";
 import CountlyAnalytics from "./CountlyAnalytics";
 import { isJoinedOrNearlyJoined } from "./utils/membership";
 import SpaceStore from "./stores/SpaceStore";
-import {makeRoomParentEvent} from "./utils/space";
+import {makeSpaceParentEvent} from "./utils/space";
 
 // we define a number of interfaces which take their names from the js-sdk
 /* eslint-disable camelcase */
@@ -178,7 +178,7 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
     }
 
     if (opts.parentSpace) {
-        opts.createOpts.initial_state.push(makeRoomParentEvent(opts.parentSpace));
+        opts.createOpts.initial_state.push(makeSpaceParentEvent(opts.parentSpace));
     }
 
     let modal;

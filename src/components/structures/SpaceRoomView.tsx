@@ -48,7 +48,7 @@ import {RightPanelPhases} from "../../stores/RightPanelStorePhases";
 import {SetRightPanelPhasePayload} from "../../dispatcher/payloads/SetRightPanelPhasePayload";
 import {useStateArray} from "../../hooks/useStateArray";
 import SpacePublicShare from "../views/spaces/SpacePublicShare";
-import {makeRoomParentEvent, showAddExistingRooms, showCreateNewRoom, showSpaceSettings} from "../../utils/space";
+import {makeSpaceParentEvent, showAddExistingRooms, showCreateNewRoom, showSpaceSettings} from "../../utils/space";
 
 interface IProps {
     space: Room;
@@ -225,7 +225,7 @@ const SpaceSetupFirstRooms = ({ space, title, description, onFinished }) => {
                 createOpts: {
                     preset: space.getJoinRule() === "public" ? Preset.PublicChat : Preset.PrivateChat,
                     name,
-                    initial_state: [makeRoomParentEvent(space, true)],
+                    initial_state: [makeSpaceParentEvent(space, true)],
                 },
                 spinner: false,
                 encryption: false,
