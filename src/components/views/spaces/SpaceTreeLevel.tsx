@@ -29,60 +29,69 @@ interface IItemProps {
     isNested?: boolean;
 }
 
-export const SpaceItem: React.FC<IItemProps> = ({
-    space,
-    activeSpaces,
-    isNested,
-}) => {
-    const childSpaces = SpaceStore.instance.getChildSpaces(space.roomId);
-    const isActive = activeSpaces.includes(space);
-    const itemClasses = classNames({
-        "mx_SpaceItem": true,
-        "collapsed": !isNested,   // default to collapsed
-        "hasSubSpaces": childSpaces && childSpaces.length,
-    });
-    const classes = classNames("mx_SpaceButton", {
-        mx_SpaceButton_active: isActive,
-    });
-    const notificationState = SpaceStore.instance.getNotificationState(space.roomId);
-    const childItems = childSpaces ? <SpaceTreeLevel
-        spaces={childSpaces}
-        activeSpaces={activeSpaces}
-        isNested={true}
-    /> : null;
-    let notifBadge;
-    if (notificationState) {
-        notifBadge = <NotificationBadge forceCount={false} notification={notificationState} />;
+export class SpaceItem extends React.PureComponent<IItemProps> {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            collapsed: !props.isNested,   // default to collapsed for root items
+        };
     }
 
-    const avatarSize = isNested ? 24 : 32;
-
-    function toggleCollapse(evt) {
-        const li = evt.target.parentElement.parentElement;
-        li.classList.toggle("collapsed");
+    toggleCollapse(evt) {
+        this.setState({collapsed: !this.state.collapsed});
         // don't bubble up so encapsulating button for space
         // doesn't get triggered
         evt.stopPropagation();
     }
 
-    const toggleCollapseButton = childSpaces && childSpaces.length ?
-        <button className="mx_SpaceButton_toggleCollapse" onClick={toggleCollapse}></button> : null;
+    render() {
+        const {space, activeSpaces, isNested} = this.props;
 
+        const childSpaces = SpaceStore.instance.getChildSpaces(space.roomId);
+        const isActive = activeSpaces.includes(space);
+        const itemClasses = classNames({
+            "mx_SpaceItem": true,
+            "collapsed": this.state.collapsed,
+            "hasSubSpaces": childSpaces && childSpaces.length,
+        });
+        const classes = classNames("mx_SpaceButton", {
+            mx_SpaceButton_active: isActive,
+        });
+        const notificationState = SpaceStore.instance.getNotificationState(space.roomId);
+        const childItems = childSpaces && !this.state.collapsed ? <SpaceTreeLevel
+            spaces={childSpaces}
+            activeSpaces={activeSpaces}
+            isNested={true}
+        /> : null;
+        let notifBadge;
+        if (notificationState) {
+            notifBadge = <NotificationBadge forceCount={false} notification={notificationState} />;
+        }
 
-    return (
-        <li className={itemClasses}>
-            <RovingAccessibleButton className={classes}
-                onClick={() => SpaceStore.instance.setActiveSpace(space)}
-                role="treeitem"
-            >
-                { toggleCollapseButton }
-                <RoomAvatar width={avatarSize} height={avatarSize} room={space} />
-                <span className="mx_SpaceButton_name">{ space.name }</span>
-                { notifBadge }
-            </RovingAccessibleButton>
-            { childItems }
-        </li>
-    );
+        const avatarSize = isNested ? 24 : 32;
+
+        const toggleCollapseButton = childSpaces && childSpaces.length ?
+            <button
+                className="mx_SpaceButton_toggleCollapse"
+                onClick={evt => this.toggleCollapse(evt)}
+            ></button> : null;
+
+        return (
+            <li className={itemClasses}>
+                <RovingAccessibleButton className={classes}
+                    onClick={() => SpaceStore.instance.setActiveSpace(space)}
+                    role="treeitem"
+                >
+                    { toggleCollapseButton }
+                    <RoomAvatar width={avatarSize} height={avatarSize} room={space} />
+                    <span className="mx_SpaceButton_name">{ space.name }</span>
+                    { notifBadge }
+                </RovingAccessibleButton>
+                { childItems }
+            </li>
+        );
+    }
 }
 
 interface ITreeLevelProps {
