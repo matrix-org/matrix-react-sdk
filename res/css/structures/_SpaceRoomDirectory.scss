@@ -108,12 +108,17 @@ limitations under the License.
 
     .mx_SpaceRoomDirectory_subspace {
         margin-top: 24px;
+        font-weight: $font-semi-bold;
+        font-size: $font-12px;
+        line-height: $font-15px;
+        color: $secondary-fg-color;
 
         .mx_SpaceRoomDirectory_subspace_info {
             margin-bottom: 8px;
 
             .mx_BaseAvatar {
                 margin-right: 12px;
+                vertical-align: middle;
             }
 
             .mx_BaseAvatar_image {
@@ -161,11 +166,11 @@ limitations under the License.
 
         .mx_SpaceRoomDirectory_roomTile_memberCount {
             position: relative;
-            margin: auto 24px;
+            margin: auto 0 auto 24px;
             padding: 0 0 0 28px;
             line-height: $font-24px;
             display: inline-block;
-            width: 64px;
+            width: 32px;
 
             &::before {
                 position: absolute;
@@ -186,7 +191,7 @@ limitations under the License.
             width: 180px;
             text-align: right;
             height: min-content;
-            margin: auto 0;
+            margin: auto 0 auto 28px;
 
             .mx_AccessibleButton {
                 & + .mx_AccessibleButton {
@@ -194,7 +199,7 @@ limitations under the License.
                 }
             }
 
-            .mx_SpaceRoomDirectory_roomTile_alreadyJoined {
+            .mx_SpaceRoomDirectory_roomTile_actionsText {
                 font-size: $font-12px;
                 line-height: $font-15px;
                 color: $secondary-fg-color;

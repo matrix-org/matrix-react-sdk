@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, {RefObject, useContext, useRef, useState} from "react";
-import {EventType} from "matrix-js-sdk/src/@types/event";
+import {EventType, RoomType} from "matrix-js-sdk/src/@types/event";
 import {Room} from "matrix-js-sdk/src/models/room";
 
 import MatrixClientContext from "../../contexts/MatrixClientContext";
@@ -48,7 +48,7 @@ import {SetRightPanelPhasePayload} from "../../dispatcher/payloads/SetRightPanel
 import {useStateArray} from "../../hooks/useStateArray";
 import SpacePublicShare from "../views/spaces/SpacePublicShare";
 import {showAddExistingRooms, showCreateNewRoom, shouldShowSpaceSettings} from "../../utils/space";
-import {HierarchyLevel, ISpaceSummaryEvent, ISpaceSummaryRoom, showRoom} from "./SpaceRoomDirectory";
+import {HierarchyLevel, ISpaceSummaryEvent, ISpaceSummaryRoom} from "./SpaceRoomDirectory";
 import {useAsyncMemo} from "../../hooks/useAsyncMemo";
 import {EnhancedMap} from "../../utils/maps";
 import AutoHideScrollbar from "./AutoHideScrollbar";
@@ -161,7 +161,7 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
         </AccessibleButton>;
     }
 
-    const [roomsMap, relations] = useAsyncMemo(async () => {
+    const [roomsMap, relations, numRooms] = useAsyncMemo(async () => {
         try {
             const data = await cli.getSpaceSummary(space.roomId, undefined, true);
 
@@ -173,7 +173,8 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
             });
 
             const roomsMap = new Map<string, ISpaceSummaryRoom>(data.rooms.map(r => [r.room_id, r]));
-            return [roomsMap, parentChildRelations];
+            const numRooms = data.rooms.filter(r => r.room_type !== RoomType.Space).length;
+            return [roomsMap, parentChildRelations, numRooms];
         } catch (e) {
             console.error(e); // TODO
         }
@@ -186,7 +187,7 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
         previewRooms = <AutoHideScrollbar className="mx_SpaceRoomDirectory_list">
             <div className="mx_SpaceRoomDirectory_roomCount">
                 <h3>{_t("Rooms")}</h3>
-                <span>{ roomsMap.size }</span>
+                <span>{ numRooms }</span>
             </div>
             <HierarchyLevel
                 spaceId={space.roomId}
@@ -194,12 +195,6 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
                 editing={false}
                 relations={relations}
                 parents={new Set()}
-                onPreviewClick={roomId => {
-                    showRoom(roomsMap.get(roomId), false);
-                }}
-                onJoinClick={roomId => {
-                    showRoom(roomsMap.get(roomId), true);
-                }}
             />
         </AutoHideScrollbar>;
     }
@@ -212,6 +207,12 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
                     const tags = { name: () => <h1>{ name }</h1> };
                     if (myMembership === "invite") {
                         return _t("You have been invited to <name/>", {}, tags) as JSX.Element;
+                    } else if (shouldShowSpaceSettings(cli, space)) {
+                        if (space.getJoinRule() === "public") {
+                            return _t("Your public space <name/>", {}, tags) as JSX.Element;
+                        } else {
+                            return _t("Your private space <name/>", {}, tags) as JSX.Element;
+                        }
                     }
                     return _t("Welcome to <name/>", {}, tags) as JSX.Element;
                 }}

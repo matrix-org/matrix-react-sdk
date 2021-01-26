@@ -17,11 +17,11 @@ limitations under the License.
 import React, {useMemo, useState} from "react";
 import Room from "matrix-js-sdk/src/models/room";
 import MatrixEvent from "matrix-js-sdk/src/models/event";
-import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
+import {EventType, RoomType} from "matrix-js-sdk/src/@types/event";
 
 import {MatrixClientPeg} from "../../MatrixClientPeg";
 import dis from "../../dispatcher/dispatcher";
-import { _t } from "../../languageHandler";
+import {_t} from "../../languageHandler";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import BaseDialog from "../views/dialogs/BaseDialog";
 import FormButton from "../views/elements/FormButton";
@@ -115,26 +115,38 @@ const RoomTile = ({ room, event, editing, onRemoveFromSpaceClick, onPreviewClick
         name: room.name,
     };
 
+    // TODO consider event for both inSpace (via) && auto_join
+    // send back to top level event contents/state keys etc to update on `Save`
+    // uniq keyed by Parent ID + Child ID
+
     const cli = MatrixClientPeg.get();
     const myMembership = cli.getRoom(room.room_id)?.getMyMembership();
 
     let actions;
-    if (editing && event) {
+    if (editing) {
+        if (event) {
+            actions = <React.Fragment>
+                <FormButton kind="danger" onClick={onRemoveFromSpaceClick} label={_t("Remove from Space")} />
+                <StyledCheckbox
+                    checked={!!event.getContent().auto_join}
+                    onChange={() => {}}
+                />
+            </React.Fragment>
+        } else {
+            actions = <span className="mx_SpaceRoomDirectory_roomTile_actionsText">
+                { _t("No permissions")}
+            </span>;
+        }
+        // TODO if editing && !event then user does not have permission, show this
         // TODO check for permissions
         // TODO add checkybox
-        actions = <React.Fragment>
-            <FormButton kind="danger" onClick={onRemoveFromSpaceClick} label={_t("Remove from Space")} />
-            <StyledCheckbox
-                checked={event.getContent().auto_join}
-                onChange={() => {}}
-            />
-        </React.Fragment>
+        // TODO confirm remove from space click behaviour here
     } else {
         if (myMembership === "join") {
-            actions = <span className="mx_SpaceRoomDirectory_roomTile_alreadyJoined">
-                { _t("You're in this room ")}
+            actions = <span className="mx_SpaceRoomDirectory_roomTile_actionsText">
+                { _t("You're in this room")}
             </span>;
-        } else {
+        } else if (onPreviewClick && onJoinClick) {
             actions = <React.Fragment>
                 <AccessibleButton onClick={onPreviewClick} kind="link">
                     { _t("Preview") }
@@ -191,7 +203,26 @@ export const showRoom = (room: ISpaceSummaryRoom, autoJoin = false) => {
     });
 };
 
-export const HierarchyLevel = ({ spaceId, rooms, editing, relations, parents, onPreviewClick, onJoinClick }) => {
+interface IHierarchyLevelProps {
+    spaceId: string;
+    rooms: Map<string, ISpaceSummaryRoom>;
+    editing?: boolean;
+    relations: EnhancedMap<string, string[]>;
+    parents: Set<string>;
+    onRemoveFromSpaceClick?(roomId: string): void;
+    onPreviewClick?(roomId: string): void;
+    onJoinClick?(roomId: string): void;
+}
+
+export const HierarchyLevel = ({
+    spaceId,
+    rooms,
+    editing,
+    relations,
+    parents,
+    onPreviewClick,
+    onJoinClick,
+}: IHierarchyLevelProps) => {
     const cli = MatrixClientPeg.get();
     const space = cli.getRoom(spaceId);
     const [subspaces, childRooms] = relations.get(spaceId).reduce((result, roomId: string) => {
@@ -204,6 +235,8 @@ export const HierarchyLevel = ({ spaceId, rooms, editing, relations, parents, on
     // TODO this is broken - as a space may have subspaces we still need to show
     // if (!childRooms.length) return null;
 
+    const userId = cli.getUserId();
+
     const newParents = new Set(parents).add(spaceId);
     return <React.Fragment>
         {
@@ -211,17 +244,19 @@ export const HierarchyLevel = ({ spaceId, rooms, editing, relations, parents, on
                 <RoomTile
                     key={roomId}
                     room={rooms.get(roomId)}
-                    event={space?.currentState.getStateEvents(EventType.SpaceChild, roomId)}
+                    event={space?.currentState.maySendStateEvent(EventType.SpaceChild, userId)
+                        ? space?.currentState.getStateEvents(EventType.SpaceChild, roomId)
+                        : undefined}
                     editing={editing}
                     onRemoveFromSpaceClick={() => {
                         console.log("@@ remove room from space", roomId);
                     }}
-                    onPreviewClick={() => {
+                    onPreviewClick={onPreviewClick ?() => {
                         onPreviewClick(roomId);
-                    }}
-                    onJoinClick={() => {
+                    } : undefined}
+                    onJoinClick={onJoinClick ? () => {
                         onJoinClick(roomId);
-                    }}
+                    } : undefined}
                 />
             ))
         }
@@ -314,11 +349,14 @@ const SpaceRoomDirectory: React.FC<IProps> = ({ space, initialText = "", onFinis
     const roomsMap = useMemo(() => {
         if (!rooms) return null;
         const lcQuery = query.toLowerCase();
-        return new Map<string, ISpaceSummaryRoom>(rooms.filter(r => {
+
+        const filteredRooms = rooms.filter(r => {
             return r.room_type === RoomType.Space // always include spaces to allow filtering of sub-space rooms
                 || r.name?.toLowerCase().includes(lcQuery)
                 || r.topic?.toLowerCase().includes(lcQuery);
-        }).map(r => [r.room_id, r]));
+        });
+
+        return new Map<string, ISpaceSummaryRoom>(filteredRooms.map(r => [r.room_id, r]));
         // const root = rooms.get(space.roomId);
     }, [rooms, query]);
 
