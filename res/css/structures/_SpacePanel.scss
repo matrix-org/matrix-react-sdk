@@ -86,6 +86,9 @@ $activeStripeSize: 4px;
             max-width: 150px;
             text-overflow: ellipsis;
             overflow: hidden;
+
+            font-size: $font-14px;
+            line-height: $font-18px;
         }
 
         .mx_SpaceButton_toggleCollapse {
