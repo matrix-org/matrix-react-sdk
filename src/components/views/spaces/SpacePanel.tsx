@@ -23,6 +23,7 @@ import RoomAvatar from "../avatars/RoomAvatar";
 import {useContextMenu} from "../../structures/ContextMenu";
 import SpaceCreateMenu from "./SpaceCreateMenu";
 import {SpaceItem} from "./SpaceTreeLevel";
+import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import {useEventEmitter} from "../../../hooks/useEventEmitter";
 import SpaceStore, {HOME_SPACE, UPDATE_SELECTED_SPACE, UPDATE_TOP_LEVEL_SPACES} from "../../../stores/SpaceStore";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
@@ -85,6 +86,7 @@ const SpacePanel = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<void>();
     const [spaces, activeSpace] = useSpaces();
+    const [isPanelCollapsed, setPanelCollapsed] = useState(true);
 
     const newClasses = classNames("mx_SpaceButton_new", {
         mx_SpaceButton_newCancel: menuDisplayed,
@@ -157,11 +159,12 @@ const SpacePanel = () => {
     };
 
     const activeSpaces = activeSpace ? [activeSpace] : [];
+    const expandCollapseButtonTitle = isPanelCollapsed ? _t("Expand space panel") : _t("Collapse space panel");
     // TODO drag and drop for re-arranging order
     return <RovingTabIndexProvider handleHomeEnd={true} onKeyDown={onKeyDown}>
         {({onKeyDownHandler}) => (
             <div className="mx_SpacePanel" onKeyDown={onKeyDownHandler}>
-                <AutoHideScrollbar>
+                <AutoHideScrollbar className="mx_SpacePanel_spaceTreeWrapper">
                     <ul className="mx_SpaceTreeLevel">
                         <li className="mx_SpaceItem">
                             <SpaceButton
@@ -172,7 +175,13 @@ const SpacePanel = () => {
                                 notificationState={SpaceStore.instance.getNotificationState(HOME_SPACE)}
                             />
                         </li>
-                        { spaces.map(s => <SpaceItem key={s.roomId} space={s} activeSpaces={activeSpaces} />) }
+                        { spaces.map(s => <SpaceItem
+                            key={s.roomId}
+                            space={s}
+                            activeSpaces={activeSpaces}
+                            isPanelCollapsed={isPanelCollapsed}
+                            onExpand={() => setPanelCollapsed(false)}
+                        />) }
                     </ul>
                     <div className="mx_SpacePanel_newWrapper">
                         <SpaceButton
@@ -182,6 +191,11 @@ const SpacePanel = () => {
                         />
                     </div>
                 </AutoHideScrollbar>
+                <AccessibleTooltipButton
+                    className={classNames("mx_SpacePanel_toggleCollapse", {expanded: !isPanelCollapsed})}
+                    onClick={evt => setPanelCollapsed(!isPanelCollapsed)}
+                    title={expandCollapseButtonTitle}
+                />
 
                 { contextMenu }
             </div>
