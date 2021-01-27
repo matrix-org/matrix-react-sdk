@@ -196,7 +196,6 @@ const SpacePanel = () => {
                     onClick={evt => setPanelCollapsed(!isPanelCollapsed)}
                     title={expandCollapseButtonTitle}
                 />
-
                 { contextMenu }
             </div>
         )}
