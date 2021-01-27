@@ -33,11 +33,15 @@ limitations under the License.
         display: flex;
 
         .mx_BaseAvatar {
-            margin-right: 16px;
+            display: inline-flex;
+            margin: 5px 16px 5px 5px;
+            vertical-align: middle;
         }
 
         .mx_BaseAvatar_image {
             border-radius: 8px;
+            margin: 0;
+            vertical-align: unset;
         }
 
         > div {
