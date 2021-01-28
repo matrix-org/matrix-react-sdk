@@ -252,9 +252,9 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         const oldFilteredRooms = this.spaceFilteredRooms;
         this.spaceFilteredRooms = new Map();
 
-        // put all invites (rooms & spaces) in the Home Space only
-        const invites = this.matrixClient.getRooms().filter(r => r.isSpaceRoom() && r.getMyMembership() === "invite");
-        this.spaceFilteredRooms.set(HOME_SPACE, new Set<string>(invites.map(space => space.roomId)));
+        // put all invites (rooms & spaces) in the Home Space
+        const invites = this.matrixClient.getRooms().filter(r => r.getMyMembership() === "invite");
+        this.spaceFilteredRooms.set(HOME_SPACE, new Set<string>(invites.map(room => room.roomId)));
 
         visibleRooms.forEach(room => {
             if (this.showInHomeSpace(room)) {
