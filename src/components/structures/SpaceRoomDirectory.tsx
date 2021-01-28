@@ -75,17 +75,19 @@ interface ISubspaceProps {
 }
 
 const SubSpace: React.FC<ISubspaceProps> = ({ space, editing, event, onRemoveFromSpaceClick, children }) => {
+    const name = space.name ?? space.canonical_alias ?? space.aliases?.[0] ?? _t("Unnamed Space");
+
     const oobData = {
         roomId: space.room_id,
         avatarUrl: space.avatar_url,
-        name: space.name,
+        name,
     };
 
     // TODO add preview/join/already in for subspaces
     return <div className="mx_SpaceRoomDirectory_subspace">
         <div className="mx_SpaceRoomDirectory_subspace_info">
             <RoomAvatar oobData={oobData} width={24} height={24} />
-            { space.name }
+            { name }
 
             {/*<FormButton kind="danger" onClick={onRemoveFromSpaceClick} label={_t("Remove from Space")} />
             <StyledCheckbox
@@ -109,10 +111,12 @@ interface IRoomTileProps {
 }
 
 const RoomTile = ({ room, event, editing, onRemoveFromSpaceClick, onPreviewClick, onJoinClick }: IRoomTileProps) => {
+    const name = room.name ?? room.canonical_alias ?? room.aliases?.[0] ?? _t("Unnamed Room");
+
     const oobData = {
         roomId: room.room_id,
         avatarUrl: room.avatar_url,
-        name: room.name,
+        name,
     };
 
     // TODO consider event for both inSpace (via) && auto_join
@@ -161,7 +165,7 @@ const RoomTile = ({ room, event, editing, onRemoveFromSpaceClick, onPreviewClick
 
         <div className="mx_SpaceRoomDirectory_roomTile_info">
             <div className="mx_SpaceRoomDirectory_roomTile_name">
-                { room.name }
+                { name }
             </div>
             <div className="mx_SpaceRoomDirectory_roomTile_topic">
                 { room.topic }
