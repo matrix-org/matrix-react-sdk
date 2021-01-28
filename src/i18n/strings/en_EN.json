@@ -2548,6 +2548,7 @@
     "Your private space <name/>": "Your private space <name/>",
     "Welcome to <name/>": "Welcome to <name/>",
     "%(count)s members|other": "%(count)s members",
+    "%(count)s members|one": "%(count)s member",
     "#general": "#general",
     "#random": "#random",
     "#support": "#support",
