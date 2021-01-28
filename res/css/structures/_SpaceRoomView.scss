@@ -72,7 +72,8 @@ $SpaceRoomViewInnerWidth: 428px;
     .mx_SpaceRoomView_landing {
         overflow-y: auto;
 
-        .mx_BaseAvatar_image {
+        > .mx_BaseAvatar_image,
+        > .mx_BaseAvatar > .mx_BaseAvatar_image {
             border-radius: 12px;
         }
 
