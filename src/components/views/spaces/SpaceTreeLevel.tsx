@@ -27,6 +27,8 @@ interface IItemProps {
     space?: Room;
     activeSpaces: Room[];
     isNested?: boolean;
+    isPanelCollapsed?: boolean;
+    onExpand?: Function;
 }
 
 interface IItemState {
@@ -43,6 +45,9 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
     }
 
     toggleCollapse(evt) {
+        if (this.props.onExpand && this.state.collapsed) {
+            this.props.onExpand();
+        }
         this.setState({collapsed: !this.state.collapsed});
         // don't bubble up so encapsulating button for space
         // doesn't get triggered
@@ -52,18 +57,22 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
     render() {
         const {space, activeSpaces, isNested} = this.props;
 
+        const forceCollapsed = this.props.isPanelCollapsed;
+        const isNarrow = this.props.isPanelCollapsed;
+        const collapsed = this.state.collapsed || forceCollapsed;
+
         const childSpaces = SpaceStore.instance.getChildSpaces(space.roomId);
         const isActive = activeSpaces.includes(space);
         const itemClasses = classNames({
             "mx_SpaceItem": true,
-            "collapsed": this.state.collapsed,
+            "collapsed": collapsed,
             "hasSubSpaces": childSpaces && childSpaces.length,
         });
         const classes = classNames("mx_SpaceButton", {
             mx_SpaceButton_active: isActive,
         });
         const notificationState = SpaceStore.instance.getNotificationState(space.roomId);
-        const childItems = childSpaces && !this.state.collapsed ? <SpaceTreeLevel
+        const childItems = childSpaces && !collapsed ? <SpaceTreeLevel
             spaces={childSpaces}
             activeSpaces={activeSpaces}
             isNested={true}
@@ -89,7 +98,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
                 >
                     { toggleCollapseButton }
                     <RoomAvatar width={avatarSize} height={avatarSize} room={space} />
-                    <span className="mx_SpaceButton_name">{ space.name }</span>
+                    { isNarrow ? null : <span className="mx_SpaceButton_name">{ space.name }</span> }
                     { notifBadge }
                 </RovingAccessibleButton>
                 { childItems }
