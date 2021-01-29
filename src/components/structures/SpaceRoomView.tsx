@@ -24,6 +24,7 @@ import {_t} from "../../languageHandler";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import RoomName from "../views/elements/RoomName";
 import RoomTopic from "../views/elements/RoomTopic";
+import InlineSpinner from "../views/elements/InlineSpinner";
 import FormButton from "../views/elements/FormButton";
 import {inviteMultipleToRoom, showSpaceInviteDialog} from "../../RoomInvite";
 import {useRoomMembers} from "../../hooks/useRoomMembers";
@@ -48,7 +49,7 @@ import {SetRightPanelPhasePayload} from "../../dispatcher/payloads/SetRightPanel
 import {useStateArray} from "../../hooks/useStateArray";
 import SpacePublicShare from "../views/spaces/SpacePublicShare";
 import {showAddExistingRooms, showCreateNewRoom, shouldShowSpaceSettings} from "../../utils/space";
-import {HierarchyLevel, ISpaceSummaryEvent, ISpaceSummaryRoom} from "./SpaceRoomDirectory";
+import {HierarchyLevel, ISpaceSummaryEvent, ISpaceSummaryRoom, showRoom} from "./SpaceRoomDirectory";
 import {useAsyncMemo} from "../../hooks/useAsyncMemo";
 import {EnhancedMap} from "../../utils/maps";
 import AutoHideScrollbar from "./AutoHideScrollbar";
@@ -154,9 +155,9 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
         </AccessibleButton>;
     }
 
-    const [roomsMap, relations, numRooms] = useAsyncMemo(async () => {
+    const [loading, roomsMap, relations, numRooms] = useAsyncMemo(async () => {
         try {
-            const data = await cli.getSpaceSummary(space.roomId, undefined, true);
+            const data = await cli.getSpaceSummary(space.roomId, undefined, myMembership !== "join");
 
             const parentChildRelations = new EnhancedMap<string, string[]>();
             data.events.map((ev: ISpaceSummaryEvent) => {
@@ -167,19 +168,19 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
 
             const roomsMap = new Map<string, ISpaceSummaryRoom>(data.rooms.map(r => [r.room_id, r]));
             const numRooms = data.rooms.filter(r => r.room_type !== RoomType.Space).length;
-            return [roomsMap, parentChildRelations, numRooms];
+            return [false, roomsMap, parentChildRelations, numRooms];
         } catch (e) {
             console.error(e); // TODO
         }
 
-        return [];
-    }, [space], []);
+        return [false];
+    }, [space], [true]);
 
     let previewRooms;
     if (roomsMap) {
         previewRooms = <AutoHideScrollbar className="mx_SpaceRoomDirectory_list">
             <div className="mx_SpaceRoomDirectory_roomCount">
-                <h3>{_t("Rooms")}</h3>
+                <h3>{ myMembership === "join" ? _t("Rooms") : _t("Default Rooms")}</h3>
                 <span>{ numRooms }</span>
             </div>
             <HierarchyLevel
@@ -193,6 +194,10 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
                 }}
             />
         </AutoHideScrollbar>;
+    } else if (loading) {
+        previewRooms = <InlineSpinner />;
+    } else {
+        previewRooms = <p>{_t("Your server does not support showing space hierarchies.")}</p>;
     }
 
     return <div className="mx_SpaceRoomView_landing">
@@ -203,7 +208,7 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
                     const tags = { name: () => <div className="mx_SpaceRoomView_landing_nameRow">
                         <h1>{ name }</h1>
                         <RoomMemberCount room={space}>
-                            {(count) => (
+                            {(count) => count > 0 ? (
                                 <AccessibleButton
                                     className="mx_SpaceRoomView_landing_memberCount"
                                     kind="link"
@@ -217,20 +222,24 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
                                 >
                                     { _t("%(count)s members", { count }) }
                                 </AccessibleButton>
-                            )}
+                            ) : null}
                         </RoomMemberCount>
                     </div> };
                     if (myMembership === "invite") {
                         const inviteSender = space.getMember(userId)?.events.member?.getSender();
                         const inviter = inviteSender && space.getMember(inviteSender);
 
-                        if (inviter) {
+                        if (inviteSender) {
                             return _t("<inviter/> invited you to to <name/>", {}, {
                                 name: tags.name,
-                                inviter: () => <span className="mx_SpaceRoomView_landing_inviter">
-                                    <MemberAvatar member={inviter} width={26} height={26} viewUserOnClick={true} />
-                                    { inviter.name }
-                                </span>,
+                                inviter: () => inviter
+                                    ? <span className="mx_SpaceRoomView_landing_inviter">
+                                        <MemberAvatar member={inviter} width={26} height={26} viewUserOnClick={true} />
+                                        { inviter.name }
+                                    </span>
+                                    : <span className="mx_SpaceRoomView_landing_inviter">
+                                        { inviteSender }
+                                    </span>,
                             }) as JSX.Element;
                         } else {
                             return _t("You have been invited to <name/>", {}, tags) as JSX.Element;
