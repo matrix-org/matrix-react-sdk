@@ -65,8 +65,6 @@ interface IProps {
 interface IState {
     phase: Phase;
     showRightPanel: boolean;
-    rightPanelPhase?: RightPanelPhase;
-    rightPanelArgs?: any;
 }
 
 enum Phase {
@@ -77,11 +75,6 @@ enum Phase {
     PrivateInvite,
     PrivateCreateRooms,
     PrivateExistingRooms,
-}
-
-enum RightPanelPhase {
-    MemberList,
-    MemberInfo,
 }
 
 const RoomMemberCount = ({ room, children }) => {
@@ -484,8 +477,6 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
         this.state = {
             phase,
             showRightPanel: RightPanelStore.getSharedInstance().isOpenForRoom,
-            rightPanelPhase: null,
-            rightPanelArgs: null,
         };
 
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
