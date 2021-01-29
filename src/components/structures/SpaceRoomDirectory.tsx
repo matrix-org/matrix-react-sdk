@@ -105,8 +105,8 @@ interface IRoomTileProps {
     room: ISpaceSummaryRoom;
     event?: MatrixEvent;
     editing?: boolean;
+    onPreviewClick(): void;
     onRemoveFromSpaceClick?(): void;
-    onPreviewClick?(): void;
     onJoinClick?(): void;
 }
 
@@ -150,7 +150,7 @@ const RoomTile = ({ room, event, editing, onRemoveFromSpaceClick, onPreviewClick
             actions = <span className="mx_SpaceRoomDirectory_roomTile_actionsText">
                 { _t("You're in this room")}
             </span>;
-        } else if (onPreviewClick && onJoinClick) {
+        } else if (onJoinClick) {
             actions = <React.Fragment>
                 <AccessibleButton onClick={onPreviewClick} kind="link">
                     { _t("Preview") }
@@ -160,7 +160,7 @@ const RoomTile = ({ room, event, editing, onRemoveFromSpaceClick, onPreviewClick
         }
     }
 
-    return <div className="mx_SpaceRoomDirectory_roomTile">
+    return <AccessibleButton className="mx_SpaceRoomDirectory_roomTile" onClick={onPreviewClick}>
         <RoomAvatar oobData={oobData} height={32} width={32} />
 
         <div className="mx_SpaceRoomDirectory_roomTile_info">
@@ -178,10 +178,10 @@ const RoomTile = ({ room, event, editing, onRemoveFromSpaceClick, onPreviewClick
         <div className="mx_SpaceRoomDirectory_roomTile_actions">
             { actions }
         </div>
-    </div>;
+    </AccessibleButton>;
 };
 
-export const showRoom = (room: ISpaceSummaryRoom, autoJoin = false) => {
+export const showRoom = (room: ISpaceSummaryRoom, viaServers?: string[], autoJoin = false) => {
     // Don't let the user view a room they won't be able to either peek or join:
     // fail earlier so they don't have to click back to the directory.
     if (MatrixClientPeg.get().isGuest()) {
@@ -199,6 +199,7 @@ export const showRoom = (room: ISpaceSummaryRoom, autoJoin = false) => {
         _type: "room_directory", // instrumentation
         room_alias: roomAlias,
         room_id: room.room_id,
+        via_servers: viaServers,
         oob_data: {
             avatarUrl: room.avatar_url,
             // XXX: This logic is duplicated from the JS SDK which would normally decide what the name is.
@@ -213,9 +214,9 @@ interface IHierarchyLevelProps {
     editing?: boolean;
     relations: EnhancedMap<string, string[]>;
     parents: Set<string>;
+    onPreviewClick(roomId: string): void;
     onRemoveFromSpaceClick?(roomId: string): void;
-    onPreviewClick?(roomId: string): void;
-    onJoinClick?(roomId: string): void;
+    onJoinClick?(roomId: string, parents: Set<string>): void;
 }
 
 export const HierarchyLevel = ({
@@ -255,11 +256,11 @@ export const HierarchyLevel = ({
                     onRemoveFromSpaceClick={() => {
                         console.log("@@ remove room from space", roomId);
                     }}
-                    onPreviewClick={onPreviewClick ?() => {
+                    onPreviewClick={() => {
                         onPreviewClick(roomId);
-                    } : undefined}
+                    }}
                     onJoinClick={onJoinClick ? () => {
-                        onJoinClick(roomId);
+                        onJoinClick(roomId, newParents);
                     } : undefined}
                 />
             ))
@@ -279,7 +280,7 @@ export const HierarchyLevel = ({
                         onPreviewClick(roomId);
                     }}
                     onJoinClick={() => {
-                        onJoinClick(roomId);
+                        onJoinClick(roomId, newParents);
                     }}
                 >
                     <HierarchyLevel
@@ -332,17 +333,23 @@ const SpaceRoomDirectory: React.FC<IProps> = ({ space, initialText = "", onFinis
         }
     }
 
-    const [rooms, relations] = useAsyncMemo<[ISpaceSummaryRoom[]?, EnhancedMap<string, string[]>?]>(async () => {
+    const [rooms, relations, viaMap] = useAsyncMemo(async () => {
         try {
             const data = await cli.getSpaceSummary(space.roomId);
 
             const parentChildRelations = new EnhancedMap<string, string[]>();
+            const viaMap = new EnhancedMap<string, Set<string>>();
             data.events.map((ev: ISpaceSummaryEvent) => {
                 if (ev.type === EventType.SpaceChild) {
                     parentChildRelations.getOrCreate(ev.room_id, []).push(ev.state_key);
                 }
+                if (Array.isArray(ev.content["via"])) {
+                    const set = viaMap.getOrCreate(ev.state_key, new Set());
+                    ev.content["via"].forEach(via => set.add(via));
+                }
             });
-            return [data.rooms, parentChildRelations];
+
+            return [data.rooms, parentChildRelations, viaMap];
         } catch (e) {
             console.error(e); // TODO
         }
@@ -388,11 +395,22 @@ const SpaceRoomDirectory: React.FC<IProps> = ({ space, initialText = "", onFinis
                 relations={relations}
                 parents={new Set()}
                 onPreviewClick={roomId => {
-                    showRoom(roomsMap.get(roomId), false);
+                    showRoom(roomsMap.get(roomId), Array.from(viaMap.get(roomId) || []), false);
                     onFinished();
                 }}
-                onJoinClick={roomId => {
-                    showRoom(roomsMap.get(roomId), true);
+                onJoinClick={(roomId, parents) => {
+                    showRoom(roomsMap.get(roomId), Array.from(viaMap.get(roomId) || []), true);
+                    // TODO remove this total bodge
+                    if (parents?.size) {
+                        parents.forEach(parentRoomId => {
+                            if (cli.getRoom(parentRoomId)?.getMyMembership() === "join") return;
+                            const room = roomsMap.get(parentRoomId);
+                            const address = room.canonical_alias || room.aliases?.[0] || parentRoomId;
+                            cli.joinRoom(address, {
+                                viaServers: viaMap.has(parentRoomId) ? Array.from(viaMap.get(parentRoomId)) : undefined,
+                            });
+                        });
+                    }
                     onFinished();
                 }}
             />

@@ -188,6 +188,9 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
                 editing={false}
                 relations={relations}
                 parents={new Set()}
+                onPreviewClick={roomId => {
+                    showRoom(roomsMap.get(roomId), [], false); // TODO
+                }}
             />
         </AutoHideScrollbar>;
     }

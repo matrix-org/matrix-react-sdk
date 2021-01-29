@@ -142,6 +142,10 @@ limitations under the License.
         min-height: 76px;
         box-sizing: border-box;
 
+        &:hover {
+            background-color: rgba(141, 151, 165, 0.1);
+        }
+
         .mx_BaseAvatar {
             margin-right: 16px;
             margin-top: 6px;
