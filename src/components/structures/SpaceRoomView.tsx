@@ -236,7 +236,7 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
                         const inviter = inviteSender && space.getMember(inviteSender);
 
                         if (inviteSender) {
-                            return _t("<inviter/> invited you to to <name/>", {}, {
+                            return _t("<inviter/> invited you to <name/>", {}, {
                                 name: tags.name,
                                 inviter: () => inviter
                                     ? <span className="mx_SpaceRoomView_landing_inviter">
