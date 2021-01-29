@@ -78,6 +78,13 @@ $activeStripeSize: 4px;
         & > .mx_SpaceTreeLevel {
             display: none;
         }
+
+        .mx_SpaceButton {
+            .mx_NotificationBadge {
+                right: -4px;
+                top: -4px;
+            }
+        }
     }
 
     .mx_SpaceItem:not(.hasSubSpaces) > .mx_SpaceButton {
@@ -190,15 +197,6 @@ $activeStripeSize: 4px;
             position: absolute;
             right: -8px;
             top: 8px;
-        }
-    }
-
-    .mx_SpaceItem.collapsed {
-        .mx_SpaceButton {
-            .mx_NotificationBadge {
-                right: -4px;
-                top: -4px;
-            }
         }
     }
 
