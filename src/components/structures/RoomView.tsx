@@ -769,6 +769,9 @@ export default class RoomView extends React.Component<IProps, IState> {
                     });
                 }
                 break;
+            case 'focus_search':
+                this.onSearchClick();
+                break;
         }
     };
 
