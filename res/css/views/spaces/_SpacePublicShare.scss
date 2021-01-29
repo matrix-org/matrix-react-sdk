@@ -16,8 +16,7 @@ limitations under the License.
 
 .mx_SpacePublicShare {
     .mx_AccessibleButton {
-        background: rgba(244, 246, 250, 0.91);
-        border: 1px solid $input-darker-bg-color;
+        border: 1px solid $space-button-outline-color;
         box-sizing: border-box;
         border-radius: 8px;
         padding: 12px 24px 12px 52px;
@@ -31,6 +30,10 @@ limitations under the License.
         > span {
             color: #368bd6;
             margin-left: auto;
+        }
+
+        &:hover {
+            background-color: rgba(141, 151, 165, 0.1);
         }
 
         &::before {

@@ -108,13 +108,13 @@ limitations under the License.
 
     .mx_SpaceRoomDirectory_subspace {
         margin-top: 8px;
-        font-weight: $font-semi-bold;
-        font-size: $font-12px;
-        line-height: $font-15px;
-        color: $secondary-fg-color;
 
         .mx_SpaceRoomDirectory_subspace_info {
             margin-bottom: 8px;
+            color: $secondary-fg-color;
+            font-weight: $font-semi-bold;
+            font-size: $font-12px;
+            line-height: $font-15px;
 
             .mx_BaseAvatar {
                 margin-right: 12px;
@@ -128,7 +128,7 @@ limitations under the License.
 
         .mx_SpaceRoomDirectory_subspace_children {
             margin-left: 12px;
-            border-left: 2px solid $input-darker-bg-color;
+            border-left: 2px solid $space-button-outline-color;
             padding-left: 24px;
         }
     }
@@ -136,7 +136,7 @@ limitations under the License.
     .mx_SpaceRoomDirectory_roomTile {
         padding: 16px;
         border-radius: 8px;
-        border: 1px solid $input-darker-bg-color;
+        border: 1px solid $space-button-outline-color;
         margin: 8px 0 16px;
         display: flex;
         min-height: 76px;

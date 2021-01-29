@@ -146,7 +146,7 @@ $SpaceRoomViewInnerWidth: 428px;
                 box-sizing: border-box;
                 padding: 72px 16px 0;
                 border-radius: 12px;
-                border: 1px solid rgba(141, 151, 165, 0.3);
+                border: 1px solid $space-button-outline-color;
                 margin-right: 28px;
                 margin-bottom: 28px;
                 font-size: $font-14px;
@@ -159,7 +159,6 @@ $SpaceRoomViewInnerWidth: 428px;
 
                 &:hover {
                     background-color: rgba(141, 151, 165, 0.1);
-                    border-color: rgba(141, 151, 165, 0.1);
                 }
 
                 &::before, &::after {
@@ -234,7 +233,7 @@ $SpaceRoomViewInnerWidth: 428px;
         .mx_RadioButton {
             width: $SpaceRoomViewInnerWidth;
             border-radius: 8px;
-            border: 1px solid $input-darker-bg-color;
+            border: 1px solid $space-button-outline-color;
             padding: 16px 16px 16px 72px;
             margin-top: 36px;
             cursor: pointer;
