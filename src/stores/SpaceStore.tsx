@@ -240,8 +240,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     private onRoomUpdate = (room: Room) => {
         if (this.showInHomeSpace(room)) {
             this.spaceFilteredRooms.get(HOME_SPACE)?.add(room.roomId);
+            this.emit(HOME_SPACE);
         } else if (!this.orphanedRooms.has(room.roomId)) {
             this.spaceFilteredRooms.get(HOME_SPACE)?.delete(room.roomId);
+            this.emit(HOME_SPACE);
         }
     };
 
@@ -316,7 +318,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             this.onSpaceUpdate();
             this.emit(room.roomId);
         } else {
-            this.onRoomUpdate(room);
+            // this.onRoomUpdate(room);
+            this.onRoomsUpdate();
         }
     };
 

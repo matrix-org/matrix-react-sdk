@@ -75,7 +75,7 @@ interface ISubspaceProps {
 }
 
 const SubSpace: React.FC<ISubspaceProps> = ({ space, editing, event, onRemoveFromSpaceClick, children }) => {
-    const name = space.name ?? space.canonical_alias ?? space.aliases?.[0] ?? _t("Unnamed Space");
+    const name = space.name || space.canonical_alias || space.aliases?.[0] || _t("Unnamed Space");
 
     const oobData = {
         roomId: space.room_id,
@@ -111,7 +111,7 @@ interface IRoomTileProps {
 }
 
 const RoomTile = ({ room, event, editing, onRemoveFromSpaceClick, onPreviewClick, onJoinClick }: IRoomTileProps) => {
-    const name = room.name ?? room.canonical_alias ?? room.aliases?.[0] ?? _t("Unnamed Room");
+    const name = room.name || room.canonical_alias || room.aliases?.[0] || _t("Unnamed Room");
 
     const oobData = {
         roomId: room.room_id,

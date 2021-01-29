@@ -38,6 +38,7 @@ export class SpaceFilterCondition extends EventEmitter implements IFilterConditi
     }
 
     public isVisible(room: Room): boolean {
+        console.log("@@ isVisible", room.roomId, room.name, this.roomIds.has(room.roomId));
         return this.roomIds.has(room.roomId);
     }
 
@@ -46,7 +47,13 @@ export class SpaceFilterCondition extends EventEmitter implements IFilterConditi
         this.roomIds = SpaceStore.instance.getSpaceFilteredRoomIds(this.space);
 
         if (setHasDiff(beforeRoomIds, this.roomIds)) {
+            console.log("@@ onStoreUpdate FILTER_CHANGED");
+            // TODO figure out why this hack is needed!?
             this.emit(FILTER_CHANGED);
+            setTimeout(() => {
+                console.log("@@ onStoreUpdate FILTER_CHANGED re-emit");
+                this.emit(FILTER_CHANGED);
+            }, 500);
         }
     };
 
