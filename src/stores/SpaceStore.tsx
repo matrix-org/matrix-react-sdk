@@ -73,7 +73,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     // The list of rooms not present in any currently joined spaces
     private orphanedRooms = new Set<string>();
     // Map from room ID to set of spaces which list it as a child
-    private parentMap = new EnhancedMap<string, Set<Room>>();
+    private parentMap = new EnhancedMap<string, Set<string>>();
     // Map from space key to SpaceNotificationState instance representing that space
     private notificationStateMap = new Map<SpaceKey, SpaceNotificationState>();
     // Map from space key to Set of room IDs that should be shown as part of that space's filter
@@ -128,7 +128,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
     public getParents(roomId: string, canonicalOnly = false): Room[] {
         const room = this.matrixClient?.getRoom(roomId);
-        return room?.currentState.getStateEvent(EventType.SpaceParent)
+        return room?.currentState.getStateEvents(EventType.SpaceParent)
             .filter(ev => {
                 const content = ev.getContent();
                 if (!content?.via) return false;
@@ -176,10 +176,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
         // untested algorithm to handle full-cycles
         const detachedNodes = new Set<Room>(spaces);
-        // if the currently selected space no longer exists, remove its selection
-        if (this._activeSpace && detachedNodes.has(this._activeSpace)) {
-            this.setActiveSpace(null);
-        }
 
         const markTreeChildren = (rootSpace: Room, unseen: Set<Room>) => {
             const stack = [rootSpace];
@@ -220,6 +216,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.orphanedRooms = new Set(orphanedRooms);
         this.rootSpaces = rootSpaces;
         this.parentMap = backrefs;
+
+        // if the currently selected space no longer exists, remove its selection
+        if (this._activeSpace && detachedNodes.has(this._activeSpace)) {
+            this.setActiveSpace(null);
+        }
 
         this.onRoomsUpdate(); // TODO only do this if a change has happened
         this.emit(UPDATE_TOP_LEVEL_SPACES, this.spacePanelSpaces);
@@ -416,10 +417,17 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                     if (room.isSpaceRoom()) {
                         this.setActiveSpace(room);
                     } else if (!this.spaceFilteredRooms.get(this._activeSpace?.roomId || HOME_SPACE).has(room.roomId)) {
-                        const canonicalParent = this.getCanonicalParent(room.roomId);
-                        const space = canonicalParent || Array.from(this.parentMap.get(room.roomId) || [])[0];
-                        if (space) {
-                            this.setActiveSpace(space);
+                        // TODO maybe reverse these first 2 clauses once space panel active is fixed
+                        let parent = this.rootSpaces.find(s => this.spaceFilteredRooms.get(s.roomId)?.has(room.roomId));
+                        if (!parent) {
+                            parent = this.getCanonicalParent(room.roomId);
+                        }
+                        if (!parent) {
+                            const parents = Array.from(this.parentMap.get(room.roomId) || []);
+                            parent = parents.find(p => this.matrixClient.getRoom(p));
+                        }
+                        if (parent) {
+                            this.setActiveSpace(parent);
                         }
                     }
                 }
