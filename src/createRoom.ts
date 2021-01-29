@@ -183,7 +183,7 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
         opts.createOpts.initial_state.push({
             type: EventType.RoomHistoryVisibility,
             content: {
-                "history_visibility": opts.createOpts.visibility === Visibility.Public ? "world_readable" : "invited",
+                "history_visibility": opts.createOpts.preset === Preset.PublicChat ? "world_readable" : "invited",
             },
         });
     }
