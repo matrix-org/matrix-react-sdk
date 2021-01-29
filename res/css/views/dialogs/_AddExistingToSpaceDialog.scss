@@ -112,10 +112,14 @@ limitations under the License.
     }
 
     .mx_AddExistingToSpaceDialog_content {
-        margin-top: 24px;
+        .mx_AddExistingToSpaceDialog_noResults {
+            margin-top: 24px;
+        }
     }
 
     .mx_AddExistingToSpaceDialog_section {
+        margin-top: 24px;
+
         > h3 {
             margin: 0;
             color: $secondary-fg-color;

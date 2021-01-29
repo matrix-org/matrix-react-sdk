@@ -33,6 +33,7 @@ import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import {allSettled} from "../../../utils/promise";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import {calculateRoomVia} from "../../../utils/permalinks/Permalinks";
+import StyledCheckbox from "../elements/StyledCheckbox";
 
 interface IProps extends IDialogProps {
     matrixClient: MatrixClient;
@@ -40,15 +41,11 @@ interface IProps extends IDialogProps {
     onCreateRoomClick(cli: MatrixClient, space: Room): void;
 }
 
-const Entry = ({ room, selected, onToggle }) => {
+const Entry = ({ room, checked, onChange }) => {
     return <div className="mx_AddExistingToSpaceDialog_entry">
         <RoomAvatar room={room} height={32} width={32} />
         <span className="mx_AddExistingToSpaceDialog_entry_name">{ room.name }</span>
-        <FormButton
-            kind={selected ? "danger" : undefined}
-            label={selected ? _t("Remove") : _t("Add")}
-            onClick={onToggle}
-        />
+        <StyledCheckbox onChange={(e) => onChange(e.target.checked)} checked={checked} />
     </div>;
 };
 
@@ -136,16 +133,15 @@ const AddExistingToSpaceDialog: React.FC<IProps> = ({ matrixClient: cli, space, 
                 <div className="mx_AddExistingToSpaceDialog_section mx_AddExistingToSpaceDialog_section_spaces">
                     <h3>{ _t("Spaces") }</h3>
                     { spaces.map(space => {
-                        const selected = selectedToAdd.has(space);
                         return <Entry
                             key={space.roomId}
                             room={space}
-                            selected={selected}
-                            onToggle={() => {
-                                if (selected) {
-                                    selectedToAdd.delete(space);
-                                } else {
+                            checked={selectedToAdd.has(space)}
+                            onChange={(checked) => {
+                                if (checked) {
                                     selectedToAdd.add(space);
+                                } else {
+                                    selectedToAdd.delete(space);
                                 }
                                 setSelectedToAdd(new Set(selectedToAdd));
                             }}
@@ -158,16 +154,15 @@ const AddExistingToSpaceDialog: React.FC<IProps> = ({ matrixClient: cli, space, 
                 <div className="mx_AddExistingToSpaceDialog_section">
                     <h3>{ _t("Rooms") }</h3>
                     { rooms.map(room => {
-                        const selected = selectedToAdd.has(room);
                         return <Entry
                             key={room.roomId}
                             room={room}
-                            selected={selected}
-                            onToggle={() => {
-                                if (selected) {
-                                    selectedToAdd.delete(room);
-                                } else {
+                            checked={selectedToAdd.has(room)}
+                            onChange={(checked) => {
+                                if (checked) {
                                     selectedToAdd.add(room);
+                                } else {
+                                    selectedToAdd.delete(room);
                                 }
                                 setSelectedToAdd(new Set(selectedToAdd));
                             }}
@@ -176,7 +171,7 @@ const AddExistingToSpaceDialog: React.FC<IProps> = ({ matrixClient: cli, space, 
                 </div>
             ) : undefined }
 
-            { spaces.length + rooms.length < 1 ? <span>
+            { spaces.length + rooms.length < 1 ? <span className="mx_AddExistingToSpaceDialog_noResults">
                 { _t("No results") }
             </span> : undefined }
         </AutoHideScrollbar>
@@ -190,7 +185,7 @@ const AddExistingToSpaceDialog: React.FC<IProps> = ({ matrixClient: cli, space, 
             </span>
 
             <FormButton
-                label={busy ? _t("Adding rooms...") : _t("Add rooms")}
+                label={busy ? _t("Applying...") : _t("Apply")}
                 disabled={busy || selectedToAdd.size < 1}
                 onClick={async () => {
                     setBusy(true);
