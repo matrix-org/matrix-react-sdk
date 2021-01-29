@@ -52,6 +52,7 @@ import {HierarchyLevel, ISpaceSummaryEvent, ISpaceSummaryRoom} from "./SpaceRoom
 import {useAsyncMemo} from "../../hooks/useAsyncMemo";
 import {EnhancedMap} from "../../utils/maps";
 import AutoHideScrollbar from "./AutoHideScrollbar";
+import MemberAvatar from "../views/avatars/MemberAvatar";
 
 interface IProps {
     space: Room;
@@ -103,6 +104,7 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
     const cli = useContext(MatrixClientContext);
     const myMembership = useMyRoomMembership(space);
     const joinRule = space.getJoinRule();
+    const userId = cli.getUserId();
 
     let joinButtons;
     if (myMembership === "invite") {
@@ -117,8 +119,6 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
             <FormButton label={_t("Join")} onClick={onJoinButtonClicked} />
         </div>;
     }
-
-    const userId = cli.getUserId();
 
     let inviteButton;
     if (myMembership === "join" && space.canInvite(userId)) {
@@ -204,9 +204,41 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
         <div className="mx_SpaceRoomView_landing_name">
             <RoomName room={space}>
                 {(name) => {
-                    const tags = { name: () => <h1>{ name }</h1> };
+                    const tags = { name: () => <div className="mx_SpaceRoomView_landing_nameRow">
+                        <h1>{ name }</h1>
+                        <RoomMemberCount room={space}>
+                            {(count) => (
+                                <AccessibleButton
+                                    className="mx_SpaceRoomView_landing_memberCount"
+                                    kind="link"
+                                    onClick={() => {
+                                        defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
+                                            action: Action.SetRightPanelPhase,
+                                            phase: RightPanelPhases.RoomMemberList,
+                                            refireParams: { space },
+                                        });
+                                    }}
+                                >
+                                    { _t("%(count)s members", { count }) }
+                                </AccessibleButton>
+                            )}
+                        </RoomMemberCount>
+                    </div> };
                     if (myMembership === "invite") {
-                        return _t("You have been invited to <name/>", {}, tags) as JSX.Element;
+                        const inviteSender = space.getMember(userId)?.events.member?.getSender();
+                        const inviter = inviteSender && space.getMember(inviteSender);
+
+                        if (inviter) {
+                            return _t("<inviter/> invited you to to <name/>", {}, {
+                                name: tags.name,
+                                inviter: () => <span className="mx_SpaceRoomView_landing_inviter">
+                                    <MemberAvatar member={inviter} width={26} height={26} viewUserOnClick={true} />
+                                    { inviter.name }
+                                </span>,
+                            }) as JSX.Element;
+                        } else {
+                            return _t("You have been invited to <name/>", {}, tags) as JSX.Element;
+                        }
                     } else if (shouldShowSpaceSettings(cli, space)) {
                         if (space.getJoinRule() === "public") {
                             return _t("Your public space <name/>", {}, tags) as JSX.Element;
@@ -217,23 +249,6 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
                     return _t("Welcome to <name/>", {}, tags) as JSX.Element;
                 }}
             </RoomName>
-            <RoomMemberCount room={space}>
-                {(count) => (
-                    <AccessibleButton
-                        className="mx_SpaceRoomView_landing_memberCount"
-                        kind="link"
-                        onClick={() => {
-                            defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-                                action: Action.SetRightPanelPhase,
-                                phase: RightPanelPhases.RoomMemberList,
-                                refireParams: { space },
-                            });
-                        }}
-                    >
-                        { _t("%(count)s members", { count }) }
-                    </AccessibleButton>
-                )}
-            </RoomMemberCount>
         </div>
         <div className="mx_SpaceRoomView_landing_topic">
             <RoomTopic room={space} />

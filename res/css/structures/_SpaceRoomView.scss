@@ -78,12 +78,27 @@ $SpaceRoomViewInnerWidth: 428px;
         }
 
         .mx_SpaceRoomView_landing_name {
-            margin: 20px 0 16px;
+            margin: 24px 0 16px;
             font-size: $font-15px;
             color: $secondary-fg-color;
 
             > span {
                 display: inline-block;
+            }
+
+            .mx_SpaceRoomView_landing_nameRow {
+                margin-top: 12px;
+
+                > h1 {
+                    display: inline-block;
+                }
+            }
+
+            .mx_SpaceRoomView_landing_inviter {
+                .mx_BaseAvatar {
+                    margin-right: 4px;
+                    vertical-align: middle;
+                }
             }
 
             .mx_SpaceRoomView_landing_memberCount {

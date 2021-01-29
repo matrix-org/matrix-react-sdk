@@ -2544,6 +2544,7 @@
     "Accept Invite": "Accept Invite",
     "Invite people": "Invite people",
     "Add existing rooms & spaces": "Add existing rooms & spaces",
+    "<inviter/> invited you to to <name/>": "<inviter/> invited you to to <name/>",
     "You have been invited to <name/>": "You have been invited to <name/>",
     "Your public space <name/>": "Your public space <name/>",
     "Your private space <name/>": "Your private space <name/>",
