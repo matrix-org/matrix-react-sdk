@@ -54,6 +54,7 @@ import {useAsyncMemo} from "../../hooks/useAsyncMemo";
 import {EnhancedMap} from "../../utils/maps";
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import MemberAvatar from "../views/avatars/MemberAvatar";
+import {useStateToggle} from "../../hooks/useStateToggle";
 
 interface IProps {
     space: Room;
@@ -127,11 +128,16 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
 
     const canAddRooms = myMembership === "join" && space.currentState.maySendStateEvent(EventType.SpaceChild, userId);
 
+    const [_, forceUpdate] = useStateToggle(false); // TODO
+
     let addRoomButtons;
     if (canAddRooms) {
         addRoomButtons = <React.Fragment>
-            <AccessibleButton className="mx_SpaceRoomView_landing_addButton" onClick={() => {
-                showAddExistingRooms(cli, space);
+            <AccessibleButton className="mx_SpaceRoomView_landing_addButton" onClick={async () => {
+                const [added] = await showAddExistingRooms(cli, space);
+                if (added) {
+                    forceUpdate();
+                }
             }}>
                 { _t("Add existing rooms & spaces") }
             </AccessibleButton>
@@ -174,7 +180,7 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
         }
 
         return [false];
-    }, [space], [true]);
+    }, [space, _], [true]);
 
     let previewRooms;
     if (roomsMap) {

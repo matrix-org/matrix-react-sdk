@@ -33,8 +33,8 @@ export const shouldShowSpaceSettings = (cli: MatrixClient, space: Room) => {
             || space.currentState.maySendStateEvent(EventType.RoomJoinRules, userId));
 }
 
-export const showAddExistingRooms = (cli: MatrixClient, space: Room) => {
-    Modal.createTrackedDialog(
+export const showAddExistingRooms = async (cli: MatrixClient, space: Room) => {
+    return Modal.createTrackedDialog(
         "Space Landing",
         "Add Existing",
         AddExistingToSpaceDialog,
@@ -44,7 +44,7 @@ export const showAddExistingRooms = (cli: MatrixClient, space: Room) => {
             space,
         },
         "mx_AddExistingToSpaceDialog_wrapper",
-    );
+    ).finished;
 };
 
 export const showCreateNewRoom = async (cli: MatrixClient, space: Room) => {
