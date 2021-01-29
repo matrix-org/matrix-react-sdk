@@ -188,8 +188,17 @@ $activeStripeSize: 4px;
 
         .mx_NotificationBadge {
             position: absolute;
-            right: -4px;
-            top: -4px;
+            right: -8px;
+            top: 8px;
+        }
+    }
+
+    .mx_SpaceItem.collapsed {
+        .mx_SpaceButton {
+            .mx_NotificationBadge {
+                right: -4px;
+                top: -4px;
+            }
         }
     }
 
