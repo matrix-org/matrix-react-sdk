@@ -22,6 +22,8 @@ $activeStripeSize: 4px;
 .mx_SpacePanel {
     flex: 0 0 auto;
     background-color: $groupFilterPanel-bg-color;
+    padding: 0;
+    margin: 0;
 
     // Create another flexbox so the Panel fills the container
     display: flex;
@@ -88,10 +90,6 @@ $activeStripeSize: 4px;
         }
     }
 
-    .mx_SpacePanel_newWrapper {
-        margin-left: $gutterSize;
-    }
-
     .mx_SpaceButton {
         border-radius: 8px;
         position: relative;
@@ -113,11 +111,11 @@ $activeStripeSize: 4px;
         }
 
         .mx_SpaceButton_toggleCollapse {
-            width: $gutterSize - $activeStripeSize;
-            margin-left: $activeStripeSize;
-            height: $gutterSize;
+            width: calc($gutterSize - $activeStripeSize);
+            margin-left: 1px;
+            height: 20px;
             mask-position: center;
-            mask-size: 21px;
+            mask-size: 20px;
             mask-repeat: no-repeat;
             background-color: $roomlist-header-color;
             mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
@@ -136,11 +134,13 @@ $activeStripeSize: 4px;
             }
         }
 
-        &.mx_SpaceButton_home, &.mx_SpaceButton_new {
+        .mx_SpaceButton_avatarPlaceholder {
             width: $topLevelHeight;
+            min-width: $topLevelHeight;
             height: $topLevelHeight;
+            border-radius: 8px;
 
-            &::after {
+            &::before {
                 position: absolute;
                 content: '';
                 width: $topLevelHeight;
@@ -152,21 +152,21 @@ $activeStripeSize: 4px;
             }
         }
 
-        &.mx_SpaceButton_home {
+        &.mx_SpaceButton_home .mx_SpaceButton_avatarPlaceholder {
             background-color: #ffffff;
 
-            &::after {
+            &::before {
                 background-color: #3f3d3d;
                 mask-image: url('$(res)/img/element-icons/home.svg');
                 mask-size: 18px;
             }
         }
 
-        &.mx_SpaceButton_new {
+        &.mx_SpaceButton_new .mx_SpaceButton_avatarPlaceholder {
             background-color: $accent-color;
             transition: all .1s ease-in-out; // TODO transition
 
-            &::after {
+            &::before {
                 background-color: #ffffff;
                 mask-image: url('$(res)/img/element-icons/plus.svg');
                 mask-size: 14px;
@@ -174,10 +174,10 @@ $activeStripeSize: 4px;
             }
         }
 
-        &.mx_SpaceButton_newCancel {
+        &.mx_SpaceButton_newCancel .mx_SpaceButton_avatarPlaceholder {
             background-color: $icon-button-color;
 
-            &::after {
+            &::before {
                 transform: rotate(45deg);
             }
         }
@@ -192,7 +192,6 @@ $activeStripeSize: 4px;
             top: -4px;
         }
     }
-
 
     /* root space buttons are bigger and not indented */
     & > .mx_AutoHideScrollbar {
