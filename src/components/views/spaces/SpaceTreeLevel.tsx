@@ -22,6 +22,7 @@ import RoomAvatar from "../avatars/RoomAvatar";
 import SpaceStore from "../../../stores/SpaceStore";
 import NotificationBadge from "../rooms/NotificationBadge";
 import {RovingAccessibleButton} from "../../../accessibility/roving/RovingAccessibleButton";
+import {RovingAccessibleTooltipButton} from "../../../accessibility/roving/RovingAccessibleTooltipButton";
 
 interface IItemProps {
     space?: Room;
@@ -88,19 +89,40 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
             <button
                 className="mx_SpaceButton_toggleCollapse"
                 onClick={evt => this.toggleCollapse(evt)}
-            ></button> : null;
+            /> : null;
 
-        return (
-            <li className={itemClasses}>
-                <RovingAccessibleButton className={classes}
+        let button;
+        if (isNarrow) {
+            button = (
+                <RovingAccessibleTooltipButton
+                    className={classes}
+                    title={space.name}
                     onClick={() => SpaceStore.instance.setActiveSpace(space)}
                     role="treeitem"
                 >
                     { toggleCollapseButton }
                     <RoomAvatar width={avatarSize} height={avatarSize} room={space} />
-                    { isNarrow ? null : <span className="mx_SpaceButton_name">{ space.name }</span> }
+                    { notifBadge }
+                </RovingAccessibleTooltipButton>
+            );
+        } else {
+            button = (
+                <RovingAccessibleButton
+                    className={classes}
+                    onClick={() => SpaceStore.instance.setActiveSpace(space)}
+                    role="treeitem"
+                >
+                    { toggleCollapseButton }
+                    <RoomAvatar width={avatarSize} height={avatarSize} room={space} />
+                    <span className="mx_SpaceButton_name">{ space.name }</span>
                     { notifBadge }
                 </RovingAccessibleButton>
+            );
+        }
+
+        return (
+            <li className={itemClasses}>
+                { button }
                 { childItems }
             </li>
         );
