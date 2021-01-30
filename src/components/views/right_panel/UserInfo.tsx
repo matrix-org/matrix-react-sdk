@@ -60,6 +60,7 @@ import QuestionDialog from "../dialogs/QuestionDialog";
 import ConfirmUserActionDialog from "../dialogs/ConfirmUserActionDialog";
 import InfoDialog from "../dialogs/InfoDialog";
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import * as sdk from '../../../index';
 
 interface IDevice {
     deviceId: string;
@@ -104,7 +105,8 @@ export const getE2EStatus = (cli: MatrixClient, userId: string, devices: IDevice
     return anyDeviceUnverified ? E2EStatus.Warning : E2EStatus.Verified;
 };
 
-async function openDMForUser(matrixClient: MatrixClient, userId: string) {
+
+async function openDMForUser(matrixClient: MatrixClient, userId: string, modal) {
     const lastActiveRoom = findDMForUser(matrixClient, userId);
 
     if (lastActiveRoom) {
@@ -112,6 +114,7 @@ async function openDMForUser(matrixClient: MatrixClient, userId: string) {
             action: 'view_room',
             room_id: lastActiveRoom.roomId,
         });
+        modal.close();
         return;
     }
 
@@ -132,8 +135,16 @@ async function openDMForUser(matrixClient: MatrixClient, userId: string) {
             createRoomOptions.encryption = true;
         }
     }
+    createRoom(createRoomOptions)
+    return modal.close();
+}
 
-    return createRoom(createRoomOptions);
+function confirmDialog(cli, userId, name) {
+    const ConfirmDirectMessageDialog = sdk.getComponent("dialogs.ConfirmDirectMessageDialog");
+    const modal = Modal.createTrackedDialog('Confirm Direct Message Dialog', '', ConfirmDirectMessageDialog, {
+        confirmMessage: ()=> openDMForUser(cli, userId, modal),
+        name: name,
+    });
 }
 
 type SetUpdating = (updating: boolean) => void;
@@ -412,7 +423,8 @@ const UserOptionsSection: React.FC<{
     let directMessageButton;
     if (!isMe) {
         directMessageButton = (
-            <AccessibleButton onClick={() => openDMForUser(cli, member.userId)} className="mx_UserInfo_field">
+            <AccessibleButton
+                onClick={() => confirmDialog(cli, member.userId, member.name)} className="mx_UserInfo_field">
                 { _t('Direct message') }
             </AccessibleButton>
         );
