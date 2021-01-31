@@ -135,8 +135,8 @@ async function openDMForUser(matrixClient: MatrixClient, userId: string, modal) 
             createRoomOptions.encryption = true;
         }
     }
-    createRoom(createRoomOptions)
-    return modal.close();
+    modal.close()
+    return createRoom(createRoomOptions);
 }
 
 function confirmDialog(cli, userId, name) {

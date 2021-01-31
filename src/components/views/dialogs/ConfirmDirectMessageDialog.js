@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2021 Ayush Kumar <2580ayush2580@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -27,14 +27,14 @@ export default class ConfirmDirectMessageDialog extends React.Component {
     render() {
         return (
             <BaseDialog
-            title={this.props.title || _t("Confirm Message")}
+            title={this.props.title || _t("Confirm Direct Messages")}
             className="mx_ConfirmDirectMessageDialog"
             contentId="mx_ConfirmDirectMessageDialog"
             onFinished={this.props.onFinished}
             hasCancel={true}
         >
                 <p>
-                    {_t("Are you sure you wish to start a direct message with the ") + `${this.props.name}` + " ?"}
+                    {_t("Are you sure you wish to start a direct message with ") + `${this.props.name}` + "?"}
                 </p>
                 <AccessibleButton className="mx_AccessibleButton_kind_primary" kind="primary" onClick={this.props.confirmMessage}>
                     {_t("Continue")}
