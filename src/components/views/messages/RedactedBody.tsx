@@ -28,19 +28,43 @@ interface IProps {
 
 const RedactedBody = React.forwardRef<any, IProps>(({mxEvent}, ref) => {
     const cli: MatrixClient = useContext(MatrixClientContext);
-
-    let text = _t("Message deleted");
+    const room = cli.getRoom(mxEvent.getRoomId());
     const unsigned = mxEvent.getUnsigned();
-    const redactedBecauseUserId = unsigned && unsigned.redacted_because && unsigned.redacted_because.sender;
-    if (redactedBecauseUserId && redactedBecauseUserId !== mxEvent.getSender()) {
-        const room = cli.getRoom(mxEvent.getRoomId());
-        const sender = room && room.getMember(redactedBecauseUserId);
-        text = _t("Message deleted by %(name)s", { name: sender ? sender.name : redactedBecauseUserId });
-    }
+    const redactionEvent = mxEvent.getRedactionEvent();
+    const redactionReason = redactionEvent.content.reason;
+    const redactedBy = unsigned.redacted_because.sender;
+    const sender = room && room.getMember(redactedBy);
+    const timestamp = unsigned.redacted_because.origin_server_ts;
 
+    // Set title
     const showTwelveHour = SettingsStore.getValue("showTwelveHourTimestamps");
-    const fullDate = formatFullDate(new Date(unsigned.redacted_because.origin_server_ts), showTwelveHour);
+    const fullDate = formatFullDate(new Date(timestamp), showTwelveHour);
     const titleText = _t("Message deleted on %(date)s", { date: fullDate });
+
+    // Set text
+    let text;
+    if (redactionReason && redactedBy && redactedBy !== mxEvent.getSender()) {
+        // We have both redactBy and redactionReason
+        text = _t(
+            "Message deleted by %(redactedBy)s. Reason: %(reason)s",
+            {reason: redactionReason, redactedBy: sender ? sender.name : redactedBy},
+        );
+    } else if (redactionReason) {
+        // We have redaction reason
+        text = _t(
+            "Message deleted. Reason: %(reason)s",
+            {reason: redactionReason},
+        );
+    } else if (redactedBy && redactedBy !== mxEvent.getSender()) {
+        // We have redactedBy
+        text = _t(
+            "Message deleted by %(redactedBy)s",
+            { redactedBy: sender ? sender.name : redactedBy },
+        );
+    } else {
+        // We don't have anything
+        text = _t("Message deleted.");
+    }
 
     return (
         <span className="mx_RedactedBody" ref={ref} title={titleText}>
