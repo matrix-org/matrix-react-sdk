@@ -34,7 +34,7 @@ export default class ConfirmDirectMessageDialog extends React.Component {
             hasCancel={true}
         >
                 <p>
-                    {_t("Are you sure you wish to start a direct message with ") + `${this.props.name}` + "?"}
+                {_t("Are you sure you wish to start a direct message with %(name)s?", { name: this.props.name })}
                 </p>
                 <AccessibleButton className="mx_AccessibleButton_kind_primary" kind="primary" onClick={this.props.confirmMessage}>
                     {_t("Continue")}
