@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useCallback, useContext, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import classNames from 'classnames';
 import * as AvatarLogic from '../../../Avatar';
 import SettingsStore from "../../../settings/SettingsStore";
@@ -51,7 +51,8 @@ const calculateUrls = (url, urls) => {
         _urls = urls || [];
 
         if (url) {
-            _urls.unshift(url); // put in urls[0]
+            // copy urls and put url first
+            _urls = [url, ..._urls];
         }
     }
 
@@ -96,7 +97,7 @@ const BaseAvatar = (props: IProps) => {
         urls,
         width = 40,
         height = 40,
-        resizeMethod = "crop", // eslint-disable-line no-unused-vars
+        resizeMethod = "crop", // eslint-disable-line @typescript-eslint/no-unused-vars
         defaultToInitialLetter = true,
         onClick,
         inputRef,

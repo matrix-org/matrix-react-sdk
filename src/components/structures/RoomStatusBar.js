@@ -1,7 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017, 2018 New Vector Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2015-2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,11 +15,9 @@ limitations under the License.
 */
 
 import React from 'react';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import Matrix from 'matrix-js-sdk';
 import { _t, _td } from '../../languageHandler';
-import * as sdk from '../../index';
 import {MatrixClientPeg} from '../../MatrixClientPeg';
 import Resend from '../../Resend';
 import dis from '../../dispatcher/dispatcher';
@@ -39,20 +35,10 @@ function getUnsentMessages(room) {
     });
 }
 
-export default createReactClass({
-    displayName: 'RoomStatusBar',
-
-    propTypes: {
+export default class RoomStatusBar extends React.Component {
+    static propTypes = {
         // the room this statusbar is representing.
         room: PropTypes.object.isRequired,
-        // This is true when the user is alone in the room, but has also sent a message.
-        // Used to suggest to the user to invite someone
-        sentMessageAndIsAlone: PropTypes.bool,
-
-        // true if there is an active call in this room (means we show
-        // the 'Active Call' text in the status bar if there is nothing
-        // more interesting)
-        hasActiveCall: PropTypes.bool,
 
         // true if the room is being peeked at. This affects components that shouldn't
         // logically be shown when peeking, such as a prompt to invite people to a room.
@@ -70,10 +56,6 @@ export default createReactClass({
         // 'you are alone' bar
         onInviteClick: PropTypes.func,
 
-        // callback for when the user clicks on the 'stop warning me' button in the
-        // 'you are alone' bar
-        onStopWarningClick: PropTypes.func,
-
         // callback for when we do something that changes the size of the
         // status bar. This is used to trigger a re-layout in the parent
         // component.
@@ -86,37 +68,35 @@ export default createReactClass({
         // callback for when the status bar is displaying something and should
         // be visible
         onVisible: PropTypes.func,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            syncState: MatrixClientPeg.get().getSyncState(),
-            syncStateData: MatrixClientPeg.get().getSyncStateData(),
-            unsentMessages: getUnsentMessages(this.props.room),
-        };
-    },
+    state = {
+        syncState: MatrixClientPeg.get().getSyncState(),
+        syncStateData: MatrixClientPeg.get().getSyncStateData(),
+        unsentMessages: getUnsentMessages(this.props.room),
+    };
 
-    componentDidMount: function() {
+    componentDidMount() {
         MatrixClientPeg.get().on("sync", this.onSyncStateChange);
         MatrixClientPeg.get().on("Room.localEchoUpdated", this._onRoomLocalEchoUpdated);
 
         this._checkSize();
-    },
+    }
 
-    componentDidUpdate: function() {
+    componentDidUpdate() {
         this._checkSize();
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         // we may have entirely lost our client as we're logging out before clicking login on the guest bar...
         const client = MatrixClientPeg.get();
         if (client) {
             client.removeListener("sync", this.onSyncStateChange);
             client.removeListener("Room.localEchoUpdated", this._onRoomLocalEchoUpdated);
         }
-    },
+    }
 
-    onSyncStateChange: function(state, prevState, data) {
+    onSyncStateChange = (state, prevState, data) => {
         if (state === "SYNCING" && prevState === "SYNCING") {
             return;
         }
@@ -124,67 +104,48 @@ export default createReactClass({
             syncState: state,
             syncStateData: data,
         });
-    },
+    };
 
-    _onResendAllClick: function() {
+    _onResendAllClick = () => {
         Resend.resendUnsentEvents(this.props.room);
         dis.fire(Action.FocusComposer);
-    },
+    };
 
-    _onCancelAllClick: function() {
+    _onCancelAllClick = () => {
         Resend.cancelUnsentEvents(this.props.room);
         dis.fire(Action.FocusComposer);
-    },
+    };
 
-    _onRoomLocalEchoUpdated: function(event, room, oldEventId, oldStatus) {
+    _onRoomLocalEchoUpdated = (event, room, oldEventId, oldStatus) => {
         if (room.roomId !== this.props.room.roomId) return;
 
         this.setState({
             unsentMessages: getUnsentMessages(this.props.room),
         });
-    },
+    };
 
     // Check whether current size is greater than 0, if yes call props.onVisible
-    _checkSize: function() {
+    _checkSize() {
         if (this._getSize()) {
             if (this.props.onVisible) this.props.onVisible();
         } else {
             if (this.props.onHidden) this.props.onHidden();
         }
-    },
+    }
 
     // We don't need the actual height - just whether it is likely to have
     // changed - so we use '0' to indicate normal size, and other values to
     // indicate other sizes.
-    _getSize: function() {
-        if (this._shouldShowConnectionError() ||
-            this.props.hasActiveCall ||
-            this.props.sentMessageAndIsAlone
-        ) {
+    _getSize() {
+        if (this._shouldShowConnectionError()) {
             return STATUS_BAR_EXPANDED;
         } else if (this.state.unsentMessages.length > 0) {
             return STATUS_BAR_EXPANDED_LARGE;
         }
         return STATUS_BAR_HIDDEN;
-    },
+    }
 
-    // return suitable content for the image on the left of the status bar.
-    _getIndicator: function() {
-        if (this.props.hasActiveCall) {
-            const TintableSvg = sdk.getComponent("elements.TintableSvg");
-            return (
-                <TintableSvg src={require("../../../res/img/element-icons/room/in-call.svg")} width="23" height="20" />
-            );
-        }
-
-        if (this._shouldShowConnectionError()) {
-            return null;
-        }
-
-        return null;
-    },
-
-    _shouldShowConnectionError: function() {
+    _shouldShowConnectionError() {
         // no conn bar trumps the "some not sent" msg since you can't resend without
         // a connection!
         // There's one situation in which we don't show this 'no connection' bar, and that's
@@ -195,9 +156,9 @@ export default createReactClass({
             this.state.syncStateData.error.errcode === 'M_RESOURCE_LIMIT_EXCEEDED',
         );
         return this.state.syncState === "ERROR" && !errorIsMauError;
-    },
+    }
 
-    _getUnsentMessageContent: function() {
+    _getUnsentMessageContent() {
         const unsentMessages = this.state.unsentMessages;
         if (!unsentMessages.length) return null;
 
@@ -272,10 +233,10 @@ export default createReactClass({
                 </div>
             </div>
         </div>;
-    },
+    }
 
     // return suitable content for the main (text) part of the status bar.
-    _getContent: function() {
+    _getContent() {
         if (this._shouldShowConnectionError()) {
             return (
                 <div className="mx_RoomStatusBar_connectionLostBar">
@@ -296,48 +257,18 @@ export default createReactClass({
             return this._getUnsentMessageContent();
         }
 
-        if (this.props.hasActiveCall) {
-            return (
-                <div className="mx_RoomStatusBar_callBar">
-                    <b>{ _t('Active call') }</b>
-                </div>
-            );
-        }
-
-        // If you're alone in the room, and have sent a message, suggest to invite someone
-        if (this.props.sentMessageAndIsAlone && !this.props.isPeeking) {
-            return (
-                <div className="mx_RoomStatusBar_isAlone">
-                    { _t("There's no one else here! Would you like to <inviteText>invite others</inviteText> " +
-                            "or <nowarnText>stop warning about the empty room</nowarnText>?",
-                        {},
-                        {
-                            'inviteText': (sub) =>
-                                <a className="mx_RoomStatusBar_resend_link" key="invite" onClick={this.props.onInviteClick}>{ sub }</a>,
-                            'nowarnText': (sub) =>
-                                <a className="mx_RoomStatusBar_resend_link" key="nowarn" onClick={this.props.onStopWarningClick}>{ sub }</a>,
-                        },
-                    ) }
-                </div>
-            );
-        }
-
         return null;
-    },
+    }
 
-    render: function() {
+    render() {
         const content = this._getContent();
-        const indicator = this._getIndicator();
 
         return (
             <div className="mx_RoomStatusBar">
-                <div className="mx_RoomStatusBar_indicator">
-                    { indicator }
-                </div>
                 <div role="alert">
                     { content }
                 </div>
             </div>
         );
-    },
-});
+    }
+}

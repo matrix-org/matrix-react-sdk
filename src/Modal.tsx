@@ -28,7 +28,7 @@ import AsyncWrapper from './AsyncWrapper';
 const DIALOG_CONTAINER_ID = "mx_Dialog_Container";
 const STATIC_DIALOG_CONTAINER_ID = "mx_Dialog_StaticContainer";
 
-interface IModal<T extends any[]> {
+export interface IModal<T extends any[]> {
     elem: React.ReactNode;
     className?: string;
     beforeClosePromise?: Promise<boolean>;
@@ -38,7 +38,7 @@ interface IModal<T extends any[]> {
     close(...args: T): void;
 }
 
-interface IHandle<T extends any[]> {
+export interface IHandle<T extends any[]> {
     finished: Promise<T>;
     close(...args: T): void;
 }
@@ -132,7 +132,7 @@ export class ModalManager {
     public createTrackedDialogAsync<T extends any[]>(
         analyticsAction: string,
         analyticsInfo: string,
-        ...rest: Parameters<ModalManager["appendDialogAsync"]>
+        ...rest: Parameters<ModalManager["createDialogAsync"]>
     ) {
         Analytics.trackEvent('Modal', analyticsAction, analyticsInfo);
         return this.createDialogAsync<T>(...rest);
@@ -147,11 +147,20 @@ export class ModalManager {
         return this.appendDialogAsync<T>(...rest);
     }
 
+    public closeCurrentModal(reason: string) {
+        const modal = this.getCurrentModal();
+        if (!modal) {
+            return;
+        }
+        modal.closeReason = reason;
+        modal.close();
+    }
+
     private buildModal<T extends any[]>(
         prom: Promise<React.ComponentType>,
         props?: IProps<T>,
         className?: string,
-        options?: IOptions<T>
+        options?: IOptions<T>,
     ) {
         const modal: IModal<T> = {
             onFinished: props ? props.onFinished : null,
@@ -182,7 +191,7 @@ export class ModalManager {
 
     private getCloseFn<T extends any[]>(
         modal: IModal<T>,
-        props: IProps<T>
+        props: IProps<T>,
     ): [IHandle<T>["close"], IHandle<T>["finished"]] {
         const deferred = defer<T>();
         return [async (...args: T) => {
@@ -264,7 +273,7 @@ export class ModalManager {
         className?: string,
         isPriorityModal = false,
         isStaticModal = false,
-        options: IOptions<T> = {}
+        options: IOptions<T> = {},
     ): IHandle<T> {
         const {modal, closeDialog, onFinishedProm} = this.buildModal<T>(prom, props, className, options);
         if (isPriorityModal) {
@@ -287,7 +296,7 @@ export class ModalManager {
     private appendDialogAsync<T extends any[]>(
         prom: Promise<React.ComponentType>,
         props?: IProps<T>,
-        className?: string
+        className?: string,
     ): IHandle<T> {
         const {modal, closeDialog, onFinishedProm} = this.buildModal<T>(prom, props, className, {});
 

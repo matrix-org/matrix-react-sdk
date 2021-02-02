@@ -47,6 +47,7 @@ import AutocompleteWrapperModel from "../../../editor/autocomplete";
 import DocumentPosition from "../../../editor/position";
 import {ICompletion} from "../../../autocomplete/Autocompleter";
 
+// matches emoticons which follow the start of a line or whitespace
 const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s$');
 
 const IS_MAC = navigator.platform.indexOf("Mac") !== -1;
@@ -92,7 +93,7 @@ interface IProps {
     label?: string;
     initialCaret?: DocumentOffset;
 
-    onChange();
+    onChange?();
     onPaste?(event: ClipboardEvent<HTMLDivElement>, model: EditorModel): boolean;
 }
 
@@ -207,7 +208,8 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         // If the user is entering a command, only consider them typing if it is one which sends a message into the room
         if (isTyping && this.props.model.parts[0].type === "command") {
             const {cmd} = parseCommandString(this.props.model.parts[0].text);
-            if (!CommandMap.has(cmd) || CommandMap.get(cmd).category !== CommandCategories.messages) {
+            const command = CommandMap.get(cmd);
+            if (!command || !command.isEnabled() || command.category !== CommandCategories.messages) {
                 isTyping = false;
             }
         }
@@ -523,7 +525,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
             const range = model.startRange(position);
             range.expandBackwardsWhile((index, offset, part) => {
-                return part.text[offset] !== " " && (
+                return part.text[offset] !== " " && part.text[offset] !== "+" && (
                     part.type === "plain" ||
                     part.type === "pill-candidate" ||
                     part.type === "command"
@@ -618,13 +620,14 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     }
 
     private onFormatAction = (action: Formatting) => {
-        const range = getRangeForSelection(
-            this.editorRef.current,
-            this.props.model,
-            document.getSelection());
+        const range = getRangeForSelection(this.editorRef.current, this.props.model, document.getSelection());
+        // trim the range as we want it to exclude leading/trailing spaces
+        range.trim();
+
         if (range.length === 0) {
             return;
         }
+
         this.historyManager.ensureLastChangesPushed(this.props.model);
         this.modifiedFlag = true;
         switch (action) {

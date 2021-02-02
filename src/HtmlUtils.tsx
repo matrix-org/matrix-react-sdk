@@ -19,6 +19,7 @@ limitations under the License.
 
 import React from 'react';
 import sanitizeHtml from 'sanitize-html';
+import { IExtendedSanitizeOptions } from './@types/sanitize-html';
 import * as linkify from 'linkifyjs';
 import linkifyMatrix from './linkify-matrix';
 import _linkifyElement from 'linkifyjs/element';
@@ -26,6 +27,10 @@ import _linkifyString from 'linkifyjs/string';
 import classNames from 'classnames';
 import EMOJIBASE_REGEX from 'emojibase-regex';
 import url from 'url';
+import katex from 'katex';
+import { AllHtmlEntities } from 'html-entities';
+import SettingsStore from './settings/SettingsStore';
+import cheerio from 'cheerio';
 
 import {MatrixClientPeg} from './MatrixClientPeg';
 import {tryTransformPermalinkToLocalHref} from "./utils/permalinks/Permalinks";
@@ -52,7 +57,7 @@ const BIGEMOJI_REGEX = new RegExp(`^(${EMOJIBASE_REGEX.source})+$`, 'i');
 
 const COLOR_REGEX = /^#[0-9a-fA-F]{6}$/;
 
-const PERMITTED_URL_SCHEMES = ['http', 'https', 'ftp', 'mailto', 'magnet'];
+export const PERMITTED_URL_SCHEMES = ['http', 'https', 'ftp', 'mailto', 'magnet'];
 
 /*
  * Return true if the given string contains emoji
@@ -151,14 +156,14 @@ export function isUrlPermitted(inputUrl: string) {
     }
 }
 
-const transformTags: sanitizeHtml.IOptions["transformTags"] = { // custom to matrix
+const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to matrix
     // add blank targets to all hyperlinks except vector URLs
     'a': function(tagName: string, attribs: sanitizeHtml.Attributes) {
         if (attribs.href) {
             attribs.target = '_blank'; // by default
 
             const transformed = tryTransformPermalinkToLocalHref(attribs.href);
-            if (transformed !== attribs.href || attribs.href.match(linkifyMatrix.VECTOR_URL_PATTERN)) {
+            if (transformed !== attribs.href || attribs.href.match(linkifyMatrix.ELEMENT_URL_PATTERN)) {
                 attribs.href = transformed;
                 delete attribs.target;
             }
@@ -170,7 +175,10 @@ const transformTags: sanitizeHtml.IOptions["transformTags"] = { // custom to mat
         // Strip out imgs that aren't `mxc` here instead of using allowedSchemesByTag
         // because transformTags is used _before_ we filter by allowedSchemesByTag and
         // we don't want to allow images with `https?` `src`s.
-        if (!attribs.src || !attribs.src.startsWith('mxc://')) {
+        // We also drop inline images (as if they were not present at all) when the "show
+        // images" preference is disabled. Future work might expose some UI to reveal them
+        // like standalone image events have.
+        if (!attribs.src || !attribs.src.startsWith('mxc://') || !SettingsStore.getValue("showImages")) {
             return { tagName, attribs: {}};
         }
         attribs.src = MatrixClientPeg.get().mxcUrlToHttp(
@@ -224,7 +232,7 @@ const transformTags: sanitizeHtml.IOptions["transformTags"] = { // custom to mat
     },
 };
 
-const sanitizeHtmlParams: sanitizeHtml.IOptions = {
+const sanitizeHtmlParams: IExtendedSanitizeOptions = {
     allowedTags: [
         'font', // custom to matrix for IRC-style font coloring
         'del', // for markdown
@@ -235,7 +243,8 @@ const sanitizeHtmlParams: sanitizeHtml.IOptions = {
     allowedAttributes: {
         // custom ones first:
         font: ['color', 'data-mx-bg-color', 'data-mx-color', 'style'], // custom to matrix
-        span: ['data-mx-bg-color', 'data-mx-color', 'data-mx-spoiler', 'style'], // custom to matrix
+        span: ['data-mx-maths', 'data-mx-bg-color', 'data-mx-color', 'data-mx-spoiler', 'style'], // custom to matrix
+        div: ['data-mx-maths'],
         a: ['href', 'name', 'target', 'rel'], // remote target: custom to matrix
         img: ['src', 'width', 'height', 'alt', 'title'],
         ol: ['start'],
@@ -245,13 +254,14 @@ const sanitizeHtmlParams: sanitizeHtml.IOptions = {
     selfClosing: ['img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta'],
     // URL schemes we permit
     allowedSchemes: PERMITTED_URL_SCHEMES,
-
     allowProtocolRelative: false,
     transformTags,
+    // 50 levels deep "should be enough for anyone"
+    nestingLimit: 50,
 };
 
 // this is the same as the above except with less rewriting
-const composerSanitizeHtmlParams: sanitizeHtml.IOptions = {
+const composerSanitizeHtmlParams: IExtendedSanitizeOptions = {
     ...sanitizeHtmlParams,
     transformTags: {
         'code': transformTags['code'],
@@ -339,33 +349,9 @@ class HtmlHighlighter extends BaseHighlighter<string> {
     }
 }
 
-class TextHighlighter extends BaseHighlighter<React.ReactNode> {
-    private key = 0;
-
-    /* create a <span> node to hold the given content
-     *
-     * snippet: content of the span
-     * highlight: true to highlight as a search match
-     *
-     * returns a React node
-     */
-    protected processSnippet(snippet: string, highlight: boolean): React.ReactNode {
-        const key = this.key++;
-
-        let node = <span key={key} className={highlight ? this.highlightClass : null}>
-            { snippet }
-        </span>;
-
-        if (highlight && this.highlightLink) {
-            node = <a key={key} href={this.highlightLink}>{ node }</a>;
-        }
-
-        return node;
-    }
-}
-
 interface IContent {
     format?: string;
+    // eslint-disable-next-line camelcase
     formatted_body?: string;
     body: string;
 }
@@ -432,18 +418,34 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
         if (isHtmlMessage) {
             isDisplayedWithHtml = true;
             safeBody = sanitizeHtml(formattedBody, sanitizeParams);
+
+            if (SettingsStore.getValue("feature_latex_maths")) {
+                const phtml = cheerio.load(safeBody,
+                    { _useHtmlParser2: true, decodeEntities: false })
+                phtml('div, span[data-mx-maths!=""]').replaceWith(function(i, e) {
+                    return katex.renderToString(
+                        AllHtmlEntities.decode(phtml(e).attr('data-mx-maths')),
+                        {
+                            throwOnError: false,
+                            displayMode: e.name == 'div',
+                            output: "htmlAndMathml",
+                        });
+                });
+                safeBody = phtml.html();
+            }
         }
     } finally {
         delete sanitizeParams.textFilter;
     }
 
+    const contentBody = isDisplayedWithHtml ? safeBody : strippedBody;
     if (opts.returnString) {
-        return isDisplayedWithHtml ? safeBody : strippedBody;
+        return contentBody;
     }
 
     let emojiBody = false;
     if (!opts.disableBigEmoji && bodyHasEmoji) {
-        let contentBodyTrimmed = strippedBody !== undefined ? strippedBody.trim() : '';
+        let contentBodyTrimmed = contentBody !== undefined ? contentBody.trim() : '';
 
         // Ignore spaces in body text. Emojis with spaces in between should
         // still be counted as purely emoji messages.
@@ -474,8 +476,13 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
     });
 
     return isDisplayedWithHtml ?
-        <span key="body" ref={opts.ref} className={className} dangerouslySetInnerHTML={{ __html: safeBody }} dir="auto" /> :
-        <span key="body" ref={opts.ref} className={className} dir="auto">{ strippedBody }</span>;
+        <span
+            key="body"
+            ref={opts.ref}
+            className={className}
+            dangerouslySetInnerHTML={{ __html: safeBody }}
+            dir="auto"
+        /> : <span key="body" ref={opts.ref} className={className} dir="auto">{ strippedBody }</span>;
 }
 
 /**
@@ -528,7 +535,6 @@ export function checkBlockNode(node: Node) {
         case "H6":
         case "PRE":
         case "BLOCKQUOTE":
-        case "DIV":
         case "P":
         case "UL":
         case "OL":
@@ -541,6 +547,9 @@ export function checkBlockNode(node: Node) {
         case "TH":
         case "TD":
             return true;
+        case "DIV":
+            // don't treat math nodes as block nodes for deserializing
+            return !(node as HTMLElement).hasAttribute("data-mx-maths");
         default:
             return false;
     }

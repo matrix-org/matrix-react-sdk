@@ -71,6 +71,7 @@ interface IProps {
     isMinimized: boolean;
     tagId: TagID;
     onResize: () => void;
+    showSkeleton?: boolean;
 
     // TODO: Don't use this. It's for community invites, and community invites shouldn't be here.
     // You should feel bad if you use this.
@@ -399,6 +400,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         const isUnreadFirst = RoomListStore.instance.getListOrder(this.props.tagId) === ListAlgorithm.Importance;
         const newAlgorithm = isUnreadFirst ? ListAlgorithm.Natural : ListAlgorithm.Importance;
         await RoomListStore.instance.setListOrder(this.props.tagId, newAlgorithm);
+        this.forceUpdate(); // because if the sublist doesn't have any changes then we will miss the list order change
     };
 
     private onTagSortChanged = async (sort: SortAlgorithm) => {
@@ -420,7 +422,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             room = this.state.rooms && this.state.rooms[0];
         } else {
             // find the first room with a count of the same colour as the badge count
-            room = this.state.rooms.find((r: Room) => {
+            room = RoomListStore.instance.unfilteredLists[this.props.tagId].find((r: Room) => {
                 const notifState = this.notificationState.getForRoom(r);
                 return notifState.count > 0 && notifState.color === this.notificationState.color;
             });
@@ -517,15 +519,13 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         if (this.state.rooms) {
             const visibleRooms = this.state.rooms.slice(0, this.numVisibleTiles);
             for (const room of visibleRooms) {
-                tiles.push(
-                    <RoomTile
-                        room={room}
-                        key={`room-${room.roomId}`}
-                        showMessagePreview={this.layout.showPreviews}
-                        isMinimized={this.props.isMinimized}
-                        tag={this.props.tagId}
-                    />
-                );
+                tiles.push(<RoomTile
+                    room={room}
+                    key={`room-${room.roomId}`}
+                    showMessagePreview={this.layout.showPreviews}
+                    isMinimized={this.props.isMinimized}
+                    tag={this.props.tagId}
+                />);
             }
         }
 
@@ -710,7 +710,12 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                     // doesn't become sticky.
                     // The same applies to the notification badge.
                     return (
-                        <div className={classes} onKeyDown={this.onHeaderKeyDown} onFocus={onFocus} aria-label={this.props.label}>
+                        <div
+                            className={classes}
+                            onKeyDown={this.onHeaderKeyDown}
+                            onFocus={onFocus}
+                            aria-label={this.props.label}
+                        >
                             <div className="mx_RoomSublist_stickable">
                                 <Button
                                     onFocus={onFocus}
@@ -762,7 +767,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             const showMoreAtMinHeight = minTiles < this.numTiles;
             const minHeightPadding = RESIZE_HANDLE_HEIGHT + (showMoreAtMinHeight ? SHOW_N_BUTTON_HEIGHT : 0);
             const minTilesPx = layout.tilesToPixelsWithPadding(minTiles, minHeightPadding);
-            let maxTilesPx = layout.tilesToPixelsWithPadding(this.numTiles, this.padding);
+            const maxTilesPx = layout.tilesToPixelsWithPadding(this.numTiles, this.padding);
             const showMoreBtnClasses = classNames({
                 'mx_RoomSublist_showNButton': true,
             });
@@ -873,6 +878,8 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                     </Resizable>
                 </React.Fragment>
             );
+        } else if (this.props.showSkeleton && this.state.isExpanded) {
+            content = <div className="mx_RoomSublist_skeletonUI" />;
         }
 
         return (

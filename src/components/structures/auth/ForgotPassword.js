@@ -17,20 +17,18 @@ limitations under the License.
 */
 
 import React from 'react';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import * as sdk from '../../../index';
 import Modal from "../../../Modal";
-import SdkConfig from "../../../SdkConfig";
 import PasswordReset from "../../../PasswordReset";
 import AutoDiscoveryUtils, {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
 import classNames from 'classnames';
 import AuthPage from "../../views/auth/AuthPage";
+import CountlyAnalytics from "../../../CountlyAnalytics";
+import ServerPicker from "../../views/elements/ServerPicker";
 
 // Phases
-// Show controls to configure server details
-const PHASE_SERVER_DETAILS = 0;
 // Show the forgot password inputs
 const PHASE_FORGOT = 1;
 // Email is in the process of being sent
@@ -40,69 +38,67 @@ const PHASE_EMAIL_SENT = 3;
 // User has clicked the link in email and completed reset
 const PHASE_DONE = 4;
 
-export default createReactClass({
-    displayName: 'ForgotPassword',
-
-    propTypes: {
+export default class ForgotPassword extends React.Component {
+    static propTypes = {
         serverConfig: PropTypes.instanceOf(ValidatedServerConfig).isRequired,
         onServerConfigChange: PropTypes.func.isRequired,
         onLoginClick: PropTypes.func,
         onComplete: PropTypes.func.isRequired,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            phase: PHASE_FORGOT,
-            email: "",
-            password: "",
-            password2: "",
-            errorText: null,
+    state = {
+        phase: PHASE_FORGOT,
+        email: "",
+        password: "",
+        password2: "",
+        errorText: null,
 
-            // We perform liveliness checks later, but for now suppress the errors.
-            // We also track the server dead errors independently of the regular errors so
-            // that we can render it differently, and override any other error the user may
-            // be seeing.
-            serverIsAlive: true,
-            serverErrorIsFatal: false,
-            serverDeadError: "",
-            serverRequiresIdServer: null,
-        };
-    },
+        // We perform liveliness checks later, but for now suppress the errors.
+        // We also track the server dead errors independently of the regular errors so
+        // that we can render it differently, and override any other error the user may
+        // be seeing.
+        serverIsAlive: true,
+        serverErrorIsFatal: false,
+        serverDeadError: "",
+    };
 
-    componentDidMount: function() {
+    constructor(props) {
+        super(props);
+
+        CountlyAnalytics.instance.track("onboarding_forgot_password_begin");
+    }
+
+    componentDidMount() {
         this.reset = null;
         this._checkServerLiveliness(this.props.serverConfig);
-    },
+    }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    UNSAFE_componentWillReceiveProps: function(newProps) {
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillReceiveProps(newProps) {
         if (newProps.serverConfig.hsUrl === this.props.serverConfig.hsUrl &&
             newProps.serverConfig.isUrl === this.props.serverConfig.isUrl) return;
 
         // Do a liveliness check on the new URLs
         this._checkServerLiveliness(newProps.serverConfig);
-    },
+    }
 
-    _checkServerLiveliness: async function(serverConfig) {
+    async _checkServerLiveliness(serverConfig) {
         try {
             await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(
                 serverConfig.hsUrl,
                 serverConfig.isUrl,
             );
 
-            const pwReset = new PasswordReset(serverConfig.hsUrl, serverConfig.isUrl);
-            const serverRequiresIdServer = await pwReset.doesServerRequireIdServerParam();
-
             this.setState({
                 serverIsAlive: true,
-                serverRequiresIdServer,
             });
         } catch (e) {
             this.setState(AutoDiscoveryUtils.authComponentStateForError(e, "forgot_password"));
         }
-    },
+    }
 
-    submitPasswordReset: function(email, password) {
+    submitPasswordReset(email, password) {
         this.setState({
             phase: PHASE_SENDING_EMAIL,
         });
@@ -117,9 +113,9 @@ export default createReactClass({
                 phase: PHASE_FORGOT,
             });
         });
-    },
+    }
 
-    onVerify: async function(ev) {
+    onVerify = async ev => {
         ev.preventDefault();
         if (!this.reset) {
             console.error("onVerify called before submitPasswordReset!");
@@ -131,9 +127,9 @@ export default createReactClass({
         } catch (err) {
             this.showErrorDialog(err.message);
         }
-    },
+    };
 
-    onSubmitForm: async function(ev) {
+    onSubmitForm = async ev => {
         ev.preventDefault();
 
         // refresh the server errors, just in case the server came back online
@@ -166,59 +162,27 @@ export default createReactClass({
                 },
             });
         }
-    },
+    };
 
-    onInputChanged: function(stateKey, ev) {
+    onInputChanged = (stateKey, ev) => {
         this.setState({
             [stateKey]: ev.target.value,
         });
-    },
+    };
 
-    async onServerDetailsNextPhaseClick() {
-        this.setState({
-            phase: PHASE_FORGOT,
-        });
-    },
-
-    onEditServerDetailsClick(ev) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        this.setState({
-            phase: PHASE_SERVER_DETAILS,
-        });
-    },
-
-    onLoginClick: function(ev) {
+    onLoginClick = ev => {
         ev.preventDefault();
         ev.stopPropagation();
         this.props.onLoginClick();
-    },
+    };
 
-    showErrorDialog: function(body, title) {
+    showErrorDialog(body, title) {
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         Modal.createTrackedDialog('Forgot Password Error', '', ErrorDialog, {
             title: title,
             description: body,
         });
-    },
-
-    renderServerDetails() {
-        const ServerConfig = sdk.getComponent("auth.ServerConfig");
-
-        if (SdkConfig.get()['disable_custom_urls']) {
-            return null;
-        }
-
-        return <ServerConfig
-            serverConfig={this.props.serverConfig}
-            onServerConfigChange={this.props.onServerConfigChange}
-            delayTimeMs={0}
-            showIdentityServerIfRequiredByHomeserver={true}
-            onAfterSubmit={this.onServerDetailsNextPhaseClick}
-            submitText={_t("Next")}
-            submitClass="mx_Login_submit"
-        />;
-    },
+    }
 
     renderForgot() {
         const Field = sdk.getComponent('elements.Field');
@@ -243,57 +207,13 @@ export default createReactClass({
             );
         }
 
-        let yourMatrixAccountText = _t('Your Matrix account on %(serverName)s', {
-            serverName: this.props.serverConfig.hsName,
-        });
-        if (this.props.serverConfig.hsNameIsDifferent) {
-            const TextWithTooltip = sdk.getComponent("elements.TextWithTooltip");
-
-            yourMatrixAccountText = _t('Your Matrix account on <underlinedServerName />', {}, {
-                'underlinedServerName': () => {
-                    return <TextWithTooltip
-                        class="mx_Login_underlinedServerName"
-                        tooltip={this.props.serverConfig.hsUrl}
-                    >
-                        {this.props.serverConfig.hsName}
-                    </TextWithTooltip>;
-                },
-            });
-        }
-
-        // If custom URLs are allowed, wire up the server details edit link.
-        let editLink = null;
-        if (!SdkConfig.get()['disable_custom_urls']) {
-            editLink = <a className="mx_AuthBody_editServerDetails"
-                href="#" onClick={this.onEditServerDetailsClick}
-            >
-                {_t('Change')}
-            </a>;
-        }
-
-        if (!this.props.serverConfig.isUrl && this.state.serverRequiresIdServer) {
-            return <div>
-                <h3>
-                    {yourMatrixAccountText}
-                    {editLink}
-                </h3>
-                {_t(
-                    "No identity server is configured: " +
-                    "add one in server settings to reset your password.",
-                )}
-                <a className="mx_AuthBody_changeFlow" onClick={this.onLoginClick} href="#">
-                    {_t('Sign in instead')}
-                </a>
-            </div>;
-        }
-
         return <div>
             {errorText}
             {serverDeadSection}
-            <h3>
-                {yourMatrixAccountText}
-                {editLink}
-            </h3>
+            <ServerPicker
+                serverConfig={this.props.serverConfig}
+                onServerConfigChange={this.props.onServerConfigChange}
+            />
             <form onSubmit={this.onSubmitForm}>
                 <div className="mx_AuthBody_fieldRow">
                     <Field
@@ -303,15 +223,20 @@ export default createReactClass({
                         value={this.state.email}
                         onChange={this.onInputChanged.bind(this, "email")}
                         autoFocus
+                        onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_email_focus")}
+                        onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_email_blur")}
                     />
                 </div>
                 <div className="mx_AuthBody_fieldRow">
                     <Field
                         name="reset_password"
                         type="password"
-                        label={_t('Password')}
+                        label={_t('New Password')}
                         value={this.state.password}
                         onChange={this.onInputChanged.bind(this, "password")}
+                        onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword_focus")}
+                        onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword_blur")}
+                        autoComplete="new-password"
                     />
                     <Field
                         name="reset_password_confirm"
@@ -319,6 +244,9 @@ export default createReactClass({
                         label={_t('Confirm')}
                         value={this.state.password2}
                         onChange={this.onInputChanged.bind(this, "password2")}
+                        onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword2_focus")}
+                        onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword2_blur")}
+                        autoComplete="new-password"
                     />
                 </div>
                 <span>{_t(
@@ -335,12 +263,12 @@ export default createReactClass({
                 {_t('Sign in instead')}
             </a>
         </div>;
-    },
+    }
 
     renderSendingEmail() {
         const Spinner = sdk.getComponent("elements.Spinner");
         return <Spinner />;
-    },
+    }
 
     renderEmailSent() {
         return <div>
@@ -350,7 +278,7 @@ export default createReactClass({
             <input className="mx_Login_submit" type="button" onClick={this.onVerify}
                 value={_t('I have verified my email address')} />
         </div>;
-    },
+    }
 
     renderDone() {
         return <div>
@@ -363,17 +291,14 @@ export default createReactClass({
             <input className="mx_Login_submit" type="button" onClick={this.props.onComplete}
                 value={_t('Return to login screen')} />
         </div>;
-    },
+    }
 
-    render: function() {
+    render() {
         const AuthHeader = sdk.getComponent("auth.AuthHeader");
         const AuthBody = sdk.getComponent("auth.AuthBody");
 
         let resetPasswordJsx;
         switch (this.state.phase) {
-            case PHASE_SERVER_DETAILS:
-                resetPasswordJsx = this.renderServerDetails();
-                break;
             case PHASE_FORGOT:
                 resetPasswordJsx = this.renderForgot();
                 break;
@@ -397,5 +322,5 @@ export default createReactClass({
                 </AuthBody>
             </AuthPage>
         );
-    },
-});
+    }
+}
