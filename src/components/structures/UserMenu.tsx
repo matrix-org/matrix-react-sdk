@@ -48,20 +48,13 @@ import IconizedContextMenu, {
 } from "../views/context_menus/IconizedContextMenu";
 import { CommunityPrototypeStore } from "../../stores/CommunityPrototypeStore";
 import GroupFilterOrderStore from "../../stores/GroupFilterOrderStore";
-import { showCommunityInviteDialog, showSpaceInviteDialog } from "../../RoomInvite";
+import { showCommunityInviteDialog } from "../../RoomInvite";
 import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
 import ErrorDialog from "../views/dialogs/ErrorDialog";
-import InfoDialog from "../views/dialogs/InfoDialog";
 import EditCommunityPrototypeDialog from "../views/dialogs/EditCommunityPrototypeDialog";
 import { UIFeature } from "../../settings/UIFeature";
 import SpaceStore, { UPDATE_SELECTED_SPACE } from "../../stores/SpaceStore";
-import RoomViewStore from "../../stores/RoomViewStore";
 import RoomName from "../views/elements/RoomName";
-import RoomAvatar from "../views/avatars/RoomAvatar";
-import { OpenSpaceSettingsPayload } from "../../dispatcher/payloads/OpenSpaceSettingsPayload";
-import { SetRightPanelPhasePayload } from "../../dispatcher/payloads/SetRightPanelPhasePayload";
-import SpacePublicShare from "../views/spaces/SpacePublicShare";
-import { shouldShowSpaceSettings } from "../../utils/space";
 
 interface IProps {
     isMinimized: boolean;
@@ -247,80 +240,6 @@ export default class UserMenu extends React.Component<IProps, IState> {
         this.setState({contextMenuPosition: null}); // also close the menu
     };
 
-    private onSpaceHomeClick = (ev: ButtonEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-
-        defaultDispatcher.dispatch({
-            action: "view_room",
-            room_id: this.state.selectedSpace.roomId,
-        });
-        this.setState({contextMenuPosition: null}); // also close the menu
-    };
-
-    private onSpaceInviteClick = (ev: ButtonEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-
-        if (this.state.selectedSpace.getJoinRule() === "public") {
-            const modal = Modal.createTrackedDialog("Space Invite", "User Menu", InfoDialog, {
-                title: _t("Invite members"),
-                description: <React.Fragment>
-                    <span>{ _t("Share your public space") }</span>
-                    <SpacePublicShare space={this.state.selectedSpace} onFinished={() => modal.close()} />
-                </React.Fragment>,
-                fixedWidth: false,
-                button: false,
-                className: "mx_UserMenu_sharePublicSpace",
-                hasCloseButton: true,
-            });
-        } else {
-            showSpaceInviteDialog(this.state.selectedSpace.roomId);
-        }
-        this.setState({contextMenuPosition: null}); // also close the menu
-    };
-
-    private onSpaceSettingsClick = (ev: ButtonEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-
-        defaultDispatcher.dispatch<OpenSpaceSettingsPayload>({
-            action: Action.OpenSpaceSettings,
-            space: this.state.selectedSpace,
-        });
-        this.setState({contextMenuPosition: null}); // also close the menu
-    };
-
-    private onSpaceLeaveClick = (ev: ButtonEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-
-        defaultDispatcher.dispatch({
-            action: "leave_room",
-            room_id: this.state.selectedSpace.roomId,
-        });
-        this.setState({contextMenuPosition: null}); // also close the menu
-    };
-
-    private onSpaceMembersClick = (ev: ButtonEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-
-        if (!RoomViewStore.getRoomId()) {
-            defaultDispatcher.dispatch({
-                action: "view_room",
-                room_id: this.state.selectedSpace.roomId,
-            }, true);
-        }
-
-        defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-            action: Action.SetRightPanelPhase,
-            phase: RightPanelPhases.SpaceMemberList,
-            refireParams: { space: this.state.selectedSpace },
-        });
-        this.setState({contextMenuPosition: null}); // also close the menu
-    };
-
     private onCommunitySettingsClick = (ev: ButtonEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
@@ -490,74 +409,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         );
         let secondarySection = null;
 
-        if (this.state.selectedSpace) {
-            let inviteOption;
-            if (this.state.selectedSpace.canInvite(userId)) {
-                inviteOption = (
-                    <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconInvite"
-                        label={_t("Invite")}
-                        onClick={this.onSpaceInviteClick}
-                    />
-                );
-            }
-
-            let settingsOption;
-            let leaveOption;
-            if (shouldShowSpaceSettings(MatrixClientPeg.get(), this.state.selectedSpace)) {
-                settingsOption = (
-                    <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconSettings"
-                        label={_t("Settings")}
-                        aria-label={_t("Space settings")}
-                        onClick={this.onSpaceSettingsClick}
-                    />
-                );
-            } else {
-                leaveOption = (
-                    <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconSignOut"
-                        label={_t("Leave space")}
-                        aria-label={_t("Leave space")}
-                        onClick={this.onSpaceLeaveClick}
-                    />
-                );
-            }
-
-            secondarySection = <React.Fragment>
-                <div className="mx_UserMenu_contextMenu_header mx_UserMenu_contextMenu_secondaryHeader">
-                    <RoomAvatar
-                        room={this.state.selectedSpace}
-                        height={avatarSize}
-                        width={avatarSize}
-                        className="mx_UserMenu_contextMenu_spaceAvatar"
-                    />
-                    <div className="mx_UserMenu_contextMenu_name">
-                        <span className="mx_UserMenu_contextMenu_displayName">
-                            { this.state.selectedSpace.name }
-                        </span>
-                    </div>
-                </div>
-
-                <IconizedContextMenuOptionList first>
-                    <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconHome"
-                        label={_t("Space Home")}
-                        onClick={this.onSpaceHomeClick}
-                    />
-                    { settingsOption }
-                    <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconMembers"
-                        label={_t("Members")}
-                        onClick={this.onSpaceMembersClick}
-                    />
-                    { inviteOption }
-                </IconizedContextMenuOptionList>
-                { leaveOption && <IconizedContextMenuOptionList red first>
-                    { leaveOption }
-                </IconizedContextMenuOptionList> }
-            </React.Fragment>;
-        } else if (prototypeCommunityName) {
+        if (prototypeCommunityName) {
             const communityId = CommunityPrototypeStore.instance.getSelectedCommunityId();
             primaryHeader = (
                 <div className="mx_UserMenu_contextMenu_name">
