@@ -156,6 +156,7 @@ $activeStripeSize: 4px;
                 left: 0;
                 mask-position: center;
                 mask-repeat: no-repeat;
+                mask-size: 18px;
             }
         }
 
@@ -165,7 +166,6 @@ $activeStripeSize: 4px;
             &::before {
                 background-color: #3f3d3d;
                 mask-image: url('$(res)/img/element-icons/home.svg');
-                mask-size: 18px;
             }
         }
 
@@ -176,7 +176,6 @@ $activeStripeSize: 4px;
             &::before {
                 background-color: #ffffff;
                 mask-image: url('$(res)/img/element-icons/plus.svg');
-                mask-size: 14px;
                 transition: all .2s ease-in-out; // TODO transition
             }
         }
