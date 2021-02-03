@@ -185,10 +185,75 @@ $activeStripeSize: 4px;
             border-radius: 8px;
         }
 
+        .mx_SpaceButton_menuButton {
+            width: 20px;
+            min-width: 20px; // yay flex
+            height: 20px;
+            margin-top: auto;
+            margin-bottom: auto;
+            position: relative;
+            display: none;
+
+            &::before {
+                top: 2px;
+                left: 2px;
+                content: '';
+                width: 16px;
+                height: 16px;
+                position: absolute;
+                mask-position: center;
+                mask-size: contain;
+                mask-repeat: no-repeat;
+                mask-image: url('$(res)/img/element-icons/context-menu.svg');
+                background: $primary-fg-color;
+            }
+        }
+    }
+
+    .mx_SpacePanel_badgeContainer {
+        height: 16px;
+        // don't set width so that it takes no space when there is no badge to show
+        margin: auto 0; // vertically align
+
+        // Create a flexbox to make aligning dot badges easier
+        display: flex;
+        align-items: center;
+
         .mx_NotificationBadge {
-            position: absolute;
-            right: -8px;
-            top: 8px;
+            margin: 0 2px; // centering
+        }
+
+        .mx_NotificationBadge_dot {
+            // make the smaller dot occupy the same width for centering
+            margin-left: 7px;
+            margin-right: 7px;
+        }
+    }
+
+    &.collapsed {
+        .mx_SpaceButton {
+            .mx_SpacePanel_badgeContainer {
+                position: absolute;
+                right: -8px;
+                top: -4px;
+            }
+        }
+    }
+
+    &:not(.collapsed) {
+        .mx_SpaceButton:hover,
+        .mx_SpaceButton:focus-within,
+        .mx_SpaceButton_hasMenuOpen {
+            // Hide the badge container on hover because it'll be a menu button
+            .mx_SpacePanel_badgeContainer {
+                width: 0;
+                height: 0;
+                display: none;
+            }
+
+            .mx_SpaceButton_menuButton {
+                display: block;
+            }
         }
     }
 
@@ -215,4 +280,51 @@ $activeStripeSize: 4px;
             padding-left: 0;
         }
     }
+}
+
+.mx_SpacePanel_contextMenu {
+    .mx_SpacePanel_contextMenu_header {
+        margin: 12px 16px 12px;
+        font-weight: $font-semi-bold;
+        font-size: $font-15px;
+        line-height: $font-18px;
+    }
+
+    .mx_IconizedContextMenu_optionList .mx_AccessibleButton.mx_SpacePanel_contextMenu_inviteButton {
+        color: $accent-color;
+
+        .mx_SpacePanel_iconInvite::before {
+            background-color: $accent-color;
+            mask-image: url('$(res)/img/element-icons/room/invite.svg');
+        }
+    }
+
+    .mx_SpacePanel_iconSettings::before {
+        mask-image: url('$(res)/img/element-icons/settings.svg');
+    }
+
+    .mx_SpacePanel_iconLeave::before {
+        mask-image: url('$(res)/img/element-icons/leave.svg');
+    }
+
+    .mx_SpacePanel_iconHome::before {
+        mask-image: url('$(res)/img/element-icons/roomlist/home.svg');
+    }
+
+    .mx_SpacePanel_iconMembers::before {
+        mask-image: url('$(res)/img/element-icons/room/members.svg');
+    }
+
+    .mx_SpacePanel_iconPlus::before {
+        mask-image: url('$(res)/img/element-icons/plus.svg');
+    }
+
+    .mx_SpacePanel_iconExplore::before {
+        mask-image: url('$(res)/img/element-icons/roomlist/explore.svg');
+    }
+}
+
+
+.mx_SpacePanel_sharePublicSpace {
+    margin: 0;
 }

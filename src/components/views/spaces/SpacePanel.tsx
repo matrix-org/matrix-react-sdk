@@ -67,7 +67,9 @@ const SpaceButton: React.FC<IButtonProps> = ({
 
     let notifBadge;
     if (notificationState) {
-        notifBadge = <NotificationBadge forceCount={false} notification={notificationState} />;
+        notifBadge = <div className="mx_SpacePanel_badgeContainer">
+            <NotificationBadge forceCount={false} notification={notificationState} />
+        </div>;
     }
 
     let button;
@@ -188,7 +190,10 @@ const SpacePanel = () => {
     // TODO drag and drop for re-arranging order
     return <RovingTabIndexProvider handleHomeEnd={true} onKeyDown={onKeyDown}>
         {({onKeyDownHandler}) => (
-            <ul className="mx_SpacePanel" onKeyDown={onKeyDownHandler}>
+            <ul
+                className={classNames("mx_SpacePanel", { collapsed: isPanelCollapsed })}
+                onKeyDown={onKeyDownHandler}
+            >
                 <AutoHideScrollbar className="mx_SpacePanel_spaceTreeWrapper">
                     <div className="mx_SpaceTreeLevel">
                         <SpaceButton
