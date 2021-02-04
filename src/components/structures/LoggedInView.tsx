@@ -216,6 +216,7 @@ class LoggedInView extends React.Component<IProps, IState> {
 
     _createResizer() {
         let size;
+        let collapsed;
         const collapseConfig: ICollapseConfig = {
             // TODO: the space panel currently does not have a fixed width,
             // just the headers at each level have a max-width of 150px
@@ -225,8 +226,9 @@ class LoggedInView extends React.Component<IProps, IState> {
             // To fix this, we'll need to turn toggleSize
             // into a callback so it can be measured when starting the resize operation
             toggleSize: 222 + 68,
-            onCollapsed: (collapsed) => {
-                if (collapsed) {
+            onCollapsed: (_collapsed) => {
+                collapsed = _collapsed;
+                if (_collapsed) {
                     dis.dispatch({action: "hide_left_panel"}, true);
                     window.localStorage.setItem("mx_lhs_size", '0');
                 } else {
@@ -241,7 +243,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                 this.props.resizeNotifier.startResizing();
             },
             onResizeStop: () => {
-                window.localStorage.setItem("mx_lhs_size", '' + size);
+                if (!collapsed) window.localStorage.setItem("mx_lhs_size", '' + size);
                 this.props.resizeNotifier.stopResizing();
             },
             isItemCollapsed: domNode => {
@@ -432,6 +434,14 @@ class LoggedInView extends React.Component<IProps, IState> {
                 if (ctrlCmdOnly) {
                     dis.dispatch({
                         action: 'focus_room_filter',
+                    });
+                    handled = true;
+                }
+                break;
+            case Key.F:
+                if (ctrlCmdOnly && SettingsStore.getValue("ctrlFForSearch")) {
+                    dis.dispatch({
+                        action: 'focus_search',
                     });
                     handled = true;
                 }

@@ -84,6 +84,7 @@ import { CallError } from "matrix-js-sdk/src/webrtc/call";
 import { logger } from 'matrix-js-sdk/src/logger';
 import { Action } from './dispatcher/actions';
 import { roomForVirtualRoom, getOrCreateVirtualRoomForRoom } from './VoipUserMapper';
+import { addManagedHybridWidget, isManagedHybridWidgetEnabled } from './widgets/ManagedHybrid';
 
 const CHECK_PSTN_SUPPORT_ATTEMPTS = 3;
 
@@ -356,6 +357,7 @@ export default class CallHandler {
                     this.play(AudioID.Ringback);
                     break;
                 case CallState.Ended:
+                {
                     Analytics.trackEvent('voip', 'callEnded', 'hangupReason', call.hangupReason);
                     this.removeCallForRoom(mappedRoomId);
                     if (oldState === CallState.InviteSent && (
@@ -393,6 +395,10 @@ export default class CallHandler {
                         // don't play the end-call sound for calls that never got off the ground
                         this.play(AudioID.CallEnd);
                     }
+
+                    this.logCallStats(call, mappedRoomId);
+                    break;
+                }
             }
         });
         call.on(CallEvent.Replaced, (newCall: MatrixCall) => {
@@ -410,6 +416,42 @@ export default class CallHandler {
             this.setCallListeners(newCall);
             this.setCallState(newCall, newCall.state);
         });
+    }
+
+    private async logCallStats(call: MatrixCall, mappedRoomId: string) {
+        const stats = await call.getCurrentCallStats();
+        logger.debug(
+            `Call completed. Call ID: ${call.callId}, virtual room ID: ${call.roomId}, ` +
+            `user-facing room ID: ${mappedRoomId}, direction: ${call.direction}, ` +
+            `our Party ID: ${call.ourPartyId}, hangup party: ${call.hangupParty}, ` +
+            `hangup reason: ${call.hangupReason}`,
+        );
+        logger.debug("Local candidates:");
+        for (const cand of stats.filter(item => item.type === 'local-candidate')) {
+            const address = cand.address || cand.ip; // firefox uses 'address', chrome uses 'ip'
+            logger.debug(
+                `${cand.id} - type: ${cand.candidateType}, address: ${address}, port: ${cand.port}, ` +
+                `protocol: ${cand.protocol}, relay protocol: ${cand.relayProtocol}, network type: ${cand.networkType}`,
+            );
+        }
+        logger.debug("Remote candidates:");
+        for (const cand of stats.filter(item => item.type === 'remote-candidate')) {
+            const address = cand.address || cand.ip; // firefox uses 'address', chrome uses 'ip'
+            logger.debug(
+                `${cand.id} - type: ${cand.candidateType}, address: ${address}, port: ${cand.port}, ` +
+                `protocol: ${cand.protocol}`,
+            );
+        }
+        logger.debug("Candidate pairs:");
+        for (const pair of stats.filter(item => item.type === 'candidate-pair')) {
+            logger.debug(
+                `${pair.localCandidateId} / ${pair.remoteCandidateId} - state: ${pair.state}, ` +
+                `nominated: ${pair.nominated}, ` +
+                `requests sent ${pair.requestsSent}, requests received  ${pair.requestsReceived},  ` +
+                `responses received: ${pair.responsesReceived}, responses sent: ${pair.responsesSent}, ` +
+                `bytes received: ${pair.bytesReceived}, bytes sent: ${pair.bytesSent}, `,
+            );
+        }
     }
 
     private setCallAudioElement(call: MatrixCall) {
@@ -540,6 +582,12 @@ export default class CallHandler {
         switch (payload.action) {
             case 'place_call':
                 {
+                    // We might be using managed hybrid widgets
+                    if (isManagedHybridWidgetEnabled()) {
+                        addManagedHybridWidget(payload.room_id);
+                        return;
+                    }
+
                     // if the runtime env doesn't do VoIP, whine.
                     if (!MatrixClientPeg.get().supportsVoip()) {
                         Modal.createTrackedDialog('Call Handler', 'VoIP is unsupported', ErrorDialog, {
