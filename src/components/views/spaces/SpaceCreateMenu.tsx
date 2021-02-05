@@ -107,13 +107,13 @@ const SpaceCreateMenu = ({ onFinished }) => {
             <SpaceCreateMenuType
                 title={_t("Public")}
                 description={_t("Open space for anyone, best for communities")}
-                className="mx_SpaceCreateMenuType_community"
+                className="mx_SpaceCreateMenuType_public"
                 onClick={() => setVisibility(Visibility.Public)}
             />
             <SpaceCreateMenuType
                 title={_t("Private")}
                 description={_t("Invite only space, best for yourself or teams")}
-                className="mx_SpaceCreateMenuType_workspace"
+                className="mx_SpaceCreateMenuType_private"
                 onClick={() => setVisibility(Visibility.Private)}
             />
 
@@ -136,7 +136,7 @@ const SpaceCreateMenu = ({ onFinished }) => {
             </h2>
             <p>
                 {
-                    _t("Give it a memorable name and photo to help you identify it.")
+                    _t("Give it a photo, name and description to help you identify it.")
                 } {
                     _t("You can change these at any point.")
                 }
