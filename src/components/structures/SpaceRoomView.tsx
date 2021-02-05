@@ -48,7 +48,7 @@ import {RightPanelPhases} from "../../stores/RightPanelStorePhases";
 import {SetRightPanelPhasePayload} from "../../dispatcher/payloads/SetRightPanelPhasePayload";
 import {useStateArray} from "../../hooks/useStateArray";
 import SpacePublicShare from "../views/spaces/SpacePublicShare";
-import {makeSpaceParentEvent, showAddExistingRooms, showCreateNewRoom, showSpaceSettings} from "../../utils/space";
+import {makeSpaceParentEvent, showAddExistingRooms, showCreateNewRoom, shouldShowSpaceSettings} from "../../utils/space";
 
 interface IProps {
     space: Room;
@@ -148,7 +148,7 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
     }
 
     let settingsButton;
-    if (showSpaceSettings(cli, space)) {
+    if (shouldShowSpaceSettings(cli, space)) {
         settingsButton = <AccessibleButton className="mx_SpaceRoomView_landing_settingsButton" onClick={() => {
             defaultDispatcher.dispatch<OpenSpaceSettingsPayload>({
                 action: Action.OpenSpaceSettings,

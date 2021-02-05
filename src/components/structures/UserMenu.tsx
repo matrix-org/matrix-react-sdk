@@ -60,7 +60,7 @@ import RoomAvatar from "../views/avatars/RoomAvatar";
 import { OpenSpaceSettingsPayload } from "../../dispatcher/payloads/OpenSpaceSettingsPayload";
 import { SetRightPanelPhasePayload } from "../../dispatcher/payloads/SetRightPanelPhasePayload";
 import SpacePublicShare from "../views/spaces/SpacePublicShare";
-import { showSpaceSettings } from "../../utils/space";
+import { shouldShowSpaceSettings } from "../../utils/space";
 
 interface IProps {
     isMinimized: boolean;
@@ -496,7 +496,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
 
             let settingsOption;
             let leaveOption;
-            if (showSpaceSettings(MatrixClientPeg.get(), this.state.selectedSpace)) {
+            if (shouldShowSpaceSettings(MatrixClientPeg.get(), this.state.selectedSpace)) {
                 settingsOption = (
                     <IconizedContextMenuOption
                         iconClassName="mx_UserMenu_iconSettings"

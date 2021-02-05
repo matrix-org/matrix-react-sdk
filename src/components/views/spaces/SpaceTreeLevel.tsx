@@ -44,7 +44,7 @@ import {RightPanelPhases} from "../../../stores/RightPanelStorePhases";
 import {showSpaceInviteDialog} from "../../../RoomInvite";
 import InfoDialog from "../dialogs/InfoDialog";
 import {EventType} from "matrix-js-sdk/src/@types/event";
-import SpaceRoomDirectory from "../../structures/SpaceRoomDirectory";
+// import SpaceRoomDirectory from "../../structures/SpaceRoomDirectory";
 
 interface IItemProps {
     space?: Room;
@@ -196,9 +196,9 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
         ev.preventDefault();
         ev.stopPropagation();
 
-        Modal.createTrackedDialog("Space room directory", "Space panel", SpaceRoomDirectory, {
-            space: this.props.space,
-        }, "mx_SpaceRoomDirectory_dialogWrapper", false, true);
+        // Modal.createTrackedDialog("Space room directory", "Space panel", SpaceRoomDirectory, {
+        //     space: this.props.space,
+        // }, "mx_SpaceRoomDirectory_dialogWrapper", false, true);
         this.setState({contextMenuPosition: null}); // also close the menu
     };
 
