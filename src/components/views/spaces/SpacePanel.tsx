@@ -29,7 +29,11 @@ import SpaceStore, {HOME_SPACE, UPDATE_SELECTED_SPACE, UPDATE_TOP_LEVEL_SPACES} 
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import {SpaceNotificationState} from "../../../stores/notifications/SpaceNotificationState";
 import NotificationBadge from "../rooms/NotificationBadge";
-import {RovingAccessibleTooltipButton, RovingTabIndexProvider} from "../../../accessibility/RovingTabIndex";
+import {
+    RovingAccessibleButton,
+    RovingAccessibleTooltipButton,
+    RovingTabIndexProvider,
+} from "../../../accessibility/RovingTabIndex";
 import {Key} from "../../../Keyboard";
 
 interface IButtonProps {
@@ -38,6 +42,7 @@ interface IButtonProps {
     selected?: boolean;
     tooltip?: string;
     notificationState?: SpaceNotificationState;
+    isNarrow?: boolean;
     onClick(): void;
 }
 
@@ -48,29 +53,51 @@ const SpaceButton: React.FC<IButtonProps> = ({
     onClick,
     tooltip,
     notificationState,
+    isNarrow,
     children,
 }) => {
     const classes = classNames("mx_SpaceButton", className, {
         mx_SpaceButton_active: selected,
     });
 
-    let avatar;
+    let avatar = <div className="mx_SpaceButton_avatarPlaceholder" />;
     if (space) {
         avatar = <RoomAvatar width={32} height={32} room={space} />;
     }
 
     let notifBadge;
     if (notificationState) {
-        notifBadge = <NotificationBadge forceCount={false} notification={notificationState} />;
+        notifBadge = <div className="mx_SpacePanel_badgeContainer">
+            <NotificationBadge forceCount={false} notification={notificationState} />
+        </div>;
     }
 
-    return (
-        <RovingAccessibleTooltipButton className={classes} title={tooltip} onClick={onClick}>
-            { avatar }
-            { notifBadge }
-            { children }
-        </RovingAccessibleTooltipButton>
-    );
+    let button;
+    if (isNarrow) {
+        button = (
+            <RovingAccessibleTooltipButton className={classes} title={tooltip} onClick={onClick} role="treeitem">
+                { avatar }
+                { notifBadge }
+                { children }
+            </RovingAccessibleTooltipButton>
+        );
+    } else {
+        button = (
+            <RovingAccessibleButton className={classes} onClick={onClick} role="treeitem">
+                { avatar }
+                <span className="mx_SpaceButton_name">{ tooltip }</span>
+                { notifBadge }
+                { children }
+            </RovingAccessibleButton>
+        );
+    }
+
+    return <li className={classNames({
+        "mx_SpaceItem": true,
+        "collapsed": isNarrow,
+    })}>
+        { button }
+    </li>;
 }
 
 const useSpaces = (): [Room[], Room | null] => {
@@ -163,18 +190,20 @@ const SpacePanel = () => {
     // TODO drag and drop for re-arranging order
     return <RovingTabIndexProvider handleHomeEnd={true} onKeyDown={onKeyDown}>
         {({onKeyDownHandler}) => (
-            <div className="mx_SpacePanel" onKeyDown={onKeyDownHandler}>
+            <ul
+                className={classNames("mx_SpacePanel", { collapsed: isPanelCollapsed })}
+                onKeyDown={onKeyDownHandler}
+            >
                 <AutoHideScrollbar className="mx_SpacePanel_spaceTreeWrapper">
-                    <ul className="mx_SpaceTreeLevel">
-                        <li className="mx_SpaceItem">
-                            <SpaceButton
-                                className="mx_SpaceButton_home"
-                                onClick={() => SpaceStore.instance.setActiveSpace(null)}
-                                selected={!activeSpace}
-                                tooltip={_t("Home")}
-                                notificationState={SpaceStore.instance.getNotificationState(HOME_SPACE)}
-                            />
-                        </li>
+                    <div className="mx_SpaceTreeLevel">
+                        <SpaceButton
+                            className="mx_SpaceButton_home"
+                            onClick={() => SpaceStore.instance.setActiveSpace(null)}
+                            selected={!activeSpace}
+                            tooltip={_t("Home")}
+                            notificationState={SpaceStore.instance.getNotificationState(HOME_SPACE)}
+                            isNarrow={isPanelCollapsed}
+                        />
                         { spaces.map(s => <SpaceItem
                             key={s.roomId}
                             space={s}
@@ -182,14 +211,13 @@ const SpacePanel = () => {
                             isPanelCollapsed={isPanelCollapsed}
                             onExpand={() => setPanelCollapsed(false)}
                         />) }
-                    </ul>
-                    <div className="mx_SpacePanel_newWrapper">
-                        <SpaceButton
-                            className={newClasses}
-                            tooltip={menuDisplayed ? _t("Cancel") : _t("Create a space")}
-                            onClick={menuDisplayed ? closeMenu : openMenu}
-                        />
                     </div>
+                    <SpaceButton
+                        className={newClasses}
+                        tooltip={menuDisplayed ? _t("Cancel") : _t("Create a space")}
+                        onClick={menuDisplayed ? closeMenu : openMenu}
+                        isNarrow={isPanelCollapsed}
+                    />
                 </AutoHideScrollbar>
                 <AccessibleTooltipButton
                     className={classNames("mx_SpacePanel_toggleCollapse", {expanded: !isPanelCollapsed})}
@@ -197,7 +225,7 @@ const SpacePanel = () => {
                     title={expandCollapseButtonTitle}
                 />
                 { contextMenu }
-            </div>
+            </ul>
         )}
     </RovingTabIndexProvider>
 };
