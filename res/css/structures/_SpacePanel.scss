@@ -71,6 +71,13 @@ $activeStripeSize: 4px;
     }
 
     .mx_SpaceItem.collapsed {
+        .mx_SpaceButton {
+            .mx_NotificationBadge {
+                right: -4px;
+                top: -4px;
+            }
+        }
+
         & > .mx_SpaceButton > .mx_SpaceButton_toggleCollapse {
             transform: rotate(-90deg);
         }
@@ -253,15 +260,6 @@ $activeStripeSize: 4px;
 
             .mx_SpaceButton_menuButton {
                 display: block;
-            }
-        }
-    }
-
-    .mx_SpaceItem.collapsed {
-        .mx_SpaceButton {
-            .mx_NotificationBadge {
-                right: -4px;
-                top: -4px;
             }
         }
     }
