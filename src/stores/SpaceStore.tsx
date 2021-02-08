@@ -110,10 +110,21 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         }, roomId);
     }
 
+    private static getOrder = (ev: MatrixEvent): string | null => {
+        const content = ev.getContent();
+        if (typeof content.order === "string" && Array.from(content.order).every((c: string) => {
+            const charCode = c.charCodeAt(0);
+            return charCode >= 0x20 && charCode <= 0x7F;
+        })) {
+            return content.order;
+        }
+        return null;
+    };
+
     private getChildren(spaceId: string): Room[] {
         const room = this.matrixClient?.getRoom(spaceId);
-        return room?.currentState.getStateEvents(EventType.SpaceChild)
-            .filter(ev => ev.getContent()?.via)
+        const childEvents = room?.currentState.getStateEvents(EventType.SpaceChild).filter(ev => ev.getContent()?.via);
+        return sortBy(childEvents, SpaceStoreClass.getOrder)
             .map(ev => this.matrixClient.getRoom(ev.getStateKey()))
             .filter(Boolean) || [];
     }
