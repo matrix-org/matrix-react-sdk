@@ -33,6 +33,7 @@ import {shouldShowSpaceSettings} from "../../utils/space";
 import {EnhancedMap} from "../../utils/maps";
 import StyledCheckbox from "../views/elements/StyledCheckbox";
 import AutoHideScrollbar from "./AutoHideScrollbar";
+import BaseAvatar from "../views/avatars/BaseAvatar";
 
 interface IProps {
     space: Room;
@@ -77,16 +78,18 @@ interface ISubspaceProps {
 const SubSpace: React.FC<ISubspaceProps> = ({ space, editing, event, onRemoveFromSpaceClick, children }) => {
     const name = space.name || space.canonical_alias || space.aliases?.[0] || _t("Unnamed Space");
 
-    const oobData = {
-        roomId: space.room_id,
-        avatarUrl: space.avatar_url,
-        name,
-    };
+    let url;
+    if (space.avatar_url) {
+        url = MatrixClientPeg.get().mxcUrlToHttp(space.avatar_url,
+            Math.floor(24 * window.devicePixelRatio),
+            Math.floor(24 * window.devicePixelRatio),
+            "crop");
+    }
 
     // TODO add preview/join/already in for subspaces
     return <div className="mx_SpaceRoomDirectory_subspace">
         <div className="mx_SpaceRoomDirectory_subspace_info">
-            <RoomAvatar oobData={oobData} width={24} height={24} />
+            <BaseAvatar name={name} idName={space.room_id} url={url} width={24} height={24} />
             { name }
 
             {/*<FormButton kind="danger" onClick={onRemoveFromSpaceClick} label={_t("Remove from Space")} />
@@ -112,12 +115,6 @@ interface IRoomTileProps {
 
 const RoomTile = ({ room, event, editing, onRemoveFromSpaceClick, onPreviewClick, onJoinClick }: IRoomTileProps) => {
     const name = room.name || room.canonical_alias || room.aliases?.[0] || _t("Unnamed Room");
-
-    const oobData = {
-        roomId: room.room_id,
-        avatarUrl: room.avatar_url,
-        name,
-    };
 
     // TODO consider event for both inSpace (via) && auto_join
     // send back to top level event contents/state keys etc to update on `Save`
@@ -160,8 +157,16 @@ const RoomTile = ({ room, event, editing, onRemoveFromSpaceClick, onPreviewClick
         }
     }
 
+    let url;
+    if (room.avatar_url) {
+        url = cli.mxcUrlToHttp(room.avatar_url,
+            Math.floor(32 * window.devicePixelRatio),
+            Math.floor(32 * window.devicePixelRatio),
+            "crop");
+    }
+
     return <AccessibleButton className="mx_SpaceRoomDirectory_roomTile" onClick={onPreviewClick}>
-        <RoomAvatar oobData={oobData} height={32} width={32} />
+        <BaseAvatar name={name} idName={room.room_id} url={url} width={32} height={32} />
 
         <div className="mx_SpaceRoomDirectory_roomTile_info">
             <div className="mx_SpaceRoomDirectory_roomTile_name">
