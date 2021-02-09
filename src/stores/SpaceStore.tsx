@@ -64,8 +64,6 @@ const getRoomFn: FetchRoomFn = (room: Room) => {
 export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     constructor() {
         super(defaultDispatcher, {});
-
-        if (!SettingsStore.getValue("feature_spaces")) return;
     }
 
     // The spaces representing the roots of the various tree-like hierarchies

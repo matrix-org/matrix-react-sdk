@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useMemo, useState} from "react";
+import React, {useMemo, useRef, useState} from "react";
 import Room from "matrix-js-sdk/src/models/room";
 import MatrixEvent from "matrix-js-sdk/src/models/event";
 import {EventType, RoomType} from "matrix-js-sdk/src/@types/event";
@@ -62,7 +62,11 @@ export interface ISpaceSummaryEvent {
     origin_server_ts: number;
     type: string;
     state_key: string;
-    content: object;
+    content: {
+        order?: string;
+        auto_join?: boolean;
+        via?: string;
+    };
 }
 /* eslint-enable camelcase */
 
@@ -104,17 +108,49 @@ const SubSpace: React.FC<ISubspaceProps> = ({ space, editing, event, onRemoveFro
     </div>
 };
 
+interface IAction {
+    event: MatrixEvent;
+    removed: boolean;
+    autoJoin: boolean;
+}
+
 interface IRoomTileProps {
     room: ISpaceSummaryRoom;
     event?: MatrixEvent;
     editing?: boolean;
     onPreviewClick(): void;
-    onRemoveFromSpaceClick?(): void;
+    queueAction(action: IAction): void;
     onJoinClick?(): void;
 }
 
-const RoomTile = ({ room, event, editing, onRemoveFromSpaceClick, onPreviewClick, onJoinClick }: IRoomTileProps) => {
+const RoomTile = ({ room, event, editing, queueAction, onPreviewClick, onJoinClick }: IRoomTileProps) => {
     const name = room.name || room.canonical_alias || room.aliases?.[0] || _t("Unnamed Room");
+
+    const evContent = event?.getContent();
+    const [autoJoin, _setAutoJoin] = useState(evContent?.auto_join);
+    const [removed, _setRemoved] = useState(!evContent?.via);
+
+    const setAutoJoin = () => {
+        _setAutoJoin(v => {
+            queueAction({
+                event,
+                removed,
+                autoJoin: !v,
+            });
+            return !v;
+        });
+    };
+
+    const setRemoved = () => {
+        _setRemoved(v => {
+            queueAction({
+                event,
+                removed: !v,
+                autoJoin,
+            });
+            return !v;
+        });
+    };
 
     // TODO consider event for both inSpace (via) && auto_join
     // send back to top level event contents/state keys etc to update on `Save`
@@ -126,13 +162,16 @@ const RoomTile = ({ room, event, editing, onRemoveFromSpaceClick, onPreviewClick
     let actions;
     if (editing) {
         if (event) {
-            actions = <React.Fragment>
-                <FormButton kind="danger" onClick={onRemoveFromSpaceClick} label={_t("Remove from Space")} />
-                <StyledCheckbox
-                    checked={!!event.getContent().auto_join}
-                    onChange={() => {}}
-                />
-            </React.Fragment>
+            if (removed) {
+                actions = <React.Fragment>
+                    <FormButton kind="danger" onClick={setRemoved} label={_t("Undo")} />
+                </React.Fragment>;
+            } else {
+                actions = <React.Fragment>
+                    <FormButton kind="danger" onClick={setRemoved} label={_t("Remove from Space")} />
+                    <StyledCheckbox checked={autoJoin} onChange={setAutoJoin} />
+                </React.Fragment>;
+            }
         } else {
             actions = <span className="mx_SpaceRoomDirectory_roomTile_actionsText">
                 { _t("No permissions")}
@@ -165,7 +204,7 @@ const RoomTile = ({ room, event, editing, onRemoveFromSpaceClick, onPreviewClick
             "crop");
     }
 
-    return <AccessibleButton className="mx_SpaceRoomDirectory_roomTile" onClick={onPreviewClick}>
+    const content = <React.Fragment>
         <BaseAvatar name={name} idName={room.room_id} url={url} width={32} height={32} />
 
         <div className="mx_SpaceRoomDirectory_roomTile_info">
@@ -183,6 +222,16 @@ const RoomTile = ({ room, event, editing, onRemoveFromSpaceClick, onPreviewClick
         <div className="mx_SpaceRoomDirectory_roomTile_actions">
             { actions }
         </div>
+    </React.Fragment>;
+
+    if (editing) {
+        return <div className="mx_SpaceRoomDirectory_roomTile">
+            { content }
+        </div>
+    }
+
+    return <AccessibleButton className="mx_SpaceRoomDirectory_roomTile" onClick={onPreviewClick}>
+        { content }
     </AccessibleButton>;
 };
 
@@ -219,6 +268,7 @@ interface IHierarchyLevelProps {
     editing?: boolean;
     relations: EnhancedMap<string, string[]>;
     parents: Set<string>;
+    queueAction(action: IAction): void;
     onPreviewClick(roomId: string): void;
     onRemoveFromSpaceClick?(roomId: string): void;
     onJoinClick?(roomId: string, parents: Set<string>): void;
@@ -232,9 +282,11 @@ export const HierarchyLevel = ({
     parents,
     onPreviewClick,
     onJoinClick,
+    queueAction,
 }: IHierarchyLevelProps) => {
     const cli = MatrixClientPeg.get();
     const space = cli.getRoom(spaceId);
+    // TODO respect order
     const [subspaces, childRooms] = relations.get(spaceId)?.reduce((result, roomId: string) => {
         if (!rooms.has(roomId)) return result; // TODO wat
         result[rooms.get(roomId).room_type === RoomType.Space ? 0 : 1].push(roomId);
@@ -258,9 +310,7 @@ export const HierarchyLevel = ({
                         ? space?.currentState.getStateEvents(EventType.SpaceChild, roomId)
                         : undefined}
                     editing={editing}
-                    onRemoveFromSpaceClick={() => {
-                        console.log("@@ remove room from space", roomId);
-                    }}
+                    queueAction={queueAction}
                     onPreviewClick={() => {
                         onPreviewClick(roomId);
                     }}
@@ -296,6 +346,7 @@ export const HierarchyLevel = ({
                         parents={newParents}
                         onPreviewClick={onPreviewClick}
                         onJoinClick={onJoinClick}
+                        queueAction={queueAction}
                     />
                 </SubSpace>
             ))
@@ -317,6 +368,9 @@ const SpaceRoomDirectory: React.FC<IProps> = ({ space, initialText = "", onFinis
         onFinished();
     };
 
+    // stored within a ref as we don't need to re-render when it changes
+    const pendingActions = useRef(new Map<string, IAction>());
+
     let adminButton;
     if (shouldShowSpaceSettings(cli, space)) { // TODO this is an imperfect test
         const onManageButtonClicked = () => {
@@ -324,7 +378,19 @@ const SpaceRoomDirectory: React.FC<IProps> = ({ space, initialText = "", onFinis
         };
 
         const onSaveButtonClicked = () => {
-            // TODO
+            // TODO setBusy
+            pendingActions.current.forEach(({event, autoJoin, removed}) => {
+                const content = {
+                    ...event.getContent(),
+                    auto_join: autoJoin,
+                };
+
+                if (removed) {
+                    delete content["via"];
+                }
+
+                cli.sendStateEvent(event.getRoomId(), event.getType(), content, event.getStateKey());
+            });
             setIsEditing(false);
         };
 
@@ -399,6 +465,9 @@ const SpaceRoomDirectory: React.FC<IProps> = ({ space, initialText = "", onFinis
                 editing={isEditing}
                 relations={relations}
                 parents={new Set()}
+                queueAction={action => {
+                    pendingActions.current.set(action.event.room_id, action);
+                }}
                 onPreviewClick={roomId => {
                     showRoom(roomsMap.get(roomId), Array.from(viaMap.get(roomId) || []), false);
                     onFinished();

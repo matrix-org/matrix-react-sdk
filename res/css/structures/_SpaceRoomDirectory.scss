@@ -142,7 +142,7 @@ limitations under the License.
         min-height: 76px;
         box-sizing: border-box;
 
-        &:hover {
+        &.mx_AccessibleButton:hover {
             background-color: rgba(141, 151, 165, 0.1);
         }
 
@@ -198,6 +198,8 @@ limitations under the License.
             margin: auto 0 auto 28px;
 
             .mx_AccessibleButton {
+                vertical-align: middle;
+
                 & + .mx_AccessibleButton {
                     margin-left: 24px;
                 }
@@ -211,7 +213,6 @@ limitations under the License.
 
             .mx_Checkbox {
                 display: inline-block;
-                vertical-align: text-bottom;
             }
         }
     }
