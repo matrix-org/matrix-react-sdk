@@ -265,7 +265,7 @@ export default class HostSignupDialog extends React.PureComponent<IProps, IState
                                 <iframe
                                     src={this.config.url}
                                     ref={this.iframeRef}
-                                    sandbox="allow-forms allow-scripts allow-same-origin allow-popups"
+                                    sandbox="allow-forms allow-scripts allow-popups"
                                 />
                             }
                         </div>
