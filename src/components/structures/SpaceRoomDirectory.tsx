@@ -130,28 +130,6 @@ const RoomTile = ({ room, event, editing, queueAction, onPreviewClick, onJoinCli
     const [autoJoin, _setAutoJoin] = useState(evContent?.auto_join);
     const [removed, _setRemoved] = useState(!evContent?.via);
 
-    const setAutoJoin = () => {
-        _setAutoJoin(v => {
-            queueAction({
-                event,
-                removed,
-                autoJoin: !v,
-            });
-            return !v;
-        });
-    };
-
-    const setRemoved = () => {
-        _setRemoved(v => {
-            queueAction({
-                event,
-                removed: !v,
-                autoJoin,
-            });
-            return !v;
-        });
-    };
-
     // TODO consider event for both inSpace (via) && auto_join
     // send back to top level event contents/state keys etc to update on `Save`
     // uniq keyed by Parent ID + Child ID
@@ -160,8 +138,30 @@ const RoomTile = ({ room, event, editing, queueAction, onPreviewClick, onJoinCli
     const myMembership = cli.getRoom(room.room_id)?.getMyMembership();
 
     let actions;
-    if (editing) {
+    if (editing && queueAction) {
         if (event) {
+            const setAutoJoin = () => {
+                _setAutoJoin(v => {
+                    queueAction({
+                        event,
+                        removed,
+                        autoJoin: !v,
+                    });
+                    return !v;
+                });
+            };
+
+            const setRemoved = () => {
+                _setRemoved(v => {
+                    queueAction({
+                        event,
+                        removed: !v,
+                        autoJoin,
+                    });
+                    return !v;
+                });
+            };
+
             if (removed) {
                 actions = <React.Fragment>
                     <FormButton kind="danger" onClick={setRemoved} label={_t("Undo")} />
@@ -268,7 +268,7 @@ interface IHierarchyLevelProps {
     editing?: boolean;
     relations: EnhancedMap<string, string[]>;
     parents: Set<string>;
-    queueAction(action: IAction): void;
+    queueAction?(action: IAction): void;
     onPreviewClick(roomId: string): void;
     onRemoveFromSpaceClick?(roomId: string): void;
     onJoinClick?(roomId: string, parents: Set<string>): void;
