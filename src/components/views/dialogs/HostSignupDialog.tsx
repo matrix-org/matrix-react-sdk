@@ -59,6 +59,9 @@ export default class HostSignupDialog extends React.PureComponent<IProps, IState
     }
 
     private messageHandler = async (message: IPostmessage) => {
+        console.log('-------------------')
+        console.log(message.origin);
+        console.log(message.data && message.data.action);
         if (!this.config.url.startsWith(message.origin)) {
             return;
         }
