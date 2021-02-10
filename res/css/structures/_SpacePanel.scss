@@ -103,6 +103,18 @@ $activeStripeSize: 4px;
         margin-bottom: 16px;
         display: flex;
         align-items: center;
+        &.mx_SpaceButton_active {
+            &:not(.mx_SpaceButton_narrow) .mx_SpaceButton_selectionWrapper {
+                background-color: $activeBackgroundColor; //rgba(112, 124, 143, 0.2)
+                border-radius: 8px;
+            }
+        }
+
+        .mx_SpaceButton_selectionWrapper {
+            display: flex;
+            flex: 1;
+            align-items: center;
+        }
 
         .mx_SpaceButton_name {
             flex: 1;
@@ -112,7 +124,8 @@ $activeStripeSize: 4px;
             max-width: 150px;
             text-overflow: ellipsis;
             overflow: hidden;
-
+        font-size: $font-14px;
+ 
             font-size: $font-14px;
             line-height: $font-18px;
         }
@@ -126,19 +139,6 @@ $activeStripeSize: 4px;
             mask-repeat: no-repeat;
             background-color: $roomlist-header-color;
             mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
-        }
-
-        &.mx_SpaceButton_active {
-            &::before {
-                position: absolute;
-                content: '';
-                width: $activeStripeSize;
-                top: 0;
-                left: 0;
-                bottom: 0;
-                background-color: $accent-color;
-                border-radius: 0 4px 4px 0;
-            }
         }
 
         .mx_SpaceButton_avatarPlaceholder {

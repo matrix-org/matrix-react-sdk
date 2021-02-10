@@ -347,9 +347,11 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
                     role="treeitem"
                 >
                     { toggleCollapseButton }
-                    <RoomAvatar width={avatarSize} height={avatarSize} room={space} />
-                    { notifBadge }
-                    { this.renderContextMenu() }
+                    <div className="mx_SpaceButton_selectionWrapper">
+                        <RoomAvatar width={avatarSize} height={avatarSize} room={space} />
+                        { notifBadge }
+                        { this.renderContextMenu() }
+                    </div>
                 </RovingAccessibleTooltipButton>
             );
         } else {
@@ -361,10 +363,12 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
                     role="treeitem"
                 >
                     { toggleCollapseButton }
-                    <RoomAvatar width={avatarSize} height={avatarSize} room={space} />
-                    <span className="mx_SpaceButton_name">{ space.name }</span>
-                    { notifBadge }
-                    { this.renderContextMenu() }
+                    <div className="mx_SpaceButton_selectionWrapper">
+                        <RoomAvatar width={avatarSize} height={avatarSize} room={space} />
+                        <span className="mx_SpaceButton_name">{ space.name }</span>
+                        { notifBadge }
+                        { this.renderContextMenu() }
+                    </div>
                 </RovingAccessibleButton>
             );
         }
