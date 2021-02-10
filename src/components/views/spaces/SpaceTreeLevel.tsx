@@ -313,6 +313,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
         const classes = classNames("mx_SpaceButton", {
             mx_SpaceButton_active: isActive,
             mx_SpaceButton_hasMenuOpen: !!this.state.contextMenuPosition,
+            mx_SpaceButton_narrow: isNarrow,
         });
         const notificationState = SpaceStore.instance.getNotificationState(space.roomId);
         const childItems = childSpaces && !collapsed ? <SpaceTreeLevel

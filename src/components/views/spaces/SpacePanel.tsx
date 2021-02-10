@@ -58,9 +58,10 @@ const SpaceButton: React.FC<IButtonProps> = ({
 }) => {
     const classes = classNames("mx_SpaceButton", className, {
         mx_SpaceButton_active: selected,
+        mx_SpaceButton_narrow: isNarrow,
     });
 
-    let avatar = <div className="mx_SpaceButton_avatarPlaceholder" />;
+    let avatar = <div className="mx_SpaceButton_avatarPlaceholder"><div className="mx_SpaceButton_icon" /></div>;
     if (space) {
         avatar = <RoomAvatar width={32} height={32} room={space} />;
     }
