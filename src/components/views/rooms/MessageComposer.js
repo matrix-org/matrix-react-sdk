@@ -149,7 +149,10 @@ const EmojiButton = ({addEmoji}) => {
         const buttonRect = button.current.getBoundingClientRect();
         const EmojiPicker = sdk.getComponent('emojipicker.EmojiPicker');
         contextMenu = <ContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu} catchTab={false}>
-            <EmojiPicker onChoose={addEmoji} showQuickReactions={true} />
+            <EmojiPicker onChoose={(emoji) => {
+                addEmoji(emoji);
+                closeMenu();
+            }} showQuickReactions={true} />
         </ContextMenu>;
     }
 
