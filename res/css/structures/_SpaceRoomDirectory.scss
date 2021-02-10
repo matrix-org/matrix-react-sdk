@@ -110,6 +110,9 @@ limitations under the License.
         margin-top: 8px;
 
         .mx_SpaceRoomDirectory_subspace_info {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
             margin-bottom: 8px;
             color: $secondary-fg-color;
             font-weight: $font-semi-bold;
@@ -123,6 +126,13 @@ limitations under the License.
 
             .mx_BaseAvatar_image {
                 border-radius: 8px;
+            }
+
+            .mx_SpaceRoomDirectory_actions {
+                text-align: right;
+                height: min-content;
+                margin-left: auto;
+                margin-right: 16px;
             }
         }
 
@@ -191,7 +201,7 @@ limitations under the License.
             }
         }
 
-        .mx_SpaceRoomDirectory_roomTile_actions {
+        .mx_SpaceRoomDirectory_actions {
             width: 180px;
             text-align: right;
             height: min-content;
@@ -204,16 +214,19 @@ limitations under the License.
                     margin-left: 24px;
                 }
             }
+        }
+    }
 
-            .mx_SpaceRoomDirectory_roomTile_actionsText {
-                font-size: $font-12px;
-                line-height: $font-15px;
-                color: $secondary-fg-color;
-            }
+    .mx_SpaceRoomDirectory_actions {
+        .mx_SpaceRoomDirectory_actionsText {
+            font-weight: normal;
+            font-size: $font-12px;
+            line-height: $font-15px;
+            color: $secondary-fg-color;
+        }
 
-            .mx_Checkbox {
-                display: inline-block;
-            }
+        .mx_Checkbox {
+            display: inline-block;
         }
     }
 }

@@ -74,72 +74,34 @@ interface ISubspaceProps {
     space: ISpaceSummaryRoom;
     event?: MatrixEvent;
     editing?: boolean;
-    onRemoveFromSpaceClick?(): void;
     onPreviewClick?(): void;
+    queueAction?(action: IAction): void;
     onJoinClick?(): void;
 }
 
-const SubSpace: React.FC<ISubspaceProps> = ({ space, editing, event, onRemoveFromSpaceClick, children }) => {
+const SubSpace: React.FC<ISubspaceProps> = ({
+    space,
+    editing,
+    event,
+    queueAction,
+    onJoinClick,
+    onPreviewClick,
+    children,
+}) => {
     const name = space.name || space.canonical_alias || space.aliases?.[0] || _t("Unnamed Space");
-
-    let url;
-    if (space.avatar_url) {
-        url = MatrixClientPeg.get().mxcUrlToHttp(space.avatar_url,
-            Math.floor(24 * window.devicePixelRatio),
-            Math.floor(24 * window.devicePixelRatio),
-            "crop");
-    }
-
-    // TODO add preview/join/already in for subspaces
-    return <div className="mx_SpaceRoomDirectory_subspace">
-        <div className="mx_SpaceRoomDirectory_subspace_info">
-            <BaseAvatar name={name} idName={space.room_id} url={url} width={24} height={24} />
-            { name }
-
-            {/*<FormButton kind="danger" onClick={onRemoveFromSpaceClick} label={_t("Remove from Space")} />
-            <StyledCheckbox
-                checked={event.getContent().auto_join}
-                onChange={() => {}}
-            />*/}
-        </div>
-        <div className="mx_SpaceRoomDirectory_subspace_children">
-            { children }
-        </div>
-    </div>
-};
-
-interface IAction {
-    event: MatrixEvent;
-    removed: boolean;
-    autoJoin: boolean;
-}
-
-interface IRoomTileProps {
-    room: ISpaceSummaryRoom;
-    event?: MatrixEvent;
-    editing?: boolean;
-    onPreviewClick(): void;
-    queueAction(action: IAction): void;
-    onJoinClick?(): void;
-}
-
-const RoomTile = ({ room, event, editing, queueAction, onPreviewClick, onJoinClick }: IRoomTileProps) => {
-    const name = room.name || room.canonical_alias || room.aliases?.[0] || _t("Unnamed Room");
 
     const evContent = event?.getContent();
     const [autoJoin, _setAutoJoin] = useState(evContent?.auto_join);
     const [removed, _setRemoved] = useState(!evContent?.via);
 
-    // TODO consider event for both inSpace (via) && auto_join
-    // send back to top level event contents/state keys etc to update on `Save`
-    // uniq keyed by Parent ID + Child ID
-
     const cli = MatrixClientPeg.get();
-    const myMembership = cli.getRoom(room.room_id)?.getMyMembership();
+    const cliRoom = cli.getRoom(space.room_id);
+    const myMembership = cliRoom?.getMyMembership();
 
+    // TODO DRY code
     let actions;
     if (editing && queueAction) {
-        if (event) {
+        if (event && cliRoom?.currentState.maySendStateEvent(event.getType(), cli.getUserId())) {
             const setAutoJoin = () => {
                 _setAutoJoin(v => {
                     queueAction({
@@ -173,17 +135,123 @@ const RoomTile = ({ room, event, editing, queueAction, onPreviewClick, onJoinCli
                 </React.Fragment>;
             }
         } else {
-            actions = <span className="mx_SpaceRoomDirectory_roomTile_actionsText">
+            actions = <span className="mx_SpaceRoomDirectory_actionsText">
                 { _t("No permissions")}
             </span>;
         }
-        // TODO if editing && !event then user does not have permission, show this
-        // TODO check for permissions
-        // TODO add checkybox
         // TODO confirm remove from space click behaviour here
     } else {
         if (myMembership === "join") {
-            actions = <span className="mx_SpaceRoomDirectory_roomTile_actionsText">
+            actions = <span className="mx_SpaceRoomDirectory_actionsText">
+                { _t("You're in this space")}
+            </span>;
+        } else if (onJoinClick) {
+            actions = <React.Fragment>
+                <AccessibleButton onClick={onPreviewClick} kind="link">
+                    { _t("Preview") }
+                </AccessibleButton>
+                <FormButton onClick={onJoinClick} label={_t("Join")} />
+            </React.Fragment>
+        }
+    }
+
+    let url: string;
+    if (space.avatar_url) {
+        url = MatrixClientPeg.get().mxcUrlToHttp(space.avatar_url,
+            Math.floor(24 * window.devicePixelRatio),
+            Math.floor(24 * window.devicePixelRatio),
+            "crop");
+    }
+
+    return <div className="mx_SpaceRoomDirectory_subspace">
+        <div className="mx_SpaceRoomDirectory_subspace_info">
+            <BaseAvatar name={name} idName={space.room_id} url={url} width={24} height={24} />
+            { name }
+
+            <div className="mx_SpaceRoomDirectory_actions">
+                { actions }
+            </div>
+        </div>
+        <div className="mx_SpaceRoomDirectory_subspace_children">
+            { children }
+        </div>
+    </div>
+};
+
+interface IAction {
+    event: MatrixEvent;
+    removed: boolean;
+    autoJoin: boolean;
+}
+
+interface IRoomTileProps {
+    room: ISpaceSummaryRoom;
+    event?: MatrixEvent;
+    editing?: boolean;
+    onPreviewClick(): void;
+    queueAction?(action: IAction): void;
+    onJoinClick?(): void;
+}
+
+const RoomTile = ({ room, event, editing, queueAction, onPreviewClick, onJoinClick }: IRoomTileProps) => {
+    const name = room.name || room.canonical_alias || room.aliases?.[0] || _t("Unnamed Room");
+
+    const evContent = event?.getContent();
+    const [autoJoin, _setAutoJoin] = useState(evContent?.auto_join);
+    const [removed, _setRemoved] = useState(!evContent?.via);
+
+    // TODO consider event for both inSpace (via) && auto_join
+    // send back to top level event contents/state keys etc to update on `Save`
+    // uniq keyed by Parent ID + Child ID
+
+    const cli = MatrixClientPeg.get();
+    const cliRoom = cli.getRoom(room.room_id);
+    const myMembership = cliRoom?.getMyMembership();
+
+    let actions;
+    if (editing && queueAction) {
+        if (event && cliRoom?.currentState.maySendStateEvent(event.getType(), cli.getUserId())) {
+            const setAutoJoin = () => {
+                _setAutoJoin(v => {
+                    queueAction({
+                        event,
+                        removed,
+                        autoJoin: !v,
+                    });
+                    return !v;
+                });
+            };
+
+            const setRemoved = () => {
+                _setRemoved(v => {
+                    queueAction({
+                        event,
+                        removed: !v,
+                        autoJoin,
+                    });
+                    return !v;
+                });
+            };
+
+            if (removed) {
+                actions = <React.Fragment>
+                    <FormButton kind="danger" onClick={setRemoved} label={_t("Undo")} />
+                </React.Fragment>;
+            } else {
+                actions = <React.Fragment>
+                    <FormButton kind="danger" onClick={setRemoved} label={_t("Remove from Space")} />
+                    <StyledCheckbox checked={autoJoin} onChange={setAutoJoin} />
+                </React.Fragment>;
+            }
+        } else {
+            actions = <span className="mx_SpaceRoomDirectory_actionsText">
+                { _t("No permissions")}
+            </span>;
+        }
+        // TODO confirm remove from space click behaviour here
+    } else {
+        if (myMembership === "join") {
+            actions = <span className="mx_SpaceRoomDirectory_actionsText">
                 { _t("You're in this room")}
             </span>;
         } else if (onJoinClick) {
@@ -196,7 +264,7 @@ const RoomTile = ({ room, event, editing, queueAction, onPreviewClick, onJoinCli
         }
     }
 
-    let url;
+    let url: string;
     if (room.avatar_url) {
         url = cli.mxcUrlToHttp(room.avatar_url,
             Math.floor(32 * window.devicePixelRatio),
@@ -219,7 +287,7 @@ const RoomTile = ({ room, event, editing, queueAction, onPreviewClick, onJoinCli
             { room.num_joined_members }
         </div>
 
-        <div className="mx_SpaceRoomDirectory_roomTile_actions">
+        <div className="mx_SpaceRoomDirectory_actions">
             { actions }
         </div>
     </React.Fragment>;
@@ -328,9 +396,7 @@ export const HierarchyLevel = ({
                     space={rooms.get(roomId)}
                     event={space?.currentState.getStateEvents(EventType.SpaceChild, roomId)}
                     editing={editing}
-                    onRemoveFromSpaceClick={() => {
-                        console.log("@@ remove subspace from space", roomId);
-                    }}
+                    queueAction={queueAction}
                     onPreviewClick={() => {
                         onPreviewClick(roomId);
                     }}
