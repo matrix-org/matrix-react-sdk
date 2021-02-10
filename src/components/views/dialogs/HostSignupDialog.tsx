@@ -62,9 +62,12 @@ export default class HostSignupDialog extends React.PureComponent<IProps, IState
         console.log('-------------------')
         console.log(message.origin);
         console.log(message.data && message.data.action);
+        console.log(message.source);
         if (!this.config.url.startsWith(message.origin)) {
             return;
         }
+        // NOTE: Since our iframe is sandboxed with no same-origin allowed,
+        // we don't have access to the sender origin. We're going to
         switch (message.data.action) {
             case PostmessageAction.HostSignupAccountDetailsRequest:
                 this.onAccountDetailsRequest();

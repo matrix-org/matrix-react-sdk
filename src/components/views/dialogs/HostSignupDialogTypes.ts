@@ -44,6 +44,7 @@ export interface IPostmessageResponseData {
 export interface IPostmessage {
     data: IPostmessageRequestData;
     origin: string;
+    source: any;
 }
 
 interface ILink {
