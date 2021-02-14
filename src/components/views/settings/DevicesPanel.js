@@ -41,7 +41,7 @@ export default class DevicesPanel extends React.Component {
 
         this._renderDevice = this._renderDevice.bind(this);
         this._onDeviceSelectionToggled = this._onDeviceSelectionToggled.bind(this);
-        this._onSignOutClick = this._onSignOutClick.bind(this);
+        this._onDeleteClick = this._onDeleteClick.bind(this);
     }
 
     componentDidMount() {
@@ -109,7 +109,7 @@ export default class DevicesPanel extends React.Component {
         });
     }
 
-    _onSignOutClick() {
+    _onDeleteClick() {
         this.setState({
             deleting: true,
         });
@@ -147,14 +147,14 @@ export default class DevicesPanel extends React.Component {
             const signOutDevsDiv =
                 <div className="mx_DevicesPanel mx_DevicesPanel_signout_devices">
                     <div className="mx_DevicesPanel_header">
-                        <div className="mx_DevicesPanel_deviceId">{ _t("ID") }</div>
-                        <div className="mx_DevicesPanel_deviceName">{ _t("Public Name") }</div>
-                        <div className="mx_DevicesPanel_deviceLastSeen">{ _t("Last seen") }</div>
+                        <div className="mx_DevicesPanel_deviceId">{_t("ID")}</div>
+                        <div className="mx_DevicesPanel_deviceName">{_t("Public Name")}</div>
+                        <div className="mx_DevicesPanel_deviceLastSeen">{_t("Last seen")}</div>
                     </div>
-                    { signOutDevs.map(dev => this._renderDevice(dev, false)) }
+                    {signOutDevs.map(dev => this._renderDevice(dev, false))}
                 </div>;
-            Modal.createTrackedDialog('Sign Out Device Dialog', '', InteractiveAuthDialog, {
-                title: _t("Session Sign Out"),
+            Modal.createTrackedDialog('Delete Device Dialog', '', InteractiveAuthDialog, {
+                title: _t("Session Deletion"),
                 body: signOutDevsDiv,
                 matrixClient: MatrixClientPeg.get(),
                 authData: error.data,
@@ -207,7 +207,7 @@ export default class DevicesPanel extends React.Component {
             const classes = classNames(this.props.className, "error");
             return (
                 <div className={classes}>
-                    { this.state.deviceLoadError }
+                    { this.state.deviceLoadError}
                 </div>
             );
         }
@@ -221,14 +221,14 @@ export default class DevicesPanel extends React.Component {
 
         devices.sort(this._deviceCompare);
 
-        const signOutButton = this.state.deleting?
+        const deleteButton = this.state.deleting ?
             <Spinner w={22} h={22} /> :
             <AccessibleButton
-                onClick={this._onSignOutClick}
+                onClick={this._onDeleteClick}
                 kind="danger"
                 disabled={this.state.selectedDevices.length === 0}
             >
-               { _t("Sign out") }
+                {_t("Delete")}
             </AccessibleButton>;
 
         const classes = classNames(this.props.className, "mx_DevicesPanel");
@@ -236,14 +236,14 @@ export default class DevicesPanel extends React.Component {
             <div>
                 <div className={classes}>
                     <div className="mx_DevicesPanel_header">
-                        <div className="mx_DevicesPanel_deviceId">{ _t("ID") }</div>
-                        <div className="mx_DevicesPanel_deviceName">{ _t("Public Name") }</div>
-                        <div className="mx_DevicesPanel_deviceLastSeen">{ _t("Last seen") }</div>
+                        <div className="mx_DevicesPanel_deviceId">{_t("ID")}</div>
+                        <div className="mx_DevicesPanel_deviceName">{_t("Public Name")}</div>
+                        <div className="mx_DevicesPanel_deviceLastSeen">{_t("Last seen")}</div>
                     </div>
-                    { devices.map(dev => this._renderDevice(dev, true)) }
+                    {devices.map(dev => this._renderDevice(dev, true))}
                 </div>
                 <div className="mx_DevicesPanel_deviceButtons">
-                    { signOutButton }
+                    {deleteButton}
                 </div>
             </div>
         );
