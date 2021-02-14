@@ -49,9 +49,19 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
         const config = SdkConfig.get();
         this.defaultServer = config["validated_server_config"] as ValidatedServerConfig;
         const { serverConfig } = this.props;
+
+        let otherHomeserver = "";
+        if (!serverConfig.isDefault) {
+            if (serverConfig.isNameResolvable && serverConfig.hsName) {
+                otherHomeserver = serverConfig.hsName;
+            } else {
+                otherHomeserver = serverConfig.hsUrl;
+            }
+        }
+
         this.state = {
             defaultChosen: serverConfig.isDefault,
-            otherHomeserver: serverConfig.isDefault ? "" : (serverConfig.hsName || serverConfig.hsUrl),
+            otherHomeserver,
         };
     }
 
@@ -141,13 +151,13 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
 
         const valid = await this.fieldRef.current.validate({ allowEmpty: false });
 
-        if (!valid) {
+        if (!valid && !this.state.defaultChosen) {
             this.fieldRef.current.focus();
             this.fieldRef.current.validate({ allowEmpty: false, focused: true });
             return;
         }
 
-        this.props.onFinished(this.validatedConf);
+        this.props.onFinished(this.state.defaultChosen ? this.defaultServer : this.validatedConf);
     };
 
     public render() {

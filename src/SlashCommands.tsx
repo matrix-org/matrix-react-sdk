@@ -48,6 +48,7 @@ import SettingsStore from "./settings/SettingsStore";
 import {UIFeature} from "./settings/UIFeature";
 import {CHAT_EFFECTS} from "./effects"
 import CallHandler from "./CallHandler";
+import {guessAndSetDMRoom} from "./Rooms";
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
 interface HTMLInputEvent extends Event {
@@ -159,6 +160,32 @@ export const Commands = [
         description: _td('Prepends ¯\\_(ツ)_/¯ to a plain-text message'),
         runFn: function(roomId, args) {
             let message = '¯\\_(ツ)_/¯';
+            if (args) {
+                message = message + ' ' + args;
+            }
+            return success(MatrixClientPeg.get().sendTextMessage(roomId, message));
+        },
+        category: CommandCategories.messages,
+    }),
+    new Command({
+        command: 'tableflip',
+        args: '<message>',
+        description: _td('Prepends (╯°□°）╯︵ ┻━┻ to a plain-text message'),
+        runFn: function(roomId, args) {
+            let message = '(╯°□°）╯︵ ┻━┻';
+            if (args) {
+                message = message + ' ' + args;
+            }
+            return success(MatrixClientPeg.get().sendTextMessage(roomId, message));
+        },
+        category: CommandCategories.messages,
+    }),
+    new Command({
+        command: 'unflip',
+        args: '<message>',
+        description: _td('Prepends ┬──┬ ノ( ゜-゜ノ) to a plain-text message'),
+        runFn: function(roomId, args) {
+            let message = '┬──┬ ノ( ゜-゜ノ)';
             if (args) {
                 message = message + ' ' + args;
             }
@@ -1084,6 +1111,24 @@ export const Commands = [
             }
             call.setRemoteOnHold(false);
             return success();
+        },
+    }),
+    new Command({
+        command: "converttodm",
+        description: _td("Converts the room to a DM"),
+        category: CommandCategories.other,
+        runFn: function(roomId, args) {
+            const room = MatrixClientPeg.get().getRoom(roomId);
+            return success(guessAndSetDMRoom(room, true));
+        },
+    }),
+    new Command({
+        command: "converttoroom",
+        description: _td("Converts the DM to a room"),
+        category: CommandCategories.other,
+        runFn: function(roomId, args) {
+            const room = MatrixClientPeg.get().getRoom(roomId);
+            return success(guessAndSetDMRoom(room, false));
         },
     }),
 
