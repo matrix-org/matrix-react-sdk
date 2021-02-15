@@ -44,11 +44,24 @@ import { CHAT_EFFECTS } from "../../effects";
 import { containsEmoji } from "../../effects/utils";
 import dis from "../../dispatcher/dispatcher";
 import {tryTransformPermalinkToLocalHref} from "../../utils/permalinks/Permalinks";
+export enum WidgetRenderMode {
+    Normal,
+    ThinWrapper,
+}
+
+// These capabilities are rejected in renderMode ThinWrapper - we just can't
+// support them yet.
+const INVALID_CAPS_FOR_THIN_WRAPPER = [
+    MatrixCapabilities.AlwaysOnScreen,
+    MatrixCapabilities.MSC2931Navigate,
+];
 
 // TODO: Purge this from the universe
 
 export class StopGapWidgetDriver extends WidgetDriver {
     private allowedCapabilities: Set<Capability>;
+
+    public static RENDER_MODE = WidgetRenderMode.Normal;
 
     // TODO: Refactor widgetKind into the Widget class
     constructor(
@@ -96,6 +109,11 @@ export class StopGapWidgetDriver extends WidgetDriver {
                     allowedSoFar.add(cap);
                     missing.delete(cap);
                 });
+            }
+        }
+        if (StopGapWidgetDriver.RENDER_MODE === WidgetRenderMode.ThinWrapper) {
+            for (const denied of INVALID_CAPS_FOR_THIN_WRAPPER) {
+                missing.delete(denied);
             }
         }
         // TODO: Do something when the widget requests new capabilities not yet asked for
