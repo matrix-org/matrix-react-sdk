@@ -305,6 +305,8 @@ class _MatrixClientPeg implements IMatrixClientPeg {
 
         this.matrixClient.setGuest(Boolean(creds.guest));
 
+        this.matrixClient.setSupportsCallTransfer(true);
+
         const notifTimelineSet = new EventTimelineSet(null, {
             timelineSupport: true,
         });
