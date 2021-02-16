@@ -29,6 +29,7 @@ export default class CreateGroupDialog extends React.Component {
     state = {
         groupName: '',
         groupId: '',
+        groupIdHasOwnValue: false,
         groupError: null,
         creating: false,
         createError: null,
@@ -37,12 +38,16 @@ export default class CreateGroupDialog extends React.Component {
     _onGroupNameChange = e => {
         this.setState({
             groupName: e.target.value,
+            groupId: !this.state.groupIdHasOwnValue
+            ? e.target.value.toLowerCase().replace(/[^0-9a-z=_\-./]+/g, '-')
+            : this.state.groupId,
         });
     };
 
     _onGroupIdChange = e => {
         this.setState({
             groupId: e.target.value,
+            groupIdHasOwnValue: Boolean(e.target.value),
         });
     };
 
