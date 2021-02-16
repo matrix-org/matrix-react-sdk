@@ -497,7 +497,8 @@ export default class RoomPreviewBar extends React.Component {
                 secondaryActionHandler = this.props.onRejectClick;
 
                 if (SettingsStore.getValue("feature_show_shared_rooms")) {
-                    extraContext = <UserInfoSharedRooms userId={inviteMember.userId} compact={true} />;
+                    // TODO: Fix this
+                    extraContext = <UserInfoSharedRooms userId={inviteMember.userId} />;
                 }
 
                 if (this.props.onRejectAndIgnoreClick) {

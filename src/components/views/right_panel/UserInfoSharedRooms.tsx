@@ -18,37 +18,48 @@ import React from 'react';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import Spinner from "../elements/Spinner";
 import { _t } from '../../../languageHandler';
-import Pill from '../../views/elements/Pill';
 import AccessibleButton from '../../views/elements/AccessibleButton';
-import SpecPermalinkConstructor from '../../../utils/permalinks/SpecPermalinkConstructor';
-import UserInfoRoomTile from "../elements/UserInfoRoomTile";
-import { RecentAlgorithm } from '../../../stores/room-list/algorithms/tag-sorting/RecentAlgorithm';
 import { Room } from "matrix-js-sdk/src/models/room";
-import { DefaultTagID } from "../../../stores/room-list/models";
+import { SetRightPanelPhasePayload } from '../../../dispatcher/payloads/SetRightPanelPhasePayload';
+import { defaultDispatcher } from '../../../dispatcher/dispatcher';
+import { Action } from '../../../dispatcher/actions';
+import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
 
 interface IProps {
     userId: string;
-    compact: boolean;
 }
 
 interface IState {
-    rooms: Room[];
+    sharedRoomCount?: number;
     error: boolean;
-    showAll: boolean;
 }
 
-const LIMITED_VIEW_SHOW_COUNT = 3;
+interface IButtonProps {
+    className: string;
+    onClick(): void;
+}
 
 export default class UserInfoSharedRooms extends React.PureComponent<IProps, IState> {
-    algorithm: RecentAlgorithm = new RecentAlgorithm();
+    static async getSharedRoomsForUser(userId: string): Promise<Room[]> {
+        const peg = MatrixClientPeg.get();
+
+        const roomIds = await MatrixClientPeg.get()._unstable_getSharedRooms(userId);
+        return roomIds.map(roomId => peg.getRoom(roomId)).filter(room => {
+            if (room === null) {
+                return false;
+            }
+            const tombstone = room.currentState.getStateEvents("m.room.tombstone", "");
+            if (tombstone) {
+                return false;
+            }
+            return true;
+        });
+    }
 
     constructor(props: IProps) {
         super(props);
-        this.algorithm = new RecentAlgorithm();
         this.state = {
             error: false,
-            showAll: false,
-            rooms: [],
         };
     }
 
@@ -65,20 +76,12 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
         // Reset because this is a new user
         this.setState({
             error: false,
-            showAll: false,
-            rooms: [],
+            sharedRoomCount: undefined,
         });
 
         try {
-            const peg = MatrixClientPeg.get();
-
-            const roomIds = await MatrixClientPeg.get()._unstable_getSharedRooms(this.props.userId);
-            const rooms = roomIds.map(roomId => peg.getRoom(roomId)).filter(room => room !== null);
             this.setState({
-                rooms: await this.algorithm.sortRooms(
-                    rooms,
-                    DefaultTagID.Untagged,
-                ),
+                sharedRoomCount: (await UserInfoSharedRooms.getSharedRoomsForUser(this.props.userId)).length,
             });
         } catch (ex) {
             console.log(`Failed to get shared rooms for ${this.props.userId}`, ex);
@@ -86,92 +89,39 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
         }
     }
 
-    private onShowMoreClick() {
-        console.log("Showing more");
-        this.setState({
-            showAll: true,
+    onShowClicked = () => {
+        defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
+            action: Action.SetRightPanelPhase,
+            phase: RightPanelPhases.SharedRoomsList,
+            userId: this.props.userId,
         });
     }
 
-    private renderRoomTile(room: Room) {
-        // If the room has been upgraded, hide it.
-        const tombstone = room.currentState.getStateEvents("m.room.tombstone", "");
-        if (tombstone) {
-            return null;
-        }
-
-        if (this.props.compact) {
-            // XXX: This is inefficent as we only render LIMITED_VIEW_SHOW_COUNT rooms at a time, the other pills are wasted.
-            const alias = room.getCanonicalAlias();
-            if (!alias) {
-                // Without an alias we get ugly room_ids, hide it.
-                return null;
-            }
-            return <a href={`#/room/${alias}`}><Pill
-                key={room.roomId}
-                type={Pill.TYPE_ROOM_MENTION}
-                room={room}
-                url={new SpecPermalinkConstructor().forRoom(alias)}
-                inMessage={false}
-                shouldShowPillAvatar={true}
-                isSelected={false}
-            /></a>;
-        }
-
-        return <li key={room.roomId}>
-            <UserInfoRoomTile room={room} />
-        </li>;
-    }
-
-    private renderRoomTiles() {
-        // We must remove the null values in order for the slice to work in render()
-        return this.state.rooms.map((room) => this.renderRoomTile(room)).filter((tile => tile !== null));
-    }
-
     render(): React.ReactNode {
-        let content;
-        let realCount = 0;
+        const { sharedRoomCount } = this.state;
 
-        if (this.state.rooms && this.state.rooms.length > 0) {
-            content = this.renderRoomTiles();
-            realCount = content.length;
-            if (!this.state.showAll) {
-                content = content.slice(0, LIMITED_VIEW_SHOW_COUNT);
-            }
-        } else if (this.state.rooms) {
-            content = <p> {_t("You share no rooms in common with this user.")} </p>;
-        } else if (this.state.error) {
-            content = <p> {_t("There was an error fetching shared rooms with this user.")} </p>;
-        } else {
-            // We're still loading
-            content = <Spinner />;
-        }
-
-        // Compact view: Show as a single line.
-        if (this.props.compact && content.length) {
-            if (realCount <= content.length) {
-                return <p> {_t("You are both participating in <rooms></rooms>", {}, {rooms: content})} </p>;
+        if (this.state.error) {
+            return <p> {_t("There was an error fetching shared rooms with this user.")} </p>;
+        } else if (typeof sharedRoomCount === 'number') {
+            console.log("Shared room count:", sharedRoomCount);
+            let text;
+            if (sharedRoomCount === 1) {
+                text = _t("1 room in common");
+            } else if (sharedRoomCount > 1) {
+                text = _t("%(count)s rooms in common", { count: sharedRoomCount });
             } else {
-                return <p> {_t("You are both participating in <rooms></rooms> and %(hidden)s more", {
-                    hidden: realCount - content.length,
-                }, {
-                    rooms: content,
-                })}</p>;
+                text = _t("No rooms in common");
             }
-        } else if (this.props.compact) {
-            return content;
+            return <AccessibleButton
+                className="mx_SharedUsers_Button"
+                onClick={this.onShowClicked}
+                disabled={sharedRoomCount === 0}>
+                {text}
+            </AccessibleButton>;
+        } else if (sharedRoomCount === 0) {
+            return <p> {_t("You share no rooms in common with this user.")} </p>;
+        } else {
+            return <Spinner />;
         }
-
-        const canShowMore = !this.state.showAll && realCount > LIMITED_VIEW_SHOW_COUNT;
-        // Normal view: Show as a list with a header
-        return <div className="mx_UserInfoSharedRooms mx_UserInfo_container">
-            <h3>{ _t("Shared Rooms") }</h3>
-            <ul>
-                {content}
-            </ul>
-            { canShowMore && <AccessibleButton className="mx_UserInfo_field" onClick={() => this.onShowMoreClick()}>
-                { _t("Show %(count)s more", { count: realCount - content.length}) }
-            </AccessibleButton> }
-        </div>;
     }
 }

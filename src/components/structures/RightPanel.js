@@ -30,6 +30,7 @@ import MatrixClientContext from "../../contexts/MatrixClientContext";
 import {Action} from "../../dispatcher/actions";
 import RoomSummaryCard from "../views/right_panel/RoomSummaryCard";
 import WidgetCard from "../views/right_panel/WidgetCard";
+import SharedRoomList from "../views/right_panel/SharedRoomsList";
 
 export default class RightPanel extends React.Component {
     static get propTypes() {
@@ -183,6 +184,12 @@ export default class RightPanel extends React.Component {
                 widgetId: payload.widgetId,
             });
         }
+        if (payload.action === Action.SetRightPanelPhase &&
+            payload.phase === RightPanelPhases.SharedRoomsList) {
+            this.setState({
+                userId: payload.userId,
+            });
+        }
     }
 
     onClose = () => {
@@ -226,6 +233,8 @@ export default class RightPanel extends React.Component {
         let panel = <div />;
         const roomId = this.props.room ? this.props.room.roomId : undefined;
 
+        console.log(this.state, this.props);
+
         switch (this.state.phase) {
             case RightPanelPhases.RoomMemberList:
                 if (roomId) {
@@ -241,6 +250,10 @@ export default class RightPanel extends React.Component {
 
             case RightPanelPhases.GroupRoomList:
                 panel = <GroupRoomList groupId={this.props.groupId} key={this.props.groupId} />;
+                break;
+
+            case RightPanelPhases.SharedRoomsList:
+                panel = <SharedRoomList onClose={this.onClose} userId={this.state.userId} key={this.props.userId} />;
                 break;
 
             case RightPanelPhases.RoomMemberInfo:

@@ -31,6 +31,9 @@ export enum RightPanelPhases {
     GroupRoomList = 'GroupRoomList',
     GroupRoomInfo = 'GroupRoomInfo',
     GroupMemberInfo = 'GroupMemberInfo',
+
+    // Shared rooms
+    SharedRoomsList = 'SharedRoomsList'
 }
 
 // These are the phases that are safe to persist (the ones that don't require additional
