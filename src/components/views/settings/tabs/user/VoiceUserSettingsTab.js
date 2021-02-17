@@ -25,6 +25,8 @@ import {MatrixClientPeg} from "../../../../../MatrixClientPeg";
 import * as sdk from "../../../../../index";
 import Modal from "../../../../../Modal";
 import {SettingLevel} from "../../../../../settings/SettingLevel";
+import SettingsStore from '../../../../../settings/SettingsStore';
+import { UIFeature } from '../../../../../settings/UIFeature';
 
 export default class VoiceUserSettingsTab extends React.Component {
     constructor() {
@@ -213,17 +215,21 @@ export default class VoiceUserSettingsTab extends React.Component {
                     {speakerDropdown}
                     {microphoneDropdown}
                     {webcamDropdown}
-                    <SettingsFlag name='VideoView.flipVideoHorizontally' level={SettingLevel.ACCOUNT} />
-                    <SettingsFlag
-                        name='webRtcAllowPeerToPeer'
-                        level={SettingLevel.DEVICE}
-                        onChange={this._changeWebRtcMethod}
-                    />
-                    <SettingsFlag
-                        name='fallbackICEServerAllowed'
-                        level={SettingLevel.DEVICE}
-                        onChange={this._changeFallbackICEServerAllowed}
-                    />
+                    {SettingsStore.getValue(UIFeature.ShowAdvancedCallSettings) &&
+                        <>
+                            <SettingsFlag name='VideoView.flipVideoHorizontally' level={SettingLevel.ACCOUNT} />
+                            <SettingsFlag
+                                name='webRtcAllowPeerToPeer'
+                                level={SettingLevel.DEVICE}
+                                onChange={this._changeWebRtcMethod}
+                            />
+                            <SettingsFlag
+                                name='fallbackICEServerAllowed'
+                                level={SettingLevel.DEVICE}
+                                onChange={this._changeFallbackICEServerAllowed}
+                            />
+                        </>
+                    }
                 </div>
             </div>
         );

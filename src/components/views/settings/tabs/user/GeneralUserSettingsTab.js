@@ -283,10 +283,12 @@ export default class GeneralUserSettingsTab extends React.Component {
         return (
             <div className="mx_SettingsTab_section mx_GeneralUserSettingsTab_accountSection">
                 <span className="mx_SettingsTab_subheading">{_t("Account")}</span>
-                <p className="mx_SettingsTab_subsectionText">
-                    {passwordChangeText}
-                </p>
-                {passwordChangeForm}
+                {SettingsStore.getValue(UIFeature.ShowPasswordReset) &&
+                    <p className="mx_SettingsTab_subsectionText">
+                        {passwordChangeText}
+                    </p>
+                }
+                {SettingsStore.getValue(UIFeature.ShowPasswordReset) && passwordChangeForm}
                 {threepidSection}
             </div>
         );
@@ -294,6 +296,7 @@ export default class GeneralUserSettingsTab extends React.Component {
 
     _renderLanguageSection() {
         // TODO: Convert to new-styled Field
+        if (!SettingsStore.getValue(UIFeature.ShowLanguageField)) return null;
         return (
             <div className="mx_SettingsTab_section">
                 <span className="mx_SettingsTab_subheading">{_t("Language and region")}</span>
@@ -409,7 +412,7 @@ export default class GeneralUserSettingsTab extends React.Component {
                 {this._renderProfileSection()}
                 {this._renderAccountSection()}
                 {this._renderLanguageSection()}
-                { discoverySection }
+                { SettingsStore.getValue(UIFeature.ShowDiscoverySection) && discoverySection }
                 {this._renderIntegrationManagerSection() /* Has its own title */}
                 { accountManagementSection }
             </div>

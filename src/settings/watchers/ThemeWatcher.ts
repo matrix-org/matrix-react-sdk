@@ -94,7 +94,7 @@ export default class ThemeWatcher {
         // itself completely redundant since we just override the result here and we're
         // now effectively just using the ThemeController as a place to store the static
         // variable. The system theme setting probably ought to have an equivalent
-        // controller that honours the same flag, although probablt better would be to
+        // controller that honours the same flag, although probably better would be to
         // have the theme logic in one place rather than split between however many
         // different places.
         if (ThemeController.isLogin) return 'light';
@@ -103,7 +103,7 @@ export default class ThemeWatcher {
         // then use that over anything else. We pick the lowest possible level for the setting
         // to ensure the ordering otherwise works.
         const systemThemeExplicit = SettingsStore.getValueAt(
-            SettingLevel.DEVICE, "use_system_theme", null, false, true);
+            SettingLevel.DEVICE, "use_system_theme", null);
         if (systemThemeExplicit) {
             console.log("returning explicit system theme");
             if (this.preferDark.matches) return 'dark';
@@ -114,7 +114,7 @@ export default class ThemeWatcher {
         // enabled specifically and excluding the default), use that theme. We pick the lowest possible
         // level for the setting to ensure the ordering otherwise works.
         const themeExplicit = SettingsStore.getValueAt(
-            SettingLevel.DEVICE, "theme", null, false, true);
+            SettingLevel.DEVICE, "theme", null);
         if (themeExplicit) {
             console.log("returning explicit theme: " + themeExplicit);
             return themeExplicit;

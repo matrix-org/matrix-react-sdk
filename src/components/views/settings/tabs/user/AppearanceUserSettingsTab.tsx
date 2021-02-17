@@ -93,9 +93,9 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
 
         const themeChoice: string = SettingsStore.getValue("theme");
         const systemThemeExplicit: boolean = SettingsStore.getValueAt(
-            SettingLevel.DEVICE, "use_system_theme", null, false, true);
+            SettingLevel.DEVICE, "use_system_theme");
         const themeExplicit: string = SettingsStore.getValueAt(
-            SettingLevel.DEVICE, "theme", null, false, true);
+            SettingLevel.DEVICE, "theme");
 
         // If the user has enabled system theme matching, use that.
         if (systemThemeExplicit) {
@@ -224,6 +224,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
     };
 
     private renderThemeSection() {
+        if (!SettingsStore.getValue(UIFeature.ThemeChanging)) return null;
         const themeWatcher = new ThemeWatcher();
         let systemThemeSection: JSX.Element;
         if (themeWatcher.isSystemThemeSupported()) {
@@ -300,6 +301,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
     }
 
     private renderFontSection() {
+        if (!SettingsStore.getValue(UIFeature.FontChanging)) return null;
         return <div className="mx_SettingsTab_section mx_AppearanceUserSettingsTab_fontScaling">
 
             <span className="mx_SettingsTab_subheading">{_t("Font size")}</span>
@@ -405,12 +407,12 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                 { brand },
             );
             advanced = <>
-                <SettingsFlag
+                {(!UIFeature.PullUpCompactLayout) && <SettingsFlag
                     name="useCompactLayout"
                     level={SettingLevel.DEVICE}
                     useCheckbox={true}
                     disabled={this.state.useIRCLayout}
-                />
+                />}
                 <SettingsFlag
                     name="useIRCLayout"
                     level={SettingLevel.DEVICE}
@@ -455,6 +457,12 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                 <div className="mx_SettingsTab_SubHeading">
                     {_t("Appearance Settings only affect this %(brand)s session.", { brand })}
                 </div>
+                {SettingsStore.getValue(UIFeature.PullUpCompactLayout) && <SettingsFlag
+                    name="useCompactLayout"
+                    level={SettingLevel.DEVICE}
+                    useCheckbox={true}
+                    disabled={this.state.useIRCLayout}
+                />}
                 {this.renderThemeSection()}
                 {this.renderFontSection()}
                 {this.renderAdvancedSection()}

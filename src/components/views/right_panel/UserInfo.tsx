@@ -60,6 +60,7 @@ import QuestionDialog from "../dialogs/QuestionDialog";
 import ConfirmUserActionDialog from "../dialogs/ConfirmUserActionDialog";
 import InfoDialog from "../dialogs/InfoDialog";
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import { UIFeature } from '../../../settings/UIFeature';
 
 interface IDevice {
     deviceId: string;
@@ -1366,7 +1367,7 @@ const BasicUserInfo: React.FC<{
             <h3>{ _t("Security") }</h3>
             <p>{ text }</p>
             { verifyButton }
-            { cryptoEnabled && <DevicesSection
+            { cryptoEnabled && SettingsStore.getValue(UIFeature.EnableEncryptionSettings) && <DevicesSection
                 loading={showDeviceListSpinner}
                 devices={devices}
                 userId={member.userId} /> }

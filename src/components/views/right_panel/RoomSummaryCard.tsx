@@ -184,6 +184,8 @@ const AppsSection: React.FC<IAppsSectionProps> = ({ room }) => {
         }
     };
 
+    if (!SettingsStore.getValue(UIFeature.ShowIntegrations)) return null;
+
     return <Group className="mx_RoomSummaryCard_appsGroup" title={_t("Widgets")}>
         { apps.map(app => <AppRow key={app.id} app={app} room={room} />) }
 
