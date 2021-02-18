@@ -108,6 +108,13 @@ export enum Action {
     PstnSupportUpdated = "pstn_support_updated",
 
     /**
+     * Similar to PstnSupportUpdated, fired when CallHandler has checked for virtual room support
+     * payload: none
+     * XXX: Ditto
+     */
+    VirtualRoomSupportUpdated = "virtual_room_support_updated",
+
+    /**
      * Opens the Space setting modal. Should be used with OpenSpaceSettingsPayload.
      */
     OpenSpaceSettings = "open_space_settings",

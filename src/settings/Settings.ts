@@ -36,6 +36,8 @@ import { isMac } from '../Keyboard';
 import UIFeatureController from "./controllers/UIFeatureController";
 import { UIFeature } from "./UIFeature";
 import { OrderedMultiController } from "./controllers/OrderedMultiController";
+import { Layout } from "./Layout";
+import ReducedMotionController from './controllers/ReducedMotionController';
 import IncompatibleController from "./controllers/IncompatibleController";
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
@@ -250,6 +252,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: true,
         invertedSettingName: 'MessageComposerInput.dontSuggestEmoji',
     },
+    "MessageComposerInput.showStickersButton": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Show stickers button'),
+        default: true,
+    },
     // TODO: Wire up appropriately to UI (FTUE notifications)
     "Notifications.alwaysShowBadgeCounts": {
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
@@ -309,6 +316,16 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Enable automatic language detection for syntax highlighting'),
         default: false,
+    },
+    "expandCodeByDefault": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Expand code blocks by default'),
+        default: false,
+    },
+    "showCodeLineNumbers": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Show line numbers in code blocks'),
+        default: true,
     },
     "Pill.shouldShowPillAvatar": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -638,15 +655,15 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("IRC display name width"),
         default: 80,
     },
-    "useIRCLayout": {
+    "layout": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Enable experimental, compact IRC style layout"),
-        default: false,
+        default: Layout.Group,
     },
     "showChatEffects": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Show chat effects"),
+        displayName: _td("Show chat effects (animations when receiving e.g. confetti)"),
         default: true,
+        controller: new ReducedMotionController(),
     },
     "Widgets.pinned": { // deprecated
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,

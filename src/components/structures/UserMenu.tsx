@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020, 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,7 +33,6 @@ import Modal from "../../Modal";
 import LogoutDialog from "../views/dialogs/LogoutDialog";
 import SettingsStore from "../../settings/SettingsStore";
 import {getCustomTheme} from "../../theme";
-import {getHostingLink} from "../../utils/HostingLink";
 import AccessibleButton, {ButtonEvent} from "../views/elements/AccessibleButton";
 import SdkConfig from "../../SdkConfig";
 import { getHomePageUrl } from "../../utils/pages";
@@ -53,6 +52,8 @@ import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
 import ErrorDialog from "../views/dialogs/ErrorDialog";
 import EditCommunityPrototypeDialog from "../views/dialogs/EditCommunityPrototypeDialog";
 import { UIFeature } from "../../settings/UIFeature";
+import HostSignupAction from "./HostSignupAction";
+import { IHostSignupConfig } from "../views/dialogs/HostSignupDialogTypes";
 import SpaceStore, { UPDATE_SELECTED_SPACE } from "../../stores/SpaceStore";
 import RoomName from "../views/elements/RoomName";
 
@@ -290,7 +291,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         const userId = MatrixClientPeg.get().getUserId();
 
         let topSection;
-        const signupLink = getHostingLink("user-context-menu");
+        const hostSignupConfig: IHostSignupConfig = SdkConfig.get().hostSignup;
         if (MatrixClientPeg.get().isGuest()) {
             topSection = (
                 <div className="mx_UserMenu_contextMenu_header mx_UserMenu_contextMenu_guestPrompts">
@@ -310,24 +311,19 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     })}
                 </div>
             )
-        } else if (signupLink) {
-            topSection = (
-                <div className="mx_UserMenu_contextMenu_header mx_UserMenu_contextMenu_hostingLink">
-                    {_t(
-                        "<a>Upgrade</a> to your own domain", {},
-                        {
-                            a: sub => (
-                                <a
-                                    href={signupLink}
-                                    target="_blank"
-                                    rel="noreferrer noopener"
-                                    tabIndex={-1}
-                                >{sub}</a>
-                            ),
-                        },
-                    )}
-                </div>
-            );
+        } else if (hostSignupConfig) {
+            if (hostSignupConfig && hostSignupConfig.url) {
+                // If hostSignup.domains is set to a non-empty array, only show
+                // dialog if the user is on the domain or a subdomain.
+                const hostSignupDomains = hostSignupConfig.domains || [];
+                const mxDomain = MatrixClientPeg.get().getDomain();
+                const validDomains = hostSignupDomains.filter(d => (d === mxDomain || mxDomain.endsWith(`.${d}`)));
+                if (!hostSignupConfig.domains || validDomains.length > 0) {
+                    topSection = <div onClick={this.onCloseMenu}>
+                        <HostSignupAction />
+                    </div>;
+                }
+            }
         }
 
         let homeButton = null;
