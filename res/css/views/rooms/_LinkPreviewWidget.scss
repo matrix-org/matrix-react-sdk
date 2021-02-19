@@ -25,6 +25,11 @@ limitations under the License.
     color: $preview-widget-fg-color;
 }
 
+.mx_LinkPreviewWidgetNonImage {
+    max-width: none;
+    flex-direction: row;
+}
+
 .mx_LinkPreviewWidget_image {
     flex: 0 0 100px;
     margin-left: 15px;
