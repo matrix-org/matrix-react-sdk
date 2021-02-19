@@ -129,9 +129,11 @@ export default class LinkPreviewWidget extends React.Component {
 
         let imageElement;
         if (image) {
-            imageElement = <div className="mx_LinkPreviewWidget_image" style={{ height: thumbHeight }}>
-                <img style={{ maxWidth: imageMaxWidth, maxHeight: imageMaxHeight }} src={image} onClick={this.onImageClick} />
-            </div>;
+            imageElement = (
+                <div className="mx_LinkPreviewWidget_image" style={{ height: thumbHeight }}>
+                    <img style={{ maxWidth: imageMaxWidth, maxHeight: imageMaxHeight }} src={image} onClick={this.onImageClick} />
+                </div>
+            );
         }
 
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
