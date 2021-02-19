@@ -146,6 +146,16 @@ export default class LinkPreviewWidget extends React.Component {
         // opaque string. This does not allow any HTML to be injected into the DOM.
         const description = AllHtmlEntities.decode(p["og:description"] || "");
 
+        const caption = (
+            <div className="mx_LinkPreviewWidget_caption">
+                <div className="mx_LinkPreviewWidget_title"><a href={this.props.link} target="_blank" rel="noreferrer noopener">{ p["og:title"] }</a></div>
+                <div className="mx_LinkPreviewWidget_siteName">{ p["og:site_name"] ? (" - " + p["og:site_name"]) : null }</div>
+                <div className="mx_LinkPreviewWidget_description" ref={this._description}>
+                    { description }
+                </div>
+            </div>
+        );
+
         let classNames = "mx_LinkPreviewWidget";
         if (!isImage) classNames += " mx_LinkPreviewWidgetNonImage";
 
@@ -153,13 +163,7 @@ export default class LinkPreviewWidget extends React.Component {
             <div className={classNames}>
                 { isImage ? closeButton : null}
                 { imageElement }
-                <div className="mx_LinkPreviewWidget_caption">
-                    <div className="mx_LinkPreviewWidget_title"><a href={this.props.link} target="_blank" rel="noreferrer noopener">{ p["og:title"] }</a></div>
-                    <div className="mx_LinkPreviewWidget_siteName">{ p["og:site_name"] ? (" - " + p["og:site_name"]) : null }</div>
-                    <div className="mx_LinkPreviewWidget_description" ref={this._description}>
-                        { description }
-                    </div>
-                </div>
+                { caption }
                 { isImage ? null: closeButton }
             </div>
         );
