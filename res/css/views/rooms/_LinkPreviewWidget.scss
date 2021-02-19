@@ -30,6 +30,10 @@ limitations under the License.
     flex-direction: row;
 }
 
+.mx_LinkPreviewWidget_imageWrapper {
+    display: flex;
+}
+
 .mx_LinkPreviewWidget_image {
     margin-left: 15px;
     cursor: pointer;
