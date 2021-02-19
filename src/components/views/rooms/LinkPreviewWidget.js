@@ -103,8 +103,8 @@ export default class LinkPreviewWidget extends React.Component {
         }
         const isImage = !(p["og:type"] && p["og:type"] == "object");
 
-        let imageMaxHeight = 100;
-        let imageMaxWidth = 100;
+        let imageMaxHeight = 75;
+        let imageMaxWidth = 75;
         if (isImage) {
             imageMaxWidth = 320;
             imageMaxHeight = 240;
