@@ -156,16 +156,22 @@ export default class LinkPreviewWidget extends React.Component {
             </div>
         );
 
-        let classNames = "mx_LinkPreviewWidget";
-        if (!isImage) classNames += " mx_LinkPreviewWidgetNonImage";
-
-        return (
-            <div className={classNames}>
-                { isImage ? closeButton : null}
-                { imageElement }
-                { caption }
-                { isImage ? null: closeButton }
-            </div>
-        );
+        if (isImage) {
+            return (
+                <div className="mx_LinkPreviewWidget">
+                    { closeButton}
+                    { imageElement }
+                    { caption }
+                </div>
+            );
+        } else {
+            return (
+                <div className="mx_LinkPreviewWidget mx_LinkPreviewWidgetNonImage">
+                    { imageElement }
+                    { caption }
+                    { closeButton }
+                </div>
+            );
+        }
     }
 }
