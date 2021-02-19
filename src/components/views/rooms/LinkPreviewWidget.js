@@ -25,6 +25,7 @@ import * as sdk from "../../../index";
 import Modal from "../../../Modal";
 import * as ImageUtils from "../../../ImageUtils";
 import { _t } from "../../../languageHandler";
+import AccessibleButton from "../../../../src/components/views/elements/AccessibleButton";
 
 export default class LinkPreviewWidget extends React.Component {
     static propTypes = {
@@ -136,7 +137,6 @@ export default class LinkPreviewWidget extends React.Component {
             );
         }
 
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         const closeButton = (
             <AccessibleButton className="mx_LinkPreviewWidget_cancel" onClick={this.props.onCancelClick} aria-label={_t("Close preview")}>
                 <img className="mx_filterFlipColor" alt="" role="presentation"
