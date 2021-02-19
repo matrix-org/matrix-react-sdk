@@ -16,15 +16,20 @@
 
 import {SettingID} from "./Types";
 
-// This exists because the TS rules for generics prevent us from using a pipe
-// character unless it is followed by a type. Because these categories could
-// be appended to over time, we want the equivalent of a trailing comma to make
-// merge conflicts easier to resolve. We do this by just defining the last
-// type in the chain to be this placeholder, which will never show up in the
-// final type because it breaks our code style guidelines and thus is an invalid
-// setting (also we'd be unlikely to pick this wording for a setting anyways).
-type typeForEaseOfNewlines = 'will-be-excluded';
+export type SettingsCategory = Record<string, SettingID>;
 
-export type RoomListSettings = Extract<SettingID,
-    'Breadcrumbs' |
-    typeForEaseOfNewlines>;
+// Note: None of the categories listed here are typed to be a SettingsCategory. This
+// is because TypeScript wipes out our types, which makes the Settings.get() function
+// return a union of all types instead of just the specified setting's type, making
+// manual casting a requirement. Instead, we use TypeScript's implied interface support
+// and hope that the remap() function in AppSettings.ts will error if someone creates
+// an invalid setting map.
+
+// Note: In order to make Settings.get() return the right type, use the syntax shown
+// below: 'RoomListBreadcrumbs' as 'RoomListBreadcrumbs' - This maps the value to a
+// setting name and forces the parent object's type to be of that type rather than
+// string, which is why we don't type these categories to SettingsCategory here.
+
+export const RoomListSettings = {
+    Breadcrumbs: 'RoomListBreadcrumbs' as 'RoomListBreadcrumbs',
+};

@@ -17,7 +17,7 @@
 import {ISetting} from "./ISetting";
 
 export class BuiltInSettings {
-    public static readonly Breadcrumbs: ISetting<string[]> = {
+    public static readonly RoomListBreadcrumbs: ISetting<string[]> = {
         default: [],
         description: "testing 1",
     };

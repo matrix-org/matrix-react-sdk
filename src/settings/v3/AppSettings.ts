@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import {SettingID, Settings, SettingType} from "./Types";
-import {RoomListSettings} from "./Categories";
+import { SettingID, Settings, SettingType } from "./Types";
+import { RoomListSettings, SettingsCategory } from "./Categories";
 
 export type SettingMap<T extends SettingID> = {
     [P in T]: P;
@@ -27,14 +27,25 @@ const AllSettingsMap: SettingMap<SettingID> = Object.keys(Settings).reduce((p, c
     return p;
 }, {}) as SettingMap<SettingID>;
 
+type MappedSettings<T extends SettingsCategory> = { [P in keyof T]: T[P] };
+
+function remap<T extends SettingsCategory>(cat: T): MappedSettings<T> {
+    return Object.entries(cat).reduce((p, [prop, mapped]) => {
+        // We cast to `any` because the compiler isn't smart enough to know what is going on here.
+        // What we're doing is essentially defining MappedSettings<T> with keys from `cat`, mapping
+        // them to the definitions populated by AllSettingsMap so the typing magically works.
+        (p as any)[prop] = AllSettingsMap[mapped];
+        return p;
+    }, {} as MappedSettings<T>);
+}
 
 export const S = {
     ...AllSettingsMap,
-    RoomList: AllSettingsMap as SettingMap<RoomListSettings>,
+    RoomList: remap(RoomListSettings),
 };
 
 function getValue<K extends SettingID>(id: K): SettingType<K> {
-    if (id === S.Breadcrumbs) {
+    if (id === S.RoomListBreadcrumbs) {
         return ['test'];
     } else if (id === S.ShowReadReceipts) {
         return false;
@@ -44,5 +55,5 @@ function getValue<K extends SettingID>(id: K): SettingType<K> {
     return null;
 }
 
-const test1 = getValue(S.Breadcrumbs);
-const test2 = getValue(S.RoomList.Breadcrumbs);
+const test1: string[] = getValue(S.RoomListBreadcrumbs);
+const test2: string[] = getValue(S.RoomList.Breadcrumbs);
