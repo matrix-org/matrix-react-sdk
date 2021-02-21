@@ -47,8 +47,12 @@ function remap<T extends SettingsCategory>(cat: T): MappedSettings<T> {
 }
 
 // We define our mapped settings ahead of the global definition so it is easier to exclude settings
-// which are mapped to categories. See the next comment block for more information on what the final
-// object looks like.
+// which are mapped to categories. We mostly want to do this to help developers use the right setting
+// even if others are technically possible: for example, if we have S.RoomList.Layout then we don't
+// want someone to accidentally use S["RoomList.Layout"] as their IDE might suggest. By defining the
+// mapped types (S.RoomList.*) ahead of the definition, we can omit the mapped values from the top
+// level definition. Inspecting the type of S or the Omit<> below should give a better idea of what
+// is going on.
 const mappedSettings = {
     RoomList: remap(RoomListSettings),
 };
@@ -77,7 +81,7 @@ function getValue<K extends SettingID>(id: K): SettingType<K> {
     return null;
 }
 
-const inspect1 = AllSettingsMap;
-const inspect2 = mappedSettings;
-const test1: string[] = getValue(S.RoomListBreadcrumbs);
-const test2: string[] = getValue(S.RoomList.Breadcrumbs);
+// const inspect1 = AllSettingsMap;
+// const inspect2 = mappedSettings;
+// const test1: string[] = getValue(S.RoomListBreadcrumbs);
+// const test2: string[] = getValue(S.RoomList.Breadcrumbs);

@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-// Dev note: Many of the types in this file reference an article which was written before recursive types
-// were possible in TypeScript. Many of these should be re-reviewed.
-// Article: https://flut1.medium.com/deep-flatten-typescript-types-with-finite-recursion-cb79233d93ca
-// TS Notes: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-1.html#recursive-conditional-types
-
 /**
  * A simple type to pull out the value types for a given type.
  * Source: https://flut1.medium.com/deep-flatten-typescript-types-with-finite-recursion-cb79233d93ca
@@ -30,7 +25,9 @@ export type ValuesOf<T> = T[keyof T];
  * objects) and return that as a type.
  * Source: https://flut1.medium.com/deep-flatten-typescript-types-with-finite-recursion-cb79233d93ca
  */
-export type NonObjectKeysOf<T> = { [K in keyof T]: T[K] extends Array<any> ? K : T[K] extends object ? never : K }[keyof T];
+export type NonObjectKeysOf<T> = {
+    [K in keyof T]: T[K] extends Array<any> ? K : T[K] extends object ? never : K;
+}[keyof T];
 
 /**
  * The inverse of NonObjectKeysOf<T> - this pulls out *only* the object types.
@@ -43,10 +40,17 @@ export type ObjectValuesOf<T extends Object> = Exclude<Exclude<Extract<ValuesOf<
  * Source: https://flut1.medium.com/deep-flatten-typescript-types-with-finite-recursion-cb79233d93ca
  * Source: https://stackoverflow.com/questions/50374908/transform-union-type-to-intersection-type/50375286#50375286
  */
-export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
+export type UnionToIntersection<U> =
+    (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
 
 // These are setup for the DeepFlatten type below. It's not exactly pretty, but we get 9 levels of recursion
-// out of this.
+// out of this. As the article (source below) notes, this is not pretty and there might even be a better way
+// to represent this with truly infinite recursion - in practice we probably don't need that level of generic
+// support, leaving us with 9 levels for now.
+//
+// We should look at TS 4.1's Recursive Conditional Types to replace this mess:
+// https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-1.html#recursive-conditional-types
+//
 // Source: https://flut1.medium.com/deep-flatten-typescript-types-with-finite-recursion-cb79233d93ca
 type DFBase<T, Recursor> = Pick<T, NonObjectKeysOf<T>> & UnionToIntersection<Recursor>;
 type DF2<T> = T extends any ? DFBase<T, DF3<ObjectValuesOf<T>>> : never;
