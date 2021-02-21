@@ -14,38 +14,60 @@
  * limitations under the License.
  */
 
-import { SettingID, Settings, SettingType } from "./Types";
+import { SettingID, AppSettings, SettingType } from "./Types";
 import { RoomListSettings, SettingsCategory } from "./Categories";
+import { DeepFlatten, ValuesOf } from "../../utils/ts";
 
-export type SettingMap<T extends SettingID> = {
-    [P in T]: P;
+// This is just to create a type which maps setting ID to setting ID. This might seem pointless,
+// but it's an intermediary type to create an interface that Settings.get() can later use.
+export type SettingMap = {
+    [P in SettingID]: P;
 };
 
-// We end up using this for everything, but hide available properties by 
-const AllSettingsMap: SettingMap<SettingID> = Object.keys(Settings).reduce((p, c) => {
+// This is our "All Settings Map" where we actually build the map defined by the SettingMap
+// type we created above.
+const AllSettingsMap = Object.keys(AppSettings).reduce((p, c) => {
     p[c] = c;
     return p;
-}, {}) as SettingMap<SettingID>;
+}, {}) as SettingMap;
 
+// This looks useless in terms of code, and arguably it is, however it does an important job
+// to enforce typechecking on the incoming map. All this definition does is allows us to use
+// friendlier names for our settings by putting them into categories for dot exploration. For
+// example, a hypothetical RoomListLayout setting might want to be recorded as RoomList.Layout,
+// which is hard to do or ugly to represent in code (property names can't have dots, which means
+// making them strings, which means our access looks like S["RoomList.Layout"] instead of a
+// cleaner S.RoomList.Layout). By defining a SettingsCategory we are able to help make this
+// mapping possible, and need to typecheck it for reasons explained in Categories.ts
+//
+// TLDR: We return the same thing because we're just typechecking our fancy map of setting values.
 type MappedSettings<T extends SettingsCategory> = { [P in keyof T]: T[P] };
-
 function remap<T extends SettingsCategory>(cat: T): MappedSettings<T> {
-    return Object.entries(cat).reduce((p, [prop, mapped]) => {
-        // We cast to `any` because the compiler isn't smart enough to know what is going on here.
-        // What we're doing is essentially defining MappedSettings<T> with keys from `cat`, mapping
-        // them to the definitions populated by AllSettingsMap so the typing magically works.
-        (p as any)[prop] = AllSettingsMap[mapped];
-        return p;
-    }, {} as MappedSettings<T>);
+    return cat;
 }
 
-export const S = {
-    ...AllSettingsMap,
+// We define our mapped settings ahead of the global definition so it is easier to exclude settings
+// which are mapped to categories. See the next comment block for more information on what the final
+// object looks like.
+const mappedSettings = {
     RoomList: remap(RoomListSettings),
 };
 
+// Finally, this is our accessor for setting IDs. Yes, code can use the setting IDs as strings,
+// but that can conflict with some "find usages of..." tooling available in IDEs and GitHub.
+// This is pretty much just a cheap way to continue using that tooling while also being descriptive
+// in code.
+//
+// As for why we call this just "S": `S.Breadcrumbs` is the same number of characters that are needed
+// for `"Breadcrumbs"` - we are actively trying to avoid making lines of code larger by optimizing for
+// IDE tooling. The S denotes "Setting ID".
+export const S = {
+    ...AllSettingsMap as Omit<typeof AllSettingsMap, ValuesOf<DeepFlatten<typeof mappedSettings>>>,
+    ...mappedSettings,
+};
+
 function getValue<K extends SettingID>(id: K): SettingType<K> {
-    if (id === S.RoomListBreadcrumbs) {
+    if (id === S.RoomList.Breadcrumbs) {
         return ['test'];
     } else if (id === S.ShowReadReceipts) {
         return false;
@@ -55,5 +77,7 @@ function getValue<K extends SettingID>(id: K): SettingType<K> {
     return null;
 }
 
+const inspect1 = AllSettingsMap;
+const inspect2 = mappedSettings;
 const test1: string[] = getValue(S.RoomListBreadcrumbs);
 const test2: string[] = getValue(S.RoomList.Breadcrumbs);
