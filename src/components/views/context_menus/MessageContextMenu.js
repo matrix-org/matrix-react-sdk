@@ -483,7 +483,7 @@ export default class MessageContextMenu extends React.Component {
 
         if (viewSourceButton || viewClearSourceButton) {
             optionLists.push((
-                <IconizedContextMenuOptionList>
+                <IconizedContextMenuOptionList key={'group1'}>
                     {viewSourceButton}
                     {viewClearSourceButton}
                 </IconizedContextMenuOptionList>
@@ -492,7 +492,7 @@ export default class MessageContextMenu extends React.Component {
 
         if (resendButton || resendEditButton || resendReactionsButton || resendRedactionButton) {
             optionLists.push((
-                <IconizedContextMenuOptionList>
+                <IconizedContextMenuOptionList key={'group2'}>
                     {resendButton}
                     {resendEditButton}
                     {resendReactionsButton}
@@ -503,7 +503,7 @@ export default class MessageContextMenu extends React.Component {
 
         if (redactButton || cancelButton) {
             optionLists.push((
-                <IconizedContextMenuOptionList red>
+                <IconizedContextMenuOptionList red key={'group3'}>
                     {redactButton}
                     {cancelButton}
                 </IconizedContextMenuOptionList>
@@ -512,7 +512,7 @@ export default class MessageContextMenu extends React.Component {
 
         if (externalURLButton || permalinkButton) {
             optionLists.push((
-                <IconizedContextMenuOptionList>
+                <IconizedContextMenuOptionList key={'group4'}>
                     {externalURLButton}
                     {permalinkButton}
                 </IconizedContextMenuOptionList>
@@ -521,7 +521,7 @@ export default class MessageContextMenu extends React.Component {
 
         if (pinButton || unhidePreviewButton || reportEventButton) {
             optionLists.push((
-                <IconizedContextMenuOptionList>
+                <IconizedContextMenuOptionList key={'group5'}>
                     {pinButton}
                     {unhidePreviewButton}
                     {reportEventButton}
@@ -531,7 +531,7 @@ export default class MessageContextMenu extends React.Component {
 
         if (forwardButton || quoteButton || collapseReplyThread) {
             optionLists.push((
-                <IconizedContextMenuOptionList>
+                <IconizedContextMenuOptionList key={'group6'}>
                     {forwardButton}
                     {collapseReplyThread}
                     {quoteButton}
