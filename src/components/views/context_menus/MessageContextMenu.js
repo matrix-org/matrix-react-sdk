@@ -314,7 +314,7 @@ export default class MessageContextMenu extends React.Component {
         let externalURLButton;
         let quoteButton;
         let collapseReplyThread;
-        let optionLists = [];
+        const optionLists = [];
 
         // status is SENT before remote-echo, null after
         const isSent = !eventStatus || eventStatus === EventStatus.SENT;
@@ -487,7 +487,7 @@ export default class MessageContextMenu extends React.Component {
                     {viewSourceButton}
                     {viewClearSourceButton}
                 </IconizedContextMenuOptionList>
-            ))
+            ));
         }
 
         if (resendButton || resendEditButton || resendReactionsButton || resendRedactionButton) {
@@ -498,7 +498,7 @@ export default class MessageContextMenu extends React.Component {
                     {resendReactionsButton}
                     {resendRedactionButton}
                 </IconizedContextMenuOptionList>
-            ))
+            ));
         }
 
         if (redactButton || cancelButton) {
@@ -507,7 +507,7 @@ export default class MessageContextMenu extends React.Component {
                     {redactButton}
                     {cancelButton}
                 </IconizedContextMenuOptionList>
-            ))
+            ));
         }
 
         if (externalURLButton || permalinkButton) {
@@ -516,7 +516,7 @@ export default class MessageContextMenu extends React.Component {
                     {externalURLButton}
                     {permalinkButton}
                 </IconizedContextMenuOptionList>
-            ))
+            ));
         }
 
         if (pinButton || unhidePreviewButton || reportEventButton) {
@@ -526,7 +526,7 @@ export default class MessageContextMenu extends React.Component {
                     {unhidePreviewButton}
                     {reportEventButton}
                 </IconizedContextMenuOptionList>
-            ))
+            ));
         }
 
         if (forwardButton || quoteButton || collapseReplyThread) {
@@ -536,7 +536,7 @@ export default class MessageContextMenu extends React.Component {
                     {collapseReplyThread}
                     {quoteButton}
                 </IconizedContextMenuOptionList>
-            ))
+            ));
         }
 
         return (
