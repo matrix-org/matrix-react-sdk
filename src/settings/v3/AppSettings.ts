@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import { LabsFeatures, SettingsCategory } from "./Categories";
+import { LabsFeatures, SettingsCategory } from "./maps/Categories";
 import { DeepFlatten, ValuesOf } from "../../utils/ts";
-import { AllSettingsMap } from "./AllSettings";
+import { AllSettingsMap } from "./maps/AllSettings";
 
 // This looks useless in terms of code, and arguably it is, however it does an important job
 // to enforce typechecking on the incoming map. All this definition does is allows us to use

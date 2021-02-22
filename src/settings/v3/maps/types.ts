@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-import {CustomSettings} from "./CustomSettings";
+import {CustomSettings} from "../registry/CustomSettings";
 
 // First let's define a variable which will help with the rest of this making sense. We just want
 // an object which has all of the settings, custom and built-in, so we just map directly to the
 // custom settings because they extend the built-in ones.
-export const AppSettings = CustomSettings;
+export const RawAppSettings = CustomSettings;
 
 // Next we want a type to represent all the setting names. This will be a type which is a union
 // of all property names on the AppSettings object. We take off 'prototype' because we don't want
 // that to be considered a setting.
-export type SettingID = keyof Omit<typeof AppSettings, 'prototype'>;
+export type SettingID = keyof Omit<typeof RawAppSettings, keyof typeof Object>;
 
 // This just defines a type which references the `ISetting<T>` for each setting ID. Essentially
 // we're making a dynamic interface of AppSettings here, mapping the property names to ISetting<T>
 // types.
-export type SettingDefinition<K extends SettingID> = (typeof AppSettings)[K];
+export type SettingDefinition<K extends SettingID> = (typeof RawAppSettings)[K];
 
 // Finally we can pull out the setting types by using the same dynamic interface trick from above:
 // we map setting IDs (property names) to the type of the definition's `default` property. The value

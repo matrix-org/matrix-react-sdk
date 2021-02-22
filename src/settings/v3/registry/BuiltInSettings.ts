@@ -15,7 +15,9 @@
  */
 
 import { CommonLevels, ISetting } from "./ISetting";
-import { _td } from "../../languageHandler";
+import { _td } from "../../../languageHandler";
+
+// These are all the settings that the app itself defines. Every setting must be registered here.
 
 export class BuiltInSettings {
     public static readonly ["feature_latex_maths"]: ISetting<boolean> = {

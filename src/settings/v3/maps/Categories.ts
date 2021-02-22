@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {SettingID} from "./Types";
+import {SettingID} from "./types";
 import { AllSettingsMap } from "./AllSettings";
 
 export type SettingsCategory = Record<string, SettingID>;

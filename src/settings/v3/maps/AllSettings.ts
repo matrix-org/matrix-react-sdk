@@ -16,7 +16,7 @@
 
 // This is just to create a type which maps setting ID to setting ID. This might seem pointless,
 // but it's an intermediary type to create an interface that Settings.get() can later use.
-import { AppSettings, SettingID } from "./Types";
+import { RawAppSettings, SettingID } from "./types";
 
 export type SettingMap = {
     [P in SettingID]: P;
@@ -24,7 +24,7 @@ export type SettingMap = {
 
 // This is our "All Settings Map" where we actually build the map defined by the SettingMap
 // type we created above.
-export const AllSettingsMap = Object.keys(AppSettings).reduce((p, c) => {
+export const AllSettingsMap = Object.keys(RawAppSettings).reduce((p, c) => {
     p[c] = c;
     return p;
 }, {}) as SettingMap;
