@@ -14,7 +14,40 @@
  * limitations under the License.
  */
 
+export enum SettingLevel {
+    Device = "device",
+    RoomDevice = "room-device",
+    RoomAccount = "room-account",
+    Account = "account",
+    Config = "config",
+    Default = "default",
+}
+
 export interface ISetting<T> {
+    /**
+     * Default value for the setting. May be null.
+     */
     default: T;
-    description: string;
+
+    /**
+     * The display name for the setting. May be an object to denote the display name
+     * changes depending on the level.
+     */
+    displayName?: string | {
+        [level in SettingLevel]?: string;
+    };
+
+    /**
+     * If not supported at each level, which levels the setting is supported at. Note
+     * that this array is ordered. The Default level will always be appended to the end.
+     */
+    levels?: SettingLevel[];
+}
+
+export class CommonLevels {
+    public static readonly LabsFeature = [SettingLevel.Device, SettingLevel.Config];
+
+    private constructor() {
+        // readonly class
+    }
 }

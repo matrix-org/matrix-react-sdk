@@ -15,6 +15,7 @@
  */
 
 import {SettingID} from "./Types";
+import { AllSettingsMap } from "./AllSettings";
 
 export type SettingsCategory = Record<string, SettingID>;
 
@@ -25,11 +26,18 @@ export type SettingsCategory = Record<string, SettingID>;
 // and hope that the remap() function in AppSettings.ts will error if someone creates
 // an invalid setting map.
 
-// Note: In order to make Settings.get() return the right type, use the syntax shown
-// below: 'RoomListBreadcrumbs' as 'RoomListBreadcrumbs' - This maps the value to a
-// setting name and forces the parent object's type to be of that type rather than
-// string, which is why we don't type these categories to SettingsCategory here.
-
-export const RoomListSettings = {
-    Breadcrumbs: 'RoomListBreadcrumbs' as 'RoomListBreadcrumbs',
+export const LabsFeatures = {
+    Maths: AllSettingsMap.feature_latex_maths,
+    CommunitiesV2: AllSettingsMap.feature_communities_v2_prototypes,
+    NewSpinner: AllSettingsMap.feature_new_spinner,
+    MessagePinning: AllSettingsMap.feature_pinning,
+    CustomStatus: AllSettingsMap.feature_custom_status,
+    CustomTags: AllSettingsMap.feature_custom_tags,
+    StateCounters: AllSettingsMap.feature_state_counters,
+    ManyIntegManagers: AllSettingsMap.feature_many_integration_managers,
+    Mjolnir: AllSettingsMap.feature_mjolnir,
+    CustomThemes: AllSettingsMap.feature_custom_themes,
+    PreviewReactionsDMs: AllSettingsMap.feature_roomlist_preview_reactions_dms,
+    PreviewReactionsAll: AllSettingsMap.feature_roomlist_preview_reactions_all,
+    Dehydration: AllSettingsMap.feature_dehydration,
 };

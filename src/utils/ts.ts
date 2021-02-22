@@ -33,7 +33,7 @@ export type NonObjectKeysOf<T> = {
  * The inverse of NonObjectKeysOf<T> - this pulls out *only* the object types.
  * Source: https://flut1.medium.com/deep-flatten-typescript-types-with-finite-recursion-cb79233d93ca
  */
-export type ObjectValuesOf<T extends Object> = Exclude<Exclude<Extract<ValuesOf<T>, object>, never>,Array<any>>;
+export type ObjectValuesOf<T extends Object> = Exclude<Exclude<Extract<ValuesOf<T>, object>, never>, Array<any>>;
 
 /**
  * As the name implies, this converts a union (A | B) to an intersection (A & B).

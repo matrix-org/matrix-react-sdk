@@ -14,20 +14,77 @@
  * limitations under the License.
  */
 
-import {ISetting} from "./ISetting";
+import { CommonLevels, ISetting } from "./ISetting";
+import { _td } from "../../languageHandler";
 
 export class BuiltInSettings {
-    public static readonly RoomListBreadcrumbs: ISetting<string[]> = {
-        default: [],
-        description: "testing 1",
+    public static readonly ["feature_latex_maths"]: ISetting<boolean> = {
+        default: false,
+        displayName: _td("Render LaTeX maths in messages"),
+        levels: CommonLevels.LabsFeature,
     };
-    public static readonly ShowReadReceipts: ISetting<boolean> = {
-        default: true,
-        description: "testing 2",
+    public static readonly ["feature_communities_v2_prototypes"]: ISetting<boolean> = {
+        default: false,
+        displayName: _td(
+            "Communities v2 prototypes. Requires compatible homeserver. " +
+            "Highly experimental - use with caution.",
+        ),
+        levels: CommonLevels.LabsFeature,
     };
-    public static readonly ['Video.TestDevice']: ISetting<string> = {
-        default: "hello",
-        description: "testing 3",
+    public static readonly ["feature_new_spinner"]: ISetting<boolean> = {
+        default: false,
+        displayName: _td("New spinner design"),
+        levels: CommonLevels.LabsFeature,
+    };
+    public static readonly ["feature_pinning"]: ISetting<boolean> = {
+        default: false,
+        displayName: _td("Message Pinning"),
+        levels: CommonLevels.LabsFeature,
+    };
+    public static readonly ["feature_custom_status"]: ISetting<boolean> = {
+        default: false,
+        displayName: _td("Custom user status messages"),
+        levels: CommonLevels.LabsFeature,
+    };
+    public static readonly ["feature_custom_tags"]: ISetting<boolean> = {
+        default: false,
+        displayName: _td("Group & filter rooms by custom tags (refresh to apply changes)"),
+        levels: CommonLevels.LabsFeature,
+    };
+    public static readonly ["feature_state_counters"]: ISetting<boolean> = {
+        default: false,
+        displayName: _td("Render simple counters in room header"),
+        levels: CommonLevels.LabsFeature,
+    };
+    public static readonly ["feature_many_integration_managers"]: ISetting<boolean> = {
+        default: false,
+        displayName: _td("Multiple integration managers"),
+        levels: CommonLevels.LabsFeature,
+    };
+    public static readonly ["feature_mjolnir"]: ISetting<boolean> = {
+        default: false,
+        displayName: _td("Try out new ways to ignore people (experimental)"),
+        levels: CommonLevels.LabsFeature,
+    };
+    public static readonly ["feature_custom_themes"]: ISetting<boolean> = {
+        default: false,
+        displayName: _td("Support adding custom themes"),
+        levels: CommonLevels.LabsFeature,
+    };
+    public static readonly ["feature_roomlist_preview_reactions_dms"]: ISetting<boolean> = {
+        default: false,
+        displayName: _td("Show message previews for reactions in DMs"),
+        levels: CommonLevels.LabsFeature,
+    };
+    public static readonly ["feature_roomlist_preview_reactions_all"]: ISetting<boolean> = {
+        default: false,
+        displayName: _td("Show message previews for reactions in all rooms"),
+        levels: CommonLevels.LabsFeature,
+    };
+    public static readonly ["feature_dehydration"]: ISetting<boolean> = {
+        default: false,
+        displayName: _td("Offline encrypted messaging using dehydrated devices"),
+        levels: CommonLevels.LabsFeature,
     };
 
     protected constructor() {

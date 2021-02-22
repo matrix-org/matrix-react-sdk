@@ -14,22 +14,9 @@
  * limitations under the License.
  */
 
-import { SettingID, AppSettings, SettingType } from "./Types";
-import { RoomListSettings, SettingsCategory } from "./Categories";
+import { LabsFeatures, SettingsCategory } from "./Categories";
 import { DeepFlatten, ValuesOf } from "../../utils/ts";
-
-// This is just to create a type which maps setting ID to setting ID. This might seem pointless,
-// but it's an intermediary type to create an interface that Settings.get() can later use.
-export type SettingMap = {
-    [P in SettingID]: P;
-};
-
-// This is our "All Settings Map" where we actually build the map defined by the SettingMap
-// type we created above.
-const AllSettingsMap = Object.keys(AppSettings).reduce((p, c) => {
-    p[c] = c;
-    return p;
-}, {}) as SettingMap;
+import { AllSettingsMap } from "./AllSettings";
 
 // This looks useless in terms of code, and arguably it is, however it does an important job
 // to enforce typechecking on the incoming map. All this definition does is allows us to use
@@ -54,7 +41,8 @@ function remap<T extends SettingsCategory>(cat: T): MappedSettings<T> {
 // level definition. Inspecting the type of S or the Omit<> below should give a better idea of what
 // is going on.
 const mappedSettings = {
-    RoomList: remap(RoomListSettings),
+    //RoomList: remap(RoomListSettings),
+    Features: remap(LabsFeatures),
 };
 
 // Finally, this is our accessor for setting IDs. Yes, code can use the setting IDs as strings,
@@ -70,18 +58,13 @@ export const S = {
     ...mappedSettings,
 };
 
-function getValue<K extends SettingID>(id: K): SettingType<K> {
-    if (id === S.RoomList.Breadcrumbs) {
-        return ['test'];
-    } else if (id === S.ShowReadReceipts) {
-        return false;
-    } else if (id === S["Video.TestDevice"]) {
-        return "ok";
-    }
-    return null;
-}
-
-// const inspect1 = AllSettingsMap;
-// const inspect2 = mappedSettings;
-// const test1: string[] = getValue(S.RoomListBreadcrumbs);
-// const test2: string[] = getValue(S.RoomList.Breadcrumbs);
+// function getValue<K extends SettingID>(id: K): SettingType<K> {
+//     if (id === S.RoomList.Breadcrumbs) {
+//         return ['test'];
+//     } else if (id === S.ShowReadReceipts) {
+//         return false;
+//     } else if (id === S["Video.TestDevice"]) {
+//         return "ok";
+//     }
+//     return null;
+// }
