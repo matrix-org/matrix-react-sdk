@@ -36,3 +36,14 @@ export type SettingDefinition<K extends SettingID> = (typeof RawAppSettings)[K];
 // of the default can be whatever - we're just stripping the type off of it from the ISetting<T>
 // contracts.
 export type SettingType<K extends SettingID> = SettingDefinition<K>['default'];
+
+/**
+ * The setting IDs which are "legacy". Only useful in the context of the application - if there are
+ * values which are not read here, they should be removed. Similarly, settings should only be added
+ * here if there is a need to reference them outside of SettingID.
+ *
+ * Typically used during migrations.
+ */
+export enum LegacySettingID {
+
+}
