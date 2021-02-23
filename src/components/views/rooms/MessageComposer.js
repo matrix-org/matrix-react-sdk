@@ -15,7 +15,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import React, {createRef} from 'react';
+import React, {createRef, useCallback} from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
@@ -143,16 +143,17 @@ HangupButton.propTypes = {
 
 const EmojiButton = ({addEmoji}) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
+    const onEmojiChosen = useCallback((emoji) => {
+        addEmoji(emoji);
+        closeMenu();
+    }, [addEmoji, closeMenu]);
 
     let contextMenu;
     if (menuDisplayed) {
         const buttonRect = button.current.getBoundingClientRect();
         const EmojiPicker = sdk.getComponent('emojipicker.EmojiPicker');
         contextMenu = <ContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu} catchTab={false}>
-            <EmojiPicker onChoose={(emoji) => {
-                addEmoji(emoji);
-                closeMenu();
-            }} showQuickReactions={true} />
+            <EmojiPicker onChoose={onEmojiChosen} showQuickReactions={true} />
         </ContextMenu>;
     }
 
