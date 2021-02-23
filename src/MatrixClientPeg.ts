@@ -53,6 +53,7 @@ export interface IOpts {
     pendingEventOrdering?: "detached" | "chronological";
     lazyLoadMembers?: boolean;
     clientWellKnownPollPeriod?: number;
+    pollTimeout?: number;
 }
 
 export interface IMatrixClientPeg {
@@ -233,6 +234,10 @@ class _MatrixClientPeg implements IMatrixClientPeg {
         opts.pendingEventOrdering = "detached";
         opts.lazyLoadMembers = true;
         opts.clientWellKnownPollPeriod = 2 * 60 * 60; // 2 hours
+        const pollTimeout = parseInt(localStorage.getItem("mx_pollTimeout"));
+        if (pollTimeout) {
+            opts.pollTimeout = pollTimeout;
+        }
 
         // Connect the matrix client to the dispatcher and setting handlers
         MatrixActionCreators.start(this.matrixClient);
