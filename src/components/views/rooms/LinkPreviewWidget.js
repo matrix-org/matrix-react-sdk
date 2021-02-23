@@ -25,6 +25,7 @@ import * as sdk from "../../../index";
 import Modal from "../../../Modal";
 import * as ImageUtils from "../../../ImageUtils";
 import { _t } from "../../../languageHandler";
+import AccessibleButton from "../../../../src/components/views/elements/AccessibleButton";
 
 export default class LinkPreviewWidget extends React.Component {
     static propTypes = {
@@ -101,13 +102,20 @@ export default class LinkPreviewWidget extends React.Component {
         if (!p || Object.keys(p).length === 0) {
             return <div />;
         }
+        const isImage = !(p["og:type"] && p["og:type"] == "object");
+
+        let imageMaxHeight = 75;
+        let imageMaxWidth = 75;
+        if (isImage) {
+            imageMaxWidth = 320;
+            imageMaxHeight = 240;
+        }
 
         // FIXME: do we want to factor out all image displaying between this and MImageBody - especially for lightboxing?
         let image = p["og:image"];
         if (!SettingsStore.getValue("showImages")) {
             image = null; // Don't render a button to show the image, just hide it outright
         }
-        const imageMaxWidth = 320; const imageMaxHeight = 240;
         if (image && image.startsWith("mxc://")) {
             image = MatrixClientPeg.get().mxcUrlToHttp(image, imageMaxWidth, imageMaxHeight);
         }
@@ -120,33 +128,54 @@ export default class LinkPreviewWidget extends React.Component {
             );
         }
 
-        let img;
+        let imageElement;
         if (image) {
-            img = <div className="mx_LinkPreviewWidget_image" style={{ height: thumbHeight }}>
+            imageElement = (
+                <div className="mx_LinkPreviewWidget_image" style={{ height: thumbHeight }}>
                     <img style={{ maxWidth: imageMaxWidth, maxHeight: imageMaxHeight }} src={image} onClick={this.onImageClick} />
-                  </div>;
+                </div>
+            );
         }
+
+        const closeButton = (
+            <AccessibleButton className="mx_LinkPreviewWidget_cancel" onClick={this.props.onCancelClick} aria-label={_t("Close preview")}>
+                <img className="mx_filterFlipColor" alt="" role="presentation"
+                    src={require("../../../../res/img/cancel.svg")} width="18" height="18" />
+            </AccessibleButton>
+        );
 
         // The description includes &-encoded HTML entities, we decode those as React treats the thing as an
         // opaque string. This does not allow any HTML to be injected into the DOM.
         const description = AllHtmlEntities.decode(p["og:description"] || "");
 
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-        return (
-            <div className="mx_LinkPreviewWidget">
-                <AccessibleButton className="mx_LinkPreviewWidget_cancel" onClick={this.props.onCancelClick} aria-label={_t("Close preview")}>
-                    <img className="mx_filterFlipColor" alt="" role="presentation"
-                        src={require("../../../../res/img/cancel.svg")} width="18" height="18" />
-                </AccessibleButton>
-                { img }
-                <div className="mx_LinkPreviewWidget_caption">
-                    <div className="mx_LinkPreviewWidget_title"><a href={this.props.link} target="_blank" rel="noreferrer noopener">{ p["og:title"] }</a></div>
-                    <div className="mx_LinkPreviewWidget_siteName">{ p["og:site_name"] ? (" - " + p["og:site_name"]) : null }</div>
-                    <div className="mx_LinkPreviewWidget_description" ref={this._description}>
-                        { description }
-                    </div>
+        const caption = (
+            <div className="mx_LinkPreviewWidget_caption">
+                <div className="mx_LinkPreviewWidget_title"><a href={this.props.link} target="_blank" rel="noreferrer noopener">{ p["og:title"] }</a></div>
+                <div className="mx_LinkPreviewWidget_siteName">{ p["og:site_name"] ? (" - " + p["og:site_name"]) : null }</div>
+                <div className="mx_LinkPreviewWidget_description" ref={this._description}>
+                    { description }
                 </div>
             </div>
         );
+
+        if (isImage) {
+            return (
+                <div className="mx_LinkPreviewWidget">
+                    <div className="mx_LinkPreviewWidget_imageWrapper">
+                        { imageElement }
+                        { closeButton }
+                    </div>
+                    { caption }
+                </div>
+            );
+        } else {
+            return (
+                <div className="mx_LinkPreviewWidget mx_LinkPreviewWidgetNonImage">
+                    { imageElement }
+                    { caption }
+                    { closeButton }
+                </div>
+            );
+        }
     }
 }
