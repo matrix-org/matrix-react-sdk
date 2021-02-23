@@ -322,6 +322,7 @@ export default class MessageContextMenu extends React.Component {
             if (eventStatus === EventStatus.NOT_SENT) {
                 resendButton = (
                     <IconizedContextMenuOption
+                        iconClassName="mx_MessageContextMenu_iconResend"
                         label={_t("Resend")}
                         onClick={this.onResendClick}
                     />
@@ -331,6 +332,7 @@ export default class MessageContextMenu extends React.Component {
             if (editStatus === EventStatus.NOT_SENT) {
                 resendEditButton = (
                     <IconizedContextMenuOption
+                        iconClassName="mx_MessageContextMenu_iconResend"
                         label={_t("Resend edit")}
                         onClick={this.onResendEditClick}
                     />
@@ -340,6 +342,7 @@ export default class MessageContextMenu extends React.Component {
             if (unsentReactionsCount !== 0) {
                 resendReactionsButton = (
                     <IconizedContextMenuOption
+                        iconClassName="mx_MessageContextMenu_iconResend"
                         label={ _t('Resend %(unsentCount)s reaction(s)', {unsentCount: unsentReactionsCount}) }
                         onClick={this.onResendReactionsClick}
                     />
@@ -350,6 +353,7 @@ export default class MessageContextMenu extends React.Component {
         if (redactStatus === EventStatus.NOT_SENT) {
             resendRedactionButton = (
                 <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconResend"
                     label={_t("Resend removal")}
                     onClick={this.onResendRedactionClick}
                 />
@@ -359,6 +363,7 @@ export default class MessageContextMenu extends React.Component {
         if (isSent && this.state.canRedact) {
             redactButton = (
                 <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconRedact"
                     label={_t("Remove")}
                     onClick={this.onRedactClick}
                 />
@@ -368,6 +373,7 @@ export default class MessageContextMenu extends React.Component {
         if (allowCancel) {
             cancelButton = (
                 <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconCancel"
                     label={_t("Cancel Sending")}
                     onClick={this.onCancelSendClick}
                 />
@@ -377,6 +383,7 @@ export default class MessageContextMenu extends React.Component {
         if (isContentActionable(mxEvent)) {
             forwardButton = (
                 <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconForward"
                     label={_t("Forward Message")}
                     onClick={this.onForwardClick}
                 />
@@ -385,6 +392,7 @@ export default class MessageContextMenu extends React.Component {
             if (this.state.canPin) {
                 pinButton = (
                     <IconizedContextMenuOption
+                        iconClassName="mx_MessageContextMenu_iconPin"
                         label={ this._isPinned() ? _t('Unpin Message') : _t('Pin Message') }
                         onClick={this.onPinClick}
                     />
@@ -394,6 +402,7 @@ export default class MessageContextMenu extends React.Component {
 
         const viewSourceButton = (
             <IconizedContextMenuOption
+                iconClassName="mx_MessageContextMenu_iconSource"
                 label={_t("View Source")}
                 onClick={this.onViewSourceClick}
             />
@@ -402,6 +411,7 @@ export default class MessageContextMenu extends React.Component {
         if (mxEvent.getType() !== mxEvent.getWireType()) {
             viewClearSourceButton = (
                 <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconSource"
                     label={_t("View Decrypted Source")}
                     onClick={this.onViewClearSourceClick}
                 />
@@ -412,6 +422,7 @@ export default class MessageContextMenu extends React.Component {
             if (this.props.eventTileOps.isWidgetHidden()) {
                 unhidePreviewButton = (
                     <IconizedContextMenuOption
+                        iconClassName="mx_MessageContextMenu_iconUnhidePreview"
                         label={_t("Unhide Preview")}
                         onClick={this.onUnhidePreviewClick}
                     />
@@ -426,6 +437,7 @@ export default class MessageContextMenu extends React.Component {
         // XXX: if we use room ID, we should also include a server where the event can be found (other than in the domain of the event ID)
         const permalinkButton = (
             <IconizedContextMenuOption
+                iconClassName="mx_MessageContextMenu_iconPermalink"
                 onClick={this.onPermalinkClick}
                 label= { mxEvent.isRedacted() || mxEvent.getType() !== 'm.room.message'
                     ? _t('Share Permalink') : _t('Share Message') }
@@ -439,6 +451,7 @@ export default class MessageContextMenu extends React.Component {
         if (this.props.eventTileOps) { // this event is rendered using TextualBody
             quoteButton = (
                 <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconQuote"
                     label={_t("Quote")}
                     onClick={this.onQuoteClick}
                 />
@@ -452,6 +465,7 @@ export default class MessageContextMenu extends React.Component {
         ) {
             externalURLButton = (
                 <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconLink"
                     onClick={this.closeMenu}
                     label={_t('Source URL')}
                     element="a"
@@ -465,6 +479,7 @@ export default class MessageContextMenu extends React.Component {
         if (this.props.collapseReplyThread) {
             collapseReplyThread = (
                 <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconCollapse"
                     label={_t("Collapse Reply Thread")}
                     onClick={this.onCollapseReplyThreadClick}
                 />
@@ -475,6 +490,7 @@ export default class MessageContextMenu extends React.Component {
         if (mxEvent.getSender() !== me) {
             reportEventButton = (
                 <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconReport"
                     label={_t("Report Content")}
                     onClick={this.onReportEventClick}
                 />
