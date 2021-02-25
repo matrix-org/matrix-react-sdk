@@ -34,6 +34,7 @@
 @import "./structures/_ViewSource.scss";
 @import "./structures/auth/_CompleteSecurity.scss";
 @import "./structures/auth/_Login.scss";
+@import "./views/_CustomThemeDesigner.scss";
 @import "./views/auth/_AuthBody.scss";
 @import "./views/auth/_AuthButtons.scss";
 @import "./views/auth/_AuthFooter.scss";
@@ -106,8 +107,8 @@
 @import "./views/elements/_AddressSelector.scss";
 @import "./views/elements/_AddressTile.scss";
 @import "./views/elements/_DesktopBuildsNotice.scss";
-@import "./views/elements/_DirectorySearchBox.scss";
 @import "./views/elements/_DesktopCapturerSourcePicker.scss";
+@import "./views/elements/_DirectorySearchBox.scss";
 @import "./views/elements/_Dropdown.scss";
 @import "./views/elements/_EditableItemList.scss";
 @import "./views/elements/_ErrorBoundary.scss";
