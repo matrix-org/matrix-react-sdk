@@ -88,7 +88,7 @@ enum Formatting {
 
 interface IProps {
     model: EditorModel;
-    room: Room;
+    rooms: Room[];
     placeholder?: string;
     label?: string;
     initialCaret?: DocumentOffset;
@@ -213,7 +213,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 isTyping = false;
             }
         }
-        TypingStore.sharedInstance().setSelfTyping(this.props.room.roomId, isTyping);
+        if (this.props.rooms.length > 0) {
+            TypingStore.sharedInstance().setSelfTyping(this.props.rooms[0].roomId, isTyping);
+        }
 
         if (this.props.onChange) {
             this.props.onChange();
@@ -661,7 +663,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                     onConfirm={this.onAutoCompleteConfirm}
                     onSelectionChange={this.onAutoCompleteSelectionChange}
                     selection={{beginning: true, end: queryLen, start: queryLen}}
-                    room={this.props.room}
+                    rooms={this.props.rooms}
                 />
             </div>);
         }

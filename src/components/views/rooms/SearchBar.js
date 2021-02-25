@@ -15,36 +15,52 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {createRef} from 'react';
+import React from 'react';
 import AccessibleButton from "../elements/AccessibleButton";
+import EditorModel from '../../../editor/model';
+import {PartCreator} from '../../../editor/parts';
+import BasicMessageComposer from "./BasicMessageComposer";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import classNames from "classnames";
-import { _t } from '../../../languageHandler';
 import {Key} from "../../../Keyboard";
 import DesktopBuildsNotice, {WarningKind} from "../elements/DesktopBuildsNotice";
 
 export default class SearchBar extends React.Component {
-    constructor(props) {
-        super(props);
+    static contextType = MatrixClientContext;
 
-        this._search_term = createRef();
+    constructor(props, context) {
+        super(props, context);
 
+        const partCreator = new PartCreator(this.props.room, this.context, null, true);
+        const parts = [];
+        this.model = new EditorModel(parts, partCreator);
         this.state = {
-            scope: 'Room',
+            roomIds: [],
+            rooms: [],
         };
     }
 
-    onThisRoomClick = () => {
-        this.setState({ scope: 'Room' }, () => this._searchIfQuery());
-    };
+    onChange = () => {
+        const roomIdMap = {};
+        const roomIds = [];
+        const rooms = [];
+        for (let i = 0; i < this.model._parts.length; i++) {
+            if (typeof this.model._parts[i].room !== 'undefined') {
+                roomIdMap[this.model._parts[i].room.roomId] = true;
+            }
+        }
+        for (const roomId in roomIdMap) {
+            roomIds.push(roomId);
+            rooms.push(this.context.getRoom(roomId));
+        }
+        this.setState({roomIds, rooms});
+    }
 
-    onAllRoomsClick = () => {
-        this.setState({ scope: 'All' }, () => this._searchIfQuery());
-    };
-
-    onSearchChange = (e) => {
+    onSearchKeydown = (e) => {
         switch (e.key) {
             case Key.ENTER:
                 this.onSearch();
+                e.preventDefault();
                 break;
             case Key.ESCAPE:
                 this.props.onCancelClick();
@@ -52,40 +68,45 @@ export default class SearchBar extends React.Component {
         }
     };
 
-    _searchIfQuery() {
-        if (this._search_term.current.value) {
-            this.onSearch();
-        }
-    }
-
     onSearch = () => {
-        this.props.onSearch(this._search_term.current.value, this.state.scope);
+        if (this.model.autoComplete !== null) {
+            this.model.autoComplete.getAutocompleterComponent().hide();
+        }
+        if (this.model._parts.length > 0) {
+            const searchTerm = [];
+            const senderIdMap = {};
+            let senderIds;
+            let roomIds;
+            for (let i = 0; i < this.model._parts.length; i++) {
+                if (typeof this.model._parts[i].member !== 'undefined') {
+                    senderIdMap[this.model._parts[i].resourceId] = true;
+                    continue;
+                }
+                if (typeof this.model._parts[i].room !== 'undefined') {
+                    continue;
+                }
+                const text = this.model._parts[i]._text.trim();
+                if (text !== '') {
+                    searchTerm.push(text);
+                }
+            }
+            const senderIdArray = Object.keys(senderIdMap);
+            if (this.state.roomIds.length > 0) roomIds = this.state.roomIds;
+            if (senderIdArray.length > 0) senderIds = senderIdArray;
+            this.props.onSearch(searchTerm.join(' '), roomIds, senderIds);
+        }
     };
 
     render() {
         const searchButtonClasses = classNames("mx_SearchBar_searchButton", {
             mx_SearchBar_searching: this.props.searchInProgress,
         });
-        const thisRoomClasses = classNames("mx_SearchBar_button", {
-            mx_SearchBar_unselected: this.state.scope !== 'Room',
-        });
-        const allRoomsClasses = classNames("mx_SearchBar_button", {
-            mx_SearchBar_unselected: this.state.scope !== 'All',
-        });
 
         return (
             <>
                 <div className="mx_SearchBar">
-                    <div className="mx_SearchBar_buttons" role="radiogroup">
-                        <AccessibleButton className={ thisRoomClasses } onClick={this.onThisRoomClick} aria-checked={this.state.scope === 'Room'} role="radio">
-                            {_t("This Room")}
-                        </AccessibleButton>
-                        <AccessibleButton className={ allRoomsClasses } onClick={this.onAllRoomsClick} aria-checked={this.state.scope === 'All'} role="radio">
-                            {_t("All Rooms")}
-                        </AccessibleButton>
-                    </div>
-                    <div className="mx_SearchBar_input mx_textinput">
-                        <input ref={this._search_term} type="text" autoFocus={true} placeholder={_t("Search…")} onKeyDown={this.onSearchChange} />
+                    <div className="mx_SearchBar_input mx_textinput" onKeyDown={this.onSearchKeydown}>
+                        <BasicMessageComposer model={this.model} rooms={this.state.rooms} onChange={this.onChange} />
                         <AccessibleButton className={ searchButtonClasses } onClick={this.onSearch} />
                     </div>
                     <AccessibleButton className="mx_SearchBar_cancel" onClick={this.props.onCancelClick} />

@@ -542,7 +542,7 @@ export default class SendMessageComposer extends React.Component {
                 <BasicMessageComposer
                     ref={this._setEditorRef}
                     model={this.model}
-                    room={this.props.room}
+                    rooms={[this.props.room]}
                     label={this.props.placeholder}
                     placeholder={this.props.placeholder}
                     onPaste={this._onPaste}

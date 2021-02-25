@@ -48,11 +48,16 @@ interface IRoomTimelineData {
 export default class UserProvider extends AutocompleteProvider {
     matcher: QueryMatcher<RoomMember>;
     users: RoomMember[];
-    room: Room;
+    rooms: Room[];
 
-    constructor(room: Room) {
+    constructor(rooms: Room[]) {
         super(USER_REGEX, FORCED_USER_REGEX);
-        this.room = room;
+        if (rooms.length === 0) {
+            this.rooms = MatrixClientPeg.get().getRooms()
+                .filter(r => r.getMyMembership() === 'join');
+        } else {
+            this.rooms = rooms;
+        }
         this.matcher = new QueryMatcher([], {
             keys: ['name'],
             funcs: [obj => obj.userId.slice(1)], // index by user id minus the leading '@'
@@ -71,6 +76,13 @@ export default class UserProvider extends AutocompleteProvider {
         }
     }
 
+    private includesRoom = (rooms: Room[], roomId: string) => {
+        for (let i = 0; i < rooms.length; i++) {
+            if (rooms[i].roomId === roomId) return true;
+        }
+        return false;
+    };
+
     private onRoomTimeline = (
         ev: MatrixEvent,
         room: Room,
@@ -80,7 +92,7 @@ export default class UserProvider extends AutocompleteProvider {
     ) => {
         if (!room) return;
         if (removed) return;
-        if (room.roomId !== this.room.roomId) return;
+        if (!this.includesRoom(this.rooms, room.roomId)) return;
 
         // ignore events from filtered timelines
         if (data.timeline.getTimelineSet() !== room.getUnfilteredTimelineSet()) return;
@@ -95,7 +107,7 @@ export default class UserProvider extends AutocompleteProvider {
 
     private onRoomStateMember = (ev: MatrixEvent, state: RoomState, member: RoomMember) => {
         // ignore members in other rooms
-        if (member.roomId !== this.room.roomId) {
+        if (!this.includesRoom(this.rooms, member.roomId)) {
             return;
         }
 
@@ -146,7 +158,10 @@ export default class UserProvider extends AutocompleteProvider {
     }
 
     _makeUsers() {
-        const events = this.room.getLiveTimeline().getEvents();
+        const events = [];
+        for (let i = 0; i < this.rooms.length; i++) {
+            events.push(...this.rooms[i].getLiveTimeline().getEvents());
+        }
         const lastSpoken = {};
 
         for (const event of events) {
@@ -154,9 +169,13 @@ export default class UserProvider extends AutocompleteProvider {
         }
 
         const currentUserId = MatrixClientPeg.get().credentials.userId;
-        this.users = this.room.getJoinedMembers().filter(({userId}) => userId !== currentUserId);
 
-        this.users = sortBy(this.users, (member) => 1E20 - lastSpoken[member.userId] || 1E20);
+        const users = [];
+        for (let i = 0; i < this.rooms.length; i++) {
+            users.push(...this.rooms[i].getJoinedMembers().filter(({userId}) => userId !== currentUserId));
+        }
+
+        this.users = sortBy(users, (member) => 1E20 - lastSpoken[member.userId] || 1E20);
 
         this.matcher.setObjects(this.users);
     }

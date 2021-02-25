@@ -62,7 +62,8 @@ export interface SearchArgs {
     before_limit: number;
     after_limit: number;
     order_by_recency: boolean;
-    room_id?: string;
+    room_ids?: [string];
+    sender_ids?: [string];
 }
 
 export interface EventAndProfile {

@@ -453,11 +453,18 @@ interface IAutocompleteCreator {
 
 export class PartCreator {
     protected readonly autoCompleteCreator: IAutocompleteCreator;
+    protected readonly disableSuffix: boolean;
 
-    constructor(private room: Room, private client: MatrixClient, autoCompleteCreator: AutoCompleteCreator = null) {
+    constructor(
+        private room: Room,
+        private client: MatrixClient,
+        autoCompleteCreator: AutoCompleteCreator = null,
+        disableSuffix: boolean,
+    ) {
         // pre-create the creator as an object even without callback so it can already be passed
         // to PillCandidatePart (e.g. while deserializing) and set later on
         this.autoCompleteCreator = {create: autoCompleteCreator && autoCompleteCreator(this)};
+        this.disableSuffix = disableSuffix;
     }
 
     setAutoCompleteCreator(autoCompleteCreator: AutoCompleteCreator) {
@@ -495,7 +502,7 @@ export class PartCreator {
             case Type.RoomPill:
                 return this.roomPill(part.text);
             case Type.UserPill:
-                return this.userPill(part.text, part.resourceId);
+                return this.userPill(part.text, part.resourceId, null);
         }
     }
 
@@ -528,14 +535,14 @@ export class PartCreator {
         return new AtRoomPillPart(text, this.room);
     }
 
-    userPill(displayName: string, userId: string) {
-        const member = this.room.getMember(userId);
+    userPill(displayName: string, userId: string, member: RoomMember) {
+        if (member === null) member = this.room.getMember(userId);
         return new UserPillPart(userId, displayName, member);
     }
 
-    createMentionParts(partIndex: number, displayName: string, userId: string) {
-        const pill = this.userPill(displayName, userId);
-        const postfix = this.plain(partIndex === 0 ? ": " : " ");
+    createMentionParts(partIndex: number, displayName: string, userId: string, member: RoomMember) {
+        const pill = this.userPill(displayName, userId, member);
+        const postfix = this.plain(partIndex === 0 && !this.disableSuffix ? ": " : " ");
         return [pill, postfix];
     }
 }

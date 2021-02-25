@@ -140,8 +140,8 @@ export interface IState {
     numUnreadMessages: number;
     draggingFile: boolean;
     searching: boolean;
+    searchMultiRoom?: boolean;
     searchTerm?: string;
-    searchScope?: "All" | "Room";
     searchResults?: XOR<{}, {
         count: number;
         highlights: string[];
@@ -1181,10 +1181,10 @@ export default class RoomView extends React.Component<IProps, IState> {
             });
     }
 
-    private onSearch = (term: string, scope) => {
+    private onSearch = (term: string, roomIds, senderIds) => {
         this.setState({
             searchTerm: term,
-            searchScope: scope,
+            searchMultiRoom: roomIds === undefined || roomIds.length > 1,
             searchResults: {},
             searchHighlights: [],
         });
@@ -1201,11 +1201,8 @@ export default class RoomView extends React.Component<IProps, IState> {
         // todo: should cancel any previous search requests.
         this.searchId = new Date().getTime();
 
-        let roomId;
-        if (scope === "Room") roomId = this.state.room.roomId;
-
         debuglog("sending search request");
-        const searchPromise = eventSearch(term, roomId);
+        const searchPromise = eventSearch(term, roomIds, senderIds);
         this.handleSearchResult(searchPromise);
     };
 
@@ -1232,7 +1229,7 @@ export default class RoomView extends React.Component<IProps, IState> {
             // whether it was used by the search engine or not.
 
             let highlights = results.highlights;
-            if (highlights.indexOf(this.state.searchTerm) < 0) {
+            if (this.state.searchTerm !== "" && highlights.indexOf(this.state.searchTerm) < 0) {
                 highlights = highlights.concat(this.state.searchTerm);
             }
 
@@ -1322,7 +1319,7 @@ export default class RoomView extends React.Component<IProps, IState> {
                 continue;
             }
 
-            if (this.state.searchScope === 'All') {
+            if (this.state.searchMultiRoom) {
                 if (roomId !== lastRoomId) {
                     ret.push(<li key={mxEv.getId() + "-room"}>
                         <h2>{ _t("Room") }: { room.name }</h2>
@@ -1805,14 +1802,6 @@ export default class RoomView extends React.Component<IProps, IState> {
         let hideCancel = false;
         if (this.state.forwardingEvent) {
             aux = <ForwardMessage onCancelClick={this.onCancelClick} />;
-        } else if (this.state.searching) {
-            hideCancel = true; // has own cancel
-            aux = <SearchBar
-                searchInProgress={this.state.searchInProgress}
-                onCancelClick={this.onCancelSearchClick}
-                onSearch={this.onSearch}
-                isRoomEncrypted={this.context.isRoomEncrypted(this.state.room.roomId)}
-            />;
         } else if (showRoomUpgradeBar) {
             aux = <RoomUpgradeWarningBar room={this.state.room} recommendation={roomVersionRecommendation} />;
             hideCancel = true;
@@ -1878,7 +1867,18 @@ export default class RoomView extends React.Component<IProps, IState> {
             </AuxPanel>
         );
 
-        let messageComposer; let searchInfo;
+        let searchBar = null;
+        if (this.state.searching) {
+            searchBar = <SearchBar
+                room={this.state.room}
+                searchInProgress={this.state.searchInProgress}
+                onCancelClick={this.onCancelSearchClick}
+                onSearch={this.onSearch}
+                isRoomEncrypted={this.context.isRoomEncrypted(this.state.room.roomId)}
+            />;
+        }
+
+        let messageComposer; let searchCount;
         const canSpeak = (
             // joined and not showing search results
             myMembership === 'join' && !this.state.searchResults
@@ -1897,14 +1897,8 @@ export default class RoomView extends React.Component<IProps, IState> {
                 />;
         }
 
-        // TODO: Why aren't we storing the term/scope/count in this format
-        // in this.state if this is what RoomHeader desires?
         if (this.state.searchResults) {
-            searchInfo = {
-                searchTerm: this.state.searchTerm,
-                searchScope: this.state.searchScope,
-                searchCount: this.state.searchResults.count,
-            };
+            searchCount = this.state.searchResults.count;
         }
 
         // if we have search results, we keep the messagepanel (so that it preserves its
@@ -2019,7 +2013,7 @@ export default class RoomView extends React.Component<IProps, IState> {
                     <ErrorBoundary>
                         <RoomHeader
                             room={this.state.room}
-                            searchInfo={searchInfo}
+                            searchCount={searchCount}
                             oobData={this.props.oobData}
                             inRoom={myMembership === 'join'}
                             onSearchClick={this.onSearchClick}
@@ -2035,6 +2029,7 @@ export default class RoomView extends React.Component<IProps, IState> {
                         <MainSplit panel={rightPanel} resizeNotifier={this.props.resizeNotifier}>
                             <div className="mx_RoomView_body">
                                 {auxPanel}
+                                {searchBar}
                                 <div className={timelineClasses}>
                                     {topUnreadMessagesBar}
                                     {jumpToBottom}
