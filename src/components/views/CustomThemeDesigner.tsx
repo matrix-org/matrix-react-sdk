@@ -71,12 +71,19 @@ export default class CustomThemeDesigner extends React.PureComponent<IProps, ISt
         this.flagWatcher = SettingsStore.watchSetting("feature_theme_designer", null, this.onFlagChange);
     }
 
+    public componentDidMount() {
+        this.updateTheme();
+    }
+
     public componentWillUnmount() {
         SettingsStore.unwatchSetting(this.flagWatcher);
     }
 
     onFlagChange = () => {
         this.forceUpdate(); // nothing to actually do, so just update
+        if (SettingsStore.getValue("feature_theme_designer")) {
+            this.updateTheme();
+        }
     };
 
     onChange = async (color: string, ev: ChangeEvent<HTMLInputElement>) => {
@@ -116,7 +123,7 @@ export default class CustomThemeDesigner extends React.PureComponent<IProps, ISt
     };
 
     public render() {
-        if (!SettingsStore.isEnabled("feature_theme_designer")) {
+        if (!SettingsStore.getValue("feature_theme_designer")) {
             return null;
         }
         return (
