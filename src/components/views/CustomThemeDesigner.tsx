@@ -72,7 +72,9 @@ export default class CustomThemeDesigner extends React.PureComponent<IProps, ISt
     }
 
     public componentDidMount() {
-        this.updateTheme();
+        if (SettingsStore.getValue("feature_theme_designer")) {
+            this.updateTheme();
+        }
     }
 
     public componentWillUnmount() {
