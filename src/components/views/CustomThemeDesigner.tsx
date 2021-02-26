@@ -24,27 +24,61 @@ import { SettingLevel } from "../../settings/SettingLevel";
 import { setTheme } from "../../theme";
 import AccessibleButton from "./elements/AccessibleButton";
 import Modal from "../../Modal";
-import dis from "../../dispatcher/dispatcher";
 import QuestionDialog from "./dialogs/QuestionDialog";
+import LabelledToggleSwitch from "./elements/LabelledToggleSwitch";
 
 interface IProps {
 }
 
 interface IState {
-    "accent-color": string;
-    "primary-color": string;
-    "warning-color": string;
-    "sidebar-color": string;
-    "roomlist-background-color": string;
-    "roomlist-text-color": string;
-    "roomlist-text-secondary-color": string;
-    "roomlist-highlights-color": string;
-    "roomlist-separator-color": string;
-    "timeline-background-color": string;
-    "timeline-text-color": string;
-    "timeline-text-secondary-color": string;
-    "timeline-highlights-color": string;
+    colors: {
+        "accent-color": string;
+        "primary-color": string;
+        "warning-color": string;
+        "sidebar-color": string;
+        "roomlist-background-color": string;
+        "roomlist-text-color": string;
+        "roomlist-text-secondary-color": string;
+        "roomlist-highlights-color": string;
+        "roomlist-separator-color": string;
+        "timeline-background-color": string;
+        "timeline-text-color": string;
+        "timeline-text-secondary-color": string;
+        "timeline-highlights-color": string;
+    };
+    isDark: boolean;
 }
+
+const LIGHT_DEFAULT = {
+    "accent-color": '#03b381',
+    "primary-color": '#2e2f32',
+    "warning-color": '#ff4b55',
+    "sidebar-color": '#27303a',
+    "roomlist-background-color": '#f2f5f8',
+    "roomlist-text-color": '#61708b',
+    "roomlist-text-secondary-color": '#61708b',
+    "roomlist-highlights-color": '#ffffff',
+    "roomlist-separator-color": '#e5e5e5',
+    "timeline-background-color": '#ffffff',
+    "timeline-text-color": '#2e2f32',
+    "timeline-text-secondary-color": '#61708b',
+    "timeline-highlights-color": '#f3f8fd',
+};
+const DARK_DEFAULT = {
+    "accent-color": '#03b381',
+    "primary-color": '#238cf5',
+    "warning-color": '#ff4b55',
+    "sidebar-color": '#15171b',
+    "roomlist-background-color": '#22262e',
+    "roomlist-text-color": '#61708b',
+    "roomlist-text-secondary-color": '#61708b',
+    "roomlist-highlights-color": '#1A1D23',
+    "roomlist-separator-color": '#000000',
+    "timeline-background-color": '#181b21',
+    "timeline-text-color": '#edf3ff',
+    "timeline-text-secondary-color": '#3c4556',
+    "timeline-highlights-color": '#22262e',
+};
 
 export default class CustomThemeDesigner extends React.PureComponent<IProps, IState> {
     private flagWatcher: string;
@@ -53,19 +87,8 @@ export default class CustomThemeDesigner extends React.PureComponent<IProps, ISt
         super(props, context);
 
         this.state = {
-            "accent-color": '#03b381',
-            "primary-color": '#2e2f32',
-            "warning-color": '#ff4b55',
-            "sidebar-color": '#27303a',
-            "roomlist-background-color": '#f2f5f8',
-            "roomlist-text-color": '#61708b',
-            "roomlist-text-secondary-color": '#61708b',
-            "roomlist-highlights-color": '#ffffff',
-            "roomlist-separator-color": '#e5e5e5',
-            "timeline-background-color": '#ffffff',
-            "timeline-text-color": '#2e2f32',
-            "timeline-text-secondary-color": '#61708b',
-            "timeline-highlights-color": '#f3f8fd',
+            colors: LIGHT_DEFAULT,
+            isDark: false,
         };
 
         this.flagWatcher = SettingsStore.watchSetting("feature_theme_designer", null, this.onFlagChange);
@@ -92,15 +115,27 @@ export default class CustomThemeDesigner extends React.PureComponent<IProps, ISt
         this.setState({[color]: ev.target.value} as any);
     };
 
+    onToggle = (checked) => {
+        this.setState({isDark: checked});
+    };
+
+    reset = () => {
+        if (this.state.isDark) {
+            this.setState({colors: DARK_DEFAULT}, () => this.updateTheme());
+        } else {
+            this.setState({colors: LIGHT_DEFAULT}, () => this.updateTheme());
+        }
+    };
+
     updateTheme = async () => {
         let themes = SettingsStore.getValueAt(SettingLevel.DEVICE, "custom_themes");
         if (!themes) themes = [];
         themes = themes.filter(t => t.name !== 'designer');
         themes.push({
             name: 'designer',
-            is_dark: false,
+            is_dark: this.state.isDark,
             colors: {
-                ...this.state,
+                ...this.state.colors,
             },
         });
         await SettingsStore.setValue("custom_themes", null, SettingLevel.DEVICE, themes);
@@ -110,9 +145,9 @@ export default class CustomThemeDesigner extends React.PureComponent<IProps, ISt
     showJson = () => {
         const theme = {
             name: 'My Theme',
-            is_dark: false,
+            is_dark: this.state.isDark,
             colors: {
-                ...this.state,
+                ...this.state.colors,
             },
         };
         Modal.createTrackedDialog('Custom theme colours', '', QuestionDialog, {
@@ -132,16 +167,18 @@ export default class CustomThemeDesigner extends React.PureComponent<IProps, ISt
             <div className="mx_CustomThemeDesigner">
                 <b>{_t("Custom theme designer")}</b>
                 <div className="mx_CustomThemeDesigner_swatches">
-                    {Object.keys(this.state).map(k => (
+                    {Object.keys(this.state.colors).map(k => (
                         <Field
-                            style={{borderBottomColor: this.state[k]}}
-                            value={this.state[k]}
+                            style={{borderBottomColor: this.state.colors[k]}}
+                            value={this.state.colors[k]}
                             onChange={(ev) => this.onChange(k, ev)}
                             label={k} />
                     ))}
                 </div>
+                <LabelledToggleSwitch toggleInFront={true} onChange={this.onToggle} value={this.state.isDark} label={_t("Dark theme")} />
                 <AccessibleButton onClick={this.updateTheme} kind='primary'>{_t("Update theme")}</AccessibleButton>
                 <AccessibleButton onClick={this.showJson} kind='primary'>{_t("Get JSON")}</AccessibleButton>
+                <AccessibleButton onClick={this.reset} kind='primary'>{_t("Reset")}</AccessibleButton>
             </div>
         );
     }

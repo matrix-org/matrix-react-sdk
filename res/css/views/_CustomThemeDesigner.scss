@@ -48,4 +48,14 @@
     .mx_AccessibleButton {
         margin-right: 8px;
     }
+
+    .mx_SettingsFlag {
+        margin-top: 8px;
+        margin-bottom: 8px;
+
+        > * {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
 }
