@@ -92,10 +92,11 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
         // show the right values for things.
 
         const themeChoice: string = SettingsStore.getValue("theme");
+        const excludeDefault = SettingsStore.getValue(UIFeature.ChangeTheme);
         const systemThemeExplicit: boolean = SettingsStore.getValueAt(
-            SettingLevel.DEVICE, "use_system_theme");
+            SettingLevel.DEVICE, "use_system_theme", null, false, excludeDefault);
         const themeExplicit: string = SettingsStore.getValueAt(
-            SettingLevel.DEVICE, "theme");
+            SettingLevel.DEVICE, "theme", null, false, excludeDefault);
 
         // If the user has enabled system theme matching, use that.
         if (systemThemeExplicit) {
@@ -224,7 +225,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
     };
 
     private renderThemeSection() {
-        if (!SettingsStore.getValue(UIFeature.ThemeChanging)) return null;
+        if (! SettingsStore.getValue(UIFeature.ChangeTheme)) return null;
         const themeWatcher = new ThemeWatcher();
         let systemThemeSection: JSX.Element;
         if (themeWatcher.isSystemThemeSupported()) {
@@ -301,7 +302,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
     }
 
     private renderFontSection() {
-        if (!SettingsStore.getValue(UIFeature.FontChanging)) return null;
+        if (! SettingsStore.getValue(UIFeature.ChangeFont)) return null;
         return <div className="mx_SettingsTab_section mx_AppearanceUserSettingsTab_fontScaling">
 
             <span className="mx_SettingsTab_subheading">{_t("Font size")}</span>
@@ -407,12 +408,14 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                 { brand },
             );
             advanced = <>
-                {(!UIFeature.PullUpCompactLayout) && <SettingsFlag
-                    name="useCompactLayout"
-                    level={SettingLevel.DEVICE}
-                    useCheckbox={true}
-                    disabled={this.state.useIRCLayout}
-                />}
+                {(! SettingsStore.getValue(UIFeature.PullUpCompactLayout)) && 
+                    <SettingsFlag
+                        name="useCompactLayout"
+                        level={SettingLevel.DEVICE}
+                        useCheckbox={true}
+                        disabled={this.state.useIRCLayout}
+                    />
+                }
                 <SettingsFlag
                     name="useIRCLayout"
                     level={SettingLevel.DEVICE}

@@ -22,6 +22,7 @@ import ThemeController from "../controllers/ThemeController";
 import { setTheme } from "../../theme";
 import { ActionPayload } from '../../dispatcher/payloads';
 import { SettingLevel } from "../SettingLevel";
+import {UIFeature} from "../UIFeature";
 
 export default class ThemeWatcher {
     private themeWatchRef: string;
@@ -99,11 +100,13 @@ export default class ThemeWatcher {
         // different places.
         if (ThemeController.isLogin) return 'light';
 
+        const excludeDefault = SettingsStore.getValue(UIFeature.ChangeTheme);
+
         // If the user has specifically enabled the system matching option (excluding default),
         // then use that over anything else. We pick the lowest possible level for the setting
         // to ensure the ordering otherwise works.
         const systemThemeExplicit = SettingsStore.getValueAt(
-            SettingLevel.DEVICE, "use_system_theme", null);
+            SettingLevel.DEVICE, "use_system_theme", null, false, excludeDefault);
         if (systemThemeExplicit) {
             console.log("returning explicit system theme");
             if (this.preferDark.matches) return 'dark';
@@ -114,7 +117,7 @@ export default class ThemeWatcher {
         // enabled specifically and excluding the default), use that theme. We pick the lowest possible
         // level for the setting to ensure the ordering otherwise works.
         const themeExplicit = SettingsStore.getValueAt(
-            SettingLevel.DEVICE, "theme", null);
+            SettingLevel.DEVICE, "theme", null, false, excludeDefault);
         if (themeExplicit) {
             console.log("returning explicit theme: " + themeExplicit);
             return themeExplicit;

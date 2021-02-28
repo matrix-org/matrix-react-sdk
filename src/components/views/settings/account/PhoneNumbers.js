@@ -264,7 +264,7 @@ export default class PhoneNumbers extends React.Component {
         return (
             <div className="mx_PhoneNumbers">
                 {existingPhoneElements}
-                {SettingsStore.getValue(UIFeature.EditPhoneNumbers) &&
+                {SettingsStore.getValue(UIFeature.EditPhoneNumbers) && <>
                     <form onSubmit={this._onAddClick} autoComplete="off" noValidate={true} className="mx_PhoneNumbers_new">
                         <div className="mx_PhoneNumbers_input">
                             <Field
@@ -278,8 +278,8 @@ export default class PhoneNumbers extends React.Component {
                             />
                         </div>
                     </form>
-                }
-                {SettingsStore.getValue(UIFeature.EditPhoneNumbers) && addVerifySection}
+                    {addVerifySection}
+                </>}
             </div>
         );
     }

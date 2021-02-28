@@ -85,14 +85,8 @@ export class ExistingEmailAddress extends React.Component {
     };
 
     render() {
-        if (!SettingsStore.getValue(UIFeature.EditEmailAddresses)) {
-            return (
-                <div className="mx_ExistingEmailAddress">
-                    <span className="mx_ExistingEmailAddress_email">{this.props.email.address}</span>
-                </div>
-            );
-        }
-        if (this.state.verifyRemove) {
+        var editEmailAddress = SettingsStore.getValue(UIFeature.EditEmailAddresses);
+        if (editEmailAddress && this.state.verifyRemove) {
             return (
                 <div className="mx_ExistingEmailAddress">
                     <span className="mx_ExistingEmailAddress_promptText">
@@ -113,9 +107,11 @@ export class ExistingEmailAddress extends React.Component {
         return (
             <div className="mx_ExistingEmailAddress">
                 <span className="mx_ExistingEmailAddress_email">{this.props.email.address}</span>
-                <AccessibleButton onClick={this._onRemove} kind="danger_sm">
-                    {_t("Remove")}
-                </AccessibleButton>
+                {editEmailAddress &&
+                    <AccessibleButton onClick={this._onRemove} kind="danger_sm">
+                        {_t("Remove")}
+                    </AccessibleButton>
+                }
             </div>
         );
     }

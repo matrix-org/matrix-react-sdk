@@ -403,8 +403,7 @@ export default class SecurityUserSettingsTab extends React.Component {
                         <DevicesPanel />
                     </div>
                 </div>
-                {SettingsStore.getValue(UIFeature.EnableEncryptionSettings) &&
-                    <>
+                {SettingsStore.getValue(UIFeature.ShowEncryptionSettings) && <>
                     <div className="mx_SettingsTab_heading">{_t("Encryption")}</div>
                     <div className="mx_SettingsTab_section">
                         {secureBackup}
@@ -412,8 +411,7 @@ export default class SecurityUserSettingsTab extends React.Component {
                         {crossSigning}
                         {this._renderCurrentDeviceInfo()}
                     </div>
-                    </>
-                }
+                </>}
                 { privacySection }
                 { advancedSection }
             </div>

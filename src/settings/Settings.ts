@@ -379,7 +379,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: "light",
         controller: new ThemeController(),
     },
-    [UIFeature.ThemeChanging]: {
+    [UIFeature.ChangeTheme]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
     },
@@ -404,7 +404,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("System font name"),
         controller: new SystemFontController(),
     },
-    [UIFeature.FontChanging]: {
+    [UIFeature.ChangeFont]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
     },
@@ -805,7 +805,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
     },
-    [UIFeature.EnableEncryptionSettings]: {
+    [UIFeature.ShowEncryptionSettings]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
     },

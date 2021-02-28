@@ -32,8 +32,8 @@ export enum UIFeature {
     Communities = "UIFeature.communities",
     AdvancedSettings = "UIFeature.advancedSettings",
     RoomHistorySettings = "UIFeature.roomHistorySettings",
-    ThemeChanging = "UIFeature.themeChanging",
-    FontChanging = "UIFeature.fontChanging",
+    ChangeTheme = "UIFeature.changeTheme",
+    ChangeFont = "UIFeature.changeFont",
     PullUpCompactLayout = "UIFeature.pullUpCompactLayout",
     ChangeDisplayName = "UIFeature.changeDisplayName",
     EditEmailAddresses = "UIFeature.editEmailAddresses",
@@ -50,7 +50,7 @@ export enum UIFeature {
     PreferencesPaneHiddenFlags = "UIFeature.preferencesPaneHiddenFlags",
     ShowAdvancedCallSettings = "UIFeature.showAdvancedCallSettings",
     SecurityAllowSessionEdits = "UIFeature.securityAllowSessionEdits",
-    EnableEncryptionSettings = "UIFeature.enableEncryptionSettings",
+    ShowEncryptionSettings = "UIFeature.showEncryptionSettings",
     ShowSimplifiedVersionInformation = "UIFeature.showSimplifiedVersionInformation",
     ShowAdvancedAboutInformation = "UIFeature.showAdvancedAboutInformation"
 }

@@ -1368,7 +1368,7 @@ const BasicUserInfo: React.FC<{
             <h3>{ _t("Security") }</h3>
             <p>{ text }</p>
             { verifyButton }
-            { cryptoEnabled && SettingsStore.getValue(UIFeature.EnableEncryptionSettings) && <DevicesSection
+            { cryptoEnabled && SettingsStore.getValue(UIFeature.ShowEncryptionSettings) && <DevicesSection
                 loading={showDeviceListSpinner}
                 devices={devices}
                 userId={member.userId} /> }

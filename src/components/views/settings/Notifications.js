@@ -886,23 +886,25 @@ export default class Notifications extends React.Component {
 
                     { emailNotificationsRows }
 
-                    {rows.length > 0 && <div className="mx_UserNotifSettings_pushRulesTableWrapper">
-                        <table className="mx_UserNotifSettings_pushRulesTable">
-                            <thead>
-                                <tr>
-                                    <th width="55%"></th>
-                                    <th width="15%">{ _t('Off') }</th>
-                                    <th width="15%">{ _t('On') }</th>
-                                    <th width="15%">{ _t('Noisy') }</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                    {rows.length > 0 && 
+                        <div className="mx_UserNotifSettings_pushRulesTableWrapper">
+                            <table className="mx_UserNotifSettings_pushRulesTable">
+                                <thead>
+                                    <tr>
+                                        <th width="55%"></th>
+                                        <th width="15%">{ _t('Off') }</th>
+                                        <th width="15%">{ _t('On') }</th>
+                                        <th width="15%">{ _t('Noisy') }</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                                { rows }
+                                    { rows }
 
-                            </tbody>
-                        </table>
-                    </div>}
+                                </tbody>
+                            </table>
+                        </div>
+                    }
 
                     { advancedSettings }
 
