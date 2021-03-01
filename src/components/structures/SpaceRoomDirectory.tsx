@@ -200,10 +200,6 @@ const RoomTile = ({ room, event, editing, queueAction, onPreviewClick, onJoinCli
     const [autoJoin, _setAutoJoin] = useState(evContent?.auto_join);
     const [removed, _setRemoved] = useState(!evContent?.via);
 
-    // TODO consider event for both inSpace (via) && auto_join
-    // send back to top level event contents/state keys etc to update on `Save`
-    // uniq keyed by Parent ID + Child ID
-
     const cli = MatrixClientPeg.get();
     const cliRoom = cli.getRoom(room.room_id);
     const myMembership = cliRoom?.getMyMembership();
@@ -339,7 +335,7 @@ interface IHierarchyLevelProps {
     queueAction?(action: IAction): void;
     onPreviewClick(roomId: string): void;
     onRemoveFromSpaceClick?(roomId: string): void;
-    onJoinClick?(roomId: string, parents: Set<string>): void;
+    onJoinClick?(roomId: string): void;
 }
 
 export const HierarchyLevel = ({
@@ -383,7 +379,7 @@ export const HierarchyLevel = ({
                         onPreviewClick(roomId);
                     }}
                     onJoinClick={onJoinClick ? () => {
-                        onJoinClick(roomId, newParents);
+                        onJoinClick(roomId);
                     } : undefined}
                 />
             ))
@@ -401,7 +397,7 @@ export const HierarchyLevel = ({
                         onPreviewClick(roomId);
                     }}
                     onJoinClick={() => {
-                        onJoinClick(roomId, newParents);
+                        onJoinClick(roomId);
                     }}
                 >
                     <HierarchyLevel
@@ -538,19 +534,8 @@ const SpaceRoomDirectory: React.FC<IProps> = ({ space, initialText = "", onFinis
                     showRoom(roomsMap.get(roomId), Array.from(viaMap.get(roomId) || []), false);
                     onFinished();
                 }}
-                onJoinClick={(roomId, parents) => {
+                onJoinClick={(roomId) => {
                     showRoom(roomsMap.get(roomId), Array.from(viaMap.get(roomId) || []), true);
-                    // TODO remove this total bodge
-                    if (parents?.size) {
-                        parents.forEach(parentRoomId => {
-                            if (cli.getRoom(parentRoomId)?.getMyMembership() === "join") return;
-                            const room = roomsMap.get(parentRoomId);
-                            const address = room.canonical_alias || room.aliases?.[0] || parentRoomId;
-                            cli.joinRoom(address, {
-                                viaServers: viaMap.has(parentRoomId) ? Array.from(viaMap.get(parentRoomId)) : undefined,
-                            });
-                        });
-                    }
                     onFinished();
                 }}
             />
