@@ -113,4 +113,9 @@ export enum Action {
      * XXX: Ditto
      */
     VirtualRoomSupportUpdated = "virtual_room_support_updated",
+
+    /**
+     * Opens the Space setting modal. Should be used with OpenSpaceSettingsPayload.
+     */
+    OpenSpaceSettings = "open_space_settings",
 }

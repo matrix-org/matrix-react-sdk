@@ -273,6 +273,7 @@ class RoomViewStore extends Store<ActionPayload> {
         const cli = MatrixClientPeg.get();
         const address = this.state.roomAlias || this.state.roomId;
         try {
+            // TODO handle spaces which require auto-joining
             await retry<void, MatrixError>(() => cli.joinRoom(address, payload.opts), NUM_JOIN_RETRY, (err) => {
                 // if we received a Gateway timeout then retry
                 return err.httpStatus === 504;
