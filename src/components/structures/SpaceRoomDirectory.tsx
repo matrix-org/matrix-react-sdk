@@ -101,7 +101,7 @@ const SubSpace: React.FC<ISubspaceProps> = ({
     // TODO DRY code
     let actions;
     if (editing && queueAction) {
-        if (event && cliRoom?.currentState.maySendStateEvent(event.getType(), cli.getUserId())) {
+        if (event && cli.getRoom(event.getRoomId())?.currentState.maySendStateEvent(event.getType(), cli.getUserId())) {
             const setAutoJoin = () => {
                 _setAutoJoin(v => {
                     queueAction({
@@ -210,7 +210,7 @@ const RoomTile = ({ room, event, editing, queueAction, onPreviewClick, onJoinCli
 
     let actions;
     if (editing && queueAction) {
-        if (event && cliRoom?.currentState.maySendStateEvent(event.getType(), cli.getUserId())) {
+        if (event && cli.getRoom(event.getRoomId())?.currentState.maySendStateEvent(event.getType(), cli.getUserId())) {
             const setAutoJoin = () => {
                 _setAutoJoin(v => {
                     queueAction({
