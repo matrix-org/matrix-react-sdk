@@ -35,7 +35,6 @@ import StyledRadioGroup from "../views/elements/StyledRadioGroup";
 import withValidation from "../views/elements/Validation";
 import * as Email from "../../email";
 import defaultDispatcher from "../../dispatcher/dispatcher";
-import {OpenSpaceSettingsPayload} from "../../dispatcher/payloads/OpenSpaceSettingsPayload";
 import {Action} from "../../dispatcher/actions";
 import ResizeNotifier from "../../utils/ResizeNotifier"
 import MainSplit from './MainSplit';
@@ -48,7 +47,7 @@ import {RightPanelPhases} from "../../stores/RightPanelStorePhases";
 import {SetRightPanelPhasePayload} from "../../dispatcher/payloads/SetRightPanelPhasePayload";
 import {useStateArray} from "../../hooks/useStateArray";
 import SpacePublicShare from "../views/spaces/SpacePublicShare";
-import {showAddExistingRooms, showCreateNewRoom, shouldShowSpaceSettings} from "../../utils/space";
+import {showAddExistingRooms, showCreateNewRoom, shouldShowSpaceSettings, showSpaceSettings} from "../../utils/space";
 import {HierarchyLevel, ISpaceSummaryEvent, ISpaceSummaryRoom, showRoom} from "./SpaceRoomDirectory";
 import {useAsyncMemo} from "../../hooks/useAsyncMemo";
 import {EnhancedMap} from "../../utils/maps";
@@ -152,10 +151,7 @@ const SpaceLanding = ({ space, onJoinButtonClicked, onRejectButtonClicked }) => 
     let settingsButton;
     if (shouldShowSpaceSettings(cli, space)) {
         settingsButton = <AccessibleButton className="mx_SpaceRoomView_landing_settingsButton" onClick={() => {
-            defaultDispatcher.dispatch<OpenSpaceSettingsPayload>({
-                action: Action.OpenSpaceSettings,
-                space,
-            });
+            showSpaceSettings(cli, space);
         }}>
             { _t("Settings") }
         </AccessibleButton>;

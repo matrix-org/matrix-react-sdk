@@ -23,6 +23,7 @@ import Modal from "../Modal";
 import AddExistingToSpaceDialog from "../components/views/dialogs/AddExistingToSpaceDialog";
 import CreateRoomDialog from "../components/views/dialogs/CreateRoomDialog";
 import createRoom, {IOpts} from "../createRoom";
+import SpaceSettingsDialog from "../components/views/dialogs/SpaceSettingsDialog";
 
 export const shouldShowSpaceSettings = (cli: MatrixClient, space: Room) => {
     const userId = cli.getUserId();
@@ -31,7 +32,14 @@ export const shouldShowSpaceSettings = (cli: MatrixClient, space: Room) => {
             || space.currentState.maySendStateEvent(EventType.RoomName, userId)
             || space.currentState.maySendStateEvent(EventType.RoomTopic, userId)
             || space.currentState.maySendStateEvent(EventType.RoomJoinRules, userId));
-}
+};
+
+export const showSpaceSettings = (cli: MatrixClient, space: Room) => {
+    Modal.createTrackedDialog("Space Settings", "", SpaceSettingsDialog, {
+        matrixClient: cli,
+        space,
+    }, /*className=*/null, /*isPriority=*/false, /*isStatic=*/true);
+};
 
 export const showAddExistingRooms = async (cli: MatrixClient, space: Room) => {
     return Modal.createTrackedDialog(

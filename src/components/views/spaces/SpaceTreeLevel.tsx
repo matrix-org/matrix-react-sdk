@@ -30,13 +30,12 @@ import IconizedContextMenu, {
 import {_t} from "../../../languageHandler";
 import {ContextMenuTooltipButton} from "../../../accessibility/context_menu/ContextMenuTooltipButton";
 import {toRightOf} from "../../structures/ContextMenu";
-import {shouldShowSpaceSettings, showCreateNewRoom} from "../../../utils/space";
+import {shouldShowSpaceSettings, showCreateNewRoom, showSpaceSettings} from "../../../utils/space";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import {ButtonEvent} from "../elements/AccessibleButton";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import Modal from "../../../Modal";
 import SpacePublicShare from "./SpacePublicShare";
-import {OpenSpaceSettingsPayload} from "../../../dispatcher/payloads/OpenSpaceSettingsPayload";
 import {Action} from "../../../dispatcher/actions";
 import RoomViewStore from "../../../stores/RoomViewStore";
 import {SetRightPanelPhasePayload} from "../../../dispatcher/payloads/SetRightPanelPhasePayload";
@@ -147,10 +146,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
         ev.preventDefault();
         ev.stopPropagation();
 
-        defaultDispatcher.dispatch<OpenSpaceSettingsPayload>({
-            action: Action.OpenSpaceSettings,
-            space: this.props.space,
-        });
+        showSpaceSettings(this.context, this.props.space);
         this.setState({contextMenuPosition: null}); // also close the menu
     };
 
