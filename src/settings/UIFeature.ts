@@ -48,12 +48,11 @@ export enum UIFeature {
     PreferencesShowComposerSection = "UIFeature.preferencesShowComposerSection",
     PreferencesShowRoomListSection = "UIFeature.preferencesShowRoomListSection",
     PreferencesPaneHiddenFlags = "UIFeature.preferencesPaneHiddenFlags",
-    ShowAdvancedCallSettings = "UIFeature.showAdvancedCallSettings",
     SecurityAllowSessionEdits = "UIFeature.securityAllowSessionEdits",
     ShowEncryptionSettings = "UIFeature.showEncryptionSettings",
     ShowSimplifiedVersionInformation = "UIFeature.showSimplifiedVersionInformation",
     ShowAdvancedAboutInformation = "UIFeature.showAdvancedAboutInformation",
-    ShowOneToOneRTCCall = "UIFeature.showOneToOneRTCCall",
-    ShowLocalVideoFeed = "UIFeature.showLocalVideoFeed",
-    AllowFallBackCall = "UIFeature.allowFallBackCall"
+    ShowSettingAllowPeerToPeerForOneToOneCalls = "UIFeature.ShowSettingAllowPeerToPeerForOneToOneCalls",
+    ShowSettingMirrorLocalVideoFeed = "UIFeature.showSettingMirrorLocalVideoFeed",
+    ShowSettingAllowFallbackCallAssist = "UIFeature.ShowSettingAllowFallbackCallAssist"
 }

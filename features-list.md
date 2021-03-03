@@ -24,9 +24,9 @@ Mirror local video feed (new config item ShowAdvancedCallSettings to toggle if t
 Allow Peer-to-Peer for 1:1 calls (new config item ShowAdvancedCallSettings to toggle if this setting is visible) - controlled by the OOTB webRtcAllowPeerToPeer setting, which defaults to true, and has been changed to false (NOTE: this setting can also be controlled with the inverse OOTB webRtcForceTURN setting)
 Allow fallback call assist server (new config item ShowAdvancedCallSettings to toggle if this setting is visible).
 
-(1) Added ShowOneToOneRTCCall flag which will hide the web rtc call toggle from menu
-(2) Added showLocalVideoFeed which turns off and hide 1:1 local video calls.
-(3) Allow fallback call assist server (new config item ShowAdvancedCallSettings to toggle if this setting is visible)
+(1) Added ShowSettingAllowPeerToPeerForOneToOneCalls flag which will hide the web rtc call toggle bar from menu
+(2) Added ShowSettingMirrorLocalVideoFeed which turns off and hide 1:1 local video calls toggle bar from menu.
+(3) Added ShowSettingAllowFallbackCallAssist to turn off feedback calls toggle bar from menu.
 
 ### Feature:188496
 Web: As an Authenticated Practitioner, I should not be able to view certain Settings that are not applicable or do not need to be displayed to the user, so that I only see applicable settings

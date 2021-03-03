@@ -215,16 +215,16 @@ export default class VoiceUserSettingsTab extends React.Component {
                     {speakerDropdown}
                     {microphoneDropdown}
                     {webcamDropdown}
-                    {SettingsStore.getValue(UIFeature.ShowAdvancedCallSettings) &&
+                    {
                         <>
-                            {SettingsStore.getValue(UIFeature.ShowLocalVideoFeed) &&
+                            {SettingsStore.getValue(UIFeature.ShowSettingMirrorLocalVideoFeed) &&
                             (
                                     <SettingsFlag
                                         name="VideoView.flipVideoHorizontally"
                                         level={SettingLevel.ACCOUNT}
                                     />
                             )}
-                            {SettingsStore.getValue(UIFeature.ShowOneToOneRTCCall) &&
+                            {SettingsStore.getValue(UIFeature.ShowSettingAllowPeerToPeerForOneToOneCalls) &&
                             (
                                     <SettingsFlag
                                         name="webRtcAllowPeerToPeer"
@@ -232,7 +232,7 @@ export default class VoiceUserSettingsTab extends React.Component {
                                         onChange={this._changeWebRtcMethod}
                                     />
                                 )}
-                            {SettingsStore.getValue(UIFeature.AllowFallBackCall) &&
+                            {SettingsStore.getValue(UIFeature.ShowSettingAllowFallbackCallAssist) &&
                             (
                                 <SettingsFlag name="fallbackICEServerAllowed"
                                 level={SettingLevel.DEVICE}

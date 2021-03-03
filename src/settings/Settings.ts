@@ -797,10 +797,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_UI_FEATURE,
         default: [],
     },
-    [UIFeature.ShowAdvancedCallSettings]: {
-        supportedLevels: LEVELS_UI_FEATURE,
-        default: true,
-    },
     [UIFeature.SecurityAllowSessionEdits]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
@@ -817,16 +813,17 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
     },
-    [UIFeature.ShowOneToOneRTCCall]: {
+    [UIFeature.ShowSettingAllowPeerToPeerForOneToOneCalls]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: false,
     },
-    [UIFeature.ShowLocalVideoFeed]: {
+    [UIFeature.ShowSettingMirrorLocalVideoFeed]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: false,
     },
-    [UIFeature.AllowFallBackCall]: {
+    [UIFeature.ShowSettingAllowFallbackCallAssist]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: false
     }
 };
+
