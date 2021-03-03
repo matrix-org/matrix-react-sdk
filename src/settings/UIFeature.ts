@@ -52,5 +52,8 @@ export enum UIFeature {
     SecurityAllowSessionEdits = "UIFeature.securityAllowSessionEdits",
     ShowEncryptionSettings = "UIFeature.showEncryptionSettings",
     ShowSimplifiedVersionInformation = "UIFeature.showSimplifiedVersionInformation",
-    ShowAdvancedAboutInformation = "UIFeature.showAdvancedAboutInformation"
+    ShowAdvancedAboutInformation = "UIFeature.showAdvancedAboutInformation",
+    ShowOneToOneRTCCall = "UIFeature.showOneToOneRTCCall",
+    ShowLocalVideoFeed = "UIFeature.showLocalVideoFeed",
+    AllowFallBackCall = "UIFeature.allowFallBackCall"
 }

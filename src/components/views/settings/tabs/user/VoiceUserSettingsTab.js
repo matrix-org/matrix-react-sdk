@@ -215,19 +215,31 @@ export default class VoiceUserSettingsTab extends React.Component {
                     {speakerDropdown}
                     {microphoneDropdown}
                     {webcamDropdown}
-                    {SettingsStore.getValue(UIFeature.ShowAdvancedCallSettings) && <>
-                        <SettingsFlag name='VideoView.flipVideoHorizontally' level={SettingLevel.ACCOUNT} />
-                        <SettingsFlag
-                            name='webRtcAllowPeerToPeer'
-                            level={SettingLevel.DEVICE}
-                            onChange={this._changeWebRtcMethod}
-                        />
-                        <SettingsFlag
-                            name='fallbackICEServerAllowed'
-                            level={SettingLevel.DEVICE}
-                            onChange={this._changeFallbackICEServerAllowed}
-                        />
-                    </>}
+                    {SettingsStore.getValue(UIFeature.ShowAdvancedCallSettings) &&
+                        <>
+                            {SettingsStore.getValue(UIFeature.ShowLocalVideoFeed) &&
+                            (
+                                    <SettingsFlag
+                                        name="VideoView.flipVideoHorizontally"
+                                        level={SettingLevel.ACCOUNT}
+                                    />
+                            )}
+                            {SettingsStore.getValue(UIFeature.ShowOneToOneRTCCall) &&
+                            (
+                                    <SettingsFlag
+                                        name="webRtcAllowPeerToPeer"
+                                        level={SettingLevel.DEVICE}
+                                        onChange={this._changeWebRtcMethod}
+                                    />
+                                )}
+                            {SettingsStore.getValue(UIFeature.AllowFallBackCall) &&
+                            (
+                                <SettingsFlag name="fallbackICEServerAllowed"
+                                level={SettingLevel.DEVICE}
+                                onChange={this._changeFallbackICEServerAllowed}
+                            />)}
+                        </>
+                    }
                 </div>
             </div>
         );
