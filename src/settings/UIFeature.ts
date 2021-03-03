@@ -52,7 +52,7 @@ export enum UIFeature {
     ShowEncryptionSettings = "UIFeature.showEncryptionSettings",
     ShowSimplifiedVersionInformation = "UIFeature.showSimplifiedVersionInformation",
     ShowAdvancedAboutInformation = "UIFeature.showAdvancedAboutInformation",
-    ShowSettingAllowPeerToPeerForOneToOneCalls = "UIFeature.ShowSettingAllowPeerToPeerForOneToOneCalls",
+    ShowSettingAllowPeerToPeerForOneToOneCalls = "UIFeature.showSettingAllowPeerToPeerForOneToOneCalls",
     ShowSettingMirrorLocalVideoFeed = "UIFeature.showSettingMirrorLocalVideoFeed",
-    ShowSettingAllowFallbackCallAssist = "UIFeature.ShowSettingAllowFallbackCallAssist"
+    ShowSettingAllowFallbackCallAssist = "UIFeature.showSettingAllowFallbackCallAssist"
 }
