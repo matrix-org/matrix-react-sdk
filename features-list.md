@@ -20,9 +20,12 @@ The following user settings are controlled by the specified configuration values
 - Incoming call ringtone
 
 Customized Features through our values inserted through communicate-config.json and UI.Feature
-Mirror local video feed (new config item ShowAdvancedCallSettings to toggle if this setting is visible)
-Allow Peer-to-Peer for 1:1 calls (new config item ShowAdvancedCallSettings to toggle if this setting is visible) - controlled by the OOTB webRtcAllowPeerToPeer setting, which defaults to true, and has been changed to false (NOTE: this setting can also be controlled with the inverse OOTB webRtcForceTURN setting)
-Allow fallback call assist server (new config item ShowAdvancedCallSettings to toggle if this setting is visible).
+Audio output - controlled by the OOTB webrtc_audiooutput setting, no change required for this story
+Microphone - controlled by the OOTB webrtc_audioinput setting, no change required for this story
+Camera - controlled by the OOTB webrtc_videoinput setting, no change required for this story
+Mirror local video feed (new config item ShowSettingMirrorLocalVideoFeed to toggle if this setting is visible) - controlled by the OOTB VideoView.flipVideoHorizontally setting, which defaults to false, so no override config value is required.
+Allow Peer-to-Peer for 1:1 calls (new config item ShowSettingAllowPeerToPeerForOneToOneCalls to toggle if this setting is visible) - controlled by the OOTB webRtcAllowPeerToPeer setting, which defaults to true, so a config override has been added to set this to false (NOTE: this setting can also be controlled with the inverse OOTB webRtcForceTURN setting)
+Allow fallback call assist server (new config item ShowSettingAllowFallbackCallAssist to toggle if this setting is visible) - controlled by the OOTB fallbackICEServerAllowed setting, which defaults to null (prompt the user), so a config override has been added to set this to false
 
 (1) Added ShowSettingAllowPeerToPeerForOneToOneCalls flag which will hide the web rtc call toggle bar from menu
 (2) Added ShowSettingMirrorLocalVideoFeed which turns off and hide 1:1 local video calls toggle bar from menu.
