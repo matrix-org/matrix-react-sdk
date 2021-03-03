@@ -42,6 +42,9 @@ import {UIFeature} from "../../../settings/UIFeature";
 import CountlyAnalytics from "../../../CountlyAnalytics";
 import {Room} from "matrix-js-sdk/src/models/room";
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
+import {EventTimeline} from "matrix-js-sdk/src/models/event-timeline";
+import {MatrixEvent} from "matrix-js-sdk/src/models/event";
+import {getAddressType} from '../../../UserAddress';
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
@@ -52,6 +55,58 @@ export const KIND_CALL_TRANSFER = "call_transfer";
 
 const INITIAL_ROOMS_SHOWN = 3; // Number of rooms to show at first
 const INCREMENT_ROOMS_SHOWN = 5; // Number of rooms to add when 'show more' is clicked
+
+function iterateShareableHistoryForRoom(client, room) {
+    let timeline = room.getLiveTimeline();
+    let visibility = timeline.getState(EventTimeline.FORWARDS)
+        .getStateEvents("m.room.history_visibility", "")
+        .getContent().history_visibility;
+    let events = timeline.getEvents();
+    let index = events.length;
+    let paginationToken;
+    const next = async () => {
+        if (index === 0) {
+            // get prev chunk
+            if (!paginationToken) {
+                const prevTimeline = timeline.getNeighbouringTimeline(EventTimeline.BACKWARDS);
+                if (prevTimeline) {
+                    timeline = prevTimeline;
+                    events = timeline.getEvents();
+                } else {
+                    paginationToken = timeline.getPaginationToken(EventTimeline.BACKWARDS);
+                    timeline = undefined;
+                }
+            }
+            if (!timeline && !paginationToken) {
+                return;
+            } else if (paginationToken) {
+                const res = await client._createMessagesRequest(
+                    room.roomId, paginationToken, 30, "b",
+                );
+                if (res.end === paginationToken) {
+                    paginationToken = undefined;
+                    return;
+                } else {
+                    events = res.chunk.reverse.map(e => new MatrixEvent(e));
+                }
+            }
+            index = events.length;
+        }
+        index--;
+        const event = events[index];
+        if (event.isState()) {
+            if (event.getType() === "m.room.history_visibility") {
+                visibility = event.getPrevContent().history_visibility;
+            }
+            return next();
+        }
+        if (visibility !== "world_readable" && visibility !== "shared") {
+            return;
+        }
+        return event;
+    };
+    return {next};
+}
 
 // This is the interface that is expected by various components in this file. It is a bit
 // awkward because it also matches the RoomMember class from the js-sdk with some extra support
@@ -676,14 +731,15 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         });
     };
 
-    _inviteUsers = () => {
+    _inviteUsers = async () => {
         const startTime = CountlyAnalytics.getTimestamp();
         this.setState({busy: true});
         this._convertFilter();
         const targets = this._convertFilter();
         const targetIds = targets.map(t => t.userId);
 
-        const room = MatrixClientPeg.get().getRoom(this.props.roomId);
+        const cli = MatrixClientPeg.get();
+        const room = cli.getRoom(this.props.roomId);
         if (!room) {
             console.error("Failed to find the room to invite users to");
             this.setState({
@@ -693,12 +749,24 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             return;
         }
 
-        inviteMultipleToRoom(this.props.roomId, targetIds).then(result => {
+        try {
+            const res = await inviteMultipleToRoom(this.props.roomId, targetIds)
             CountlyAnalytics.instance.trackSendInvite(startTime, this.props.roomId, targetIds.length);
-            if (!this._shouldAbortAfterInviteError(result)) { // handles setting error message too
+            if (!this._shouldAbortAfterInviteError(res)) { // handles setting error message too
                 this.props.onFinished();
             }
-        }).catch(err => {
+
+            if (cli.isRoomEncrypted(this.props.roomId)) {
+                const invitedUsers = [];
+                for (const [addr, state] of Object.entries(res.states)) {
+                    if (state === "invited" && getAddressType(addr) === "mx-user-id") {
+                        invitedUsers.push(addr);
+                    }
+                }
+                console.log("Sharing history with", invitedUsers);
+                cli.shareKeysForMessages(this.props.roomId, invitedUsers, iterateShareableHistoryForRoom(cli, room));
+            }
+        } catch (err) {
             console.error(err);
             this.setState({
                 busy: false,
@@ -706,7 +774,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                     "We couldn't invite those users. Please check the users you want to invite and try again.",
                 ),
             });
-        });
+        }
     };
 
     _transferCall = async () => {
