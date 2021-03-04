@@ -815,15 +815,15 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     [UIFeature.ShowSettingAllowPeerToPeerForOneToOneCalls]: {
         supportedLevels: LEVELS_UI_FEATURE,
-        default: false,
+        default: true,
     },
     [UIFeature.ShowSettingMirrorLocalVideoFeed]: {
         supportedLevels: LEVELS_UI_FEATURE,
-        default: false,
+        default: true,
     },
     [UIFeature.ShowSettingAllowFallbackCallAssist]: {
         supportedLevels: LEVELS_UI_FEATURE,
-        default: false
+        default: true
     }
 };
 
