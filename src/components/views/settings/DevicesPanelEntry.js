@@ -22,6 +22,8 @@ import { _t } from '../../../languageHandler';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import {formatDate} from '../../../DateUtils';
 import StyledCheckbox from '../elements/StyledCheckbox';
+import SettingsStore from '../../../settings/SettingsStore';
+import { UIFeature } from '../../../settings/UIFeature';
 
 export default class DevicesPanelEntry extends React.Component {
     constructor(props) {
@@ -73,17 +75,23 @@ export default class DevicesPanelEntry extends React.Component {
                     { device.device_id }
                 </div>
                 <div className="mx_DevicesPanel_deviceName">
-                    <EditableTextContainer initialValue={device.display_name}
-                        onSubmit={this._onDisplayNameChanged}
-                        placeholder={device.device_id}
-                    />
+                    {SettingsStore.getValue(UIFeature.SecurityAllowSessionEdits) ?
+                        <EditableTextContainer initialValue={device.display_name}
+                            onSubmit={this._onDisplayNameChanged}
+                            placeholder={device.device_id}
+                        />
+                        :
+                        <span>{device.display_name}</span>
+                    }
                 </div>
                 <div className="mx_DevicesPanel_lastSeen">
                     { lastSeen }
                 </div>
-                <div className="mx_DevicesPanel_deviceButtons">
-                    <StyledCheckbox onChange={this.onDeviceToggled} checked={this.props.selected} />
-                </div>
+                {SettingsStore.getValue(UIFeature.SecurityAllowSessionEdits) &&
+                    <div className="mx_DevicesPanel_deviceButtons">
+                        <StyledCheckbox onChange={this.onDeviceToggled} checked={this.props.selected} />
+                    </div>
+                }
             </div>
         );
     }

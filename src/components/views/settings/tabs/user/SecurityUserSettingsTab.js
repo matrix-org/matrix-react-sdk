@@ -388,7 +388,7 @@ export default class SecurityUserSettingsTab extends React.Component {
                 <div className="mx_SettingsTab_heading">{_t("Where you’re logged in")}</div>
                 <div className="mx_SettingsTab_section">
                     <span>
-                        {_t(
+                        {SettingsStore.getValue(UIFeature.SecurityAllowSessionEdits) && _t(
                             "Manage the names of and sign out of your sessions below or " +
                             "<a>verify them in your User Profile</a>.", {},
                             {
@@ -403,13 +403,15 @@ export default class SecurityUserSettingsTab extends React.Component {
                         <DevicesPanel />
                     </div>
                 </div>
-                <div className="mx_SettingsTab_heading">{_t("Encryption")}</div>
-                <div className="mx_SettingsTab_section">
-                    {secureBackup}
-                    {eventIndex}
-                    {crossSigning}
-                    {this._renderCurrentDeviceInfo()}
-                </div>
+                {SettingsStore.getValue(UIFeature.ShowEncryptionSettings) && <>
+                    <div className="mx_SettingsTab_heading">{_t("Encryption")}</div>
+                    <div className="mx_SettingsTab_section">
+                        {secureBackup}
+                        {eventIndex}
+                        {crossSigning}
+                        {this._renderCurrentDeviceInfo()}
+                    </div>
+                </>}
                 { privacySection }
                 { advancedSection }
             </div>

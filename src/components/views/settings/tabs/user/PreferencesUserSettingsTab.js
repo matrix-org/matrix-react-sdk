@@ -23,19 +23,20 @@ import Field from "../../../elements/Field";
 import * as sdk from "../../../../..";
 import PlatformPeg from "../../../../../PlatformPeg";
 import {SettingLevel} from "../../../../../settings/SettingLevel";
+import { UIFeature } from '../../../../../settings/UIFeature';
 
 export default class PreferencesUserSettingsTab extends React.Component {
     static ROOM_LIST_SETTINGS = [
         'breadcrumbs',
-    ];
+    ].filter(z => SettingsStore.getValue(UIFeature.PreferencesPaneHiddenFlags).indexOf(z) === -1);
 
     static COMPOSER_SETTINGS = [
         'MessageComposerInput.autoReplaceEmoji',
         'MessageComposerInput.suggestEmoji',
         'sendTypingNotifications',
         'MessageComposerInput.ctrlEnterToSend',
-        'MessageComposerInput.showStickersButton',
-    ];
+        'MessageComposerInput.showStickersButton'
+    ].filter(z => SettingsStore.getValue(UIFeature.PreferencesPaneHiddenFlags).indexOf(z) === -1);
 
     static TIMELINE_SETTINGS = [
         'showTypingNotifications',
@@ -55,15 +56,15 @@ export default class PreferencesUserSettingsTab extends React.Component {
         'showImages',
         'showChatEffects',
         'Pill.shouldShowPillAvatar',
-        'ctrlFForSearch',
-    ];
+        'ctrlFForSearch'
+    ].filter(z => SettingsStore.getValue(UIFeature.PreferencesPaneHiddenFlags).indexOf(z) === -1);
 
     static GENERAL_SETTINGS = [
         'TagPanel.enableTagPanel',
         'promptBeforeInviteUnknownUsers',
         // Start automatically after startup (electron-only)
         // Autocomplete delay (niche text box)
-    ];
+    ].filter(z => SettingsStore.getValue(UIFeature.PreferencesPaneHiddenFlags).indexOf(z) === -1);
 
     constructor() {
         super();
@@ -178,43 +179,55 @@ export default class PreferencesUserSettingsTab extends React.Component {
             <div className="mx_SettingsTab mx_PreferencesUserSettingsTab">
                 <div className="mx_SettingsTab_heading">{_t("Preferences")}</div>
 
-                <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{_t("Room list")}</span>
-                    {this._renderGroup(PreferencesUserSettingsTab.ROOM_LIST_SETTINGS)}
-                </div>
+                {SettingsStore.getValue(UIFeature.PreferencesShowRoomListSection) &&
+                PreferencesUserSettingsTab.ROOM_LIST_SETTINGS.length > 0 &&
+                    <div className="mx_SettingsTab_section">
+                        <span className="mx_SettingsTab_subheading">{_t("Room list")}</span>
+                        {this._renderGroup(PreferencesUserSettingsTab.ROOM_LIST_SETTINGS)}
+                    </div>
+                }
 
-                <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{_t("Composer")}</span>
-                    {this._renderGroup(PreferencesUserSettingsTab.COMPOSER_SETTINGS)}
-                </div>
+                {SettingsStore.getValue(UIFeature.PreferencesShowComposerSection) &&
+                PreferencesUserSettingsTab.COMPOSER_SETTINGS.length > 0 &&
+                    <div className="mx_SettingsTab_section">
+                        <span className="mx_SettingsTab_subheading">{_t("Composer")}</span>
+                        {this._renderGroup(PreferencesUserSettingsTab.COMPOSER_SETTINGS)}
+                    </div>
+                }
 
-                <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{_t("Timeline")}</span>
-                    {this._renderGroup(PreferencesUserSettingsTab.TIMELINE_SETTINGS)}
-                </div>
+                {SettingsStore.getValue(UIFeature.PreferencesShowTimelineSection) &&
+                PreferencesUserSettingsTab.TIMELINE_SETTINGS.length > 0 &&
+                    <div className="mx_SettingsTab_section">
+                        <span className="mx_SettingsTab_subheading">{_t("Timeline")}</span>
+                        {this._renderGroup(PreferencesUserSettingsTab.TIMELINE_SETTINGS)}
+                    </div>
+                }
 
-                <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{_t("General")}</span>
-                    {this._renderGroup(PreferencesUserSettingsTab.GENERAL_SETTINGS)}
-                    {minimizeToTrayOption}
-                    {autoHideMenuOption}
-                    {autoLaunchOption}
-                    <Field
-                        label={_t('Autocomplete delay (ms)')}
-                        type='number'
-                        value={this.state.autocompleteDelay}
-                        onChange={this._onAutocompleteDelayChange} />
-                    <Field
-                        label={_t('Read Marker lifetime (ms)')}
-                        type='number'
-                        value={this.state.readMarkerInViewThresholdMs}
-                        onChange={this._onReadMarkerInViewThresholdMs} />
-                    <Field
-                        label={_t('Read Marker off-screen lifetime (ms)')}
-                        type='number'
-                        value={this.state.readMarkerOutOfViewThresholdMs}
-                        onChange={this._onReadMarkerOutOfViewThresholdMs} />
-                </div>
+                {SettingsStore.getValue(UIFeature.PreferencesShowGeneralSection) &&
+                PreferencesUserSettingsTab.GENERAL_SETTINGS.length > 0 &&
+                    <div className="mx_SettingsTab_section">
+                        <span className="mx_SettingsTab_subheading">{_t("General")}</span>
+                        {this._renderGroup(PreferencesUserSettingsTab.GENERAL_SETTINGS)}
+                        {minimizeToTrayOption}
+                        {autoHideMenuOption}
+                        {autoLaunchOption}
+                        <Field
+                            label={_t('Autocomplete delay (ms)')}
+                            type='number'
+                            value={this.state.autocompleteDelay}
+                            onChange={this._onAutocompleteDelayChange} />
+                        <Field
+                            label={_t('Read Marker lifetime (ms)')}
+                            type='number'
+                            value={this.state.readMarkerInViewThresholdMs}
+                            onChange={this._onReadMarkerInViewThresholdMs} />
+                        <Field
+                            label={_t('Read Marker off-screen lifetime (ms)')}
+                            type='number'
+                            value={this.state.readMarkerOutOfViewThresholdMs}
+                            onChange={this._onReadMarkerOutOfViewThresholdMs} />
+                    </div>
+                }
             </div>
         );
     }

@@ -19,6 +19,7 @@ import {_t} from "../../../languageHandler";
 import {IntegrationManagers} from "../../../integrations/IntegrationManagers";
 import * as sdk from '../../../index';
 import SettingsStore from "../../../settings/SettingsStore";
+import {UIFeature} from "../../../settings/UIFeature";
 import {SettingLevel} from "../../../settings/SettingLevel";
 
 export default class SetIntegrationManager extends React.Component {
@@ -61,7 +62,7 @@ export default class SetIntegrationManager extends React.Component {
         } else {
             bodyText = _t("Use an Integration Manager to manage bots, widgets, and sticker packs.");
         }
-
+        if (!SettingsStore.getValue(UIFeature.ShowIntegrations)) return null;
         return (
             <div className='mx_SetIntegrationManager'>
                 <div className="mx_SettingsTab_heading">

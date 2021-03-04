@@ -25,6 +25,8 @@ import AddThreepid from "../../../../AddThreepid";
 import CountryDropdown from "../../auth/CountryDropdown";
 import * as sdk from '../../../../index';
 import Modal from '../../../../Modal';
+import {UIFeature} from '../../../../settings/UIFeature';
+import SettingsStore from '../../../../settings/SettingsStore';
 
 /*
 TODO: Improve the UX for everything in here.
@@ -99,9 +101,11 @@ export class ExistingPhoneNumber extends React.Component {
         return (
             <div className="mx_ExistingPhoneNumber">
                 <span className="mx_ExistingPhoneNumber_address">+{this.props.msisdn.address}</span>
-                <AccessibleButton onClick={this._onRemove} kind="danger_sm">
-                    {_t("Remove")}
-                </AccessibleButton>
+                {SettingsStore.getValue(UIFeature.EditPhoneNumbers) &&
+                    <AccessibleButton onClick={this._onRemove} kind="danger_sm">
+                        {_t("Remove")}
+                    </AccessibleButton>
+                }
             </div>
         );
     }
@@ -260,20 +264,22 @@ export default class PhoneNumbers extends React.Component {
         return (
             <div className="mx_PhoneNumbers">
                 {existingPhoneElements}
-                <form onSubmit={this._onAddClick} autoComplete="off" noValidate={true} className="mx_PhoneNumbers_new">
-                    <div className="mx_PhoneNumbers_input">
-                        <Field
-                            type="text"
-                            label={_t("Phone Number")}
-                            autoComplete="off"
-                            disabled={this.state.verifying}
-                            prefixComponent={phoneCountry}
-                            value={this.state.newPhoneNumber}
-                            onChange={this._onChangeNewPhoneNumber}
-                        />
-                    </div>
-                </form>
-                {addVerifySection}
+                {SettingsStore.getValue(UIFeature.EditPhoneNumbers) && <>
+                    <form onSubmit={this._onAddClick} autoComplete="off" noValidate={true} className="mx_PhoneNumbers_new">
+                        <div className="mx_PhoneNumbers_input">
+                            <Field
+                                type="text"
+                                label={_t("Phone Number")}
+                                autoComplete="off"
+                                disabled={this.state.verifying}
+                                prefixComponent={phoneCountry}
+                                value={this.state.newPhoneNumber}
+                                onChange={this._onChangeNewPhoneNumber}
+                            />
+                        </div>
+                    </form>
+                    {addVerifySection}
+                </>}
             </div>
         );
     }

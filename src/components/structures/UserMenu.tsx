@@ -478,17 +478,19 @@ export default class UserMenu extends React.Component<IProps, IState> {
         >
             <div className="mx_UserMenu_contextMenu_header">
                 {primaryHeader}
-                <AccessibleTooltipButton
-                    className="mx_UserMenu_contextMenu_themeButton"
-                    onClick={this.onSwitchThemeClick}
-                    title={this.state.isDarkTheme ? _t("Switch to light mode") : _t("Switch to dark mode")}
-                >
-                    <img
-                        src={require("../../../res/img/element-icons/roomlist/dark-light-mode.svg")}
-                        alt={_t("Switch theme")}
-                        width={16}
-                    />
-                </AccessibleTooltipButton>
+                {SettingsStore.getValue(UIFeature.ChangeTheme) && 
+					<AccessibleTooltipButton
+						className="mx_UserMenu_contextMenu_themeButton"
+						onClick={this.onSwitchThemeClick}
+						title={this.state.isDarkTheme ? _t("Switch to light mode") : _t("Switch to dark mode")}
+					>
+						<img
+							src={require("../../../res/img/element-icons/roomlist/dark-light-mode.svg")}
+							alt={_t("Switch theme")}
+							width={16}
+						/>
+					</AccessibleTooltipButton>
+				}
             </div>
             {topSection}
             {primaryOptionList}

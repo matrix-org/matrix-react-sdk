@@ -23,6 +23,8 @@ import * as sdk from "../../../index";
 import {OwnProfileStore} from "../../../stores/OwnProfileStore";
 import Modal from "../../../Modal";
 import ErrorDialog from "../dialogs/ErrorDialog";
+import {UIFeature} from "../../../settings/UIFeature";
+import SettingsStore from "../../../settings/SettingsStore";
 
 export default class ProfileSettings extends React.Component {
     constructor() {
@@ -170,12 +172,20 @@ export default class ProfileSettings extends React.Component {
                 <div className="mx_ProfileSettings_profile">
                     <div className="mx_ProfileSettings_controls">
                         <span className="mx_SettingsTab_subheading">{_t("Profile")}</span>
-                        <Field
-                            label={_t("Display Name")}
-                            type="text" value={this.state.displayName}
-                            autoComplete="off"
-                            onChange={this._onDisplayNameChanged}
-                        />
+                        {SettingsStore.getValue(UIFeature.ChangeDisplayName) && 
+                            <Field
+                                label={_t("Display Name")}
+                                type="text" value={this.state.displayName}
+                                autoComplete="off"
+                                onChange={this._onDisplayNameChanged}
+                            />
+                        }
+                        {!SettingsStore.getValue(UIFeature.ChangeDisplayName) &&
+                            <span>
+                                <span>{_t("Display Name")}: </span>
+                                <span>{this.state.displayName}</span>
+                            </span>
+                        }
                         <p>
                             {this.state.userId}
                             {hostingSignup}

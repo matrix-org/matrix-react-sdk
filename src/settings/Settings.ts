@@ -379,6 +379,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: "light",
         controller: new ThemeController(),
     },
+    [UIFeature.ChangeTheme]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
     "custom_themes": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: [],
@@ -399,6 +403,14 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: "",
         displayName: _td("System font name"),
         controller: new SystemFontController(),
+    },
+    [UIFeature.ChangeFont]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.PullUpCompactLayout]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: false,
     },
     "webRtcAllowPeerToPeer": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
@@ -733,4 +745,85 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
     },
+    [UIFeature.ChangeDisplayName]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.EditEmailAddresses]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.EditPhoneNumbers]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.ShowDiscoverySection]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.ShowPasswordReset]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.ShowLanguageField]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.ShowIntegrations]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.HiddenNotificationRules]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: [],
+    },
+    [UIFeature.PreferencesShowRoomListSection]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.PreferencesShowTimelineSection]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.PreferencesShowComposerSection]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.PreferencesShowGeneralSection]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.PreferencesPaneHiddenFlags]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: [],
+    },
+    [UIFeature.SecurityAllowSessionEdits]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.ShowEncryptionSettings]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.ShowSimplifiedVersionInformation]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: false,
+    },
+    [UIFeature.ShowAdvancedAboutInformation]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.ShowSettingAllowPeerToPeerForOneToOneCalls]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.ShowSettingMirrorLocalVideoFeed]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.ShowSettingAllowFallbackCallAssist]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true
+    }
 };
+

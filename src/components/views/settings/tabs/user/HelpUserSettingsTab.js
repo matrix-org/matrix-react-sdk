@@ -27,6 +27,8 @@ import * as sdk from "../../../../../";
 import PlatformPeg from "../../../../../PlatformPeg";
 import * as KeyboardShortcuts from "../../../../../accessibility/KeyboardShortcuts";
 import UpdateCheckButton from "../../UpdateCheckButton";
+import SettingsStore from '../../../../../settings/SettingsStore';
+import { UIFeature } from '../../../../../settings/UIFeature';
 
 export default class HelpUserSettingsTab extends React.Component {
     static propTypes = {
@@ -254,29 +256,33 @@ export default class HelpUserSettingsTab extends React.Component {
                     <span className='mx_SettingsTab_subheading'>{_t("Versions")}</span>
                     <div className='mx_SettingsTab_subsectionText'>
                         {_t("%(brand)s version:", { brand })} {appVersion}<br />
-                        {_t("olm version:")} {olmVersion}<br />
-                        {updateButton}
+                        {!SettingsStore.getValue(UIFeature.ShowSimplifiedVersionInformation) && <>
+                            {_t("olm version:")} {olmVersion}<br />
+                            {updateButton}
+                        </>}
                     </div>
                 </div>
                 {this._renderLegal()}
                 {this._renderCredits()}
-                <div className='mx_SettingsTab_section mx_HelpUserSettingsTab_versions'>
-                    <span className='mx_SettingsTab_subheading'>{_t("Advanced")}</span>
-                    <div className='mx_SettingsTab_subsectionText'>
-                        {_t("Homeserver is")} <code>{MatrixClientPeg.get().getHomeserverUrl()}</code><br />
-                        {_t("Identity Server is")} <code>{MatrixClientPeg.get().getIdentityServerUrl()}</code><br />
-                        {_t("Access Token:") + ' '}
-                        <AccessibleButton element="span" onClick={this._showSpoiler}
-                                          data-spoiler={MatrixClientPeg.get().getAccessToken()}>
-                            &lt;{ _t("click to reveal") }&gt;
-                        </AccessibleButton>
-                        <div className='mx_HelpUserSettingsTab_debugButton'>
-                            <AccessibleButton onClick={this._onClearCacheAndReload} kind='danger'>
-                                {_t("Clear cache and reload")}
+                {SettingsStore.getValue(UIFeature.ShowAdvancedAboutInformation) &&
+                    <div className='mx_SettingsTab_section mx_HelpUserSettingsTab_versions'>
+                        <span className='mx_SettingsTab_subheading'>{_t("Advanced")}</span>
+                        <div className='mx_SettingsTab_subsectionText'>
+                            {_t("Homeserver is")} <code>{MatrixClientPeg.get().getHomeserverUrl()}</code><br />
+                            {_t("Identity Server is")} <code>{MatrixClientPeg.get().getIdentityServerUrl()}</code><br />
+                            {_t("Access Token:") + ' '}
+                            <AccessibleButton element="span" onClick={this._showSpoiler}
+                                            data-spoiler={MatrixClientPeg.get().getAccessToken()}>
+                                &lt;{ _t("click to reveal") }&gt;
                             </AccessibleButton>
+                            <div className='mx_HelpUserSettingsTab_debugButton'>
+                                <AccessibleButton onClick={this._onClearCacheAndReload} kind='danger'>
+                                    {_t("Clear cache and reload")}
+                                </AccessibleButton>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
         );
     }

@@ -186,6 +186,7 @@ const AppsSection: React.FC<IAppsSectionProps> = ({ room }) => {
         }
     };
 
+    if (!SettingsStore.getValue(UIFeature.ShowIntegrations)) return null;
     let copyLayoutBtn = null;
     if (apps.length > 0 && WidgetLayoutStore.instance.canCopyLayoutToRoom(room)) {
         copyLayoutBtn = (

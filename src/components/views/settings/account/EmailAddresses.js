@@ -25,6 +25,8 @@ import * as Email from "../../../../email";
 import AddThreepid from "../../../../AddThreepid";
 import * as sdk from '../../../../index';
 import Modal from '../../../../Modal';
+import {UIFeature} from '../../../../settings/UIFeature';
+import SettingsStore from '../../../../settings/SettingsStore';
 
 /*
 TODO: Improve the UX for everything in here.
@@ -83,7 +85,8 @@ export class ExistingEmailAddress extends React.Component {
     };
 
     render() {
-        if (this.state.verifyRemove) {
+        var editEmailAddress = SettingsStore.getValue(UIFeature.EditEmailAddresses);
+        if (editEmailAddress && this.state.verifyRemove) {
             return (
                 <div className="mx_ExistingEmailAddress">
                     <span className="mx_ExistingEmailAddress_promptText">
@@ -104,9 +107,11 @@ export class ExistingEmailAddress extends React.Component {
         return (
             <div className="mx_ExistingEmailAddress">
                 <span className="mx_ExistingEmailAddress_email">{this.props.email.address}</span>
-                <AccessibleButton onClick={this._onRemove} kind="danger_sm">
-                    {_t("Remove")}
-                </AccessibleButton>
+                {editEmailAddress &&
+                    <AccessibleButton onClick={this._onRemove} kind="danger_sm">
+                        {_t("Remove")}
+                    </AccessibleButton>
+                }
             </div>
         );
     }
@@ -235,18 +240,20 @@ export default class EmailAddresses extends React.Component {
         return (
             <div className="mx_EmailAddresses">
                 {existingEmailElements}
-                <form onSubmit={this._onAddClick} autoComplete="off"
-                      noValidate={true} className="mx_EmailAddresses_new">
-                    <Field
-                        type="text"
-                        label={_t("Email Address")}
-                        autoComplete="off"
-                        disabled={this.state.verifying}
-                        value={this.state.newEmailAddress}
-                        onChange={this._onChangeNewEmailAddress}
-                    />
-                    {addButton}
-                </form>
+                {SettingsStore.getValue(UIFeature.EditEmailAddresses) &&
+                    <form onSubmit={this._onAddClick} autoComplete="off"
+                        noValidate={true} className="mx_EmailAddresses_new">
+                        <Field
+                            type="text"
+                            label={_t("Email Address")}
+                            autoComplete="off"
+                            disabled={this.state.verifying}
+                            value={this.state.newEmailAddress}
+                            onChange={this._onChangeNewEmailAddress}
+                        />
+                        {addButton}
+                    </form>
+                }
             </div>
         );
     }

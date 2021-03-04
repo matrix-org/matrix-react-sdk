@@ -721,7 +721,8 @@ export default class Notifications extends React.Component {
                 console.warn(`Skipping render of rule ${rule.vectorRuleId} due to no underlying rule`);
                 continue;
             }
-            //console.log("rendering: " + rule.description + ", " + rule.vectorRuleId + ", " + rule.vectorState);
+            if (SettingsStore.getValue(UIFeature.HiddenNotificationRules).indexOf(rule.vectorRuleId) > -1) continue;
+            console.log("rendering: " + rule.description + ", " + rule.vectorRuleId + ", " + rule.vectorState);
             rows.push(this.renderNotifRulesTableRow(rule.description, rule.vectorRuleId, rule.vectorState));
         }
         return rows;
@@ -861,7 +862,7 @@ export default class Notifications extends React.Component {
                 </div>
             );
         }
-
+        const rows = this.renderNotifRulesTableRows();
         return (
             <div>
 
@@ -885,23 +886,25 @@ export default class Notifications extends React.Component {
 
                     { emailNotificationsRows }
 
-                    <div className="mx_UserNotifSettings_pushRulesTableWrapper">
-                        <table className="mx_UserNotifSettings_pushRulesTable">
-                            <thead>
-                                <tr>
-                                    <th width="55%"></th>
-                                    <th width="15%">{ _t('Off') }</th>
-                                    <th width="15%">{ _t('On') }</th>
-                                    <th width="15%">{ _t('Noisy') }</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                    {rows.length > 0 && 
+                        <div className="mx_UserNotifSettings_pushRulesTableWrapper">
+                            <table className="mx_UserNotifSettings_pushRulesTable">
+                                <thead>
+                                    <tr>
+                                        <th width="55%"></th>
+                                        <th width="15%">{ _t('Off') }</th>
+                                        <th width="15%">{ _t('On') }</th>
+                                        <th width="15%">{ _t('Noisy') }</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                                { this.renderNotifRulesTableRows() }
+                                    { rows }
 
-                            </tbody>
-                        </table>
-                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                    }
 
                     { advancedSettings }
 
