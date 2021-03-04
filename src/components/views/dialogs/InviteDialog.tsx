@@ -57,12 +57,19 @@ export const KIND_CALL_TRANSFER = "call_transfer";
 const INITIAL_ROOMS_SHOWN = 3; // Number of rooms to show at first
 const INCREMENT_ROOMS_SHOWN = 5; // Number of rooms to add when 'show more' is clicked
 
+/**
+ * Iterate backwards through the message history, returning messages that are
+ * visible to all members of the room (`m.room.history_visibility` is
+ * `world_readable` or `shared`), until the most recent message that is not.
+ *
+ * This function is intended to be used with MatrixClient.shareKeysForMessages.
+ */
 function iterateShareableHistoryForRoom(client, room) {
     let timeline = room.getLiveTimeline();
     const visibilityEvent = timeline.getState(EventTimeline.FORWARDS)
         .getStateEvents("m.room.history_visibility", "");
-    let visibility = visibilityEvent && visibility.getContent() &&
-        visibility.getContent().history_visibility;
+    let visibility = visibilityEvent && visibilityEvent.getContent() &&
+        visibilityEvent.getContent().history_visibility;
     let events = timeline.getEvents();
     let index = events.length;
     let paginationToken;
@@ -109,7 +116,7 @@ function iterateShareableHistoryForRoom(client, room) {
         }
         return event;
     };
-    return {next};
+    return next;
 }
 
 // This is the interface that is expected by various components in this file. It is a bit
@@ -760,15 +767,21 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 this.props.onFinished();
             }
 
-            if (cli.isRoomEncrypted(this.props.roomId)) {
-                const invitedUsers = [];
-                for (const [addr, state] of Object.entries(res.states)) {
-                    if (state === "invited" && getAddressType(addr) === "mx-user-id") {
-                        invitedUsers.push(addr);
+            if (cli.isRoomEncrypted(this.props.roomId) &&
+                SettingsStore.getValue("feature_room_history_key_sharing")) {
+                const visibilityEvent = room.currentState.getStateEvents(
+                    "m.room.history_visibility", "",
+                );
+                const visibility = visibilityEvent && visibilityEvent.getContent() &&
+                    visibilityEvent.getContent().history_visibility;
+                if (visibility == "world_readable" || visibility == "shared") {
+                    const invitedUsers = [];
+                    for (const [addr, state] of Object.entries(res.states)) {
+                        if (state === "invited" && getAddressType(addr) === "mx-user-id") {
+                            invitedUsers.push(addr);
+                        }
                     }
-                }
-                console.log("Sharing history with", invitedUsers);
-                if (SettingsStore.getValue("feature_room_history_key_sharing")) {
+                    console.log("Sharing history with", invitedUsers);
                     cli.shareKeysForMessages(
                         this.props.roomId, invitedUsers,
                         iterateShareableHistoryForRoom(cli, room),
@@ -1364,12 +1377,12 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             if (SettingsStore.getValue("feature_room_history_key_sharing") &&
                 cli.isRoomEncrypted(this.props.roomId)) {
                 const room = cli.getRoom(this.props.roomId);
-                const visibilityEvent = room.currentState.getStateevents(
+                const visibilityEvent = room.currentState.getStateEvents(
                     "m.room.history_visibility", "",
                 );
-                const visibility = visibilityEvent && visibility.getContent() &&
-                    visibility.getContent().history_visibility;
-                if (visibility == "world_readable" && visibility == "shared") {
+                const visibility = visibilityEvent && visibilityEvent.getContent() &&
+                    visibilityEvent.getContent().history_visibility;
+                if (visibility == "world_readable" || visibility == "shared") {
                     keySharingWarning =
                         <div>
                             {_t("Note: Decryption keys for old messages will be shared with invited users.")}
