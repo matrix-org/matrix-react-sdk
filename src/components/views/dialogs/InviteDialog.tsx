@@ -44,7 +44,8 @@ import {Room} from "matrix-js-sdk/src/models/room";
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import {EventTimeline} from "matrix-js-sdk/src/models/event-timeline";
 import {MatrixEvent} from "matrix-js-sdk/src/models/event";
-import {getAddressType} from '../../../UserAddress';
+import {getAddressType} from "../../../UserAddress";
+import {sleep} from "../../../utils/promise";
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
@@ -58,9 +59,10 @@ const INCREMENT_ROOMS_SHOWN = 5; // Number of rooms to add when 'show more' is c
 
 function iterateShareableHistoryForRoom(client, room) {
     let timeline = room.getLiveTimeline();
-    let visibility = timeline.getState(EventTimeline.FORWARDS)
-        .getStateEvents("m.room.history_visibility", "")
-        .getContent().history_visibility;
+    const visibilityEvent = timeline.getState(EventTimeline.FORWARDS)
+        .getStateEvents("m.room.history_visibility", "");
+    let visibility = visibilityEvent && visibility.getContent() &&
+        visibility.getContent().history_visibility;
     let events = timeline.getEvents();
     let index = events.length;
     let paginationToken;
@@ -80,6 +82,7 @@ function iterateShareableHistoryForRoom(client, room) {
             if (!timeline && !paginationToken) {
                 return;
             } else if (paginationToken) {
+                await sleep(1000);
                 const res = await client._createMessagesRequest(
                     room.roomId, paginationToken, 30, "b",
                 );
@@ -96,7 +99,8 @@ function iterateShareableHistoryForRoom(client, room) {
         const event = events[index];
         if (event.isState()) {
             if (event.getType() === "m.room.history_visibility") {
-                visibility = event.getPrevContent().history_visibility;
+                visibility = event.getPrevContent() &&
+                    event.getPrevContent().history_visibility;
             }
             return next();
         }
@@ -764,7 +768,12 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                     }
                 }
                 console.log("Sharing history with", invitedUsers);
-                cli.shareKeysForMessages(this.props.roomId, invitedUsers, iterateShareableHistoryForRoom(cli, room));
+                if (SettingsStore.getValue("feature_room_history_key_sharing")) {
+                    cli.shareKeysForMessages(
+                        this.props.roomId, invitedUsers,
+                        iterateShareableHistoryForRoom(cli, room),
+                    );
+                }
             }
         } catch (err) {
             console.error(err);
@@ -1255,10 +1264,12 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         let helpText;
         let buttonText;
         let goButtonFn;
+        let keySharingWarning = "";
 
         const identityServersEnabled = SettingsStore.getValue(UIFeature.IdentityServer);
 
-        const userId = MatrixClientPeg.get().getUserId();
+        const cli = MatrixClientPeg.get();
+        const userId = cli.getUserId();
         if (this.props.kind === KIND_DM) {
             title = _t("Direct Messages");
 
@@ -1349,6 +1360,22 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
 
             buttonText = _t("Invite");
             goButtonFn = this._inviteUsers;
+
+            if (SettingsStore.getValue("feature_room_history_key_sharing") &&
+                cli.isRoomEncrypted(this.props.roomId)) {
+                const room = cli.getRoom(this.props.roomId);
+                const visibilityEvent = room.currentState.getStateevents(
+                    "m.room.history_visibility", "",
+                );
+                const visibility = visibilityEvent && visibility.getContent() &&
+                    visibility.getContent().history_visibility;
+                if (visibility == "world_readable" && visibility == "shared") {
+                    keySharingWarning =
+                        <div>
+                            {_t("Note: Decryption keys for old messages will be shared with invited users.")}
+                        </div>;
+                }
+            }
         } else if (this.props.kind === KIND_CALL_TRANSFER) {
             title = _t("Transfer");
             buttonText = _t("Transfer");
@@ -1382,6 +1409,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                             {spinner}
                         </div>
                     </div>
+                    {keySharingWarning}
                     {this._renderIdentityServerWarning()}
                     <div className='error'>{this.state.errorText}</div>
                     <div className='mx_InviteDialog_userSections'>
