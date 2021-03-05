@@ -73,6 +73,11 @@ export enum Key {
     Z = "z",
 }
 
+/**
+ * An array of modifiers
+ */
+export const Modifiers = ["Control", "Meta", "Shift", "Alt"];
+
 export const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
 
 export function isOnlyCtrlOrCmdKeyEvent(ev) {
