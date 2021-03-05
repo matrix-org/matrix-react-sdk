@@ -93,11 +93,13 @@ function iterateShareableHistoryForRoom(client, room) {
                 const res = await client._createMessagesRequest(
                     room.roomId, paginationToken, 30, "b",
                 );
-                if (res.end === paginationToken) {
+                if (res.end === paginationToken || res.chunk.length === 0) {
+                    // no new messages
                     paginationToken = undefined;
                     return;
                 } else {
-                    events = res.chunk.reverse.map(e => new MatrixEvent(e));
+                    paginationToken = res.end;
+                    events = res.chunk.reverse().map(e => new MatrixEvent(e));
                 }
             }
             index = events.length;
