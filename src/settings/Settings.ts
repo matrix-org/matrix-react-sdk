@@ -156,6 +156,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
+    "feature_keybindings": {
+        isFeature: true,
+        displayName: _td("[WIP] Customizable keybindings"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "feature_custom_status": {
         isFeature: true,
         displayName: _td("Custom user status messages"),
