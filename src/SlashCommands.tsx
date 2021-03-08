@@ -207,6 +207,19 @@ export const Commands = [
         category: CommandCategories.messages,
     }),
     new Command({
+        command: 'disapproval',
+        args: '<message>',
+        description: _td('Prepends ಠ_ಠ to a plain-text message'),
+        runFn: function(roomId, args) {
+            let message = 'ಠ_ಠ';
+            if (args) {
+                message = message + ' ' + args;
+            }
+            return success(MatrixClientPeg.get().sendTextMessage(roomId, message));
+        },
+        category: CommandCategories.messages,
+    }),
+    new Command({
         command: 'plain',
         args: '<message>',
         description: _td('Sends a message as plain text, without interpreting it as markdown'),
