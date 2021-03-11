@@ -329,8 +329,8 @@ class NewlinePart extends BasePart implements IBasePart {
 }
 
 class RoomPillPart extends PillPart {
-    constructor(resourceId: string, label: string, private room: Room) {
-        super(resourceId, label);
+    constructor(displayAlias, private room: Room) {
+        super(displayAlias, displayAlias);
     }
 
     setAvatar(node: HTMLElement) {
@@ -357,10 +357,6 @@ class RoomPillPart extends PillPart {
 }
 
 class AtRoomPillPart extends RoomPillPart {
-    constructor(text: string, room: Room) {
-        super(text, text, room);
-    }
-
     get type(): IPillPart["type"] {
         return Type.AtRoomPill;
     }
@@ -525,7 +521,7 @@ export class PartCreator {
                        r.getAltAliases().includes(alias);
             });
         }
-        return new RoomPillPart(alias, room ? room.name : alias, room);
+        return new RoomPillPart(alias, room);
     }
 
     atRoomPill(text: string) {
