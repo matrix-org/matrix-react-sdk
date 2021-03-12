@@ -1,3 +1,19 @@
+/*
+Copyright 2021 Clemens Zeidler
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 import { AutocompleteAction, IKeyBindingsProvider, KeyBinding, MessageComposerAction, NavigationAction, RoomAction,
     RoomListAction } from "./KeyBindingsManager";
 import { isMac, Key } from "./Keyboard";
@@ -235,14 +251,7 @@ const roomListBindings = (): KeyBinding<RoomListAction>[] => {
 }
 
 const roomBindings = (): KeyBinding<RoomAction>[] => {
-    const bindings = [
-        {
-            action: RoomAction.FocusRoomSearch,
-            keyCombo: {
-                key: Key.K,
-                ctrlOrCmd: true,
-            },
-        },
+    const bindings: KeyBinding<RoomAction>[] = [
         {
             action: RoomAction.ScrollUp,
             keyCombo: {
@@ -307,6 +316,13 @@ const roomBindings = (): KeyBinding<RoomAction>[] => {
 
 const navigationBindings = (): KeyBinding<NavigationAction>[] => {
     return [
+        {
+            action: NavigationAction.FocusRoomSearch,
+            keyCombo: {
+                key: Key.K,
+                ctrlOrCmd: true,
+            },
+        },
         {
             action: NavigationAction.ToggleRoomSidePanel,
             keyCombo: {
@@ -379,7 +395,7 @@ const navigationBindings = (): KeyBinding<NavigationAction>[] => {
                 shiftKey: true,
             },
         },
-    ]
+    ];
 }
 
 export const defaultBindingsProvider: IKeyBindingsProvider = {

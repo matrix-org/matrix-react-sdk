@@ -1,3 +1,19 @@
+/*
+Copyright 2021 Clemens Zeidler
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 import { defaultBindingsProvider } from './KeyBindingsDefaults';
 import { isMac } from './Keyboard';
 
@@ -62,8 +78,6 @@ export enum RoomListAction {
 
 /** Actions for the current room view */
 export enum RoomAction {
-    /** Jump to room search (search for a room)*/
-    FocusRoomSearch = 'FocusRoomSearch', // TODO: move to NavigationAction?
     /** Scroll up in the timeline */
     ScrollUp = 'ScrollUp',
     /** Scroll down in the timeline */
@@ -84,6 +98,8 @@ export enum RoomAction {
 
 /** Actions for navigating do various menus / dialogs / screens */
 export enum NavigationAction {
+    /** Jump to room search (search for a room)*/
+    FocusRoomSearch = 'FocusRoomSearch',
     /** Toggle the room side panel */
     ToggleRoomSidePanel = 'ToggleRoomSidePanel',
     /** Toggle the user menu */
@@ -147,30 +163,35 @@ export function isKeyComboMatch(ev: KeyboardEvent | React.KeyboardEvent, combo: 
     const comboAlt = combo.altKey ?? false;
     const comboShift = combo.shiftKey ?? false;
     const comboMeta = combo.metaKey ?? false;
+    // Tests mock events may keep the modifiers undefined; convert them to booleans
+    const evCtrl = ev.ctrlKey ?? false;
+    const evAlt = ev.altKey ?? false;
+    const evShift = ev.shiftKey ?? false;
+    const evMeta = ev.metaKey ?? false;
     // When ctrlOrCmd is set, the keys need do evaluated differently on PC and Mac
     if (combo.ctrlOrCmd) {
         if (onMac) {
-            if (!ev.metaKey
-                || ev.ctrlKey !== comboCtrl
-                || ev.altKey !== comboAlt
-                || ev.shiftKey !== comboShift) {
+            if (!evMeta
+                || evCtrl !== comboCtrl
+                || evAlt !== comboAlt
+                || evShift !== comboShift) {
                 return false;
             }
         } else {
-            if (!ev.ctrlKey
-                || ev.metaKey !== comboMeta
-                || ev.altKey !== comboAlt
-                || ev.shiftKey !== comboShift) {
+            if (!evCtrl
+                || evMeta !== comboMeta
+                || evAlt !== comboAlt
+                || evShift !== comboShift) {
                 return false;
             }
         }
         return true;
     }
 
-    if (ev.metaKey !== comboMeta
-        || ev.ctrlKey !== comboCtrl
-        || ev.altKey !== comboAlt
-        || ev.shiftKey !== comboShift) {
+    if (evMeta !== comboMeta
+        || evCtrl !== comboCtrl
+        || evAlt !== comboAlt
+        || evShift !== comboShift) {
         return false;
     }
 
