@@ -145,6 +145,14 @@ export default class HelpUserSettingsTab extends React.Component {
                         <a href="https://creativecommons.org/licenses/by/4.0/" rel="noreferrer noopener" target="_blank">
                         CC-BY 4.0</a>.
                     </li>
+                    <li>
+                        The <a href="https://github.com/google/material-design-icons" rel="noreferrer noopener"
+                               target="_blank"> Material design icons</a> font is ©&nbsp;
+                        <a href="https://material.io/" rel="noreferrer noopener" target="_blank">Material Design</a>{' '}
+                        used under the terms of&nbsp;
+                        <a href="http://www.apache.org/licenses/LICENSE-2.0" rel="noreferrer noopener" target="_blank">
+                        Apache 2.0</a>.
+                    </li>
                 </ul>
             </div>
         );
