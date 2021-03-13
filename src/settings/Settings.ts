@@ -39,6 +39,7 @@ import { OrderedMultiController } from "./controllers/OrderedMultiController";
 import { Layout } from "./Layout";
 import ReducedMotionController from './controllers/ReducedMotionController';
 import IncompatibleController from "./controllers/IncompatibleController";
+import {Key} from "./../Keyboard"
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
 const LEVELS_ROOM_SETTINGS = [
@@ -761,5 +762,308 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     [UIFeature.AdvancedSettings]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
+    },
+    // TODO: TravisR will fix this nightmare
+    // Keybinding settings
+    "KeyBinding.toggleBoldInComposer": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.B,
+        },
+        displayName: _td("Toggle Bold"),
+    },
+    "KeyBinding.toggleItalicsInComposer": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.I,
+        },
+        displayName: _td("Toggle Italics"),
+    },
+    "KeyBinding.toggleQuoteInComposer": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.GREATER_THAN,
+        },
+        displayName: _td("Toggle Quote"),
+    },
+    "KeyBinding.newLineInComposer": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            shiftKey: true,
+            key: Key.ENTER,
+        },
+        displayName: _td("New line"),
+    },
+    "KeyBinding.cancelReplyInComposer": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            key: Key.ESCAPE,
+        },
+        displayName: _td("Cancel replying to a message"),
+    },
+    "KeyBinding.editNextMessage": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            key: Key.ARROW_UP,
+        },
+        displayName: _td("Navigate to next message to edit"),
+    },
+    "KeyBinding.editPreviousMessage": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            key: Key.ARROW_DOWN,
+        },
+        displayName: _td("Navigate to previous message to edit"),
+    },
+    "KeyBinding.jumpToStartInComposer": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.HOME,
+        },
+        displayName: _td("Jump to start of the composer"),
+    },
+    "KeyBinding.jumpToEndInComposer": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.END,
+        },
+        displayName: _td("Jump to end of the composer"),
+    },
+    "KeyBinding.nextMessageInComposerHistory": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            altKey: true,
+            ctrlKey: true,
+            key: Key.ARROW_UP,
+        },
+        displayName: _td("Navigate to next message in composer history"),
+    },
+    "KeyBinding.previousMessageInComposerHistory": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            altKey: true,
+            ctrlKey: true,
+            key: Key.ARROW_DOWN,
+        },
+        displayName: _td("Navigate to previous message in composer history"),
+    },
+    "KeyBinding.toggleMicInCall": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.D,
+        },
+        displayName: _td("Toggle microphone mute"),
+    },
+    "KeyBinding.toggleWebcamInCall": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.E,
+        },
+        displayName: _td("Toggle webcam on/off"),
+    },
+    "KeyBinding.dismissReadMarkerAndJumpToBottom": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            key: Key.ESCAPE,
+        },
+        displayName: _td("Dismiss read marker and jump to bottom"),
+    },
+    "KeyBinding.jumpToOldestUnreadMessage": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            shiftKey: true,
+            key: Key.PAGE_UP,
+        },
+        displayName: _td("Jump to oldest unread message"),
+    },
+    "KeyBinding.uploadFileToRoom": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            shiftKey: true,
+            key: Key.U,
+        },
+        displayName: _td("Upload a file"),
+    },
+    "KeyBinding.searchInRoom": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.F,
+        },
+        displayName: _td("Search (must be enabled)"),
+    },
+    "KeyBinding.scrollUpInTimeline": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            key: Key.PAGE_UP,
+        },
+        displayName: _td("Scroll up in the timeline"),
+    },
+    "KeyBinding.scrollDownInTimeline": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            key: Key.PAGE_DOWN,
+        },
+        displayName: _td("Scroll down in the timeline"),
+    },
+    "KeyBinding.filterRooms": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.K,
+        },
+        displayName: _td("Jump to room search"),
+    },
+    "KeyBinding.selectRoomInRoomList": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            key: Key.ENTER,
+        },
+        displayName: _td("Select room from the room list"),
+    },
+    "KeyBinding.collapseSectionInRoomList": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            key: Key.ARROW_LEFT,
+        },
+        displayName: _td("Collapse room list section"),
+    },
+    "KeyBinding.expandSectionInRoomList": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            key: Key.ARROW_RIGHT,
+        },
+        displayName: _td("Expand room list section"),
+    },
+    "KeyBinding.clearRoomFilter": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            key: Key.ESCAPE,
+        },
+        displayName: _td("Clear room list filter field"),
+    },
+    "KeyBinding.upperRoom": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            key: Key.ARROW_UP,
+        },
+        displayName: _td("Navigate up in the room list"),
+    },
+    "KeyBinding.downerRoom": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            key: Key.ARROW_DOWN,
+        },
+        displayName: _td("Navigate down in the room list"),
+    },
+    "KeyBinding.toggleTopLeftMenu": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.BACKTICK,
+        },
+        displayName: _td("Toggle the top left menu"),
+    },
+    "KeyBinding.closeDialogOrContextMenu": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            key: Key.ESCAPE,
+        },
+        displayName: _td("Close dialog or context menu"),
+    },
+    "KeyBinding.activateSelectedButton": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            key: Key.ENTER,
+        },
+        displayName: _td("Activate selected button"),
+    },
+    "KeyBinding.toggleRightPanel": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.PERIOD,
+        },
+        displayName: _td("Toggle right panel"),
+    },
+    "KeyBinding.showKeyBindingsSettings": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.SLASH,
+        },
+        displayName: _td("Show keybinding settings"),
+    },
+    "KeyBinding.goToHomeView": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            altKey: true,
+            key: Key.H,
+        },
+        displayName: _td("Go to Home View"),
+    },
+    "KeyBinding.nextUnreadRoom": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            shiftKey: true,
+            altKey: true,
+            key: Key.ARROW_UP,
+        },
+        displayName: _td("Next unread room or DM"),
+    },
+    "KeyBinding.previousUnreadRoom": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            shiftKey: true,
+            altKey: true,
+            key: Key.ARROW_DOWN,
+        },
+        displayName: _td("Previous unread room or DM"),
+    },
+    "KeyBinding.nextRoom": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            altKey: true,
+            key: Key.ARROW_UP,
+        },
+        displayName: _td("Next room or DM"),
+    },
+    "KeyBinding.previousRoom": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            altKey: true,
+            key: Key.ARROW_DOWN,
+        },
+        displayName: _td("Previous room or DM"),
+    },
+    "KeyBinding.cancelAutoComplete": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            key: Key.ESCAPE,
+        },
+        displayName: _td("Cancel autocomplete"),
+    },
+    "KeyBinding.nextOptionInAutoComplete": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            key: Key.ARROW_UP,
+        },
+        displayName: _td("Next autocomplete suggestion"),
+    },
+    "KeyBinding.previousOptionInAutoComplete": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {
+            key: Key.ARROW_DOWN,
+        },
+        displayName: _td("Previous autocomplete suggestion"),
     },
 };
