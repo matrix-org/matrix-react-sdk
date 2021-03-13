@@ -45,6 +45,10 @@ limitations under the License.
     mask-image: url('$(res)/img/element-icons/settings/help.svg');
 }
 
+.mx_UserSettingsDialog_keyboardIcon::before {
+    mask-image: url('$(res)/img/element-icons/settings/keyboard.svg');
+}
+
 .mx_UserSettingsDialog_labsIcon::before {
     mask-image: url('$(res)/img/element-icons/settings/lab-flags.svg');
 }

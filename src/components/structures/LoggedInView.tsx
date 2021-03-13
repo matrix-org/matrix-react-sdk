@@ -58,6 +58,8 @@ import HostSignupContainer from '../views/host_signup/HostSignupContainer';
 import { getKeyBindingsManager, NavigationAction, RoomAction } from '../../KeyBindingsManager';
 import { IOpts } from "../../createRoom";
 import {replaceableComponent} from "../../utils/replaceableComponent";
+import { USER_KEYBINDINGS_TAB } from "../views/dialogs/UserSettingsDialog"
+import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -482,7 +484,15 @@ class LoggedInView extends React.Component<IProps, IState> {
                 handled = true;
                 break;
             case NavigationAction.ToggleShortCutDialog:
-                KeyboardShortcuts.toggleDialog();
+                if (SettingsStore.getValue("feature_keybindings")) {
+                    const payload: OpenToTabPayload = {
+                        action: Action.ViewUserSettings,
+                        initialTabId: USER_KEYBINDINGS_TAB,
+                    };
+                    dis.dispatch(payload);
+                } else {
+                    KeyboardShortcuts.toggleDialog();
+                }
                 handled = true;
                 break;
             case NavigationAction.GoToHome:
