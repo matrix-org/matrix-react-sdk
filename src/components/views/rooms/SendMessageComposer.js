@@ -339,7 +339,7 @@ export default class SendMessageComposer extends React.Component {
         const inlineWidget = startsWith(this.model, "https://")
             ? WidgetUtils.tryConvertInputToInlineWidget(textSerialize(this.model))
             : null;
-        if (inlineWidget && SettingsStore.isFeatureEnabled("feature_inline_widgets")) {
+        if (inlineWidget && SettingsStore.getValue("feature_inline_widgets")) {
             console.log("Message can be an inline widget - sending widget");
             this.context.sendMessage(this.props.room.roomId, inlineWidget);
             shouldSend = false;

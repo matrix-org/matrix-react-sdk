@@ -134,6 +134,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
+    "feature_inline_widgets": {
+        isFeature: true,
+        displayName: _td("Widgets in the timeline"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "feature_communities_v2_prototypes": {
         isFeature: true,
         displayName: _td(

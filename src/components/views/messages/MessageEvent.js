@@ -71,7 +71,7 @@ export default class MessageEvent extends React.Component {
             'm.file': sdk.getComponent('messages.MFileBody'),
             'm.audio': sdk.getComponent('messages.MAudioBody'),
             'm.video': sdk.getComponent('messages.MVideoBody'),
-            'm.widget': SettingsStore.isFeatureEnabled("feature_inline_widgets")
+            'm.widget': SettingsStore.getValue("feature_inline_widgets")
                 ? sdk.getComponent('messages.MWidgetBody')
                 : sdk.getComponent('messages.TextualBody'),
         };

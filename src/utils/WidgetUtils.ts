@@ -29,6 +29,8 @@ import {objectClone} from "./objects";
 import {_t} from "../languageHandler";
 import {Capability, IWidget, IWidgetData, MatrixCapabilities} from "matrix-widget-api";
 import {IApp} from "../stores/WidgetStore";
+import embedVideo from "embed-video";
+import $ from "jquery";
 
 // How long we wait for the state event echo to come back from the server
 // before waitFor[Room/User]Widget rejects its promise
@@ -44,6 +46,65 @@ export interface IWidgetEvent {
 }
 
 export default class WidgetUtils {
+    /**
+     * Tries to convert a given input string into an inline widget. If the
+     * input string does not translate to an inline widget, a falsey value
+     * is returned. Otherwise, the content object for an m.room.message
+     * representing the inline widget is returned.
+     * @param {string} inputText The input text to try and parse.
+     * @returns {*} The m.room.message content object or a falsey value.
+     */
+    static tryConvertInputToInlineWidget(inputText) {
+        // Dev note: borrowed from Dimension with permission
+        // https://github.com/turt2live/matrix-dimension/blob/f773b7a3ae4af4a6929d58c0528574f6b240d574/web/app/configs/widget/youtube/youtube.widget.component.ts#L59-L70
+        const embedCode = embedVideo(inputText);
+        if (!embedCode) return null; // can't be converted
+        // HACK: Grab the video URL from the iframe embed code
+        const videoUrl = "https:" + $(embedCode).attr("src");
+
+        return {
+            msgtype: "m.widget",
+            body: inputText,
+            type: "m.custom",
+            widget_url: videoUrl,
+        };
+    }
+
+    /**
+     * Sanitizes and wraps a block of HTML for a local widget.
+     * @param {string} html The widget's HTML.
+     * @returns {{wantedCapabilities: string[], url: string}} An object containing
+     * the URL for the wrapped HTML and the capabilities the widget wants.
+     */
+    static wrapWidgetHtml(html) {
+        const wantedCapabilities = [];
+
+        // TODO: Sanitize HTML
+        // TODO: Parse capabilities, etc from sanitized HTML
+
+        // HACK: Temporary measure
+        wantedCapabilities.push("m.send.m.room.message");
+        wantedCapabilities.push("m.send.m.room.hidden");
+
+        const wrapperOpts = {
+            html: html,
+            capabilities: wantedCapabilities,
+        };
+
+        const base64WrapperOpts = btoa(JSON.stringify(wrapperOpts))
+            .replace(/\+/g, '-')
+            .replace(/\//g, '_');
+
+        const loc = window.location;
+        let urlBase = `${loc.protocol}//${loc.host}${loc.pathname}`;
+        if (!urlBase.endsWith("/")) urlBase = `${urlBase}/`;
+
+        return {
+            url: `${urlBase}inline_widget_wrapper/index.html#${base64WrapperOpts}`,
+            wantedCapabilities: wantedCapabilities,
+        };
+    }
+
     /* Returns true if user is able to send state events to modify widgets in this room
      * (Does not apply to non-room-based / user widgets)
      * @param roomId -- The ID of the room to check

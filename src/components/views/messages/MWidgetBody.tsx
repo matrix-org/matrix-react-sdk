@@ -19,6 +19,7 @@ import * as React from 'react';
 import * as sdk from "../../../index";
 import AppTile from "../elements/AppTile";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
+import {IApp} from "../../../stores/WidgetStore";
 
 export default class MWidgetBody extends React.Component<any, any> {
     // static propTypes: {
@@ -63,28 +64,37 @@ export default class MWidgetBody extends React.Component<any, any> {
         }
         if (!widgetUrl) return this.renderAsText();
 
-        // XXX: Is this a secure enough widget ID?
-        return <AppTile
-            id={this.props.mxEvent.getRoomId() + "_" + this.props.mxEvent.getId()}
-            url={widgetUrl}
-            name={widgetInfo['name'] || "Widget"}
-            room={MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId())}
-            type={widgetInfo['type'] || "m.custom"}
-            fullWidth={true}
-            userId={MatrixClientPeg.get().credentials.userId}
-            creatorUserId={this.props.mxEvent.getSender()}
-            waitForIframeLoad={true}
-            show={true}
-            showMenubar={showTitle}
-            showTitle={showTitle}
-            showMinimise={false}
-            showDelete={false}
-            showCancel={false}
-            showPopout={false}
-            widgetPageTitle={(widgetInfo['data'] && widgetInfo['data']['title']) ? widgetInfo['data']['title'] : null}
-            handleMinimisePointerEvents={false}
-            whitelistCapabilities={wantedCapabilities}
-            strictSandbox={strictFrame}
-        />;
+        const app: IApp = {
+            ...widgetInfo,
+            // XXX: Is this a secure enough widget ID?
+            id: this.props.mxEvent.getRoomId() + "_" + this.props.mxEvent.getId(),
+            url: widgetUrl,
+        };
+
+        return <div className="mx_MWidgetBody">
+            <AppTile
+                id={app.id}
+                url={widgetUrl}
+                name={widgetInfo['name'] || "Widget"}
+                room={MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId())}
+                type={widgetInfo['type'] || "m.custom"}
+                app={app}
+                fullWidth={true}
+                userId={MatrixClientPeg.get().credentials.userId}
+                creatorUserId={this.props.mxEvent.getSender()}
+                waitForIframeLoad={true}
+                show={true}
+                showMenubar={showTitle}
+                showTitle={showTitle}
+                showMinimise={false}
+                showDelete={false}
+                showCancel={false}
+                showPopout={false}
+                widgetPageTitle={(widgetInfo['data'] && widgetInfo['data']['title']) ? widgetInfo['data']['title'] : null}
+                handleMinimisePointerEvents={false}
+                whitelistCapabilities={wantedCapabilities}
+                strictSandbox={strictFrame}
+            />
+        </div>;
     };
 }
