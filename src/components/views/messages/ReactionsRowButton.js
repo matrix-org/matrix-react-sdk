@@ -22,7 +22,10 @@ import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
+import dis from "../../../dispatcher/dispatcher";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.messages.ReactionsRowButton")
 export default class ReactionsRowButton extends React.PureComponent {
     static propTypes = {
         // The event we're displaying reactions for
@@ -60,6 +63,7 @@ export default class ReactionsRowButton extends React.PureComponent {
                     "key": content,
                 },
             });
+            dis.dispatch({action: "message_sent"});
         }
     };
 
@@ -72,7 +76,7 @@ export default class ReactionsRowButton extends React.PureComponent {
         });
     }
 
-    onMouseOut = () => {
+    onMouseLeave = () => {
         this.setState({
             tooltipVisible: false,
         });
@@ -127,11 +131,12 @@ export default class ReactionsRowButton extends React.PureComponent {
         }
 
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-        return <AccessibleButton className={classes}
+        return <AccessibleButton
+            className={classes}
             aria-label={label}
             onClick={this.onClick}
             onMouseOver={this.onMouseOver}
-            onMouseOut={this.onMouseOut}
+            onMouseLeave={this.onMouseLeave}
         >
             <span className="mx_ReactionsRowButton_content" aria-hidden="true">
                 {content}

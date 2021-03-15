@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -45,9 +46,8 @@ limitations under the License.
 }
 
 .mx_RoomDirectory_listheader {
-    display: flex;
-    margin-top: 12px;
-    margin-bottom: 12px;
+    display: block;
+    margin-top: 13px;
 }
 
 .mx_RoomDirectory_searchbox {
@@ -64,28 +64,23 @@ limitations under the License.
 }
 
 .mx_RoomDirectory_table {
-    font-size: 14px;
     color: $primary-fg-color;
-    width: 100%;
+    display: grid;
+    font-size: $font-12px;
+    grid-template-columns: max-content auto max-content max-content max-content;
+    row-gap: 24px;
     text-align: left;
-    table-layout: fixed;
+    width: 100%;
 }
 
 .mx_RoomDirectory_roomAvatar {
-    width: 32px;
-    padding-right: 14px;
-    vertical-align: top;
-}
-
-.mx_RoomDirectory_roomDescription {
-    padding-bottom: 16px;
+    padding: 2px 14px 0 0;
 }
 
 .mx_RoomDirectory_roomMemberCount {
+    align-self: center;
     color: $light-fg-color;
-    width: 60px;
-    padding: 0 10px;
-    text-align: center;
+    padding: 3px 10px 0;
 
     &::before {
         background-color: $light-fg-color;
@@ -105,13 +100,13 @@ limitations under the License.
 }
 
 .mx_RoomDirectory_join, .mx_RoomDirectory_preview {
-    width: 80px;
-    text-align: center;
+    align-self: center;
     white-space: nowrap;
 }
 
 .mx_RoomDirectory_name {
     display: inline-block;
+    font-size: $font-18px;
     font-weight: 600;
 }
 
@@ -123,7 +118,7 @@ limitations under the License.
     border-radius: 10px;
     display: inline-block;
     height: 20px;
-    line-height: 20px;
+    line-height: $font-20px;
     padding: 0 5px;
     color: $accent-fg-color;
     background-color: $rte-room-pill-color;
@@ -132,10 +127,14 @@ limitations under the License.
 .mx_RoomDirectory_topic {
     cursor: initial;
     color: $light-fg-color;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
 }
 
 .mx_RoomDirectory_alias {
-    font-size: 12px;
+    font-size: $font-12px;
     color: $settings-grey-fg-color;
 }
 
@@ -148,8 +147,8 @@ limitations under the License.
     padding: 0;
 }
 
-.mx_RoomDirectory p {
-    font-size: 14px;
+.mx_RoomDirectory > span {
+    font-size: $font-15px;
     margin-top: 0;
 
     .mx_AccessibleButton {

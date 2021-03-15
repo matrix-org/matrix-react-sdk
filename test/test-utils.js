@@ -1,8 +1,6 @@
-"use strict";
-
 import React from 'react';
 import {MatrixClientPeg as peg} from '../src/MatrixClientPeg';
-import dis from '../src/dispatcher';
+import dis from '../src/dispatcher/dispatcher';
 import {makeType} from "../src/utils/TypeUtils";
 import {ValidatedServerConfig} from "../src/utils/AutoDiscoveryUtils";
 import ShallowRenderer from 'react-test-renderer/shallow';
@@ -80,6 +78,7 @@ export function createTestClient() {
         getSyncState: () => "SYNCING",
         generateClientSecret: () => "t35tcl1Ent5ECr3T",
         isGuest: () => false,
+        isCryptoEnabled: () => false,
     };
 }
 
@@ -214,6 +213,7 @@ export function mkStubRoom(roomId = null) {
             rawDisplayName: 'Member',
             roomId: roomId,
             getAvatarUrl: () => 'mxc://avatar.url/image.png',
+            getMxcAvatarUrl: () => 'mxc://avatar.url/image.png',
         }),
         getMembersWithMembership: jest.fn().mockReturnValue([]),
         getJoinedMembers: jest.fn().mockReturnValue([]),
@@ -241,6 +241,9 @@ export function mkStubRoom(roomId = null) {
         setBlacklistUnverifiedDevices: jest.fn(),
         on: jest.fn(),
         removeListener: jest.fn(),
+        getDMInviter: jest.fn(),
+        getAvatarUrl: () => 'mxc://avatar.url/room.png',
+        getMxcAvatarUrl: () => 'mxc://avatar.url/room.png',
     };
 }
 

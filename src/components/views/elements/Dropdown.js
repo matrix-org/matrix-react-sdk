@@ -22,6 +22,7 @@ import classnames from 'classnames';
 import AccessibleButton from './AccessibleButton';
 import { _t } from '../../../languageHandler';
 import {Key} from "../../../Keyboard";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 class MenuOption extends React.Component {
     constructor(props) {
@@ -83,6 +84,7 @@ MenuOption.propTypes = {
  *
  * TODO: Port NetworkDropdown to use this.
  */
+@replaceableComponent("views.elements.Dropdown")
 export default class Dropdown extends React.Component {
     constructor(props) {
         super(props);
@@ -116,7 +118,8 @@ export default class Dropdown extends React.Component {
         };
     }
 
-    componentWillMount() {
+    // TODO: [REACT-WARNING] Replace component with real class, use constructor for refs
+    UNSAFE_componentWillMount() { // eslint-disable-line camelcase
         this._button = createRef();
         // Listen for all clicks on the document so we can close the
         // menu when the user clicks somewhere else
@@ -127,7 +130,8 @@ export default class Dropdown extends React.Component {
         document.removeEventListener('click', this._onDocumentClick, false);
     }
 
-    componentWillReceiveProps(nextProps) {
+    // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
+    UNSAFE_componentWillReceiveProps(nextProps) { // eslint-disable-line camelcase
         if (!nextProps.children || nextProps.children.length === 0) {
             return;
         }

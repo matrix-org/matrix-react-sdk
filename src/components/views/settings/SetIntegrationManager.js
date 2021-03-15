@@ -18,8 +18,11 @@ import React from 'react';
 import {_t} from "../../../languageHandler";
 import {IntegrationManagers} from "../../../integrations/IntegrationManagers";
 import * as sdk from '../../../index';
-import SettingsStore, {SettingLevel} from "../../../settings/SettingsStore";
+import SettingsStore from "../../../settings/SettingsStore";
+import {SettingLevel} from "../../../settings/SettingLevel";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.settings.SetIntegrationManager")
 export default class SetIntegrationManager extends React.Component {
     constructor() {
         super();

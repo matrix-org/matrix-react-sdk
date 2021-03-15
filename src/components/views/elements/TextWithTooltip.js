@@ -17,7 +17,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as sdk from '../../../index';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.elements.TextWithTooltip")
 export default class TextWithTooltip extends React.Component {
     static propTypes = {
         class: PropTypes.string,
@@ -37,7 +39,7 @@ export default class TextWithTooltip extends React.Component {
         this.setState({hover: true});
     };
 
-    onMouseOut = () => {
+    onMouseLeave = () => {
         this.setState({hover: false});
     };
 
@@ -45,13 +47,12 @@ export default class TextWithTooltip extends React.Component {
         const Tooltip = sdk.getComponent("elements.Tooltip");
 
         return (
-            <span onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut} className={this.props.class}>
+            <span onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave} className={this.props.class}>
                 {this.props.children}
-                <Tooltip
+                {this.state.hover && <Tooltip
                     label={this.props.tooltip}
-                    visible={this.state.hover}
                     tooltipClassName={this.props.tooltipClass}
-                    className={"mx_TextWithTooltip_tooltip"} />
+                    className={"mx_TextWithTooltip_tooltip"} /> }
             </span>
         );
     }

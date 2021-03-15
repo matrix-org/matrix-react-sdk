@@ -18,9 +18,7 @@ limitations under the License.
 import SettingsStore from "../../../src/settings/SettingsStore";
 
 import React from 'react';
-import createReactClass from 'create-react-class';
 import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
 const TestUtils = require('react-dom/test-utils');
 const expect = require('expect');
 import { EventEmitter } from "events";
@@ -37,9 +35,9 @@ const mockclock = require('../../mock-clock');
 import Adapter from "enzyme-adapter-react-16";
 import { configure, mount } from "enzyme";
 
-import Velocity from 'velocity-animate';
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import RoomContext from "../../../src/contexts/RoomContext";
+import DMRoomMap from "../../../src/utils/DMRoomMap";
 
 configure({ adapter: new Adapter() });
 
@@ -47,21 +45,19 @@ let client;
 const room = new Matrix.Room();
 
 // wrap MessagePanel with a component which provides the MatrixClient in the context.
-const WrappedMessagePanel = createReactClass({
-    getInitialState: function() {
-        return {
-            resizeNotifier: new EventEmitter(),
-        };
-    },
+class WrappedMessagePanel extends React.Component {
+    state = {
+        resizeNotifier: new EventEmitter(),
+    };
 
-    render: function() {
+    render() {
         return <MatrixClientContext.Provider value={client}>
-            <RoomContext.Provider value={{ canReact: true, canReply: true }}>
+            <RoomContext.Provider value={{ canReact: true, canReply: true, room, roomId: room.roomId }}>
                 <MessagePanel room={room} {...this.props} resizeNotifier={this.state.resizeNotifier} />
             </RoomContext.Provider>
         </MatrixClientContext.Provider>;
-    },
-});
+    }
+}
 
 describe('MessagePanel', function() {
     const clock = mockclock.clock();
@@ -78,16 +74,10 @@ describe('MessagePanel', function() {
             return arg === "showDisplaynameChanges";
         });
 
-        // This option clobbers the duration of all animations to be 1ms
-        // which makes unit testing a lot simpler (the animation doesn't
-        // complete without this even if we mock the clock and tick it
-        // what should be the correct amount of time).
-        Velocity.mock = true;
+        DMRoomMap.makeShared();
     });
 
     afterEach(function() {
-        delete Velocity.mock;
-
         clock.uninstall();
     });
 
@@ -126,6 +116,7 @@ describe('MessagePanel', function() {
                     getAvatarUrl: () => {
                         return "avatar.jpeg";
                     },
+                    getMxcAvatarUrl: () => 'mxc://avatar.url/image.png',
                 },
                 ts: ts0 + i*1000,
                 mship: 'join',
@@ -140,6 +131,128 @@ describe('MessagePanel', function() {
         }));
 
         return events;
+    }
+
+    // A list of membership events only with nothing else
+    function mkMelsEventsOnly() {
+        const events = [];
+        const ts0 = Date.now();
+
+        let i = 0;
+
+        for (i = 0; i < 10; i++) {
+            events.push(test_utils.mkMembership({
+                event: true, room: "!room:id", user: "@user:id",
+                target: {
+                    userId: "@user:id",
+                    name: "Bob",
+                    getAvatarUrl: () => {
+                        return "avatar.jpeg";
+                    },
+                    getMxcAvatarUrl: () => 'mxc://avatar.url/image.png',
+                },
+                ts: ts0 + i*1000,
+                mship: 'join',
+                prevMship: 'join',
+                name: 'A user',
+            }));
+        }
+
+        return events;
+    }
+
+    // A list of room creation, encryption, and invite events.
+    function mkCreationEvents() {
+        const mkEvent = test_utils.mkEvent;
+        const mkMembership = test_utils.mkMembership;
+        const roomId = "!someroom";
+        const alice = "@alice:example.org";
+        const ts0 = Date.now();
+
+        return [
+            mkEvent({
+                event: true,
+                type: "m.room.create",
+                room: roomId,
+                user: alice,
+                content: {
+                    creator: alice,
+                    room_version: "5",
+                    predecessor: {
+                        room_id: "!prevroom",
+                        event_id: "$someevent",
+                    },
+                },
+                ts: ts0,
+            }),
+            mkMembership({
+                event: true,
+                room: roomId,
+                user: alice,
+                target: {
+                    userId: alice,
+                    name: "Alice",
+                    getAvatarUrl: () => {
+                        return "avatar.jpeg";
+                    },
+                    getMxcAvatarUrl: () => 'mxc://avatar.url/image.png',
+                },
+                ts: ts0 + 1,
+                mship: 'join',
+                name: 'Alice',
+            }),
+            mkEvent({
+                event: true,
+                type: "m.room.join_rules",
+                room: roomId,
+                user: alice,
+                content: {
+                    "join_rule": "invite",
+                },
+                ts: ts0 + 2,
+            }),
+            mkEvent({
+                event: true,
+                type: "m.room.history_visibility",
+                room: roomId,
+                user: alice,
+                content: {
+                    "history_visibility": "invited",
+                },
+                ts: ts0 + 3,
+            }),
+            mkEvent({
+                event: true,
+                type: "m.room.encryption",
+                room: roomId,
+                user: alice,
+                content: {
+                    "algorithm": "m.megolm.v1.aes-sha2",
+                },
+                ts: ts0 + 4,
+            }),
+            mkMembership({
+                event: true,
+                room: roomId,
+                user: alice,
+                skey: "@bob:example.org",
+                target: {
+                    userId: "@bob:example.org",
+                    name: "Bob",
+                    getAvatarUrl: () => {
+                        return "avatar.jpeg";
+                    },
+                    getMxcAvatarUrl: () => 'mxc://avatar.url/image.png',
+                },
+                ts: ts0 + 5,
+                mship: 'invite',
+                name: 'Bob',
+            }),
+        ];
+    }
+
+    function isReadMarkerVisible(rmContainer) {
+        return rmContainer && rmContainer.children.length > 0;
     }
 
     it('should show the events', function() {
@@ -170,7 +283,7 @@ describe('MessagePanel', function() {
         expect(summaryTiles.length).toEqual(1);
     });
 
-    it('should show the read-marker in the right place', function() {
+    it('should insert the read-marker in the right place', function() {
         const res = TestUtils.renderIntoDocument(
                 <WrappedMessagePanel className="cls" events={events} readMarkerEventId={events[4].getId()}
                     readMarkerVisible={true} />,
@@ -200,6 +313,27 @@ describe('MessagePanel', function() {
         const rm = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_RoomView_myReadMarker_container');
 
         expect(rm.previousSibling).toEqual(summary);
+
+        // read marker should be visible given props and not at the last event
+        expect(isReadMarkerVisible(rm)).toBeTruthy();
+    });
+
+    it('should hide the read-marker at the end of summarised events', function() {
+        const melsEvents = mkMelsEventsOnly();
+        const res = TestUtils.renderIntoDocument(
+                <WrappedMessagePanel className="cls" events={melsEvents} readMarkerEventId={melsEvents[9].getId()}
+                    readMarkerVisible={true} />,
+        );
+
+        const summary = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_EventListSummary');
+
+        // find the <li> which wraps the read marker
+        const rm = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_RoomView_myReadMarker_container');
+
+        expect(rm.previousSibling).toEqual(summary);
+
+        // read marker should be hidden given props and at the last event
+        expect(isReadMarkerVisible(rm)).toBeFalsy();
     });
 
     it('shows a ghost read-marker when the read-marker moves', function(done) {
@@ -258,89 +392,7 @@ describe('MessagePanel', function() {
     });
 
     it('should collapse creation events', function() {
-        const mkEvent = test_utils.mkEvent;
-        const mkMembership = test_utils.mkMembership;
-        const roomId = "!someroom";
-        const alice = "@alice:example.org";
-        const ts0 = Date.now();
-        const events = [
-            mkEvent({
-                event: true,
-                type: "m.room.create",
-                room: roomId,
-                user: alice,
-                content: {
-                    creator: alice,
-                    room_version: "5",
-                    predecessor: {
-                        room_id: "!prevroom",
-                        event_id: "$someevent",
-                    },
-                },
-                ts: ts0,
-            }),
-            mkMembership({
-                event: true,
-                room: roomId,
-                user: alice,
-                target: {
-                    userId: alice,
-                    name: "Alice",
-                    getAvatarUrl: () => {
-                        return "avatar.jpeg";
-                    },
-                },
-                ts: ts0 + 1,
-                mship: 'join',
-                name: 'Alice',
-            }),
-            mkEvent({
-                event: true,
-                type: "m.room.join_rules",
-                room: roomId,
-                user: alice,
-                content: {
-                    "join_rule": "invite"
-                },
-                ts: ts0 + 2,
-            }),
-            mkEvent({
-                event: true,
-                type: "m.room.history_visibility",
-                room: roomId,
-                user: alice,
-                content: {
-                    "history_visibility": "invited",
-                },
-                ts: ts0 + 3,
-            }),
-            mkEvent({
-                event: true,
-                type: "m.room.encryption",
-                room: roomId,
-                user: alice,
-                content: {
-                    "algorithm": "m.megolm.v1.aes-sha2",
-                },
-                ts: ts0 + 4,
-            }),
-            mkMembership({
-                event: true,
-                room: roomId,
-                user: alice,
-                skey: "@bob:example.org",
-                target: {
-                    userId: "@bob:example.org",
-                    name: "Bob",
-                    getAvatarUrl: () => {
-                        return "avatar.jpeg";
-                    },
-                },
-                ts: ts0 + 5,
-                mship: 'invite',
-                name: 'Bob',
-            }),
-        ];
+        const events = mkCreationEvents();
         const res = mount(
             <WrappedMessagePanel className="cls" events={events} />,
         );
@@ -362,5 +414,27 @@ describe('MessagePanel', function() {
         // every event except for the room creation, room encryption, and Bob's
         // invite event should be in the event summary
         expect(summaryEventTiles.length).toEqual(tiles.length - 3);
+    });
+
+    it('should hide read-marker at the end of creation event summary', function() {
+        const events = mkCreationEvents();
+        const res = mount(
+            <WrappedMessagePanel
+                className="cls"
+                events={events}
+                readMarkerEventId={events[5].getId()}
+                readMarkerVisible={true}
+            />,
+        );
+
+        // find the <li> which wraps the read marker
+        const rm = res.find('.mx_RoomView_myReadMarker_container').getDOMNode();
+
+        const rows = res.find('.mx_RoomView_MessageList').children();
+        expect(rows.length).toEqual(7); // 6 events + the NewRoomIntro
+        expect(rm.previousSibling).toEqual(rows.at(5).getDOMNode());
+
+        // read marker should be hidden given props and at the last event
+        expect(isReadMarkerVisible(rm)).toBeFalsy();
     });
 });

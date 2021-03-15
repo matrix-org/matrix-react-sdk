@@ -26,12 +26,15 @@ import * as sdk from '../../../index';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import Modal from '../../../Modal';
 import classNames from 'classnames';
+import RedactedBody from "./RedactedBody";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 function getReplacedContent(event) {
     const originalContent = event.getOriginalContent();
     return originalContent["m.new_content"] || originalContent;
 }
 
+@replaceableComponent("views.messages.EditHistoryMessage")
 export default class EditHistoryMessage extends React.PureComponent {
     static propTypes = {
         // the message event being edited
@@ -73,9 +76,7 @@ export default class EditHistoryMessage extends React.PureComponent {
     _onViewSourceClick = () => {
         const ViewSource = sdk.getComponent('structures.ViewSource');
         Modal.createTrackedDialog('View Event Source', 'Edit history', ViewSource, {
-            roomId: this.props.mxEvent.getRoomId(),
-            eventId: this.props.mxEvent.getId(),
-            content: this.props.mxEvent.event,
+            mxEvent: this.props.mxEvent,
         }, 'mx_Dialog_viewsource');
     };
 
@@ -132,8 +133,7 @@ export default class EditHistoryMessage extends React.PureComponent {
         const content = getReplacedContent(mxEvent);
         let contentContainer;
         if (mxEvent.isRedacted()) {
-            const UnknownBody = sdk.getComponent('messages.UnknownBody');
-            contentContainer = <UnknownBody mxEvent={this.props.mxEvent} />;
+            contentContainer = <RedactedBody mxEvent={this.props.mxEvent} />;
         } else {
             let contentElements;
             if (this.props.previousEdit) {
@@ -158,7 +158,7 @@ export default class EditHistoryMessage extends React.PureComponent {
         const isSending = (['sending', 'queued', 'encrypting'].indexOf(this.state.sendStatus) !== -1);
         const classes = classNames({
             "mx_EventTile": true,
-            "mx_EventTile_redacted": mxEvent.isRedacted(),
+            // Note: we keep the `sending` state class for tests, not for our styles
             "mx_EventTile_sending": isSending,
             "mx_EventTile_notSent": this.state.sendStatus === 'not_sent',
         });

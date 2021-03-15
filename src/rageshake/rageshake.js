@@ -41,7 +41,7 @@ limitations under the License.
 const FLUSH_RATE_MS = 30 * 1000;
 
 // the length of log data we keep in indexeddb (and include in the reports)
-const MAX_LOG_SIZE = 1024 * 1024 * 1; // 1 MB
+const MAX_LOG_SIZE = 1024 * 1024 * 5; // 5 MB
 
 // A class which monkey-patches the global console and stores log lines.
 class ConsoleLogger {
@@ -371,7 +371,6 @@ class IndexedDBLogStore {
                 removeLogIds = allLogIds.slice(i + 1);
                 break;
             }
-
         }
         if (removeLogIds.length > 0) {
             console.log("Removing logs: ", removeLogIds);
@@ -469,7 +468,7 @@ export function flush() {
 
 /**
  * Clean up old logs.
- * @return Promise Resolves if cleaned logs.
+ * @return {Promise} Resolves if cleaned logs.
  */
 export async function cleanup() {
     if (!global.mx_rage_store) {

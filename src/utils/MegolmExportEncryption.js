@@ -1,5 +1,6 @@
 /*
 Copyright 2017 Vector Creations Ltd
+Copyright 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,8 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-"use strict";
-
 // polyfill textencoder if necessary
 import * as TextEncodingUtf8 from 'text-encoding-utf-8';
 let TextEncoder = window.TextEncoder;
@@ -28,7 +27,7 @@ if (!TextDecoder) {
 }
 
 import { _t } from '../languageHandler';
-
+import SdkConfig from '../SdkConfig';
 
 const subtleCrypto = window.crypto.subtle || window.crypto.webkitSubtle;
 
@@ -61,23 +60,24 @@ function cryptoFailMsg() {
  */
 export async function decryptMegolmKeyFile(data, password) {
     const body = unpackMegolmKeyFile(data);
+    const brand = SdkConfig.get().brand;
 
     // check we have a version byte
     if (body.length < 1) {
         throw friendlyError('Invalid file: too short',
-            _t('Not a valid Riot keyfile'));
+            _t('Not a valid %(brand)s keyfile', { brand }));
     }
 
     const version = body[0];
     if (version !== 1) {
         throw friendlyError('Unsupported version',
-            _t('Not a valid Riot keyfile'));
+            _t('Not a valid %(brand)s keyfile', { brand }));
     }
 
     const ciphertextLength = body.length-(1+16+16+4+32);
     if (ciphertextLength < 0) {
         throw friendlyError('Invalid file: too short',
-            _t('Not a valid Riot keyfile'));
+            _t('Not a valid %(brand)s keyfile', { brand }));
     }
 
     const salt = body.subarray(1, 1+16);

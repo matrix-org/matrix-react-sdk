@@ -34,32 +34,12 @@ export function shouldShowMentionBadge(roomNotifState) {
     return MENTION_BADGE_STATES.includes(roomNotifState);
 }
 
-export function countRoomsWithNotif(rooms) {
-    return rooms.reduce((result, room, index) => {
-        const roomNotifState = getRoomNotifsState(room.roomId);
-        const highlight = room.getUnreadNotificationCount('highlight') > 0;
-        const notificationCount = room.getUnreadNotificationCount();
-
-        const notifBadges = notificationCount > 0 && shouldShowNotifBadge(roomNotifState);
-        const mentionBadges = highlight && shouldShowMentionBadge(roomNotifState);
-        const isInvite = room.hasMembershipState(MatrixClientPeg.get().credentials.userId, 'invite');
-        const badges = notifBadges || mentionBadges || isInvite;
-
-        if (badges) {
-            result.count++;
-            if (highlight) {
-                result.highlight = true;
-            }
-        }
-        return result;
-    }, {count: 0, highlight: false});
-}
-
 export function aggregateNotificationCount(rooms) {
-    return rooms.reduce((result, room, index) => {
+    return rooms.reduce((result, room) => {
         const roomNotifState = getRoomNotifsState(room.roomId);
         const highlight = room.getUnreadNotificationCount('highlight') > 0;
-        const notificationCount = room.getUnreadNotificationCount();
+        // use helper method to include highlights in the previous version of the room
+        const notificationCount = getUnreadNotificationCount(room);
 
         const notifBadges = notificationCount > 0 && shouldShowNotifBadge(roomNotifState);
         const mentionBadges = highlight && shouldShowMentionBadge(roomNotifState);
@@ -222,12 +202,13 @@ function setRoomNotifsStateUnmuted(roomId, newState) {
 }
 
 function findOverrideMuteRule(roomId) {
-    if (!MatrixClientPeg.get().pushRules ||
-        !MatrixClientPeg.get().pushRules['global'] ||
-        !MatrixClientPeg.get().pushRules['global'].override) {
+    const cli = MatrixClientPeg.get();
+    if (!cli.pushRules ||
+        !cli.pushRules['global'] ||
+        !cli.pushRules['global'].override) {
         return null;
     }
-    for (const rule of MatrixClientPeg.get().pushRules['global'].override) {
+    for (const rule of cli.pushRules['global'].override) {
         if (isRuleForRoom(roomId, rule)) {
             if (isMuteRule(rule) && rule.enabled) {
                 return rule;

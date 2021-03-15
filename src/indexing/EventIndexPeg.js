@@ -21,7 +21,11 @@ limitations under the License.
 
 import PlatformPeg from "../PlatformPeg";
 import EventIndex from "../indexing/EventIndex";
-import SettingsStore, {SettingLevel} from '../settings/SettingsStore';
+import {MatrixClientPeg} from "../MatrixClientPeg";
+import SettingsStore from '../settings/SettingsStore';
+import {SettingLevel} from "../settings/SettingLevel";
+
+const INDEX_VERSION = 1;
 
 class EventIndexPeg {
     constructor() {
@@ -37,10 +41,6 @@ class EventIndexPeg {
      * EventIndex was successfully initialized, false otherwise.
      */
     async init() {
-        if (!SettingsStore.isFeatureEnabled("feature_event_indexing")) {
-            return false;
-        }
-
         const indexManager = PlatformPeg.get().getEventIndexingManager();
         if (!indexManager) {
             console.log("EventIndex: Platform doesn't support event indexing, not initializing.");
@@ -70,8 +70,29 @@ class EventIndexPeg {
      */
     async initEventIndex() {
         const index = new EventIndex();
+        const indexManager = PlatformPeg.get().getEventIndexingManager();
+        const client = MatrixClientPeg.get();
+
+        const userId = client.getUserId();
+        const deviceId = client.getDeviceId();
 
         try {
+            await indexManager.initEventIndex(userId, deviceId);
+
+            const userVersion = await indexManager.getUserVersion();
+            const eventIndexIsEmpty = await indexManager.isEventIndexEmpty();
+
+            if (eventIndexIsEmpty) {
+                await indexManager.setUserVersion(INDEX_VERSION);
+            } else if (userVersion === 0 && !eventIndexIsEmpty) {
+                await indexManager.closeEventIndex();
+                await this.deleteEventIndex();
+
+                await indexManager.initEventIndex(userId, deviceId);
+                await indexManager.setUserVersion(INDEX_VERSION);
+            }
+
+            console.log("EventIndex: Successfully initialized the event index");
             await index.init();
         } catch (e) {
             console.log("EventIndex: Error initializing the event index", e);
@@ -135,7 +156,7 @@ class EventIndexPeg {
      */
     async unset() {
         if (this.index === null) return;
-        this.index.close();
+        await this.index.close();
         this.index = null;
     }
 
@@ -151,7 +172,7 @@ class EventIndexPeg {
         const indexManager = PlatformPeg.get().getEventIndexingManager();
 
         if (indexManager !== null) {
-            this.unset();
+            await this.unset();
             console.log("EventIndex: Deleting event index.");
             await indexManager.deleteEventIndex();
         }

@@ -17,12 +17,13 @@ limitations under the License.
 
 import React, {createRef} from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
-import('../../../VelocityBounce');
+import '../../../VelocityBounce';
 import { _t } from '../../../languageHandler';
 import {formatDate} from '../../../DateUtils';
 import Velociraptor from "../../../Velociraptor";
 import * as sdk from "../../../index";
+import {toPx} from "../../../utils/units";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 let bounce = false;
 try {
@@ -32,10 +33,9 @@ try {
 } catch (e) {
 }
 
-export default createReactClass({
-    displayName: 'ReadReceiptMarker',
-
-    propTypes: {
+@replaceableComponent("views.rooms.ReadReceiptMarker")
+export default class ReadReceiptMarker extends React.PureComponent {
+    static propTypes = {
         // the RoomMember to show the RR for
         member: PropTypes.object,
         // userId to fallback the avatar to
@@ -69,29 +69,27 @@ export default createReactClass({
 
         // True to show twelve hour format, false otherwise
         showTwelveHour: PropTypes.bool,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            leftOffset: 0,
-        };
-    },
+    static defaultProps = {
+        leftOffset: 0,
+    };
 
-    getInitialState: function() {
-        // if we are going to animate the RR, we don't show it on first render,
-        // and instead just add a placeholder to the DOM; once we've been
-        // mounted, we start an animation which moves the RR from its old
-        // position.
-        return {
+    constructor(props) {
+        super(props);
+
+        this._avatar = createRef();
+
+        this.state = {
+            // if we are going to animate the RR, we don't show it on first render,
+            // and instead just add a placeholder to the DOM; once we've been
+            // mounted, we start an animation which moves the RR from its old
+            // position.
             suppressDisplay: !this.props.suppressAnimation,
         };
-    },
+    }
 
-    UNSAFE_componentWillMount: function() {
-        this._avatar = createRef();
-    },
-
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         // before we remove the rr, store its location in the map, so that if
         // it reappears, it can be animated from the right place.
         const rrInfo = this.props.readReceiptInfo;
@@ -110,9 +108,9 @@ export default createReactClass({
         rrInfo.top = avatarNode.offsetTop;
         rrInfo.left = avatarNode.offsetLeft;
         rrInfo.parent = avatarNode.offsetParent;
-    },
+    }
 
-    componentDidMount: function() {
+    componentDidMount() {
         if (!this.state.suppressDisplay) {
             // we've already done our display - nothing more to do.
             return;
@@ -147,7 +145,7 @@ export default createReactClass({
             // start at the old height and in the old h pos
 
             startStyles.push({ top: startTopOffset+"px",
-                               left: oldInfo.left+"px" });
+                               left: toPx(oldInfo.left) });
 
             const reorderTransitionOpts = {
                 duration: 100,
@@ -159,7 +157,15 @@ export default createReactClass({
 
         // then shift to the rightmost column,
         // and then it will drop down to its resting position
-        startStyles.push({ top: startTopOffset+'px', left: '0px' });
+        //
+        // XXX: We use a small left value to trick velocity-animate into actually animating.
+        // This is a very annoying bug where if it thinks there's no change to `left` then it'll
+        // skip applying it, thus making our read receipt at +14px instead of +0px like it
+        // should be. This does cause a tiny amount of drift for read receipts, however with a
+        // value so small it's not perceived by a user.
+        // Note: Any smaller values (or trying to interchange units) might cause read receipts to
+        // fail to fall down or cause gaps.
+        startStyles.push({ top: startTopOffset+'px', left: '1px' });
         enterTransitionOpts.push({
             duration: bounce ? Math.min(Math.log(Math.abs(startTopOffset)) * 200, 3000) : 300,
             easing: bounce ? 'easeOutBounce' : 'easeOutCubic',
@@ -170,17 +176,16 @@ export default createReactClass({
             startStyles: startStyles,
             enterTransitionOpts: enterTransitionOpts,
         });
-    },
+    }
 
-
-    render: function() {
+    render() {
         const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
         if (this.state.suppressDisplay) {
             return <div ref={this._avatar} />;
         }
 
         const style = {
-            left: this.props.leftOffset+'px',
+            left: toPx(this.props.leftOffset),
             top: '0px',
             visibility: this.props.hidden ? 'hidden' : 'visible',
         };
@@ -220,5 +225,5 @@ export default createReactClass({
                 />
             </Velociraptor>
         );
-    },
-});
+    }
+}

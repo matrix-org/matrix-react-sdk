@@ -1,5 +1,6 @@
 /*
 Copyright 2019 New Vector Ltd
+Copyright 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,14 +17,17 @@ limitations under the License.
 
 import React from 'react';
 import {_t} from "../../../../../languageHandler";
+import SdkConfig from "../../../../../SdkConfig";
 import CallMediaHandler from "../../../../../CallMediaHandler";
 import Field from "../../../elements/Field";
 import AccessibleButton from "../../../elements/AccessibleButton";
-import {SettingLevel} from "../../../../../settings/SettingsStore";
 import {MatrixClientPeg} from "../../../../../MatrixClientPeg";
 import * as sdk from "../../../../../index";
 import Modal from "../../../../../Modal";
+import {SettingLevel} from "../../../../../settings/SettingLevel";
+import {replaceableComponent} from "../../../../../utils/replaceableComponent";
 
+@replaceableComponent("views.settings.tabs.user.VoiceUserSettingsTab")
 export default class VoiceUserSettingsTab extends React.Component {
     constructor() {
         super();
@@ -80,10 +84,14 @@ export default class VoiceUserSettingsTab extends React.Component {
             }
         }
         if (error) {
+            const brand = SdkConfig.get().brand;
             const ErrorDialog = sdk.getComponent('dialogs.ErrorDialog');
             Modal.createTrackedDialog('No media permissions', '', ErrorDialog, {
                 title: _t('No media permissions'),
-                description: _t('You may need to manually permit Riot to access your microphone/webcam'),
+                description: _t(
+                    'You may need to manually permit %(brand)s to access your microphone/webcam',
+                    { brand },
+                ),
             });
         } else {
             this._refreshMediaDevices(stream);
@@ -151,6 +159,9 @@ export default class VoiceUserSettingsTab extends React.Component {
                 label: _t('Default Device'),
             };
             const getDefaultDevice = (devices) => {
+                // Note we're looking for a device with deviceId 'default' but adding a device
+                // with deviceId == the empty string: this is because Chrome gives us a device
+                // with deviceId 'default', so we're looking for this, not the one we are adding.
                 if (!devices.some((i) => i.deviceId === 'default')) {
                     devices.unshift(defaultOption);
                     return '';
@@ -163,7 +174,7 @@ export default class VoiceUserSettingsTab extends React.Component {
             if (audioOutputs.length > 0) {
                 const defaultDevice = getDefaultDevice(audioOutputs);
                 speakerDropdown = (
-                    <Field element="select" label={_t("Audio Output")} id="audioOutput"
+                    <Field element="select" label={_t("Audio Output")}
                            value={this.state.activeAudioOutput || defaultDevice}
                            onChange={this._setAudioOutput}>
                         {this._renderDeviceOptions(audioOutputs, 'audioOutput')}
@@ -175,7 +186,7 @@ export default class VoiceUserSettingsTab extends React.Component {
             if (audioInputs.length > 0) {
                 const defaultDevice = getDefaultDevice(audioInputs);
                 microphoneDropdown = (
-                    <Field element="select" label={_t("Microphone")} id="audioInput"
+                    <Field element="select" label={_t("Microphone")}
                            value={this.state.activeAudioInput || defaultDevice}
                            onChange={this._setAudioInput}>
                         {this._renderDeviceOptions(audioInputs, 'audioInput')}
@@ -187,7 +198,7 @@ export default class VoiceUserSettingsTab extends React.Component {
             if (videoInputs.length > 0) {
                 const defaultDevice = getDefaultDevice(videoInputs);
                 webcamDropdown = (
-                    <Field element="select" label={_t("Camera")} id="videoInput"
+                    <Field element="select" label={_t("Camera")}
                            value={this.state.activeVideoInput || defaultDevice}
                            onChange={this._setVideoInput}>
                         {this._renderDeviceOptions(videoInputs, 'videoInput')}

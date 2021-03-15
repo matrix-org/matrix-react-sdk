@@ -17,10 +17,14 @@ limitations under the License.
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-
+import {throttle} from "lodash";
 import ResizeObserver from 'resize-observer-polyfill';
 
-import dis from '../../../dispatcher';
+import dis from '../../../dispatcher/dispatcher';
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import {MatrixClientPeg} from "../../../MatrixClientPeg";
+import {isNullOrUndefined} from "matrix-js-sdk/src/utils";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 // Shamelessly ripped off Modal.js.  There's probably a better way
 // of doing reusable widgets like dialog boxes & menus where we go and
@@ -53,12 +57,16 @@ function getOrCreateContainer(containerId) {
  * children are made visible and are positioned into a div that is given the same
  * bounding rect as the parent of PE.
  */
+@replaceableComponent("views.elements.PersistedElement")
 export default class PersistedElement extends React.Component {
     static propTypes = {
         // Unique identifier for this PersistedElement instance
         // Any PersistedElements with the same persistKey will use
         // the same DOM container.
         persistKey: PropTypes.string.isRequired,
+
+        // z-index for the element. Defaults to 9.
+        zIndex: PropTypes.number,
     };
 
     constructor() {
@@ -113,10 +121,12 @@ export default class PersistedElement extends React.Component {
 
     componentDidMount() {
         this.updateChild();
+        this.renderApp();
     }
 
     componentDidUpdate() {
         this.updateChild();
+        this.renderApp();
     }
 
     componentWillUnmount() {
@@ -141,31 +151,38 @@ export default class PersistedElement extends React.Component {
         this.updateChildVisibility(this.child, true);
     }
 
+    renderApp() {
+        const content = <MatrixClientContext.Provider value={MatrixClientPeg.get()}>
+            <div ref={this.collectChild} style={this.props.style}>
+                {this.props.children}
+            </div>
+        </MatrixClientContext.Provider>;
+
+        ReactDOM.render(content, getOrCreateContainer('mx_persistedElement_'+this.props.persistKey));
+    }
+
     updateChildVisibility(child, visible) {
         if (!child) return;
         child.style.display = visible ? 'block' : 'none';
     }
 
-    updateChildPosition(child, parent) {
+    updateChildPosition = throttle((child, parent) => {
         if (!child || !parent) return;
 
         const parentRect = parent.getBoundingClientRect();
         Object.assign(child.style, {
+            zIndex: isNullOrUndefined(this.props.zIndex) ? 9 : this.props.zIndex,
             position: 'absolute',
             top: parentRect.top + 'px',
             left: parentRect.left + 'px',
             width: parentRect.width + 'px',
             height: parentRect.height + 'px',
         });
-    }
+    }, 100, {trailing: true, leading: true});
 
     render() {
-        const content = <div ref={this.collectChild} style={this.props.style}>
-            {this.props.children}
-        </div>;
-
-        ReactDOM.render(content, getOrCreateContainer('mx_persistedElement_'+this.props.persistKey));
-
-        return <div ref={this.collectChildContainer}></div>;
+        return <div ref={this.collectChildContainer} />;
     }
 }
+
+export const getPersistKey = (appId: string) => 'widget_' + appId;

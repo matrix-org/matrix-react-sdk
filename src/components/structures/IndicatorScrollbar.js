@@ -17,7 +17,9 @@ limitations under the License.
 import React from "react";
 import PropTypes from "prop-types";
 import AutoHideScrollbar from "./AutoHideScrollbar";
+import {replaceableComponent} from "../../utils/replaceableComponent";
 
+@replaceableComponent("structures.IndicatorScrollbar")
 export default class IndicatorScrollbar extends React.Component {
     static propTypes = {
         // If true, the scrollbar will append mx_IndicatorScrollbar_leftOverflowIndicator
@@ -66,6 +68,22 @@ export default class IndicatorScrollbar extends React.Component {
         this._autoHideScrollbar = autoHideScrollbar;
     }
 
+
+    componentDidUpdate(prevProps) {
+        const prevLen = prevProps && prevProps.children && prevProps.children.length || 0;
+        const curLen = this.props.children && this.props.children.length || 0;
+        // check overflow only if amount of children changes.
+        // if we don't guard here, we end up with an infinite
+        // render > componentDidUpdate > checkOverflow > setState > render loop
+        if (prevLen !== curLen) {
+            this.checkOverflow();
+        }
+    }
+
+    componentDidMount() {
+        this.checkOverflow();
+    }
+
     checkOverflow() {
         const hasTopOverflow = this._scrollElement.scrollTop > 0;
         const hasBottomOverflow = this._scrollElement.scrollHeight >
@@ -93,10 +111,6 @@ export default class IndicatorScrollbar extends React.Component {
             this._scrollElement.classList.add("mx_IndicatorScrollbar_rightOverflow");
         } else {
             this._scrollElement.classList.remove("mx_IndicatorScrollbar_rightOverflow");
-        }
-
-        if (this._autoHideScrollbar) {
-            this._autoHideScrollbar.checkOverflow();
         }
 
         if (this.props.trackHorizontalOverflow) {
@@ -146,7 +160,7 @@ export default class IndicatorScrollbar extends React.Component {
             }
 
             // don't mess with the horizontal scroll for trackpad users
-            // See https://github.com/vector-im/riot-web/issues/10005
+            // See https://github.com/vector-im/element-web/issues/10005
             if (this._likelyTrackpadUser) {
                 return;
             }
@@ -180,7 +194,7 @@ export default class IndicatorScrollbar extends React.Component {
             ref={this._collectScrollerComponent}
             wrappedRef={this._collectScroller}
             onWheel={this.onMouseWheel}
-            {... this.props}
+            {...this.props}
         >
             { leftOverflowIndicator }
             { this.props.children }

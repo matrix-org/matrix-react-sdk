@@ -21,6 +21,7 @@ import {MatrixClientPeg} from "../../../../../MatrixClientPeg";
 import * as sdk from "../../../../..";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import Modal from "../../../../../Modal";
+import {replaceableComponent} from "../../../../../utils/replaceableComponent";
 
 const plEventsToLabels = {
     // These will be translated for us later.
@@ -33,6 +34,7 @@ const plEventsToLabels = {
     "m.room.tombstone": _td("Upgrade the room"),
     "m.room.encryption": _td("Enable room encryption"),
 
+    // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
     "im.vector.modular.widgets": _td("Modify widgets"),
 };
 
@@ -47,6 +49,7 @@ const plEventsToShow = {
     "m.room.tombstone": {isState: true},
     "m.room.encryption": {isState: true},
 
+    // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
     "im.vector.modular.widgets": {isState: true},
 };
 
@@ -101,6 +104,7 @@ export class BannedUser extends React.Component {
     }
 }
 
+@replaceableComponent("views.settings.tabs.room.RolesRoomSettingsTab")
 export default class RolesRoomSettingsTab extends React.Component {
     static propTypes = {
         roomId: PropTypes.string.isRequired,
@@ -237,7 +241,7 @@ export default class RolesRoomSettingsTab extends React.Component {
                 defaultValue: 50,
             },
             "redact": {
-                desc: _t('Remove messages'),
+                desc: _t('Remove messages sent by others'),
                 defaultValue: 50,
             },
             "notifications.room": {

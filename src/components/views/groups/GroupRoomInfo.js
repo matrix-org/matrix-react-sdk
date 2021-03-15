@@ -17,57 +17,56 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
-import dis from '../../../dispatcher';
+import dis from '../../../dispatcher/dispatcher';
 import Modal from '../../../Modal';
 import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import GroupStore from '../../../stores/GroupStore';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
+import {mediaFromMxc} from "../../../customisations/Media";
 
-export default createReactClass({
-    displayName: 'GroupRoomInfo',
+@replaceableComponent("views.groups.GroupRoomInfo")
+export default class GroupRoomInfo extends React.Component {
+    static contextType = MatrixClientContext;
 
-    statics: {
-        contextType: MatrixClientContext,
-    },
-
-    propTypes: {
+    static propTypes = {
         groupId: PropTypes.string,
         groupRoomId: PropTypes.string,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            isUserPrivilegedInGroup: null,
-            groupRoom: null,
-            groupRoomPublicityLoading: false,
-            groupRoomRemoveLoading: false,
-        };
-    },
+    state = {
+        isUserPrivilegedInGroup: null,
+        groupRoom: null,
+        groupRoomPublicityLoading: false,
+        groupRoomRemoveLoading: false,
+    };
 
-    componentWillMount: function() {
+    componentDidMount() {
         this._initGroupStore(this.props.groupId);
-    },
+    }
 
-    componentWillReceiveProps(newProps) {
+    // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillReceiveProps(newProps) {
         if (newProps.groupId !== this.props.groupId) {
             this._unregisterGroupStore(this.props.groupId);
             this._initGroupStore(newProps.groupId);
         }
-    },
+    }
 
     componentWillUnmount() {
         this._unregisterGroupStore(this.props.groupId);
-    },
+    }
 
     _initGroupStore(groupId) {
         GroupStore.registerListener(groupId, this.onGroupStoreUpdated);
-    },
+    }
 
     _unregisterGroupStore(groupId) {
         GroupStore.unregisterListener(this.onGroupStoreUpdated);
-    },
+    }
 
     _updateGroupRoom() {
         this.setState({
@@ -75,16 +74,16 @@ export default createReactClass({
                 (r) => r.roomId === this.props.groupRoomId,
             ),
         });
-    },
+    }
 
-    onGroupStoreUpdated: function() {
+    onGroupStoreUpdated = () => {
         this.setState({
             isUserPrivilegedInGroup: GroupStore.isUserPrivileged(this.props.groupId),
         });
         this._updateGroupRoom();
-    },
+    };
 
-    _onRemove: function(e) {
+    _onRemove = e => {
         const groupId = this.props.groupId;
         const roomName = this.state.groupRoom.displayname;
         e.preventDefault();
@@ -117,15 +116,15 @@ export default createReactClass({
                 });
             },
         });
-    },
+    };
 
-    _onCancel: function(e) {
+    _onCancel = e => {
         dis.dispatch({
             action: "view_group_room_list",
         });
-    },
+    };
 
-    _changeGroupRoomPublicity(e) {
+    _changeGroupRoomPublicity = e => {
         const isPublic = e.target.value === "public";
         this.setState({
             groupRoomPublicityLoading: true,
@@ -148,12 +147,11 @@ export default createReactClass({
                 groupRoomPublicityLoading: false,
             });
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         const InlineSpinner = sdk.getComponent('elements.InlineSpinner');
-        const GeminiScrollbarWrapper = sdk.getComponent("elements.GeminiScrollbarWrapper");
         if (this.state.groupRoomRemoveLoading || !this.state.groupRoom) {
             const Spinner = sdk.getComponent("elements.Spinner");
             return <div className="mx_MemberInfo">
@@ -207,16 +205,14 @@ export default createReactClass({
         const avatarUrl = this.state.groupRoom.avatarUrl;
         let avatarElement;
         if (avatarUrl) {
-            const httpUrl = this.context.mxcUrlToHttp(avatarUrl, 800, 800);
-            avatarElement = (<div className="mx_MemberInfo_avatar">
-                            <img src={httpUrl} />
-                        </div>);
+            const httpUrl = mediaFromMxc(avatarUrl).getSquareThumbnailHttp(800);
+            avatarElement = <div className="mx_MemberInfo_avatar"><img src={httpUrl} /></div>;
         }
 
         const groupRoomName = this.state.groupRoom.displayname;
         return (
             <div className="mx_MemberInfo" role="tabpanel">
-                <GeminiScrollbarWrapper autoshow={true}>
+                <AutoHideScrollbar>
                     <AccessibleButton className="mx_MemberInfo_cancel" onClick={this._onCancel}>
                         <img src={require("../../../../res/img/cancel.svg")} width="18" height="18" className="mx_filterFlipColor" />
                     </AccessibleButton>
@@ -231,8 +227,8 @@ export default createReactClass({
                     </div>
 
                     { adminTools }
-                </GeminiScrollbarWrapper>
+                </AutoHideScrollbar>
             </div>
         );
-    },
-});
+    }
+}

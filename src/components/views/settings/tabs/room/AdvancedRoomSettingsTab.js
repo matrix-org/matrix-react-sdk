@@ -21,16 +21,18 @@ import {MatrixClientPeg} from "../../../../../MatrixClientPeg";
 import * as sdk from "../../../../..";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import Modal from "../../../../../Modal";
-import dis from "../../../../../dispatcher";
+import dis from "../../../../../dispatcher/dispatcher";
+import {replaceableComponent} from "../../../../../utils/replaceableComponent";
 
+@replaceableComponent("views.settings.tabs.room.AdvancedRoomSettingsTab")
 export default class AdvancedRoomSettingsTab extends React.Component {
     static propTypes = {
         roomId: PropTypes.string.isRequired,
         closeSettingsFn: PropTypes.func.isRequired,
     };
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             // This is eventually set to the value of room.getRecommendedVersion()
@@ -38,7 +40,8 @@ export default class AdvancedRoomSettingsTab extends React.Component {
         };
     }
 
-    componentWillMount() {
+    // TODO: [REACT-WARNING] Move this to constructor
+    UNSAFE_componentWillMount() { // eslint-disable-line camelcase
         // we handle lack of this object gracefully later, so don't worry about it failing here.
         const room = MatrixClientPeg.get().getRoom(this.props.roomId);
         room.getRecommendedVersion().then((v) => {

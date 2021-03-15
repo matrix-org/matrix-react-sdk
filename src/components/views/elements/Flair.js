@@ -14,13 +14,13 @@
  limitations under the License.
  */
 
-'use strict';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import FlairStore from '../../../stores/FlairStore';
-import dis from '../../../dispatcher';
+import dis from '../../../dispatcher/dispatcher';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
+import {mediaFromMxc} from "../../../customisations/Media";
 
 
 class FlairAvatar extends React.Component {
@@ -40,8 +40,7 @@ class FlairAvatar extends React.Component {
     }
 
     render() {
-        const httpUrl = this.context.mxcUrlToHttp(
-            this.props.groupProfile.avatarUrl, 16, 16, 'scale', false);
+        const httpUrl = mediaFromMxc(this.props.groupProfile.avatarUrl).getSquareThumbnailHttp(16);
         const tooltip = this.props.groupProfile.name ?
             `${this.props.groupProfile.name} (${this.props.groupProfile.groupId})`:
             this.props.groupProfile.groupId;
@@ -64,6 +63,7 @@ FlairAvatar.propTypes = {
 
 FlairAvatar.contextType = MatrixClientContext;
 
+@replaceableComponent("views.elements.Flair")
 export default class Flair extends React.Component {
     constructor() {
         super();
@@ -81,7 +81,8 @@ export default class Flair extends React.Component {
         this._unmounted = true;
     }
 
-    componentWillReceiveProps(newProps) {
+    // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
+    UNSAFE_componentWillReceiveProps(newProps) {  // eslint-disable-line camelcase
         this._generateAvatars(newProps.groups);
     }
 

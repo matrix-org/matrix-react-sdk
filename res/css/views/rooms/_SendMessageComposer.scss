@@ -18,7 +18,7 @@ limitations under the License.
     flex: 1;
     display: flex;
     flex-direction: column;
-    font-size: 14px;
+    font-size: $font-14px;
     justify-content: center;
     margin-right: 6px;
     // don't grow wider than available space
@@ -43,11 +43,6 @@ limitations under the License.
             max-height: 140px;
             overflow-y: auto;
         }
-    }
-
-    .mx_SendMessageComposer_overlayWrapper {
-        position: relative;
-        height: 0;
     }
 }
 

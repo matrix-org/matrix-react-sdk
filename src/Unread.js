@@ -16,12 +16,14 @@ limitations under the License.
 
 import {MatrixClientPeg} from "./MatrixClientPeg";
 import shouldHideEvent from './shouldHideEvent';
-import * as sdk from "./index";
 import {haveTileForEvent} from "./components/views/rooms/EventTile";
 
 /**
  * Returns true iff this event arriving in a room should affect the room's
  * count of unread messages
+ *
+ * @param {Object} ev The event
+ * @returns {boolean} True if the given event should affect the unread message count
  */
 export function eventTriggersUnreadCount(ev) {
     if (ev.sender && ev.sender.userId == MatrixClientPeg.get().credentials.userId) {
@@ -52,10 +54,10 @@ export function doesRoomHaveUnreadMessages(room) {
 
     // as we don't send RRs for our own messages, make sure we special case that
     // if *we* sent the last message into the room, we consider it not unread!
-    // Should fix: https://github.com/vector-im/riot-web/issues/3263
-    //             https://github.com/vector-im/riot-web/issues/2427
+    // Should fix: https://github.com/vector-im/element-web/issues/3263
+    //             https://github.com/vector-im/element-web/issues/2427
     // ...and possibly some of the others at
-    //             https://github.com/vector-im/riot-web/issues/3363
+    //             https://github.com/vector-im/element-web/issues/3363
     if (room.timeline.length &&
         room.timeline[room.timeline.length - 1].sender &&
         room.timeline[room.timeline.length - 1].sender.userId === myUserId) {

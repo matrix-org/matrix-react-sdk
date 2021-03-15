@@ -23,6 +23,7 @@ import {MatrixClientPeg} from "../../../../MatrixClientPeg";
 import * as sdk from '../../../../index';
 import Modal from '../../../../Modal';
 import AddThreepid from '../../../../AddThreepid';
+import {replaceableComponent} from "../../../../utils/replaceableComponent";
 
 /*
 TODO: Improve the UX for everything in here.
@@ -58,7 +59,8 @@ export class EmailAddress extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
+    UNSAFE_componentWillReceiveProps(nextProps) { // eslint-disable-line camelcase
         const { bound } = nextProps.email;
         this.setState({ bound });
     }
@@ -232,6 +234,7 @@ export class EmailAddress extends React.Component {
     }
 }
 
+@replaceableComponent("views.settings.discovery.EmailAddresses")
 export default class EmailAddresses extends React.Component {
     static propTypes = {
         emails: PropTypes.array.isRequired,

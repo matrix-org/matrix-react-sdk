@@ -1,6 +1,6 @@
 /*
 Copyright 2019 New Vector Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -34,6 +34,8 @@ export class ValidatedServerConfig {
     isUrl: string;
 
     isDefault: boolean;
+    // when the server config is based on static URLs the hsName is not resolvable and things may wish to use hsUrl
+    isNameResolvable: boolean;
 
     warning: string;
 }
@@ -70,13 +72,17 @@ export default class AutoDiscoveryUtils {
         let title = _t("Cannot reach homeserver");
         let body = _t("Ensure you have a stable internet connection, or get in touch with the server admin");
         if (!AutoDiscoveryUtils.isLivelinessError(err)) {
-            title = _t("Your Riot is misconfigured");
+            const brand = SdkConfig.get().brand;
+            title = _t("Your %(brand)s is misconfigured", { brand });
             body = _t(
-                "Ask your Riot admin to check <a>your config</a> for incorrect or duplicate entries.",
-                {}, {
+                "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.",
+                {
+                    brand,
+                },
+                {
                     a: (sub) => {
                         return <a
-                            href="https://github.com/vector-im/riot-web/blob/master/docs/config.md"
+                            href="https://github.com/vector-im/element-web/blob/master/docs/config.md"
                             target="_blank"
                             rel="noreferrer noopener"
                         >{sub}</a>;
@@ -157,7 +163,7 @@ export default class AutoDiscoveryUtils {
         const url = new URL(homeserverUrl);
         const serverName = url.hostname;
 
-        return AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, result, syntaxOnly);
+        return AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, result, syntaxOnly, true);
     }
 
     /**
@@ -175,12 +181,12 @@ export default class AutoDiscoveryUtils {
      * input.
      * @param {string} serverName The domain name the AutoDiscovery result is for.
      * @param {*} discoveryResult The AutoDiscovery result.
-     * @param {boolean} syntaxOnly If true, errors relating to liveliness of the servers will
-     * not be raised.
+     * @param {boolean} syntaxOnly If true, errors relating to liveliness of the servers will not be raised.
+     * @param {boolean} isSynthetic If true, then the discoveryResult was synthesised locally.
      * @returns {Promise<ValidatedServerConfig>} Resolves to the validated configuration.
      */
     static buildValidatedConfigFromDiscovery(
-        serverName: string, discoveryResult, syntaxOnly=false): ValidatedServerConfig {
+        serverName: string, discoveryResult, syntaxOnly=false, isSynthetic=false): ValidatedServerConfig {
         if (!discoveryResult || !discoveryResult["m.homeserver"]) {
             // This shouldn't happen without major misconfiguration, so we'll log a bit of information
             // in the log so we can find this bit of codee but otherwise tell teh user "it broke".
@@ -199,7 +205,7 @@ export default class AutoDiscoveryUtils {
         // Note: In the cases where we rely on the default IS from the config (namely
         // lack of identity server provided by the discovery method), we intentionally do not
         // validate it. This has already been validated and this helps some off-the-grid usage
-        // of Riot.
+        // of Element.
         let preferredIdentityUrl = defaultConfig && defaultConfig['isUrl'];
         if (isResult && isResult.state === AutoDiscovery.SUCCESS) {
             preferredIdentityUrl = isResult["base_url"];
@@ -248,6 +254,7 @@ export default class AutoDiscoveryUtils {
             isUrl: preferredIdentityUrl,
             isDefault: false,
             warning: hsResult.error,
+            isNameResolvable: !isSynthetic,
         });
     }
 }

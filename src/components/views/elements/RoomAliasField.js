@@ -19,11 +19,12 @@ import PropTypes from 'prop-types';
 import * as sdk from '../../../index';
 import withValidation from './Validation';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 // Controlled form component wrapping Field for inputting a room alias scoped to a given domain
+@replaceableComponent("views.elements.RoomAliasField")
 export default class RoomAliasField extends React.PureComponent {
     static propTypes = {
-        id: PropTypes.string.isRequired,
         domain: PropTypes.string.isRequired,
         onChange: PropTypes.func,
         value: PropTypes.string.isRequired,
@@ -46,11 +47,10 @@ export default class RoomAliasField extends React.PureComponent {
         const maxlength = 255 - this.props.domain.length - 2;   // 2 for # and :
         return (
                 <Field
-                    label={_t("Room alias")}
+                    label={_t("Room address")}
                     className="mx_RoomAliasField"
-                    prefix={poundSign}
-                    postfix={domain}
-                    id={this.props.id}
+                    prefixComponent={poundSign}
+                    postfixComponent={domain}
                     ref={ref => this._fieldRef = ref}
                     onValidate={this._onValidate}
                     placeholder={_t("e.g. my-room")}
@@ -89,7 +89,7 @@ export default class RoomAliasField extends React.PureComponent {
             }, {
                 key: "required",
                 test: async ({ value, allowEmpty }) => allowEmpty || !!value,
-                invalid: () => _t("Please provide a room alias"),
+                invalid: () => _t("Please provide a room address"),
             }, {
                 key: "taken",
                 final: true,
@@ -109,8 +109,8 @@ export default class RoomAliasField extends React.PureComponent {
                         return !!err.errcode;
                     }
                 },
-                valid: () => _t("This alias is available to use"),
-                invalid: () => _t("This alias is already in use"),
+                valid: () => _t("This address is available to use"),
+                invalid: () => _t("This address is already in use"),
             },
         ],
     });

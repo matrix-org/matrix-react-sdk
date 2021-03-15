@@ -16,16 +16,15 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import AccessibleButton from './AccessibleButton';
-import dis from '../../../dispatcher';
+import dis from '../../../dispatcher/dispatcher';
 import * as sdk from '../../../index';
 import Analytics from '../../../Analytics';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
-export default createReactClass({
-    displayName: 'RoleButton',
-
-    propTypes: {
+@replaceableComponent("views.elements.ActionButton")
+export default class ActionButton extends React.Component {
+    static propTypes = {
         size: PropTypes.string,
         tooltip: PropTypes.bool,
         action: PropTypes.string.isRequired,
@@ -33,39 +32,35 @@ export default createReactClass({
         label: PropTypes.string.isRequired,
         iconPath: PropTypes.string,
         className: PropTypes.string,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            size: "25",
-            tooltip: false,
-        };
-    },
+    static defaultProps = {
+        size: "25",
+        tooltip: false,
+    };
 
-    getInitialState: function() {
-        return {
-            showTooltip: false,
-        };
-    },
+    state = {
+        showTooltip: false,
+    };
 
-    _onClick: function(ev) {
+    _onClick = (ev) => {
         ev.stopPropagation();
         Analytics.trackEvent('Action Button', 'click', this.props.action);
         dis.dispatch({action: this.props.action});
-    },
+    };
 
-    _onMouseEnter: function() {
+    _onMouseEnter = () => {
         if (this.props.tooltip) this.setState({showTooltip: true});
         if (this.props.mouseOverAction) {
             dis.dispatch({action: this.props.mouseOverAction});
         }
-    },
+    };
 
-    _onMouseLeave: function() {
+    _onMouseLeave = () => {
         this.setState({showTooltip: false});
-    },
+    };
 
-    render: function() {
+    render() {
         const TintableSvg = sdk.getComponent("elements.TintableSvg");
 
         let tooltip;
@@ -94,5 +89,5 @@ export default createReactClass({
                 { tooltip }
             </AccessibleButton>
         );
-    },
-});
+    }
+}

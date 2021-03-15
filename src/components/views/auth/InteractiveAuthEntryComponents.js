@@ -1,7 +1,7 @@
 /*
 Copyright 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,14 +17,16 @@ limitations under the License.
 */
 
 import React, {createRef} from 'react';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
-import url from 'url';
 import classnames from 'classnames';
 
 import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
+import AccessibleButton from "../elements/AccessibleButton";
+import Spinner from "../elements/Spinner";
+import CountlyAnalytics from "../../../CountlyAnalytics";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 /* This file contains a collection of components which are used by the
  * InteractiveAuth to prompt the user to enter the information needed
@@ -59,41 +61,51 @@ import SettingsStore from "../../../settings/SettingsStore";
  *                         session to be failed and the process to go back to the start.
  * setEmailSid:            m.login.email.identity only: a function to be called with the
  *                         email sid after a token is requested.
+ * onPhaseChange:          A function which is called when the stage's phase changes. If
+ *                         the stage has no phases, call this with DEFAULT_PHASE. Takes
+ *                         one argument, the phase, and is always defined/required.
+ * continueText:           For stages which have a continue button, the text to use.
+ * continueKind:           For stages which have a continue button, the style of button to
+ *                         use. For example, 'danger' or 'primary'.
+ * onCancel                A function with no arguments which is called by the stage if the
+ *                         user knowingly cancelled/dismissed the authentication attempt.
  *
  * Each component may also provide the following functions (beyond the standard React ones):
  *    focus: set the input focus appropriately in the form.
  */
 
-export const PasswordAuthEntry = createReactClass({
-    displayName: 'PasswordAuthEntry',
+export const DEFAULT_PHASE = 0;
 
-    statics: {
-        LOGIN_TYPE: "m.login.password",
-    },
+@replaceableComponent("views.auth.PasswordAuthEntry")
+export class PasswordAuthEntry extends React.Component {
+    static LOGIN_TYPE = "m.login.password";
 
-    propTypes: {
+    static propTypes = {
         matrixClient: PropTypes.object.isRequired,
         submitAuthDict: PropTypes.func.isRequired,
         errorText: PropTypes.string,
         // is the auth logic currently waiting for something to
         // happen?
         busy: PropTypes.bool,
-    },
+        onPhaseChange: PropTypes.func.isRequired,
+    };
 
-    getInitialState: function() {
-        return {
-            password: "",
-        };
-    },
+    componentDidMount() {
+        this.props.onPhaseChange(DEFAULT_PHASE);
+    }
 
-    _onSubmit: function(e) {
+    state = {
+        password: "",
+    };
+
+    _onSubmit = e => {
         e.preventDefault();
         if (this.props.busy) return;
 
         this.props.submitAuthDict({
             type: PasswordAuthEntry.LOGIN_TYPE,
             // TODO: Remove `user` once servers support proper UIA
-            // See https://github.com/vector-im/riot-web/issues/10312
+            // See https://github.com/vector-im/element-web/issues/10312
             user: this.props.matrixClient.credentials.userId,
             identifier: {
                 type: "m.id.user",
@@ -101,16 +113,16 @@ export const PasswordAuthEntry = createReactClass({
             },
             password: this.state.password,
         });
-    },
+    };
 
-    _onPasswordFieldChange: function(ev) {
+    _onPasswordFieldChange = ev => {
         // enable the submit button iff the password is non-empty
         this.setState({
             password: ev.target.value,
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const passwordBoxClass = classnames({
             "error": this.props.errorText,
         });
@@ -145,7 +157,6 @@ export const PasswordAuthEntry = createReactClass({
                 <p>{ _t("Confirm your identity by entering your account password below.") }</p>
                 <form onSubmit={this._onSubmit} className="mx_InteractiveAuthEntryComponents_passwordSection">
                     <Field
-                        id="mx_InteractiveAuthEntryComponents_password"
                         className={passwordBoxClass}
                         type="password"
                         name="passwordField"
@@ -161,31 +172,34 @@ export const PasswordAuthEntry = createReactClass({
             { errorSection }
             </div>
         );
-    },
-});
+    }
+}
 
-export const RecaptchaAuthEntry = createReactClass({
-    displayName: 'RecaptchaAuthEntry',
+@replaceableComponent("views.auth.RecaptchaAuthEntry")
+export class RecaptchaAuthEntry extends React.Component {
+    static LOGIN_TYPE = "m.login.recaptcha";
 
-    statics: {
-        LOGIN_TYPE: "m.login.recaptcha",
-    },
-
-    propTypes: {
+    static propTypes = {
         submitAuthDict: PropTypes.func.isRequired,
         stageParams: PropTypes.object.isRequired,
         errorText: PropTypes.string,
         busy: PropTypes.bool,
-    },
+        onPhaseChange: PropTypes.func.isRequired,
+    };
 
-    _onCaptchaResponse: function(response) {
+    componentDidMount() {
+        this.props.onPhaseChange(DEFAULT_PHASE);
+    }
+
+    _onCaptchaResponse = response => {
+        CountlyAnalytics.instance.track("onboarding_grecaptcha_submit");
         this.props.submitAuthDict({
             type: RecaptchaAuthEntry.LOGIN_TYPE,
             response: response,
         });
-    },
+    };
 
-    render: function() {
+    render() {
         if (this.props.busy) {
             const Loader = sdk.getComponent("elements.Spinner");
             return <Loader />;
@@ -221,25 +235,25 @@ export const RecaptchaAuthEntry = createReactClass({
                 { errorSection }
             </div>
         );
-    },
-});
+    }
+}
 
-export const TermsAuthEntry = createReactClass({
-    displayName: 'TermsAuthEntry',
+@replaceableComponent("views.auth.TermsAuthEntry")
+export class TermsAuthEntry extends React.Component {
+    static LOGIN_TYPE = "m.login.terms";
 
-    statics: {
-        LOGIN_TYPE: "m.login.terms",
-    },
-
-    propTypes: {
+    static propTypes = {
         submitAuthDict: PropTypes.func.isRequired,
         stageParams: PropTypes.object.isRequired,
         errorText: PropTypes.string,
         busy: PropTypes.bool,
         showContinue: PropTypes.bool,
-    },
+        onPhaseChange: PropTypes.func.isRequired,
+    };
 
-    componentWillMount: function() {
+    constructor(props) {
+        super(props);
+
         // example stageParams:
         //
         // {
@@ -284,17 +298,24 @@ export const TermsAuthEntry = createReactClass({
             pickedPolicies.push(langPolicy);
         }
 
-        this.setState({
-            "toggledPolicies": initToggles,
-            "policies": pickedPolicies,
-        });
-    },
+        this.state = {
+            toggledPolicies: initToggles,
+            policies: pickedPolicies,
+        };
 
-    tryContinue: function() {
+        CountlyAnalytics.instance.track("onboarding_terms_begin");
+    }
+
+
+    componentDidMount() {
+        this.props.onPhaseChange(DEFAULT_PHASE);
+    }
+
+    tryContinue = () => {
         this._trySubmit();
-    },
+    };
 
-    _togglePolicy: function(policyId) {
+    _togglePolicy(policyId) {
         const newToggles = {};
         for (const policy of this.state.policies) {
             let checked = this.state.toggledPolicies[policy.id];
@@ -303,20 +324,24 @@ export const TermsAuthEntry = createReactClass({
             newToggles[policy.id] = checked;
         }
         this.setState({"toggledPolicies": newToggles});
-    },
+    }
 
-    _trySubmit: function() {
+    _trySubmit = () => {
         let allChecked = true;
         for (const policy of this.state.policies) {
             const checked = this.state.toggledPolicies[policy.id];
             allChecked = allChecked && checked;
         }
 
-        if (allChecked) this.props.submitAuthDict({type: TermsAuthEntry.LOGIN_TYPE});
-        else this.setState({errorText: _t("Please review and accept all of the homeserver's policies")});
-    },
+        if (allChecked) {
+            this.props.submitAuthDict({type: TermsAuthEntry.LOGIN_TYPE});
+            CountlyAnalytics.instance.track("onboarding_terms_complete");
+        } else {
+            this.setState({errorText: _t("Please review and accept all of the homeserver's policies")});
+        }
+    };
 
-    render: function() {
+    render() {
         if (this.props.busy) {
             const Loader = sdk.getComponent("elements.Spinner");
             return <Loader />;
@@ -329,6 +354,7 @@ export const TermsAuthEntry = createReactClass({
             allChecked = allChecked && checked;
 
             checkboxes.push(
+                // XXX: replace with StyledCheckbox
                 <label key={"policy_checkbox_" + policy.id} className="mx_InteractiveAuthEntryComponents_termsPolicy">
                     <input type="checkbox" onChange={() => this._togglePolicy(policy.id)} checked={checked} />
                     <a href={policy.url} target="_blank" rel="noreferrer noopener">{ policy.name }</a>
@@ -360,17 +386,14 @@ export const TermsAuthEntry = createReactClass({
                 { submitButton }
             </div>
         );
-    },
-});
+    }
+}
 
-export const EmailIdentityAuthEntry = createReactClass({
-    displayName: 'EmailIdentityAuthEntry',
+@replaceableComponent("views.auth.EmailIdentityAuthEntry")
+export class EmailIdentityAuthEntry extends React.Component {
+    static LOGIN_TYPE = "m.login.email.identity";
 
-    statics: {
-        LOGIN_TYPE: "m.login.email.identity",
-    },
-
-    propTypes: {
+    static propTypes = {
         matrixClient: PropTypes.object.isRequired,
         submitAuthDict: PropTypes.func.isRequired,
         authSessionId: PropTypes.string.isRequired,
@@ -379,40 +402,46 @@ export const EmailIdentityAuthEntry = createReactClass({
         stageState: PropTypes.object.isRequired,
         fail: PropTypes.func.isRequired,
         setEmailSid: PropTypes.func.isRequired,
-    },
+        onPhaseChange: PropTypes.func.isRequired,
+    };
 
-    getInitialState: function() {
-        return {
-            requestingToken: false,
-        };
-    },
+    componentDidMount() {
+        this.props.onPhaseChange(DEFAULT_PHASE);
+    }
 
-    render: function() {
-        if (this.state.requestingToken) {
-            const Loader = sdk.getComponent("elements.Spinner");
-            return <Loader />;
+    render() {
+        // This component is now only displayed once the token has been requested,
+        // so we know the email has been sent. It can also get loaded after the user
+        // has clicked the validation link if the server takes a while to propagate
+        // the validation internally. If we're in the session spawned from clicking
+        // the validation link, we won't know the email address, so if we don't have it,
+        // assume that the link has been clicked and the server will realise when we poll.
+        if (this.props.inputs.emailAddress === undefined) {
+            return <Spinner />;
+        } else if (this.props.stageState?.emailSid) {
+            // we only have a session ID if the user has clicked the link in their email,
+            // so show a loading state instead of "an email has been sent to..." because
+            // that's confusing when you've already read that email.
+            return <Spinner />;
         } else {
             return (
-                <div>
-                    <p>{ _t("An email has been sent to %(emailAddress)s",
-                        { emailAddress: (sub) => <i>{ this.props.inputs.emailAddress }</i> },
+                <div className="mx_InteractiveAuthEntryComponents_emailWrapper">
+                    <p>{ _t("A confirmation email has been sent to %(emailAddress)s",
+                        { emailAddress: (sub) => <b>{ this.props.inputs.emailAddress }</b> },
                     ) }
                     </p>
-                    <p>{ _t("Please check your email to continue registration.") }</p>
+                    <p>{ _t("Open the link in the email to continue registration.") }</p>
                 </div>
             );
         }
-    },
-});
+    }
+}
 
-export const MsisdnAuthEntry = createReactClass({
-    displayName: 'MsisdnAuthEntry',
+@replaceableComponent("views.auth.MsisdnAuthEntry")
+export class MsisdnAuthEntry extends React.Component {
+    static LOGIN_TYPE = "m.login.msisdn";
 
-    statics: {
-        LOGIN_TYPE: "m.login.msisdn",
-    },
-
-    propTypes: {
+    static propTypes = {
         inputs: PropTypes.shape({
             phoneCountry: PropTypes.string,
             phoneNumber: PropTypes.string,
@@ -421,16 +450,17 @@ export const MsisdnAuthEntry = createReactClass({
         clientSecret: PropTypes.func,
         submitAuthDict: PropTypes.func.isRequired,
         matrixClient: PropTypes.object,
-    },
+        onPhaseChange: PropTypes.func.isRequired,
+    };
 
-    getInitialState: function() {
-        return {
-            token: '',
-            requestingToken: false,
-        };
-    },
+    state = {
+        token: '',
+        requestingToken: false,
+    };
 
-    componentWillMount: function() {
+    componentDidMount() {
+        this.props.onPhaseChange(DEFAULT_PHASE);
+
         this._submitUrl = null;
         this._sid = null;
         this._msisdn = null;
@@ -442,12 +472,12 @@ export const MsisdnAuthEntry = createReactClass({
         }).finally(() => {
             this.setState({requestingToken: false});
         });
-    },
+    }
 
     /*
      * Requests a verification token by SMS.
      */
-    _requestMsisdnToken: function() {
+    _requestMsisdnToken() {
         return this.props.matrixClient.requestRegisterMsisdnToken(
             this.props.inputs.phoneCountry,
             this.props.inputs.phoneNumber,
@@ -458,15 +488,15 @@ export const MsisdnAuthEntry = createReactClass({
             this._sid = result.sid;
             this._msisdn = result.msisdn;
         });
-    },
+    }
 
-    _onTokenChange: function(e) {
+    _onTokenChange = e => {
         this.setState({
             token: e.target.value,
         });
-    },
+    };
 
-    _onFormSubmit: async function(e) {
+    _onFormSubmit = async e => {
         e.preventDefault();
         if (this.state.token == '') return;
 
@@ -475,16 +505,10 @@ export const MsisdnAuthEntry = createReactClass({
         });
 
         try {
-            const requiresIdServerParam =
-                await this.props.matrixClient.doesServerRequireIdServerParam();
             let result;
             if (this._submitUrl) {
                 result = await this.props.matrixClient.submitMsisdnTokenOtherUrl(
                     this._submitUrl, this._sid, this.props.clientSecret, this.state.token,
-                );
-            } else if (requiresIdServerParam) {
-                result = await this.props.matrixClient.submitMsisdnToken(
-                    this._sid, this.props.clientSecret, this.state.token,
                 );
             } else {
                 throw new Error("The registration with MSISDN flow is misconfigured");
@@ -494,16 +518,11 @@ export const MsisdnAuthEntry = createReactClass({
                     sid: this._sid,
                     client_secret: this.props.clientSecret,
                 };
-                if (requiresIdServerParam) {
-                    const idServerParsedUrl = url.parse(
-                        this.props.matrixClient.getIdentityServerUrl(),
-                    );
-                    creds.id_server = idServerParsedUrl.host;
-                }
                 this.props.submitAuthDict({
                     type: MsisdnAuthEntry.LOGIN_TYPE,
                     // TODO: Remove `threepid_creds` once servers support proper UIA
-                    // See https://github.com/vector-im/riot-web/issues/10312
+                    // See https://github.com/vector-im/element-web/issues/10312
+                    // See https://github.com/matrix-org/matrix-doc/issues/2220
                     threepid_creds: creds,
                     threepidCreds: creds,
                 });
@@ -516,9 +535,9 @@ export const MsisdnAuthEntry = createReactClass({
             this.props.fail(e);
             console.log("Failed to submit msisdn token");
         }
-    },
+    };
 
-    render: function() {
+    render() {
         if (this.state.requestingToken) {
             const Loader = sdk.getComponent("elements.Spinner");
             return <Loader />;
@@ -562,61 +581,201 @@ export const MsisdnAuthEntry = createReactClass({
                 </div>
             );
         }
-    },
-});
+    }
+}
 
-export const FallbackAuthEntry = createReactClass({
-    displayName: 'FallbackAuthEntry',
-
-    propTypes: {
+@replaceableComponent("views.auth.SSOAuthEntry")
+export class SSOAuthEntry extends React.Component {
+    static propTypes = {
         matrixClient: PropTypes.object.isRequired,
         authSessionId: PropTypes.string.isRequired,
         loginType: PropTypes.string.isRequired,
         submitAuthDict: PropTypes.func.isRequired,
         errorText: PropTypes.string,
-    },
+        onPhaseChange: PropTypes.func.isRequired,
+        continueText: PropTypes.string,
+        continueKind: PropTypes.string,
+        onCancel: PropTypes.func,
+    };
 
-    componentWillMount: function() {
+    static LOGIN_TYPE = "m.login.sso";
+    static UNSTABLE_LOGIN_TYPE = "org.matrix.login.sso";
+
+    static PHASE_PREAUTH = 1; // button to start SSO
+    static PHASE_POSTAUTH = 2; // button to confirm SSO completed
+
+    _ssoUrl: string;
+
+    constructor(props) {
+        super(props);
+
+        // We actually send the user through fallback auth so we don't have to
+        // deal with a redirect back to us, losing application context.
+        this._ssoUrl = props.matrixClient.getFallbackAuthUrl(
+            this.props.loginType,
+            this.props.authSessionId,
+        );
+
+        this._popupWindow = null;
+        window.addEventListener("message", this._onReceiveMessage);
+
+        this.state = {
+            phase: SSOAuthEntry.PHASE_PREAUTH,
+            attemptFailed: false,
+        };
+    }
+
+    componentDidMount(): void {
+        this.props.onPhaseChange(SSOAuthEntry.PHASE_PREAUTH);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("message", this._onReceiveMessage);
+        if (this._popupWindow) {
+            this._popupWindow.close();
+            this._popupWindow = null;
+        }
+    }
+
+    attemptFailed = () => {
+        this.setState({
+            attemptFailed: true,
+        });
+    };
+
+    _onReceiveMessage = event => {
+        if (event.data === "authDone" && event.origin === this.props.matrixClient.getHomeserverUrl()) {
+            if (this._popupWindow) {
+                this._popupWindow.close();
+                this._popupWindow = null;
+            }
+        }
+    };
+
+    onStartAuthClick = () => {
+        // Note: We don't use PlatformPeg's startSsoAuth functions because we almost
+        // certainly will need to open the thing in a new tab to avoid losing application
+        // context.
+
+        this._popupWindow = window.open(this._ssoUrl, "_blank");
+        this.setState({phase: SSOAuthEntry.PHASE_POSTAUTH});
+        this.props.onPhaseChange(SSOAuthEntry.PHASE_POSTAUTH);
+    };
+
+    onConfirmClick = () => {
+        this.props.submitAuthDict({});
+    };
+
+    render() {
+        let continueButton = null;
+        const cancelButton = (
+            <AccessibleButton
+                onClick={this.props.onCancel}
+                kind={this.props.continueKind ? (this.props.continueKind + '_outline') : 'primary_outline'}
+            >{_t("Cancel")}</AccessibleButton>
+        );
+        if (this.state.phase === SSOAuthEntry.PHASE_PREAUTH) {
+            continueButton = (
+                <AccessibleButton
+                    onClick={this.onStartAuthClick}
+                    kind={this.props.continueKind || 'primary'}
+                >{this.props.continueText || _t("Single Sign On")}</AccessibleButton>
+            );
+        } else {
+            continueButton = (
+                <AccessibleButton
+                    onClick={this.onConfirmClick}
+                    kind={this.props.continueKind || 'primary'}
+                >{this.props.continueText || _t("Confirm")}</AccessibleButton>
+            );
+        }
+
+        let errorSection;
+        if (this.props.errorText) {
+            errorSection = (
+                <div className="error" role="alert">
+                    { this.props.errorText }
+                </div>
+            );
+        } else if (this.state.attemptFailed) {
+            errorSection = (
+                <div className="error" role="alert">
+                    { _t("Something went wrong in confirming your identity. Cancel and try again.") }
+                </div>
+            );
+        }
+
+        return <React.Fragment>
+            { errorSection }
+            <div className="mx_InteractiveAuthEntryComponents_sso_buttons">
+                {cancelButton}
+                {continueButton}
+            </div>
+        </React.Fragment>;
+    }
+}
+
+@replaceableComponent("views.auth.FallbackAuthEntry")
+export class FallbackAuthEntry extends React.Component {
+    static propTypes = {
+        matrixClient: PropTypes.object.isRequired,
+        authSessionId: PropTypes.string.isRequired,
+        loginType: PropTypes.string.isRequired,
+        submitAuthDict: PropTypes.func.isRequired,
+        errorText: PropTypes.string,
+        onPhaseChange: PropTypes.func.isRequired,
+    };
+
+    constructor(props) {
+        super(props);
+
         // we have to make the user click a button, as browsers will block
         // the popup if we open it immediately.
         this._popupWindow = null;
         window.addEventListener("message", this._onReceiveMessage);
 
         this._fallbackButton = createRef();
-    },
+    }
 
-    componentWillUnmount: function() {
+
+    componentDidMount() {
+        this.props.onPhaseChange(DEFAULT_PHASE);
+    }
+
+    componentWillUnmount() {
         window.removeEventListener("message", this._onReceiveMessage);
         if (this._popupWindow) {
             this._popupWindow.close();
         }
-    },
+    }
 
-    focus: function() {
+    focus = () => {
         if (this._fallbackButton.current) {
             this._fallbackButton.current.focus();
         }
-    },
+    };
 
-    _onShowFallbackClick: function() {
+    _onShowFallbackClick = e => {
+        e.preventDefault();
+        e.stopPropagation();
+
         const url = this.props.matrixClient.getFallbackAuthUrl(
             this.props.loginType,
             this.props.authSessionId,
         );
-        this._popupWindow = window.open(url);
-        this._popupWindow.opener = null;
-    },
+        this._popupWindow = window.open(url, "_blank");
+    };
 
-    _onReceiveMessage: function(event) {
+    _onReceiveMessage = event => {
         if (
             event.data === "authDone" &&
             event.origin === this.props.matrixClient.getHomeserverUrl()
         ) {
             this.props.submitAuthDict({});
         }
-    },
+    };
 
-    render: function() {
+    render() {
         let errorSection;
         if (this.props.errorText) {
             errorSection = (
@@ -627,12 +786,12 @@ export const FallbackAuthEntry = createReactClass({
         }
         return (
             <div>
-                <a ref={this._fallbackButton} onClick={this._onShowFallbackClick}>{ _t("Start authentication") }</a>
+                <a href="" ref={this._fallbackButton} onClick={this._onShowFallbackClick}>{ _t("Start authentication") }</a>
                 {errorSection}
             </div>
         );
-    },
-});
+    }
+}
 
 const AuthEntryComponents = [
     PasswordAuthEntry,
@@ -640,11 +799,12 @@ const AuthEntryComponents = [
     EmailIdentityAuthEntry,
     MsisdnAuthEntry,
     TermsAuthEntry,
+    SSOAuthEntry,
 ];
 
 export default function getEntryComponentForLoginType(loginType) {
     for (const c of AuthEntryComponents) {
-        if (c.LOGIN_TYPE == loginType) {
+        if (c.LOGIN_TYPE === loginType || c.UNSTABLE_LOGIN_TYPE === loginType) {
             return c;
         }
     }

@@ -1,5 +1,6 @@
 /*
 Copyright 2019 New Vector Ltd
+Copyright 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -24,7 +25,11 @@ import createRoom from "../../../../../createRoom";
 import Modal from "../../../../../Modal";
 import * as sdk from "../../../../../";
 import PlatformPeg from "../../../../../PlatformPeg";
+import * as KeyboardShortcuts from "../../../../../accessibility/KeyboardShortcuts";
+import UpdateCheckButton from "../../UpdateCheckButton";
+import {replaceableComponent} from "../../../../../utils/replaceableComponent";
 
+@replaceableComponent("views.settings.tabs.user.HelpUserSettingsTab")
 export default class HelpUserSettingsTab extends React.Component {
     static propTypes = {
         closeSettingsFn: PropTypes.func.isRequired,
@@ -34,13 +39,13 @@ export default class HelpUserSettingsTab extends React.Component {
         super();
 
         this.state = {
-            vectorVersion: null,
+            appVersion: null,
             canUpdate: false,
         };
     }
 
-    componentWillMount(): void {
-        PlatformPeg.get().getAppVersion().then((ver) => this.setState({vectorVersion: ver})).catch((e) => {
+    componentDidMount(): void {
+        PlatformPeg.get().getAppVersion().then((ver) => this.setState({appVersion: ver})).catch((e) => {
             console.error("Error getting vector version: ", e);
         });
         PlatformPeg.get().canSelfUpdate().then((v) => this.setState({canUpdate: v})).catch((e) => {
@@ -117,7 +122,7 @@ export default class HelpUserSettingsTab extends React.Component {
                 <span className='mx_SettingsTab_subheading'>{_t("Credits")}</span>
                 <ul>
                     <li>
-                        The <a href="themes/riot/img/backgrounds/valley.jpg" rel="noreferrer noopener" target="_blank">
+                        The <a href="themes/element/img/backgrounds/lake.jpg" rel="noreferrer noopener" target="_blank">
                         default cover photo</a> is ©&nbsp;
                         <a href="https://www.flickr.com/golan" rel="noreferrer noopener" target="_blank">Jesús Roncero</a>{' '}
                         used under the terms of&nbsp;
@@ -146,47 +151,64 @@ export default class HelpUserSettingsTab extends React.Component {
     }
 
     render() {
-        let faqText = _t('For help with using Riot, click <a>here</a>.', {}, {
-            'a': (sub) =>
-                <a href="https://about.riot.im/need-help/" rel="noreferrer noopener" target="_blank">{sub}</a>,
-        });
+        const brand = SdkConfig.get().brand;
+
+        let faqText = _t(
+            'For help with using %(brand)s, click <a>here</a>.',
+            {
+                brand,
+            },
+            {
+                'a': (sub) => <a
+                    href="https://element.io/help"
+                    rel="noreferrer noopener"
+                    target="_blank"
+                >
+                    {sub}
+                </a>,
+            },
+        );
         if (SdkConfig.get().welcomeUserId && getCurrentLanguage().startsWith('en')) {
             faqText = (
                 <div>
-                    {
-                        _t('For help with using Riot, click <a>here</a> or start a chat with our ' +
-                            'bot using the button below.', {}, {
-                            'a': (sub) => <a href="https://about.riot.im/need-help/" rel='noreferrer noopener'
-                                             target='_blank'>{sub}</a>,
-                        })
-                    }
+                    {_t(
+                        'For help with using %(brand)s, click <a>here</a> or start a chat with our ' +
+                        'bot using the button below.',
+                        {
+                            brand,
+                        },
+                        {
+                            'a': (sub) => <a
+                                href="https://element.io/help"
+                                rel='noreferrer noopener'
+                                target='_blank'
+                            >
+                                {sub}
+                            </a>,
+                        },
+                    )}
                     <div>
                         <AccessibleButton onClick={this._onStartBotChat} kind='primary'>
-                            {_t("Chat with Riot Bot")}
+                            {_t("Chat with %(brand)s Bot", { brand })}
                         </AccessibleButton>
                     </div>
                 </div>
             );
         }
 
-        const vectorVersion = this.state.vectorVersion || 'unknown';
+        const appVersion = this.state.appVersion || 'unknown';
 
         let olmVersion = MatrixClientPeg.get().olmVersion;
         olmVersion = olmVersion ? `${olmVersion[0]}.${olmVersion[1]}.${olmVersion[2]}` : '<not-enabled>';
 
         let updateButton = null;
         if (this.state.canUpdate) {
-            const platform = PlatformPeg.get();
-            updateButton = (
-                <AccessibleButton onClick={platform.startUpdateCheck} kind='primary'>
-                    {_t('Check for update')}
-                </AccessibleButton>
-            );
+            updateButton = <UpdateCheckButton />;
         }
 
-        return (
-            <div className="mx_SettingsTab mx_HelpUserSettingsTab">
-                <div className="mx_SettingsTab_heading">{_t("Help & About")}</div>
+        let bugReportingSection;
+        if (SdkConfig.get().bug_report_endpoint_url) {
+            bugReportingSection = (
                 <div className="mx_SettingsTab_section">
                     <span className='mx_SettingsTab_subheading'>{_t('Bug reporting')}</span>
                     <div className='mx_SettingsTab_subsectionText'>
@@ -203,32 +225,37 @@ export default class HelpUserSettingsTab extends React.Component {
                                 {_t("Submit debug logs")}
                             </AccessibleButton>
                         </div>
-                        <div className='mx_HelpUserSettingsTab_debugButton'>
-                            <AccessibleButton onClick={this._onClearCacheAndReload} kind='danger'>
-                                {_t("Clear cache and reload")}
-                            </AccessibleButton>
-                        </div>
                         {
                             _t( "To report a Matrix-related security issue, please read the Matrix.org " +
                                 "<a>Security Disclosure Policy</a>.", {},
                                 {
                                     'a': (sub) =>
                                         <a href="https://matrix.org/security-disclosure-policy/"
-                                        rel="noreferrer noopener" target="_blank">{sub}</a>,
+                                           rel="noreferrer noopener" target="_blank">{sub}</a>,
                                 })
                         }
                     </div>
                 </div>
+            );
+        }
+
+        return (
+            <div className="mx_SettingsTab mx_HelpUserSettingsTab">
+                <div className="mx_SettingsTab_heading">{_t("Help & About")}</div>
+                { bugReportingSection }
                 <div className='mx_SettingsTab_section'>
                     <span className='mx_SettingsTab_subheading'>{_t("FAQ")}</span>
                     <div className='mx_SettingsTab_subsectionText'>
                         {faqText}
                     </div>
+                    <AccessibleButton kind="primary" onClick={KeyboardShortcuts.toggleDialog}>
+                        { _t("Keyboard Shortcuts") }
+                    </AccessibleButton>
                 </div>
                 <div className='mx_SettingsTab_section mx_HelpUserSettingsTab_versions'>
                     <span className='mx_SettingsTab_subheading'>{_t("Versions")}</span>
                     <div className='mx_SettingsTab_subsectionText'>
-                        {_t("riot-web version:")} {vectorVersion}<br />
+                        {_t("%(brand)s version:", { brand })} {appVersion}<br />
                         {_t("olm version:")} {olmVersion}<br />
                         {updateButton}
                     </div>
@@ -245,6 +272,11 @@ export default class HelpUserSettingsTab extends React.Component {
                                           data-spoiler={MatrixClientPeg.get().getAccessToken()}>
                             &lt;{ _t("click to reveal") }&gt;
                         </AccessibleButton>
+                        <div className='mx_HelpUserSettingsTab_debugButton'>
+                            <AccessibleButton onClick={this._onClearCacheAndReload} kind='danger'>
+                                {_t("Clear cache and reload")}
+                            </AccessibleButton>
+                        </div>
                     </div>
                 </div>
             </div>

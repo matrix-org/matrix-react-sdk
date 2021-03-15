@@ -1,6 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017, 2018 New Vector Ltd
+Copyright 2015-2018, 2020, 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,18 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React, {createRef} from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
-import CallHandler from '../../../CallHandler';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import * as sdk from '../../../index';
-import dis from '../../../dispatcher';
-import RoomViewStore from '../../../stores/RoomViewStore';
+import dis from '../../../dispatcher/dispatcher';
 import Stickerpicker from './Stickerpicker';
 import { makeRoomPermalink } from '../../../utils/permalinks/Permalinks';
 import ContentMessages from '../../../ContentMessages';
 import E2EIcon from './E2EIcon';
 import SettingsStore from "../../../settings/SettingsStore";
+import {aboveLeftOf, ContextMenu, ContextMenuTooltipButton, useContextMenu} from "../../structures/ContextMenu";
+import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
+import ReplyPreview from "./ReplyPreview";
+import {UIFeature} from "../../../settings/UIFeature";
+import WidgetStore from "../../../stores/WidgetStore";
+import {UPDATE_EVENT} from "../../../stores/AsyncStore";
+import ActiveWidgetStore from "../../../stores/ActiveWidgetStore";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 function ComposerAvatar(props) {
     const MemberStatusMessageAvatar = sdk.getComponent('avatars.MemberStatusMessageAvatar');
@@ -39,68 +45,55 @@ ComposerAvatar.propTypes = {
     me: PropTypes.object.isRequired,
 };
 
-function CallButton(props) {
-    const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-    const onVoiceCallClick = (ev) => {
-        dis.dispatch({
-            action: 'place_call',
-            type: "voice",
-            room_id: props.roomId,
-        });
-    };
-
-    return (<AccessibleButton className="mx_MessageComposer_button mx_MessageComposer_voicecall"
-            onClick={onVoiceCallClick}
-            title={_t('Voice call')}
-        />);
+function SendButton(props) {
+    return (
+        <AccessibleTooltipButton
+            className="mx_MessageComposer_sendMessage"
+            onClick={props.onClick}
+            title={_t('Send message')}
+        />
+    );
 }
 
-CallButton.propTypes = {
-    roomId: PropTypes.string.isRequired,
+SendButton.propTypes = {
+    onClick: PropTypes.func.isRequired,
 };
 
-function VideoCallButton(props) {
-    const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-    const onCallClick = (ev) => {
-        dis.dispatch({
-            action: 'place_call',
-            type: ev.shiftKey ? "screensharing" : "video",
-            room_id: props.roomId,
-        });
-    };
+const EmojiButton = ({addEmoji}) => {
+    const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 
-    return <AccessibleButton className="mx_MessageComposer_button mx_MessageComposer_videocall"
-        onClick={onCallClick}
-        title={_t('Video call')}
-    />;
-}
+    let contextMenu;
+    if (menuDisplayed) {
+        const buttonRect = button.current.getBoundingClientRect();
+        const EmojiPicker = sdk.getComponent('emojipicker.EmojiPicker');
+        contextMenu = <ContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu} catchTab={false}>
+            <EmojiPicker onChoose={addEmoji} showQuickReactions={true} />
+        </ContextMenu>;
+    }
 
-VideoCallButton.propTypes = {
-    roomId: PropTypes.string.isRequired,
-};
+    const className = classNames(
+        "mx_MessageComposer_button",
+        "mx_MessageComposer_emoji",
+        {
+            "mx_MessageComposer_button_highlight": menuDisplayed,
+        },
+    );
 
-function HangupButton(props) {
-    const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-    const onHangupClick = () => {
-        const call = CallHandler.getCallForRoom(props.roomId);
-        if (!call) {
-            return;
-        }
-        dis.dispatch({
-            action: 'hangup',
-            // hangup the call for this room, which may not be the room in props
-            // (e.g. conferences which will hangup the 1:1 room instead)
-            room_id: call.roomId,
-        });
-    };
-    return (<AccessibleButton className="mx_MessageComposer_button mx_MessageComposer_hangup"
-            onClick={onHangupClick}
-            title={_t('Hangup')}
-        />);
-}
+    // TODO: replace ContextMenuTooltipButton with a unified representation of
+    // the header buttons and the right panel buttons
+    return <React.Fragment>
+        <ContextMenuTooltipButton
+            className={className}
+            onClick={openMenu}
+            isExpanded={menuDisplayed}
+            title={_t('Emoji picker')}
+            inputRef={button}
+        >
 
-HangupButton.propTypes = {
-    roomId: PropTypes.string.isRequired,
+        </ContextMenuTooltipButton>
+
+        { contextMenu }
+    </React.Fragment>;
 };
 
 class UploadButton extends React.Component {
@@ -114,7 +107,18 @@ class UploadButton extends React.Component {
         this.onUploadFileInputChange = this.onUploadFileInputChange.bind(this);
 
         this._uploadInput = createRef();
+        this._dispatcherRef = dis.register(this.onAction);
     }
+
+    componentWillUnmount() {
+        dis.unregister(this._dispatcherRef);
+    }
+
+    onAction = payload => {
+        if (payload.action === "upload_file") {
+            this.onUploadClick();
+        }
+    };
 
     onUploadClick(ev) {
         if (MatrixClientPeg.get().isGuest()) {
@@ -128,7 +132,7 @@ class UploadButton extends React.Component {
         if (ev.target.files.length === 0) return;
 
         // take a copy so we can safely reset the value of the form control
-        // (Note it is a FileList: we can't use slice or sesnible iteration).
+        // (Note it is a FileList: we can't use slice or sensible iteration).
         const tfiles = [];
         for (let i = 0; i < ev.target.files.length; ++i) {
             tfiles.push(ev.target.files[i]);
@@ -147,9 +151,9 @@ class UploadButton extends React.Component {
 
     render() {
         const uploadInputStyle = {display: 'none'};
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         return (
-            <AccessibleButton className="mx_MessageComposer_button mx_MessageComposer_upload"
+            <AccessibleTooltipButton
+                className="mx_MessageComposer_button mx_MessageComposer_upload"
                 onClick={this.onUploadClick}
                 title={_t('Upload file')}
             >
@@ -160,30 +164,55 @@ class UploadButton extends React.Component {
                     multiple
                     onChange={this.onUploadFileInputChange}
                 />
-            </AccessibleButton>
+            </AccessibleTooltipButton>
         );
     }
 }
 
+@replaceableComponent("views.rooms.MessageComposer")
 export default class MessageComposer extends React.Component {
     constructor(props) {
         super(props);
         this.onInputStateChanged = this.onInputStateChanged.bind(this);
         this._onRoomStateEvents = this._onRoomStateEvents.bind(this);
-        this._onRoomViewStoreUpdate = this._onRoomViewStoreUpdate.bind(this);
         this._onTombstoneClick = this._onTombstoneClick.bind(this);
         this.renderPlaceholderText = this.renderPlaceholderText.bind(this);
+        WidgetStore.instance.on(UPDATE_EVENT, this._onWidgetUpdate);
+        ActiveWidgetStore.on('update', this._onActiveWidgetUpdate);
+        this._dispatcherRef = null;
 
         this.state = {
-            isQuoting: Boolean(RoomViewStore.getQuotingEvent()),
             tombstone: this._getRoomTombstone(),
             canSendMessages: this.props.room.maySendMessage(),
+            hasConference: WidgetStore.instance.doesRoomHaveConference(this.props.room),
+            joinedConference: WidgetStore.instance.isJoinedToConferenceIn(this.props.room),
+            isComposerEmpty: true,
         };
     }
 
+    onAction = (payload) => {
+        if (payload.action === 'reply_to_event') {
+            // add a timeout for the reply preview to be rendered, so
+            // that the ScrollPanel listening to the resizeNotifier can
+            // correctly measure it's new height and scroll down to keep
+            // at the bottom if it already is
+            setTimeout(() => {
+                this.props.resizeNotifier.notifyTimelineHeightChanged();
+            }, 100);
+        }
+    };
+
+    _onWidgetUpdate = () => {
+        this.setState({hasConference: WidgetStore.instance.doesRoomHaveConference(this.props.room)});
+    };
+
+    _onActiveWidgetUpdate = () => {
+        this.setState({joinedConference: WidgetStore.instance.isJoinedToConferenceIn(this.props.room)});
+    };
+
     componentDidMount() {
+        this.dispatcherRef = dis.register(this.onAction);
         MatrixClientPeg.get().on("RoomState.events", this._onRoomStateEvents);
-        this._roomStoreToken = RoomViewStore.addListener(this._onRoomViewStoreUpdate);
         this._waitForOwnMember();
     }
 
@@ -207,9 +236,9 @@ export default class MessageComposer extends React.Component {
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener("RoomState.events", this._onRoomStateEvents);
         }
-        if (this._roomStoreToken) {
-            this._roomStoreToken.remove();
-        }
+        WidgetStore.instance.removeListener(UPDATE_EVENT, this._onWidgetUpdate);
+        ActiveWidgetStore.removeListener('update', this._onActiveWidgetUpdate);
+        dis.unregister(this.dispatcherRef);
     }
 
     _onRoomStateEvents(ev, state) {
@@ -225,12 +254,6 @@ export default class MessageComposer extends React.Component {
 
     _getRoomTombstone() {
         return this.props.room.currentState.getStateEvents('m.room.tombstone', '');
-    }
-
-    _onRoomViewStoreUpdate() {
-        const isQuoting = Boolean(RoomViewStore.getQuotingEvent());
-        if (this.state.isQuoting === isQuoting) return;
-        this.setState({ isQuoting });
     }
 
     onInputStateChanged(inputState) {
@@ -257,6 +280,7 @@ export default class MessageComposer extends React.Component {
             event_id: createEventId,
             room_id: replacementRoomId,
             auto_join: true,
+            _type: "tombstone", // instrumentation
 
             // Try to join via the server that sent the event. This converts @something:example.org
             // into a server domain by splitting on colons and ignoring the first entry ("@something").
@@ -269,35 +293,36 @@ export default class MessageComposer extends React.Component {
     }
 
     renderPlaceholderText() {
-        if (SettingsStore.isFeatureEnabled("feature_cross_signing")) {
-            if (this.state.isQuoting) {
-                if (this.props.e2eStatus) {
-                    return _t('Send an encrypted reply…');
-                } else {
-                    return _t('Send a reply…');
-                }
+        if (this.props.replyToEvent) {
+            if (this.props.e2eStatus) {
+                return _t('Send an encrypted reply…');
             } else {
-                if (this.props.e2eStatus) {
-                    return _t('Send an encrypted message…');
-                } else {
-                    return _t('Send a message…');
-                }
+                return _t('Send a reply…');
             }
         } else {
-            if (this.state.isQuoting) {
-                if (this.props.e2eStatus) {
-                    return _t('Send an encrypted reply…');
-                } else {
-                    return _t('Send a reply (unencrypted)…');
-                }
+            if (this.props.e2eStatus) {
+                return _t('Send an encrypted message…');
             } else {
-                if (this.props.e2eStatus) {
-                    return _t('Send an encrypted message…');
-                } else {
-                    return _t('Send a message (unencrypted)…');
-                }
+                return _t('Send a message…');
             }
         }
+    }
+
+    addEmoji(emoji) {
+        dis.dispatch({
+            action: "insert_emoji",
+            emoji,
+        });
+    }
+
+    sendMessage = () => {
+        this.messageComposerInput._sendMessage();
+    }
+
+    onChange = (model) => {
+        this.setState({
+            isComposerEmpty: model.isEmpty,
+        });
     }
 
     render() {
@@ -309,12 +334,7 @@ export default class MessageComposer extends React.Component {
         ];
 
         if (!this.state.tombstone && this.state.canSendMessages) {
-            // This also currently includes the call buttons. Really we should
-            // check separately for whether we can call, but this is slightly
-            // complex because of conference calls.
-
             const SendMessageComposer = sdk.getComponent("rooms.SendMessageComposer");
-            const callInProgress = this.props.callState && this.props.callState !== 'ended';
 
             controls.push(
                 <SendMessageComposer
@@ -322,13 +342,25 @@ export default class MessageComposer extends React.Component {
                     key="controls_input"
                     room={this.props.room}
                     placeholder={this.renderPlaceholderText()}
-                    permalinkCreator={this.props.permalinkCreator} />,
-                <Stickerpicker key='stickerpicker_controls_button' room={this.props.room} />,
+                    resizeNotifier={this.props.resizeNotifier}
+                    permalinkCreator={this.props.permalinkCreator}
+                    replyToEvent={this.props.replyToEvent}
+                    onChange={this.onChange}
+                />,
                 <UploadButton key="controls_upload" roomId={this.props.room.roomId} />,
-                callInProgress ? <HangupButton key="controls_hangup" roomId={this.props.room.roomId} /> : null,
-                callInProgress ? null : <CallButton key="controls_call" roomId={this.props.room.roomId} />,
-                callInProgress ? null : <VideoCallButton key="controls_videocall" roomId={this.props.room.roomId} />,
+                <EmojiButton key="emoji_button" addEmoji={this.addEmoji} />,
             );
+
+            if (SettingsStore.getValue(UIFeature.Widgets) &&
+                SettingsStore.getValue("MessageComposerInput.showStickersButton")) {
+                controls.push(<Stickerpicker key="stickerpicker_controls_button" room={this.props.room} />);
+            }
+
+            if (!this.state.isComposerEmpty) {
+                controls.push(
+                    <SendButton key="controls_send" onClick={this.sendMessage} />,
+                );
+            }
         } else if (this.state.tombstone) {
             const replacementRoomId = this.state.tombstone.getContent()['replacement_room'];
 
@@ -359,8 +391,9 @@ export default class MessageComposer extends React.Component {
         }
 
         return (
-            <div className="mx_MessageComposer">
+            <div className="mx_MessageComposer mx_GroupLayout">
                 <div className="mx_MessageComposer_wrapper">
+                    <ReplyPreview permalinkCreator={this.props.permalinkCreator} />
                     <div className="mx_MessageComposer_row">
                         { controls }
                     </div>

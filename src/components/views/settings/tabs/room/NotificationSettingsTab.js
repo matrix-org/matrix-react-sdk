@@ -21,12 +21,16 @@ import {MatrixClientPeg} from "../../../../../MatrixClientPeg";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import Notifier from "../../../../../Notifier";
 import SettingsStore from '../../../../../settings/SettingsStore';
-import { SettingLevel } from '../../../../../settings/SettingsStore';
+import {SettingLevel} from "../../../../../settings/SettingLevel";
+import {replaceableComponent} from "../../../../../utils/replaceableComponent";
 
+@replaceableComponent("views.settings.tabs.room.NotificationsSettingsTab")
 export default class NotificationsSettingsTab extends React.Component {
     static propTypes = {
         roomId: PropTypes.string.isRequired,
     };
+
+    _soundUpload = createRef();
 
     constructor() {
         super();
@@ -37,15 +41,13 @@ export default class NotificationsSettingsTab extends React.Component {
         };
     }
 
-    componentWillMount() {
-        Notifier.getSoundForRoom(this.props.roomId).then((soundData) => {
-            if (!soundData) {
-                return;
-            }
-            this.setState({currentSound: soundData.name || soundData.url});
-        });
-
-        this._soundUpload = createRef();
+    // TODO: [REACT-WARNING] Replace component with real class, use constructor for refs
+    UNSAFE_componentWillMount() { // eslint-disable-line camelcase
+        const soundData = Notifier.getSoundForRoom(this.props.roomId);
+        if (!soundData) {
+            return;
+        }
+        this.setState({currentSound: soundData.name || soundData.url});
     }
 
     async _triggerUploader(e) {

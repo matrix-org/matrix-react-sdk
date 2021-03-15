@@ -15,58 +15,103 @@ limitations under the License.
 */
 
 import React, {createRef} from 'react';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import * as sdk from '../../../index';
+import Field from "../elements/Field";
+import { _t, _td } from '../../../languageHandler';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
-export default createReactClass({
-    displayName: 'TextInputDialog',
-    propTypes: {
+@replaceableComponent("views.dialogs.TextInputDialog")
+export default class TextInputDialog extends React.Component {
+    static propTypes = {
         title: PropTypes.string,
         description: PropTypes.oneOfType([
             PropTypes.element,
             PropTypes.string,
         ]),
         value: PropTypes.string,
+        placeholder: PropTypes.string,
         button: PropTypes.string,
+        busyMessage: PropTypes.string, // pass _td string
         focus: PropTypes.bool,
         onFinished: PropTypes.func.isRequired,
-    },
+        hasCancel: PropTypes.bool,
+        validator: PropTypes.func, // result of withValidation
+        fixedWidth: PropTypes.bool,
+    };
 
-    getDefaultProps: function() {
-        return {
-            title: "",
-            value: "",
-            description: "",
-            focus: true,
+    static defaultProps = {
+        title: "",
+        value: "",
+        description: "",
+        busyMessage: _td("Loading..."),
+        focus: true,
+        hasCancel: true,
+    };
+
+    constructor(props) {
+        super(props);
+
+        this._field = createRef();
+
+        this.state = {
+            value: this.props.value,
+            busy: false,
+            valid: false,
         };
-    },
+    }
 
-    UNSAFE_componentWillMount: function() {
-        this._textinput = createRef();
-    },
-
-    componentDidMount: function() {
+    componentDidMount() {
         if (this.props.focus) {
             // Set the cursor at the end of the text input
-            this._textinput.current.value = this.props.value;
+            // this._field.current.value = this.props.value;
+            this._field.current.focus();
         }
-    },
+    }
 
-    onOk: function() {
-        this.props.onFinished(true, this._textinput.current.value);
-    },
+    onOk = async ev => {
+        ev.preventDefault();
+        if (this.props.validator) {
+            this.setState({ busy: true });
+            await this._field.current.validate({ allowEmpty: false });
 
-    onCancel: function() {
+            if (!this._field.current.state.valid) {
+                this._field.current.focus();
+                this._field.current.validate({ allowEmpty: false, focused: true });
+                this.setState({ busy: false });
+                return;
+            }
+        }
+        this.props.onFinished(true, this.state.value);
+    };
+
+    onCancel = () => {
         this.props.onFinished(false);
-    },
+    };
 
-    render: function() {
+    onChange = ev => {
+        this.setState({
+            value: ev.target.value,
+        });
+    };
+
+    onValidate = async fieldState => {
+        const result = await this.props.validator(fieldState);
+        this.setState({
+            valid: result.valid,
+        });
+        return result;
+    };
+
+    render() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         return (
-            <BaseDialog className="mx_TextInputDialog" onFinished={this.props.onFinished}
+            <BaseDialog
+                className="mx_TextInputDialog"
+                onFinished={this.props.onFinished}
                 title={this.props.title}
+                fixedWidth={this.props.fixedWidth}
             >
                 <form onSubmit={this.onOk}>
                     <div className="mx_Dialog_content">
@@ -74,20 +119,27 @@ export default createReactClass({
                             <label htmlFor="textinput"> { this.props.description } </label>
                         </div>
                         <div>
-                            <input
-                                id="textinput"
-                                ref={this._textinput}
+                            <Field
                                 className="mx_TextInputDialog_input"
-                                defaultValue={this.props.value}
-                                autoFocus={this.props.focus}
-                                size="64" />
+                                ref={this._field}
+                                type="text"
+                                label={this.props.placeholder}
+                                value={this.state.value}
+                                onChange={this.onChange}
+                                onValidate={this.props.validator ? this.onValidate : undefined}
+                                size="64"
+                            />
                         </div>
                     </div>
                 </form>
-                <DialogButtons primaryButton={this.props.button}
+                <DialogButtons
+                    primaryButton={this.state.busy ? _t(this.props.busyMessage) : this.props.button}
+                    disabled={this.state.busy}
                     onPrimaryButtonClick={this.onOk}
-                    onCancel={this.onCancel} />
+                    onCancel={this.onCancel}
+                    hasCancel={this.props.hasCancel}
+                />
             </BaseDialog>
         );
-    },
-});
+    }
+}

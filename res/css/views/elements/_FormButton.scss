@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 .mx_FormButton {
-    line-height: 16px;
+    line-height: $font-16px;
     padding: 5px 15px;
-    font-size: 12px;
+    font-size: $font-12px;
     height: min-content;
 
     &:not(:last-child) {
@@ -32,5 +32,11 @@ limitations under the License.
     &.mx_AccessibleButton_kind_danger {
         color: $notice-primary-color;
         background-color: $notice-primary-bg-color;
+    }
+
+    &.mx_AccessibleButton_kind_secondary {
+        color: $secondary-fg-color;
+        border: 1px solid $secondary-fg-color;
+        background-color: unset;
     }
 }

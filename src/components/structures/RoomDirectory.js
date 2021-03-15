@@ -1,7 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,104 +17,156 @@ limitations under the License.
 */
 
 import React from 'react';
-import createReactClass from 'create-react-class';
 import {MatrixClientPeg} from "../../MatrixClientPeg";
 import * as sdk from "../../index";
-import dis from "../../dispatcher";
+import dis from "../../dispatcher/dispatcher";
 import Modal from "../../Modal";
 import { linkifyAndSanitizeHtml } from '../../HtmlUtils';
 import PropTypes from 'prop-types';
 import { _t } from '../../languageHandler';
+import SdkConfig from '../../SdkConfig';
 import { instanceForInstanceId, protocolNameForInstanceId } from '../../utils/DirectoryUtils';
 import Analytics from '../../Analytics';
-import {getHttpUriForMxc} from "matrix-js-sdk/src/content-repo";
+import {ALL_ROOMS} from "../views/directory/NetworkDropdown";
+import SettingsStore from "../../settings/SettingsStore";
+import GroupFilterOrderStore from "../../stores/GroupFilterOrderStore";
+import GroupStore from "../../stores/GroupStore";
+import FlairStore from "../../stores/FlairStore";
+import CountlyAnalytics from "../../CountlyAnalytics";
+import {replaceableComponent} from "../../utils/replaceableComponent";
+import {mediaFromMxc} from "../../customisations/Media";
 
 const MAX_NAME_LENGTH = 80;
-const MAX_TOPIC_LENGTH = 160;
+const MAX_TOPIC_LENGTH = 800;
 
 function track(action) {
     Analytics.trackEvent('RoomDirectory', action);
 }
 
-export default createReactClass({
-    displayName: 'RoomDirectory',
-
-    propTypes: {
-        config: PropTypes.object,
+@replaceableComponent("structures.RoomDirectory")
+export default class RoomDirectory extends React.Component {
+    static propTypes = {
+        initialText: PropTypes.string,
         onFinished: PropTypes.func.isRequired,
-    },
+    };
 
-    getDefaultProps: function() {
-        return {
-            config: {},
-        };
-    },
+    constructor(props) {
+        super(props);
 
-    getInitialState: function() {
-        return {
+        CountlyAnalytics.instance.trackRoomDirectoryBegin();
+        this.startTime = CountlyAnalytics.getTimestamp();
+
+        const selectedCommunityId = GroupFilterOrderStore.getSelectedTags()[0];
+        this.state = {
             publicRooms: [],
             loading: true,
             protocolsLoading: true,
             error: null,
-            instanceId: null,
-            includeAll: false,
-            roomServer: null,
-            filterString: null,
+            instanceId: undefined,
+            roomServer: MatrixClientPeg.getHomeserverName(),
+            filterString: this.props.initialText || "",
+            selectedCommunityId: SettingsStore.getValue("feature_communities_v2_prototypes")
+                ? selectedCommunityId
+                : null,
+            communityName: null,
         };
-    },
 
-    componentWillMount: function() {
         this._unmounted = false;
         this.nextBatch = null;
         this.filterTimeout = null;
         this.scrollPanel = null;
         this.protocols = null;
 
-        this.setState({protocolsLoading: true});
+        this.state.protocolsLoading = true;
         if (!MatrixClientPeg.get()) {
             // We may not have a client yet when invoked from welcome page
-            this.setState({protocolsLoading: false});
+            this.state.protocolsLoading = false;
             return;
         }
-        MatrixClientPeg.get().getThirdpartyProtocols().then((response) => {
-            this.protocols = response;
-            this.setState({protocolsLoading: false});
-        }, (err) => {
-            console.warn(`error loading thirdparty protocols: ${err}`);
-            this.setState({protocolsLoading: false});
-            if (MatrixClientPeg.get().isGuest()) {
-                // Guests currently aren't allowed to use this API, so
-                // ignore this as otherwise this error is literally the
-                // thing you see when loading the client!
-                return;
-            }
-            track('Failed to get protocol list from homeserver');
-            this.setState({
-                error: _t(
-                    'Riot failed to get the protocol list from the homeserver. ' +
-                    'The homeserver may be too old to support third party networks.',
-                ),
-            });
-        });
-    },
 
-    componentWillUnmount: function() {
+        if (!this.state.selectedCommunityId) {
+            MatrixClientPeg.get().getThirdpartyProtocols().then((response) => {
+                this.protocols = response;
+                this.setState({protocolsLoading: false});
+            }, (err) => {
+                console.warn(`error loading third party protocols: ${err}`);
+                this.setState({protocolsLoading: false});
+                if (MatrixClientPeg.get().isGuest()) {
+                    // Guests currently aren't allowed to use this API, so
+                    // ignore this as otherwise this error is literally the
+                    // thing you see when loading the client!
+                    return;
+                }
+                track('Failed to get protocol list from homeserver');
+                const brand = SdkConfig.get().brand;
+                this.setState({
+                    error: _t(
+                        '%(brand)s failed to get the protocol list from the homeserver. ' +
+                        'The homeserver may be too old to support third party networks.',
+                        {brand},
+                    ),
+                });
+            });
+        } else {
+            // We don't use the protocols in the communities v2 prototype experience
+            this.state.protocolsLoading = false;
+
+            // Grab the profile info async
+            FlairStore.getGroupProfileCached(MatrixClientPeg.get(), this.state.selectedCommunityId).then(profile => {
+                this.setState({communityName: profile.name});
+            });
+        }
+    }
+
+    componentDidMount() {
+        this.refreshRoomList();
+    }
+
+    componentWillUnmount() {
         if (this.filterTimeout) {
             clearTimeout(this.filterTimeout);
         }
         this._unmounted = true;
-    },
+    }
 
-    refreshRoomList: function() {
+    refreshRoomList = () => {
+        if (this.state.selectedCommunityId) {
+            this.setState({
+                publicRooms: GroupStore.getGroupRooms(this.state.selectedCommunityId).map(r => {
+                    return {
+                        // Translate all the group properties to the directory format
+                        room_id: r.roomId,
+                        name: r.name,
+                        topic: r.topic,
+                        canonical_alias: r.canonicalAlias,
+                        num_joined_members: r.numJoinedMembers,
+                        avatarUrl: r.avatarUrl,
+                        world_readable: r.worldReadable,
+                        guest_can_join: r.guestsCanJoin,
+                    };
+                }).filter(r => {
+                    const filterString = this.state.filterString;
+                    if (filterString) {
+                        const containedIn = (s: string) => (s || "").toLowerCase().includes(filterString.toLowerCase());
+                        return containedIn(r.name) || containedIn(r.topic) || containedIn(r.canonical_alias);
+                    }
+                    return true;
+                }),
+                loading: false,
+            });
+            return;
+        }
+
         this.nextBatch = null;
         this.setState({
             publicRooms: [],
             loading: true,
         });
         this.getMoreRooms();
-    },
+    };
 
-    getMoreRooms: function() {
+    getMoreRooms() {
+        if (this.state.selectedCommunityId) return Promise.resolve(); // no more rooms
         if (!MatrixClientPeg.get()) return Promise.resolve();
 
         this.setState({
@@ -130,10 +182,10 @@ export default createReactClass({
         if (my_server != MatrixClientPeg.getHomeserverName()) {
             opts.server = my_server;
         }
-        if (this.state.instanceId) {
-            opts.third_party_instance_id = this.state.instanceId;
-        } else if (this.state.includeAll) {
+        if (this.state.instanceId === ALL_ROOMS) {
             opts.include_all_networks = true;
+        } else if (this.state.instanceId) {
+            opts.third_party_instance_id = this.state.instanceId;
         }
         if (this.nextBatch) opts.since = this.nextBatch;
         if (my_filter_string) opts.filter = { generic_search_term: my_filter_string };
@@ -151,6 +203,11 @@ export default createReactClass({
             if (this._unmounted) {
                 // if we've been unmounted, we don't care either.
                 return;
+            }
+
+            if (this.state.filterString) {
+                const count = data.total_room_count_estimate || data.chunk.length;
+                CountlyAnalytics.instance.trackRoomDirectorySearch(count, this.state.filterString);
             }
 
             this.nextBatch = data.next_batch;
@@ -177,15 +234,16 @@ export default createReactClass({
 
             console.error("Failed to get publicRooms: %s", JSON.stringify(err));
             track('Failed to get public room list');
+            const brand = SdkConfig.get().brand;
             this.setState({
                 loading: false,
-                error:
-                    `${_t('Riot failed to get the public room list.')} ` +
-                    `${(err && err.message) ? err.message : _t('The homeserver may be unavailable or overloaded.')}`
-                ,
+                error: (
+                    _t('%(brand)s failed to get the public room list.', { brand }) +
+                    (err && err.message) ? err.message : _t('The homeserver may be unavailable or overloaded.')
+                ),
             });
         });
-    },
+    }
 
     /**
      * A limited interface for removing rooms from the directory.
@@ -194,7 +252,7 @@ export default createReactClass({
      * HS admins to do this through the RoomSettings interface, but
      * this needs SPEC-417.
      */
-    removeFromDirectory: function(room) {
+    removeFromDirectory(room) {
         const alias = get_display_alias_for_room(room);
         const name = room.name || alias || _t('Unnamed room');
 
@@ -203,7 +261,7 @@ export default createReactClass({
 
         let desc;
         if (alias) {
-            desc = _t('Delete the room alias %(alias)s and remove %(name)s from the directory?', {alias: alias, name: name});
+            desc = _t('Delete the room address %(alias)s and remove %(name)s from the directory?', {alias, name});
         } else {
             desc = _t('Remove %(name)s from the directory?', {name: name});
         }
@@ -220,7 +278,7 @@ export default createReactClass({
 
                 MatrixClientPeg.get().setRoomDirectoryVisibility(room.room_id, 'private').then(() => {
                     if (!alias) return;
-                    step = _t('delete the alias.');
+                    step = _t('delete the address.');
                     return MatrixClientPeg.get().deleteAlias(alias);
                 }).then(() => {
                     modal.close();
@@ -236,18 +294,18 @@ export default createReactClass({
                 });
             },
         });
-    },
+    }
 
-    onRoomClicked: function(room, ev) {
-        if (ev.shiftKey) {
+    onRoomClicked = (room, ev) => {
+        if (ev.shiftKey && !this.state.selectedCommunityId) {
             ev.preventDefault();
             this.removeFromDirectory(room);
         } else {
             this.showRoom(room);
         }
-    },
+    };
 
-    onOptionChange: function(server, instanceId, includeAll) {
+    onOptionChange = (server, instanceId) => {
         // clear next batch so we don't try to load more rooms
         this.nextBatch = null;
         this.setState({
@@ -257,7 +315,6 @@ export default createReactClass({
             publicRooms: [],
             roomServer: server,
             instanceId: instanceId,
-            includeAll: includeAll,
             error: null,
         }, this.refreshRoomList);
         // We also refresh the room list each time even though this
@@ -266,15 +323,15 @@ export default createReactClass({
         // find the five gitter ones, at which point we do not want
         // to render all those rooms when switching back to 'all networks'.
         // Easiest to just blow away the state & re-fetch.
-    },
+    };
 
-    onFillRequest: function(backwards) {
+    onFillRequest = (backwards) => {
         if (backwards || !this.nextBatch) return Promise.resolve(false);
 
         return this.getMoreRooms();
-    },
+    };
 
-    onFilterChange: function(alias) {
+    onFilterChange = (alias) => {
         this.setState({
             filterString: alias || null,
         });
@@ -290,9 +347,9 @@ export default createReactClass({
             this.filterTimeout = null;
             this.refreshRoomList();
         }, 700);
-    },
+    };
 
-    onFilterClear: function() {
+    onFilterClear = () => {
         // update immediately
         this.setState({
             filterString: null,
@@ -301,11 +358,11 @@ export default createReactClass({
         if (this.filterTimeout) {
             clearTimeout(this.filterTimeout);
         }
-    },
+    };
 
-    onJoinFromSearchClick: function(alias) {
+    onJoinFromSearchClick = (alias) => {
         // If we don't have a particular instance id selected, just show that rooms alias
-        if (!this.state.instanceId) {
+        if (!this.state.instanceId || this.state.instanceId === ALL_ROOMS) {
             // If the user specified an alias without a domain, add on whichever server is selected
             // in the dropdown
             if (alias.indexOf(':') == -1) {
@@ -319,9 +376,10 @@ export default createReactClass({
             const fields = protocolName ? this._getFieldsForThirdPartyLocation(alias, this.protocols[protocolName], instance) : null;
             if (!fields) {
                 const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
+                const brand = SdkConfig.get().brand;
                 Modal.createTrackedDialog('Unable to join network', '', ErrorDialog, {
                     title: _t('Unable to join network'),
-                    description: _t('Riot does not know how to join a room on this network'),
+                    description: _t('%(brand)s does not know how to join a room on this network', { brand }),
                 });
                 return;
             }
@@ -343,47 +401,42 @@ export default createReactClass({
                 });
             });
         }
-    },
+    };
 
-    onPreviewClick: function(ev, room) {
-        this.props.onFinished();
-        dis.dispatch({
-            action: 'view_room',
-            room_id: room.room_id,
-            should_peek: true,
-        });
+    onPreviewClick = (ev, room) => {
+        this.showRoom(room, null, false, true);
         ev.stopPropagation();
-    },
+    };
 
-    onViewClick: function(ev, room) {
-        this.props.onFinished();
-        dis.dispatch({
-            action: 'view_room',
-            room_id: room.room_id,
-            should_peek: false,
-        });
+    onViewClick = (ev, room) => {
+        this.showRoom(room);
         ev.stopPropagation();
-    },
+    };
 
-    onJoinClick: function(ev, room) {
+    onJoinClick = (ev, room) => {
         this.showRoom(room, null, true);
         ev.stopPropagation();
-    },
+    };
 
-    onCreateRoomClick: function(room) {
-        this.props.onFinished();
-        dis.dispatch({action: 'view_create_room'});
-    },
+    onCreateRoomClick = room => {
+        this.onFinished();
+        dis.dispatch({
+            action: 'view_create_room',
+            public: true,
+        });
+    };
 
-    showRoomAlias: function(alias, autoJoin=false) {
+    showRoomAlias(alias, autoJoin=false) {
         this.showRoom(null, alias, autoJoin);
-    },
+    }
 
-    showRoom: function(room, room_alias, autoJoin=false) {
-        this.props.onFinished();
+    showRoom(room, room_alias, autoJoin = false, shouldPeek = false) {
+        this.onFinished();
         const payload = {
             action: 'view_room',
             auto_join: autoJoin,
+            should_peek: shouldPeek,
+            _type: "room_directory", // instrumentation
         };
         if (room) {
             // Don't let the user view a room they won't be able to either
@@ -408,6 +461,7 @@ export default createReactClass({
             };
 
             if (this.state.roomServer) {
+                payload.via_servers = [this.state.roomServer];
                 payload.opts = {
                     viaServers: [this.state.roomServer],
                 };
@@ -423,9 +477,9 @@ export default createReactClass({
             payload.room_id = room.room_id;
         }
         dis.dispatch(payload);
-    },
+    }
 
-    getRow(room) {
+    createRoomCells(room) {
         const client = MatrixClientPeg.get();
         const clientRoom = client.getRoom(room.room_id);
         const hasJoinedRoom = clientRoom && clientRoom.getMyMembership() === "join";
@@ -435,7 +489,11 @@ export default createReactClass({
         let previewButton;
         let joinOrViewButton;
 
-        if (room.world_readable && !hasJoinedRoom) {
+        // Element Web currently does not allow guests to join rooms, so we
+        // instead show them preview buttons for all rooms. If the room is not
+        // world readable, a modal will appear asking you to register first. If
+        // it is readable, the preview appears as normal.
+        if (!hasJoinedRoom && (room.world_readable || isGuest)) {
             previewButton = (
                 <AccessibleButton kind="secondary" onClick={(ev) => this.onPreviewClick(ev, room)}>{_t("Preview")}</AccessibleButton>
             );
@@ -444,7 +502,7 @@ export default createReactClass({
             joinOrViewButton = (
                 <AccessibleButton kind="secondary" onClick={(ev) => this.onViewClick(ev, room)}>{_t("View")}</AccessibleButton>
             );
-        } else if (!isGuest || room.guest_can_join) {
+        } else if (!isGuest) {
             joinOrViewButton = (
                 <AccessibleButton kind="primary" onClick={(ev) => this.onJoinClick(ev, room)}>{_t("Join")}</AccessibleButton>
             );
@@ -456,55 +514,82 @@ export default createReactClass({
         }
 
         let topic = room.topic || '';
+        // Additional truncation based on line numbers is done via CSS,
+        // but to ensure that the DOM is not polluted with a huge string
+        // we give it a hard limit before rendering.
         if (topic.length > MAX_TOPIC_LENGTH) {
             topic = `${topic.substring(0, MAX_TOPIC_LENGTH)}...`;
         }
         topic = linkifyAndSanitizeHtml(topic);
-        const avatarUrl = getHttpUriForMxc(
-                                MatrixClientPeg.get().getHomeserverUrl(),
-                                room.avatar_url, 32, 32, "crop",
-                            );
-        return (
-            <tr key={ room.room_id }
+        let avatarUrl = null;
+        if (room.avatar_url) avatarUrl = mediaFromMxc(room.avatar_url).getSquareThumbnailHttp(32);
+
+        return [
+            <div key={ `${room.room_id}_avatar` }
                 onClick={(ev) => this.onRoomClicked(room, ev)}
                 // cancel onMouseDown otherwise shift-clicking highlights text
                 onMouseDown={(ev) => {ev.preventDefault();}}
+                className="mx_RoomDirectory_roomAvatar"
             >
-                <td className="mx_RoomDirectory_roomAvatar">
-                    <BaseAvatar width={32} height={32} resizeMethod='crop'
-                        name={ name } idName={ name }
-                        url={ avatarUrl } />
-                </td>
-                <td className="mx_RoomDirectory_roomDescription">
-                    <div className="mx_RoomDirectory_name">{ name }</div>&nbsp;
-                    <div className="mx_RoomDirectory_topic"
-                        onClick={ (ev) => { ev.stopPropagation(); } }
-                        dangerouslySetInnerHTML={{ __html: topic }} />
-                    <div className="mx_RoomDirectory_alias">{ get_display_alias_for_room(room) }</div>
-                </td>
-                <td className="mx_RoomDirectory_roomMemberCount">
-                    { room.num_joined_members }
-                </td>
-                <td className="mx_RoomDirectory_preview">{previewButton}</td>
-                <td className="mx_RoomDirectory_join">{joinOrViewButton}</td>
-            </tr>
-        );
-    },
+                <BaseAvatar width={32} height={32} resizeMethod='crop'
+                    name={ name } idName={ name }
+                    url={ avatarUrl }
+                />
+            </div>,
+            <div key={ `${room.room_id}_description` }
+                onClick={(ev) => this.onRoomClicked(room, ev)}
+                // cancel onMouseDown otherwise shift-clicking highlights text
+                onMouseDown={(ev) => {ev.preventDefault();}}
+                className="mx_RoomDirectory_roomDescription"
+            >
+                <div className="mx_RoomDirectory_name">{ name }</div>&nbsp;
+                <div className="mx_RoomDirectory_topic"
+                    onClick={ (ev) => { ev.stopPropagation(); } }
+                    dangerouslySetInnerHTML={{ __html: topic }}
+                />
+                <div className="mx_RoomDirectory_alias">{ get_display_alias_for_room(room) }</div>
+            </div>,
+            <div key={ `${room.room_id}_memberCount` }
+                onClick={(ev) => this.onRoomClicked(room, ev)}
+                // cancel onMouseDown otherwise shift-clicking highlights text
+                onMouseDown={(ev) => {ev.preventDefault();}}
+                className="mx_RoomDirectory_roomMemberCount"
+            >
+                { room.num_joined_members }
+            </div>,
+            <div key={ `${room.room_id}_preview` }
+                onClick={(ev) => this.onRoomClicked(room, ev)}
+                // cancel onMouseDown otherwise shift-clicking highlights text
+                onMouseDown={(ev) => {ev.preventDefault();}}
+                className="mx_RoomDirectory_preview"
+            >
+                {previewButton}
+            </div>,
+            <div key={ `${room.room_id}_join` }
+                onClick={(ev) => this.onRoomClicked(room, ev)}
+                // cancel onMouseDown otherwise shift-clicking highlights text
+                onMouseDown={(ev) => {ev.preventDefault();}}
+                className="mx_RoomDirectory_join"
+            >
+                {joinOrViewButton}
+            </div>,
+        ];
+    }
 
-    collectScrollPanel: function(element) {
+    collectScrollPanel = (element) => {
         this.scrollPanel = element;
-    },
+    };
 
-    _stringLooksLikeId: function(s, field_type) {
+    _stringLooksLikeId(s, field_type) {
         let pat = /^#[^\s]+:[^\s]/;
         if (field_type && field_type.regexp) {
             pat = new RegExp(field_type.regexp);
         }
 
         return pat.test(s);
-    },
+    }
 
-    _getFieldsForThirdPartyLocation: function(userInput, protocol, instance) {
+    _getFieldsForThirdPartyLocation(userInput, protocol, instance) {
         // make an object with the fields specified by that protocol. We
         // require that the values of all but the last field come from the
         // instance. The last is the user input.
@@ -518,20 +603,25 @@ export default createReactClass({
         }
         fields[requiredFields[requiredFields.length - 1]] = userInput;
         return fields;
-    },
+    }
 
     /**
      * called by the parent component when PageUp/Down/etc is pressed.
      *
      * We pass it down to the scroll panel.
      */
-    handleScrollKey: function(ev) {
+    handleScrollKey = ev => {
         if (this.scrollPanel) {
             this.scrollPanel.handleScrollKey(ev);
         }
-    },
+    };
 
-    render: function() {
+    onFinished = () => {
+        CountlyAnalytics.instance.trackRoomDirectory(this.startTime);
+        this.props.onFinished();
+    };
+
+    render() {
         const Loader = sdk.getComponent("elements.Spinner");
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
@@ -542,7 +632,8 @@ export default createReactClass({
         } else if (this.state.protocolsLoading) {
             content = <Loader />;
         } else {
-            const rows = (this.state.publicRooms || []).map(room => this.getRow(room));
+            const cells = (this.state.publicRooms || [])
+                .reduce((cells, room) => cells.concat(this.createRoomCells(room)), [],);
             // we still show the scrollpanel, at least for now, because
             // otherwise we don't fetch more because we don't get a fill
             // request from the scrollpanel because there isn't one
@@ -553,14 +644,12 @@ export default createReactClass({
             }
 
             let scrollpanel_content;
-            if (rows.length === 0 && !this.state.loading) {
+            if (cells.length === 0 && !this.state.loading) {
                 scrollpanel_content = <i>{ _t('No rooms to show') }</i>;
             } else {
-                scrollpanel_content = <table className="mx_RoomDirectory_table">
-                    <tbody>
-                        { rows }
-                    </tbody>
-                </table>;
+                scrollpanel_content = <div className="mx_RoomDirectory_table">
+                    { cells }
+                </div>;
             }
             const ScrollPanel = sdk.getComponent("structures.ScrollPanel");
             content = <ScrollPanel ref={this.collectScrollPanel}
@@ -593,7 +682,7 @@ export default createReactClass({
             }
 
             let placeholder = _t('Find a room…');
-            if (!this.state.instanceId) {
+            if (!this.state.instanceId || this.state.instanceId === ALL_ROOMS) {
                 placeholder = _t("Find a room… (e.g. %(exampleRoom)s)", {exampleRoom: "#example:" + this.state.roomServer});
             } else if (instance_expected_field_type) {
                 placeholder = instance_expected_field_type.placeholder;
@@ -607,13 +696,29 @@ export default createReactClass({
                 }
             }
 
+            let dropdown = (
+                <NetworkDropdown
+                    protocols={this.protocols}
+                    onOptionChange={this.onOptionChange}
+                    selectedServerName={this.state.roomServer}
+                    selectedInstanceId={this.state.instanceId}
+                />
+            );
+            if (this.state.selectedCommunityId) {
+                dropdown = null;
+            }
+
             listHeader = <div className="mx_RoomDirectory_listheader">
                 <DirectorySearchBox
                     className="mx_RoomDirectory_searchbox"
-                    onChange={this.onFilterChange} onClear={this.onFilterClear} onJoinClick={this.onJoinFromSearchClick}
-                    placeholder={placeholder} showJoinButton={showJoinButton}
+                    onChange={this.onFilterChange}
+                    onClear={this.onFilterClear}
+                    onJoinClick={this.onJoinFromSearchClick}
+                    placeholder={placeholder}
+                    showJoinButton={showJoinButton}
+                    initialText={this.props.initialText}
                 />
-                <NetworkDropdown config={this.props.config} protocols={this.protocols} onOptionChange={this.onOptionChange} />
+                {dropdown}
             </div>;
         }
         const explanation =
@@ -626,15 +731,19 @@ export default createReactClass({
                 }},
             );
 
+        const title = this.state.selectedCommunityId
+            ? _t("Explore rooms in %(communityName)s", {
+                communityName: this.state.communityName || this.state.selectedCommunityId,
+            }) : _t("Explore rooms");
         return (
             <BaseDialog
                 className={'mx_RoomDirectory_dialog'}
                 hasCancel={true}
-                onFinished={this.props.onFinished}
-                title={_t("Explore rooms")}
+                onFinished={this.onFinished}
+                title={title}
             >
                 <div className="mx_RoomDirectory">
-                    <p>{explanation}</p>
+                    {explanation}
                     <div className="mx_RoomDirectory_list">
                         {listHeader}
                         {content}
@@ -642,8 +751,8 @@ export default createReactClass({
                 </div>
             </BaseDialog>
         );
-    },
-});
+    }
+}
 
 // Similar to matrix-react-sdk's MatrixTools.getDisplayAliasForRoom
 // but works with the objects we get from the public room list

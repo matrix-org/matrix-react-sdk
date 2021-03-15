@@ -15,8 +15,12 @@ limitations under the License.
 */
 
 /**
- * Fires when the middle panel has been resized.
+ * Fires when the middle panel has been resized (throttled).
  * @event module:utils~ResizeNotifier#"middlePanelResized"
+ */
+/**
+ * Fires when the middle panel has been resized by a pixel.
+ * @event module:utils~ResizeNotifier#"middlePanelResizedNoisy"
  */
 import { EventEmitter } from "events";
 import { throttle } from "lodash";
@@ -27,22 +31,45 @@ export default class ResizeNotifier extends EventEmitter {
         // with default options, will call fn once at first call, and then every x ms
         // if there was another call in that timespan
         this._throttledMiddlePanel = throttle(() => this.emit("middlePanelResized"), 200);
+        this._isResizing = false;
     }
 
-    notifyBannersChanged() {
-        this.emit("leftPanelResized");
-        this.emit("middlePanelResized");
+    get isResizing() {
+        return this._isResizing;
+    }
+
+    startResizing() {
+        this._isResizing = true;
+        this.emit("isResizing", true);
+    }
+
+    stopResizing() {
+        this._isResizing = false;
+        this.emit("isResizing", false);
+    }
+
+    _noisyMiddlePanel() {
+        this.emit("middlePanelResizedNoisy");
+    }
+
+    _updateMiddlePanel() {
+        this._throttledMiddlePanel();
+        this._noisyMiddlePanel();
     }
 
     // can be called in quick succession
     notifyLeftHandleResized() {
         // don't emit event for own region
-        this._throttledMiddlePanel();
+        this._updateMiddlePanel();
     }
 
     // can be called in quick succession
     notifyRightHandleResized() {
-        this._throttledMiddlePanel();
+        this._updateMiddlePanel();
+    }
+
+    notifyTimelineHeightChanged() {
+        this._updateMiddlePanel();
     }
 
     // can be called in quick succession
@@ -53,7 +80,7 @@ export default class ResizeNotifier extends EventEmitter {
         // taller than the available space
         this.emit("leftPanelResized");
 
-        this._throttledMiddlePanel();
+        this._updateMiddlePanel();
     }
 }
 

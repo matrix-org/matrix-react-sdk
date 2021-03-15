@@ -19,9 +19,13 @@ import React from 'react';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 import * as sdk from '../../../index';
-import { accessSecretStorage } from '../../../CrossSigningManager';
 import Modal from '../../../Modal';
+import Spinner from '../elements/Spinner';
+import InteractiveAuthDialog from '../dialogs/InteractiveAuthDialog';
+import ConfirmDestroyCrossSigningDialog from '../dialogs/security/ConfirmDestroyCrossSigningDialog';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.settings.CrossSigningPanel")
 export default class CrossSigningPanel extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -30,9 +34,13 @@ export default class CrossSigningPanel extends React.PureComponent {
 
         this.state = {
             error: null,
-            crossSigningPublicKeysOnDevice: false,
-            crossSigningPrivateKeysInStorage: false,
-            secretStorageKeyInAccount: false,
+            crossSigningPublicKeysOnDevice: null,
+            crossSigningPrivateKeysInStorage: null,
+            masterPrivateKeyCached: null,
+            selfSigningPrivateKeyCached: null,
+            userSigningPrivateKeyCached: null,
+            homeserverSupportsCrossSigning: null,
+            crossSigningReady: null,
         };
     }
 
@@ -60,59 +68,83 @@ export default class CrossSigningPanel extends React.PureComponent {
         }
     };
 
+    _onBootstrapClick = () => {
+        this._bootstrapCrossSigning({ forceReset: false });
+    };
+
     onStatusChanged = () => {
         this._getUpdatedStatus();
     };
 
     async _getUpdatedStatus() {
-        // XXX: Add public accessors if we keep this around in production
         const cli = MatrixClientPeg.get();
+        const pkCache = cli.getCrossSigningCacheCallbacks();
         const crossSigning = cli._crypto._crossSigningInfo;
         const secretStorage = cli._crypto._secretStorage;
         const crossSigningPublicKeysOnDevice = crossSigning.getId();
         const crossSigningPrivateKeysInStorage = await crossSigning.isStoredInSecretStorage(secretStorage);
-        const secretStorageKeyInAccount = await secretStorage.hasKey();
+        const masterPrivateKeyCached = !!(pkCache && await pkCache.getCrossSigningKeyCache("master"));
+        const selfSigningPrivateKeyCached = !!(pkCache && await pkCache.getCrossSigningKeyCache("self_signing"));
+        const userSigningPrivateKeyCached = !!(pkCache && await pkCache.getCrossSigningKeyCache("user_signing"));
         const homeserverSupportsCrossSigning =
             await cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing");
+        const crossSigningReady = await cli.isCrossSigningReady();
 
         this.setState({
             crossSigningPublicKeysOnDevice,
             crossSigningPrivateKeysInStorage,
-            secretStorageKeyInAccount,
+            masterPrivateKeyCached,
+            selfSigningPrivateKeyCached,
+            userSigningPrivateKeyCached,
             homeserverSupportsCrossSigning,
+            crossSigningReady,
         });
     }
 
     /**
-     * Bootstrapping secret storage may take one of these paths:
-     * 1. Create secret storage from a passphrase and store cross-signing keys
-     *    in secret storage.
+     * Bootstrapping cross-signing take one of these paths:
+     * 1. Create cross-signing keys locally and store in secret storage (if it
+     *    already exists on the account).
      * 2. Access existing secret storage by requesting passphrase and accessing
      *    cross-signing keys as needed.
      * 3. All keys are loaded and there's nothing to do.
-     * @param {bool} [force] Bootstrap again even if keys already present
+     * @param {bool} [forceReset] Bootstrap again even if keys already present
      */
-    _bootstrapSecureSecretStorage = async (force=false) => {
+    _bootstrapCrossSigning = async ({ forceReset = false }) => {
         this.setState({ error: null });
         try {
-            await accessSecretStorage(() => undefined, force);
+            const cli = MatrixClientPeg.get();
+            await cli.bootstrapCrossSigning({
+                authUploadDeviceSigningKeys: async (makeRequest) => {
+                    const { finished } = Modal.createTrackedDialog(
+                        'Cross-signing keys dialog', '', InteractiveAuthDialog,
+                        {
+                            title: _t("Setting up keys"),
+                            matrixClient: cli,
+                            makeRequest,
+                        },
+                    );
+                    const [confirmed] = await finished;
+                    if (!confirmed) {
+                        throw new Error("Cross-signing key upload auth canceled");
+                    }
+                },
+                setupNewCrossSigning: forceReset,
+            });
         } catch (e) {
             this.setState({ error: e });
-            console.error("Error bootstrapping secret storage", e);
+            console.error("Error bootstrapping cross-signing", e);
         }
         if (this._unmounted) return;
         this._getUpdatedStatus();
     }
 
-    onDestroyStorage = (act) => {
-        if (!act) return;
-        this._bootstrapSecureSecretStorage(true);
-    }
-
-    _destroySecureSecretStorage = () => {
-        const ConfirmDestoryCrossSigningDialog = sdk.getComponent("dialogs.ConfirmDestroyCrossSigningDialog");
-        Modal.createDialog(ConfirmDestoryCrossSigningDialog, {
-            onFinished: this.onDestroyStorage,
+    _resetCrossSigning = () => {
+        Modal.createDialog(ConfirmDestroyCrossSigningDialog, {
+            onFinished: (act) => {
+                if (!act) return;
+                this._bootstrapCrossSigning({ forceReset: true });
+            },
         });
     }
 
@@ -122,8 +154,11 @@ export default class CrossSigningPanel extends React.PureComponent {
             error,
             crossSigningPublicKeysOnDevice,
             crossSigningPrivateKeysInStorage,
-            secretStorageKeyInAccount,
+            masterPrivateKeyCached,
+            selfSigningPrivateKeyCached,
+            userSigningPrivateKeyCached,
             homeserverSupportsCrossSigning,
+            crossSigningReady,
         } = this.state;
 
         let errorSection;
@@ -131,55 +166,67 @@ export default class CrossSigningPanel extends React.PureComponent {
             errorSection = <div className="error">{error.toString()}</div>;
         }
 
-        // Whether the various keys exist on your account (but not necessarily
-        // on this device).
-        const enabledForAccount = (
-            crossSigningPrivateKeysInStorage &&
-            secretStorageKeyInAccount
-        );
-
         let summarisedStatus;
-        if (!homeserverSupportsCrossSigning) {
+        if (homeserverSupportsCrossSigning === undefined) {
+            summarisedStatus = <Spinner />;
+        } else if (!homeserverSupportsCrossSigning) {
             summarisedStatus = <p>{_t(
                 "Your homeserver does not support cross-signing.",
             )}</p>;
-        } else if (enabledForAccount && crossSigningPublicKeysOnDevice) {
+        } else if (crossSigningReady) {
             summarisedStatus = <p>✅ {_t(
-                "Cross-signing and secret storage are enabled.",
+                "Cross-signing is ready for use.",
             )}</p>;
         } else if (crossSigningPrivateKeysInStorage) {
             summarisedStatus = <p>{_t(
-                "Your account has a cross-signing identity in secret storage, but it " +
-                "is not yet trusted by this session.",
+                "Your account has a cross-signing identity in secret storage, " +
+                "but it is not yet trusted by this session.",
             )}</p>;
         } else {
             summarisedStatus = <p>{_t(
-                "Cross-signing and secret storage are not yet set up.",
+                "Cross-signing is not set up.",
             )}</p>;
         }
 
-        let resetButton;
-        if (enabledForAccount) {
-            resetButton = (
-                <div className="mx_CrossSigningPanel_buttonRow">
-                    <AccessibleButton kind="danger" onClick={this._destroySecureSecretStorage}>
-                        {_t("Reset cross-signing and secret storage")}
-                    </AccessibleButton>
-                </div>
+        const keysExistAnywhere = (
+            crossSigningPublicKeysOnDevice ||
+            crossSigningPrivateKeysInStorage ||
+            masterPrivateKeyCached ||
+            selfSigningPrivateKeyCached ||
+            userSigningPrivateKeyCached
+        );
+        const keysExistEverywhere = (
+            crossSigningPublicKeysOnDevice &&
+            crossSigningPrivateKeysInStorage &&
+            masterPrivateKeyCached &&
+            selfSigningPrivateKeyCached &&
+            userSigningPrivateKeyCached
+        );
+
+        const actions = [];
+
+        // TODO: determine how better to expose this to users in addition to prompts at login/toast
+        if (!keysExistEverywhere && homeserverSupportsCrossSigning) {
+            actions.push(
+                <AccessibleButton key="setup" kind="primary" onClick={this._onBootstrapClick}>
+                    {_t("Set up")}
+                </AccessibleButton>,
             );
         }
-        let bootstrapButton;
-        if (
-            (!enabledForAccount || !crossSigningPublicKeysOnDevice) &&
-            homeserverSupportsCrossSigning
-        ) {
-            bootstrapButton = (
-                <div className="mx_CrossSigningPanel_buttonRow">
-                    <AccessibleButton kind="primary" onClick={this._bootstrapSecureSecretStorage}>
-                        {_t("Bootstrap cross-signing and secret storage")}
-                    </AccessibleButton>
-                </div>
+
+        if (keysExistAnywhere) {
+            actions.push(
+                <AccessibleButton key="reset" kind="danger" onClick={this._resetCrossSigning}>
+                    {_t("Reset")}
+                </AccessibleButton>,
             );
+        }
+
+        let actionRow;
+        if (actions.length) {
+            actionRow = <div className="mx_CrossSigningPanel_buttonRow">
+                {actions}
+            </div>;
         }
 
         return (
@@ -194,11 +241,19 @@ export default class CrossSigningPanel extends React.PureComponent {
                         </tr>
                         <tr>
                             <td>{_t("Cross-signing private keys:")}</td>
-                            <td>{crossSigningPrivateKeysInStorage ? _t("in secret storage") : _t("not found")}</td>
+                            <td>{crossSigningPrivateKeysInStorage ? _t("in secret storage") : _t("not found in storage")}</td>
                         </tr>
                         <tr>
-                            <td>{_t("Secret storage public key:")}</td>
-                            <td>{secretStorageKeyInAccount ? _t("in account data") : _t("not found")}</td>
+                            <td>{_t("Master private key:")}</td>
+                            <td>{masterPrivateKeyCached ? _t("cached locally") : _t("not found locally")}</td>
+                        </tr>
+                        <tr>
+                            <td>{_t("Self signing private key:")}</td>
+                            <td>{selfSigningPrivateKeyCached ? _t("cached locally") : _t("not found locally")}</td>
+                        </tr>
+                        <tr>
+                            <td>{_t("User signing private key:")}</td>
+                            <td>{userSigningPrivateKeyCached ? _t("cached locally") : _t("not found locally")}</td>
                         </tr>
                         <tr>
                             <td>{_t("Homeserver feature support:")}</td>
@@ -207,8 +262,7 @@ export default class CrossSigningPanel extends React.PureComponent {
                    </tbody></table>
                 </details>
                 {errorSection}
-                {bootstrapButton}
-                {resetButton}
+                {actionRow}
             </div>
         );
     }

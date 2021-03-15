@@ -19,11 +19,10 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import {EventStatus} from 'matrix-js-sdk';
 
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
-import dis from '../../../dispatcher';
+import dis from '../../../dispatcher/dispatcher';
 import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
@@ -32,15 +31,16 @@ import SettingsStore from '../../../settings/SettingsStore';
 import { isUrlPermitted } from '../../../HtmlUtils';
 import { isContentActionable } from '../../../utils/EventUtils';
 import {MenuItem} from "../../structures/ContextMenu";
+import {EventType} from "matrix-js-sdk/src/@types/event";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 function canCancel(eventStatus) {
     return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
 }
 
-export default createReactClass({
-    displayName: 'MessageContextMenu',
-
-    propTypes: {
+@replaceableComponent("views.context_menus.MessageContextMenu")
+export default class MessageContextMenu extends React.Component {
+    static propTypes = {
         /* the MatrixEvent associated with the context menu */
         mxEvent: PropTypes.object.isRequired,
 
@@ -52,108 +52,91 @@ export default createReactClass({
 
         /* callback called when the menu is dismissed */
         onFinished: PropTypes.func,
-    },
+    };
 
-    getInitialState: function() {
-        return {
-            canRedact: false,
-            canPin: false,
-        };
-    },
+    state = {
+        canRedact: false,
+        canPin: false,
+    };
 
-    componentWillMount: function() {
+    componentDidMount() {
         MatrixClientPeg.get().on('RoomMember.powerLevel', this._checkPermissions);
         this._checkPermissions();
-    },
+    }
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         const cli = MatrixClientPeg.get();
         if (cli) {
             cli.removeListener('RoomMember.powerLevel', this._checkPermissions);
         }
-    },
+    }
 
-    _checkPermissions: function() {
+    _checkPermissions = () => {
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(this.props.mxEvent.getRoomId());
 
-        const canRedact = room.currentState.maySendRedactionForEvent(this.props.mxEvent, cli.credentials.userId);
+        // We explicitly decline to show the redact option on ACL events as it has a potential
+        // to obliterate the room - https://github.com/matrix-org/synapse/issues/4042
+        const canRedact = room.currentState.maySendRedactionForEvent(this.props.mxEvent, cli.credentials.userId)
+            && this.props.mxEvent.getType() !== EventType.RoomServerAcl;
         let canPin = room.currentState.mayClientSendStateEvent('m.room.pinned_events', cli);
 
         // HACK: Intentionally say we can't pin if the user doesn't want to use the functionality
-        if (!SettingsStore.isFeatureEnabled("feature_pinning")) canPin = false;
+        if (!SettingsStore.getValue("feature_pinning")) canPin = false;
 
         this.setState({canRedact, canPin});
-    },
+    };
 
-    _isPinned: function() {
+    _isPinned() {
         const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
         const pinnedEvent = room.currentState.getStateEvents('m.room.pinned_events', '');
         if (!pinnedEvent) return false;
         const content = pinnedEvent.getContent();
         return content.pinned && Array.isArray(content.pinned) && content.pinned.includes(this.props.mxEvent.getId());
-    },
+    }
 
-    onResendClick: function() {
+    onResendClick = () => {
         Resend.resend(this.props.mxEvent);
         this.closeMenu();
-    },
+    };
 
-    onResendEditClick: function() {
+    onResendEditClick = () => {
         Resend.resend(this.props.mxEvent.replacingEvent());
         this.closeMenu();
-    },
+    };
 
-    onResendRedactionClick: function() {
+    onResendRedactionClick = () => {
         Resend.resend(this.props.mxEvent.localRedactionEvent());
         this.closeMenu();
-    },
+    };
 
-    onResendReactionsClick: function() {
+    onResendReactionsClick = () => {
         for (const reaction of this._getUnsentReactions()) {
             Resend.resend(reaction);
         }
         this.closeMenu();
-    },
+    };
 
-    e2eInfoClicked: function() {
-        this.props.e2eInfoCallback();
-        this.closeMenu();
-    },
-
-    onReportEventClick: function() {
+    onReportEventClick = () => {
         const ReportEventDialog = sdk.getComponent("dialogs.ReportEventDialog");
         Modal.createTrackedDialog('Report Event', '', ReportEventDialog, {
             mxEvent: this.props.mxEvent,
         }, 'mx_Dialog_reportEvent');
         this.closeMenu();
-    },
+    };
 
-    onViewSourceClick: function() {
+    onViewSourceClick = () => {
         const ViewSource = sdk.getComponent('structures.ViewSource');
         Modal.createTrackedDialog('View Event Source', '', ViewSource, {
-            roomId: this.props.mxEvent.getRoomId(),
-            eventId: this.props.mxEvent.getId(),
-            content: this.props.mxEvent.event,
+            mxEvent: this.props.mxEvent,
         }, 'mx_Dialog_viewsource');
         this.closeMenu();
-    },
+    };
 
-    onViewClearSourceClick: function() {
-        const ViewSource = sdk.getComponent('structures.ViewSource');
-        Modal.createTrackedDialog('View Clear Event Source', '', ViewSource, {
-            roomId: this.props.mxEvent.getRoomId(),
-            eventId: this.props.mxEvent.getId(),
-            // FIXME: _clearEvent is private
-            content: this.props.mxEvent._clearEvent,
-        }, 'mx_Dialog_viewsource');
-        this.closeMenu();
-    },
-
-    onRedactClick: function() {
+    onRedactClick = () => {
         const ConfirmRedactDialog = sdk.getComponent("dialogs.ConfirmRedactDialog");
         Modal.createTrackedDialog('Confirm Redact Dialog', '', ConfirmRedactDialog, {
-            onFinished: async (proceed) => {
+            onFinished: async (proceed, reason) => {
                 if (!proceed) return;
 
                 const cli = MatrixClientPeg.get();
@@ -161,6 +144,8 @@ export default createReactClass({
                     await cli.redactEvent(
                         this.props.mxEvent.getRoomId(),
                         this.props.mxEvent.getId(),
+                        undefined,
+                        reason ? { reason } : {},
                     );
                 } catch (e) {
                     const code = e.errcode || e.statusCode;
@@ -179,9 +164,9 @@ export default createReactClass({
             },
         }, 'mx_Dialog_confirmredact');
         this.closeMenu();
-    },
+    };
 
-    onCancelSendClick: function() {
+    onCancelSendClick = () => {
         const mxEvent = this.props.mxEvent;
         const editEvent = mxEvent.replacingEvent();
         const redactEvent = mxEvent.localRedactionEvent();
@@ -202,17 +187,17 @@ export default createReactClass({
             Resend.removeFromQueue(this.props.mxEvent);
         }
         this.closeMenu();
-    },
+    };
 
-    onForwardClick: function() {
+    onForwardClick = () => {
         dis.dispatch({
             action: 'forward_event',
             event: this.props.mxEvent,
         });
         this.closeMenu();
-    },
+    };
 
-    onPinClick: function() {
+    onPinClick = () => {
         MatrixClientPeg.get().getStateEvent(this.props.mxEvent.getRoomId(), 'm.room.pinned_events', '')
             .catch((e) => {
                 // Intercept the Event Not Found error and fall through the promise chain with no event.
@@ -233,28 +218,28 @@ export default createReactClass({
                 cli.sendStateEvent(this.props.mxEvent.getRoomId(), 'm.room.pinned_events', {pinned: eventIds}, '');
             });
         this.closeMenu();
-    },
+    };
 
-    closeMenu: function() {
+    closeMenu = () => {
         if (this.props.onFinished) this.props.onFinished();
-    },
+    };
 
-    onUnhidePreviewClick: function() {
+    onUnhidePreviewClick = () => {
         if (this.props.eventTileOps) {
             this.props.eventTileOps.unhideWidget();
         }
         this.closeMenu();
-    },
+    };
 
-    onQuoteClick: function() {
+    onQuoteClick = () => {
         dis.dispatch({
             action: 'quote',
             event: this.props.mxEvent,
         });
         this.closeMenu();
-    },
+    };
 
-    onPermalinkClick: function(e: Event) {
+    onPermalinkClick = (e: Event) => {
         e.preventDefault();
         const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
         Modal.createTrackedDialog('share room message dialog', '', ShareDialog, {
@@ -262,12 +247,12 @@ export default createReactClass({
             permalinkCreator: this.props.permalinkCreator,
         });
         this.closeMenu();
-    },
+    };
 
-    onCollapseReplyThreadClick: function() {
+    onCollapseReplyThreadClick = () => {
         this.props.collapseReplyThread();
         this.closeMenu();
-    },
+    };
 
     _getReactions(filter) {
         const cli = MatrixClientPeg.get();
@@ -280,17 +265,17 @@ export default createReactClass({
                 relation.event_id === eventId &&
                 filter(e);
         });
-    },
+    }
 
     _getPendingReactions() {
         return this._getReactions(e => canCancel(e.status));
-    },
+    }
 
     _getUnsentReactions() {
         return this._getReactions(e => e.status === EventStatus.NOT_SENT);
-    },
+    }
 
-    render: function() {
+    render() {
         const cli = MatrixClientPeg.get();
         const me = cli.getUserId();
         const mxEvent = this.props.mxEvent;
@@ -311,7 +296,6 @@ export default createReactClass({
         let cancelButton;
         let forwardButton;
         let pinButton;
-        let viewClearSourceButton;
         let unhidePreviewButton;
         let externalURLButton;
         let quoteButton;
@@ -391,14 +375,6 @@ export default createReactClass({
             </MenuItem>
         );
 
-        if (mxEvent.getType() !== mxEvent.getWireType()) {
-            viewClearSourceButton = (
-                <MenuItem className="mx_MessageContextMenu_field" onClick={this.onViewClearSourceClick}>
-                    { _t('View Decrypted Source') }
-                </MenuItem>
-            );
-        }
-
         if (this.props.eventTileOps) {
             if (this.props.eventTileOps.isWidgetHidden()) {
                 unhidePreviewButton = (
@@ -463,15 +439,6 @@ export default createReactClass({
             );
         }
 
-        let e2eInfo;
-        if (this.props.e2eInfoCallback) {
-            e2eInfo = (
-                <MenuItem className="mx_MessageContextMenu_field" onClick={this.e2eInfoClicked}>
-                    { _t('End-to-end encryption information') }
-                </MenuItem>
-            );
-        }
-
         let reportEventButton;
         if (mxEvent.getSender() !== me) {
             reportEventButton = (
@@ -492,15 +459,13 @@ export default createReactClass({
                 { forwardButton }
                 { pinButton }
                 { viewSourceButton }
-                { viewClearSourceButton }
                 { unhidePreviewButton }
                 { permalinkButton }
                 { quoteButton }
                 { externalURLButton }
                 { collapseReplyThread }
-                { e2eInfo }
                 { reportEventButton }
             </div>
         );
-    },
-});
+    }
+}

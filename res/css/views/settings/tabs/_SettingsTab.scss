@@ -1,5 +1,5 @@
 /*
-Copyright 2019 New Vector Ltd
+Copyright 2019, 2020 New Vector Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,14 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+.mx_SettingsTab {
+    color: $muted-fg-color;
+}
+
 .mx_SettingsTab_warningText {
     color: $warning-color;
 }
 
 .mx_SettingsTab_heading {
-    font-size: 20px;
+    font-size: $font-20px;
     font-weight: 600;
     color: $primary-fg-color;
+    margin-bottom: 10px;
 }
 
 .mx_SettingsTab_heading:nth-child(n + 2) {
@@ -29,7 +34,7 @@ limitations under the License.
 }
 
 .mx_SettingsTab_subheading {
-    font-size: 16px;
+    font-size: $font-16px;
     display: block;
     font-family: $font-family;
     font-weight: 600;
@@ -40,26 +45,30 @@ limitations under the License.
 
 .mx_SettingsTab_subsectionText {
     color: $settings-subsection-fg-color;
-    font-size: 14px;
+    font-size: $font-14px;
     display: block;
     margin: 10px 100px 10px 0; // Align with the rest of the view
 }
 
 .mx_SettingsTab_section {
     margin-bottom: 24px;
-}
 
-.mx_SettingsTab_section .mx_SettingsFlag {
-    margin-right: 100px;
-    margin-bottom: 10px;
+    .mx_SettingsFlag {
+        margin-right: 100px;
+        margin-bottom: 10px;
+    }
+
+    &.mx_SettingsTab_subsectionText .mx_SettingsFlag {
+        margin-right: 0px !important;
+    }
 }
 
 .mx_SettingsTab_section .mx_SettingsFlag .mx_SettingsFlag_label {
     vertical-align: middle;
     display: inline-block;
-    font-size: 14px;
+    font-size: $font-14px;
     color: $primary-fg-color;
-    max-width: calc(100% - 48px); // Force word wrap instead of colliding with the switch
+    max-width: calc(100% - $font-48px); // Force word wrap instead of colliding with the switch
     box-sizing: border-box;
     padding-right: 10px;
 }

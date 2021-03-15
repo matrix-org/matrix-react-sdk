@@ -22,13 +22,15 @@ import * as sdk from '../../../index';
 import * as languageHandler from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
 import { _t } from "../../../languageHandler";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 function languageMatchesSearchQuery(query, language) {
-    if (language.label.toUpperCase().indexOf(query.toUpperCase()) == 0) return true;
-    if (language.value.toUpperCase() == query.toUpperCase()) return true;
+    if (language.label.toUpperCase().includes(query.toUpperCase())) return true;
+    if (language.value.toUpperCase() === query.toUpperCase()) return true;
     return false;
 }
 
+@replaceableComponent("views.elements.LanguageDropdown")
 export default class LanguageDropdown extends React.Component {
     constructor(props) {
         super(props);
@@ -40,7 +42,7 @@ export default class LanguageDropdown extends React.Component {
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         languageHandler.getAllLanguagesFromJson().then((langs) => {
             langs.sort(function(a, b) {
                 if (a.label < b.label) return -1;
@@ -100,10 +102,10 @@ export default class LanguageDropdown extends React.Component {
         let language = SettingsStore.getValue("language", null, /*excludeDefault:*/true);
         let value = null;
         if (language) {
-          value = this.props.value || language;
+            value = this.props.value || language;
         } else {
-          language = navigator.language || navigator.userLanguage;
-          value = this.props.value || language;
+            language = navigator.language || navigator.userLanguage;
+            value = this.props.value || language;
         }
 
         return <Dropdown
@@ -114,6 +116,7 @@ export default class LanguageDropdown extends React.Component {
             searchEnabled={true}
             value={value}
             label={_t("Language Dropdown")}
+            disabled={this.props.disabled}
         >
             { options }
         </Dropdown>;

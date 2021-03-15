@@ -19,28 +19,28 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import * as sdk from "../../../index";
 import { _t, _td } from '../../../languageHandler';
-import SettingsStore, {SettingLevel} from "../../../settings/SettingsStore";
-import dis from "../../../dispatcher";
+import SettingsStore from "../../../settings/SettingsStore";
+import dis from "../../../dispatcher/dispatcher";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
+import {Action} from "../../../dispatcher/actions";
+import {SettingLevel} from "../../../settings/SettingLevel";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
-
-export default createReactClass({
-    displayName: 'UrlPreviewSettings',
-
-    propTypes: {
+@replaceableComponent("views.room_settings.UrlPreviewSettings")
+export default class UrlPreviewSettings extends React.Component {
+    static propTypes = {
         room: PropTypes.object,
-    },
+    };
 
-    _onClickUserSettings: (e) => {
+    _onClickUserSettings = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        dis.dispatch({action: 'view_user_settings'});
-    },
+        dis.fire(Action.ViewUserSettings);
+    };
 
-    render: function() {
+    render() {
         const SettingsFlag = sdk.getComponent("elements.SettingsFlag");
         const roomId = this.props.room.roomId;
         const isEncrypted = MatrixClientPeg.get().isRoomEncrypted(roomId);
@@ -57,7 +57,7 @@ export default createReactClass({
                         'a': (sub)=><a onClick={this._onClickUserSettings} href=''>{ sub }</a>,
                     })
                 );
-            } else if (accountEnabled) {
+            } else {
                 previewsForAccount = (
                     _t("You have <a>disabled</a> URL previews by default.", {}, {
                         'a': (sub)=><a onClick={this._onClickUserSettings} href=''>{ sub }</a>,
@@ -108,5 +108,5 @@ export default createReactClass({
                 <label>{ previewsForRoomAccount }</label>
             </div>
         );
-    },
-});
+    }
+}
