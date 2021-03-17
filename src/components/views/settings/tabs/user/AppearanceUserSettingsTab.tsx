@@ -1,13 +1,10 @@
 /*
 Copyright 2019 New Vector Ltd
 Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-
     http://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,15 +25,14 @@ import { FontWatcher } from "../../../../../settings/watchers/FontWatcher";
 import { RecheckThemePayload } from '../../../../../dispatcher/payloads/RecheckThemePayload';
 import { Action } from '../../../../../dispatcher/actions';
 import { IValidationResult, IFieldState } from '../../../elements/Validation';
-import StyledRadioButton from '../../../elements/StyledRadioButton';
 import StyledCheckbox from '../../../elements/StyledCheckbox';
 import SettingsFlag from '../../../elements/SettingsFlag';
 import Field from '../../../elements/Field';
 import EventTilePreview from '../../../elements/EventTilePreview';
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
-import classNames from 'classnames';
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import {UIFeature} from "../../../../../settings/UIFeature";
+import {Layout} from "../../../../../settings/Layout";
 
 interface IProps {
 }
@@ -62,7 +58,7 @@ interface IState extends IThemeState {
     useSystemFont: boolean;
     systemFont: string;
     showAdvanced: boolean;
-    useIRCLayout: boolean;
+    layout: Layout;
 }
 
 
@@ -83,7 +79,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
             useSystemFont: SettingsStore.getValue("useSystemFont"),
             systemFont: SettingsStore.getValue("systemFont"),
             showAdvanced: false,
-            useIRCLayout: SettingsStore.getValue("useIRCLayout"),
+            layout: SettingsStore.getValue("layout"),
         };
     }
 
@@ -92,11 +88,10 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
         // show the right values for things.
 
         const themeChoice: string = SettingsStore.getValue("theme");
-        const excludeDefault = SettingsStore.getValue(UIFeature.ChangeTheme);
         const systemThemeExplicit: boolean = SettingsStore.getValueAt(
-            SettingLevel.DEVICE, "use_system_theme", null, false, excludeDefault);
+            SettingLevel.DEVICE, "use_system_theme", null, false, true);
         const themeExplicit: string = SettingsStore.getValueAt(
-            SettingLevel.DEVICE, "theme", null, false, excludeDefault);
+            SettingLevel.DEVICE, "theme", null, false, true);
 
         // If the user has enabled system theme matching, use that.
         if (systemThemeExplicit) {
@@ -214,18 +209,17 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
         this.setState({customThemeUrl: e.target.value});
     };
 
-    private onLayoutChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const val = e.target.value === "true";
-
-        this.setState({
-            useIRCLayout: val,
-        });
-
-        SettingsStore.setValue("useIRCLayout", null, SettingLevel.DEVICE, val);
-    };
+    private onIRCLayoutChange = (enabled: boolean) => {
+        if (enabled) {
+            this.setState({layout: Layout.IRC});
+            SettingsStore.setValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
+        } else {
+            this.setState({layout: Layout.Group});
+            SettingsStore.setValue("layout", null, SettingLevel.DEVICE, Layout.Group);
+        }
+    }
 
     private renderThemeSection() {
-        if (! SettingsStore.getValue(UIFeature.ChangeTheme)) return null;
         const themeWatcher = new ThemeWatcher();
         let systemThemeSection: JSX.Element;
         if (themeWatcher.isSystemThemeSupported()) {
@@ -302,14 +296,13 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
     }
 
     private renderFontSection() {
-        if (! SettingsStore.getValue(UIFeature.ChangeFont)) return null;
         return <div className="mx_SettingsTab_section mx_AppearanceUserSettingsTab_fontScaling">
 
             <span className="mx_SettingsTab_subheading">{_t("Font size")}</span>
             <EventTilePreview
                 className="mx_AppearanceUserSettingsTab_fontSlider_preview"
                 message={this.MESSAGE_PREVIEW_TEXT}
-                useIRCLayout={this.state.useIRCLayout}
+                layout={this.state.layout}
             />
             <div className="mx_AppearanceUserSettingsTab_fontSlider">
                 <div className="mx_AppearanceUserSettingsTab_fontSlider_smallText">Aa</div>
@@ -345,50 +338,6 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
         </div>;
     }
 
-    private renderLayoutSection = () => {
-        return <div className="mx_SettingsTab_section mx_AppearanceUserSettingsTab_Layout">
-            <span className="mx_SettingsTab_subheading">{_t("Message layout")}</span>
-
-            <div className="mx_AppearanceUserSettingsTab_Layout_RadioButtons">
-                <div className={classNames("mx_AppearanceUserSettingsTab_Layout_RadioButton", {
-                    mx_AppearanceUserSettingsTab_Layout_RadioButton_selected: this.state.useIRCLayout,
-                })}>
-                    <EventTilePreview
-                        className="mx_AppearanceUserSettingsTab_Layout_RadioButton_preview"
-                        message={this.MESSAGE_PREVIEW_TEXT}
-                        useIRCLayout={true}
-                    />
-                    <StyledRadioButton
-                        name="layout"
-                        value="true"
-                        checked={this.state.useIRCLayout}
-                        onChange={this.onLayoutChange}
-                    >
-                        {_t("Compact")}
-                    </StyledRadioButton>
-                </div>
-                <div className="mx_AppearanceUserSettingsTab_spacer" />
-                <div className={classNames("mx_AppearanceUserSettingsTab_Layout_RadioButton", {
-                    mx_AppearanceUserSettingsTab_Layout_RadioButton_selected: !this.state.useIRCLayout,
-                })}>
-                    <EventTilePreview
-                        className="mx_AppearanceUserSettingsTab_Layout_RadioButton_preview"
-                        message={this.MESSAGE_PREVIEW_TEXT}
-                        useIRCLayout={false}
-                    />
-                    <StyledRadioButton
-                        name="layout"
-                        value="false"
-                        checked={!this.state.useIRCLayout}
-                        onChange={this.onLayoutChange}
-                    >
-                        {_t("Modern")}
-                    </StyledRadioButton>
-                </div>
-            </div>
-        </div>;
-    };
-
     private renderAdvancedSection() {
         if (!SettingsStore.getValue(UIFeature.AdvancedSettings)) return null;
 
@@ -408,20 +357,19 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                 { brand },
             );
             advanced = <>
-                {(! SettingsStore.getValue(UIFeature.PullUpCompactLayout)) && 
-                    <SettingsFlag
-                        name="useCompactLayout"
-                        level={SettingLevel.DEVICE}
-                        useCheckbox={true}
-                        disabled={this.state.useIRCLayout}
-                    />
-                }
                 <SettingsFlag
-                    name="useIRCLayout"
+                    name="useCompactLayout"
                     level={SettingLevel.DEVICE}
                     useCheckbox={true}
-                    onChange={(checked) => this.setState({useIRCLayout: checked})}
+                    disabled={this.state.layout == Layout.IRC}
                 />
+                <StyledCheckbox
+                    checked={this.state.layout == Layout.IRC}
+                    onChange={(ev) => this.onIRCLayoutChange(ev.target.checked)}
+                >
+                    {_t("Enable experimental, compact IRC style layout")}
+                </StyledCheckbox>
+
                 <SettingsFlag
                     name="useSystemFont"
                     level={SettingLevel.DEVICE}
@@ -460,12 +408,6 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                 <div className="mx_SettingsTab_SubHeading">
                     {_t("Appearance Settings only affect this %(brand)s session.", { brand })}
                 </div>
-                {SettingsStore.getValue(UIFeature.PullUpCompactLayout) && <SettingsFlag
-                    name="useCompactLayout"
-                    level={SettingLevel.DEVICE}
-                    useCheckbox={true}
-                    disabled={this.state.useIRCLayout}
-                />}
                 {this.renderThemeSection()}
                 {this.renderFontSection()}
                 {this.renderAdvancedSection()}

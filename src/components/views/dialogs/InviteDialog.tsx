@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, {createRef} from 'react';
-import {_t} from "../../../languageHandler";
+import {_t, _td} from "../../../languageHandler";
 import * as sdk from "../../../index";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import {makeRoomPermalink, makeUserPermalink} from "../../../utils/permalinks/Permalinks";
@@ -348,7 +348,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     constructor(props) {
         super(props);
 
-        if (props.kind === KIND_INVITE && !props.roomId) {
+        if ((props.kind === KIND_INVITE) && !props.roomId) {
             throw new Error("When using KIND_INVITE a roomId is required for an InviteDialog");
         } else if (props.kind === KIND_CALL_TRANSFER && !props.call) {
             throw new Error("When using KIND_CALL_TRANSFER a call is required for an InviteDialog");
@@ -1248,36 +1248,39 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             buttonText = _t("Go");
             goButtonFn = this._startDm;
         } else if (this.props.kind === KIND_INVITE) {
-            title = _t("Invite to this room");
+            const room = MatrixClientPeg.get()?.getRoom(this.props.roomId);
+            const isSpace = room?.isSpaceRoom();
+            title = isSpace
+                ? _t("Invite to %(spaceName)s", {
+                    spaceName: room.name || _t("Unnamed Space"),
+                })
+                : _t("Invite to this room");
 
-            if (identityServersEnabled) {
-                helpText = _t(
-                    "Invite someone using their name, email address, username (like <userId/>) or " +
-                        "<a>share this room</a>.",
-                    {},
-                    {
-                        userId: () =>
-                            <a href={makeUserPermalink(userId)} rel="noreferrer noopener" target="_blank">{userId}</a>,
-                        a: (sub) =>
-                            <a href={makeRoomPermalink(this.props.roomId)} rel="noreferrer noopener" target="_blank">
-                                {sub}
-                            </a>,
-                    },
-                );
+            let helpTextUntranslated;
+            if (isSpace) {
+                if (identityServersEnabled) {
+                    helpTextUntranslated = _td("Invite someone using their name, email address, username " +
+                        "(like <userId/>) or <a>share this space</a>.");
+                } else {
+                    helpTextUntranslated = _td("Invite someone using their name, username " +
+                        "(like <userId/>) or <a>share this space</a>.");
+                }
             } else {
-                helpText = _t(
-                    "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.",
-                    {},
-                    {
-                        userId: () =>
-                            <a href={makeUserPermalink(userId)} rel="noreferrer noopener" target="_blank">{userId}</a>,
-                        a: (sub) =>
-                            <a href={makeRoomPermalink(this.props.roomId)} rel="noreferrer noopener" target="_blank">
-                                {sub}
-                            </a>,
-                    },
-                );
+                if (identityServersEnabled) {
+                    helpTextUntranslated = _td("Invite someone using their name, email address, username " +
+                        "(like <userId/>) or <a>share this room</a>.");
+                } else {
+                    helpTextUntranslated = _td("Invite someone using their name, username " +
+                        "(like <userId/>) or <a>share this room</a>.");
+                }
             }
+
+            helpText = _t(helpTextUntranslated, {}, {
+                userId: () =>
+                    <a href={makeUserPermalink(userId)} rel="noreferrer noopener" target="_blank">{userId}</a>,
+                a: (sub) =>
+                    <a href={makeRoomPermalink(this.props.roomId)} rel="noreferrer noopener" target="_blank">{sub}</a>,
+            });
 
             buttonText = _t("Invite");
             goButtonFn = this._inviteUsers;
