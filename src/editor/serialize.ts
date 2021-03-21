@@ -48,6 +48,11 @@ export function mdSerialize(model: EditorModel) {
 export function htmlSerializeIfNeeded(model: EditorModel, {forceHTML = false} = {}) {
     let md = mdSerialize(model);
 
+    // if it is only a single character,
+    // do not treat it as markdown
+    // https://github.com/matrix-org/matrix-react-sdk/pull/5779
+    if (md.trim().length <= 1) return md
+
     if (SettingsStore.getValue("feature_latex_maths")) {
         const displayPattern = (SdkConfig.get()['latex_maths_delims'] || {})['display_pattern'] ||
             "\\$\\$(([^$]|\\\\\\$)*)\\$\\$";
