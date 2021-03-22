@@ -322,8 +322,15 @@ export default class AppTile extends React.Component {
         // this would only be for content hosted on the same origin as the element client: anything
         // hosted on the same origin as the client will get the same access as if you clicked
         // a link to it.
-        const sandboxFlags = "allow-forms allow-popups allow-popups-to-escape-sandbox "+
+        let sandboxFlags = "allow-forms allow-popups allow-popups-to-escape-sandbox "+
             "allow-same-origin allow-scripts allow-presentation";
+        if (this.props.strictSandbox)  {
+            // XXX: A compromised wrapped HTML widget can access localStorage with allow-same-origin.
+            // We already filter down the HTML though, so this should be fine. Just scary.
+            // Note: Removing allow-same-origin means that postMessage requests from the frame get
+            // an `origin` with the literal string "null" and no way to deduce it.
+            sandboxFlags = "allow-forms allow-scripts allow-presentation allow-same-origin";
+        }
 
         // Additional iframe feature pemissions
         // (see - https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-permissions-in-cross-origin-iframes and https://wicg.github.io/feature-policy/)
@@ -485,6 +492,9 @@ AppTile.propTypes = {
     userWidget: PropTypes.bool,
     // sets the pointer-events property on the iframe
     pointerEvents: PropTypes.string,
+    // If true, the sandbox prevents most things. Intended for inline widgets
+    // with untrusted HTML.
+    strictSandbox: PropTypes.bool,
 };
 
 AppTile.defaultProps = {

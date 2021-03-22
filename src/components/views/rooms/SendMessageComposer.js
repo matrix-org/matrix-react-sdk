@@ -40,11 +40,12 @@ import {_t, _td} from '../../../languageHandler';
 import ContentMessages from '../../../ContentMessages';
 import {Key, isOnlyCtrlOrCmdKeyEvent} from "../../../Keyboard";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import WidgetUtils from "../../../utils/WidgetUtils";
+import SettingsStore from "../../../settings/SettingsStore";
 import RateLimitedFunc from '../../../ratelimitedfunc';
 import {Action} from "../../../dispatcher/actions";
 import {containsEmoji} from "../../../effects/utils";
 import {CHAT_EFFECTS} from '../../../effects';
-import SettingsStore from "../../../settings/SettingsStore";
 import CountlyAnalytics from "../../../CountlyAnalytics";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import EMOJI_REGEX from 'emojibase-regex';
@@ -334,6 +335,15 @@ export default class SendMessageComposer extends React.Component {
         }
 
         let shouldSend = true;
+
+        const inlineWidget = startsWith(this.model, "https://")
+            ? WidgetUtils.tryConvertInputToInlineWidget(textSerialize(this.model))
+            : null;
+        if (inlineWidget && SettingsStore.getValue("feature_inline_widgets")) {
+            console.log("Message can be an inline widget - sending widget");
+            this.context.sendMessage(this.props.room.roomId, inlineWidget);
+            shouldSend = false;
+        }
 
         if (!containsEmote(this.model) && this._isSlashCommand()) {
             const [cmd, commandText] = this._getSlashCommand();
