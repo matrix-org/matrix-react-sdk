@@ -83,7 +83,7 @@ export default class TileErrorBoundary extends React.Component {
                             {_t("Can't load this message")}
                             {mxEvent && ` (${mxEvent.getType()})`}
                             {submitLogsButton}
-                            {viewSourceButton}
+                            {mxEvent && viewSourceButton}
                         </span>
                     </div>
                 </div>
