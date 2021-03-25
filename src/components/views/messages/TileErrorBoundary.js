@@ -48,6 +48,13 @@ export default class TileErrorBoundary extends React.Component {
         });
     };
 
+    onViewSourceClick = () => {
+        const ViewSource = sdk.getComponent('structures.ViewSource');
+        Modal.createTrackedDialog('View Event Source', '', ViewSource, {
+            mxEvent: this.props.mxEvent,
+        }, 'mx_Dialog_viewsource');
+    };
+
     render() {
         if (this.state.error) {
             const { mxEvent } = this.props;
@@ -65,15 +72,22 @@ export default class TileErrorBoundary extends React.Component {
                 </a>;
             }
 
-            return (<div className={classNames(classes)}>
-                <div className="mx_EventTile_line">
-                    <span>
-                        {_t("Can't load this message")}
-                        { mxEvent && ` (${mxEvent.getType()})` }
-                        { submitLogsButton }
-                    </span>
+            const viewSourceButton = <a onClick={this.onViewSourceClick} href="#">
+                {_t("View Source")}
+            </a>;
+
+            return (
+                <div className={classNames(classes)}>
+                    <div className="mx_EventTile_line">
+                        <span>
+                            {_t("Can't load this message")}
+                            {mxEvent && ` (${mxEvent.getType()})`}
+                            {submitLogsButton}
+                            {viewSourceButton}
+                        </span>
+                    </div>
                 </div>
-            </div>);
+            );
         }
 
         return this.props.children;
