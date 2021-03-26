@@ -109,7 +109,7 @@ interface KeybindingIProps {
     settingName: string;
 }
 
-export class Keybinding extends React.Component<KeybindingIProps> {
+class Keybinding extends React.Component<KeybindingIProps> {
     render() {
         const label = SettingsStore.getDisplayName(this.props.settingName);
         const value = SettingsStore.getValue(this.props.settingName);
