@@ -94,6 +94,7 @@ interface IProps {
     placeholder?: string;
     label?: string;
     initialCaret?: DocumentOffset;
+    disabled?: boolean;
 
     onChange?();
     onPaste?(event: ClipboardEvent<HTMLDivElement>, model: EditorModel): boolean;
@@ -669,6 +670,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         });
         const classes = classNames("mx_BasicMessageComposer_input", {
             "mx_BasicMessageComposer_input_shouldShowPillAvatar": this.state.showPillAvatar,
+
+            // TODO: @@ TravisR: This doesn't work properly. The composer resets in a strange way.
+            "mx_BasicMessageComposer_input_disabled": this.props.disabled,
         });
 
         const shortcuts = {
@@ -701,6 +705,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 aria-expanded={Boolean(this.state.autoComplete)}
                 aria-activedescendant={completionIndex >= 0 ? generateCompletionDomId(completionIndex) : undefined}
                 dir="auto"
+                aria-disabled={this.props.disabled}
             />
         </div>);
     }
