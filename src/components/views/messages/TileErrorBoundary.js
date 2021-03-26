@@ -21,6 +21,8 @@ import * as sdk from '../../../index';
 import Modal from '../../../Modal';
 import SdkConfig from "../../../SdkConfig";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import ViewSource from '../../structures/ViewSource';
+import BugReportDialog from '../dialogs/BugReportDialog';
 
 @replaceableComponent("views.messages.TileErrorBoundary")
 export default class TileErrorBoundary extends React.Component {
@@ -39,17 +41,12 @@ export default class TileErrorBoundary extends React.Component {
     }
 
     _onBugReport = () => {
-        const BugReportDialog = sdk.getComponent("dialogs.BugReportDialog");
-        if (!BugReportDialog) {
-            return;
-        }
         Modal.createTrackedDialog('Bug Report Dialog', '', BugReportDialog, {
             label: 'react-soft-crash-tile',
         });
     };
 
     onViewSourceClick = () => {
-        const ViewSource = sdk.getComponent('structures.ViewSource');
         Modal.createTrackedDialog('View Event Source', '', ViewSource, {
             mxEvent: this.props.mxEvent,
         }, 'mx_Dialog_viewsource');
