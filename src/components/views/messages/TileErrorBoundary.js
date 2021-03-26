@@ -17,7 +17,6 @@ limitations under the License.
 import React from 'react';
 import classNames from 'classnames';
 import { _t } from '../../../languageHandler';
-import * as sdk from '../../../index';
 import Modal from '../../../Modal';
 import SdkConfig from "../../../SdkConfig";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
