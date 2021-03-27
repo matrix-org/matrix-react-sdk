@@ -20,7 +20,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { _t } from "../../../languageHandler";
 import { getSenderName, isSelf, shouldPrefixMessagesIn } from "./utils";
 import ReplyThread from "../../../components/views/elements/ReplyThread";
-import { sanitizedHtmlNodeInnerText } from "../../../HtmlUtils";
+import sanitizeHtml from "sanitize-html";
 
 export class MessageEventPreview implements IPreview {
     public getTextFor(event: MatrixEvent, tagId?: TagID): string {
@@ -55,7 +55,9 @@ export class MessageEventPreview implements IPreview {
         }
 
         if (hasHtml) {
-            body = sanitizedHtmlNodeInnerText(body);
+	    body = sanitizeHtml(body, {
+	    	allowedTags: [ 'del', 'strong' ],
+	    });
         }
 
         if (msgtype === 'm.emote') {
