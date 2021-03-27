@@ -1,0 +1,31 @@
+.mx_GifPicker {
+	width: 240px;
+	height: 450px;
+	border-radius: 4px;
+	display: flex;
+	flex-direction: column;
+}
+
+.mx_GifPicker_scrollPanel {
+	overflow-y: scroll;
+    flex: 1 1 0;
+	max-height: 450px;
+	// height: 450px;
+	width: 240px;
+}
+
+.mx_GifPicker_initialNotice {
+	text-align: center;
+	margin: auto;
+}
+
+.mx_GifPicker_thumbnail img {
+	border: 2px solid $input-darker-bg-color;
+    border-radius: 6px;
+    margin-bottom: 0.8em;
+	cursor: pointer;
+	
+	&:hover {
+		border-color: $strong-input-border-color;
+	}
+}

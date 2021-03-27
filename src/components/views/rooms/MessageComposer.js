@@ -34,6 +34,7 @@ import {UPDATE_EVENT} from "../../../stores/AsyncStore";
 import ActiveWidgetStore from "../../../stores/ActiveWidgetStore";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 import VoiceRecordComposerTile from "./VoiceRecordComposerTile";
+import GifButton from './GifButton';
 
 function ComposerAvatar(props) {
     const MemberStatusMessageAvatar = sdk.getComponent('avatars.MemberStatusMessageAvatar');
@@ -178,6 +179,7 @@ export default class MessageComposer extends React.Component {
         this._onRoomStateEvents = this._onRoomStateEvents.bind(this);
         this._onTombstoneClick = this._onTombstoneClick.bind(this);
         this.renderPlaceholderText = this.renderPlaceholderText.bind(this);
+        this.addGif = this.addGif.bind(this);
         WidgetStore.instance.on(UPDATE_EVENT, this._onWidgetUpdate);
         ActiveWidgetStore.on('update', this._onActiveWidgetUpdate);
         this._dispatcherRef = null;
@@ -317,6 +319,18 @@ export default class MessageComposer extends React.Component {
         });
     }
 
+    async addGif(gif) {
+        const cli = MatrixClientPeg.get();
+        const response = await fetch(gif.images.original.url)
+        const file = await response.blob();
+
+        ContentMessages.sharedInstance().sendContentListToRoom(
+            [file],
+            this.props.room.roomId,
+            cli
+        );
+    }
+
     sendMessage = () => {
         this.messageComposerInput._sendMessage();
     }
@@ -368,6 +382,14 @@ export default class MessageComposer extends React.Component {
                 SettingsStore.getValue("MessageComposerInput.showStickersButton") &&
                 !this.state.haveRecording) {
                 controls.push(<Stickerpicker key="stickerpicker_controls_button" room={this.props.room} />);
+            }
+
+            if (
+                SettingsStore.getValue(UIFeature.Widgets) &&
+                SettingsStore.getValue("MessageComposerInput.showGifButton") &&
+                !this.state.haveRecording
+            ) {
+                controls.push(<GifButton key="gif_button" addGif={this.addGif} />);
             }
 
             if (SettingsStore.getValue("feature_voice_messages")) {
