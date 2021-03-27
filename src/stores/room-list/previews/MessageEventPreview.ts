@@ -58,7 +58,7 @@ export class MessageEventPreview implements IPreview {
             body = sanitizeHtml(body, {
                 // only allow italics, underlined, code, strikethrough
                 // and bold text in message previews
-                allowedTags: ['i', 'u', 'code', 'del', 'strong'],
+                allowedTags: ['em', 'u', 'code', 'del', 'strong'],
             });
         }
 
