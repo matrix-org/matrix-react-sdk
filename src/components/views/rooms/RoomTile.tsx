@@ -567,7 +567,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                     className="mx_RoomTile_messagePreview"
                     id={messagePreviewId(this.props.room.roomId)}
                     dangerouslySetInnerHTML={{
-                        __html: this.state.messagePreview
+                        __html: this.state.messagePreview,
                     }}
                 >
                 </div>

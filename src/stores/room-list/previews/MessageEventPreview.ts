@@ -57,7 +57,7 @@ export class MessageEventPreview implements IPreview {
         if (hasHtml) {
             body = sanitizeHtml(body, {
                 // only show strikethrough and bold in message previews
-                allowedTags: [ 'del', 'strong' ],
+                allowedTags: ['del', 'strong'],
             });
         }
 
