@@ -27,6 +27,7 @@ import RoomViewStore from './stores/RoomViewStore';
 import encrypt from "browser-encrypt-attachment";
 import extractPngChunks from "png-chunks-extract";
 import Spinner from "./components/views/elements/Spinner";
+import UploadConfirmDialog from "./components/views/dialogs/UploadConfirmDialog";
 
 // Polyfill for Canvas.toBlob API using Canvas.toDataURL
 import "blueimp-canvas-to-blob";
@@ -385,7 +386,7 @@ export default class ContentMessages {
         }
     }
 
-    async sendContentListToRoom(files: File[], roomId: string, matrixClient: MatrixClient) {
+    async sendContentListToRoom(files: File[], roomId: string, matrixClient: MatrixClient, showConfirmationDialogs = true) {
         if (matrixClient.isGuest()) {
             dis.dispatch({action: 'require_registration'});
             return;
@@ -437,8 +438,7 @@ export default class ContentMessages {
             if (!shouldContinue) return;
         }
 
-        const UploadConfirmDialog = sdk.getComponent("dialogs.UploadConfirmDialog");
-        let uploadAll = false;
+        let uploadAll = !showConfirmationDialogs;
         // Promise to complete before sending next file into room, used for synchronisation of file-sending
         // to match the order the files were specified in
         let promBefore = Promise.resolve();

@@ -141,7 +141,7 @@ class UploadButton extends React.Component {
         }
 
         ContentMessages.sharedInstance().sendContentListToRoom(
-            tfiles, this.props.roomId, MatrixClientPeg.get(),
+            tfiles, this.props.roomId, MatrixClientPeg.get(), true
         );
 
         // This is the onChange handler for a file form control, but we're
@@ -319,15 +319,16 @@ export default class MessageComposer extends React.Component {
         });
     }
 
-    async addGif(gif) {
+    async addGif(gif: Gif) {
         const cli = MatrixClientPeg.get();
-        const response = await fetch(gif.images.original.url)
+        const response = await fetch(gif.images.downsized.url)
         const file = await response.blob();
 
         ContentMessages.sharedInstance().sendContentListToRoom(
             [file],
             this.props.room.roomId,
-            cli
+            cli,
+            false,
         );
     }
 
