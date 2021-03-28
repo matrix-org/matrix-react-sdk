@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 // a gif, as returned by the giphy endpoint
 export interface Gif {
     id: string;
@@ -13,6 +15,7 @@ export interface Gif {
             width: string;
             height: string;
             webp: string;
+            mp4: string;
         };
         original: {
             height: string;

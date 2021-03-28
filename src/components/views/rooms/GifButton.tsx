@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { _t } from '../../../languageHandler';
 import { aboveLeftOf, ContextMenu, ContextMenuTooltipButton, useContextMenu } from '../../structures/ContextMenu';
+import { Gif } from '../gifpicker/Gif';
 import GifPicker from '../gifpicker/GifPicker';
 
 const GifButton = ({addGif}) => {
@@ -10,8 +11,14 @@ const GifButton = ({addGif}) => {
     let contextMenu;
     if (menuDisplayed) {
         const buttonRect = button.current.getBoundingClientRect();
-        contextMenu = <ContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu} catchTab={false}>
-            <GifPicker addGif={addGif} />
+
+        const onAddGif = (gif: Gif) => {
+            closeMenu();
+            addGif(gif);
+        };
+
+        contextMenu = <ContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu}>
+            <GifPicker addGif={onAddGif} />
         </ContextMenu>;
     }
 

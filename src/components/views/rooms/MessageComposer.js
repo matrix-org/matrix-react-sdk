@@ -35,6 +35,7 @@ import ActiveWidgetStore from "../../../stores/ActiveWidgetStore";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 import VoiceRecordComposerTile from "./VoiceRecordComposerTile";
 import GifButton from './GifButton';
+import {Gif} from '../gifpicker/Gif';
 
 function ComposerAvatar(props) {
     const MemberStatusMessageAvatar = sdk.getComponent('avatars.MemberStatusMessageAvatar');
@@ -68,7 +69,7 @@ const EmojiButton = ({addEmoji}) => {
     if (menuDisplayed) {
         const buttonRect = button.current.getBoundingClientRect();
         const EmojiPicker = sdk.getComponent('emojipicker.EmojiPicker');
-        contextMenu = <ContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu} catchTab={false}>
+        contextMenu = <ContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu}>
             <EmojiPicker onChoose={addEmoji} showQuickReactions={true} />
         </ContextMenu>;
     }
@@ -141,7 +142,7 @@ class UploadButton extends React.Component {
         }
 
         ContentMessages.sharedInstance().sendContentListToRoom(
-            tfiles, this.props.roomId, MatrixClientPeg.get(), true
+            tfiles, this.props.roomId, MatrixClientPeg.get(), true,
         );
 
         // This is the onChange handler for a file form control, but we're
@@ -321,8 +322,9 @@ export default class MessageComposer extends React.Component {
 
     async addGif(gif: Gif) {
         const cli = MatrixClientPeg.get();
-        const response = await fetch(gif.images.downsized.url)
+        const response = await fetch(gif.images.downsized.url);
         const file = await response.blob();
+        file.name = gif.title;
 
         ContentMessages.sharedInstance().sendContentListToRoom(
             [file],

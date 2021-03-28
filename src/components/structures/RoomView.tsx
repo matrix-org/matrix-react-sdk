@@ -1179,7 +1179,7 @@ export default class RoomView extends React.Component<IProps, IState> {
         ev.stopPropagation();
         ev.preventDefault();
         ContentMessages.sharedInstance().sendContentListToRoom(
-            Array.from(ev.dataTransfer.files), this.state.room.roomId, this.context, true
+            Array.from(ev.dataTransfer.files), this.state.room.roomId, this.context, true,
         );
         dis.fire(Action.FocusComposer);
 

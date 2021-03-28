@@ -386,7 +386,12 @@ export default class ContentMessages {
         }
     }
 
-    async sendContentListToRoom(files: File[], roomId: string, matrixClient: MatrixClient, showConfirmationDialogs = true) {
+    async sendContentListToRoom(
+        files: File[],
+        roomId: string,
+        matrixClient: MatrixClient,
+        showConfirmationDialogs = true,
+    ) {
         if (matrixClient.isGuest()) {
             dis.dispatch({action: 'require_registration'});
             return;

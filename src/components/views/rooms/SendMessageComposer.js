@@ -559,7 +559,7 @@ export default class SendMessageComposer extends React.Component {
             // from Finder) but more images copied from a different website
             // / word processor etc.
             ContentMessages.sharedInstance().sendContentListToRoom(
-                Array.from(clipboardData.files), this.props.room.roomId, this.context, true
+                Array.from(clipboardData.files), this.props.room.roomId, this.context, true,
             );
             return true; // to skip internal onPaste handler
         }

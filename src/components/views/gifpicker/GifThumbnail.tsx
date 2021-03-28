@@ -1,9 +1,10 @@
 import React from "react";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { Gif } from './Gif';
 
 interface IProps {
-	url: string;
-    onClick(): void;
+    gif: Gif;
+    onClick(gif: Gif): void;
 }
 
 interface IState {
@@ -16,9 +17,14 @@ export default class GifThumbnail extends React.Component<IProps, IState> {
     }
 
     render() {
+        const gif = this.props.gif;
+        const rendition = gif.images.fixed_width;
         return (
-            <div onClick={this.props.onClick} className="mx_GifPicker_thumbnail">
-				<img src={this.props.url}></img>
+            <div onClick={() => this.props.onClick(gif)} className="mx_GifPicker_thumbnail">
+                <video autoPlay loop muted playsInline width={rendition.width} height={rendition.height}>
+                    <source src={rendition.mp4} type="video/mp4" />
+                    Unsupported file type.
+                </video>
             </div>
         );
     }
