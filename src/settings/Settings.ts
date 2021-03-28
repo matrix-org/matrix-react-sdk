@@ -266,10 +266,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td('Show stickers button'),
         default: true,
     },
-    "MessageComposerInput.showGifButton": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+    "feature_giphy_integration": {
+        isFeature: true,
+        supportedLevels: LEVELS_FEATURE,
         displayName: _td('Show GIF picker button'),
-        default: true,
+        default: false,
     },
     // TODO: Wire up appropriately to UI (FTUE notifications)
     "Notifications.alwaysShowBadgeCounts": {

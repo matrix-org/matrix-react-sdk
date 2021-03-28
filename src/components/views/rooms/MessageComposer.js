@@ -386,7 +386,7 @@ export default class MessageComposer extends React.Component {
 
             if (
                 SettingsStore.getValue(UIFeature.Widgets) &&
-                SettingsStore.getValue("MessageComposerInput.showGifButton") &&
+                SettingsStore.getValue("feature_giphy_integration") &&
                 !this.state.haveRecording
             ) {
                 controls.push(<GifButton key="gif_button" addGif={this.addGif} />);
