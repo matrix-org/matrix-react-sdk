@@ -121,8 +121,8 @@ export const CHAT_EFFECTS: Array<Effect<{ [key: string]: any }>> = [
     } as Effect<FireworksOptions>,
     {
         emojis: ['❄', '🌨'],
-        msgType: 'io.element.effect.snowfall',
-        command: 'snowfall',
+        msgType: 'nic.custom.snow',
+        command: 'snow',
         description: () => _td("Sends the given message with snowfall"),
         fallbackMessage: () => _t("sends snowfall") + " ❄",
         options: {
