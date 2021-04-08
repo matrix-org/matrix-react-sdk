@@ -156,6 +156,28 @@ function success(promise?: Promise<any>) {
 
 export const Commands = [
     new Command({
+        command: 'greentext',
+        args: 'message',
+        description: _td('Makes your text green and adds meme arrows to the beginning of each line of the message'),
+        runFn: function(roomId, args) {
+            const texts = args.split(/\n{2,}(.+|\n+)/g);
+            const greentext = texts[0];
+            const normalText = texts[1] || "";
+
+            let plainGreentext = greentext.replace(/^/g, "> ");
+            plainGreentext = plainGreentext.replace(/(?:\r\n|\r|\n)+/g, "\n> ");
+
+            let htmlGreentext = greentext.replace(/^/g, "&gt; ");
+            htmlGreentext = htmlGreentext.replace(/(?:\r\n|\r|\n)+/g, "<br />&gt; ");
+
+            return success(ContentHelpers.makeHtmlMessage(
+                plainGreentext + "\n" + normalText,
+                `<font color="#789902">${htmlGreentext}</font><br/>${normalText}`,
+            ));
+        },
+        category: CommandCategories.messages,
+    }),
+    new Command({
         command: 'spoiler',
         args: '<message>',
         description: _td('Sends the given message as a spoiler'),
