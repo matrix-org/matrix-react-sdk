@@ -54,55 +54,59 @@ function keyDisplayValue(key: Key | string) {
 }
 
 export default class KeyboardShortcut extends React.Component<IProps> {
+    renderKey(key: string, text: string) {
+        return (
+            <React.Fragment key={key}>
+                <kbd className="mx_KeyboardShortcut_key">
+                    {text}
+                </kbd>+
+            </React.Fragment>
+        );
+    }
+
     render() {
         const key = this.props.keyCombo.key;
 
         const modifiersElement = [];
         // We have to use hasOwnProperty here, see https://stackoverflow.com/a/43496627/10822785
         if (this.props.keyCombo.hasOwnProperty("ctrlOrCmdKey")) {
-            modifiersElement.push(
-                <React.Fragment key="ctrlOrCmdKey">
-                    <kbd>{ isMac ? keyDisplayValue(Key.META) : keyDisplayValue(Key.CONTROL) }</kbd>+
-                </React.Fragment>,
-            );
+            const text = isMac ? keyDisplayValue(Key.META) : keyDisplayValue(Key.CONTROL);
+            const key = this.renderKey("ctrlOrCmdKey", text)
+            modifiersElement.push(key);
         } else if (this.props.keyCombo.ctrlKey) {
-            modifiersElement.push(
-                <React.Fragment key="ctrlKey">
-                    <kbd>{ keyDisplayValue(Key.CONTROL) }</kbd>+
-                </React.Fragment>,
-            );
+            const text = keyDisplayValue(Key.CONTROL);
+            const key = this.renderKey("ctrlKey", text)
+            modifiersElement.push(key);
         } else if (this.props.keyCombo.metaKey) {
-            modifiersElement.push(
-                <React.Fragment key="metaKey">
-                    <kbd>{ keyDisplayValue(Key.META) }</kbd>+
-                </React.Fragment>,
-            );
+            const text = keyDisplayValue(Key.META);
+            const key = this.renderKey("metaKey", text)
+            modifiersElement.push(key);
         }
         if (this.props.keyCombo.altKey) {
-            modifiersElement.push(
-                <React.Fragment key="altKey">
-                    <kbd>{ keyDisplayValue(Key.ALT) }</kbd>+
-                </React.Fragment>,
-            );
+            const text = keyDisplayValue(Key.ALT);
+            const key = this.renderKey("altKey", text)
+            modifiersElement.push(key);
         }
         if (this.props.keyCombo.shiftKey) {
-            modifiersElement.push(
-                <React.Fragment key="shiftKey">
-                    <kbd>{ keyDisplayValue(Key.SHIFT) }</kbd>+
-                </React.Fragment>,
-            );
+            const text = keyDisplayValue(Key.SHIFT);
+            const key = this.renderKey("shiftKey", text)
+            modifiersElement.push(key);
         }
 
         let keyElement;
         if (key && !Modifiers.includes(key)) {
-            keyElement = <kbd>{ keyDisplayValue(key) }</kbd>;
+            keyElement = (
+                <kbd className="mx_KeyboardShortcut_key">
+                    { keyDisplayValue(key) }
+                </kbd>
+            );
         }
 
         return (
-            <div className="mx_KeyboardShortcut">
+            <kbd className="mx_KeyboardShortcut">
                 {modifiersElement}
                 {keyElement}
-            </div>
+            </kbd>
         );
     }
 }

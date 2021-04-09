@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .mx_KeyboardShortcut {
-    kbd {
+    .mx_KeyboardShortcut_key {
         padding: 5px;
         border-radius: 4px;
         background-color: $reaction-row-button-bg-color;
