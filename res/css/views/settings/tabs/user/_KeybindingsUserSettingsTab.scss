@@ -29,10 +29,6 @@ limitations under the License.
         .mx_KeybindingUserSettingsTab_keybind_buttons {
             display: flex;
             align-items: center;
-
-            :nth-child(n + 1) {
-                margin-inline-end: 5px;
-            }
         }
     }
 }
