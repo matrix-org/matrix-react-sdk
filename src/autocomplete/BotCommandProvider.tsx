@@ -131,7 +131,7 @@ export default class BotCommandProvider extends AutocompleteProvider {
     }
 
     getName() {
-        return '*️⃣ Bot Commands';// + _t('BotCommands');
+        return '*️⃣ ' + _t('BotCommands');
     }
 
     // TODO: group by bot somehow
