@@ -23,7 +23,7 @@ import AutocompleteProvider from './AutocompleteProvider';
 import QueryMatcher from './QueryMatcher';
 import {BotCommandCompletion} from './Components';
 import {ICompletion, ISelectionRange} from "./Autocompleter";
-import {Command,CommandCategories} from '../SlashCommands';
+import {Command, CommandCategories} from '../SlashCommands';
 import Room from "matrix-js-sdk/src/models/room";
 
 const COMMAND_RE = /(^\/\w*)(@\w*)?(?: .*)?/g;
@@ -31,53 +31,54 @@ const COMMAND_RE = /(^\/\w*)(@\w*)?(?: .*)?/g;
 export default class BotCommandProvider extends AutocompleteProvider {
     matcher: QueryMatcher<Command>;
     bots: string[];
-    command_map: Map<string,Command>;
-    command_list: Command[];
+    commandMap: Map<string, Command>;
+    commandList: Command[];
 
     constructor(room: Room) {
         super(COMMAND_RE);
 
-        const interactions_state = room.currentState.getStateEvents("dev.nordgedanken.msc3006.bot.interactions");
-        this.createCommandsList(interactions_state);
+        const interactionsState = room.currentState.getStateEvents("dev.nordgedanken.msc3006.bot.interactions");
+        this.createCommandsList(interactionsState);
 
-        this.bots = interactions_state.map(bot => {
+        this.bots = interactionsState.map(bot => {
             return bot.getStateKey();
         });
 
-        this.matcher = new QueryMatcher(this.command_list, {
+        this.matcher = new QueryMatcher(this.commandList, {
             keys: ['command', 'args', 'description'],
             funcs: [({aliases}) => aliases.join(" ")], // aliases
         });
 
 
-        
         console.log(this.bots);
     }
 
-    createCommandsList(interactions_state) {
-        this.command_list = [];
-        this.command_map = new Map();
-        interactions_state.forEach(bot => {
+    createCommandsList(interactionsState) {
+        this.commandList = [];
+        this.commandMap = new Map();
+        interactionsState.forEach(bot => {
             const content = bot.getContent();
             console.log(content);
 
-            content["interactions"].filter(interaction => interaction["type"] == "dev.nordgedanken.msc3006.interaction.command").forEach(interaction => {
-                this.command_list.push(new Command({
-                    command: interaction["name"],
-                    namespace: bot.getStateKey(),
-                    args: '', //TODO needs MSC change
-                    description: interaction["description"],
-                    // We can only assume this.
-                    category: CommandCategories.other,
-                    hideCompletionAfterSpace: true,
-                }))
-            });
+            content["interactions"]
+                .filter(interaction => interaction["type"] == "dev.nordgedanken.msc3006.interaction.command")
+                .forEach(interaction => {
+                    this.commandList.push(new Command({
+                        command: interaction["name"],
+                        namespace: bot.getStateKey(),
+                        args: '', //TODO needs MSC change
+                        description: interaction["description"],
+                        // We can only assume this.
+                        category: CommandCategories.other,
+                        hideCompletionAfterSpace: true,
+                    }))
+                });
         });
 
-        this.command_list.forEach(cmd => {
-            this.command_map.set(cmd.command, cmd);
+        this.commandList.forEach(cmd => {
+            this.commandMap.set(cmd.command, cmd);
             cmd.aliases.forEach(alias => {
-                this.command_map.set(alias, cmd);
+                this.commandMap.set(alias, cmd);
             });
         });
     }
@@ -91,15 +92,15 @@ export default class BotCommandProvider extends AutocompleteProvider {
         if (command[0] !== command[1]) {
             // The input looks like a command with arguments, perform exact match
             const name = command[1].substr(1); // strip leading `/`
-            if (this.command_map.has(name) && this.command_map.get(name).isEnabled()) {
+            if (this.commandMap.has(name) && this.commandMap.get(name).isEnabled()) {
                 // some commands, namely `me` and `ddg` don't suit having the usage shown whilst typing their arguments
-                if (this.command_map.get(name).hideCompletionAfterSpace) return [];
-                matches = [this.command_map.get(name)];
+                if (this.commandMap.get(name).hideCompletionAfterSpace) return [];
+                matches = [this.commandMap.get(name)];
             }
         } else {
             if (query === '/') {
                 // If they have just entered `/` show everything
-                matches = this.command_list;
+                matches = this.commandList;
             } else {
                 // otherwise fuzzy match against all of the fields
                 matches = this.matcher.match(command[1]);

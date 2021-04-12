@@ -61,7 +61,9 @@ export const BotCommandCompletion = forwardRef<IBotCommandCompletionProps, any>(
             role="option"
             ref={ref}
         >
-            <span className="mx_Autocomplete_Completion_title">{ title }<span className="mx_Autocomplete_Completion_namespace">{ namespace }</span></span>
+            <span className="mx_Autocomplete_Completion_title">{ title }
+                <span className="mx_Autocomplete_Completion_namespace">{ namespace }</span>
+            </span>
             <span className="mx_Autocomplete_Completion_subtitle">{ subtitle }</span>
             <span className="mx_Autocomplete_Completion_description">{ description }</span>
         </div>

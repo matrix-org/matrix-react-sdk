@@ -1225,56 +1225,62 @@ export function parseCommandString(input: string) {
 export function getCommand(input: string, roomId: string) {
     const {cmd, namespace, args} = parseCommandString(input);
     const room = MatrixClientPeg.get().getRoom(roomId);
-    const interactions_state = room.currentState.getStateEvents("dev.nordgedanken.msc3006.bot.interactions");
-    let bot_commands_list: Command[] = [];
+    const interactionsState = room.currentState.getStateEvents("dev.nordgedanken.msc3006.bot.interactions");
+    const botCommandsList: Command[] = [];
 
-    interactions_state.forEach(bot => {
+    interactionsState.forEach(bot => {
         const content = bot.getContent();
 
-        content["interactions"].filter(interaction => interaction["type"] == "dev.nordgedanken.msc3006.interaction.command").forEach(interaction => {
-            bot_commands_list.push(new Command({
-                command: interaction["name"],
-                namespace: bot.getStateKey(),
-                args: '', //TODO needs MSC change
-                description: interaction["description"],
-                category: CommandCategories.messages,
-                hideCompletionAfterSpace: true,
-                runFn: function(roomId, args, cmd) {
-                    let generateMessage = async () => {
-                        let cmd_parts = cmd.split('@');
-                        let name = cmd_parts[0].substring(1);
-                        let namespace = '@' + cmd_parts[1];
-                        const room = MatrixClientPeg.get().getRoom(roomId);
-                        const interactions_state = room.currentState.getStateEvents("dev.nordgedanken.msc3006.bot.interactions");
-                        const bot = interactions_state.filter(bot => bot.getStateKey() == namespace)[0];
-                        console.log(bot);
-                        return {
-                            msgtype: "m.text",
-                            body: bot.getContent()["command_prefix"] + name + (args != undefined ? " " + args : ""),
-                            "dev.nordgedanken.msc3006.interaction.command": {
-                                command: name,
-                                target: namespace
-                            }
+        content["interactions"]
+            .filter(interaction => interaction["type"] == "dev.nordgedanken.msc3006.interaction.command")
+            .forEach(interaction => {
+                botCommandsList.push(new Command({
+                    command: interaction["name"],
+                    namespace: bot.getStateKey(),
+                    args: '', //TODO needs MSC change
+                    description: interaction["description"],
+                    category: CommandCategories.messages,
+                    hideCompletionAfterSpace: true,
+                    runFn: function(roomId, rawArgs, cmd) {
+                        const generateMessage = async () => {
+                            const cmdParts = cmd.split('@');
+                            const name = cmdParts[0].substring(1);
+                            const namespace = '@' + cmdParts[1];
+                            const room = MatrixClientPeg.get().getRoom(roomId);
+                            const interactionsState = room.currentState
+                                .getStateEvents("dev.nordgedanken.msc3006.bot.interactions");
+                            const bot = interactionsState.filter(bot => bot.getStateKey() == namespace)[0];
+
+                            const args = (rawArgs != undefined ? " " + rawArgs : "");
+
+
+                            return {
+                                "msgtype": "m.text",
+                                "body": bot.getContent()["command_prefix"] + name + args,
+                                "dev.nordgedanken.msc3006.interaction.command": {
+                                    command: name,
+                                    target: namespace,
+                                },
+                            };
                         };
-                    };
-                    return success(generateMessage());
-                },
-            }))
-        });
+                        return success(generateMessage());
+                    },
+                }))
+            });
     });
 
-    let temp_command_map = new Map(CommandMap);
+    const tempCommandMap = new Map(CommandMap);
 
-    bot_commands_list.forEach(cmd => {
-        temp_command_map.set(cmd.command + cmd.getNamespace(), cmd);
+    botCommandsList.forEach(cmd => {
+        tempCommandMap.set(cmd.command + cmd.getNamespace(), cmd);
         cmd.aliases.forEach(alias => {
-            temp_command_map.set(alias, cmd);
+            tempCommandMap.set(alias, cmd);
         });
     });
 
-    if (temp_command_map.has(cmd + namespace) && temp_command_map.get(cmd + namespace).isEnabled()) {
+    if (tempCommandMap.has(cmd + namespace) && tempCommandMap.get(cmd + namespace).isEnabled()) {
         return {
-            cmd: temp_command_map.get(cmd + namespace),
+            cmd: tempCommandMap.get(cmd + namespace),
             args,
         };
     }

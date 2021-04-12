@@ -27,7 +27,7 @@ import AutocompleteWrapperModel, {
 import * as Avatar from "../Avatar";
 
 interface ISerializedPart {
-    type: Type.Plain | Type.Newline | Type.Command | Type.PillCandidate;
+    type: Type.Plain | Type.Newline | Type.Command | Type.PillCandidate | Type.BotCommand;
     text: string;
 }
 
@@ -587,7 +587,6 @@ class CommandPart extends PillCandidatePart {
 // used in SendMessageComposer
 // TODO: somehow make this a partial pill
 export class BotCommandPartCreator extends PartCreator {
-
     createPartForInput(text: string, partIndex: number) {
         // at beginning and starts with /? create
         if (partIndex === 0 && text[0] === "/") {
