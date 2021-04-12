@@ -45,6 +45,29 @@ export const TextualCompletion = forwardRef<ITextualCompletionProps, any>((props
     );
 });
 
+interface IBotCommandCompletionProps {
+    title?: string;
+    namespace?: string;
+    subtitle?: string;
+    description?: string;
+    className?: string;
+}
+
+export const BotCommandCompletion = forwardRef<IBotCommandCompletionProps, any>((props, ref) => {
+    const {title, namespace, subtitle, description, className, ...restProps} = props;
+    return (
+        <div {...restProps}
+            className={classNames('mx_Autocomplete_Completion_block', className)}
+            role="option"
+            ref={ref}
+        >
+            <span className="mx_Autocomplete_Completion_title">{ title }<span className="mx_Autocomplete_Completion_namespace">{ namespace }</span></span>
+            <span className="mx_Autocomplete_Completion_subtitle">{ subtitle }</span>
+            <span className="mx_Autocomplete_Completion_description">{ description }</span>
+        </div>
+    );
+});
+
 interface IPillCompletionProps extends ITextualCompletionProps {
     children?: React.ReactNode;
 }

@@ -43,6 +43,7 @@ enum Type {
     Plain = "plain",
     Newline = "newline",
     Command = "command",
+    BotCommand = "bot_command",
     UserPill = "user-pill",
     RoomPill = "room-pill",
     AtRoomPill = "at-room-pill",
@@ -67,7 +68,7 @@ interface IBasePart {
 }
 
 interface IPillCandidatePart extends Omit<IBasePart, "type" | "createAutoComplete"> {
-    type: Type.PillCandidate | Type.Command;
+    type: Type.PillCandidate | Type.Command | Type.BotCommand;
     createAutoComplete(updateCallback: UpdateCallback): AutocompleteWrapperModel;
 }
 
@@ -579,5 +580,39 @@ export class CommandPartCreator extends PartCreator {
 class CommandPart extends PillCandidatePart {
     get type(): IPillCandidatePart["type"] {
         return Type.Command;
+    }
+}
+
+// part creator that support auto complete for /commands which belong to a bot,
+// used in SendMessageComposer
+// TODO: somehow make this a partial pill
+export class BotCommandPartCreator extends PartCreator {
+
+    createPartForInput(text: string, partIndex: number) {
+        // at beginning and starts with /? create
+        if (partIndex === 0 && text[0] === "/") {
+            // text will be inserted by model, so pass empty string
+            return this.command("");
+        } else {
+            return super.createPartForInput(text, partIndex);
+        }
+    }
+
+    command(text: string) {
+        return new BotCommandPart(text, this.autoCompleteCreator);
+    }
+
+    deserializePart(part: Part): Part {
+        if (part.type === "bot_command") {
+            return this.command(part.text);
+        } else {
+            return super.deserializePart(part);
+        }
+    }
+}
+
+class BotCommandPart extends PillCandidatePart {
+    get type(): IPillCandidatePart["type"] {
+        return Type.BotCommand;
     }
 }

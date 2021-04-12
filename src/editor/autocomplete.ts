@@ -17,7 +17,7 @@ limitations under the License.
 
 import {KeyboardEvent} from "react";
 
-import {Part, CommandPartCreator, PartCreator} from "./parts";
+import {Part, CommandPartCreator, BotCommandPartCreator, PartCreator} from "./parts";
 import DocumentPosition from "./position";
 import {ICompletion} from "../autocomplete/Autocompleter";
 import Autocomplete from "../components/views/rooms/Autocomplete";
@@ -132,6 +132,9 @@ export default class AutocompleteWrapperModel {
             case "command":
                 // command needs special handling for auto complete, but also renders as plain texts
                 return [(this.partCreator as CommandPartCreator).command(text)];
+            case "bot_command":
+                // command needs special handling for auto complete, but also renders as plain texts
+                return [(this.partCreator as BotCommandPartCreator).command(text)];
             default:
                 // used for emoji and other plain text completion replacement
                 return [this.partCreator.plain(text)];

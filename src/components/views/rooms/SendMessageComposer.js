@@ -281,12 +281,12 @@ export default class SendMessageComposer extends React.Component {
             }
             return text + part.text;
         }, "");
-        const {cmd, args} = getCommand(commandText);
+        const {cmd, args} = getCommand(commandText, this.props.room.roomId);
         return [cmd, args, commandText];
     }
 
-    async _runSlashCommand(cmd, args) {
-        const result = cmd.run(this.props.room.roomId, args);
+    async _runSlashCommand(cmd, args, commandText) {
+        const result = cmd.run(this.props.room.roomId, args, commandText);
         let messageContent;
         let error = result.error;
         if (result.promise) {
@@ -340,12 +340,12 @@ export default class SendMessageComposer extends React.Component {
             const [cmd, args, commandText] = this._getSlashCommand();
             if (cmd) {
                 if (cmd.category === CommandCategories.messages) {
-                    content = await this._runSlashCommand(cmd, args);
+                    content = await this._runSlashCommand(cmd, args, commandText);
                     if (replyToEvent) {
                         addReplyToMessageContent(content, replyToEvent, this.props.permalinkCreator);
                     }
                 } else {
-                    this._runSlashCommand(cmd, args);
+                    this._runSlashCommand(cmd, args, commandText);
                     shouldSend = false;
                 }
             } else {
