@@ -18,55 +18,35 @@ limitations under the License.
 */
 
 import React, { createRef } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
 import classNames from "classnames";
 import { RovingTabIndexWrapper } from "../../../accessibility/RovingTabIndex";
 import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleButton";
-import dis from '../../../dispatcher/dispatcher';
-import defaultDispatcher from '../../../dispatcher/dispatcher';
 import { Key } from "../../../Keyboard";
-import ActiveRoomObserver from "../../../ActiveRoomObserver";
 import { _t } from "../../../languageHandler";
 import { ChevronFace, ContextMenuTooltipButton } from "../../structures/ContextMenu";
-import { DefaultTagID, TagID } from "../../../stores/room-list/models";
-import { MessagePreviewStore } from "../../../stores/room-list/MessagePreviewStore";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { ALL_MESSAGES, ALL_MESSAGES_LOUD, MENTIONS_ONLY, MUTE } from "../../../RoomNotifs";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import NotificationBadge from "./NotificationBadge";
 import { Volume } from "../../../RoomNotifsTypes";
-import RoomListStore from "../../../stores/room-list/RoomListStore";
-import RoomListActions from "../../../actions/RoomListActions";
-import { ActionPayload } from "../../../dispatcher/payloads";
-import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
-import { NOTIFICATION_STATE_UPDATE, NotificationState } from "../../../stores/notifications/NotificationState";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { EchoChamber } from "../../../stores/local-echo/EchoChamber";
-import { CachedRoomKey, RoomEchoChamber } from "../../../stores/local-echo/RoomEchoChamber";
-import { PROPERTY_UPDATED } from "../../../stores/local-echo/GenericEchoChamber";
 import IconizedContextMenu, {
     IconizedContextMenuCheckbox,
     IconizedContextMenuOption,
     IconizedContextMenuOptionList,
     IconizedContextMenuRadio,
 } from "../context_menus/IconizedContextMenu";
-import { CommunityPrototypeStore, IRoomProfile } from "../../../stores/CommunityPrototypeStore";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import {RoomTileViewModel} from "../../../domain/session/leftpanel/RoomTileViewModel";
 
 interface IProps {
-    room: Room;
-    showMessagePreview: boolean;
-    isMinimized: boolean;
-    tag: TagID;
+    model: RoomTileViewModel;
 }
 
 type PartialDOMRect = Pick<DOMRect, "left" | "bottom">;
 
 interface IState {
-    selected: boolean;
     notificationsMenuPosition: PartialDOMRect;
     generalMenuPosition: PartialDOMRect;
-    messagePreview?: string;
 }
 
 const messagePreviewId = (roomId: string) => `mx_RoomTile_messagePreview_${roomId}`;
@@ -81,138 +61,32 @@ const contextMenuBelow = (elementRect: PartialDOMRect) => {
 
 @replaceableComponent("views.rooms.RoomTile")
 export default class RoomTile extends React.PureComponent<IProps, IState> {
-    private dispatcherRef: string;
     private roomTileRef = createRef<HTMLDivElement>();
-    private notificationState: NotificationState;
-    private roomProps: RoomEchoChamber;
-
-    constructor(props: IProps) {
-        super(props);
-
-        this.state = {
-            selected: ActiveRoomObserver.activeRoomId === this.props.room.roomId,
-            notificationsMenuPosition: null,
-            generalMenuPosition: null,
-
-            // generatePreview() will return nothing if the user has previews disabled
-            messagePreview: this.generatePreview(),
-        };
-
-        ActiveRoomObserver.addListener(this.props.room.roomId, this.onActiveRoomUpdate);
-        this.dispatcherRef = defaultDispatcher.register(this.onAction);
-        MessagePreviewStore.instance.on(
-            MessagePreviewStore.getPreviewChangedEventName(this.props.room),
-            this.onRoomPreviewChanged,
-        );
-        this.notificationState = RoomNotificationStateStore.instance.getRoomState(this.props.room);
-        this.notificationState.on(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
-        this.roomProps = EchoChamber.forRoom(this.props.room);
-        this.roomProps.on(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
-        CommunityPrototypeStore.instance.on(
-            CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
-            this.onCommunityUpdate,
-        );
-        this.props.room.on("Room.name", this.onRoomNameUpdate);
-    }
-
-    private onRoomNameUpdate = (room) => {
-        this.forceUpdate();
-    }
-
-    private onNotificationUpdate = () => {
-        this.forceUpdate(); // notification state changed - update
-    };
-
-    private onRoomPropertyUpdate = (property: CachedRoomKey) => {
-        if (property === CachedRoomKey.NotificationVolume) this.onNotificationUpdate();
-        // else ignore - not important for this tile
-    };
-
-    private get showContextMenu(): boolean {
-        return this.props.tag !== DefaultTagID.Invite;
-    }
-
-    private get showMessagePreview(): boolean {
-        return !this.props.isMinimized && this.props.showMessagePreview;
-    }
-
-    public componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>) {
-        if (prevProps.showMessagePreview !== this.props.showMessagePreview && this.showMessagePreview) {
-            this.setState({messagePreview: this.generatePreview()});
-        }
-        if (prevProps.room?.roomId !== this.props.room?.roomId) {
-            MessagePreviewStore.instance.off(
-                MessagePreviewStore.getPreviewChangedEventName(prevProps.room),
-                this.onRoomPreviewChanged,
-            );
-            MessagePreviewStore.instance.on(
-                MessagePreviewStore.getPreviewChangedEventName(this.props.room),
-                this.onRoomPreviewChanged,
-            );
-            CommunityPrototypeStore.instance.off(
-                CommunityPrototypeStore.getUpdateEventName(prevProps.room?.roomId),
-                this.onCommunityUpdate,
-            );
-            CommunityPrototypeStore.instance.on(
-                CommunityPrototypeStore.getUpdateEventName(this.props.room?.roomId),
-                this.onCommunityUpdate,
-            );
-            prevProps.room?.off("Room.name", this.onRoomNameUpdate);
-            this.props.room?.on("Room.name", this.onRoomNameUpdate);
-        }
-    }
 
     public componentDidMount() {
         // when we're first rendered (or our sublist is expanded) make sure we are visible if we're active
-        if (this.state.selected) {
+        if (this.props.model.selected) {
             this.scrollIntoView();
         }
+        this.props.model.on("change", this.rerender);
     }
 
-    public componentWillUnmount() {
-        if (this.props.room) {
-            ActiveRoomObserver.removeListener(this.props.room.roomId, this.onActiveRoomUpdate);
-            MessagePreviewStore.instance.off(
-                MessagePreviewStore.getPreviewChangedEventName(this.props.room),
-                this.onRoomPreviewChanged,
-            );
-            CommunityPrototypeStore.instance.off(
-                CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
-                this.onCommunityUpdate,
-            );
-            this.props.room.off("Room.name", this.onRoomNameUpdate);
-        }
-        defaultDispatcher.unregister(this.dispatcherRef);
-        this.notificationState.off(NOTIFICATION_STATE_UPDATE, this.onNotificationUpdate);
-    }
-
-    private onAction = (payload: ActionPayload) => {
-        if (payload.action === "view_room" && payload.room_id === this.props.room.roomId && payload.show_room_tile) {
+    public componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>) {
+        if (this.props.model.ensureVisible) {
             setImmediate(() => {
                 this.scrollIntoView();
             });
         }
-    };
-
-    private onCommunityUpdate = (roomId: string) => {
-        if (roomId !== this.props.room.roomId) return;
-        this.forceUpdate(); // we don't have anything to actually update
-    };
-
-    private onRoomPreviewChanged = (room: Room) => {
-        if (this.props.room && room.roomId === this.props.room.roomId) {
-            // generatePreview() will return nothing if the user has previews disabled
-            this.setState({messagePreview: this.generatePreview()});
-        }
-    };
-
-    private generatePreview(): string | null {
-        if (!this.showMessagePreview) {
-            return null;
-        }
-
-        return MessagePreviewStore.instance.getPreviewForRoom(this.props.room, this.props.tag);
     }
+
+    public componentWillUnmount() {
+        this.props.model.off("change", this.rerender);
+        this.props.model.destroy();
+    }
+
+    private rerender = () => {
+        this.forceUpdate();
+    };
 
     private scrollIntoView = () => {
         if (!this.roomTileRef.current) return;
@@ -225,17 +99,10 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
     private onTileClick = (ev: React.KeyboardEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
-        dis.dispatch({
-            action: 'view_room',
-            show_room_tile: true, // make sure the room is visible in the list
-            room_id: this.props.room.roomId,
-            clear_search: (ev && (ev.key === Key.ENTER || ev.key === Key.SPACE)),
-        });
+        const clearSearch = ev && (ev.key === Key.ENTER || ev.key === Key.SPACE);
+        this.props.model.open(clearSearch);
     };
 
-    private onActiveRoomUpdate = (isActive: boolean) => {
-        this.setState({selected: isActive});
-    };
 
     private onNotificationsMenuOpenClick = (ev: React.MouseEvent) => {
         ev.preventDefault();
@@ -257,7 +124,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
 
     private onContextMenu = (ev: React.MouseEvent) => {
         // If we don't have a context menu to show, ignore the action.
-        if (!this.showContextMenu) return;
+        if (!this.props.model.showContextMenu) return;
 
         ev.preventDefault();
         ev.stopPropagation();
@@ -273,89 +140,64 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         this.setState({generalMenuPosition: null});
     };
 
-    private onTagRoom = (ev: ButtonEvent, tagId: TagID) => {
+    private closeGeneralMenu = (ev: ButtonEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
+        this.setState({generalMenuPosition: null}); // hide the menu
+    };
 
-        if (tagId === DefaultTagID.Favourite || tagId === DefaultTagID.LowPriority) {
-            const inverseTag = tagId === DefaultTagID.Favourite ? DefaultTagID.LowPriority : DefaultTagID.Favourite;
-            const isApplied = RoomListStore.instance.getTagsForRoom(this.props.room).includes(tagId);
-            const removeTag = isApplied ? tagId : inverseTag;
-            const addTag = isApplied ? null : tagId;
-            dis.dispatch(RoomListActions.tagRoom(
-                MatrixClientPeg.get(),
-                this.props.room,
-                removeTag,
-                addTag,
-                undefined,
-                0,
-            ));
-        } else {
-            console.warn(`Unexpected tag ${tagId} applied to ${this.props.room.room_id}`);
-        }
-
+    private closeGeneralMenuOnEnter = (ev: ButtonEvent) => {
+        ev.preventDefault();
+        ev.stopPropagation();
         if ((ev as React.KeyboardEvent).key === Key.ENTER) {
             // Implements https://www.w3.org/TR/wai-aria-practices/#keyboard-interaction-12
             this.setState({generalMenuPosition: null}); // hide the menu
         }
     };
 
-    private onLeaveRoomClick = (ev: ButtonEvent) => {
+    private closeNotificationsMenuOnEnter = (ev: ButtonEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
-
-        dis.dispatch({
-            action: 'leave_room',
-            room_id: this.props.room.roomId,
-        });
-        this.setState({generalMenuPosition: null}); // hide the menu
-    };
-
-    private onForgetRoomClick = (ev: ButtonEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-
-        dis.dispatch({
-            action: 'forget_room',
-            room_id: this.props.room.roomId,
-        });
-        this.setState({generalMenuPosition: null}); // hide the menu
-    };
-
-    private onOpenRoomSettings = (ev: ButtonEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-
-        dis.dispatch({
-            action: 'open_room_settings',
-            room_id: this.props.room.roomId,
-        });
-        this.setState({generalMenuPosition: null}); // hide the menu
-    };
-
-    private onInviteClick = (ev: ButtonEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-
-        dis.dispatch({
-            action: 'view_invite',
-            roomId: this.props.room.roomId,
-        });
-        this.setState({generalMenuPosition: null}); // hide the menu
-    };
-
-    private async saveNotifState(ev: ButtonEvent, newState: Volume) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        if (MatrixClientPeg.get().isGuest()) return;
-
-        this.roomProps.notificationVolume = newState;
-
         const key = (ev as React.KeyboardEvent).key;
         if (key === Key.ENTER) {
             // Implements https://www.w3.org/TR/wai-aria-practices/#keyboard-interaction-12
             this.setState({notificationsMenuPosition: null}); // hide the menu
         }
+    };
+
+    private onLeaveRoomClick = (ev: ButtonEvent) => {
+        this.props.model.leave();
+        this.closeGeneralMenu(ev);
+    };
+
+    private onForgetRoomClick = (ev: ButtonEvent) => {
+        this.props.model.forget();
+        this.closeGeneralMenu(ev);
+    };
+
+    private onOpenRoomSettings = (ev: ButtonEvent) => {
+        this.props.model.openSettings();
+        this.closeGeneralMenu(ev);
+    };
+
+    private onInviteClick = (ev: ButtonEvent) => {
+        this.props.model.invitePeople();
+        this.closeGeneralMenu(ev);
+    };
+
+    private async saveNotifState(ev: ButtonEvent, volume: Volume) {
+        this.props.model.setNotificationVolume(volume);
+        this.closeNotificationsMenuOnEnter(ev);
+    }
+
+    private async toggleFavourite(ev: ButtonEvent) {
+        this.props.model.toggleFavourite();
+        this.closeGeneralMenuOnEnter(ev);
+    }
+
+    private async toggleLowPriority(ev: ButtonEvent) {
+        this.props.model.toggleLowPriority();
+        this.closeGeneralMenuOnEnter(ev);
     }
 
     private onClickAllNotifs = ev => this.saveNotifState(ev, ALL_MESSAGES);
@@ -364,14 +206,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
     private onClickMute = ev => this.saveNotifState(ev, MUTE);
 
     private renderNotificationsMenu(isActive: boolean): React.ReactElement {
-        if (MatrixClientPeg.get().isGuest() || this.props.tag === DefaultTagID.Archived ||
-            !this.showContextMenu || this.props.isMinimized
-        ) {
+        if (!this.props.model.showNotificationMenu) {
             // the menu makes no sense in these cases so do not show one
             return null;
         }
 
-        const state = this.roomProps.notificationVolume;
+        const volume = this.props.model.notificationVolume;
 
         let contextMenu = null;
         if (this.state.notificationsMenuPosition) {
@@ -384,25 +224,25 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 <IconizedContextMenuOptionList first>
                     <IconizedContextMenuRadio
                         label={_t("Use default")}
-                        active={state === ALL_MESSAGES}
+                        active={volume === ALL_MESSAGES}
                         iconClassName="mx_RoomTile_iconBell"
                         onClick={this.onClickAllNotifs}
                     />
                     <IconizedContextMenuRadio
                         label={_t("All messages")}
-                        active={state === ALL_MESSAGES_LOUD}
+                        active={volume === ALL_MESSAGES_LOUD}
                         iconClassName="mx_RoomTile_iconBellDot"
                         onClick={this.onClickAlertMe}
                     />
                     <IconizedContextMenuRadio
                         label={_t("Mentions & Keywords")}
-                        active={state === MENTIONS_ONLY}
+                        active={volume === MENTIONS_ONLY}
                         iconClassName="mx_RoomTile_iconBellMentions"
                         onClick={this.onClickMentions}
                     />
                     <IconizedContextMenuRadio
                         label={_t("None")}
-                        active={state === MUTE}
+                        active={volume === MUTE}
                         iconClassName="mx_RoomTile_iconBellCrossed"
                         onClick={this.onClickMute}
                     />
@@ -412,14 +252,14 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
 
         const classes = classNames("mx_RoomTile_notificationsButton", {
             // Show bell icon for the default case too.
-            mx_RoomTile_iconBell: state === ALL_MESSAGES,
-            mx_RoomTile_iconBellDot: state === ALL_MESSAGES_LOUD,
-            mx_RoomTile_iconBellMentions: state === MENTIONS_ONLY,
-            mx_RoomTile_iconBellCrossed: state === MUTE,
+            mx_RoomTile_iconBell: volume === ALL_MESSAGES,
+            mx_RoomTile_iconBellDot: volume === ALL_MESSAGES_LOUD,
+            mx_RoomTile_iconBellMentions: volume === MENTIONS_ONLY,
+            mx_RoomTile_iconBellCrossed: volume === MUTE,
 
             // Only show the icon by default if the room is overridden to muted.
             // TODO: [FTUE Notifications] Probably need to detect global mute state
-            mx_RoomTile_notificationsButton_show: state === MUTE,
+            mx_RoomTile_notificationsButton_show: volume === MUTE,
         });
 
         return (
@@ -437,10 +277,10 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
     }
 
     private renderGeneralMenu(): React.ReactElement {
-        if (!this.showContextMenu) return null; // no menu to show
+        if (!this.props.model.showContextMenu) return null; // no menu to show
 
         let contextMenu = null;
-        if (this.state.generalMenuPosition && this.props.tag === DefaultTagID.Archived) {
+        if (this.state.generalMenuPosition && this.props.model.isArchived) {
             contextMenu = <IconizedContextMenu
                 {...contextMenuBelow(this.state.generalMenuPosition)}
                 onFinished={this.onCloseGeneralMenu}
@@ -456,16 +296,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 </IconizedContextMenuOptionList>
             </IconizedContextMenu>;
         } else if (this.state.generalMenuPosition) {
-            const roomTags = RoomListStore.instance.getTagsForRoom(this.props.room);
-
-            const isFavorite = roomTags.includes(DefaultTagID.Favourite);
-            const favouriteLabel = isFavorite ? _t("Favourited") : _t("Favourite");
-
-            const isLowPriority = roomTags.includes(DefaultTagID.LowPriority);
-            const lowPriorityLabel = _t("Low Priority");
-
-            const userId = MatrixClientPeg.get().getUserId();
-            const canInvite = this.props.room.canInvite(userId);
+            const favouriteLabel = this.props.model.isFavourite ? _t("Favourited") : _t("Favourite");
             contextMenu = <IconizedContextMenu
                 {...contextMenuBelow(this.state.generalMenuPosition)}
                 onFinished={this.onCloseGeneralMenu}
@@ -474,18 +305,18 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             >
                 <IconizedContextMenuOptionList>
                     <IconizedContextMenuCheckbox
-                        onClick={(e) => this.onTagRoom(e, DefaultTagID.Favourite)}
-                        active={isFavorite}
+                        onClick={(e) => this.toggleFavourite(e)}
+                        active={this.props.model.isFavourite}
                         label={favouriteLabel}
                         iconClassName="mx_RoomTile_iconStar"
                     />
                     <IconizedContextMenuCheckbox
-                        onClick={(e) => this.onTagRoom(e, DefaultTagID.LowPriority)}
-                        active={isLowPriority}
-                        label={lowPriorityLabel}
+                        onClick={(e) => this.toggleLowPriority(e)}
+                        active={this.props.model.isLowPriority}
+                        label={_t("Low Priority")}
                         iconClassName="mx_RoomTile_iconArrowDown"
                     />
-                    {canInvite ? (
+                    {this.props.model.canInvite ? (
                         <IconizedContextMenuOption
                             onClick={this.onInviteClick}
                             label={_t("Invite People")}
@@ -524,47 +355,38 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
     public render(): React.ReactElement {
         const classes = classNames({
             'mx_RoomTile': true,
-            'mx_RoomTile_selected': this.state.selected,
+            'mx_RoomTile_selected': this.props.model.selected,
             'mx_RoomTile_hasMenuOpen': !!(this.state.generalMenuPosition || this.state.notificationsMenuPosition),
-            'mx_RoomTile_minimized': this.props.isMinimized,
+            'mx_RoomTile_minimized': this.props.model.isMinimized,
         });
 
-        let roomProfile: IRoomProfile = {displayName: null, avatarMxc: null};
-        if (this.props.tag === DefaultTagID.Invite) {
-            roomProfile = CommunityPrototypeStore.instance.getInviteProfile(this.props.room.roomId);
-        }
-
-        let name = roomProfile.displayName || this.props.room.name;
-        if (typeof name !== 'string') name = '';
-        name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
-
         const roomAvatar = <DecoratedRoomAvatar
-            room={this.props.room}
+            room={this.props.model.room}
             avatarSize={32}
-            tag={this.props.tag}
-            displayBadge={this.props.isMinimized}
-            oobData={({avatarUrl: roomProfile.avatarMxc})}
+            displayBadge={this.props.model.isMinimized}
+            oobData={({avatarUrl: this.props.model.avatarMxc})}
         />;
 
+        const {notificationState} = this.props.model;
         let badge: React.ReactNode;
-        if (!this.props.isMinimized) {
+        if (!this.props.model.isMinimized) {
             // aria-hidden because we summarise the unread count/highlight status in a manual aria-label below
             badge = (
                 <div className="mx_RoomTile_badgeContainer" aria-hidden="true">
                     <NotificationBadge
-                        notification={this.notificationState}
+                        notification={notificationState}
                         forceCount={false}
-                        roomId={this.props.room.roomId}
+                        roomId={this.props.model.id}
                     />
                 </div>
             );
         }
 
         let messagePreview = null;
-        if (this.showMessagePreview && this.state.messagePreview) {
+        if (this.props.model.messagePreview) {
             messagePreview = (
-                <div className="mx_RoomTile_messagePreview" id={messagePreviewId(this.props.room.roomId)}>
-                    {this.state.messagePreview}
+                <div className="mx_RoomTile_messagePreview" id={messagePreviewId(this.props.model.id)}>
+                    {this.props.model.messagePreview}
                 </div>
             );
         }
@@ -572,9 +394,10 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         const nameClasses = classNames({
             "mx_RoomTile_name": true,
             "mx_RoomTile_nameWithPreview": !!messagePreview,
-            "mx_RoomTile_nameHasUnreadEvents": this.notificationState.isUnread,
+            "mx_RoomTile_nameHasUnreadEvents": notificationState.isUnread,
         });
 
+        const {name} = this.props.model;
         let nameContainer = (
             <div className="mx_RoomTile_nameContainer">
                 <div title={name} className={nameClasses} tabIndex={-1} dir="auto">
@@ -583,32 +406,32 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 {messagePreview}
             </div>
         );
-        if (this.props.isMinimized) nameContainer = null;
+        if (this.props.model.isMinimized) nameContainer = null;
 
         let ariaLabel = name;
         // The following labels are written in such a fashion to increase screen reader efficiency (speed).
-        if (this.props.tag === DefaultTagID.Invite) {
+        if (this.props.model.isInvite) {
             // append nothing
-        } else if (this.notificationState.hasMentions) {
+        } else if (notificationState.hasMentions) {
             ariaLabel += " " + _t("%(count)s unread messages including mentions.", {
-                count: this.notificationState.count,
+                count: notificationState.count,
             });
-        } else if (this.notificationState.hasUnreadCount) {
+        } else if (notificationState.hasUnreadCount) {
             ariaLabel += " " + _t("%(count)s unread messages.", {
-                count: this.notificationState.count,
+                count: notificationState.count,
             });
-        } else if (this.notificationState.isUnread) {
+        } else if (notificationState.isUnread) {
             ariaLabel += " " + _t("Unread messages.");
         }
 
         let ariaDescribedBy: string;
-        if (this.showMessagePreview) {
-            ariaDescribedBy = messagePreviewId(this.props.room.roomId);
+        if (messagePreview) {
+            ariaDescribedBy = messagePreviewId(this.props.model.id);
         }
 
         const props: Partial<React.ComponentProps<typeof AccessibleTooltipButton>> = {};
         let Button: React.ComponentType<React.ComponentProps<typeof AccessibleButton>> = AccessibleButton;
-        if (this.props.isMinimized) {
+        if (this.props.model.isMinimized) {
             Button = AccessibleTooltipButton;
             props.title = name;
             // force the tooltip to hide whilst we are showing the context menu
@@ -629,7 +452,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                             onContextMenu={this.onContextMenu}
                             role="treeitem"
                             aria-label={ariaLabel}
-                            aria-selected={this.state.selected}
+                            aria-selected={this.props.model.selected}
                             aria-describedby={ariaDescribedBy}
                         >
                             {roomAvatar}
