@@ -126,7 +126,7 @@ class Keybinding extends React.Component<KeybindingIProps> {
 }
 
 export default class KeybindingsUserSettingsTab extends React.Component {
-    getKeybindings(settingsNames: Array<string>) {
+    private getKeybindings(settingsNames: Array<string>) {
         return settingsNames.map((settingName) => {
             return (
                 <Keybinding key={settingName} settingName={settingName}></Keybinding>
@@ -134,7 +134,7 @@ export default class KeybindingsUserSettingsTab extends React.Component {
         });
     }
 
-    getCategories(categories: Array<Category>) {
+    private getCategories(categories: Array<Category>) {
         return categories.map((category) => {
             return (
                 <div key={category.categoryName} className="mx_SettingsTab_section">

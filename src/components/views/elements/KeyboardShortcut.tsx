@@ -54,7 +54,7 @@ function keyDisplayValue(key: string | Key) {
 }
 
 export default class KeyboardShortcut extends React.Component<IProps> {
-    renderKey(key: string, text: string) {
+    private renderKey(key: string, text: string) {
         return (
             <React.Fragment key={key}>
                 <kbd className="mx_KeyboardShortcut_key">
