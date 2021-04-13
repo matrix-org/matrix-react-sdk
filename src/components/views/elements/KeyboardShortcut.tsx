@@ -19,26 +19,25 @@ import { _td } from "../../../languageHandler";
 import {isMac, Key, Modifiers} from "../../../Keyboard";
 import {KeyCombo} from "../../../KeyBindingsManager";
 
-const keyName: Record<string, string> = {
-    [Key.PAGE_UP]: _td("Page Up"),
-    [Key.PAGE_DOWN]: _td("Page Down"),
-    [Key.ESCAPE]: _td("Esc"),
-    [Key.ENTER]: _td("Enter"),
-    [Key.SPACE]: _td("Space"),
-    [Key.HOME]: _td("Home"),
-    [Key.END]: _td("End"),
-    [Key.ALT]: _td("Alt"),
-    [Key.CONTROL]: _td("Ctrl"),
-    [Key.SHIFT]: _td("Shift"),
-};
+const keyName: Map<Key, string> = new Map([
+    [Key.PAGE_UP, _td("Page Up")],
+    [Key.PAGE_DOWN, _td("Page Down")],
+    [Key.ESCAPE, _td("Esc")],
+    [Key.ENTER, _td("Enter")],
+    [Key.SPACE, _td("Space")],
+    [Key.HOME, _td("Home")],
+    [Key.END, _td("End")],
+    [Key.ALT, _td("Alt")],
+    [Key.CONTROL, _td("Ctrl")],
+    [Key.SHIFT, _td("Shift")],
+]);
 
-const keyIcon: Record<string, string> = {
-    [Key.ARROW_UP]: "↑",
-    [Key.ARROW_DOWN]: "↓",
-    [Key.ARROW_LEFT]: "←",
-    [Key.ARROW_RIGHT]: "→",
-
-};
+const keyIcon: Map<Key, string> = new Map([
+    [Key.ARROW_UP, "↑"],
+    [Key.ARROW_DOWN, "↓"],
+    [Key.ARROW_LEFT, "←"],
+    [Key.ARROW_RIGHT, "→"],
+]);
 
 if (isMac) {
     keyIcon[Key.META] = "⌘";
@@ -49,8 +48,9 @@ interface IProps {
     keyCombo: KeyCombo | KeyboardEvent;
 }
 
-function keyDisplayValue(key: Key | string) {
-    return keyIcon[key] || keyName[key] || key;
+function keyDisplayValue(key: string | Key) {
+    const newKey = Key[key] || key;
+    return keyIcon.get(newKey) || keyName.get(newKey) || newKey;
 }
 
 export default class KeyboardShortcut extends React.Component<IProps> {
