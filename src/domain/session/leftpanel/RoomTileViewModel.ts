@@ -237,12 +237,7 @@ export class RoomTileViewModel extends ViewModel {
 
     private onAction = async (payload: ActionPayload) => {
         if (payload.action === "view_room" && payload.room_id === this.room.roomId && payload.show_room_tile) {
-            await Promise.resolve();
-            this.ensureVisible = true;
-            this.emitChange();
-            await Promise.resolve();
-            this.ensureVisible = false;
-            this.emitChange();
+            this.emit("ensureVisible");
         }
     };
 

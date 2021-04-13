@@ -77,18 +77,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             this.scrollIntoView();
         }
         this.props.model.on("change", this.rerender);
-    }
-
-    public componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>) {
-        if (this.props.model.ensureVisible) {
-            setImmediate(() => {
-                this.scrollIntoView();
-            });
-        }
+        this.props.model.on("ensureVisible", this.scrollIntoView);
     }
 
     public componentWillUnmount() {
         this.props.model.off("change", this.rerender);
+        this.props.model.off("ensureVisible", this.scrollIntoView);
         this.props.model.destroy();
     }
 
@@ -98,9 +92,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
 
     private scrollIntoView = () => {
         if (!this.roomTileRef.current) return;
-        this.roomTileRef.current.scrollIntoView({
-            block: "nearest",
-            behavior: "auto",
+        setImmediate(() => {
+            if (!this.roomTileRef.current) return;
+            this.roomTileRef.current.scrollIntoView({
+                block: "nearest",
+                behavior: "auto",
+            });
         });
     };
 
