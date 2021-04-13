@@ -79,9 +79,6 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
         this.setState({ otherHomeserver: ev.target.value });
     };
 
-    // TODO: Do we want to support .well-known lookups here?
-    // If for some reason someone enters "matrix.org" for a URL, we could do a lookup to
-    // find their homeserver without demanding they use "https://matrix.org"
     private validate = withValidation<this, { error?: string }>({
         deriveData: async ({ value }) => {
             let hsUrl = value.trim(); // trim to account for random whitespace
@@ -99,7 +96,8 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
 
             // if we got to this stage then either the well-known failed or the URL had a protocol specified,
             // so validate statically only. If the URL has no protocol, default to https.
-            if (!hsUrl.includes("://")) {
+            const hasNoProtocol = !hsUrl.includes("://");
+            if (hasNoProtocol) {
                 hsUrl = "https://" + hsUrl;
             }
 
@@ -108,6 +106,18 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
                 return {};
             } catch (e) {
                 console.error(e);
+
+                // If the auto-prefixed https:// failed and we are loaded over http then try http:// too
+                // this is only really useful for localhost development with a local homeserver
+                if (hasNoProtocol && window.location.protocol === "http:") {
+                    try {
+                        const httpUrl = "http://" + value.trim();
+                        this.validatedConf = await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(httpUrl);
+                        return {};
+                    } catch (e) {
+                        console.error(e);
+                    }
+                }
 
                 const stateForError = AutoDiscoveryUtils.authComponentStateForError(e);
                 if (stateForError.isFatalError) {
