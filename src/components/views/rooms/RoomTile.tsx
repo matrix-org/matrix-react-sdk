@@ -80,6 +80,16 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         this.props.model.on("ensureVisible", this.scrollIntoView);
     }
 
+    public componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>) {
+        if (prevProps.model !== this.props.model) {
+            prevProps.model.off("change", this.rerender);
+            prevProps.model.off("ensureVisible", this.scrollIntoView);
+            prevProps.model.destroy();
+            this.props.model.on("change", this.rerender);
+            this.props.model.on("ensureVisible", this.scrollIntoView);
+        }
+    }
+
     public componentWillUnmount() {
         this.props.model.off("change", this.rerender);
         this.props.model.off("ensureVisible", this.scrollIntoView);
