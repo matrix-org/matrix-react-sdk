@@ -165,7 +165,7 @@ export default class GroupRoomInfo extends React.Component {
                 <div className="mx_MemberInfo_adminTools">
                     <h3>{ _t("Admin Tools") }</h3>
                     <div className="mx_MemberInfo_buttons">
-                        <AccessibleButton className="mx_MemberInfo_field" onClick={this._onRemove}>
+                        <AccessibleButton className="mx_MemberInfo_field mx_MemberInfo_destructive" onClick={this._onRemove}>
                             { _t('Remove from community') }
                         </AccessibleButton>
                     </div>

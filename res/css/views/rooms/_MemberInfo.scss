@@ -116,6 +116,10 @@ limitations under the License.
     line-height: $font-23px;
 }
 
+.mx_MemberInfo_destructive {
+    color: $warning-color;
+}
+
 .mx_MemberInfo_createRoom {
     cursor: pointer;
     display: flex;
