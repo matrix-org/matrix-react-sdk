@@ -263,7 +263,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             mx_RoomTile_iconBellCrossed: volume === MUTE,
 
             // Only show the icon by default if the room is overridden to muted.
-            // TODO: [FTUE Notifications] Probably need to detect global mute state
             mx_RoomTile_notificationsButton_show: volume === MUTE,
         });
 

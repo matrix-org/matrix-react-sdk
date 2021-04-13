@@ -39,7 +39,6 @@ import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore
 export class RoomTileViewModel extends ViewModel {
     public selected: boolean;
     public isMinimized: boolean;
-    public notificationVolume: Volume;
     public ensureVisible: boolean;
     // this class is a lot like a view model, perhaps it should be one?
     public notificationState: NotificationState;
@@ -123,6 +122,11 @@ export class RoomTileViewModel extends ViewModel {
             return null;
         }
         return this._messagePreview;
+    }
+
+    public get notificationVolume(): Volume {
+        // TODO: [FTUE Notifications] Probably need to detect global mute state
+        return this.roomProps.notificationVolume;
     }
 
     public get isArchived(): boolean {
