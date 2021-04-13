@@ -63,6 +63,14 @@ const contextMenuBelow = (elementRect: PartialDOMRect) => {
 export default class RoomTile extends React.PureComponent<IProps, IState> {
     private roomTileRef = createRef<HTMLDivElement>();
 
+    constructor(props: IProps) {
+        super(props);
+        this.state = {
+            notificationsMenuPosition: null,
+            generalMenuPosition: null,
+        };
+    }
+
     public componentDidMount() {
         // when we're first rendered (or our sublist is expanded) make sure we are visible if we're active
         if (this.props.model.selected) {
