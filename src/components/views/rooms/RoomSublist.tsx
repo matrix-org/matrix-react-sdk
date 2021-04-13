@@ -53,6 +53,7 @@ import { ListNotificationState } from "../../../stores/notifications/ListNotific
 import IconizedContextMenu from "../context_menus/IconizedContextMenu";
 import { getKeyBindingsManager, RoomListAction } from "../../../KeyBindingsManager";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import {RoomTileViewModel} from "../../../domain/session/leftpanel/RoomTileViewModel";
 
 const SHOW_N_BUTTON_HEIGHT = 28; // As defined by CSS
 const RESIZE_HANDLE_HEIGHT = 4; // As defined by CSS
@@ -522,11 +523,13 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             const visibleRooms = this.state.rooms.slice(0, this.numVisibleTiles);
             for (const room of visibleRooms) {
                 tiles.push(<RoomTile
-                    room={room}
+                    model={new RoomTileViewModel({
+                        room,
+                        showMessagePreview: this.layout.showPreviews,
+                        isMinimized: this.props.isMinimized,
+                        tag: this.props.tagId,
+                    })}
                     key={`room-${room.roomId}`}
-                    showMessagePreview={this.layout.showPreviews}
-                    isMinimized={this.props.isMinimized}
-                    tag={this.props.tagId}
                 />);
             }
         }
