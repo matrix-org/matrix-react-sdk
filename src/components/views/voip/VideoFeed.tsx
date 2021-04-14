@@ -18,6 +18,7 @@ import classnames from 'classnames';
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import React, {createRef} from 'react';
 import SettingsStore from "../../../settings/SettingsStore";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 export enum VideoFeedType {
     Local,
@@ -37,20 +38,31 @@ interface IProps {
     onResize?: (e: Event) => void,
 }
 
+@replaceableComponent("views.voip.VideoFeed")
 export default class VideoFeed extends React.Component<IProps> {
     private vid = createRef<HTMLVideoElement>();
 
     componentDidMount() {
         this.vid.current.addEventListener('resize', this.onResize);
-        if (this.props.type === VideoFeedType.Local) {
-            this.props.call.setLocalVideoElement(this.vid.current);
-        } else {
-            this.props.call.setRemoteVideoElement(this.vid.current);
+        this.setVideoElement();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.call !== prevProps.call) {
+            this.setVideoElement();
         }
     }
 
     componentWillUnmount() {
         this.vid.current.removeEventListener('resize', this.onResize);
+    }
+
+    private setVideoElement() {
+        if (this.props.type === VideoFeedType.Local) {
+            this.props.call.setLocalVideoElement(this.vid.current);
+        } else {
+            this.props.call.setRemoteVideoElement(this.vid.current);
+        }
     }
 
     onResize = (e) => {

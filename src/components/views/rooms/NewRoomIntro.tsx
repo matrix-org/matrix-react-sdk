@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020, 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -28,6 +28,8 @@ import defaultDispatcher from "../../../dispatcher/dispatcher";
 import {ViewUserPayload} from "../../../dispatcher/payloads/ViewUserPayload";
 import {Action} from "../../../dispatcher/actions";
 import dis from "../../../dispatcher/dispatcher";
+import SpaceStore from "../../../stores/SpaceStore";
+import {showSpaceInvite} from "../../../utils/space";
 
 const NewRoomIntro = () => {
     const cli = useContext(MatrixClientContext);
@@ -60,8 +62,9 @@ const NewRoomIntro = () => {
             { caption && <p>{ caption }</p> }
         </React.Fragment>;
     } else {
+        const inRoom = room && room.getMyMembership() === "join";
         const topic = room.currentState.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic;
-        const canAddTopic = room.currentState.maySendStateEvent(EventType.RoomTopic, cli.getUserId());
+        const canAddTopic = inRoom && room.currentState.maySendStateEvent(EventType.RoomTopic, cli.getUserId());
 
         const onTopicClick = () => {
             dis.dispatch({
@@ -99,9 +102,49 @@ const NewRoomIntro = () => {
             });
         }
 
-        const onInviteClick = () => {
-            dis.dispatch({ action: "view_invite", roomId });
-        };
+        let parentSpace;
+        if (
+            SpaceStore.instance.activeSpace?.canInvite(cli.getUserId()) &&
+            SpaceStore.instance.getSpaceFilteredRoomIds(SpaceStore.instance.activeSpace).has(room.roomId)
+        ) {
+            parentSpace = SpaceStore.instance.activeSpace;
+        }
+
+        let buttons;
+        if (parentSpace) {
+            buttons = <div className="mx_NewRoomIntro_buttons">
+                <AccessibleButton
+                    className="mx_NewRoomIntro_inviteButton"
+                    kind="primary"
+                    onClick={() => {
+                        showSpaceInvite(parentSpace);
+                    }}
+                >
+                    {_t("Invite to %(spaceName)s", { spaceName: parentSpace.name })}
+                </AccessibleButton>
+                { room.canInvite(cli.getUserId()) && <AccessibleButton
+                    className="mx_NewRoomIntro_inviteButton"
+                    kind="primary_outline"
+                    onClick={() => {
+                        dis.dispatch({ action: "view_invite", roomId });
+                    }}
+                >
+                    {_t("Invite to just this room")}
+                </AccessibleButton> }
+            </div>;
+        } else if (room.canInvite(cli.getUserId())) {
+            buttons = <div className="mx_NewRoomIntro_buttons">
+                <AccessibleButton
+                    className="mx_NewRoomIntro_inviteButton"
+                    kind="primary"
+                    onClick={() => {
+                        dis.dispatch({ action: "view_invite", roomId });
+                    }}
+                >
+                    {_t("Invite to this room")}
+                </AccessibleButton>
+            </div>;
+        }
 
         const avatarUrl = room.currentState.getStateEvents(EventType.RoomAvatar, "")?.getContent()?.url;
         body = <React.Fragment>
@@ -119,11 +162,7 @@ const NewRoomIntro = () => {
                 roomName: () => <b>{ room.name }</b>,
             })}</p>
             <p>{topicText}</p>
-            <div className="mx_NewRoomIntro_buttons">
-                <AccessibleButton className="mx_NewRoomIntro_inviteButton" kind="primary" onClick={onInviteClick}>
-                    {_t("Invite to this room")}
-                </AccessibleButton>
-            </div>
+            { buttons }
         </React.Fragment>;
     }
 
