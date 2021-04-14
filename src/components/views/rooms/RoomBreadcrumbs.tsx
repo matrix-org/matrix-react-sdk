@@ -84,8 +84,6 @@ export default class RoomBreadcrumbs extends React.PureComponent<IProps, IState>
 
     public render(): React.ReactElement {
         const tiles = BreadcrumbsStore.instance.rooms.map((r, i) => {
-            const roomTags = RoomListStore.instance.getTagsForRoom(r);
-            const roomTag = roomTags.includes(DefaultTagID.DM) ? DefaultTagID.DM : roomTags[0];
             return (
                 <RovingAccessibleTooltipButton
                     className="mx_RoomBreadcrumbs_crumb"
