@@ -21,7 +21,7 @@ import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import * as sdk from '../../../index';
 import { unicodeToShortcode } from '../../../HtmlUtils';
 import { _t } from '../../../languageHandler';
-import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
+import { formatCommaSeparatedList } from '../../../crossplatform/common';
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 @replaceableComponent("views.messages.ReactionsRowButtonTooltip")

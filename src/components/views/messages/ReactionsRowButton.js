@@ -21,7 +21,7 @@ import classNames from 'classnames';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
-import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
+import { formatCommaSeparatedList } from '../../../crossplatform/common';
 import dis from "../../../dispatcher/dispatcher";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 

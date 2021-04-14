@@ -15,8 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { _t } from '../languageHandler';
-
 /**
  * formats numbers to fit into ~3 characters, suitable for badge counts
  * e.g: 999, 9.9K, 99K, 0.9M, 9.9M, 99M, 0.9B, 9.9B
@@ -90,32 +88,4 @@ export function hashCode(str: string): number {
 export function getUserNameColorClass(userId: string): string {
     const colorNumber = (hashCode(userId) % 8) + 1;
     return `mx_Username_color${colorNumber}`;
-}
-
-/**
- * Constructs a written English string representing `items`, with an optional
- * limit on the number of items included in the result. If specified and if the
- * length of `items` is greater than the limit, the string "and n others" will
- * be appended onto the result. If `items` is empty, returns the empty string.
- * If there is only one item, return it.
- * @param {string[]} items the items to construct a string from.
- * @param {number?} itemLimit the number by which to limit the list.
- * @returns {string} a string constructed by joining `items` with a comma
- * between each item, but with the last item appended as " and [lastItem]".
- */
-export function formatCommaSeparatedList(items: string[], itemLimit?: number): string {
-    const remaining = itemLimit === undefined ? 0 : Math.max(
-        items.length - itemLimit, 0,
-    );
-    if (items.length === 0) {
-        return "";
-    } else if (items.length === 1) {
-        return items[0];
-    } else if (remaining > 0) {
-        items = items.slice(0, itemLimit);
-        return _t("%(items)s and %(count)s others", { items: items.join(', '), count: remaining } );
-    } else {
-        const lastItem = items.pop();
-        return _t("%(items)s and %(lastItem)s", { items: items.join(', '), lastItem: lastItem });
-    }
 }
