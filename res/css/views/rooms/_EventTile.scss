@@ -52,6 +52,7 @@ $left-gutter: 64px;
 
 .mx_EventTile_isEditing {
     background-color: $header-panel-bg-color;
+    border-radius: 8px 8px 0 0;
 }
 
 .mx_EventTile .mx_SenderProfile {
