@@ -24,6 +24,17 @@ limitations under the License.
     margin: -7px -10px -5px -10px;
     overflow: visible !important;   // override mx_EventTile_content
 
+    .mx_EditMessageComposer_header {
+        position: absolute;
+        left: 0;
+        right: 0;
+        //height of the mx_BasicMessageComposer
+        bottom: 26px;
+        // What looks good
+        height: 8px;
+        border-radius: 8px 8px 0 0;
+        background-color: $header-panel-bg-color;
+    }
 
     .mx_BasicMessageComposer_input {
         border-radius: 4px;
@@ -47,8 +58,8 @@ limitations under the License.
         background: $header-panel-bg-color;
         z-index: 100;
         right: 0;
-        margin: 0 -110px 0 0;
-        padding-right: 147px;
+        // mx_EditMessageComposer margin (34px) + padding (3px)
+        padding-right: 37px;
         border-radius: 0 0 8px 8px;
 
         .mx_AccessibleButton {
