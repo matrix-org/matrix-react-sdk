@@ -34,6 +34,8 @@ import {UPDATE_EVENT} from "../../../stores/AsyncStore";
 import ActiveWidgetStore from "../../../stores/ActiveWidgetStore";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 import VoiceRecordComposerTile from "./VoiceRecordComposerTile";
+import GifButton from './GifButton';
+import {Gif} from '../gifpicker/Gif';
 
 function ComposerAvatar(props) {
     const MemberStatusMessageAvatar = sdk.getComponent('avatars.MemberStatusMessageAvatar');
@@ -67,7 +69,7 @@ const EmojiButton = ({addEmoji}) => {
     if (menuDisplayed) {
         const buttonRect = button.current.getBoundingClientRect();
         const EmojiPicker = sdk.getComponent('emojipicker.EmojiPicker');
-        contextMenu = <ContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu} catchTab={false}>
+        contextMenu = <ContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu}>
             <EmojiPicker onChoose={addEmoji} showQuickReactions={true} />
         </ContextMenu>;
     }
@@ -140,7 +142,7 @@ class UploadButton extends React.Component {
         }
 
         ContentMessages.sharedInstance().sendContentListToRoom(
-            tfiles, this.props.roomId, MatrixClientPeg.get(),
+            tfiles, this.props.roomId, MatrixClientPeg.get(), true,
         );
 
         // This is the onChange handler for a file form control, but we're
@@ -178,6 +180,7 @@ export default class MessageComposer extends React.Component {
         this._onRoomStateEvents = this._onRoomStateEvents.bind(this);
         this._onTombstoneClick = this._onTombstoneClick.bind(this);
         this.renderPlaceholderText = this.renderPlaceholderText.bind(this);
+        this.addGif = this.addGif.bind(this);
         WidgetStore.instance.on(UPDATE_EVENT, this._onWidgetUpdate);
         ActiveWidgetStore.on('update', this._onActiveWidgetUpdate);
         this._dispatcherRef = null;
@@ -317,6 +320,20 @@ export default class MessageComposer extends React.Component {
         });
     }
 
+    async addGif(gif: Gif) {
+        const cli = MatrixClientPeg.get();
+        const response = await fetch(gif.images.downsized.url);
+        const file = await response.blob();
+        file.name = gif.title;
+
+        ContentMessages.sharedInstance().sendContentListToRoom(
+            [file],
+            this.props.room.roomId,
+            cli,
+            false,
+        );
+    }
+
     sendMessage = () => {
         this.messageComposerInput._sendMessage();
     }
@@ -368,6 +385,14 @@ export default class MessageComposer extends React.Component {
                 SettingsStore.getValue("MessageComposerInput.showStickersButton") &&
                 !this.state.haveRecording) {
                 controls.push(<Stickerpicker key="stickerpicker_controls_button" room={this.props.room} />);
+            }
+
+            if (
+                SettingsStore.getValue(UIFeature.Widgets) &&
+                SettingsStore.getValue("feature_giphy_integration") &&
+                !this.state.haveRecording
+            ) {
+                controls.push(<GifButton key="gif_button" addGif={this.addGif} />);
             }
 
             if (SettingsStore.getValue("feature_voice_messages")) {

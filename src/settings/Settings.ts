@@ -276,6 +276,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td('Show stickers button'),
         default: true,
     },
+    "feature_giphy_integration": {
+        isFeature: true,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td('Show GIF picker button'),
+        default: false,
+    },
     // TODO: Wire up appropriately to UI (FTUE notifications)
     "Notifications.alwaysShowBadgeCounts": {
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
