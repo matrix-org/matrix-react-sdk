@@ -34,7 +34,6 @@ $left-gutter: 64px;
     left: 8px;
     cursor: pointer;
     user-select: none;
-    z-index: 101;
 }
 
 .mx_EventTile.mx_EventTile_info .mx_EventTile_avatar {
@@ -57,11 +56,20 @@ $left-gutter: 64px;
             border-left: none !important;
         }
     }
+
+    .mx_EventTile_avatar {
+        // Place this avatar the editor
+        z-index: 101;
+    }
+
+    .mx_SenderProfile {
+        // Place sender profile above the editor
+        z-index: 101;
+    }
 }
 
 .mx_EventTile .mx_SenderProfile {
     position: relative;
-    z-index: 101;
     color: $primary-fg-color;
     font-size: $font-14px;
     display: inline-block; /* anti-zalgo, with overflow hidden */

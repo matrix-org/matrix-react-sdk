@@ -26,9 +26,9 @@ limitations under the License.
     padding-top: 32px;
     // padding 32px + mx_BasicMessageComposer_input padding 2px
     top: -34px;
+    z-index: 100;
 
     .mx_BasicMessageComposer {
-        background-color: $header-panel-bg-color;
         .mx_BasicMessageComposer_input {
             border-radius: 4px;
             border: solid 1px $primary-hairline-color;
@@ -45,15 +45,12 @@ limitations under the License.
     }
 
     .mx_EditMessageComposer_buttons {
-        background-color: $header-panel-bg-color;
         // Match padding of mx_EditMessageComposer
         position: relative;
         padding-top: 6px;
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
-        // Place this above the sender profile
-        z-index: 102;
 
         .mx_AccessibleButton {
             margin-left: 5px;
