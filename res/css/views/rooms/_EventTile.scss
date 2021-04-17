@@ -62,6 +62,8 @@ $left-gutter: 64px;
 }
 
 .mx_EventTile .mx_SenderProfile {
+    position: relative;
+    z-index: 101;
     color: $primary-fg-color;
     font-size: $font-14px;
     display: inline-block; /* anti-zalgo, with overflow hidden */

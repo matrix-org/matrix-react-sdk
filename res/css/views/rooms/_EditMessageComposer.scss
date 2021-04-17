@@ -23,8 +23,10 @@ limitations under the License.
     z-index: 100;
     border-radius: 8px;
     padding: 2px;
-    // padding 6px + mx_BasicMessageComposer_input padding 2px
-    top: -4px;
+    // To contain the avatar and sender
+    padding-top: 32px;
+    // padding 32px + mx_BasicMessageComposer_input padding 2px
+    top: -34px;
 
     .mx_BasicMessageComposer {
         .mx_BasicMessageComposer_input {
@@ -53,5 +55,13 @@ limitations under the License.
             margin-left: 5px;
             padding: 5px 40px;
         }
+    }
+}
+
+.mx_EventTile_continuation {
+    .mx_EditMessageComposer {
+        padding: 2px;
+        // padding 2px + mx_BasicMessageComposer_input padding 2px
+        top: -4px;
     }
 }
