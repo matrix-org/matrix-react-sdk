@@ -68,6 +68,11 @@ $left-gutter: 64px;
     }
 }
 
+.mx_EventTile_isEditing.mx_EventTile_last {
+    // This number is from fiddling with this with inspector
+    padding-bottom: 28px;
+}
+
 .mx_EventTile .mx_SenderProfile {
     position: relative;
     color: $primary-fg-color;
