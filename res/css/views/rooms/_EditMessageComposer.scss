@@ -22,9 +22,9 @@ limitations under the License.
     right: 0;
     z-index: 100;
     border-radius: 8px;
-    padding: 6px;
+    padding: 2px;
     // padding 6px + mx_BasicMessageComposer_input padding 2px
-    top: -8px;
+    top: -4px;
 
     &:hover {
         // A 4px border appears on the event tile if it's being hovers
@@ -41,7 +41,7 @@ limitations under the License.
             max-height: 200px;
             padding: 2px 6px;
             // TODO: Why?
-            margin-left: 51px;
+            margin-left: 55px;
 
             &:focus {
                 border-color: $accent-color-50pct;
