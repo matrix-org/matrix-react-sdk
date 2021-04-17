@@ -53,6 +53,10 @@ $left-gutter: 64px;
 
 .mx_EventTile_isEditing {
     .mx_EventTile_line {
+        &:hover {
+            border-left: none !important;
+        }
+
         background-color: $header-panel-bg-color;
     }
 }
