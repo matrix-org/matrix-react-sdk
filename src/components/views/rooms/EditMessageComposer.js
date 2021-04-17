@@ -26,7 +26,6 @@ import {findEditableEvent} from '../../../utils/EventUtils';
 import {parseEvent} from '../../../editor/deserialize';
 import {PartCreator} from '../../../editor/parts';
 import EditorStateTransfer from '../../../utils/EditorStateTransfer';
-import classNames from 'classnames';
 import {EventStatus} from 'matrix-js-sdk/src/models/event';
 import BasicMessageComposer from "./BasicMessageComposer";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -280,22 +279,23 @@ export default class EditMessageComposer extends React.Component {
 
     render() {
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-        return (<div className={classNames("mx_EditMessageComposer", this.props.className)} onKeyDown={this._onKeyDown}>
-            <div className="mx_EditMessageComposer_header"></div>
-            <BasicMessageComposer
-                ref={this._setEditorRef}
-                model={this.model}
-                room={this._getRoom()}
-                initialCaret={this.props.editState.getCaret()}
-                label={_t("Edit message")}
-                onChange={this._onChange}
-            />
-            <div className="mx_EditMessageComposer_buttons">
-                <AccessibleButton kind="secondary" onClick={this._cancelEdit}>{_t("Cancel")}</AccessibleButton>
-                <AccessibleButton kind="primary" onClick={this._sendEdit} disabled={this.state.saveDisabled}>
-                    {_t("Save")}
-                </AccessibleButton>
+        return (
+            <div className="mx_EditMessageComposer" onKeyDown={this._onKeyDown}>
+                <BasicMessageComposer
+                    ref={this._setEditorRef}
+                    model={this.model}
+                    room={this._getRoom()}
+                    initialCaret={this.props.editState.getCaret()}
+                    label={_t("Edit message")}
+                    onChange={this._onChange}
+                />
+                <div className="mx_EditMessageComposer_buttons">
+                    <AccessibleButton kind="secondary" onClick={this._cancelEdit}>{_t("Cancel")}</AccessibleButton>
+                    <AccessibleButton kind="primary" onClick={this._sendEdit} disabled={this.state.saveDisabled}>
+                        {_t("Save")}
+                    </AccessibleButton>
+                </div>
             </div>
-        </div>);
+        );
     }
 }

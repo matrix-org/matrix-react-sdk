@@ -16,60 +16,49 @@ limitations under the License.
 */
 
 .mx_EditMessageComposer {
+    background: $header-panel-bg-color;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    border-radius: 8px;
+    padding: 6px;
+    // padding 6px + mx_BasicMessageComposer_input padding 2px
+    top: -8px;
 
-    padding: 3px;
-    // this is to try not make the text move but still have some
-    // padding around and in the editor.
-    // Actual values from fiddling around in inspector
-    margin: -7px -10px -5px -10px;
-    overflow: visible !important;   // override mx_EventTile_content
-
-    .mx_EditMessageComposer_header {
-        position: absolute;
-        left: 0;
-        right: 0;
-        //height of the mx_BasicMessageComposer
-        bottom: 26px;
-        // What looks good
-        height: 8px;
-        border-radius: 8px 8px 0 0;
-        background-color: $header-panel-bg-color;
+    &:hover {
+        // A 4px border appears on the event tile if it's being hovers
+        // that shifts the whole event to the right and therefore we
+        // try to balance that here to avoid any movement
+        left: -4px;
     }
 
-    .mx_BasicMessageComposer_input {
-        border-radius: 4px;
-        border: solid 1px $primary-hairline-color;
-        background-color: $primary-bg-color;
-        max-height: 200px;
-        padding: 2px 6px;
+    .mx_BasicMessageComposer {
+        .mx_BasicMessageComposer_input {
+            border-radius: 4px;
+            border: solid 1px $primary-hairline-color;
+            background-color: $primary-bg-color;
+            max-height: 200px;
+            padding: 2px 6px;
+            // TODO: Why?
+            margin-left: 51px;
 
-        &:focus {
-            border-color: $accent-color-50pct;
+            &:focus {
+                border-color: $accent-color-50pct;
+            }
         }
     }
 
     .mx_EditMessageComposer_buttons {
+        // Match padding of mx_EditMessageComposer
+        padding-top: 6px;
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
-        padding: 5px;
-        position: absolute;
-        left: 0;
-        background: $header-panel-bg-color;
-        z-index: 100;
-        right: 0;
-        // mx_EditMessageComposer margin (34px) + padding (3px)
-        padding-right: 37px;
-        border-radius: 0 0 8px 8px;
 
         .mx_AccessibleButton {
             margin-left: 5px;
             padding: 5px 40px;
         }
     }
-}
-
-.mx_EventTile_last .mx_EditMessageComposer_buttons {
-    position: static;
-    margin-right: -147px;
 }
