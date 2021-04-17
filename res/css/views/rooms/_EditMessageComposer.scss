@@ -35,8 +35,8 @@ limitations under the License.
             background-color: $primary-bg-color;
             max-height: 200px;
             padding: 2px 6px;
-            // TODO: Why?
-            margin-left: 55px;
+            // mx_EventTile left-gutter 64px - border 1px - padding 6px - mx_EditMessageComposer 4px
+            margin-left: 53px;
 
             &:focus {
                 border-color: $accent-color-50pct;
