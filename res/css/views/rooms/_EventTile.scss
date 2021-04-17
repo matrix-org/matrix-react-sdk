@@ -34,6 +34,7 @@ $left-gutter: 64px;
     left: 8px;
     cursor: pointer;
     user-select: none;
+    z-index: 101;
 }
 
 .mx_EventTile.mx_EventTile_info .mx_EventTile_avatar {
