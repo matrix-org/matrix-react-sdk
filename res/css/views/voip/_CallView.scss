@@ -290,6 +290,7 @@ limitations under the License.
     width: 100%;
     opacity: 1;
     transition: opacity 0.5s;
+    z-index: 51;
 }
 
 .mx_CallView_callControls_hidden {
