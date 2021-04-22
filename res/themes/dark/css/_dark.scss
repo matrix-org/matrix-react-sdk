@@ -79,13 +79,12 @@ $avatar-bg-color: $bg-color;
 $h3-color: $primary-fg-color;
 
 $dialog-title-fg-color: $base-text-color;
-$dialog-backdrop-color: #000;
+$dialog-backdrop-color: rgba(0, 0, 0, 0.8);
 $dialog-shadow-color: rgba(0, 0, 0, 0.48);
 $dialog-close-fg-color: #9fa9ba;
 
 $dialog-background-bg-color: $header-panel-bg-color;
-$lightbox-background-bg-color: #000;
-$lightbox-background-bg-opacity: 85%;
+$lightbox-background-bg-color: rgba(0, 0, 0, 0.85);
 
 $settings-grey-fg-color: #a2a2a2;
 $settings-profile-placeholder-bg-color: #21262c;
