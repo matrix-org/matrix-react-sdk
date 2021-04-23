@@ -19,8 +19,8 @@ limitations under the License.
     height: 100%;
     background-color: #000;
     z-index: 50;
-    margin-top: auto;
-    margin-bottom: auto;
+    object-fit: contain;
+    object-position: center;
 }
 
 .mx_VideoFeed_local {
