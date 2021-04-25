@@ -355,6 +355,16 @@ export const Commands = [
         category: CommandCategories.actions,
     }),
     new Command({
+        command: 'status',
+        args: '[<message>]',
+        description: _td('Set or clear your custom status'),
+        isEnabled: () => SettingsStore.getValue("feature_custom_status"),
+        runFn: function(roomId, args) {
+            return success(MatrixClientPeg.get()._unstable_setStatusMessage(args));
+        },
+        category: CommandCategories.actions,
+    }),
+    new Command({
         command: 'roomavatar',
         args: '[<mxc_url>]',
         description: _td('Changes the avatar of the current room'),
