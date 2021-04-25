@@ -1432,7 +1432,7 @@ class TimelinePanel extends React.Component {
                 highlightedEventId={this.props.highlightedEventId}
                 readMarkerEventId={this.state.readMarkerEventId}
                 readMarkerVisible={this.state.readMarkerVisible}
-                suppressFirstDateSeparator={this.state.canBackPaginate && this.state.firstVisibleEventIndex === 0}
+                canBackPaginate={this.state.canBackPaginate && this.state.firstVisibleEventIndex === 0}
                 showUrlPreview={this.props.showUrlPreview}
                 showReadReceipts={this.props.showReadReceipts}
                 ourUserId={MatrixClientPeg.get().credentials.userId}
