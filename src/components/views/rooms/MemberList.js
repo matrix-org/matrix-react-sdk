@@ -20,7 +20,7 @@ import React from 'react';
 import { _t } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
 import dis from '../../../dispatcher/dispatcher';
-import {isValid3pidInvite} from "../../../RoomInvite";
+import {isValid3pidInvite} from "../../../crossplatform/common";
 import rate_limited_func from "../../../ratelimitedfunc";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import * as sdk from "../../../index";

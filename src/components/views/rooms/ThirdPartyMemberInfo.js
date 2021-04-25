@@ -22,7 +22,7 @@ import {_t} from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
 import * as sdk from "../../../index";
 import Modal from "../../../Modal";
-import {isValid3pidInvite} from "../../../RoomInvite";
+import {isValid3pidInvite} from "../../../crossplatform/common";
 import RoomAvatar from "../avatars/RoomAvatar";
 import RoomName from "../elements/RoomName";
 import {replaceableComponent} from "../../../utils/replaceableComponent";

@@ -16,7 +16,7 @@ limitations under the License.
 import {MatrixClientPeg} from './MatrixClientPeg';
 import { _t } from './languageHandler';
 import * as Roles from './Roles';
-import {isValid3pidInvite} from "./RoomInvite";
+import {isValid3pidInvite} from "./crossplatform/common";
 import SettingsStore from "./settings/SettingsStore";
 import {ALL_RULE_TYPES, ROOM_RULE_TYPES, SERVER_RULE_TYPES, USER_RULE_TYPES} from "./mjolnir/BanList";
 import {WIDGET_LAYOUT_EVENT_TYPE} from "./stores/widgets/WidgetLayoutStore";
