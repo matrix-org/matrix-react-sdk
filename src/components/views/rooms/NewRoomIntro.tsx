@@ -17,16 +17,12 @@ limitations under the License.
 import React, {useContext} from "react";
 import {EventType} from "matrix-js-sdk/src/@types/event";
 
+import RoomIntro from "./RoomIntro";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import RoomContext from "../../../contexts/RoomContext";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import {_t} from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
-import MiniAvatarUploader, {AVATAR_SIZE} from "../elements/MiniAvatarUploader";
-import RoomAvatar from "../avatars/RoomAvatar";
-import defaultDispatcher from "../../../dispatcher/dispatcher";
-import {ViewUserPayload} from "../../../dispatcher/payloads/ViewUserPayload";
-import {Action} from "../../../dispatcher/actions";
 import dis from "../../../dispatcher/dispatcher";
 import SpaceStore from "../../../stores/SpaceStore";
 import {showSpaceInvite} from "../../../utils/space";
@@ -36,7 +32,6 @@ const NewRoomIntro = () => {
     const {room, roomId} = useContext(RoomContext);
 
     const dmPartner = DMRoomMap.shared().getUserIdForRoomId(roomId);
-    let body;
     if (dmPartner) {
         let caption;
         if ((room.getJoinedMemberCount() + room.getInvitedMemberCount()) === 2) {
@@ -45,22 +40,12 @@ const NewRoomIntro = () => {
 
         const member = room?.getMember(dmPartner);
         const displayName = member?.rawDisplayName || dmPartner;
-        body = <React.Fragment>
-            <RoomAvatar room={room} width={AVATAR_SIZE} height={AVATAR_SIZE} onClick={() => {
-                defaultDispatcher.dispatch<ViewUserPayload>({
-                    action: Action.ViewUser,
-                    // XXX: We should be using a real member object and not assuming what the receiver wants.
-                    member: member || {userId: dmPartner},
-                });
-            }} />
-
-            <h2>{ room.name }</h2>
-
+        return <RoomIntro>
             <p>{_t("This is the beginning of your direct message history with <displayName/>.", {}, {
                 displayName: () => <b>{ displayName }</b>,
             })}</p>
             { caption && <p>{ caption }</p> }
-        </React.Fragment>;
+        </RoomIntro>;
     } else {
         const inRoom = room && room.getMyMembership() === "join";
         const topic = room.currentState.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic;
@@ -146,29 +131,14 @@ const NewRoomIntro = () => {
             </div>;
         }
 
-        const avatarUrl = room.currentState.getStateEvents(EventType.RoomAvatar, "")?.getContent()?.url;
-        body = <React.Fragment>
-            <MiniAvatarUploader
-                hasAvatar={!!avatarUrl}
-                noAvatarLabel={_t("Add a photo, so people can easily spot your room.")}
-                setAvatarUrl={url => cli.sendStateEvent(roomId, EventType.RoomAvatar, { url }, '')}
-            >
-                <RoomAvatar room={room} width={AVATAR_SIZE} height={AVATAR_SIZE} />
-            </MiniAvatarUploader>
-
-            <h2>{ room.name }</h2>
-
+        return <RoomIntro>
             <p>{createdText} {_t("This is the start of <roomName/>.", {}, {
                 roomName: () => <b>{ room.name }</b>,
             })}</p>
-            <p>{topicText}</p>
+            { topicText && <p>{topicText}</p> }
             { buttons }
-        </React.Fragment>;
+        </RoomIntro>;
     }
-
-    return <div className="mx_NewRoomIntro">
-        { body }
-    </div>;
 };
 
 export default NewRoomIntro;
