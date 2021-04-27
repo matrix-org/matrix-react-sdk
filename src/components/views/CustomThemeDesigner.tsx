@@ -49,6 +49,7 @@ interface IState {
     isDark: boolean;
 }
 
+// TODO: Figure out what an Element theme would be instead of Riot
 const LIGHT_DEFAULT = {
     "accent-color": '#03b381',
     "primary-color": '#2e2f32',
