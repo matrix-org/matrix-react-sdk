@@ -27,6 +27,9 @@
 @import "./structures/_RoomView.scss";
 @import "./structures/_ScrollPanel.scss";
 @import "./structures/_SearchBox.scss";
+@import "./structures/_SpacePanel.scss";
+@import "./structures/_SpaceRoomDirectory.scss";
+@import "./structures/_SpaceRoomView.scss";
 @import "./structures/_TabbedView.scss";
 @import "./structures/_ToastContainer.scss";
 @import "./structures/_UploadBar.scss";
@@ -57,6 +60,7 @@
 @import "./views/context_menus/_MessageContextMenu.scss";
 @import "./views/context_menus/_StatusMessageContextMenu.scss";
 @import "./views/context_menus/_TagTileContextMenu.scss";
+@import "./views/dialogs/_AddExistingToSpaceDialog.scss";
 @import "./views/dialogs/_AddressPickerDialog.scss";
 @import "./views/dialogs/_Analytics.scss";
 @import "./views/dialogs/_BugReportDialog.scss";
@@ -90,6 +94,7 @@
 @import "./views/dialogs/_SettingsDialog.scss";
 @import "./views/dialogs/_ShareDialog.scss";
 @import "./views/dialogs/_SlashCommandHelpDialog.scss";
+@import "./views/dialogs/_SpaceSettingsDialog.scss";
 @import "./views/dialogs/_TabbedIntegrationManagerDialog.scss";
 @import "./views/dialogs/_TermsDialog.scss";
 @import "./views/dialogs/_UploadConfirmDialog.scss";
@@ -113,11 +118,13 @@
 @import "./views/elements/_EditableItemList.scss";
 @import "./views/elements/_ErrorBoundary.scss";
 @import "./views/elements/_EventListSummary.scss";
+@import "./views/elements/_FacePile.scss";
 @import "./views/elements/_Field.scss";
 @import "./views/elements/_FormButton.scss";
 @import "./views/elements/_ImageView.scss";
 @import "./views/elements/_InfoTooltip.scss";
 @import "./views/elements/_InlineSpinner.scss";
+@import "./views/elements/_InviteReason.scss";
 @import "./views/elements/_ManageIntegsButton.scss";
 @import "./views/elements/_MiniAvatarUploader.scss";
 @import "./views/elements/_PowerSelector.scss";
@@ -207,6 +214,7 @@
 @import "./views/rooms/_SendMessageComposer.scss";
 @import "./views/rooms/_Stickers.scss";
 @import "./views/rooms/_TopUnreadMessagesBar.scss";
+@import "./views/rooms/_VoiceRecordComposerTile.scss";
 @import "./views/rooms/_WhoIsTypingTile.scss";
 @import "./views/settings/_AvatarSetting.scss";
 @import "./views/settings/_CrossSigningPanel.scss";
@@ -220,6 +228,7 @@
 @import "./views/settings/_SecureBackupPanel.scss";
 @import "./views/settings/_SetIdServer.scss";
 @import "./views/settings/_SetIntegrationManager.scss";
+@import "./views/settings/_SpellCheckLanguages.scss";
 @import "./views/settings/_UpdateCheckButton.scss";
 @import "./views/settings/tabs/_SettingsTab.scss";
 @import "./views/settings/tabs/room/_GeneralRoomSettingsTab.scss";
@@ -233,12 +242,19 @@
 @import "./views/settings/tabs/user/_PreferencesUserSettingsTab.scss";
 @import "./views/settings/tabs/user/_SecurityUserSettingsTab.scss";
 @import "./views/settings/tabs/user/_VoiceUserSettingsTab.scss";
+@import "./views/spaces/_SpaceBasicSettings.scss";
+@import "./views/spaces/_SpaceCreateMenu.scss";
+@import "./views/spaces/_SpacePublicShare.scss";
 @import "./views/terms/_InlineTermsAgreement.scss";
 @import "./views/toasts/_AnalyticsToast.scss";
 @import "./views/toasts/_NonUrgentEchoFailureToast.scss";
 @import "./views/verification/_VerificationShowSas.scss";
+@import "./views/voice_messages/_PlayPauseButton.scss";
+@import "./views/voice_messages/_PlaybackContainer.scss";
+@import "./views/voice_messages/_Waveform.scss";
 @import "./views/voip/_CallContainer.scss";
 @import "./views/voip/_CallView.scss";
+@import "./views/voip/_CallViewForRoom.scss";
 @import "./views/voip/_DialPad.scss";
 @import "./views/voip/_DialPadContextMenu.scss";
 @import "./views/voip/_DialPadModal.scss";

@@ -134,6 +134,18 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
+    "feature_dnd": {
+        isFeature: true,
+        displayName: _td("Show options to enable 'Do not disturb' mode"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
+    "feature_voice_messages": {
+        isFeature: true,
+        displayName: _td("Send and receive voice messages (in development)"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "feature_latex_maths": {
         isFeature: true,
         displayName: _td("Render LaTeX maths in messages"),
@@ -224,6 +236,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         // TODO: Remove flag before launch: https://github.com/vector-im/element-web/issues/14231
         displayName: _td("Enable advanced debugging for the room list"),
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: false,
+    },
+    "doNotDisturb": {
+        supportedLevels: [SettingLevel.DEVICE],
         default: false,
     },
     "mjolnirRooms": {
@@ -334,6 +350,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "showCodeLineNumbers": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Show line numbers in code blocks'),
+        default: true,
+    },
+    "scrollToBottomOnMessageSent": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Jump to the bottom of the timeline when you send a message'),
         default: true,
     },
     "Pill.shouldShowPillAvatar": {
@@ -638,6 +659,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: 3000,
     },
     "showCallButtonsInComposer": {
+        // Dev note: This is no longer "in composer" but is instead "in room header".
+        // TODO: Rename with settings v3
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: true,
         controller: new UIFeatureController(UIFeature.Voip),
