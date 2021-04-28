@@ -389,19 +389,21 @@ export default class SecurityUserSettingsTab extends React.Component {
                 {warning}
                 <div className="mx_SettingsTab_heading">{_t("Where you’re logged in")}</div>
                 <div className="mx_SettingsTab_section">
-                    <span>
-                        {_t(
-                            "Manage the names of and sign out of your sessions below or " +
-                            "<a>verify them in your User Profile</a>.", {},
-                            {
-                                a: sub => <AccessibleButton kind="link" onClick={this._onGoToUserProfileClick}>
-                                    {sub}
-                                </AccessibleButton>,
-                            },
-                        )}
-                    </span>
                     <div className='mx_SettingsTab_subsectionText'>
-                        {_t("A session's public name is visible to people you communicate with")}
+                        <p>
+                            {_t(
+                                "Manage the names of and sign out of your sessions below or " +
+                                "<a>verify them in your User Profile</a>.", {},
+                                {
+                                    a: sub => <AccessibleButton kind="link" onClick={this._onGoToUserProfileClick}>
+                                        {sub}
+                                    </AccessibleButton>,
+                                },
+                            )}
+                        </p>
+                        <p>
+                            {_t("A session's public name is visible to people you communicate with.")}
+                        </p>
                         <DevicesPanel />
                     </div>
                 </div>

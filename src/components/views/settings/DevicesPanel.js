@@ -145,8 +145,19 @@ export default class DevicesPanel extends React.Component {
                     continueKind: "danger",
                 },
             };
+            const signOutDevs = this.state.devices.filter(dev => this.state.selectedDevices.includes(dev.device_id));
+            const signOutDevsDiv =
+                <div className="mx_DevicesPanel mx_DevicesPanel_signout_devices">
+                    <div className="mx_DevicesPanel_header">
+                        <div className="mx_DevicesPanel_deviceId">{_t("ID")}</div>
+                        <div className="mx_DevicesPanel_deviceName">{_t("Public Name")}</div>
+                        <div className="mx_DevicesPanel_deviceLastSeen">{_t("Last seen")}</div>
+                    </div>
+                    {signOutDevs.map(dev => this._renderDevice(dev, false))}
+                </div>;
             Modal.createTrackedDialog('Delete Device Dialog', '', InteractiveAuthDialog, {
-                title: _t("Authentication"),
+                title: _t("Session Deletion"),
+                body: signOutDevsDiv,
                 matrixClient: MatrixClientPeg.get(),
                 authData: error.data,
                 makeRequest: this._makeDeleteRequest.bind(this),
@@ -179,13 +190,14 @@ export default class DevicesPanel extends React.Component {
         );
     }
 
-    _renderDevice(device) {
+    _renderDevice(device, editable) {
         const DevicesPanelEntry = sdk.getComponent('settings.DevicesPanelEntry');
         return <DevicesPanelEntry
             key={device.device_id}
             device={device}
             selected={this.state.selectedDevices.includes(device.device_id)}
             onDeviceToggled={this._onDeviceSelectionToggled}
+            editable={editable}
         />;
     }
 
@@ -197,7 +209,7 @@ export default class DevicesPanel extends React.Component {
             const classes = classNames(this.props.className, "error");
             return (
                 <div className={classes}>
-                    { this.state.deviceLoadError }
+                    { this.state.deviceLoadError}
                 </div>
             );
         }
@@ -213,22 +225,28 @@ export default class DevicesPanel extends React.Component {
 
         const deleteButton = this.state.deleting ?
             <Spinner w={22} h={22} /> :
-            <AccessibleButton onClick={this._onDeleteClick} kind="danger_sm">
-               { _t("Delete %(count)s sessions", {count: this.state.selectedDevices.length}) }
+            <AccessibleButton
+                onClick={this._onDeleteClick}
+                kind="danger"
+                disabled={this.state.selectedDevices.length === 0}
+            >
+                {_t("Delete")}
             </AccessibleButton>;
 
         const classes = classNames(this.props.className, "mx_DevicesPanel");
         return (
-            <div className={classes}>
-                <div className="mx_DevicesPanel_header">
-                    <div className="mx_DevicesPanel_deviceId">{ _t("ID") }</div>
-                    <div className="mx_DevicesPanel_deviceName">{ _t("Public Name") }</div>
-                    <div className="mx_DevicesPanel_deviceLastSeen">{ _t("Last seen") }</div>
-                    <div className="mx_DevicesPanel_deviceButtons">
-                        { this.state.selectedDevices.length > 0 ? deleteButton : null }
+            <div>
+                <div className={classes}>
+                    <div className="mx_DevicesPanel_header">
+                        <div className="mx_DevicesPanel_deviceId">{_t("ID")}</div>
+                        <div className="mx_DevicesPanel_deviceName">{_t("Public Name")}</div>
+                        <div className="mx_DevicesPanel_deviceLastSeen">{_t("Last seen")}</div>
                     </div>
+                    {devices.map(dev => this._renderDevice(dev, true))}
                 </div>
-                { devices.map(this._renderDevice) }
+                <div className="mx_DevicesPanel_deviceButtons">
+                    {deleteButton}
+                </div>
             </div>
         );
     }
