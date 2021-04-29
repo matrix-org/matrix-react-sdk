@@ -38,8 +38,8 @@ import IconizedContextMenu, {
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 import {RoomTileViewModel} from "../../../domain/session/leftpanel/RoomTileViewModel";
 
-interface IProps {
-    model: RoomTileViewModel;
+interface IProps<T> {
+    model: T;
 }
 
 type PartialDOMRect = Pick<DOMRect, "left" | "bottom">;
@@ -59,12 +59,71 @@ const contextMenuBelow = (elementRect: PartialDOMRect) => {
     return {left, top, chevronFace};
 };
 
+class ModelView<V, S> extends React.PureComponent<IProps<V>, S> {
+    constructor(props) {
+        super(props);
+        this._actions = null;
+    }
+
+    public setActions(actions: {string: () => void}) {
+        this._actions = actions;
+    }
+
+    get model(): V {
+        return this.props.model;
+    }
+
+    public componentDidMount() {
+        this.model.on("change", this.rerender);
+        this.registerActions(this.model);
+    }
+
+    public componentDidUpdate(prevProps: Readonly<IProps<V>>, prevState: Readonly<IState>) {
+        if (prevProps.model !== this.model) {
+            prevProps.model.off("change", this.rerender);
+            this.unregisterActions(prevProps.model);
+            prevProps.model.destroy();
+            this.model.on("change", this.rerender);
+            this.registerActions(this.model);
+        }
+    }
+
+    public componentWillUnmount() {
+        this.model.off("change", this.rerender);
+        this.unregisterActions(this.model);
+        this.model.destroy();
+    }
+
+    private rerender = () => {
+        this.forceUpdate();
+    };
+
+    private registerActions(model: V) {
+        if (this._actions) {
+            for (const [name, handler] of Object.entries(this._actions)) {
+                this.model.on(name, handler);
+            }
+        }
+    }
+
+    private unregisterActions(model: V) {
+        if (this._actions) {
+            for (const [name, handler] of Object.entries(this._actions)) {
+                this.model.off(name, handler);
+            }
+        }        
+    }
+}
+
 @replaceableComponent("views.rooms.RoomTile")
-export default class RoomTile extends React.PureComponent<IProps, IState> {
+export default class RoomTile extends ModelView<RoomTileViewModel, IState> {
     private roomTileRef = createRef<HTMLDivElement>();
 
-    constructor(props: IProps) {
+    constructor(props: IProps<RoomTileViewModel>) {
         super(props);
+        this.setActions({
+            ensureVisible: this.scrollIntoView
+        });
         this.state = {
             notificationsMenuPosition: null,
             generalMenuPosition: null,
@@ -72,33 +131,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
     }
 
     public componentDidMount() {
+        super.componentDidMount();
         // when we're first rendered (or our sublist is expanded) make sure we are visible if we're active
-        if (this.props.model.selected) {
+        if (this.model.selected) {
             this.scrollIntoView();
         }
-        this.props.model.on("change", this.rerender);
-        this.props.model.on("ensureVisible", this.scrollIntoView);
     }
-
-    public componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>) {
-        if (prevProps.model !== this.props.model) {
-            prevProps.model.off("change", this.rerender);
-            prevProps.model.off("ensureVisible", this.scrollIntoView);
-            prevProps.model.destroy();
-            this.props.model.on("change", this.rerender);
-            this.props.model.on("ensureVisible", this.scrollIntoView);
-        }
-    }
-
-    public componentWillUnmount() {
-        this.props.model.off("change", this.rerender);
-        this.props.model.off("ensureVisible", this.scrollIntoView);
-        this.props.model.destroy();
-    }
-
-    private rerender = () => {
-        this.forceUpdate();
-    };
 
     private scrollIntoView = () => {
         if (!this.roomTileRef.current) return;
