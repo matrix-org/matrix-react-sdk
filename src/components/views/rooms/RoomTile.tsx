@@ -153,7 +153,7 @@ export default class RoomTile extends ModelView<RoomTileViewModel, IState> {
         ev.preventDefault();
         ev.stopPropagation();
         const clearSearch = ev && (ev.key === Key.ENTER || ev.key === Key.SPACE);
-        this.props.model.open(clearSearch);
+        this.model.open(clearSearch);
     };
 
 
@@ -177,7 +177,7 @@ export default class RoomTile extends ModelView<RoomTileViewModel, IState> {
 
     private onContextMenu = (ev: React.MouseEvent) => {
         // If we don't have a context menu to show, ignore the action.
-        if (!this.props.model.showContextMenu) return;
+        if (!this.model.showContextMenu) return;
 
         ev.preventDefault();
         ev.stopPropagation();
@@ -219,37 +219,37 @@ export default class RoomTile extends ModelView<RoomTileViewModel, IState> {
     };
 
     private onLeaveRoomClick = (ev: ButtonEvent) => {
-        this.props.model.leave();
+        this.model.leave();
         this.closeGeneralMenu(ev);
     };
 
     private onForgetRoomClick = (ev: ButtonEvent) => {
-        this.props.model.forget();
+        this.model.forget();
         this.closeGeneralMenu(ev);
     };
 
     private onOpenRoomSettings = (ev: ButtonEvent) => {
-        this.props.model.openSettings();
+        this.model.openSettings();
         this.closeGeneralMenu(ev);
     };
 
     private onInviteClick = (ev: ButtonEvent) => {
-        this.props.model.invitePeople();
+        this.model.invitePeople();
         this.closeGeneralMenu(ev);
     };
 
     private async saveNotifState(ev: ButtonEvent, volume: Volume) {
-        this.props.model.setNotificationVolume(volume);
+        this.model.setNotificationVolume(volume);
         this.closeNotificationsMenuOnEnter(ev);
     }
 
     private async toggleFavourite(ev: ButtonEvent) {
-        this.props.model.toggleFavourite();
+        this.model.toggleFavourite();
         this.closeGeneralMenuOnEnter(ev);
     }
 
     private async toggleLowPriority(ev: ButtonEvent) {
-        this.props.model.toggleLowPriority();
+        this.model.toggleLowPriority();
         this.closeGeneralMenuOnEnter(ev);
     }
 
@@ -259,12 +259,12 @@ export default class RoomTile extends ModelView<RoomTileViewModel, IState> {
     private onClickMute = ev => this.saveNotifState(ev, MUTE);
 
     private renderNotificationsMenu(isActive: boolean): React.ReactElement {
-        if (!this.props.model.showNotificationMenu) {
+        if (!this.model.showNotificationMenu) {
             // the menu makes no sense in these cases so do not show one
             return null;
         }
 
-        const volume = this.props.model.notificationVolume;
+        const volume = this.model.notificationVolume;
 
         let contextMenu = null;
         if (this.state.notificationsMenuPosition) {
@@ -329,10 +329,10 @@ export default class RoomTile extends ModelView<RoomTileViewModel, IState> {
     }
 
     private renderGeneralMenu(): React.ReactElement {
-        if (!this.props.model.showContextMenu) return null; // no menu to show
+        if (!this.model.showContextMenu) return null; // no menu to show
 
         let contextMenu = null;
-        if (this.state.generalMenuPosition && this.props.model.isArchived) {
+        if (this.state.generalMenuPosition && this.model.isArchived) {
             contextMenu = <IconizedContextMenu
                 {...contextMenuBelow(this.state.generalMenuPosition)}
                 onFinished={this.onCloseGeneralMenu}
@@ -348,7 +348,7 @@ export default class RoomTile extends ModelView<RoomTileViewModel, IState> {
                 </IconizedContextMenuOptionList>
             </IconizedContextMenu>;
         } else if (this.state.generalMenuPosition) {
-            const favouriteLabel = this.props.model.isFavourite ? _t("Favourited") : _t("Favourite");
+            const favouriteLabel = this.model.isFavourite ? _t("Favourited") : _t("Favourite");
             contextMenu = <IconizedContextMenu
                 {...contextMenuBelow(this.state.generalMenuPosition)}
                 onFinished={this.onCloseGeneralMenu}
@@ -358,17 +358,17 @@ export default class RoomTile extends ModelView<RoomTileViewModel, IState> {
                 <IconizedContextMenuOptionList>
                     <IconizedContextMenuCheckbox
                         onClick={(e) => this.toggleFavourite(e)}
-                        active={this.props.model.isFavourite}
+                        active={this.model.isFavourite}
                         label={favouriteLabel}
                         iconClassName="mx_RoomTile_iconStar"
                     />
                     <IconizedContextMenuCheckbox
                         onClick={(e) => this.toggleLowPriority(e)}
-                        active={this.props.model.isLowPriority}
+                        active={this.model.isLowPriority}
                         label={_t("Low Priority")}
                         iconClassName="mx_RoomTile_iconArrowDown"
                     />
-                    {this.props.model.canInvite ? (
+                    {this.model.canInvite ? (
                         <IconizedContextMenuOption
                             onClick={this.onInviteClick}
                             label={_t("Invite People")}
@@ -407,38 +407,38 @@ export default class RoomTile extends ModelView<RoomTileViewModel, IState> {
     public render(): React.ReactElement {
         const classes = classNames({
             'mx_RoomTile': true,
-            'mx_RoomTile_selected': this.props.model.selected,
+            'mx_RoomTile_selected': this.model.selected,
             'mx_RoomTile_hasMenuOpen': !!(this.state.generalMenuPosition || this.state.notificationsMenuPosition),
-            'mx_RoomTile_minimized': this.props.model.isMinimized,
+            'mx_RoomTile_minimized': this.model.isMinimized,
         });
 
         const roomAvatar = <DecoratedRoomAvatar
-            room={this.props.model.room}
+            room={this.model.room}
             avatarSize={32}
-            displayBadge={this.props.model.isMinimized}
-            oobData={({avatarUrl: this.props.model.avatarMxc})}
+            displayBadge={this.model.isMinimized}
+            oobData={({avatarUrl: this.model.avatarMxc})}
         />;
 
-        const {notificationState} = this.props.model;
+        const {notificationState} = this.model;
         let badge: React.ReactNode;
-        if (!this.props.model.isMinimized) {
+        if (!this.model.isMinimized) {
             // aria-hidden because we summarise the unread count/highlight status in a manual aria-label below
             badge = (
                 <div className="mx_RoomTile_badgeContainer" aria-hidden="true">
                     <NotificationBadge
                         notification={notificationState}
                         forceCount={false}
-                        roomId={this.props.model.id}
+                        roomId={this.model.id}
                     />
                 </div>
             );
         }
 
         let messagePreview = null;
-        if (this.props.model.messagePreview) {
+        if (this.model.messagePreview) {
             messagePreview = (
-                <div className="mx_RoomTile_messagePreview" id={messagePreviewId(this.props.model.id)}>
-                    {this.props.model.messagePreview}
+                <div className="mx_RoomTile_messagePreview" id={messagePreviewId(this.model.id)}>
+                    {this.model.messagePreview}
                 </div>
             );
         }
@@ -449,7 +449,7 @@ export default class RoomTile extends ModelView<RoomTileViewModel, IState> {
             "mx_RoomTile_nameHasUnreadEvents": notificationState.isUnread,
         });
 
-        const {name} = this.props.model;
+        const {name} = this.model;
         let nameContainer = (
             <div className="mx_RoomTile_nameContainer">
                 <div title={name} className={nameClasses} tabIndex={-1} dir="auto">
@@ -458,11 +458,11 @@ export default class RoomTile extends ModelView<RoomTileViewModel, IState> {
                 {messagePreview}
             </div>
         );
-        if (this.props.model.isMinimized) nameContainer = null;
+        if (this.model.isMinimized) nameContainer = null;
 
         let ariaLabel = name;
         // The following labels are written in such a fashion to increase screen reader efficiency (speed).
-        if (this.props.model.isInvite) {
+        if (this.model.isInvite) {
             // append nothing
         } else if (notificationState.hasMentions) {
             ariaLabel += " " + _t("%(count)s unread messages including mentions.", {
@@ -478,12 +478,12 @@ export default class RoomTile extends ModelView<RoomTileViewModel, IState> {
 
         let ariaDescribedBy: string;
         if (messagePreview) {
-            ariaDescribedBy = messagePreviewId(this.props.model.id);
+            ariaDescribedBy = messagePreviewId(this.model.id);
         }
 
         const props: Partial<React.ComponentProps<typeof AccessibleTooltipButton>> = {};
         let Button: React.ComponentType<React.ComponentProps<typeof AccessibleButton>> = AccessibleButton;
-        if (this.props.model.isMinimized) {
+        if (this.model.isMinimized) {
             Button = AccessibleTooltipButton;
             props.title = name;
             // force the tooltip to hide whilst we are showing the context menu
@@ -504,7 +504,7 @@ export default class RoomTile extends ModelView<RoomTileViewModel, IState> {
                             onContextMenu={this.onContextMenu}
                             role="treeitem"
                             aria-label={ariaLabel}
-                            aria-selected={this.props.model.selected}
+                            aria-selected={this.model.selected}
                             aria-describedby={ariaDescribedBy}
                         >
                             {roomAvatar}
