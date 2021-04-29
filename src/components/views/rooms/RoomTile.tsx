@@ -65,6 +65,9 @@ class ModelView<V, S> extends React.PureComponent<IProps<V>, S> {
         this._actions = null;
     }
 
+    /** Actions are events (other than change) on the view model that should
+    trigger an imperative action in the view, rather than a rerender,
+    which should always happen trough the change event. */
     public setActions(actions: {string: () => void}) {
         this._actions = actions;
     }
