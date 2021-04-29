@@ -43,23 +43,6 @@ interface IProps<T extends ViewModel> {
     model: T;
 }
 
-type PartialDOMRect = Pick<DOMRect, "left" | "bottom">;
-
-interface IState {
-    notificationsMenuPosition: PartialDOMRect;
-    generalMenuPosition: PartialDOMRect;
-}
-
-const messagePreviewId = (roomId: string) => `mx_RoomTile_messagePreview_${roomId}`;
-
-const contextMenuBelow = (elementRect: PartialDOMRect) => {
-    // align the context menu's icons with the icon which opened the context menu
-    const left = elementRect.left + window.pageXOffset - 9;
-    const top = elementRect.bottom + window.pageYOffset + 17;
-    const chevronFace = ChevronFace.None;
-    return {left, top, chevronFace};
-};
-
 class ModelView<V extends ViewModel, S extends V> extends React.PureComponent<IProps<V>, S> {
     
     private actions: {[name: string]: () => void} = null;
@@ -130,7 +113,23 @@ class ModelView<V extends ViewModel, S extends V> extends React.PureComponent<IP
         return state;
     }
 }
+
+type PartialDOMRect = Pick<DOMRect, "left" | "bottom">;
+
+interface IState extends RoomTileViewModel {
+    notificationsMenuPosition: PartialDOMRect;
+    generalMenuPosition: PartialDOMRect;
 }
+
+const messagePreviewId = (roomId: string) => `mx_RoomTile_messagePreview_${roomId}`;
+
+const contextMenuBelow = (elementRect: PartialDOMRect) => {
+    // align the context menu's icons with the icon which opened the context menu
+    const left = elementRect.left + window.pageXOffset - 9;
+    const top = elementRect.bottom + window.pageYOffset + 17;
+    const chevronFace = ChevronFace.None;
+    return {left, top, chevronFace};
+};
 
 @replaceableComponent("views.rooms.RoomTile")
 export default class RoomTile extends ModelView<RoomTileViewModel, IState> {
