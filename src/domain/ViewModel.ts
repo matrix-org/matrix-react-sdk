@@ -18,6 +18,11 @@ import {EventEmitter} from "events";
 import { IDestroyable } from "../utils/IDestroyable";
 
 export class ViewModel extends EventEmitter implements IDestroyable {
+	constructor(propertyNames) {
+		super();
+		this.propertyNames = propertyNames;
+	}
+
     public emitChange() {
         this.emit("change");
     }

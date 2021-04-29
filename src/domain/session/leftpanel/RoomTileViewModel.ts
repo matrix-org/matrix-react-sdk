@@ -53,7 +53,29 @@ export class RoomTileViewModel extends ViewModel {
     private _messagePreview?: string;
 
     constructor({room, showMessagePreview, isMinimized, tag}) {
-        super();
+        super([
+            // TODO: need to find a better way of enumerating the properties
+            // Here, there is a both a mix of members on the object (selected, room, ...)
+            // and getters on the class. Would we be OK to constraint ourselves to either to make it
+            // easy to automate this?
+            "selected",
+            "isMinimized",
+            "ensureVisible",
+            "notificationState",
+            "room",
+            "id",
+            "name",
+            "avatarMxc",
+            "showNotificationMenu",
+            "showContextMenu",
+            "messagePreview",
+            "notificationVolume",
+            "isArchived",
+            "isInvite",
+            "isFavourite",
+            "isLowPriority",
+            "canInvite",
+        ]);
         this.room = room;
         this._showMessagePreview = showMessagePreview;
         this.isMinimized = isMinimized;
