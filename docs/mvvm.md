@@ -32,9 +32,6 @@ The ViewModel base class is basically just an event emitter. As mentioned, when 
 
 Because it is the model that reports changes, a view is responsible for subscribing to its own model and rerendering itself. This precludes passing the view model properties are props on the React component.
 
-For trigger a rerender, the view could either:
- - use a state variables for all view properties
- - use a dummy state variable that is changed (e.g. an increasing number)
- - use `forceUpdate`
+To trigger a rerender, the view uses a state variables for all view properties.
 
 Note that this is somewhat of a shift to how traditional React applications work, where components are ideally passed only props from their parent component, e.g. "pure" components, and don't use any state internally. The parent is responsible for updating the child components in that paradigm. With MVVM, or at least how it is implemented here, the model is responsible for updating the component, and hence the update mechanism needs to be a little different.
