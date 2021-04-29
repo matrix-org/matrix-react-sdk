@@ -37,8 +37,9 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 import {RoomTileViewModel} from "../../../domain/session/leftpanel/RoomTileViewModel";
+import {ViewModel} from "../../../domain/ViewModel";
 
-interface IProps<T> {
+interface IProps<T extends ViewModel> {
     model: T;
 }
 
@@ -59,17 +60,15 @@ const contextMenuBelow = (elementRect: PartialDOMRect) => {
     return {left, top, chevronFace};
 };
 
-class ModelView<V, S> extends React.PureComponent<IProps<V>, S> {
-    constructor(props) {
-        super(props);
-        this._actions = null;
-    }
+class ModelView<V extends ViewModel, S> extends React.PureComponent<IProps<V>, S> {
+
+    private actions: {[name: string]: () => void} = null;
 
     /** Actions are events (other than change) on the view model that should
     trigger an imperative action in the view, rather than a rerender,
     which should always happen trough the change event. */
-    public setActions(actions: {string: () => void}) {
-        this._actions = actions;
+    public setActions(actions: {[name: string]: () => void}) {
+        this.actions = actions;
     }
 
     get model(): V {
@@ -81,7 +80,7 @@ class ModelView<V, S> extends React.PureComponent<IProps<V>, S> {
         this.registerActions(this.model);
     }
 
-    public componentDidUpdate(prevProps: Readonly<IProps<V>>, prevState: Readonly<IState>) {
+    public componentDidUpdate(prevProps: Readonly<IProps<V>>, prevState: Readonly<S>) {
         if (prevProps.model !== this.model) {
             prevProps.model.off("change", this.rerender);
             this.unregisterActions(prevProps.model);
@@ -102,16 +101,16 @@ class ModelView<V, S> extends React.PureComponent<IProps<V>, S> {
     };
 
     private registerActions(model: V) {
-        if (this._actions) {
-            for (const [name, handler] of Object.entries(this._actions)) {
+        if (this.actions) {
+            for (const [name, handler] of Object.entries(this.actions)) {
                 this.model.on(name, handler);
             }
         }
     }
 
     private unregisterActions(model: V) {
-        if (this._actions) {
-            for (const [name, handler] of Object.entries(this._actions)) {
+        if (this.actions) {
+            for (const [name, handler] of Object.entries(this.actions)) {
                 this.model.off(name, handler);
             }
         }        
