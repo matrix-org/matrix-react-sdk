@@ -114,6 +114,8 @@ export default class ImageView extends React.Component<IProps, IState> {
 
     componentWillUnmount() {
         this.focusLock.current.removeEventListener('wheel', this.onWheel);
+        window.removeEventListener("resize", this.calculateZoom);
+        this.image.current.removeEventListener("load", this.calculateZoom);
     }
 
     private calculateZoom = () => {
@@ -159,8 +161,8 @@ export default class ImageView extends React.Component<IProps, IState> {
             });
             return;
         }
-        if (newZoom >= this.state.maxZoom) {
-            this.setState({zoom: this.state.maxZoom});
+        if (newZoom >= 2 * this.state.maxZoom) {
+            this.setState({zoom: 2 * this.state.maxZoom});
             return;
         }
 
