@@ -152,7 +152,8 @@ export default class ImageView extends React.Component<IProps, IState> {
 
     private zoom(delta: number) {
         const newZoom = this.state.zoom + delta;
-
+        // Compute the maxZoom based on the image size
+        const maxZoom = this.state.maxZoom === this.state.minZoom ? 2 * this.state.maxZoom : this.state.maxZoom;
         if (newZoom <= this.state.minZoom) {
             this.setState({
                 zoom: this.state.minZoom,
@@ -161,8 +162,8 @@ export default class ImageView extends React.Component<IProps, IState> {
             });
             return;
         }
-        if (newZoom >= 2 * this.state.maxZoom) {
-            this.setState({zoom: 2 * this.state.maxZoom});
+        if (newZoom >= maxZoom) {
+            this.setState({zoom: maxZoom});
             return;
         }
 
@@ -248,9 +249,13 @@ export default class ImageView extends React.Component<IProps, IState> {
         // other button than the left one
         if (ev.button !== 0) return;
 
-        // Zoom in if we are completely zoomed out
+        // Zoom in if we are completely zoomed out and increase the zoom factor for images
+        // smaller than the viewport size
         if (this.state.zoom === this.state.minZoom) {
-            this.setState({zoom: this.state.maxZoom});
+            this.setState({zoom: this.state.maxZoom === this.state.minZoom
+                ? 2 * this.state.maxZoom
+                : this.state.maxZoom,
+            });
             return;
         }
 
@@ -318,13 +323,9 @@ export default class ImageView extends React.Component<IProps, IState> {
 
     render() {
         const showEventMeta = !!this.props.mxEvent;
-        const zoomingDisabled = this.state.maxZoom === this.state.minZoom;
-
         let cursor;
         if (this.state.moving) {
             cursor= "grabbing";
-        } else if (zoomingDisabled) {
-            cursor = "default";
         } else if (this.state.zoom === this.state.minZoom) {
             cursor = "zoom-in";
         } else {
@@ -415,24 +416,21 @@ export default class ImageView extends React.Component<IProps, IState> {
             );
         }
 
-        let zoomOutButton;
-        let zoomInButton;
-        if (!zoomingDisabled) {
-            zoomOutButton = (
-                <AccessibleTooltipButton
-                    className="mx_ImageView_button mx_ImageView_button_zoomOut"
-                    title={_t("Zoom out")}
-                    onClick={this.onZoomOutClick}>
-                </AccessibleTooltipButton>
-            );
-            zoomInButton = (
-                <AccessibleTooltipButton
-                    className="mx_ImageView_button mx_ImageView_button_zoomIn"
-                    title={_t("Zoom in")}
-                    onClick={ this.onZoomInClick }>
-                </AccessibleTooltipButton>
-            );
-        }
+
+        const zoomOutButton = (
+            <AccessibleTooltipButton
+                className="mx_ImageView_button mx_ImageView_button_zoomOut"
+                title={_t("Zoom out")}
+                onClick={this.onZoomOutClick}>
+            </AccessibleTooltipButton>
+        );
+        const zoomInButton = (
+            <AccessibleTooltipButton
+                className="mx_ImageView_button mx_ImageView_button_zoomIn"
+                title={_t("Zoom in")}
+                onClick={ this.onZoomInClick }>
+            </AccessibleTooltipButton>
+        );
 
         return (
             <FocusLock
