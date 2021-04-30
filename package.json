@@ -50,7 +50,9 @@
     "lint:style": "stylelint 'res/css/**/*.scss'",
     "test": "jest",
     "test:e2e": "./test/end-to-end-tests/run.sh --app-url http://localhost:8080",
-    "coverage": "yarn test --coverage"
+    "coverage": "yarn test --coverage",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
@@ -123,6 +125,10 @@
     "@babel/traverse": "^7.12.12",
     "@peculiar/webcrypto": "^1.1.4",
     "@sinonjs/fake-timers": "^7.0.2",
+    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-essentials": "^6.2.9",
+    "@storybook/addon-links": "^6.2.9",
+    "@storybook/react": "^6.2.9",
     "@types/classnames": "^2.2.11",
     "@types/counterpart": "^0.18.1",
     "@types/flux": "^3.1.9",
@@ -142,6 +148,7 @@
     "@typescript-eslint/parser": "^4.14.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.3",
+    "babel-loader": "^8.2.2",
     "chokidar": "^3.5.1",
     "concurrently": "^5.3.0",
     "enzyme": "^3.11.0",
