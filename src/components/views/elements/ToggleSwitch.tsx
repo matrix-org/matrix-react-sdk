@@ -23,8 +23,8 @@ interface IProps {
     // Whether or not this toggle is in the 'on' position.
     checked: boolean;
 
-    // Whether or not the user can interact with the switch
-    disabled: boolean;
+    // Whether or not the user can interact with the switch. Default false (enabled).
+    disabled?: boolean;
 
     // Called when the checked state changes. First argument will be the new state.
     onChange(checked: boolean): void;

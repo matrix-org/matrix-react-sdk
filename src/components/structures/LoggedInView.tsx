@@ -55,6 +55,7 @@ import { IThreepidInvite } from "../../stores/ThreepidInviteStore";
 import Modal from "../../Modal";
 import { ICollapseConfig } from "../../resizer/distributors/collapse";
 import HostSignupContainer from '../views/host_signup/HostSignupContainer';
+import CustomThemeDesigner from "../views/CustomThemeDesigner";
 import { getKeyBindingsManager, NavigationAction, RoomAction } from '../../KeyBindingsManager';
 import { IOpts } from "../../createRoom";
 import SpacePanel from "../views/spaces/SpacePanel";
@@ -685,6 +686,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                 <CallContainer />
                 <NonUrgentToastContainer />
                 <HostSignupContainer />
+                <CustomThemeDesigner />
             </MatrixClientContext.Provider>
         );
     }
