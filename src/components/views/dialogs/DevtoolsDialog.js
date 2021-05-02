@@ -19,7 +19,6 @@ import PropTypes from 'prop-types';
 import * as sdk from '../../../index';
 import SyntaxHighlight from '../elements/SyntaxHighlight';
 import { _t } from '../../../languageHandler';
-import { Room, MatrixEvent } from "matrix-js-sdk";
 import Field from "../elements/Field";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import {useEventEmitter} from "../../../hooks/useEventEmitter";
@@ -38,6 +37,9 @@ import {SETTINGS} from "../../../settings/Settings";
 import SettingsStore, {LEVEL_ORDER} from "../../../settings/SettingsStore";
 import Modal from "../../../Modal";
 import ErrorDialog from "./ErrorDialog";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
+import {Room} from "matrix-js-sdk/src/models/room";
+import {MatrixEvent} from "matrix-js-sdk/src/models/event";
 
 class GenericEditor extends React.PureComponent {
     // static propTypes = {onBack: PropTypes.func.isRequired};
@@ -68,18 +70,27 @@ class GenericEditor extends React.PureComponent {
     }
 
     textInput(id, label) {
-        return <Field id={id} label={label} size="42" autoFocus={true} type="text" autoComplete="on"
-                      value={this.state[id]} onChange={this._onChange} />;
+        return <Field
+            id={id}
+            label={label}
+            size="42"
+            autoFocus={true}
+            type="text"
+            autoComplete="on"
+            value={this.state[id]}
+            onChange={this._onChange}
+        />;
     }
 }
 
-class SendCustomEvent extends GenericEditor {
+export class SendCustomEvent extends GenericEditor {
     static getLabel() { return _t('Send Custom Event'); }
 
     static propTypes = {
         onBack: PropTypes.func.isRequired,
         room: PropTypes.instanceOf(Room).isRequired,
         forceStateEvent: PropTypes.bool,
+        forceGeneralEvent: PropTypes.bool,
         inputs: PropTypes.object,
     };
 
@@ -140,6 +151,8 @@ class SendCustomEvent extends GenericEditor {
             </div>;
         }
 
+        const showTglFlip = !this.state.message && !this.props.forceStateEvent && !this.props.forceGeneralEvent;
+
         return <div>
             <div className="mx_DevTools_content">
                 <div className="mx_DevTools_eventTypeStateKeyGroup">
@@ -150,12 +163,12 @@ class SendCustomEvent extends GenericEditor {
                 <br />
 
                 <Field id="evContent" label={_t("Event Content")} type="text" className="mx_DevTools_textarea"
-                       autoComplete="off" value={this.state.evContent} onChange={this._onChange} element="textarea" />
+                    autoComplete="off" value={this.state.evContent} onChange={this._onChange} element="textarea" />
             </div>
             <div className="mx_Dialog_buttons">
                 <button onClick={this.onBack}>{ _t('Back') }</button>
                 { !this.state.message && <button onClick={this._send}>{ _t('Send') }</button> }
-                { !this.state.message && !this.props.forceStateEvent && <div style={{float: "right"}}>
+                { showTglFlip && <div style={{float: "right"}}>
                     <input id="isStateEvent" className="mx_DevTools_tgl mx_DevTools_tgl-flip" type="checkbox" onChange={this._onChange} checked={this.state.isStateEvent} />
                     <label className="mx_DevTools_tgl-btn" data-tg-off="Event" data-tg-on="State Event" htmlFor="isStateEvent" />
                 </div> }
@@ -234,7 +247,7 @@ class SendAccountData extends GenericEditor {
                 <br />
 
                 <Field id="evContent" label={_t("Event Content")} type="text" className="mx_DevTools_textarea"
-                       autoComplete="off" value={this.state.evContent} onChange={this._onChange} element="textarea" />
+                    autoComplete="off" value={this.state.evContent} onChange={this._onChange} element="textarea" />
             </div>
             <div className="mx_Dialog_buttons">
                 <button onClick={this.onBack}>{ _t('Back') }</button>
@@ -310,15 +323,15 @@ class FilteredList extends React.PureComponent {
         const TruncatedList = sdk.getComponent("elements.TruncatedList");
         return <div>
             <Field label={_t('Filter results')} autoFocus={true} size={64}
-                   type="text" autoComplete="off" value={this.props.query} onChange={this.onQuery}
-                   className="mx_TextInputDialog_input mx_DevTools_RoomStateExplorer_query"
-                   // force re-render so that autoFocus is applied when this component is re-used
-                   key={this.props.children[0] ? this.props.children[0].key : ''} />
+                type="text" autoComplete="off" value={this.props.query} onChange={this.onQuery}
+                className="mx_TextInputDialog_input mx_DevTools_RoomStateExplorer_query"
+                // force re-render so that autoFocus is applied when this component is re-used
+                key={this.props.children[0] ? this.props.children[0].key : ''} />
 
             <TruncatedList getChildren={this.getChildren}
-                           getChildCount={this.getChildCount}
-                           truncateAt={this.state.truncateAt}
-                           createOverflowElement={this.createOverflowElement} />
+                getChildCount={this.getChildCount}
+                truncateAt={this.state.truncateAt}
+                createOverflowElement={this.createOverflowElement} />
         </div>;
     }
 }
@@ -642,7 +655,7 @@ function VerificationRequest({txnId, request}) {
 
         /* Note that request.timeout is a getter, so its value changes */
         const id = setInterval(() => {
-           setRequestTimeout(request.timeout);
+            setRequestTimeout(request.timeout);
         }, 500);
 
         return () => { clearInterval(id); };
@@ -936,35 +949,35 @@ class SettingsExplorer extends React.Component {
                         />
                         <table>
                             <thead>
-                            <tr>
-                                <th>{_t("Setting ID")}</th>
-                                <th>{_t("Value")}</th>
-                                <th>{_t("Value in this room")}</th>
-                            </tr>
+                                <tr>
+                                    <th>{_t("Setting ID")}</th>
+                                    <th>{_t("Value")}</th>
+                                    <th>{_t("Value in this room")}</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            {allSettings.map(i => (
-                                <tr key={i}>
-                                    <td>
-                                        <a href="" onClick={(e) => this.onViewClick(e, i)}>
-                                            <code>{i}</code>
-                                        </a>
-                                        <a href="" onClick={(e) => this.onEditClick(e, i)}
-                                           className='mx_DevTools_SettingsExplorer_edit'
-                                        >
+                                {allSettings.map(i => (
+                                    <tr key={i}>
+                                        <td>
+                                            <a href="" onClick={(e) => this.onViewClick(e, i)}>
+                                                <code>{i}</code>
+                                            </a>
+                                            <a href="" onClick={(e) => this.onEditClick(e, i)}
+                                                className='mx_DevTools_SettingsExplorer_edit'
+                                            >
                                             ✏
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <code>{this.renderSettingValue(SettingsStore.getValue(i))}</code>
-                                    </td>
-                                    <td>
-                                        <code>
-                                            {this.renderSettingValue(SettingsStore.getValue(i, room.roomId))}
-                                        </code>
-                                    </td>
-                                </tr>
-                            ))}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <code>{this.renderSettingValue(SettingsStore.getValue(i))}</code>
+                                        </td>
+                                        <td>
+                                            <code>
+                                                {this.renderSettingValue(SettingsStore.getValue(i, room.roomId))}
+                                            </code>
+                                        </td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>
@@ -993,11 +1006,11 @@ class SettingsExplorer extends React.Component {
                         <div>
                             <table>
                                 <thead>
-                                <tr>
-                                    <th>{_t("Level")}</th>
-                                    <th>{_t("Settable at global")}</th>
-                                    <th>{_t("Settable at room")}</th>
-                                </tr>
+                                    <tr>
+                                        <th>{_t("Level")}</th>
+                                        <th>{_t("Settable at global")}</th>
+                                        <th>{_t("Settable at room")}</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     {LEVEL_ORDER.map(lvl => (
@@ -1089,6 +1102,7 @@ const Entries = [
     SettingsExplorer,
 ];
 
+@replaceableComponent("views.dialogs.DevtoolsDialog")
 export default class DevtoolsDialog extends React.PureComponent {
     static propTypes = {
         roomId: PropTypes.string.isRequired,

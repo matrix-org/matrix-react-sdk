@@ -25,6 +25,7 @@ import { Action } from "../../dispatcher/actions";
 import ProgressBar from "../views/elements/ProgressBar";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import { IUpload } from "../../models/IUpload";
+import {replaceableComponent} from "../../utils/replaceableComponent";
 
 interface IProps {
     room: Room;
@@ -35,13 +36,18 @@ interface IState {
     uploadsHere: IUpload[];
 }
 
+@replaceableComponent("structures.UploadBar")
 export default class UploadBar extends React.Component<IProps, IState> {
     private dispatcherRef: string;
     private mounted: boolean;
 
     constructor(props) {
         super(props);
-        this.state = {uploadsHere: []};
+
+        // Set initial state to any available upload in this room - we might be mounting
+        // earlier than the first progress event, so should show something relevant.
+        const uploadsHere = this.getUploadsInRoom();
+        this.state = {currentUpload: uploadsHere[0], uploadsHere};
     }
 
     componentDidMount() {
@@ -54,6 +60,11 @@ export default class UploadBar extends React.Component<IProps, IState> {
         dis.unregister(this.dispatcherRef);
     }
 
+    private getUploadsInRoom(): IUpload[] {
+        const uploads = ContentMessages.sharedInstance().getCurrentUploads();
+        return uploads.filter(u => u.roomId === this.props.room.roomId);
+    }
+
     private onAction = (payload: ActionPayload) => {
         switch (payload.action) {
             case Action.UploadStarted:
@@ -62,8 +73,7 @@ export default class UploadBar extends React.Component<IProps, IState> {
             case Action.UploadCanceled:
             case Action.UploadFailed: {
                 if (!this.mounted) return;
-                const uploads = ContentMessages.sharedInstance().getCurrentUploads();
-                const uploadsHere = uploads.filter(u => u.roomId === this.props.room.roomId);
+                const uploadsHere = this.getUploadsInRoom();
                 this.setState({currentUpload: uploadsHere[0], uploadsHere});
                 break;
             }

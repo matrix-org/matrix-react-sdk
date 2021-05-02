@@ -38,7 +38,9 @@ import {ElementWidgetActions} from "../../../stores/widgets/ElementWidgetActions
 import {MatrixCapabilities} from "matrix-widget-api";
 import RoomWidgetContextMenu from "../context_menus/WidgetContextMenu";
 import WidgetAvatar from "../avatars/WidgetAvatar";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.elements.AppTile")
 export default class AppTile extends React.Component {
     constructor(props) {
         super(props);
@@ -107,7 +109,7 @@ export default class AppTile extends React.Component {
         const childContentProtocol = u.protocol;
         if (parentContentProtocol === 'https:' && childContentProtocol !== 'https:') {
             console.warn("Refusing to load mixed-content app:",
-            parentContentProtocol, childContentProtocol, window.location, this.props.app.url);
+                parentContentProtocol, childContentProtocol, window.location, this.props.app.url);
             return true;
         }
         return false;

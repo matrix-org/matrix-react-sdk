@@ -22,6 +22,7 @@ import * as sdk from '../../../index';
 import * as languageHandler from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
 import { _t } from "../../../languageHandler";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 function languageMatchesSearchQuery(query, language) {
     if (language.label.toUpperCase().includes(query.toUpperCase())) return true;
@@ -29,6 +30,7 @@ function languageMatchesSearchQuery(query, language) {
     return false;
 }
 
+@replaceableComponent("views.elements.LanguageDropdown")
 export default class LanguageDropdown extends React.Component {
     constructor(props) {
         super(props);
@@ -58,10 +60,10 @@ export default class LanguageDropdown extends React.Component {
             // doesn't know this, therefore we do this.
             const language = SettingsStore.getValue("language", null, /*excludeDefault:*/true);
             if (language) {
-              this.props.onOptionChange(language);
+                this.props.onOptionChange(language);
             } else {
-              const language = languageHandler.normalizeLanguageKey(languageHandler.getLanguageFromBrowser());
-              this.props.onOptionChange(language);
+                const language = languageHandler.normalizeLanguageKey(languageHandler.getLanguageFromBrowser());
+                this.props.onOptionChange(language);
             }
         }
     }

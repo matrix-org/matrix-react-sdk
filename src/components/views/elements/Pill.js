@@ -1,7 +1,5 @@
 /*
-Copyright 2017 Vector Creations Ltd
-Copyright 2018 New Vector Ltd
-Copyright 2019, 2021 The Matrix.org Foundation C.I.C.
+Copyright 2017 - 2019, 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,15 +17,19 @@ import React from 'react';
 import * as sdk from '../../../index';
 import dis from '../../../dispatcher/dispatcher';
 import classNames from 'classnames';
-import { Room, RoomMember } from 'matrix-js-sdk';
+import { Room } from 'matrix-js-sdk/src/models/room';
+import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import PropTypes from 'prop-types';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import FlairStore from "../../../stores/FlairStore";
 import {getPrimaryPermalinkEntity, parseAppLocalLink} from "../../../utils/permalinks/Permalinks";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import {Action} from "../../../dispatcher/actions";
+import {mediaFromMxc} from "../../../customisations/Media";
 import Tooltip from './Tooltip';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.elements.Pill")
 class Pill extends React.Component {
     static roomNotifPos(text) {
         return text.indexOf("@room");
@@ -223,19 +225,19 @@ class Pill extends React.Component {
             }
                 break;
             case Pill.TYPE_USER_MENTION: {
-                    // If this user is not a member of this room, default to the empty member
-                    const member = this.state.member;
-                    if (member) {
-                        userId = member.userId;
-                        member.rawDisplayName = member.rawDisplayName || '';
-                        linkText = member.rawDisplayName;
-                        if (this.props.shouldShowPillAvatar) {
-                            avatar = <MemberAvatar member={member} width={16} height={16} aria-hidden="true" />;
-                        }
-                        pillClass = 'mx_UserPill';
-                        href = null;
-                        onClick = this.onUserPillClicked;
+                // If this user is not a member of this room, default to the empty member
+                const member = this.state.member;
+                if (member) {
+                    userId = member.userId;
+                    member.rawDisplayName = member.rawDisplayName || '';
+                    linkText = member.rawDisplayName;
+                    if (this.props.shouldShowPillAvatar) {
+                        avatar = <MemberAvatar member={member} width={16} height={16} aria-hidden="true" />;
                     }
+                    pillClass = 'mx_UserPill';
+                    href = null;
+                    onClick = this.onUserPillClicked;
+                }
             }
                 break;
             case Pill.TYPE_ROOM_MENTION: {
@@ -252,12 +254,12 @@ class Pill extends React.Component {
             case Pill.TYPE_GROUP_MENTION: {
                 if (this.state.group) {
                     const {avatarUrl, groupId, name} = this.state.group;
-                    const cli = MatrixClientPeg.get();
 
                     linkText = groupId;
                     if (this.props.shouldShowPillAvatar) {
-                        avatar = <BaseAvatar name={name || groupId} width={16} height={16} aria-hidden="true"
-                                             url={avatarUrl ? cli.mxcUrlToHttp(avatarUrl, 16, 16) : null} />;
+                        avatar = <BaseAvatar
+                            name={name || groupId} width={16} height={16} aria-hidden="true"
+                            url={avatarUrl ? mediaFromMxc(avatarUrl).getSquareThumbnailHttp(16) : null} />;
                     }
                     pillClass = 'mx_GroupPill';
                 }
