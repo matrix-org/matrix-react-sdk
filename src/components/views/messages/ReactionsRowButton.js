@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-
+import {EventStatus} from 'matrix-js-sdk/src/models/event';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
@@ -86,9 +86,11 @@ export default class ReactionsRowButton extends React.PureComponent {
         const ReactionsRowButtonTooltip =
             sdk.getComponent('messages.ReactionsRowButtonTooltip');
         const { mxEvent, content, count, reactionEvents, myReactionEvent } = this.props;
-
+        const failed =Boolean(mxEvent.staus === EventStatus.NOT_SENT)
+        
         const classes = classNames({
             mx_ReactionsRowButton: true,
+            mx_ReactionsRowButton_failed:failed,
             mx_ReactionsRowButton_selected: !!myReactionEvent,
         });
 
