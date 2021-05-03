@@ -18,7 +18,7 @@ import {MHtml, MText} from "./schema/text";
 import {EventContent, PartialEvent} from "./schema/event";
 import {Optional} from "../../@types/common";
 import {TextNode} from "./nodes/TextNode";
-import {EventType} from "matrix-js-sdk/lib/@types/event";
+import {EventType} from "matrix-js-sdk/src/@types/event";
 
 export class RoomEvent {
     private constructor(private content: EventContent, public readonly type: string) {
