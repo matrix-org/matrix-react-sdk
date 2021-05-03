@@ -20,5 +20,8 @@ import {MMessagePart} from "./message";
 export const MText = new UnstableValue("m.text", "org.matrix.msc1767.text");
 export const MHtml = new UnstableValue("m.html", "org.matrix.msc1767.html");
 
+export type MText = typeof MText;
+export type MHtml = typeof MHtml;
+
 export type MTextContent = string | MMessagePart;
 export type MHtmlContent = MTextContent; // it's the same, thankfully

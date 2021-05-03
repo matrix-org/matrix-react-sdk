@@ -17,61 +17,45 @@ limitations under the License.
 import {RoomEvent} from "../../../src/matrix/events/RoomEvent";
 import {MHtml, MText} from "../../../src/matrix/events/schema/text";
 import {MMessage} from "../../../src/matrix/events/schema/message";
+import {EventType, MsgType} from "matrix-js-sdk/src/@types/event";
 
 describe("RoomEvent", () => {
     describe("pure legacy", () => {
         it("should parse plaintext", () => {
             const ev = {
-                type: "m.room.message",
+                type: EventType.RoomMessage,
                 content: {
-                    msgtype: "m.text",
+                    msgtype: MsgType.Text,
                     body: "Hello World",
                 },
             };
             const re = RoomEvent.fromRaw(ev);
             expect(re).toBeDefined();
-            expect(re.text).toEqual(ev.content.body);
-            expect(re.textNode).toMatchObject({
-                mimetype: "text/plain",
-                body: ev.content.body,
-            });
-
-            // We shouldn't have HTML
-            expect(re.html).toBeFalsy();
-            expect(re.htmlNode).toBeFalsy();
+            expect(re.textNode).toBeDefined();
+            expect(re.textNode.text).toEqual(ev.content.body);
+            expect(re.textNode.html).toBeFalsy();
         });
         it("should parse HTML", () => {
             const ev = {
-                type: "m.room.message",
+                type: EventType.RoomMessage,
                 content: {
-                    msgtype: "m.text",
+                    msgtype: MsgType.Text,
                     body: "Hello World",
                     format: "org.matrix.custom.html",
                     formatted_body: "<b>Hello world</b>",
                 },
             };
             const re = RoomEvent.fromRaw(ev);
-
-            // Check that the HTML didn't break plaintext parsing
             expect(re).toBeDefined();
-            expect(re.text).toEqual(ev.content.body);
-            expect(re.textNode).toMatchObject({
-                mimetype: "text/plain",
-                body: ev.content.body,
-            });
-
-            // Now check HTML
-            expect(re.html).toEqual(ev.content.formatted_body);
-            expect(re.htmlNode).toMatchObject({
-                mimetype: "text/html",
-                body: ev.content.formatted_body,
-            });
+            expect(re.textNode).toBeDefined();
+            expect(re.textNode.text).toEqual(ev.content.body);
+            expect(re.textNode.html).toEqual(ev.content.formatted_body);
         });
         it("should parse not parse unknown formats as HTML", () => {
             const ev = {
-                type: "m.room.message",
+                type: EventType.RoomMessage,
                 content: {
-                    msgtype: "m.text",
+                    msgtype: MsgType.Text,
                     body: "Hello World",
                     format: "com.example.not_html",
                     formatted_body: "<b>Hello world</b>",
@@ -79,88 +63,50 @@ describe("RoomEvent", () => {
             };
             const re = RoomEvent.fromRaw(ev);
             expect(re).toBeDefined();
-            expect(re.text).toEqual(ev.content.body);
-            expect(re.textNode).toMatchObject({
-                mimetype: "text/plain",
-                body: ev.content.body,
-            });
-            expect(re.html).toBeFalsy();
-            expect(re.htmlNode).toBeFalsy();
+            expect(re.textNode).toBeDefined();
+            expect(re.textNode.text).toEqual(ev.content.body);
+            expect(re.textNode.html).toBeFalsy();
         });
     });
     describe("hybrid legacy", () => {
-        it("should parse plaintext", () => {
+        it("should find plaintext", () => {
             const ev = {
-                type: "m.room.message",
+                type: EventType.RoomMessage,
                 content: {
-                    msgtype: "m.text",
+                    msgtype: MsgType.Text,
                     body: "Hello World",
                     [MText.name]: "This is the real text",
                 },
             };
             const re = RoomEvent.fromRaw(ev);
             expect(re).toBeDefined();
-            expect(re.text).toEqual(ev.content[MText.name]);
-            expect(re.textNode).toMatchObject({
-                mimetype: "text/plain",
-                body: ev.content[MText.name],
-            });
-
-            // We shouldn't have HTML
-            expect(re.html).toBeFalsy();
-            expect(re.htmlNode).toBeFalsy();
+            expect(re.textNode).toBeDefined();
+            expect(re.textNode.text).toEqual(ev.content[MText.name]);
         });
         it("should parse HTML", () => {
             const ev = {
-                type: "m.room.message",
+                type: EventType.RoomMessage,
                 content: {
-                    msgtype: "m.text",
+                    msgtype: MsgType.Text,
                     body: "Hello World",
                     format: "org.matrix.custom.html",
                     formatted_body: "<b>Hello world</b>",
                     [MText.name]: "This is the real text",
-                    [MHtml.name]: "<i>This is the real text</i>",
+                    [MHtml.name]: "<p>This is the real text</p>",
                 },
             };
             const re = RoomEvent.fromRaw(ev);
-
-            // Check that the HTML didn't break plaintext parsing
             expect(re).toBeDefined();
-            expect(re.text).toEqual(ev.content[MText.name]);
-            expect(re.textNode).toMatchObject({
-                mimetype: "text/plain",
-                body: ev.content[MText.name],
-            });
-
-            // Now check HTML
-            expect(re.html).toEqual(ev.content[MHtml.name]);
-            expect(re.htmlNode).toMatchObject({
-                mimetype: "text/html",
-                body: ev.content[MHtml.name],
-            });
+            expect(re.textNode).toBeDefined();
+            expect(re.textNode.text).toEqual(ev.content[MText.name]);
+            expect(re.textNode.html).toEqual(ev.content[MHtml.name]);
         });
     });
     describe("m.message", () => {
-        it("should parse plaintext from m.text", () => {
-            const ev = {
-                type: MMessage.name,
-                content: {
-                    [MText.name]: "This is the real text",
-                },
-            };
-            const re = RoomEvent.fromRaw(ev);
-            expect(re).toBeDefined();
-            expect(re.text).toEqual(ev.content[MText.name]);
-            expect(re.textNode).toMatchObject({
-                mimetype: "text/plain",
-                body: ev.content[MText.name],
-            });
+        // Note: We don't test extensively because we're just seeing if the RoomEvent class is
+        // properly handing off to the TextNode class.
 
-            // We shouldn't have HTML
-            expect(re.html).toBeFalsy();
-            expect(re.htmlNode).toBeFalsy();
-        });
-        it("should parse plaintext from m.message", () => {
+        it("should parse plaintext", () => {
             const ev = {
                 type: MMessage.name,
                 content: {
@@ -171,102 +117,44 @@ describe("RoomEvent", () => {
             };
             const re = RoomEvent.fromRaw(ev);
             expect(re).toBeDefined();
-            expect(re.text).toEqual(ev.content[MMessage.name][0].body);
-            expect(re.textNode).toMatchObject({
-                mimetype: "text/plain",
-                body: ev.content[MMessage.name][0].body,
-            });
-
-            // We shouldn't have HTML
-            expect(re.html).toBeFalsy();
-            expect(re.htmlNode).toBeFalsy();
+            expect(re.textNode).toBeDefined();
+            expect(re.textNode.text).toEqual(ev.content[MMessage.name][0].body);
+            expect(re.textNode.html).toBeFalsy();
         });
-        it("should parse plaintext from m.message without mimetypes", () => {
-            const ev = {
-                type: MMessage.name,
-                content: {
-                    [MMessage.name]: [
-                        {body: "hello world"},
-                    ],
-                },
-            };
-            const re = RoomEvent.fromRaw(ev);
-            expect(re).toBeDefined();
-            expect(re.text).toEqual(ev.content[MMessage.name][0].body);
-            expect(re.textNode).toMatchObject({
-                //mimetype: "text/plain", // our example text node doesn't have a mimetype
-                body: ev.content[MMessage.name][0].body,
-            });
 
-            // We shouldn't have HTML
-            expect(re.html).toBeFalsy();
-            expect(re.htmlNode).toBeFalsy();
-        });
-        it("should parse plaintext from m.message from available options", () => {
+        it("should parse HTML", () => {
             const ev = {
                 type: MMessage.name,
                 content: {
                     [MMessage.name]: [
                         {mimetype: "text/plain", body: "hello world"},
-                        {mimetype: "text/not-plain", body: "WRONG"},
+                        {mimetype: "text/html", body: "<p>hello world</p>"},
                     ],
                 },
             };
             const re = RoomEvent.fromRaw(ev);
             expect(re).toBeDefined();
-            expect(re.text).toEqual(ev.content[MMessage.name][0].body);
-            expect(re.textNode).toMatchObject({
-                mimetype: "text/plain",
-                body: ev.content[MMessage.name][0].body,
-            });
+            expect(re.textNode).toBeDefined();
+            expect(re.textNode.text).toEqual(ev.content[MMessage.name][0].body);
+            expect(re.textNode.html).toEqual(ev.content[MMessage.name][1].body);
+        });
 
-            // We shouldn't have HTML
-            expect(re.html).toBeFalsy();
-            expect(re.htmlNode).toBeFalsy();
-        });
-        it("should parse HTML from m.html", () => {
+        it("should not parse legacy m.room.message fields", () => {
             const ev = {
                 type: MMessage.name,
                 content: {
-                    [MText.name]: "This is the real text",
-                    [MHtml.name]: "<b>This is the real text</b>",
-                },
-            };
-            const re = RoomEvent.fromRaw(ev);
-            expect(re).toBeDefined();
-            expect(re.text).toEqual(ev.content[MText.name]);
-            expect(re.textNode).toMatchObject({
-                mimetype: "text/plain",
-                body: ev.content[MText.name],
-            });
-            expect(re.html).toEqual(ev.content[MHtml.name]);
-            expect(re.htmlNode).toMatchObject({
-                mimetype: "text/html",
-                body: ev.content[MHtml.name],
-            });
-        });
-        it("should parse HTML from m.message", () => {
-            const ev = {
-                type: MMessage.name,
-                content: {
+                    msgtype: MsgType.Text,
+                    body: "WRONG",
                     [MMessage.name]: [
                         {mimetype: "text/plain", body: "hello world"},
-                        {mimetype: "text/html", body: "<b>hello world</b>"},
                     ],
                 },
             };
             const re = RoomEvent.fromRaw(ev);
             expect(re).toBeDefined();
-            expect(re.text).toEqual(ev.content[MMessage.name][0].body);
-            expect(re.textNode).toMatchObject({
-                mimetype: "text/plain",
-                body: ev.content[MMessage.name][0].body,
-            });
-            expect(re.html).toEqual(ev.content[MMessage.name][1].body);
-            expect(re.htmlNode).toMatchObject({
-                mimetype: "text/html",
-                body: ev.content[MMessage.name][1].body,
-            });
+            expect(re.textNode).toBeDefined();
+            expect(re.textNode.text).toEqual(ev.content[MMessage.name][0].body);
+            expect(re.textNode.html).toBeFalsy();
         });
     });
 });

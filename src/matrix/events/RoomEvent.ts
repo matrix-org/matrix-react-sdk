@@ -14,81 +14,43 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {MMessage, MMessageContent, MMessagePart} from "./schema/message";
-import {MHtml, MHtmlContent, MText, MTextContent} from "./schema/text";
-
-type MMessageTopLevel = {
-    [k in typeof MMessage.tsType]?: MMessageContent;
-};
-type MTextTopLevel = {
-    [k in typeof MText.tsType]?: MTextContent;
-};
-type MHtmlTopLevel = {
-    [k in typeof MHtml.tsType]?: MHtmlContent;
-};
-type MessageLike = MMessageTopLevel & MTextTopLevel & MHtmlTopLevel & any;
+import {MHtml, MText} from "./schema/text";
+import {EventContent, PartialEvent} from "./schema/event";
+import {Optional} from "../../@types/common";
+import {TextNode} from "./nodes/TextNode";
+import {EventType} from "matrix-js-sdk/lib/@types/event";
 
 export class RoomEvent {
-    private constructor(private definition: MessageLike, public readonly type: string) {
+    private constructor(private content: EventContent, public readonly type: string) {
     }
 
     public get canRender(): boolean {
-        // TODO: @TR Detect this better
-        return !this.textNode;
+        // TODO: @TR Detect this better?
+        return !!this.textNode;
     }
 
-    public get redacted(): boolean {
-        // TODO: @TR Detect this better
+    public get redactedOrUnknown(): boolean {
         return !this.canRender;
     }
 
-    public get textNode(): MMessagePart | null {
-        const text = MText.findIn<string>(this.definition);
-        if (text) {
-            return {
-                mimetype: "text/plain",
-                body: text,
-            };
-        }
-
-        const message = MMessage.findIn<MMessageContent>(this.definition);
-        if (!message) return null;
-        return message.find(p => !p.mimetype || p.mimetype === "text/plain");
+    public get textNode(): Optional<TextNode> {
+        return TextNode.fromContent(this.content);
     }
 
-    public get htmlNode(): MMessagePart | null {
-        const text = MHtml.findIn<string>(this.definition);
-        if (text) {
-            return {
-                mimetype: "text/html",
-                body: text,
-            };
-        }
-
-        const message = MMessage.findIn<MMessageContent>(this.definition);
-        if (!message) return null;
-        return message.find(p => p.mimetype === "text/html");
-    }
-
-    public get text(): string | null {
-        return this.textNode?.body;
-    }
-
-    public get html(): string | null {
-        return this.htmlNode?.body;
-    }
-
-    public static fromRaw(json: any): RoomEvent | null {
-        const content = json?.['content'] ?? {};
-        const type = json?.['type'];
+    public static fromRaw(json: PartialEvent): Optional<RoomEvent> {
+        // We sanity check the input even with types because we just don't trust it
+        const content = json?.content ?? {};
+        const type = json?.type;
         if (!type) return null;
 
-        if (type === "m.room.message") {
+        if (type === EventType.RoomMessage) {
             // TODO: @@TR Check & interpret msgtype
             const fallback = {
                 [MText.name]: content['body'],
                 [MHtml.name]: content['format'] === 'org.matrix.custom.html' ? content['formatted_body'] : null,
             };
+
+            // We apply the fallback first so that the real event content can specify real values
             return new RoomEvent(Object.assign({}, fallback, content), type);
         } else {
             return new RoomEvent(content, type);

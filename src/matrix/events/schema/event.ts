@@ -14,15 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {UnstableValue} from "../../NamespacedValue";
+export type EventContent = {
+    [key: string]: any;
+}
 
-export const MMessage = new UnstableValue("m.message", "org.matrix.msc1767.message");
-export type MMessage = typeof MMessage;
-
-export type MMessagePart = {
-    mimetype?: string; // default text/plain
-    lang?: string; // default english
-    body: string;
-};
-
-export type MMessageContent = MMessagePart[];
+export type PartialEvent = {
+    type: string;
+    content: EventContent;
+}
