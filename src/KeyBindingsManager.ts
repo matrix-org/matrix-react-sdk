@@ -52,14 +52,19 @@ export enum MessageComposerAction {
 
 /** Actions for text editing autocompletion */
 export enum AutocompleteAction {
-    /** Apply the current autocomplete selection */
-    ApplySelection = 'ApplySelection',
-    /** Cancel autocompletion */
-    Cancel = 'Cancel',
+    /**
+     * Select previous selection or, if the autocompletion window is not shown, open the window and select the first
+     * selection.
+     */
+    CompleteOrPrevSelection = 'ApplySelection',
+    /** Select next selection or, if the autocompletion window is not shown, open it and select the first selection */
+    CompleteOrNextSelection = 'CompleteOrNextSelection',
     /** Move to the previous autocomplete selection */
     PrevSelection = 'PrevSelection',
     /** Move to the next autocomplete selection */
     NextSelection = 'NextSelection',
+    /** Close the autocompletion window */
+    Cancel = 'Cancel',
 }
 
 /** Actions for the room list sidebar */
@@ -226,8 +231,10 @@ export class KeyBindingsManager {
     /**
      * Finds a matching KeyAction for a given KeyboardEvent
      */
-    private getAction<T extends string>(getters: KeyBindingGetter<T>[], ev: KeyboardEvent | React.KeyboardEvent)
-        : T | undefined {
+    private getAction<T extends string>(
+        getters: KeyBindingGetter<T>[],
+        ev: KeyboardEvent | React.KeyboardEvent,
+    ): T | undefined {
         for (const getter of getters) {
             const bindings = getter();
             const binding = bindings.find(it => isKeyComboMatch(ev, it.keyCombo, isMac));

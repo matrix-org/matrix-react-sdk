@@ -190,6 +190,9 @@ export interface IState {
     rejectError?: Error;
     hasPinnedWidgets?: boolean;
     dragCounter: number;
+    // whether or not a spaces context switch brought us here,
+    // if it did we don't want the room to be marked as read as soon as it is loaded.
+    wasContextSwitch?: boolean;
 }
 
 @replaceableComponent("structures.RoomView")
@@ -326,6 +329,7 @@ export default class RoomView extends React.Component<IProps, IState> {
             shouldPeek: this.state.matrixClientIsReady && RoomViewStore.shouldPeek(),
             showingPinned: SettingsStore.getValue("PinnedEvents.isOpen", roomId),
             showReadReceipts: SettingsStore.getValue("showReadReceipts", roomId),
+            wasContextSwitch: RoomViewStore.getWasContextSwitch(),
         };
 
         if (!initial && this.state.shouldPeek && !newState.shouldPeek) {
@@ -1137,10 +1141,16 @@ export default class RoomView extends React.Component<IProps, IState> {
         ev.stopPropagation();
         ev.preventDefault();
 
-        this.setState({
-            dragCounter: this.state.dragCounter + 1,
-            draggingFile: true,
-        });
+        // We always increment the counter no matter the types, because dragging is
+        // still happening. If we didn't, the drag counter would get out of sync.
+        this.setState({dragCounter: this.state.dragCounter + 1});
+
+        // See:
+        // https://docs.w3cub.com/dom/datatransfer/types
+        // https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/Recommended_drag_types#file
+        if (ev.dataTransfer.types.includes("Files") || ev.dataTransfer.types.includes("application/x-moz-file")) {
+            this.setState({draggingFile: true});
+        }
     };
 
     private onDragLeave = ev => {
@@ -1164,6 +1174,9 @@ export default class RoomView extends React.Component<IProps, IState> {
 
         ev.dataTransfer.dropEffect = 'none';
 
+        // See:
+        // https://docs.w3cub.com/dom/datatransfer/types
+        // https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/Recommended_drag_types#file
         if (ev.dataTransfer.types.includes("Files") || ev.dataTransfer.types.includes("application/x-moz-file")) {
             ev.dataTransfer.dropEffect = 'copy';
         }
@@ -2005,6 +2018,7 @@ export default class RoomView extends React.Component<IProps, IState> {
                 timelineSet={this.state.room.getUnfilteredTimelineSet()}
                 showReadReceipts={this.state.showReadReceipts}
                 manageReadReceipts={!this.state.isPeeking}
+                sendReadReceiptOnLoad={!this.state.wasContextSwitch}
                 manageReadMarkers={!this.state.isPeeking}
                 hidden={hideMessagePanel}
                 highlightedEventId={highlightedEventId}

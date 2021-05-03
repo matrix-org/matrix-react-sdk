@@ -34,7 +34,6 @@ import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import SettingsStore from "../../settings/SettingsStore";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../stores/room-list/RoomListStore";
-import {Key} from "../../Keyboard";
 import IndicatorScrollbar from "../structures/IndicatorScrollbar";
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import { OwnProfileStore } from "../../stores/OwnProfileStore";
@@ -43,6 +42,7 @@ import LeftPanelWidget from "./LeftPanelWidget";
 import {replaceableComponent} from "../../utils/replaceableComponent";
 import {mediaFromMxc} from "../../customisations/Media";
 import SpaceStore, {UPDATE_SELECTED_SPACE} from "../../stores/SpaceStore";
+import { getKeyBindingsManager, RoomListAction } from "../../KeyBindingsManager";
 
 interface IProps {
     isMinimized: boolean;
@@ -154,7 +154,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
     private doStickyHeaders(list: HTMLDivElement) {
         const topEdge = list.scrollTop;
         const bottomEdge = list.offsetHeight + list.scrollTop;
-        const sublists = list.querySelectorAll<HTMLDivElement>(".mx_RoomSublist");
+        const sublists = list.querySelectorAll<HTMLDivElement>(".mx_RoomSublist:not(.mx_RoomSublist_hidden)");
 
         const headerRightMargin = 15; // calculated from margins and widths to align with non-sticky tiles
         const headerStickyWidth = list.clientWidth - headerRightMargin;
@@ -297,17 +297,18 @@ export default class LeftPanel extends React.Component<IProps, IState> {
     private onKeyDown = (ev: React.KeyboardEvent) => {
         if (!this.focusedElement) return;
 
-        switch (ev.key) {
-            case Key.ARROW_UP:
-            case Key.ARROW_DOWN:
+        const action = getKeyBindingsManager().getRoomListAction(ev);
+        switch (action) {
+            case RoomListAction.NextRoom:
+            case RoomListAction.PrevRoom:
                 ev.stopPropagation();
                 ev.preventDefault();
-                this.onMoveFocus(ev.key === Key.ARROW_UP);
+                this.onMoveFocus(action === RoomListAction.PrevRoom);
                 break;
         }
     };
 
-    private onEnter = () => {
+    private selectRoom = () => {
         const firstRoom = this.listContainerRef.current.querySelector<HTMLDivElement>(".mx_RoomTile");
         if (firstRoom) {
             firstRoom.click();
@@ -346,7 +347,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
             if (element) {
                 classes = element.classList;
             }
-        } while (element && !cssClasses.some(c => classes.contains(c)));
+        } while (element && (!cssClasses.some(c => classes.contains(c)) || element.offsetParent === null));
 
         if (element) {
             element.focus();
@@ -388,8 +389,8 @@ export default class LeftPanel extends React.Component<IProps, IState> {
             >
                 <RoomSearch
                     isMinimized={this.props.isMinimized}
-                    onVerticalArrow={this.onKeyDown}
-                    onEnter={this.onEnter}
+                    onKeyDown={this.onKeyDown}
+                    onSelectRoom={this.selectRoom}
                 />
                 <AccessibleTooltipButton
                     className={classNames("mx_LeftPanel_exploreButton", {
