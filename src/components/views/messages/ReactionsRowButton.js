@@ -86,11 +86,11 @@ export default class ReactionsRowButton extends React.PureComponent {
         const ReactionsRowButtonTooltip =
             sdk.getComponent('messages.ReactionsRowButtonTooltip');
         const { mxEvent, content, count, reactionEvents, myReactionEvent } = this.props;
-        const failed =Boolean(mxEvent.staus === EventStatus.NOT_SENT)
-        
+        const failed =Boolean(mxEvent.staus === EventStatus.NOT_SENT);
+
         const classes = classNames({
             mx_ReactionsRowButton: true,
-            mx_ReactionsRowButton_failed:failed,
+            mx_ReactionsRowButton_failed: failed,
             mx_ReactionsRowButton_selected: !!myReactionEvent,
         });
 
