@@ -41,12 +41,7 @@ const RoomHistoryIntro = () => {
         const displayName = member?.rawDisplayName || dmPartner;
 
         let caption1;
-        if (encryptionState) {
-            caption1 = _t("This is the beginning of your visible history with <displayName/>, "
-                          + "as encrypted messages before this point are unavailable.", {}, {
-                displayName: () => <b>{ displayName }</b>,
-            });
-        } else if (historyState == "invited") {
+        if (historyState == "invited") {
             caption1 = _t("This is the beginning of your visible history with <displayName/>, "
                           + "as the room's admins have restricted your ability to view messages "
                           + "from before you were invited.", {}, {
@@ -56,6 +51,11 @@ const RoomHistoryIntro = () => {
             caption1 = _t("This is the beginning of your visible history with <displayName/>, "
                           + "as the room's admins have restricted your ability to view messages "
                           + "from before you joined.", {}, {
+                displayName: () => <b>{ displayName }</b>,
+            });
+        } else if (encryptionState) {
+            caption1 = _t("This is the beginning of your visible history with <displayName/>, "
+                          + "as encrypted messages before this point are unavailable.", {}, {
                 displayName: () => <b>{ displayName }</b>,
             });
         } else {
@@ -103,12 +103,7 @@ const RoomHistoryIntro = () => {
         }
 
         let caption;
-        if (encryptionState) {
-            caption = _t("This is the beginning of your visible history in <roomName/>, "
-                         + "as encrypted messages before this point are unavailable.", {}, {
-                roomName: () => <b>{ room.name }</b>,
-            });
-        } else if (historyState == "invited") {
+        if (historyState == "invited") {
             caption = _t("This is the beginning of your visible history in <roomName/>, "
                          + "as the room's admins have restricted your ability to view messages "
                          + "from before you were invited.", {}, {
@@ -118,6 +113,11 @@ const RoomHistoryIntro = () => {
             caption = _t("This is the beginning of your visible history in <roomName/>, "
                          + "as the room's admins have restricted your ability to view messages "
                          + "from before you joined.", {}, {
+                roomName: () => <b>{ room.name }</b>,
+            });
+        } else if (encryptionState) {
+            caption = _t("This is the beginning of your visible history in <roomName/>, "
+                         + "as encrypted messages before this point are unavailable.", {}, {
                 roomName: () => <b>{ room.name }</b>,
             });
         } else {
