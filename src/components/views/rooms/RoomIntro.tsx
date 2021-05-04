@@ -26,6 +26,10 @@ import RoomAvatar from "../avatars/RoomAvatar";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import {ViewUserPayload} from "../../../dispatcher/payloads/ViewUserPayload";
 import {Action} from "../../../dispatcher/actions";
+import AccessibleButton from "../elements/AccessibleButton";
+import dis from "../../../dispatcher/dispatcher";
+import SpaceStore from "../../../stores/SpaceStore";
+import {showSpaceInvite} from "../../../utils/space";
 
 const RoomIntro: React.FC<{}> = ({ children }) => {
     const cli = useContext(MatrixClientContext);
@@ -33,7 +37,13 @@ const RoomIntro: React.FC<{}> = ({ children }) => {
 
     const dmPartner = DMRoomMap.shared().getUserIdForRoomId(roomId);
     let avatar;
+    let caption;
+    let buttons;
     if (dmPartner) {
+        if ((room.getJoinedMemberCount() + room.getInvitedMemberCount()) === 2) {
+            caption = _t("Only the two of you are in this conversation, unless either of you invites anyone to join.");
+        }
+
         const member = room?.getMember(dmPartner);
         avatar = <RoomAvatar room={room} width={AVATAR_SIZE} height={AVATAR_SIZE} onClick={() => {
             defaultDispatcher.dispatch<ViewUserPayload>({
@@ -43,6 +53,76 @@ const RoomIntro: React.FC<{}> = ({ children }) => {
             });
         }} />;
     } else {
+        const inRoom = room && room.getMyMembership() === "join";
+        const topic = room.currentState.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic;
+        const canAddTopic = inRoom && room.currentState.maySendStateEvent(EventType.RoomTopic, cli.getUserId());
+
+        const onTopicClick = () => {
+            dis.dispatch({
+                action: "open_room_settings",
+                room_id: roomId,
+            }, true);
+            // focus the topic field to help the user find it as it'll gain an outline
+            setImmediate(() => {
+                window.document.getElementById("profileTopic").focus();
+            });
+        };
+
+        if (canAddTopic && topic) {
+            caption = _t("Topic: %(topic)s (<a>edit</a>)", { topic }, {
+                a: sub => <AccessibleButton kind="link" onClick={onTopicClick}>{ sub }</AccessibleButton>,
+            });
+        } else if (topic) {
+            caption = _t("Topic: %(topic)s ", { topic });
+        } else if (canAddTopic) {
+            caption = _t("<a>Add a topic</a> to help people know what it is about.", {}, {
+                a: sub => <AccessibleButton kind="link" onClick={onTopicClick}>{ sub }</AccessibleButton>,
+            });
+        }
+
+        let parentSpace;
+        if (
+            SpaceStore.instance.activeSpace?.canInvite(cli.getUserId()) &&
+            SpaceStore.instance.getSpaceFilteredRoomIds(SpaceStore.instance.activeSpace).has(room.roomId)
+        ) {
+            parentSpace = SpaceStore.instance.activeSpace;
+        }
+
+        if (parentSpace) {
+            buttons = <div className="mx_NewRoomIntro_buttons">
+                <AccessibleButton
+                    className="mx_NewRoomIntro_inviteButton"
+                    kind="primary"
+                    onClick={() => {
+                        showSpaceInvite(parentSpace);
+                    }}
+                >
+                    {_t("Invite to %(spaceName)s", { spaceName: parentSpace.name })}
+                </AccessibleButton>
+                { room.canInvite(cli.getUserId()) && <AccessibleButton
+                    className="mx_NewRoomIntro_inviteButton"
+                    kind="primary_outline"
+                    onClick={() => {
+                        dis.dispatch({ action: "view_invite", roomId });
+                    }}
+                >
+                    {_t("Invite to just this room")}
+                </AccessibleButton> }
+            </div>;
+        } else if (room.canInvite(cli.getUserId())) {
+            buttons = <div className="mx_NewRoomIntro_buttons">
+                <AccessibleButton
+                    className="mx_NewRoomIntro_inviteButton"
+                    kind="primary"
+                    onClick={() => {
+                        dis.dispatch({ action: "view_invite", roomId });
+                    }}
+                >
+                    {_t("Invite to this room")}
+                </AccessibleButton>
+            </div>;
+        }
+
         const avatarUrl = room.currentState.getStateEvents(EventType.RoomAvatar, "")?.getContent()?.url;
         avatar = (
             <MiniAvatarUploader
@@ -59,6 +139,8 @@ const RoomIntro: React.FC<{}> = ({ children }) => {
         { avatar }
         <h2>{ room.name }</h2>
         { children }
+        { caption && <p>{ caption }</p> }
+        { buttons }
     </div>;
 };
 
