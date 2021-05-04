@@ -42,6 +42,14 @@ $preview-bar-bg-color: $header-panel-bg-color;
 $groupFilterPanel-bg-color: rgba(38, 39, 43, 0.82);
 $inverted-bg-color: $base-color;
 
+$voice-record-stop-border-color: #6F7882; // "Quarterly"
+$voice-record-waveform-bg-color: #394049; // "Dark Tile"
+$voice-record-waveform-fg-color: $tertiary-fg-color;
+$voice-record-waveform-incomplete-fg-color: #5b646d;
+$voice-record-icon-color: $tertiary-fg-color;
+$voice-playback-button-bg-color: $tertiary-fg-color;
+$voice-playback-button-fg-color: $bg-color;
+
 // used by AddressSelector
 $selected-color: $room-highlight-color;
 
@@ -62,6 +70,8 @@ $input-valid-border-color: $accent-color;
 $input-invalid-border-color: $warning-color;
 
 $field-focused-label-bg-color: $bg-color;
+
+$resend-button-divider-color: #b9bec64a; // muted-text with a 4A opacity.
 
 // scrollbars
 $scrollbar-thumb-color: rgba(255, 255, 255, 0.2);
@@ -110,7 +120,7 @@ $header-divider-color: $header-panel-text-primary-color;
 $composer-e2e-icon-color: $header-panel-text-primary-color;
 
 // this probably shouldn't have it's own colour
-$voipcall-plinth-color: #21262c;
+$voipcall-plinth-color: #394049;
 
 // ********************
 
