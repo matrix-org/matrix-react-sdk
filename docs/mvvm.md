@@ -8,7 +8,7 @@ With MVVM, you organize the application code into views, view models and models.
 
 ### View Models
 
-The view model is an object tailered to the needs of the view, yet does not know about the view (e.g. no React or DOM related code and no reference to the view). The view model has properties that will be rendered in the corresponding view, methods for reacting to UI interactions, and in rare cases emits events that should trigger an imperative action in the view (anything that is not a rerender, like scrolling an item into view, ...). When the value of a property changes, the view emits a change event, which will cause the view to rerender.
+The view model is an object tailored to the needs of the view, yet does not know about the view (e.g. no React or DOM related code and no reference to the view). The view model has properties that will be rendered in the corresponding view, methods for reacting to UI interactions, and in rare cases emits events that should trigger an imperative action in the view (anything that is not a rerender, like scrolling an item into view, ...). When the value of a property changes, the view emits a change event, which will cause the view to rerender.
 
 ### Child View Models
 
