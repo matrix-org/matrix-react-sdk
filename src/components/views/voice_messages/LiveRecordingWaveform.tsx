@@ -18,7 +18,7 @@ import React from "react";
 import {IRecordingUpdate, RECORDING_PLAYBACK_SAMPLES, VoiceRecording} from "../../../voice/VoiceRecording";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 import {arrayFastResample, arraySeed} from "../../../utils/arrays";
-import {percentageOf} from "../../../utils/numbers";
+import {clamp, percentageOf} from "../../../utils/numbers";
 import Waveform from "./Waveform";
 
 interface IProps {
@@ -50,7 +50,7 @@ export default class LiveRecordingWaveform extends React.PureComponent<IProps, I
             // microphone won't send you over 0.6, so we artificially adjust the gain for the
             // waveform. This results in a slightly more cinematic/animated waveform for the
             // user.
-            heights: bars.map(b => percentageOf(b, 0, 0.50)),
+            heights: bars.map(b => clamp(percentageOf(b, 0, 0.50), 0, 1)),
         });
     };
 

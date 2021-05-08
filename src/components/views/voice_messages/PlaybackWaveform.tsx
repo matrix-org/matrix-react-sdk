@@ -19,7 +19,7 @@ import {replaceableComponent} from "../../../utils/replaceableComponent";
 import {arraySeed, arrayTrimFill} from "../../../utils/arrays";
 import Waveform from "./Waveform";
 import {Playback, PLAYBACK_WAVEFORM_SAMPLES} from "../../../voice/Playback";
-import {percentageOf} from "../../../utils/numbers";
+import {clamp, percentageOf} from "../../../utils/numbers";
 
 interface IProps {
     playback: Playback;
@@ -49,7 +49,8 @@ export default class PlaybackWaveform extends React.PureComponent<IProps, IState
 
     private toHeights(waveform: number[]) {
         const seed = arraySeed(0, PLAYBACK_WAVEFORM_SAMPLES);
-        return arrayTrimFill(waveform, PLAYBACK_WAVEFORM_SAMPLES, seed);
+        return arrayTrimFill(waveform, PLAYBACK_WAVEFORM_SAMPLES, seed)
+            .map(b => clamp(percentageOf(b, 0, 0.50), 0, 1)); // like a live recording, trim as needed
     }
 
     private onWaveformUpdate = (waveform: number[]) => {
