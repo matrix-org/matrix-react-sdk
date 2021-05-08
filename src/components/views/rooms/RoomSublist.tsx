@@ -418,7 +418,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         this.forceUpdate(); // because the layout doesn't trigger a re-render
     };
     private getRoomNames = () => {
-        let expor={}
+        const expor={}
         this.state.rooms.forEach(room =>{expor[room.name]=room.roomId })
         console.log(expor)
         navigator.clipboard.writeText(JSON.stringify(expor))
@@ -589,12 +589,11 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                             <hr />
                             <div className='mx_RoomSublist_contextMenu_title'>{"Export/Import"}</div> {/* Needs a translation object for sure */}
                             <AccessibleButton onClick={this.getRoomNames}
-                            kind="secondary"
-                            >   
+                                kind="secondary"
+                            >
                                 {"Copy Room Names"}            {/* Needs a translation object for sure */}
                             </AccessibleButton>
 
-                            
 
                         </div>
 
