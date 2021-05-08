@@ -417,7 +417,12 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         this.layout.showPreviews = !this.layout.showPreviews;
         this.forceUpdate(); // because the layout doesn't trigger a re-render
     };
-
+    private getRoomNames = () => {
+        let expor={}
+        this.state.rooms.forEach(room =>{expor[room.name]=room.roomId })
+        console.log(expor)
+        navigator.clipboard.writeText(JSON.stringify(expor))
+    }
     private onBadgeClick = (ev: React.MouseEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
@@ -581,7 +586,18 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                             >
                                 {_t("Show previews of messages")}
                             </StyledMenuItemCheckbox>
+                            <hr />
+                            <div className='mx_RoomSublist_contextMenu_title'>{"Export/Import"}</div> {/* Needs a translation object for sure */}
+                            <AccessibleButton onClick={this.getRoomNames}
+                            kind="secondary"
+                            >   
+                                {"Copy Room Names"}            {/* Needs a translation object for sure */}
+                            </AccessibleButton>
+
+                            
+
                         </div>
+
                     </React.Fragment>
                 );
             }
