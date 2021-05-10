@@ -18,7 +18,7 @@ $room-highlight-color: #343a46;
 $primary-fg-color: $text-primary-color;
 $primary-bg-color: $bg-color;
 $muted-fg-color: $header-panel-text-primary-color;
-
+$link-fg-color: #238CF5;
 // additional text colors
 $secondary-fg-color: #A9B2BC;
 $tertiary-fg-color: #8E99A4;
@@ -287,8 +287,7 @@ $composer-shadow-color: rgba(0, 0, 0, 0.28);
         filter: invert(1);
     }
     a code{
-        color:#238CF5;
-
+        color: $link-fg-color;
     }
 
     pre code {
