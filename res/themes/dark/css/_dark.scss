@@ -286,6 +286,10 @@ $composer-shadow-color: rgba(0, 0, 0, 0.28);
     pre, code {
         filter: invert(1);
     }
+    a code{
+        color:#238CF5;
+
+    }
 
     pre code {
         filter: none;
