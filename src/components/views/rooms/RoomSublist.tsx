@@ -421,7 +421,8 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         const expor={}
         this.state.rooms.forEach(room =>{expor[room.name]=room.roomId })
         console.log(expor)
-        navigator.clipboard.writeText(JSON.stringify(expor))
+        navigator.clipboard.writeText(JSON.stringify(expor));
+        this.setState({contextMenuPosition: null});
     }
     private onBadgeClick = (ev: React.MouseEvent) => {
         ev.preventDefault();
@@ -587,7 +588,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                                 {_t("Show previews of messages")}
                             </StyledMenuItemCheckbox>
                             <hr />
-                            <div className='mx_RoomSublist_contextMenu_title'>{"Export/Import"}</div> {/* Needs a translation object for sure */}
+                            <div className='mx_RoomSublist_contextMenu_title'>{"Export / Import Rooms"}</div> {/* Needs a translation object for sure */}
                             <AccessibleButton onClick={this.getRoomNames}
                                 kind="secondary"
                             >
