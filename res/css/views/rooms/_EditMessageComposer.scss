@@ -24,7 +24,7 @@ limitations under the License.
     padding: 4px; // To contain the avatar and sender
     padding-top: 32px; // padding 32px + mx_BasicMessageComposer_input padding 2px
     top: -34px;
-    z-index: 100;
+    z-index: 100; // Place the mx_EditMessageComposer above the timeline
 
     .mx_BasicMessageComposer {
         .mx_BasicMessageComposer_input {
