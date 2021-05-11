@@ -69,7 +69,9 @@ $left-gutter: 64px;
 }
 
 .mx_EventTile_isEditing.mx_EventTile_last {
-    // This number is from fiddling with this with inspector
+    // This number is from fiddling with this with inspector. It moves the last
+    // event up when editing to avoid the edit message composer being below the
+    // main composer
     padding-bottom: 28px;
 }
 
