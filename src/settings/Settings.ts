@@ -561,6 +561,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: true,
     },
+    "soundLibrary": {
+        supportedLevels: [SettingLevel.ACCOUNT],
+        default: {},
+    },
     "enableWidgetScreenshots": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Enable widget screenshots on supported widgets'),
