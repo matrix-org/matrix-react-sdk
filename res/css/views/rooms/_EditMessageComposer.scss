@@ -21,10 +21,8 @@ limitations under the License.
     left: 0;
     right: 0;
     border-radius: 8px;
-    padding: 4px;
-    // To contain the avatar and sender
-    padding-top: 32px;
-    // padding 32px + mx_BasicMessageComposer_input padding 2px
+    padding: 4px; // To contain the avatar and sender
+    padding-top: 32px; // padding 32px + mx_BasicMessageComposer_input padding 2px
     top: -34px;
     z-index: 100;
 
@@ -34,8 +32,7 @@ limitations under the License.
             border: solid 1px $primary-hairline-color;
             background-color: $primary-bg-color;
             max-height: 200px;
-            padding: 2px 6px;
-            // mx_EventTile left-gutter 64px - border 1px - padding 6px - mx_EditMessageComposer 4px
+            padding: 2px 6px; // mx_EventTile left-gutter 64px - border 1px - padding 6px - mx_EditMessageComposer 4px
             margin-left: 53px;
 
             &:focus {
@@ -45,9 +42,8 @@ limitations under the License.
     }
 
     .mx_EditMessageComposer_buttons {
-        // Match padding of mx_EditMessageComposer
         position: relative;
-        padding-top: 6px;
+        padding-top: 6px; // Match padding of mx_EditMessageComposer
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
@@ -62,7 +58,6 @@ limitations under the License.
 .mx_EventTile_continuation {
     .mx_EditMessageComposer {
         padding: 4px;
-        // padding 4px + mx_BasicMessageComposer_input padding 2px
-        top: -6px;
+        top: -6px; // padding 4px + mx_BasicMessageComposer_input padding 2px
     }
 }
