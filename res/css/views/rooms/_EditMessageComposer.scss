@@ -17,7 +17,7 @@ limitations under the License.
 
 .mx_EditMessageComposer {
     background-color: $header-panel-bg-color;
-    position: absolute;
+    position: absolute; // The mx_EditMessageComposer is positioned relatively to the corresponding EventTile_line
     left: 0;
     right: 0;
     border-radius: 8px;
