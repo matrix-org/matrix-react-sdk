@@ -58,13 +58,11 @@ $left-gutter: 64px;
     }
 
     .mx_EventTile_avatar {
-        // Place this avatar above the editor
-        z-index: 101;
+        z-index: 101; // Place this avatar above the editor
     }
 
     .mx_SenderProfile {
-        // Place sender profile above the editor
-        z-index: 101;
+        z-index: 101; // Place sender profile above the editor
     }
 }
 
