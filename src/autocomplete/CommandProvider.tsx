@@ -60,6 +60,7 @@ export default class CommandProvider extends AutocompleteProvider {
         } else {
             if (query === '/') {
                 // If they have just entered `/` show everything
+                // We exclude the limit on purpose to have a comprehensive list
                 matches = Commands;
             } else {
                 // otherwise fuzzy match against all of the fields
