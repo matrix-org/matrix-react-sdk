@@ -83,7 +83,8 @@ export default class Autocompleter {
     }
 
     async getCompletions(
-        query: string, selection: ISelectionRange,
+        query: string,
+        selection: ISelectionRange,
         force = false,
         limit = -1,
     ): Promise<IProviderCompletions[]> {
@@ -94,13 +95,11 @@ export default class Autocompleter {
         */
         // list of results from each provider, each being a list of completions or null if it times out
         const completionsList: ICompletion[][] = await Promise.all(this.providers.map(async provider => {
-            const completions = await timeout(
-                provider.getCompletions(query, selection, force),
+            return await timeout(
+                provider.getCompletions(query, selection, force, limit),
                 null,
                 PROVIDER_COMPLETION_TIMEOUT,
             );
-            const maxCompletionsItems = limit > -1 ? limit : completions.length;
-            return completions.slice(0, maxCompletionsItems);
         }));
 
         // map then filter to maintain the index for the map-operation, for this.providers to line up
