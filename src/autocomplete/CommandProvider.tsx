@@ -42,7 +42,7 @@ export default class CommandProvider extends AutocompleteProvider {
         query: string,
         selection: ISelectionRange,
         force?: boolean,
-        limit: -1,
+        limit = -1,
     ): Promise<ICompletion[]> {
         const {command, range} = this.getCurrentCommand(query, selection);
         if (!command) return [];
