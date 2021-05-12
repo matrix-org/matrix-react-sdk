@@ -82,8 +82,11 @@ export default class Autocompleter {
         });
     }
 
-    // eslint-disable-next-line
-    async getCompletions(query: string, selection: ISelectionRange, force = false, limit = -1): Promise<IProviderCompletions[]> {
+    async getCompletions(
+        query: string, selection: ISelectionRange,
+        force = false,
+        limit = -1,
+    ): Promise<IProviderCompletions[]> {
         /* Note: This intentionally waits for all providers to return,
          otherwise, we run into a condition where new completions are displayed
          while the user is interacting with the list, which makes it difficult
