@@ -19,7 +19,6 @@ import PropTypes from 'prop-types';
 import {_t} from "../../../../../languageHandler";
 import {MatrixClientPeg} from "../../../../../MatrixClientPeg";
 import AccessibleButton from "../../../elements/AccessibleButton";
-import Notifier from "../../../../../Notifier";
 import SettingsStore from '../../../../../settings/SettingsStore';
 import {SettingLevel} from "../../../../../settings/SettingLevel";
 import {replaceableComponent} from "../../../../../utils/replaceableComponent";
@@ -53,9 +52,9 @@ export default class NotificationsSettingsTab extends React.Component {
         console.log(soundLibrary);
         const selected = (soundData === null) ? "default" : soundData.name;
         this.setState({
-            currentSound:  soundData.name || soundData.url,
-            selected:      selected,
-            soundLibrary:  soundLibrary,
+            currentSound: soundData.name || soundData.url,
+            selected: selected,
+            soundLibrary: soundLibrary,
         });
     }
 
@@ -69,7 +68,7 @@ export default class NotificationsSettingsTab extends React.Component {
         }
 
         const file = e.target.files[0];
-        let soundLibrary = this.state.soundLibrary;
+        const soundLibrary = this.state.soundLibrary;
 
         if (file.name in soundLibrary) {
             const QuestionDialog = sdk.getComponent('dialogs.QuestionDialog');
@@ -87,12 +86,11 @@ export default class NotificationsSettingsTab extends React.Component {
             return;
         }
         this._uploadSound(file);
-
     }
 
     async _uploadSound(file) {
-
         let type = file.type;
+
         if (type === "video/ogg") {
             // XXX: I've observed browsers allowing users to pick a audio/ogg files,
             // and then calling it a video/ogg. This is a lame hack, but man browsers
@@ -113,7 +111,7 @@ export default class NotificationsSettingsTab extends React.Component {
             url,
         };
 
-        let soundLibrary = this.state.soundLibrary;
+        const soundLibrary = this.state.soundLibrary;
         soundLibrary[soundJSON.name] = soundJSON;
 
         await SettingsStore.setValue(
@@ -125,9 +123,8 @@ export default class NotificationsSettingsTab extends React.Component {
 
         this.setState({
             soundLibrary: soundLibrary,
-            selected:     soundJSON.name,
+            selected: soundJSON.name,
         });
-
     }
 
     async _onClickSaveSound(e) {
@@ -203,8 +200,9 @@ export default class NotificationsSettingsTab extends React.Component {
 
 
     render() {
-
         const notChanged = this.state.currentSound == this.state.selected && !this.state.currentSoundReplaced;
+        const soundOptions = Object.keys(this.state.soundLibrary)
+            .map((sound, i) => <option key={i} value={sound}>{sound}</option>);
 
         return (
             <div className="mx_SettingsTab">
@@ -224,11 +222,17 @@ export default class NotificationsSettingsTab extends React.Component {
                             onChange={this._onChangeSelection.bind(this)}
                         >
                             <option key="default" value="default">{_t("Default")}</option>
-                            {Object.keys(this.state.soundLibrary).map((sound, i) => <option key={i} value={sound}>{sound}</option>)}
+                            {soundOptions}
                             <option key="uplod" value="upload">{_t("upload")}</option>
                         </Field>
                         <form autoComplete="off" noValidate={true}>
-                            <input ref={this._soundUpload} className="mx_NotificationSound_soundUpload" type="file" onChange={this._onSoundUploadChanged.bind(this)} accept="audio/*" />
+                            <input
+                                ref={this._soundUpload}
+                                className="mx_NotificationSound_soundUpload"
+                                type="file"
+                                onChange={this._onSoundUploadChanged.bind(this)}
+                                accept="audio/*"
+                            />
                         </form>
 
                         <AccessibleButton className="mx_NotificationSound_resetSound" disabled={notChanged} onClick={this._onReset.bind(this)} kind="primary">
