@@ -81,6 +81,15 @@ export interface IMatrixClientPeg {
     assign(): Promise<any>;
     start(): Promise<any>;
 
+    /**
+     * Populates the underlying MatrixClient with the bare minimum needed to
+     * have the react-sdk work. Data will not be persisted long-term. This
+     * should not be used to run a full app.
+     * @param {string} hsUrl The homeserver URL to initialize with.
+     * @param {string} accessToken The access token to initialize with.
+     */
+    shim(hsUrl: string, accessToken: string): Promise<void>;
+
     getCredentials(): IMatrixClientCreds;
 
     /**
@@ -247,6 +256,26 @@ class _MatrixClientPeg implements IMatrixClientPeg {
         console.log(`MatrixClientPeg: really starting MatrixClient`);
         await this.get().startClient(opts);
         console.log(`MatrixClientPeg: MatrixClient started`);
+    }
+
+    public async shim(hsUrl: string, accessToken: string): Promise<void> {
+        const r = await fetch(`${hsUrl}/_matrix/client/r0/account/whoami`, {
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${accessToken}`,
+            },
+        }).then(r => r.json());
+        this.createClient({
+            userId: r['user_id'],
+            accessToken: accessToken,
+            homeserverUrl: hsUrl,
+            deviceId: null,
+            identityServerUrl: null,
+            guest: false,
+            pickleKey: null,
+            freshLogin: true,
+        });
+        await this.assign();
     }
 
     public getCredentials(): IMatrixClientCreds {
