@@ -51,7 +51,6 @@ export default class RoomHeader extends React.Component {
     };
 
     static defaultProps = {
-        editing: false,
         inRoom: false,
         onCancelClick: null,
     };
