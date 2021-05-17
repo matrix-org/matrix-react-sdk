@@ -760,6 +760,8 @@
     "Please contact your homeserver administrator.": "Please contact your homeserver administrator.",
     "The person who invited you already left the room.": "The person who invited you already left the room.",
     "The person who invited you already left the room, or their server is offline.": "The person who invited you already left the room, or their server is offline.",
+    "You attempted to join using a Room ID without providing a list of servers to join through. Room IDs are internal identifiers and cannot be used to join a room without additional information.": "You attempted to join using a Room ID without providing a list of servers to join through. Room IDs are internal identifiers and cannot be used to join a room without additional information.",
+    "If you know a room alias, try joining through that instead.": "If you know a room alias, try joining through that instead.",
     "Failed to join room": "Failed to join room",
     "You joined the call": "You joined the call",
     "%(senderName)s joined the call": "%(senderName)s joined the call",

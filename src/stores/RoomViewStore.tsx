@@ -317,7 +317,7 @@ class RoomViewStore extends Store<ActionPayload> {
                 </div>;
             } else if (err.httpStatus === 404) {
                 const invitingUserId = this.getInvitingUserId(this.state.roomId);
-                // only provide a better error message for invites
+                // provide a better error message for invites
                 if (invitingUserId) {
                     // if the inviting user is on the same HS, there can only be one cause: they left.
                     if (invitingUserId.endsWith(`:${MatrixClientPeg.get().getDomain()}`)) {
@@ -325,6 +325,17 @@ class RoomViewStore extends Store<ActionPayload> {
                     } else {
                         msg = _t("The person who invited you already left the room, or their server is offline.");
                     }
+                }
+
+                // if joined through room ID and didn't provide any via servers, provide
+                // a more detailed error than "No known servers"
+                if (address === this.state.roomId && viaServers.length === 0) {
+                    msg = <div>
+                        {_t("You attempted to join using a Room ID without providing a list " +
+                            "of servers to join through. Room IDs are internal identifiers and " +
+                            "cannot be used to join a room without additional information.")}<br /><br />
+                        {_t("If you know a room alias, try joining through that instead.")}
+                    </div>
                 }
             }
 
