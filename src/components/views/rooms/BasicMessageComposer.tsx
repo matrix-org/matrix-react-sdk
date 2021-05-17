@@ -490,7 +490,8 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         // 1) It makes it possible to set the NewLine key binding to a key other than Enter without still triggering a
         // new line when pressing Enter.
         // 2) It stops key combos like shift + Enter or alt + Enter to generate NewLines.
-        // 3) It avoids a Chrome 'quirk' which sometimes results in a '\n\n' input on shift+Enter (#17215).
+        // 3) It avoids a Chrome 'quirk' which sometimes results in a '\n\n' input on shift+Enter
+        // (https://github.com/vector-im/element-web/issues/17215).
         if (event.key === Key.ENTER) {
             event.preventDefault();
             return;
