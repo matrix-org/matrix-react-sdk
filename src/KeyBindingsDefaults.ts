@@ -131,6 +131,13 @@ const messageComposerBindings = (): KeyBinding<MessageComposerAction>[] => {
                 key: Key.ENTER,
             },
         });
+        bindings.push({
+            action: MessageComposerAction.NewLine,
+            keyCombo: {
+                key: Key.ENTER,
+                shiftKey: true,
+            },
+        });
     } else {
         bindings.push({
             action: MessageComposerAction.Send,
