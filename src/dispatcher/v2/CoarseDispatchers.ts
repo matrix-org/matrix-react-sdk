@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {CoarseDispatcher, PassthroughCoarseDispatcher} from "../../CoarseDispatcher";
-import {CoarseRoute} from "../../routing/coarse";
-import {CentralDispatcher} from "../../CentralDispatcher";
-import {EnhancedMap} from "../../../../utils/maps";
+import { CoarseDispatcher } from "./CoarseDispatcher";
+import { CoarseRoute } from "./routing/coarse";
+import { CentralDispatcher } from "./CentralDispatcher";
+import { EnhancedMap } from "../../utils/maps";
 
 export class CoarseDispatchers {
     private static _instance: CoarseDispatchers;
@@ -28,7 +28,7 @@ export class CoarseDispatchers {
     }
 
     public forRoute(route: CoarseRoute): CoarseDispatcher {
-        return this.byRoute.getOrCreate(route, new PassthroughCoarseDispatcher(route, CentralDispatcher.instance));
+        return this.byRoute.getOrCreate(route, new CoarseDispatcher(route, CentralDispatcher.instance));
     }
 
     public static get instance(): CoarseDispatchers {

@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {Action, ActionType, NoPayloadAction} from "./actions/types";
-import {CoarseRoute} from "./routing/coarse";
+import { Action, ActionType, NoPayloadAction } from "./actions/types";
 
 /**
  * A rudimentary dispatcher. Actions can be raised (dispatched or fired),
@@ -27,15 +26,15 @@ import {CoarseRoute} from "./routing/coarse";
  * the action to another dispatcher, or simply the dispatcher is not
  * interested in the action.
  */
-export abstract class Dispatcher {
+export interface IDispatcher {
     /**
      * Dispatches an action into the dispatcher. The action will be sent
      * through various queues as part of processing, though may not appear
      * on the dispatcher's listeners.
      * @param {Action} action The action to dispatch.
-     * @param {ActionType<A>} val Value (payload) to dispatch.
+     * @param {ActionType<A>} payload Payload to dispatch.
      */
-    public abstract dispatch<A extends Action>(action: A, val: ActionType<A>);
+    dispatch<A extends Action>(action: A, payload: ActionType<A>);
 
     /**
      * Dispatches an action without a payload. Used for indicator statuses
@@ -45,5 +44,19 @@ export abstract class Dispatcher {
      * payload.
      * @param {NoPayloadAction} action Action to fire/dispatch.
      */
-    public abstract fire<A extends NoPayloadAction>(action: A);
+    fire<A extends NoPayloadAction>(action: A);
+
+    /**
+     * Registers all discoverable listeners with the dispatcher to be called
+     * when the interested actions are fired.
+     * @param {Object} obj The object to search for listeners on.
+     */
+    registerListeners(obj: any);
+
+    /**
+     * Removes all listeners that were previously registered from the given
+     * object.
+     * @param {Object} obj The object to remove all listeners for.
+     */
+    unregisterListeners(obj: any);
 }

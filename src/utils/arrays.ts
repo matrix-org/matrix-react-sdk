@@ -17,6 +17,17 @@ limitations under the License.
 import {percentageOf, percentageWithin} from "./numbers";
 
 /**
+ * Removes an element from the given array. The array will be modified in place.
+ * If the element is not found in the array, this no-ops.
+ * @param {T[]} arr The array.
+ * @param {T} el The element to remove.
+ */
+export function arrayRemove<T>(arr: T[], el: T) {
+    const idx = arr.indexOf(el);
+    if (idx >= 0) arr.splice(idx, 1);
+}
+
+/**
  * Quickly resample an array to have less/more data points. If an input which is larger
  * than the desired size is provided, it will be downsampled. Similarly, if the input
  * is smaller than the desired size then it will be upsampled.

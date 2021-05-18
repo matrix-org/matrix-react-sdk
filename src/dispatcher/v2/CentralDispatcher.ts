@@ -14,18 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {InputDispatcher} from "./InputDispatcher";
-import {Action, ActionType} from "./actions/types";
-import {EnhancedMap} from "../../utils/maps";
-import {CoarseRoute} from "./routing/coarse";
-import {ICoarseFilter, ICoarseListener} from "./CoarseDispatcher";
-import {ActionRegistry} from "./actions/ActionRegistry";
+import { SimpleDispatcher } from "./SimpleDispatcher";
 
-export class CentralDispatcher extends InputDispatcher implements ICoarseFilter {
+// This exists just for developer friendliness when trying to assign names to dispatchers.
+export class CentralDispatcher extends SimpleDispatcher {
     private static _instance: CentralDispatcher;
-    private byRoute = new EnhancedMap<CoarseRoute, ICoarseListener[]>();
 
-    constructor() {
+    private constructor() {
         super();
     }
 
@@ -34,30 +29,5 @@ export class CentralDispatcher extends InputDispatcher implements ICoarseFilter 
             CentralDispatcher._instance = new CentralDispatcher();
         }
         return CentralDispatcher._instance;
-    }
-
-    public dispatch<A extends Action>(action: A, val: ActionType<A>) {
-        const coarse = ActionRegistry[action]?.route;
-        const listeners = this.byRoute.get(coarse);
-        if (!listeners) return;
-
-        for (const listener of listeners) {
-            try {
-                listener.onCoarseAction(action, val);
-            } catch (e) {
-                console.error(`[CentralDispatcher] Error calling '${action}' for ${listener.toString()}: `, e);
-            }
-        }
-    }
-
-    public onCoarseAction(coarse: CoarseRoute, listener: ICoarseListener) {
-        this.byRoute.getOrCreate(coarse, []).push(listener);
-    }
-
-    public offCoarseAction(coarse: CoarseRoute, listener: ICoarseListener) {
-        const arr = this.byRoute.get(coarse);
-        if (!arr) return;
-        const idx = arr.indexOf(listener);
-        if (idx >= 0) arr.splice(idx, 1);
     }
 }

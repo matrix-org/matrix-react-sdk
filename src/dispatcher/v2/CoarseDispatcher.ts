@@ -14,64 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {CoarseRoute} from "./routing/coarse";
-import {InputDispatcher, InputtingDispatcher} from "./InputDispatcher";
-import {Action, ActionType} from "./actions/types";
+import { CoarseRoute } from "./routing/coarse";
+import { Action, ActionType } from "./actions/types";
+import { SimpleDispatcher } from "./SimpleDispatcher";
+import { CentralDispatcher } from "./CentralDispatcher";
+import { ActionRegistry } from "./actions/ActionRegistry";
 
-export interface ICoarseListener {
-    onCoarseAction(action: Action, val: ActionType<Action>);
-}
-
-export interface ICoarseFilter {
-    onCoarseAction(coarse: CoarseRoute, listener: ICoarseListener);
-    offCoarseAction(coarse: CoarseRoute, listener: ICoarseListener);
-}
-
-export interface IFeedListener {
-    onAction(action: Action, val: ActionType<Action>);
-}
-
-export type CoarseParentDispatcher = InputDispatcher & ICoarseFilter;
-
-export abstract class CoarseDispatcher extends InputtingDispatcher implements ICoarseListener {
-    protected feeds: IFeedListener[] = [];
-
-    protected constructor(public readonly route: CoarseRoute, input: CoarseParentDispatcher) {
-        super(input);
-        input.onCoarseAction(route, this);
+export class CoarseDispatcher extends SimpleDispatcher {
+    public constructor(private route: CoarseRoute, central: CentralDispatcher) {
+        super();
+        super.connect(central);
     }
 
-    protected doInformFeeds(action: Action, val: ActionType<Action>) {
-        for (const feed of this.feeds) {
-            try {
-                feed.onAction(action, val);
-            } catch (e) {
-                console.error(`[CoarseDispatcher@${this.route}] Error when calling '${action}' to ${feed}: `, e);
-            }
-        }
+    protected shouldAllowPropagate<A extends Action>(action: A, payload: ActionType<A>): boolean {
+        return this.wouldAllowPropagation(action);
     }
 
-    public abstract onCoarseAction(action: Action, val: ActionType<Action>);
-
-    public abstract addFeeder(feeder: IFeedListener);
-    public abstract removeFeeder(feeder: IFeedListener);
-}
-
-export class PassthroughCoarseDispatcher extends CoarseDispatcher {
-    public constructor(route: CoarseRoute, input: CoarseParentDispatcher) {
-        super(route, input);
-    }
-
-    public onCoarseAction(action: Action, val: ActionType<Action>) {
-        this.doInformFeeds(action, val);
-    }
-
-    public addFeeder(feeder: IFeedListener) {
-        this.feeds.push(feeder);
-    }
-
-    public removeFeeder(feeder: IFeedListener) {
-        const idx = this.feeds.indexOf(feeder);
-        if (idx >= 0) this.feeds.splice(idx, 1);
+    protected wouldAllowPropagation<A extends Action>(action: A): boolean {
+        const actionRoute = ActionRegistry[action]?.route;
+        return actionRoute === this.route;
     }
 }
