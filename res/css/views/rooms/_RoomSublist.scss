@@ -27,51 +27,15 @@ limitations under the License.
         display: flex;
         align-items: center;
 
-        // ***************************
-        // Sticky Headers Start
+        position: sticky;
+        top: 0;
+        z-index: 9;
+        background: rgb(245,245,245);
 
-        // Ideally we'd be able to use `position: sticky; top: 0; bottom: 0;` on the
-        // headerContainer, however due to our layout concerns we actually have to
-        // calculate it manually so we can sticky things in the right places. We also
-        // target the headerText instead of the container to reduce jumps when scrolling,
-        // and to help hide the badges/other buttons that could appear on hover. This
-        // all works by ensuring the header text has a fixed height when sticky so the
-        // fixed height of the container can maintain the scroll position.
-
-        // The combined height must be set in the LeftPanel component for sticky headers
-        // to work correctly.
-        padding-bottom: 8px;
         // Allow the container to collapse on itself if its children
         // are not in the normal document flow
         max-height: 24px;
         color: $roomlist-header-color;
-
-        .mx_RoomSublist_stickable {
-            flex: 1;
-            max-width: 100%;
-
-            // Create a flexbox to make ordering easy
-            display: flex;
-            align-items: center;
-
-            // We use a generic sticky class for 2 reasons: to reduce style duplication and
-            // to identify when a header is sticky. If we didn't have a consistent sticky class,
-            // we'd have to do the "is sticky" checks again on click, as clicking the header
-            // when sticky scrolls instead of collapses the list.
-            &.mx_RoomSublist_headerContainer_sticky {
-                position: fixed;
-                height: 32px; // to match the header container
-                // width set by JS
-                width: calc(100% - 22px);
-            }
-
-            // We don't have a top style because the top is dependent on the room list header's
-            // height, and is therefore calculated in JS.
-            // The class, mx_RoomSublist_headerContainer_stickyTop, is applied though.
-        }
-
-        // Sticky Headers End
-        // ***************************
 
         .mx_RoomSublist_badgeContainer {
             // Create another flexbox row because it's super easy to position the badge this way.
