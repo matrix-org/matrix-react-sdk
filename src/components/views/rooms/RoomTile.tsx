@@ -123,9 +123,9 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         this.forceUpdate(); // notification state changed - update
     };
 
-    private onResize = async () => {
+    private onResize = () => {
         if (this.showMessagePreview && !this.state.messagePreview) {
-            await this.generatePreview();
+            this.generatePreview();
         }
     };
 
@@ -236,9 +236,9 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         this.forceUpdate(); // we don't have anything to actually update
     };
 
-    private onRoomPreviewChanged = async (room: Room) => {
+    private onRoomPreviewChanged = (room: Room) => {
         if (this.props.room && room.roomId === this.props.room.roomId) {
-            await this.generatePreview();
+            this.generatePreview();
         }
     };
 

@@ -131,9 +131,7 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
 
             const event = events[i];
 
-            if (event.shouldAttemptDecryption()) {
-                await this.matrixClient.decryptEvent(event);
-            }
+            await this.matrixClient.decryptEvent(event);
 
             const previewDef = PREVIEWS[event.getType()];
             if (!previewDef) continue;
