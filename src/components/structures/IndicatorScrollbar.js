@@ -17,7 +17,9 @@ limitations under the License.
 import React from "react";
 import PropTypes from "prop-types";
 import AutoHideScrollbar from "./AutoHideScrollbar";
+import {replaceableComponent} from "../../utils/replaceableComponent";
 
+@replaceableComponent("structures.IndicatorScrollbar")
 export default class IndicatorScrollbar extends React.Component {
     static propTypes = {
         // If true, the scrollbar will append mx_IndicatorScrollbar_leftOverflowIndicator
@@ -158,7 +160,7 @@ export default class IndicatorScrollbar extends React.Component {
             }
 
             // don't mess with the horizontal scroll for trackpad users
-            // See https://github.com/vector-im/riot-web/issues/10005
+            // See https://github.com/vector-im/element-web/issues/10005
             if (this._likelyTrackpadUser) {
                 return;
             }
@@ -192,7 +194,7 @@ export default class IndicatorScrollbar extends React.Component {
             ref={this._collectScrollerComponent}
             wrappedRef={this._collectScroller}
             onWheel={this.onMouseWheel}
-            {... this.props}
+            {...this.props}
         >
             { leftOverflowIndicator }
             { this.props.children }

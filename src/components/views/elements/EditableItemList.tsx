@@ -16,9 +16,10 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {_t} from '../../../languageHandler.js';
+import {_t} from '../../../languageHandler';
 import Field from "./Field";
 import AccessibleButton from "./AccessibleButton";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 interface IEditableItemProps {
     index: number,
@@ -148,12 +149,16 @@ export default class EditableItemList extends React.Component<IProps> {
 
     _renderNewItemField() {
         return (
-            <form onSubmit={this._onItemAdded} autoComplete="off"
-                  noValidate={true} className="mx_EditableItemList_newItem">
+            <form
+                onSubmit={this._onItemAdded}
+                autoComplete="off"
+                noValidate={true}
+                className="mx_EditableItemList_newItem"
+            >
                 <Field label={this.props.placeholder} type="text"
-                       autoComplete="off" value={this.props.newItem || ""} onChange={this._onNewItemChanged}
-                       list={this.props.suggestionsListId} />
-                <AccessibleButton onClick={this._onItemAdded} kind="primary" type="submit">
+                    autoComplete="off" value={this.props.newItem || ""} onChange={this._onNewItemChanged}
+                    list={this.props.suggestionsListId} />
+                <AccessibleButton onClick={this._onItemAdded} kind="primary" type="submit" disabled={!this.props.newItem}>
                     {_t("Add")}
                 </AccessibleButton>
             </form>

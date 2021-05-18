@@ -18,16 +18,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
+import Modal from '../../../Modal';
+import VerificationRequestDialog from '../../views/dialogs/VerificationRequestDialog';
 import * as sdk from '../../../index';
 import {
     SetupEncryptionStore,
+    PHASE_LOADING,
     PHASE_INTRO,
     PHASE_BUSY,
     PHASE_DONE,
     PHASE_CONFIRM_SKIP,
     PHASE_FINISHED,
 } from '../../../stores/SetupEncryptionStore';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+function keyHasPassphrase(keyInfo) {
+    return (
+        keyInfo.passphrase &&
+        keyInfo.passphrase.salt &&
+        keyInfo.passphrase.iterations
+    );
+}
+
+@replaceableComponent("structures.auth.SetupEncryptionBody")
 export default class SetupEncryptionBody extends React.Component {
     static propTypes = {
         onFinished: PropTypes.func.isRequired,
@@ -72,6 +85,22 @@ export default class SetupEncryptionBody extends React.Component {
         store.usePassPhrase();
     }
 
+    _onVerifyClick = () => {
+        const cli = MatrixClientPeg.get();
+        const userId = cli.getUserId();
+        const requestPromise = cli.requestVerification(userId);
+
+        this.props.onFinished(true);
+        Modal.createTrackedDialog('New Session Verification', 'Starting dialog', VerificationRequestDialog, {
+            verificationRequestPromise: requestPromise,
+            member: cli.getUser(userId),
+            onFinished: async () => {
+                const request = await requestPromise;
+                request.cancel();
+            },
+        });
+    }
+
     onSkipClick = () => {
         const store = SetupEncryptionStore.sharedInstance();
         store.skip();
@@ -108,32 +137,37 @@ export default class SetupEncryptionBody extends React.Component {
                 member={MatrixClientPeg.get().getUser(this.state.verificationRequest.otherUserId)}
             />;
         } else if (phase === PHASE_INTRO) {
+            const store = SetupEncryptionStore.sharedInstance();
+            let recoveryKeyPrompt;
+            if (store.keyInfo && keyHasPassphrase(store.keyInfo)) {
+                recoveryKeyPrompt = _t("Use Security Key or Phrase");
+            } else if (store.keyInfo) {
+                recoveryKeyPrompt = _t("Use Security Key");
+            }
+
+            let useRecoveryKeyButton;
+            if (recoveryKeyPrompt) {
+                useRecoveryKeyButton = <AccessibleButton kind="link" onClick={this._onUsePassphraseClick}>
+                    {recoveryKeyPrompt}
+                </AccessibleButton>;
+            }
+
+            let verifyButton;
+            if (store.hasDevicesToVerifyAgainst) {
+                verifyButton = <AccessibleButton kind="primary" onClick={this._onVerifyClick}>
+                    { _t("Use another login") }
+                </AccessibleButton>;
+            }
+
             return (
                 <div>
                     <p>{_t(
-                        "Confirm your identity by verifying this login from one of your other sessions, " +
-                        "granting it access to encrypted messages.",
+                        "Verify your identity to access encrypted messages and prove your identity to others.",
                     )}</p>
-                    <p>{_t(
-                        "This requires the latest Riot on your other devices:",
-                    )}</p>
-
-                    <div className="mx_CompleteSecurity_clients">
-                        <div className="mx_CompleteSecurity_clients_desktop">
-                            <div>Riot Web</div>
-                            <div>Riot Desktop</div>
-                        </div>
-                        <div className="mx_CompleteSecurity_clients_mobile">
-                            <div>Riot iOS</div>
-                            <div>Riot X for Android</div>
-                        </div>
-                        <p>{_t("or another cross-signing capable Matrix client")}</p>
-                    </div>
 
                     <div className="mx_CompleteSecurity_actionRow">
-                        <AccessibleButton kind="link" onClick={this._onUsePassphraseClick}>
-                            {_t("Use Recovery Passphrase or Key")}
-                        </AccessibleButton>
+                        {verifyButton}
+                        {useRecoveryKeyButton}
                         <AccessibleButton kind="danger" onClick={this.onSkipClick}>
                             {_t("Skip")}
                         </AccessibleButton>
@@ -170,8 +204,8 @@ export default class SetupEncryptionBody extends React.Component {
             return (
                 <div>
                     <p>{_t(
-                        "Without completing security on this session, it won’t have " +
-                        "access to encrypted messages.",
+                        "Without verifying, you won’t have access to all your messages " +
+                        "and may appear as untrusted to others.",
                     )}</p>
                     <div className="mx_CompleteSecurity_actionRow">
                         <AccessibleButton
@@ -190,7 +224,7 @@ export default class SetupEncryptionBody extends React.Component {
                     </div>
                 </div>
             );
-        } else if (phase === PHASE_BUSY) {
+        } else if (phase === PHASE_BUSY || phase === PHASE_LOADING) {
             const Spinner = sdk.getComponent('views.elements.Spinner');
             return <Spinner />;
         } else {

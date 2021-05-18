@@ -32,17 +32,32 @@ import FlairUserSettingsTab from "../settings/tabs/user/FlairUserSettingsTab";
 import * as sdk from "../../../index";
 import SdkConfig from "../../../SdkConfig";
 import MjolnirUserSettingsTab from "../settings/tabs/user/MjolnirUserSettingsTab";
+import {UIFeature} from "../../../settings/UIFeature";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+export const USER_GENERAL_TAB = "USER_GENERAL_TAB";
+export const USER_APPEARANCE_TAB = "USER_APPEARANCE_TAB";
+export const USER_FLAIR_TAB = "USER_FLAIR_TAB";
+export const USER_NOTIFICATIONS_TAB = "USER_NOTIFICATIONS_TAB";
+export const USER_PREFERENCES_TAB = "USER_PREFERENCES_TAB";
+export const USER_VOICE_TAB = "USER_VOICE_TAB";
+export const USER_SECURITY_TAB = "USER_SECURITY_TAB";
+export const USER_LABS_TAB = "USER_LABS_TAB";
+export const USER_MJOLNIR_TAB = "USER_MJOLNIR_TAB";
+export const USER_HELP_TAB = "USER_HELP_TAB";
+
+@replaceableComponent("views.dialogs.UserSettingsDialog")
 export default class UserSettingsDialog extends React.Component {
     static propTypes = {
         onFinished: PropTypes.func.isRequired,
+        initialTabId: PropTypes.string,
     };
 
     constructor() {
         super();
 
         this.state = {
-            mjolnirEnabled: SettingsStore.isFeatureEnabled("feature_mjolnir"),
+            mjolnirEnabled: SettingsStore.getValue("feature_mjolnir"),
         };
     }
 
@@ -63,42 +78,59 @@ export default class UserSettingsDialog extends React.Component {
         const tabs = [];
 
         tabs.push(new Tab(
+            USER_GENERAL_TAB,
             _td("General"),
             "mx_UserSettingsDialog_settingsIcon",
             <GeneralUserSettingsTab closeSettingsFn={this.props.onFinished} />,
         ));
         tabs.push(new Tab(
+            USER_APPEARANCE_TAB,
             _td("Appearance"),
             "mx_UserSettingsDialog_appearanceIcon",
             <AppearanceUserSettingsTab />,
         ));
+        if (SettingsStore.getValue(UIFeature.Flair)) {
+            tabs.push(new Tab(
+                USER_FLAIR_TAB,
+                _td("Flair"),
+                "mx_UserSettingsDialog_flairIcon",
+                <FlairUserSettingsTab />,
+            ));
+        }
         tabs.push(new Tab(
-            _td("Flair"),
-            "mx_UserSettingsDialog_flairIcon",
-            <FlairUserSettingsTab />,
-        ));
-        tabs.push(new Tab(
+            USER_NOTIFICATIONS_TAB,
             _td("Notifications"),
             "mx_UserSettingsDialog_bellIcon",
             <NotificationUserSettingsTab />,
         ));
         tabs.push(new Tab(
+            USER_PREFERENCES_TAB,
             _td("Preferences"),
             "mx_UserSettingsDialog_preferencesIcon",
             <PreferencesUserSettingsTab />,
         ));
+
+        if (SettingsStore.getValue(UIFeature.Voip)) {
+            tabs.push(new Tab(
+                USER_VOICE_TAB,
+                _td("Voice & Video"),
+                "mx_UserSettingsDialog_voiceIcon",
+                <VoiceUserSettingsTab />,
+            ));
+        }
+
         tabs.push(new Tab(
-            _td("Voice & Video"),
-            "mx_UserSettingsDialog_voiceIcon",
-            <VoiceUserSettingsTab />,
-        ));
-        tabs.push(new Tab(
+            USER_SECURITY_TAB,
             _td("Security & Privacy"),
             "mx_UserSettingsDialog_securityIcon",
             <SecurityUserSettingsTab closeSettingsFn={this.props.onFinished} />,
         ));
-        if (SdkConfig.get()['showLabsSettings'] || SettingsStore.getLabsFeatures().length > 0) {
+        // Show the Labs tab if enabled or if there are any active betas
+        if (SdkConfig.get()['showLabsSettings']
+            || SettingsStore.getFeatureSettingNames().some(k => SettingsStore.getBetaInfo(k))
+        ) {
             tabs.push(new Tab(
+                USER_LABS_TAB,
                 _td("Labs"),
                 "mx_UserSettingsDialog_labsIcon",
                 <LabsUserSettingsTab />,
@@ -106,12 +138,14 @@ export default class UserSettingsDialog extends React.Component {
         }
         if (this.state.mjolnirEnabled) {
             tabs.push(new Tab(
+                USER_MJOLNIR_TAB,
                 _td("Ignored users"),
                 "mx_UserSettingsDialog_mjolnirIcon",
                 <MjolnirUserSettingsTab />,
             ));
         }
         tabs.push(new Tab(
+            USER_HELP_TAB,
             _td("Help & About"),
             "mx_UserSettingsDialog_helpIcon",
             <HelpUserSettingsTab closeSettingsFn={this.props.onFinished} />,
@@ -124,10 +158,14 @@ export default class UserSettingsDialog extends React.Component {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
 
         return (
-            <BaseDialog className='mx_UserSettingsDialog' hasCancel={true}
-                        onFinished={this.props.onFinished} title={_t("Settings")}>
-                <div className='ms_SettingsDialog_content'>
-                    <TabbedView tabs={this._getTabs()} />
+            <BaseDialog
+                className='mx_UserSettingsDialog'
+                hasCancel={true}
+                onFinished={this.props.onFinished}
+                title={_t("Settings")}
+            >
+                <div className='mx_SettingsDialog_content'>
+                    <TabbedView tabs={this._getTabs()} initialTabId={this.props.initialTabId} />
                 </div>
             </BaseDialog>
         );

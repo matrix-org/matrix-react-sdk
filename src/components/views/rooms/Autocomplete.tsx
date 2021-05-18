@@ -15,17 +15,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, {createRef, KeyboardEvent} from 'react';
 import classNames from 'classnames';
-import flatMap from 'lodash/flatMap';
+import {flatMap} from "lodash";
 import {ICompletion, ISelectionRange, IProviderCompletions} from '../../../autocomplete/Autocompleter';
 import {Room} from 'matrix-js-sdk/src/models/room';
 
 import SettingsStore from "../../../settings/SettingsStore";
 import Autocompleter from '../../../autocomplete/Autocompleter';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 const COMPOSER_SELECTED = 0;
+const MAX_PROVIDER_MATCHES = 20;
 
 export const generateCompletionDomId = (number) => `mx_Autocomplete_Completion_${number}`;
 
@@ -50,11 +51,12 @@ interface IState {
     forceComplete: boolean;
 }
 
+@replaceableComponent("views.rooms.Autocomplete")
 export default class Autocomplete extends React.PureComponent<IProps, IState> {
     autocompleter: Autocompleter;
     queryRequested: string;
     debounceCompletionsRequest: NodeJS.Timeout;
-    containerRef: React.RefObject<HTMLDivElement>;
+    private containerRef = createRef<HTMLDivElement>();
 
     constructor(props) {
         super(props);
@@ -78,8 +80,6 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
 
             forceComplete: false,
         };
-
-        this.containerRef = React.createRef();
     }
 
     componentDidMount() {
@@ -137,7 +137,7 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
 
     processQuery(query: string, selection: ISelectionRange) {
         return this.autocompleter.getCompletions(
-            query, selection, this.state.forceComplete,
+            query, selection, this.state.forceComplete, MAX_PROVIDER_MATCHES,
         ).then((completions) => {
             // Only ever process the completions for the most recent query being processed
             if (query !== this.queryRequested) {
@@ -256,14 +256,15 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
     componentDidUpdate(prevProps: IProps) {
         this.applyNewProps(prevProps.query, prevProps.room);
         // this is the selected completion, so scroll it into view if needed
-        const selectedCompletion = this.refs[`completion${this.state.selectionOffset}`];
-        if (selectedCompletion && this.containerRef.current) {
-            const domNode = ReactDOM.findDOMNode(selectedCompletion);
-            const offsetTop = domNode && (domNode as HTMLElement).offsetTop;
-            if (offsetTop > this.containerRef.current.scrollTop + this.containerRef.current.offsetHeight ||
-                offsetTop < this.containerRef.current.scrollTop) {
-                this.containerRef.current.scrollTop = offsetTop - this.containerRef.current.offsetTop;
-            }
+        const selectedCompletion = this.refs[`completion${this.state.selectionOffset}`] as HTMLElement;
+
+        if (selectedCompletion) {
+            selectedCompletion.scrollIntoView({
+                behavior: "auto",
+                block: "nearest",
+            });
+        } else if (this.containerRef.current) {
+            this.containerRef.current.scrollTo({ top: 0 });
         }
     }
 

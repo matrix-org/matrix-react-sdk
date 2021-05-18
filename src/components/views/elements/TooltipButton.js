@@ -16,31 +16,28 @@ limitations under the License.
 */
 
 import React from 'react';
-import createReactClass from 'create-react-class';
 import * as sdk from '../../../index';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
-export default createReactClass({
-    displayName: 'TooltipButton',
+@replaceableComponent("views.elements.TooltipButton")
+export default class TooltipButton extends React.Component {
+    state = {
+        hover: false,
+    };
 
-    getInitialState: function() {
-        return {
-            hover: false,
-        };
-    },
-
-    onMouseOver: function() {
+    onMouseOver = () => {
         this.setState({
             hover: true,
         });
-    },
+    };
 
-    onMouseOut: function() {
+    onMouseLeave = () => {
         this.setState({
             hover: false,
         });
-    },
+    };
 
-    render: function() {
+    render() {
         const Tooltip = sdk.getComponent("elements.Tooltip");
         const tip = this.state.hover ? <Tooltip
             className="mx_TooltipButton_container"
@@ -48,10 +45,10 @@ export default createReactClass({
             label={this.props.helpText}
         /> : <div />;
         return (
-            <div className="mx_TooltipButton" onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut} >
+            <div className="mx_TooltipButton" onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave}>
                 ?
                 { tip }
             </div>
         );
-    },
-});
+    }
+}

@@ -15,26 +15,27 @@ limitations under the License.
 */
 
 import React from 'react';
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 interface IProps {
-    className: string,
-    dragFunc: (currentLocation: ILocationState, event: MouseEvent) => ILocationState,
-    onMouseUp: (event: MouseEvent) => void,
+    className: string;
+    dragFunc: (currentLocation: ILocationState, event: MouseEvent) => ILocationState;
+    onMouseUp: (event: MouseEvent) => void;
 }
 
 interface IState {
-    onMouseMove: (event: MouseEvent) => void,
-    onMouseUp: (event: MouseEvent) => void,
-    location: ILocationState,
+    onMouseMove: (event: MouseEvent) => void;
+    onMouseUp: (event: MouseEvent) => void;
+    location: ILocationState;
 }
 
 export interface ILocationState {
-    currentX: number,
-    currentY: number,
+    currentX: number;
+    currentY: number;
 }
 
+@replaceableComponent("views.elements.Draggable")
 export default class Draggable extends React.Component<IProps, IState> {
-
     constructor(props: IProps) {
         super(props);
 
@@ -58,18 +59,15 @@ export default class Draggable extends React.Component<IProps, IState> {
 
         document.addEventListener("mousemove", this.state.onMouseMove);
         document.addEventListener("mouseup", this.state.onMouseUp);
-        console.log("Mouse down")
-    }
+    };
 
     private onMouseUp = (event: MouseEvent): void => {
         document.removeEventListener("mousemove", this.state.onMouseMove);
         document.removeEventListener("mouseup", this.state.onMouseUp);
         this.props.onMouseUp(event);
-        console.log("Mouse up")
-    }
+    };
 
     private onMouseMove(event: MouseEvent): void {
-        console.log("Mouse Move")
         const newLocation = this.props.dragFunc(this.state.location, event);
 
         this.setState({
@@ -78,7 +76,6 @@ export default class Draggable extends React.Component<IProps, IState> {
     }
 
     render() {
-        return <div className={this.props.className} onMouseDown={this.onMouseDown.bind(this)} />
+        return <div className={this.props.className} onMouseDown={this.onMouseDown.bind(this)} />;
     }
-
 }

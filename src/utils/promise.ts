@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 // Returns a promise which resolves with a given value after the given number of ms
-export function sleep<T>(ms: number, value: T): Promise<T> {
+export function sleep<T>(ms: number, value?: T): Promise<T> {
     return new Promise((resolve => { setTimeout(resolve, ms, value); }));
 }
 
@@ -67,4 +67,22 @@ export function allSettled<T>(promises: Promise<T>[]): Promise<Array<ISettledFul
             reason,
         }));
     }));
+}
+
+// Helper method to retry a Promise a given number of times or until a predicate fails
+export async function retry<T, E extends Error>(fn: () => Promise<T>, num: number, predicate?: (e: E) => boolean) {
+    let lastErr: E;
+    for (let i = 0; i < num; i++) {
+        try {
+            const v = await fn();
+            // If `await fn()` throws then we won't reach here
+            return v;
+        } catch (err) {
+            if (predicate && !predicate(err)) {
+                throw err;
+            }
+            lastErr = err;
+        }
+    }
+    throw lastErr;
 }

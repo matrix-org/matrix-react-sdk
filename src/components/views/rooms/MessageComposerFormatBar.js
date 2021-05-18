@@ -17,10 +17,11 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
-import * as sdk from '../../../index';
 import classNames from 'classnames';
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.rooms.MessageComposerFormatBar")
 export default class MessageComposerFormatBar extends React.PureComponent {
     static propTypes = {
         onAction: PropTypes.func.isRequired,
@@ -68,28 +69,28 @@ class FormatButton extends React.PureComponent {
     };
 
     render() {
-        const InteractiveTooltip = sdk.getComponent('elements.InteractiveTooltip');
         const className = `mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIcon${this.props.icon}`;
         let shortcut;
         if (this.props.shortcut) {
             shortcut = <div className="mx_MessageComposerFormatBar_tooltipShortcut">{this.props.shortcut}</div>;
         }
-        const tooltipContent = (
-            <div className="mx_MessageComposerFormatBar_buttonTooltip">
-                <div>{this.props.label}</div>
+        const tooltip = <div>
+            <div className="mx_Tooltip_title">
+                {this.props.label}
+            </div>
+            <div className="mx_Tooltip_sub">
                 {shortcut}
             </div>
-        );
+        </div>;
 
         return (
-            <InteractiveTooltip content={tooltipContent} forceHidden={!this.props.visible}>
-                <AccessibleButton
-                    as="span"
-                    role="button"
-                    onClick={this.props.onClick}
-                    aria-label={this.props.label}
-                    className={className} />
-            </InteractiveTooltip>
+            <AccessibleTooltipButton
+                element="button"
+                type="button"
+                onClick={this.props.onClick}
+                title={this.props.label}
+                tooltip={tooltip}
+                className={className} />
         );
     }
 }

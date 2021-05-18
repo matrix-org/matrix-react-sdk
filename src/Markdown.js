@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import commonmark from 'commonmark';
-import escape from 'lodash/escape';
+import * as commonmark from 'commonmark';
+import {escape} from "lodash";
 
 const ALLOWED_HTML_TAGS = ['sub', 'sup', 'del', 'u'];
 
@@ -23,6 +23,11 @@ const ALLOWED_HTML_TAGS = ['sub', 'sup', 'del', 'u'];
 const TEXT_NODES = ['text', 'softbreak', 'linebreak', 'paragraph', 'document'];
 
 function is_allowed_html_tag(node) {
+    if (node.literal != null &&
+        node.literal.match('^<((div|span) data-mx-maths="[^"]*"|\/(div|span))>$') != null) {
+        return true;
+    }
+
     // Regex won't work for tags with attrs, but we only
     // allow <del> anyway.
     const matches = /^<\/?(.*)>$/.exec(node.literal);
@@ -30,6 +35,7 @@ function is_allowed_html_tag(node) {
         const tag = matches[1];
         return ALLOWED_HTML_TAGS.indexOf(tag) > -1;
     }
+
     return false;
 }
 
@@ -99,7 +105,7 @@ export default class Markdown {
             // puts softbreaks in for multiple lines in a blockquote,
             // so if these are just newline characters then the
             // block quote ends up all on one line
-            // (https://github.com/vector-im/riot-web/issues/3154)
+            // (https://github.com/vector-im/element-web/issues/3154)
             softbreak: '<br />',
         });
 
@@ -166,7 +172,7 @@ export default class Markdown {
      * Render the markdown message to plain text. That is, essentially
      * just remove any backslashes escaping what would otherwise be
      * markdown syntax
-     * (to fix https://github.com/vector-im/riot-web/issues/2870).
+     * (to fix https://github.com/vector-im/element-web/issues/2870).
      *
      * N.B. this does **NOT** render arbitrary MD to plain text - only MD
      * which has no formatting.  Otherwise it emits HTML(!).
@@ -174,14 +180,6 @@ export default class Markdown {
     toPlaintext() {
         const renderer = new commonmark.HtmlRenderer({safe: false});
         const real_paragraph = renderer.paragraph;
-
-        // The default `out` function only sends the input through an XML
-        // escaping function, which causes messages to be entity encoded,
-        // which we don't want in this case.
-        renderer.out = function(s) {
-            // The `lit` function adds a string literal to the output buffer.
-            this.lit(s);
-        };
 
         renderer.paragraph = function(node, entering) {
             // as with toHTML, only append lines to paragraphs if there are

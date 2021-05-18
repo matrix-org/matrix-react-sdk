@@ -17,10 +17,14 @@ limitations under the License.
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-
+import {throttle} from "lodash";
 import ResizeObserver from 'resize-observer-polyfill';
 
 import dis from '../../../dispatcher/dispatcher';
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import {MatrixClientPeg} from "../../../MatrixClientPeg";
+import {isNullOrUndefined} from "matrix-js-sdk/src/utils";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 // Shamelessly ripped off Modal.js.  There's probably a better way
 // of doing reusable widgets like dialog boxes & menus where we go and
@@ -53,12 +57,16 @@ function getOrCreateContainer(containerId) {
  * children are made visible and are positioned into a div that is given the same
  * bounding rect as the parent of PE.
  */
+@replaceableComponent("views.elements.PersistedElement")
 export default class PersistedElement extends React.Component {
     static propTypes = {
         // Unique identifier for this PersistedElement instance
         // Any PersistedElements with the same persistKey will use
         // the same DOM container.
         persistKey: PropTypes.string.isRequired,
+
+        // z-index for the element. Defaults to 9.
+        zIndex: PropTypes.number,
     };
 
     constructor() {
@@ -131,6 +139,8 @@ export default class PersistedElement extends React.Component {
     _onAction(payload) {
         if (payload.action === 'timeline_resize') {
             this._repositionChild();
+        } else if (payload.action === 'logout') {
+            PersistedElement.destroyElement(this.props.persistKey);
         }
     }
 
@@ -144,9 +154,11 @@ export default class PersistedElement extends React.Component {
     }
 
     renderApp() {
-        const content = <div ref={this.collectChild} style={this.props.style}>
-            {this.props.children}
-        </div>;
+        const content = <MatrixClientContext.Provider value={MatrixClientPeg.get()}>
+            <div ref={this.collectChild} style={this.props.style}>
+                {this.props.children}
+            </div>
+        </MatrixClientContext.Provider>;
 
         ReactDOM.render(content, getOrCreateContainer('mx_persistedElement_'+this.props.persistKey));
     }
@@ -156,74 +168,23 @@ export default class PersistedElement extends React.Component {
         child.style.display = visible ? 'block' : 'none';
     }
 
-    /*
-     * Clip element bounding rectangle to that of the parent elements.
-     * This is not a full visibility check, but prevents the persisted
-     * element from overflowing parent containers when inside a scrolled
-     * area.
-     */
-    _getClippedBoundingClientRect(element) {
-        let parentElement = element.parentElement;
-        let rect = element.getBoundingClientRect();
-
-        rect = new DOMRect(rect.left, rect.top, rect.width, rect.height);
-
-        while (parentElement) {
-            const parentRect = parentElement.getBoundingClientRect();
-
-            if (parentRect.left > rect.left) {
-                rect.width = rect.width - (parentRect.left - rect.left);
-                rect.x = parentRect.x;
-            }
-
-            if (parentRect.top > rect.top) {
-                rect.height = rect.height - (parentRect.top - rect.top);
-                rect.y = parentRect.y;
-            }
-
-            if (parentRect.right < rect.right) {
-                rect.width = rect.width - (rect.right - parentRect.right);
-            }
-
-            if (parentRect.bottom < rect.bottom) {
-                rect.height = rect.height - (rect.bottom - parentRect.bottom);
-            }
-
-            parentElement = parentElement.parentElement;
-        }
-
-        if (rect.width < 0) rect.width = 0;
-        if (rect.height < 0) rect.height = 0;
-
-        return rect;
-    }
-
-    updateChildPosition(child, parent) {
+    updateChildPosition = throttle((child, parent) => {
         if (!child || !parent) return;
 
         const parentRect = parent.getBoundingClientRect();
-        const clipRect = this._getClippedBoundingClientRect(parent);
-
-        Object.assign(child.parentElement.style, {
-            position: 'absolute',
-            top: clipRect.top + 'px',
-            left: clipRect.left + 'px',
-            width: clipRect.width + 'px',
-            height: clipRect.height + 'px',
-            overflow: "hidden",
-        });
-
         Object.assign(child.style, {
+            zIndex: isNullOrUndefined(this.props.zIndex) ? 9 : this.props.zIndex,
             position: 'absolute',
-            top: (parentRect.top - clipRect.top) + 'px',
-            left: (parentRect.left - clipRect.left) + 'px',
+            top: parentRect.top + 'px',
+            left: parentRect.left + 'px',
             width: parentRect.width + 'px',
             height: parentRect.height + 'px',
-            overflow: "hidden",
         });
-    }
+    }, 100, {trailing: true, leading: true});
 
     render() {
-        return <div ref={this.collectChildContainer}></div>;
+        return <div ref={this.collectChildContainer} />;
     }
 }
+
+export const getPersistKey = (appId: string) => 'widget_' + appId;

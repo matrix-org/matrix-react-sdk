@@ -33,7 +33,12 @@ export default class NotifProvider extends AutocompleteProvider {
         this.room = room;
     }
 
-    async getCompletions(query: string, selection: ISelectionRange, force= false): Promise<ICompletion[]> {
+    async getCompletions(
+        query: string,
+        selection: ISelectionRange,
+        force = false,
+        limit = -1,
+    ): Promise<ICompletion[]> {
         const RoomAvatar = sdk.getComponent('views.avatars.RoomAvatar');
 
         const client = MatrixClientPeg.get();
@@ -48,7 +53,9 @@ export default class NotifProvider extends AutocompleteProvider {
                 type: "at-room",
                 suffix: ' ',
                 component: (
-                    <PillCompletion initialComponent={<RoomAvatar width={24} height={24} room={this.room} />} title="@room" description={_t("Notify the whole room")} />
+                    <PillCompletion title="@room" description={_t("Notify the whole room")}>
+                        <RoomAvatar width={24} height={24} room={this.room} />
+                    </PillCompletion>
                 ),
                 range,
             }];

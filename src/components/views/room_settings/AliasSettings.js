@@ -25,6 +25,8 @@ import ErrorDialog from "../dialogs/ErrorDialog";
 import AccessibleButton from "../elements/AccessibleButton";
 import Modal from "../../../Modal";
 import PublishedAliases from "./PublishedAliases";
+import RoomPublishSetting from "./RoomPublishSetting";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 class EditableAliasesList extends EditableItemList {
     constructor(props) {
@@ -73,6 +75,7 @@ class EditableAliasesList extends EditableItemList {
     }
 }
 
+@replaceableComponent("views.room_settings.AliasSettings")
 export default class AliasSettings extends React.Component {
     static propTypes = {
         roomId: PropTypes.string.isRequired,
@@ -153,7 +156,7 @@ export default class AliasSettings extends React.Component {
     onLocalAliasDeleted = (index) => {
         const alias = this.state.localAliases[index];
         // TODO: In future, we should probably be making sure that the alias actually belongs
-        // to this room. See https://github.com/vector-im/riot-web/issues/7353
+        // to this room. See https://github.com/vector-im/element-web/issues/7353
         MatrixClientPeg.get().deleteAlias(alias).then(() => {
             const localAliases = this.state.localAliases.filter(a => a !== alias);
             this.setState({localAliases});
