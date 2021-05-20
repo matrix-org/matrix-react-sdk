@@ -20,23 +20,6 @@ limitations under the License.
     padding-right: 9px;
 }
 
-.mx_DirectorySearchBox_joinButton {
-    display: table-cell;
-    padding: 3px;
-    padding-left: 10px;
-    padding-right: 10px;
-    background-color: $plinth-bg-color;
-    border-radius: 3px;
-    background-image: url('$(res)/img/icon-return.svg');
-    background-position: 8px 70%;
-    background-repeat: no-repeat;
-    text-indent: 18px;
-    font-weight: 600;
-    font-size: $font-12px;
-    user-select: none;
-    cursor: pointer;
-}
-
 .mx_DirectorySearchBox_clear {
     background-color: $warning-color;
     mask: url('$(res)/img/cancel.svg');

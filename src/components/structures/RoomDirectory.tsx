@@ -199,6 +199,8 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
             return;
         }
 
+        // TODO if looks like a room alias then look it up
+
         this.nextBatch = null;
         this.setState({
             publicRooms: [],
@@ -624,6 +626,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
     }
 
     private stringLooksLikeId(s: string, fieldType: IFieldType) {
+        // TODO consider matrix.to links
         let pat = /^#[^\s]+:[^\s]/;
         if (fieldType && fieldType.regexp) {
             pat = new RegExp(fieldType.regexp);
@@ -654,6 +657,67 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
     };
 
     render() {
+        let listHeader;
+        let showGeneratedTile;
+        if (!this.state.protocolsLoading) {
+            const protocolName = protocolNameForInstanceId(this.protocols, this.state.instanceId);
+            let instanceExpectedFieldType: IFieldType;
+            if (
+                protocolName &&
+                this.protocols?.[protocolName]?.location_fields.length > 0 &&
+                this.protocols?.[protocolName]?.field_types
+            ) {
+                const lastField = this.protocols[protocolName].location_fields.slice(-1)[0];
+                instanceExpectedFieldType = this.protocols[protocolName].field_types[lastField];
+            }
+
+            let placeholder = _t('Find a room…');
+            if (!this.state.instanceId || this.state.instanceId === ALL_ROOMS) {
+                placeholder = _t("Find a room… (e.g. %(exampleRoom)s)", {
+                    exampleRoom: "#example:" + this.state.roomServer,
+                });
+            } else if (instanceExpectedFieldType) {
+                placeholder = instanceExpectedFieldType.placeholder;
+            }
+
+            showGeneratedTile = this.stringLooksLikeId(this.state.filterString, instanceExpectedFieldType);
+            if (protocolName) {
+                const instance = instanceForInstanceId(this.protocols, this.state.instanceId);
+                if (this.getFieldsForThirdPartyLocation(
+                    this.state.filterString,
+                    this.protocols[protocolName],
+                    instance,
+                ) === null) {
+                    showGeneratedTile = false;
+                }
+            }
+            // TODO hide generated tile if its already a result
+
+            let dropdown = (
+                <NetworkDropdown
+                    protocols={this.protocols}
+                    onOptionChange={this.onOptionChange}
+                    selectedServerName={this.state.roomServer}
+                    selectedInstanceId={this.state.instanceId}
+                />
+            );
+            if (this.state.selectedCommunityId) {
+                dropdown = null;
+            }
+
+            listHeader = <div className="mx_RoomDirectory_listheader">
+                <DirectorySearchBox
+                    className="mx_RoomDirectory_searchbox"
+                    onChange={this.onFilterChange}
+                    onClear={this.onFilterClear}
+                    onEnter={() => {}}
+                    placeholder={placeholder}
+                    initialText={this.props.initialText}
+                />
+                {dropdown}
+            </div>;
+        }
+
         let content;
         if (this.state.error) {
             content = this.state.error;
@@ -679,7 +743,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
 
             let scrollPanelContent;
             let footer;
-            if (cells.length === 0 && !this.state.loading) {
+            if (cells.length === 0 && !this.state.loading && !showGeneratedTile) { // TODO
                 footer = <>
                     <h5>{ _t('No results for "%(query)s"', { query: this.state.filterString.trim() }) }</h5>
                     <p>
@@ -689,7 +753,13 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                     { createNewButton }
                 </>;
             } else {
+                let generatedTile;
+                // if (showGeneratedTile) {
+                //     generatedTile = this.createApproximateRoomCells();
+                // }
+
                 scrollPanelContent = <div className="mx_RoomDirectory_table">
+                    { generatedTile }
                     { cells }
                 </div>;
                 if (!this.state.loading && !this.nextBatch) {
@@ -710,67 +780,6 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
             </ScrollPanel>;
         }
 
-        let listHeader;
-        if (!this.state.protocolsLoading) {
-            const protocolName = protocolNameForInstanceId(this.protocols, this.state.instanceId);
-            let instanceExpectedFieldType;
-            if (
-                protocolName &&
-                this.protocols &&
-                this.protocols[protocolName] &&
-                this.protocols[protocolName].location_fields.length > 0 &&
-                this.protocols[protocolName].field_types
-            ) {
-                const lastField = this.protocols[protocolName].location_fields.slice(-1)[0];
-                instanceExpectedFieldType = this.protocols[protocolName].field_types[lastField];
-            }
-
-            let placeholder = _t('Find a room…');
-            if (!this.state.instanceId || this.state.instanceId === ALL_ROOMS) {
-                placeholder = _t("Find a room… (e.g. %(exampleRoom)s)", {
-                    exampleRoom: "#example:" + this.state.roomServer,
-                });
-            } else if (instanceExpectedFieldType) {
-                placeholder = instanceExpectedFieldType.placeholder;
-            }
-
-            let showJoinButton = this.stringLooksLikeId(this.state.filterString, instanceExpectedFieldType);
-            if (protocolName) {
-                const instance = instanceForInstanceId(this.protocols, this.state.instanceId);
-                if (this.getFieldsForThirdPartyLocation(
-                    this.state.filterString,
-                    this.protocols[protocolName],
-                    instance,
-                ) === null) {
-                    showJoinButton = false;
-                }
-            }
-
-            let dropdown = (
-                <NetworkDropdown
-                    protocols={this.protocols}
-                    onOptionChange={this.onOptionChange}
-                    selectedServerName={this.state.roomServer}
-                    selectedInstanceId={this.state.instanceId}
-                />
-            );
-            if (this.state.selectedCommunityId) {
-                dropdown = null;
-            }
-
-            listHeader = <div className="mx_RoomDirectory_listheader">
-                <DirectorySearchBox
-                    className="mx_RoomDirectory_searchbox"
-                    onChange={this.onFilterChange}
-                    onClear={this.onFilterClear}
-                    onJoinClick={this.onJoinFromSearchClick}
-                    placeholder={placeholder}
-                    showJoinButton={showJoinButton}
-                    initialText={this.props.initialText}
-                />
-                {dropdown}
-            </div>;
-        }
         const explanation =
             _t("If you can't find the room you're looking for, ask for an invite or <a>Create a new room</a>.", null,
                 {a: sub => (

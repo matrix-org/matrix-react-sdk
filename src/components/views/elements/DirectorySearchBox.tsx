@@ -25,10 +25,9 @@ interface IProps {
     initialText: string;
     className?: string;
     placeholder?: string;
-    showJoinButton?: boolean;
     onChange(value: string): void;
     onClear(): void;
-    onJoinClick(value: string): void;
+    onEnter(): void;
 }
 
 interface IState {
@@ -52,10 +51,7 @@ export default class DirectorySearchBox extends React.Component<IProps, IState> 
 
         if (this.input.current) {
             this.input.current.focus();
-
-            if (this.props.onClear) {
-                this.props.onClear();
-            }
+            this.props.onClear();
         }
     };
 
@@ -63,35 +59,16 @@ export default class DirectorySearchBox extends React.Component<IProps, IState> 
         if (!this.input.current) return;
         this.setState({ value: ev.target.value });
 
-        if (this.props.onChange) {
-            this.props.onChange(ev.target.value);
-        }
+        this.props.onChange(ev.target.value);
     };
 
-    private onKeyUp = ev => {
-        if (ev.key === Key.ENTER && this.props.showJoinButton) {
-            if (this.props.onJoinClick) {
-                this.props.onJoinClick(this.state.value);
-            }
-        }
-    };
-
-    private onJoinButtonClick = () => {
-        if (this.props.onJoinClick) {
-            this.props.onJoinClick(this.state.value);
+    private onKeyDown = ev => {
+        if (ev.key === Key.ENTER) {
+            this.props.onEnter();
         }
     };
 
     render() {
-        let joinButton;
-        if (this.props.showJoinButton) {
-            joinButton = (
-                <AccessibleButton className="mx_DirectorySearchBox_joinButton" onClick={this.onJoinButtonClick}>
-                    { _t("Join") }
-                </AccessibleButton>
-            );
-        }
-
         return <div className={`mx_DirectorySearchBox ${this.props.className} mx_textinput`}>
             <input
                 type="text"
@@ -100,11 +77,10 @@ export default class DirectorySearchBox extends React.Component<IProps, IState> 
                 className="mx_textinput_icon mx_textinput_search"
                 ref={this.input}
                 onChange={this.onChange}
-                onKeyUp={this.onKeyUp}
+                onKeyDown={this.onKeyDown}
                 placeholder={this.props.placeholder}
                 autoFocus
             />
-            { joinButton }
             <AccessibleButton className="mx_DirectorySearchBox_clear" onClick={this.onClearClick} />
         </div>;
     }
