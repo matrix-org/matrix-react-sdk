@@ -403,8 +403,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
     private onJoinFromSearchClick = (alias: string) => {
         // If we don't have a particular instance id selected, just show that rooms alias
         if (!this.state.instanceId || this.state.instanceId === ALL_ROOMS) {
-            // If the user specified an alias without a domain, add on whichever server is selected
-            // in the dropdown
+            // If the user specified an alias without a domain, add on whichever server is selected in the dropdown
             if (alias.indexOf(':') == -1) {
                 alias = alias + ':' + this.state.roomServer;
             }
@@ -568,8 +567,8 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
         let avatarUrl = null;
         if (room.avatar_url) avatarUrl = mediaFromMxc(room.avatar_url).getSquareThumbnailHttp(32);
 
-        return [
-            <div key={ `${room.room_id}_avatar` }
+        return <React.Fragment key={room.room_id}>
+            <div
                 onClick={(ev) => this.onRoomClicked(room, ev)}
                 // cancel onMouseDown otherwise shift-clicking highlights text
                 onMouseDown={(ev) => {ev.preventDefault();}}
@@ -583,8 +582,8 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                     idName={name}
                     url={avatarUrl}
                 />
-            </div>,
-            <div key={ `${room.room_id}_description` }
+            </div>
+            <div
                 onClick={(ev) => this.onRoomClicked(room, ev)}
                 // cancel onMouseDown otherwise shift-clicking highlights text
                 onMouseDown={(ev) => {ev.preventDefault();}}
@@ -596,32 +595,32 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                     dangerouslySetInnerHTML={{ __html: topic }}
                 />
                 <div className="mx_RoomDirectory_alias">{ getDisplayAliasForRoom(room) }</div>
-            </div>,
-            <div key={ `${room.room_id}_memberCount` }
+            </div>
+            <div
                 onClick={(ev) => this.onRoomClicked(room, ev)}
                 // cancel onMouseDown otherwise shift-clicking highlights text
                 onMouseDown={(ev) => {ev.preventDefault();}}
                 className="mx_RoomDirectory_roomMemberCount"
             >
                 { room.num_joined_members }
-            </div>,
-            <div key={ `${room.room_id}_preview` }
+            </div>
+            <div
                 onClick={(ev) => this.onRoomClicked(room, ev)}
                 // cancel onMouseDown otherwise shift-clicking highlights text
                 onMouseDown={(ev) => {ev.preventDefault();}}
                 className="mx_RoomDirectory_preview"
             >
                 {previewButton}
-            </div>,
-            <div key={ `${room.room_id}_join` }
+            </div>
+            <div
                 onClick={(ev) => this.onRoomClicked(room, ev)}
                 // cancel onMouseDown otherwise shift-clicking highlights text
                 onMouseDown={(ev) => {ev.preventDefault();}}
                 className="mx_RoomDirectory_join"
             >
                 {joinOrViewButton}
-            </div>,
-        ];
+            </div>
+        </React.Fragment>;
     }
 
     private stringLooksLikeId(s: string, fieldType: IFieldType) {
@@ -661,8 +660,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
         } else if (this.state.protocolsLoading) {
             content = <Spinner />;
         } else {
-            const cells = (this.state.publicRooms || [])
-                .reduce((cells, room) => cells.concat(this.createRoomCells(room)), []);
+            const cells = (this.state.publicRooms || []).map(room => this.createRoomCells(room));
             // we still show the scrollpanel, at least for now, because
             // otherwise we don't fetch more because we don't get a fill
             // request from the scrollpanel because there isn't one
