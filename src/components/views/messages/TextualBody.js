@@ -35,7 +35,9 @@ import {isPermalinkHost} from "../../../utils/permalinks/Permalinks";
 import {toRightOf} from "../../structures/ContextMenu";
 import {copyPlaintext} from "../../../utils/strings";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
+@replaceableComponent("views.messages.TextualBody")
 export default class TextualBody extends React.Component {
     static propTypes = {
         /* the MatrixEvent to show */
@@ -96,6 +98,13 @@ export default class TextualBody extends React.Component {
             const pres = ReactDOM.findDOMNode(this).getElementsByTagName("pre");
             if (pres.length > 0) {
                 for (let i = 0; i < pres.length; i++) {
+                    // If there already is a div wrapping the codeblock we want to skip this.
+                    // This happens after the codeblock was edited.
+                    if (pres[i].parentNode.className == "mx_EventTile_pre_container") continue;
+                    // Add code element if it's missing since we depend on it
+                    if (pres[i].getElementsByTagName("code").length == 0) {
+                        this._addCodeElement(pres[i]);
+                    }
                     // Wrap a div around <pre> so that the copy button can be correctly positioned
                     // when the <pre> overflows and is scrolled horizontally.
                     const div = this._wrapInDiv(pres[i]);
@@ -110,18 +119,25 @@ export default class TextualBody extends React.Component {
             // Highlight code
             const codes = ReactDOM.findDOMNode(this).getElementsByTagName("code");
             if (codes.length > 0) {
-                for (let i = 0; i < codes.length; i++) {
-                    // Do this asynchronously: parsing code takes time and we don't
-                    // need to block the DOM update on it.
-                    setTimeout(() => {
-                        if (this._unmounted) return;
-                        for (let i = 0; i < pres.length; i++) {
-                            this._highlightCode(codes[i]);
-                        }
-                    }, 10);
-                }
+                // Do this asynchronously: parsing code takes time and we don't
+                // need to block the DOM update on it.
+                setTimeout(() => {
+                    if (this._unmounted) return;
+                    for (let i = 0; i < codes.length; i++) {
+                        // If the code already has the hljs class we want to skip this.
+                        // This happens after the codeblock was edited.
+                        if (codes[i].className.includes("hljs")) continue;
+                        this._highlightCode(codes[i]);
+                    }
+                }, 10);
             }
         }
+    }
+
+    _addCodeElement(pre) {
+        const code = document.createElement("code");
+        code.append(...pre.childNodes);
+        pre.appendChild(code);
     }
 
     _addCodeExpansionButton(div, pre) {
@@ -200,12 +216,12 @@ export default class TextualBody extends React.Component {
     }
 
     _addLineNumbers(pre) {
+        // Calculate number of lines in pre
+        const number = pre.innerHTML.replace(/\n(<\/code>)?$/, "").split(/\n/).length;
         pre.innerHTML = '<span class="mx_EventTile_lineNumbers"></span>' + pre.innerHTML + '<span></span>';
         const lineNumbers = pre.getElementsByClassName("mx_EventTile_lineNumbers")[0];
-        // Calculate number of lines in pre
-        const number = pre.innerHTML.split(/\n/).length;
         // Iterate through lines starting with 1 (number of the first line is 1)
-        for (let i = 1; i < number; i++) {
+        for (let i = 1; i <= number; i++) {
             lineNumbers.innerHTML += '<span class="mx_EventTile_lineNumber">' + i + '</span>';
         }
     }
@@ -505,11 +521,12 @@ export default class TextualBody extends React.Component {
             const LinkPreviewWidget = sdk.getComponent('rooms.LinkPreviewWidget');
             widgets = this.state.links.map((link)=>{
                 return <LinkPreviewWidget
-                            key={link}
-                            link={link}
-                            mxEvent={this.props.mxEvent}
-                            onCancelClick={this.onCancelClick}
-                            onHeightChanged={this.props.onHeightChanged} />;
+                    key={link}
+                    link={link}
+                    mxEvent={this.props.mxEvent}
+                    onCancelClick={this.onCancelClick}
+                    onHeightChanged={this.props.onHeightChanged}
+                />;
             });
         }
 
