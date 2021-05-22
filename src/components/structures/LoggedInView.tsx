@@ -27,7 +27,7 @@ import CallMediaHandler from '../../CallMediaHandler';
 import { fixupColorFonts } from '../../utils/FontManager';
 import * as sdk from '../../index';
 import dis from '../../dispatcher/dispatcher';
-import {MatrixClientPeg, IMatrixClientCreds} from '../../MatrixClientPeg';
+import { IMatrixClientCreds } from '../../MatrixClientPeg';
 import SettingsStore from "../../settings/SettingsStore";
 
 import TagOrderActions from '../../actions/TagOrderActions';
@@ -61,6 +61,9 @@ import SpacePanel from "../views/spaces/SpacePanel";
 import {replaceableComponent} from "../../utils/replaceableComponent";
 import { USER_KEYBINDINGS_TAB } from "../views/dialogs/UserSettingsDialog"
 import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
+import CallHandler, { CallHandlerEvent } from '../../CallHandler';
+import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
+import AudioFeedArrayForCall from '../views/voip/AudioFeedArrayForCall';
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -121,6 +124,7 @@ interface IState {
     usageLimitEventContent?: IUsageLimit;
     usageLimitEventTs?: number;
     useCompactLayout: boolean;
+    activeCalls: Array<MatrixCall>;
 }
 
 /**
@@ -162,6 +166,7 @@ class LoggedInView extends React.Component<IProps, IState> {
             // use compact timeline view
             useCompactLayout: SettingsStore.getValue('useCompactLayout'),
             usageLimitDismissed: false,
+            activeCalls: [],
         };
 
         // stash the MatrixClient in case we log out before we are unmounted
@@ -177,6 +182,7 @@ class LoggedInView extends React.Component<IProps, IState> {
 
     componentDidMount() {
         document.addEventListener('keydown', this._onNativeKeyDown, false);
+        CallHandler.sharedInstance().addListener(CallHandlerEvent.CallsChanged, this.onCallsChanged);
 
         this._updateServerNoticeEvents();
 
@@ -201,6 +207,7 @@ class LoggedInView extends React.Component<IProps, IState> {
 
     componentWillUnmount() {
         document.removeEventListener('keydown', this._onNativeKeyDown, false);
+        CallHandler.sharedInstance().removeListener(CallHandlerEvent.CallsChanged, this.onCallsChanged);
         this._matrixClient.removeListener("accountData", this.onAccountData);
         this._matrixClient.removeListener("sync", this.onSync);
         this._matrixClient.removeListener("RoomState.events", this.onRoomStateEvents);
@@ -208,15 +215,11 @@ class LoggedInView extends React.Component<IProps, IState> {
         this.resizer.detach();
     }
 
-    // Child components assume that the client peg will not be null, so give them some
-    // sort of assurance here by only allowing a re-render if the client is truthy.
-    //
-    // This is required because `LoggedInView` maintains its own state and if this state
-    // updates after the client peg has been made null (during logout), then it will
-    // attempt to re-render and the children will throw errors.
-    shouldComponentUpdate() {
-        return Boolean(MatrixClientPeg.get());
-    }
+    private onCallsChanged = () => {
+        this.setState({
+            activeCalls: CallHandler.sharedInstance().getAllActiveCalls(),
+        });
+    };
 
     canResetTimelineInRoom = (roomId) => {
         if (!this._roomView.current) {
@@ -671,6 +674,12 @@ class LoggedInView extends React.Component<IProps, IState> {
             bodyClasses += ' mx_MatrixChat_useCompactLayout';
         }
 
+        const audioFeedArraysForCalls = this.state.activeCalls.map((call) => {
+            return (
+                <AudioFeedArrayForCall call={call} key={call.callId} />
+            );
+        });
+
         return (
             <MatrixClientContext.Provider value={this._matrixClient}>
                 <div
@@ -695,6 +704,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                 <CallContainer />
                 <NonUrgentToastContainer />
                 <HostSignupContainer />
+                {audioFeedArraysForCalls}
             </MatrixClientContext.Provider>
         );
     }
