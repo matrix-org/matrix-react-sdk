@@ -21,6 +21,15 @@ export function levelRoleMap(usersDefault: number) {
         undefined: _t('Default'),
         0: _t('Restricted'),
         [usersDefault]: _t('Default'),
+
+        // START CUSTOM ROLES
+        3: _t("Attendee"),
+        6: _t("Sponsor"),
+        9: _t("Sprinter"),
+        12: _t("Speaker"),
+        15: _t("Staff"),
+        // END CUSTOM ROLES
+
         50: _t('Moderator'),
         100: _t('Admin'),
     };

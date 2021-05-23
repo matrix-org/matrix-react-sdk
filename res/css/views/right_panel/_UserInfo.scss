@@ -37,7 +37,7 @@ limitations under the License.
             height: 16px;
             width: 16px;
             padding: 4px;
-            mask-image: url('$(res)/img/minimise.svg');
+            mask-image: url("$(res)/img/minimise.svg");
             mask-repeat: no-repeat;
             mask-position: 7px center;
             background-color: $rightpanel-button-color;
@@ -55,7 +55,7 @@ limitations under the License.
     }
 
     .mx_UserInfo_separator {
-        border-bottom: 1px solid rgba($primary-fg-color, .1);
+        border-bottom: 1px solid rgba($primary-fg-color, 0.1);
     }
 
     .mx_UserInfo_memberDetailsContainer {
@@ -223,7 +223,6 @@ limitations under the License.
             display: flex;
             margin: 8px 0;
 
-
             &.mx_UserInfo_device_verified {
                 .mx_UserInfo_device_trusted {
                     color: $accent-color;
@@ -277,7 +276,6 @@ limitations under the License.
         margin: 16px 0 8px;
     }
 
-
     .mx_VerificationShowSas {
         .mx_AccessibleButton + .mx_AccessibleButton {
             margin: 8px 0; // space between buttons
@@ -294,4 +292,64 @@ limitations under the License.
     .mx_UserInfo_avatar .mx_BaseAvatar_initial {
         font-size: 40px !important; // override the other override because here the avatar is smaller
     }
+}
+
+.mx_powerLevel {
+    max-width: max-content;
+    padding: 5px 10px;
+    font-weight: 600;
+    border-radius: 8px;
+    margin-top: 15px;
+    font-size: 1.4rem;
+    // color: white;
+}
+
+.sp_powerLevel {
+    margin-left: 10px;
+    text-align: center;
+    padding: 5px 10px 5px 5px;
+    border-radius: 22px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    max-width: max-content;
+}
+// There is no PostCSS to loop, and the plugins available do not allow looping over
+// a SCSS map and also require postcss > 8 which requires a whole migration.
+// We stick to ol' good copy paste.
+
+// Attendee
+.mx_powerLevel_0 {
+    background-color: #DBEAFE;
+}
+
+.mx_powerLevel_3 {
+    background-color: #DBEAFE;
+}
+// Sponsor
+.mx_powerLevel_6 {
+    background-color: #F59E0B;
+    color: white;
+}
+// Sprinter
+.mx_powerLevel_9 {
+    background-color: #C4B5FD;
+}
+// Speaker
+.mx_powerLevel_12 {
+    background-color: #7C3AED;
+    color: white;
+}
+// Staff
+.mx_powerLevel_15 {
+    background-color: #f472b6;
+}
+// Moderator
+.mx_powerLevel_50 {
+    background-color: #ec4899;
+    color: white;
+}
+// Admin
+.mx_powerLevel_100 {
+    background-color: #db2777;
+    color: white;
 }

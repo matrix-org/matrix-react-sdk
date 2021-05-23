@@ -14,13 +14,14 @@
  limitations under the License.
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import Flair from '../elements/Flair.js';
-import FlairStore from '../../../stores/FlairStore';
-import {getUserNameColorClass} from '../../../utils/FormattingUtils';
+import Flair from "../elements/Flair.js";
+import FlairStore from "../../../stores/FlairStore";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import PropTypes from "prop-types";
+import React from "react";
+import { getUserNameColorClass } from "../../../utils/FormattingUtils";
+import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { textualPowerLevel } from "../../../Roles";
 
 @replaceableComponent("views.messages.SenderProfile")
 export default class SenderProfile extends React.Component {
@@ -41,22 +42,24 @@ export default class SenderProfile extends React.Component {
         this._updateRelatedGroups();
 
         FlairStore.getPublicisedGroupsCached(
-            this.context, this.props.mxEvent.getSender(),
+            this.context,
+            this.props.mxEvent.getSender()
         ).then((userGroups) => {
             if (this.unmounted) return;
-            this.setState({userGroups});
+            this.setState({ userGroups });
         });
 
-        this.context.on('RoomState.events', this.onRoomStateEvents);
+        this.context.on("RoomState.events", this.onRoomStateEvents);
     }
 
     componentWillUnmount() {
         this.unmounted = true;
-        this.context.removeListener('RoomState.events', this.onRoomStateEvents);
+        this.context.removeListener("RoomState.events", this.onRoomStateEvents);
     }
 
-    onRoomStateEvents = event => {
-        if (event.getType() === 'm.room.related_groups' &&
+    onRoomStateEvents = (event) => {
+        if (
+            event.getType() === "m.room.related_groups" &&
             event.getRoomId() === this.props.mxEvent.getRoomId()
         ) {
             this._updateRelatedGroups();
@@ -68,9 +71,14 @@ export default class SenderProfile extends React.Component {
         const room = this.context.getRoom(this.props.mxEvent.getRoomId());
         if (!room) return;
 
-        const relatedGroupsEvent = room.currentState.getStateEvents('m.room.related_groups', '');
+        const relatedGroupsEvent = room.currentState.getStateEvents(
+            "m.room.related_groups",
+            ""
+        );
         this.setState({
-            relatedGroups: relatedGroupsEvent ? relatedGroupsEvent.getContent().groups || [] : [],
+            relatedGroups: relatedGroupsEvent
+                ? relatedGroupsEvent.getContent().groups || []
+                : [],
         });
     }
 
@@ -87,42 +95,63 @@ export default class SenderProfile extends React.Component {
     }
 
     render() {
-        const {mxEvent} = this.props;
+        const { mxEvent } = this.props;
         const colorClass = getUserNameColorClass(mxEvent.getSender());
         const name = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
-        const {msgtype} = mxEvent.getContent();
+        console.log(mxEvent.sender, this.state);
+        const { msgtype } = mxEvent.getContent();
 
-        if (msgtype === 'm.emote') {
+        if (msgtype === "m.emote") {
             return <span />; // emote message must include the name so don't duplicate it
         }
 
         let flair = <div />;
         if (this.props.enableFlair) {
             const displayedGroups = this._getDisplayedGroups(
-                this.state.userGroups, this.state.relatedGroups,
+                this.state.userGroups,
+                this.state.relatedGroups
             );
 
-            flair = <Flair key='flair'
-                userId={mxEvent.getSender()}
-                groups={displayedGroups}
-            />;
+            flair = (
+                <Flair
+                    key="flair"
+                    userId={mxEvent.getSender()}
+                    groups={displayedGroups}
+                />
+            );
         }
 
-        const nameElem = name || '';
+        const nameElem = name || "";
+
+        const powerLevel = parseInt(mxEvent.powerLevel || 0, 10);
+        const role = textualPowerLevel(powerLevel, 0);
+        const powerLevelClass = `mx_powerLevel_${powerLevel}`;
+        // const powerLevelClass = `mx_powerLevel_${powerLevel}`;
 
         // Name + flair
-        const nameFlair = <span>
-            <span className={`mx_SenderProfile_name ${colorClass}`}>
-                { nameElem }
+        const nameFlair = (
+            <span>
+                <span className={`mx_SenderProfile_name ${colorClass}`}>
+                    {nameElem}
+                </span>
+                {/* Exclude basic roles lie default or attendee */}
+                {![0, 1, 2, 3].includes(powerLevel) && (
+                    <span className={`sp_powerLevel ${powerLevelClass}`}>
+                        {" "}
+                        {role}
+                    </span>
+                )}
+                {flair}
             </span>
-            { flair }
-        </span>;
+        );
 
         return (
-            <div className="mx_SenderProfile" dir="auto" onClick={this.props.onClick}>
-                <div className="mx_SenderProfile_hover">
-                    { nameFlair }
-                </div>
+            <div
+                className="mx_SenderProfile"
+                dir="auto"
+                onClick={this.props.onClick}
+            >
+                <div className="mx_SenderProfile_hover">{nameFlair}</div>
             </div>
         );
     }

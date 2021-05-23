@@ -14,19 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
+import * as Email from "../../../email";
 
-import { _t } from '../../../languageHandler';
-import SdkConfig from '../../../SdkConfig';
-import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
 import AccessibleButton from "../elements/AccessibleButton";
 import CountlyAnalytics from "../../../CountlyAnalytics";
-import withValidation from "../elements/Validation";
-import * as Email from "../../../email";
-import Field from "../elements/Field";
 import CountryDropdown from "./CountryDropdown";
+import Field from "../elements/Field";
+import React from 'react';
+import SdkConfig from '../../../SdkConfig';
+import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
+import { _t } from '../../../languageHandler';
+import classNames from 'classnames';
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import withValidation from "../elements/Validation";
 
 // For validating phone numbers without country codes
 const PHONE_NUMBER_REGEX = /^[0-9()\-\s]*$/;
@@ -83,7 +83,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
         this.state = {
             // Field error codes by field ID
             fieldValid: {},
-            loginType: LoginField.MatrixId,
+            loginType: LoginField.Email,
             password: "",
         };
     }
@@ -440,17 +440,11 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
                         onChange={this.onLoginTypeChange}
                         disabled={this.props.disableSubmit}
                     >
-                        <option key={LoginField.MatrixId} value={LoginField.MatrixId}>
-                            {_t('Username')}
-                        </option>
                         <option
                             key={LoginField.Email}
                             value={LoginField.Email}
                         >
                             {_t('Email address')}
-                        </option>
-                        <option key={LoginField.Password} value={LoginField.Password}>
-                            {_t('Phone')}
                         </option>
                     </Field>
                 </div>

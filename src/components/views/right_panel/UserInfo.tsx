@@ -18,54 +18,54 @@ limitations under the License.
 */
 
 import React, {useCallback, useContext, useEffect, useMemo, useState} from 'react';
-import classNames from 'classnames';
-import {MatrixClient} from 'matrix-js-sdk/src/client';
-import {RoomMember} from 'matrix-js-sdk/src/models/room-member';
-import {User} from 'matrix-js-sdk/src/models/user';
-import {Room} from 'matrix-js-sdk/src/models/room';
-import {EventTimeline} from 'matrix-js-sdk/src/models/event-timeline';
-import {MatrixEvent} from 'matrix-js-sdk/src/models/event';
-
-import dis from '../../../dispatcher/dispatcher';
-import Modal from '../../../Modal';
-import {_t} from '../../../languageHandler';
 import createRoom, { findDMForUser, privateShouldBeEncrypted } from '../../../createRoom';
-import DMRoomMap from '../../../utils/DMRoomMap';
-import AccessibleButton from '../elements/AccessibleButton';
-import SdkConfig from '../../../SdkConfig';
-import SettingsStore from "../../../settings/SettingsStore";
-import RoomViewStore from "../../../stores/RoomViewStore";
-import MultiInviter from "../../../utils/MultiInviter";
-import GroupStore from "../../../stores/GroupStore";
-import {MatrixClientPeg} from "../../../MatrixClientPeg";
-import E2EIcon from "../rooms/E2EIcon";
-import {useEventEmitter} from "../../../hooks/useEventEmitter";
-import {textualPowerLevel} from '../../../Roles';
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import {RightPanelPhases} from "../../../stores/RightPanelStorePhases";
-import EncryptionPanel from "./EncryptionPanel";
-import {useAsyncMemo} from '../../../hooks/useAsyncMemo';
 import {legacyVerifyUser, verifyDevice, verifyUser} from '../../../verification';
+
+import AccessibleButton from '../elements/AccessibleButton';
 import {Action} from "../../../dispatcher/actions";
-import { USER_SECURITY_TAB } from "../dialogs/UserSettingsDialog";
-import {useIsEncrypted} from "../../../hooks/useIsEncrypted";
 import BaseCard from "./BaseCard";
-import {E2EStatus} from "../../../utils/ShieldUtils";
-import ImageView from "../elements/ImageView";
-import Spinner from "../elements/Spinner";
-import PowerSelector from "../elements/PowerSelector";
-import MemberAvatar from "../avatars/MemberAvatar";
-import PresenceLabel from "../rooms/PresenceLabel";
-import ShareDialog from "../dialogs/ShareDialog";
-import ErrorDialog from "../dialogs/ErrorDialog";
-import QuestionDialog from "../dialogs/QuestionDialog";
 import ConfirmUserActionDialog from "../dialogs/ConfirmUserActionDialog";
-import InfoDialog from "../dialogs/InfoDialog";
+import DMRoomMap from '../../../utils/DMRoomMap';
+import E2EIcon from "../rooms/E2EIcon";
+import {E2EStatus} from "../../../utils/ShieldUtils";
+import EncryptionPanel from "./EncryptionPanel";
+import ErrorDialog from "../dialogs/ErrorDialog";
+import {EventTimeline} from 'matrix-js-sdk/src/models/event-timeline';
 import { EventType } from "matrix-js-sdk/src/@types/event";
-import { SetRightPanelPhasePayload } from "../../../dispatcher/payloads/SetRightPanelPhasePayload";
+import GroupStore from "../../../stores/GroupStore";
+import ImageView from "../elements/ImageView";
+import InfoDialog from "../dialogs/InfoDialog";
+import {MatrixClient} from 'matrix-js-sdk/src/client';
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import {MatrixClientPeg} from "../../../MatrixClientPeg";
+import {MatrixEvent} from 'matrix-js-sdk/src/models/event';
+import MemberAvatar from "../avatars/MemberAvatar";
+import Modal from '../../../Modal';
+import MultiInviter from "../../../utils/MultiInviter";
+import PowerSelector from "../elements/PowerSelector";
+import PresenceLabel from "../rooms/PresenceLabel";
+import QuestionDialog from "../dialogs/QuestionDialog";
+import {RightPanelPhases} from "../../../stores/RightPanelStorePhases";
+import {Room} from 'matrix-js-sdk/src/models/room';
 import RoomAvatar from "../avatars/RoomAvatar";
+import {RoomMember} from 'matrix-js-sdk/src/models/room-member';
 import RoomName from "../elements/RoomName";
+import RoomViewStore from "../../../stores/RoomViewStore";
+import SdkConfig from '../../../SdkConfig';
+import { SetRightPanelPhasePayload } from "../../../dispatcher/payloads/SetRightPanelPhasePayload";
+import SettingsStore from "../../../settings/SettingsStore";
+import ShareDialog from "../dialogs/ShareDialog";
+import Spinner from "../elements/Spinner";
+import { USER_SECURITY_TAB } from "../dialogs/UserSettingsDialog";
+import {User} from 'matrix-js-sdk/src/models/user';
+import {_t} from '../../../languageHandler';
+import classNames from 'classnames';
+import dis from '../../../dispatcher/dispatcher';
 import {mediaFromMxc} from "../../../customisations/Media";
+import {textualPowerLevel} from '../../../Roles';
+import {useAsyncMemo} from '../../../hooks/useAsyncMemo';
+import {useEventEmitter} from "../../../hooks/useEventEmitter";
+import {useIsEncrypted} from "../../../hooks/useIsEncrypted";
 
 interface IDevice {
     deviceId: string;
@@ -1040,9 +1040,10 @@ const PowerLevelSection: React.FC<{
         const powerLevelUsersDefault = powerLevels.users_default || 0;
         const powerLevel = parseInt(user.powerLevel, 10);
         const role = textualPowerLevel(powerLevel, powerLevelUsersDefault);
+        const powerLevelClass = `mx_powerLevel_${powerLevel || 0}`
         return (
             <div className="mx_UserInfo_profileField">
-                <div className="mx_UserInfo_roleDescription">{role}</div>
+                <div className={`mx_UserInfo_roleDescription mx_powerLevel ${powerLevelClass}`}>{role}</div>
             </div>
         );
     }

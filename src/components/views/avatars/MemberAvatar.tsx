@@ -15,15 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import {RoomMember} from "matrix-js-sdk/src/models/room-member";
-
-import dis from "../../../dispatcher/dispatcher";
 import {Action} from "../../../dispatcher/actions";
 import BaseAvatar from "./BaseAvatar";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
-import {mediaFromMxc} from "../../../customisations/Media";
+import React from 'react';
 import {ResizeMethod} from "../../../Avatar";
+import {RoomMember} from "matrix-js-sdk/src/models/room-member";
+import dis from "../../../dispatcher/dispatcher";
+import {mediaFromMxc} from "../../../customisations/Media";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | "idName" | "url"> {
     member: RoomMember;
