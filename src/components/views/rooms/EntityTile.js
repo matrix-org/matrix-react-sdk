@@ -16,13 +16,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
 import * as sdk from '../../../index';
+
 import AccessibleButton from '../elements/AccessibleButton';
+import E2EIcon from './E2EIcon';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { _t } from '../../../languageHandler';
 import classNames from "classnames";
-import E2EIcon from './E2EIcon';
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 const PRESENCE_CLASS = {
@@ -153,15 +154,19 @@ class EntityTile extends React.Component {
         }
 
         let powerLabel;
-        const powerStatus = this.props.powerStatus;
-        if (powerStatus) {
+        const powerStatus = this.props.member.powerLevel;
+        if (powerStatus > 3) {
             const powerText = {
-                [EntityTile.POWER_STATUS_MODERATOR]: _t("Mod"),
-                [EntityTile.POWER_STATUS_ADMIN]: _t("Admin"),
+                50: _t("Mod"),
+                100: _t("Admin"),
+                6: "Sponsor",
+                9: "Sprinter",
+                12: "Speaker",
+                15: "Staff",
             }[powerStatus];
-            powerLabel = <div className="mx_EntityTile_power">{powerText}</div>;
-        }
+            powerLabel = <div className={`mx_EntityTile_power sp_powerLevel mx_powerLevel_${powerStatus}`}>{powerText}</div>;
 
+        }
         let e2eIcon;
         const { e2eStatus } = this.props;
         if (e2eStatus) {
