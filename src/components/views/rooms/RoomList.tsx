@@ -55,7 +55,7 @@ interface IProps {
     onKeyDown: (ev: React.KeyboardEvent) => void;
     onFocus: (ev: React.FocusEvent) => void;
     onBlur: (ev: React.FocusEvent) => void;
-    onResize: () => void;
+    onResize?: () => void;
     resizeNotifier: ResizeNotifier;
     isMinimized: boolean;
     activeSpace: Room;
@@ -405,7 +405,9 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
             const sublists = objectShallowClone(newSublists, (k, v) => arrayFastClone(v));
 
             this.setState({sublists, isNameFiltering}, () => {
-                this.props.onResize();
+                if (this.props.onResize) {
+                    this.props.onResize();
+                }
             });
         }
     };
