@@ -168,7 +168,7 @@ export class SendCustomEvent extends GenericEditor {
             <div className="mx_Dialog_buttons">
                 <button onClick={this.onBack}>{ _t('Back') }</button>
                 { !this.state.message && <button onClick={this._send}>{ _t('Send') }</button> }
-                { showTglFlip && <div style={{float: "right"}}>
+                { showTglFlip && <div style={{float: "left"}}>
                     <input id="isStateEvent" className="mx_DevTools_tgl mx_DevTools_tgl-flip" type="checkbox" onChange={this._onChange} checked={this.state.isStateEvent} />
                     <label className="mx_DevTools_tgl-btn" data-tg-off="Event" data-tg-on="State Event" htmlFor="isStateEvent" />
                 </div> }
@@ -252,7 +252,7 @@ class SendAccountData extends GenericEditor {
             <div className="mx_Dialog_buttons">
                 <button onClick={this.onBack}>{ _t('Back') }</button>
                 { !this.state.message && <button onClick={this._send}>{ _t('Send') }</button> }
-                { !this.state.message && <div style={{float: "right"}}>
+                { !this.state.message && <div style={{float: "left"}}>
                     <input id="isRoomAccountData" className="mx_DevTools_tgl mx_DevTools_tgl-flip" type="checkbox" onChange={this._onChange} checked={this.state.isRoomAccountData} disabled={this.props.forceMode} />
                     <label className="mx_DevTools_tgl-btn" data-tg-off="Account Data" data-tg-on="Room Data" htmlFor="isRoomAccountData" />
                 </div> }
@@ -580,7 +580,7 @@ class AccountDataExplorer extends React.PureComponent {
             </div>
             <div className="mx_Dialog_buttons">
                 <button onClick={this.onBack}>{ _t('Back') }</button>
-                { !this.state.message && <div style={{float: "right"}}>
+                { !this.state.message && <div style={{float: "left"}}>
                     <input id="isRoomAccountData" className="mx_DevTools_tgl mx_DevTools_tgl-flip" type="checkbox" onChange={this._onChange} checked={this.state.isRoomAccountData} />
                     <label className="mx_DevTools_tgl-btn" data-tg-off="Account Data" data-tg-on="Room Data" htmlFor="isRoomAccountData" />
                 </div> }
