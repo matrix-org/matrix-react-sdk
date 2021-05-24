@@ -811,7 +811,7 @@ export default class RoomView extends React.Component<IProps, IState> {
     };
 
     private onEvent = (ev) => {
-        if (ev.isBeingDecrypted() || ev.isDecryptionFailure()) return;
+        if (ev.isBeingDecrypted() || ev.isDecryptionFailure() || ev.shouldAttemptDecryption()) return;
         this.handleEffects(ev);
     };
 
@@ -1598,33 +1598,6 @@ export default class RoomView extends React.Component<IProps, IState> {
         this.setState({auxPanelMaxHeight: auxPanelMaxHeight});
     };
 
-    private onFullscreenClick = () => {
-        dis.dispatch({
-            action: 'video_fullscreen',
-            fullscreen: true,
-        }, true);
-    };
-
-    private onMuteAudioClick = () => {
-        const call = this.getCallForRoom();
-        if (!call) {
-            return;
-        }
-        const newState = !call.isMicrophoneMuted();
-        call.setMicrophoneMuted(newState);
-        this.forceUpdate(); // TODO: just update the voip buttons
-    };
-
-    private onMuteVideoClick = () => {
-        const call = this.getCallForRoom();
-        if (!call) {
-            return;
-        }
-        const newState = !call.isLocalVideoMuted();
-        call.setLocalVideoMuted(newState);
-        this.forceUpdate(); // TODO: just update the voip buttons
-    };
-
     private onStatusBarVisible = () => {
         if (this.unmounted) return;
         this.setState({
@@ -1638,24 +1611,6 @@ export default class RoomView extends React.Component<IProps, IState> {
         this.setState({
             statusBarVisible: false,
         });
-    };
-
-    /**
-     * called by the parent component when PageUp/Down/etc is pressed.
-     *
-     * We pass it down to the scroll panel.
-     */
-    private handleScrollKey = ev => {
-        let panel;
-        if (this.searchResultsPanel.current) {
-            panel = this.searchResultsPanel.current;
-        } else if (this.messagePanel) {
-            panel = this.messagePanel;
-        }
-
-        if (panel) {
-            panel.handleScrollKey(ev);
-        }
     };
 
     /**
@@ -1750,7 +1705,10 @@ export default class RoomView extends React.Component<IProps, IState> {
         }
 
         const myMembership = this.state.room.getMyMembership();
-        if (myMembership === "invite" && !this.state.room.isSpaceRoom()) { // SpaceRoomView handles invites itself
+        if (myMembership === "invite"
+            // SpaceRoomView handles invites itself
+            && (!SettingsStore.getValue("feature_spaces") || !this.state.room.isSpaceRoom())
+        ) {
             if (this.state.joining || this.state.rejecting) {
                 return (
                     <ErrorBoundary>
@@ -1892,7 +1850,7 @@ export default class RoomView extends React.Component<IProps, IState> {
                     room={this.state.room}
                 />
             );
-            if (!this.state.canPeek && !this.state.room?.isSpaceRoom()) {
+            if (!this.state.canPeek && (!SettingsStore.getValue("feature_spaces") || !this.state.room?.isSpaceRoom())) {
                 return (
                     <div className="mx_RoomView">
                         { previewBar }
@@ -1914,7 +1872,7 @@ export default class RoomView extends React.Component<IProps, IState> {
             );
         }
 
-        if (SettingsStore.getValue("feature_spaces") && this.state.room?.isSpaceRoom()) {
+        if (this.state.room?.isSpaceRoom()) {
             return <SpaceRoomView
                 space={this.state.room}
                 justCreatedOpts={this.props.justCreatedOpts}
