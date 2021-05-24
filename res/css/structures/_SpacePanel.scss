@@ -87,6 +87,8 @@ $activeBorderColor: $secondary-fg-color;
 
     .mx_SpaceItem.collapsed {
         & > .mx_SpaceButton > .mx_SpaceButton_toggleCollapse {
+            padding: 0 10px;
+            margin: 0 -10px;
             transform: rotate(-90deg);
         }
 
@@ -149,6 +151,7 @@ $activeBorderColor: $secondary-fg-color;
 
         .mx_SpaceButton_toggleCollapse {
             width: $gutterSize;
+            padding: 10px 0;
             height: 20px;
             mask-position: center;
             mask-size: 20px;
