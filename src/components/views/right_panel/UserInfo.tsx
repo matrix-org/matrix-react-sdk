@@ -592,18 +592,10 @@ const RedactMessagesButton: React.FC<IBaseProps> = ({member}) => {
         let timeline = room.getLiveTimeline();
         let eventsToRedact = [];
         while (timeline) {
-            eventsToRedact = timeline.getEvents().reduce((events, event) => {
-                if (event.getSender() === userId && !event.isRedacted() && !event.isRedaction() &&
-                    event.getType() !== EventType.RoomCreate &&
-                    // Don't redact ACLs because that'll obliterate the room
-                    // See https://github.com/matrix-org/synapse/issues/4042 for details.
-                    event.getType() !== EventType.RoomServerAcl
-                ) {
-                    return events.concat(event);
-                } else {
-                    return events;
-                }
-            }, eventsToRedact);
+            eventsToRedact = eventsToRedact.concat(timeline.getEvents().filter(event =>
+                event.getSender() === userId && !event.isState() &&
+                    !event.isRedacted() && !event.isRedaction()
+            ));
             timeline = timeline.getNeighbouringTimeline(EventTimeline.BACKWARDS);
         }
 
