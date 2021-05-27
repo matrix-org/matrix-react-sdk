@@ -1229,6 +1229,8 @@
     "Failed to change password. Is your password correct?": "Failed to change password. Is your password correct?",
     "Success": "Success",
     "Your password was successfully changed. You will not receive push notifications on other sessions until you log back in to them": "Your password was successfully changed. You will not receive push notifications on other sessions until you log back in to them",
+    "Please note that this is a permanent action. Once you deactivate your account, your\n                     account cannot be reactivated, and you won't be able to sign up again with the same user ID.": "Please note that this is a permanent action. Once you deactivate your account, your\n                     account cannot be reactivated, and you won't be able to sign up again with the same user ID.",
+    "I understand the risks and wish to continue": "I understand the risks and wish to continue",
     "Email addresses": "Email addresses",
     "Phone numbers": "Phone numbers",
     "Set a new account password...": "Set a new account password...",
