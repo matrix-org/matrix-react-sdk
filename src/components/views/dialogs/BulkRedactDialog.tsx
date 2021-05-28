@@ -22,6 +22,8 @@ import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { _t } from '../../../languageHandler';
+import dis from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
 import { IDialogProps } from "../dialogs/IDialogProps";
 import BaseDialog from "../dialogs/BaseDialog";
 import InfoDialog from "../dialogs/InfoDialog";
@@ -58,11 +60,15 @@ const BulkRedactDialog: React.FC<IBulkRedactDialogProps> = props => {
     const user = member.name;
 
     const redact = async () => {
+        console.info(`Started redacting recent ${count} messages for ${member.userId} in ${room.roomId}`);
+        dis.dispatch({
+            action: Action.BulkRedactStart,
+            room_id: room.roomId,
+        });
+
         // Submitting a large number of redactions freezes the UI,
         // so first yield to allow to rerender after closing the dialog.
         await Promise.resolve();
-
-        console.info(`Started redacting recent ${count} messages for ${member.userId} in ${room.roomId}`);
         await Promise.all(eventsToRedact.map(async event => {
             try {
                 await cli.redactEvent(room.roomId, event.getId());
@@ -72,7 +78,12 @@ const BulkRedactDialog: React.FC<IBulkRedactDialogProps> = props => {
                 console.error(err);
             }
         }));
+
         console.info(`Finished redacting recent ${count} messages for ${member.userId} in ${room.roomId}`);
+        dis.dispatch({
+            action: Action.BulkRedactEnd,
+            room_id: room.roomId,
+        });
     };
 
     if (count === 0 && !keepStateEvents) {

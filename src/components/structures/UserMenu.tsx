@@ -59,17 +59,24 @@ import RoomName from "../views/elements/RoomName";
 import {replaceableComponent} from "../../utils/replaceableComponent";
 import InlineSpinner from "../views/elements/InlineSpinner";
 import TooltipButton from "../views/elements/TooltipButton";
+
 interface IProps {
     isMinimized: boolean;
 }
 
 type PartialDOMRect = Pick<DOMRect, "width" | "left" | "top" | "height">;
 
+enum PendingActionType {
+    JoinRoom,
+    BulkRedact,
+}
+
 interface IState {
     contextMenuPosition: PartialDOMRect;
     isDarkTheme: boolean;
     selectedSpace?: Room;
-    pendingRoomJoin: Set<string>;
+    // Sets of long running actions which should trigger a spinner
+    pendingActions: Map<PendingActionType, Set<string>>;
 }
 
 @replaceableComponent("structures.UserMenu")
@@ -86,7 +93,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         this.state = {
             contextMenuPosition: null,
             isDarkTheme: this.isUserOnDarkTheme(),
-            pendingRoomJoin: new Set<string>(),
+            pendingActions: new Map(),
         };
 
         OwnProfileStore.instance.on(UPDATE_EVENT, this.onProfileUpdate);
@@ -122,7 +129,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
     }
 
     private onRoom = (room: Room): void => {
-        this.removePendingJoinRoom(room.roomId);
+        this.removePendingAction(PendingActionType.JoinRoom, room.roomId);
     }
 
     private onTagStoreUpdate = () => {
@@ -165,28 +172,53 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 }
                 break;
             case Action.JoinRoom:
-                this.addPendingJoinRoom(ev.roomId);
+                this.addPendingAction(PendingActionType.JoinRoom, ev.roomId);
                 break;
             case Action.JoinRoomReady:
             case Action.JoinRoomError:
-                this.removePendingJoinRoom(ev.roomId);
+                this.removePendingAction(PendingActionType.JoinRoom, ev.roomId);
+                break;
+            case Action.BulkRedactStart:
+                this.addPendingAction(PendingActionType.BulkRedact, ev.roomId);
+                break;
+            case Action.BulkRedactEnd:
+                this.removePendingAction(PendingActionType.BulkRedact, ev.roomId);
                 break;
         }
     };
 
-    private addPendingJoinRoom(roomId: string): void {
+    private addPendingAction(type: PendingActionType, key: string) {
+        const newKeys = new Set(this.state.pendingActions.get(type));
+        newKeys.add(key);
         this.setState({
-            pendingRoomJoin: new Set<string>(this.state.pendingRoomJoin)
-                .add(roomId),
+            pendingActions: new Map(this.state.pendingActions).set(type, newKeys),
         });
     }
 
-    private removePendingJoinRoom(roomId: string): void {
-        if (this.state.pendingRoomJoin.delete(roomId)) {
-            this.setState({
-                pendingRoomJoin: new Set<string>(this.state.pendingRoomJoin),
+    private removePendingAction(type: PendingActionType, key: string) {
+        const newKeys = new Set(this.state.pendingActions.get(type));
+        newKeys.delete(key);
+        this.setState({
+            pendingActions: new Map(this.state.pendingActions).set(type, newKeys),
+        });
+    }
+
+    get hasPendingActions(): boolean {
+        return [...this.state.pendingActions.values()].some(keys => keys.size > 0);
+    }
+
+    private summarisePendingActions(): string {
+        return [...this.state.pendingActions.entries()]
+            .filter(([type, keys]) => keys.size > 0)
+            .map(([type, keys]) => {
+                switch (type) {
+                    case PendingActionType.JoinRoom:
+                        return _t("Currently joining %(count)s rooms", { count: keys.size });
+                    case PendingActionType.BulkRedact:
+                        return _t("Currently removing messages in %(count)s rooms", { count: keys.size });
+                }
             })
-        }
+            .join("\n");
     }
 
     private onOpenMenuClick = (ev: React.MouseEvent) => {
@@ -650,12 +682,9 @@ export default class UserMenu extends React.Component<IProps, IState> {
                             />
                         </span>
                         {name}
-                        {this.state.pendingRoomJoin.size > 0 && (
+                        {this.hasPendingActions && (
                             <InlineSpinner>
-                                <TooltipButton helpText={_t(
-                                    "Currently joining %(count)s rooms",
-                                    { count: this.state.pendingRoomJoin.size },
-                                )} />
+                                <TooltipButton helpText={this.summarisePendingActions()} />
                             </InlineSpinner>
                         )}
                         {dnd}

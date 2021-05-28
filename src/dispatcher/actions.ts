@@ -153,4 +153,14 @@ export enum Action {
      * Fired when joining a room failed
      */
     JoinRoomError = "join_room_error",
+
+    /**
+     * Fired when starting to bulk redact messages from a user in a room
+     */
+    BulkRedactStart = "bulk_redact_start",
+
+    /**
+     * Fired when done bulk redacting messages from a user in a room
+     */
+    BulkRedactEnd = "bulk_redact_end",
 }
