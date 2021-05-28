@@ -48,7 +48,9 @@ const BulkRedactDialog: React.FC<IBulkRedactDialogProps> = props => {
                 event.getType() !== EventType.RoomCreate &&
                 // Don't redact ACLs because that'll obliterate the room
                 // See https://github.com/matrix-org/synapse/issues/4042 for details.
-                event.getType() !== EventType.RoomServerAcl,
+                event.getType() !== EventType.RoomServerAcl &&
+                // Redacting encryption events is equally bad
+                event.getType() !== EventType.RoomEncryption,
         ));
         timeline = timeline.getNeighbouringTimeline(EventTimeline.BACKWARDS);
     }
