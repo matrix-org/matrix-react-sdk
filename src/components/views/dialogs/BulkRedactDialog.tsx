@@ -104,7 +104,8 @@ const BulkRedactDialog: React.FC<IBulkRedactDialogProps> = props => {
         >
             <div className="mx_Dialog_content" id="mx_Dialog_content">
                 <p>{ _t("You are about to remove %(count)s messages by %(user)s. " +
-                    "This cannot be undone. Do you wish to continue?", {count, user}) }</p>
+                    "This will remove them permanently for everyone in the conversation. " +
+                    "Do you wish to continue?", {count, user}) }</p>
                 <p>{ _t("For a large amount of messages, this might take some time. " +
                     "Please don't refresh your client in the meantime.") }</p>
                 <StyledCheckbox
