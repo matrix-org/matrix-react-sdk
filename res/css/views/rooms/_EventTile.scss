@@ -374,7 +374,7 @@ $left-gutter: 64px;
 .mx_EventTile_e2eIcon_unknown {
     &::after {
         mask-image: url('$(res)/img/e2e/warning.svg');
-        background-color: $notice-primary-color;
+        background-color: $composer-e2e-icon-color;
     }
     opacity: 1;
 }
