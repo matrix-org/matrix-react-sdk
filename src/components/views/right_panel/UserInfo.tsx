@@ -334,21 +334,34 @@ const UserOptionsSection: React.FC<{
     // Only allow the user to ignore the user if its not ourselves
     // same goes for jumping to read receipt
     if (!isMe) {
-        const onIgnoreToggle = () => {
+        const unignore = () => {
             const ignoredUsers = cli.getIgnoredUsers();
-            if (isIgnored) {
-                const index = ignoredUsers.indexOf(member.userId);
-                if (index !== -1) ignoredUsers.splice(index, 1);
-            } else {
-                ignoredUsers.push(member.userId);
-            }
-
+            const index = ignoredUsers.indexOf(member.userId);
+            if (index !== -1) ignoredUsers.splice(index, 1);
             cli.setIgnoredUsers(ignoredUsers);
+        };
+
+        const ignore = async () => {
+            const { finished } = Modal.createTrackedDialog('Ignore User', '', QuestionDialog, {
+                title: _t("Ignore %(user)s", { user: member.name }),
+                description: <div>
+                    { _t("All messages and invites from this user will be hidden. " +
+                         "Are you sure you want to ignore them?") }
+                </div>,
+                button: _t("Ignore"),
+            });
+            const [confirmed] = await finished;
+
+            if (confirmed) {
+                const ignoredUsers = cli.getIgnoredUsers();
+                ignoredUsers.push(member.userId);
+                cli.setIgnoredUsers(ignoredUsers);
+            }
         };
 
         ignoreButton = (
             <AccessibleButton
-                onClick={onIgnoreToggle}
+                onClick={isIgnored ? unignore : ignore}
                 className={classNames("mx_UserInfo_field", {mx_UserInfo_destructive: !isIgnored})}
             >
                 { isIgnored ? _t("Unignore") : _t("Ignore") }
