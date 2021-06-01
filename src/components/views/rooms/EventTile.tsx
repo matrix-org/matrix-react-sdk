@@ -999,13 +999,14 @@ export default class EventTile extends React.Component<IProps, IState> {
             />;
         }
 
-        const linkedTimestamp = <a
+        const linkedTimestamp = this.props.mxEvent.getTs() ? <MessageTimestamp
+            as="a"
             href={permalink}
             onClick={this.onPermalinkClicked}
             aria-label={formatTime(new Date(this.props.mxEvent.getTs()), this.props.isTwelveHour)}
-        >
-            { timestamp }
-        </a>;
+            showTwelveHour={this.props.isTwelveHour}
+            ts={this.props.mxEvent.getTs()}
+        /> : null;
 
         const useIRCLayout = this.props.layout == Layout.IRC;
         const groupTimestamp = !useIRCLayout ? linkedTimestamp : null;
