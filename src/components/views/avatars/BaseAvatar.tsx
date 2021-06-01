@@ -42,6 +42,7 @@ interface IProps {
     onClick?: React.MouseEventHandler;
     inputRef?: React.RefObject<HTMLImageElement & HTMLSpanElement>;
     className?: string;
+    style?: React.CSSProperties;
 }
 
 const calculateUrls = (url, urls) => {
@@ -104,14 +105,15 @@ const BaseAvatar = (props: IProps) => {
         onClick,
         inputRef,
         className,
+        style,
         ...otherProps
     } = props;
 
     const [imageUrl, onError] = useImageUrl({url, urls});
 
     if (!imageUrl && defaultToInitialLetter) {
-        const style: React.CSSProperties = {
-            ...otherProps.style,
+        const styleProp: React.CSSProperties = {
+            ...style,
             fontSize: toPx(width * 0.65),
             width: toPx(width),
             height: toPx(height),
@@ -129,7 +131,7 @@ const BaseAvatar = (props: IProps) => {
                     onClick={onClick}
                     inputRef={inputRef}
                     data-initial={defaultToInitialLetter ? AvatarLogic.getInitialLetter(name) : null}
-                    style={style}
+                    style={styleProp}
                 />
             );
         } else {
@@ -155,6 +157,7 @@ const BaseAvatar = (props: IProps) => {
                 onClick={onClick}
                 onError={onError}
                 style={{
+                    ...style,
                     width: toPx(width),
                     height: toPx(height),
                 }}
@@ -169,6 +172,7 @@ const BaseAvatar = (props: IProps) => {
                 src={imageUrl}
                 onError={onError}
                 style={{
+                    ...style,
                     width: toPx(width),
                     height: toPx(height),
                 }}
