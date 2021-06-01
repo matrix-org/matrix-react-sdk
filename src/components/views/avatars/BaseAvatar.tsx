@@ -110,19 +110,14 @@ const BaseAvatar = (props: IProps) => {
     const [imageUrl, onError] = useImageUrl({url, urls});
 
     if (!imageUrl && defaultToInitialLetter) {
-        const imgNode = (
-            <img
-                className="mx_BaseAvatar_image"
-                src={AvatarLogic.defaultAvatarUrlForString(idName || name)}
-                alt=""
-                title={title}
-                onError={onError}
-                style={{
-                    width: toPx(width),
-                    height: toPx(height),
-                }}
-                aria-hidden="true" />
-        );
+        const style: React.CSSProperties = {
+            ...otherProps.style,
+            fontSize: toPx(width * 0.65),
+            width: toPx(width),
+            height: toPx(height),
+            background: `url(${AvatarLogic.defaultAvatarUrlForString(idName || name)})`,
+            borderRadius: "50%",
+        };
 
         if (onClick) {
             return (
@@ -134,12 +129,8 @@ const BaseAvatar = (props: IProps) => {
                     onClick={onClick}
                     inputRef={inputRef}
                     data-initial={defaultToInitialLetter ? AvatarLogic.getInitialLetter(name) : null}
-                    style={{
-                        fontSize: toPx(width * 0.65),
-                    }}
-                >
-                    { imgNode }
-                </AccessibleButton>
+                    style={style}
+                />
             );
         } else {
             return (
@@ -149,12 +140,8 @@ const BaseAvatar = (props: IProps) => {
                     {...otherProps}
                     role="presentation"
                     data-initial={defaultToInitialLetter ? AvatarLogic.getInitialLetter(name) : null}
-                    style={{
-                        fontSize: toPx(width * 0.65),
-                    }}
-                >
-                    { imgNode }
-                </span>
+                    style={style}
+                />
             );
         }
     }
