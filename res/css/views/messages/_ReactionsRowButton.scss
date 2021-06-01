@@ -20,7 +20,7 @@ limitations under the License.
     margin-right: 6px;
     padding: 0 6px;
     border: 1px solid $reaction-row-button-border-color;
-    border-radius: 10px;
+    border-radius: 10px; 
     background-color: $reaction-row-button-bg-color;
     cursor: pointer;
     user-select: none;
@@ -34,8 +34,11 @@ limitations under the License.
         border-color: $reaction-row-button-selected-border-color;
     }
     &.mx_ReactionsRowButton_failed {
-        background-color: rgba(140, 12, 12, 0.748);
-        border-color: rgba(68, 0, 0, 0.748);
+        background-color: $reaction-notsent-color;
+        border-color: $reaction-notsent-border;
+    }
+    &.mx_ReactionsRowButton_failed::after{
+        //Add a exclamation icon
     }
 
     .mx_ReactionsRowButton_content {

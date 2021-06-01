@@ -145,6 +145,10 @@ $event-redacted-border-color: #000000;
 $event-highlight-fg-color: $warning-color;
 $event-highlight-bg-color: #25271F;
 
+//event not sent
+$reaction-notsent-color: rgba(140, 12, 12, 0.748);
+$reaction-notsent-border: rgba(68, 0, 0, 0.748);
+
 // event timestamp
 $event-timestamp-color: $text-secondary-color;
 

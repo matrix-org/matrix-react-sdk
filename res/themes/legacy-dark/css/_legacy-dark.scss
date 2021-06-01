@@ -143,6 +143,10 @@ $event-highlight-bg-color: #25271F;
 // event timestamp
 $event-timestamp-color: $text-secondary-color;
 
+//event not sent
+$reaction-notsent-color: rgba(140, 12, 12, 0.748);
+$reaction-notsent-border: rgba(68, 0, 0, 0.748);
+
 // Tabbed views
 $tab-label-fg-color: $text-primary-color;
 $tab-label-active-fg-color: $text-primary-color;
