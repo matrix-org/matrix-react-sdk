@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .mx_BaseAvatar {
-    position: relative;
+    contain: content;
     // In at least Firefox, the case of relative positioned inline elements
     // (such as mx_BaseAvatar) with absolute positioned children (such as
     // mx_BaseAvatar_initial) is a dark corner full of spider webs. It will give
@@ -27,16 +27,19 @@ limitations under the License.
     // https://bugzilla.mozilla.org/show_bug.cgi?id=255139
     display: inline-block;
     user-select: none;
-}
 
-.mx_BaseAvatar_initial {
-    position: absolute;
-    left: 0px;
-    color: $avatar-initial-color;
-    text-align: center;
-    speak: none;
-    pointer-events: none;
-    font-weight: normal;
+    &[data-initial]::before {
+        content: attr(data-initial);
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        color: $avatar-initial-color;
+        text-align: center;
+        speak: none;
+        pointer-events: none;
+        font-weight: normal;
+    }
 }
 
 .mx_BaseAvatar_image {

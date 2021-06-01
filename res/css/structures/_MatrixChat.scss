@@ -57,7 +57,7 @@ limitations under the License.
 }
 
 /* not the left panel, and not the resize handle, so the roomview/groupview/... */
-.mx_MatrixChat > :not(.mx_LeftPanel):not(.mx_SpacePanel):not(.mx_ResizeHandle) {
+.mx_MatrixChat > :last-child {
     background-color: $primary-bg-color;
 
     flex: 1 1 0;

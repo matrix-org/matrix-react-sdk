@@ -110,20 +110,6 @@ const BaseAvatar = (props: IProps) => {
     const [imageUrl, onError] = useImageUrl({url, urls});
 
     if (!imageUrl && defaultToInitialLetter) {
-        const initialLetter = AvatarLogic.getInitialLetter(name);
-        const textNode = (
-            <span
-                className="mx_BaseAvatar_initial"
-                aria-hidden="true"
-                style={{
-                    fontSize: toPx(width * 0.65),
-                    width: toPx(width),
-                    lineHeight: toPx(height),
-                }}
-            >
-                { initialLetter }
-            </span>
-        );
         const imgNode = (
             <img
                 className="mx_BaseAvatar_image"
@@ -147,8 +133,11 @@ const BaseAvatar = (props: IProps) => {
                     className={classNames("mx_BaseAvatar", className)}
                     onClick={onClick}
                     inputRef={inputRef}
+                    data-initial={defaultToInitialLetter ? AvatarLogic.getInitialLetter(name) : null}
+                    style={{
+                        fontSize: toPx(width * 0.65),
+                    }}
                 >
-                    { textNode }
                     { imgNode }
                 </AccessibleButton>
             );
@@ -159,8 +148,11 @@ const BaseAvatar = (props: IProps) => {
                     ref={inputRef}
                     {...otherProps}
                     role="presentation"
+                    data-initial={defaultToInitialLetter ? AvatarLogic.getInitialLetter(name) : null}
+                    style={{
+                        fontSize: toPx(width * 0.65),
+                    }}
                 >
-                    { textNode }
                     { imgNode }
                 </span>
             );
