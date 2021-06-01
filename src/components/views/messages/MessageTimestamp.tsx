@@ -16,20 +16,25 @@ limitations under the License.
 */
 
 import React from 'react';
-import PropTypes from 'prop-types';
+import { omit } from 'lodash';
 import {formatFullDate, formatTime, formatFullTime} from '../../../DateUtils';
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 
-@replaceableComponent("views.messages.MessageTimestamp")
-export default class MessageTimestamp extends React.Component {
-    static propTypes = {
-        ts: PropTypes.number.isRequired,
-        showTwelveHour: PropTypes.bool,
-        showFullDate: PropTypes.bool,
-        showSeconds: PropTypes.bool,
-    };
+interface IProps {
+    ts: number;
+    showTwelveHour?: boolean;
+    showFullDate?: boolean;
+    showSeconds?: boolean;
+    as?: string
+}
 
-    render() {
+@replaceableComponent("views.messages.MessageTimestamp")
+export default class MessageTimestamp extends React.PureComponent<IProps & any> {
+    static defaultProps = {
+        as: "span",
+    }
+
+    public render() {
         const date = new Date(this.props.ts);
         let timestamp;
         if (this.props.showFullDate) {
@@ -40,10 +45,17 @@ export default class MessageTimestamp extends React.Component {
             timestamp = formatTime(date, this.props.showTwelveHour);
         }
 
-        return (
-            <span className="mx_MessageTimestamp" title={formatFullDate(date, this.props.showTwelveHour)} aria-hidden={true}>
-                {timestamp}
-            </span>
+        return React.createElement(
+            this.props.as,
+            {
+                "className": "mx_MessageTimestamp",
+                "title": formatFullDate(date, this.props.showTwelveHour),
+                "aria-hidden": true,
+                // removing all properties defined in `IProps`
+                // and spreading the remaining
+                ...omit(this.props, "as", "showTwelveHour", "showFullDate", "showSeconds", "as"),
+            },
+            [timestamp],
         );
     }
 }
