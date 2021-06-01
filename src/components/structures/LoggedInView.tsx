@@ -672,25 +672,24 @@ class LoggedInView extends React.Component<IProps, IState> {
 
         return (
             <MatrixClientContext.Provider value={this._matrixClient}>
-                <div
-                    onPaste={this._onPaste}
-                    onKeyDown={this._onReactKeyDown}
-                    className='mx_MatrixChat_wrapper'
-                    aria-hidden={this.props.hideToSRUsers}
-                >
-                    <ToastContainer />
-                    <DragDropContext onDragEnd={this._onDragEnd}>
-                        <div ref={this._resizeContainer} className={bodyClasses}>
-                            { SettingsStore.getValue("feature_spaces") ? <SpacePanel /> : null }
-                            <LeftPanel
-                                isMinimized={this.props.collapseLhs || false}
-                                resizeNotifier={this.props.resizeNotifier}
-                            />
-                            <ResizeHandle />
-                            { pageElement }
-                        </div>
-                    </DragDropContext>
-                </div>
+                <DragDropContext onDragEnd={this._onDragEnd}>
+                    <div
+                        onPaste={this._onPaste}
+                        onKeyDown={this._onReactKeyDown}
+                        ref={this._resizeContainer}
+                        className={bodyClasses}
+                        aria-hidden={this.props.hideToSRUsers}
+                    >
+                        <ToastContainer />
+                        { SettingsStore.getValue("feature_spaces") ? <SpacePanel /> : null }
+                        <LeftPanel
+                            isMinimized={this.props.collapseLhs || false}
+                            resizeNotifier={this.props.resizeNotifier}
+                        />
+                        <ResizeHandle />
+                        { pageElement }
+                    </div>
+                </DragDropContext>
                 <CallContainer />
                 <NonUrgentToastContainer />
                 <HostSignupContainer />
