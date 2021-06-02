@@ -680,7 +680,6 @@ class LoggedInView extends React.Component<IProps, IState> {
                         className={bodyClasses}
                         aria-hidden={this.props.hideToSRUsers}
                     >
-                        <ToastContainer />
                         { SettingsStore.getValue("feature_spaces") ? <SpacePanel /> : null }
                         <LeftPanel
                             isMinimized={this.props.collapseLhs || false}
@@ -690,6 +689,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                         { pageElement }
                     </div>
                 </DragDropContext>
+                <ToastContainer />
                 <CallContainer />
                 <NonUrgentToastContainer />
                 <HostSignupContainer />
