@@ -142,7 +142,7 @@ const BaseAvatar = (props: IProps) => {
                     {...otherProps}
                     role="presentation"
                     data-initial={defaultToInitialLetter ? AvatarLogic.getInitialLetter(name) : null}
-                    style={style}
+                    style={styleProp}
                 />
             );
         }
