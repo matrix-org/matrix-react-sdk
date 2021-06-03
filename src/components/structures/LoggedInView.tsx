@@ -59,6 +59,8 @@ import { getKeyBindingsManager, NavigationAction, RoomAction } from '../../KeyBi
 import { IOpts } from "../../createRoom";
 import SpacePanel from "../views/spaces/SpacePanel";
 import {replaceableComponent} from "../../utils/replaceableComponent";
+import { USER_KEYBINDINGS_TAB } from "../views/dialogs/UserSettingsDialog"
+import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
 import CallHandler, { CallHandlerEvent } from '../../CallHandler';
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import AudioFeedArrayForCall from '../views/voip/AudioFeedArrayForCall';
@@ -477,7 +479,15 @@ class LoggedInView extends React.Component<IProps, IState> {
                 handled = true;
                 break;
             case NavigationAction.ToggleShortCutDialog:
-                KeyboardShortcuts.toggleDialog();
+                if (SettingsStore.getValue("feature_keybindings")) {
+                    const payload: OpenToTabPayload = {
+                        action: Action.ViewUserSettings,
+                        initialTabId: USER_KEYBINDINGS_TAB,
+                    };
+                    dis.dispatch(payload);
+                } else {
+                    KeyboardShortcuts.toggleDialog();
+                }
                 handled = true;
                 break;
             case NavigationAction.GoToHome:

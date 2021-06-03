@@ -104,6 +104,7 @@
 @import "./views/dialogs/_WidgetCapabilitiesPromptDialog.scss";
 @import "./views/dialogs/_WidgetOpenIDPermissionsDialog.scss";
 @import "./views/dialogs/security/_AccessSecretStorageDialog.scss";
+@import "./views/elements/_KeyboardShortcut.scss";
 @import "./views/dialogs/security/_CreateCrossSigningDialog.scss";
 @import "./views/dialogs/security/_CreateKeyBackupDialog.scss";
 @import "./views/dialogs/security/_CreateSecretStorageDialog.scss";
@@ -240,6 +241,7 @@
 @import "./views/settings/tabs/user/_AppearanceUserSettingsTab.scss";
 @import "./views/settings/tabs/user/_GeneralUserSettingsTab.scss";
 @import "./views/settings/tabs/user/_HelpUserSettingsTab.scss";
+@import "./views/settings/tabs/user/_KeybindingsUserSettingsTab.scss";
 @import "./views/settings/tabs/user/_LabsUserSettingsTab.scss";
 @import "./views/settings/tabs/user/_MjolnirUserSettingsTab.scss";
 @import "./views/settings/tabs/user/_NotificationUserSettingsTab.scss";
