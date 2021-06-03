@@ -1744,6 +1744,7 @@
     "%(count)s sessions|other": "%(count)s sessions",
     "%(count)s sessions|one": "%(count)s session",
     "Hide sessions": "Hide sessions",
+    "Override nick color": "Override nick color",
     "Jump to read receipt": "Jump to read receipt",
     "Mention": "Mention",
     "Invite": "Invite",

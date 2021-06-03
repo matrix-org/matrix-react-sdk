@@ -18,9 +18,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Flair from '../elements/Flair.js';
 import FlairStore from '../../../stores/FlairStore';
-import {getUserNameColorClass} from '../../../utils/FormattingUtils';
+import {getUserNameColorClass, getUserNameColorStyle} from '../../../utils/FormattingUtils';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import SettingsStore from "../../../settings/SettingsStore";
 
 @replaceableComponent("views.messages.SenderProfile")
 export default class SenderProfile extends React.Component {
@@ -48,11 +49,14 @@ export default class SenderProfile extends React.Component {
         });
 
         this.context.on('RoomState.events', this.onRoomStateEvents);
+        this.overrideColorsWatcherRef =
+            SettingsStore.watchSetting("override_colors", null, this.onOverrideColorsChange);
     }
 
     componentWillUnmount() {
         this.unmounted = true;
         this.context.removeListener('RoomState.events', this.onRoomStateEvents);
+        SettingsStore.unwatchSetting(this.overrideColorsWatcherRef);
     }
 
     onRoomStateEvents = event => {
@@ -61,6 +65,11 @@ export default class SenderProfile extends React.Component {
         ) {
             this._updateRelatedGroups();
         }
+    };
+
+    onOverrideColorsChange = () => {
+        // Trigger a redraw:
+        this.setState({});
     };
 
     _updateRelatedGroups() {
@@ -88,8 +97,10 @@ export default class SenderProfile extends React.Component {
 
     render() {
         const {mxEvent} = this.props;
-        const colorClass = getUserNameColorClass(mxEvent.getSender());
-        const name = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
+        const userId = mxEvent.getSender();
+        const colorStyle = getUserNameColorStyle(userId);
+        const colorClass = colorStyle ? "" : getUserNameColorClass(userId);
+        const name = mxEvent.sender ? mxEvent.sender.name : userId;
         const {msgtype} = mxEvent.getContent();
 
         if (msgtype === 'm.emote') {
@@ -103,7 +114,7 @@ export default class SenderProfile extends React.Component {
             );
 
             flair = <Flair key='flair'
-                userId={mxEvent.getSender()}
+                userId={userId}
                 groups={displayedGroups}
             />;
         }
@@ -112,7 +123,7 @@ export default class SenderProfile extends React.Component {
 
         // Name + flair
         const nameFlair = <span>
-            <span className={`mx_SenderProfile_name ${colorClass}`}>
+            <span className={`mx_SenderProfile_name ${colorClass}`} style={colorStyle}>
                 { nameElem }
             </span>
             { flair }
