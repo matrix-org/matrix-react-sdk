@@ -53,7 +53,7 @@ export default class MessageTimestamp extends React.PureComponent<IProps & any> 
                 "aria-hidden": true,
                 // removing all properties defined in `IProps`
                 // and spreading the remaining
-                ...omit(this.props, "as", "showTwelveHour", "showFullDate", "showSeconds", "as"),
+                ...omit(this.props, "showTwelveHour", "showFullDate", "showSeconds", "as"),
             },
             [timestamp],
         );
