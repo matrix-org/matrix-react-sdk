@@ -17,15 +17,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import * as AvatarLogic from '../../../Avatar';
 import SettingsStore from "../../../settings/SettingsStore";
 import AccessibleButton from '../elements/AccessibleButton';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import {useEventEmitter} from "../../../hooks/useEventEmitter";
-import {toPx} from "../../../utils/units";
-import {ResizeMethod} from "../../../Avatar";
+import { useEventEmitter } from "../../../hooks/useEventEmitter";
+import { toPx } from "../../../utils/units";
+import { ResizeMethod } from "../../../Avatar";
 import { _t } from '../../../languageHandler';
 
 interface IProps {
@@ -42,6 +42,7 @@ interface IProps {
     onClick?: React.MouseEventHandler;
     inputRef?: React.RefObject<HTMLImageElement & HTMLSpanElement>;
     className?: string;
+    style?: React.CSSProperties;
 }
 
 const calculateUrls = (url, urls) => {
@@ -104,39 +105,21 @@ const BaseAvatar = (props: IProps) => {
         onClick,
         inputRef,
         className,
+        style,
         ...otherProps
     } = props;
 
     const [imageUrl, onError] = useImageUrl({url, urls});
 
     if (!imageUrl && defaultToInitialLetter) {
-        const initialLetter = AvatarLogic.getInitialLetter(name);
-        const textNode = (
-            <span
-                className="mx_BaseAvatar_initial"
-                aria-hidden="true"
-                style={{
-                    fontSize: toPx(width * 0.65),
-                    width: toPx(width),
-                    lineHeight: toPx(height),
-                }}
-            >
-                { initialLetter }
-            </span>
-        );
-        const imgNode = (
-            <img
-                className="mx_BaseAvatar_image"
-                src={AvatarLogic.defaultAvatarUrlForString(idName || name)}
-                alt=""
-                title={title}
-                onError={onError}
-                style={{
-                    width: toPx(width),
-                    height: toPx(height),
-                }}
-                aria-hidden="true" />
-        );
+        const styleProp: React.CSSProperties = {
+            ...style,
+            fontSize: toPx(width * 0.65),
+            width: toPx(width),
+            height: toPx(height),
+            background: `url(${AvatarLogic.defaultAvatarUrlForString(idName || name)})`,
+            borderRadius: "50%",
+        };
 
         if (onClick) {
             return (
@@ -147,10 +130,9 @@ const BaseAvatar = (props: IProps) => {
                     className={classNames("mx_BaseAvatar", className)}
                     onClick={onClick}
                     inputRef={inputRef}
-                >
-                    { textNode }
-                    { imgNode }
-                </AccessibleButton>
+                    data-initial={defaultToInitialLetter ? AvatarLogic.getInitialLetter(name) : null}
+                    style={styleProp}
+                />
             );
         } else {
             return (
@@ -159,10 +141,9 @@ const BaseAvatar = (props: IProps) => {
                     ref={inputRef}
                     {...otherProps}
                     role="presentation"
-                >
-                    { textNode }
-                    { imgNode }
-                </span>
+                    data-initial={defaultToInitialLetter ? AvatarLogic.getInitialLetter(name) : null}
+                    style={styleProp}
+                />
             );
         }
     }
@@ -176,6 +157,7 @@ const BaseAvatar = (props: IProps) => {
                 onClick={onClick}
                 onError={onError}
                 style={{
+                    ...style,
                     width: toPx(width),
                     height: toPx(height),
                 }}
@@ -190,6 +172,7 @@ const BaseAvatar = (props: IProps) => {
                 src={imageUrl}
                 onError={onError}
                 style={{
+                    ...style,
                     width: toPx(width),
                     height: toPx(height),
                 }}

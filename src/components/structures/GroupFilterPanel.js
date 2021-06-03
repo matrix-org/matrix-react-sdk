@@ -166,9 +166,8 @@ class GroupFilterPanel extends React.Component {
                         >
                             { this.renderGlobalIcon() }
                             { tags }
-                            <div>
-                                {createButton}
-                            </div>
+
+                            {createButton}
                             { provided.placeholder }
                         </div>
                     ) }

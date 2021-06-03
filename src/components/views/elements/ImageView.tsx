@@ -359,18 +359,16 @@ export default class ImageView extends React.Component<IProps, IState> {
                 </div>
             );
             const messageTimestamp = (
-                <a
+                <MessageTimestamp
+                    as="a"
                     href={permalink}
                     onClick={this.onPermalinkClicked}
                     aria-label={formatFullDate(new Date(this.props.mxEvent.getTs()), showTwelveHour, false)}
-                >
-                    <MessageTimestamp
-                        showFullDate={true}
-                        showTwelveHour={showTwelveHour}
-                        ts={mxEvent.getTs()}
-                        showSeconds={false}
-                    />
-                </a>
+                    showFullDate={true}
+                    showTwelveHour={showTwelveHour}
+                    ts={mxEvent.getTs()}
+                    showSeconds={false}
+                />
             );
             const avatar = (
                 <MemberAvatar
