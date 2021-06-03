@@ -36,6 +36,7 @@ import RoomSummaryCard from "../views/right_panel/RoomSummaryCard";
 import WidgetCard from "../views/right_panel/WidgetCard";
 import {replaceableComponent} from "../../utils/replaceableComponent";
 import SettingsStore from "../../settings/SettingsStore";
+import UIStore from "../../stores/UIStore";
 
 @replaceableComponent("structures.RightPanel")
 export default class RightPanel extends React.Component {
@@ -62,6 +63,7 @@ export default class RightPanel extends React.Component {
         this.onGroupStoreUpdated = this.onGroupStoreUpdated.bind(this);
         this.onInviteToGroupButtonClick = this.onInviteToGroupButtonClick.bind(this);
         this.onAddRoomToGroupButtonClick = this.onAddRoomToGroupButtonClick.bind(this);
+        this.rightPanelRef = React.createRef();
 
         this._delayedUpdate = new RateLimitedFunc(() => {
             this.forceUpdate();
@@ -119,6 +121,7 @@ export default class RightPanel extends React.Component {
         const cli = this.context;
         cli.on("RoomState.members", this.onRoomStateMember);
         this._initGroupStore(this.props.groupId);
+        UIStore.instance.trackElementDimensions("RightPanel", this.rightPanelRef.current);
     }
 
     componentWillUnmount() {
@@ -127,6 +130,7 @@ export default class RightPanel extends React.Component {
             this.context.removeListener("RoomState.members", this.onRoomStateMember);
         }
         this._unregisterGroupStore(this.props.groupId);
+        UIStore.instance.stopTrackingElementDimensions("RightPanel");
     }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
@@ -313,7 +317,7 @@ export default class RightPanel extends React.Component {
         }
 
         return (
-            <aside className="mx_RightPanel dark-panel" id="mx_RightPanel">
+            <aside className="mx_RightPanel dark-panel" id="mx_RightPanel" ref={this.rightPanelRef}>
                 { panel }
             </aside>
         );

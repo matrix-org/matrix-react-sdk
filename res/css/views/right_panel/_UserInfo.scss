@@ -76,33 +76,12 @@ limitations under the License.
         width: 160px;
     }
 
-    .mx_UserInfo_avatar {
-        margin: 24px 32px 0 32px;
+    .mx_BaseAvatar {
+        display: block;
+        margin: 24px auto 0;
+        transition: font-size 0.5s;
     }
 
-    .mx_UserInfo_avatar > div {
-        max-width: 30vh;
-        margin: 0 auto;
-        transition: 0.5s;
-    }
-
-    .mx_UserInfo_avatar > div > div {
-        /* use padding-top instead of height to make this element square,
-        as the % in padding is a % of the width (including margin,
-        that's why we had to put the margin to center on a parent div),
-        and not a % of the parent height. */
-        padding-top: 100%;
-        position: relative;
-    }
-
-    .mx_UserInfo_avatar > div > div * {
-        border-radius: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100% !important;
-        height: 100% !important;
-    }
 
     .mx_UserInfo_avatar .mx_BaseAvatar.mx_BaseAvatar_image {
         cursor: zoom-in;

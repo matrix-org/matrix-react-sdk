@@ -1442,22 +1442,30 @@ const UserInfoHeader: React.FC<{
         Modal.createDialog(ImageView, params, "mx_Dialog_lightbox", null, true);
     }, [member]);
 
+    const dimensions = UIStore.instance.getElementDimensions("RightPanel");
+    const initialSize = Math.min(dimensions.width, 0.3 * UIStore.instance.windowHeight) - 20; // 2 x 10 margin on each side
+    const [avatarSize, setAvatarSize] = useState(initialSize);
+    useEffect(() => {
+        function setAvatarDimensions(type, entry: ResizeObserverEntry) {
+            const size = Math.min(entry.contentRect.width, 0.3 * UIStore.instance.windowHeight) - 20; // 2 x 10 margin on each side
+            setAvatarSize(size);
+        }
+        UIStore.instance.on("RightPanel", setAvatarDimensions);
+        return () => {
+            UIStore.instance.removeListener("RightPanel", setAvatarDimensions);
+        }
+    }, []);
+
     const avatarElement = (
-        <div className="mx_UserInfo_avatar">
-            <div>
-                <div>
-                    <MemberAvatar
-                        key={member.userId} // to instantly blank the avatar when UserInfo changes members
-                        member={member}
-                        width={2 * 0.3 * UIStore.instance.windowHeight} // 2x@30vh
-                        height={2 * 0.3 * UIStore.instance.windowHeight} // 2x@30vh
-                        resizeMethod="scale"
-                        fallbackUserId={member.userId}
-                        onClick={onMemberAvatarClick}
-                        urls={member.avatarUrl ? [member.avatarUrl] : undefined} />
-                </div>
-            </div>
-        </div>
+        <MemberAvatar
+            key={member.userId} // to instantly blank the avatar when UserInfo changes members
+            member={member}
+            width={avatarSize}
+            height={avatarSize}
+            resizeMethod="scale"
+            fallbackUserId={member.userId}
+            onClick={onMemberAvatarClick}
+            urls={member.avatarUrl ? [member.avatarUrl] : undefined} />
     );
 
     let presenceState;
