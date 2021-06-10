@@ -36,7 +36,6 @@ import shouldHideEvent from '../../shouldHideEvent';
 import EditorStateTransfer from '../../utils/EditorStateTransfer';
 import {haveTileForEvent} from "../views/rooms/EventTile";
 import {UIFeature} from "../../settings/UIFeature";
-import {objectHasDiff} from "../../utils/objects";
 import {replaceableComponent} from "../../utils/replaceableComponent";
 import { arrayFastClone } from "../../utils/arrays";
 
@@ -94,6 +93,9 @@ class TimelinePanel extends React.Component {
         // callback which is called when the panel is scrolled.
         onScroll: PropTypes.func,
 
+        // callback which is called when the user interacts with the room timeline
+        onUserScroll: PropTypes.func,
+
         // callback which is called when the read-up-to mark is updated.
         onReadMarkerUpdated: PropTypes.func,
 
@@ -118,6 +120,9 @@ class TimelinePanel extends React.Component {
 
         // which layout to use
         layout: LayoutPropType,
+
+        // whether to always show timestamps for an event
+        alwaysShowTimestamps: PropTypes.bool,
     }
 
     // a map from room id to read marker event timestamp
@@ -258,35 +263,13 @@ class TimelinePanel extends React.Component {
             console.warn("Replacing timelineSet on a TimelinePanel - confusion may ensue");
         }
 
-        if (newProps.eventId != this.props.eventId) {
+        const differentEventId = newProps.eventId != this.props.eventId;
+        const differentHighlightedEventId = newProps.highlightedEventId != this.props.highlightedEventId;
+        if (differentEventId || differentHighlightedEventId) {
             console.log("TimelinePanel switching to eventId " + newProps.eventId +
                         " (was " + this.props.eventId + ")");
             return this._initTimeline(newProps);
         }
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        if (objectHasDiff(this.props, nextProps)) {
-            if (DEBUG) {
-                console.group("Timeline.shouldComponentUpdate: props change");
-                console.log("props before:", this.props);
-                console.log("props after:", nextProps);
-                console.groupEnd();
-            }
-            return true;
-        }
-
-        if (objectHasDiff(this.state, nextState)) {
-            if (DEBUG) {
-                console.group("Timeline.shouldComponentUpdate: state change");
-                console.log("state before:", this.state);
-                console.log("state after:", nextState);
-                console.groupEnd();
-            }
-            return true;
-        }
-
-        return false;
     }
 
     componentWillUnmount() {
@@ -1149,9 +1132,8 @@ class TimelinePanel extends React.Component {
         arrayFastClone(events)
             .reverse()
             .forEach(event => {
-                if (event.shouldAttemptDecryption()) {
-                    event.attemptDecryption(MatrixClientPeg.get()._crypto);
-                }
+                const client = MatrixClientPeg.get();
+                client.decryptEventIfNeeded(event);
             });
 
         const firstVisibleEventIndex = this._checkForPreJoinUISI(events);
@@ -1457,10 +1439,11 @@ class TimelinePanel extends React.Component {
                 ourUserId={MatrixClientPeg.get().credentials.userId}
                 stickyBottom={stickyBottom}
                 onScroll={this.onMessageListScroll}
+                onUserScroll={this.props.onUserScroll}
                 onFillRequest={this.onMessageListFillRequest}
                 onUnfillRequest={this.onMessageListUnfillRequest}
                 isTwelveHour={this.state.isTwelveHour}
-                alwaysShowTimestamps={this.state.alwaysShowTimestamps}
+                alwaysShowTimestamps={this.props.alwaysShowTimestamps || this.state.alwaysShowTimestamps}
                 className={this.props.className}
                 tileShape={this.props.tileShape}
                 resizeNotifier={this.props.resizeNotifier}

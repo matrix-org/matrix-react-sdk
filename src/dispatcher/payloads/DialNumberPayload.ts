@@ -14,17 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EnhancedMap } from "./maps";
-import AwaitLock from "await-lock";
+import { ActionPayload } from "../payloads";
+import { Action } from "../actions";
 
-export type DoneFn = () => void;
-
-export class MultiLock {
-    private locks = new EnhancedMap<string, AwaitLock>();
-
-    public async acquire(key: string): Promise<DoneFn> {
-        const lock = this.locks.getOrCreate(key, new AwaitLock());
-        await lock.acquireAsync();
-        return () => lock.release();
-    }
+export interface DialNumberPayload extends ActionPayload {
+    action: Action.DialNumber;
+    number: string;
 }

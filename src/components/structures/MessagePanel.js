@@ -19,7 +19,6 @@ limitations under the License.
 import React, {createRef} from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import shouldHideEvent from '../../shouldHideEvent';
 import {wantsDateSeparator} from '../../DateUtils';
 import * as sdk from '../../index';
@@ -120,6 +119,9 @@ export default class MessagePanel extends React.Component {
 
         // callback which is called when the panel is scrolled.
         onScroll: PropTypes.func,
+
+        // callback which is called when the user interacts with the room timeline
+        onUserScroll: PropTypes.func,
 
         // callback which is called when more content is needed.
         onFillRequest: PropTypes.func,
@@ -473,7 +475,7 @@ export default class MessagePanel extends React.Component {
     }
 
     get _roomHasPendingEdit() {
-        return localStorage.getItem(`mx_edit_room_${this.props.room.roomId}`);
+        return this.props.room && localStorage.getItem(`mx_edit_room_${this.props.room.roomId}`);
     }
 
     _getEventTiles() {
@@ -613,10 +615,6 @@ export default class MessagePanel extends React.Component {
         const eventId = mxEv.getId();
         const highlight = (eventId === this.props.highlightedEventId);
 
-        // we can't use local echoes as scroll tokens, because their event IDs change.
-        // Local echos have a send "status".
-        const scrollToken = mxEv.status ? undefined : eventId;
-
         const readReceipts = this._readReceiptsByEvent[eventId];
 
         let isLastSuccessful = false;
@@ -645,39 +643,36 @@ export default class MessagePanel extends React.Component {
 
         // use txnId as key if available so that we don't remount during sending
         ret.push(
-            <li
-                key={mxEv.getTxnId() || eventId}
-                ref={this._collectEventNode.bind(this, eventId)}
-                data-scroll-tokens={scrollToken}
-            >
-                <TileErrorBoundary mxEvent={mxEv}>
-                    <EventTile
-                        mxEvent={mxEv}
-                        continuation={continuation}
-                        isRedacted={mxEv.isRedacted()}
-                        replacingEventId={mxEv.replacingEventId()}
-                        editState={isEditing && this.props.editState}
-                        onHeightChanged={this._onHeightChanged}
-                        readReceipts={readReceipts}
-                        readReceiptMap={this._readReceiptMap}
-                        showUrlPreview={this.props.showUrlPreview}
-                        checkUnmounting={this._isUnmounting}
-                        eventSendStatus={mxEv.getAssociatedStatus()}
-                        tileShape={this.props.tileShape}
-                        isTwelveHour={this.props.isTwelveHour}
-                        permalinkCreator={this.props.permalinkCreator}
-                        last={last}
-                        lastInSection={willWantDateSeparator}
-                        lastSuccessful={isLastSuccessful}
-                        isSelectedEvent={highlight}
-                        getRelationsForEvent={this.props.getRelationsForEvent}
-                        showReactions={this.props.showReactions}
-                        layout={this.props.layout}
-                        enableFlair={this.props.enableFlair}
-                        showReadReceipts={this.props.showReadReceipts}
-                    />
-                </TileErrorBoundary>
-            </li>,
+            <TileErrorBoundary key={mxEv.getTxnId() || eventId} mxEvent={mxEv}>
+                <EventTile
+                    as="li"
+                    ref={this._collectEventNode.bind(this, eventId)}
+                    alwaysShowTimestamps={this.props.alwaysShowTimestamps}
+                    mxEvent={mxEv}
+                    continuation={continuation}
+                    isRedacted={mxEv.isRedacted()}
+                    replacingEventId={mxEv.replacingEventId()}
+                    editState={isEditing && this.props.editState}
+                    onHeightChanged={this._onHeightChanged}
+                    readReceipts={readReceipts}
+                    readReceiptMap={this._readReceiptMap}
+                    showUrlPreview={this.props.showUrlPreview}
+                    checkUnmounting={this._isUnmounting}
+                    eventSendStatus={mxEv.getAssociatedStatus()}
+                    tileShape={this.props.tileShape}
+                    isTwelveHour={this.props.isTwelveHour}
+                    permalinkCreator={this.props.permalinkCreator}
+                    last={last}
+                    lastInSection={willWantDateSeparator}
+                    lastSuccessful={isLastSuccessful}
+                    isSelectedEvent={highlight}
+                    getRelationsForEvent={this.props.getRelationsForEvent}
+                    showReactions={this.props.showReactions}
+                    layout={this.props.layout}
+                    enableFlair={this.props.enableFlair}
+                    showReadReceipts={this.props.showReadReceipts}
+                />
+            </TileErrorBoundary>,
         );
 
         return ret;
@@ -779,7 +774,7 @@ export default class MessagePanel extends React.Component {
     }
 
     _collectEventNode = (eventId, node) => {
-        this.eventNodes[eventId] = node;
+        this.eventNodes[eventId] = node?.ref?.current;
     }
 
     // once dynamic content in the events load, make the scrollPanel check the
@@ -853,13 +848,6 @@ export default class MessagePanel extends React.Component {
 
         const style = this.props.hidden ? { display: 'none' } : {};
 
-        const className = classNames(
-            this.props.className,
-            {
-                "mx_MessagePanel_alwaysShowTimestamps": this.props.alwaysShowTimestamps,
-            },
-        );
-
         let whoIsTyping;
         if (this.props.room && !this.props.tileShape && this.state.showTypingNotifications) {
             whoIsTyping = (<WhoIsTypingTile
@@ -883,8 +871,9 @@ export default class MessagePanel extends React.Component {
             <ErrorBoundary>
                 <ScrollPanel
                     ref={this._scrollPanel}
-                    className={className}
+                    className={this.props.className}
                     onScroll={this.props.onScroll}
+                    onUserScroll={this.props.onUserScroll}
                     onResize={this.onResize}
                     onFillRequest={this.props.onFillRequest}
                     onUnfillRequest={this.props.onUnfillRequest}
