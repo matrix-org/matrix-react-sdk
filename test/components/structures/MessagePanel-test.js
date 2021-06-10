@@ -51,8 +51,20 @@ class WrappedMessagePanel extends React.Component {
     };
 
     render() {
+        const roomContext = {
+            room,
+            roomId: room.roomId,
+            canReact: true,
+            canReply: true,
+            showReadReceipts: true,
+            showRedactions: false,
+            showJoinLeaves: false,
+            showAvatarChanges: false,
+            showDisplaynameChanges: true,
+        };
+
         return <MatrixClientContext.Provider value={client}>
-            <RoomContext.Provider value={{ canReact: true, canReply: true, room, roomId: room.roomId }}>
+            <RoomContext.Provider value={roomContext}>
                 <MessagePanel room={room} {...this.props} resizeNotifier={this.state.resizeNotifier} />
             </RoomContext.Provider>
         </MatrixClientContext.Provider>;
@@ -309,7 +321,7 @@ describe('MessagePanel', function() {
         const rm = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_RoomView_myReadMarker_container');
 
         // it should follow the <li> which wraps the event tile for event 4
-        const eventContainer = ReactDOM.findDOMNode(tiles[4]).parentNode;
+        const eventContainer = ReactDOM.findDOMNode(tiles[4]);
         expect(rm.previousSibling).toEqual(eventContainer);
     });
 
@@ -365,7 +377,7 @@ describe('MessagePanel', function() {
         const tiles = TestUtils.scryRenderedComponentsWithType(
             mp, sdk.getComponent('rooms.EventTile'));
         const tileContainers = tiles.map(function(t) {
-            return ReactDOM.findDOMNode(t).parentNode;
+            return ReactDOM.findDOMNode(t);
         });
 
         // find the <li> which wraps the read marker
@@ -460,7 +472,7 @@ describe('MessagePanel', function() {
             />,
         );
         const Dates = res.find(sdk.getComponent('messages.DateSeparator'));
-       
+
         expect(Dates.length).toEqual(1);
     });
 });
