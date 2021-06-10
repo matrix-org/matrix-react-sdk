@@ -30,7 +30,7 @@ import IdentityAuthClient from "../../../IdentityAuthClient";
 import Modal from "../../../Modal";
 import {humanizeTime} from "../../../utils/humanize";
 import createRoom, {
-    canEncryptToAllUsers, ensureDMExists, findDMForUser, privateShouldBeEncrypted,
+    canEncryptToAllUsers, findDMForUser, privateShouldBeEncrypted,
     IInvite3PID,
 } from "../../../createRoom";
 import {inviteMultipleToRoom, showCommunityInviteDialog} from "../../../RoomInvite";
@@ -50,6 +50,10 @@ import {getAddressType} from "../../../UserAddress";
 import BaseAvatar from '../avatars/BaseAvatar';
 import AccessibleButton from '../elements/AccessibleButton';
 import { compare } from '../../../utils/strings';
+import TabbedView, { Tab } from '../../structures/TabbedView';
+import Dialpad from '../voip/DialPad';
+import Field from '../elements/Field';
+import { TransferCallPayload } from '../../../dispatcher/payloads/TransferCallPayload';
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
@@ -338,6 +342,7 @@ interface IInviteDialogState {
     canUseIdentityServer: boolean;
     tryingIdentityServer: boolean;
     consultFirst: boolean;
+    dialPadValue: string;
 
     // These two flags are used for the 'Go' button to communicate what is going on.
     busy: boolean,
@@ -388,6 +393,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             canUseIdentityServer: !!MatrixClientPeg.get().getIdentityServerUrl(),
             tryingIdentityServer: false,
             consultFirst: false,
+            dialPadValue: '',
 
             // These two flags are used for the 'Go' button to communicate what is going on.
             busy: false,
@@ -764,36 +770,14 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             });
         }
 
-        if (this.state.consultFirst) {
-            const dmRoomId = await ensureDMExists(MatrixClientPeg.get(), targetIds[0]);
-
-            dis.dispatch({
-                action: 'place_call',
-                type: this.props.call.type,
-                room_id: dmRoomId,
-                transferee: this.props.call,
-            });
-            dis.dispatch({
-                action: 'view_room',
-                room_id: dmRoomId,
-                should_peek: false,
-                joining: false,
-            });
-            this.props.onFinished();
-        } else {
-            this.setState({busy: true});
-            try {
-                await this.props.call.transfer(targetIds[0]);
-                this.setState({busy: false});
-                this.props.onFinished();
-            } catch (e) {
-                this.setState({
-                    busy: false,
-                    errorText: _t("Failed to transfer call"),
-                });
-            }
-        }
-    };
+        dis.dispatch({
+            action: Action.TransferCallToMatrixID,
+            call: this.props.call,
+            destination: targetIds[0],
+            consultFirst: this.state.consultFirst,
+        } as TransferCallPayload);
+        this.props.onFinished();
+    }
 
     private onKeyDown = (e) => {
         if (this.state.busy) return;
@@ -1238,6 +1222,34 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         }
     }
 
+    private onDialFormSubmit = ev => {
+        ev.preventDefault();
+        this.onDialPress();
+    }
+
+    private onDialChange = ev => {
+        this.setState({dialPadValue: ev.target.value});
+    }
+
+    private onDigitPress = digit => {
+        this.setState({dialPadValue: this.state.dialPadValue + digit});
+    }
+
+    private onDialPress = () => {
+        dis.dispatch({
+            action: Action.TransferCallToPhoneNumber,
+            call: this.props.call,
+            destination: this.state.dialPadValue,
+            consultFirst: this.state.consultFirst,
+        } as TransferCallPayload);
+        this.props.onFinished();
+    }
+
+    private onDeletePress = () => {
+        if (this.state.dialPadValue.length === 0) return;
+        this.setState({dialPadValue: this.state.dialPadValue.slice(0, -1)});
+    }
+
     render() {
         const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
@@ -1389,6 +1401,59 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
 
         const hasSelection = this.state.targets.length > 0
             || (this.state.filterText && this.state.filterText.includes('@'));
+        const usersSection = <React.Fragment>
+            <p className='mx_InviteDialog_helpText'>{helpText}</p>
+            <div className='mx_InviteDialog_addressBar'>
+                {this.renderEditor()}
+                <div className='mx_InviteDialog_buttonAndSpinner'>
+                    <AccessibleButton
+                        kind="primary"
+                        onClick={goButtonFn}
+                        className='mx_InviteDialog_goButton'
+                        disabled={this.state.busy || !hasSelection}
+                    >
+                        {buttonText}
+                    </AccessibleButton>
+                    {spinner}
+                </div>
+            </div>
+            {keySharingWarning}
+            {this.renderIdentityServerWarning()}
+            <div className='error'>{this.state.errorText}</div>
+            <div className='mx_InviteDialog_userSections'>
+                {this.renderSection('recents')}
+                {this.renderSection('suggestions')}
+            </div>
+            {consultSection}
+        </React.Fragment>;
+
+        let dialogContent;
+        if (this.props.kind === KIND_CALL_TRANSFER) {
+            const tabs = [];
+            tabs.push(new Tab('UsersTab', _td("Users"), null, usersSection));
+
+            const dialPadSection = <React.Fragment>
+                <form onSubmit={this.onDialFormSubmit}>
+                    <Field className="mx_InviteDialog_field" id="dialpad_number"
+                        value={this.state.dialPadValue} autoFocus={true}
+                        onChange={this.onDialChange}
+                    />
+                </form>
+                <div className="mx_InviteDialog_dialPad">
+                    <Dialpad hasDialAndDelete={true}
+                        onDigitPress={this.onDigitPress}
+                        onDeletePress={this.onDeletePress}
+                        onDialPress={this.onDialPress}
+                    />
+                </div>
+                {consultSection}
+            </React.Fragment>;
+            tabs.push(new Tab('DialPadTab', _td("Dial pad"), null, dialPadSection));
+            dialogContent = <TabbedView tabs={tabs} initialTabId={'byMatrixID'} />;
+        } else {
+            dialogContent = usersSection;
+        }
+
         return (
             <BaseDialog
                 className='mx_InviteDialog'
@@ -1397,29 +1462,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 title={title}
             >
                 <div className='mx_InviteDialog_content'>
-                    <p className='mx_InviteDialog_helpText'>{helpText}</p>
-                    <div className='mx_InviteDialog_addressBar'>
-                        {this.renderEditor()}
-                        <div className='mx_InviteDialog_buttonAndSpinner'>
-                            <AccessibleButton
-                                kind="primary"
-                                onClick={goButtonFn}
-                                className='mx_InviteDialog_goButton'
-                                disabled={this.state.busy || !hasSelection}
-                            >
-                                {buttonText}
-                            </AccessibleButton>
-                            {spinner}
-                        </div>
-                    </div>
-                    {keySharingWarning}
-                    {this.renderIdentityServerWarning()}
-                    <div className='error'>{this.state.errorText}</div>
-                    <div className='mx_InviteDialog_userSections'>
-                        {this.renderSection('recents')}
-                        {this.renderSection('suggestions')}
-                    </div>
-                    {consultSection}
+                    {dialogContent}
                 </div>
             </BaseDialog>
         );
