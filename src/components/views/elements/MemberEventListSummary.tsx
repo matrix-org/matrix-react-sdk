@@ -24,6 +24,7 @@ import { _t } from '../../../languageHandler';
 import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
 import { isValid3pidInvite } from "../../../RoomInvite";
 import EventListSummary from "./EventListSummary";
+import { Layout } from '../../../settings/Layout';
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 interface IProps {
@@ -39,6 +40,8 @@ interface IProps {
     startExpanded?: boolean,
     // An array of EventTiles to render when expanded
     children: ReactChildren;
+    // which layout to use
+    layout: Layout,
     // Called when the MELS expansion is toggled
     onToggle?(): void,
 }
@@ -448,6 +451,7 @@ export default class MemberEventListSummary extends React.Component<IProps> {
             startExpanded={this.props.startExpanded}
             children={this.props.children}
             summaryMembers={[...latestUserAvatarMember.values()]}
-            summaryText={this.generateSummary(aggregate.names, orderedTransitionSequences)} />;
+            summaryText={this.generateSummary(aggregate.names, orderedTransitionSequences)}
+            layout={this.props.layout} />;
     }
 }

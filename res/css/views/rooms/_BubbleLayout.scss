@@ -467,7 +467,7 @@ $left-gutter: 56px;
                 display: inline-flex;
                 margin-inline-start: .7em;
                 opacity: 0;
-                line-height: 1; // don't add additional height
+                line-height: inherit; // don't add additional height
 
                 .mx_MessageTimestamp {
                     visibility: visible !important;

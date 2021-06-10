@@ -552,7 +552,8 @@ export default class MessagePanel extends React.Component {
 
             for (const Grouper of groupers) {
                 if (Grouper.canStartGroup(this, mxEv)) {
-                    grouper = new Grouper(this, mxEv, prevEvent, lastShownEvent, nextEvent, nextTile);
+                    grouper = new Grouper(this, mxEv, prevEvent, lastShownEvent, nextEvent, nextTile,
+                        this.props.layout);
                 }
             }
             if (!grouper) {
@@ -919,7 +920,7 @@ class CreationGrouper {
         return ev.getType() === "m.room.create";
     };
 
-    constructor(panel, createEvent, prevEvent, lastShownEvent) {
+    constructor(panel, createEvent, prevEvent, lastShownEvent, nextEvent, nextEventTile, layout) {
         this.panel = panel;
         this.createEvent = createEvent;
         this.prevEvent = prevEvent;
@@ -932,6 +933,7 @@ class CreationGrouper {
             createEvent.getId(),
             createEvent === lastShownEvent,
         );
+        this.layout = layout;
     }
 
     shouldGroup(ev) {
@@ -1030,6 +1032,7 @@ class CreationGrouper {
                 onToggle={panel._onHeightChanged} // Update scroll state
                 summaryMembers={[ev.sender]}
                 summaryText={summaryText}
+                layout={this.layout}
             >
                 { eventTiles }
             </EventListSummary>,
@@ -1052,7 +1055,7 @@ class RedactionGrouper {
         return panel._shouldShowEvent(ev) && ev.isRedacted();
     }
 
-    constructor(panel, ev, prevEvent, lastShownEvent, nextEvent, nextEventTile) {
+    constructor(panel, ev, prevEvent, lastShownEvent, nextEvent, nextEventTile, layout) {
         this.panel = panel;
         this.readMarker = panel._readMarkerForEvent(
             ev.getId(),
@@ -1063,6 +1066,7 @@ class RedactionGrouper {
         this.lastShownEvent = lastShownEvent;
         this.nextEvent = nextEvent;
         this.nextEventTile = nextEventTile;
+        this.layout = layout;
     }
 
     shouldGroup(ev) {
@@ -1128,6 +1132,7 @@ class RedactionGrouper {
                 onToggle={panel._onHeightChanged} // Update scroll state
                 summaryMembers={Array.from(senders)}
                 summaryText={_t("%(count)s messages deleted.", { count: eventTiles.length })}
+                layout={this.layout}
             >
                 { eventTiles }
             </EventListSummary>,
@@ -1151,7 +1156,7 @@ class MemberGrouper {
         return panel._shouldShowEvent(ev) && isMembershipChange(ev);
     }
 
-    constructor(panel, ev, prevEvent, lastShownEvent) {
+    constructor(panel, ev, prevEvent, lastShownEvent, nextEvent, nextEventTile, layout) {
         this.panel = panel;
         this.readMarker = panel._readMarkerForEvent(
             ev.getId(),
@@ -1160,6 +1165,7 @@ class MemberGrouper {
         this.events = [ev];
         this.prevEvent = prevEvent;
         this.lastShownEvent = lastShownEvent;
+        this.layout = layout;
     }
 
     shouldGroup(ev) {
@@ -1234,6 +1240,7 @@ class MemberGrouper {
                 events={this.events}
                 onToggle={panel._onHeightChanged} // Update scroll state
                 startExpanded={highlightInMels}
+                layout={this.layout}
             >
                 { eventTiles }
             </MemberEventListSummary>,

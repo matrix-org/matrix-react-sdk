@@ -1012,7 +1012,8 @@ export default class EventTile extends React.Component<IProps, IState> {
         /> : undefined;
 
         const showTimestamp = this.props.mxEvent.getTs() &&
-            (scBubbleEnabled || this.props.alwaysShowTimestamps || this.props.last || this.state.hover || this.state.actionBarFocused);
+            (scBubbleEnabled ||
+                this.props.alwaysShowTimestamps || this.props.last || this.state.hover || this.state.actionBarFocused);
         const timestamp = showTimestamp ?
             <MessageTimestamp showTwelveHour={this.props.isTwelveHour} ts={this.props.mxEvent.getTs()} /> : null;
 
@@ -1284,7 +1285,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                                             onHeightChanged={this.props.onHeightChanged}
                                             scBubble={true}
                                             scBubbleActionBar={mediaBody ? actionBar : null}
-                                            scBubbleGroupTimestamp={[placeholderTimestamp, groupTimestamp]}
+                                            scBubbleGroupTimestamp={<>{placeholderTimestamp}{groupTimestamp}</>}
                                         />
                                         { !mediaBody ? actionBar : null }
                                     </div>
@@ -1294,7 +1295,6 @@ export default class EventTile extends React.Component<IProps, IState> {
                             </div>,
                             !infoBubble ? avatar : null,
                             msgOption,
-
                         ])
                     );
                 } else {
@@ -1333,7 +1333,6 @@ export default class EventTile extends React.Component<IProps, IState> {
                             </div>,
                             msgOption,
                             avatar,
-
                         ])
                     );
                 }
