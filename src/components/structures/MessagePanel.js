@@ -148,6 +148,9 @@ export default class MessagePanel extends React.Component {
         // which layout to use
         layout: LayoutPropType,
 
+        // whether to use single side bubbles
+        singleSideBubbles: PropTypes.bool,
+
         // whether or not to show flair at all
         enableFlair: PropTypes.bool,
     };
@@ -672,6 +675,7 @@ export default class MessagePanel extends React.Component {
                     getRelationsForEvent={this.props.getRelationsForEvent}
                     showReactions={this.props.showReactions}
                     layout={this.props.layout}
+                    singleSideBubbles={this.props.singleSideBubbles}
                     enableFlair={this.props.enableFlair}
                     showReadReceipts={this.props.showReadReceipts}
                 />

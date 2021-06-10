@@ -122,6 +122,9 @@ class TimelinePanel extends React.Component {
         // which layout to use
         layout: LayoutPropType,
 
+        // whether to use single side bubbles
+        singleSideBubbles: PropTypes.bool,
+
         // whether to always show timestamps for an event
         alwaysShowTimestamps: PropTypes.bool,
     }
@@ -1454,6 +1457,7 @@ class TimelinePanel extends React.Component {
                 editState={this.state.editState}
                 showReactions={this.props.showReactions}
                 layout={this.props.layout}
+                singleSideBubbles={this.props.singleSideBubbles}
                 enableFlair={SettingsStore.getValue(UIFeature.Flair)}
             />
         );

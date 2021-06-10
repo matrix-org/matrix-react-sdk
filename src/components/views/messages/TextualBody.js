@@ -58,6 +58,8 @@ export default class TextualBody extends React.Component {
 
         /* the shape of the tile, used */
         tileShape: PropTypes.string,
+
+        scBubbleGroupTimestamp: PropTypes.object,
     };
 
     constructor(props) {
@@ -201,6 +203,7 @@ export default class TextualBody extends React.Component {
     _wrapInDiv(pre) {
         const div = document.createElement("div");
         div.className = "mx_EventTile_pre_container";
+        div.dir = "auto";
 
         // Insert containing div in place of <pre> block
         pre.parentNode.replaceChild(div, pre);
@@ -489,7 +492,7 @@ export default class TextualBody extends React.Component {
     render() {
         if (this.props.editState) {
             const EditMessageComposer = sdk.getComponent('rooms.EditMessageComposer');
-            return <EditMessageComposer editState={this.props.editState} className="mx_EventTile_content" />;
+            return <EditMessageComposer editState={this.props.editState} className="mx_EventTile_content" dir="auto" />;
         }
         const mxEvent = this.props.mxEvent;
         const content = mxEvent.getContent();
@@ -534,7 +537,7 @@ export default class TextualBody extends React.Component {
         switch (content.msgtype) {
             case "m.emote":
                 return (
-                    <span className="mx_MEmoteBody mx_EventTile_content">
+                    <span className={ "mx_MEmoteBody mx_EventTile_content" } dir="auto">
                         *&nbsp;
                         <span
                             className="mx_MEmoteBody_sender"
@@ -545,20 +548,23 @@ export default class TextualBody extends React.Component {
                         &nbsp;
                         { body }
                         { widgets }
+                        { this.props.scBubbleGroupTimestamp }
                     </span>
                 );
             case "m.notice":
                 return (
-                    <span className="mx_MNoticeBody mx_EventTile_content">
+                    <span className={ "mx_MNoticeBody mx_EventTile_content" } dir="auto">
                         { body }
                         { widgets }
+                        { this.props.scBubbleGroupTimestamp }
                     </span>
                 );
             default: // including "m.text"
                 return (
-                    <span className="mx_MTextBody mx_EventTile_content">
+                    <span className={ "mx_MTextBody mx_EventTile_content" } dir="auto">
                         { body }
                         { widgets }
+                        { this.props.scBubbleGroupTimestamp }
                     </span>
                 );
         }

@@ -49,6 +49,10 @@ export default class MessageEvent extends React.Component {
 
         /* the permalinkCreator */
         permalinkCreator: PropTypes.object,
+
+        scBubble: PropTypes.bool,
+        scBubbleGroupTimestamp: PropTypes.object,
+        scBubbleActionBar: PropTypes.object,
     };
 
     constructor(props) {
@@ -126,6 +130,9 @@ export default class MessageEvent extends React.Component {
             onHeightChanged={this.props.onHeightChanged}
             onMessageAllowed={this.onTileUpdate}
             permalinkCreator={this.props.permalinkCreator}
+            scBubble={this.props.scBubble}
+            scBubbleGroupTimestamp={this.props.scBubbleGroupTimestamp}
+            scBubbleActionBar={this.props.scBubbleActionBar}
         />;
     }
 }

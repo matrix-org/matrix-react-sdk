@@ -1,6 +1,8 @@
 /*
 Copyright 2015-2021 The Matrix.org Foundation C.I.C.
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2020 Tobias Büttner <dev@spiritcroc.de>
+Copyright 2020-2021 Quirin Götz <codeworks@supercable.onl>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -260,6 +262,9 @@ interface IProps {
 
     // which layout to use
     layout: Layout;
+
+    // whether to use single side bubbles
+    singleSideBubbles: boolean;
 
     // whether or not to show flair at all
     enableFlair?: boolean;
@@ -651,11 +656,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             // animation will start from the top of the timeline (because it
             // lost its container).
             // See also https://github.com/vector-im/element-web/issues/17561
-            return (
-                <div className="mx_EventTile_msgOption">
-                    <span className="mx_EventTile_readAvatars" />
-                </div>
-            );
+            return (<span className="mx_EventTile_readAvatars" />);
         }
 
         const ReadReceiptMarker = sdk.getComponent('rooms.ReadReceiptMarker');
@@ -677,7 +678,11 @@ export default class EventTile extends React.Component<IProps, IState> {
 
             // If hidden, set offset equal to the offset of the final visible avatar or
             // else set it proportional to index
-            left = (hidden ? MAX_READ_AVATARS - 1 : i) * -receiptOffset;
+            if (this.props.layout == Layout.Bubble) {
+                left = (hidden ? MAX_READ_AVATARS - 1 : i) * receiptOffset;
+            } else {
+                left = (hidden ? MAX_READ_AVATARS - 1 : i) * -receiptOffset;
+            }
 
             const userId = receipt.userId;
             let readReceiptInfo;
@@ -707,22 +712,26 @@ export default class EventTile extends React.Component<IProps, IState> {
         let remText;
         if (!this.state.allReadAvatars) {
             const remainder = receipts.length - MAX_READ_AVATARS;
+
+            let style;
+            if (this.props.layout == Layout.Bubble) {
+                style = { left: "calc(" + toRem(left) + " + " + receiptOffset + "px)" };
+            } else {
+                style = { right: "calc(" + toRem(-left) + " + " + receiptOffset + "px)" };
+            }
+
             if (remainder > 0) {
                 remText = <span className="mx_EventTile_readAvatarRemainder"
                     onClick={this.toggleAllReadAvatars}
-                    style={{ right: "calc(" + toRem(-left) + " + " + receiptOffset + "px)" }}>{ remainder }+
+                    style={style}>{ remainder }+
                 </span>;
             }
         }
 
-        return (
-            <div className="mx_EventTile_msgOption">
-                <span className="mx_EventTile_readAvatars">
-                    { remText }
-                    { avatars }
-                </span>
-            </div>
-        )
+        return <span className="mx_EventTile_readAvatars">
+            { remText }
+            { avatars }
+        </span>;
     }
 
     onSenderProfileClick = event => {
@@ -882,18 +891,28 @@ export default class EventTile extends React.Component<IProps, IState> {
         const isRedacted = isMessageEvent(this.props.mxEvent) && this.props.isRedacted;
         const isEncryptionFailure = this.props.mxEvent.isDecryptionFailure();
 
+        const client = MatrixClientPeg.get();
+        const me = client && client.getUserId();
+        const scBubbleEnabled = this.props.layout == Layout.Bubble
+                && this.props.tileShape !== 'reply_preview' && this.props.tileShape !== 'reply'
+                && this.props.tileShape !== 'notif' && this.props.tileShape !== 'file_grid';
+        const sentByMe = me === this.props.mxEvent.getSender();
+        const showRight = sentByMe && !this.props.singleSideBubbles;
+        const showLeft = !sentByMe || this.props.singleSideBubbles;
+
         const isEditing = !!this.props.editState;
         const classes = classNames({
-            mx_EventTile_bubbleContainer: isBubbleMessage,
+            mx_EventTile_bubbleContainer: isBubbleMessage && this.props.layout != Layout.Bubble,
             mx_EventTile: true,
             mx_EventTile_isEditing: isEditing,
-            mx_EventTile_info: isInfoMessage,
+            mx_EventTile_info: isInfoMessage && this.props.layout != Layout.Bubble,
             mx_EventTile_12hr: this.props.isTwelveHour,
             // Note: we keep the `sending` state class for tests, not for our styles
             mx_EventTile_sending: !isEditing && isSending,
             mx_EventTile_highlight: this.props.tileShape === 'notif' ? false : this.shouldHighlight(),
             mx_EventTile_selected: this.props.isSelectedEvent,
-            mx_EventTile_continuation: this.props.tileShape ? '' : this.props.continuation,
+            mx_EventTile_continuation: !isInfoMessage && !isBubbleMessage &&
+                (this.props.tileShape ? '' : this.props.continuation),
             mx_EventTile_last: this.props.last,
             mx_EventTile_lastInSection: this.props.lastInSection,
             mx_EventTile_contextual: this.props.contextual,
@@ -903,6 +922,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             mx_EventTile_unknown: !isBubbleMessage && this.state.verified === E2E_STATE.UNKNOWN,
             mx_EventTile_bad: isEncryptionFailure,
             mx_EventTile_emote: msgtype === 'm.emote',
+            sc_EventTile_bubbleContainer: scBubbleEnabled,
         });
 
         // If the tile is in the Sending state, don't speak the message.
@@ -924,7 +944,10 @@ export default class EventTile extends React.Component<IProps, IState> {
         let avatarSize;
         let needsSenderProfile;
 
-        if (this.props.tileShape === "notif") {
+        if (!isInfoMessage && scBubbleEnabled && showRight) {
+            avatarSize = 0;
+            needsSenderProfile = false;
+        } else if (this.props.tileShape === "notif") {
             avatarSize = 24;
             needsSenderProfile = true;
         } else if (tileHandler === 'messages.RoomCreate' || isBubbleMessage) {
@@ -989,7 +1012,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         /> : undefined;
 
         const showTimestamp = this.props.mxEvent.getTs() &&
-            (this.props.alwaysShowTimestamps || this.props.last || this.state.hover || this.state.actionBarFocused);
+            (scBubbleEnabled || this.props.alwaysShowTimestamps || this.props.last || this.state.hover || this.state.actionBarFocused);
         const timestamp = showTimestamp ?
             <MessageTimestamp showTwelveHour={this.props.isTwelveHour} ts={this.props.mxEvent.getTs()} /> : null;
 
@@ -1036,7 +1059,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             />;
         }
 
-        const linkedTimestamp = <a
+        const linkedTimestamp = <a className={"sc_LinkedTimestamp"}
             href={permalink}
             onClick={this.onPermalinkClicked}
             aria-label={formatTime(new Date(this.props.mxEvent.getTs()), this.props.isTwelveHour)}
@@ -1044,16 +1067,35 @@ export default class EventTile extends React.Component<IProps, IState> {
             { timestamp }
         </a>;
 
+        const placeholderTimestamp = <span className={"sc_PlaceholderTimestamp"}>
+            { timestamp }
+        </span>;
+
         const useIRCLayout = this.props.layout == Layout.IRC;
         const groupTimestamp = !useIRCLayout ? linkedTimestamp : null;
         const ircTimestamp = useIRCLayout ? linkedTimestamp : null;
         const groupPadlock = !useIRCLayout && !isBubbleMessage && this.renderE2EPadlock();
         const ircPadlock = useIRCLayout && !isBubbleMessage && this.renderE2EPadlock();
 
+        const msgOptionClasses = classNames(
+            "mx_EventTile_msgOption",
+            {
+                "sc_readReceipts_empty": (
+                    // Don't reserve space below bubbles if there are no read receipts
+                    (!this.props.readReceipts || this.props.readReceipts.length === 0) &&
+                    // ToDo: Maybe incorporate sent/sending state into bubble?!?
+                    !(this.shouldShowSentReceipt || this.shouldShowSendingReceipt)
+                ),
+            },
+        );
         let msgOption;
         if (this.props.showReadReceipts) {
             const readAvatars = this.getReadAvatars();
-            msgOption = readAvatars;
+            msgOption = (
+                <div className={msgOptionClasses}>
+                    { readAvatars }
+                </div>
+            );
         }
 
         switch (this.props.tileShape) {
@@ -1158,44 +1200,143 @@ export default class EventTile extends React.Component<IProps, IState> {
                     this.props.alwaysShowTimestamps || this.state.hover,
                 );
 
-                // tab-index=-1 to allow it to be focusable but do not add tab stop for it, primarily for screen readers
-                return (
-                    React.createElement(this.props.as || "li", {
-                        "ref": this.ref,
-                        "className": classes,
-                        "tabIndex": -1,
-                        "aria-live": ariaLive,
-                        "aria-atomic": "true",
-                        "data-scroll-tokens": scrollToken,
-                        "onMouseEnter": () => this.setState({ hover: true }),
-                        "onMouseLeave": () => this.setState({ hover: false }),
-                    }, [
-                        ircTimestamp,
-                        sender,
-                        ircPadlock,
-                        <div className="mx_EventTile_line" key="mx_EventTile_line">
-                            { groupTimestamp }
-                            { groupPadlock }
-                            { thread }
-                            <EventTileType ref={this.tile}
-                                mxEvent={this.props.mxEvent}
-                                replacingEventId={this.props.replacingEventId}
-                                editState={this.props.editState}
-                                highlights={this.props.highlights}
-                                highlightLink={this.props.highlightLink}
-                                showUrlPreview={this.props.showUrlPreview}
-                                permalinkCreator={this.props.permalinkCreator}
-                                onHeightChanged={this.props.onHeightChanged}
-                            />
-                            { keyRequestInfo }
-                            { reactionsRow }
-                            { actionBar }
-                        </div>,
-                        msgOption,
-                        avatar,
+                if (scBubbleEnabled) {
+                    const infoBubble = isInfoMessage || isBubbleMessage;
 
-                    ])
-                )
+                    const mediaBodyTypes = ['m.image', /* 'm.file', */ /* 'm.audio', */ 'm.video'];
+                    const mediaEvTypes = ['m.sticker'];
+                    let mediaBody = false;
+                    let stickerBody = false;
+                    let noticeBody = false;
+
+                    const content = this.props.mxEvent.getContent();
+                    const type = this.props.mxEvent.getType();
+                    const msgtype = content.msgtype;
+
+                    if (msgtype && mediaBodyTypes.indexOf(msgtype) != -1) {
+                        mediaBody = true;
+                    }
+
+                    if (type && mediaEvTypes.indexOf(type) != -1) {
+                        mediaBody = true;
+                        stickerBody = true;
+                    }
+
+                    if (msgtype && msgtype == 'm.notice') noticeBody = true;
+
+                    const bubbleLineClasses = classNames(
+                        "mx_EventTile_line",
+                        "sc_EventTile_bubbleLine",
+                        {
+                            "sc_EventTile_bubbleLine_info": infoBubble,
+                        },
+                    );
+                    const bubbleAreaClasses = classNames(
+                        "sc_EventTile_bubbleArea",
+                        {
+                            "sc_EventTile_bubbleArea_right": !infoBubble && showRight,
+                            "sc_EventTile_bubbleArea_left": !infoBubble && showLeft,
+                            "sc_EventTile_bubbleArea_center": infoBubble,
+                            "sc_EventTile_bubbleArea_info": infoBubble,
+                        },
+                    );
+                    const bubbleClasses = classNames(
+                        {
+                            "sc_EventTile_bubble": !mediaBody,
+                            "sc_EventTile_bubble_media": mediaBody,
+                            "sc_EventTile_bubble_info": infoBubble,
+                            "sc_EventTile_bubble_self": !infoBubble && sentByMe,
+                            "sc_EventTile_bubble_right": !infoBubble && showRight,
+                            "sc_EventTile_bubble_left": !infoBubble && showLeft,
+                            "sc_EventTile_bubble_center": infoBubble,
+                            "sc_EventTile_bubble_tail": !infoBubble && !this.props.continuation,
+                            "sc_EventTile_bubble_notice": noticeBody,
+                            "sc_EventTile_bubble_sticker": stickerBody,
+                        },
+                    );
+
+                    // tab-index=-1 to allow it to be focusable but do not add tab stop for it, primarily for screen readers
+                    return (
+                        React.createElement(this.props.as || "li", {
+                            "ref": this.ref,
+                            "className": classes,
+                            "tabIndex": -1,
+                            "aria-live": ariaLive,
+                            "aria-atomic": "true",
+                            "data-scroll-tokens": scrollToken,
+                            "onMouseEnter": () => this.setState({ hover: true }),
+                            "onMouseLeave": () => this.setState({ hover: false }),
+                        }, [
+                            <div className={bubbleLineClasses} key="mx_EventTile_line">
+                                { groupPadlock }
+                                <div className={bubbleAreaClasses}>
+                                    <div className={bubbleClasses}>
+                                        { sender }
+                                        { thread }
+                                        { infoBubble ? avatar : null }
+                                        <EventTileType ref={this.tile}
+                                            mxEvent={this.props.mxEvent}
+                                            replacingEventId={this.props.replacingEventId}
+                                            editState={this.props.editState}
+                                            highlights={this.props.highlights}
+                                            highlightLink={this.props.highlightLink}
+                                            showUrlPreview={this.props.showUrlPreview}
+                                            onHeightChanged={this.props.onHeightChanged}
+                                            scBubble={true}
+                                            scBubbleActionBar={mediaBody ? actionBar : null}
+                                            scBubbleGroupTimestamp={[placeholderTimestamp, groupTimestamp]}
+                                        />
+                                        { !mediaBody ? actionBar : null }
+                                    </div>
+                                    { keyRequestInfo }
+                                    { reactionsRow }
+                                </div>
+                            </div>,
+                            !infoBubble ? avatar : null,
+                            msgOption,
+
+                        ])
+                    );
+                } else {
+                    // tab-index=-1 to allow it to be focusable but do not add tab stop for it, primarily for screen readers
+                    return (
+                        React.createElement(this.props.as || "li", {
+                            "ref": this.ref,
+                            "className": classes,
+                            "tabIndex": -1,
+                            "aria-live": ariaLive,
+                            "aria-atomic": "true",
+                            "data-scroll-tokens": scrollToken,
+                            "onMouseEnter": () => this.setState({ hover: true }),
+                            "onMouseLeave": () => this.setState({ hover: false }),
+                        }, [
+                            ircTimestamp,
+                            sender,
+                            ircPadlock,
+                            <div className="mx_EventTile_line" key="mx_EventTile_line">
+                                { groupTimestamp }
+                                { groupPadlock }
+                                { thread }
+                                <EventTileType ref={this.tile}
+                                    mxEvent={this.props.mxEvent}
+                                    replacingEventId={this.props.replacingEventId}
+                                    editState={this.props.editState}
+                                    highlights={this.props.highlights}
+                                    highlightLink={this.props.highlightLink}
+                                    showUrlPreview={this.props.showUrlPreview}
+                                    permalinkCreator={this.props.permalinkCreator}
+                                    onHeightChanged={this.props.onHeightChanged}
+                                />
+                                { keyRequestInfo }
+                                { reactionsRow }
+                                { actionBar }
+                            </div>,
+                            msgOption,
+                            avatar,
+
+                        ])
+                    );
+                }
             }
         }
     }
@@ -1357,15 +1498,11 @@ class SentReceipt extends React.PureComponent<ISentReceiptProps, ISentReceiptSta
             tooltip = <Tooltip className="mx_EventTile_readAvatars_receiptTooltip" label={label} yOffset={20} />;
         }
 
-        return (
-            <div className="mx_EventTile_msgOption">
-                <span className="mx_EventTile_readAvatars">
-                    <span className={receiptClasses} onMouseEnter={this.onHoverStart} onMouseLeave={this.onHoverEnd}>
-                        {nonCssBadge}
-                        {tooltip}
-                    </span>
-                </span>
-            </div>
-        );
+        return <span className="mx_EventTile_readAvatars">
+            <span className={receiptClasses} onMouseEnter={this.onHoverStart} onMouseLeave={this.onHoverEnd}>
+                {nonCssBadge}
+                {tooltip}
+            </span>
+        </span>;
     }
 }

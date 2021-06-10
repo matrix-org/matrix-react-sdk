@@ -180,6 +180,8 @@ export interface IState {
     canReact: boolean;
     canReply: boolean;
     layout: Layout;
+    singleSideBubbles: boolean;
+    adaptiveSideBubbles: boolean;
     lowBandwidth: boolean;
     showReadReceipts: boolean;
     showRedactions: boolean;
@@ -243,6 +245,8 @@ export default class RoomView extends React.Component<IProps, IState> {
             canReact: false,
             canReply: false,
             layout: SettingsStore.getValue("layout"),
+            singleSideBubbles: SettingsStore.getValue("singleSideBubbles"),
+            adaptiveSideBubbles: SettingsStore.getValue("adaptiveSideBubbles"),
             lowBandwidth: SettingsStore.getValue("lowBandwidth"),
             showReadReceipts: true,
             showRedactions: true,
@@ -278,6 +282,15 @@ export default class RoomView extends React.Component<IProps, IState> {
         this.settingWatchers = [
             SettingsStore.watchSetting("layout", null, () =>
                 this.setState({ layout: SettingsStore.getValue("layout") }),
+            ),
+            SettingsStore.watchSetting("singleSideBubbles", null, () =>
+                this.setState({ singleSideBubbles: SettingsStore.getValue("singleSideBubbles") }),
+            ),
+            SettingsStore.watchSetting("adaptiveSideBubbles", null, () =>
+                this.setState({
+                    adaptiveSideBubbles: SettingsStore.getValue("adaptiveSideBubbles"),
+                    singleSideBubbles: SettingsStore.getValue("singleSideBubbles"), // restore default
+                }),
             ),
             SettingsStore.watchSetting("lowBandwidth", null, () =>
                 this.setState({ lowBandwidth: SettingsStore.getValue("lowBandwidth") }),
@@ -608,6 +621,8 @@ export default class RoomView extends React.Component<IProps, IState> {
                 atEndOfLiveTimeline: this.messagePanel.isAtEndOfLiveTimeline(),
             });
         }
+
+        this.onResize();
     }
 
     componentWillUnmount() {
@@ -704,12 +719,6 @@ export default class RoomView extends React.Component<IProps, IState> {
             });
         }
     }
-
-    private onLayoutChange = () => {
-        this.setState({
-            layout: SettingsStore.getValue("layout"),
-        });
-    };
 
     private onRightPanelStoreUpdate = () => {
         this.setState({
@@ -1435,6 +1444,8 @@ export default class RoomView extends React.Component<IProps, IState> {
                 resultLink={resultLink}
                 permalinkCreator={this.getPermalinkCreatorForRoom(room)}
                 onHeightChanged={onHeightChanged}
+                layout={this.state.layout}
+                singleSideBubbles={this.state.singleSideBubbles}
             />);
         }
         return ret;
@@ -1992,6 +2003,13 @@ export default class RoomView extends React.Component<IProps, IState> {
             };
         }
 
+        const layout = {
+            "mx_IRCLayout": this.state.layout == Layout.IRC,
+            "mx_GroupLayout": this.state.layout == Layout.Group,
+            "sc_BubbleLayout": this.state.layout == Layout.Bubble,
+            "sc_BubbleLayout_singleSide": this.state.layout == Layout.Bubble && this.state.singleSideBubbles,
+        };
+
         // if we have search results, we keep the messagepanel (so that it preserves its
         // scroll state), but hide it.
         let searchResultsPanel;
@@ -2004,10 +2022,16 @@ export default class RoomView extends React.Component<IProps, IState> {
                     <div className="mx_RoomView_messagePanel mx_RoomView_messagePanelSearchSpinner" />
                 );
             } else {
+                const searchResultsPanelClassNames = classNames(
+                    "mx_RoomView_messagePanel",
+                    "mx_RoomView_searchResultsPanel",
+                    layout,
+                );
+
                 searchResultsPanel = (
                     <ScrollPanel
                         ref={this.searchResultsPanel}
-                        className="mx_RoomView_messagePanel mx_RoomView_searchResultsPanel mx_GroupLayout"
+                        className={searchResultsPanelClassNames}
                         onFillRequest={this.onSearchResultsFillRequest}
                         resizeNotifier={this.props.resizeNotifier}
                     >
@@ -2026,10 +2050,8 @@ export default class RoomView extends React.Component<IProps, IState> {
 
         const messagePanelClassNames = classNames(
             "mx_RoomView_messagePanel",
-            {
-                "mx_IRCLayout": this.state.layout == Layout.IRC,
-                "mx_GroupLayout": this.state.layout == Layout.Group,
-            });
+            layout,
+        );
 
         // console.info("ShowUrlPreview for %s is %s", this.state.room.roomId, this.state.showUrlPreview);
         const messagePanel = (
@@ -2054,6 +2076,7 @@ export default class RoomView extends React.Component<IProps, IState> {
                 resizeNotifier={this.props.resizeNotifier}
                 showReactions={true}
                 layout={this.state.layout}
+                singleSideBubbles={this.state.singleSideBubbles}
             />);
 
         let topUnreadMessagesBar = null;

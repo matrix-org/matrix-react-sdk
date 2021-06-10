@@ -29,6 +29,8 @@ interface IProps {
     mxEvent: any;
     /* called when the video has loaded */
     onHeightChanged: () => void;
+
+    scBubbleActionBar: any;
 }
 
 interface IState {
@@ -193,6 +195,7 @@ export default class MVideoBody extends React.PureComponent<IProps, IState> {
                 <span className="mx_MVideoBody">
                     <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
                     { _t("Error decrypting video") }
+                    { this.props.scBubbleActionBar }
                 </span>
             );
         }
@@ -207,6 +210,7 @@ export default class MVideoBody extends React.PureComponent<IProps, IState> {
                     <div className="mx_MImageBody_thumbnail mx_MImageBody_thumbnail_spinner">
                         <InlineSpinner />
                     </div>
+                    { this.props.scBubbleActionBar }
                 </span>
             );
         }
@@ -230,23 +234,26 @@ export default class MVideoBody extends React.PureComponent<IProps, IState> {
             }
         }
         return (
-            <span className="mx_MVideoBody">
-                <video
-                    className="mx_MVideoBody"
-                    ref={this.videoRef}
-                    src={contentUrl}
-                    title={content.body}
-                    controls
-                    preload={preload}
-                    muted={autoplay}
-                    autoPlay={autoplay}
-                    height={height}
-                    width={width}
-                    poster={poster}
-                    onPlay={this.videoOnPlay}
-                >
-                </video>
+            <span className="mx_MVideoBody" style={{ maxWidth: width + "px" }}>
+                <span className="sc_MVideoBody_video_container">
+                    <video
+                        className="mx_MVideoBody"
+                        ref={this.videoRef}
+                        src={contentUrl}
+                        title={content.body}
+                        controls
+                        preload={preload}
+                        muted={autoplay}
+                        autoPlay={autoplay}
+                        height={height}
+                        width={width}
+                        poster={poster}
+                        onPlay={this.videoOnPlay}
+                    >
+                    </video>
+                </span>
                 <MFileBody {...this.props} decryptedBlob={this.state.decryptedBlob} showGenericPlaceholder={false} />
+                { this.props.scBubbleActionBar }
             </span>
         );
     }

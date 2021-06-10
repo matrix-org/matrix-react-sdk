@@ -70,6 +70,8 @@ export default class SearchResultTile extends React.Component {
                         isTwelveHour={SettingsStore.getValue("showTwelveHourTimestamps")}
                         alwaysShowTimestamps={alwaysShowTimestamps}
                         enableFlair={SettingsStore.getValue(UIFeature.Flair)}
+                        layout={this.props.layout}
+                        singleSideBubbles={this.props.singleSideBubbles}
                     />
                 ));
             }

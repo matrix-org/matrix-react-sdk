@@ -22,6 +22,7 @@ import MemberAvatar from '../avatars/MemberAvatar';
 import { _t } from '../../../languageHandler';
 import {useStateToggle} from "../../../hooks/useStateToggle";
 import AccessibleButton from "./AccessibleButton";
+import { Layout } from '../../../settings/Layout';
 
 interface IProps {
     // An array of member events to summarise
@@ -37,7 +38,9 @@ interface IProps {
     // An array of EventTiles to render when expanded
     children: ReactChildren,
     // Called when the event list expansion is toggled
-    onToggle?(): void;
+    onToggle?(): void,
+    // which layout to use
+    layout: Layout,
 }
 
 const EventListSummary: React.FC<IProps> = ({
@@ -48,6 +51,7 @@ const EventListSummary: React.FC<IProps> = ({
     startExpanded,
     summaryMembers = [],
     summaryText,
+    layout,
 }) => {
     const [expanded, toggleExpanded] = useStateToggle(startExpanded);
 
@@ -63,9 +67,9 @@ const EventListSummary: React.FC<IProps> = ({
     // If we are only given few events then just pass them through
     if (events.length < threshold) {
         return (
-            <li className="mx_EventListSummary" data-scroll-tokens={eventIds}>
+            <div className="mx_EventListSummary" data-scroll-tokens={eventIds}>
                 { children }
-            </li>
+            </div>
         );
     }
 
@@ -77,18 +81,35 @@ const EventListSummary: React.FC<IProps> = ({
         </React.Fragment>;
     } else {
         const avatars = summaryMembers.map((m) => <MemberAvatar key={m.userId} member={m} width={14} height={14} />);
-        body = (
-            <div className="mx_EventTile_line">
-                <div className="mx_EventTile_info">
-                    <span className="mx_EventListSummary_avatars" onClick={toggleExpanded}>
-                        { avatars }
-                    </span>
-                    <span className="mx_TextualEvent mx_EventListSummary_summary">
-                        { summaryText }
-                    </span>
+        if (layout == Layout.Bubble) {
+            body = (
+                <div className="mx_EventTile_line sc_EventTile_bubbleLine sc_EventTile_bubbleLine_info">
+                    <div className="sc_EventTile_bubbleArea sc_EventTile_bubbleArea_center sc_EventTile_bubbleArea_info">
+                        <div className="sc_EventTile_bubble sc_EventTile_bubble_info sc_EventTile_bubble_center">
+                            <span className="mx_EventListSummary_avatars" onClick={toggleExpanded}>
+                                { avatars }
+                            </span>
+                            <span className="mx_TextualEvent mx_EventListSummary_summary">
+                                { summaryText }
+                            </span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        } else {
+            body = (
+                <div className="mx_EventTile_line">
+                    <div className="mx_EventTile_info">
+                        <span className="mx_EventListSummary_avatars" onClick={toggleExpanded}>
+                            { avatars }
+                        </span>
+                        <span className="mx_TextualEvent mx_EventListSummary_summary">
+                            { summaryText }
+                        </span>
+                    </div>
+                </div>
+            );
+        }
     }
 
     return (

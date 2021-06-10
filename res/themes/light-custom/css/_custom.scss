@@ -140,3 +140,8 @@ $event-highlight-bg-color: var(--timeline-highlights-color);
 //
 // redirect some variables away from their hardcoded values in the light theme
 $settings-grey-fg-color: $primary-fg-color;
+
+// bubble layout variables
+$message-bubble-background: var(--timeline-bubble-background-incoming);
+$message-bubble-background-self: var(--timeline-bubble-background-outgoing);
+$message-bubble-background-selected: var(--timeline-bubble-background-selected);

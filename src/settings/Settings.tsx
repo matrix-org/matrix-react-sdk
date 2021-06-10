@@ -719,6 +719,16 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: Layout.Group,
     },
+    "singleSideBubbles": {
+        supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
+        displayName: _td("Show message bubbles on one side only"),
+        default: false,
+    },
+    "adaptiveSideBubbles": {
+        supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
+        displayName: _td("Show message bubbles depending on the width either on both sides or only on one side"),
+        default: true,
+    },
     "showChatEffects": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
         displayName: _td("Show chat effects (animations when receiving e.g. confetti)"),

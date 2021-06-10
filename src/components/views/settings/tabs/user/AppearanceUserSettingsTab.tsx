@@ -37,6 +37,8 @@ import StyledRadioGroup from "../../../elements/StyledRadioGroup";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { UIFeature } from "../../../../../settings/UIFeature";
 import { Layout } from "../../../../../settings/Layout";
+import classNames from 'classnames';
+import StyledRadioButton from '../../../elements/StyledRadioButton';
 import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import { compare } from "../../../../../utils/strings";
 
@@ -65,6 +67,7 @@ interface IState extends IThemeState {
     systemFont: string;
     showAdvanced: boolean;
     layout: Layout;
+    adaptiveSideBubbles: boolean;
     // User profile data for the message preview
     userId: string;
     displayName: string;
@@ -90,6 +93,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
             systemFont: SettingsStore.getValue("systemFont"),
             showAdvanced: false,
             layout: SettingsStore.getValue("layout"),
+            adaptiveSideBubbles: SettingsStore.getValue("adaptiveSideBubbles"),
             userId: "@erim:fink.fink",
             displayName: "Erimayas Fink",
             avatarUrl: null,
@@ -235,6 +239,21 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
         this.setState({customThemeUrl: e.target.value});
     };
 
+    private onLayoutChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        let layout;
+        switch (e.target.value) {
+            case "irc": layout = Layout.IRC; break;
+            case "group": layout = Layout.Group; break;
+            case "bubble": layout = Layout.Bubble; break;
+        }
+
+        this.setState({
+            layout: layout,
+        });
+
+        SettingsStore.setValue("layout", null, SettingLevel.DEVICE, layout);
+    };
+
     private onIRCLayoutChange = (enabled: boolean) => {
         if (enabled) {
             this.setState({layout: Layout.IRC});
@@ -367,6 +386,77 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
         </div>;
     }
 
+    private renderLayoutSection = () => {
+        return <div className="mx_SettingsTab_section mx_AppearanceUserSettingsTab_Layout">
+            <span className="mx_SettingsTab_subheading">{_t("Message layout")}</span>
+
+            <div className="mx_AppearanceUserSettingsTab_Layout_RadioButtons">
+                <div className={classNames("mx_AppearanceUserSettingsTab_Layout_RadioButton", {
+                    mx_AppearanceUserSettingsTab_Layout_RadioButton_selected: this.state.layout == Layout.IRC,
+                })}>
+                    <EventTilePreview
+                        className="mx_AppearanceUserSettingsTab_Layout_RadioButton_preview"
+                        message={this.MESSAGE_PREVIEW_TEXT}
+                        layout={Layout.IRC}
+                        userId={this.state.userId}
+                        displayName={this.state.displayName}
+                        avatarUrl={this.state.avatarUrl}
+                    />
+                    <StyledRadioButton
+                        name="layout"
+                        value="irc"
+                        checked={this.state.layout == Layout.IRC}
+                        onChange={this.onLayoutChange}
+                    >
+                        {"IRC"}
+                    </StyledRadioButton>
+                </div>
+                <div className="mx_AppearanceUserSettingsTab_spacer" />
+                <div className={classNames("mx_AppearanceUserSettingsTab_Layout_RadioButton", {
+                    mx_AppearanceUserSettingsTab_Layout_RadioButton_selected: this.state.layout == Layout.Group,
+                })}>
+                    <EventTilePreview
+                        className="mx_AppearanceUserSettingsTab_Layout_RadioButton_preview"
+                        message={this.MESSAGE_PREVIEW_TEXT}
+                        layout={Layout.Group}
+                        userId={this.state.userId}
+                        displayName={this.state.displayName}
+                        avatarUrl={this.state.avatarUrl}
+                    />
+                    <StyledRadioButton
+                        name="layout"
+                        value="group"
+                        checked={this.state.layout == Layout.Group}
+                        onChange={this.onLayoutChange}
+                    >
+                        {_t("Modern")}
+                    </StyledRadioButton>
+                </div>
+                <div className="mx_AppearanceUserSettingsTab_spacer" />
+                <div className={classNames("mx_AppearanceUserSettingsTab_Layout_RadioButton", {
+                    mx_AppearanceUserSettingsTab_Layout_RadioButton_selected: this.state.layout == Layout.Bubble,
+                })}>
+                    <EventTilePreview
+                        className="mx_AppearanceUserSettingsTab_Layout_RadioButton_preview"
+                        message={this.MESSAGE_PREVIEW_TEXT}
+                        layout={Layout.Bubble}
+                        userId={this.state.userId}
+                        displayName={this.state.displayName}
+                        avatarUrl={this.state.avatarUrl}
+                    />
+                    <StyledRadioButton
+                        name="layout"
+                        value="bubble"
+                        checked={this.state.layout == Layout.Bubble}
+                        onChange={this.onLayoutChange}
+                    >
+                        {_t("Message bubbles")}
+                    </StyledRadioButton>
+                </div>
+            </div>
+        </div>;
+    };
+
     private renderAdvancedSection() {
         if (!SettingsStore.getValue(UIFeature.AdvancedSettings)) return null;
 
@@ -391,6 +481,19 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                     level={SettingLevel.DEVICE}
                     useCheckbox={true}
                     disabled={this.state.layout == Layout.IRC}
+                />
+                <SettingsFlag
+                    name="singleSideBubbles"
+                    level={SettingLevel.DEVICE}
+                    useCheckbox={true}
+                    disabled={!(this.state.layout == Layout.Bubble) || this.state.adaptiveSideBubbles}
+                />
+                <SettingsFlag
+                    name="adaptiveSideBubbles"
+                    level={SettingLevel.DEVICE}
+                    useCheckbox={true}
+                    onChange={(checked) => this.setState({adaptiveSideBubbles: checked})}
+                    disabled={!(this.state.layout == Layout.Bubble)}
                 />
                 <StyledCheckbox
                     checked={this.state.layout == Layout.IRC}
@@ -439,6 +542,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                 </div>
                 {this.renderThemeSection()}
                 {this.renderFontSection()}
+                {this.renderLayoutSection()}
                 {this.renderAdvancedSection()}
             </div>
         );

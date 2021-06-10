@@ -44,6 +44,10 @@ export default class MImageBody extends React.Component {
 
         /* the permalinkCreator */
         permalinkCreator: PropTypes.object,
+
+        scBubble: PropTypes.bool,
+        scBubbleGroupTimestamp: PropTypes.object,
+        scBubbleActionBar: PropTypes.object,
     };
 
     static contextType = MatrixClientContext;
@@ -352,7 +356,7 @@ export default class MImageBody extends React.Component {
                         />
                     );
                 }
-                return this.wrapImage(contentUrl, imageElement);
+                return {thumbnail: this.wrapImage(contentUrl, imageElement)};
             }
             infoWidth = this.state.loadedImageDimensions.naturalWidth;
             infoHeight = this.state.loadedImageDimensions.naturalHeight;
@@ -426,7 +430,7 @@ export default class MImageBody extends React.Component {
             </div>
         );
 
-        return this.wrapImage(contentUrl, thumbnail);
+        return {thumbnail: this.wrapImage(contentUrl, thumbnail), maxWidth: maxWidth};
     }
 
     // Overidden by MStickerBody
@@ -460,6 +464,7 @@ export default class MImageBody extends React.Component {
                 <span className="mx_MImageBody">
                     <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
                     { _t("Error decrypting image") }
+                    { this.props.scBubbleActionBar }
                 </span>
             );
         }
@@ -472,12 +477,15 @@ export default class MImageBody extends React.Component {
             thumbUrl = this._getThumbUrl();
         }
 
-        const thumbnail = this._messageContent(contentUrl, thumbUrl, content);
+        const messageContent = this._messageContent(contentUrl, thumbUrl, content);
+        const thumbnail = messageContent.thumbnail;
+        const maxWidth = messageContent.maxWidth;
         const fileBody = this.getFileBody();
 
-        return <span className="mx_MImageBody">
+        return <span className="mx_MImageBody" style={{ maxWidth: this.props.scBubble ? maxWidth + "px" : null }}>
             { thumbnail }
             { fileBody }
+            { this.props.scBubbleActionBar }
         </span>;
     }
 }

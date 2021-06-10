@@ -33,6 +33,7 @@ import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import ReplyPreview from "./ReplyPreview";
 import {UIFeature} from "../../../settings/UIFeature";
 import {UPDATE_EVENT} from "../../../stores/AsyncStore";
+import { Layout } from '../../../settings/Layout';
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 import VoiceRecordComposerTile from "./VoiceRecordComposerTile";
 import {VoiceRecordingStore} from "../../../stores/VoiceRecordingStore";
@@ -183,6 +184,7 @@ interface IProps {
     permalinkCreator: RoomPermalinkCreator;
     replyToEvent?: MatrixEvent;
     e2eStatus?: E2EStatus;
+    layout: Layout;
 }
 
 interface IState {
@@ -436,6 +438,17 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             );
         }
 
+        const msgComposerClassNames = classNames(
+            "mx_MessageComposer",
+            {
+                // IRC layout has nothing for message composer so use group layout stuff
+                // "mx_IRCLayout": this.props.layout == Layout.IRC,
+                // "mx_GroupLayout": this.props.layout == Layout.Group,
+                "mx_GroupLayout": this.props.layout == Layout.IRC || this.props.layout == Layout.Group,
+                "sc_BubbleLayout": this.props.layout == Layout.Bubble,
+            },
+        );
+
         let recordingTooltip;
         const secondsLeft = Math.round(this.state.recordingTimeLeftSeconds);
         if (secondsLeft) {
@@ -446,7 +459,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         }
 
         return (
-            <div className="mx_MessageComposer mx_GroupLayout">
+            <div className={msgComposerClassNames}>
                 {recordingTooltip}
                 <div className="mx_MessageComposer_wrapper">
                     <ReplyPreview permalinkCreator={this.props.permalinkCreator} />

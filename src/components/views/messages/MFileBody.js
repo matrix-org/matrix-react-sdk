@@ -102,6 +102,7 @@ export default class MFileBody extends React.Component {
         tileShape: PropTypes.string,
         /* whether or not to show the default placeholder for the file. Defaults to true. */
         showGenericPlaceholder: PropTypes.bool,
+        scBubbleGroupTimestamp: PropTypes.object,
     };
 
     static defaultProps = {
@@ -214,6 +215,7 @@ export default class MFileBody extends React.Component {
                                 { _t("Decrypt %(text)s", { text: text }) }
                             </AccessibleButton>
                         </div>
+                        { this.props.scBubbleGroupTimestamp }
                     </span>
                 );
             }
@@ -256,6 +258,7 @@ export default class MFileBody extends React.Component {
                             ref={this._iframe}
                             sandbox="allow-scripts allow-downloads allow-downloads-without-user-activation" />
                     </div>
+                    { this.props.scBubbleGroupTimestamp }
                 </span>
             );
         } else if (contentUrl) {
@@ -318,6 +321,7 @@ export default class MFileBody extends React.Component {
                                 { content.info && content.info.size ? filesize(content.info.size) : "" }
                             </div>
                         </div>
+                        { this.props.scBubbleGroupTimestamp }
                     </span>
                 );
             } else {
@@ -330,6 +334,7 @@ export default class MFileBody extends React.Component {
                                 { _t("Download %(text)s", { text: text }) }
                             </a>
                         </div>
+                        { this.props.scBubbleGroupTimestamp }
                     </span>
                 );
             }
@@ -338,6 +343,7 @@ export default class MFileBody extends React.Component {
             return <span className="mx_MFileBody">
                 {placeholder}
                 { _t("Invalid file%(extra)s", { extra: extra }) }
+                { this.props.scBubbleGroupTimestamp }
             </span>;
         }
     }
