@@ -247,9 +247,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
             case "bubble": layout = Layout.Bubble; break;
         }
 
-        this.setState({
-            layout: layout,
-        });
+        this.setState({ layout: layout });
 
         SettingsStore.setValue("layout", null, SettingLevel.DEVICE, layout);
     };
@@ -388,7 +386,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
 
     private renderLayoutSection = () => {
         return <div className="mx_SettingsTab_section mx_AppearanceUserSettingsTab_Layout">
-            <span className="mx_SettingsTab_subheading">{_t("Message layout")}</span>
+            <span className="mx_SettingsTab_subheading">{ _t("Message layout") }</span>
 
             <div className="mx_AppearanceUserSettingsTab_Layout_RadioButtons">
                 <div className={classNames("mx_AppearanceUserSettingsTab_Layout_RadioButton", {
@@ -408,7 +406,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                         checked={this.state.layout == Layout.IRC}
                         onChange={this.onLayoutChange}
                     >
-                        {"IRC"}
+                        { "IRC" }
                     </StyledRadioButton>
                 </div>
                 <div className="mx_AppearanceUserSettingsTab_spacer" />
@@ -487,7 +485,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                         name="singleSideBubbles"
                         level={SettingLevel.DEVICE}
                         useCheckbox={true}
-                        disabled={!(this.state.layout == Layout.Bubble) || this.state.adaptiveSideBubbles}
+                        disabled={this.state.layout !== Layout.Bubble || this.state.adaptiveSideBubbles}
                     /> : null
                 }
                 { SettingsStore.getValue("feature_new_layout_switcher") ?
@@ -495,8 +493,8 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                         name="adaptiveSideBubbles"
                         level={SettingLevel.DEVICE}
                         useCheckbox={true}
-                        onChange={(checked) => this.setState({adaptiveSideBubbles: checked})}
-                        disabled={!(this.state.layout == Layout.Bubble)}
+                        onChange={(checked) => this.setState({ adaptiveSideBubbles: checked })}
+                        disabled={this.state.layout !== Layout.Bubble}
                     /> : null
                 }
                 { !SettingsStore.getValue("feature_new_layout_switcher") ?

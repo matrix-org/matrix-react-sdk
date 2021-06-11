@@ -81,7 +81,7 @@ const EventListSummary: React.FC<IProps> = ({
         </React.Fragment>;
     } else {
         const avatars = summaryMembers.map((m) => <MemberAvatar key={m.userId} member={m} width={14} height={14} />);
-        if (layout == Layout.Bubble) {
+        if (layout === Layout.Bubble) {
             body = (
                 <div className="mx_EventTile_line sc_EventTile_bubbleLine sc_EventTile_bubbleLine_info">
                     <div
