@@ -482,25 +482,31 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                     useCheckbox={true}
                     disabled={this.state.layout == Layout.IRC}
                 />
-                <SettingsFlag
-                    name="singleSideBubbles"
-                    level={SettingLevel.DEVICE}
-                    useCheckbox={true}
-                    disabled={!(this.state.layout == Layout.Bubble) || this.state.adaptiveSideBubbles}
-                />
-                <SettingsFlag
-                    name="adaptiveSideBubbles"
-                    level={SettingLevel.DEVICE}
-                    useCheckbox={true}
-                    onChange={(checked) => this.setState({adaptiveSideBubbles: checked})}
-                    disabled={!(this.state.layout == Layout.Bubble)}
-                />
-                <StyledCheckbox
-                    checked={this.state.layout == Layout.IRC}
-                    onChange={(ev) => this.onIRCLayoutChange(ev.target.checked)}
-                >
-                    {_t("Enable experimental, compact IRC style layout")}
-                </StyledCheckbox>
+                { SettingsStore.getValue("feature_new_layout_switcher") ?
+                    <SettingsFlag
+                        name="singleSideBubbles"
+                        level={SettingLevel.DEVICE}
+                        useCheckbox={true}
+                        disabled={!(this.state.layout == Layout.Bubble) || this.state.adaptiveSideBubbles}
+                    /> : null
+                }
+                { SettingsStore.getValue("feature_new_layout_switcher") ?
+                    <SettingsFlag
+                        name="adaptiveSideBubbles"
+                        level={SettingLevel.DEVICE}
+                        useCheckbox={true}
+                        onChange={(checked) => this.setState({adaptiveSideBubbles: checked})}
+                        disabled={!(this.state.layout == Layout.Bubble)}
+                    /> : null
+                }
+                { !SettingsStore.getValue("feature_new_layout_switcher") ?
+                    <StyledCheckbox
+                        checked={this.state.layout == Layout.IRC}
+                        onChange={(ev) => this.onIRCLayoutChange(ev.target.checked)}
+                    >
+                        {_t("Enable experimental, compact IRC style layout")}
+                    </StyledCheckbox> : null
+                }
 
                 <SettingsFlag
                     name="useSystemFont"
@@ -541,8 +547,8 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                     {_t("Appearance Settings only affect this %(brand)s session.", { brand })}
                 </div>
                 {this.renderThemeSection()}
+                {SettingsStore.getValue("feature_new_layout_switcher") ? this.renderLayoutSection() : null}
                 {this.renderFontSection()}
-                {this.renderLayoutSection()}
                 {this.renderAdvancedSection()}
             </div>
         );
