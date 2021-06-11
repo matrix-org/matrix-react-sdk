@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 export enum Layout {
     IRC = "irc",
     Group = "group",
-    Bubble = "bubble"
+    Bubble = "bubble",
 }
 
 /* We need this because multiple components are still using JavaScript */

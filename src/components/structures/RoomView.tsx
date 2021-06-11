@@ -1675,9 +1675,9 @@ export default class RoomView extends React.Component<IProps, IState> {
             }
             // ToDo: Make threshold configurable?
             if (width < 1280) {
-                this.setState({singleSideBubbles: false});
+                this.setState({ singleSideBubbles: false });
             } else {
-                this.setState({singleSideBubbles: true});
+                this.setState({ singleSideBubbles: true });
             }
         }
     };

@@ -356,7 +356,7 @@ export default class MImageBody extends React.Component {
                         />
                     );
                 }
-                return {thumbnail: this.wrapImage(contentUrl, imageElement)};
+                return { thumbnail: this.wrapImage(contentUrl, imageElement) };
             }
             infoWidth = this.state.loadedImageDimensions.naturalWidth;
             infoHeight = this.state.loadedImageDimensions.naturalHeight;
@@ -430,7 +430,7 @@ export default class MImageBody extends React.Component {
             </div>
         );
 
-        return {thumbnail: this.wrapImage(contentUrl, thumbnail), maxWidth: maxWidth};
+        return { thumbnail: this.wrapImage(contentUrl, thumbnail), maxWidth: maxWidth };
     }
 
     // Overidden by MStickerBody
@@ -477,9 +477,7 @@ export default class MImageBody extends React.Component {
             thumbUrl = this._getThumbUrl();
         }
 
-        const messageContent = this._messageContent(contentUrl, thumbUrl, content);
-        const thumbnail = messageContent.thumbnail;
-        const maxWidth = messageContent.maxWidth;
+        const { thumbnail, maxWidth } = this._messageContent(contentUrl, thumbUrl, content);
         const fileBody = this.getFileBody();
 
         return <span className="mx_MImageBody" style={{ maxWidth: this.props.scBubble ? maxWidth + "px" : null }}>
