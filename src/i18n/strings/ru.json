@@ -3211,5 +3211,8 @@
     "Failed to remove some rooms. Try again later": "Не удалось удалить несколько комнат. Попробуйте позже",
     "%(count)s rooms and 1 space|one": "%(count)s комната и одно пространство",
     "%(count)s rooms and 1 space|other": "%(count)s комнат и одно пространство",
-    "Sends the given message as a spoiler": "Отправить данное сообщение под спойлером"
+    "Sends the given message as a spoiler": "Отправить данное сообщение под спойлером",
+    "Message bubbles": "Пузырьки сообщений",
+    "Show message bubbles on one side only": "Показывайте пузырьки с сообщениями только на одной стороне",
+    "Show message bubbles depending on the width either on both sides or only on one side": "Показывать пузырьки сообщений в зависимости от ширины либо с обеих сторон, либо только с одной стороны"
 }

@@ -3345,5 +3345,8 @@
     "Send and receive voice messages": "Saada ja võta vastu häälsõnumeid",
     "Your feedback will help make spaces better. The more detail you can go into, the better.": "Sinu tagasiside aitab teha kogukonnakeskuseid paremaks. Mida detailsemalt sa oma arvamust kirjeldad, seda parem.",
     "If you leave, %(brand)s will reload with Spaces disabled. Communities and custom tags will be visible again.": "Kui sa lahkud, siis käivitame %(brand)s uuesti nii, et kogukonnakeskused ei ole kasutusel. Vana tüüpi kogukonnad ja kohandatud sildid saavad jälle olema kasutusel.",
-    "Message search initialisation failed": "Sõnumite otsingu alustamine ei õnnestunud"
+    "Message search initialisation failed": "Sõnumite otsingu alustamine ei õnnestunud",
+    "Show message bubbles on one side only": "Näita sõnumimulle ainult ühel poolel",
+    "Show message bubbles depending on the width either on both sides or only on one side": "Näita sõnumimullid sõltuvalt laiusest kas mõlemal või ainult ühel küljel",
+    "Message bubbles": "Sõnumimullid"
 }

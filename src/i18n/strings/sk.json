@@ -2080,5 +2080,8 @@
     "The call was answered on another device.": "Hovor bol prijatý na inom zariadení.",
     "The call could not be established": "Hovor nemohol byť realizovaný",
     "The other party declined the call.": "Druhá strana odmietla hovor.",
-    "Call Declined": "Hovor odmietnutý"
+    "Call Declined": "Hovor odmietnutý",
+    "Show message bubbles on one side only": "Zobrazenie bublín správ len na jednej strane",
+    "Show message bubbles depending on the width either on both sides or only on one side": "Zobrazenie bublín správ v závislosti od šírky buď na oboch stranách, alebo len na jednej strane",
+    "Message bubbles": "Bubliny správ"
 }

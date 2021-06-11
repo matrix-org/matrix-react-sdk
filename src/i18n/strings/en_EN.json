@@ -2988,5 +2988,11 @@
     "Esc": "Esc",
     "Enter": "Enter",
     "Space": "Space",
-    "End": "End"
+    "End": "End",
+    "Message layout": "Message layout",
+    "Modern": "Modern",
+    "Explore new ways switching layouts (including a new bubble layout)": "Explore new ways switching layouts (including a new bubble layout)",
+    "Show message bubbles on one side only": "Show message bubbles on one side only",
+    "Show message bubbles depending on the width either on both sides or only on one side": "Show message bubbles depending on the width either on both sides or only on one side",
+    "Message bubbles": "Message bubbles"
 }

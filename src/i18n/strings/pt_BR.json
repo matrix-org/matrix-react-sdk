@@ -3110,5 +3110,8 @@
     "Inviting...": "Convidando...",
     "Invite by username": "Convidar por nome de usuário",
     "Support": "Suporte",
-    "Original event source": "Fonte do evento original"
+    "Original event source": "Fonte do evento original",
+    "Message bubbles": "Bolhas de mensagens",
+    "Show message bubbles on one side only": "Mostrar bolhas de mensagem em apenas um lado",
+    "Show message bubbles depending on the width either on both sides or only on one side": "Mostrar bolhas de mensagem dependendo da largura de ambos os lados ou somente de um lado"
 }
