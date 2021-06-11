@@ -264,7 +264,7 @@ interface IProps {
     layout: Layout;
 
     // whether to use single side bubbles
-    singleSideBubbles: boolean;
+    singleSideBubbles?: boolean;
 
     // whether or not to show flair at all
     enableFlair?: boolean;
