@@ -3343,11 +3343,5 @@
     "Your feedback will help make spaces better. The more detail you can go into, the better.": "Dein Feedback hilfst uns, die Spaces zu verbessern. Je genauer, desto besser.",
     "If you leave, %(brand)s will reload with Spaces disabled. Communities and custom tags will be visible again.": "Durchs Verlassen lädt %(brand)s mit deaktivierten Spaces neu. Danach kannst du Communities und Custom Tags wieder verwenden.",
     "sends space invaders": "sendet Space Invaders",
-    "Sends the given message with a space themed effect": "Sendet die Nachricht mit Raumschiffen",
-    "Message layout": "Nachrichtenlayout",
-    "Modern": "Modern",
-    "Message bubbles": "Sprechblasen",
-    "Explore new ways switching layouts (including a new bubble layout)": "Probiere neue Möglichkeiten zum Wechseln von Layouts aus (inklusive eines neuen Layouts mit Sprechblasen)",
-    "Show message bubbles on one side only": "Sprechblasen nur auf einer Seite anzeigen",
-    "Show message bubbles depending on the width either on both sides or only on one side": "Sprechblasen abhänging von der Breite auf beiden Seiten oder nur einer Seite anzeigen"
+    "Sends the given message with a space themed effect": "Sendet die Nachricht mit Raumschiffen"
 }
