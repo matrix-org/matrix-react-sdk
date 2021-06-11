@@ -59,7 +59,7 @@ export default class TextualBody extends React.Component {
         /* the shape of the tile, used */
         tileShape: PropTypes.string,
 
-        scBubbleGroupTimestamp: PropTypes.object,
+        bubbleTimestamp: PropTypes.object,
     };
 
     constructor(props) {
@@ -548,7 +548,7 @@ export default class TextualBody extends React.Component {
                         &nbsp;
                         { body }
                         { widgets }
-                        { this.props.scBubbleGroupTimestamp }
+                        { this.props.bubbleTimestamp }
                     </span>
                 );
             case "m.notice":
@@ -556,7 +556,7 @@ export default class TextualBody extends React.Component {
                     <span className="mx_MNoticeBody mx_EventTile_content" dir="auto">
                         { body }
                         { widgets }
-                        { this.props.scBubbleGroupTimestamp }
+                        { this.props.bubbleTimestamp }
                     </span>
                 );
             default: // including "m.text"
@@ -564,7 +564,7 @@ export default class TextualBody extends React.Component {
                     <span className="mx_MTextBody mx_EventTile_content" dir="auto">
                         { body }
                         { widgets }
-                        { this.props.scBubbleGroupTimestamp }
+                        { this.props.bubbleTimestamp }
                     </span>
                 );
         }

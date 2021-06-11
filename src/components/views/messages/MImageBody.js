@@ -45,9 +45,9 @@ export default class MImageBody extends React.Component {
         /* the permalinkCreator */
         permalinkCreator: PropTypes.object,
 
-        scBubble: PropTypes.bool,
-        scBubbleGroupTimestamp: PropTypes.object,
-        scBubbleActionBar: PropTypes.object,
+        bubbleEnabled: PropTypes.bool,
+        bubbleTimestamp: PropTypes.object,
+        bubbleActionBar: PropTypes.object,
     };
 
     static contextType = MatrixClientContext;
@@ -464,7 +464,7 @@ export default class MImageBody extends React.Component {
                 <span className="mx_MImageBody">
                     <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
                     { _t("Error decrypting image") }
-                    { this.props.scBubbleActionBar }
+                    { this.props.bubbleActionBar }
                 </span>
             );
         }
@@ -480,10 +480,10 @@ export default class MImageBody extends React.Component {
         const { thumbnail, maxWidth } = this._messageContent(contentUrl, thumbUrl, content);
         const fileBody = this.getFileBody();
 
-        return <span className="mx_MImageBody" style={{ maxWidth: this.props.scBubble ? maxWidth + "px" : null }}>
+        return <span className="mx_MImageBody" style={{ maxWidth: this.props.bubbleEnabled ? maxWidth + "px" : null }}>
             { thumbnail }
             { fileBody }
-            { this.props.scBubbleActionBar }
+            { this.props.bubbleActionBar }
         </span>;
     }
 }

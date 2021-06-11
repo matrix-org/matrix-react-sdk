@@ -893,7 +893,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         const client = MatrixClientPeg.get();
         const me = client && client.getUserId();
-        const scBubbleEnabled = this.props.layout == Layout.Bubble
+        const bubbleEnabled = this.props.layout == Layout.Bubble
                 && this.props.tileShape !== 'reply_preview' && this.props.tileShape !== 'reply'
                 && this.props.tileShape !== 'notif' && this.props.tileShape !== 'file_grid';
         const sentByMe = me === this.props.mxEvent.getSender();
@@ -922,7 +922,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             mx_EventTile_unknown: !isBubbleMessage && this.state.verified === E2E_STATE.UNKNOWN,
             mx_EventTile_bad: isEncryptionFailure,
             mx_EventTile_emote: msgtype === 'm.emote',
-            sc_EventTile_bubbleContainer: scBubbleEnabled,
+            sc_EventTile_bubbleContainer: bubbleEnabled,
         });
 
         // If the tile is in the Sending state, don't speak the message.
@@ -944,7 +944,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         let avatarSize;
         let needsSenderProfile;
 
-        if (!isInfoMessage && scBubbleEnabled && showRight) {
+        if (!isInfoMessage && bubbleEnabled && showRight) {
             avatarSize = 0;
             needsSenderProfile = false;
         } else if (this.props.tileShape === "notif") {
@@ -1012,7 +1012,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         /> : undefined;
 
         const showTimestamp = this.props.mxEvent.getTs() &&
-            (scBubbleEnabled ||
+            (bubbleEnabled ||
                 this.props.alwaysShowTimestamps || this.props.last || this.state.hover || this.state.actionBarFocused);
         const timestamp = showTimestamp ?
             <MessageTimestamp showTwelveHour={this.props.isTwelveHour} ts={this.props.mxEvent.getTs()} /> : null;
@@ -1071,6 +1071,8 @@ export default class EventTile extends React.Component<IProps, IState> {
         const placeholderTimestamp = <span className={"sc_PlaceholderTimestamp"}>
             { timestamp }
         </span>;
+
+        const bubbleTimestamp = <>{placeholderTimestamp}{linkedTimestamp}</>;
 
         const useIRCLayout = this.props.layout == Layout.IRC;
         const groupTimestamp = !useIRCLayout ? linkedTimestamp : null;
@@ -1201,7 +1203,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                     this.props.alwaysShowTimestamps || this.state.hover,
                 );
 
-                if (scBubbleEnabled) {
+                if (bubbleEnabled) {
                     const infoBubble = isInfoMessage || isBubbleMessage;
 
                     const mediaBodyTypes = ['m.image', /* 'm.file', */ /* 'm.audio', */ 'm.video'];
@@ -1283,9 +1285,9 @@ export default class EventTile extends React.Component<IProps, IState> {
                                             highlightLink={this.props.highlightLink}
                                             showUrlPreview={this.props.showUrlPreview}
                                             onHeightChanged={this.props.onHeightChanged}
-                                            scBubble={true}
-                                            scBubbleActionBar={mediaBody ? actionBar : null}
-                                            scBubbleGroupTimestamp={<>{placeholderTimestamp}{groupTimestamp}</>}
+                                            bubbleEnabled={true}
+                                            bubbleActionBar={mediaBody ? actionBar : null}
+                                            bubbleTimestamp={bubbleTimestamp}
                                         />
                                         { !mediaBody ? actionBar : null }
                                     </div>

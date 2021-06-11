@@ -28,7 +28,7 @@ import {mediaFromContent} from "../../../customisations/Media";
 @replaceableComponent("views.messages.MAudioBody")
 export default class MAudioBody extends React.Component {
     static propTypes = {
-        scBubbleGroupTimestamp: PropTypes.object,
+        bubbleTimestamp: PropTypes.object,
     };
 
     constructor(props) {
