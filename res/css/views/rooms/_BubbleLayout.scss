@@ -438,14 +438,14 @@ $left-gutter: 56px;
         // Don't inherit bubbleArea alignment
         text-align: start;
 
-        &.sc_EventTile_bubble_tail::before {
-            content: '';
-            border: 16px solid transparent;
-            border-top-color: $message-bubble-background;
-            border-bottom: 0;
-            position: absolute;
-            top: 0;
-        }
+        // &.sc_EventTile_bubble_tail::before {
+        //     content: '';
+        //     border: 16px solid transparent;
+        //     border-top-color: $message-bubble-background;
+        //     border-bottom: 0;
+        //     position: absolute;
+        //     top: 0;
+        // }
 
         > .mx_SenderProfile {
             // Sender-profile within bubble
@@ -514,9 +514,9 @@ $left-gutter: 56px;
         margin-left: 0px;
         margin-right: auto;
 
-        &.sc_EventTile_bubble_tail::before {
-            left: -8px;
-        }
+        // &.sc_EventTile_bubble_tail::before {
+        //     left: -8px;
+        // }
     }
 
     .sc_EventTile_bubbleArea_right {
@@ -539,18 +539,18 @@ $left-gutter: 56px;
         margin-right: 0px;
         margin-left: auto;
 
-        &.sc_EventTile_bubble_tail::before {
-            right: -8px;
-        }
+        // &.sc_EventTile_bubble_tail::before {
+        //     right: -8px;
+        // }
     }
     
     .sc_EventTile_bubble_self {
         &:not(.sc_EventTile_bubble_media) {
             background-color: $message-bubble-background-self;
 
-            &.sc_EventTile_bubble_tail::before {
-                border-top-color: $message-bubble-background-self;
-            }
+            // &.sc_EventTile_bubble_tail::before {
+            //     border-top-color: $message-bubble-background-self;
+            // }
         }
 
         .mx_MImageBody_thumbnail, span.mx_MVideoBody video.mx_MVideoBody {
@@ -660,9 +660,9 @@ $left-gutter: 56px;
         .sc_EventTile_bubble {
             background: $message-bubble-background-selected;
 
-            &.sc_EventTile_bubble_tail::before {
-                border-top-color: $message-bubble-background-selected;
-            }
+            // &.sc_EventTile_bubble_tail::before {
+            //     border-top-color: $message-bubble-background-selected;
+            // }
         }
 
         .sc_EventTile_bubble_media {
