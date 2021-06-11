@@ -2024,8 +2024,8 @@ export default class RoomView extends React.Component<IProps, IState> {
         const layout = {
             "mx_IRCLayout": this.state.layout == Layout.IRC,
             "mx_GroupLayout": this.state.layout == Layout.Group,
-            "sc_BubbleLayout": this.state.layout == Layout.Bubble,
-            "sc_BubbleLayout_singleSide": this.state.layout == Layout.Bubble && this.state.singleSideBubbles,
+            "mx_BubbleLayout": this.state.layout == Layout.Bubble,
+            "mx_BubbleLayout_singleSide": this.state.layout == Layout.Bubble && this.state.singleSideBubbles,
         };
 
         // if we have search results, we keep the messagepanel (so that it preserves its

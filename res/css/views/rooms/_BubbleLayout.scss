@@ -19,7 +19,7 @@ limitations under the License.
 
 $left-gutter: 56px;
 
-.sc_BubbleLayout {
+.mx_BubbleLayout {
     // ---- Overrides ----
 
     .mx_RoomView_MessageList {
@@ -96,7 +96,7 @@ $left-gutter: 56px;
             padding-top: 0;
         }
 
-        .sc_EventTile_bubbleLine_info {
+        .mx_EventTile_bubbleLine_info {
             margin-top: 6px;
 
             // ToDo: Find better way to not crash bubble with toggle on small width screens
@@ -110,7 +110,7 @@ $left-gutter: 56px;
             padding-bottom: 3px;
         }
 
-        .sc_EventTile_bubbleArea_info {
+        .mx_EventTile_bubbleArea_info {
             // For toggle
             max-width: 72rem;
         }
@@ -166,14 +166,14 @@ $left-gutter: 56px;
         // stop read avatars overflowing
         width: 100%;
 
-        &.sc_readReceipts_empty {
+        &.mx_readReceipts_empty {
             height: 0;
             margin-top: 0;
             margin-bottom: 0;
         }
     }
 
-    .mx_EventTile_bubbleContainer .mx_EventTile_msgOption {
+    .mx_EventTile_bigInfoContainer .mx_EventTile_msgOption {
         grid-column: unset; // show read avatara like always
     }
 
@@ -307,7 +307,7 @@ $left-gutter: 56px;
             display: none;
         }
 
-        .sc_PlaceholderTimestamp {
+        .mx_PlaceholderTimestamp {
             display: none;
         }
 
@@ -361,11 +361,11 @@ $left-gutter: 56px;
             text-overflow: ellipsis;
         }
 
-        .sc_PlaceholderTimestamp {
+        .mx_PlaceholderTimestamp {
             display: none;
         }
 
-        .sc_LinkedTimestamp {
+        .mx_LinkedTimestamp {
             margin-left: 1rem;
 
             .mx_MessageTimestamp {
@@ -380,15 +380,15 @@ $left-gutter: 56px;
 
     // ---- Bubble specific ----
 
-    .mx_EventTile > .sc_EventTile_bubbleLine_info {
+    .mx_EventTile > .mx_EventTile_bubbleLine_info {
         padding-left: 0 !important;
     }
 
-    .mx_EventTile .sc_EventTile_bubbleLine_info {
+    .mx_EventTile .mx_EventTile_bubbleLine_info {
         line-height: unset;
     }
 
-    .sc_EventTile_bubbleContainer {
+    .mx_EventTile_bubbleContainer {
         > .mx_EventTile_avatar {
             top: 9px;
         }
@@ -398,17 +398,17 @@ $left-gutter: 56px;
         display: none !important;
     }
 
-    // .sc_EventTile_bubbleLine {
+    // .mx_EventTile_bubbleLine {
     //     .mx_EventTile_e2eIcon {
     //         left: 16px;
 
-    //         .sc_EventTile_bubbleTailLeftContainer & {
+    //         .mx_EventTile_bubbleTailLeftContainer & {
     //             top: 35px;
     //         }
     //     }
     // }
 
-    .sc_EventTile_bubbleArea {
+    .mx_EventTile_bubbleArea {
         // No full width for both-side bubbles only
         width: 84%;
         max-width: 88rem;
@@ -416,13 +416,13 @@ $left-gutter: 56px;
         margin-bottom: 0;
     }
 
-    .sc_EventTile_bubbleArea_left {
+    .mx_EventTile_bubbleArea_left {
         margin-left: 0px;
         margin-right: auto;
         text-align: left;
     }
 
-    .sc_EventTile_bubble {
+    .mx_EventTile_bubble {
         background-color: $message-bubble-background;
         padding: 7px 10px;
         border-radius: 8px;
@@ -438,7 +438,7 @@ $left-gutter: 56px;
         // Don't inherit bubbleArea alignment
         text-align: start;
 
-        // &.sc_EventTile_bubble_tail::before {
+        // &.mx_EventTile_bubble_tail::before {
         //     content: '';
         //     border: 16px solid transparent;
         //     border-top-color: $message-bubble-background;
@@ -463,7 +463,7 @@ $left-gutter: 56px;
                 margin-top: 3px !important;
             }
 
-            .sc_PlaceholderTimestamp {
+            .mx_PlaceholderTimestamp {
                 display: inline-flex;
                 margin-inline-start: .7em;
                 opacity: 0;
@@ -484,7 +484,7 @@ $left-gutter: 56px;
                 }
             }
 
-            .sc_LinkedTimestamp {
+            .mx_LinkedTimestamp {
                 position: absolute;
                 inset-block-end: 4px;
                 inset-inline-end: 10px;
@@ -510,16 +510,16 @@ $left-gutter: 56px;
         }
     }
 
-    .sc_EventTile_bubble_left {
+    .mx_EventTile_bubble_left {
         margin-left: 0px;
         margin-right: auto;
 
-        // &.sc_EventTile_bubble_tail::before {
+        // &.mx_EventTile_bubble_tail::before {
         //     left: -8px;
         // }
     }
 
-    .sc_EventTile_bubbleArea_right {
+    .mx_EventTile_bubbleArea_right {
         margin-right: 16px;
         margin-left: auto;
         text-align: right;
@@ -535,20 +535,20 @@ $left-gutter: 56px;
         }
     }
 
-    .sc_EventTile_bubble_right {
+    .mx_EventTile_bubble_right {
         margin-right: 0px;
         margin-left: auto;
 
-        // &.sc_EventTile_bubble_tail::before {
+        // &.mx_EventTile_bubble_tail::before {
         //     right: -8px;
         // }
     }
 
-    .sc_EventTile_bubble_self {
-        &:not(.sc_EventTile_bubble_media) {
+    .mx_EventTile_bubble_self {
+        &:not(.mx_EventTile_bubble_media) {
             background-color: $message-bubble-background-self;
 
-            // &.sc_EventTile_bubble_tail::before {
+            // &.mx_EventTile_bubble_tail::before {
             //     border-top-color: $message-bubble-background-self;
             // }
         }
@@ -558,21 +558,21 @@ $left-gutter: 56px;
         }
     }
 
-    .sc_EventTile_bubbleArea_center {
+    .mx_EventTile_bubbleArea_center {
         margin-left: auto;
         margin-right: auto;
     }
 
-    .sc_EventTile_bubble_center {
+    .mx_EventTile_bubble_center {
         margin-left: auto;
         margin-right: auto;
     }
 
-    .sc_EventTile_bubbleArea_info {
+    .mx_EventTile_bubbleArea_info {
         width: 76%;
     }
 
-    .sc_EventTile_bubble_info {
+    .mx_EventTile_bubble_info {
         text-align: center;
         background: transparent;
         box-shadow: inset 0px 0px 0px 1px rgba($roomtopic-color, 0.15);
@@ -622,15 +622,15 @@ $left-gutter: 56px;
         }
     }
 
-    .sc_EventTile_bubble_notice {
+    .mx_EventTile_bubble_notice {
         opacity: 0.6;
     }
 
-    .sc_EventTile_bubble_media {
+    .mx_EventTile_bubble_media {
         max-width: 600px;
         position: relative;
 
-        &.sc_EventTile_bubble_right {
+        &.mx_EventTile_bubble_right {
             margin-left: auto;
 
             > * {
@@ -650,22 +650,22 @@ $left-gutter: 56px;
         // }
     }
 
-    .sc_EventTile_bubble_sticker {
+    .mx_EventTile_bubble_sticker {
         .mx_MImageBody_thumbnail {
             border: none;
         }
     }
 
     .mx_EventTile_selected {
-        .sc_EventTile_bubble {
+        .mx_EventTile_bubble {
             background: $message-bubble-background-selected;
 
-            // &.sc_EventTile_bubble_tail::before {
+            // &.mx_EventTile_bubble_tail::before {
             //     border-top-color: $message-bubble-background-selected;
             // }
         }
 
-        .sc_EventTile_bubble_media {
+        .mx_EventTile_bubble_media {
             > .mx_MImageBody {
                 .mx_MImageBody_thumbnail_container {
                     background: $accent-color;
@@ -677,7 +677,7 @@ $left-gutter: 56px;
             }
 
             > span.mx_MVideoBody {
-                .sc_MVideoBody_video_container {
+                .mx_MVideoBody_video_container {
                     background: $accent-color;
                     border-radius: 8px;
                     display: block;
@@ -691,22 +691,22 @@ $left-gutter: 56px;
     }
 
     // single side bubbles overrides
-    &.sc_BubbleLayout_singleSide {
-        .sc_EventTile_bubbleArea {
+    &.mx_BubbleLayout_singleSide {
+        .mx_EventTile_bubbleArea {
             width: calc(100% - 16px);
             max-width: unset;
         }
 
-        .sc_EventTile_bubbleArea_info {
+        .mx_EventTile_bubbleArea_info {
             width: 80%;
             max-width: 72rem;
         }
 
-        .sc_EventTile_bubbleLine {
+        .mx_EventTile_bubbleLine {
             max-width: 104rem;
         }
 
-        .sc_EventTile_bubbleLine_info, .mx_DateSeparator, .mx_EventListSummary {
+        .mx_EventTile_bubbleLine_info, .mx_DateSeparator, .mx_EventListSummary {
             max-width: calc($left-gutter + 104rem);
         }
     }
@@ -715,7 +715,7 @@ $left-gutter: 56px;
 /* Compact layout overrides */
 
 // .mx_MatrixChat_useCompactLayout {
-//     .sc_BubbleLayout {
+//     .mx_BubbleLayout {
 //         // nothing (yet?)
 //         // ToDo: figure out if there is a useful way to make it more compact
 //         // maybe reduce text line-height and some paddings and margins

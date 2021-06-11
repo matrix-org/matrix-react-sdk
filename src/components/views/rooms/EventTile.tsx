@@ -855,13 +855,13 @@ export default class EventTile extends React.Component<IProps, IState> {
         let tileHandler = getHandlerTile(this.props.mxEvent);
 
         // Info messages are basically information about commands processed on a room
-        const isBubbleMessage = eventType.startsWith("m.key.verification") ||
+        const isBigInfoMessage = eventType.startsWith("m.key.verification") ||
             (eventType === EventType.RoomMessage && msgtype && msgtype.startsWith("m.key.verification")) ||
             (eventType === EventType.RoomCreate) ||
             (eventType === EventType.RoomEncryption) ||
             (tileHandler === "messages.MJitsiWidgetEvent");
         let isInfoMessage = (
-            !isBubbleMessage && eventType !== EventType.RoomMessage &&
+            !isBigInfoMessage && eventType !== EventType.RoomMessage &&
             eventType !== EventType.Sticker && eventType !== EventType.RoomCreate
         );
 
@@ -902,7 +902,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         const isEditing = !!this.props.editState;
         const classes = classNames({
-            mx_EventTile_bubbleContainer: isBubbleMessage && this.props.layout != Layout.Bubble,
+            mx_EventTile_bigInfoContainer: isBigInfoMessage && this.props.layout != Layout.Bubble,
             mx_EventTile: true,
             mx_EventTile_isEditing: isEditing,
             mx_EventTile_info: isInfoMessage && this.props.layout != Layout.Bubble,
@@ -911,18 +911,18 @@ export default class EventTile extends React.Component<IProps, IState> {
             mx_EventTile_sending: !isEditing && isSending,
             mx_EventTile_highlight: this.props.tileShape === 'notif' ? false : this.shouldHighlight(),
             mx_EventTile_selected: this.props.isSelectedEvent,
-            mx_EventTile_continuation: !isInfoMessage && !isBubbleMessage &&
+            mx_EventTile_continuation: !isInfoMessage && !isBigInfoMessage &&
                 (this.props.tileShape ? '' : this.props.continuation),
             mx_EventTile_last: this.props.last,
             mx_EventTile_lastInSection: this.props.lastInSection,
             mx_EventTile_contextual: this.props.contextual,
             mx_EventTile_actionBarFocused: this.state.actionBarFocused,
-            mx_EventTile_verified: !isBubbleMessage && this.state.verified === E2E_STATE.VERIFIED,
-            mx_EventTile_unverified: !isBubbleMessage && this.state.verified === E2E_STATE.WARNING,
-            mx_EventTile_unknown: !isBubbleMessage && this.state.verified === E2E_STATE.UNKNOWN,
+            mx_EventTile_verified: !isBigInfoMessage && this.state.verified === E2E_STATE.VERIFIED,
+            mx_EventTile_unverified: !isBigInfoMessage && this.state.verified === E2E_STATE.WARNING,
+            mx_EventTile_unknown: !isBigInfoMessage && this.state.verified === E2E_STATE.UNKNOWN,
             mx_EventTile_bad: isEncryptionFailure,
             mx_EventTile_emote: msgtype === 'm.emote',
-            sc_EventTile_bubbleContainer: bubbleEnabled,
+            mx_EventTile_bubbleContainer: bubbleEnabled,
         });
 
         // If the tile is in the Sending state, don't speak the message.
@@ -950,7 +950,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         } else if (this.props.tileShape === "notif") {
             avatarSize = 24;
             needsSenderProfile = true;
-        } else if (tileHandler === 'messages.RoomCreate' || isBubbleMessage) {
+        } else if (tileHandler === 'messages.RoomCreate' || isBigInfoMessage) {
             avatarSize = 0;
             needsSenderProfile = false;
         } else if (isInfoMessage) {
@@ -1060,7 +1060,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             />;
         }
 
-        const linkedTimestamp = <a className={"sc_LinkedTimestamp"}
+        const linkedTimestamp = <a className={"mx_LinkedTimestamp"}
             href={permalink}
             onClick={this.onPermalinkClicked}
             aria-label={formatTime(new Date(this.props.mxEvent.getTs()), this.props.isTwelveHour)}
@@ -1068,7 +1068,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             { timestamp }
         </a>;
 
-        const placeholderTimestamp = <span className={"sc_PlaceholderTimestamp"}>
+        const placeholderTimestamp = <span className={"mx_PlaceholderTimestamp"}>
             { timestamp }
         </span>;
 
@@ -1077,13 +1077,13 @@ export default class EventTile extends React.Component<IProps, IState> {
         const useIRCLayout = this.props.layout == Layout.IRC;
         const groupTimestamp = !useIRCLayout ? linkedTimestamp : null;
         const ircTimestamp = useIRCLayout ? linkedTimestamp : null;
-        const groupPadlock = !useIRCLayout && !isBubbleMessage && this.renderE2EPadlock();
-        const ircPadlock = useIRCLayout && !isBubbleMessage && this.renderE2EPadlock();
+        const groupPadlock = !useIRCLayout && !isBigInfoMessage && this.renderE2EPadlock();
+        const ircPadlock = useIRCLayout && !isBigInfoMessage && this.renderE2EPadlock();
 
         const msgOptionClasses = classNames(
             "mx_EventTile_msgOption",
             {
-                "sc_readReceipts_empty": (
+                "mx_readReceipts_empty": (
                     // Don't reserve space below bubbles if there are no read receipts
                     (!this.props.readReceipts || this.props.readReceipts.length === 0) &&
                     // ToDo: Maybe incorporate sent/sending state into bubble?!?
@@ -1204,7 +1204,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                 );
 
                 if (bubbleEnabled) {
-                    const infoBubble = isInfoMessage || isBubbleMessage;
+                    const infoBubble = isInfoMessage || isBigInfoMessage;
 
                     const mediaBodyTypes = ['m.image', /* 'm.file', */ /* 'm.audio', */ 'm.video'];
                     const mediaEvTypes = ['m.sticker'];
@@ -1229,32 +1229,32 @@ export default class EventTile extends React.Component<IProps, IState> {
 
                     const bubbleLineClasses = classNames(
                         "mx_EventTile_line",
-                        "sc_EventTile_bubbleLine",
+                        "mx_EventTile_bubbleLine",
                         {
-                            "sc_EventTile_bubbleLine_info": infoBubble,
+                            "mx_EventTile_bubbleLine_info": infoBubble,
                         },
                     );
                     const bubbleAreaClasses = classNames(
-                        "sc_EventTile_bubbleArea",
+                        "mx_EventTile_bubbleArea",
                         {
-                            "sc_EventTile_bubbleArea_right": !infoBubble && showRight,
-                            "sc_EventTile_bubbleArea_left": !infoBubble && showLeft,
-                            "sc_EventTile_bubbleArea_center": infoBubble,
-                            "sc_EventTile_bubbleArea_info": infoBubble,
+                            "mx_EventTile_bubbleArea_right": !infoBubble && showRight,
+                            "mx_EventTile_bubbleArea_left": !infoBubble && showLeft,
+                            "mx_EventTile_bubbleArea_center": infoBubble,
+                            "mx_EventTile_bubbleArea_info": infoBubble,
                         },
                     );
                     const bubbleClasses = classNames(
                         {
-                            "sc_EventTile_bubble": !mediaBody,
-                            "sc_EventTile_bubble_media": mediaBody,
-                            "sc_EventTile_bubble_info": infoBubble,
-                            "sc_EventTile_bubble_self": !infoBubble && sentByMe,
-                            "sc_EventTile_bubble_right": !infoBubble && showRight,
-                            "sc_EventTile_bubble_left": !infoBubble && showLeft,
-                            "sc_EventTile_bubble_center": infoBubble,
-                            "sc_EventTile_bubble_tail": !infoBubble && !this.props.continuation,
-                            "sc_EventTile_bubble_notice": noticeBody,
-                            "sc_EventTile_bubble_sticker": stickerBody,
+                            "mx_EventTile_bubble": !mediaBody,
+                            "mx_EventTile_bubble_media": mediaBody,
+                            "mx_EventTile_bubble_info": infoBubble,
+                            "mx_EventTile_bubble_self": !infoBubble && sentByMe,
+                            "mx_EventTile_bubble_right": !infoBubble && showRight,
+                            "mx_EventTile_bubble_left": !infoBubble && showLeft,
+                            "mx_EventTile_bubble_center": infoBubble,
+                            "mx_EventTile_bubble_tail": !infoBubble && !this.props.continuation,
+                            "mx_EventTile_bubble_notice": noticeBody,
+                            "mx_EventTile_bubble_sticker": stickerBody,
                         },
                     );
 

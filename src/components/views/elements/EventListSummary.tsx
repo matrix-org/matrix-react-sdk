@@ -83,11 +83,11 @@ const EventListSummary: React.FC<IProps> = ({
         const avatars = summaryMembers.map((m) => <MemberAvatar key={m.userId} member={m} width={14} height={14} />);
         if (layout === Layout.Bubble) {
             body = (
-                <div className="mx_EventTile_line sc_EventTile_bubbleLine sc_EventTile_bubbleLine_info">
+                <div className="mx_EventTile_line mx_EventTile_bubbleLine mx_EventTile_bubbleLine_info">
                     <div
-                        className="sc_EventTile_bubbleArea sc_EventTile_bubbleArea_center sc_EventTile_bubbleArea_info"
+                        className="mx_EventTile_bubbleArea mx_EventTile_bubbleArea_center mx_EventTile_bubbleArea_info"
                     >
-                        <div className="sc_EventTile_bubble sc_EventTile_bubble_info sc_EventTile_bubble_center">
+                        <div className="mx_EventTile_bubble mx_EventTile_bubble_info mx_EventTile_bubble_center">
                             <span className="mx_EventListSummary_avatars" onClick={toggleExpanded}>
                                 { avatars }
                             </span>
