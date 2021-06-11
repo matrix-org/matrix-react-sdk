@@ -1265,10 +1265,13 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         let helpText;
         let buttonText;
         let goButtonFn;
-        let consultSection;
+        let consultConnectSection;
         let keySharingWarning = <span />;
 
         const identityServersEnabled = SettingsStore.getValue(UIFeature.IdentityServer);
+
+        const hasSelection = this.state.targets.length > 0
+            || (this.state.filterText && this.state.filterText.includes('@'));
 
         const cli = MatrixClientPeg.get();
         const userId = cli.getUserId();
@@ -1387,33 +1390,39 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             }
         } else if (this.props.kind === KIND_CALL_TRANSFER) {
             title = _t("Transfer");
-            buttonText = _t("Transfer");
-            goButtonFn = this.transferCall;
-            consultSection = <div>
+            consultConnectSection = <div>
                 <label>
                     <input type="checkbox" checked={this.state.consultFirst} onChange={this.onConsultFirstChange} />
                     {_t("Consult first")}
                 </label>
+                <AccessibleButton
+                    kind="primary"
+                    onClick={this.transferCall}
+                    className='mx_InviteDialog_goButton'
+                    disabled={!hasSelection && this.state.dialPadValue === ''}
+                >
+                    {_t("Transfer")}
+                </AccessibleButton>
             </div>;
         } else {
             console.error("Unknown kind of InviteDialog: " + this.props.kind);
         }
 
-        const hasSelection = this.state.targets.length > 0
-            || (this.state.filterText && this.state.filterText.includes('@'));
+        const goButton = this.props.kind == KIND_CALL_TRANSFER ? null : <AccessibleButton
+            kind="primary"
+            onClick={goButtonFn}
+            className='mx_InviteDialog_goButton'
+            disabled={this.state.busy || !hasSelection}
+        >
+            {buttonText}
+        </AccessibleButton>;
+
         const usersSection = <React.Fragment>
             <p className='mx_InviteDialog_helpText'>{helpText}</p>
             <div className='mx_InviteDialog_addressBar'>
                 {this.renderEditor()}
                 <div className='mx_InviteDialog_buttonAndSpinner'>
-                    <AccessibleButton
-                        kind="primary"
-                        onClick={goButtonFn}
-                        className='mx_InviteDialog_goButton'
-                        disabled={this.state.busy || !hasSelection}
-                    >
-                        {buttonText}
-                    </AccessibleButton>
+                    {goButton}
                     {spinner}
                 </div>
             </div>
@@ -1424,7 +1433,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 {this.renderSection('recents')}
                 {this.renderSection('suggestions')}
             </div>
-            {consultSection}
+            {consultConnectSection}
         </React.Fragment>;
 
         let dialogContent;
@@ -1446,7 +1455,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                         onDialPress={this.onDialPress}
                     />
                 </div>
-                {consultSection}
+                {consultConnectSection}
             </React.Fragment>;
             tabs.push(new Tab('DialPadTab', _td("Dial pad"), null, dialPadSection));
             dialogContent = <TabbedView tabs={tabs} initialTabId={'byMatrixID'} />;
