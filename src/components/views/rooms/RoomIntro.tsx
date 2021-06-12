@@ -100,9 +100,9 @@ const RoomIntro: React.FC<{}> = ({ children }) => {
         }
 
         if (parentSpace) {
-            buttons = <div className="mx_NewRoomIntro_buttons">
+            buttons = <div className="mx_RoomIntro_buttons">
                 <AccessibleButton
-                    className="mx_NewRoomIntro_inviteButton"
+                    className="mx_RoomIntro_inviteButton"
                     kind="primary"
                     onClick={() => {
                         showSpaceInvite(parentSpace);
@@ -111,7 +111,7 @@ const RoomIntro: React.FC<{}> = ({ children }) => {
                     {_t("Invite to %(spaceName)s", { spaceName: parentSpace.name })}
                 </AccessibleButton>
                 { room.canInvite(cli.getUserId()) && <AccessibleButton
-                    className="mx_NewRoomIntro_inviteButton"
+                    className="mx_RoomIntro_inviteButton"
                     kind="primary_outline"
                     onClick={() => {
                         dis.dispatch({ action: "view_invite", roomId });
@@ -121,9 +121,9 @@ const RoomIntro: React.FC<{}> = ({ children }) => {
                 </AccessibleButton> }
             </div>;
         } else if (room.canInvite(cli.getUserId())) {
-            buttons = <div className="mx_NewRoomIntro_buttons">
+            buttons = <div className="mx_RoomIntro_buttons">
                 <AccessibleButton
-                    className="mx_NewRoomIntro_inviteButton"
+                    className="mx_RoomIntro_inviteButton"
                     kind="primary"
                     onClick={() => {
                         dis.dispatch({ action: "view_invite", roomId });

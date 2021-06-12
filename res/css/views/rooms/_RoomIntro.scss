@@ -28,7 +28,7 @@ limitations under the License.
         font-size: inherit;
     }
 
-    .mx_NewRoomIntro_buttons {
+    .mx_RoomIntro_buttons {
         margin-top: 28px;
 
         .mx_AccessibleButton {
@@ -53,7 +53,7 @@ limitations under the License.
             }
         }
 
-        .mx_NewRoomIntro_inviteButton::before {
+        .mx_RoomIntro_inviteButton::before {
             mask-image: url('$(res)/img/element-icons/room/invite.svg');
         }
     }
