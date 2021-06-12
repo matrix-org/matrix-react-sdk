@@ -25,7 +25,6 @@ import ErrorDialog from "../dialogs/ErrorDialog";
 import AccessibleButton from "../elements/AccessibleButton";
 import Modal from "../../../Modal";
 import PublishedAliases from "./PublishedAliases";
-import RoomPublishSetting from "./RoomPublishSetting";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 class EditableAliasesList extends EditableItemList {

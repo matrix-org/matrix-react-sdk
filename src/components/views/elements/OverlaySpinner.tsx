@@ -28,7 +28,7 @@ import Spinner from "./Spinner";
 interface IProps {
     active: boolean,
     className?: string,
-};
+}
 
 export const OverlaySpinner: FunctionComponent<IProps> = ({active, className, children}) => {
     const measured = useRef(null);

@@ -44,20 +44,20 @@ interface State {
     regarding: string | undefined,
     error: Error & { during?: string, errcode?: string } | undefined,
     newAltAlias: string,
-};
+}
 
 type Alts = string[];
 
 interface AUpdateAlias {
     type: 'update_alt_alias',
     value: string,
-};
+}
 
 interface ASyncedAliases {
     type: 'synced_aliases',
     alt: Alts,
     canonical: string | undefined,
-};
+}
 
 interface ABeginCommit {
     type: 'begin_commit',
@@ -74,7 +74,7 @@ interface AEndCommit {
 interface AAbortCommit {
     type: 'abort_commit',
     error: Error
-};
+}
 
 type Action = AUpdateAlias | ASyncedAliases | ABeginCommit | AEndCommit | AAbortCommit;
 
@@ -334,11 +334,13 @@ export default function PublishedAliases({ room, localAliases }) {
             if (event.getRoomId() !== room.roomId) return;
             if (event.getType() !== "m.room.canonical_alias") return;
 
-            if (isMounted.current) dispatch({
-                type: 'synced_aliases',
-                alt: room.getAltAliases(),
-                canonical: room.getCanonicalAlias(),
-            });
+            if (isMounted.current) {
+                dispatch({
+                    type: 'synced_aliases',
+                    alt: room.getAltAliases(),
+                    canonical: room.getCanonicalAlias(),
+                });
+            }
         }
 
         client.on("RoomState.events", handleEvent);
