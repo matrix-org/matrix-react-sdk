@@ -678,7 +678,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
             // If hidden, set offset equal to the offset of the final visible avatar or
             // else set it proportional to index
-            if (this.props.layout == Layout.Bubble) {
+            if (this.props.layout === Layout.Bubble) {
                 left = (hidden ? MAX_READ_AVATARS - 1 : i) * receiptOffset;
             } else {
                 left = (hidden ? MAX_READ_AVATARS - 1 : i) * -receiptOffset;
@@ -714,7 +714,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             const remainder = receipts.length - MAX_READ_AVATARS;
 
             let style;
-            if (this.props.layout == Layout.Bubble) {
+            if (this.props.layout === Layout.Bubble) {
                 style = { left: "calc(" + toRem(left) + " + " + receiptOffset + "px)" };
             } else {
                 style = { right: "calc(" + toRem(-left) + " + " + receiptOffset + "px)" };
@@ -905,7 +905,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             mx_EventTile_bigInfoContainer: isBigInfoMessage && this.props.layout != Layout.Bubble,
             mx_EventTile: true,
             mx_EventTile_isEditing: isEditing,
-            mx_EventTile_info: isInfoMessage && this.props.layout != Layout.Bubble,
+            mx_EventTile_info: isInfoMessage && this.props.layout !== Layout.Bubble,
             mx_EventTile_12hr: this.props.isTwelveHour,
             // Note: we keep the `sending` state class for tests, not for our styles
             mx_EventTile_sending: !isEditing && isSending,
