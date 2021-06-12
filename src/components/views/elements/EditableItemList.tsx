@@ -18,7 +18,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {_t} from '../../../languageHandler';
 import Field from "./Field";
-import AccessibleButton from "./AccessibleButton";
+import AccessibleButton, {ButtonEvent} from "./AccessibleButton";
 
 interface IEditableItemProps {
     index: number,
@@ -52,14 +52,14 @@ export class EditableItem extends React.Component<IEditableItemProps, IEditableI
         this.setState({verifyRemove: true});
     };
 
-    _onDontRemove = (e: Event) => {
+    _onDontRemove = (e: ButtonEvent) => {
         e.stopPropagation();
         e.preventDefault();
 
         this.setState({verifyRemove: false});
     };
 
-    _onActuallyRemove = (e: Event) => {
+    _onActuallyRemove = (e: ButtonEvent) => {
         e.stopPropagation();
         e.preventDefault();
 
@@ -133,7 +133,7 @@ export default class EditableItemList extends React.Component<IProps> {
         canRemove: PropTypes.bool,
     };
 
-    _onItemAdded = (e: React.FormEvent<HTMLFormElement>) => {
+    _onItemAdded = (e: any) => {
         e.stopPropagation();
         e.preventDefault();
 
