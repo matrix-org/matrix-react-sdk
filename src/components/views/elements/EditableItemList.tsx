@@ -74,12 +74,14 @@ export class EditableItem extends React.Component<IEditableItemProps, IEditableI
                     <span className="mx_EditableItem_promptText">
                         {_t("Are you sure?")}
                     </span>
-                    <AccessibleButton onClick={this._onActuallyRemove} kind="link"
-                                      className="mx_EditableItem_confirmBtn">
+                    <AccessibleButton onClick={this._onActuallyRemove}
+                        kind="link"
+                        className="mx_EditableItem_confirmBtn">
                         {_t("Yes")}
                     </AccessibleButton>
-                    <AccessibleButton onClick={this._onDontRemove} kind="link"
-                                      className="mx_EditableItem_confirmBtn">
+                    <AccessibleButton onClick={this._onDontRemove}
+                        kind="link"
+                        className="mx_EditableItem_confirmBtn">
                         {_t("No")}
                     </AccessibleButton>
                 </div>
@@ -158,9 +160,9 @@ export default class EditableItemList extends React.Component<IProps> {
                     autoComplete="off" value={this.props.newItem || ""} onChange={this._onNewItemChanged}
                     list={this.props.suggestionsListId} />
                 <AccessibleButton onClick={this._onItemAdded}
-                                  kind="primary"
-                                  type="submit"
-                                  disabled={!this.props.newItem}>
+                    kind="primary"
+                    type="submit"
+                    disabled={!this.props.newItem}>
                     {_t("Add")}
                 </AccessibleButton>
             </form>

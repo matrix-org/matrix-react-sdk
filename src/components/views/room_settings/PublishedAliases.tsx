@@ -345,14 +345,14 @@ export default function PublishedAliases({ room, localAliases }) {
 
         client.on("RoomState.events", handleEvent);
         return () => client.off("RoomState.events", handleEvent);
-    }, [client, room]);
+    }, [client, room]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const error = state.error && errorReasons[state.error.errcode];
 
     /* Alternate aliases must be either an existing local alias, or an existing remote alias.  Suggest all existing
      * local aliases that are not already in the alt alias list. */
     const altSuggestions = localAliases && localAliases.filter((alias: string) =>
-      !state.alt.working.includes(alias),
+        !state.alt.working.includes(alias),
     ).map((alias: string) => alias.replace(/^#/, '')); // strip the # for display
 
     /* Canonical aliases can be either existing local aliases or existing alt aliases */
@@ -377,7 +377,7 @@ export default function PublishedAliases({ room, localAliases }) {
             >
                 <option value="" key="unset">{ _t('not specified') }</option>
                 {canonicalSuggestions.map((alias, i) =>
-                  <option value={alias} key={i}>{alias}</option>)}
+                    <option value={alias} key={i}>{alias}</option>)}
                 {explicitlyInclude && <option key="explicit" value={state.canonical.working}>
                     {state.canonical.working}</option>}
             </Field>
