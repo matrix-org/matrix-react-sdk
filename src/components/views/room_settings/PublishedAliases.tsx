@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useContext, useEffect, useReducer, useRef} from 'react';
+import React, {useContext, useEffect, useReducer, useRef, createRef} from 'react';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { _t } from '../../../languageHandler';
 import EditableItemList from "../elements/EditableItemList";
@@ -148,8 +148,16 @@ export function reducer(state: State, action: Action): State {
  */
 
 class EditableAltAliasList extends EditableItemList {
+    constructor(props) {
+        super(props);
+
+        this._publishedAliasField = createRef();
+    }
+
     _onAliasAdded = () => {
         this.props.onItemAdded(this.props.newItem);
+
+        this._publishedAliasField.current.focus();
     };
 
     _renderNewItemField() {
@@ -161,6 +169,7 @@ class EditableAltAliasList extends EditableItemList {
                 className="mx_EditableItemList_newItem"
             >
                 <Field
+                    ref={this._publishedAliasField}
                     label={this.props.placeholder}
                     className="mx_RoomAliasField"
                     type="text"
@@ -171,6 +180,7 @@ class EditableAltAliasList extends EditableItemList {
                     list={this.props.suggestionsListId}
                     flagInvalid={this.props.error ? true : undefined}
                     tooltipContent={this.props.error}
+                    forceTooltipVisible={true}
                 />
                 <AccessibleButton onClick={this._onAliasAdded} kind="primary">
                     { _t("Add") }
