@@ -1991,6 +1991,7 @@ export default class RoomView extends React.Component<IProps, IState> {
                     resizeNotifier={this.props.resizeNotifier}
                     replyToEvent={this.state.replyToEvent}
                     permalinkCreator={this.getPermalinkCreatorForRoom(this.state.room)}
+                    layout={this.state.layout}
                 />;
         }
 
