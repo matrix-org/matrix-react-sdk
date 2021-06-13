@@ -82,6 +82,7 @@ import { IOpts } from "../../createRoom";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import { omit } from 'lodash';
 import UIStore from "../../stores/UIStore";
+import ReactDOM from 'react-dom';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -1667,11 +1668,12 @@ export default class RoomView extends React.Component<IProps, IState> {
         // Let the bubble layout choose between single side and both sides by threshold
         if (this.state.layout == Layout.Bubble && this.state.adaptiveSideBubbles && this.roomView.current) {
             // ToDo: Find better way to get the current width (references, but which???)
-            const messagelists = this.roomView.current.getElementsByClassName("mx_RoomView_MessageList");
+            const messageLists = [this.searchResultsPanel, this.messagePanel];
             let width = 0;
-            for (let i = 0; i < messagelists.length; i++) {
-                const boundingBox = messagelists[i].getBoundingClientRect();
-                if (boundingBox.width > width) width = boundingBox.width;
+            for (const messageList of messageLists) {
+                // FIXME: My IDE is screaming about the this line because Text has no prop of getBoundingClientRect()
+                const boundingBox = ReactDOM.findDOMNode(messageList.current)?.getBoundingClientRect();
+                if (boundingBox?.width > width) width = boundingBox.width;
             }
             // ToDo: Make threshold configurable?
             if (width < 1280) {
