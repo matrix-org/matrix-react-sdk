@@ -213,7 +213,7 @@ export default class RoomView extends React.Component<IProps, IState> {
 
     private roomView = createRef<HTMLElement>();
     private searchResultsPanel = createRef<ScrollPanel>();
-    private messagePanel: TimelinePanel;
+    private messagePanel = createRef<TimelinePanel>();
 
     static contextType = MatrixClientContext;
 
@@ -615,10 +615,10 @@ export default class RoomView extends React.Component<IProps, IState> {
         // in render() prevents the ref from being set on first mount, so we try and
         // catch the messagePanel when it does mount. Because we only want the ref once,
         // we use a boolean flag to avoid duplicate work.
-        if (this.messagePanel && !this.state.atEndOfLiveTimelineInit) {
+        if (this.messagePanel.current && !this.state.atEndOfLiveTimelineInit) {
             this.setState({
                 atEndOfLiveTimelineInit: true,
-                atEndOfLiveTimeline: this.messagePanel.isAtEndOfLiveTimeline(),
+                atEndOfLiveTimeline: this.messagePanel.current.isAtEndOfLiveTimeline(),
             });
         }
 
@@ -742,7 +742,7 @@ export default class RoomView extends React.Component<IProps, IState> {
         const action = getKeyBindingsManager().getRoomAction(ev);
         switch (action) {
             case RoomAction.DismissReadMarker:
-                this.messagePanel.forgetReadMarker();
+                this.messagePanel.current?.forgetReadMarker();
                 this.jumpToLiveTimeline();
                 handled = true;
                 break;
@@ -915,10 +915,10 @@ export default class RoomView extends React.Component<IProps, IState> {
     };
 
     public canResetTimeline = () => {
-        if (!this.messagePanel) {
+        if (!this.messagePanel.current) {
             return true;
         }
-        return this.messagePanel.canResetTimeline();
+        return this.messagePanel.current.canResetTimeline();
     };
 
     // called when state.room is first initialised (either at initial load,
@@ -1198,7 +1198,7 @@ export default class RoomView extends React.Component<IProps, IState> {
     };
 
     private onMessageListScroll = ev => {
-        if (this.messagePanel.isAtEndOfLiveTimeline()) {
+        if (this.messagePanel.current?.isAtEndOfLiveTimeline()) {
             this.setState({
                 numUnreadMessages: 0,
                 atEndOfLiveTimeline: true,
@@ -1577,29 +1577,29 @@ export default class RoomView extends React.Component<IProps, IState> {
             });
         } else {
             // Otherwise we have to jump manually
-            this.messagePanel.jumpToLiveTimeline();
+            this.messagePanel.current?.jumpToLiveTimeline();
             dis.fire(Action.FocusComposer);
         }
     };
 
     // jump up to wherever our read marker is
     private jumpToReadMarker = () => {
-        this.messagePanel.jumpToReadMarker();
+        this.messagePanel.current?.jumpToReadMarker();
     };
 
     // update the read marker to match the read-receipt
     private forgetReadMarker = ev => {
         ev.stopPropagation();
-        this.messagePanel.forgetReadMarker();
+        this.messagePanel.current?.forgetReadMarker();
     };
 
     // decide whether or not the top 'unread messages' bar should be shown
     private updateTopUnreadMessagesBar = () => {
-        if (!this.messagePanel) {
+        if (!this.messagePanel.current) {
             return;
         }
 
-        const showBar = this.messagePanel.canJumpToReadMarker();
+        const showBar = this.messagePanel.current?.canJumpToReadMarker();
         if (this.state.showTopUnreadMessagesBar != showBar) {
             this.setState({showTopUnreadMessagesBar: showBar});
         }
@@ -1609,7 +1609,7 @@ export default class RoomView extends React.Component<IProps, IState> {
     // restored when we switch back to it.
     //
     private getScrollState() {
-        const messagePanel = this.messagePanel;
+        const messagePanel = this.messagePanel.current;
         if (!messagePanel) return null;
 
         // if we're following the live timeline, we want to return null; that
@@ -1706,8 +1706,8 @@ export default class RoomView extends React.Component<IProps, IState> {
         let panel;
         if (this.searchResultsPanel.current) {
             panel = this.searchResultsPanel.current;
-        } else if (this.messagePanel) {
-            panel = this.messagePanel;
+        } else if (this.messagePanel.current) {
+            panel = this.messagePanel.current;
         }
 
         if (panel) {
@@ -2074,7 +2074,7 @@ export default class RoomView extends React.Component<IProps, IState> {
         // console.info("ShowUrlPreview for %s is %s", this.state.room.roomId, this.state.showUrlPreview);
         const messagePanel = (
             <TimelinePanel
-                ref={this.gatherTimelinePanelRef}
+                ref={this.messagePanel}
                 timelineSet={this.state.room.getUnfilteredTimelineSet()}
                 showReadReceipts={this.state.showReadReceipts}
                 manageReadReceipts={!this.state.isPeeking}
