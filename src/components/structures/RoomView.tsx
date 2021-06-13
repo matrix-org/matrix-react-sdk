@@ -1671,7 +1671,7 @@ export default class RoomView extends React.Component<IProps, IState> {
             const messageLists = [this.searchResultsPanel, this.messagePanel];
             let width = 0;
             for (const messageList of messageLists) {
-                // FIXME: My IDE is screaming about the this line because Text has no prop of getBoundingClientRect()
+                // @ts-ignore - findDOMNode() has return type of Element | Text, but we know better
                 const boundingBox = ReactDOM.findDOMNode(messageList.current)?.getBoundingClientRect();
                 if (boundingBox?.width > width) width = boundingBox.width;
             }
