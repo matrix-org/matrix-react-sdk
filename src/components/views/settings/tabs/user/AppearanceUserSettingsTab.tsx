@@ -478,7 +478,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                     name="useCompactLayout"
                     level={SettingLevel.DEVICE}
                     useCheckbox={true}
-                    disabled={this.state.layout == Layout.IRC}
+                    disabled={this.state.layout !== Layout.Group}
                 />
                 { SettingsStore.getValue("feature_new_layout_switcher") ?
                     <SettingsFlag
