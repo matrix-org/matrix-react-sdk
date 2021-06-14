@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020-2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,6 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
+import { memoize } from "lodash";
 
 /**
  * Copy plaintext to user's clipboard
@@ -84,3 +86,24 @@ const collator = new Intl.Collator();
 export function compare(a: string, b: string): number {
     return collator.compare(a, b);
 }
+
+/**
+ * A cache for regular expression used in fuzzy matching
+ * @param str The string to inspect
+ * @return {RegExp} a regular expression to inspect `str`
+ */
+const fuzzyCache = memoize((str: string): RegExp => {
+    return new RegExp("^"+str.replace(/./g, function(x) {
+        // eslint-disable-next-line
+        return /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/.test(x) ? "\\"+x+"?" : x+"?";
+    })+"$");
+});
+
+/**
+ * @param str The string to inspect
+ * @param target The string to search for
+ * @returns {bool} Whether the string has a fuzzy match
+ */
+export const fuzzyMatch = (str: string, target: string): boolean => {
+    return fuzzyCache(str).test(target);
+};

@@ -19,6 +19,11 @@ import { FILTER_CHANGED, FilterKind, IFilterCondition } from "./IFilterCondition
 import { EventEmitter } from "events";
 import { normalize } from "matrix-js-sdk/src/utils";
 import { throttle } from "lodash";
+import { fuzzyMatch } from "../../../utils/strings";
+
+interface IOpts {
+    fuzzy?: boolean;
+}
 
 /**
  * A filter condition for the room list which reveals rooms of a particular
@@ -26,9 +31,11 @@ import { throttle } from "lodash";
  */
 export class NameFilterCondition extends EventEmitter implements IFilterCondition {
     private _search = "";
+    private fuzzy = false;
 
-    constructor() {
+    constructor(options: IOpts = {}) {
         super();
+        this.fuzzy = options.fuzzy === true;
     }
 
     public get kind(): FilterKind {
@@ -66,6 +73,11 @@ export class NameFilterCondition extends EventEmitter implements IFilterConditio
     }
 
     public matches(normalizedName: string): boolean {
-        return normalizedName.includes(normalize(this.search));
+        const normalizedSearch = normalize(this.search);
+        if (this.fuzzy) {
+            return fuzzyMatch(normalizedName, normalizedSearch);
+        } else {
+            return normalizedName.includes(normalizedSearch);
+        }
     }
 }
