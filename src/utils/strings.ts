@@ -88,21 +88,22 @@ export function compare(a: string, b: string): number {
 }
 
 /**
- * A cache for regular expression used in fuzzy matching
- * @param str The string to inspect
- * @return {RegExp} a regular expression to inspect `str`
+ * A cache for regular expression used in fuzzy matching.
+ * With memoization to avoid performance pitfalls.
+ * @param str The string to inspect.
+ * @return {RegExp} a regular expression to inspect `str`.
  */
 const fuzzyCache = memoize((str: string): RegExp => {
     return new RegExp("^"+str.replace(/./g, function(x) {
-        // eslint-disable-next-line
+        // eslint-disable-next-line no-useless-escape
         return /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/.test(x) ? "\\"+x+"?" : x+"?";
     })+"$");
 });
 
 /**
- * @param str The string to inspect
- * @param target The string to search for
- * @returns {bool} Whether the string has a fuzzy match
+ * @param str The string to inspect.
+ * @param target The string to search for.
+ * @returns {bool} Whether the string has a fuzzy match.
  */
 export const fuzzyMatch = (str: string, target: string): boolean => {
     return fuzzyCache(str).test(target);
