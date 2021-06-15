@@ -889,6 +889,8 @@
     "sends snowfall": "sends snowfall",
     "Sends the given message with a space themed effect": "Sends the given message with a space themed effect",
     "sends space invaders": "sends space invaders",
+	"Sends the given message with hearts": "Sends the given message with hearts",
+    "sends hearts": "sends hearts",
     "unknown person": "unknown person",
     "Consulting with %(transferTarget)s. <a>Transfer to %(transferee)s</a>": "Consulting with %(transferTarget)s. <a>Transfer to %(transferee)s</a>",
     "You held the call <a>Switch</a>": "You held the call <a>Switch</a>",
