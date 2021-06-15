@@ -76,7 +76,7 @@ export default class Hearts implements ICanvasEffect {
         'rgba(228,55,116,1)',
         'rgba(255,86,130,1)',
         'rgba(244,36,57,1)',
-        'rgba(247,126,157,1)',//w
+        'rgba(247,126,157,1)',
         'rgba(243,142,140,1)',
         'rgba(252,116,183,1)'];
 
@@ -150,9 +150,9 @@ export default class Hearts implements ICanvasEffect {
             particle.x = 6 * particle.maximumDrift * Math.sin(0.7 * (PI2 / peakDistance) * particle.y);
             particle.x += particle.xCol; // bring the particle to the right place
 
-            let posScale = 1 / particle.scale;
-            let x = particle.x * posScale;
-            let y = particle.y * posScale;
+            const posScale = 1 / particle.scale;
+            const x = particle.x * posScale;
+            const y = particle.y * posScale;
 
             this.context.save();
             this.context.scale(particle.scale, particle.scale);
