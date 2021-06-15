@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1623768509252,
+  "lastUpdate": 1623799888432,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -140,6 +140,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Register",
             "value": 4599.510000000009,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7e434d8844e27e6c0b246c9af6083a1d2aadc7a4",
+          "message": "Merge pull request #6195 from matrix-org/dependabot/npm_and_yarn/postcss-7.0.36\n\nBump postcss from 7.0.35 to 7.0.36",
+          "timestamp": "2021-06-15T17:25:50-06:00",
+          "tree_id": "6acedec432f237b137749c80b081cfea104cafed",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7e434d8844e27e6c0b246c9af6083a1d2aadc7a4"
+        },
+        "date": 1623799886897,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4987.995000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
