@@ -74,7 +74,7 @@ export const CHAT_EFFECTS: Array<Effect<{ [key: string]: any }>> = [
             gravity: 0.01,
         },
     } as Effect<SpaceInvadersOptions>,
-	{
+    {
         emojis: ["💝", "💖", "💞", "💕"],
         msgType: "io.element.effect.hearts",
         command: "hearts",
@@ -86,5 +86,3 @@ export const CHAT_EFFECTS: Array<Effect<{ [key: string]: any }>> = [
         },
     } as Effect<HeartOptions>,
 ];
-
-
