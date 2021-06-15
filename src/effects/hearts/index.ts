@@ -128,17 +128,16 @@ export default class Hearts implements ICanvasEffect {
 				this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
 
 				this.lastAnimationTime = Date.now();
-				this.animateAndRenderSnowflakes();
+				this.animateAndRenderHearts();
 			}
 			requestAnimationFrame(this.renderLoop);
 		}
 	};
 
-	private animateAndRenderSnowflakes() {
+	private animateAndRenderHearts() {
 		if (!this.context || !this.context.canvas) {
 			return;
 		}
-		const height = this.context.canvas.height;
 		for (const particle of arrayFastClone(this.particles)) {
 			particle.y -= particle.gravity;
 
@@ -183,7 +182,6 @@ export default class Hearts implements ICanvasEffect {
 
 			// Remove any dead hearts after a 100px wide margin.
 			if (particle.y < -100 ) {
-				console.log("disappear")
 				const idx = this.particles.indexOf(particle);
 				this.particles.splice(idx, 1);
 			}
