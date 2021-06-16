@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1623799888432,
+  "lastUpdate": 1623830145270,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -170,6 +170,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Register",
             "value": 4987.995000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1f15097e9d66e387b75726576ea281599d4adec4",
+          "message": "Merge pull request #6191 from matrix-org/gsouquet/ci-disable-perf-comments\n\nDisable comment-on-alert",
+          "timestamp": "2021-06-16T08:50:38+01:00",
+          "tree_id": "fc0ece0501af627f841daecdea867b88798b7469",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1f15097e9d66e387b75726576ea281599d4adec4"
+        },
+        "date": 1623830144261,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3717.8849999999666,
             "unit": "ms",
             "extra": "type: measure"
           }
