@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1623830145270,
+  "lastUpdate": 1623830478881,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -200,6 +200,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Register",
             "value": 3717.8849999999666,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3162d144e2f0889cfc243e0757d8227ccf883e39",
+          "message": "Merge pull request #6194 from matrix-org/dbkr/already_in_call\n\nCache virtual/native room mappings when they're created",
+          "timestamp": "2021-06-16T08:55:44+01:00",
+          "tree_id": "6918129193c189820cc2194d7ae488cc85d61517",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3162d144e2f0889cfc243e0757d8227ccf883e39"
+        },
+        "date": 1623830477768,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3909.8050000000053,
             "unit": "ms",
             "extra": "type: measure"
           }
