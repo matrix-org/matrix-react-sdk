@@ -90,7 +90,7 @@ function textForMemberEvent(ev): () => string | null {
                 if (prevContent.membership === "invite") {
                     return () => _t('%(targetName)s rejected the invitation.', {targetName});
                 } else {
-                    return () => _t('%(targetName)s left the room.', {targetName});
+                    return () => _t('%(targetName)s left the room.', {targetName}) + ' ' + getReason();
                 }
             } else if (prevContent.membership === "ban") {
                 return () => _t('%(senderName)s unbanned %(targetName)s.', {senderName, targetName});
