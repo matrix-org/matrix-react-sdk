@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1623844339976,
+  "lastUpdate": 1623871411242,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -290,6 +290,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Register",
             "value": 3808.324999999968,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ad3aefad35df2bfc962ef50e45c428234279cefd",
+          "message": "Merge pull request #6203 from matrix-org/jryans/nested-reply-perf\n\nStop requesting null next replies from the server",
+          "timestamp": "2021-06-16T20:17:53+01:00",
+          "tree_id": "ec0c31e6dee7303a80e06746054b0da8412b2c46",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ad3aefad35df2bfc962ef50e45c428234279cefd"
+        },
+        "date": 1623871410081,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4639.499999999998,
             "unit": "ms",
             "extra": "type: measure"
           }
