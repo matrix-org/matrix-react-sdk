@@ -317,7 +317,7 @@ limitations under the License.
 // a SCSS map and also require postcss > 8 which requires a whole migration.
 // We stick to ol' good copy paste.
 
-// Attendee
+// Sprinter
 .mx_powerLevel_0 {
     background-color: #DBEAFE;
 }
@@ -325,12 +325,7 @@ limitations under the License.
 .mx_powerLevel_3 {
     background-color: #DBEAFE;
 }
-// Sponsor
-.mx_powerLevel_6 {
-    background-color: #F59E0B;
-    color: white;
-}
-// Sprinter
+// Attendee
 .mx_powerLevel_9 {
     background-color: #C4B5FD;
 }
@@ -339,14 +334,19 @@ limitations under the License.
     background-color: #7C3AED;
     color: white;
 }
-// Staff
-.mx_powerLevel_15 {
-    background-color: #f472b6;
+// Sponsor
+.mx_powerLevel_40 {
+    background-color: #F59E0B;
+    color: white;
 }
 // Moderator
 .mx_powerLevel_50 {
     background-color: #ec4899;
     color: white;
+}
+// Organizer
+.mx_powerLevel_75 {
+    background-color: #f472b6;
 }
 // Admin
 .mx_powerLevel_100 {

@@ -157,12 +157,12 @@ class EntityTile extends React.Component {
         const powerStatus = this.props.member.powerLevel;
         if (powerStatus > 3) {
             const powerText = {
-                50: _t("Mod"),
                 100: _t("Admin"),
-                6: "Sponsor",
-                9: "Sprinter",
-                12: "Speaker",
-                15: "Staff",
+                75: 'Organizer',
+                50: _t("Mod"),
+                40: 'Sponsor',
+                12: 'Speaker',
+                9: 'Attendee',
             }[powerStatus];
             powerLabel = <div className={`mx_EntityTile_power sp_powerLevel mx_powerLevel_${powerStatus}`}>{powerText}</div>;
 
