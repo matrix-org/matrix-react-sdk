@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1623928808100,
+  "lastUpdate": 1623937290233,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -476,6 +476,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4131.6749999999665,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "distinct": true,
+          "id": "9f83846ecc78c3682f07bc88e25726e814ac821d",
+          "message": "Remove redundant word from GitHub Actions workflow",
+          "timestamp": "2021-06-17T14:35:33+01:00",
+          "tree_id": "3c06a935e245a006493ecad8439e9eedd2863761",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9f83846ecc78c3682f07bc88e25726e814ac821d"
+        },
+        "date": 1623937288456,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4427.200000000028,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1301.3250000000153,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1802.4299999999566,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4689.71500000004,
             "unit": "ms",
             "extra": "type: measure"
           }
