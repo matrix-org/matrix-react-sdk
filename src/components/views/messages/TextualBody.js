@@ -487,9 +487,12 @@ export default class TextualBody extends React.Component {
     }
 
     render() {
+        let editor;
         if (this.props.editState) {
             const EditMessageComposer = sdk.getComponent('rooms.EditMessageComposer');
-            return <EditMessageComposer editState={this.props.editState} className="mx_EventTile_content" />;
+            editor = (
+                <EditMessageComposer editState={this.props.editState} />
+            );
         }
         const mxEvent = this.props.mxEvent;
         const content = mxEvent.getContent();
@@ -531,9 +534,10 @@ export default class TextualBody extends React.Component {
             });
         }
 
+        let textualBody;
         switch (content.msgtype) {
             case "m.emote":
-                return (
+                textualBody = (
                     <span className="mx_MEmoteBody mx_EventTile_content">
                         *&nbsp;
                         <span
@@ -547,20 +551,30 @@ export default class TextualBody extends React.Component {
                         { widgets }
                     </span>
                 );
+                break;
             case "m.notice":
-                return (
+                textualBody = (
                     <span className="mx_MNoticeBody mx_EventTile_content">
                         { body }
                         { widgets }
                     </span>
                 );
+                break;
             default: // including "m.text"
-                return (
+                textualBody = (
                     <span className="mx_MTextBody mx_EventTile_content">
                         { body }
                         { widgets }
                     </span>
                 );
+                break;
         }
+
+        return (
+            <div>
+                {editor}
+                {textualBody}
+            </div>
+        );
     }
 }

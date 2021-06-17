@@ -52,10 +52,30 @@ $hover-select-border: 4px;
 }
 
 .mx_EventTile_isEditing {
-    background-color: $header-panel-bg-color;
+    &:hover {
+        .mx_EventTile_line {
+            border-left: none !important; // Override .mx_EventTile:hover.mx_EventTile_verified .mx_EventTile_line
+        }
+    }
+
+    .mx_EventTile_avatar {
+        z-index: 101; // Place this avatar above the editor
+    }
+
+    .mx_SenderProfile {
+        z-index: 101; // Place sender profile above the editor
+    }
+}
+
+.mx_EventTile_isEditing.mx_EventTile_last {
+    // This number is from fiddling with this with inspector. It moves the last
+    // event up when editing to avoid the edit message composer being below the
+    // main composer
+    padding-bottom: 28px;
 }
 
 .mx_EventTile .mx_SenderProfile {
+    position: relative;
     color: $primary-fg-color;
     font-size: $font-14px;
     display: inline-block; /* anti-zalgo, with overflow hidden */
