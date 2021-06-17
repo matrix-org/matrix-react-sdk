@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1623917098687,
+  "lastUpdate": 1623921409046,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -350,6 +350,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Register",
             "value": 4695.700000000044,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6e827ad4c97542995dbc965785966d0c4d204df4",
+          "message": "Merge pull request #6204 from robintown/forward-dialog-display-name\n\nFix forward dialog message preview display names",
+          "timestamp": "2021-06-17T10:10:54+01:00",
+          "tree_id": "0880ce137670490f34af9ff05949b3fa3b3bc9e5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6e827ad4c97542995dbc965785966d0c4d204df4"
+        },
+        "date": 1623921407178,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4770.764999999983,
             "unit": "ms",
             "extra": "type: measure"
           }
