@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1623922425590,
+  "lastUpdate": 1623928808100,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -428,6 +428,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4900.689999999995,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "97e6599780afcebf05f4cd0ff77e696130097e6b",
+          "message": "Merge pull request #6207 from matrix-org/t3chguy/ts/5\n\nFix types in SlashCommands",
+          "timestamp": "2021-06-17T12:15:16+01:00",
+          "tree_id": "9d12aa72104d7d7cca7b3d7cdd326078488d7c01",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/97e6599780afcebf05f4cd0ff77e696130097e6b"
+        },
+        "date": 1623928807061,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3872.1350000000143,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 905.9200000000383,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1578.5700000000143,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4131.6749999999665,
             "unit": "ms",
             "extra": "type: measure"
           }
