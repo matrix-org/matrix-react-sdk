@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1623871411242,
+  "lastUpdate": 1623917098687,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -320,6 +320,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Register",
             "value": 4639.499999999998,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2f1abe251fe3928ad2ec1121a6a82a74f44bc9d6",
+          "message": "Merge pull request #6206 from matrix-org/gsouquet/fix-17672\n\nRemove stray bullet point in reply preview",
+          "timestamp": "2021-06-17T08:58:47+01:00",
+          "tree_id": "51a473be96f8fddf8c50192ea28d36b90f007786",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2f1abe251fe3928ad2ec1121a6a82a74f44bc9d6"
+        },
+        "date": 1623917097612,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4695.700000000044,
             "unit": "ms",
             "extra": "type: measure"
           }
