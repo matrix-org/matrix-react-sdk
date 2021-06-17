@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1623937290233,
+  "lastUpdate": 1623944770816,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -524,6 +524,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4689.71500000004,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "71ff5248fef842c7aa129913ebb1ef49da1aec10",
+          "message": "Merge pull request #6082 from SimonBrandner/fix/mute-incoming-call/15591",
+          "timestamp": "2021-06-17T16:41:00+01:00",
+          "tree_id": "57c24456cad6525f31f5fc3f70224f67afa9a8c5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/71ff5248fef842c7aa129913ebb1ef49da1aec10"
+        },
+        "date": 1623944769620,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3673.749999999984,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 628.4949999999808,
             "unit": "ms",
             "extra": "type: measure"
           }
