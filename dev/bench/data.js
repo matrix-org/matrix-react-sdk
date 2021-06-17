@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1623921409046,
+  "lastUpdate": 1623922425590,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -380,6 +380,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Register",
             "value": 4770.764999999983,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "782adbc41e594075c6a02d651de3f5079d58a702",
+          "message": "Merge pull request #6190 from matrix-org/gsouquet/performance-tracking-markers",
+          "timestamp": "2021-06-17T10:27:33+01:00",
+          "tree_id": "1ec307f9236132e9772c78ce4b233776d4e4c6ac",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/782adbc41e594075c6a02d651de3f5079d58a702"
+        },
+        "date": 1623922423879,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4787.570000000017,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1234.9649999999892,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1766.349999999984,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4900.689999999995,
             "unit": "ms",
             "extra": "type: measure"
           }
