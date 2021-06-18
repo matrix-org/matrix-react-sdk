@@ -1275,6 +1275,11 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         this.setState({dialPadValue: this.state.dialPadValue + digit});
     }
 
+    private onDeletePress = () => {
+        if (this.state.dialPadValue.length === 0) return;
+        this.setState({dialPadValue: this.state.dialPadValue.slice(0, -1)});
+    }
+
     private onTabChange = (tabId: TabId) => {
         this.setState({currentTabId: tabId});
     }
@@ -1529,8 +1534,8 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                         onChange={this.onDialChange}
                     />
                 </form>
-                <Dialpad hasDialAndDelete={false}
-                    onDigitPress={this.onDigitPress}
+                <Dialpad hasDial={false} hasDelete={true}
+                    onDigitPress={this.onDigitPress} onDeletePress={this.onDeletePress}
                 />
             </div>;
             tabs.push(new Tab(TabId.DialPad, _td("Dial pad"), 'mx_InviteDialog_dialPadIcon', dialPadSection));
