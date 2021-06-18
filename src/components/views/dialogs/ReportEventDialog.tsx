@@ -213,6 +213,8 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
             const client = MatrixClientPeg.get();
             const ev = this.props.mxEvent;
             if (this.moderation && this.state.nature != NON_STANDARD_NATURE.ADMIN) {
+                const nature: NATURE = this.state.nature;
+
                 // Report to moderators through to the dedicated bot,
                 // as configured in the room's state events.
                 const dmRoomId = await ensureDMExists(client, this.moderation.moderationBotUserId);
@@ -220,7 +222,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                     event_id: ev.getId(),
                     room_id: ev.getRoomId(),
                     moderated_by_id: this.moderation.moderationRoomId,
-                    nature: this.state.nature,
+                    nature,
                     reporter: client.getUserId(),
                     comment: this.state.reason.trim(),
                 });
