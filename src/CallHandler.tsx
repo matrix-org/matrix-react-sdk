@@ -394,7 +394,7 @@ export default class CallHandler extends EventEmitter {
     }
 
     private setCallListeners(call: MatrixCall) {
-        let mappedRoomId = CallHandler.sharedInstance().roomIdForCall(call);
+        let mappedRoomId = this.roomIdForCall(call);
 
         call.on(CallEvent.Error, (err: CallError) => {
             if (!this.matchesCallForThisRoom(call)) return;

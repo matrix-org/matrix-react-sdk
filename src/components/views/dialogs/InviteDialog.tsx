@@ -50,7 +50,7 @@ import {getAddressType} from "../../../UserAddress";
 import BaseAvatar from '../avatars/BaseAvatar';
 import AccessibleButton from '../elements/AccessibleButton';
 import { compare } from '../../../utils/strings';
-import TabbedView, { Tab } from '../../structures/TabbedView';
+import TabbedView, { Tab, TabLocation } from '../../structures/TabbedView';
 import Dialpad from '../voip/DialPad';
 import Field from '../elements/Field';
 import { TransferCallPayload } from '../../../dispatcher/payloads/TransferCallPayload';
@@ -70,6 +70,11 @@ export const KIND_CALL_TRANSFER = "call_transfer";
 
 const INITIAL_ROOMS_SHOWN = 3; // Number of rooms to show at first
 const INCREMENT_ROOMS_SHOWN = 5; // Number of rooms to add when 'show more' is clicked
+
+enum TabId {
+    UserDirectory = 'users',
+    DialPad = 'dialpad',
+}
 
 // This is the interface that is expected by various components in this file. It is a bit
 // awkward because it also matches the RoomMember class from the js-sdk with some extra support
@@ -343,6 +348,7 @@ interface IInviteDialogState {
     tryingIdentityServer: boolean;
     consultFirst: boolean;
     dialPadValue: string;
+    currentTabId: TabId;
 
     // These two flags are used for the 'Go' button to communicate what is going on.
     busy: boolean,
@@ -394,6 +400,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             tryingIdentityServer: false,
             consultFirst: false,
             dialPadValue: '',
+            currentTabId: TabId.UserDirectory,
 
             // These two flags are used for the 'Go' button to communicate what is going on.
             busy: false,
@@ -761,21 +768,30 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     };
 
     private transferCall = async () => {
-        this.convertFilter();
-        const targets = this.convertFilter();
-        const targetIds = targets.map(t => t.userId);
-        if (targetIds.length > 1) {
-            this.setState({
-                errorText: _t("A call can only be transferred to a single user."),
-            });
-        }
+        if (this.state.currentTabId == TabId.UserDirectory) {
+            this.convertFilter();
+            const targets = this.convertFilter();
+            const targetIds = targets.map(t => t.userId);
+            if (targetIds.length > 1) {
+                this.setState({
+                    errorText: _t("A call can only be transferred to a single user."),
+                });
+            }
 
-        dis.dispatch({
-            action: Action.TransferCallToMatrixID,
-            call: this.props.call,
-            destination: targetIds[0],
-            consultFirst: this.state.consultFirst,
-        } as TransferCallPayload);
+            dis.dispatch({
+                action: Action.TransferCallToMatrixID,
+                call: this.props.call,
+                destination: targetIds[0],
+                consultFirst: this.state.consultFirst,
+            } as TransferCallPayload);
+        } else {
+            dis.dispatch({
+                action: Action.TransferCallToPhoneNumber,
+                call: this.props.call,
+                destination: this.state.dialPadValue,
+                consultFirst: this.state.consultFirst,
+            } as TransferCallPayload);
+        }
         this.props.onFinished();
     }
 
@@ -796,6 +812,10 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             e.preventDefault();
             this.convertFilter();
         }
+    };
+
+    private onCancel = () => {
+        this.props.onFinished([]);
     };
 
     private updateSuggestions = async (term) => {
@@ -933,11 +953,14 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     private toggleMember = (member: Member) => {
         if (!this.state.busy) {
             let filterText = this.state.filterText;
-            const targets = this.state.targets.map(t => t); // cheap clone for mutation
+            let targets = this.state.targets.map(t => t); // cheap clone for mutation
             const idx = targets.indexOf(member);
             if (idx >= 0) {
                 targets.splice(idx, 1);
             } else {
+                if (this.props.kind === KIND_CALL_TRANSFER && targets.length > 0) {
+                    targets = [];
+                }
                 targets.push(member);
                 filterText = ""; // clear the filter when the user accepts a suggestion
             }
@@ -1162,6 +1185,11 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     }
 
     private renderEditor() {
+        const hasPlaceholder = (
+            this.props.kind == KIND_CALL_TRANSFER &&
+            this.state.targets.length === 0 &&
+            this.state.filterText.length === 0
+        );
         const targets = this.state.targets.map(t => (
             <DMUserTile member={t} onRemove={!this.state.busy && this.removeMember} key={t.userId} />
         ));
@@ -1176,6 +1204,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 autoFocus={true}
                 disabled={this.state.busy}
                 autoComplete="off"
+                placeholder={hasPlaceholder ? _t("Search") : null}
             />
         );
         return (
@@ -1224,7 +1253,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
 
     private onDialFormSubmit = ev => {
         ev.preventDefault();
-        this.onDialPress();
+        this.transferCall();
     }
 
     private onDialChange = ev => {
@@ -1235,19 +1264,8 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         this.setState({dialPadValue: this.state.dialPadValue + digit});
     }
 
-    private onDialPress = () => {
-        dis.dispatch({
-            action: Action.TransferCallToPhoneNumber,
-            call: this.props.call,
-            destination: this.state.dialPadValue,
-            consultFirst: this.state.consultFirst,
-        } as TransferCallPayload);
-        this.props.onFinished();
-    }
-
-    private onDeletePress = () => {
-        if (this.state.dialPadValue.length === 0) return;
-        this.setState({dialPadValue: this.state.dialPadValue.slice(0, -1)});
+    private onTabChange = (tabId: TabId) => {
+        this.setState({currentTabId: tabId});
     }
 
     render() {
@@ -1391,18 +1409,25 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         } else if (this.props.kind === KIND_CALL_TRANSFER) {
             title = _t("Transfer");
             consultConnectSection = <div>
-                <label>
-                    <input type="checkbox" checked={this.state.consultFirst} onChange={this.onConsultFirstChange} />
-                    {_t("Consult first")}
-                </label>
                 <AccessibleButton
                     kind="primary"
                     onClick={this.transferCall}
-                    className='mx_InviteDialog_goButton'
+                    className='mx_InviteDialog_transferButton'
                     disabled={!hasSelection && this.state.dialPadValue === ''}
                 >
                     {_t("Transfer")}
                 </AccessibleButton>
+                <AccessibleButton
+                    kind="secondary"
+                    onClick={this.onCancel}
+                    className='mx_InviteDialog_transferButton'
+                >
+                    {_t("Cancel")}
+                </AccessibleButton>
+                <label>
+                    <input type="checkbox" checked={this.state.consultFirst} onChange={this.onConsultFirstChange} />
+                    {_t("Consult first")}
+                </label>
             </div>;
         } else {
             console.error("Unknown kind of InviteDialog: " + this.props.kind);
@@ -1433,39 +1458,46 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 {this.renderSection('recents')}
                 {this.renderSection('suggestions')}
             </div>
-            {consultConnectSection}
         </React.Fragment>;
 
         let dialogContent;
         if (this.props.kind === KIND_CALL_TRANSFER) {
             const tabs = [];
-            tabs.push(new Tab('UsersTab', _td("Users"), null, usersSection));
+            tabs.push(new Tab(
+                TabId.UserDirectory, _td("User Directory"), 'mx_InviteDialog_userDirectoryIcon', usersSection,
+            ));
 
-            const dialPadSection = <React.Fragment>
+            const dialPadSection = <div className="mx_InviteDialog_dialPad">
                 <form onSubmit={this.onDialFormSubmit}>
-                    <Field className="mx_InviteDialog_field" id="dialpad_number"
+                    <Field className="mx_InviteDialog_dialPadField" id="dialpad_number"
                         value={this.state.dialPadValue} autoFocus={true}
                         onChange={this.onDialChange}
                     />
                 </form>
-                <div className="mx_InviteDialog_dialPad">
-                    <Dialpad hasDialAndDelete={true}
-                        onDigitPress={this.onDigitPress}
-                        onDeletePress={this.onDeletePress}
-                        onDialPress={this.onDialPress}
-                    />
-                </div>
+                <Dialpad hasDialAndDelete={false}
+                    onDigitPress={this.onDigitPress}
+                />
+            </div>;
+            tabs.push(new Tab(TabId.DialPad, _td("Dial pad"), 'mx_InviteDialog_dialPadIcon', dialPadSection));
+            dialogContent = <React.Fragment>
+                <TabbedView tabs={tabs} initialTabId={this.state.currentTabId}
+                    tabLocation={TabLocation.TOP} onChange={this.onTabChange}
+                />
                 {consultConnectSection}
             </React.Fragment>;
-            tabs.push(new Tab('DialPadTab', _td("Dial pad"), null, dialPadSection));
-            dialogContent = <TabbedView tabs={tabs} initialTabId={'byMatrixID'} />;
         } else {
-            dialogContent = usersSection;
+            dialogContent = <React.Fragment>
+                usersSection
+                {consultConnectSection}
+            </React.Fragment>;
         }
+
+        const dialogClass = this.props.kind === KIND_CALL_TRANSFER ?
+            'mx_InviteDialog_transfer' : 'mx_InviteDialog_other';
 
         return (
             <BaseDialog
-                className='mx_InviteDialog'
+                className={dialogClass}
                 hasCancel={true}
                 onFinished={this.props.onFinished}
                 title={title}
