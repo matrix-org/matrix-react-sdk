@@ -2993,5 +2993,19 @@
     "Esc": "Esc",
     "Enter": "Enter",
     "Space": "Space",
-    "End": "End"
+    "End": "End",
+    "Abuse: What this user is writing is wrong.": "What this user is writing is wrong.\nThis will be reported to the room moderators.",
+    "Abuse: This user is displaying toxic behavior.": "This user is displaying toxic behavior, for instance by insulting other users or sharing adult-only content in a family-friendly room or otherwise violating the rules of this room.\nThis will be reported to the room moderators.",
+    "Abuse: This user is displaying illegal behavior.": "This user is displaying illegal behavior, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.",
+    "Abuse: This user is spamming the room.": "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.",
+    "Abuse: Report the entire room to %(homeserver)s admin. Encrypted.": "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\n This will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.",
+    "Abuse: Report the entire room to %(homeserver)s admin. Unencrypted.": "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\n This will be reported to the administrators of %(homeserver)s.",
+    "Abuse: What makes this message abusive?": "Please pick a nature and describe what makes this message abusive.",
+    "Abuse: Any other reason.": "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.",
+    "Abuse nature: Disagreement": "Disagree",
+    "Abuse nature: Toxic Behavior": "Toxic Behavior",
+    "Abuse nature: Illegal Content": "Illegal Content",
+    "Abuse nature: Spam, propaganda, ...": "Spam or propaganda",
+    "Abuse nature: Report the entire room to your homeserver admin": "Report the entire room",
+    "Abuse nature: Anything else": "Other"
 }
