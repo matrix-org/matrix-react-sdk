@@ -385,7 +385,8 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                             {
                                 _t("Reporting this message will send its unique 'event ID' to the administrator of " +
                                     "your homeserver. If messages in this room are encrypted, your homeserver " +
-                                    "administrator will not be able to read the message text or view any files or images.")
+                                    "administrator will not be able to read the message text or view any files " +
+                                    "or images.")
                             }
                         </p>
                         {adminMessage}
