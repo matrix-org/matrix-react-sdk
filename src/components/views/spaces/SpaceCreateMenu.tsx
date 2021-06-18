@@ -22,17 +22,19 @@ import FocusLock from "react-focus-lock";
 import {_t} from "../../../languageHandler";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import {ChevronFace, ContextMenu} from "../../structures/ContextMenu";
-import createRoom, {IStateEvent, Preset} from "../../../createRoom";
+import createRoom from "../../../createRoom";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import {SpaceAvatar} from "./SpaceBasicSettings";
 import AccessibleButton from "../elements/AccessibleButton";
 import {BetaPill} from "../beta/BetaCard";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import {Action} from "../../../dispatcher/actions";
-import {USER_LABS_TAB} from "../dialogs/UserSettingsDialog";
+import { UserTab } from "../dialogs/UserSettingsDialog";
 import Field from "../elements/Field";
 import withValidation from "../elements/Validation";
 import {SpaceFeedbackPrompt} from "../../structures/SpaceRoomView";
+import { Preset } from "matrix-js-sdk/src/@types/partials";
+import { ICreateRoomStateEvent } from "matrix-js-sdk/src/@types/requests";
 
 const SpaceCreateMenuType = ({ title, description, className, onClick }) => {
     return (
@@ -81,7 +83,7 @@ const SpaceCreateMenu = ({ onFinished }) => {
             return;
         }
 
-        const initialState: IStateEvent[] = [
+        const initialState: ICreateRoomStateEvent[] = [
             {
                 type: EventType.RoomHistoryVisibility,
                 content: {
@@ -222,7 +224,7 @@ const SpaceCreateMenu = ({ onFinished }) => {
                 onFinished();
                 defaultDispatcher.dispatch({
                     action: Action.ViewUserSettings,
-                    initialTabId: USER_LABS_TAB,
+                    initialTabId: UserTab.Labs,
                 });
             }} />
             { body }

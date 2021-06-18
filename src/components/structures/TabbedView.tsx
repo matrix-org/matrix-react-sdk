@@ -47,7 +47,7 @@ interface IProps {
     tabs: Tab[];
     initialTabId?: string;
     tabLocation: TabLocation;
-    onChange: (tabId: string) => void;
+    onChange?: (tabId: string) => void;
 }
 
 interface IState {
