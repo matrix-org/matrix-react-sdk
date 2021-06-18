@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624037945827,
+  "lastUpdate": 1624041153651,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -896,6 +896,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4367.32499999999,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2c66adcb0e7a1f0496f23cadd5ebc37122756d2e",
+          "message": "Merge pull request #6218 from matrix-org/t3chguy/ci-jq\n\nAdd jq to e2e tests Dockerfile",
+          "timestamp": "2021-06-18T19:27:37+01:00",
+          "tree_id": "2fe154077fd15ff7cdbb8ab84ac80862881dc18c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2c66adcb0e7a1f0496f23cadd5ebc37122756d2e"
+        },
+        "date": 1624041152302,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3784.275000000008,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 936.5899999999674,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1669.0100000000166,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4280.574999999997,
             "unit": "ms",
             "extra": "type: measure"
           }
