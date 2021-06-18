@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624030111180,
+  "lastUpdate": 1624032851216,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -800,6 +800,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4324.314999999951,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "D.O.Teller@gmail.com",
+            "name": "David Teller",
+            "username": "Yoric"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "77a4d345bda4791bfec1b8fee643e2b29441a1c2",
+          "message": "Submitting abuse reports to moderators (#6213)\n\n    This patch is part of MSC3215. It implements `feature_report_to_moderator`\r\n    to let end-users send report to room moderators instead of homeserver\r\n    administrators.\r\n\r\n    This only works if the room has been setup for moderation, something that\r\n    does not have a UX yet.\r\n\r\n    Signed-off-by: David Teller <davidt@element.io>",
+          "timestamp": "2021-06-18T18:09:02+02:00",
+          "tree_id": "6adbb3e2ec2f4d9670cc7ea010f76ab01155e2c9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/77a4d345bda4791bfec1b8fee643e2b29441a1c2"
+        },
+        "date": 1624032849524,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4087.330000000008,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1004.9149999999827,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1822.645000000026,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4192.504999999983,
             "unit": "ms",
             "extra": "type: measure"
           }
