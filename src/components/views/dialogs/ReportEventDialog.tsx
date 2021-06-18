@@ -19,7 +19,6 @@ import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import { ensureDMExists } from "../../../createRoom";
 import { IDialogProps } from "./IDialogProps";
-import PropTypes from "prop-types";
 import {MatrixEvent} from "matrix-js-sdk/src/models/event";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import SdkConfig from '../../../SdkConfig';
@@ -34,11 +33,11 @@ interface IProps extends IDialogProps {
 
 interface IState {
     // A free-form text describing the abuse.
-    reason: string,
-    busy: boolean,
-    err: string|null,
-    // If specified, the nature of the abuse, as specified by MSC3215.
-    nature: string|null,
+    reason: string;
+    busy: boolean;
+    err?: string;
+    // If we know it, the nature of the abuse, as specified by MSC3215.
+    nature?: EXTENDED_NATURE;
 }
 
 
@@ -54,16 +53,29 @@ const MODERATED_BY_STATE_EVENT_TYPE = [
 const ABUSE_EVENT_TYPE = "org.matrix.msc3215.abuse.report";
 
 // Standard abuse natures.
-const NATURE_DISAGREEMENT = "org.matrix.msc3215.abuse.nature.disagreement";
-const NATURE_TOXIC = "org.matrix.msc3215.abuse.nature.toxic";
-const NATURE_ILLEGAL = "org.matrix.msc3215.abuse.nature.illegal";
-const NATURE_SPAM = "org.matrix.msc3215.abuse.nature.spam";
-const NATURE_OTHER = "org.matrix.msc3215.abuse.nature.other";
-// Non-standard abuse nature.
-// It should never leave the client - we use it to fallback to
-// server-wide abuse reporting.
-const NATURE_ADMIN = "non-standard.abuse.nature.admin";
+enum NATURE {
+    DISAGREEMENT = "org.matrix.msc3215.abuse.nature.disagreement",
+    TOXIC = "org.matrix.msc3215.abuse.nature.toxic",
+    ILLEGAL = "org.matrix.msc3215.abuse.nature.illegal",
+    SPAM = "org.matrix.msc3215.abuse.nature.spam",
+    OTHER = "org.matrix.msc3215.abuse.nature.other",
+}
 
+enum NON_STANDARD_NATURE {
+    // Non-standard abuse nature.
+    // It should never leave the client - we use it to fallback to
+    // server-wide abuse reporting.
+    ADMIN = "non-standard.abuse.nature.admin"
+}
+
+type EXTENDED_NATURE = NATURE | NON_STANDARD_NATURE;
+
+type Moderation = {
+    // The id of the moderation room.
+    moderationRoomId: string;
+    // The id of the bot in charge of forwarding abuse reports to the moderation room.
+    moderationBotUserId: string;
+}
 /*
  * A dialog for reporting an event.
  *
@@ -76,21 +88,14 @@ const NATURE_ADMIN = "non-standard.abuse.nature.admin";
  */
 @replaceableComponent("views.dialogs.ReportEventDialog")
 export default class ReportEventDialog extends React.Component<IProps, IState> {
-    static propTypes = {
-        mxEvent: PropTypes.instanceOf(MatrixEvent).isRequired,
-        onFinished: PropTypes.func.isRequired,
-    };
+    // If the room supports moderation, the moderation information.
+    moderation?: Moderation;
 
-    // If non-null, the id of the moderation room.
-    moderatedByRoomId: string | null;
-    // If non-null, the id of the bot in charge of forwarding abuse reports to the moderation room.
-    moderatedByUserId: string | null;
-
-    constructor(props) {
+    constructor(props: IProps) {
         super(props);
 
-        this.moderatedByRoomId = null;
-        this.moderatedByUserId = null;
+        let moderatedByRoomId = null;
+        let moderatedByUserId = null;
 
         if (SettingsStore.getValue("feature_report_to_moderators")) {
             // The client supports reporting to moderators.
@@ -133,8 +138,16 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                         "should have a string field `content.user_id`, got", event);
                     continue;
                 }
-                this.moderatedByRoomId = content["room_id"];
-                this.moderatedByUserId = content["user_id"];
+                moderatedByRoomId = content["room_id"];
+                moderatedByUserId = content["user_id"];
+            }
+
+            if (moderatedByRoomId && moderatedByUserId) {
+                // The room supports moderation.
+                this.moderation = {
+                    moderationRoomId: moderatedByRoomId,
+                    moderationBotUserId: moderatedByUserId,
+                };
             }
         }
 
@@ -148,28 +161,31 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
         };
     }
 
-    _onReasonChange = ({target: {value: reason}}) => {
+    // The user has written down a freeform description of the abuse.
+    private onReasonChange = ({target: {value: reason}}): void => {
         this.setState({ reason });
     };
 
     // The user has clicked on a nature.
-    _onNatureChosen = e => {
-        this.setState({ nature: e.target.value });
+    private onNatureChosen = (e: React.FormEvent<HTMLInputElement>): void => {
+        this.setState({ nature: e.currentTarget.value as EXTENDED_NATURE});
     };
 
-    _onCancel = () => {
+    // The user has clicked "cancel".
+    private onCancel = (): void => {
         this.props.onFinished(false);
     };
 
-    _onSubmit = async () => {
+    // The user has clicked "submit".
+    private onSubmit = async () => {
         let reason = this.state.reason || "";
         reason = reason.trim();
-        if (this.moderatedByUserId && this.moderatedByRoomId) {
+        if (this.moderation) {
             // This room supports moderation.
             // We need a nature.
-            // If the nature is `NATURE_OTHER` or `NATURE_ADMIN`, we also need a `reason`.
+            // If the nature is `NATURE.OTHER` or `NON_STANDARD_NATURE.ADMIN`, we also need a `reason`.
             if (!this.state.nature ||
-                    ((this.state.nature == NATURE_OTHER || this.state.nature == NATURE_ADMIN)
+                    ((this.state.nature == NATURE.OTHER || this.state.nature == NON_STANDARD_NATURE.ADMIN)
                         && !reason)
             ) {
                 this.setState({
@@ -194,27 +210,25 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
         });
 
         try {
-            if (this.moderatedByRoomId && this.moderatedByUserId && this.state.nature != NATURE_ADMIN) {
+            const client = MatrixClientPeg.get();
+            const ev = this.props.mxEvent;
+            if (this.moderation && this.state.nature != NON_STANDARD_NATURE.ADMIN) {
                 // Report to moderators through to the dedicated bot,
                 // as configured in the room's state events.
-                const client = MatrixClientPeg.get();
-                const dmRoomId = await ensureDMExists(client, this.moderatedByUserId);
-                const ev = this.props.mxEvent;
-                await MatrixClientPeg.get().sendEvent(dmRoomId, ABUSE_EVENT_TYPE, {
+                const dmRoomId = await ensureDMExists(client, this.moderation.moderationBotUserId);
+                await client.sendEvent(dmRoomId, ABUSE_EVENT_TYPE, {
                     event_id: ev.getId(),
                     room_id: ev.getRoomId(),
-                    moderated_by_id: this.moderatedByRoomId,
+                    moderated_by_id: this.moderation.moderationRoomId,
                     nature: this.state.nature,
-                    reporter: MatrixClientPeg.get().getUserId(),
+                    reporter: client.getUserId(),
                     comment: this.state.reason.trim(),
                 });
-                this.props.onFinished(true);
             } else {
                 // Report to homeserver admin through the dedicated Matrix API.
-                const ev = this.props.mxEvent;
-                await MatrixClientPeg.get().reportEvent(ev.getRoomId(), ev.getId(), -100, this.state.reason.trim());
-                this.props.onFinished(true);
+                await client.reportEvent(ev.getRoomId(), ev.getId(), -100, this.state.reason.trim());
             }
+            this.props.onFinished(true);
         } catch (e) {
             this.setState({
                 busy: false,
@@ -254,34 +268,34 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
             adminMessage = <p dangerouslySetInnerHTML={{ __html: html }} />;
         }
 
-        if (this.moderatedByRoomId && this.moderatedByUserId) {
+        if (this.moderation) {
             // Display report-to-moderator dialog.
             // We let the user pick a nature.
             const client = MatrixClientPeg.get();
             const homeServerName = SdkConfig.get()["validated_server_config"].hsName;
             let subtitle;
             switch (this.state.nature) {
-                case NATURE_DISAGREEMENT:
+                case NATURE.DISAGREEMENT:
                     subtitle = _t("What this user is writing is wrong.\n" +
                         "This will be reported to the room moderators.");
                     break;
-                case NATURE_TOXIC:
-                    subtitle = _t("This user is displaying toxic behavior, " +
+                case NATURE.TOXIC:
+                    subtitle = _t("This user is displaying toxic behaviour, " +
                         "for instance by insulting other users or sharing " +
                         " adult-only content in a family-friendly room " +
                         " or otherwise violating the rules of this room.\n" +
                         "This will be reported to the room moderators.");
                     break;
-                case NATURE_ILLEGAL:
-                    subtitle = _t("This user is displaying illegal behavior, " +
+                case NATURE.ILLEGAL:
+                    subtitle = _t("This user is displaying illegal behaviour, " +
                         "for instance by doxing people or threatening violence.\n" +
                         "This will be reported to the room moderators who may escalate this to legal authorities.");
                     break;
-                case NATURE_SPAM:
+                case NATURE.SPAM:
                     subtitle = _t("This user is spamming the room with ads, links to ads or to propaganda.\n" +
                         "This will be reported to the room moderators.");
                     break;
-                case NATURE_ADMIN:
+                case NON_STANDARD_NATURE.ADMIN:
                     if (client.isRoomEncrypted(this.props.mxEvent.getRoomId())) {
                         subtitle = _t("This room is dedicated to illegal or toxic content " +
                             "or the moderators fail to moderate illegal or toxic content.\n" +
@@ -295,7 +309,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                         { homeserver: homeServerName });
                     }
                     break;
-                case NATURE_OTHER:
+                case NATURE.OTHER:
                     subtitle = _t("Any other reason. Please describe the problem.\n" +
                         "This will be reported to the room moderators.");
                     break;
@@ -306,7 +320,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
 
             return (
                 <BaseDialog
-                    className="mx_BugReportDialog" //YORIC: Really?
+                    className="mx_ReportEventDialog"
                     onFinished={this.props.onFinished}
                     title={_t('Report Content')}
                     contentId='mx_ReportEventDialog'
@@ -314,49 +328,49 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                     <div>
                         <StyledRadioButton
                             name = "nature"
-                            value = { NATURE_DISAGREEMENT }
-                            checked = { this.state.nature == NATURE_DISAGREEMENT }
-                            onChange = { this._onNatureChosen }
+                            value = { NATURE.DISAGREEMENT }
+                            checked = { this.state.nature == NATURE.DISAGREEMENT }
+                            onChange = { this.onNatureChosen }
                         >
                             {_t('Disagree')}
                         </StyledRadioButton>
                         <StyledRadioButton
                             name = "nature"
-                            value = { NATURE_TOXIC }
-                            checked = { this.state.nature == NATURE_TOXIC }
-                            onChange = { this._onNatureChosen }
+                            value = { NATURE.TOXIC }
+                            checked = { this.state.nature == NATURE.TOXIC }
+                            onChange = { this.onNatureChosen }
                         >
-                            {_t('Toxic Behavior')}
+                            {_t('Toxic Behaviour')}
                         </StyledRadioButton>
                         <StyledRadioButton
                             name = "nature"
-                            value = { NATURE_ILLEGAL }
-                            checked = { this.state.nature == NATURE_ILLEGAL }
-                            onChange = { this._onNatureChosen }
+                            value = { NATURE.ILLEGAL }
+                            checked = { this.state.nature == NATURE.ILLEGAL }
+                            onChange = { this.onNatureChosen }
                         >
                             {_t('Illegal Content')}
                         </StyledRadioButton>
                         <StyledRadioButton
                             name = "nature"
-                            value = { NATURE_SPAM }
-                            checked = { this.state.nature == NATURE_SPAM }
-                            onChange = { this._onNatureChosen }
+                            value = { NATURE.SPAM }
+                            checked = { this.state.nature == NATURE.SPAM }
+                            onChange = { this.onNatureChosen }
                         >
                             {_t('Spam or propaganda')}
                         </StyledRadioButton>
                         <StyledRadioButton
                             name = "nature"
-                            value = { NATURE_ADMIN }
-                            checked = { this.state.nature == NATURE_ADMIN }
-                            onChange = { this._onNatureChosen }
+                            value = { NON_STANDARD_NATURE.ADMIN }
+                            checked = { this.state.nature == NON_STANDARD_NATURE.ADMIN }
+                            onChange = { this.onNatureChosen }
                         >
                             {_t('Report the entire room')}
                         </StyledRadioButton>
                         <StyledRadioButton
                             name = "nature"
-                            value = { NATURE_OTHER }
-                            checked = { this.state.nature == NATURE_OTHER }
-                            onChange = { this._onNatureChosen }
+                            value = { NATURE.OTHER }
+                            checked = { this.state.nature == NATURE.OTHER }
+                            onChange = { this.onNatureChosen }
                         >
                             {_t('Other')}
                         </StyledRadioButton>
@@ -368,7 +382,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                             element="textarea"
                             label={_t("Reason")}
                             rows={5}
-                            onChange={this._onReasonChange}
+                            onChange={this.onReasonChange}
                             value={this.state.reason}
                             disabled={this.state.busy}
                         />
@@ -377,54 +391,53 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                     </div>
                     <DialogButtons
                         primaryButton={_t("Send report")}
-                        onPrimaryButtonClick={this._onSubmit}
+                        onPrimaryButtonClick={this.onSubmit}
                         focus={true}
-                        onCancel={this._onCancel}
-                        disabled={this.state.busy}
-                    />
-                </BaseDialog>
-            );
-        } else {
-            // Report to homeserver admin.
-            // Currently, the API does not support natures.
-            return (
-                <BaseDialog
-                    className="mx_BugReportDialog"
-                    onFinished={this.props.onFinished}
-                    title={_t('Report Content to Your Homeserver Administrator')}
-                    contentId='mx_ReportEventDialog'
-                >
-                    <div className="mx_ReportEventDialog" id="mx_ReportEventDialog">
-                        <p>
-                            {
-                                _t("Reporting this message will send its unique 'event ID' to the administrator of " +
-                                    "your homeserver. If messages in this room are encrypted, your homeserver " +
-                                    "administrator will not be able to read the message text or view any files " +
-                                    "or images.")
-                            }
-                        </p>
-                        {adminMessage}
-                        <Field
-                            className="mx_ReportEventDialog_reason"
-                            element="textarea"
-                            label={_t("Reason")}
-                            rows={5}
-                            onChange={this._onReasonChange}
-                            value={this.state.reason}
-                            disabled={this.state.busy}
-                        />
-                        {progress}
-                        {error}
-                    </div>
-                    <DialogButtons
-                        primaryButton={_t("Send report")}
-                        onPrimaryButtonClick={this._onSubmit}
-                        focus={true}
-                        onCancel={this._onCancel}
+                        onCancel={this.onCancel}
                         disabled={this.state.busy}
                     />
                 </BaseDialog>
             );
         }
+        // Report to homeserver admin.
+        // Currently, the API does not support natures.
+        return (
+            <BaseDialog
+                className="mx_ReportEventDialog"
+                onFinished={this.props.onFinished}
+                title={_t('Report Content to Your Homeserver Administrator')}
+                contentId='mx_ReportEventDialog'
+            >
+                <div className="mx_ReportEventDialog" id="mx_ReportEventDialog">
+                    <p>
+                        {
+                            _t("Reporting this message will send its unique 'event ID' to the administrator of " +
+                                "your homeserver. If messages in this room are encrypted, your homeserver " +
+                                "administrator will not be able to read the message text or view any files " +
+                                "or images.")
+                        }
+                    </p>
+                    {adminMessage}
+                    <Field
+                        className="mx_ReportEventDialog_reason"
+                        element="textarea"
+                        label={_t("Reason")}
+                        rows={5}
+                        onChange={this.onReasonChange}
+                        value={this.state.reason}
+                        disabled={this.state.busy}
+                    />
+                    {progress}
+                    {error}
+                </div>
+                <DialogButtons
+                    primaryButton={_t("Send report")}
+                    onPrimaryButtonClick={this.onSubmit}
+                    focus={true}
+                    onCancel={this.onCancel}
+                    disabled={this.state.busy}
+                />
+            </BaseDialog>
+        );
     }
 }

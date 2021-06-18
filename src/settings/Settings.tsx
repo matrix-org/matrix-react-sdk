@@ -137,7 +137,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             "In rooms that support moderation, the `report` button will let you report abuse to room moderators"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
-        controller: new ReloadOnChangeController(),
     },
     "feature_spaces": {
         isFeature: true,
