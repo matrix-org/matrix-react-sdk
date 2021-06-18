@@ -1542,7 +1542,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             </React.Fragment>;
         } else {
             dialogContent = <React.Fragment>
-                usersSection
+                {usersSection}
                 {consultConnectSection}
             </React.Fragment>;
         }
