@@ -14,18 +14,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {PureComponent} from 'react';
+import React from 'react';
 import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
-import { ensureDMExists } from '../../../createRoom';
+import { ensureDMExists } from "../../../createRoom";
+import { IDialogProps } from "./IDialogProps";
 import PropTypes from "prop-types";
 import {MatrixEvent} from "matrix-js-sdk/src/models/event";
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import SdkConfig from '../../../SdkConfig';
 import Markdown from '../../../Markdown';
 import {replaceableComponent} from "../../../utils/replaceableComponent";
-import SettingsStore from '../../../settings/SettingsStore';
+import SettingsStore from "../../../settings/SettingsStore";
 import StyledRadioButton from "../elements/StyledRadioButton";
+
+interface IProps extends IDialogProps {
+    mxEvent: MatrixEvent;
+}
+
+interface IState {
+    // A free-form text describing the abuse.
+    reason: string,
+    busy: boolean,
+    err: string|null,
+    // If specified, the nature of the abuse, as specified by MSC3215.
+    nature: string|null,
+}
+
 
 const MODERATED_BY_STATE_EVENT_TYPE = [
     "org.matrix.msc3215.room.moderation.moderated_by",
@@ -60,19 +75,21 @@ const NATURE_ADMIN = "non-standard.abuse.nature.admin";
  *    /`org.matrix.msc3215.room.moderation.moderated_by`?
  */
 @replaceableComponent("views.dialogs.ReportEventDialog")
-export default class ReportEventDialog extends PureComponent {
+export default class ReportEventDialog extends React.Component<IProps, IState> {
     static propTypes = {
         mxEvent: PropTypes.instanceOf(MatrixEvent).isRequired,
         onFinished: PropTypes.func.isRequired,
     };
 
+    // If non-null, the id of the moderation room.
+    moderatedByRoomId: string | null;
+    // If non-null, the id of the bot in charge of forwarding abuse reports to the moderation room.
+    moderatedByUserId: string | null;
+
     constructor(props) {
         super(props);
 
-        // If non-null, the id of the moderation room.
         this.moderatedByRoomId = null;
-
-        // If non-null, the id of the bot in charge of forwarding abuse reports to the moderation room.
         this.moderatedByUserId = null;
 
         if (SettingsStore.getValue("feature_report_to_moderators")) {
