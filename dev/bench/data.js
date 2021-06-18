@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624017715608,
+  "lastUpdate": 1624022323791,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -704,6 +704,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4539.704999999973,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f34086aa3c8b546ce243af99229547eb7b1e4f67",
+          "message": "Merge pull request #6214 from matrix-org/jryans/enc-phase-ts\n\nFix phase enum usage in JS modules as well",
+          "timestamp": "2021-06-18T14:13:31+01:00",
+          "tree_id": "7676aa7b4c30d1af39b98f0d4b0b80bc281cf823",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f34086aa3c8b546ce243af99229547eb7b1e4f67"
+        },
+        "date": 1624022322193,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4039.085,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 963.2100000000028,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1733.2900000000081,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4450.044999999984,
             "unit": "ms",
             "extra": "type: measure"
           }
