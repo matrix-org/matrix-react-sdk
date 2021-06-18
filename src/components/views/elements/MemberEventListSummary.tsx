@@ -25,7 +25,7 @@ import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
 import { isValid3pidInvite } from "../../../RoomInvite";
 import EventListSummary from "./EventListSummary";
 import { Layout } from '../../../settings/Layout';
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     // An array of member events to summarise
@@ -306,7 +306,7 @@ export default class MemberEventListSummary extends React.Component<IProps> {
         return res;
     }
 
-    private static getTransitionSequence(events: MatrixEvent[]) {
+    private static getTransitionSequence(events: IUserEvents[]) {
         return events.map(MemberEventListSummary.getTransition);
     }
 
@@ -318,7 +318,7 @@ export default class MemberEventListSummary extends React.Component<IProps> {
      * @returns {string?} the transition type given to this event. This defaults to `null`
      * if a transition is not recognised.
      */
-    private static getTransition(e: MatrixEvent): TransitionType {
+    private static getTransition(e: IUserEvents): TransitionType {
         if (e.mxEvent.getType() === 'm.room.third_party_invite') {
             // Handle 3pid invites the same as invites so they get bundled together
             if (!isValid3pidInvite(e.mxEvent)) {
