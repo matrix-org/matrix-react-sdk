@@ -262,31 +262,45 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
             let subtitle;
             switch (this.state.nature) {
                 case NATURE_DISAGREEMENT:
-                    subtitle = _t("Abuse: What this user is writing is wrong.");
+                    subtitle = _t("What this user is writing is wrong.\n" +
+                        "This will be reported to the room moderators.");
                     break;
                 case NATURE_TOXIC:
-                    subtitle = _t("Abuse: This user is displaying toxic behavior.");
+                    subtitle = _t("This user is displaying toxic behavior, " +
+                        "for instance by insulting other users or sharing " +
+                        " adult-only content in a family-friendly room " +
+                        " or otherwise violating the rules of this room.\n" +
+                        "This will be reported to the room moderators.");
                     break;
                 case NATURE_ILLEGAL:
-                    subtitle = _t("Abuse: This user is displaying illegal behavior.");
+                    subtitle = _t("This user is displaying illegal behavior, " +
+                        "for instance by doxing people or threatening violence.\n" +
+                        "This will be reported to the room moderators who may escalate this to legal authorities.");
                     break;
                 case NATURE_SPAM:
-                    subtitle = _t("Abuse: This user is spamming the room.");
+                    subtitle = _t("This user is spamming the room with ads, links to ads or to propaganda.\n" +
+                        "This will be reported to the room moderators.");
                     break;
                 case NATURE_ADMIN:
                     if (client.isRoomEncrypted(this.props.mxEvent.getRoomId())) {
-                        subtitle = _t("Abuse: Report the entire room to %(homeserver)s admin. Encrypted.",
-                            { homeserver: homeServerName });
+                        subtitle = _t("This room is dedicated to illegal or toxic content " +
+                            "or the moderators fail to moderate illegal or toxic content.\n" +
+                            "This will be reported to the administrators of %(homeserver)s. " +
+                            "The administrators will NOT be able to read the encrypted content of this room.",
+                        { homeserver: homeServerName });
                     } else {
-                        subtitle = _t("Abuse: Report the entire room to %(homeserver)s admin. Unencrypted.",
-                            { homeserver: homeServerName });
+                        subtitle = _t("This room is dedicated to illegal or toxic content " +
+                            "or the moderators fail to moderate illegal or toxic content.\n" +
+                            " This will be reported to the administrators of %(homeserver)s.",
+                        { homeserver: homeServerName });
                     }
                     break;
                 case NATURE_OTHER:
-                    subtitle = _t("Abuse: Any other reason.");
+                    subtitle = _t("Any other reason. Please describe the problem.\n" +
+                        "This will be reported to the room moderators.");
                     break;
                 default:
-                    subtitle = _t("Abuse: What makes this message abusive?");
+                    subtitle = _t("Please pick a nature and describe what makes this message abusive.");
                     break;
             }
 
@@ -304,7 +318,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                             checked = { this.state.nature == NATURE_DISAGREEMENT }
                             onChange = { this._onNatureChosen }
                         >
-                            {_t('Abuse nature: Disagreement')}
+                            {_t('Disagree')}
                         </StyledRadioButton>
                         <StyledRadioButton
                             name = "nature"
@@ -312,7 +326,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                             checked = { this.state.nature == NATURE_TOXIC }
                             onChange = { this._onNatureChosen }
                         >
-                            {_t('Abuse nature: Toxic Behavior')}
+                            {_t('Toxic Behavior')}
                         </StyledRadioButton>
                         <StyledRadioButton
                             name = "nature"
@@ -320,7 +334,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                             checked = { this.state.nature == NATURE_ILLEGAL }
                             onChange = { this._onNatureChosen }
                         >
-                            {_t('Abuse nature: Illegal Content')}
+                            {_t('Illegal Content')}
                         </StyledRadioButton>
                         <StyledRadioButton
                             name = "nature"
@@ -328,7 +342,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                             checked = { this.state.nature == NATURE_SPAM }
                             onChange = { this._onNatureChosen }
                         >
-                            {_t('Abuse nature: Spam, propaganda, ...')}
+                            {_t('Spam or propaganda')}
                         </StyledRadioButton>
                         <StyledRadioButton
                             name = "nature"
@@ -336,7 +350,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                             checked = { this.state.nature == NATURE_ADMIN }
                             onChange = { this._onNatureChosen }
                         >
-                            {_t('Abuse nature: Report the entire room to your homeserver admin')}
+                            {_t('Report the entire room')}
                         </StyledRadioButton>
                         <StyledRadioButton
                             name = "nature"
@@ -344,7 +358,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                             checked = { this.state.nature == NATURE_OTHER }
                             onChange = { this._onNatureChosen }
                         >
-                            {_t('Abuse nature: Anything else')}
+                            {_t('Other')}
                         </StyledRadioButton>
                         <p>
                             {subtitle}
