@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624032851216,
+  "lastUpdate": 1624037945827,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -848,6 +848,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4192.504999999983,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "89240c377b3fcd1e7620a5028f131618fec6ca62",
+          "message": "Merge pull request #6196 from matrix-org/travis/event-fixes\n\nPartially restore immutable event objects at the rendering layer",
+          "timestamp": "2021-06-18T11:32:57-06:00",
+          "tree_id": "c820412bf4681ee24b876e3cb5fd19c23ea16cfc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/89240c377b3fcd1e7620a5028f131618fec6ca62"
+        },
+        "date": 1624037944118,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4252.084999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1230.1249999999854,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1729.2350000000151,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4367.32499999999,
             "unit": "ms",
             "extra": "type: measure"
           }
