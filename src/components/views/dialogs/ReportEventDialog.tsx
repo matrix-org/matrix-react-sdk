@@ -89,7 +89,7 @@ type Moderation = {
 @replaceableComponent("views.dialogs.ReportEventDialog")
 export default class ReportEventDialog extends React.Component<IProps, IState> {
     // If the room supports moderation, the moderation information.
-    moderation?: Moderation;
+    private moderation?: Moderation;
 
     constructor(props: IProps) {
         super(props);
