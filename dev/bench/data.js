@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624041153651,
+  "lastUpdate": 1624132146201,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -944,6 +944,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4280.574999999997,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e9ea3cad76173c5e5b8f4d7d618a3d8a17548102",
+          "message": "Merge pull request #6221 from matrix-org/revert-6196-travis/event-fixes\n\nRevert \"Partially restore immutable event objects at the rendering layer\"",
+          "timestamp": "2021-06-19T13:43:30-06:00",
+          "tree_id": "de28d274f01c273a9934de5bbdd86b52c8c99b9b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e9ea3cad76173c5e5b8f4d7d618a3d8a17548102"
+        },
+        "date": 1624132145486,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4535.785000000033,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1183.889999999912,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1750.169999999911,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4619.574999999939,
             "unit": "ms",
             "extra": "type: measure"
           }
