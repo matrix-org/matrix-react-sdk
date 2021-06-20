@@ -89,6 +89,7 @@ type RunFn = ((roomId: string, args: string, cmd: string) => {error: any} | {pro
 
 interface ICommandOpts {
     command: string;
+    namespace?: string;
     aliases?: string[];
     args?: string;
     description: string;
@@ -100,6 +101,7 @@ interface ICommandOpts {
 
 export class Command {
     command: string;
+    namespace: string;
     aliases: string[];
     args: undefined | string;
     description: string;
@@ -110,6 +112,7 @@ export class Command {
 
     constructor(opts: ICommandOpts) {
         this.command = opts.command;
+        this.namespace = opts.namespace || "";
         this.aliases = opts.aliases || [];
         this.args = opts.args || "";
         this.description = opts.description;
@@ -123,14 +126,18 @@ export class Command {
         return `/${this.command}`;
     }
 
+    getNamespace() {
+        return `${this.namespace}`;
+    }
+
     getCommandWithArgs() {
         return this.getCommand() + " " + this.args;
     }
 
-    run(roomId: string, args: string) {
+    run(roomId: string, args: string, cmd: string) {
         // if it has no runFn then its an ignored/nop command (autocomplete only) e.g `/me`
         if (!this.runFn) return reject(_t("Command error"));
-        return this.runFn.bind(this)(roomId, args);
+        return this.runFn.bind(this)(roomId, args, cmd);
     }
 
     getUsage() {
@@ -1196,17 +1203,19 @@ export function parseCommandString(input: string) {
     input = input.replace(/\s+$/, '');
     if (input[0] !== '/') return {}; // not a command
 
-    const bits = input.match(/^(\S+?)(?:[ \n]+((.|\n)*))?$/);
+    const bits = input.match(/^(\S+?)(@\S+?)?(?:[ \n]+((.|\n)*))?$/);
     let cmd;
+    let namespace;
     let args;
     if (bits) {
         cmd = bits[1].substring(1).toLowerCase();
-        args = bits[2];
+        namespace = (bits[2] || "").toLowerCase();
+        args = bits[3];
     } else {
         cmd = input;
     }
 
-    return {cmd, args};
+    return {cmd, namespace, args};
 }
 
 /**
@@ -1217,12 +1226,65 @@ export function parseCommandString(input: string) {
  * processing the command, or 'promise' if a request was sent out.
  * Returns null if the input didn't match a command.
  */
-export function getCommand(input: string) {
-    const {cmd, args} = parseCommandString(input);
+export function getCommand(input: string, roomId: string) {
+    const {cmd, namespace, args} = parseCommandString(input);
+    const room = MatrixClientPeg.get().getRoom(roomId);
+    const interactionsState = room.currentState.getStateEvents("dev.nordgedanken.msc3006.bot.interactions");
+    const botCommandsList: Command[] = [];
 
-    if (CommandMap.has(cmd) && CommandMap.get(cmd).isEnabled()) {
+    interactionsState.forEach(bot => {
+        const content = bot.getContent();
+
+        content["interactions"]
+            .filter(interaction => interaction["type"] == "dev.nordgedanken.msc3006.interaction.command")
+            .forEach(interaction => {
+                botCommandsList.push(new Command({
+                    command: interaction["name"],
+                    namespace: bot.getStateKey(),
+                    args: '', //TODO needs MSC change
+                    description: interaction["description"],
+                    category: CommandCategories.messages,
+                    hideCompletionAfterSpace: true,
+                    runFn: function(roomId, rawArgs, cmd) {
+                        const generateMessage = async () => {
+                            const cmdParts = cmd.split('@');
+                            const name = cmdParts[0].substring(1);
+                            const namespace = '@' + cmdParts[1];
+                            const room = MatrixClientPeg.get().getRoom(roomId);
+                            const interactionsState = room.currentState
+                                .getStateEvents("dev.nordgedanken.msc3006.bot.interactions");
+                            const bot = interactionsState.filter(bot => bot.getStateKey() == namespace)[0];
+
+                            const args = (rawArgs != undefined ? " " + rawArgs : "");
+
+
+                            return {
+                                "msgtype": "m.text",
+                                "body": bot.getContent()["command_prefix"] + name + args,
+                                "dev.nordgedanken.msc3006.interaction.command": {
+                                    command: name,
+                                    target: namespace,
+                                },
+                            };
+                        };
+                        return success(generateMessage());
+                    },
+                }))
+            });
+    });
+
+    const tempCommandMap = new Map(CommandMap);
+
+    botCommandsList.forEach(cmd => {
+        tempCommandMap.set(cmd.command + cmd.getNamespace(), cmd);
+        cmd.aliases.forEach(alias => {
+            tempCommandMap.set(alias, cmd);
+        });
+    });
+
+    if (tempCommandMap.has(cmd + namespace) && tempCommandMap.get(cmd + namespace).isEnabled()) {
         return {
-            cmd: CommandMap.get(cmd),
+            cmd: tempCommandMap.get(cmd + namespace),
             args,
         };
     }

@@ -65,6 +65,7 @@
 
 .mx_Autocomplete_Completion_container_truncate {
     .mx_Autocomplete_Completion_title,
+    .mx_Autocomplete_Completion_namespace,
     .mx_Autocomplete_Completion_subtitle,
     .mx_Autocomplete_Completion_description {
         /* Ellipsis for long names/subtitles/descriptions */
@@ -73,6 +74,10 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+}
+
+.mx_Autocomplete_Completion_namespace {
+    color: gray;
 }
 
 .mx_Autocomplete_Completion.selected,
