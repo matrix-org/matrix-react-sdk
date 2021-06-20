@@ -28,35 +28,8 @@ limitations under the License.
         mask-image: url("$(res)/img/download.svg");
         background-color: $accent-color;
         display: inline-block;
+        margin-right: 2px;
     }
-}
-
-.mx_MFileBody_download a {
-    color: $accent-color;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.mx_MFileBody_download object {
-    margin-left: -16px;
-    padding-right: 4px;
-    margin-top: -4px;
-    vertical-align: middle;
-    pointer-events: none;
-}
-
-/* Remove the border and padding for iframes for download links. */
-.mx_MFileBody_download iframe {
-    margin: 0px;
-    padding: 0px;
-    border: none;
-    width: 100%;
-    /* Set the height of the iframe to be 1 line of text.
-     * Iframes don't automatically size themselves to fit their content.
-     * So either we have to fix the height of the iframe using CSS or
-     * use javascript's cross-origin postMessage API to communicate how
-     * big the content of the iframe is. */
-    height: 1.5em;
 }
 
 .mx_MFileBody_info {
@@ -65,16 +38,17 @@ limitations under the License.
     width: 243px; // same width as a playable voice message, accounting for padding
     padding: 6px 12px;
     color: $message-body-panel-fg-color;
+    display: flex;
+    align-items: center;
 
     .mx_MFileBody_info_icon {
         background-color: $message-body-panel-icon-bg-color;
         border-radius: 20px;
-        display: inline-block;
         width: 32px;
         height: 32px;
         position: relative;
-        vertical-align: middle;
         margin-right: 12px;
+        flex-shrink: 0;
 
         &::before {
             content: '';
@@ -96,8 +70,27 @@ limitations under the License.
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
-        display: inline-block;
-        width: calc(100% - 32px - 12px); // 32px icon, 12px margin on the icon
+        width: 100%;
         vertical-align: middle;
+    }
+
+    .mx_MFileBody_info_downloadButton {
+        margin-left: 12px;
+        height: 22px;
+        width: 22px;
+        flex-shrink: 0;
+
+        &::before {
+            content: '';
+            mask-repeat: no-repeat;
+            mask-position: center;
+            mask-size: cover;
+            mask-image: url('$(res)/img/image-view/download.svg');
+            background-color: $icon-button-color;
+            height: 22px;
+            width: 22px;
+
+            position: absolute;
+        }
     }
 }

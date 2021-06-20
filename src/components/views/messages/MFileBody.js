@@ -24,17 +24,7 @@ import AccessibleButton from "../elements/AccessibleButton";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 import {mediaFromContent} from "../../../customisations/Media";
 import ErrorDialog from "../dialogs/ErrorDialog";
-
-let downloadIconUrl; // cached copy of the download.svg asset for the sandboxed iframe later on
-
-async function cacheDownloadIcon() {
-    if (downloadIconUrl) return; // cached already
-    const svg = await fetch(require("../../../../res/img/download.svg")).then(r => r.text());
-    downloadIconUrl = "data:image/svg+xml;base64," + window.btoa(svg);
-}
-
-// Cache the asset immediately
-cacheDownloadIcon();
+import AccessibleTooltipButton from '../elements/AccessibleTooltipButton';
 
 // User supplied content can contain scripts, we have to be careful that
 // we don't accidentally run those script within the same origin as the
@@ -66,31 +56,10 @@ cacheDownloadIcon();
 // the downside of using a sandboxed iframe is that the browers are overly
 // restrictive in what you are allowed to do with the generated URL.
 
-/**
- * Get the current CSS style for a DOMElement.
- * @param {HTMLElement} element The element to get the current style of.
- * @return {string} The CSS style encoded as a string.
- */
-function computedStyle(element) {
-    if (!element) {
-        return "";
-    }
-    const style = window.getComputedStyle(element, null);
-    let cssText = style.cssText;
-    // noinspection EqualityComparisonWithCoercionJS
-    if (cssText == "") {
-        // Firefox doesn't implement ".cssText" for computed styles.
-        // https://bugzilla.mozilla.org/show_bug.cgi?id=137687
-        for (let i = 0; i < style.length; i++) {
-            cssText += style[i] + ":";
-            cssText += style.getPropertyValue(style[i]) + ";";
-        }
-    }
-    return cssText;
-}
-
 @replaceableComponent("views.messages.MFileBody")
 export default class MFileBody extends React.Component {
+    decrypting = false;
+
     static propTypes = {
         /* the MatrixEvent to show */
         mxEvent: PropTypes.object.isRequired,
@@ -159,186 +128,141 @@ export default class MFileBody extends React.Component {
         }
     }
 
-    render() {
+    async _decrypt(file) {
+        try {
+            const blob = await decryptFile(file);
+            await this.setState({
+                decryptedBlob: blob,
+            });
+        } catch (error) {
+            console.warn("Unable to decrypt attachment: ", error);
+            Modal.createTrackedDialog('Error decrypting attachment', '', ErrorDialog, {
+                title: _t("Error"),
+                description: _t("Error decrypting attachment"),
+            });
+        }
+    }
+
+    _onDownloadClick = async () => {
         const content = this.props.mxEvent.getContent();
-        const text = this.presentableTextForFile(content);
-        const isEncrypted = content.file !== undefined;
-        const fileName = content.body && content.body.length > 0 ? content.body : _t("Attachment");
-        const contentUrl = this._getContentUrl();
         const fileSize = content.info ? content.info.size : null;
         const fileType = content.info ? content.info.mimetype : "application/octet-stream";
+        const fileName = content.body && content.body.length > 0 ? content.body : _t("Attachment");
+        const contentUrl = this.getContentUrl();
+        // Blobs can only have up to 500mb, so if the file reports as being too
+        // large then we won't try and convert it. Likewise, if the file size is
+        // unknown then we'll assume it is too big. There is the risk of the
+        // reported file size and the actual file size being different, however
+        // the user shouldn't normally run into this problem. - Travis
+        const fileTooBig = typeof(fileSize) === 'number' ? fileSize > 524288000 : true;
 
-        let placeholder = null;
-        if (this.props.showGenericPlaceholder) {
-            placeholder = (
-                <div className="mx_MFileBody_info">
-                    <span className="mx_MFileBody_info_icon" />
-                    <span className="mx_MFileBody_info_filename">{this.presentableTextForFile(content, false)}</span>
-                </div>
-            );
+        if (!this.state.decryptedBlob && content.file) {
+            // We have a file but we do not have the decryptedBlob, so we try to
+            // decrypt it
+            if (this.decrypting) return;
+            this.decrypting = true;
+            await this._decrypt(content.file);
+            this.decrypting = false;
         }
 
-        if (isEncrypted) {
-            if (this.state.decryptedBlob === null) {
-                // Need to decrypt the attachment
-                // Wait for the user to click on the link before downloading
-                // and decrypting the attachment.
-                let decrypting = false;
-                const decrypt = (e) => {
-                    if (decrypting) {
-                        return false;
-                    }
-                    decrypting = true;
-                    decryptFile(content.file).then((blob) => {
-                        this.setState({
-                            decryptedBlob: blob,
-                        });
-                    }).catch((err) => {
-                        console.warn("Unable to decrypt attachment: ", err);
-                        Modal.createTrackedDialog('Error decrypting attachment', '', ErrorDialog, {
-                            title: _t("Error"),
-                            description: _t("Error decrypting attachment"),
-                        });
-                    }).finally(() => {
-                        decrypting = false;
-                    });
-                };
+        // We have to create an anchor to download the file
+        const anchor = document.createElement("a");
+        anchor.href = contentUrl;
+        anchor.download = fileName;
+        anchor.target = "_blank";
+        anchor.rel = "noreferrer noopener";
 
-                // This button should actually Download because usercontent/ will try to click itself
-                // but it is not guaranteed between various browsers' settings.
-                return (
-                    <span className="mx_MFileBody">
-                        {placeholder}
-                        <div className="mx_MFileBody_download">
-                            <AccessibleButton onClick={decrypt}>
-                                { _t("Decrypt %(text)s", { text: text }) }
-                            </AccessibleButton>
-                        </div>
-                    </span>
-                );
-            }
+        if (this.state.decryptedBlob) {
+            // If the attachment is encrypted then put the link inside an iframe.
+            const iframe = document.createElement("iframe");
 
             // When the iframe loads we tell it to render a download link
             const onIframeLoad = (ev) => {
                 ev.target.contentWindow.postMessage({
-                    imgSrc: downloadIconUrl,
-                    imgStyle: null, // it handles this internally for us. Useful if a downstream changes the icon.
-                    style: computedStyle(this._dummyLink.current),
                     blob: this.state.decryptedBlob,
-                    // Set a download attribute for encrypted files so that the file
-                    // will have the correct name when the user tries to download it.
-                    // We can't provide a Content-Disposition header like we would for HTTP.
+                    // Set a download attribute for encrypted files so that the
+                    // file will have the correct name when the user tries to
+                    // download it. We can't provide a Content-Disposition
+                    // header like we would for HTTP. - Mark Haines
                     download: fileName,
-                    textContent: _t("Download %(text)s", { text: text }),
                     // only auto-download if a user triggered this iframe explicitly
                     auto: !this.props.decryptedBlob,
                 }, "*");
             };
 
-            const url = "usercontent/"; // XXX: this path should probably be passed from the skin
+            iframe.src = "usercontent/"; // XXX: this path should probably be passed from the skin - Michael
+            iframe.onload = onIframeLoad;
+            iframe.sandbox = "allow-scripts allow-downloads allow-downloads-without-user-activation";
+            document.body.appendChild(iframe);
+        } else if (["application/pdf"].includes(fileType) && !fileTooBig) {
+            // We download PDFs as blobs to avoid empty grey screens, see
+            // https://github.com/vector-im/element-web/issues/8605
+            const response = await fetch(contentUrl);
+            const blob = await response.blob();
+            const blobUrl = URL.createObjectURL(blob);
 
-            // If the attachment is encrypted then put the link inside an iframe.
-            return (
-                <span className="mx_MFileBody">
-                    {placeholder}
-                    <div className="mx_MFileBody_download">
-                        <div style={{display: "none"}}>
-                            { /*
-                              * Add dummy copy of the "a" tag
-                              * We'll use it to learn how the download link
-                              * would have been styled if it was rendered inline.
-                              */ }
-                            <a ref={this._dummyLink} />
-                        </div>
-                        <iframe
-                            src={url}
-                            onLoad={onIframeLoad}
-                            ref={this._iframe}
-                            sandbox="allow-scripts allow-downloads allow-downloads-without-user-activation" />
-                    </div>
-                </span>
-            );
-        } else if (contentUrl) {
-            const downloadProps = {
-                target: "_blank",
-                rel: "noreferrer noopener",
-
-                // We set the href regardless of whether or not we intercept the download
-                // because we don't really want to convert the file to a blob eagerly, and
-                // still want "open in new tab" and "save link as" to work.
-                href: contentUrl,
-            };
-
-            // Blobs can only have up to 500mb, so if the file reports as being too large then
-            // we won't try and convert it. Likewise, if the file size is unknown then we'll assume
-            // it is too big. There is the risk of the reported file size and the actual file size
-            // being different, however the user shouldn't normally run into this problem.
-            const fileTooBig = typeof(fileSize) === 'number' ? fileSize > 524288000 : true;
-
-            if (["application/pdf"].includes(fileType) && !fileTooBig) {
-                // We want to force a download on this type, so use an onClick handler.
-                downloadProps["onClick"] = (e) => {
-                    console.log(`Downloading ${fileType} as blob (unencrypted)`);
-
-                    // Avoid letting the <a> do its thing
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    // Start a fetch for the download
-                    // Based upon https://stackoverflow.com/a/49500465
-                    fetch(contentUrl).then((response) => response.blob()).then((blob) => {
-                        const blobUrl = URL.createObjectURL(blob);
-
-                        // We have to create an anchor to download the file
-                        const tempAnchor = document.createElement('a');
-                        tempAnchor.download = fileName;
-                        tempAnchor.href = blobUrl;
-                        document.body.appendChild(tempAnchor); // for firefox: https://stackoverflow.com/a/32226068
-                        tempAnchor.click();
-                        tempAnchor.remove();
-                    });
-                };
-            } else {
-                // Else we are hoping the browser will do the right thing
-                downloadProps["download"] = fileName;
-            }
-
-            // If the attachment is not encrypted then we check whether we
-            // are being displayed in the room timeline or in a list of
-            // files in the right hand side of the screen.
-            if (this.props.tileShape === "file_grid") {
-                return (
-                    <span className="mx_MFileBody">
-                        {placeholder}
-                        <div className="mx_MFileBody_download">
-                            <a className="mx_MFileBody_downloadLink" {...downloadProps}>
-                                { fileName }
-                            </a>
-                            <div className="mx_MImageBody_size">
-                                { content.info && content.info.size ? filesize(content.info.size) : "" }
-                            </div>
-                        </div>
-                    </span>
-                );
-            } else {
-                return (
-                    <span className="mx_MFileBody">
-                        {placeholder}
-                        <div className="mx_MFileBody_download">
-                            <a {...downloadProps}>
-                                <span className="mx_MFileBody_download_icon" />
-                                { _t("Download %(text)s", { text: text }) }
-                            </a>
-                        </div>
-                    </span>
-                );
-            }
+            anchor.href = blobUrl;
+            document.body.appendChild(anchor); // for firefox: https://stackoverflow.com/a/32226068
+            anchor.click();
+            anchor.remove();
         } else {
-            const extra = text ? (': ' + text) : '';
-            return <span className="mx_MFileBody">
-                {placeholder}
-                { _t("Invalid file%(extra)s", { extra: extra }) }
-            </span>;
+            // Else we are hoping the browser will do the right thing
+            anchor.click();
         }
+    };
+
+    render() {
+        const content = this.props.mxEvent.getContent();
+        const isEncrypted = content.file !== undefined;
+        const contentUrl = this._getContentUrl();
+
+        if (!this.props.showGenericPlaceholder) {
+            return (
+                <AccessibleButton
+                    className="mx_MFileBody_download"
+                    onClick={this.onDownloadClick}
+                >
+                    <span className="mx_MFileBody_download_icon" />
+                    { _t("Download %(text)s", { text: this.presentableTextForFile(content) }) }
+                </AccessibleButton>
+            );
+        }
+
+        let invalidFile;
+        if (!isEncrypted && !contentUrl) {
+            const text = this.presentableTextForFile(content);
+            const extra = text ? (': ' + text) : '';
+            invalidFile = _t("Invalid file%(extra)s", { extra: extra });
+        }
+
+        // If the file is being showed in the file panel and we have contentUrl, we show size info
+        let size;
+        if (this.props.tileShape === "file_grid" && contentUrl) {
+            size = (
+                <div className="mx_MFileBody_download">
+                    <div className="mx_MImageBody_size">
+                        { content.info && content.info.size ? filesize(content.info.size) : "" }
+                    </div>
+                </div>
+            );
+        }
+
+        return (
+            <span className="mx_MFileBody">
+                <div className="mx_MFileBody_info">
+                    <span className="mx_MFileBody_info_icon" />
+                    <span className="mx_MFileBody_info_filename">
+                        { this.presentableTextForFile(content, false) }
+                    </span>
+                    <AccessibleTooltipButton
+                        className="mx_MFileBody_info_downloadButton"
+                        onClick={this.onDownloadClick}
+                        title={_t("Download")}
+                    />
+                </div>
+                { size }
+                { invalidFile }
+            </span>
+        );
     }
 }
