@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016, 2018, 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 Šimon Brandner <simon.bra.ag@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,17 +15,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {createRef} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import filesize from 'filesize';
 import { _t } from '../../../languageHandler';
-import {decryptFile} from '../../../utils/DecryptFile';
+import { decryptFile } from '../../../utils/DecryptFile';
 import Modal from '../../../Modal';
-import AccessibleButton from "../elements/AccessibleButton";
-import {replaceableComponent} from "../../../utils/replaceableComponent";
-import {mediaFromContent} from "../../../customisations/Media";
+import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { mediaFromContent } from "../../../customisations/Media";
+import AccessibleButton from '../elements/AccessibleButton';
 import ErrorDialog from "../dialogs/ErrorDialog";
 import AccessibleTooltipButton from '../elements/AccessibleTooltipButton';
+import { MatrixEvent } from 'matrix-js-sdk';
 
 // User supplied content can contain scripts, we have to be careful that
 // we don't accidentally run those script within the same origin as the
@@ -56,22 +57,20 @@ import AccessibleTooltipButton from '../elements/AccessibleTooltipButton';
 // the downside of using a sandboxed iframe is that the browers are overly
 // restrictive in what you are allowed to do with the generated URL.
 
-@replaceableComponent("views.messages.MFileBody")
-export default class MFileBody extends React.Component {
-    decrypting = false;
+interface IProps {
+    mxEvent: MatrixEvent,
+    decryptedBlob?: Blob; // already decrypted blob
+    tileShape?: string; // the shape of the tile, used
+    showGenericPlaceholder?: boolean; // whether or not to show the default placeholder for the file. Defaults to true.
+}
 
-    static propTypes = {
-        /* the MatrixEvent to show */
-        mxEvent: PropTypes.object.isRequired,
-        /* already decrypted blob */
-        decryptedBlob: PropTypes.object,
-        /* called when the download link iframe is shown */
-        onHeightChanged: PropTypes.func,
-        /* the shape of the tile, used */
-        tileShape: PropTypes.string,
-        /* whether or not to show the default placeholder for the file. Defaults to true. */
-        showGenericPlaceholder: PropTypes.bool,
-    };
+interface IState {
+    decryptedBlob: Blob;
+}
+
+@replaceableComponent("views.messages.MFileBody")
+export default class MFileBody extends React.Component<IProps, IState> {
+    private decrypting = false;
 
     static defaultProps = {
         showGenericPlaceholder: true,
@@ -81,11 +80,8 @@ export default class MFileBody extends React.Component {
         super(props);
 
         this.state = {
-            decryptedBlob: (this.props.decryptedBlob ? this.props.decryptedBlob : null),
+            decryptedBlob: this.props.decryptedBlob,
         };
-
-        this._iframe = createRef();
-        this._dummyLink = createRef();
     }
 
     /**
@@ -96,7 +92,7 @@ export default class MFileBody extends React.Component {
      * @param {boolean} withSize Whether to include size information. Default true.
      * @return {string} the human readable link text for the attachment.
      */
-    presentableTextForFile(content, withSize = true) {
+    private presentableTextForFile(content: any, withSize = true): string {
         let linkText = _t("Attachment");
         if (content.body && content.body.length > 0) {
             // The content body should be the name of the file including a
@@ -117,18 +113,12 @@ export default class MFileBody extends React.Component {
         return linkText;
     }
 
-    _getContentUrl() {
+    private getContentUrl(): string {
         const media = mediaFromContent(this.props.mxEvent.getContent());
         return media.srcHttp;
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (this.props.onHeightChanged && !prevState.decryptedBlob && this.state.decryptedBlob) {
-            this.props.onHeightChanged();
-        }
-    }
-
-    async _decrypt(file) {
+    private async decrypt(file: any) {
         try {
             const blob = await decryptFile(file);
             await this.setState({
@@ -143,7 +133,7 @@ export default class MFileBody extends React.Component {
         }
     }
 
-    _onDownloadClick = async () => {
+    private onDownloadClick = async () => {
         const content = this.props.mxEvent.getContent();
         const fileSize = content.info ? content.info.size : null;
         const fileType = content.info ? content.info.mimetype : "application/octet-stream";
@@ -161,7 +151,7 @@ export default class MFileBody extends React.Component {
             // decrypt it
             if (this.decrypting) return;
             this.decrypting = true;
-            await this._decrypt(content.file);
+            await this.decrypt(content.file);
             this.decrypting = false;
         }
 
@@ -192,6 +182,7 @@ export default class MFileBody extends React.Component {
 
             iframe.src = "usercontent/"; // XXX: this path should probably be passed from the skin - Michael
             iframe.onload = onIframeLoad;
+            // @ts-ignore - TS thinks sandbox is readonly but we know better
             iframe.sandbox = "allow-scripts allow-downloads allow-downloads-without-user-activation";
             document.body.appendChild(iframe);
         } else if (["application/pdf"].includes(fileType) && !fileTooBig) {
@@ -214,7 +205,7 @@ export default class MFileBody extends React.Component {
     render() {
         const content = this.props.mxEvent.getContent();
         const isEncrypted = content.file !== undefined;
-        const contentUrl = this._getContentUrl();
+        const contentUrl = this.getContentUrl();
 
         if (!this.props.showGenericPlaceholder) {
             return (
