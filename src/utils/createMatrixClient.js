@@ -18,6 +18,8 @@ import {createClient} from "matrix-js-sdk/src/matrix";
 import {IndexedDBCryptoStore} from "matrix-js-sdk/src/crypto/store/indexeddb-crypto-store";
 import {WebStorageSessionStore} from "matrix-js-sdk/src/store/session/webstorage";
 import {IndexedDBStore} from "matrix-js-sdk/src/store/indexeddb";
+import * as Matrix from 'matrix-js-sdk';
+import SdkConfig from "../SdkConfig";
 
 const localStorage = window.localStorage;
 
@@ -55,14 +57,19 @@ export default function createMatrixClient(opts) {
         });
     }
 
+    const disableEncryption = SdkConfig.get()['disableEncryption'] === true;
     if (localStorage) {
         storeOpts.sessionStore = new WebStorageSessionStore(localStorage);
     }
 
-    if (indexedDB) {
+    if (indexedDB && !disableEncryption) {
         storeOpts.cryptoStore = new IndexedDBCryptoStore(
             indexedDB, "matrix-js-sdk:crypto",
         );
+    }
+
+    if (disableEncryption) {
+        Matrix.setCryptoStoreFactory(() => null);
     }
 
     opts = Object.assign(storeOpts, opts);
