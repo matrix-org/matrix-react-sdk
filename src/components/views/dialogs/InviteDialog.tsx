@@ -1269,7 +1269,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     }
 
     private onDialChange = ev => {
-        this.setState({dialPadValue: ev.target.value});
+        this.setState({dialPadValue: ev.currentTarget.value});
     }
 
     private onDigitPress = digit => {
