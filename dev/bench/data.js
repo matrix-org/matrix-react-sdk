@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624262549641,
+  "lastUpdate": 1624266922405,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -1040,6 +1040,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4641.375000000044,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b6e00688226f0c48a2ebe016cfc97f580a3aff38",
+          "message": "Merge pull request #6225 from matrix-org/jryans/repair-decrypted-source\n\nFix View Source accessing renamed private field on MatrixEvent",
+          "timestamp": "2021-06-21T10:09:36+01:00",
+          "tree_id": "a6ae9b1c264d641746520916e234f0399baad338",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b6e00688226f0c48a2ebe016cfc97f580a3aff38"
+        },
+        "date": 1624266921672,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4448.715000000049,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1267.2150000000183,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1842.4199999999983,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4539.790000000037,
             "unit": "ms",
             "extra": "type: measure"
           }
