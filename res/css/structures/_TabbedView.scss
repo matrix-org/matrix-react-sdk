@@ -107,8 +107,8 @@ limitations under the License.
 
     .mx_TabbedView_maskedIcon::before {
         mask-size: 22px;
-        width: 22px;
-        height: 22px;
+        width: inherit;
+        height: inherit;
     }
 }
 
