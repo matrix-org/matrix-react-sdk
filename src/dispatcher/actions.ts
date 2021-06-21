@@ -110,13 +110,13 @@ export enum Action {
      * Start a call transfer to a Matrix ID
      * payload: TransferCallPayload
      */
-    TransferCallToMatrixID = "transferCallToMatrixID",
+    TransferCallToMatrixID = "transfer_call_to_matrix_id",
 
     /**
      * Start a call transfer to a phone number
      * payload: TransferCallPayload
      */
-     TransferCallToPhoneNumber = "transferCallToPhoneNumber",
+     TransferCallToPhoneNumber = "transfer_call_to_phone_number",
 
     /**
      * Fired when CallHandler has checked for PSTN protocol support
