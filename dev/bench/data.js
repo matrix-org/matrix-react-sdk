@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624132146201,
+  "lastUpdate": 1624262549641,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -992,6 +992,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4619.574999999939,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b380e43e4f6407406d4050d60d2057266a8d6dba",
+          "message": "Merge pull request #6219 from matrix-org/t3chguy/ts/6\n\nFix ConfirmUserActionDialog returning an input field rather than text",
+          "timestamp": "2021-06-21T08:53:43+01:00",
+          "tree_id": "6befa4a33fedbc69039f480e208afb6349dfbbd6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b380e43e4f6407406d4050d60d2057266a8d6dba"
+        },
+        "date": 1624262548845,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4475.979999999992,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1266.1449999999968,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1712.8350000000428,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4641.375000000044,
             "unit": "ms",
             "extra": "type: measure"
           }
