@@ -71,6 +71,7 @@ limitations under the License.
 
     .mx_TabbedView_tabLabels {
         display: flex;
+        margin-bottom: 8px;
     }
 
     .mx_TabbedView_tabLabel {
@@ -133,7 +134,7 @@ limitations under the License.
 
 .mx_TabbedView_maskedIcon::before {
     display: inline-block;
-    background-color: $tab-label-icon-bg-color;
+    background-color: $icon-button-color;
     mask-repeat: no-repeat;
     mask-position: center;
     content: '';

@@ -1466,7 +1466,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         } else if (this.props.kind === KIND_CALL_TRANSFER) {
             title = _t("Transfer");
 
-            consultConnectSection = <div>
+            consultConnectSection = <div className="mx_InviteDialog_transferConsultConnect">
                 <AccessibleButton
                     kind="primary"
                     onClick={this.transferCall}

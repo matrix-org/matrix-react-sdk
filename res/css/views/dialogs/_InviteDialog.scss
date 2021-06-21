@@ -298,6 +298,7 @@ limitations under the License.
 
 .mx_InviteDialog_content {
     height: calc(100% - 36px); // full height minus the size of the header
+    overflow: hidden;
 }
 
 .mx_InviteDialog_transfer {
@@ -309,9 +310,17 @@ limitations under the License.
         flex-direction: column;
 
         .mx_TabbedView {
-            height: calc(100% - 40px);
+            height: calc(100% - 60px);
         }
-        overflow: hidden;
+        overflow: visible;
+    }
+
+    .mx_InviteDialog_addressBar {
+        margin-top: 8px;
+    }
+
+    input[type="checkbox"] {
+        margin-right: 8px;
     }
 }
 
@@ -349,6 +358,19 @@ limitations under the License.
     width: 224px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.mx_InviteDialog_transferConsultConnect {
+    padding-top: 20px;
+    /* This wants a drop shadow the full width of the dialog, so relative-position it
+     * and make it wider, then compensate with padding
+     */
+    position: relative;
+    width: 496px;
+    left: -24px;
+    padding-left: 24px;
+    padding-right: 24px;
+    box-shadow: 0 -4px 4px rgba(0, 0, 0, 0.05);
 }
 
 .mx_InviteDialog_transferButton {
