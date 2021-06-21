@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624305777211,
+  "lastUpdate": 1624306284214,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -1268,6 +1268,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4608.055000000037,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9fa7ac21bd3b84aad8b0484a325dd38bdd796773",
+          "message": "Merge pull request #6216 from SimonBrandner/feature/pr-template\n\nAdd PR template",
+          "timestamp": "2021-06-21T14:05:58-06:00",
+          "tree_id": "94e0b3af34e700a18f3f9a67661360ccc613b9d5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9fa7ac21bd3b84aad8b0484a325dd38bdd796773"
+        },
+        "date": 1624306283398,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4601.399999999956,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1170.1800000000148,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1804.4449999999924,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4645.804999999993,
             "unit": "ms",
             "extra": "type: measure"
           }
