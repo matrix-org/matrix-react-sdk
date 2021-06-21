@@ -787,6 +787,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 this.setState({
                     errorText: _t("A call can only be transferred to a single user."),
                 });
+                return;
             }
 
             dis.dispatch({
