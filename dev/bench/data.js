@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624266922405,
+  "lastUpdate": 1624289635724,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -1088,6 +1088,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4539.790000000037,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "439e5628f5cceabcae13142e6253ce0c003b9041",
+          "message": "Merge pull request #6224 from matrix-org/gsouquet/fix-17707",
+          "timestamp": "2021-06-21T16:28:01+01:00",
+          "tree_id": "bfefc8e6c8eafb1bbfccf8b773e5abcacf0c9de4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/439e5628f5cceabcae13142e6253ce0c003b9041"
+        },
+        "date": 1624289634946,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4719.63999999997,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1205.0900000000402,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1850.4849999999933,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4770.084999999992,
             "unit": "ms",
             "extra": "type: measure"
           }
