@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624304158498,
+  "lastUpdate": 1624305777211,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -1220,6 +1220,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 634.5850000000064,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0e4bac46f8dacb477fc3d9986270d71e9e36dfd6",
+          "message": "Merge pull request #6222 from SimonBrandner/fix/prioritise-canonical/17570",
+          "timestamp": "2021-06-21T20:57:24+01:00",
+          "tree_id": "122744400fcd7e4dcbc101e454580ee2fdbb2ccb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0e4bac46f8dacb477fc3d9986270d71e9e36dfd6"
+        },
+        "date": 1624305775823,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4557.794999999998,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1226.8450000000266,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1722.7449999999735,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4608.055000000037,
             "unit": "ms",
             "extra": "type: measure"
           }
