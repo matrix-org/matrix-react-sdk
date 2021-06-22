@@ -1467,6 +1467,17 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             title = _t("Transfer");
 
             consultConnectSection = <div className="mx_InviteDialog_transferConsultConnect">
+                <label>
+                    <input type="checkbox" checked={this.state.consultFirst} onChange={this.onConsultFirstChange} />
+                    {_t("Consult first")}
+                </label>
+                <AccessibleButton
+                    kind="secondary"
+                    onClick={this.onCancel}
+                    className='mx_InviteDialog_transferConsultConnect_pushRight'
+                >
+                    {_t("Cancel")}
+                </AccessibleButton>
                 <AccessibleButton
                     kind="primary"
                     onClick={this.transferCall}
@@ -1475,18 +1486,6 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 >
                     {_t("Transfer")}
                 </AccessibleButton>
-                <AccessibleButton
-                    kind="secondary"
-                    onClick={this.onCancel}
-                    className='mx_InviteDialog_transferButton'
-                >
-                    {_t("Cancel")}
-                </AccessibleButton>
-
-                <label>
-                    <input type="checkbox" checked={this.state.consultFirst} onChange={this.onConsultFirstChange} />
-                    {_t("Consult first")}
-                </label>
             </div>;
         } else {
             console.error("Unknown kind of InviteDialog: " + this.props.kind);

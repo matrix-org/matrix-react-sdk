@@ -371,10 +371,14 @@ limitations under the License.
     padding-left: 24px;
     padding-right: 24px;
     box-shadow: 0 -4px 4px rgba(0, 0, 0, 0.05);
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
-.mx_InviteDialog_transferButton {
-    float: right;
+.mx_InviteDialog_transferConsultConnect_pushRight {
+    margin-left: auto;
 }
 
 .mx_InviteDialog_userDirectoryIcon::before {
