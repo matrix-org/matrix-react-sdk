@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624371132466,
+  "lastUpdate": 1624376946708,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -1508,6 +1508,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4138.874999999985,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cbfab29a5c9f7995a3c64baaa736914e3cff713f",
+          "message": "Merge pull request #6236 from matrix-org/gsouquet/bk-branch-matching\n\nFix branch matching for Buildkite",
+          "timestamp": "2021-06-22T16:44:15+01:00",
+          "tree_id": "e0634b96175556352ddd247061168398b846e66a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cbfab29a5c9f7995a3c64baaa736914e3cff713f"
+        },
+        "date": 1624376946001,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3893.434999999982,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 985.8100000000122,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1826.0550000000003,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4179.705000000009,
             "unit": "ms",
             "extra": "type: measure"
           }
