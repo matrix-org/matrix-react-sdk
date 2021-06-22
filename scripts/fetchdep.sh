@@ -44,11 +44,15 @@ fi
 # to determine whether the branch is from a fork or not
 BRANCH_ARRAY=(${head//:/ })
 if [[ "${#BRANCH_ARRAY[@]}" == "1" ]]; then
-    if [[ "$GITHUB_REPOSITORY" = "$deforg/$defrepo" ]]; then
+
+    if [ -n "$BUILDKITE_BRANCH" ]; then
+        clone $deforg $defrepo $head
+    elif [[ "$GITHUB_REPOSITORY" = "$deforg/$defrepo" ]]; then
         clone $deforg $defrepo $head
     else
         clone $GITHUB_ACTOR $defrepo $head
     fi
+
 elif [[ "${#BRANCH_ARRAY[@]}" == "2" ]]; then
     clone ${BRANCH_ARRAY[0]} $defrepo ${BRANCH_ARRAY[1]}
 fi
