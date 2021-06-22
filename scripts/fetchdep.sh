@@ -25,10 +25,10 @@ clone() {
 # First we check if GITHUB_HEAD_REF is defined,
 # Then we check if BUILDKITE_BRANCH is defined,
 # if it isn't we can assume this is a Netlify build
-if [ -n $BUILDKITE_BRANCH ]; then
+if [ -n "$BUILDKITE_BRANCH" ]; then
     echo "🥳 BK"
 	head=$BUILDKITE_BRANCH
-elif [ -n $GITHUB_HEAD_REF ]; then
+elif [ -n "$GITHUB_HEAD_REF" ]; then
     echo "💔 GHA"
     head=$GITHUB_HEAD_REF
 else
@@ -46,7 +46,8 @@ fi
 # to determine whether the branch is from a fork or not
 BRANCH_ARRAY=(${head//:/ })
 if [[ "${#BRANCH_ARRAY[@]}" == "1" ]]; then
-    if [ -z ${BUILDKITE_BRANCH+x} ]; then
+
+    if [ -n "$GITHUB_HEAD_REF" ]; then
         if [[ "$GITHUB_REPOSITORY" == "$deforg"* ]]; then
             clone $deforg $defrepo $GITHUB_HEAD_REF
         else
