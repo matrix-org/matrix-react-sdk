@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624354410674,
+  "lastUpdate": 1624354443383,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -1364,6 +1364,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4951.2449999999735,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f56216eec5a89405a3b7a579b5bb74961ca0ea79",
+          "message": "Merge pull request #6238 from matrix-org/gsouquet/fix-17716\n\nFix modal opening race condition",
+          "timestamp": "2021-06-22T10:28:30+01:00",
+          "tree_id": "de82af246fea0ef5413c74b0cc0fd64ae04500c3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f56216eec5a89405a3b7a579b5bb74961ca0ea79"
+        },
+        "date": 1624354441271,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4386.21999999998,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1084.0650000000132,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1774.2100000000428,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4452.975000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
