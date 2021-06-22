@@ -25,15 +25,17 @@ clone() {
 # First we check if GITHUB_HEAD_REF is defined,
 # Then we check if BUILDKITE_BRANCH is defined,
 # if it isn't we can assume this is a Netlify build
-if [ -n ${GITHUB_HEAD_REF+x} ]; then
-	head=$GITHUB_HEAD_REF
-elif [ -n ${BUILDKITE_BRANCH+x} ]; then
-	head=$BUILDKITE_BRANCH
+if [ -z ${BUILDKITE_BRANCH+x} ]; then
+    if [ -z ${GITHUB_HEAD_REF+x} ]; then
+        # Netlify doesn't give us info about the fork so we have to get it from GitHub API
+        apiEndpoint="https://api.github.com/repos/matrix-org/matrix-react-sdk/pulls/"
+        apiEndpoint+=$REVIEW_ID
+        head=$(curl $apiEndpoint | jq -r '.head.label')
+    else
+    	head=$GITHUB_HEAD_REF
+    fi
 else
-	# Netlify doesn't give us info about the fork so we have to get it from GitHub API
-	apiEndpoint="https://api.github.com/repos/matrix-org/matrix-react-sdk/pulls/"
-	apiEndpoint+=$REVIEW_ID
-	head=$(curl $apiEndpoint | jq -r '.head.label')
+	head=$BUILDKITE_BRANCH
 fi
 
 # If head is set, it will contain on BuilKite either:
@@ -45,12 +47,14 @@ fi
 BRANCH_ARRAY=(${head//:/ })
 if [[ "${#BRANCH_ARRAY[@]}" == "1" ]]; then
 
-    if [ -n "$BUILDKITE_BRANCH" ]; then
-        clone $deforg $defrepo $head
-    elif [[ "$GITHUB_REPOSITORY" = "$deforg/$defrepo" ]]; then
-        clone $deforg $defrepo $head
+    if [ -z ${BUILDKITE_BRANCH+x} ]; then
+        if [[ "$GITHUB_REPOSITORY" = "$deforg/$defrepo" ]]; then
+            clone $deforg $defrepo $head
+        else
+            clone $GITHUB_ACTOR $defrepo $head
+        fi
     else
-        clone $GITHUB_ACTOR $defrepo $head
+        clone $deforg $defrepo $BUILDKITE_BRANCH
     fi
 
 elif [[ "${#BRANCH_ARRAY[@]}" == "2" ]]; then
