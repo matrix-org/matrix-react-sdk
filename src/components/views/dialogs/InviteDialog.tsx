@@ -1214,7 +1214,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 ref={this.editorRef}
                 onPaste={this.onPaste}
                 autoFocus={true}
-                disabled={this.state.busy}
+                disabled={this.state.busy || (this.props.kind == KIND_CALL_TRANSFER && this.state.targets.length > 0)}
                 autoComplete="off"
                 placeholder={hasPlaceholder ? _t("Search") : null}
             />
