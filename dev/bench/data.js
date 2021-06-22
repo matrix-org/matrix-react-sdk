@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624380724378,
+  "lastUpdate": 1624381969734,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -1652,6 +1652,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4349.385000000038,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d96d8619835d5b2b1b3f716e822f447b075f6797",
+          "message": "Merge pull request #6242 from matrix-org/t3chguy/ts/fix\n\nFix type error in the SpaceStore",
+          "timestamp": "2021-06-22T18:08:00+01:00",
+          "tree_id": "c93dfcd3b36924a1009f07269a92440ff0863399",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d96d8619835d5b2b1b3f716e822f447b075f6797"
+        },
+        "date": 1624381969013,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3828.9150000000523,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 937.0599999999722,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1720.9050000000134,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4296.820000000029,
             "unit": "ms",
             "extra": "type: measure"
           }
