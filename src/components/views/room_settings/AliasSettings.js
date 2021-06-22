@@ -21,11 +21,10 @@ import PropTypes from 'prop-types';
 import {MatrixClientPeg} from "../../../MatrixClientPeg";
 import * as sdk from "../../../index";
 import { _t } from '../../../languageHandler';
-import Field from "../elements/Field";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import AccessibleButton from "../elements/AccessibleButton";
 import Modal from "../../../Modal";
-import RoomPublishSetting from "./RoomPublishSetting";
+import PublishedAliases from "./PublishedAliases";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 class EditableAliasesList extends EditableItemList {
@@ -81,7 +80,6 @@ export default class AliasSettings extends React.Component {
         roomId: PropTypes.string.isRequired,
         canSetCanonicalAlias: PropTypes.bool.isRequired,
         canSetAliases: PropTypes.bool.isRequired,
-        canonicalAliasEvent: PropTypes.object, // MatrixEvent
     };
 
     static defaultProps = {
@@ -94,22 +92,10 @@ export default class AliasSettings extends React.Component {
         super(props);
 
         const state = {
-            altAliases: [], // [ #alias:domain.tld, ... ]
             localAliases: [], // [ #alias:my-hs.tld, ... ]
-            canonicalAlias: null, // #canonical:domain.tld
-            updatingCanonicalAlias: false,
             localAliasesLoading: false,
             detailsOpen: false,
         };
-
-        if (props.canonicalAliasEvent) {
-            const content = props.canonicalAliasEvent.getContent();
-            const altAliases = content.alt_aliases;
-            if (Array.isArray(altAliases)) {
-                state.altAliases = altAliases.slice();
-            }
-            state.canonicalAlias = content.alias;
-        }
 
         this.state = state;
     }
@@ -143,69 +129,6 @@ export default class AliasSettings extends React.Component {
         }
     }
 
-    changeCanonicalAlias(alias) {
-        if (!this.props.canSetCanonicalAlias) return;
-
-        const oldAlias = this.state.canonicalAlias;
-        this.setState({
-            canonicalAlias: alias,
-            updatingCanonicalAlias: true,
-        });
-
-        const eventContent = {
-            alt_aliases: this.state.altAliases,
-        };
-
-        if (alias) eventContent["alias"] = alias;
-
-        MatrixClientPeg.get().sendStateEvent(this.props.roomId, "m.room.canonical_alias",
-            eventContent, "").catch((err) => {
-            console.error(err);
-            Modal.createTrackedDialog('Error updating main address', '', ErrorDialog, {
-                title: _t("Error updating main address"),
-                description: _t(
-                    "There was an error updating the room's main address. It may not be allowed by the server " +
-                    "or a temporary failure occurred.",
-                ),
-            });
-            this.setState({canonicalAlias: oldAlias});
-        }).finally(() => {
-            this.setState({updatingCanonicalAlias: false});
-        });
-    }
-
-    changeAltAliases(altAliases) {
-        if (!this.props.canSetCanonicalAlias) return;
-
-        this.setState({
-            updatingCanonicalAlias: true,
-            altAliases,
-        });
-
-        const eventContent = {};
-
-        if (this.state.canonicalAlias) {
-            eventContent.alias = this.state.canonicalAlias;
-        }
-        if (altAliases) {
-            eventContent["alt_aliases"] = altAliases;
-        }
-
-        MatrixClientPeg.get().sendStateEvent(this.props.roomId, "m.room.canonical_alias",
-            eventContent, "").catch((err) => {
-            console.error(err);
-            Modal.createTrackedDialog('Error updating alternative addresses', '', ErrorDialog, {
-                title: _t("Error updating main address"),
-                description: _t(
-                    "There was an error updating the room's alternative addresses. " +
-                    "It may not be allowed by the server or a temporary failure occurred.",
-                ),
-            });
-        }).finally(() => {
-            this.setState({updatingCanonicalAlias: false});
-        });
-    }
-
     onNewAliasChanged = (value) => {
         this.setState({newAlias: value});
     };
@@ -221,9 +144,6 @@ export default class AliasSettings extends React.Component {
                 localAliases: this.state.localAliases.concat(alias),
                 newAlias: null,
             });
-            if (!this.state.canonicalAlias) {
-                this.changeCanonicalAlias(alias);
-            }
         }).catch((err) => {
             console.error(err);
             Modal.createTrackedDialog('Error creating address', '', ErrorDialog, {
@@ -243,10 +163,6 @@ export default class AliasSettings extends React.Component {
         MatrixClientPeg.get().deleteAlias(alias).then(() => {
             const localAliases = this.state.localAliases.filter(a => a !== alias);
             this.setState({localAliases});
-
-            if (this.state.canonicalAlias === alias) {
-                this.changeCanonicalAlias(null);
-            }
         }).catch((err) => {
             console.error(err);
             let description;
@@ -276,71 +192,10 @@ export default class AliasSettings extends React.Component {
         this.setState({detailsOpen: event.target.open});
     };
 
-    onCanonicalAliasChange = (event) => {
-        this.changeCanonicalAlias(event.target.value);
-    };
-
-    onNewAltAliasChanged = (value) => {
-        this.setState({newAltAlias: value});
-    }
-
-    onAltAliasAdded = (alias) => {
-        const altAliases = this.state.altAliases.slice();
-        if (!altAliases.some(a => a.trim() === alias.trim())) {
-            altAliases.push(alias.trim());
-            this.changeAltAliases(altAliases);
-            this.setState({newAltAlias: ""});
-        }
-    }
-
-    onAltAliasDeleted = (index) => {
-        const altAliases = this.state.altAliases.slice();
-        altAliases.splice(index, 1);
-        this.changeAltAliases(altAliases);
-    }
-
-    _getAliases() {
-        return this.state.altAliases.concat(this._getLocalNonAltAliases());
-    }
-
-    _getLocalNonAltAliases() {
-        const {altAliases} = this.state;
-        return this.state.localAliases.filter(alias => !altAliases.includes(alias));
-    }
-
     render() {
         const localDomain = MatrixClientPeg.get().getDomain();
 
-        let found = false;
-        const canonicalValue = this.state.canonicalAlias || "";
-        const canonicalAliasSection = (
-            <Field
-                onChange={this.onCanonicalAliasChange}
-                value={canonicalValue}
-                disabled={this.state.updatingCanonicalAlias || !this.props.canSetCanonicalAlias}
-                element='select'
-                id='canonicalAlias'
-                label={_t('Main address')}
-            >
-                <option value="" key="unset">{ _t('not specified') }</option>
-                {
-                    this._getAliases().map((alias, i) => {
-                        if (alias === this.state.canonicalAlias) found = true;
-                        return (
-                            <option value={alias} key={i}>
-                                { alias }
-                            </option>
-                        );
-                    })
-                }
-                {
-                    found || !this.state.canonicalAlias ? '' :
-                        <option value={ this.state.canonicalAlias } key='arbitrary'>
-                            { this.state.canonicalAlias }
-                        </option>
-                }
-            </Field>
-        );
+        const room = MatrixClientPeg.get().getRoom(this.props.roomId);
 
         let localAliasesList;
         if (this.state.localAliasesLoading) {
@@ -365,31 +220,7 @@ export default class AliasSettings extends React.Component {
 
         return (
             <div className='mx_AliasSettings'>
-                <span className='mx_SettingsTab_subheading'>{_t("Published Addresses")}</span>
-                <p>{_t("Published addresses can be used by anyone on any server to join your room. " +
-                    "To publish an address, it needs to be set as a local address first.")}</p>
-                {canonicalAliasSection}
-                <RoomPublishSetting roomId={this.props.roomId} canSetCanonicalAlias={this.props.canSetCanonicalAlias} />
-                <datalist id="mx_AliasSettings_altRecommendations">
-                    {this._getLocalNonAltAliases().map(alias => {
-                        return <option value={alias} key={alias} />;
-                    })};
-                </datalist>
-                <EditableAliasesList
-                    id="roomAltAliases"
-                    className={"mx_RoomSettings_altAliases"}
-                    items={this.state.altAliases}
-                    newItem={this.state.newAltAlias}
-                    onNewItemChanged={this.onNewAltAliasChanged}
-                    canRemove={this.props.canSetCanonicalAlias}
-                    canEdit={this.props.canSetCanonicalAlias}
-                    onItemAdded={this.onAltAliasAdded}
-                    onItemRemoved={this.onAltAliasDeleted}
-                    suggestionsListId="mx_AliasSettings_altRecommendations"
-                    itemsLabel={_t('Other published addresses:')}
-                    noItemsLabel={_t('No other published addresses yet, add one below')}
-                    placeholder={_t('New published address (e.g. #alias:server)')}
-                />
+                <PublishedAliases room={room} localAliases={this.state.localAliases} />
                 <span className='mx_SettingsTab_subheading mx_AliasSettings_localAliasHeader'>{_t("Local Addresses")}</span>
                 <p>{_t("Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)", {localDomain})}</p>
                 <details onToggle={this.onLocalAliasesToggled} open={this.state.detailsOpen}>
