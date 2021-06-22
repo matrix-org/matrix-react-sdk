@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624394499021,
+  "lastUpdate": 1624395180725,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -1796,6 +1796,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4316.140000000021,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c316eb841aaa7186a8daf8c75f345eca9f0accda",
+          "message": "Merge pull request #6179 from aaronraimist/open-local-addresses\n\nOpen local addresses section by default when there are no existing local addresses",
+          "timestamp": "2021-06-22T14:48:02-06:00",
+          "tree_id": "36688433b4f1275ccf52655f1779326ce0ef34c0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c316eb841aaa7186a8daf8c75f345eca9f0accda"
+        },
+        "date": 1624395179937,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3987.8049999999803,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1022.6200000000172,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1714.140000000043,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4299.4350000000195,
             "unit": "ms",
             "extra": "type: measure"
           }
