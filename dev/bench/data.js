@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624443345746,
+  "lastUpdate": 1624445239674,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -1976,6 +1976,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4581.779999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f0ad70f0e7815ca0867a9ff5ffc364c2a1eed134",
+          "message": "Merge pull request #5786 from DantrazTrev/DialPad\n\nDial Pad UI bug fixes",
+          "timestamp": "2021-06-23T11:41:41+01:00",
+          "tree_id": "e126d5e9c7fa74adee7989e81b53721086c2d126",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f0ad70f0e7815ca0867a9ff5ffc364c2a1eed134"
+        },
+        "date": 1624445238917,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4143.410000000017,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1055.58500000001,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1776.465000000033,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4365.754999999976,
             "unit": "ms",
             "extra": "type: measure"
           }
