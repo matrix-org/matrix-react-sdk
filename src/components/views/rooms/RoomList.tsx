@@ -97,10 +97,12 @@ interface ITagAesthetics {
     defaultHidden: boolean;
 }
 
-const TAG_AESTHETICS: {
+interface ITagAestheticsMap {
     // @ts-ignore - TS wants this to be a string but we know better
     [tagId: TagID]: ITagAesthetics;
-} = {
+}
+
+const TAG_AESTHETICS: ITagAestheticsMap = {
     [DefaultTagID.Invite]: {
         sectionLabel: _td("Invites"),
         isInvite: true,
