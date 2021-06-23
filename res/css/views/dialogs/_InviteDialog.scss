@@ -372,7 +372,7 @@ limitations under the License.
     left: -24px;
     padding-left: 24px;
     padding-right: 24px;
-    box-shadow: 0 -4px 4px rgba(0, 0, 0, 0.05);
+    border-top: 1px solid $message-body-panel-bg-color;
 
     display: flex;
     flex-direction: row;
