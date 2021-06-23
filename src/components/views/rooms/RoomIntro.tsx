@@ -14,30 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useContext} from "react";
-import {EventType} from "matrix-js-sdk/src/@types/event";
+import React, { useContext } from "react";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+import { MatrixClient } from "matrix-js-sdk/src/client";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { User } from "matrix-js-sdk/src/models/user";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import RoomContext from "../../../contexts/RoomContext";
 import DMRoomMap from "../../../utils/DMRoomMap";
-import {_t} from "../../../languageHandler";
+import { _t } from "../../../languageHandler";
 import MiniAvatarUploader, {AVATAR_SIZE} from "../elements/MiniAvatarUploader";
 import RoomAvatar from "../avatars/RoomAvatar";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
-import {ViewUserPayload} from "../../../dispatcher/payloads/ViewUserPayload";
-import {Action} from "../../../dispatcher/actions";
+import { ViewUserPayload } from "../../../dispatcher/payloads/ViewUserPayload";
+import { Action } from "../../../dispatcher/actions";
 import AccessibleButton from "../elements/AccessibleButton";
 import dis from "../../../dispatcher/dispatcher";
 import SpaceStore from "../../../stores/SpaceStore";
-import {showSpaceInvite} from "../../../utils/space";
-
+import { showSpaceInvite } from "../../../utils/space";
 import { privateShouldBeEncrypted } from "../../../createRoom";
-
 import EventTileBubble from "../messages/EventTileBubble";
 import { ROOM_SECURITY_TAB } from "../dialogs/RoomSettingsDialog";
 
-function hasExpectedEncryptionSettings(room): boolean {
-    const isEncrypted: boolean = room._client?.isRoomEncrypted(room.roomId);
+function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): boolean {
+    const isEncrypted: boolean = matrixClient.isRoomEncrypted(room.roomId);
     const isPublic: boolean = room.getJoinRule() === "public";
     return isPublic || !privateShouldBeEncrypted() || isEncrypted;
 }
@@ -60,7 +61,7 @@ const RoomIntro: React.FC<{}> = ({ children }) => {
             defaultDispatcher.dispatch<ViewUserPayload>({
                 action: Action.ViewUser,
                 // XXX: We should be using a real member object and not assuming what the receiver wants.
-                member: member || {userId: dmPartner},
+                member: member || { userId: dmPartner } as User,
             });
         }} />;
     } else {
@@ -162,7 +163,7 @@ const RoomIntro: React.FC<{}> = ({ children }) => {
     );
 
     return <div className="mx_RoomIntro">
-        { !hasExpectedEncryptionSettings(room) && (
+        { !hasExpectedEncryptionSettings(cli, room) && (
             <EventTileBubble
                 className="mx_cryptoEvent mx_cryptoEvent_icon_warning"
                 title={_t("End-to-end encryption isn't enabled")}

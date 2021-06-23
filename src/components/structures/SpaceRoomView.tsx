@@ -28,7 +28,7 @@ import RoomTopic from "../views/elements/RoomTopic";
 import InlineSpinner from "../views/elements/InlineSpinner";
 import {inviteMultipleToRoom, showRoomInviteDialog} from "../../RoomInvite";
 import {useRoomMembers} from "../../hooks/useRoomMembers";
-import createRoom, {IOpts, Preset} from "../../createRoom";
+import createRoom, {IOpts} from "../../createRoom";
 import Field from "../views/elements/Field";
 import {useEventEmitter} from "../../hooks/useEventEmitter";
 import withValidation from "../views/elements/Validation";
@@ -59,12 +59,13 @@ import IconizedContextMenu, {
 } from "../views/context_menus/IconizedContextMenu";
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import {BetaPill} from "../views/beta/BetaCard";
-import {USER_LABS_TAB} from "../views/dialogs/UserSettingsDialog";
+import { UserTab } from "../views/dialogs/UserSettingsDialog";
 import SettingsStore from "../../settings/SettingsStore";
 import dis from "../../dispatcher/dispatcher";
 import Modal from "../../Modal";
 import BetaFeedbackDialog from "../views/dialogs/BetaFeedbackDialog";
 import SdkConfig from "../../SdkConfig";
+import { Preset } from "matrix-js-sdk/src/@types/partials";
 
 interface IProps {
     space: Room;
@@ -165,7 +166,7 @@ const SpaceInfo = ({ space }) => {
 const onBetaClick = () => {
     defaultDispatcher.dispatch({
         action: Action.ViewUserSettings,
-        initialTabId: USER_LABS_TAB,
+        initialTabId: UserTab.Labs,
     });
 };
 

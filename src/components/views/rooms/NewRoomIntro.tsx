@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useContext} from "react";
-import {EventType} from "matrix-js-sdk/src/@types/event";
+import React, { useContext } from "react";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import RoomIntro from "./RoomIntro";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import RoomContext from "../../../contexts/RoomContext";
 import DMRoomMap from "../../../utils/DMRoomMap";
-import {_t} from "../../../languageHandler";
+import { _t } from "../../../languageHandler";
 
 const NewRoomIntro = () => {
     const cli = useContext(MatrixClientContext);
