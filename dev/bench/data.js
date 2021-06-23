@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624436063539,
+  "lastUpdate": 1624443345746,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -1928,6 +1928,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 609.4850000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1fe1288427a85bbf8d411def0fd58732a4a5353c",
+          "message": "Merge pull request #6247 from SimonBrandner/feature/media-device-handler",
+          "timestamp": "2021-06-23T11:10:09+01:00",
+          "tree_id": "5157292f2e3ee62f7b74dbfffb8012666ab2924e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1fe1288427a85bbf8d411def0fd58732a4a5353c"
+        },
+        "date": 1624443344398,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4317.670000000021,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1178.0850000000137,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1684.4750000000204,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4581.779999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
