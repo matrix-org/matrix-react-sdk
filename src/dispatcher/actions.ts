@@ -169,4 +169,14 @@ export enum Action {
      * Fired when done bulk redacting messages from a user in a room
      */
     BulkRedactEnd = "bulk_redact_end",
+
+    /**
+     * Inserts content into the active composer. Should be used with ComposerInsertPayload
+     */
+    ComposerInsert = "composer_insert",
+
+    /**
+     * Switches space. Should be used with SwitchSpacePayload.
+     */
+    SwitchSpace = "switch_space",
 }

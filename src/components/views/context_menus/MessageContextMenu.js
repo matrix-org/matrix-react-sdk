@@ -32,6 +32,8 @@ import { MenuItem } from "../../structures/ContextMenu";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ReadPinsEventId } from "../right_panel/PinnedMessagesCard";
+import ForwardDialog from "../dialogs/ForwardDialog";
+import { Action } from "../../../dispatcher/actions";
 
 export function canCancel(eventStatus) {
     return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
@@ -157,10 +159,10 @@ export default class MessageContextMenu extends React.Component {
     };
 
     onForwardClick = () => {
-        if (this.props.onCloseDialog) this.props.onCloseDialog();
-        dis.dispatch({
-            action: 'forward_event',
+        Modal.createTrackedDialog('Forward Message', '', ForwardDialog, {
+            matrixClient: MatrixClientPeg.get(),
             event: this.props.mxEvent,
+            permalinkCreator: this.props.permalinkCreator,
         });
         this.closeMenu();
     };
@@ -199,7 +201,7 @@ export default class MessageContextMenu extends React.Component {
 
     onQuoteClick = () => {
         dis.dispatch({
-            action: 'quote',
+            action: Action.ComposerInsert,
             event: this.props.mxEvent,
         });
         this.closeMenu();

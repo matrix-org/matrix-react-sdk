@@ -45,7 +45,7 @@ import { ActionPayload } from "../../../dispatcher/payloads";
 import { Enable, Resizable } from "re-resizable";
 import { Direction } from "re-resizable/lib/resizer";
 import { polyfillTouchEvent } from "../../../@types/polyfill";
-import { ResizeNotifier } from "../../../utils/ResizeNotifier";
+import ResizeNotifier from "../../../utils/ResizeNotifier";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 import RoomListLayoutStore from "../../../stores/room-list/RoomListLayoutStore";
 import { arrayFastClone, arrayHasOrderChange } from "../../../utils/arrays";
@@ -454,8 +454,9 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         const sublist = possibleSticky.parentElement.parentElement;
         const list = sublist.parentElement.parentElement;
         // the scrollTop is capped at the height of the header in LeftPanel, the top header is always sticky
-        const isAtTop = list.scrollTop <= HEADER_HEIGHT;
-        const isAtBottom = list.scrollTop >= list.scrollHeight - list.offsetHeight;
+        const listScrollTop = Math.round(list.scrollTop);
+        const isAtTop = listScrollTop <= Math.round(HEADER_HEIGHT);
+        const isAtBottom = listScrollTop >= Math.round(list.scrollHeight - list.offsetHeight);
         const isStickyTop = possibleSticky.classList.contains('mx_RoomSublist_headerContainer_stickyTop');
         const isStickyBottom = possibleSticky.classList.contains('mx_RoomSublist_headerContainer_stickyBottom');
 
