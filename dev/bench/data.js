@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624395180725,
+  "lastUpdate": 1624435728104,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -1844,6 +1844,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4299.4350000000195,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bca19783fa5c34417d2d6199f7dda2cf577d0f4a",
+          "message": "Merge pull request #6246 from matrix-org/gsouquet/fix-dependencies-mismatch\n\nFix dependency and lockfile mismatch",
+          "timestamp": "2021-06-23T09:03:15+01:00",
+          "tree_id": "74ca655eaa021609d29f7a1a0384895cae6f0b7b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bca19783fa5c34417d2d6199f7dda2cf577d0f4a"
+        },
+        "date": 1624435727274,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4487.930000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1230.1049999999814,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1788.640000000043,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4614.244999999981,
             "unit": "ms",
             "extra": "type: measure"
           }
