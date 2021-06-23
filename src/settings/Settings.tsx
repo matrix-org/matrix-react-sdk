@@ -1,6 +1,6 @@
 /*
 Copyright 2017 Travis Ralston
-Copyright 2018, 2019, 2020 The Matrix.org Foundation C.I.C.
+Copyright 2018 - 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -94,6 +94,9 @@ export interface ISetting {
         [level: SettingLevel]: string;
     };
 
+    // Optional description which will be shown as microCopy under SettingsFlags
+    description?: string;
+
     // The supported levels are required. Preferably, use the preset arrays
     // at the top of this file to define this rather than a custom array.
     supportedLevels?: SettingLevel[];
@@ -127,10 +130,18 @@ export interface ISetting {
         image: string; // require(...)
         feedbackSubheading?: string;
         feedbackLabel?: string;
+        extraSettings?: string[];
     };
 }
 
 export const SETTINGS: {[setting: string]: ISetting} = {
+    "feature_report_to_moderators": {
+        isFeature: true,
+        displayName: _td("Report to moderators prototype. " +
+            "In rooms that support moderation, the `report` button will let you report abuse to room moderators"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "feature_spaces": {
         isFeature: true,
         displayName: _td("Spaces prototype. Incompatible with Communities, Communities v2 and Custom Tags. " +
@@ -167,7 +178,32 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             feedbackSubheading: _td("Your feedback will help make spaces better. " +
                 "The more detail you can go into, the better."),
             feedbackLabel: "spaces-feedback",
+            extraSettings: [
+                "feature_spaces.all_rooms",
+                "feature_spaces.space_member_dms",
+                "feature_spaces.space_dm_badges",
+            ],
         },
+    },
+    "feature_spaces.all_rooms": {
+        displayName: _td("Show all rooms in Home"),
+        supportedLevels: LEVELS_FEATURE,
+        default: true,
+        controller: new ReloadOnChangeController(),
+    },
+    "feature_spaces.space_member_dms": {
+        displayName: _td("Show people in spaces"),
+        description: _td("If disabled, you can still add Direct Messages to Personal Spaces. " +
+            "If enabled, you'll automatically see everyone who is a member of the Space."),
+        supportedLevels: LEVELS_FEATURE,
+        default: true,
+        controller: new ReloadOnChangeController(),
+    },
+    "feature_spaces.space_dm_badges": {
+        displayName: _td("Show notification badges for People in Spaces"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+        controller: new ReloadOnChangeController(),
     },
     "feature_dnd": {
         isFeature: true,
@@ -196,12 +232,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
         controller: new IncompatibleController("feature_spaces"),
-    },
-    "feature_new_spinner": {
-        isFeature: true,
-        displayName: _td("New spinner design"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
     },
     "feature_pinning": {
         isFeature: true,
@@ -607,10 +637,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td('Enable widget screenshots on supported widgets'),
         default: false,
     },
-    "PinnedEvents.isOpen": {
-        supportedLevels: [SettingLevel.ROOM_DEVICE],
-        default: false,
-    },
     "promptBeforeInviteUnknownUsers": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Prompt before sending invites to potentially invalid matrix IDs'),
@@ -730,7 +756,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: Layout.Group,
     },
     "showChatEffects": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
         displayName: _td("Show chat effects (animations when receiving e.g. confetti)"),
         default: true,
         controller: new ReducedMotionController(),
