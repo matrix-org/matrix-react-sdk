@@ -290,7 +290,9 @@ const PersistentVResizer = ({
 
     // Arbitrary defaults to avoid NaN problems. 100 px or 3/4 of the visible window.
     if (!minHeight) minHeight = 100;
-    if (!maxHeight) maxHeight = (window.innerHeight / 4) * 3;
+    //if (!maxHeight) maxHeight = (window.innerHeight / 4) * 3;
+    // For EP2021 we want more vertical room for the widgets:
+    if (!maxHeight) maxHeight = (window.innerHeight / 6) * 5;
 
     // Convert from percentage to height. Note that the default height is 280px.
     if (defaultHeight) {
