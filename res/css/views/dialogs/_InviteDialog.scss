@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+.mx_InviteDialog_transferWrapper .mx_Dialog {
+    padding-bottom: 16px;
+}
+
 .mx_InviteDialog_addressBar {
     display: flex;
     flex-direction: row;
@@ -363,7 +367,7 @@ limitations under the License.
 }
 
 .mx_InviteDialog_transferConsultConnect {
-    padding-top: 20px;
+    padding-top: 16px;
     /* This wants a drop shadow the full width of the dialog, so relative-position it
      * and make it wider, then compensate with padding
      */

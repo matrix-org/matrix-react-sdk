@@ -73,6 +73,9 @@ interface IRecentUser {
 
 export const KIND_DM = "dm";
 export const KIND_INVITE = "invite";
+// NB. This dialog needs the 'mx_InviteDialog_transferWrapper' wrapper class to have the correct
+// padding on the bottom (because all modals have 24px padding on all sides), so this needs to
+// be passed when creating the modal
 export const KIND_CALL_TRANSFER = "call_transfer";
 
 const INITIAL_ROOMS_SHOWN = 3; // Number of rooms to show at first
