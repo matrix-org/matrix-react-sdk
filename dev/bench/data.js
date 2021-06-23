@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624462056410,
+  "lastUpdate": 1624469275766,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -2072,6 +2072,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4335.255000000019,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "distinct": true,
+          "id": "e290fdaabcb0259b26412b34b3ec4cd11e76164a",
+          "message": "Update widget-api for https://github.com/matrix-org/matrix-react-sdk/pull/6178",
+          "timestamp": "2021-06-23T11:21:56-06:00",
+          "tree_id": "1a9935b05132b5b803b16ce6d738bf124beb506f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e290fdaabcb0259b26412b34b3ec4cd11e76164a"
+        },
+        "date": 1624469274446,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3919.5199999999777,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1074.1249999999854,
             "unit": "ms",
             "extra": "type: measure"
           }
