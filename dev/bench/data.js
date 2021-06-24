@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624544954231,
+  "lastUpdate": 1624546674930,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -2444,6 +2444,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4261.129999999983,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "006c6df2051a0bb1b55815bbd9e16f5e2ef18d5f",
+          "message": "Merge pull request #6253 from matrix-org/travis/leave-reasons\n\nUpdate membership reason handling, including leave reason displaying",
+          "timestamp": "2021-06-24T08:52:34-06:00",
+          "tree_id": "4a109d70672f93c45131ba00e9cb493df3b27e5c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/006c6df2051a0bb1b55815bbd9e16f5e2ef18d5f"
+        },
+        "date": 1624546673616,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4202.359999999999,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1066.9249999999665,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1737.6800000000148,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4561.910000000011,
             "unit": "ms",
             "extra": "type: measure"
           }
