@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624534906985,
+  "lastUpdate": 1624537900084,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -2300,6 +2300,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4526.335000000021,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f965d449b8bc569f0229c9e9561c9c303577061c",
+          "message": "Merge pull request #6249 from SimonBrandner/ts/member-list",
+          "timestamp": "2021-06-24T13:25:59+01:00",
+          "tree_id": "a9962e3f990a0aa604377fca8d378608927603b7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f965d449b8bc569f0229c9e9561c9c303577061c"
+        },
+        "date": 1624537899184,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4412.579999999991,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1217.7599999999984,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1779.1650000000373,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4480.739999999969,
             "unit": "ms",
             "extra": "type: measure"
           }
