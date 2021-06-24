@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624549373223,
+  "lastUpdate": 1624551058667,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -2528,6 +2528,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 579.414999999979,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8f6d31b73c5375506dc65ffb3249a77d94c058da",
+          "message": "Merge pull request #6251 from SimonBrandner/ts/entity-and-member-tile",
+          "timestamp": "2021-06-24T17:05:16+01:00",
+          "tree_id": "2fe8022290fbff0691b24697b96220044d19b103",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8f6d31b73c5375506dc65ffb3249a77d94c058da"
+        },
+        "date": 1624551057866,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4496.809999999981,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1116.37999999999,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1825.769999999975,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4547.770000000011,
             "unit": "ms",
             "extra": "type: measure"
           }
