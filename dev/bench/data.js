@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624523124706,
+  "lastUpdate": 1624528662651,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -2156,6 +2156,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4658.245000000024,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cd8f8dc4580039fba09d3c8594b70bfe68a6f207",
+          "message": "Merge pull request #6256 from matrix-org/t3chguy/fix/17744\n\nFix invite dialog being cut off when it has limited results",
+          "timestamp": "2021-06-24T10:52:41+01:00",
+          "tree_id": "975f30fe681e748a2c36d3bb331f1c6b063db1c0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cd8f8dc4580039fba09d3c8594b70bfe68a6f207"
+        },
+        "date": 1624528661222,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3934.194999999989,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 948.1900000000096,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1716.7999999999738,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4389.020000000011,
             "unit": "ms",
             "extra": "type: measure"
           }
