@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624546674930,
+  "lastUpdate": 1624549373223,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -2492,6 +2492,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4561.910000000011,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "767b8cd5c79559c293887117c53252385ceeb363",
+          "message": "Merge pull request #6260 from matrix-org/t3chguy/2\n\nFix UserInfo not working when rendered without a room",
+          "timestamp": "2021-06-24T16:37:35+01:00",
+          "tree_id": "6ee8bcbbb29151eaf53e49236e7bd06da7d4cc99",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/767b8cd5c79559c293887117c53252385ceeb363"
+        },
+        "date": 1624549371947,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3662.6100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 579.414999999979,
             "unit": "ms",
             "extra": "type: measure"
           }
