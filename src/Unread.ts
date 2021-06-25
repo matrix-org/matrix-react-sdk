@@ -35,11 +35,16 @@ export function eventTriggersUnreadCount(ev: MatrixEvent): boolean {
     // Ignore events sent by us
     if (isMyEvent(ev)) return false;
 
-    switch (ev.getType()) {
+    const type = ev.getType()
+
+    if (
+        (type.startsWith("m.call.") || type.startsWith("org.matrix.call.")) &&
+        type !== EventType.CallInvite
+    ) return false;
+
+    switch (type) {
         case EventType.RoomMember:
         case EventType.RoomThirdPartyInvite:
-        case EventType.CallAnswer:
-        case EventType.CallHangup:
         case EventType.RoomAliases:
         case EventType.RoomCanonicalAlias:
         case EventType.RoomServerAcl:
