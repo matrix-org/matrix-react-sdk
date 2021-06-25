@@ -61,6 +61,20 @@ export function eventTriggersUnreadCount(ev: MatrixEvent): boolean {
     return haveTileForEvent(ev);
 }
 
+export function shouldSubtractEventFromNotifCount(event: MatrixEvent): boolean {
+    // Ignore events sent by us
+    if (isMyEvent(event)) return false;
+
+    const type = event.getType();
+
+    if (
+        (type.startsWith("m.call.") || type.startsWith("org.matrix.call.")) &&
+        type !== EventType.CallInvite
+    ) return true;
+
+    return false;
+}
+
 export function doesRoomHaveUnreadMessages(room: Room): boolean {
     const myUserId = MatrixClientPeg.get().getUserId();
 
@@ -107,4 +121,43 @@ export function doesRoomHaveUnreadMessages(room: Room): boolean {
     // unread on the theory that false positives are better than false
     // negatives here.
     return true;
+}
+
+
+/**
+ * This method returns the number of events before the user's RR that should not
+ * be counted as notifications. An example of this would be hidden call events
+ * or call hangup events
+ *
+ * This method only looks at the history we currently have!
+ * @param {Room} room
+ * @returns {number} number of events that should not be counted as notifications
+ */
+export function getSubtractNotifCountForRoom(room: Room): number {
+    const myUserId = MatrixClientPeg.get().getUserId();
+
+    // Get the most recent read receipt sent by our account
+    const readUpToId = room.getEventReadUpTo(myUserId);
+
+    // If we sent the last message don't subtract anything
+    if (room.timeline[room.timeline.length - 1]?.sender?.userId === myUserId) return 0;
+
+    let subtractCount = 0;
+
+    // Loop through messages, starting with the most recent...
+    for (let i = room.timeline.length - 1; i >= 0; --i) {
+        const event = room.timeline[i];
+
+        // We've go to the RR, therefore we return
+        if (event.getId() === readUpToId) return subtractCount;
+
+        // We've found an event before the user's RM that shouldn't count as
+        // a notification, therefore we increment
+        if (shouldSubtractEventFromNotifCount(event)) subtractCount++;
+    }
+
+    // If we got here, we didn't find the user's RM. That means that there is
+    // probably more events to go through. We could fetch more history, but
+    // currently we just return what we got
+    return subtractCount;
 }
