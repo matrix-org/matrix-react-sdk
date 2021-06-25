@@ -57,6 +57,8 @@ export enum Modifiers {
 
 // Meta-modifier: isMac ? CMD : CONTROL
 export const CMD_OR_CTRL = isMac ? Modifiers.COMMAND : Modifiers.CONTROL;
+// Meta-key representing the digits [0-9] often found at the top of standard keyboard layouts
+export const DIGITS = "digits";
 
 interface IKeybind {
     modifiers?: Modifiers[];
@@ -265,7 +267,7 @@ const shortcuts: Record<Categories, IShortcut[]> = {
             description: _td("Toggle this dialog"),
         }, {
             keybinds: [{
-                modifiers: [CMD_OR_CTRL, Modifiers.ALT],
+                modifiers: [Modifiers.CONTROL, isMac ? Modifiers.SHIFT : Modifiers.ALT],
                 key: Key.H,
             }],
             description: _td("Go to Home View"),
@@ -319,6 +321,7 @@ const alternateKeyName: Record<string, string> = {
     [Key.SPACE]: _td("Space"),
     [Key.HOME]: _td("Home"),
     [Key.END]: _td("End"),
+    [DIGITS]: _td("[number]"),
 };
 const keyIcon: Record<string, string> = {
     [Key.ARROW_UP]: "↑",

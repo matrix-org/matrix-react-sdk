@@ -18,6 +18,7 @@ limitations under the License.
 import React from 'react';
 import {_t} from "../../../../../languageHandler";
 import SdkConfig from "../../../../../SdkConfig";
+import { MatrixClientPeg } from '../../../../../MatrixClientPeg';
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { enumerateThemes } from "../../../../../theme";
 import ThemeWatcher from "../../../../../settings/watchers/ThemeWatcher";
@@ -34,8 +35,10 @@ import Field from '../../../elements/Field';
 import EventTilePreview from '../../../elements/EventTilePreview';
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
-import {UIFeature} from "../../../../../settings/UIFeature";
-import {Layout} from "../../../../../settings/Layout";
+import { UIFeature } from "../../../../../settings/UIFeature";
+import { Layout } from "../../../../../settings/Layout";
+import { replaceableComponent } from "../../../../../utils/replaceableComponent";
+import { compare } from "../../../../../utils/strings";
 
 interface IProps {
 }
@@ -62,9 +65,13 @@ interface IState extends IThemeState {
     systemFont: string;
     showAdvanced: boolean;
     layout: Layout;
+    // User profile data for the message preview
+    userId: string;
+    displayName: string;
+    avatarUrl: string;
 }
 
-
+@replaceableComponent("views.settings.tabs.user.AppearanceUserSettingsTab")
 export default class AppearanceUserSettingsTab extends React.Component<IProps, IState> {
     private readonly MESSAGE_PREVIEW_TEXT = _t("Hey you. You're the best!");
 
@@ -83,7 +90,23 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
             systemFont: SettingsStore.getValue("systemFont"),
             showAdvanced: false,
             layout: SettingsStore.getValue("layout"),
+            userId: "@erim:fink.fink",
+            displayName: "Erimayas Fink",
+            avatarUrl: null,
         };
+    }
+
+    async componentDidMount() {
+        // Fetch the current user profile for the message preview
+        const client = MatrixClientPeg.get();
+        const userId = client.getUserId();
+        const profileInfo = await client.getProfileInfo(userId);
+
+        this.setState({
+            userId,
+            displayName: profileInfo.displayname,
+            avatarUrl: profileInfo.avatar_url,
+        });
     }
 
     private calculateThemeState(): IThemeState {
@@ -273,7 +296,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
             .map(p => ({id: p[0], name: p[1]})); // convert pairs to objects for code readability
         const builtInThemes = themes.filter(p => !p.id.startsWith("custom-"));
         const customThemes = themes.filter(p => !builtInThemes.includes(p))
-            .sort((a, b) => a.name.localeCompare(b.name));
+            .sort((a, b) => compare(a.name, b.name));
         const orderedThemes = [...builtInThemes, ...customThemes];
         return (
             <div className="mx_SettingsTab_section mx_AppearanceUserSettingsTab_themeSection">
@@ -306,6 +329,9 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                 className="mx_AppearanceUserSettingsTab_fontSlider_preview"
                 message={this.MESSAGE_PREVIEW_TEXT}
                 layout={this.state.layout}
+                userId={this.state.userId}
+                displayName={this.state.displayName}
+                avatarUrl={this.state.avatarUrl}
             />
             <div className="mx_AppearanceUserSettingsTab_fontSlider">
                 <div className="mx_AppearanceUserSettingsTab_fontSlider_smallText">Aa</div>

@@ -24,7 +24,7 @@ import { _t, _td } from '../../../languageHandler';
 import * as sdk from '../../../index';
 import {MatrixClientPeg} from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
-import { addressTypes, getAddressType } from '../../../UserAddress.js';
+import { addressTypes, getAddressType } from '../../../UserAddress';
 import GroupStore from '../../../stores/GroupStore';
 import * as Email from '../../../email';
 import IdentityAuthClient from '../../../IdentityAuthClient';
@@ -33,6 +33,7 @@ import { abbreviateUrl } from '../../../utils/UrlUtils';
 import {sleep} from "../../../utils/promise";
 import {Key} from "../../../Keyboard";
 import {Action} from "../../../dispatcher/actions";
+import {replaceableComponent} from "../../../utils/replaceableComponent";
 
 const TRUNCATE_QUERY_LIST = 40;
 const QUERY_USER_DIRECTORY_DEBOUNCE_MS = 200;
@@ -43,7 +44,7 @@ const addressTypeName = {
     'email': _td("email address"),
 };
 
-
+@replaceableComponent("views.dialogs.AddressPickerDialog")
 export default class AddressPickerDialog extends React.Component {
     static propTypes = {
         title: PropTypes.string.isRequired,
