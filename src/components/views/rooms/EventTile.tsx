@@ -49,6 +49,7 @@ import { StaticNotificationState } from "../../../stores/notifications/StaticNot
 import NotificationBadge from "./NotificationBadge";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { Action } from '../../../dispatcher/actions';
+import PlatformPeg from '../../../PlatformPeg';
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -867,7 +868,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     }
 
     private onContextMenu = (ev: React.MouseEvent): void => {
-        console.log("LOG clicked");
+        if (!PlatformPeg.get().allowOverridingNativeContextMenus()) return;
         ev.preventDefault();
         ev.stopPropagation();
         this.setState({
