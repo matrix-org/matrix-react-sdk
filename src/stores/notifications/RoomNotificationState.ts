@@ -90,7 +90,10 @@ export class RoomNotificationState extends NotificationState implements IDestroy
             this._count = 1; // not used, technically
         } else {
             const redNotifs = RoomNotifs.getUnreadNotificationCount(this.room, 'highlight');
-            const greyNotifs = RoomNotifs.getUnreadNotificationCount(this.room, 'total');
+            const greyNotifs = (
+                RoomNotifs.getUnreadNotificationCount(this.room, 'total') -
+                Unread.getSubtractNotifCountForRoom(this.room)
+            );
 
             // For a 'true count' we pick the grey notifications first because they include the
             // red notifications. If we don't have a grey count for some reason we use the red
