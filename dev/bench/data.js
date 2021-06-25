@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624618227821,
+  "lastUpdate": 1624619013822,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -2624,6 +2624,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4612.365000000005,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b371abe556567051ab8be8235a35227c4b023017",
+          "message": "Merge pull request #6266 from matrix-org/t3chguy/fix/17768\n\nFix space avatar management layout being broken",
+          "timestamp": "2021-06-25T11:58:41+01:00",
+          "tree_id": "9ac20b5bc3c08cd4466863a92adc071e57abb91f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b371abe556567051ab8be8235a35227c4b023017"
+        },
+        "date": 1624619013067,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3965.285000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 953.1499999999942,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1638.6949999999852,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4089.605000000003,
             "unit": "ms",
             "extra": "type: measure"
           }
