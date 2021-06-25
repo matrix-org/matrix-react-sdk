@@ -314,7 +314,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     private isListeningForReceipts: boolean;
     private ref: React.RefObject<unknown>;
     private tile = React.createRef();
-    private replyThread = React.createRef();
+    private replyThread = React.createRef<ReplyThread>();
 
     static defaultProps = {
         // no-op function because onHeightChanged is optional yet some sub-components assume its existence
@@ -816,7 +816,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         });
     };
 
-    getTile = () => this.tile.current;
+    getTile = (): any => this.tile.current;
 
     getReplyThread = () => this.replyThread.current;
 
@@ -844,16 +844,17 @@ export default class EventTile extends React.Component<IProps, IState> {
     private renderContextMenu(): React.ReactFragment {
         let contextMenu = null;
         if (this.state.contextMenuPosition) {
-            const tile = this.getTile && this.getTile();
-            const replyThread = this.getReplyThread && this.getReplyThread();
-            const collapseReplyThread = replyThread && replyThread.canCollapse() ? replyThread.collapse : undefined;
+            const tile = this.getTile();
+            const replyThread = this.getReplyThread();
+            const eventTileOps = tile?.getEventTileOps ? tile.getEventTileOps() : undefined;
+            const collapseReplyThread = replyThread?.canCollapse() ? replyThread.collapse : undefined;
 
             contextMenu = (
                 <MessageContextMenu
                     {...aboveLeftOf(this.state.contextMenuPosition)}
                     mxEvent={this.props.mxEvent}
                     permalinkCreator={this.props.permalinkCreator}
-                    eventTileOps={tile && tile.getEventTileOps ? tile.getEventTileOps() : undefined}
+                    eventTileOps={eventTileOps}
                     collapseReplyThread={collapseReplyThread}
                     onFinished={this.onCloseMenu}
                 />
