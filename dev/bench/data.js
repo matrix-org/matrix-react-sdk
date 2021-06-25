@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624551058667,
+  "lastUpdate": 1624618227821,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -2576,6 +2576,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4547.770000000011,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "1342360+anoadragon453@users.noreply.github.com",
+            "name": "Andrew Morgan",
+            "username": "anoadragon453"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a8e2c1bc2a9a8f4ab7850ca540ac6162c3e740fc",
+          "message": "Move the dial pad button next to Explore button from Create Room context menu  (#6237)\n\nThis commit moves the dial pad from a context menu to sit right by the explore button, in line with the designs in the linked issue. The dial pad button is only shown when PSTN support is detected.",
+          "timestamp": "2021-06-25T11:45:15+01:00",
+          "tree_id": "df12ea76f4446349fe6b1190bd90df289c22c257",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a8e2c1bc2a9a8f4ab7850ca540ac6162c3e740fc"
+        },
+        "date": 1624618227011,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3982.354999999984,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1130.1399999999849,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1658.4550000000017,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4612.365000000005,
             "unit": "ms",
             "extra": "type: measure"
           }
