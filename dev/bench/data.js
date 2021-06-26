@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624632549771,
+  "lastUpdate": 1624729929299,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -2720,6 +2720,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4473.425000000025,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "18b470820d2126ba49fcd32010b3b41cda305766",
+          "message": "Merge pull request #6270 from SimonBrandner/fix/presence/17786\n\nFix hyper-precise presence",
+          "timestamp": "2021-06-26T18:47:17+01:00",
+          "tree_id": "d1557fb99f0ee93e1c507d299856083216682f1d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/18b470820d2126ba49fcd32010b3b41cda305766"
+        },
+        "date": 1624729928494,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3964.6450000000186,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 947.9450000000033,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1689.57999999998,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4252.970000000001,
             "unit": "ms",
             "extra": "type: measure"
           }
