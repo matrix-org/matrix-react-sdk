@@ -40,6 +40,7 @@ import Spinner from "../../../elements/Spinner";
 import {SettingLevel} from "../../../../../settings/SettingLevel";
 import {UIFeature} from "../../../../../settings/UIFeature";
 import {replaceableComponent} from "../../../../../utils/replaceableComponent";
+import QuestionDialog from '../../../dialogs/QuestionDialog';
 
 @replaceableComponent("views.settings.tabs.user.GeneralUserSettingsTab")
 export default class GeneralUserSettingsTab extends React.Component {
@@ -236,7 +237,21 @@ export default class GeneralUserSettingsTab extends React.Component {
         });
     };
 
-    _onDeactivateClicked = () => {
+    _onDeactivateClicked = async () => {
+        const { finished } = Modal.createTrackedDialog("Warning", "", QuestionDialog, {
+            title: _t("Warning"),
+            description: <div>
+                <p>
+                    { _t(`Please note that this is a permanent action. Once you deactivate your account, your
+                     account cannot be reactivated, and you won't be able to sign up again with the same user ID.`) }
+                </p>
+            </div>,
+            danger: true,
+            button: _t('I understand the risks and wish to continue'),
+        });
+        const [proceed] = await finished;
+        if (!proceed) return;
+
         Modal.createTrackedDialog('Deactivate Account', '', DeactivateAccountDialog, {
             onFinished: (success) => {
                 if (success) this.props.closeSettingsFn();
