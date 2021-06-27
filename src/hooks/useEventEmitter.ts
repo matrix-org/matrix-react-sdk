@@ -15,9 +15,13 @@ limitations under the License.
 */
 
 import {useRef, useEffect} from "react";
-import type {EventEmitter} from "events";
 
 type Handler = (...args: any[]) => void;
+
+interface EventEmitter {
+    on(event: string | symbol, listener: (...args: any[]) => void);
+    removeListener(event: string | symbol, listener: (...args: any[]) => void);
+}
 
 // Hook to wrap event emitter on and removeListener in hook lifecycle
 export const useEventEmitter = (emitter: EventEmitter, eventName: string | symbol, handler: Handler) => {
