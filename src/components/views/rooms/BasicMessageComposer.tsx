@@ -29,6 +29,7 @@ import {
     formatRangeAsCode,
     toggleInlineFormat,
     replaceRangeAndMoveCaret,
+    formatRangeAsLink,
 } from '../../../editor/operations';
 import { getCaretOffsetAndText, getRangeForSelection } from '../../../editor/dom';
 import Autocomplete, { generateCompletionDomId } from '../rooms/Autocomplete';
@@ -87,6 +88,7 @@ enum Formatting {
     Strikethrough = "strikethrough",
     Code = "code",
     Quote = "quote",
+    InsertLink = "insert_link",
 }
 
 interface IProps {
@@ -651,6 +653,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 break;
             case Formatting.Quote:
                 formatRangeAsQuote(range);
+                break;
+            case Formatting.InsertLink:
+                formatRangeAsLink(range);
                 break;
         }
     };

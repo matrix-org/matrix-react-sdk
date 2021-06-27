@@ -43,6 +43,7 @@ export default class MessageComposerFormatBar extends React.PureComponent {
             <FormatButton label={_t("Strikethrough")} onClick={() => this.props.onAction("strikethrough")} icon="Strikethrough" visible={this.state.visible} />
             <FormatButton label={_t("Code block")} onClick={() => this.props.onAction("code")} icon="Code" visible={this.state.visible} />
             <FormatButton label={_t("Quote")} onClick={() => this.props.onAction("quote")} icon="Quote" shortcut={this.props.shortcuts.quote} visible={this.state.visible} />
+            <FormatButton label={_t("Insert link")} onClick={() => this.props.onAction("insert_link")} icon="InsertLink" visible={this.state.visible} />
         </div>);
     }
 
