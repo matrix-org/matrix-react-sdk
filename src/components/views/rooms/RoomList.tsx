@@ -48,6 +48,8 @@ import SpaceStore, {ISuggestedRoom, SUGGESTED_ROOMS} from "../../../stores/Space
 import {showAddExistingRooms, showCreateNewRoom, showSpaceInvite} from "../../../utils/space";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 import RoomAvatar from "../avatars/RoomAvatar";
+import Modal from "../../../Modal";
+import ErrorDialog from "../dialogs/ErrorDialog";
 
 interface IProps {
     onKeyDown: (ev: React.KeyboardEvent) => void;
@@ -120,7 +122,13 @@ const TAG_AESTHETICS: ITagAestheticsMap = {
         onAddRoom: (dispatcher?: Dispatcher<ActionPayload>) => {
             const activeSpace = SpaceStore.instance.activeSpace;
             const dis = dispatcher || defaultDispatcher;
-            if (activeSpace) {
+
+            if (activeSpace && !activeSpace.canInvite(MatrixClientPeg.get().getUserId())) {
+                Modal.createDialog(ErrorDialog, {
+                    title: _t("You cannot invite people to this space"),
+                    description: _t("You do not have sufficient permissions to invite people to this space"),
+                });
+            } else if (activeSpace) {
                 dis.dispatch({
                     action: 'view_invite',
                     roomId: activeSpace.roomId,

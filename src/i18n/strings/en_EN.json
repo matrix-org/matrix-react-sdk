@@ -1586,6 +1586,8 @@
     "Favourites": "Favourites",
     "People": "People",
     "Add people": "Add people",
+    "You cannot invite people to this space": "You cannot invite people to this space",
+    "You do not have sufficient permissions to invite people to this space": "You do not have sufficient permissions to invite people to this space",
     "Rooms": "Rooms",
     "Add room": "Add room",
     "You do not have permissions to create new rooms in this space": "You do not have permissions to create new rooms in this space",
