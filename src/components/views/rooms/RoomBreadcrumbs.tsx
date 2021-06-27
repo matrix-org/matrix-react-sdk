@@ -16,16 +16,12 @@ limitations under the License.
 
 import React from "react";
 import { BreadcrumbsStore } from "../../../stores/BreadcrumbsStore";
-import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { _t } from "../../../languageHandler";
-import { Room } from "matrix-js-sdk/src/models/room";
-import defaultDispatcher from "../../../dispatcher/dispatcher";
-import Analytics from "../../../Analytics";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import { CSSTransition } from "react-transition-group";
-import { RovingAccessibleTooltipButton } from "../../../accessibility/RovingTabIndex";
 import Toolbar from "../../../accessibility/Toolbar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import RoomBreadcrumb from "./RoomBreadcrumb";
 
 interface IProps {
 }
@@ -75,31 +71,11 @@ export default class RoomBreadcrumbs extends React.PureComponent<IProps, IState>
         setTimeout(() => this.setState({doAnimation: true, skipFirst: false}), 0);
     };
 
-    private viewRoom = (room: Room, index: number) => {
-        Analytics.trackEvent("Breadcrumbs", "click_node", String(index));
-        defaultDispatcher.dispatch({action: "view_room", room_id: room.roomId});
-    };
-
     public render(): React.ReactElement {
-        const tiles = BreadcrumbsStore.instance.rooms.map((r, i) => {
-            return (
-                <RovingAccessibleTooltipButton
-                    className="mx_RoomBreadcrumbs_crumb"
-                    key={r.roomId}
-                    onClick={() => this.viewRoom(r, i)}
-                    aria-label={_t("Room %(name)s", {name: r.name})}
-                    title={r.name}
-                    tooltipClassName="mx_RoomBreadcrumbs_Tooltip"
-                >
-                    <DecoratedRoomAvatar
-                        room={r}
-                        avatarSize={32}
-                        displayBadge={true}
-                        forceCount={true}
-                    />
-                </RovingAccessibleTooltipButton>
-            );
-        });
+        const tiles = BreadcrumbsStore.instance.rooms.map((r, i) => (
+            <RoomBreadcrumb key = {r.roomId} room = {r} roomIndex = {i} />
+        ),
+        )
 
         if (tiles.length > 0) {
             // NOTE: The CSSTransition timeout MUST match the timeout in our CSS!
