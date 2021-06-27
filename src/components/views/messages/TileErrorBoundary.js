@@ -17,10 +17,11 @@ limitations under the License.
 import React from 'react';
 import classNames from 'classnames';
 import { _t } from '../../../languageHandler';
-import * as sdk from '../../../index';
 import Modal from '../../../Modal';
 import SdkConfig from "../../../SdkConfig";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
+import ViewSource from '../../structures/ViewSource';
+import BugReportDialog from '../dialogs/BugReportDialog';
 
 @replaceableComponent("views.messages.TileErrorBoundary")
 export default class TileErrorBoundary extends React.Component {
@@ -39,13 +40,15 @@ export default class TileErrorBoundary extends React.Component {
     }
 
     _onBugReport = () => {
-        const BugReportDialog = sdk.getComponent("dialogs.BugReportDialog");
-        if (!BugReportDialog) {
-            return;
-        }
         Modal.createTrackedDialog('Bug Report Dialog', '', BugReportDialog, {
             label: 'react-soft-crash-tile',
         });
+    };
+
+    onViewSourceClick = () => {
+        Modal.createTrackedDialog('View Event Source', '', ViewSource, {
+            mxEvent: this.props.mxEvent,
+        }, 'mx_Dialog_viewsource');
     };
 
     render() {
@@ -65,15 +68,22 @@ export default class TileErrorBoundary extends React.Component {
                 </a>;
             }
 
-            return (<div className={classNames(classes)}>
-                <div className="mx_EventTile_line">
-                    <span>
-                        {_t("Can't load this message")}
-                        { mxEvent && ` (${mxEvent.getType()})` }
-                        { submitLogsButton }
-                    </span>
+            const viewSourceButton = <a onClick={this.onViewSourceClick} href="#">
+                {_t("View Source")}
+            </a>;
+
+            return (
+                <div className={classNames(classes)}>
+                    <div className="mx_EventTile_line">
+                        <span>
+                            {_t("Can't load this message")}
+                            {mxEvent && ` (${mxEvent.getType()})`}
+                            {submitLogsButton}
+                            {mxEvent && viewSourceButton}
+                        </span>
+                    </div>
                 </div>
-            </div>);
+            );
         }
 
         return this.props.children;
