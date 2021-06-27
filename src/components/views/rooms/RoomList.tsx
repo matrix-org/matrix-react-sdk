@@ -116,9 +116,18 @@ const TAG_AESTHETICS: ITagAestheticsMap = {
         sectionLabel: _td("People"),
         isInvite: false,
         defaultHidden: false,
-        addRoomLabel: _td("Start chat"),
+        addRoomLabel: _td("Add people"),
         onAddRoom: (dispatcher?: Dispatcher<ActionPayload>) => {
-            (dispatcher || defaultDispatcher).dispatch({action: 'view_create_chat'});
+            const activeSpace = SpaceStore.instance.activeSpace;
+            const dis = dispatcher || defaultDispatcher;
+            if (activeSpace) {
+                dis.dispatch({
+                    action: 'view_invite',
+                    roomId: activeSpace.roomId,
+                });
+            } else {
+                dis.dispatch({ action: 'view_create_chat' });
+            }
         },
     },
     [DefaultTagID.Untagged]: {
