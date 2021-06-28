@@ -48,8 +48,6 @@ import SpaceStore, {ISuggestedRoom, SUGGESTED_ROOMS} from "../../../stores/Space
 import {showAddExistingRooms, showCreateNewRoom, showSpaceInvite} from "../../../utils/space";
 import {replaceableComponent} from "../../../utils/replaceableComponent";
 import RoomAvatar from "../avatars/RoomAvatar";
-import Modal from "../../../Modal";
-import ErrorDialog from "../dialogs/ErrorDialog";
 
 interface IProps {
     onKeyDown: (ev: React.KeyboardEvent) => void;
