@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624729929299,
+  "lastUpdate": 1624865727724,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -2768,6 +2768,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4252.970000000001,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1874f3b96344dd01cabf39cf96b49c4d1d378fef",
+          "message": "Merge pull request #6269 from matrix-org/travis/encrypt-voice\n\nEncrypt the voice message file if needed",
+          "timestamp": "2021-06-28T01:30:16-06:00",
+          "tree_id": "8449c540c0b9c4ecfd3734e8479fd44e295cdf2c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1874f3b96344dd01cabf39cf96b49c4d1d378fef"
+        },
+        "date": 1624865726904,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3880.7100000000214,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1007.814999999995,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1814.354999999974,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4469.3699999999735,
             "unit": "ms",
             "extra": "type: measure"
           }
