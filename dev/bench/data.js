@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624893255803,
+  "lastUpdate": 1624893377189,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -2984,6 +2984,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4775.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "52b578fb3f23e32717501b4c9d01c911fc9d47e6",
+          "message": "Merge pull request #6193 from SimonBrandner/fix/irc-layout-mxid/17648\n\nFix IRC layout regressions",
+          "timestamp": "2021-06-28T16:10:02+01:00",
+          "tree_id": "7e5687f4fc6d592a233cccfd27527dddd6244209",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/52b578fb3f23e32717501b4c9d01c911fc9d47e6"
+        },
+        "date": 1624893375321,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4782,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1200.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1928.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4954.5,
             "unit": "ms",
             "extra": "type: measure"
           }
