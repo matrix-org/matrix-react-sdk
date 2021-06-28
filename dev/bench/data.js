@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624893377189,
+  "lastUpdate": 1624894195021,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -3032,6 +3032,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4954.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a8f5b7ebaea32a6cc45cfb99432be791f91124a2",
+          "message": "Merge pull request #5953 from DantrazTrev/Bubble-bericht\n\nRemoves the override on the Bubble Container",
+          "timestamp": "2021-06-28T16:23:40+01:00",
+          "tree_id": "777f5762e005a17c7122ce97ef24962f02a5b055",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a8f5b7ebaea32a6cc45cfb99432be791f91124a2"
+        },
+        "date": 1624894193160,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4616.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1103.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2040.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4918.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
