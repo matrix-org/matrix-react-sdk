@@ -150,6 +150,7 @@ const BaseAvatar = (props: IProps) => {
             return (
                 <AccessibleButton
                     aria-label={_t("Avatar")}
+                    aria-description={title}
                     {...otherProps}
                     element="span"
                     className={classNames("mx_BaseAvatar", className)}

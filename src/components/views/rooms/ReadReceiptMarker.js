@@ -60,6 +60,8 @@ export default class ReadReceiptMarker extends React.PureComponent {
 
         // True to show twelve hour format, false otherwise
         showTwelveHour: PropTypes.bool,
+        // True if this component handles accessibility presentation, false means parent does it
+        handleAccessibility: PropTypes.bool,
     };
 
     static defaultProps = {
@@ -191,7 +193,7 @@ export default class ReadReceiptMarker extends React.PureComponent {
                 <MemberAvatar
                     member={this.props.member}
                     fallbackUserId={this.props.fallbackUserId}
-                    aria-hidden="true"
+                    aria-hidden={ !this.props.handleAccessibility }
                     width={14} height={14} resizeMethod="crop"
                     style={style}
                     title={title}

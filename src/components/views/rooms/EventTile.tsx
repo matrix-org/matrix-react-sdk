@@ -47,6 +47,7 @@ import { StaticNotificationState } from "../../../stores/notifications/StaticNot
 import NotificationBadge from "./NotificationBadge";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { Action } from '../../../dispatcher/actions';
+import AccessibleButton from "../elements/AccessibleButton";
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -164,6 +165,7 @@ export function getHandlerTile(ev) {
 }
 
 const MAX_READ_AVATARS = 5;
+const MAX_READ_AVATARS_A11Y = 3;
 
 // Our component structure for EventTiles on the timeline is:
 //
@@ -661,10 +663,16 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         const ReadReceiptMarker = sdk.getComponent('rooms.ReadReceiptMarker');
         const avatars = [];
+        const ariaLabels = [];
         const receiptOffset = 15;
         let left = 0;
 
         const receipts = this.props.readReceipts;
+
+        let calculateAriaLabel = false;
+        if ((receipts.length > 1) && !this.state.allReadAvatars) {
+            calculateAriaLabel = true;
+        }
 
         for (let i = 0; i < receipts.length; ++i) {
             const receipt = receipts[i];
@@ -691,6 +699,11 @@ export default class EventTile extends React.Component<IProps, IState> {
                 }
             }
 
+            if ((i < MAX_READ_AVATARS_A11Y) && calculateAriaLabel) {
+                ariaLabels.unshift(
+                (!receipt.roomMember || userId === receipt.roomMember.rawDisplayName) ? userId : receipt.roomMember.rawDisplayName,
+                );
+            }
             // add to the start so the most recent is on the end (ie. ends up rightmost)
             avatars.unshift(
                 <ReadReceiptMarker key={userId} member={receipt.roomMember}
@@ -702,22 +715,66 @@ export default class EventTile extends React.Component<IProps, IState> {
                     onClick={this.toggleAllReadAvatars}
                     timestamp={receipt.ts}
                     showTwelveHour={this.props.isTwelveHour}
+                    handleAccessibility={!calculateAriaLabel}
                 />,
             );
+        }
+        let ariaLabel;
+        switch (ariaLabels.length) {
+            case 2: {
+                ariaLabel = _t(
+                    "%(first)s and %(second)s read",
+                    {first: ariaLabels[0],
+                    second: ariaLabels[1]},
+                );
+                break;
+            }
+            default: {
+                const a11yRemainder = receipts.length - MAX_READ_AVATARS_A11Y;
+                if (a11yRemainder > 0) {
+                    ariaLabel = _t(
+                        "%(first)s, %(second)s and %(count)s others read",
+                        {first: ariaLabels[0],
+                        second: ariaLabels[1],
+                        count: a11yRemainder},
+                    );
+                } else {
+                    ariaLabel = _t(
+                        "%(first)s, %(second)s and %(third)s read",
+                        {first: ariaLabels[0],
+                        second: ariaLabels[1],
+                        third: ariaLabels[2]},
+                    );
+                }
+            }
         }
         let remText;
         if (!this.state.allReadAvatars) {
             const remainder = receipts.length - MAX_READ_AVATARS;
             if (remainder > 0) {
                 remText = <span className="mx_EventTile_readAvatarRemainder"
+                    aria-hidden="true"
                     onClick={this.toggleAllReadAvatars}
                     style={{ right: "calc(" + toRem(-left) + " + " + receiptOffset + "px)" }}>{ remainder }+
                 </span>;
             }
         }
 
+        if (calculateAriaLabel) {
+            return (
+                <div className="mx_EventTile_msgOption" aria-live="off">
+                    <AccessibleButton element="span" className="mx_EventTile_readAvatars"
+                        aria-label={ ariaLabel }
+                        onClick={this.toggleAllReadAvatars}
+                    >
+                        { remText }
+                        { avatars }
+                    </AccessibleButton>
+                </div>
+            );
+        }
         return (
-            <div className="mx_EventTile_msgOption">
+            <div className="mx_EventTile_msgOption" aria-live="off">
                 <span className="mx_EventTile_readAvatars">
                     { remText }
                     { avatars }
