@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624865727724,
+  "lastUpdate": 1624868165244,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -2816,6 +2816,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4469.3699999999735,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a576362c749e1a85d0994de46a5d07eca01e1de7",
+          "message": "Merge pull request #6275 from matrix-org/gsouquet/toast-button-kind",
+          "timestamp": "2021-06-28T09:10:09+01:00",
+          "tree_id": "41434275f5d5202a5bce26d3ae300277c8fe5112",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a576362c749e1a85d0994de46a5d07eca01e1de7"
+        },
+        "date": 1624868163185,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3956.270000000018,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1065.62999999999,
             "unit": "ms",
             "extra": "type: measure"
           }
