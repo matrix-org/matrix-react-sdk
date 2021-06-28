@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624868165244,
+  "lastUpdate": 1624872839613,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -2852,6 +2852,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1065.62999999999,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "53a6089cc9176643211974711141608df34615db",
+          "message": "Merge pull request #6268 from matrix-org/gsouquet/upgrade-puppeteer",
+          "timestamp": "2021-06-28T10:28:56+01:00",
+          "tree_id": "e425709e872dec04fb6deea31a49238bd362acd3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/53a6089cc9176643211974711141608df34615db"
+        },
+        "date": 1624872838647,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4407,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 971.1999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
