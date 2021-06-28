@@ -121,20 +121,11 @@ const TAG_AESTHETICS: ITagAestheticsMap = {
         addRoomLabel: _td("Add people"),
         onAddRoom: (dispatcher?: Dispatcher<ActionPayload>) => {
             const activeSpace = SpaceStore.instance.activeSpace;
-            const dis = dispatcher || defaultDispatcher;
 
-            if (activeSpace && !activeSpace.canInvite(MatrixClientPeg.get().getUserId())) {
-                Modal.createDialog(ErrorDialog, {
-                    title: _t("You cannot invite people to this space"),
-                    description: _t("You do not have sufficient permissions to invite people to this space"),
-                });
-            } else if (activeSpace) {
-                dis.dispatch({
-                    action: 'view_invite',
-                    roomId: activeSpace.roomId,
-                });
+            if (activeSpace) {
+                showSpaceInvite(activeSpace);
             } else {
-                dis.dispatch({ action: 'view_create_chat' });
+                (dispatcher || defaultDispatcher).dispatch({ action: 'view_create_chat' });
             }
         },
     },
