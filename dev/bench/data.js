@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624894195021,
+  "lastUpdate": 1624904370325,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -3080,6 +3080,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4918.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "690656e3b2f29df2f5651206f184191d0b787ced",
+          "message": "Merge pull request #6281 from maunium/unread-notices\n\nLet m.notice messages mark a room as unread",
+          "timestamp": "2021-06-28T19:14:15+01:00",
+          "tree_id": "15dc91d9ca58d99725da08631e7fe9184d07abc6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/690656e3b2f29df2f5651206f184191d0b787ced"
+        },
+        "date": 1624904369323,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4120,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 967.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1817.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4464.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
