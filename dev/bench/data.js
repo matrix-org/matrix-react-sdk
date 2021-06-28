@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624872839613,
+  "lastUpdate": 1624892020798,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -2888,6 +2888,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 971.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "500be0d0d876d3ad7b7aa68d13a1f6ca763b206d",
+          "message": "Merge pull request #6276 from matrix-org/t3chguy/fix/17805\n\nFix tiny scrollbar dot on chrome/electron in Forward Dialog",
+          "timestamp": "2021-06-28T15:47:34+01:00",
+          "tree_id": "08129381c58dd353ec8405efc749b5c785b987fd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/500be0d0d876d3ad7b7aa68d13a1f6ca763b206d"
+        },
+        "date": 1624892019055,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4625.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1271.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1859.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4742.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
