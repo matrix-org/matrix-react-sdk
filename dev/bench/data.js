@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624957643601,
+  "lastUpdate": 1624960880335,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -3368,6 +3368,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4184.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b70297c510dc7247175a6ab52c4ad4527d805b33",
+          "message": "Merge pull request #6277 from matrix-org/t3chguy/fix/17793\n\nFix back button on user info card after clicking a permalink",
+          "timestamp": "2021-06-29T10:55:53+01:00",
+          "tree_id": "f79ae0515fdd1c4c8e43f8fb8c115c098e662773",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b70297c510dc7247175a6ab52c4ad4527d805b33"
+        },
+        "date": 1624960878763,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4325.399999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1212,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1750.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4407.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
