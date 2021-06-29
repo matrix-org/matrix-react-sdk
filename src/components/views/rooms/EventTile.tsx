@@ -882,7 +882,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     };
 
     private onCloseMenu = (): void => {
-        this.setState({contextMenuPosition: null});
+        this.setState({ contextMenuPosition: null });
     }
 
     render() {
