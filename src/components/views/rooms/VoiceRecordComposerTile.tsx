@@ -30,7 +30,7 @@ import RecordingPlayback from "../voice_messages/RecordingPlayback";
 import {MsgType} from "matrix-js-sdk/src/@types/event";
 import Modal from "../../../Modal";
 import ErrorDialog from "../dialogs/ErrorDialog";
-import CallMediaHandler from "../../../CallMediaHandler";
+import MediaDeviceHandler from "../../../MediaDeviceHandler";
 
 interface IProps {
     room: Room;
@@ -65,12 +65,13 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
         }
 
         await this.state.recorder.stop();
-        const mxc = await this.state.recorder.upload();
+        const upload = await this.state.recorder.upload(this.props.room.roomId);
         MatrixClientPeg.get().sendMessage(this.props.room.roomId, {
             "body": "Voice message",
             //"msgtype": "org.matrix.msc2516.voice",
             "msgtype": MsgType.Audio,
-            "url": mxc,
+            "url": upload.mxc,
+            "file": upload.encrypted,
             "info": {
                 duration: Math.round(this.state.recorder.durationSeconds * 1000),
                 mimetype: this.state.recorder.contentType,
@@ -81,7 +82,8 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
             // https://github.com/matrix-org/matrix-doc/pull/3245
             "org.matrix.msc1767.text": "Voice message",
             "org.matrix.msc1767.file": {
-                url: mxc,
+                url: upload.mxc,
+                file: upload.encrypted,
                 name: "Voice message.ogg",
                 mimetype: this.state.recorder.contentType,
                 size: this.state.recorder.contentLength,
@@ -129,8 +131,8 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
         // Do a sanity test to ensure we're about to grab a valid microphone reference. Things might
         // change between this and recording, but at least we will have tried.
         try {
-            const devices = await CallMediaHandler.getDevices();
-            if (!devices?.['audioinput']?.length) {
+            const devices = await MediaDeviceHandler.getDevices();
+            if (!devices?.['audioInput']?.length) {
                 Modal.createTrackedDialog('No Microphone Error', '', ErrorDialog, {
                     title: _t("No microphone found"),
                     description: <>
