@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624935288841,
+  "lastUpdate": 1624951459772,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -3224,6 +3224,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4439.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "26592da09f0fd04cd3f27119098bb515f7e1f2ce",
+          "message": "Merge pull request #5671 from weeman1337/msg-context-menu",
+          "timestamp": "2021-06-29T08:18:07+01:00",
+          "tree_id": "a96af40d2d8a6a7bbd34c49e8dd5d7bf40183fdb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/26592da09f0fd04cd3f27119098bb515f7e1f2ce"
+        },
+        "date": 1624951457913,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4711.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1127.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1858.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4664.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
