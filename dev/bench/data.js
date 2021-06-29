@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624954783487,
+  "lastUpdate": 1624957643601,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -3320,6 +3320,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4548,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "14ef38e0575ff655e9b94674edb6c959f93b9ae3",
+          "message": "Merge pull request #6280 from robintown/group-acls\n\nGroup ACLs with MELS",
+          "timestamp": "2021-06-29T10:02:12+01:00",
+          "tree_id": "b6d07e5cf2e135b448f84e27813dc08e54c965a7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/14ef38e0575ff655e9b94674edb6c959f93b9ae3"
+        },
+        "date": 1624957642059,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4162.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 963.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1678.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4184.5,
             "unit": "ms",
             "extra": "type: measure"
           }
