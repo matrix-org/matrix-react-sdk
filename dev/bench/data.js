@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624977500018,
+  "lastUpdate": 1624984150901,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -3608,6 +3608,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4910,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "55121f6e81171bac51fdfc27fa574e7bcd663a08",
+          "message": "Merge pull request #6287 from matrix-org/gsouquet/fix-17836\n\nAvoid cyclic dependencies by moving watchers out of constructor",
+          "timestamp": "2021-06-29T17:23:13+01:00",
+          "tree_id": "373ae9c4631d1e340ad93eb0aaa666874cd9c995",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/55121f6e81171bac51fdfc27fa574e7bcd663a08"
+        },
+        "date": 1624984149148,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5011.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1137.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1848.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4783.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
