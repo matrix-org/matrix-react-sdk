@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624976922152,
+  "lastUpdate": 1624977500018,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -3560,6 +3560,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4717.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9a37f298419a3b08b1e4699e1db44d925023cb43",
+          "message": "Merge pull request #6284 from matrix-org/gsouquet/fix-17826\n\nAdd spacing between toast buttons with cross browser support in mind",
+          "timestamp": "2021-06-29T15:32:14+01:00",
+          "tree_id": "cf4381fd2164400beafc8eaec770dfece9c5bb9e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9a37f298419a3b08b1e4699e1db44d925023cb43"
+        },
+        "date": 1624977496276,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4439.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1100.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1930.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4910,
             "unit": "ms",
             "extra": "type: measure"
           }
