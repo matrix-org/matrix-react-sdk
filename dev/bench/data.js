@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624972799529,
+  "lastUpdate": 1624976487192,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -3464,6 +3464,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4337.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "78f17486345adea3c1fbac3e359ae54aedab1fd5",
+          "message": "Merge pull request #6283 from matrix-org/gsouquet/filepanel-typescript",
+          "timestamp": "2021-06-29T15:15:29+01:00",
+          "tree_id": "26f66474a153e09b8f2c06b1c60f1f663c0249e0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/78f17486345adea3c1fbac3e359ae54aedab1fd5"
+        },
+        "date": 1624976485855,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4998.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1125.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1868.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4702.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
