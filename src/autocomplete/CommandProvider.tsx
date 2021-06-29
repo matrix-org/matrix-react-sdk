@@ -97,7 +97,7 @@ export default class CommandProvider extends AutocompleteProvider {
         return (
             <div
                 className="mx_Autocomplete_Completion_container_block"
-                role="listbox"
+                role="presentation"
                 aria-label={_t("Command Autocomplete")}
             >
                 { completions }
