@@ -341,13 +341,13 @@ class RoomViewStore extends Store<ActionPayload> {
 
             // if joined through room ID and didn't provide any via servers, provide
             // a more detailed error than "No known servers"
-            if (address === this.state.roomId && viaServers.length === 0) {
-                msg = <div>
-                    {_t("You attempted to join using a Room ID without providing a list " +
-                        "of servers to join through. Room IDs are internal identifiers and " +
-                        "cannot be used to join a room without additional information.")}<br /><br />
-                    {_t("If you know a room alias, try joining through that instead.")}
-                </div>
+            if (payload.roomId === this.state.roomId && this.state.viaServers.length === 0) {
+               msg = <div>
+                   {_t("You attempted to join using a Room ID without providing a list " +
+                       "of servers to join through. Room IDs are internal identifiers and " +
+                       "cannot be used to join a room without additional information.")}<br /><br />
+                   {_t("If you know a room alias, try joining through that instead.")}
+               </div>
             }
         }
 
