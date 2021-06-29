@@ -736,7 +736,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                         "%(first)s, %(second)s and %(count)s others read",
                         {first: ariaLabels[0],
                         second: ariaLabels[1],
-                        count: a11yRemainder},
+                        count: (a11yRemainder +1)},
                     );
                 } else {
                     ariaLabel = _t(
