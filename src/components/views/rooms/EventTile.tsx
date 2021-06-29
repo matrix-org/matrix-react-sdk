@@ -1118,7 +1118,6 @@ export default class EventTile extends React.Component<IProps, IState> {
                     "aria-live": ariaLive,
                     "aria-atomic": true,
                     "data-scroll-tokens": scrollToken,
-                    "onContextMenu": this.onContextMenu,
                 }, [
                     <div className="mx_EventTile_roomName" key="mx_EventTile_roomName">
                         <RoomAvatar room={room} width={28} height={28} />
