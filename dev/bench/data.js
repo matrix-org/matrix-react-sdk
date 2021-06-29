@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624951459772,
+  "lastUpdate": 1624954783487,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -3272,6 +3272,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4664.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0cc7f42f08b36f5388ce5a81d553b86315027a7f",
+          "message": "Merge pull request #6282 from matrix-org/t3chguy/fix/17738\n\nFix editState not getting passed through",
+          "timestamp": "2021-06-29T09:14:17+01:00",
+          "tree_id": "3d19173413a1be595d9ff8f85e153fccaa3abd36",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0cc7f42f08b36f5388ce5a81d553b86315027a7f"
+        },
+        "date": 1624954781883,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4472.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1085,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2062.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4548,
             "unit": "ms",
             "extra": "type: measure"
           }
