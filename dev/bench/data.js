@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624976487192,
+  "lastUpdate": 1624976922152,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -3512,6 +3512,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4702.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "640fc591bbaa3dab2f96b4b0d38ca7360c825664",
+          "message": "Merge pull request #6279 from matrix-org/gsouquet/deprecate-tinter\n\nDeprecate Tinter and TintableSVG",
+          "timestamp": "2021-06-29T15:22:48+01:00",
+          "tree_id": "59dd7f1f5da424449f7d3c13e71a00e2fc7d5673",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/640fc591bbaa3dab2f96b4b0d38ca7360c825664"
+        },
+        "date": 1624976921303,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4486.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1083.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1895.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4717.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
