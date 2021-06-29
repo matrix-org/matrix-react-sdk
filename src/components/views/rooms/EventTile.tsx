@@ -48,6 +48,7 @@ import NotificationBadge from "./NotificationBadge";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { Action } from '../../../dispatcher/actions';
 import AccessibleButton from "../elements/AccessibleButton";
+import Toolbar from "../../../accessibility/Toolbar";
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -673,7 +674,6 @@ export default class EventTile extends React.Component<IProps, IState> {
         if ((receipts.length > 1) && !this.state.allReadAvatars) {
             calculateAriaLabel = true;
         }
-
         for (let i = 0; i < receipts.length; ++i) {
             const receipt = receipts[i];
 
@@ -775,10 +775,11 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
         return (
             <div className="mx_EventTile_msgOption" aria-live="off">
-                <span className="mx_EventTile_readAvatars">
+                <Toolbar className="mx_EventTile_readAvatars"
+                    aria-label={_t("Read receipts")}>
                     { remText }
                     { avatars }
-                </span>
+                </Toolbar>
             </div>
         );
     }

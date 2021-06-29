@@ -23,6 +23,7 @@ import NodeAnimator from "../../../NodeAnimator";
 import * as sdk from "../../../index";
 import { toPx } from "../../../utils/units";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { RovingTabIndexWrapper } from "../../../accessibility/RovingTabIndex";
 
 @replaceableComponent("views.rooms.ReadReceiptMarker")
 export default class ReadReceiptMarker extends React.PureComponent {
@@ -188,12 +189,35 @@ export default class ReadReceiptMarker extends React.PureComponent {
             }
         }
 
+        if (this.props.handleAccessibility) {
+            return (
+                <NodeAnimator startStyles={this.state.startStyles}>
+                <React.Fragment>
+                    <RovingTabIndexWrapper inputRef={this._avatar}>
+                        {({onFocus, isActive, ref}) =>
+                    <MemberAvatar
+                        onFocus={onFocus}
+                        tabIndex={isActive ? 0 : -1}
+                        inputRef={ref}
+                        member={this.props.member}
+                        fallbackUserId={this.props.fallbackUserId}
+                        width={14} height={14} resizeMethod="crop"
+                        style={style}
+                        title={title}
+                        onClick={this.props.onClick}
+                    />
+                        }
+                    </RovingTabIndexWrapper>
+                </React.Fragment>
+                </NodeAnimator>
+            );
+        }
         return (
             <NodeAnimator startStyles={this.state.startStyles}>
                 <MemberAvatar
                     member={this.props.member}
                     fallbackUserId={this.props.fallbackUserId}
-                    aria-hidden={ !this.props.handleAccessibility }
+                    aria-hidden="true"
                     width={14} height={14} resizeMethod="crop"
                     style={style}
                     title={title}
@@ -202,5 +226,6 @@ export default class ReadReceiptMarker extends React.PureComponent {
                 />
             </NodeAnimator>
         );
+
     }
 }
