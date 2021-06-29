@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624984150901,
+  "lastUpdate": 1624985450240,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -3656,6 +3656,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4783.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9d6d8fc666855ca0c06c71ccb30c74ac4fc8fd12",
+          "message": "Merge pull request #6285 from matrix-org/jryans/rework-linting-2\n\nMigrate to `eslint-plugin-matrix-org`",
+          "timestamp": "2021-06-29T17:45:10+01:00",
+          "tree_id": "7b70c05648e16233175b5197ad5b198568ab0888",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9d6d8fc666855ca0c06c71ccb30c74ac4fc8fd12"
+        },
+        "date": 1624985448431,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4536.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1064.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1885.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4614.70000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
