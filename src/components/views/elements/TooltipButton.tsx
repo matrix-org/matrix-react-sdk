@@ -15,12 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import * as sdk from '../../../index';
+import React, {ReactNode} from 'react';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import Tooltip from './Tooltip';
 
 interface IProps {
-    helpText: string;
+    helpText: ReactNode;
 }
 
 interface IState {
@@ -49,7 +49,6 @@ export default class TooltipButton extends React.Component<IProps, IState> {
     };
 
     render() {
-        const Tooltip = sdk.getComponent("elements.Tooltip");
         const tip = this.state.hover ? <Tooltip
             className="mx_TooltipButton_container"
             tooltipClassName="mx_TooltipButton_helpText"

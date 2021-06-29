@@ -16,12 +16,13 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import Modal from '../../../Modal';
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import RoomUpgradeDialog from "../dialogs/RoomUpgradeDialog";
+import AccessibleButton from "../elements/AccessibleButton";
 
 @replaceableComponent("views.rooms.RoomUpgradeWarningBar")
 export default class RoomUpgradeWarningBar extends React.PureComponent {
@@ -61,13 +62,10 @@ export default class RoomUpgradeWarningBar extends React.PureComponent {
     };
 
     onUpgradeClick = () => {
-        const RoomUpgradeDialog = sdk.getComponent('dialogs.RoomUpgradeDialog');
         Modal.createTrackedDialog('Upgrade Room Version', '', RoomUpgradeDialog, { room: this.props.room });
     };
 
     render() {
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-
         let doUpgradeWarnings = (
             <div>
                 <div className="mx_RoomUpgradeWarningBar_body">

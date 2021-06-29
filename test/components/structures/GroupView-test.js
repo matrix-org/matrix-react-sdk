@@ -20,16 +20,15 @@ import ReactTestUtils from 'react-dom/test-utils';
 
 import MockHttpBackend from 'matrix-mock-request';
 import { MatrixClientPeg } from '../../../src/MatrixClientPeg';
-import sdk from '../../skinned-sdk';
 import Matrix from 'matrix-js-sdk';
 
 import * as TestUtils from '../../test-utils';
+import GroupAvatar from "../../../src/components/views/avatars/GroupAvatar";
+import GroupView from "../../../src/components/structures/GroupView";
+import Spinner from "../../../src/components/views/elements/Spinner";
 const { waitForUpdate } = TestUtils;
 
-const GroupView = sdk.getComponent('structures.GroupView');
 const WrappedGroupView = TestUtils.wrapInMatrixClientContext(GroupView);
-
-const Spinner = sdk.getComponent('elements.Spinner');
 
 describe('GroupView', function() {
     let root;
@@ -179,7 +178,7 @@ describe('GroupView', function() {
         const prom = waitForUpdate(groupView, 4).then(() => {
             ReactTestUtils.findRenderedDOMComponentWithClass(root, 'mx_GroupView');
 
-            const avatar = ReactTestUtils.findRenderedComponentWithType(root, sdk.getComponent('avatars.GroupAvatar'));
+            const avatar = ReactTestUtils.findRenderedComponentWithType(root, GroupAvatar);
             const img = ReactTestUtils.findRenderedDOMComponentWithTag(avatar, 'img');
             const avatarImgElement = ReactDOM.findDOMNode(img);
             expect(avatarImgElement).toBeTruthy();

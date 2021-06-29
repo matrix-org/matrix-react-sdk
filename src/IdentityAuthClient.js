@@ -19,7 +19,6 @@ import { createClient } from 'matrix-js-sdk/src/matrix';
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import Modal from './Modal';
-import * as sdk from './index';
 import { _t } from './languageHandler';
 import { Service, startTermsFlow, TermsNotSignedError } from './Terms';
 import {
@@ -28,6 +27,7 @@ import {
     useDefaultIdentityServer,
 } from './utils/IdentityServerUtils';
 import { abbreviateUrl } from './utils/UrlUtils';
+import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 
 export class AbortedIdentityActionError extends Error {}
 
@@ -143,7 +143,6 @@ export default class IdentityAuthClient {
             !doesAccountDataHaveIdentityServer() &&
             !await doesIdentityServerHaveTerms(identityServerUrl)
         ) {
-            const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
             const { finished } = Modal.createTrackedDialog('Default identity server terms warning', '',
                 QuestionDialog, {
                 title: _t("Identity server has no terms of service"),

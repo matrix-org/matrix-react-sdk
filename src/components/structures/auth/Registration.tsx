@@ -18,7 +18,6 @@ import { createClient } from 'matrix-js-sdk/src/matrix';
 import React, { ReactNode } from 'react';
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
-import * as sdk from '../../../index';
 import { _t, _td } from '../../../languageHandler';
 import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
 import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
@@ -31,6 +30,20 @@ import dis from "../../../dispatcher/dispatcher";
 import SSOButtons from "../../views/elements/SSOButtons";
 import ServerPicker from '../../views/elements/ServerPicker';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import InteractiveAuth from "../InteractiveAuth";
+import Spinner from '../../views/elements/Spinner';
+import RegistrationForm, {IRegisterParams} from '../../views/auth/RegistrationForm';
+import AccessibleButton from '../../views/elements/AccessibleButton';
+import AuthHeader from "../../views/auth/AuthHeader";
+import AuthBody from "../../views/auth/AuthBody";
+
+export interface ILoggedInParams {
+    userId: string;
+    deviceId: string
+    homeserverUrl: string;
+    identityServerUrl?: string;
+    accessToken: string;
+}
 
 interface IProps {
     serverConfig: ValidatedServerConfig;
@@ -47,13 +60,7 @@ interface IProps {
     // - The user's password, if available and applicable (may be cached in memory
     //   for a short time so the user is not required to re-enter their password
     //   for operations like uploading cross-signing keys).
-    onLoggedIn(params: {
-        userId: string;
-        deviceId: string
-        homeserverUrl: string;
-        identityServerUrl?: string;
-        accessToken: string;
-    }, password: string): void;
+    onLoggedIn(params: ILoggedInParams, password: string): void;
     makeRegistrationUrl(params: {
         /* eslint-disable camelcase */
         client_secret: string;
@@ -78,7 +85,7 @@ interface IState {
     // values the user entered still in it. We can keep
     // them in this component's state since this component
     // persist for the duration of the registration process.
-    formVals: Record<string, string>;
+    formVals: IRegisterParams;
     // user-interactive auth
     // If we've been given a session ID, we're resuming
     // straight back into UI auth
@@ -122,6 +129,8 @@ export default class Registration extends React.Component<IProps, IState> {
             errorText: null,
             formVals: {
                 email: this.props.email,
+                username: "",
+                password: "",
             },
             doingUIAuth: Boolean(this.props.sessionId),
             flows: null,
@@ -246,7 +255,7 @@ export default class Registration extends React.Component<IProps, IState> {
         }
     }
 
-    private onFormSubmit = formVals => {
+    private onFormSubmit = async (formVals: IRegisterParams) => {
         this.setState({
             errorText: "",
             busy: true,
@@ -442,10 +451,6 @@ export default class Registration extends React.Component<IProps, IState> {
     };
 
     private renderRegisterComponent() {
-        const InteractiveAuth = sdk.getComponent('structures.InteractiveAuth');
-        const Spinner = sdk.getComponent('elements.Spinner');
-        const RegistrationForm = sdk.getComponent('auth.RegistrationForm');
-
         if (this.state.matrixClient && this.state.doingUIAuth) {
             return <InteractiveAuth
                 matrixClient={this.state.matrixClient}
@@ -516,10 +521,6 @@ export default class Registration extends React.Component<IProps, IState> {
     }
 
     render() {
-        const AuthHeader = sdk.getComponent('auth.AuthHeader');
-        const AuthBody = sdk.getComponent("auth.AuthBody");
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-
         let errorText;
         const err = this.state.errorText;
         if (err) {

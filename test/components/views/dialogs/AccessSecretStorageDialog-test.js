@@ -16,11 +16,9 @@ limitations under the License.
 
 import React from 'react';
 import TestRenderer from 'react-test-renderer';
-import sdk from '../../../skinned-sdk';
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import { stubClient } from '../../../test-utils';
-
-const AccessSecretStorageDialog = sdk.getComponent("dialogs.security.AccessSecretStorageDialog");
+import AccessSecretStorageDialog from "../../../../src/components/views/dialogs/security/AccessSecretStorageDialog";
 
 describe("AccessSecretStorageDialog", function() {
     it("Closes the dialog if _onRecoveryKeyNext is called with a valid key", (done) => {

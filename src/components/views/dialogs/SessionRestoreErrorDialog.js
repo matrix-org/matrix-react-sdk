@@ -18,11 +18,14 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import SdkConfig from '../../../SdkConfig';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import BugReportDialog from "./BugReportDialog";
+import QuestionDialog from "./QuestionDialog";
+import DialogButtons from "../elements/DialogButtons";
+import BaseDialog from "./BaseDialog";
 
 @replaceableComponent("views.dialogs.SessionRestoreErrorDialog")
 export default class SessionRestoreErrorDialog extends React.Component {
@@ -32,12 +35,10 @@ export default class SessionRestoreErrorDialog extends React.Component {
     };
 
     _sendBugReport = () => {
-        const BugReportDialog = sdk.getComponent("dialogs.BugReportDialog");
         Modal.createTrackedDialog('Session Restore Error', 'Send Bug Report Dialog', BugReportDialog, {});
     };
 
     _onClearStorageClick = () => {
-        const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
         Modal.createTrackedDialog('Session Restore Confirm Logout', '', QuestionDialog, {
             title: _t("Sign out"),
             description:
@@ -56,9 +57,6 @@ export default class SessionRestoreErrorDialog extends React.Component {
 
     render() {
         const brand = SdkConfig.get().brand;
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
-
         const clearStorageButton = (
             <button onClick={this._onClearStorageClick} className="danger">
                 { _t("Clear Storage and Sign Out") }

@@ -20,9 +20,11 @@ import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import Modal from '../../../Modal';
 import VerificationRequestDialog from '../../views/dialogs/VerificationRequestDialog';
-import * as sdk from '../../../index';
 import { SetupEncryptionStore, Phase } from '../../../stores/SetupEncryptionStore';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import EncryptionPanel from "../../views/right_panel/EncryptionPanel";
+import AccessibleButton from "../../views/elements/AccessibleButton";
+import Spinner from "../../views/elements/Spinner";
 
 function keyHasPassphrase(keyInfo) {
     return (
@@ -114,14 +116,11 @@ export default class SetupEncryptionBody extends React.Component {
     }
 
     render() {
-        const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
-
         const {
             phase,
         } = this.state;
 
         if (this.state.verificationRequest) {
-            const EncryptionPanel = sdk.getComponent("views.right_panel.EncryptionPanel");
             return <EncryptionPanel
                 layout="dialog"
                 verificationRequest={this.state.verificationRequest}
@@ -217,7 +216,6 @@ export default class SetupEncryptionBody extends React.Component {
                 </div>
             );
         } else if (phase === Phase.Busy || phase === Phase.Loading) {
-            const Spinner = sdk.getComponent('views.elements.Spinner');
             return <Spinner />;
         } else {
             console.log(`SetupEncryptionBody: Unknown phase ${phase}`);

@@ -23,9 +23,6 @@ const TestUtils = require('react-dom/test-utils');
 const expect = require('expect');
 import { EventEmitter } from "events";
 
-import sdk from '../../skinned-sdk';
-
-const MessagePanel = sdk.getComponent('structures.MessagePanel');
 import {MatrixClientPeg} from '../../../src/MatrixClientPeg';
 import Matrix from 'matrix-js-sdk';
 
@@ -38,6 +35,11 @@ import { configure, mount } from "enzyme";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import RoomContext from "../../../src/contexts/RoomContext";
 import DMRoomMap from "../../../src/utils/DMRoomMap";
+import DateSeparator from "../../../src/components/views/messages/DateSeparator";
+import EventTile from "../../../src/components/views/rooms/EventTile";
+import EventListSummary from "../../../src/components/views/elements/EventListSummary";
+import MemberEventListSummary from "../../../src/components/views/elements/MemberEventListSummary";
+import MessagePanel from "../../../src/components/structures/MessagePanel";
 
 configure({ adapter: new Adapter() });
 
@@ -286,8 +288,7 @@ describe('MessagePanel', function() {
         );
 
         // just check we have the right number of tiles for now
-        const tiles = TestUtils.scryRenderedComponentsWithType(
-            res, sdk.getComponent('rooms.EventTile'));
+        const tiles = TestUtils.scryRenderedComponentsWithType(res, EventTile);
         expect(tiles.length).toEqual(10);
     });
 
@@ -297,14 +298,10 @@ describe('MessagePanel', function() {
         );
 
         // just check we have the right number of tiles for now
-        const tiles = TestUtils.scryRenderedComponentsWithType(
-            res, sdk.getComponent('rooms.EventTile'),
-        );
+        const tiles = TestUtils.scryRenderedComponentsWithType(res, EventTile);
         expect(tiles.length).toEqual(2);
 
-        const summaryTiles = TestUtils.scryRenderedComponentsWithType(
-            res, sdk.getComponent('elements.MemberEventListSummary'),
-        );
+        const summaryTiles = TestUtils.scryRenderedComponentsWithType(res, MemberEventListSummary);
         expect(summaryTiles.length).toEqual(1);
     });
 
@@ -314,8 +311,7 @@ describe('MessagePanel', function() {
                 readMarkerVisible={true} />,
         );
 
-        const tiles = TestUtils.scryRenderedComponentsWithType(
-            res, sdk.getComponent('rooms.EventTile'));
+        const tiles = TestUtils.scryRenderedComponentsWithType(res, EventTile);
 
         // find the <li> which wraps the read marker
         const rm = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_RoomView_myReadMarker_container');
@@ -374,8 +370,7 @@ describe('MessagePanel', function() {
                 readMarkerVisible={true}
             />, parentDiv);
 
-        const tiles = TestUtils.scryRenderedComponentsWithType(
-            mp, sdk.getComponent('rooms.EventTile'));
+        const tiles = TestUtils.scryRenderedComponentsWithType(mp, EventTile);
         const tileContainers = tiles.map(function(t) {
             return ReactDOM.findDOMNode(t);
         });
@@ -427,15 +422,15 @@ describe('MessagePanel', function() {
         //   should be outside of the room creation summary
         // - all other events should be inside the room creation summary
 
-        const tiles = res.find(sdk.getComponent('views.rooms.EventTile'));
+        const tiles = res.find(EventTile);
 
         expect(tiles.at(0).props().mxEvent.getType()).toEqual("m.room.create");
         expect(tiles.at(1).props().mxEvent.getType()).toEqual("m.room.encryption");
 
-        const summaryTiles = res.find(sdk.getComponent('views.elements.EventListSummary'));
+        const summaryTiles = res.find(EventListSummary);
         const summaryTile = summaryTiles.at(0);
 
-        const summaryEventTiles = summaryTile.find(sdk.getComponent('views.rooms.EventTile'));
+        const summaryEventTiles = summaryTile.find(EventTile);
         // every event except for the room creation, room encryption, and Bob's
         // invite event should be in the event summary
         expect(summaryEventTiles.length).toEqual(tiles.length - 3);
@@ -471,7 +466,7 @@ describe('MessagePanel', function() {
                 events={events}
             />,
         );
-        const Dates = res.find(sdk.getComponent('messages.DateSeparator'));
+        const Dates = res.find(DateSeparator);
 
         expect(Dates.length).toEqual(1);
     });

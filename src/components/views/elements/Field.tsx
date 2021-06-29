@@ -16,9 +16,9 @@ limitations under the License.
 
 import React, { InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes } from 'react';
 import classNames from 'classnames';
-import * as sdk from '../../../index';
 import { debounce } from "lodash";
 import { IFieldState, IValidationResult } from "./Validation";
+import Tooltip from './Tooltip';
 
 // Invoke validation from user input (when typing, etc.) at most once every N ms.
 const VALIDATION_THROTTLE_MS = 200;
@@ -260,7 +260,6 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         });
 
         // Handle displaying feedback on validity
-        const Tooltip = sdk.getComponent("elements.Tooltip");
         let fieldTooltip;
         if (tooltipContent || this.state.feedback) {
             fieldTooltip = <Tooltip

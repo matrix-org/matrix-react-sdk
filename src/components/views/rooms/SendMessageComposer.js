@@ -14,6 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import dis from '../../../dispatcher/dispatcher';
@@ -33,7 +34,6 @@ import ReplyThread from "../elements/ReplyThread";
 import { findEditableEvent } from '../../../utils/EventUtils';
 import SendHistoryManager from "../../../SendHistoryManager";
 import { CommandCategories, getCommand } from '../../../SlashCommands';
-import * as sdk from '../../../index';
 import Modal from '../../../Modal';
 import { _t, _td } from '../../../languageHandler';
 import ContentMessages from '../../../ContentMessages';
@@ -48,6 +48,8 @@ import EMOJI_REGEX from 'emojibase-regex';
 import { getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindingsManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import SettingsStore from '../../../settings/SettingsStore';
+import QuestionDialog from "../dialogs/QuestionDialog";
+import ErrorDialog from "../dialogs/ErrorDialog";
 
 function addReplyToMessageContent(content, repliedToEvent, permalinkCreator) {
     const replyContent = ReplyThread.makeReplyMixIn(repliedToEvent);
@@ -302,7 +304,6 @@ export default class SendMessageComposer extends React.Component {
         }
         if (error) {
             console.error("Command failure: %s", error);
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             // assume the error is a server error when the command is async
             const isServerError = !!result.promise;
             const title = isServerError ? _td("Server error") : _td("Command error");
@@ -349,7 +350,6 @@ export default class SendMessageComposer extends React.Component {
                 }
             } else {
                 // ask the user if their unknown command should be sent as a message
-                const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
                 const { finished } = Modal.createTrackedDialog("Unknown command", "", QuestionDialog, {
                     title: _t("Unknown Command"),
                     description: <div>

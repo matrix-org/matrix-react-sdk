@@ -17,11 +17,11 @@ limitations under the License.
 */
 
 import { MatrixClientPeg } from './MatrixClientPeg';
-import * as sdk from './index';
 import Modal from './Modal';
 import { _t } from './languageHandler';
 import IdentityAuthClient from './IdentityAuthClient';
 import { SSOAuthEntry } from "./components/views/auth/InteractiveAuthEntryComponents";
+import InteractiveAuthDialog from "./components/views/dialogs/InteractiveAuthDialog";
 
 function getIdServerDomain() {
     return MatrixClientPeg.get().idBaseUrl.split("://")[1];
@@ -187,8 +187,6 @@ export default class AddThreepid {
                         }
 
                         // pop up an interactive auth dialog
-                        const InteractiveAuthDialog = sdk.getComponent("dialogs.InteractiveAuthDialog");
-
                         const dialogAesthetics = {
                             [SSOAuthEntry.PHASE_PREAUTH]: {
                                 title: _t("Use Single Sign On to continue"),
@@ -303,8 +301,6 @@ export default class AddThreepid {
                     }
 
                     // pop up an interactive auth dialog
-                    const InteractiveAuthDialog = sdk.getComponent("dialogs.InteractiveAuthDialog");
-
                     const dialogAesthetics = {
                         [SSOAuthEntry.PHASE_PREAUTH]: {
                             title: _t("Use Single Sign On to continue"),

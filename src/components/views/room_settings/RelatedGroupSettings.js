@@ -17,12 +17,12 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
 import ErrorDialog from "../dialogs/ErrorDialog";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import EditableItemList from "../elements/EditableItemList";
 
 const GROUP_ID_REGEX = /\+\S+:\S+/;
 
@@ -66,7 +66,6 @@ export default class RelatedGroupSettings extends React.Component {
 
     validateGroupId(groupId) {
         if (!GROUP_ID_REGEX.test(groupId)) {
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog('Invalid related community ID', '', ErrorDialog, {
                 title: _t('Invalid community ID'),
                 description: _t('\'%(groupId)s\' is not a valid community ID', { groupId }),
@@ -101,7 +100,6 @@ export default class RelatedGroupSettings extends React.Component {
 
     render() {
         const localDomain = this.context.getDomain();
-        const EditableItemList = sdk.getComponent('elements.EditableItemList');
         return <div>
             <EditableItemList
                 id="relatedGroups"

@@ -23,7 +23,7 @@ import VerificationRequestDialog from './VerificationRequestDialog';
 import BaseDialog from './BaseDialog';
 import DialogButtons from '../elements/DialogButtons';
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import * as sdk from '../../../index';
+import ErrorDialog from "./ErrorDialog";
 
 @replaceableComponent("views.dialogs.NewSessionReviewDialog")
 export default class NewSessionReviewDialog extends React.PureComponent {
@@ -34,7 +34,6 @@ export default class NewSessionReviewDialog extends React.PureComponent {
     }
 
     onCancelClick = () => {
-        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         Modal.createTrackedDialog("Verification failed", "insecure", ErrorDialog, {
             headerImage: require("../../../../res/img/e2e/warning.svg"),
             title: _t("Your account is not secure"),

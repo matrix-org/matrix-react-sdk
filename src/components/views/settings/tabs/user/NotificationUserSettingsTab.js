@@ -16,8 +16,8 @@ limitations under the License.
 
 import React from 'react';
 import { _t } from "../../../../../languageHandler";
-import * as sdk from "../../../../../index";
 import { replaceableComponent } from "../../../../../utils/replaceableComponent";
+import Notifications from "../../Notifications";
 
 @replaceableComponent("views.settings.tabs.user.NotificationUserSettingsTab")
 export default class NotificationUserSettingsTab extends React.Component {
@@ -26,7 +26,6 @@ export default class NotificationUserSettingsTab extends React.Component {
     }
 
     render() {
-        const Notifications = sdk.getComponent("views.settings.Notifications");
         return (
             <div className="mx_SettingsTab mx_NotificationUserSettingsTab">
                 <div className="mx_SettingsTab_heading">{_t("Notifications")}</div>

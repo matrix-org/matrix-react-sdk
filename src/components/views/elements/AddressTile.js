@@ -18,11 +18,11 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import * as sdk from "../../../index";
 import { _t } from '../../../languageHandler';
 import { UserAddressType } from '../../../UserAddress';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
+import BaseAvatar from "../avatars/BaseAvatar";
 
 @replaceableComponent("views.elements.AddressTile")
 export default class AddressTile extends React.Component {
@@ -51,8 +51,6 @@ export default class AddressTile extends React.Component {
         } else if (address.addressType === 'email') {
             imgUrls.push(require("../../../../res/img/icon-email-user.svg"));
         }
-
-        const BaseAvatar = sdk.getComponent('avatars.BaseAvatar');
 
         const nameClasses = classNames({
             "mx_AddressTile_name": true,

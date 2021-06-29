@@ -17,8 +17,9 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import AuthHeaderLogo from "./AuthHeaderLogo";
+import LanguageSelector from "./LanguageSelector";
 
 @replaceableComponent("views.auth.AuthHeader")
 export default class AuthHeader extends React.Component {
@@ -27,9 +28,6 @@ export default class AuthHeader extends React.Component {
     };
 
     render() {
-        const AuthHeaderLogo = sdk.getComponent('auth.AuthHeaderLogo');
-        const LanguageSelector = sdk.getComponent('views.auth.LanguageSelector');
-
         return (
             <div className="mx_AuthHeader">
                 <AuthHeaderLogo />

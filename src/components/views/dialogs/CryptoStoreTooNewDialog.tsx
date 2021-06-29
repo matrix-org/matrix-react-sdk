@@ -15,22 +15,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import * as sdk from '../../../index';
+import React, { ReactElement } from 'react';
+
 import dis from '../../../dispatcher/dispatcher';
 import { _t } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
 import Modal from '../../../Modal';
+import QuestionDialog from "./QuestionDialog";
+import BaseDialog from "./BaseDialog";
+import DialogButtons from "../elements/DialogButtons";
 
 interface IProps {
     onFinished: (success: boolean) => void;
 }
 
-export default (props: IProps) => {
+export default (props: IProps): ReactElement => {
     const brand = SdkConfig.get().brand;
 
     const _onLogoutClicked = () => {
-        const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
         Modal.createTrackedDialog('Logout e2e db too new', '', QuestionDialog, {
             title: _t("Sign out"),
             description: _t(
@@ -58,8 +60,6 @@ export default (props: IProps) => {
             { brand },
         );
 
-    const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-    const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
     return (<BaseDialog className="mx_CryptoStoreTooNewDialog"
         contentId='mx_Dialog_content'
         title={_t("Incompatible Database")}

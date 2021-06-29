@@ -23,9 +23,9 @@ import Field from "../../elements/Field";
 import AccessibleButton from "../../elements/AccessibleButton";
 import AddThreepid from "../../../../AddThreepid";
 import CountryDropdown from "../../auth/CountryDropdown";
-import * as sdk from '../../../../index';
 import Modal from '../../../../Modal';
 import { replaceableComponent } from "../../../../utils/replaceableComponent";
+import ErrorDialog from "../../dialogs/ErrorDialog";
 
 /*
 TODO: Improve the UX for everything in here.
@@ -69,7 +69,6 @@ export class ExistingPhoneNumber extends React.Component {
         MatrixClientPeg.get().deleteThreePid(this.props.msisdn.medium, this.props.msisdn.address).then(() => {
             return this.props.onRemoved(this.props.msisdn);
         }).catch((err) => {
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             console.error("Unable to remove contact information: " + err);
             Modal.createTrackedDialog('Remove 3pid failed', '', ErrorDialog, {
                 title: _t("Unable to remove contact information"),
@@ -159,7 +158,6 @@ export default class PhoneNumbers extends React.Component {
 
         if (!this.state.newPhoneNumber) return;
 
-        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         const phoneNumber = this.state.newPhoneNumber;
         const phoneCountry = this.state.phoneCountry;
 
@@ -207,7 +205,6 @@ export default class PhoneNumbers extends React.Component {
         }).catch((err) => {
             this.setState({ continueDisabled: false });
             if (err.errcode !== 'M_THREEPID_AUTH_FAILED') {
-                const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 console.error("Unable to verify phone number: " + err);
                 Modal.createTrackedDialog('Unable to verify phone number', '', ErrorDialog, {
                     title: _t("Unable to verify phone number."),

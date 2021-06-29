@@ -17,11 +17,12 @@ limitations under the License.
 import React from 'react';
 import CustomRoomTagStore from '../../stores/CustomRoomTagStore';
 import AutoHideScrollbar from './AutoHideScrollbar';
-import * as sdk from '../../index';
 import dis from '../../dispatcher/dispatcher';
 import classNames from 'classnames';
 import * as FormattingUtils from '../../utils/FormattingUtils';
 import { replaceableComponent } from "../../utils/replaceableComponent";
+import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
+import BaseAvatar from "../views/avatars/BaseAvatar";
 
 @replaceableComponent("structures.CustomRoomTagPanel")
 class CustomRoomTagPanel extends React.Component {
@@ -68,9 +69,6 @@ class CustomRoomTagTile extends React.Component {
     };
 
     render() {
-        const BaseAvatar = sdk.getComponent('avatars.BaseAvatar');
-        const AccessibleTooltipButton = sdk.getComponent('elements.AccessibleTooltipButton');
-
         const tag = this.props.tag;
         const avatarHeight = 40;
         const className = classNames({

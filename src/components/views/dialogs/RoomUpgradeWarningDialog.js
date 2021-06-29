@@ -18,11 +18,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
-import * as sdk from "../../../index";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Modal from "../../../Modal";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import BugReportDialog from "./BugReportDialog";
+import BaseDialog from "./BaseDialog";
 
 @replaceableComponent("views.dialogs.RoomUpgradeWarningDialog")
 export default class RoomUpgradeWarningDialog extends React.Component {
@@ -61,14 +62,11 @@ export default class RoomUpgradeWarningDialog extends React.Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const BugReportDialog = sdk.getComponent("dialogs.BugReportDialog");
         Modal.createTrackedDialog('Bug Report Dialog', '', BugReportDialog, {});
     };
 
     render() {
         const brand = SdkConfig.get().brand;
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
 
         let inviteToggle = null;
         if (this.state.isPrivate) {

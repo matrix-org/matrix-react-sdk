@@ -18,10 +18,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from '../../../languageHandler';
-import * as sdk from "../../../index";
 import { wantsDateSeparator } from '../../../DateUtils';
 import SettingsStore from '../../../settings/SettingsStore';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import DateSeparator from "../messages/DateSeparator";
+import EditHistoryMessage from "../messages/EditHistoryMessage";
+import Spinner from "../elements/Spinner";
+import ScrollPanel from "../../structures/ScrollPanel";
+import BaseDialog from "./BaseDialog";
 
 @replaceableComponent("views.dialogs.MessageEditHistoryDialog")
 export default class MessageEditHistoryDialog extends React.PureComponent {
@@ -100,8 +104,6 @@ export default class MessageEditHistoryDialog extends React.PureComponent {
     }
 
     _renderEdits() {
-        const EditHistoryMessage = sdk.getComponent('messages.EditHistoryMessage');
-        const DateSeparator = sdk.getComponent('messages.DateSeparator');
         const nodes = [];
         let lastEvent;
         let allEvents = this.state.events;
@@ -149,10 +151,8 @@ export default class MessageEditHistoryDialog extends React.PureComponent {
                 </p>);
             }
         } else if (this.state.isLoading) {
-            const Spinner = sdk.getComponent("elements.Spinner");
             content = <Spinner />;
         } else {
-            const ScrollPanel = sdk.getComponent("structures.ScrollPanel");
             content = (<ScrollPanel
                 className="mx_MessageEditHistoryDialog_scrollPanel"
                 onFillRequest={ this.loadMoreEdits }
@@ -162,7 +162,6 @@ export default class MessageEditHistoryDialog extends React.PureComponent {
                 <ul className="mx_MessageEditHistoryDialog_edits">{this._renderEdits()}</ul>
             </ScrollPanel>);
         }
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         return (
             <BaseDialog
                 className='mx_MessageEditHistoryDialog'

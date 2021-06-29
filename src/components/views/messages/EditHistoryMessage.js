@@ -22,12 +22,14 @@ import { formatTime } from '../../../DateUtils';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { pillifyLinks, unmountPills } from '../../../utils/pillify';
 import { _t } from '../../../languageHandler';
-import * as sdk from '../../../index';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import Modal from '../../../Modal';
 import classNames from 'classnames';
 import RedactedBody from "./RedactedBody";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import ConfirmAndWaitRedactDialog from "../dialogs/ConfirmAndWaitRedactDialog";
+import ViewSource from "../../structures/ViewSource";
+import AccessibleButton from "../elements/AccessibleButton";
 
 function getReplacedContent(event) {
     const originalContent = event.getOriginalContent();
@@ -66,7 +68,6 @@ export default class EditHistoryMessage extends React.PureComponent {
     _onRedactClick = async () => {
         const event = this.props.mxEvent;
         const cli = MatrixClientPeg.get();
-        const ConfirmAndWaitRedactDialog = sdk.getComponent("dialogs.ConfirmAndWaitRedactDialog");
 
         Modal.createTrackedDialog('Confirm Redact Dialog', 'Edit history', ConfirmAndWaitRedactDialog, {
             redact: () => cli.redactEvent(event.getRoomId(), event.getId()),
@@ -74,7 +75,6 @@ export default class EditHistoryMessage extends React.PureComponent {
     };
 
     _onViewSourceClick = () => {
-        const ViewSource = sdk.getComponent('structures.ViewSource');
         Modal.createTrackedDialog('View Event Source', 'Edit history', ViewSource, {
             mxEvent: this.props.mxEvent,
         }, 'mx_Dialog_viewsource');
@@ -104,7 +104,6 @@ export default class EditHistoryMessage extends React.PureComponent {
     }
 
     _renderActionBar() {
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         // hide the button when already redacted
         let redactButton;
         if (!this.props.mxEvent.isRedacted() && !this.props.isBaseEvent && this.state.canRedact) {

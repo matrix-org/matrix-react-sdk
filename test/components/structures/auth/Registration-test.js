@@ -17,13 +17,10 @@ limitations under the License.
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-dom/test-utils';
-import sdk from '../../../skinned-sdk';
 import SdkConfig from '../../../../src/SdkConfig';
 import { mkServerConfig } from "../../../test-utils";
-
-const Registration = sdk.getComponent(
-    'structures.auth.Registration',
-);
+import RegistrationForm from "../../../../src/components/views/auth/RegistrationForm";
+import Registration from "../../../../src/components/structures/auth/Registration";
 
 describe('Registration', function() {
     let parentDiv;
@@ -70,10 +67,7 @@ describe('Registration', function() {
             busy: false,
         });
 
-        const form = ReactTestUtils.findRenderedComponentWithType(
-            root,
-            sdk.getComponent('auth.RegistrationForm'),
-        );
+        const form = ReactTestUtils.findRenderedComponentWithType(root, RegistrationForm);
         expect(form).toBeTruthy();
     });
 

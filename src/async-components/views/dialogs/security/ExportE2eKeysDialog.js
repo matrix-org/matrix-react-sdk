@@ -21,7 +21,7 @@ import { _t } from '../../../../languageHandler';
 
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 import * as MegolmExportEncryption from '../../../../utils/MegolmExportEncryption';
-import * as sdk from '../../../../index';
+import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
 
 const PHASE_EDIT = 1;
 const PHASE_EXPORTING = 2;
@@ -107,8 +107,6 @@ export default class ExportE2eKeysDialog extends React.Component {
     };
 
     render() {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-
         const disableForm = (this.state.phase === PHASE_EXPORTING);
 
         return (

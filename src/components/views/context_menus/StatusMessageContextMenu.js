@@ -18,9 +18,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import * as sdk from '../../../index';
 import AccessibleButton from '../elements/AccessibleButton';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import Spinner from "../elements/Spinner";
 
 @replaceableComponent("views.context_menus.StatusMessageContextMenu")
 export default class StatusMessageContextMenu extends React.Component {
@@ -91,8 +91,6 @@ export default class StatusMessageContextMenu extends React.Component {
     };
 
     render() {
-        const Spinner = sdk.getComponent('views.elements.Spinner');
-
         let actionButton;
         if (this.comittedStatusMessage) {
             if (this.state.message === this.comittedStatusMessage) {

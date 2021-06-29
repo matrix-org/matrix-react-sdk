@@ -17,10 +17,10 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import classNames from 'classnames';
 import { UserAddressType } from '../../../UserAddress';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import AddressTile from "./AddressTile";
 
 @replaceableComponent("views.elements.AddressSelector")
 export default class AddressSelector extends React.Component {
@@ -121,7 +121,6 @@ export default class AddressSelector extends React.Component {
     };
 
     createAddressListTiles() {
-        const AddressTile = sdk.getComponent("elements.AddressTile");
         const maxSelected = this._maxSelected(this.props.addressList);
         const addressList = [];
 

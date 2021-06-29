@@ -18,9 +18,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AccessibleButton from './AccessibleButton';
 import dis from '../../../dispatcher/dispatcher';
-import * as sdk from '../../../index';
 import Analytics from '../../../Analytics';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import Tooltip from "./Tooltip";
 
 @replaceableComponent("views.elements.ActionButton")
 export default class ActionButton extends React.Component {
@@ -64,7 +64,6 @@ export default class ActionButton extends React.Component {
     render() {
         let tooltip;
         if (this.state.showTooltip) {
-            const Tooltip = sdk.getComponent("elements.Tooltip");
             tooltip = <Tooltip className="mx_RoleButton_tooltip" label={this.props.label} />;
         }
 

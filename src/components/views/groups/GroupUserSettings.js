@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import React from 'react';
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import GroupPublicityToggle from "./GroupPublicityToggle";
 
 @replaceableComponent("views.groups.GroupUserSettings")
 export default class GroupUserSettings extends React.Component {
@@ -48,7 +48,6 @@ export default class GroupUserSettings extends React.Component {
         } else if (groups === null) {
             text = _t('Loading...');
         } else if (groups.length > 0) {
-            const GroupPublicityToggle = sdk.getComponent('groups.GroupPublicityToggle');
             groupPublicityToggles = groups.map((groupId, index) => {
                 return <GroupPublicityToggle key={index} groupId={groupId} />;
             });

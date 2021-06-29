@@ -18,10 +18,11 @@ import filesize from 'filesize';
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import ContentMessages from '../../../ContentMessages';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import BaseDialog from "./BaseDialog";
+import DialogButtons from "../elements/DialogButtons";
 
 /*
  * Tells the user about files we know cannot be uploaded before we even try uploading
@@ -46,9 +47,6 @@ export default class UploadFailureDialog extends React.Component {
     }
 
     render() {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
-
         let message;
         let preview;
         let buttons;

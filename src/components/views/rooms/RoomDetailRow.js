@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as sdk from '../../../index';
 import React, { createRef } from 'react';
 import { _t } from '../../../languageHandler';
 import { linkifyElement } from '../../../HtmlUtils';
 import PropTypes from 'prop-types';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
+import BaseAvatar from "../avatars/BaseAvatar";
 
 export function getDisplayAliasForRoom(room) {
     return room.canonicalAlias || (room.aliases ? room.aliases[0] : "");
@@ -82,8 +82,6 @@ export default class RoomDetailRow extends React.Component {
     };
 
     render() {
-        const BaseAvatar = sdk.getComponent('avatars.BaseAvatar');
-
         const room = this.props.room;
         const name = room.name || getDisplayAliasForRoom(room) || _t('Unnamed room');
 

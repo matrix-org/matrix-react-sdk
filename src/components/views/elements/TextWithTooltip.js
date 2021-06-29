@@ -16,8 +16,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import Tooltip from "./Tooltip";
 
 @replaceableComponent("views.elements.TextWithTooltip")
 export default class TextWithTooltip extends React.Component {
@@ -45,8 +45,6 @@ export default class TextWithTooltip extends React.Component {
     };
 
     render() {
-        const Tooltip = sdk.getComponent("elements.Tooltip");
-
         const { class: className, children, tooltip, tooltipClass, tooltipProps, ...props } = this.props;
 
         return (

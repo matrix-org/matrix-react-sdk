@@ -22,7 +22,6 @@ import { MatrixError } from "matrix-js-sdk/src/http-api";
 
 import dis from '../dispatcher/dispatcher';
 import { MatrixClientPeg } from '../MatrixClientPeg';
-import * as sdk from '../index';
 import Modal from '../Modal';
 import { _t } from '../languageHandler';
 import { getCachedRoomIDForAlias, storeRoomAliasInCache } from '../RoomAliasCache';
@@ -30,6 +29,8 @@ import { ActionPayload } from "../dispatcher/payloads";
 import { Action } from "../dispatcher/actions";
 import { retry } from "../utils/promise";
 import CountlyAnalytics from "../CountlyAnalytics";
+import ErrorDialog from "../components/views/dialogs/ErrorDialog";
+import RoomSettingsDialog from "../components/views/dialogs/RoomSettingsDialog";
 
 const NUM_JOIN_RETRY = 5;
 
@@ -164,7 +165,6 @@ class RoomViewStore extends Store<ActionPayload> {
                 }
                 break;
             case 'open_room_settings': {
-                const RoomSettingsDialog = sdk.getComponent("dialogs.RoomSettingsDialog");
                 Modal.createTrackedDialog('Room settings', '', RoomSettingsDialog, {
                     roomId: payload.room_id || this.state.roomId,
                     initialTabId: payload.initial_tab_id,
@@ -340,7 +340,6 @@ class RoomViewStore extends Store<ActionPayload> {
             }
         }
 
-        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         Modal.createTrackedDialog('Failed to join room', '', ErrorDialog, {
             title: _t("Failed to join room"),
             description: msg,

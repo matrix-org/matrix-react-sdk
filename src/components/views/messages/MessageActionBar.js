@@ -21,7 +21,6 @@ import PropTypes from 'prop-types';
 import { EventStatus } from 'matrix-js-sdk/src/models/event';
 
 import { _t } from '../../../languageHandler';
-import * as sdk from '../../../index';
 import dis from '../../../dispatcher/dispatcher';
 import { aboveLeftOf, ContextMenu, ContextMenuTooltipButton, useContextMenu } from '../../structures/ContextMenu';
 import { isContentActionable, canEditContent } from '../../../utils/EventUtils';
@@ -29,9 +28,10 @@ import RoomContext from "../../../contexts/RoomContext";
 import Toolbar from "../../../accessibility/Toolbar";
 import { RovingAccessibleTooltipButton, useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { canCancel } from "../context_menus/MessageContextMenu";
+import MessageContextMenu, { canCancel } from "../context_menus/MessageContextMenu";
 import Resend from "../../../Resend";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import ReactionPicker from "../emojipicker/ReactionPicker";
 
 const OptionsButton = ({ mxEvent, getTile, getReplyThread, permalinkCreator, onFocusChange }) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
@@ -42,8 +42,6 @@ const OptionsButton = ({ mxEvent, getTile, getReplyThread, permalinkCreator, onF
 
     let contextMenu;
     if (menuDisplayed) {
-        const MessageContextMenu = sdk.getComponent('context_menus.MessageContextMenu');
-
         const tile = getTile && getTile();
         const replyThread = getReplyThread && getReplyThread();
 
@@ -83,7 +81,6 @@ const ReactButton = ({ mxEvent, reactions, onFocusChange }) => {
     let contextMenu;
     if (menuDisplayed) {
         const buttonRect = button.current.getBoundingClientRect();
-        const ReactionPicker = sdk.getComponent('emojipicker.ReactionPicker');
         contextMenu = <ContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu} managed={false}>
             <ReactionPicker mxEvent={mxEvent} reactions={reactions} onFinished={closeMenu} />
         </ContextMenu>;

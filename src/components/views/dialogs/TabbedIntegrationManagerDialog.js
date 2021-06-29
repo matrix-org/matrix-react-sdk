@@ -18,11 +18,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
 import { Room } from "matrix-js-sdk/src/models/room";
-import * as sdk from '../../../index';
 import { dialogTermsInteractionCallback, TermsNotSignedError } from "../../../Terms";
 import classNames from 'classnames';
 import * as ScalarMessaging from "../../../ScalarMessaging";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import AccessibleButton from "../elements/AccessibleButton";
+import IntegrationManager from "../settings/IntegrationManager";
 
 @replaceableComponent("views.dialogs.TabbedIntegrationManagerDialog")
 export default class TabbedIntegrationManagerDialog extends React.Component {
@@ -121,7 +122,6 @@ export default class TabbedIntegrationManagerDialog extends React.Component {
     };
 
     _renderTabs() {
-        const AccessibleButton = sdk.getComponent("views.elements.AccessibleButton");
         return this.state.managers.map((m, i) => {
             const classes = classNames({
                 'mx_TabbedIntegrationManagerDialog_tab': true,
@@ -141,7 +141,6 @@ export default class TabbedIntegrationManagerDialog extends React.Component {
     }
 
     _renderTab() {
-        const IntegrationManager = sdk.getComponent("views.settings.IntegrationManager");
         let uiUrl = null;
         if (this.state.currentScalarClient) {
             uiUrl = this.state.currentScalarClient.getScalarInterfaceUrlForRoom(

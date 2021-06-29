@@ -17,13 +17,16 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import * as Email from '../../../email';
 import AddThreepid from '../../../AddThreepid';
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-
+import ErrorDialog from "./ErrorDialog";
+import QuestionDialog from "./QuestionDialog";
+import Spinner from "../elements/Spinner";
+import EditableText from "../elements/EditableText";
+import BaseDialog from "./BaseDialog";
 /*
  * Prompt the user to set an email address.
  *
@@ -47,9 +50,6 @@ export default class SetEmailDialog extends React.Component {
     };
 
     onSubmit = () => {
-        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-        const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-
         const emailAddress = this.state.emailAddress;
         if (!Email.looksValid(emailAddress)) {
             Modal.createTrackedDialog('Invalid Email Address', '', ErrorDialog, {
@@ -98,7 +98,6 @@ export default class SetEmailDialog extends React.Component {
         }, (err) => {
             this.setState({ emailBusy: false });
             if (err.errcode == 'M_THREEPID_AUTH_FAILED') {
-                const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
                 const message = _t("Unable to verify email address.") + " " +
                     _t("Please check your email and click on the link it contains. Once this is done, click continue.");
                 Modal.createTrackedDialog('Verification Pending', '3pid Auth Failed', QuestionDialog, {
@@ -108,7 +107,6 @@ export default class SetEmailDialog extends React.Component {
                     onFinished: this.onEmailDialogFinished,
                 });
             } else {
-                const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 console.error("Unable to verify email address: " + err);
                 Modal.createTrackedDialog('Unable to verify email address', '', ErrorDialog, {
                     title: _t("Unable to verify email address."),
@@ -119,10 +117,6 @@ export default class SetEmailDialog extends React.Component {
     }
 
     render() {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-        const Spinner = sdk.getComponent('elements.Spinner');
-        const EditableText = sdk.getComponent('elements.EditableText');
-
         const emailInput = this.state.emailBusy ? <Spinner /> : <EditableText
             initialValue={this.state.emailAddress}
             className="mx_SetEmailDialog_email_input"

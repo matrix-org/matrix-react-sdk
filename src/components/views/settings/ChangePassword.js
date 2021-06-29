@@ -23,12 +23,13 @@ import AccessibleButton from '../elements/AccessibleButton';
 import Spinner from '../elements/Spinner';
 import withValidation from '../elements/Validation';
 import { _t } from '../../../languageHandler';
-import * as sdk from "../../../index";
 import Modal from "../../../Modal";
 import PassphraseField from "../auth/PassphraseField";
 import CountlyAnalytics from "../../../CountlyAnalytics";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { PASSWORD_MIN_SCORE } from '../auth/RegistrationForm';
+import SetEmailDialog from "../dialogs/SetEmailDialog";
+import QuestionDialog from "../dialogs/QuestionDialog";
 
 const FIELD_OLD_PASSWORD = 'field_old_password';
 const FIELD_NEW_PASSWORD = 'field_new_password';
@@ -88,7 +89,6 @@ export default class ChangePassword extends React.Component {
             return;
         }
 
-        const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
         Modal.createTrackedDialog('Change Password', '', QuestionDialog, {
             title: _t("Warning!"),
             description:
@@ -163,7 +163,6 @@ export default class ChangePassword extends React.Component {
 
     _optionallySetEmail() {
         // Ask for an email otherwise the user has no way to reset their password
-        const SetEmailDialog = sdk.getComponent("dialogs.SetEmailDialog");
         const modal = Modal.createTrackedDialog('Do you want to set an email address?', '', SetEmailDialog, {
             title: _t('Do you want to set an email address?'),
         });

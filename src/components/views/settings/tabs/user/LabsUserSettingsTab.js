@@ -19,11 +19,11 @@ import { _t } from "../../../../../languageHandler";
 import PropTypes from "prop-types";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
-import * as sdk from "../../../../../index";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import SdkConfig from "../../../../../SdkConfig";
 import BetaCard from "../../../beta/BetaCard";
+import SettingsFlag from "../../../elements/SettingsFlag";
 
 export class LabsSettingToggle extends React.Component {
     static propTypes = {
@@ -65,7 +65,6 @@ export default class LabsUserSettingsTab extends React.Component {
 
         let labsSection;
         if (SdkConfig.get()['showLabsSettings']) {
-            const SettingsFlag = sdk.getComponent("views.elements.SettingsFlag");
             const flags = labs.map(f => <LabsSettingToggle featureId={f} key={f} />);
 
             labsSection = <div className="mx_SettingsTab_section">

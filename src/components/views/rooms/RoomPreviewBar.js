@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
 import classNames from 'classnames';
@@ -27,6 +26,9 @@ import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import InviteReason from "../elements/InviteReason";
+import Spinner from "../elements/Spinner";
+import AccessibleButton from "../elements/AccessibleButton";
+import RoomAvatar from "../avatars/RoomAvatar";
 
 const MessageCase = Object.freeze({
     NotLoggedIn: "NotLoggedIn",
@@ -299,8 +301,6 @@ export default class RoomPreviewBar extends React.Component {
 
     render() {
         const brand = SdkConfig.get().brand;
-        const Spinner = sdk.getComponent('elements.Spinner');
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
 
         let showSpinner = false;
         let title;
@@ -454,7 +454,6 @@ export default class RoomPreviewBar extends React.Component {
                 break;
             }
             case MessageCase.Invite: {
-                const RoomAvatar = sdk.getComponent("views.avatars.RoomAvatar");
                 const oobData = Object.assign({}, this.props.oobData, {
                     avatarUrl: this._communityProfile().avatarMxc,
                 });

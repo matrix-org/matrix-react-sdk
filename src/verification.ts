@@ -19,13 +19,13 @@ import { User } from "matrix-js-sdk/src/models/user";
 import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from "./dispatcher/dispatcher";
 import Modal from './Modal';
-import * as sdk from './index';
 import { RightPanelPhases } from "./stores/RightPanelStorePhases";
 import { findDMForUser } from './createRoom';
 import { accessSecretStorage } from './SecurityManager';
 import { verificationMethods } from 'matrix-js-sdk/src/crypto';
 import { Action } from './dispatcher/actions';
 import UntrustedDeviceDialog from "./components/views/dialogs/UntrustedDeviceDialog";
+import ManualDeviceKeyVerificationDialog from "./components/views/dialogs/ManualDeviceKeyVerificationDialog";
 import { IDevice } from "./components/views/right_panel/UserInfo";
 
 async function enable4SIfNeeded() {
@@ -71,8 +71,6 @@ export async function verifyDevice(user: User, device: IDevice) {
                     refireParams: { member: user, verificationRequestPromise },
                 });
             } else if (action === "legacy") {
-                const ManualDeviceKeyVerificationDialog =
-                    sdk.getComponent("dialogs.ManualDeviceKeyVerificationDialog");
                 Modal.createTrackedDialog("Legacy verify session", "legacy verify session",
                     ManualDeviceKeyVerificationDialog,
                     {

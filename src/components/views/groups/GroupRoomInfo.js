@@ -19,13 +19,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dis from '../../../dispatcher/dispatcher';
 import Modal from '../../../Modal';
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import GroupStore from '../../../stores/GroupStore';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
+import QuestionDialog from "../dialogs/QuestionDialog";
+import ErrorDialog from "../dialogs/ErrorDialog";
+import Spinner from "../elements/Spinner";
+import AccessibleButton from "../elements/AccessibleButton";
+import InlineSpinner from "../elements/InlineSpinner";
 
 @replaceableComponent("views.groups.GroupRoomInfo")
 export default class GroupRoomInfo extends React.Component {
@@ -88,7 +92,6 @@ export default class GroupRoomInfo extends React.Component {
         const roomName = this.state.groupRoom.displayname;
         e.preventDefault();
         e.stopPropagation();
-        const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
         Modal.createTrackedDialog('Confirm removal of group from room', '', QuestionDialog, {
             title: _t("Are you sure you want to remove '%(roomName)s' from %(groupId)s?", { roomName, groupId }),
             description: _t("Removing a room from the community will also remove it from the community page."),
@@ -104,7 +107,6 @@ export default class GroupRoomInfo extends React.Component {
                     });
                 }).catch((err) => {
                     console.error(`Error whilst removing ${roomId} from ${groupId}`, err);
-                    const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                     Modal.createTrackedDialog('Failed to remove room from group', '', ErrorDialog, {
                         title: _t("Failed to remove room from community"),
                         description: _t(
@@ -134,7 +136,6 @@ export default class GroupRoomInfo extends React.Component {
         const roomName = this.state.groupRoom.displayname;
         GroupStore.updateGroupRoomVisibility(this.props.groupId, roomId, isPublic).catch((err) => {
             console.error(`Error whilst changing visibility of ${roomId} in ${groupId} to ${isPublic}`, err);
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog('Failed to remove room from group', '', ErrorDialog, {
                 title: _t("Something went wrong!"),
                 description: _t(
@@ -150,10 +151,7 @@ export default class GroupRoomInfo extends React.Component {
     };
 
     render() {
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-        const InlineSpinner = sdk.getComponent('elements.InlineSpinner');
         if (this.state.groupRoomRemoveLoading || !this.state.groupRoom) {
-            const Spinner = sdk.getComponent("elements.Spinner");
             return <div className="mx_MemberInfo">
                 <Spinner />
             </div>;

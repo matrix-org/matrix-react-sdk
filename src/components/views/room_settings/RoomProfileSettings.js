@@ -19,9 +19,10 @@ import PropTypes from 'prop-types';
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Field from "../elements/Field";
-import * as sdk from "../../../index";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
+import AccessibleButton from "../elements/AccessibleButton";
+import AvatarSetting from "../settings/AvatarSetting";
 
 // TODO: Merge with ProfileSettings?
 @replaceableComponent("views.room_settings.RoomProfileSettings")
@@ -169,9 +170,6 @@ export default class RoomProfileSettings extends React.Component {
     };
 
     render() {
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-        const AvatarSetting = sdk.getComponent('settings.AvatarSetting');
-
         let profileSettingsButtons;
         if (
             this.state.canSetName ||

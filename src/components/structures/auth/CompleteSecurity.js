@@ -17,10 +17,11 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
-import * as sdk from '../../../index';
 import { SetupEncryptionStore, Phase } from '../../../stores/SetupEncryptionStore';
 import SetupEncryptionBody from "./SetupEncryptionBody";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import AuthPage from "../../views/auth/AuthPage";
+import CompleteSecurityBody from "../../views/auth/CompleteSecurityBody";
 
 @replaceableComponent("structures.auth.CompleteSecurity")
 export default class CompleteSecurity extends React.Component {
@@ -48,8 +49,6 @@ export default class CompleteSecurity extends React.Component {
     }
 
     render() {
-        const AuthPage = sdk.getComponent("auth.AuthPage");
-        const CompleteSecurityBody = sdk.getComponent("auth.CompleteSecurityBody");
         const { phase } = this.state;
         let icon;
         let title;

@@ -15,9 +15,11 @@ limitations under the License.
 */
 
 import React, { useState, useCallback, useRef } from 'react';
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
+import Spinner from "../elements/Spinner";
+import DialogButtons from "../elements/DialogButtons";
+import BaseDialog from "./BaseDialog";
 
 export default function KeySignatureUploadFailedDialog({
         failures,
@@ -26,9 +28,6 @@ export default function KeySignatureUploadFailedDialog({
         onFinished,
 }) {
     const RETRIES = 2;
-    const BaseDialog = sdk.getComponent('dialogs.BaseDialog');
-    const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
-    const Spinner = sdk.getComponent('elements.Spinner');
     const [retry, setRetry] = useState(RETRIES);
     const [cancelled, setCancelled] = useState(false);
     const [retrying, setRetrying] = useState(false);

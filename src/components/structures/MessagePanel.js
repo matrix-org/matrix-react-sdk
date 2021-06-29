@@ -21,20 +21,27 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import shouldHideEvent from '../../shouldHideEvent';
 import { wantsDateSeparator } from '../../DateUtils';
-import * as sdk from '../../index';
 
 import { MatrixClientPeg } from '../../MatrixClientPeg';
 import SettingsStore from '../../settings/SettingsStore';
 import RoomContext from "../../contexts/RoomContext";
 import { Layout, LayoutPropType } from "../../settings/Layout";
 import { _t } from "../../languageHandler";
-import { haveTileForEvent } from "../views/rooms/EventTile";
+import EventTile, { haveTileForEvent } from "../views/rooms/EventTile";
 import { hasText } from "../../TextForEvent";
 import IRCTimelineProfileResizer from "../views/elements/IRCTimelineProfileResizer";
 import DMRoomMap from "../../utils/DMRoomMap";
 import NewRoomIntro from "../views/rooms/NewRoomIntro";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import defaultDispatcher from '../../dispatcher/dispatcher';
+import DateSeparator from "../views/messages/DateSeparator";
+import TileErrorBoundary from "../views/messages/TileErrorBoundary";
+import Spinner from "../views/elements/Spinner";
+import WhoIsTypingTile from "../views/rooms/WhoIsTypingTile";
+import ErrorBoundary from "../views/elements/ErrorBoundary";
+import ScrollPanel from "./ScrollPanel";
+import EventListSummary from "../views/elements/EventListSummary";
+import MemberEventListSummary from "../views/elements/MemberEventListSummary";
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = ['m.sticker', 'm.room.message'];
@@ -583,9 +590,6 @@ export default class MessagePanel extends React.Component {
     }
 
     _getTilesForEvent(prevEvent, mxEv, last, isGrouped=false, nextEvent, nextEventWithTile) {
-        const TileErrorBoundary = sdk.getComponent('messages.TileErrorBoundary');
-        const EventTile = sdk.getComponent('rooms.EventTile');
-        const DateSeparator = sdk.getComponent('messages.DateSeparator');
         const ret = [];
 
         const isEditing = this.props.editState &&
@@ -835,10 +839,6 @@ export default class MessagePanel extends React.Component {
     }
 
     render() {
-        const ErrorBoundary = sdk.getComponent('elements.ErrorBoundary');
-        const ScrollPanel = sdk.getComponent("structures.ScrollPanel");
-        const WhoIsTypingTile = sdk.getComponent("rooms.WhoIsTypingTile");
-        const Spinner = sdk.getComponent("elements.Spinner");
         let topSpinner;
         let bottomSpinner;
         if (this.props.backPaginating) {
@@ -970,8 +970,6 @@ class CreationGrouper {
         // the events we were supposed to group were redacted.
         if (!this.events || !this.events.length) return [];
 
-        const DateSeparator = sdk.getComponent('messages.DateSeparator');
-        const EventListSummary = sdk.getComponent('views.elements.EventListSummary');
         const panel = this.panel;
         const ret = [];
         const isGrouped = true;
@@ -1085,8 +1083,6 @@ class RedactionGrouper {
     getTiles() {
         if (!this.events || !this.events.length) return [];
 
-        const DateSeparator = sdk.getComponent('messages.DateSeparator');
-        const EventListSummary = sdk.getComponent('views.elements.EventListSummary');
         const isGrouped = true;
         const panel = this.panel;
         const ret = [];
@@ -1182,8 +1178,6 @@ class MemberGrouper {
         // the events we were supposed to group were redacted.
         if (!this.events || !this.events.length) return [];
 
-        const DateSeparator = sdk.getComponent('messages.DateSeparator');
-        const MemberEventListSummary = sdk.getComponent('views.elements.MemberEventListSummary');
         const isGrouped = true;
         const panel = this.panel;
         const lastShownEvent = this.lastShownEvent;

@@ -18,9 +18,9 @@ import SdkConfig from "../../../SdkConfig";
 import { getCurrentLanguage } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import PlatformPeg from "../../../PlatformPeg";
-import * as sdk from '../../../index';
 import React from 'react';
 import { SettingLevel } from "../../../settings/SettingLevel";
+import LanguageDropdown from "../elements/LanguageDropdown";
 
 function onChange(newLang) {
     if (getCurrentLanguage() !== newLang) {
@@ -32,7 +32,6 @@ function onChange(newLang) {
 export default function LanguageSelector({ disabled }) {
     if (SdkConfig.get()['disable_login_language_selector']) return <div />;
 
-    const LanguageDropdown = sdk.getComponent('views.elements.LanguageDropdown');
     return <LanguageDropdown
         className="mx_AuthBody_language"
         onOptionChange={onChange}

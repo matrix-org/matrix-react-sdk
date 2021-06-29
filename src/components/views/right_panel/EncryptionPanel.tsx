@@ -26,11 +26,11 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { ensureDMExists } from "../../../createRoom";
 import { useEventEmitter } from "../../../hooks/useEventEmitter";
 import Modal from "../../../Modal";
-import * as sdk from "../../../index";
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
+import ErrorDialog from "../dialogs/ErrorDialog";
 
 // cancellation codes which constitute a key mismatch
 const MISMATCHES = ["m.key_mismatch", "m.user_error", "m.mismatched_sas"];
@@ -82,7 +82,6 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
     const changeHandler = useCallback(() => {
         // handle transitions -> cancelled for mismatches which fire a modal instead of showing a card
         if (request && request.cancelled && MISMATCHES.includes(request.cancellationCode)) {
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog("Verification failed", "insecure", ErrorDialog, {
                 headerImage: require("../../../../res/img/e2e/warning.svg"),
                 title: _t("Your messages are not secure"),

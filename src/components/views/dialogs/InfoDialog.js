@@ -18,9 +18,10 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import classNames from "classnames";
+import BaseDialog from "./BaseDialog";
+import DialogButtons from "../elements/DialogButtons";
 
 export default class InfoDialog extends React.Component {
     static propTypes = {
@@ -45,8 +46,6 @@ export default class InfoDialog extends React.Component {
     };
 
     render() {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         return (
             <BaseDialog
                 className="mx_InfoDialog"

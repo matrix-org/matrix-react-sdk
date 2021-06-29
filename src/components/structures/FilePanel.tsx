@@ -23,7 +23,6 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { TimelineWindow } from 'matrix-js-sdk/src/timeline-window';
 
-import * as sdk from '../../index';
 import { MatrixClientPeg } from '../../MatrixClientPeg';
 import EventIndexPeg from "../../indexing/EventIndexPeg";
 import { _t } from '../../languageHandler';
@@ -31,6 +30,8 @@ import BaseCard from "../views/right_panel/BaseCard";
 import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
 import DesktopBuildsNotice, { WarningKind } from "../views/elements/DesktopBuildsNotice";
 import { replaceableComponent } from "../../utils/replaceableComponent";
+import TimelinePanel from "./TimelinePanel";
+import Spinner from "../views/elements/Spinner";
 
 import ResizeNotifier from '../../utils/ResizeNotifier';
 
@@ -232,9 +233,6 @@ class FilePanel extends React.Component<IProps, IState> {
         }
 
         // wrap a TimelinePanel with the jump-to-event bits turned off.
-        const TimelinePanel = sdk.getComponent("structures.TimelinePanel");
-        const Loader = sdk.getComponent("elements.Spinner");
-
         const emptyState = (<div className="mx_RightPanel_empty mx_FilePanel_empty">
             <h2>{_t('No files visible in this room')}</h2>
             <p>{_t('Attach files from chat or just drag and drop them anywhere in a room.')}</p>
@@ -272,7 +270,7 @@ class FilePanel extends React.Component<IProps, IState> {
                     onClose={this.props.onClose}
                     previousPhase={RightPanelPhases.RoomSummary}
                 >
-                    <Loader />
+                    <Spinner />
                 </BaseCard>
             );
         }

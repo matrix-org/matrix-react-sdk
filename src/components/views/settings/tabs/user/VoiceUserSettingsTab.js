@@ -22,10 +22,11 @@ import MediaDeviceHandler from "../../../../../MediaDeviceHandler";
 import Field from "../../../elements/Field";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
-import * as sdk from "../../../../../index";
 import Modal from "../../../../../Modal";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { replaceableComponent } from "../../../../../utils/replaceableComponent";
+import SettingsFlag from "../../../elements/SettingsFlag";
+import ErrorDialog from "../../../dialogs/ErrorDialog";
 
 @replaceableComponent("views.settings.tabs.user.VoiceUserSettingsTab")
 export default class VoiceUserSettingsTab extends React.Component {
@@ -86,7 +87,6 @@ export default class VoiceUserSettingsTab extends React.Component {
         if (error) {
             console.log("Failed to list userMedia devices", error);
             const brand = SdkConfig.get().brand;
-            const ErrorDialog = sdk.getComponent('dialogs.ErrorDialog');
             Modal.createTrackedDialog('No media permissions', '', ErrorDialog, {
                 title: _t('No media permissions'),
                 description: _t(
@@ -135,8 +135,6 @@ export default class VoiceUserSettingsTab extends React.Component {
     }
 
     render() {
-        const SettingsFlag = sdk.getComponent("views.elements.SettingsFlag");
-
         let requestButton = null;
         let speakerDropdown = null;
         let microphoneDropdown = null;

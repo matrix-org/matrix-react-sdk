@@ -19,7 +19,6 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from "../../../index";
 import { _t, _td } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
 import dis from "../../../dispatcher/dispatcher";
@@ -27,6 +26,7 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { Action } from "../../../dispatcher/actions";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import SettingsFlag from "../elements/SettingsFlag";
 
 @replaceableComponent("views.room_settings.UrlPreviewSettings")
 export default class UrlPreviewSettings extends React.Component {
@@ -41,7 +41,6 @@ export default class UrlPreviewSettings extends React.Component {
     };
 
     render() {
-        const SettingsFlag = sdk.getComponent("elements.SettingsFlag");
         const roomId = this.props.room.roomId;
         const isEncrypted = MatrixClientPeg.get().isRoomEncrypted(roomId);
 

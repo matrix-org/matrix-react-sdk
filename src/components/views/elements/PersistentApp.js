@@ -19,9 +19,9 @@ import React from 'react';
 import RoomViewStore from '../../../stores/RoomViewStore';
 import ActiveWidgetStore from '../../../stores/ActiveWidgetStore';
 import WidgetUtils from '../../../utils/WidgetUtils';
-import * as sdk from '../../../index';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import AppTile from "./AppTile";
 
 @replaceableComponent("views.elements.PersistentApp")
 export default class PersistentApp extends React.Component {
@@ -89,7 +89,6 @@ export default class PersistentApp extends React.Component {
                     appEvent.getStateKey(), appEvent.getContent(), appEvent.getSender(),
                     persistentWidgetInRoomId, appEvent.getId(),
                 );
-                const AppTile = sdk.getComponent('elements.AppTile');
                 return <AppTile
                     key={app.id}
                     app={app}

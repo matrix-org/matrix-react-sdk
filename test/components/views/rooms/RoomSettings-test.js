@@ -2,12 +2,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as testUtils from '../../../test-utils';
-import sdk from '../../../skinned-sdk';
+import '../../../skinned-sdk';
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import SettingsStore from '../../../../src/settings/SettingsStore';
 
+let RoomSettings = null;
 describe.skip('RoomSettings', () => {
-    const WrappedRoomSettings = testUtils.wrapInMatrixClientContext(sdk.getComponent('views.rooms.RoomSettings'));
+    const WrappedRoomSettings = testUtils.wrapInMatrixClientContext(RoomSettings);
 
     let parentDiv = null;
     let client = null;

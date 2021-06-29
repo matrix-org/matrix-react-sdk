@@ -28,7 +28,6 @@ import DeactivateAccountDialog from "../../../dialogs/DeactivateAccountDialog";
 import PropTypes from "prop-types";
 import PlatformPeg from "../../../../../PlatformPeg";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
-import * as sdk from "../../../../..";
 import Modal from "../../../../../Modal";
 import dis from "../../../../../dispatcher/dispatcher";
 import { Service, startTermsFlow } from "../../../../../Terms";
@@ -40,6 +39,15 @@ import Spinner from "../../../elements/Spinner";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { UIFeature } from "../../../../../settings/UIFeature";
 import { replaceableComponent } from "../../../../../utils/replaceableComponent";
+import SetIntegrationManager from "../../SetIntegrationManager";
+import DiscoveryEmailAddresses from "../../discovery/EmailAddresses";
+import DiscoveryPhoneNumbers from "../../discovery/PhoneNumbers";
+import InlineTermsAgreement from "../../../terms/InlineTermsAgreement";
+import SetIdServer from "../../SetIdServer";
+import EmailAddresses from "../../account/EmailAddresses";
+import PhoneNumbers from "../../account/PhoneNumbers";
+import ChangePassword from "../../ChangePassword";
+import ErrorDialog from "../../../dialogs/ErrorDialog";
 
 @replaceableComponent("views.settings.tabs.user.GeneralUserSettingsTab")
 export default class GeneralUserSettingsTab extends React.Component {
@@ -216,7 +224,6 @@ export default class GeneralUserSettingsTab extends React.Component {
         } else if (!errMsg) {
             errMsg += ` (HTTP status ${err.httpStatus})`;
         }
-        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         console.error("Failed to change password: " + errMsg);
         Modal.createTrackedDialog('Failed to change password', '', ErrorDialog, {
             title: _t("Error"),
@@ -226,7 +233,6 @@ export default class GeneralUserSettingsTab extends React.Component {
 
     _onPasswordChanged = () => {
         // TODO: Figure out a design that doesn't involve replacing the current dialog
-        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         Modal.createTrackedDialog('Password changed', '', ErrorDialog, {
             title: _t("Success"),
             description: _t(
@@ -253,10 +259,6 @@ export default class GeneralUserSettingsTab extends React.Component {
     }
 
     _renderAccountSection() {
-        const ChangePassword = sdk.getComponent("views.settings.ChangePassword");
-        const EmailAddresses = sdk.getComponent("views.settings.account.EmailAddresses");
-        const PhoneNumbers = sdk.getComponent("views.settings.account.PhoneNumbers");
-
         let passwordChangeForm = (
             <ChangePassword
                 className="mx_GeneralUserSettingsTab_changePassword"
@@ -345,10 +347,7 @@ export default class GeneralUserSettingsTab extends React.Component {
     }
 
     _renderDiscoverySection() {
-        const SetIdServer = sdk.getComponent("views.settings.SetIdServer");
-
         if (this.state.requiredPolicyInfo.hasTerms) {
-            const InlineTermsAgreement = sdk.getComponent("views.terms.InlineTermsAgreement");
             const intro = <span className="mx_SettingsTab_subsectionText">
                 {_t(
                     "Agree to the identity server (%(serverName)s) Terms of Service to " +
@@ -370,11 +369,8 @@ export default class GeneralUserSettingsTab extends React.Component {
             );
         }
 
-        const EmailAddresses = sdk.getComponent("views.settings.discovery.EmailAddresses");
-        const PhoneNumbers = sdk.getComponent("views.settings.discovery.PhoneNumbers");
-
-        const emails = this.state.loading3pids ? <Spinner /> : <EmailAddresses emails={this.state.emails} />;
-        const msisdns = this.state.loading3pids ? <Spinner /> : <PhoneNumbers msisdns={this.state.msisdns} />;
+        const emails = this.state.loading3pids ? <Spinner /> : <DiscoveryEmailAddresses emails={this.state.emails} />;
+        const msisdns = this.state.loading3pids ? <Spinner /> : <DiscoveryPhoneNumbers msisdns={this.state.msisdns} />;
 
         const threepidSection = this.state.haveIdServer ? <div className='mx_GeneralUserSettingsTab_discovery'>
             <span className="mx_SettingsTab_subheading">{_t("Email addresses")}</span>
@@ -410,8 +406,6 @@ export default class GeneralUserSettingsTab extends React.Component {
 
     _renderIntegrationManagerSection() {
         if (!SettingsStore.getValue(UIFeature.Widgets)) return null;
-
-        const SetIntegrationManager = sdk.getComponent("views.settings.SetIntegrationManager");
 
         return (
             <div className="mx_SettingsTab_section">

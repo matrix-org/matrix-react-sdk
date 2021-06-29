@@ -15,13 +15,14 @@ limitations under the License.
 */
 
 import React from 'react';
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import PlatformPeg from '../../../PlatformPeg';
 import Modal from '../../../Modal';
 import SdkConfig from "../../../SdkConfig";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import BugReportDialog from "../dialogs/BugReportDialog";
+import AccessibleButton from "./AccessibleButton";
 
 /**
  * This error boundary component can be used to wrap large content areas and
@@ -63,10 +64,6 @@ export default class ErrorBoundary extends React.PureComponent {
     };
 
     _onBugReport = () => {
-        const BugReportDialog = sdk.getComponent("dialogs.BugReportDialog");
-        if (!BugReportDialog) {
-            return;
-        }
         Modal.createTrackedDialog('Bug Report Dialog', '', BugReportDialog, {
             label: 'react-soft-crash',
         });
@@ -74,7 +71,6 @@ export default class ErrorBoundary extends React.PureComponent {
 
     render() {
         if (this.state.error) {
-            const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
             const newIssueUrl = "https://github.com/vector-im/element-web/issues/new";
 
             let bugReportSection;

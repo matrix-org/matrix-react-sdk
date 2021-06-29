@@ -19,15 +19,11 @@ import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-dom/test-utils';
 import MatrixReactTestUtils from 'matrix-react-test-utils';
 
-import sdk from '../../../skinned-sdk';
 import {MatrixClientPeg} from '../../../../src/MatrixClientPeg';
 
 import * as test_utils from '../../../test-utils';
 import {sleep} from "../../../../src/utils/promise";
-
-const InteractiveAuthDialog = sdk.getComponent(
-    'views.dialogs.InteractiveAuthDialog',
-);
+import InteractiveAuthDialog from "../../../../src/components/views/dialogs/InteractiveAuthDialog";
 
 describe('InteractiveAuthDialog', function() {
     let parentDiv;

@@ -20,12 +20,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import SyntaxHighlight from "../views/elements/SyntaxHighlight";
 import { _t } from "../../languageHandler";
-import * as sdk from "../../index";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { SendCustomEvent } from "../views/dialogs/DevtoolsDialog";
 import { canEditContent } from "../../utils/EventUtils";
 import { MatrixClientPeg } from '../../MatrixClientPeg';
 import { replaceableComponent } from "../../utils/replaceableComponent";
+import BaseDialog from "../views/dialogs/BaseDialog";
 
 @replaceableComponent("structures.ViewSource")
 export default class ViewSource extends React.Component {
@@ -166,7 +166,6 @@ export default class ViewSource extends React.Component {
     }
 
     render() {
-        const BaseDialog = sdk.getComponent("views.dialogs.BaseDialog");
         const mxEvent = this.props.mxEvent.replacingEvent() || this.props.mxEvent; // show the replacing event, not the original, if it is an edit
 
         const isEditing = this.state.isEditing;

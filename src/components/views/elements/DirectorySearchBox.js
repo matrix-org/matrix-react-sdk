@@ -16,9 +16,9 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import AccessibleButton from "./AccessibleButton";
 
 @replaceableComponent("views.elements.DirectorySearchBox")
 export default class DirectorySearchBox extends React.Component {
@@ -77,8 +77,6 @@ export default class DirectorySearchBox extends React.Component {
     }
 
     render() {
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-
         const searchboxClasses = {
             mx_DirectorySearchBox: true,
         };

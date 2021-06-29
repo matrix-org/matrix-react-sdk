@@ -16,9 +16,9 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import DialogButtons from "../elements/DialogButtons";
 
 @replaceableComponent("views.verification.VerificationComplete")
 export default class VerificationComplete extends React.Component {
@@ -27,7 +27,6 @@ export default class VerificationComplete extends React.Component {
     }
 
     render() {
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         return <div>
             <h2>{_t("Verified!")}</h2>
             <p>{_t("You've successfully verified this user.")}</p>

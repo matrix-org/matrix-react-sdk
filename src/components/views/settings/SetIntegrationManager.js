@@ -17,10 +17,10 @@ limitations under the License.
 import React from 'react';
 import { _t } from "../../../languageHandler";
 import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
-import * as sdk from '../../../index';
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import ToggleSwitch from "../elements/ToggleSwitch";
 
 @replaceableComponent("views.settings.SetIntegrationManager")
 export default class SetIntegrationManager extends React.Component {
@@ -47,8 +47,6 @@ export default class SetIntegrationManager extends React.Component {
     };
 
     render() {
-        const ToggleSwitch = sdk.getComponent("views.elements.ToggleSwitch");
-
         const currentManager = this.state.currentManager;
         let managerName;
         let bodyText;

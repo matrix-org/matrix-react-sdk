@@ -20,10 +20,11 @@ import PropTypes from 'prop-types';
 
 import { _t } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
-import * as sdk from '../../../../index';
 import Modal from '../../../../Modal';
 import AddThreepid from '../../../../AddThreepid';
 import { replaceableComponent } from "../../../../utils/replaceableComponent";
+import AccessibleButton from "../../elements/AccessibleButton";
+import ErrorDialog from "../../dialogs/ErrorDialog";
 
 /*
 TODO: Improve the UX for everything in here.
@@ -70,7 +71,6 @@ export class EmailAddress extends React.Component {
             return this.changeBindingTangledAddBind({ bind, label, errorTitle });
         }
 
-        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         const { medium, address } = this.props.email;
 
         try {
@@ -104,7 +104,6 @@ export class EmailAddress extends React.Component {
     }
 
     async changeBindingTangledAddBind({ bind, label, errorTitle }) {
-        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         const { medium, address } = this.props.email;
 
         const task = new AddThreepid();
@@ -173,7 +172,6 @@ export class EmailAddress extends React.Component {
             });
         } catch (err) {
             this.setState({ continueDisabled: false });
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             if (err.errcode === 'M_THREEPID_AUTH_FAILED') {
                 Modal.createTrackedDialog("E-mail hasn't been verified yet", "", ErrorDialog, {
                     title: _t("Your email address hasn't been verified yet"),
@@ -191,7 +189,6 @@ export class EmailAddress extends React.Component {
     }
 
     render() {
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         const { address } = this.props.email;
         const { verifying, bound } = this.state;
 

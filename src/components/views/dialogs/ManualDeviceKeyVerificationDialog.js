@@ -21,10 +21,10 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import * as sdk from '../../../index';
 import * as FormattingUtils from '../../../utils/FormattingUtils';
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import QuestionDialog from "./QuestionDialog";
 
 @replaceableComponent("views.dialogs.ManualDeviceKeyVerificationDialog")
 export default class ManualDeviceKeyVerificationDialog extends React.Component {
@@ -48,8 +48,6 @@ export default class ManualDeviceKeyVerificationDialog extends React.Component {
     }
 
     render() {
-        const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-
         let text;
         if (MatrixClientPeg.get().getUserId() === this.props.userId) {
             text = _t("Confirm by comparing the following with the User Settings in your other session:");

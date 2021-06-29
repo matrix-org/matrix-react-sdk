@@ -21,7 +21,6 @@ import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { _t, _td } from '../../../languageHandler';
-import * as sdk from '../../../index';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
 import { addressTypes, getAddressType } from '../../../UserAddress';
@@ -34,6 +33,10 @@ import { sleep } from "../../../utils/promise";
 import { Key } from "../../../Keyboard";
 import { Action } from "../../../dispatcher/actions";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import AddressTile from "../elements/AddressTile";
+import AddressSelector from "../elements/AddressSelector";
+import BaseDialog from "./BaseDialog";
+import DialogButtons from "../elements/DialogButtons";
 
 const TRUNCATE_QUERY_LIST = 40;
 const QUERY_USER_DIRECTORY_DEBOUNCE_MS = 200;
@@ -612,9 +615,6 @@ export default class AddressPickerDialog extends React.Component {
     };
 
     render() {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
-        const AddressSelector = sdk.getComponent("elements.AddressSelector");
         this.scrollElement = null;
 
         let inputLabel;
@@ -627,7 +627,6 @@ export default class AddressPickerDialog extends React.Component {
         const query = [];
         // create the invite list
         if (this.state.selectedList.length > 0) {
-            const AddressTile = sdk.getComponent("elements.AddressTile");
             for (let i = 0; i < this.state.selectedList.length; i++) {
                 query.push(
                     <AddressTile

@@ -13,15 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 import React from 'react';
 import { _t } from '../../../languageHandler';
-import * as sdk from '../../../index';
 import GroupStore from '../../../stores/GroupStore';
 import PropTypes from 'prop-types';
 import { showGroupAddRoomDialog } from '../../../GroupAddressPicker';
 import AccessibleButton from '../elements/AccessibleButton';
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import EntityTile from "../rooms/EntityTile";
+import BaseAvatar from "../avatars/BaseAvatar";
+import GroupRoomTile from "./GroupRoomTile";
+import TruncatedList from "../elements/TruncatedList";
 
 const INITIAL_LOAD_NUM_ROOMS = 30;
 
@@ -72,8 +76,6 @@ export default class GroupRoomList extends React.Component {
 
     _createOverflowTile = (overflowCount, totalCount) => {
         // For now we'll pretend this is any entity. It should probably be a separate tile.
-        const EntityTile = sdk.getComponent("rooms.EntityTile");
-        const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
         const text = _t("and %(count)s others...", { count: overflowCount });
         return (
             <EntityTile className="mx_EntityTile_ellipsis" avatarJsx={
@@ -100,7 +102,6 @@ export default class GroupRoomList extends React.Component {
     };
 
     makeGroupRoomTiles(query) {
-        const GroupRoomTile = sdk.getComponent("groups.GroupRoomTile");
         query = (query || "").toLowerCase();
 
         let roomList = this.state.rooms;
@@ -151,7 +152,6 @@ export default class GroupRoomList extends React.Component {
             />
         );
 
-        const TruncatedList = sdk.getComponent("elements.TruncatedList");
         return (
             <div className="mx_GroupRoomList" role="tabpanel">
                 { inviteButton }

@@ -16,11 +16,14 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import ErrorDialog from "./ErrorDialog";
+import Spinner from "../elements/Spinner";
+import DialogButtons from "../elements/DialogButtons";
+import BaseDialog from "./BaseDialog";
 
 @replaceableComponent("views.dialogs.RoomUpgradeDialog")
 export default class RoomUpgradeDialog extends React.Component {
@@ -48,7 +51,6 @@ export default class RoomUpgradeDialog extends React.Component {
         MatrixClientPeg.get().upgradeRoom(this.props.room.roomId, this._targetVersion).then(() => {
             this.props.onFinished(true);
         }).catch((err) => {
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog('Failed to upgrade room', '', ErrorDialog, {
                 title: _t("Failed to upgrade room"),
                 description: ((err && err.message) ? err.message : _t("The room upgrade could not be completed")),
@@ -59,10 +61,6 @@ export default class RoomUpgradeDialog extends React.Component {
     };
 
     render() {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
-        const Spinner = sdk.getComponent('views.elements.Spinner');
-
         let buttons;
         if (this.state.busy) {
             buttons = <Spinner />;

@@ -21,7 +21,6 @@ import { EventStatus } from 'matrix-js-sdk/src/models/event';
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
 import Resend from '../../../Resend';
@@ -34,6 +33,11 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ReadPinsEventId } from "../right_panel/PinnedMessagesCard";
 import ForwardDialog from "../dialogs/ForwardDialog";
 import { Action } from "../../../dispatcher/actions";
+import ReportEventDialog from "../dialogs/ReportEventDialog";
+import ViewSource from "../../structures/ViewSource";
+import ConfirmRedactDialog from "../dialogs/ConfirmRedactDialog";
+import ErrorDialog from "../dialogs/ErrorDialog";
+import ShareDialog from "../dialogs/ShareDialog";
 
 export function canCancel(eventStatus) {
     return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
@@ -109,7 +113,6 @@ export default class MessageContextMenu extends React.Component {
     };
 
     onReportEventClick = () => {
-        const ReportEventDialog = sdk.getComponent("dialogs.ReportEventDialog");
         Modal.createTrackedDialog('Report Event', '', ReportEventDialog, {
             mxEvent: this.props.mxEvent,
         }, 'mx_Dialog_reportEvent');
@@ -117,7 +120,6 @@ export default class MessageContextMenu extends React.Component {
     };
 
     onViewSourceClick = () => {
-        const ViewSource = sdk.getComponent('structures.ViewSource');
         Modal.createTrackedDialog('View Event Source', '', ViewSource, {
             mxEvent: this.props.mxEvent,
         }, 'mx_Dialog_viewsource');
@@ -125,7 +127,6 @@ export default class MessageContextMenu extends React.Component {
     };
 
     onRedactClick = () => {
-        const ConfirmRedactDialog = sdk.getComponent("dialogs.ConfirmRedactDialog");
         Modal.createTrackedDialog('Confirm Redact Dialog', '', ConfirmRedactDialog, {
             onFinished: async (proceed, reason) => {
                 if (!proceed) return;
@@ -145,7 +146,6 @@ export default class MessageContextMenu extends React.Component {
                     // (e.g. no errcode or statusCode) as in that case the redactions end up in the
                     // detached queue and we show the room status bar to allow retry
                     if (typeof code !== "undefined") {
-                        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                         // display error message stating you couldn't delete this.
                         Modal.createTrackedDialog('You cannot delete this message', '', ErrorDialog, {
                             title: _t('Error'),
@@ -209,7 +209,6 @@ export default class MessageContextMenu extends React.Component {
 
     onPermalinkClick = (e) => {
         e.preventDefault();
-        const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
         Modal.createTrackedDialog('share room message dialog', '', ShareDialog, {
             target: this.props.mxEvent,
             permalinkCreator: this.props.permalinkCreator,

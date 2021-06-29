@@ -17,13 +17,10 @@ limitations under the License.
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-dom/test-utils';
-import sdk from '../../../skinned-sdk';
 import SdkConfig from '../../../../src/SdkConfig';
 import { mkServerConfig } from "../../../test-utils";
-
-const Login = sdk.getComponent(
-    'structures.auth.Login',
-);
+import PasswordLogin from "../../../../src/components/views/auth/PasswordLogin";
+import Login from "../../../../src/Login";
 
 describe('Login', function() {
     let parentDiv;
@@ -55,10 +52,7 @@ describe('Login', function() {
             flows: [{ type: "m.login.password" }],
         });
 
-        const form = ReactTestUtils.findRenderedComponentWithType(
-            root,
-            sdk.getComponent('auth.PasswordLogin'),
-        );
+        const form = ReactTestUtils.findRenderedComponentWithType(root, PasswordLogin);
         expect(form).toBeTruthy();
 
         const changeServerLink = ReactTestUtils.findRenderedDOMComponentWithClass(root, 'mx_ServerPicker_change');
@@ -77,10 +71,7 @@ describe('Login', function() {
             flows: [{ type: "m.login.password" }],
         });
 
-        const form = ReactTestUtils.findRenderedComponentWithType(
-            root,
-            sdk.getComponent('auth.PasswordLogin'),
-        );
+        const form = ReactTestUtils.findRenderedComponentWithType(root, PasswordLogin);
         expect(form).toBeTruthy();
 
         const changeServerLinks = ReactTestUtils.scryRenderedDOMComponentsWithClass(root, 'mx_ServerPicker_change');
@@ -115,7 +106,7 @@ describe('Login', function() {
             flows: [{ type: "m.login.password" }, { type: "m.login.sso" }],
         });
 
-        const form = ReactTestUtils.findRenderedComponentWithType(root, sdk.getComponent('auth.PasswordLogin'));
+        const form = ReactTestUtils.findRenderedComponentWithType(root, PasswordLogin);
         expect(form).toBeTruthy();
 
         const ssoButton = ReactTestUtils.findRenderedDOMComponentWithClass(root, "mx_SSOButton");

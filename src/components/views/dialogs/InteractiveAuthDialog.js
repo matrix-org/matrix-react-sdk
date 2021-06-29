@@ -19,13 +19,13 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 
 import AccessibleButton from '../elements/AccessibleButton';
-import { ERROR_USER_CANCELLED } from "../../structures/InteractiveAuth";
+import InteractiveAuth, { ERROR_USER_CANCELLED } from "../../structures/InteractiveAuth";
 import { SSOAuthEntry } from "../auth/InteractiveAuthEntryComponents";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import BaseDialog from "./BaseDialog";
 
 @replaceableComponent("views.dialogs.InteractiveAuthDialog")
 export default class InteractiveAuthDialog extends React.Component {
@@ -125,9 +125,6 @@ export default class InteractiveAuthDialog extends React.Component {
     };
 
     render() {
-        const InteractiveAuth = sdk.getComponent("structures.InteractiveAuth");
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-
         // Let's pick a title, body, and other params text that we'll show to the user. The order
         // is most specific first, so stagePhase > our props > defaults.
 

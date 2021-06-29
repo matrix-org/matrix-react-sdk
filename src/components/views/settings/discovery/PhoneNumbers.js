@@ -20,10 +20,12 @@ import PropTypes from 'prop-types';
 
 import { _t } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
-import * as sdk from '../../../../index';
 import Modal from '../../../../Modal';
 import AddThreepid from '../../../../AddThreepid';
 import { replaceableComponent } from "../../../../utils/replaceableComponent";
+import Field from "../../elements/Field";
+import AccessibleButton from "../../elements/AccessibleButton";
+import ErrorDialog from "../../dialogs/ErrorDialog";
 
 /*
 TODO: Improve the UX for everything in here.
@@ -62,7 +64,6 @@ export class PhoneNumber extends React.Component {
             return this.changeBindingTangledAddBind({ bind, label, errorTitle });
         }
 
-        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         const { medium, address } = this.props.msisdn;
 
         try {
@@ -100,7 +101,6 @@ export class PhoneNumber extends React.Component {
     }
 
     async changeBindingTangledAddBind({ bind, label, errorTitle }) {
-        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         const { medium, address } = this.props.msisdn;
 
         const task = new AddThreepid();
@@ -183,7 +183,6 @@ export class PhoneNumber extends React.Component {
         } catch (err) {
             this.setState({ continueDisabled: false });
             if (err.errcode !== 'M_THREEPID_AUTH_FAILED') {
-                const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 console.error("Unable to verify phone number: " + err);
                 Modal.createTrackedDialog('Unable to verify phone number', '', ErrorDialog, {
                     title: _t("Unable to verify phone number."),
@@ -196,8 +195,6 @@ export class PhoneNumber extends React.Component {
     }
 
     render() {
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-        const Field = sdk.getComponent('elements.Field');
         const { address } = this.props.msisdn;
         const { verifying, bound } = this.state;
 

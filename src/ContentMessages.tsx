@@ -20,13 +20,16 @@ import React from "react";
 import dis from './dispatcher/dispatcher';
 import { MatrixClientPeg } from './MatrixClientPeg';
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import * as sdk from './index';
 import { _t } from './languageHandler';
 import Modal from './Modal';
 import RoomViewStore from './stores/RoomViewStore';
 import encrypt from "browser-encrypt-attachment";
 import extractPngChunks from "png-chunks-extract";
 import Spinner from "./components/views/elements/Spinner";
+import QuestionDialog from "./components/views/dialogs/QuestionDialog";
+import UploadFailureDialog from "./components/views/dialogs/UploadFailureDialog";
+import UploadConfirmDialog from "./components/views/dialogs/UploadConfirmDialog";
+import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 
 import { Action } from "./dispatcher/actions";
 import CountlyAnalytics from "./CountlyAnalytics";
@@ -397,7 +400,6 @@ export default class ContentMessages {
 
         const isQuoting = Boolean(RoomViewStore.getQuotingEvent());
         if (isQuoting) {
-            const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
             const { finished } = Modal.createTrackedDialog<[boolean]>('Upload Reply Warning', '', QuestionDialog, {
                 title: _t('Replying With Files'),
                 description: (
@@ -431,7 +433,6 @@ export default class ContentMessages {
         }
 
         if (tooBigFiles.length > 0) {
-            const UploadFailureDialog = sdk.getComponent("dialogs.UploadFailureDialog");
             const { finished } = Modal.createTrackedDialog<[boolean]>('Upload Failure', '', UploadFailureDialog, {
                 badFiles: tooBigFiles,
                 totalFiles: files.length,
@@ -441,7 +442,6 @@ export default class ContentMessages {
             if (!shouldContinue) return;
         }
 
-        const UploadConfirmDialog = sdk.getComponent("dialogs.UploadConfirmDialog");
         let uploadAll = false;
         // Promise to complete before sending next file into room, used for synchronisation of file-sending
         // to match the order the files were specified in
@@ -584,7 +584,6 @@ export default class ContentMessages {
                         { fileName: upload.fileName },
                     );
                 }
-                const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 Modal.createTrackedDialog('Upload failed', '', ErrorDialog, {
                     title: _t('Upload Failed'),
                     description: desc,

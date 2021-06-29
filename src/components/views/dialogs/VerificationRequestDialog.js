@@ -17,9 +17,10 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import BaseDialog from "./BaseDialog";
+import EncryptionPanel from "../right_panel/EncryptionPanel";
 
 @replaceableComponent("views.dialogs.VerificationRequestDialog")
 export default class VerificationRequestDialog extends React.Component {
@@ -43,8 +44,6 @@ export default class VerificationRequestDialog extends React.Component {
     }
 
     render() {
-        const BaseDialog = sdk.getComponent("views.dialogs.BaseDialog");
-        const EncryptionPanel = sdk.getComponent("views.right_panel.EncryptionPanel");
         const request = this.state.verificationRequest;
         const otherUserId = request && request.otherUserId;
         const member = this.props.member ||

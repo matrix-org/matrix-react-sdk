@@ -16,11 +16,13 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import SdkConfig from '../../../SdkConfig';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import BugReportDialog from "./BugReportDialog";
+import BaseDialog from "./BaseDialog";
+import DialogButtons from "../elements/DialogButtons";
 
 @replaceableComponent("views.dialogs.StorageEvictedDialog")
 export default class StorageEvictedDialog extends React.Component {
@@ -30,7 +32,6 @@ export default class StorageEvictedDialog extends React.Component {
 
     _sendBugReport = ev => {
         ev.preventDefault();
-        const BugReportDialog = sdk.getComponent("dialogs.BugReportDialog");
         Modal.createTrackedDialog('Storage evicted', 'Send Bug Report Dialog', BugReportDialog, {});
     };
 
@@ -39,9 +40,6 @@ export default class StorageEvictedDialog extends React.Component {
     };
 
     render() {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
-
         let logRequest;
         if (SdkConfig.get().bug_report_endpoint_url) {
             logRequest = _t(

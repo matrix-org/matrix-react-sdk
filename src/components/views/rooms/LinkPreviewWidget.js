@@ -21,12 +21,13 @@ import { AllHtmlEntities } from 'html-entities';
 import { linkifyElement } from '../../../HtmlUtils';
 import SettingsStore from "../../../settings/SettingsStore";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import * as sdk from "../../../index";
 import Modal from "../../../Modal";
 import * as ImageUtils from "../../../ImageUtils";
 import { _t } from "../../../languageHandler";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
+import AccessibleButton from "../elements/AccessibleButton";
+import ImageView from "../elements/ImageView";
 
 @replaceableComponent("views.rooms.LinkPreviewWidget")
 export default class LinkPreviewWidget extends React.Component {
@@ -80,7 +81,6 @@ export default class LinkPreviewWidget extends React.Component {
         const p = this.state.preview;
         if (ev.button != 0 || ev.metaKey) return;
         ev.preventDefault();
-        const ImageView = sdk.getComponent("elements.ImageView");
 
         let src = p["og:image"];
         if (src && src.startsWith("mxc://")) {
@@ -136,7 +136,6 @@ export default class LinkPreviewWidget extends React.Component {
         // opaque string. This does not allow any HTML to be injected into the DOM.
         const description = AllHtmlEntities.decode(p["og:description"] || "");
 
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         return (
             <div className="mx_LinkPreviewWidget">
                 { img }

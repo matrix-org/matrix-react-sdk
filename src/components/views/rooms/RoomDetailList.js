@@ -14,14 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as sdk from '../../../index';
 import dis from '../../../dispatcher/dispatcher';
 import React from 'react';
 import { _t } from '../../../languageHandler';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { roomShape } from './RoomDetailRow';
+import RoomDetailRow, { roomShape } from './RoomDetailRow';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 @replaceableComponent("views.rooms.RoomDetailList")
@@ -34,7 +33,6 @@ export default class RoomDetailList extends React.Component {
     getRows() {
         if (!this.props.rooms) return [];
 
-        const RoomDetailRow = sdk.getComponent('rooms.RoomDetailRow');
         return this.props.rooms.map((room, index) => {
             return <RoomDetailRow key={index} room={room} onClick={this.onDetailsClick} />;
         });

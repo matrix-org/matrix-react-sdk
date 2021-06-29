@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, {ComponentType, PropsWithRef} from 'react';
 import classNames from "classnames";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
@@ -25,7 +25,6 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import ReplyThread from "../elements/ReplyThread";
 import { _t } from '../../../languageHandler';
 import { hasText } from "../../../TextForEvent";
-import * as sdk from "../../../index";
 import dis from '../../../dispatcher/dispatcher';
 import SettingsStore from "../../../settings/SettingsStore";
 import { Layout } from "../../../settings/Layout";
@@ -47,38 +46,53 @@ import { StaticNotificationState } from "../../../stores/notifications/StaticNot
 import NotificationBadge from "./NotificationBadge";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { Action } from '../../../dispatcher/actions';
+import ReactionsRow from "../messages/ReactionsRow";
+import TooltipButton from "../elements/TooltipButton";
+import MessageActionBar from "../messages/MessageActionBar";
+import MemberAvatar from "../avatars/MemberAvatar";
+import SenderProfile from "../messages/SenderProfile";
+import MessageTimestamp from "../messages/MessageTimestamp";
+import ReadReceiptMarker from "../rooms/ReadReceiptMarker";
+import MKeyVerificationRequest from "../messages/MKeyVerificationRequest";
+import MJitsiWidgetEvent from "../messages/MJitsiWidgetEvent";
+import MKeyVerificationConclusion from "../messages/MKeyVerificationConclusion";
+import TextualEvent from "../messages/TextualEvent";
+import EncryptionEvent from "../messages/EncryptionEvent";
+import RoomCreate from "../messages/RoomCreate";
+import RoomAvatarEvent from "../messages/RoomAvatarEvent";
+import ViewSourceEvent from "../messages/ViewSourceEvent";
 
 const eventTileTypes = {
-    [EventType.RoomMessage]: 'messages.MessageEvent',
-    [EventType.Sticker]: 'messages.MessageEvent',
-    [EventType.KeyVerificationCancel]: 'messages.MKeyVerificationConclusion',
-    [EventType.KeyVerificationDone]: 'messages.MKeyVerificationConclusion',
-    [EventType.CallInvite]: 'messages.TextualEvent',
-    [EventType.CallAnswer]: 'messages.TextualEvent',
-    [EventType.CallHangup]: 'messages.TextualEvent',
-    [EventType.CallReject]: 'messages.TextualEvent',
+    [EventType.RoomMessage]: MessageEvent,
+    [EventType.Sticker]: MessageEvent,
+    [EventType.KeyVerificationCancel]: MKeyVerificationConclusion,
+    [EventType.KeyVerificationDone]: MKeyVerificationConclusion,
+    [EventType.CallInvite]: TextualEvent,
+    [EventType.CallAnswer]: TextualEvent,
+    [EventType.CallHangup]: TextualEvent,
+    [EventType.CallReject]: TextualEvent,
 };
 
 const stateEventTileTypes = {
-    [EventType.RoomEncryption]: 'messages.EncryptionEvent',
-    [EventType.RoomCanonicalAlias]: 'messages.TextualEvent',
-    [EventType.RoomCreate]: 'messages.RoomCreate',
-    [EventType.RoomMember]: 'messages.TextualEvent',
-    [EventType.RoomName]: 'messages.TextualEvent',
-    [EventType.RoomAvatar]: 'messages.RoomAvatarEvent',
-    [EventType.RoomThirdPartyInvite]: 'messages.TextualEvent',
-    [EventType.RoomHistoryVisibility]: 'messages.TextualEvent',
-    [EventType.RoomTopic]: 'messages.TextualEvent',
-    [EventType.RoomPowerLevels]: 'messages.TextualEvent',
-    [EventType.RoomPinnedEvents]: 'messages.TextualEvent',
-    [EventType.RoomServerAcl]: 'messages.TextualEvent',
+    [EventType.RoomEncryption]: EncryptionEvent,
+    [EventType.RoomCanonicalAlias]: TextualEvent,
+    [EventType.RoomCreate]: RoomCreate,
+    [EventType.RoomMember]: TextualEvent,
+    [EventType.RoomName]: TextualEvent,
+    [EventType.RoomAvatar]: RoomAvatarEvent,
+    [EventType.RoomThirdPartyInvite]: TextualEvent,
+    [EventType.RoomHistoryVisibility]: TextualEvent,
+    [EventType.RoomTopic]: TextualEvent,
+    [EventType.RoomPowerLevels]: TextualEvent,
+    [EventType.RoomPinnedEvents]: TextualEvent,
+    [EventType.RoomServerAcl]: TextualEvent,
     // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
-    'im.vector.modular.widgets': 'messages.TextualEvent',
-    [WIDGET_LAYOUT_EVENT_TYPE]: 'messages.TextualEvent',
-    [EventType.RoomTombstone]: 'messages.TextualEvent',
-    [EventType.RoomJoinRules]: 'messages.TextualEvent',
-    [EventType.RoomGuestAccess]: 'messages.TextualEvent',
-    'm.room.related_groups': 'messages.TextualEvent', // legacy communities flair
+    'im.vector.modular.widgets': TextualEvent,
+    [WIDGET_LAYOUT_EVENT_TYPE]: TextualEvent,
+    [EventType.RoomTombstone]: TextualEvent,
+    [EventType.RoomJoinRules]: TextualEvent,
+    [EventType.RoomGuestAccess]: TextualEvent,
+    'm.room.related_groups': TextualEvent, // legacy communities flair
 };
 
 const stateEventSingular = new Set([
@@ -101,10 +115,10 @@ const stateEventSingular = new Set([
 
 // Add all the Mjolnir stuff to the renderer
 for (const evType of ALL_RULE_TYPES) {
-    stateEventTileTypes[evType] = 'messages.TextualEvent';
+    stateEventTileTypes[evType] = TextualEvent;
 }
 
-export function getHandlerTile(ev) {
+export function getHandlerTile(ev: MatrixEvent): ComponentType<PropsWithRef<any>> | undefined {
     const type = ev.getType();
 
     // don't show verification requests we're not involved in,
@@ -117,7 +131,7 @@ export function getHandlerTile(ev) {
             if (ev.getSender() !== me && content.to !== me) {
                 return undefined;
             } else {
-                return "messages.MKeyVerificationRequest";
+                return MKeyVerificationRequest;
             }
         }
     }
@@ -136,7 +150,7 @@ export function getHandlerTile(ev) {
     // XXX: This is extremely a hack. Possibly these components should have an interface for
     // declining to render?
     if (type === "m.key.verification.cancel" || type === "m.key.verification.done") {
-        const MKeyVerificationConclusion = sdk.getComponent("messages.MKeyVerificationConclusion");
+        // @ts-ignore
         if (!MKeyVerificationConclusion.prototype._shouldRender.call(null, ev, ev.request)) {
             return;
         }
@@ -151,7 +165,7 @@ export function getHandlerTile(ev) {
         }
 
         if (WidgetType.JITSI.matches(type)) {
-            return "messages.MJitsiWidgetEvent";
+            return MJitsiWidgetEvent;
         }
     }
 
@@ -659,7 +673,6 @@ export default class EventTile extends React.Component<IProps, IState> {
             );
         }
 
-        const ReadReceiptMarker = sdk.getComponent('rooms.ReadReceiptMarker');
         const avatars = [];
         const receiptOffset = 15;
         let left = 0;
@@ -726,7 +739,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         );
     }
 
-    onSenderProfileClick = event => {
+    onSenderProfileClick = () => {
         const mxEvent = this.props.mxEvent;
         dis.dispatch<ComposerInsertPayload>({
             action: Action.ComposerInsert,
@@ -834,24 +847,20 @@ export default class EventTile extends React.Component<IProps, IState> {
     };
 
     render() {
-        const MessageTimestamp = sdk.getComponent('messages.MessageTimestamp');
-        const SenderProfile = sdk.getComponent('messages.SenderProfile');
-        const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
-
         //console.info("EventTile showUrlPreview for %s is %s", this.props.mxEvent.getId(), this.props.showUrlPreview);
 
         const content = this.props.mxEvent.getContent();
         const msgtype = content.msgtype;
         const eventType = this.props.mxEvent.getType();
 
-        let tileHandler = getHandlerTile(this.props.mxEvent);
+        let EventTileType = getHandlerTile(this.props.mxEvent);
 
         // Info messages are basically information about commands processed on a room
         let isBubbleMessage = eventType.startsWith("m.key.verification") ||
             (eventType === EventType.RoomMessage && msgtype && msgtype.startsWith("m.key.verification")) ||
             (eventType === EventType.RoomCreate) ||
             (eventType === EventType.RoomEncryption) ||
-            (tileHandler === "messages.MJitsiWidgetEvent");
+            (EventTileType === MJitsiWidgetEvent);
         let isInfoMessage = (
             !isBubbleMessage && eventType !== EventType.RoomMessage &&
             eventType !== EventType.Sticker && eventType !== EventType.RoomCreate
@@ -862,14 +871,14 @@ export default class EventTile extends React.Component<IProps, IState> {
         // replace relations (which otherwise would display as a confusing
         // duplicate of the thing they are replacing).
         if (SettingsStore.getValue("showHiddenEventsInTimeline") && !haveTileForEvent(this.props.mxEvent)) {
-            tileHandler = "messages.ViewSourceEvent";
+            EventTileType = ViewSourceEvent;
             isBubbleMessage = false;
             // Reuse info message avatar and sender profile styling
             isInfoMessage = true;
         }
         // This shouldn't happen: the caller should check we support this type
         // before trying to instantiate us
-        if (!tileHandler) {
+        if (!EventTileType) {
             const { mxEvent } = this.props;
             console.warn(`Event type not supported: type:${mxEvent.getType()} isState:${mxEvent.isState()}`);
             return <div className="mx_EventTile mx_EventTile_info mx_MNoticeBody">
@@ -878,7 +887,6 @@ export default class EventTile extends React.Component<IProps, IState> {
                 </div>
             </div>;
         }
-        const EventTileType = sdk.getComponent(tileHandler);
 
         const isSending = (['sending', 'queued', 'encrypting'].indexOf(this.props.eventSendStatus) !== -1);
         const isRedacted = isMessageEvent(this.props.mxEvent) && this.props.isRedacted;
@@ -929,7 +937,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         if (this.props.tileShape === "notif") {
             avatarSize = 24;
             needsSenderProfile = true;
-        } else if (tileHandler === 'messages.RoomCreate' || isBubbleMessage) {
+        } else if (EventTileType === RoomCreate || isBubbleMessage) {
             avatarSize = 0;
             needsSenderProfile = false;
         } else if (isInfoMessage) {
@@ -980,7 +988,6 @@ export default class EventTile extends React.Component<IProps, IState> {
             }
         }
 
-        const MessageActionBar = sdk.getComponent('messages.MessageActionBar');
         const actionBar = !isEditing ? <MessageActionBar
             mxEvent={this.props.mxEvent}
             reactions={this.state.reactions}
@@ -1020,7 +1027,6 @@ export default class EventTile extends React.Component<IProps, IState> {
                 { 'requestLink': (sub) => <a onClick={this.onRequestKeysClick}>{ sub }</a> },
             );
 
-        const TooltipButton = sdk.getComponent('elements.TooltipButton');
         const keyRequestInfo = isEncryptionFailure && !isRedacted ?
             <div className="mx_EventTile_keyRequestInfo">
                 <span className="mx_EventTile_keyRequestInfo_text">
@@ -1031,7 +1037,6 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         let reactionsRow;
         if (!isRedacted) {
-            const ReactionsRow = sdk.getComponent('messages.ReactionsRow');
             reactionsRow = <ReactionsRow
                 mxEvent={this.props.mxEvent}
                 reactions={this.state.reactions}
@@ -1228,9 +1233,9 @@ export function haveTileForEvent(e) {
 
     const handler = getHandlerTile(e);
     if (handler === undefined) return false;
-    if (handler === 'messages.TextualEvent') {
+    if (handler === TextualEvent) {
         return hasText(e);
-    } else if (handler === 'messages.RoomCreate') {
+    } else if (handler === RoomCreate) {
         return Boolean(e.getContent()['predecessor']);
     } else {
         return true;

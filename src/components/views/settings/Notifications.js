@@ -16,7 +16,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import SettingsStore from '../../../settings/SettingsStore';
@@ -33,6 +32,9 @@ import AccessibleButton from "../elements/AccessibleButton";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import { UIFeature } from "../../../settings/UIFeature";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import Spinner from "../elements/Spinner";
+import ErrorDialog from "../dialogs/ErrorDialog";
+import TextInputDialog from "../dialogs/TextInputDialog";
 
 // TODO: this "view" component still has far too much application logic in it,
 // which should be factored out to other files.
@@ -174,7 +176,6 @@ export default class Notifications extends React.Component {
         emailPusherPromise.then(() => {
             this._refreshFromServer();
         }, (error) => {
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog('Error saving email notification preferences', '', ErrorDialog, {
                 title: _t('Error saving email notification preferences'),
                 description: _t('An error occurred whilst saving your email notification preferences.'),
@@ -214,7 +215,6 @@ export default class Notifications extends React.Component {
             keywords = "";
         }
 
-        const TextInputDialog = sdk.getComponent("dialogs.TextInputDialog");
         Modal.createTrackedDialog('Keywords Dialog', '', TextInputDialog, {
             title: _t('Keywords'),
             description: _t('Enter keywords separated by a comma:'),
@@ -276,7 +276,6 @@ export default class Notifications extends React.Component {
             Promise.all(deferreds).then(function() {
                 self._refreshFromServer();
             }, function(error) {
-                const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                 console.error("Failed to change settings: " + error);
                 Modal.createTrackedDialog('Failed to change settings', '', ErrorDialog, {
                     title: _t('Failed to change settings'),
@@ -345,7 +344,6 @@ export default class Notifications extends React.Component {
         Promise.all(deferreds).then(function(resps) {
             self._refreshFromServer();
         }, function(error) {
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             console.error("Can't update user notification settings: " + error);
             Modal.createTrackedDialog('Can\'t update user notifcation settings', '', ErrorDialog, {
                 title: _t('Can\'t update user notification settings'),
@@ -387,7 +385,6 @@ export default class Notifications extends React.Component {
         }
 
         const onError = function(error) {
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             console.error("Failed to update keywords: " + error);
             Modal.createTrackedDialog('Failed to update keywords', '', ErrorDialog, {
                 title: _t('Failed to update keywords'),
@@ -749,8 +746,7 @@ export default class Notifications extends React.Component {
     render() {
         let spinner;
         if (this.state.phase === Notifications.phases.LOADING) {
-            const Loader = sdk.getComponent("elements.Spinner");
-            spinner = <Loader />;
+            spinner = <Spinner />;
         }
 
         let masterPushRuleDiv;

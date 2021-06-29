@@ -13,8 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 import React from 'react';
-import * as sdk from '../../../index';
 import dis from '../../../dispatcher/dispatcher';
 import classNames from 'classnames';
 import { Room } from 'matrix-js-sdk/src/models/room';
@@ -28,6 +28,9 @@ import { Action } from "../../../dispatcher/actions";
 import { mediaFromMxc } from "../../../customisations/Media";
 import Tooltip from './Tooltip';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import RoomAvatar from "../avatars/RoomAvatar";
+import MemberAvatar from "../avatars/MemberAvatar";
+import BaseAvatar from "../avatars/BaseAvatar";
 
 @replaceableComponent("views.elements.Pill")
 class Pill extends React.Component {
@@ -200,10 +203,6 @@ class Pill extends React.Component {
     };
 
     render() {
-        const BaseAvatar = sdk.getComponent('views.avatars.BaseAvatar');
-        const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
-        const RoomAvatar = sdk.getComponent('avatars.RoomAvatar');
-
         const resource = this.state.resourceId;
 
         let avatar = null;

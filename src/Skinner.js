@@ -70,13 +70,6 @@ class Skinner {
             const comp = skinObject.components[compKeys[i]];
             this.addComponent(compKeys[i], comp);
         }
-
-        // Now that we have a skin, load our components too
-        const idx = require("./component-index");
-        if (!idx || !idx.components) throw new Error("Invalid react-sdk component index");
-        for (const c in idx.components) {
-            if (!this.components[c]) this.components[c] = idx.components[c];
-        }
     }
 
     addComponent(name, comp) {

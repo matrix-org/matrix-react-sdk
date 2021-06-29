@@ -16,10 +16,11 @@ limitations under the License.
 
 import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import Field from "../elements/Field";
 import { _t, _td } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import BaseDialog from "./BaseDialog";
+import DialogButtons from "../elements/DialogButtons";
 
 @replaceableComponent("views.dialogs.TextInputDialog")
 export default class TextInputDialog extends React.Component {
@@ -104,8 +105,6 @@ export default class TextInputDialog extends React.Component {
     };
 
     render() {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         return (
             <BaseDialog
                 className="mx_TextInputDialog"

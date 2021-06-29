@@ -16,8 +16,9 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import Spinner from "./Spinner";
+import EditableText from "./EditableText";
 
 /**
  * A component which wraps an EditableText, with a spinner while updates take
@@ -104,18 +105,17 @@ export default class EditableTextContainer extends React.Component {
 
     render() {
         if (this.state.busy) {
-            const Loader = sdk.getComponent("elements.Spinner");
             return (
-                <Loader />
+                <Spinner />
             );
         } else if (this.state.errorString) {
             return (
                 <div className="error">{ this.state.errorString }</div>
             );
         } else {
-            const EditableText = sdk.getComponent('elements.EditableText');
             return (
-                <EditableText initialValue={this.state.value}
+                <EditableText
+                    initialValue={this.state.value}
                     placeholder={this.props.placeholder}
                     onValueChanged={this._onValueChanged}
                     blurToSubmit={this.props.blurToSubmit}

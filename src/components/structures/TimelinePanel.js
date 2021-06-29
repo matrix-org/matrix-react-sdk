@@ -30,7 +30,6 @@ import RoomContext from "../../contexts/RoomContext";
 import UserActivity from "../../UserActivity";
 import Modal from "../../Modal";
 import dis from "../../dispatcher/dispatcher";
-import * as sdk from "../../index";
 import { Key } from '../../Keyboard';
 import Timer from '../../utils/Timer';
 import shouldHideEvent from '../../shouldHideEvent';
@@ -38,6 +37,9 @@ import { haveTileForEvent } from "../views/rooms/EventTile";
 import { UIFeature } from "../../settings/UIFeature";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import { arrayFastClone } from "../../utils/arrays";
+import ErrorDialog from "../views/dialogs/ErrorDialog";
+import Spinner from "../views/elements/Spinner";
+import MessagePanel from "./MessagePanel";
 
 const PAGINATE_SIZE = 20;
 const INITIAL_SIZE = 20;
@@ -1045,8 +1047,6 @@ class TimelinePanel extends React.Component {
             console.error(
                 `Error loading timeline panel at ${eventId}: ${error}`,
             );
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-
             let onFinished;
 
             // if we were given an event ID, then when the user closes the
@@ -1369,9 +1369,6 @@ class TimelinePanel extends React.Component {
     getRelationsForEvent = (...args) => this.props.timelineSet.getRelationsForEvent(...args);
 
     render() {
-        const MessagePanel = sdk.getComponent("structures.MessagePanel");
-        const Loader = sdk.getComponent("elements.Spinner");
-
         // just show a spinner while the timeline loads.
         //
         // put it in a div of the right class (mx_RoomView_messagePanel) so
@@ -1386,7 +1383,7 @@ class TimelinePanel extends React.Component {
         if (this.state.timelineLoading) {
             return (
                 <div className="mx_RoomView_messagePanelSpinner">
-                    <Loader />
+                    <Spinner />
                 </div>
             );
         }

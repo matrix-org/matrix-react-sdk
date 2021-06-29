@@ -16,10 +16,10 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import GroupStore from '../../../stores/GroupStore';
 import ToggleSwitch from "../elements/ToggleSwitch";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import GroupTile from "./GroupTile";
 
 @replaceableComponent("views.groups.GroupPublicityTile")
 export default class GroupPublicityToggle extends React.Component {
@@ -64,7 +64,6 @@ export default class GroupPublicityToggle extends React.Component {
     };
 
     render() {
-        const GroupTile = sdk.getComponent('groups.GroupTile');
         return <div className="mx_GroupPublicity_toggle">
             <GroupTile groupId={this.props.groupId} showDescription={false} avatarHeight={40} />
             <ToggleSwitch checked={this.state.isGroupPublicised}

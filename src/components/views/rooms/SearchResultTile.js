@@ -17,11 +17,11 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
-import { haveTileForEvent } from "./EventTile";
+import EventTile, { haveTileForEvent } from "./EventTile";
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import DateSeparator from "../messages/DateSeparator";
 
 @replaceableComponent("views.rooms.SearchResultTile")
 export default class SearchResultTile extends React.Component {
@@ -39,8 +39,6 @@ export default class SearchResultTile extends React.Component {
     };
 
     render() {
-        const DateSeparator = sdk.getComponent('messages.DateSeparator');
-        const EventTile = sdk.getComponent('rooms.EventTile');
         const result = this.props.searchResult;
         const mxEv = result.context.getEvent();
         const eventId = mxEv.getId();

@@ -18,8 +18,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
-import * as sdk from "../../../index";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import BaseDialog from "./BaseDialog";
+import DialogButtons from "../elements/DialogButtons";
 
 @replaceableComponent("views.dialogs.IntegrationsImpossibleDialog")
 export default class IntegrationsImpossibleDialog extends React.Component {
@@ -33,9 +34,6 @@ export default class IntegrationsImpossibleDialog extends React.Component {
 
     render() {
         const brand = SdkConfig.get().brand;
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
-
         return (
             <BaseDialog
                 className='mx_IntegrationsImpossibleDialog'

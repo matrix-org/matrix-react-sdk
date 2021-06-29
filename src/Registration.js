@@ -21,9 +21,9 @@ limitations under the License.
  */
 
 import dis from './dispatcher/dispatcher';
-import * as sdk from './index';
 import Modal from './Modal';
 import { _t } from './languageHandler';
+import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 
 // Regex for what a "safe" or "Matrix-looking" localpart would be.
 // TODO: Update as needed for https://github.com/matrix-org/matrix-doc/issues/1514
@@ -43,7 +43,6 @@ export const SAFE_LOCALPART_REGEX = /^[a-z0-9=_\-./]+$/;
  */
 export async function startAnyRegistrationFlow(options) {
     if (options === undefined) options = {};
-    const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
     const modal = Modal.createTrackedDialog('Registration required', '', QuestionDialog, {
         hasCancelButton: true,
         quitOnly: true,

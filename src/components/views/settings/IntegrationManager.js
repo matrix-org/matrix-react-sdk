@@ -17,11 +17,11 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
 import { Key } from "../../../Keyboard";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import Spinner from "../elements/Spinner";
 
 @replaceableComponent("views.settings.IntegrationManager")
 export default class IntegrationManager extends React.Component {
@@ -82,7 +82,6 @@ export default class IntegrationManager extends React.Component {
 
     render() {
         if (this.props.loading) {
-            const Spinner = sdk.getComponent("elements.Spinner");
             return (
                 <div className='mx_IntegrationManager_loading'>
                     <h3>{_t("Connecting to integration manager...")}</h3>

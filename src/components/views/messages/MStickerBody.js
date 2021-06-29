@@ -16,8 +16,9 @@ limitations under the License.
 
 import React from 'react';
 import MImageBody from './MImageBody';
-import * as sdk from '../../../index';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import TintableSVG from "../elements/TintableSVG";
+import Tooltip from "../elements/Tooltip";
 
 @replaceableComponent("views.messages.MStickerBody")
 export default class MStickerBody extends MImageBody {
@@ -42,7 +43,6 @@ export default class MStickerBody extends MImageBody {
     // Placeholder to show in place of the sticker image if
     // img onLoad hasn't fired yet.
     getPlaceholder() {
-        const TintableSVG = sdk.getComponent('elements.TintableSvg');
         return <TintableSVG src={require("../../../../res/img/icons-show-stickers.svg")} width="75" height="75" />;
     }
 
@@ -52,7 +52,6 @@ export default class MStickerBody extends MImageBody {
 
         if (!content || !content.body || !content.info || !content.info.w) return null;
 
-        const Tooltip = sdk.getComponent('elements.Tooltip');
         return <div style={{ left: content.info.w + 'px' }} className="mx_MStickerBody_tooltip">
             <Tooltip label={content.body} />
         </div>;

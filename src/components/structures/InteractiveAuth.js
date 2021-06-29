@@ -21,8 +21,8 @@ import PropTypes from 'prop-types';
 
 import getEntryComponentForLoginType from '../views/auth/InteractiveAuthEntryComponents';
 
-import * as sdk from '../../index';
 import { replaceableComponent } from "../../utils/replaceableComponent";
+import Spinner from "../views/elements/Spinner";
 
 export const ERROR_USER_CANCELLED = new Error("User cancelled auth session");
 
@@ -238,8 +238,7 @@ export default class InteractiveAuthComponent extends React.Component {
         const stage = this.state.authStage;
         if (!stage) {
             if (this.state.busy) {
-                const Loader = sdk.getComponent("elements.Spinner");
-                return <Loader />;
+                return <Spinner />;
             } else {
                 return null;
             }

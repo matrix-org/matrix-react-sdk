@@ -16,13 +16,11 @@ limitations under the License.
 */
 
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
 import { Room } from "matrix-js-sdk/src/models/room";
 import { User } from "matrix-js-sdk/src/models/user";
 import { Group } from "matrix-js-sdk/src/models/group";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import QRCode from "../elements/QRCode";
 import { RoomPermalinkCreator, makeGroupPermalink, makeUserPermalink } from "../../../utils/permalinks/Permalinks";
@@ -35,6 +33,8 @@ import { IDialogProps } from "./IDialogProps";
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import BaseDialog from "./BaseDialog";
+import GenericTextContextMenu from "../context_menus/GenericTextContextMenu";
 
 const socials = [
     {
@@ -76,17 +76,6 @@ interface IState {
 
 @replaceableComponent("views.dialogs.ShareDialog")
 export default class ShareDialog extends React.PureComponent<IProps, IState> {
-    static propTypes = {
-        onFinished: PropTypes.func.isRequired,
-        target: PropTypes.oneOfType([
-            PropTypes.instanceOf(Room),
-            PropTypes.instanceOf(User),
-            PropTypes.instanceOf(Group),
-            PropTypes.instanceOf(RoomMember),
-            PropTypes.instanceOf(MatrixEvent),
-        ]).isRequired,
-    };
-
     protected closeCopiedTooltip: () => void;
 
     constructor(props) {
@@ -119,7 +108,6 @@ export default class ShareDialog extends React.PureComponent<IProps, IState> {
 
         const successful = await copyPlaintext(this.getUrl());
         const buttonRect = target.getBoundingClientRect();
-        const GenericTextContextMenu = sdk.getComponent('context_menus.GenericTextContextMenu');
         const { close } = ContextMenu.createMenu(GenericTextContextMenu, {
             ...toRightOf(buttonRect, 2),
             message: successful ? _t('Copied!') : _t('Failed to copy'),
@@ -230,7 +218,6 @@ export default class ShareDialog extends React.PureComponent<IProps, IState> {
             </>;
         }
 
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
         return <BaseDialog
             title={title}
             className='mx_ShareDialog'

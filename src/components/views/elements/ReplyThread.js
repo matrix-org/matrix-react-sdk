@@ -15,8 +15,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 import React from 'react';
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import PropTypes from 'prop-types';
 import dis from '../../../dispatcher/dispatcher';
@@ -32,6 +32,10 @@ import sanitizeHtml from "sanitize-html";
 import { UIFeature } from "../../../settings/UIFeature";
 import { PERMITTED_URL_SCHEMES } from "../../../HtmlUtils";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import Pill from "./Pill";
+import Spinner from "./Spinner";
+import DateSeparator from "../messages/DateSeparator";
+import EventTile from "../rooms/EventTile";
 
 // This component does no cycle detection, simply because the only way to make such a cycle would be to
 // craft event_id's, using a homeserver that generates predictable event IDs; even then the impact would
@@ -349,7 +353,6 @@ export default class ReplyThread extends React.Component {
             </blockquote>;
         } else if (this.state.loadedEv) {
             const ev = this.state.loadedEv;
-            const Pill = sdk.getComponent('elements.Pill');
             const room = this.context.getRoom(ev.getRoomId());
             header = <blockquote className="mx_ReplyThread">
                 {
@@ -367,12 +370,9 @@ export default class ReplyThread extends React.Component {
                 }
             </blockquote>;
         } else if (this.state.loading) {
-            const Spinner = sdk.getComponent("elements.Spinner");
             header = <Spinner w={16} h={16} />;
         }
 
-        const EventTile = sdk.getComponent('views.rooms.EventTile');
-        const DateSeparator = sdk.getComponent('messages.DateSeparator');
         const evTiles = this.state.events.map((ev) => {
             let dateSep = null;
 

@@ -19,7 +19,6 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { _t, _td } from '../../../languageHandler';
-import * as sdk from '../../../index';
 import Modal from "../../../Modal";
 import PasswordReset from "../../../PasswordReset";
 import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
@@ -30,6 +29,12 @@ import ServerPicker from "../../views/elements/ServerPicker";
 import PassphraseField from '../../views/auth/PassphraseField';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { PASSWORD_MIN_SCORE } from '../../views/auth/RegistrationForm';
+import QuestionDialog from "../../views/dialogs/QuestionDialog";
+import ErrorDialog from "../../views/dialogs/ErrorDialog";
+import Field from "../../views/elements/Field";
+import Spinner from "../../views/elements/Spinner";
+import AuthHeader from "../../views/auth/AuthHeader";
+import AuthBody from "../../views/auth/AuthBody";
 
 // Phases
 // Show the forgot password inputs
@@ -150,7 +155,6 @@ export default class ForgotPassword extends React.Component {
         } else if (this.state.password !== this.state.password2) {
             this.showErrorDialog(_t('New passwords must match each other.'));
         } else {
-            const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
             Modal.createTrackedDialog('Forgot Password Warning', '', QuestionDialog, {
                 title: _t('Warning!'),
                 description:
@@ -185,7 +189,6 @@ export default class ForgotPassword extends React.Component {
     };
 
     showErrorDialog(body, title) {
-        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         Modal.createTrackedDialog('Forgot Password Error', '', ErrorDialog, {
             title: title,
             description: body,
@@ -199,8 +202,6 @@ export default class ForgotPassword extends React.Component {
     }
 
     renderForgot() {
-        const Field = sdk.getComponent('elements.Field');
-
         let errorText = null;
         const err = this.state.errorText;
         if (err) {
@@ -283,7 +284,6 @@ export default class ForgotPassword extends React.Component {
     }
 
     renderSendingEmail() {
-        const Spinner = sdk.getComponent("elements.Spinner");
         return <Spinner />;
     }
 
@@ -311,9 +311,6 @@ export default class ForgotPassword extends React.Component {
     }
 
     render() {
-        const AuthHeader = sdk.getComponent("auth.AuthHeader");
-        const AuthBody = sdk.getComponent("auth.AuthBody");
-
         let resetPasswordJsx;
         switch (this.state.phase) {
             case PHASE_FORGOT:

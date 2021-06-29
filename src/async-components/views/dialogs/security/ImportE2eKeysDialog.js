@@ -19,8 +19,8 @@ import PropTypes from 'prop-types';
 
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 import * as MegolmExportEncryption from '../../../../utils/MegolmExportEncryption';
-import * as sdk from '../../../../index';
 import { _t } from '../../../../languageHandler';
+import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
 
 function readFileAsArrayBuffer(file) {
     return new Promise((resolve, reject) => {
@@ -110,8 +110,6 @@ export default class ImportE2eKeysDialog extends React.Component {
     };
 
     render() {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-
         const disableForm = (this.state.phase !== PHASE_EDIT);
 
         return (

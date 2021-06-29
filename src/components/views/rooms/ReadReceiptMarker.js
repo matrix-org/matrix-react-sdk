@@ -20,9 +20,9 @@ import PropTypes from 'prop-types';
 import { _t } from '../../../languageHandler';
 import { formatDate } from '../../../DateUtils';
 import NodeAnimator from "../../../NodeAnimator";
-import * as sdk from "../../../index";
 import { toPx } from "../../../utils/units";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import MemberAvatar from "../avatars/MemberAvatar";
 
 @replaceableComponent("views.rooms.ReadReceiptMarker")
 export default class ReadReceiptMarker extends React.PureComponent {
@@ -157,7 +157,6 @@ export default class ReadReceiptMarker extends React.PureComponent {
     }
 
     render() {
-        const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
         if (this.state.suppressDisplay) {
             return <div ref={this._avatar} />;
         }

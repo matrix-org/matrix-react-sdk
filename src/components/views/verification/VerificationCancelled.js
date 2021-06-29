@@ -16,9 +16,9 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import DialogButtons from "../elements/DialogButtons";
 
 @replaceableComponent("views.verification.VerificationCancelled")
 export default class VerificationCancelled extends React.Component {
@@ -27,7 +27,6 @@ export default class VerificationCancelled extends React.Component {
     }
 
     render() {
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
         return <div>
             <p>{_t(
                 "The other party cancelled the verification.",

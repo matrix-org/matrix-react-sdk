@@ -17,10 +17,16 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
+import BaseAvatar from "../avatars/BaseAvatar";
+import DialogButtons from "../elements/DialogButtons";
+import Spinner from "../elements/Spinner";
+import VerificationShowSas from "../verification/VerificationShowSas";
+import VerificationComplete from "../verification/VerificationComplete";
+import VerificationCancelled from "../verification/VerificationCancelled";
+import BaseDialog from "./BaseDialog";
 
 const PHASE_START = 0;
 const PHASE_SHOW_SAS = 1;
@@ -120,10 +126,6 @@ export default class IncomingSasDialog extends React.Component {
     }
 
     _renderPhaseStart() {
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
-        const Spinner = sdk.getComponent("views.elements.Spinner");
-        const BaseAvatar = sdk.getComponent("avatars.BaseAvatar");
-
         const isSelf = this.props.verifier.userId === MatrixClientPeg.get().getUserId();
 
         let profile;
@@ -193,7 +195,6 @@ export default class IncomingSasDialog extends React.Component {
     }
 
     _renderPhaseShowSas() {
-        const VerificationShowSas = sdk.getComponent('views.verification.VerificationShowSas');
         return <VerificationShowSas
             sas={this._showSasEvent.sas}
             onCancel={this._onCancelClick}
@@ -204,8 +205,6 @@ export default class IncomingSasDialog extends React.Component {
     }
 
     _renderPhaseWaitForPartnerToConfirm() {
-        const Spinner = sdk.getComponent("views.elements.Spinner");
-
         return (
             <div>
                 <Spinner />
@@ -215,12 +214,10 @@ export default class IncomingSasDialog extends React.Component {
     }
 
     _renderPhaseVerified() {
-        const VerificationComplete = sdk.getComponent('views.verification.VerificationComplete');
         return <VerificationComplete onDone={this._onVerifiedDoneClick} />;
     }
 
     _renderPhaseCancelled() {
-        const VerificationCancelled = sdk.getComponent('views.verification.VerificationCancelled');
         return <VerificationCancelled onDone={this._onCancelClick} />;
     }
 
@@ -244,7 +241,6 @@ export default class IncomingSasDialog extends React.Component {
                 break;
         }
 
-        const BaseDialog = sdk.getComponent("dialogs.BaseDialog");
         return (
             <BaseDialog
                 title={_t("Incoming Verification Request")}

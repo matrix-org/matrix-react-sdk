@@ -17,12 +17,15 @@ limitations under the License.
 
 import React from 'react';
 import Modal from '../../../Modal';
-import * as sdk from '../../../index';
 import dis from '../../../dispatcher/dispatcher';
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import RestoreKeyBackupDialog from './security/RestoreKeyBackupDialog';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import Spinner from "../elements/Spinner";
+import DialogButtons from "../elements/DialogButtons";
+import BaseDialog from "./BaseDialog";
+import QuestionDialog from "./QuestionDialog";
 
 @replaceableComponent("views.dialogs.LogoutDialog")
 export default class LogoutDialog extends React.Component {
@@ -120,8 +123,6 @@ export default class LogoutDialog extends React.Component {
 
     render() {
         if (this.state.shouldLoadBackupStatus) {
-            const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-
             const description = <div>
                 <p>{_t(
                     "Encrypted messages are secured with end-to-end encryption. " +
@@ -132,11 +133,8 @@ export default class LogoutDialog extends React.Component {
 
             let dialogContent;
             if (this.state.loading) {
-                const Spinner = sdk.getComponent('views.elements.Spinner');
-
                 dialogContent = <Spinner />;
             } else {
-                const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
                 let setupButtonCaption;
                 if (this.state.backupInfo) {
                     setupButtonCaption = _t("Connect this session to Key Backup");
@@ -179,7 +177,6 @@ export default class LogoutDialog extends React.Component {
                 {dialogContent}
             </BaseDialog>);
         } else {
-            const QuestionDialog = sdk.getComponent('views.dialogs.QuestionDialog');
             return (<QuestionDialog
                 hasCancelButton={true}
                 title={_t("Sign out")}

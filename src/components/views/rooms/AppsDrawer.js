@@ -22,7 +22,6 @@ import { Resizable } from "re-resizable";
 
 import AppTile from '../elements/AppTile';
 import dis from '../../../dispatcher/dispatcher';
-import * as sdk from '../../../index';
 import * as ScalarMessaging from '../../../ScalarMessaging';
 import WidgetUtils from '../../../utils/WidgetUtils';
 import WidgetEchoStore from "../../../stores/WidgetEchoStore";
@@ -37,6 +36,7 @@ import { clamp, percentageOf, percentageWithin } from "../../../utils/numbers";
 import { useStateCallback } from "../../../hooks/useStateCallback";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import UIStore from "../../../stores/UIStore";
+import Spinner from "../elements/Spinner";
 
 @replaceableComponent("views.rooms.AppsDrawer")
 export default class AppsDrawer extends React.Component {
@@ -234,8 +234,7 @@ export default class AppsDrawer extends React.Component {
                 WidgetUtils.getRoomWidgets(this.props.room),
             )
         ) {
-            const Loader = sdk.getComponent("elements.Spinner");
-            spinner = <Loader />;
+            spinner = <Spinner />;
         }
 
         const classes = classNames({

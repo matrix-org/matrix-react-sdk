@@ -17,11 +17,12 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { _t } from "../../../languageHandler";
-import * as sdk from "../../../index";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import { Widget } from "matrix-widget-api";
 import { OIDCState, WidgetPermissionStore } from "../../../stores/widgets/WidgetPermissionStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import DialogButtons from "../elements/DialogButtons";
+import BaseDialog from "./BaseDialog";
 
 @replaceableComponent("views.dialogs.WidgetOpenIDPermissionsDialog")
 export default class WidgetOpenIDPermissionsDialog extends React.Component {
@@ -66,9 +67,6 @@ export default class WidgetOpenIDPermissionsDialog extends React.Component {
     };
 
     render() {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
-
         return (
             <BaseDialog
                 className='mx_WidgetOpenIDPermissionsDialog'

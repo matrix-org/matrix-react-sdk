@@ -22,7 +22,6 @@ import PropTypes from 'prop-types';
 import highlight from 'highlight.js';
 import * as HtmlUtils from '../../../HtmlUtils';
 import { formatDate } from '../../../DateUtils';
-import * as sdk from '../../../index';
 import Modal from '../../../Modal';
 import dis from '../../../dispatcher/dispatcher';
 import { _t } from '../../../languageHandler';
@@ -39,6 +38,12 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import UIStore from "../../../stores/UIStore";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { Action } from "../../../dispatcher/actions";
+import GenericTextContextMenu from "../context_menus/GenericTextContextMenu";
+import Spoiler from "../elements/Spoiler";
+import QuestionDialog from "../dialogs/QuestionDialog";
+import MessageEditHistoryDialog from "../dialogs/MessageEditHistoryDialog";
+import EditMessageComposer from "../rooms/EditMessageComposer";
+import LinkPreviewWidget from "../rooms/LinkPreviewWidget";
 
 @replaceableComponent("views.messages.TextualBody")
 export default class TextualBody extends React.Component {
@@ -189,7 +194,6 @@ export default class TextualBody extends React.Component {
             const successful = await copyPlaintext(copyCode.textContent);
 
             const buttonRect = button.getBoundingClientRect();
-            const GenericTextContextMenu = sdk.getComponent('context_menus.GenericTextContextMenu');
             const { close } = ContextMenu.createMenu(GenericTextContextMenu, {
                 ...toRightOf(buttonRect, 2),
                 message: successful ? _t('Copied!') : _t('Failed to copy'),
@@ -308,7 +312,6 @@ export default class TextualBody extends React.Component {
                 const spoilerContainer = document.createElement('span');
 
                 const reason = node.getAttribute("data-mx-spoiler");
-                const Spoiler = sdk.getComponent('elements.Spoiler');
                 node.removeAttribute("data-mx-spoiler"); // we don't want to recurse
                 const spoiler = <Spoiler
                     reason={reason}
@@ -431,7 +434,6 @@ export default class TextualBody extends React.Component {
         const scalarClient = integrationManager.getScalarClient();
         scalarClient.connect().then(() => {
             const completeUrl = scalarClient.getStarterLink(starterLink);
-            const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
             const integrationsUrl = integrationManager.uiUrl;
             Modal.createTrackedDialog('Add an integration', '', QuestionDialog, {
                 title: _t("Add an Integration"),
@@ -459,7 +461,6 @@ export default class TextualBody extends React.Component {
     };
 
     _openHistoryDialog = async () => {
-        const MessageEditHistoryDialog = sdk.getComponent("views.dialogs.MessageEditHistoryDialog");
         Modal.createDialog(MessageEditHistoryDialog, { mxEvent: this.props.mxEvent });
     };
 
@@ -490,7 +491,6 @@ export default class TextualBody extends React.Component {
 
     render() {
         if (this.props.editState) {
-            const EditMessageComposer = sdk.getComponent('rooms.EditMessageComposer');
             return <EditMessageComposer editState={this.props.editState} className="mx_EventTile_content" />;
         }
         const mxEvent = this.props.mxEvent;
@@ -521,7 +521,6 @@ export default class TextualBody extends React.Component {
 
         let widgets;
         if (this.state.links.length && !this.state.widgetHidden && this.props.showUrlPreview) {
-            const LinkPreviewWidget = sdk.getComponent('rooms.LinkPreviewWidget');
             widgets = this.state.links.map((link)=>{
                 return <LinkPreviewWidget
                     key={link}

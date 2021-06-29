@@ -17,11 +17,14 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../../index';
 import { MatrixClientPeg } from '../../../../MatrixClientPeg';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 import { _t } from '../../../../languageHandler';
 import { accessSecretStorage } from '../../../../SecurityManager';
+import Spinner from "../../elements/Spinner";
+import DialogButtons from "../../elements/DialogButtons";
+import AccessibleButton from "../../elements/AccessibleButton";
+import BaseDialog from "../BaseDialog";
 
 const RESTORE_TYPE_PASSPHRASE = 0;
 const RESTORE_TYPE_RECOVERYKEY = 1;
@@ -264,9 +267,6 @@ export default class RestoreKeyBackupDialog extends React.PureComponent {
     }
 
     render() {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-        const Spinner = sdk.getComponent("elements.Spinner");
-
         const backupHasPassphrase = (
             this.state.backupInfo &&
             this.state.backupInfo.auth_data &&
@@ -321,7 +321,6 @@ export default class RestoreKeyBackupDialog extends React.PureComponent {
             title = _t("Error");
             content = _t("No backup found!");
         } else if (this.state.recoverInfo) {
-            const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
             title = _t("Keys restored");
             let failedToDecrypt;
             if (this.state.recoverInfo.total > this.state.recoverInfo.imported) {
@@ -340,8 +339,6 @@ export default class RestoreKeyBackupDialog extends React.PureComponent {
                 />
             </div>;
         } else if (backupHasPassphrase && !this.state.forceRecoveryKey) {
-            const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
-            const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
             title = _t("Enter Security Phrase");
             content = <div>
                 <p>{_t(
@@ -394,8 +391,6 @@ export default class RestoreKeyBackupDialog extends React.PureComponent {
             </div>;
         } else {
             title = _t("Enter Security Key");
-            const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
-            const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
 
             let keyStatus;
             if (this.state.recoveryKey.length === 0) {

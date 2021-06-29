@@ -23,9 +23,9 @@ import Field from "../../elements/Field";
 import AccessibleButton from "../../elements/AccessibleButton";
 import * as Email from "../../../../email";
 import AddThreepid from "../../../../AddThreepid";
-import * as sdk from '../../../../index';
 import Modal from '../../../../Modal';
 import { replaceableComponent } from "../../../../utils/replaceableComponent";
+import ErrorDialog from "../../dialogs/ErrorDialog";
 
 /*
 TODO: Improve the UX for everything in here.
@@ -74,7 +74,6 @@ export class ExistingEmailAddress extends React.Component {
         MatrixClientPeg.get().deleteThreePid(this.props.email.medium, this.props.email.address).then(() => {
             return this.props.onRemoved(this.props.email);
         }).catch((err) => {
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             console.error("Unable to remove contact information: " + err);
             Modal.createTrackedDialog('Remove 3pid failed', '', ErrorDialog, {
                 title: _t("Unable to remove contact information"),
@@ -154,7 +153,6 @@ export default class EmailAddresses extends React.Component {
 
         if (!this.state.newEmailAddress) return;
 
-        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         const email = this.state.newEmailAddress;
 
         // TODO: Inline field validation
@@ -205,7 +203,6 @@ export default class EmailAddresses extends React.Component {
             });
         }).catch((err) => {
             this.setState({ continueDisabled: false });
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             if (err.errcode === 'M_THREEPID_AUTH_FAILED') {
                 Modal.createTrackedDialog("Email hasn't been verified yet", "", ErrorDialog, {
                     title: _t("Your email address hasn't been verified yet"),

@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import dis from '../../../dispatcher/dispatcher';
 import FlairStore from '../../../stores/FlairStore';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -25,6 +24,8 @@ import { mediaFromMxc } from "../../../customisations/Media";
 import { _t } from "../../../languageHandler";
 import TagOrderActions from "../../../actions/TagOrderActions";
 import GroupFilterOrderStore from "../../../stores/GroupFilterOrderStore";
+import BaseAvatar from "../avatars/BaseAvatar";
+import AccessibleButton from "../elements/AccessibleButton";
 
 @replaceableComponent("views.groups.GroupTile")
 class GroupTile extends React.Component {
@@ -76,8 +77,6 @@ class GroupTile extends React.Component {
     };
 
     render() {
-        const BaseAvatar = sdk.getComponent('avatars.BaseAvatar');
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         const profile = this.state.profile || {};
         const name = profile.name || this.props.groupId;
         const avatarHeight = this.props.avatarHeight;

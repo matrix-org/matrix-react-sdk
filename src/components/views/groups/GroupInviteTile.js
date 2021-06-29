@@ -18,7 +18,6 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import dis from '../../../dispatcher/dispatcher';
 import { _t } from '../../../languageHandler';
 import classNames from 'classnames';
@@ -28,6 +27,10 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { RovingTabIndexWrapper } from "../../../accessibility/RovingTabIndex";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
+import BaseAvatar from "../avatars/BaseAvatar";
+import AccessibleButton from "../elements/AccessibleButton";
+import Tooltip from "../elements/Tooltip";
+import GroupInviteTileContextMenu from "../context_menus/GroupInviteTileContextMenu";
 
 // XXX this class copies a lot from RoomTile.js
 @replaceableComponent("views.groups.GroupInviteTile")
@@ -114,9 +117,6 @@ export default class GroupInviteTile extends React.Component {
     };
 
     render() {
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-        const BaseAvatar = sdk.getComponent('avatars.BaseAvatar');
-
         const groupName = this.props.group.name || this.props.group.groupId;
         const httpAvatarUrl = this.props.group.avatarUrl
             ? mediaFromMxc(this.props.group.avatarUrl).getSquareThumbnailHttp(24)
@@ -143,7 +143,6 @@ export default class GroupInviteTile extends React.Component {
 
         let tooltip;
         if (this.props.collapsed && this.state.hover) {
-            const Tooltip = sdk.getComponent("elements.Tooltip");
             tooltip = <Tooltip className="mx_RoomTile_tooltip" label={groupName} dir="auto" />;
         }
 
@@ -155,7 +154,6 @@ export default class GroupInviteTile extends React.Component {
 
         let contextMenu;
         if (isMenuDisplayed) {
-            const GroupInviteTileContextMenu = sdk.getComponent('context_menus.GroupInviteTileContextMenu');
             contextMenu = (
                 <ContextMenu {...toRightOf(this.state.contextMenuPosition)} onFinished={this.closeMenu}>
                     <GroupInviteTileContextMenu group={this.props.group} onFinished={this.closeMenu} />

@@ -21,7 +21,6 @@ import PropTypes from 'prop-types';
 
 import MFileBody from './MFileBody';
 import Modal from '../../../Modal';
-import * as sdk from '../../../index';
 import { decryptFile } from '../../../utils/DecryptFile';
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
@@ -29,6 +28,7 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import InlineSpinner from '../elements/InlineSpinner';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromContent } from "../../../customisations/Media";
+import ImageView from "../elements/ImageView";
 
 @replaceableComponent("views.messages.MImageBody")
 export default class MImageBody extends React.Component {
@@ -104,7 +104,6 @@ export default class MImageBody extends React.Component {
 
             const content = this.props.mxEvent.getContent();
             const httpUrl = this._getContentUrl();
-            const ImageView = sdk.getComponent("elements.ImageView");
             const params = {
                 src: httpUrl,
                 name: content.body && content.body.length > 0 ? content.body : _t('Attachment'),

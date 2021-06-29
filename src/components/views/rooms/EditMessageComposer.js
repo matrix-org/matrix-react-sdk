@@ -14,8 +14,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 import React from 'react';
-import * as sdk from '../../../index';
 import { _t, _td } from '../../../languageHandler';
 import PropTypes from 'prop-types';
 import dis from '../../../dispatcher/dispatcher';
@@ -37,6 +37,9 @@ import { getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindin
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import SendHistoryManager from '../../../SendHistoryManager';
 import Modal from '../../../Modal';
+import ErrorDialog from "../dialogs/ErrorDialog";
+import QuestionDialog from "../dialogs/QuestionDialog";
+import AccessibleButton from "../elements/AccessibleButton";
 
 function _isReply(mxEvent) {
     const relatesTo = mxEvent.getContent()["m.relates_to"];
@@ -285,7 +288,6 @@ export default class EditMessageComposer extends React.Component {
         }
         if (error) {
             console.error("Command failure: %s", error);
-            const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             // assume the error is a server error when the command is async
             const isServerError = !!result.promise;
             const title = isServerError ? _td("Server error") : _td("Command error");
@@ -331,7 +333,6 @@ export default class EditMessageComposer extends React.Component {
                     }
                 } else {
                     // ask the user if their unknown command should be sent as a message
-                    const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
                     const { finished } = Modal.createTrackedDialog("Unknown command", "", QuestionDialog, {
                         title: _t("Unknown Command"),
                         description: <div>
@@ -458,7 +459,6 @@ export default class EditMessageComposer extends React.Component {
     };
 
     render() {
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
         return (<div className={classNames("mx_EditMessageComposer", this.props.className)} onKeyDown={this._onKeyDown}>
             <BasicMessageComposer
                 ref={this._setEditorRef}

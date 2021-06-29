@@ -24,7 +24,6 @@ import * as FormattingUtils from "../../../../../utils/FormattingUtils";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import Analytics from "../../../../../Analytics";
 import Modal from "../../../../../Modal";
-import * as sdk from "../../../../..";
 import { sleep } from "../../../../../utils/promise";
 import dis from "../../../../../dispatcher/dispatcher";
 import { privateShouldBeEncrypted } from "../../../../../createRoom";
@@ -32,9 +31,14 @@ import { SettingLevel } from "../../../../../settings/SettingLevel";
 import SecureBackupPanel from "../../SecureBackupPanel";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { UIFeature } from "../../../../../settings/UIFeature";
-import { isE2eAdvancedPanelPossible } from "../../E2eAdvancedPanel";
+import E2eAdvancedPanel, { isE2eAdvancedPanelPossible } from "../../E2eAdvancedPanel";
 import CountlyAnalytics from "../../../../../CountlyAnalytics";
 import { replaceableComponent } from "../../../../../utils/replaceableComponent";
+import CrossSigningPanel from "../../CrossSigningPanel";
+import EventIndexPanel from "../../EventIndexPanel";
+import SettingsFlag from "../../../elements/SettingsFlag";
+import DevicesPanel from "../../DevicesPanel";
+import InlineSpinner from "../../../elements/InlineSpinner";
 
 export class IgnoredUser extends React.Component {
     static propTypes = {
@@ -198,8 +202,6 @@ export default class SecurityUserSettingsTab extends React.Component {
     };
 
     _renderCurrentDeviceInfo() {
-        const SettingsFlag = sdk.getComponent('views.elements.SettingsFlag');
-
         const client = MatrixClientPeg.get();
         const deviceId = client.deviceId;
         let identityKey = client.getDeviceEd25519Key();
@@ -283,7 +285,6 @@ export default class SecurityUserSettingsTab extends React.Component {
         }
 
         const invitedRooms = this._getInvitedRooms();
-        const InlineSpinner = sdk.getComponent('elements.InlineSpinner');
         const onClickAccept = this._onAcceptAllInvitesClicked.bind(this, invitedRooms);
         const onClickReject = this._onRejectAllInvitesClicked.bind(this, invitedRooms);
         return (
@@ -302,9 +303,6 @@ export default class SecurityUserSettingsTab extends React.Component {
 
     render() {
         const brand = SdkConfig.get().brand;
-        const DevicesPanel = sdk.getComponent('views.settings.DevicesPanel');
-        const SettingsFlag = sdk.getComponent('views.elements.SettingsFlag');
-        const EventIndexPanel = sdk.getComponent('views.settings.EventIndexPanel');
 
         const secureBackup = (
             <div className='mx_SettingsTab_section'>
@@ -326,7 +324,6 @@ export default class SecurityUserSettingsTab extends React.Component {
         // it's useful to have for testing the feature. If there's no interest
         // in having advanced details here once all flows are implemented, we
         // can remove this.
-        const CrossSigningPanel = sdk.getComponent('views.settings.CrossSigningPanel');
         const crossSigning = (
             <div className='mx_SettingsTab_section'>
                 <span className="mx_SettingsTab_subheading">{_t("Cross-signing")}</span>
@@ -367,7 +364,6 @@ export default class SecurityUserSettingsTab extends React.Component {
             </React.Fragment>;
         }
 
-        const E2eAdvancedPanel = sdk.getComponent('views.settings.E2eAdvancedPanel');
         let advancedSection;
         if (SettingsStore.getValue(UIFeature.AdvancedSettings)) {
             const ignoreUsersPanel = this._renderIgnoredUsers();

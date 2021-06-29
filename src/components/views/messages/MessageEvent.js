@@ -16,12 +16,18 @@ limitations under the License.
 
 import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
-import * as sdk from '../../../index';
 import SettingsStore from "../../../settings/SettingsStore";
 import { Mjolnir } from "../../../mjolnir/Mjolnir";
 import RedactedBody from "./RedactedBody";
 import UnknownBody from "./UnknownBody";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import TextualBody from "./TextualBody";
+import MImageBody from "./MImageBody";
+import MFileBody from "./MFileBody";
+import MVoiceOrAudioBody from "./MVoiceOrAudioBody";
+import MVideoBody from "./MVideoBody";
+import MStickerBody from "./MStickerBody";
+import MjolnirBody from "./MjolnirBody";
 
 @replaceableComponent("views.messages.MessageEvent")
 export default class MessageEvent extends React.Component {
@@ -67,16 +73,16 @@ export default class MessageEvent extends React.Component {
 
     render() {
         const bodyTypes = {
-            'm.text': sdk.getComponent('messages.TextualBody'),
-            'm.notice': sdk.getComponent('messages.TextualBody'),
-            'm.emote': sdk.getComponent('messages.TextualBody'),
-            'm.image': sdk.getComponent('messages.MImageBody'),
-            'm.file': sdk.getComponent('messages.MFileBody'),
-            'm.audio': sdk.getComponent('messages.MVoiceOrAudioBody'),
-            'm.video': sdk.getComponent('messages.MVideoBody'),
+            'm.text': TextualBody,
+            'm.notice': TextualBody,
+            'm.emote': TextualBody,
+            'm.image': MImageBody,
+            'm.file': MFileBody,
+            'm.audio': MVoiceOrAudioBody,
+            'm.video': MVideoBody,
         };
         const evTypes = {
-            'm.sticker': sdk.getComponent('messages.MStickerBody'),
+            'm.sticker': MStickerBody,
         };
 
         const content = this.props.mxEvent.getContent();
@@ -108,7 +114,7 @@ export default class MessageEvent extends React.Component {
                 const serverBanned = Mjolnir.sharedInstance().isServerBanned(userDomain);
 
                 if (userBanned || serverBanned) {
-                    BodyType = sdk.getComponent('messages.MjolnirBody');
+                    BodyType = MjolnirBody;
                 }
             }
         }

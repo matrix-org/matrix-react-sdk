@@ -19,12 +19,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import * as sdk from '../../../index';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
 import { SSOAuthEntry } from "../auth/InteractiveAuthEntryComponents";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import Spinner from "../elements/Spinner";
+import AccessibleButton from "../elements/AccessibleButton";
+import DevicesPanelEntry from "./DevicesPanelEntry";
+import InteractiveAuthDialog from "../dialogs/InteractiveAuthDialog";
 
 @replaceableComponent("views.settings.DevicesPanel")
 export default class DevicesPanel extends React.Component {
@@ -123,8 +126,6 @@ export default class DevicesPanel extends React.Component {
             }
 
             // pop up an interactive auth dialog
-            const InteractiveAuthDialog = sdk.getComponent("dialogs.InteractiveAuthDialog");
-
             const numDevices = this.state.selectedDevices.length;
             const dialogAesthetics = {
                 [SSOAuthEntry.PHASE_PREAUTH]: {
@@ -179,7 +180,6 @@ export default class DevicesPanel extends React.Component {
     }
 
     _renderDevice(device) {
-        const DevicesPanelEntry = sdk.getComponent('settings.DevicesPanelEntry');
         return <DevicesPanelEntry
             key={device.device_id}
             device={device}
@@ -189,9 +189,6 @@ export default class DevicesPanel extends React.Component {
     }
 
     render() {
-        const Spinner = sdk.getComponent("elements.Spinner");
-        const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
-
         if (this.state.deviceLoadError !== undefined) {
             const classes = classNames(this.props.className, "error");
             return (

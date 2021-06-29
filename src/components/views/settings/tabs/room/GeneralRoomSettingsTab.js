@@ -18,13 +18,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { _t } from "../../../../../languageHandler";
 import RoomProfileSettings from "../../../room_settings/RoomProfileSettings";
-import * as sdk from "../../../../..";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import dis from "../../../../../dispatcher/dispatcher";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { UIFeature } from "../../../../../settings/UIFeature";
 import { replaceableComponent } from "../../../../../utils/replaceableComponent";
+import UrlPreviewSettings from "../../../room_settings/UrlPreviewSettings";
+import RelatedGroupSettings from "../../../room_settings/RelatedGroupSettings";
+import AliasSettings from "../../../room_settings/AliasSettings";
 
 @replaceableComponent("views.settings.tabs.room.GeneralRoomSettingsTab")
 export default class GeneralRoomSettingsTab extends React.Component {
@@ -50,10 +52,6 @@ export default class GeneralRoomSettingsTab extends React.Component {
     };
 
     render() {
-        const AliasSettings = sdk.getComponent("room_settings.AliasSettings");
-        const RelatedGroupSettings = sdk.getComponent("room_settings.RelatedGroupSettings");
-        const UrlPreviewSettings = sdk.getComponent("room_settings.UrlPreviewSettings");
-
         const client = this.context;
         const room = client.getRoom(this.props.roomId);
 

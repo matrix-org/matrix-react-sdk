@@ -17,10 +17,10 @@ limitations under the License.
 import React from 'react';
 import classNames from 'classnames';
 import { _t } from '../../../languageHandler';
-import * as sdk from '../../../index';
 import Modal from '../../../Modal';
 import SdkConfig from "../../../SdkConfig";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import BugReportDialog from "../dialogs/BugReportDialog";
 
 @replaceableComponent("views.messages.TileErrorBoundary")
 export default class TileErrorBoundary extends React.Component {
@@ -39,10 +39,6 @@ export default class TileErrorBoundary extends React.Component {
     }
 
     _onBugReport = () => {
-        const BugReportDialog = sdk.getComponent("dialogs.BugReportDialog");
-        if (!BugReportDialog) {
-            return;
-        }
         Modal.createTrackedDialog('Bug Report Dialog', '', BugReportDialog, {
             label: 'react-soft-crash-tile',
         });

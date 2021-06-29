@@ -17,12 +17,12 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { formatDate } from '../../../DateUtils';
 import StyledCheckbox from '../elements/StyledCheckbox';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import EditableTextContainer from "../elements/EditableTextContainer";
 
 @replaceableComponent("views.settings.DevicesPanelEntry")
 export default class DevicesPanelEntry extends React.Component {
@@ -53,8 +53,6 @@ export default class DevicesPanelEntry extends React.Component {
     }
 
     render() {
-        const EditableTextContainer = sdk.getComponent('elements.EditableTextContainer');
-
         const device = this.props.device;
 
         let lastSeen = "";
