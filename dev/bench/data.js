@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1624919420507,
+  "lastUpdate": 1624935288841,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -3176,6 +3176,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4825.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b6d9ecde8b7d04933098bd1d0e42a6db064f272d",
+          "message": "Merge pull request #6240 from matrix-org/gsouquet/voice-messages-waveform-perf\n\nImprove audio recording performance",
+          "timestamp": "2021-06-28T20:49:21-06:00",
+          "tree_id": "328d21bc7e50daf5777b83631a6e97ce6a988922",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b6d9ecde8b7d04933098bd1d0e42a6db064f272d"
+        },
+        "date": 1624935287733,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4828.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1118.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1763.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4439.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
