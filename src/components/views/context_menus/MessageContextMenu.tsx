@@ -16,9 +16,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import PropTypes from 'prop-types';
-import { EventStatus } from 'matrix-js-sdk/src/models/event';
-
+import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
 import * as sdk from '../../../index';
@@ -34,48 +32,61 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ReadPinsEventId } from "../right_panel/PinnedMessagesCard";
 import ForwardDialog from "../dialogs/ForwardDialog";
 import { Action } from "../../../dispatcher/actions";
+import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
+import { ButtonEvent } from '../elements/AccessibleButton';
 
 export function canCancel(eventStatus) {
     return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
 }
 
-@replaceableComponent("views.context_menus.MessageContextMenu")
-export default class MessageContextMenu extends React.Component {
-    static propTypes = {
-        /* the MatrixEvent associated with the context menu */
-        mxEvent: PropTypes.object.isRequired,
+interface IProps {
+    /* the MatrixEvent associated with the context menu */
+        mxEvent: MatrixEvent;
 
         /* an optional EventTileOps implementation that can be used to unhide preview widgets */
-        eventTileOps: PropTypes.object,
+        eventTileOps;
 
         /* an optional function to be called when the user clicks collapse thread, if not provided hide button */
-        collapseReplyThread: PropTypes.func,
+        collapseReplyThread?();
 
         /* callback called when the menu is dismissed */
-        onFinished: PropTypes.func,
+        onFinished();
 
         /* if the menu is inside a dialog, we sometimes need to close that dialog after click (forwarding) */
-        onCloseDialog: PropTypes.func,
-    };
+        onCloseDialog?();
 
-    state = {
-        canRedact: false,
-        canPin: false,
-    };
+        permalinkCreator: RoomPermalinkCreator;
+}
+
+interface IState {
+    canRedact: boolean;
+    canPin: boolean;
+}
+
+@replaceableComponent("views.context_menus.MessageContextMenu")
+export default class MessageContextMenu extends React.Component<IProps, IState> {
+    constructor(props: IProps) {
+        super(props);
+
+        this.state = {
+            canRedact: false,
+            canPin: false,
+        };
+    }
 
     componentDidMount() {
-        MatrixClientPeg.get().on('RoomMember.powerLevel', this._checkPermissions);
-        this._checkPermissions();
+        MatrixClientPeg.get().on('RoomMember.powerLevel', this.checkPermissions);
+        this.checkPermissions();
     }
 
     componentWillUnmount() {
         const cli = MatrixClientPeg.get();
         if (cli) {
-            cli.removeListener('RoomMember.powerLevel', this._checkPermissions);
+            cli.removeListener('RoomMember.powerLevel', this.checkPermissions);
         }
     }
 
-    _checkPermissions = () => {
+    private checkPermissions = (): void => {
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(this.props.mxEvent.getRoomId());
 
@@ -90,10 +101,10 @@ export default class MessageContextMenu extends React.Component {
         // HACK: Intentionally say we can't pin if the user doesn't want to use the functionality
         if (!SettingsStore.getValue("feature_pinning")) canPin = false;
 
-        this.setState({canRedact, canPin});
+        this.setState({ canRedact, canPin });
     };
 
-    _isPinned() {
+    private isPinned(): boolean {
         const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
         const pinnedEvent = room.currentState.getStateEvents(EventType.RoomPinnedEvents, '');
         if (!pinnedEvent) return false;
@@ -101,14 +112,14 @@ export default class MessageContextMenu extends React.Component {
         return content.pinned && Array.isArray(content.pinned) && content.pinned.includes(this.props.mxEvent.getId());
     }
 
-    onResendReactionsClick = () => {
-        for (const reaction of this._getUnsentReactions()) {
+    private onResendReactionsClick = (): void => {
+        for (const reaction of this.getUnsentReactions()) {
             Resend.resend(reaction);
         }
         this.closeMenu();
     };
 
-    onReportEventClick = () => {
+    private onReportEventClick = (): void => {
         const ReportEventDialog = sdk.getComponent("dialogs.ReportEventDialog");
         Modal.createTrackedDialog('Report Event', '', ReportEventDialog, {
             mxEvent: this.props.mxEvent,
@@ -116,7 +127,7 @@ export default class MessageContextMenu extends React.Component {
         this.closeMenu();
     };
 
-    onViewSourceClick = () => {
+    private onViewSourceClick = (): void => {
         const ViewSource = sdk.getComponent('structures.ViewSource');
         Modal.createTrackedDialog('View Event Source', '', ViewSource, {
             mxEvent: this.props.mxEvent,
@@ -124,7 +135,7 @@ export default class MessageContextMenu extends React.Component {
         this.closeMenu();
     };
 
-    onRedactClick = () => {
+    private onRedactClick = (): void => {
         const ConfirmRedactDialog = sdk.getComponent("dialogs.ConfirmRedactDialog");
         Modal.createTrackedDialog('Confirm Redact Dialog', '', ConfirmRedactDialog, {
             onFinished: async (proceed, reason) => {
@@ -158,7 +169,7 @@ export default class MessageContextMenu extends React.Component {
         this.closeMenu();
     };
 
-    onForwardClick = () => {
+    private onForwardClick = (): void => {
         Modal.createTrackedDialog('Forward Message', '', ForwardDialog, {
             matrixClient: MatrixClientPeg.get(),
             event: this.props.mxEvent,
@@ -167,12 +178,12 @@ export default class MessageContextMenu extends React.Component {
         this.closeMenu();
     };
 
-    onPinClick = () => {
+    private onPinClick = (): void => {
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(this.props.mxEvent.getRoomId());
         const eventId = this.props.mxEvent.getId();
 
-        const pinnedIds = room?.currentState?.getStateEvents(EventType.RoomPinnedEvents, "")?.pinned || [];
+        const pinnedIds = room?.currentState?.getStateEvents(EventType.RoomPinnedEvents, "")?.getContent().pinned || [];
         if (pinnedIds.includes(eventId)) {
             pinnedIds.splice(pinnedIds.indexOf(eventId), 1);
         } else {
@@ -188,18 +199,18 @@ export default class MessageContextMenu extends React.Component {
         this.closeMenu();
     };
 
-    closeMenu = () => {
+    private closeMenu = (): void => {
         if (this.props.onFinished) this.props.onFinished();
     };
 
-    onUnhidePreviewClick = () => {
+    private onUnhidePreviewClick = (): void => {
         if (this.props.eventTileOps) {
             this.props.eventTileOps.unhideWidget();
         }
         this.closeMenu();
     };
 
-    onQuoteClick = () => {
+    private onQuoteClick = (): void => {
         dis.dispatch({
             action: Action.ComposerInsert,
             event: this.props.mxEvent,
@@ -207,7 +218,7 @@ export default class MessageContextMenu extends React.Component {
         this.closeMenu();
     };
 
-    onPermalinkClick = (e: Event) => {
+    private onPermalinkClick = (e: ButtonEvent): void => {
         e.preventDefault();
         const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
         Modal.createTrackedDialog('share room message dialog', '', ShareDialog, {
@@ -217,12 +228,12 @@ export default class MessageContextMenu extends React.Component {
         this.closeMenu();
     };
 
-    onCollapseReplyThreadClick = () => {
+    private onCollapseReplyThreadClick = (): void => {
         this.props.collapseReplyThread();
         this.closeMenu();
     };
 
-    _getReactions(filter) {
+    private getReactions(filter: (event: MatrixEvent) => boolean): Array<MatrixEvent> {
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(this.props.mxEvent.getRoomId());
         const eventId = this.props.mxEvent.getId();
@@ -235,12 +246,8 @@ export default class MessageContextMenu extends React.Component {
         });
     }
 
-    _getPendingReactions() {
-        return this._getReactions(e => canCancel(e.status));
-    }
-
-    _getUnsentReactions() {
-        return this._getReactions(e => e.status === EventStatus.NOT_SENT);
+    private getUnsentReactions(): Array<MatrixEvent> {
+        return this.getReactions(e => e.status === EventStatus.NOT_SENT);
     }
 
     render() {
@@ -248,7 +255,7 @@ export default class MessageContextMenu extends React.Component {
         const me = cli.getUserId();
         const mxEvent = this.props.mxEvent;
         const eventStatus = mxEvent.status;
-        const unsentReactionsCount = this._getUnsentReactions().length;
+        const unsentReactionsCount = this.getUnsentReactions().length;
         let resendReactionsButton;
         let redactButton;
         let forwardButton;
@@ -296,7 +303,7 @@ export default class MessageContextMenu extends React.Component {
                 pinButton = (
                     <IconizedContextMenuOption
                         iconClassName="mx_MessageContextMenu_iconPin"
-                        label={ this._isPinned() ? _t('Unpin') : _t('Pin') }
+                        label={ this.isPinned() ? _t('Unpin') : _t('Pin') }
                         onClick={this.onPinClick}
                     />
                 );
