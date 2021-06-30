@@ -51,6 +51,7 @@ interface IProps {
     // If the menu is inside a dialog, we sometimes need to close that dialog after click (forwarding)
     onCloseDialog?(): void;
     permalinkCreator: RoomPermalinkCreator;
+    rightClick?: boolean;
 }
 
 interface IState {
