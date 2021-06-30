@@ -89,4 +89,8 @@ limitations under the License.
     .mx_MessageContextMenu_iconEdit::before {
         mask-image: url('$(res)/img/element-icons/room/message-bar/edit.svg');
     }
+
+    .mx_MessageContextMenu_iconReply::before {
+        mask-image: url('$(res)/img/element-icons/room/message-bar/reply.svg');
+    }
 }

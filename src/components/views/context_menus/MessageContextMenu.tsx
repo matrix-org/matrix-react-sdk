@@ -35,6 +35,7 @@ import { Action } from "../../../dispatcher/actions";
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import { ButtonEvent } from '../elements/AccessibleButton';
 import { copyPlaintext } from '../../../utils/strings';
+import RoomContext from '../../../contexts/RoomContext';
 
 export function canCancel(eventStatus) {
     return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
@@ -62,6 +63,8 @@ interface IState {
 
 @replaceableComponent("views.context_menus.MessageContextMenu")
 export default class MessageContextMenu extends React.Component<IProps, IState> {
+    static contextType = RoomContext;
+
     constructor(props: IProps) {
         super(props);
 
@@ -242,6 +245,15 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         });
         this.closeMenu();
     };
+
+    private onReplyClick = (): void => {
+        dis.dispatch({
+            action: 'reply_to_event',
+            event: this.props.mxEvent,
+        });
+        this.closeMenu();
+    };
+
     private getReactions(filter: (event: MatrixEvent) => boolean): Array<MatrixEvent> {
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(this.props.mxEvent.getRoomId());
@@ -264,6 +276,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     }
 
     render() {
+        // TODO: Cleanup me up
         const cli = MatrixClientPeg.get();
         const me = cli.getUserId();
         const mxEvent = this.props.mxEvent;
@@ -429,6 +442,18 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 />
             );
         }
+
+        let replyButton;
+        if (this.props.rightClick && isContentActionable(this.props.mxEvent) && this.context.canReply) {
+            replyButton = (
+                <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconReply"
+                    label={_t("Reply")}
+                    onClick={this.onReplyClick}
+                />
+            );
+        }
+
         const nativeItemsList = (
             <IconizedContextMenuOptionList>
                 { copyButton }
@@ -438,6 +463,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         const quickItemsList = (
             <IconizedContextMenuOptionList>
                 { editButton }
+                { replyButton }
             </IconizedContextMenuOptionList>
         );
 
