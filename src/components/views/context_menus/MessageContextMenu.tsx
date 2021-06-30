@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { createRef } from 'react';
 import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
@@ -36,6 +36,9 @@ import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import { ButtonEvent } from '../elements/AccessibleButton';
 import { copyPlaintext } from '../../../utils/strings';
 import RoomContext from '../../../contexts/RoomContext';
+import { toRightOf, ContextMenu } from '../../structures/ContextMenu';
+import ReactionPicker from '../emojipicker/ReactionPicker';
+import { Relations } from 'matrix-js-sdk/src/models/relations';
 
 export function canCancel(eventStatus) {
     return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
@@ -54,16 +57,20 @@ interface IProps {
     onCloseDialog?(): void;
     permalinkCreator: RoomPermalinkCreator;
     rightClick?: boolean;
+    // The Relations model from the JS SDK for reactions to `mxEvent`
+    reactions?: Relations;
 }
 
 interface IState {
     canRedact: boolean;
     canPin: boolean;
+    reactionPickerDisplayed: boolean;
 }
 
 @replaceableComponent("views.context_menus.MessageContextMenu")
 export default class MessageContextMenu extends React.Component<IProps, IState> {
     static contextType = RoomContext;
+    private reactButtonRef = createRef<any>(); // XXX Ref to a functional component
 
     constructor(props: IProps) {
         super(props);
@@ -71,6 +78,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         this.state = {
             canRedact: false,
             canPin: false,
+            reactionPickerDisplayed: false,
         };
     }
 
@@ -251,6 +259,15 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             action: 'reply_to_event',
             event: this.props.mxEvent,
         });
+        this.closeMenu();
+    };
+
+    private onReactClick = (): void => {
+        this.setState({ reactionPickerDisplayed: true });
+    };
+
+    private onCloseReactionPicker = (): void => {
+        this.setState({ reactionPickerDisplayed: false });
         this.closeMenu();
     };
 
@@ -454,6 +471,18 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
+        let reactButton;
+        if (this.props.rightClick && isContentActionable(this.props.mxEvent) && this.context.canReact) {
+            reactButton = (
+                <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconReact"
+                    label={_t("React")}
+                    onClick={this.onReactClick}
+                    inputRef={this.reactButtonRef}
+                />
+            );
+        }
+
         const nativeItemsList = (
             <IconizedContextMenuOptionList>
                 { copyButton }
@@ -464,6 +493,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             <IconizedContextMenuOptionList>
                 { editButton }
                 { replyButton }
+                { reactButton }
             </IconizedContextMenuOptionList>
         );
 
@@ -490,17 +520,38 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
+        let reactionPicker;
+        if (this.state.reactionPickerDisplayed) {
+            const buttonRect = (this.reactButtonRef.current as HTMLElement)?.getBoundingClientRect();
+            reactionPicker = (
+                <ContextMenu
+                    {...toRightOf(buttonRect)}
+                    onFinished={this.closeMenu}
+                    managed={false}
+                >
+                    <ReactionPicker
+                        mxEvent={this.props.mxEvent}
+                        onFinished={this.onCloseReactionPicker}
+                        reactions={this.props.reactions}
+                    />
+                </ContextMenu>
+            );
+        }
+
         return (
-            <IconizedContextMenu
-                {...this.props}
-                className="mx_MessageContextMenu"
-                compact={true}
-            >
-                { nativeItemsList }
-                { quickItemsList }
-                { commonItemsList }
-                { redactItemList }
-            </IconizedContextMenu>
+            <React.Fragment>
+                <IconizedContextMenu
+                    {...this.props}
+                    className="mx_MessageContextMenu"
+                    compact={true}
+                >
+                    { nativeItemsList }
+                    { quickItemsList }
+                    { commonItemsList }
+                    { redactItemList }
+                </IconizedContextMenu>
+                { reactionPicker }
+            </React.Fragment>
         );
     }
 }

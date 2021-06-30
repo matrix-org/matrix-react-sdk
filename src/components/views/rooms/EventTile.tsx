@@ -864,6 +864,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                     collapseReplyThread={collapseReplyThread}
                     onFinished={this.onCloseMenu}
                     rightClick={true}
+                    reactions={this.state.reactions}
                 />
             );
         }
