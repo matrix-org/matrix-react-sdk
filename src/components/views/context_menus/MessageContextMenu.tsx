@@ -420,7 +420,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         }
 
         let editButton;
-        if (canEditContent(this.props.mxEvent)) {
+        if (this.props.rightClick && canEditContent(this.props.mxEvent)) {
             editButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconEdit"
