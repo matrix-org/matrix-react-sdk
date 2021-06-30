@@ -49,11 +49,13 @@ const AVATAR_SIZE = 30;
 
 interface IProps extends IDialogProps {
     matrixClient: MatrixClient;
+    // dialog title
+    dialogTitle?: string;
     // The event to forward
     event: MatrixEvent;
     // We need a permalink creator for the source room to pass through to EventTile
     // in case the event is a reply (even though the user can't get at the link)
-    permalinkCreator: RoomPermalinkCreator;
+    permalinkCreator?: RoomPermalinkCreator;
 }
 
 interface IEntryProps {
@@ -147,7 +149,13 @@ const Entry: React.FC<IEntryProps> = ({ room, event, matrixClient: cli, onFinish
     </div>;
 };
 
-const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCreator, onFinished }) => {
+const ForwardDialog: React.FC<IProps> = ({
+    dialogTitle = _t("Forward message"),
+    matrixClient: cli,
+    event,
+    permalinkCreator,
+    onFinished,
+}) => {
     const userId = cli.getUserId();
     const [profileInfo, setProfileInfo] = useState<any>({});
     useEffect(() => {
@@ -212,7 +220,7 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
     }
 
     return <BaseDialog
-        title={_t("Forward message")}
+        title={dialogTitle}
         className="mx_ForwardDialog"
         contentId="mx_ForwardList"
         onFinished={onFinished}

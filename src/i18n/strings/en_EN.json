@@ -2664,6 +2664,7 @@
     "Upgrade to %(hostSignupBrand)s": "Upgrade to %(hostSignupBrand)s",
     "Open dial pad": "Open dial pad",
     "Failed to reject invitation": "Failed to reject invitation",
+    "Send to": "Send to",
     "Cannot create rooms in this community": "Cannot create rooms in this community",
     "You do not have permission to create rooms in this community.": "You do not have permission to create rooms in this community.",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "You are the only person here. If you leave, no one will be able to join in the future, including you.",

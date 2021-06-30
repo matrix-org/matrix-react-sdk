@@ -20,6 +20,7 @@ import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { sleep, defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
+import qs, { ParsedUrlQueryInput } from 'querystring';
 
 // focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by _AccessibleButton.scss
 import 'focus-visible';
@@ -58,6 +59,7 @@ import { FontWatcher } from '../../settings/watchers/FontWatcher';
 import { storeRoomAliasInCache } from '../../RoomAliasCache';
 import ToastStore from "../../stores/ToastStore";
 import * as StorageManager from "../../utils/StorageManager";
+import ForwardDialog from '../views/dialogs/ForwardDialog';
 import type LoggedInViewType from "./LoggedInView";
 import { ViewUserPayload } from "../../dispatcher/payloads/ViewUserPayload";
 import { Action } from "../../dispatcher/actions";
@@ -828,6 +830,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 SettingsStore.setValue("showCookieBar", null, SettingLevel.DEVICE, false);
                 hideAnalyticsToast();
                 break;
+            case 'view_send_to_dialog':
+                this.viewSendToDialog(payload);
+                break;
         }
     };
 
@@ -968,6 +973,43 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         });
         this.setPage(PageTypes.GroupView);
         this.notifyNewScreen('group/' + groupId);
+    }
+
+    private async viewSendToDialog(payload) {
+        // open the home page in the background
+        this.setPage(PageTypes.HomePage);
+
+        let waitFor;
+        if (!this.firstSyncComplete) {
+            waitFor = this.firstSyncPromise.promise;
+        } else {
+            waitFor = Promise.resolve();
+        }
+        await waitFor;
+
+        const cli = MatrixClientPeg.get();
+
+        const mockEvent = new MatrixEvent({
+            type: "m.room.message",
+            sender: cli.getUserId(),
+            content: {
+                msgtype: "m.text",
+                body: this.props.startingFragmentQueryParams.url,
+            },
+            unsigned: {
+                age: 97,
+            },
+            event_id: "$9999999999999999999999999999999999999999999",
+            room_id: undefined,
+        });
+
+        Modal.createTrackedDialog(
+            'Send To Dialog', '', ForwardDialog, {
+                title: _t("Send to"),
+                matrixClient: cli,
+                event: mockEvent,
+            },
+        );
     }
 
     private viewSomethingBehindModal() {
@@ -1710,6 +1752,16 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             dis.dispatch({
                 action: 'view_my_groups',
             });
+        } else if (screen === 'share') {
+            if (this.props.startingFragmentQueryParams.url) {
+                dis.dispatch({
+                    action: 'view_send_to_dialog',
+                });
+            } else {
+                dis.dispatch({
+                    action: 'view_home_page',
+                });
+            }
         } else if (screen.indexOf('room/') === 0) {
             // Rooms can have the following formats:
             // #room_alias:domain or !opaque_id:domain
@@ -1988,7 +2040,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             // XXX: workaround for https://github.com/vector-im/element-web/issues/11643 causing a login-loop
             !["welcome", "login", "register", "start_sso", "start_cas"].includes(initialScreenAfterLogin.screen)
         ) {
-            fragmentAfterLogin = `/${initialScreenAfterLogin.screen}`;
+            const queryString = qs.encode(initialScreenAfterLogin.params as ParsedUrlQueryInput);
+            fragmentAfterLogin = `/${initialScreenAfterLogin.screen}${queryString ? "?" + queryString : ""}`;
         }
         return fragmentAfterLogin;
     }
