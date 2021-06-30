@@ -416,7 +416,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             <IconizedContextMenuOptionList>
                 { copyButton }
             </IconizedContextMenuOptionList>
-        )
+        );
 
         const commonItemsList = (
             <IconizedContextMenuOptionList>

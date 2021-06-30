@@ -890,7 +890,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
     private onCloseMenu = (): void => {
         this.setState({ contextMenuPosition: null });
-    }
+    };
 
     render() {
         const MessageTimestamp = sdk.getComponent('messages.MessageTimestamp');

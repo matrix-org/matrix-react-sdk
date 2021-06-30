@@ -139,7 +139,6 @@ export default abstract class BasePlatform {
         return false;
     }
 
-
     /**
      * Returns true if platform allows overriding native context menus
      */
