@@ -45,9 +45,9 @@ export function canCancel(eventStatus) {
 }
 
 interface IProps {
-    // The MatrixEvent associated with the context menu */
+    // The MatrixEvent associated with the context menu
     mxEvent: MatrixEvent;
-    // An optional EventTileOps implementation that can be used to unhide preview widgets */
+    // An optional EventTileOps implementation that can be used to unhide preview widgets
     eventTileOps?; // TODO: Add type when TextualBody is TSified
     // An optional function to be called when the user clicks collapse thread, if not provided hide button
     collapseReplyThread?(): void;
@@ -55,7 +55,9 @@ interface IProps {
     onFinished(): void;
     // If the menu is inside a dialog, we sometimes need to close that dialog after click (forwarding)
     onCloseDialog?(): void;
+    // The RoomPermalinkCreator
     permalinkCreator: RoomPermalinkCreator;
+    // True if the menu is being used as a right click menu
     rightClick?: boolean;
     // The Relations model from the JS SDK for reactions to `mxEvent`
     reactions?: Relations;
