@@ -1005,7 +1005,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         Modal.createTrackedDialog(
             'Send To Dialog', '', ForwardDialog, {
-                title: _t("Send to"),
+                dialogTitle: _t("Send to"),
                 matrixClient: cli,
                 event: mockEvent,
             },
