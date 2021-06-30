@@ -160,7 +160,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                         // display error message stating you couldn't delete this.
                         Modal.createTrackedDialog('You cannot delete this message', '', ErrorDialog, {
                             title: _t('Error'),
-                            description: _t('You cannot delete this message. (%(code)s)', {code}),
+                            description: _t('You cannot delete this message. (%(code)s)', { code }),
                         });
                     }
                 }
@@ -273,7 +273,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 resendReactionsButton = (
                     <IconizedContextMenuOption
                         iconClassName="mx_MessageContextMenu_iconResend"
-                        label={ _t('Resend %(unsentCount)s reaction(s)', {unsentCount: unsentReactionsCount}) }
+                        label={ _t('Resend %(unsentCount)s reaction(s)', { unsentCount: unsentReactionsCount }) }
                         onClick={this.onResendReactionsClick}
                     />
                 );
