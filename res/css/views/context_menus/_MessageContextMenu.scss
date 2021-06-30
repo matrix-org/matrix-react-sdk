@@ -85,4 +85,8 @@ limitations under the License.
     .mx_MessageContextMenu_iconCopy::before {
         mask-image: url($copy-button-url);
     }
+
+    .mx_MessageContextMenu_iconEdit::before {
+        mask-image: url('$(res)/img/element-icons/room/message-bar/edit.svg');
+    }
 }

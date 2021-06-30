@@ -25,7 +25,7 @@ import Modal from '../../../Modal';
 import Resend from '../../../Resend';
 import SettingsStore from '../../../settings/SettingsStore';
 import { isUrlPermitted } from '../../../HtmlUtils';
-import { isContentActionable } from '../../../utils/EventUtils';
+import { canEditContent, isContentActionable } from '../../../utils/EventUtils';
 import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from './IconizedContextMenu';
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -235,6 +235,13 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         this.closeMenu();
     };
 
+    private onEditClick = (): void => {
+        dis.dispatch({
+            action: 'edit_event',
+            event: this.props.mxEvent,
+        });
+        this.closeMenu();
+    };
     private getReactions(filter: (event: MatrixEvent) => boolean): Array<MatrixEvent> {
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(this.props.mxEvent.getRoomId());
@@ -412,9 +419,25 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
+        let editButton;
+        if (canEditContent(this.props.mxEvent)) {
+            editButton = (
+                <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconEdit"
+                    label={_t("Edit")}
+                    onClick={this.onEditClick}
+                />
+            );
+        }
         const nativeItemsList = (
             <IconizedContextMenuOptionList>
                 { copyButton }
+            </IconizedContextMenuOptionList>
+        );
+
+        const quickItemsList = (
+            <IconizedContextMenuOptionList>
+                { editButton }
             </IconizedContextMenuOptionList>
         );
 
@@ -448,6 +471,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 compact={true}
             >
                 { nativeItemsList }
+                { quickItemsList }
                 { commonItemsList }
                 { redactItemList }
             </IconizedContextMenu>
