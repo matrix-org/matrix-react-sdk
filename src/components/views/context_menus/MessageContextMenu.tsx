@@ -40,22 +40,17 @@ export function canCancel(eventStatus) {
 }
 
 interface IProps {
-    /* the MatrixEvent associated with the context menu */
-        mxEvent: MatrixEvent;
-
-        /* an optional EventTileOps implementation that can be used to unhide preview widgets */
-        eventTileOps;
-
-        /* an optional function to be called when the user clicks collapse thread, if not provided hide button */
-        collapseReplyThread?();
-
-        /* callback called when the menu is dismissed */
-        onFinished();
-
-        /* if the menu is inside a dialog, we sometimes need to close that dialog after click (forwarding) */
-        onCloseDialog?();
-
-        permalinkCreator: RoomPermalinkCreator;
+    // The MatrixEvent associated with the context menu */
+    mxEvent: MatrixEvent;
+    // An optional EventTileOps implementation that can be used to unhide preview widgets */
+    eventTileOps?; // TODO: Add type when TextualBody is TSified
+    // An optional function to be called when the user clicks collapse thread, if not provided hide button
+    collapseReplyThread?(): void;
+    // Callback called when the menu is dismissed
+    onFinished(): void;
+    // If the menu is inside a dialog, we sometimes need to close that dialog after click (forwarding)
+    onCloseDialog?(): void;
+    permalinkCreator: RoomPermalinkCreator;
 }
 
 interface IState {
