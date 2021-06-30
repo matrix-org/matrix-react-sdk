@@ -39,7 +39,8 @@ interface IProps extends React.AllHTMLAttributes<Element> {
     tabIndex?: number;
     disabled?: boolean;
     className?: string;
-    onClick(e?: ButtonEvent): void;
+    // Optional in case we need to use onMouseDown
+    onClick?(e?: ButtonEvent): void;
 }
 
 interface IAccessibleButtonProps extends React.AllHTMLAttributes<Element> {
