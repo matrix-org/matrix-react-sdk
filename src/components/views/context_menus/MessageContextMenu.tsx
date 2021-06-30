@@ -34,6 +34,7 @@ import ForwardDialog from "../dialogs/ForwardDialog";
 import { Action } from "../../../dispatcher/actions";
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import { ButtonEvent } from '../elements/AccessibleButton';
+import { copyPlaintext } from '../../../utils/strings';
 
 export function canCancel(eventStatus) {
     return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
@@ -229,6 +230,11 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         this.closeMenu();
     };
 
+    private onCopyClick = (): void => {
+        copyPlaintext(this.getSelectedText());
+        this.closeMenu();
+    };
+
     private getReactions(filter: (event: MatrixEvent) => boolean): Array<MatrixEvent> {
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(this.props.mxEvent.getRoomId());
@@ -244,6 +250,10 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 
     private getUnsentReactions(): Array<MatrixEvent> {
         return this.getReactions(e => e.status === EventStatus.NOT_SENT);
+    }
+
+    private getSelectedText(): string {
+        return window.getSelection().toString();
     }
 
     render() {
@@ -391,6 +401,23 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
+        let copyButton;
+        if (this.props.rightClick && this.getSelectedText()) {
+            copyButton = (
+                <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconCopy"
+                    label={_t("Copy")}
+                    onMouseDown={this.onCopyClick} // We use onMouseDown so that the selection isn't cleared when we click
+                />
+            );
+        }
+
+        const nativeItemsList = (
+            <IconizedContextMenuOptionList>
+                { copyButton }
+            </IconizedContextMenuOptionList>
+        )
+
         const commonItemsList = (
             <IconizedContextMenuOptionList>
                 { quoteButton }
@@ -420,6 +447,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 className="mx_MessageContextMenu"
                 compact={true}
             >
+                { nativeItemsList }
                 { commonItemsList }
                 { redactItemList }
             </IconizedContextMenu>
