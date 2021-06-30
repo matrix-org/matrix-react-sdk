@@ -299,6 +299,9 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         const mxEvent = this.props.mxEvent;
         const eventStatus = mxEvent.status;
         const unsentReactionsCount = this.getUnsentReactions().length;
+        const contentActionable = isContentActionable(this.props.mxEvent);
+        const rightClick = this.props.rightClick;
+        const context = this.context;
         let resendReactionsButton;
         let redactButton;
         let forwardButton;
@@ -308,6 +311,15 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         let quoteButton;
         let collapseReplyThread;
         let redactItemList;
+        let reportEventButton;
+        let permalink;
+        let copyButton;
+        let editButton;
+        let replyButton;
+        let reactButton;
+        let reactionPicker;
+        let quickItemsList;
+        let nativeItemsList;
 
         // status is SENT before remote-echo, null after
         const isSent = !eventStatus || eventStatus === EventStatus.SENT;
@@ -333,7 +345,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        if (isContentActionable(mxEvent)) {
+        if (contentActionable) {
             forwardButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconForward"
@@ -373,9 +385,8 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             }
         }
 
-        let permalink;
         if (this.props.permalinkCreator) {
-            permalink = this.props.permalinkCreator.forEvent(this.props.mxEvent.getId());
+            permalink = this.props.permalinkCreator.forEvent(mxEvent.getId());
         }
         // XXX: if we use room ID, we should also include a server where the event can be found (other than in the domain of the event ID)
         const permalinkButton = (
@@ -427,7 +438,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        let reportEventButton;
         if (mxEvent.getSender() !== me) {
             reportEventButton = (
                 <IconizedContextMenuOption
@@ -438,8 +448,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        let copyButton;
-        if (this.props.rightClick && this.getSelectedText()) {
+        if (rightClick && this.getSelectedText()) {
             copyButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconCopy"
@@ -449,8 +458,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        let editButton;
-        if (this.props.rightClick && canEditContent(this.props.mxEvent)) {
+        if (rightClick && canEditContent(mxEvent)) {
             editButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconEdit"
@@ -460,8 +468,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        let replyButton;
-        if (this.props.rightClick && isContentActionable(this.props.mxEvent) && this.context.canReply) {
+        if (rightClick && contentActionable && context.canReply) {
             replyButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconReply"
@@ -471,8 +478,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        let reactButton;
-        if (this.props.rightClick && isContentActionable(this.props.mxEvent) && this.context.canReact) {
+        if (rightClick && contentActionable && context.canReact) {
             reactButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconReact"
@@ -483,19 +489,23 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        const nativeItemsList = (
-            <IconizedContextMenuOptionList>
-                { copyButton }
-            </IconizedContextMenuOptionList>
-        );
+        if (copyButton) {
+            nativeItemsList = (
+                <IconizedContextMenuOptionList>
+                    { copyButton }
+                </IconizedContextMenuOptionList>
+            );
+        }
 
-        const quickItemsList = (
-            <IconizedContextMenuOptionList>
-                { editButton }
-                { replyButton }
-                { reactButton }
-            </IconizedContextMenuOptionList>
-        );
+        if (editButton || replyButton || reactButton) {
+            quickItemsList = (
+                <IconizedContextMenuOptionList>
+                    { editButton }
+                    { replyButton }
+                    { reactButton }
+                </IconizedContextMenuOptionList>
+            );
+        }
 
         const commonItemsList = (
             <IconizedContextMenuOptionList>
@@ -520,7 +530,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        let reactionPicker;
         if (this.state.reactionPickerDisplayed) {
             const buttonRect = (this.reactButtonRef.current as HTMLElement)?.getBoundingClientRect();
             reactionPicker = (
@@ -530,7 +539,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                     managed={false}
                 >
                     <ReactionPicker
-                        mxEvent={this.props.mxEvent}
+                        mxEvent={mxEvent}
                         onFinished={this.onCloseReactionPicker}
                         reactions={this.props.reactions}
                     />
