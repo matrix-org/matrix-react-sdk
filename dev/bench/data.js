@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625048897234,
+  "lastUpdate": 1625088199284,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -3848,6 +3848,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4630.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3d5117c6317a566fcaf1074838af9ae2d5444252",
+          "message": "Merge pull request #6264 from matrix-org/travis/new-audio\n\nAdd custom audio player",
+          "timestamp": "2021-06-30T15:17:48-06:00",
+          "tree_id": "2b5d7d0c84939786934a8130149c4d72550c360c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3d5117c6317a566fcaf1074838af9ae2d5444252"
+        },
+        "date": 1625088198514,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4529,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1143.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1756.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5181.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
