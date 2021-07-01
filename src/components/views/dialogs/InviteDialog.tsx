@@ -1290,7 +1290,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     private async onLinkClick(e) {
         e.preventDefault();
         selectText(e.target);
-    };
+    }
 
     private onCopyClick = async e => {
         e.preventDefault();
