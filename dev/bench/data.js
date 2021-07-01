@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625178389522,
+  "lastUpdate": 1625180357427,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -4364,6 +4364,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4511.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "780c413b5d63ecb16e758021dde5b1b23d8af6aa",
+          "message": "Merge pull request #6306 from matrix-org/dbkr/ts_semicolons\n\nComply with new member-delimiter-style rule",
+          "timestamp": "2021-07-01T23:53:57+01:00",
+          "tree_id": "027edc3c6c0543c2c441480fbb67eda8652f21eb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/780c413b5d63ecb16e758021dde5b1b23d8af6aa"
+        },
+        "date": 1625180356032,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4523.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1109.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1665.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4503.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
