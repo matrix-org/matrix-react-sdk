@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625150294458,
+  "lastUpdate": 1625162777876,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -4076,6 +4076,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4530.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e3201eb20fd2b27c6841e718cf7d3bba48dc2d59",
+          "message": "Merge pull request #6300 from matrix-org/dbkr/kill_ratelimitedfunc\n\nRemove rateLimitedFunc",
+          "timestamp": "2021-07-01T19:01:15+01:00",
+          "tree_id": "7f92d40f49741508f888be9b68ef13a5da0c81b3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e3201eb20fd2b27c6841e718cf7d3bba48dc2d59"
+        },
+        "date": 1625162777057,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4417.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1035.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1847.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4476.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
