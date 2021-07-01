@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625088199284,
+  "lastUpdate": 1625140915096,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -3896,6 +3896,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5181.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8520a11fc3300ee3a26d0621727d79e4ac01beed",
+          "message": "Merge pull request #6298 from matrix-org/gsouquet/fix-browserlist-warning\n\nUpgrade browserlist target versions",
+          "timestamp": "2021-07-01T12:56:35+01:00",
+          "tree_id": "6cbabd6960bc324ed8482bf285be6445a8ac0b5a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8520a11fc3300ee3a26d0621727d79e4ac01beed"
+        },
+        "date": 1625140913786,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 3789.6999999999825,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 957.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
