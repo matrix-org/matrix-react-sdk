@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625170403939,
+  "lastUpdate": 1625171885918,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -4220,6 +4220,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4601.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "53b89bbcd9e023d7f3e811d7d858d5f1a9f3c456",
+          "message": "Merge pull request #6302 from matrix-org/dbkr/tsify_roomheader\n\nConvert RoomHeader to TS",
+          "timestamp": "2021-07-01T21:33:11+01:00",
+          "tree_id": "af17c9a97db2bbf3f08fce38b6d70228e3cce9f9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/53b89bbcd9e023d7f3e811d7d858d5f1a9f3c456"
+        },
+        "date": 1625171885123,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4260,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 932.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1700.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4398.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
