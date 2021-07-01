@@ -343,7 +343,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     }
 
     render() {
-        // TODO: Cleanup me up
         const cli = MatrixClientPeg.get();
         const me = cli.getUserId();
         const mxEvent = this.props.mxEvent;
