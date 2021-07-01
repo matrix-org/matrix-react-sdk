@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625170343920,
+  "lastUpdate": 1625170403939,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -4172,6 +4172,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4633.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c80ba16ae9e5b2681761b64fc5ca89d755df7619",
+          "message": "Merge pull request #6296 from matrix-org/t3chguy/fix/17853\n\nPrevent RoomDirectory from exploding when filterString is wrongly nulled",
+          "timestamp": "2021-07-01T21:07:35+01:00",
+          "tree_id": "8daff2e61b738736ec52e2c23b24e8c8472c6e83",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c80ba16ae9e5b2681761b64fc5ca89d755df7619"
+        },
+        "date": 1625170402535,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4390.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1012.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1860.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4601.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
