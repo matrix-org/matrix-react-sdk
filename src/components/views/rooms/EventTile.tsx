@@ -312,7 +312,10 @@ interface IState {
     hover: boolean;
 
     // Position of the context menu
-    contextMenuPosition: Partial<DOMRect>;
+    contextMenu: {
+        position: Partial<DOMRect>,
+        showPermalink?: boolean,
+    };
 }
 
 @replaceableComponent("views.rooms.EventTile")
@@ -347,7 +350,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             // The Relations model from the JS SDK for reactions to `mxEvent`
             reactions: this.getReactions(),
             // Context menu position
-            contextMenuPosition: null,
+            contextMenu: null,
 
             hover: false,
         };
@@ -849,7 +852,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
     private renderContextMenu(): React.ReactFragment {
         let contextMenu = null;
-        if (this.state.contextMenuPosition) {
+        if (this.state.contextMenu) {
             const tile = this.getTile();
             const replyThread = this.getReplyThread();
             const eventTileOps = tile?.getEventTileOps ? tile.getEventTileOps() : undefined;
@@ -857,7 +860,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
             contextMenu = (
                 <MessageContextMenu
-                    {...aboveLeftOf(this.state.contextMenuPosition)}
+                    {...aboveLeftOf(this.state.contextMenu.position)}
                     mxEvent={this.props.mxEvent}
                     permalinkCreator={this.props.permalinkCreator}
                     eventTileOps={eventTileOps}
@@ -865,6 +868,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                     onFinished={this.onCloseMenu}
                     rightClick={true}
                     reactions={this.state.reactions}
+                    showPermalink={this.state.contextMenu.showPermalink}
                 />
             );
         }
@@ -877,21 +881,32 @@ export default class EventTile extends React.Component<IProps, IState> {
     }
 
     private onContextMenu = (ev: React.MouseEvent): void => {
-        if (!PlatformPeg.get().allowOverridingNativeContextMenus()) return;
-        if (this.props.editState) return;
-        ev.preventDefault();
-        ev.stopPropagation();
-        this.setState({
-            contextMenuPosition: {
-                right: ev.clientX,
-                top: ev.clientY,
-                bottom: ev.clientY,
-            },
-        });
+        this.showContextMenu(ev);
     };
 
+    private onTimestampContextMenu = (ev: React.MouseEvent): void => {
+        this.showContextMenu(ev, true);
+    };
+
+    private showContextMenu(ev: React.MouseEvent, showPermalink?: boolean): void {
+        ev.preventDefault();
+        ev.stopPropagation();
+        if (!PlatformPeg.get().allowOverridingNativeContextMenus()) return;
+        if (this.props.editState) return;
+        this.setState({
+            contextMenu: {
+                position: {
+                    right: ev.clientX,
+                    top: ev.clientY,
+                    bottom: ev.clientY,
+                },
+                showPermalink: showPermalink,
+            },
+        });
+    }
+
     private onCloseMenu = (): void => {
-        this.setState({ contextMenuPosition: null });
+        this.setState({ contextMenu: null });
     };
 
     render() {
@@ -1103,6 +1118,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             href={permalink}
             onClick={this.onPermalinkClicked}
             aria-label={formatTime(new Date(this.props.mxEvent.getTs()), this.props.isTwelveHour)}
+            onContextMenu={this.onTimestampContextMenu}
         >
             { timestamp }
         </a>;
@@ -1136,7 +1152,11 @@ export default class EventTile extends React.Component<IProps, IState> {
                     </div>,
                     <div className="mx_EventTile_senderDetails" key="mx_EventTile_senderDetails">
                         { avatar }
-                        <a href={permalink} onClick={this.onPermalinkClicked}>
+                        <a
+                            href={permalink}
+                            onClick={this.onPermalinkClicked}
+                            onContextMenu={this.onTimestampContextMenu}
+                        >
                             { sender }
                             { timestamp }
                         </a>
@@ -1177,7 +1197,10 @@ export default class EventTile extends React.Component<IProps, IState> {
                         href={permalink}
                         onClick={this.onPermalinkClicked}
                     >
-                        <div className="mx_EventTile_senderDetails">
+                        <div
+                            className="mx_EventTile_senderDetails"
+                            onContextMenu={this.onTimestampContextMenu}
+                        >
                             { sender }
                             { timestamp }
                         </div>

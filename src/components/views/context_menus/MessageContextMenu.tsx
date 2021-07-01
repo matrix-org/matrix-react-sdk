@@ -71,6 +71,8 @@ interface IProps {
     rightClick?: boolean;
     // The Relations model from the JS SDK for reactions to `mxEvent`
     reactions?: Relations;
+    // A permalink to the event
+    showPermalink?: boolean;
 }
 
 interface IState {
@@ -249,6 +251,12 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         this.closeMenu();
     };
 
+    private onCopyPermalinkClick = (e: ButtonEvent): void => {
+        e.preventDefault(); // So that we don't open the permalink
+        copyPlaintext(this.getPermalink());
+        this.closeMenu();
+    };
+
     private onCollapseReplyThreadClick = (): void => {
         this.props.collapseReplyThread();
         this.closeMenu();
@@ -328,6 +336,13 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         return window.getSelection().toString();
     }
 
+
+    private getPermalink(): string {
+        if (!this.props.permalinkCreator) return null;
+        // XXX: if we use room ID, we should also include a server where the event can be found (other than in the domain of the event ID)
+        return this.props.permalinkCreator.forEvent(this.props.mxEvent.getId());
+    }
+
     render() {
         // TODO: Cleanup me up
         const cli = MatrixClientPeg.get();
@@ -339,6 +354,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         const contentActionable = isContentActionable(this.props.mxEvent);
         const rightClick = this.props.rightClick;
         const context = this.context;
+        const permalink = this.getPermalink();
 
         let resendReactionsButton;
         let redactButton;
@@ -350,7 +366,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         let collapseReplyThread;
         let redactItemList;
         let reportEventButton;
-        let permalink;
         let copyButton;
         let saveButton;
         let editButton;
@@ -359,6 +374,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         let reactionPicker;
         let quickItemsList;
         let nativeItemsList;
+        let permalinkButton;
 
         // status is SENT before remote-echo, null after
         const isSent = !eventStatus || eventStatus === EventStatus.SENT;
@@ -424,21 +440,33 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             }
         }
 
-        if (this.props.permalinkCreator) {
-            permalink = this.props.permalinkCreator.forEvent(mxEvent.getId());
+        if (rightClick && permalink) {
+            if (this.props.showPermalink) {
+                permalinkButton = (
+                    <IconizedContextMenuOption
+                        iconClassName="mx_MessageContextMenu_iconCopy"
+                        onClick={this.onCopyPermalinkClick}
+                        label= {_t('Copy link')}
+                        element="a"
+                        href={permalink}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                    />
+                );
+            } else {
+                permalinkButton = (
+                    <IconizedContextMenuOption
+                        iconClassName="mx_MessageContextMenu_iconPermalink"
+                        onClick={this.onPermalinkClick}
+                        label= {_t('Share')}
+                        element="a"
+                        href={permalink}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                    />
+                );
+            }
         }
-        // XXX: if we use room ID, we should also include a server where the event can be found (other than in the domain of the event ID)
-        const permalinkButton = (
-            <IconizedContextMenuOption
-                iconClassName="mx_MessageContextMenu_iconPermalink"
-                onClick={this.onPermalinkClick}
-                label= {_t('Share')}
-                element="a"
-                href={permalink}
-                target="_blank"
-                rel="noreferrer noopener"
-            />
-        );
 
         if (this.props.eventTileOps) { // this event is rendered using TextualBody
             quoteButton = (
