@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625177645022,
+  "lastUpdate": 1625178389522,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -4316,6 +4316,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4095.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bd470f8897756b1ff8fdd2606684e1e833730e9e",
+          "message": "Merge pull request #6304 from matrix-org/dbkr/tests_lint\n\nFix Test Linting",
+          "timestamp": "2021-07-01T23:20:45+01:00",
+          "tree_id": "0c53f5dbb49b927ad6804b2503cf720eccb72f25",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bd470f8897756b1ff8fdd2606684e1e833730e9e"
+        },
+        "date": 1625178388272,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4587.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1124,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1860,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4511.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
