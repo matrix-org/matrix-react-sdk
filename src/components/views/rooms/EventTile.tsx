@@ -878,6 +878,7 @@ export default class EventTile extends React.Component<IProps, IState> {
 
     private onContextMenu = (ev: React.MouseEvent): void => {
         if (!PlatformPeg.get().allowOverridingNativeContextMenus()) return;
+        if (this.props.editState) return;
         ev.preventDefault();
         ev.stopPropagation();
         this.setState({
