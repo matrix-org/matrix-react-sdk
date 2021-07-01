@@ -74,10 +74,10 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
 
     render() {
         return <div className="mx_DialPadModal">
+            <div>
+                <AccessibleButton className="mx_DialPadModal_cancel" onClick={this.onCancelClick} />
+            </div>
             <div className="mx_DialPadModal_header">
-                <div>
-                    <AccessibleButton className="mx_DialPadModal_cancel" onClick={this.onCancelClick} />
-                </div>
                 <form onSubmit={this.onFormSubmit}>
                     <Field className="mx_DialPadModal_field" id="dialpad_number"
                         value={this.state.value} autoFocus={true}
