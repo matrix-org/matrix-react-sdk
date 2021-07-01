@@ -889,6 +889,10 @@ export default class EventTile extends React.Component<IProps, IState> {
     };
 
     private showContextMenu(ev: React.MouseEvent, showPermalink?: boolean): void {
+        // There is no way to copy non-PNG images into clipboard, so we can't
+        // have our own handling for copying images, so we leave it to the
+        // Electron layer (webcontents-handler.ts)
+        if (ev.target instanceof HTMLImageElement) return;
         ev.preventDefault();
         ev.stopPropagation();
         if (!PlatformPeg.get().allowOverridingNativeContextMenus()) return;
