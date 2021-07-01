@@ -28,6 +28,14 @@ limitations under the License.
     margin-top: 12px;
     margin-left: 12px;
     margin-right: 12px;
+
+    /* a separator between the input line and the dial buttons */
+    border-bottom: 1px solid $input-darker-bg-color;
+    transition: border-bottom 0.25s;
+}
+
+.mx_DialPadModal_header:focus-within {
+    border-bottom: 1px solid #0DBD8B;
 }
 
 .mx_DialPadModal_title {
@@ -62,14 +70,4 @@ limitations under the License.
     margin-left: 16px;
     margin-right: 16px;
     margin-top: 16px;
-}
-
-.mx_DialPadModal_horizSep {
-    position: relative;
-    &::before {
-        content: '';
-        position: absolute;
-        width: 100%;
-        border-bottom: 1px solid $input-darker-bg-color;
-    }
 }

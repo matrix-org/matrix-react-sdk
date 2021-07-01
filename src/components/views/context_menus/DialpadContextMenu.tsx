@@ -56,7 +56,6 @@ export default class DialpadContextMenu extends React.Component<IProps, IState> 
                     onChange={this.onChange}
                 />
             </div>
-            <div className="mx_DialPadContextMenu_horizSep" />
             <div className="mx_DialPadContextMenu_dialPad">
                 <Dialpad onDigitPress={this.onDigitPress} hasDial={false} hasDelete={false} />
             </div>

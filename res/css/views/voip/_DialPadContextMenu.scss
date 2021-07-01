@@ -15,9 +15,13 @@ limitations under the License.
 */
 
 .mx_DialPadContextMenu_header {
+    border: none;
     margin-top: 12px;
     margin-left: 12px;
     margin-right: 12px;
+
+    /* a separator between the input line and the dial buttons */
+    border-bottom: 1px solid $input-darker-bg-color;
 }
 
 .mx_DialPadContextMenu_title {
@@ -47,14 +51,4 @@ limitations under the License.
 
 .mx_DialPadContextMenu_dialPad {
     margin: 16px;
-}
-
-.mx_DialPadContextMenu_horizSep {
-    position: relative;
-    &::before {
-        content: '';
-        position: absolute;
-        width: 100%;
-        border-bottom: 1px solid $input-darker-bg-color;
-    }
 }
