@@ -38,6 +38,7 @@ export interface IMediaEventContent {
         thumbnail_url?: string; // eslint-disable-line camelcase
         thumbnail_file?: IEncryptedFile; // eslint-disable-line camelcase
     };
+    body?: string;
 }
 
 export interface IPreparedMedia extends IMediaObject {

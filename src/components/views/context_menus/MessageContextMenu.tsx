@@ -27,7 +27,7 @@ import SettingsStore from '../../../settings/SettingsStore';
 import { isUrlPermitted } from '../../../HtmlUtils';
 import { canEditContent, isContentActionable } from '../../../utils/EventUtils';
 import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from './IconizedContextMenu';
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ReadPinsEventId } from "../right_panel/PinnedMessagesCard";
 import ForwardDialog from "../dialogs/ForwardDialog";
@@ -39,6 +39,16 @@ import RoomContext from '../../../contexts/RoomContext';
 import { toRightOf, ContextMenu } from '../../structures/ContextMenu';
 import ReactionPicker from '../emojipicker/ReactionPicker';
 import { Relations } from 'matrix-js-sdk/src/models/relations';
+import { IMediaEventContent } from '../../../customisations/models/IMediaEventContent';
+import { mediaFromContent } from '../../../customisations/Media';
+import { decryptFile } from '../../../utils/DecryptFile';
+
+const DOWNLOADABLE_MESSAGE_TYPES = [
+    MsgType.Audio,
+    MsgType.File,
+    MsgType.Image,
+    MsgType.Video,
+];
 
 export function canCancel(eventStatus) {
     return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
@@ -73,6 +83,7 @@ interface IState {
 export default class MessageContextMenu extends React.Component<IProps, IState> {
     static contextType = RoomContext;
     private reactButtonRef = createRef<any>(); // XXX Ref to a functional component
+    private decryptedUrl?: string;
 
     constructor(props: IProps) {
         super(props);
@@ -248,6 +259,29 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         this.closeMenu();
     };
 
+    private onSaveClick = async (): Promise<void> => {
+        const content = this.props.mxEvent.getContent() as IMediaEventContent;
+        const media = mediaFromContent(this.props.mxEvent.getContent());
+
+        if (content.file !== undefined && !this.decryptedUrl) {
+            try {
+                const blob = await decryptFile(content.file);
+                this.decryptedUrl = URL.createObjectURL(blob);
+            } catch (error) {
+                console.warn("Unable to decrypt attachment: ", error);
+                return;
+            }
+        }
+
+        const anchor = document.createElement("a");
+        anchor.href = this.decryptedUrl || media.srcHttp;
+        anchor.download = content.body?.length > 0 ? content.body : _t('Attachment');
+        anchor.target = "_blank";
+        anchor.rel = "noreferrer noopener";
+        anchor.click();
+        this.closeMenu();
+    };
+
     private onEditClick = (): void => {
         dis.dispatch({
             action: 'edit_event',
@@ -299,11 +333,13 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         const cli = MatrixClientPeg.get();
         const me = cli.getUserId();
         const mxEvent = this.props.mxEvent;
+        const messageType = mxEvent.getContent().msgtype;
         const eventStatus = mxEvent.status;
         const unsentReactionsCount = this.getUnsentReactions().length;
         const contentActionable = isContentActionable(this.props.mxEvent);
         const rightClick = this.props.rightClick;
         const context = this.context;
+
         let resendReactionsButton;
         let redactButton;
         let forwardButton;
@@ -316,6 +352,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         let reportEventButton;
         let permalink;
         let copyButton;
+        let saveButton;
         let editButton;
         let replyButton;
         let reactButton;
@@ -460,6 +497,16 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
+        if (rightClick && DOWNLOADABLE_MESSAGE_TYPES.includes(messageType as MsgType)) {
+            saveButton = (
+                <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconSave"
+                    label={_t("Save")}
+                    onClick={this.onSaveClick}
+                />
+            );
+        }
+
         if (rightClick && canEditContent(mxEvent)) {
             editButton = (
                 <IconizedContextMenuOption
@@ -491,10 +538,11 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        if (copyButton) {
+        if (copyButton || saveButton) {
             nativeItemsList = (
                 <IconizedContextMenuOptionList>
                     { copyButton }
+                    { saveButton }
                 </IconizedContextMenuOptionList>
             );
         }
