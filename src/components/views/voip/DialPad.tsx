@@ -55,7 +55,8 @@ class DialPadButton extends React.PureComponent<IButtonProps> {
 
 interface IProps {
     onDigitPress: (string) => void;
-    hasDialAndDelete: boolean;
+    hasDial: boolean;
+    hasDelete: boolean;
     onDeletePress?: (string) => void;
     onDialPress?: (string) => void;
 }
@@ -71,10 +72,12 @@ export default class Dialpad extends React.PureComponent<IProps> {
             />);
         }
 
-        if (this.props.hasDialAndDelete) {
+        if (this.props.hasDelete) {
             buttonNodes.push(<DialPadButton key="del" kind={DialPadButtonKind.Delete}
                 onButtonPress={this.props.onDeletePress}
             />);
+        }
+        if (this.props.hasDial) {
             buttonNodes.push(<DialPadButton key="dial" kind={DialPadButtonKind.Dial}
                 onButtonPress={this.props.onDialPress}
             />);
