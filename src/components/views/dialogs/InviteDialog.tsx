@@ -807,7 +807,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             } as TransferCallPayload);
         }
         this.props.onFinished();
-    }
+    };
 
     private onKeyDown = (e) => {
         if (this.state.busy) return;
@@ -1268,29 +1268,29 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     private onDialFormSubmit = ev => {
         ev.preventDefault();
         this.transferCall();
-    }
+    };
 
     private onDialChange = ev => {
-        this.setState({dialPadValue: ev.currentTarget.value});
-    }
+        this.setState({ dialPadValue: ev.currentTarget.value });
+    };
 
     private onDigitPress = digit => {
-        this.setState({dialPadValue: this.state.dialPadValue + digit});
-    }
+        this.setState({ dialPadValue: this.state.dialPadValue + digit });
+    };
 
     private onDeletePress = () => {
         if (this.state.dialPadValue.length === 0) return;
-        this.setState({dialPadValue: this.state.dialPadValue.slice(0, -1)});
-    }
+        this.setState({ dialPadValue: this.state.dialPadValue.slice(0, -1) });
+    };
 
     private onTabChange = (tabId: TabId) => {
-        this.setState({currentTabId: tabId});
-    }
+        this.setState({ currentTabId: tabId });
+    };
 
     private async onLinkClick(e) {
         e.preventDefault();
         selectText(e.target);
-    }
+    };
 
     private onCopyClick = async e => {
         e.preventDefault();

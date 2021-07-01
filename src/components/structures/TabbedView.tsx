@@ -72,7 +72,7 @@ export default class TabbedView extends React.Component<IProps, IState> {
 
     static defaultProps = {
         tabLocation: TabLocation.LEFT,
-    }
+    };
 
     private _getActiveTabIndex() {
         if (!this.state || !this.state.activeTabIndex) return 0;
