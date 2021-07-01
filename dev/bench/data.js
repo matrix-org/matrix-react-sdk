@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625145421850,
+  "lastUpdate": 1625150294458,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -4028,6 +4028,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4626.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fdef1f9b684dd37fc5d566e37ae0fd79320ae27b",
+          "message": "Merge pull request #6299 from matrix-org/dbkr/tsify_setupencryptionbody\n\nConvert some Key Verification classes to TypeScript",
+          "timestamp": "2021-07-01T15:33:15+01:00",
+          "tree_id": "d37120adb2066e16c3afa44af05831851bbb420e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fdef1f9b684dd37fc5d566e37ae0fd79320ae27b"
+        },
+        "date": 1625150293628,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4372.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 965.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1859.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4530.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
