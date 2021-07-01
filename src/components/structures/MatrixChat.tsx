@@ -830,9 +830,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 SettingsStore.setValue("showCookieBar", null, SettingLevel.DEVICE, false);
                 hideAnalyticsToast();
                 break;
-            case 'view_send_to_dialog':
-                this.viewSendToDialog(payload);
-                break;
         }
     };
 
@@ -975,7 +972,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.notifyNewScreen('group/' + groupId);
     }
 
-    private async viewSendToDialog(payload) {
+    private async openSendToDialog(url: string) {
         // open the home page in the background
         this.setPage(PageTypes.HomePage);
 
@@ -994,7 +991,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             sender: cli.getUserId(),
             content: {
                 msgtype: "m.text",
-                body: this.props.startingFragmentQueryParams.url,
+                body: url,
             },
             unsigned: {
                 age: 97,
@@ -1754,9 +1751,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             });
         } else if (screen === 'share') {
             if (this.props.startingFragmentQueryParams.url) {
-                dis.dispatch({
-                    action: 'view_send_to_dialog',
-                });
+                this.openSendToDialog(this.props.startingFragmentQueryParams.url);
             } else {
                 dis.dispatch({
                     action: 'view_home_page',
