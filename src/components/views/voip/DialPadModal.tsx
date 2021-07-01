@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import * as React from "react";
-import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import Field from "../elements/Field";
 import DialPad from './DialPad';
@@ -77,7 +76,6 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
         return <div className="mx_DialPadModal">
             <div className="mx_DialPadModal_header">
                 <div>
-                    <span className="mx_DialPadModal_title">{_t("Dial pad")}</span>
                     <AccessibleButton className="mx_DialPadModal_cancel" onClick={this.onCancelClick} />
                 </div>
                 <form onSubmit={this.onFormSubmit}>

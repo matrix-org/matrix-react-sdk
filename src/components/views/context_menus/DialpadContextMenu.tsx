@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import { _t } from '../../../languageHandler';
 import { ContextMenu, IProps as IContextMenuProps } from '../../structures/ContextMenu';
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import Field from "../elements/Field";
@@ -52,9 +51,6 @@ export default class DialpadContextMenu extends React.Component<IProps, IState> 
     render() {
         return <ContextMenu {...this.props}>
             <div className="mx_DialPadContextMenu_header">
-                <div>
-                    <span className="mx_DialPadContextMenu_title">{_t("Dial pad")}</span>
-                </div>
                 <Field className="mx_DialPadContextMenu_dialled"
                     value={this.state.value} autoFocus={true}
                     onChange={this.onChange}
