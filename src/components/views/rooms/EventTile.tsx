@@ -893,10 +893,10 @@ export default class EventTile extends React.Component<IProps, IState> {
         // have our own handling for copying images, so we leave it to the
         // Electron layer (webcontents-handler.ts)
         if (ev.target instanceof HTMLImageElement) return;
-        ev.preventDefault();
-        ev.stopPropagation();
         if (!PlatformPeg.get().allowOverridingNativeContextMenus()) return;
         if (this.props.editState) return;
+        ev.preventDefault();
+        ev.stopPropagation();
         this.setState({
             contextMenu: {
                 position: {
