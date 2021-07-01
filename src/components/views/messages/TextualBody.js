@@ -283,10 +283,14 @@ export default class TextualBody extends React.Component {
                 // de-duplicate the links after stripping hashes as they don't affect the preview
                 // using a set here maintains the order
                 links = Array.from(new Set(links.map(link => {
-                    const url = new URL(link);
-                    url.hash = "";
-                    return url.toString();
-                })));
+                    try {
+                        const url = new URL(link);
+                        url.hash = "";
+                        return url.toString();
+                    } catch (e) {
+                        console.warn("Failed to parse URL for preview", e);
+                    }
+                }).filter(Boolean)));
 
                 this.setState({ links });
 
