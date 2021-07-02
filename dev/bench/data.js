@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625235248219,
+  "lastUpdate": 1625256165394,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -4496,6 +4496,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 848.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9bb4e4ca4a39d87a7b6751e0e77de443424d0d68",
+          "message": "Merge pull request #6312 from matrix-org/dbkr/my_icon_is_too_big\n\nFix icon size in passphrase prompt",
+          "timestamp": "2021-07-02T20:56:59+01:00",
+          "tree_id": "5658a91564280db5a3a7a4a0af422b6025484cf9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9bb4e4ca4a39d87a7b6751e0e77de443424d0d68"
+        },
+        "date": 1625256163942,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4499.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1116.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1773.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4707.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
