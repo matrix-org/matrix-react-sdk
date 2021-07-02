@@ -978,7 +978,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             // Note: we keep the `sending` state class for tests, not for our styles
             mx_EventTile_sending: !isEditing && isSending,
             mx_EventTile_highlight: this.props.tileShape === 'notif' ? false : this.shouldHighlight(),
-            mx_EventTile_selected: this.props.isSelectedEvent,
+            mx_EventTile_selected: this.props.isSelectedEvent || this.state.contextMenu,
             mx_EventTile_continuation: this.props.tileShape ? '' : this.props.continuation,
             mx_EventTile_last: this.props.last,
             mx_EventTile_lastInSection: this.props.lastInSection,
@@ -1074,8 +1074,16 @@ export default class EventTile extends React.Component<IProps, IState> {
             onFocusChange={this.onActionBarFocusChange}
         /> : undefined;
 
-        const showTimestamp = this.props.mxEvent.getTs() &&
-            (this.props.alwaysShowTimestamps || this.props.last || this.state.hover || this.state.actionBarFocused);
+        const showTimestamp = (
+            this.props.mxEvent.getTs() &&
+            (
+                this.props.alwaysShowTimestamps ||
+                this.props.last ||
+                this.state.hover ||
+                this.state.actionBarFocused ||
+                this.state.contextMenu
+            )
+        );
         const timestamp = showTimestamp ?
             <MessageTimestamp showTwelveHour={this.props.isTwelveHour} ts={this.props.mxEvent.getTs()} /> : null;
 
