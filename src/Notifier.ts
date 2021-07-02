@@ -130,7 +130,8 @@ export const Notifier = {
         if (content.body.startsWith('>') && formattedBody) formattedBody = ReplyThread.stripHTMLReply(formattedBody);
         const strippedBody = content.body.startsWith('>') ? ReplyThread.stripPlainReply(plainBody) : plainBody;
 
-        content.body.startsWith('>') ? (notif = plaf.displayNotification(title, strippedBody, avatarUrl, room)) : (notif = plaf.displayNotification(title, msg, avatarUrl, room));
+        content.body.startsWith('>') ? (notif = plaf.displayNotification(title, strippedBody, avatarUrl, room)) : 
+            (notif = plaf.displayNotification(title, msg, avatarUrl, room));
 
         // if displayNotification returns non-null,  the platform supports
         // clearing notifications later, so keep track of this.
