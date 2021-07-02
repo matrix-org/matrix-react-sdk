@@ -122,14 +122,13 @@ export const Notifier = {
         }
 
         const content = ev.getContent();
-        const strippedBody: string;
         let notif: any;
 
         let formattedBody = typeof content.formatted_body === 'string' ? content.formatted_body : null;
         const plainBody = typeof content.body === 'string' ? content.body : "";
 
         if (content.body.startsWith('>') && formattedBody) formattedBody = ReplyThread.stripHTMLReply(formattedBody);
-        strippedBody = content.body.startsWith('>') ? ReplyThread.stripPlainReply(plainBody) : plainBody;
+        const strippedBody = content.body.startsWith('>') ? ReplyThread.stripPlainReply(plainBody) : plainBody;
 
         content.body.startsWith('>') ? (notif = plaf.displayNotification(title, strippedBody, avatarUrl, room)) : (notif = plaf.displayNotification(title, msg, avatarUrl, room));
 
