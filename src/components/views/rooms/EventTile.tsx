@@ -906,11 +906,15 @@ export default class EventTile extends React.Component<IProps, IState> {
                 },
                 showPermalink: showPermalink,
             },
+            actionBarFocused: true,
         });
     }
 
     private onCloseMenu = (): void => {
-        this.setState({ contextMenu: null });
+        this.setState({
+            contextMenu: null,
+            actionBarFocused: false,
+        });
     };
 
     render() {
