@@ -865,8 +865,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
     };
 
     private removeUnreadMarker = () => {
-        if (!this.messagePanel.current) return;
-        if (!this.props.manageReadReceipts) return;
         // This happens on user_activity_end which is delayed, and it's
         // very possible have logged out within that timeframe, so check
         // we still have a client.
