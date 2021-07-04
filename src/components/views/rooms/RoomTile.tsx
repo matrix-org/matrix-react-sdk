@@ -52,6 +52,9 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import { CommunityPrototypeStore, IRoomProfile } from "../../../stores/CommunityPrototypeStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { getUnsentMessages } from "../../structures/RoomStatusBar";
+import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
+import { setRoomMarkedAsUnread } from "../../../Rooms";
 
 interface IProps {
     room: Room;
@@ -286,15 +289,9 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
     private onMarkUnreadClick = (ev: ButtonEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
-        MatrixClientPeg.get().setRoomAccountData(
-            this.props.room.roomId,
-            "com.famedly.marked_unread",
-            {
-                unread: true,
-            },
-        )
-        this.setState({generalMenuPosition: null}); // hide the menu
-    }
+        setRoomMarkedAsUnread(this.props.room);
+        this.setState({ generalMenuPosition: null }); // hide the menu
+    };
 
     private onTagRoom = (ev: ButtonEvent, tagId: TagID) => {
         ev.preventDefault();

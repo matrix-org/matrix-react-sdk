@@ -26,6 +26,7 @@ import * as RoomNotifs from '../../RoomNotifs';
 import * as Unread from '../../Unread';
 import { NotificationState } from "./NotificationState";
 import { getUnsentMessages } from "../../components/structures/RoomStatusBar";
+import { isRoomMarkedAsUnread } from "../../Rooms";
 
 export class RoomNotificationState extends NotificationState implements IDestroyable {
     constructor(public readonly room: Room) {
@@ -129,10 +130,7 @@ export class RoomNotificationState extends NotificationState implements IDestroy
                 this._count = trueCount;
                 this._symbol = null; // symbol calculated by component
             } else {
-                // it is marked as unread?
-                const isMarkedUnread = this.room.getAccountData('com.famedly.marked_unread')?.getContent()?.unread
-
-                if (isMarkedUnread) {
+                if (isRoomMarkedAsUnread(this.room)) {
                     this._color = NotificationColor.Red;
                 } else {
                     // We don't have any notified messages, but we might have unread messages. Let's
