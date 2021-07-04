@@ -26,11 +26,11 @@ import * as RoomNotifs from '../../RoomNotifs';
 import * as Unread from '../../Unread';
 import { NotificationState } from "./NotificationState";
 import { getUnsentMessages } from "../../components/structures/RoomStatusBar";
-import { isRoomMarkedAsUnread } from "../../Rooms";
+import { isRoomMarkedAsUnread, UNSTABLE_MSC2867_MARKED_UNREAD_TYPE } from "../../Rooms";
 import SettingsStore from "../../settings/SettingsStore";
 
 export class RoomNotificationState extends NotificationState implements IDestroyable {
-    settingWatcherRef = null;
+    private featureMarkedUnreadWatcherRef = null;
     constructor(public readonly room: Room) {
         super();
         this.room.on("Room.receipt", this.handleReadReceipt);
@@ -42,7 +42,7 @@ export class RoomNotificationState extends NotificationState implements IDestroy
         MatrixClientPeg.get().on("Event.decrypted", this.handleRoomEventUpdate);
         MatrixClientPeg.get().on("accountData", this.handleAccountDataUpdate);
 
-        this.settingWatcherRef = SettingsStore.watchSetting("feature_mark_unread", null, () => {
+        this.featureMarkedUnreadWatcherRef = SettingsStore.watchSetting("feature_mark_unread", null, () => {
             this.updateNotificationState();
         });
 
@@ -65,7 +65,7 @@ export class RoomNotificationState extends NotificationState implements IDestroy
             MatrixClientPeg.get().removeListener("Event.decrypted", this.handleRoomEventUpdate);
             MatrixClientPeg.get().removeListener("accountData", this.handleAccountDataUpdate);
         }
-        SettingsStore.unwatchSetting(this.settingWatcherRef);
+        SettingsStore.unwatchSetting(this.featureMarkedUnreadWatcherRef);
     }
 
     private handleLocalEchoUpdated = () => {
@@ -96,7 +96,9 @@ export class RoomNotificationState extends NotificationState implements IDestroy
     };
 
     private handleRoomAccountDataUpdate = (ev: MatrixEvent) => {
-        this.updateNotificationState();
+        if (ev.getType() === UNSTABLE_MSC2867_MARKED_UNREAD_TYPE) {
+            this.updateNotificationState();
+        }
     };
 
     private updateNotificationState() {
