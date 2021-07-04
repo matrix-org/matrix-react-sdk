@@ -874,7 +874,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // if no client or client is guest don't send mark room as read
         if (!cli || cli.isGuest()) return;
 
-        if (isRoomMarkedAsUnread(this.props.timelineSet.room)) {
+        const markUnreadEnabled = SettingsStore.getValue("feature_mark_unread");
+        if (markUnreadEnabled && isRoomMarkedAsUnread(this.props.timelineSet.room)) {
             setRoomMarkedAsUnread(this.props.timelineSet.room, false);
         }
     };

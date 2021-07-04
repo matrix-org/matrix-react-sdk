@@ -55,6 +55,7 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { getUnsentMessages } from "../../structures/RoomStatusBar";
 import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
 import { setRoomMarkedAsUnread } from "../../../Rooms";
+import SettingsStore from "../../../settings/SettingsStore";
 
 interface IProps {
     room: Room;
@@ -499,6 +500,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
 
             const userId = MatrixClientPeg.get().getUserId();
             const canInvite = this.props.room.canInvite(userId) && !isDm; // hide invite in DMs from this quick menu
+            const markUnreadEnabled = SettingsStore.getValue("feature_mark_unread");
+
             contextMenu = <IconizedContextMenu
                 {...contextMenuBelow(this.state.generalMenuPosition)}
                 onFinished={this.onCloseGeneralMenu}
@@ -506,11 +509,11 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 compact
             >
                 <IconizedContextMenuOptionList>
-                    <IconizedContextMenuOption
+                    {markUnreadEnabled ? (<IconizedContextMenuOption
                         onClick={this.onMarkUnreadClick}
                         label={_t("Mark as unread")}
                         iconClassName="mx_RoomTile_iconStar"
-                    />
+                    />) : null }
                     <IconizedContextMenuCheckbox
                         onClick={(e) => this.onTagRoom(e, DefaultTagID.Favourite)}
                         active={isFavorite}
