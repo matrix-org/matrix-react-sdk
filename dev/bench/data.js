@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625256165394,
+  "lastUpdate": 1625466475846,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -4544,6 +4544,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4707.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "92fcfbd8f669d79eeb9aa1eee5e98bcd02427778",
+          "message": "Merge pull request #6313 from robintown/fix-image-rotation\n\nFix being able to un-rotate images",
+          "timestamp": "2021-07-05T07:22:05+01:00",
+          "tree_id": "d7abe12a55f5a56054871b193555baa12293227d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/92fcfbd8f669d79eeb9aa1eee5e98bcd02427778"
+        },
+        "date": 1625466474415,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4998.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1262.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1795.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4486.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
