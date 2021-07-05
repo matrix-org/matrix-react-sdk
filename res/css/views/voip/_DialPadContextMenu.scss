@@ -14,14 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+.mx_DialPadContextMenu_dialPad .mx_DialPad {
+    row-gap: 16px;
+    column-gap: 32px;
+}
+
+.mx_DialPadContextMenuWrapper {
+    padding: 30px;
+}
+
 .mx_DialPadContextMenu_header {
     border: none;
-    margin-top: 12px;
-    margin-left: 12px;
-    margin-right: 12px;
+    margin-top: 16px;
+    margin-left: 44px;
+    margin-right: 44px;
 
     /* a separator between the input line and the dial buttons */
     border-bottom: 1px solid $input-darker-bg-color;
+    transition: border-bottom 0.25s;
+}
+
+.mx_DialPadContextMenu_header:focus-within {
+    border-bottom: 1px solid #0DBD8B;
 }
 
 .mx_DialPadContextMenu_title {
@@ -34,7 +48,6 @@ limitations under the License.
     height: 1.5em;
     font-size: 18px;
     font-weight: 600;
-    max-width: 150px;
     border: none;
     margin: 0px;
 }
