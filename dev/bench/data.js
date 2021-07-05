@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625474367729,
+  "lastUpdate": 1625484411406,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -4628,6 +4628,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 943.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1b95762910b0ce1a7564688e99a61fd187e11241",
+          "message": "Merge pull request #6310 from matrix-org/gsouquet/faster-animations",
+          "timestamp": "2021-07-05T12:21:49+01:00",
+          "tree_id": "17a13ba892f880eff90a706c4efbab816c900edd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1b95762910b0ce1a7564688e99a61fd187e11241"
+        },
+        "date": 1625484410597,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4396,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1011.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1868.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4458.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
