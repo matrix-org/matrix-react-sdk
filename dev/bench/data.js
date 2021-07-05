@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625466475846,
+  "lastUpdate": 1625474367729,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -4592,6 +4592,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4486.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "47b297c2db656c484927deb9cc80eb12251edeb3",
+          "message": "Merge pull request #5742 from SimonBrandner/reorganize-preferences",
+          "timestamp": "2021-07-05T09:33:21+01:00",
+          "tree_id": "bff4a5f1691a493cd6b6521aa7473f0f766cdb6f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/47b297c2db656c484927deb9cc80eb12251edeb3"
+        },
+        "date": 1625474366429,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4375.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 943.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
