@@ -123,15 +123,17 @@ export const Notifier = {
 
         const content = ev.getContent();
         let notif: any;
+        
+        if(content.body !== undefined){
+            let formattedBody = typeof content.formatted_body === 'string' ? content.formatted_body : null;
 
-        let formattedBody = typeof content.formatted_body === 'string' ? content.formatted_body : null;
-        const plainBody = typeof content.body === 'string' ? content.body : "";
-
-        if (content.body.startsWith('>') && formattedBody) formattedBody = ReplyThread.stripHTMLReply(formattedBody);
-        const strippedBody = content.body.startsWith('>') ? ReplyThread.stripPlainReply(plainBody) : plainBody;
-
-        content.body.startsWith('>') ? (notif = plaf.displayNotification(title, strippedBody, avatarUrl, room)) :
-            (notif = plaf.displayNotification(title, msg, avatarUrl, room));
+            if (content.body.startsWith('>') && formattedBody) formattedBody = ReplyThread.stripHTMLReply(formattedBody);
+    
+            content.body.startsWith('>') ? (notif = plaf.displayNotification(title, strippedBody, avatarUrl, room)) :
+                (notif = plaf.displayNotification(title, msg, avatarUrl, room));
+        } else {
+            notif = plaf.displayNotification(title, msg, avatarUrl, room);
+        }
 
         // if displayNotification returns non-null,  the platform supports
         // clearing notifications later, so keep track of this.
