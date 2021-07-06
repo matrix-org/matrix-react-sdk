@@ -68,6 +68,7 @@ interface IState {
     groupRoomId?: string;
     groupId?: string;
     event: MatrixEvent;
+    userId?: string;
 }
 
 @replaceableComponent("structures.RightPanel")
@@ -202,8 +203,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 space: payload.space,
             });
         }
-        if (payload.action === Action.SetRightPanelPhase &&
-            payload.phase === RightPanelPhases.SharedRoomsList) {
+        if (payload.action === Action.SetRightPanelPhase && payload.phase === RightPanelPhases.SharedRoomsList) {
             this.setState({
                 userId: payload.userId,
             });
@@ -268,7 +268,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 break;
 
             case RightPanelPhases.SharedRoomsList:
-                panel = <SharedRoomList onClose={this.onClose} userId={this.state.userId} key={this.props.userId} />;
+                panel = <SharedRoomList onClose={this.onClose} userId={this.state.userId} key={this.state.userId} />;
                 break;
 
             case RightPanelPhases.RoomMemberInfo:

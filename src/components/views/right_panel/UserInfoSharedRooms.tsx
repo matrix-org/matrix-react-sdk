@@ -15,11 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
+import { Room } from "matrix-js-sdk/src/models/room";
+
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import Spinner from "../elements/Spinner";
 import { _t } from '../../../languageHandler';
 import AccessibleButton from '../../views/elements/AccessibleButton';
-import { Room } from "matrix-js-sdk/src/models/room";
 import { SetRightPanelPhasePayload } from '../../../dispatcher/payloads/SetRightPanelPhasePayload';
 import { defaultDispatcher } from '../../../dispatcher/dispatcher';
 import { Action } from '../../../dispatcher/actions';
@@ -34,13 +35,8 @@ interface IState {
     error: boolean;
 }
 
-interface IButtonProps {
-    className: string;
-    onClick(): void;
-}
-
 export default class UserInfoSharedRooms extends React.PureComponent<IProps, IState> {
-    static async getSharedRoomsForUser(userId: string): Promise<Room[]> {
+    public static async getSharedRoomsForUser(userId: string): Promise<Room[]> {
         const peg = MatrixClientPeg.get();
 
         const roomIds = await MatrixClientPeg.get()._unstable_getSharedRooms(userId);
@@ -89,37 +85,25 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
         }
     }
 
-    onShowClicked = () => {
+    private onShowClicked = () => {
         defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
             action: Action.SetRightPanelPhase,
             phase: RightPanelPhases.SharedRoomsList,
             userId: this.props.userId,
         });
-    }
+    };
 
     render(): React.ReactNode {
         const { sharedRoomCount } = this.state;
 
         if (this.state.error) {
-            return <p> {_t("There was an error fetching shared rooms with this user.")} </p>;
-        } else if (typeof sharedRoomCount === 'number') {
-            console.log("Shared room count:", sharedRoomCount);
-            let text;
-            if (sharedRoomCount === 1) {
-                text = _t("1 room in common");
-            } else if (sharedRoomCount > 1) {
-                text = _t("%(count)s rooms in common", { count: sharedRoomCount });
-            } else {
-                text = _t("No rooms in common");
-            }
-            return <AccessibleButton
-                className="mx_SharedUsers_Button"
-                onClick={this.onShowClicked}
-                disabled={sharedRoomCount === 0}>
-                {text}
-            </AccessibleButton>;
+            return <p>{ _t("There was an error fetching shared rooms with this user.") }</p>;
         } else if (sharedRoomCount === 0) {
-            return <p> {_t("You share no rooms in common with this user.")} </p>;
+            return <p>{ _t("You share no rooms in common with this user.") }</p>;
+        } else if (typeof sharedRoomCount === "number") {
+            return <AccessibleButton className="mx_BaseCard_Button" onClick={this.onShowClicked}>
+                { _t("%(count)s rooms in common", { count: sharedRoomCount }) }
+            </AccessibleButton>;
         } else {
             return <Spinner />;
         }

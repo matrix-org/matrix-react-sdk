@@ -23,6 +23,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import Spinner from "../elements/Spinner";
 import TruncatedList from "../elements/TruncatedList";
 import UserInfoRoomTile from '../elements/UserInfoRoomTile';
+import { _t } from "../../../languageHandler";
 
 interface IProps {
     onClose: () => void;
@@ -51,33 +52,27 @@ export default class SharedRoomList extends React.PureComponent<IProps, IState> 
 
     async componentDidMount() {
         try {
-            if (!this.props.userId) {
-                throw Error('userId is not defined');
-            }
             const rooms = await UserInfoSharedRooms.getSharedRoomsForUser(this.props.userId);
-            const sortedRooms = await this.algorithm.sortRooms(
-                rooms,
-                DefaultTagID.Untagged,
-            );
-            this.setState({rooms: sortedRooms});
+            const sortedRooms = await this.algorithm.sortRooms(rooms, DefaultTagID.Untagged);
+            this.setState({ rooms: sortedRooms });
         } catch (ex) {
             console.log("Error fetching shared rooms for user", ex);
-            this.setState({error: true});
+            this.setState({ error: true });
         }
     }
 
-    makeRoomTiles() {
-        return this.state.rooms.map(r => <UserInfoRoomTile key={r} room={r}></UserInfoRoomTile>);
+    private makeRoomTiles() {
+        return this.state.rooms.map(r => <UserInfoRoomTile key={r.roomId} room={r} />);
     }
 
-    renderContent() {
+    private renderContent() {
         if (this.state.error) {
             // In theory this shouldn't happen, because the button for this view
             // validates that the client can fetch shared rooms for this user.
-            return <p>Could not fetch shared rooms for user.</p>
+            return <p>{ _t("Could not fetch shared rooms for user.") }</p>;
         }
         if (!this.state.rooms) {
-            return <Spinner></Spinner>
+            return <Spinner />;
         }
         return <TruncatedList className="mx_SharedRoomList" truncateAt={TRUNCATE_AT}>
             { this.makeRoomTiles() }
