@@ -1,5 +1,5 @@
 /*
-Copyright 2015, 2016, 2017, 2018, 2019, 2020 The Matrix.org Foundation C.I.C.
+Copyright 2015-2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,22 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Matrix from 'matrix-js-sdk';
-import React, {ReactNode} from 'react';
-import {MatrixClient} from "matrix-js-sdk/src/client";
+import { createClient } from 'matrix-js-sdk/src/matrix';
+import React, { ReactNode } from 'react';
+import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import * as sdk from '../../../index';
 import { _t, _td } from '../../../languageHandler';
 import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
-import AutoDiscoveryUtils, {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
+import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
 import classNames from "classnames";
 import * as Lifecycle from '../../../Lifecycle';
-import {MatrixClientPeg} from "../../../MatrixClientPeg";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import AuthPage from "../../views/auth/AuthPage";
-import Login, {ISSOFlow} from "../../../Login";
+import Login, { ISSOFlow } from "../../../Login";
 import dis from "../../../dispatcher/dispatcher";
 import SSOButtons from "../../views/elements/SSOButtons";
 import ServerPicker from '../../views/elements/ServerPicker';
+import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     serverConfig: ValidatedServerConfig;
@@ -48,7 +49,7 @@ interface IProps {
     //   for operations like uploading cross-signing keys).
     onLoggedIn(params: {
         userId: string;
-        deviceId: string
+        deviceId: string;
         homeserverUrl: string;
         identityServerUrl?: string;
         accessToken: string;
@@ -60,7 +61,7 @@ interface IProps {
         is_url?: string;
         session_id: string;
         /* eslint-enable camelcase */
-    }): void;
+    }): string;
     // registration shouldn't know or care how login is done.
     onLoginClick(): void;
     onServerConfigChange(config: ValidatedServerConfig): void;
@@ -94,7 +95,7 @@ interface IState {
     // be seeing.
     serverIsAlive: boolean;
     serverErrorIsFatal: boolean;
-    serverDeadError: string;
+    serverDeadError?: ReactNode;
 
     // Our matrix client - part of state because we can't render the UI auth
     // component without it.
@@ -109,6 +110,7 @@ interface IState {
     ssoFlow?: ISSOFlow;
 }
 
+@replaceableComponent("structures.auth.Registration")
 export default class Registration extends React.Component<IProps, IState> {
     loginLogic: Login;
 
@@ -129,7 +131,7 @@ export default class Registration extends React.Component<IProps, IState> {
             serverDeadError: "",
         };
 
-        const {hsUrl, isUrl} = this.props.serverConfig;
+        const { hsUrl, isUrl } = this.props.serverConfig;
         this.loginLogic = new Login(hsUrl, isUrl, null, {
             defaultDeviceDisplayName: "Element login check", // We shouldn't ever be used
         });
@@ -178,8 +180,8 @@ export default class Registration extends React.Component<IProps, IState> {
             }
         }
 
-        const {hsUrl, isUrl} = serverConfig;
-        const cli = Matrix.createClient({
+        const { hsUrl, isUrl } = serverConfig;
+        const cli = createClient({
             baseUrl: hsUrl,
             idBaseUrl: isUrl,
         });
@@ -221,13 +223,14 @@ export default class Registration extends React.Component<IProps, IState> {
                 this.setState({
                     flows: e.data.flows,
                 });
-            } else if (e.httpStatus === 403 && e.errcode === "M_UNKNOWN") {
+            } else if (e.httpStatus === 403 || e.errcode === "M_FORBIDDEN") {
+                // Check for 403 or M_FORBIDDEN, Synapse used to send 403 M_UNKNOWN but now sends 403 M_FORBIDDEN.
                 // At this point registration is pretty much disabled, but before we do that let's
                 // quickly check to see if the server supports SSO instead. If it does, we'll send
                 // the user off to the login page to figure their account out.
                 if (ssoFlow) {
                     // Redirect to login page - server probably expects SSO only
-                    dis.dispatch({action: 'start_login'});
+                    dis.dispatch({ action: 'start_login' });
                 } else {
                     this.setState({
                         serverErrorIsFatal: true, // fatal because user cannot continue on this server
@@ -264,9 +267,9 @@ export default class Registration extends React.Component<IProps, IState> {
                 session_id: sessionId,
             }),
         );
-    }
+    };
 
-    private onUIAuthFinished = async (success, response, extra) => {
+    private onUIAuthFinished = async (success: boolean, response: any) => {
         if (!success) {
             let msg = response.message || response.toString();
             // can we give a better error message?
@@ -276,6 +279,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     response.data.admin_contact,
                     {
                         'monthly_active_user': _td("This homeserver has hit its Monthly Active User limit."),
+                        'hs_blocked': _td("This homeserver has been blocked by it's administrator."),
                         '': _td("This homeserver has exceeded one of its resource limits."),
                     },
                 );
@@ -428,11 +432,13 @@ export default class Registration extends React.Component<IProps, IState> {
     private onLoginClickWithCheck = async ev => {
         ev.preventDefault();
 
-        const sessionLoaded = await Lifecycle.loadSession({ignoreGuest: true});
+        const sessionLoaded = await Lifecycle.loadSession({ ignoreGuest: true });
         if (!sessionLoaded) {
             // ok fine, there's still no session: really go to the login page
             this.props.onLoginClick();
         }
+
+        return sessionLoaded;
     };
 
     private renderRegisterComponent() {
@@ -462,7 +468,7 @@ export default class Registration extends React.Component<IProps, IState> {
             let ssoSection;
             if (this.state.ssoFlow) {
                 let continueWithSection;
-                const providers = this.state.ssoFlow["org.matrix.msc2858.identity_providers"] || [];
+                const providers = this.state.ssoFlow.identity_providers || [];
                 // when there is only a single (or 0) providers we show a wide button with `Continue with X` text
                 if (providers.length > 1) {
                     // i18n: ssoButtons is a placeholder to help translators understand context
@@ -481,7 +487,13 @@ export default class Registration extends React.Component<IProps, IState> {
                         fragmentAfterLogin={this.props.fragmentAfterLogin}
                     />
                     <h3 className="mx_AuthBody_centered">
-                        { _t("%(ssoButtons)s Or %(usernamePassword)s", { ssoButtons: "", usernamePassword: ""}).trim() }
+                        {_t(
+                            "%(ssoButtons)s Or %(usernamePassword)s",
+                            {
+                                ssoButtons: "",
+                                usernamePassword: "",
+                            },
+                        ).trim()}
                     </h3>
                 </React.Fragment>;
             }
@@ -554,7 +566,12 @@ export default class Registration extends React.Component<IProps, IState> {
                             loggedInUserId: this.state.differentLoggedInUserId,
                         },
                     )}</p>
-                    <p><AccessibleButton element="span" className="mx_linkButton" onClick={this.onLoginClickWithCheck}>
+                    <p><AccessibleButton element="span" className="mx_linkButton" onClick={async event => {
+                        const sessionLoaded = await this.onLoginClickWithCheck(event);
+                        if (sessionLoaded) {
+                            dis.dispatch({ action: "view_welcome_page" });
+                        }
+                    }}>
                         {_t("Continue with previous account")}
                     </AccessibleButton></p>
                 </div>;
