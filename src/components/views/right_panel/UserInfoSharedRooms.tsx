@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { Room } from "matrix-js-sdk/src/models/room";
+import { EventType } from 'matrix-js-sdk/src/@types/event';
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import Spinner from "../elements/Spinner";
@@ -37,18 +38,10 @@ interface IState {
 
 export default class UserInfoSharedRooms extends React.PureComponent<IProps, IState> {
     public static async getSharedRoomsForUser(userId: string): Promise<Room[]> {
-        const peg = MatrixClientPeg.get();
-
-        const roomIds = await MatrixClientPeg.get()._unstable_getSharedRooms(userId);
-        return roomIds.map(roomId => peg.getRoom(roomId)).filter(room => {
-            if (room === null) {
-                return false;
-            }
-            const tombstone = room.currentState.getStateEvents("m.room.tombstone", "");
-            if (tombstone) {
-                return false;
-            }
-            return true;
+        const client = MatrixClientPeg.get();
+        const roomIds = await client._unstable_getSharedRooms(userId);
+        return roomIds.map(roomId => client.getRoom(roomId)).filter(room => {
+            return room && !room.currentState.getStateEvents(EventType.RoomTombstone, "");
         });
     }
 
@@ -64,10 +57,8 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
     }
 
     async componentDidUpdate(prevProps?: IProps) {
-        if (prevProps && prevProps.userId === this.props.userId) {
-            // Nothing to update.
-            return;
-        }
+        const userId = this.props.userId;
+        if (prevProps?.userId === userId) return; // Nothing to update.
 
         // Reset because this is a new user
         this.setState({
@@ -76,11 +67,13 @@ export default class UserInfoSharedRooms extends React.PureComponent<IProps, ISt
         });
 
         try {
+            const sharedRooms = await UserInfoSharedRooms.getSharedRoomsForUser(userId);
+            if (this.props.userId !== userId) return; // stale
             this.setState({
-                sharedRoomCount: (await UserInfoSharedRooms.getSharedRoomsForUser(this.props.userId)).length,
+                sharedRoomCount: sharedRooms.length,
             });
         } catch (ex) {
-            console.log(`Failed to get shared rooms for ${this.props.userId}`, ex);
+            console.log(`Failed to get shared rooms for ${userId}`, ex);
             this.setState({ error: true });
         }
     }

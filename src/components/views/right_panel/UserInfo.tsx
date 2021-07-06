@@ -1404,8 +1404,8 @@ const BasicUserInfo: React.FC<{
     if (isSharedRoomsFeatureEnabled && !isMe) {
         sharedRooms = <div className="mx_UserInfo_container">
             <h3>{ _t("Shared Rooms") }</h3>
-            { <UserInfoSharedRooms userId={member.userId} /> }
-        </div>
+            <UserInfoSharedRooms userId={member.userId} />
+        </div>;
     }
 
     return <React.Fragment>
