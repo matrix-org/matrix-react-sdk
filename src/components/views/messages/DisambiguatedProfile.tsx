@@ -32,7 +32,7 @@ export default class DisambiguatedProfile extends React.Component<IProps> {
     render() {
         const { fallbackName, member, flair, colored, emphasizeDisplayName, onClick } = this.props;
         const rawDisplayName = member?.rawDisplayName || fallbackName;
-        const mxid = member?.userId || fallbackName;
+        const mxid = member?.userId;
 
         let colorClass;
         if (colored) {
@@ -40,7 +40,7 @@ export default class DisambiguatedProfile extends React.Component<IProps> {
         }
 
         let mxidElement;
-        if (member?.disambiguate) {
+        if (member?.disambiguate && mxid) {
             mxidElement = (
                 <span className="mx_DisambiguatedProfile_mxid">
                     { mxid }
