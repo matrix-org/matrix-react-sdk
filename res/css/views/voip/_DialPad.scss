@@ -25,6 +25,10 @@ limitations under the License.
 }
 
 .mx_DialPad_button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
     width: 40px;
     height: 40px;
     background-color: $dialpad-button-bg-color;
@@ -33,9 +37,12 @@ limitations under the License.
     font-weight: 600;
     text-align: center;
     vertical-align: middle;
-    line-height: 40px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.mx_DialPad_button .mx_DialPad_buttonSubText {
+    font-size: 8px;
 }
 
 .mx_DialPad_deleteButton, .mx_DialPad_dialButton {
