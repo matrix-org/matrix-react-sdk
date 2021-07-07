@@ -256,7 +256,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
         const nameJSX = (
             <DisambiguatedProfile
                 member={member}
-                fallbackName={member.rawDisplayName || ""}
+                fallbackName={name || ""}
             />
         );
 
