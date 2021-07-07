@@ -1532,7 +1532,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                         onChange={this.onDialChange}
                     />
                 </form>
-                <Dialpad hasDial={false} hasDelete={true}
+                <Dialpad hasDial={false}
                     onDigitPress={this.onDigitPress} onDeletePress={this.onDeletePress}
                 />
             </div>;

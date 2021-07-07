@@ -86,7 +86,7 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
                 </form>
             </div>
             <div className="mx_DialPadModal_dialPad">
-                <DialPad hasDial={true} hasDelete={true}
+                <DialPad hasDial={true}
                     onDigitPress={this.onDigitPress}
                     onDeletePress={this.onDeletePress}
                     onDialPress={this.onDialPress}
