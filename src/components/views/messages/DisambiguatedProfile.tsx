@@ -17,20 +17,27 @@ limitations under the License.
 import React from 'react';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import { getUserNameColorClass } from '../../../utils/FormattingUtils';
+import classNames from 'classnames';
 
 interface IProps {
     member?: RoomMember
     fallbackName: string;
     flair?: JSX.Element;
     onClick?(): void;
+    colored?: boolean;
+    emphasizeDisplayName?: boolean;
 }
 
 export default class DisambiguatedProfile extends React.Component<IProps> {
     render() {
-        const { fallbackName, member, flair, onClick } = this.props;
-        const colorClass = getUserNameColorClass(fallbackName);
+        const { fallbackName, member, flair, colored, emphasizeDisplayName, onClick } = this.props;
         const rawDisplayName = member?.rawDisplayName || fallbackName;
         const mxid = member?.userId || fallbackName;
+
+        let colorClass;
+        if (colored) {
+            colorClass = getUserNameColorClass(fallbackName);
+        }
 
         let mxidElement;
         if (member?.disambiguate) {
@@ -41,9 +48,14 @@ export default class DisambiguatedProfile extends React.Component<IProps> {
             );
         }
 
+        const displayNameClasses = classNames({
+            "mx_DisambiguatedProfile_displayName": emphasizeDisplayName,
+            [colorClass]: true,
+        });
+
         return (
             <div className="mx_DisambiguatedProfile" dir="auto" onClick={onClick}>
-                <span className={`mx_DisambiguatedProfile_displayName ${colorClass}`}>
+                <span className={displayNameClasses}>
                     { rawDisplayName }
                 </span>
                 { mxidElement }

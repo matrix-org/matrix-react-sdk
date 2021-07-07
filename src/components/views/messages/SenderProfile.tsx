@@ -129,6 +129,8 @@ export default class SenderProfile extends React.Component<IProps, IState> {
                 flair={flair}
                 onClick={onClick}
                 member={mxEvent.sender}
+                colored={true}
+                emphasizeDisplayName={true}
             />
         );
     }
