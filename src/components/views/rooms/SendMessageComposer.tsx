@@ -17,17 +17,19 @@ limitations under the License.
 import React, { ClipboardEvent, createRef, KeyboardEvent } from 'react';
 import EMOJI_REGEX from 'emojibase-regex';
 import { IContent, MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { DebouncedFunc, throttle } from 'lodash';
+import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 
 import dis from '../../../dispatcher/dispatcher';
 import EditorModel from '../../../editor/model';
 import {
-    htmlSerializeIfNeeded,
-    textSerialize,
     containsEmote,
-    stripEmoteCommand,
-    unescapeMessage,
+    htmlSerializeIfNeeded,
     startsWith,
+    stripEmoteCommand,
     stripPrefix,
+    textSerialize,
+    unescapeMessage,
 } from '../../../editor/serialize';
 import { CommandPartCreator, Part, PartCreator, SerializedPart } from '../../../editor/parts';
 import BasicMessageComposer from "./BasicMessageComposer";
@@ -39,7 +41,6 @@ import Modal from '../../../Modal';
 import { _t, _td } from '../../../languageHandler';
 import ContentMessages from '../../../ContentMessages';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import RateLimitedFunc from '../../../ratelimitedfunc';
 import { Action } from "../../../dispatcher/actions";
 import { containsEmoji } from "../../../effects/utils";
 import { CHAT_EFFECTS } from '../../../effects';
@@ -138,7 +139,7 @@ export default class SendMessageComposer extends React.Component<IProps> {
     static contextType = MatrixClientContext;
     context!: React.ContextType<typeof MatrixClientContext>;
 
-    private readonly prepareToEncrypt?: RateLimitedFunc;
+    private readonly prepareToEncrypt?: DebouncedFunc<() => void>;
     private readonly editorRef = createRef<BasicMessageComposer>();
     private model: EditorModel = null;
     private currentlyComposedEditorState: SerializedPart[] = null;
@@ -149,9 +150,9 @@ export default class SendMessageComposer extends React.Component<IProps> {
         super(props);
         this.context = context; // otherwise React will only set it prior to render due to type def above
         if (this.context.isCryptoEnabled() && this.context.isRoomEncrypted(this.props.room.roomId)) {
-            this.prepareToEncrypt = new RateLimitedFunc(() => {
+            this.prepareToEncrypt = throttle(() => {
                 this.context.prepareToEncrypt(this.props.room);
-            }, 60000);
+            }, 60000, { leading: true, trailing: false });
         }
 
         window.addEventListener("beforeunload", this.saveStoredEditorState);
@@ -258,12 +259,12 @@ export default class SendMessageComposer extends React.Component<IProps> {
         const events = timeline.getEvents();
         const reaction = this.model.parts[1].text;
         for (let i = events.length - 1; i >= 0; i--) {
-            if (events[i].getType() === "m.room.message") {
+            if (events[i].getType() === EventType.RoomMessage) {
                 let shouldReact = true;
                 const lastMessage = events[i];
                 const userId = MatrixClientPeg.get().getUserId();
                 const messageReactions = this.props.room.getUnfilteredTimelineSet()
-                    .getRelationsForEvent(lastMessage.getId(), "m.annotation", "m.reaction");
+                    .getRelationsForEvent(lastMessage.getId(), RelationType.Annotation, EventType.Reaction);
 
                 // if we have already sent this reaction, don't redact but don't re-send
                 if (messageReactions) {
@@ -274,9 +275,9 @@ export default class SendMessageComposer extends React.Component<IProps> {
                     shouldReact = !myReactionKeys.includes(reaction);
                 }
                 if (shouldReact) {
-                    MatrixClientPeg.get().sendEvent(lastMessage.getRoomId(), "m.reaction", {
+                    MatrixClientPeg.get().sendEvent(lastMessage.getRoomId(), EventType.Reaction, {
                         "m.relates_to": {
-                            "rel_type": "m.annotation",
+                            "rel_type": RelationType.Annotation,
                             "event_id": lastMessage.getId(),
                             "key": reaction,
                         },
