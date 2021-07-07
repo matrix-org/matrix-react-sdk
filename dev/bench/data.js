@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625670555349,
+  "lastUpdate": 1625672155934,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -4820,6 +4820,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5011.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "209cafb1f537e8f1ebf171fd2c2d998dc8b068eb",
+          "message": "Merge pull request #6308 from SimonBrandner/burn-sdk-get-comp-with-fire",
+          "timestamp": "2021-07-07T16:30:54+01:00",
+          "tree_id": "5904e5ddc996455e364ae83205f99d8cc98d5b3b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/209cafb1f537e8f1ebf171fd2c2d998dc8b068eb"
+        },
+        "date": 1625672154699,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4095.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1202.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1752.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4538.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
