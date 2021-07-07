@@ -59,6 +59,7 @@ import { FontWatcher } from '../../settings/watchers/FontWatcher';
 import { storeRoomAliasInCache } from '../../RoomAliasCache';
 import ToastStore from "../../stores/ToastStore";
 import * as StorageManager from "../../utils/StorageManager";
+import ForwardDialog from '../views/dialogs/ForwardDialog';
 import type LoggedInViewType from "./LoggedInView";
 import { ViewUserPayload } from "../../dispatcher/payloads/ViewUserPayload";
 import { Action } from "../../dispatcher/actions";
@@ -85,7 +86,7 @@ import RoomListStore from "../../stores/room-list/RoomListStore";
 import { RoomUpdateCause } from "../../stores/room-list/models";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import SecurityCustomisations from "../../customisations/Security";
-
+import qs, { ParsedUrlQueryInput } from 'querystring';
 import PerformanceMonitor, { PerformanceEntryNames } from "../../performance";
 import UIStore, { UI_EVENTS } from "../../stores/UIStore";
 
@@ -946,6 +947,43 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.notifyNewScreen('group/' + groupId);
     }
 
+    private async openSendToDialog(url: string) {
+        // open the home page in the background
+        this.setPage(PageTypes.HomePage);
+
+        let waitFor;
+        if (!this.firstSyncComplete) {
+            waitFor = this.firstSyncPromise.promise;
+        } else {
+            waitFor = Promise.resolve();
+        }
+        await waitFor;
+
+        const cli = MatrixClientPeg.get();
+
+        const mockEvent = new MatrixEvent({
+            type: "m.room.message",
+            sender: cli.getUserId(),
+            content: {
+                msgtype: "m.text",
+                body: url,
+            },
+            unsigned: {
+                age: 97,
+            },
+            event_id: "$9999999999999999999999999999999999999999999",
+            room_id: undefined,
+        });
+
+        Modal.createTrackedDialog(
+            'Send To Dialog', '', ForwardDialog, {
+                dialogTitle: _t("Send to"),
+                matrixClient: cli,
+                event: mockEvent,
+            },
+        );
+    }
+
     private viewSomethingBehindModal() {
         if (this.state.view !== Views.LOGGED_IN) {
             this.viewWelcome();
@@ -1682,6 +1720,14 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             dis.dispatch({
                 action: 'view_my_groups',
             });
+        } else if (screen === 'share') {
+            if (this.props.startingFragmentQueryParams.url) {
+                this.openSendToDialog(this.props.startingFragmentQueryParams.url);
+            } else {
+                dis.dispatch({
+                    action: 'view_home_page',
+                });
+            }
         } else if (screen.indexOf('room/') === 0) {
             // Rooms can have the following formats:
             // #room_alias:domain or !opaque_id:domain
@@ -1967,7 +2013,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             // XXX: workaround for https://github.com/vector-im/element-web/issues/11643 causing a login-loop
             !["welcome", "login", "register", "start_sso", "start_cas"].includes(initialScreenAfterLogin.screen)
         ) {
-            fragmentAfterLogin = `/${initialScreenAfterLogin.screen}`;
+            const queryString = qs.encode(initialScreenAfterLogin.params as ParsedUrlQueryInput);
+            fragmentAfterLogin = `/${initialScreenAfterLogin.screen}${queryString ? "?" + queryString : ""}`;
         }
         return fragmentAfterLogin;
     }
