@@ -162,7 +162,7 @@ $irc-line-height: $font-18px;
         border-left: 0;
     }
 
-    .mx_SenderProfile {
+    .mx_DisambiguatedProfile {
         width: var(--name-width);
         display: flex;
         order: 2;
@@ -170,34 +170,34 @@ $irc-line-height: $font-18px;
         justify-content: flex-start;
         align-items: center;
 
-        > .mx_SenderProfile_displayName {
+        > .mx_DisambiguatedProfile_displayName {
             width: 100%;
             text-align: end;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        > .mx_SenderProfile_mxid {
+        > .mx_DisambiguatedProfile_mxid {
             visibility: collapse;
         }
     }
 
-    .mx_SenderProfile:hover {
+    .mx_DisambiguatedProfile:hover {
         overflow: visible;
         z-index: 10;
 
-        > .mx_SenderProfile_displayName {
+        > .mx_DisambiguatedProfile_displayName {
             overflow: visible;
         }
 
-        > .mx_SenderProfile_mxid {
+        > .mx_DisambiguatedProfile_mxid {
             visibility: visible;
         }
     }
 
     .mx_ReplyThread {
         margin: 0;
-        .mx_SenderProfile {
+        .mx_DisambiguatedProfile {
             width: unset;
             max-width: var(--name-width);
             background: transparent;

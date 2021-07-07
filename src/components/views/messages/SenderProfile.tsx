@@ -17,10 +17,11 @@
 import React from 'react';
 import Flair from '../elements/Flair';
 import FlairStore from '../../../stores/FlairStore';
-import { getUserNameColorClass } from '../../../utils/FormattingUtils';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import DisambiguatedProfile from "./DisambiguatedProfile";
+import { MsgType } from '../../../../../matrix-js-sdk/src/@types/event';
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -105,26 +106,10 @@ export default class SenderProfile extends React.Component<IProps, IState> {
     }
 
     render() {
-        const { mxEvent } = this.props;
-        const colorClass = getUserNameColorClass(mxEvent.getSender());
-        const { msgtype } = mxEvent.getContent();
+        const { mxEvent, onClick } = this.props;
 
-        const disambiguate = mxEvent.sender?.disambiguate;
-        const displayName = mxEvent.sender?.rawDisplayName || mxEvent.getSender() || "";
-        const mxid = mxEvent.sender?.userId || mxEvent.getSender() || "";
-
-        if (msgtype === 'm.emote') {
-            return null; // emote message must include the name so don't duplicate it
-        }
-
-        let mxidElement;
-        if (disambiguate) {
-            mxidElement = (
-                <span className="mx_SenderProfile_mxid">
-                    { mxid }
-                </span>
-            );
-        }
+        // emote message must include the name so don't duplicate it
+        if (mxEvent.getContent()?.msgtype === MsgType.Emote) return null;
 
         let flair;
         if (this.props.enableFlair) {
@@ -139,13 +124,12 @@ export default class SenderProfile extends React.Component<IProps, IState> {
         }
 
         return (
-            <div className="mx_SenderProfile" dir="auto" onClick={this.props.onClick}>
-                <span className={`mx_SenderProfile_displayName ${colorClass}`}>
-                    { displayName }
-                </span>
-                { mxidElement }
-                { flair }
-            </div>
+            <DisambiguatedProfile
+                fallbackName={mxEvent.getSender() || ""}
+                flair={flair}
+                onClick={onClick}
+                member={mxEvent.sender}
+            />
         );
     }
 }

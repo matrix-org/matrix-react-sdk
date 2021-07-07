@@ -121,7 +121,7 @@ function getAllEventTiles(session) {
 }
 
 async function getMessageFromEventTile(eventTile) {
-    const senderElement = await eventTile.$(".mx_SenderProfile_displayName");
+    const senderElement = await eventTile.$(".mx_DisambiguatedProfile_displayName");
     const className = await (await eventTile.getProperty("className")).jsonValue();
     const classNames = className.split(" ");
     const bodyElement = await eventTile.$(".mx_EventTile_body");

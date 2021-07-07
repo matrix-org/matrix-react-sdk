@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2021 Šimon Brandner <simon.bra.ag@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,11 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_SenderProfile_displayName {
+.mx_DisambiguatedProfile_displayName {
     font-weight: 600;
 }
 
-.mx_SenderProfile_mxid {
+.mx_DisambiguatedProfile_mxid {
     font-weight: 600;
     font-size: 1.1rem;
     margin-left: 5px;
