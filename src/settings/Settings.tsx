@@ -223,6 +223,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
+    "feature_mark_unread": {
+        isFeature: true,
+        displayName: _td("Mark rooms as unread"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "feature_communities_v2_prototypes": {
         isFeature: true,
         displayName: _td(

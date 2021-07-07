@@ -24,16 +24,25 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import * as RoomNotifs from '../../RoomNotifs';
 import * as Unread from '../../Unread';
 import { NotificationState } from "./NotificationState";
+import { isRoomMarkedAsUnread, UNSTABLE_MSC2867_MARKED_UNREAD_TYPE } from "../../Rooms";
+import SettingsStore from "../../settings/SettingsStore";
 
 export class RoomNotificationState extends NotificationState implements IDestroyable {
+    private featureMarkedUnreadWatcherRef = null;
     constructor(public readonly room: Room) {
         super();
         this.room.on("Room.receipt", this.handleReadReceipt);
         this.room.on("Room.timeline", this.handleRoomEventUpdate);
         this.room.on("Room.redaction", this.handleRoomEventUpdate);
         this.room.on("Room.myMembership", this.handleMembershipUpdate);
+        this.room.on("Room.accountData", this.handleRoomAccountDataUpdate);
         MatrixClientPeg.get().on("Event.decrypted", this.handleRoomEventUpdate);
         MatrixClientPeg.get().on("accountData", this.handleAccountDataUpdate);
+
+        this.featureMarkedUnreadWatcherRef = SettingsStore.watchSetting("feature_mark_unread", null, () => {
+            this.updateNotificationState();
+        });
+
         this.updateNotificationState();
     }
 
@@ -47,10 +56,12 @@ export class RoomNotificationState extends NotificationState implements IDestroy
         this.room.removeListener("Room.timeline", this.handleRoomEventUpdate);
         this.room.removeListener("Room.redaction", this.handleRoomEventUpdate);
         this.room.removeListener("Room.myMembership", this.handleMembershipUpdate);
+        this.room.removeListener("Room.accountData", this.handleRoomAccountDataUpdate);
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener("Event.decrypted", this.handleRoomEventUpdate);
             MatrixClientPeg.get().removeListener("accountData", this.handleAccountDataUpdate);
         }
+        SettingsStore.unwatchSetting(this.featureMarkedUnreadWatcherRef);
     }
 
     private handleReadReceipt = (event: MatrixEvent, room: Room) => {
@@ -72,6 +83,12 @@ export class RoomNotificationState extends NotificationState implements IDestroy
 
     private handleAccountDataUpdate = (ev: MatrixEvent) => {
         if (ev.getType() === "m.push_rules") {
+            this.updateNotificationState();
+        }
+    };
+
+    private handleRoomAccountDataUpdate = (ev: MatrixEvent) => {
+        if (ev.getType() === UNSTABLE_MSC2867_MARKED_UNREAD_TYPE) {
             this.updateNotificationState();
         }
     };
@@ -110,13 +127,20 @@ export class RoomNotificationState extends NotificationState implements IDestroy
                 this._count = trueCount;
                 this._symbol = null; // symbol calculated by component
             } else {
-                // We don't have any notified messages, but we might have unread messages. Let's
-                // find out.
-                const hasUnread = Unread.doesRoomHaveUnreadMessages(this.room);
-                if (hasUnread) {
-                    this._color = NotificationColor.Bold;
+                const markUnreadEnabled = SettingsStore.getValue("feature_mark_unread");
+
+                if (markUnreadEnabled && isRoomMarkedAsUnread(this.room)) {
+                    this._color = NotificationColor.Red;
                 } else {
-                    this._color = NotificationColor.None;
+                    // We don't have any notified messages, but we might have unread messages. Let's
+                    // find out.
+                    const hasUnread = Unread.doesRoomHaveUnreadMessages(this.room);
+
+                    if (hasUnread) {
+                        this._color = NotificationColor.Bold;
+                    } else {
+                        this._color = NotificationColor.None;
+                    }
                 }
 
                 // no symbol or count for this state

@@ -34,7 +34,7 @@ limitations under the License.
         align-items: center;
         justify-content: center;
 
-        &.mx_NotificationBadge_highlighted {
+        &.mx_NotificationBadge_highlighted, &.mx_NotificationBadge_highlighted.mx_NotificationBadge_dot {
             // TODO: Use a more specific variable
             background-color: $warning-color;
         }
@@ -44,9 +44,9 @@ limitations under the License.
         &.mx_NotificationBadge_dot {
             background-color: $primary-fg-color; // increased visibility
 
-            width: 6px;
-            height: 6px;
-            border-radius: 6px;
+            width: 8px;
+            height: 8px;
+            border-radius: 8px;
         }
 
         &.mx_NotificationBadge_2char {

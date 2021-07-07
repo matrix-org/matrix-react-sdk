@@ -47,6 +47,7 @@ import ResizeNotifier from "../../utils/ResizeNotifier";
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import Spinner from "../views/elements/Spinner";
 import EditorStateTransfer from '../../utils/EditorStateTransfer';
+import { isRoomMarkedAsUnread, setRoomMarkedAsUnread } from '../../Rooms';
 
 const PAGINATE_SIZE = 20;
 const INITIAL_SIZE = 20;
@@ -839,6 +840,20 @@ class TimelinePanel extends React.Component<IProps, IState> {
         this.sendReadReceipt();
     };
 
+    private removeUnreadMarker = () => {
+        // This happens on user_activity_end which is delayed, and it's
+        // very possible have logged out within that timeframe, so check
+        // we still have a client.
+        const cli = MatrixClientPeg.get();
+        // if no client or client is guest don't send mark room as read
+        if (!cli || cli.isGuest()) return;
+
+        const markUnreadEnabled = SettingsStore.getValue("feature_mark_unread");
+        if (markUnreadEnabled && isRoomMarkedAsUnread(this.props.timelineSet.room)) {
+            setRoomMarkedAsUnread(this.props.timelineSet.room, false);
+        }
+    };
+
     // advance the read marker past any events we sent ourselves.
     private advanceReadMarkerPastMyEvents(): void {
         if (!this.props.manageReadMarkers) return;
@@ -1088,6 +1103,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 if (this.props.sendReadReceiptOnLoad) {
                     this.sendReadReceipt();
                 }
+                this.removeUnreadMarker();
             });
         };
 
