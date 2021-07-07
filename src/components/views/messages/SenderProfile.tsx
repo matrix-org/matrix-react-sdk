@@ -21,7 +21,7 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import DisambiguatedProfile from "./DisambiguatedProfile";
-import { MsgType } from '../../../../../matrix-js-sdk/src/@types/event';
+import { MsgType } from 'matrix-js-sdk/src/@types/event';
 
 interface IProps {
     mxEvent: MatrixEvent;

@@ -20,7 +20,7 @@ import { getUserNameColorClass } from '../../../utils/FormattingUtils';
 import classNames from 'classnames';
 
 interface IProps {
-    member?: RoomMember
+    member?: RoomMember;
     fallbackName: string;
     flair?: JSX.Element;
     onClick?(): void;
