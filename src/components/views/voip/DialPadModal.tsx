@@ -22,6 +22,7 @@ import dis from '../../../dispatcher/dispatcher';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { DialNumberPayload } from "../../../dispatcher/payloads/DialNumberPayload";
 import { Action } from "../../../dispatcher/actions";
+import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
 
 interface IProps {
     onFinished: (boolean) => void;
@@ -73,6 +74,10 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
     };
 
     render() {
+        const backspaceButton = (
+            <DialPadBackspaceButton onBackspacePress={this.onDeletePress} />
+        );
+
         return <div className="mx_DialPadModal">
             <div>
                 <AccessibleButton className="mx_DialPadModal_cancel" onClick={this.onCancelClick} />
@@ -82,6 +87,7 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
                     <Field className="mx_DialPadModal_field" id="dialpad_number"
                         value={this.state.value} autoFocus={true}
                         onChange={this.onChange}
+                        postfixComponent={backspaceButton}
                     />
                 </form>
             </div>
