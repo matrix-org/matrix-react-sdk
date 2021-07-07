@@ -16,8 +16,12 @@ limitations under the License.
 
 .mx_DialPad {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
+
+    /* squeeze the dial pad buttons together horizontally */
+    grid-template-columns: 2fr 1fr 2fr;
+    margin-left: 32px;
+    margin-right: 32px;
 }
 
 .mx_DialPad_button {
