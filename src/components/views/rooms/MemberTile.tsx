@@ -28,6 +28,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import EntityTile, { PowerStatus } from "./EntityTile";
 import MemberAvatar from "./../avatars/MemberAvatar";
+import DisambiguatedProfile from "../messages/DisambiguatedProfile";
 
 interface IProps {
     member: RoomMember;
@@ -252,6 +253,13 @@ export default class MemberTile extends React.Component<IProps, IState> {
             e2eStatus = this.state.e2eStatus;
         }
 
+        const nameJSX = (
+            <DisambiguatedProfile
+                member={member}
+                fallbackName={member.rawDisplayName || ""}
+            />
+        );
+
         return (
             <EntityTile
                 {...this.props}
@@ -262,6 +270,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
                 avatarJsx={av}
                 title={this.getPowerLabel()}
                 name={name}
+                nameJSX={nameJSX}
                 powerStatus={powerStatus}
                 showPresence={this.props.showPresence}
                 subtextLabel={statusMessage}
