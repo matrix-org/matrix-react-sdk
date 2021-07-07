@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625653350428,
+  "lastUpdate": 1625668129030,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -4724,6 +4724,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4682.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "33930c296ff165c8442ca704c555e88fab4a6109",
+          "message": "Merge pull request #6327 from matrix-org/gsouquet/ci-pure-lockfile\n\nDo not generate a lockfile when running in CI",
+          "timestamp": "2021-07-07T15:23:20+01:00",
+          "tree_id": "09f6f96aedac4b43edf61e586b51c209a2ee8e74",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/33930c296ff165c8442ca704c555e88fab4a6109"
+        },
+        "date": 1625668128199,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4600,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1293.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1650.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4408.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
