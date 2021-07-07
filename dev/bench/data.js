@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625668129030,
+  "lastUpdate": 1625670555349,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -4772,6 +4772,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4408.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "25dab1eb646c5cd0423cd6ed9e9d061d364b2fba",
+          "message": "Merge pull request #6307 from matrix-org/t3chguy/fix/17858\n\nFix instances of the Edit Message Composer's save button being wrongly disabled",
+          "timestamp": "2021-07-07T16:03:27+01:00",
+          "tree_id": "a31c3ec53dcc693b431b76654971092f5640f009",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/25dab1eb646c5cd0423cd6ed9e9d061d364b2fba"
+        },
+        "date": 1625670554483,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4545.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1147.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1918.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5011.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
