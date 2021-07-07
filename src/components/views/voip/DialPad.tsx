@@ -19,6 +19,7 @@ import AccessibleButton from "../elements/AccessibleButton";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 const BUTTONS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0', '#'];
+const BUTTON_LETTERS = ['', 'ABC', 'DEF', 'GHI', 'JKL', 'MNO', 'PQRS', 'TUV', 'WXYZ', '', '+', '']
 
 enum DialPadButtonKind {
     Digit,
@@ -29,6 +30,7 @@ enum DialPadButtonKind {
 interface IButtonProps {
     kind: DialPadButtonKind;
     digit?: string;
+    digitSubtext?: string;
     onButtonPress: (string) => void;
 }
 
@@ -42,6 +44,9 @@ class DialPadButton extends React.PureComponent<IButtonProps> {
             case DialPadButtonKind.Digit:
                 return <AccessibleButton className="mx_DialPad_button" onClick={this.onClick}>
                     {this.props.digit}
+                    <div className="mx_DialPad_buttonSubText">
+                        {this.props.digitSubtext}
+                    </div>
                 </AccessibleButton>;
             case DialPadButtonKind.Delete:
                 return <AccessibleButton className="mx_DialPad_button mx_DialPad_deleteButton"
@@ -66,9 +71,11 @@ export default class Dialpad extends React.PureComponent<IProps> {
     render() {
         const buttonNodes = [];
 
-        for (const button of BUTTONS) {
+        for (let i = 0; i < BUTTONS.length; i++) {
+            const button = BUTTONS[i];
+            const digitSubtext = BUTTON_LETTERS[i];
             buttonNodes.push(<DialPadButton key={button} kind={DialPadButtonKind.Digit}
-                digit={button} onButtonPress={this.props.onDigitPress}
+                digit={button} digitSubtext={digitSubtext} onButtonPress={this.props.onDigitPress}
             />);
         }
 
