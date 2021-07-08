@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625732478236,
+  "lastUpdate": 1625732617610,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -4964,6 +4964,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4412.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "72acd5a6110bb354c83b74354c689afe430a609b",
+          "message": "Merge pull request #6330 from matrix-org/dbkr/tsify_secretstorage\n\nUpdate import location for types",
+          "timestamp": "2021-07-08T09:18:31+01:00",
+          "tree_id": "026134714e1fdd06bd6ac20a0e8dd568c60a906b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/72acd5a6110bb354c83b74354c689afe430a609b"
+        },
+        "date": 1625732616265,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4015.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 617.8999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
