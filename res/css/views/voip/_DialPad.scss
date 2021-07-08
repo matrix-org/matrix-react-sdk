@@ -45,7 +45,7 @@ limitations under the License.
     font-size: 8px;
 }
 
-.mx_DialPad_deleteButton, .mx_DialPad_dialButton {
+.mx_DialPad_dialButton {
     &::before {
         content: '';
         display: inline-block;
@@ -56,14 +56,6 @@ limitations under the License.
         mask-size: 20px;
         mask-position: center;
         background-color: $primary-bg-color;
-    }
-}
-
-.mx_DialPad_deleteButton {
-    background-color: $notice-primary-color;
-    &::before {
-        mask-image: url('$(res)/img/element-icons/call/delete.svg');
-        mask-position: 9px; // delete icon is right-heavy so have to be slightly to the left to look centered
     }
 }
 

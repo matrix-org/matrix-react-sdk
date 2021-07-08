@@ -14,18 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as React from "react";
-import AccessibleButton from "./AccessibleButton";
+.mx_DialPadBackspaceButton {
+    position: relative;
+    height: 28px;
+    width: 28px;
 
-interface IProps {
-    // Callback for when the button is pressed
-    onBackspacePress: () => void;
-}
+    &::before {
+        /* force this element to appear on the DOM */
+        content: "";
 
-export default class DialPadBackspaceButton extends React.PureComponent<IProps> {
-    render() {
-        return <div className="mx_DialPadBackspaceButtonWrapper">
-            <AccessibleButton className="mx_DialPadBackspaceButton" onClick={this.props.onBackspacePress} />
-        </div>;
+        background-color: #8D97A5;
+        width: 28px;
+        height: 28px;
+        top: 0px;
+        left: 0px;
+        position: absolute;
+        display: inline-block;
+        vertical-align: middle;
+
+        mask-image: url('$(res)/img/element-icons/call/delete.svg');
+        mask-position: 8px;
+        mask-size: 20px;
+        mask-repeat: no-repeat;
     }
 }

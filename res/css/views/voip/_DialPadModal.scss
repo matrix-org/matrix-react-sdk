@@ -59,6 +59,12 @@ limitations under the License.
 .mx_DialPadModal_field {
     border: none;
     margin: 0px;
+    height: 30px;
+}
+
+.mx_DialPadModal_field .mx_Field_postfix {
+    /* Remove border separator between postfix and field content */
+    border-left: none;
 }
 
 .mx_DialPadModal_field input {
