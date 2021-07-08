@@ -37,6 +37,7 @@ import RoomViewStore from "./stores/RoomViewStore";
 import UserActivity from "./UserActivity";
 import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
+import ReplyThread from "./components/views/elements/ReplyThread";
 
 /*
  * Dispatches:
@@ -120,7 +121,16 @@ export const Notifier = {
             avatarUrl = Avatar.avatarUrlForMember(ev.sender, 40, 40, 'crop');
         }
 
-        const notif = plaf.displayNotification(title, msg, avatarUrl, room);
+        let content = ev.getContent();
+        let notif: any;
+        if(content.body !== undefined){
+            let formattedBody = typeof content.formatted_body === 'string' ? content.formatted_body : null;
+            if (content.body.startsWith('>') && formattedBody) formattedBody = ReplyThread.stripHTMLReply(formattedBody);
+            content.body.startsWith('>') ? (notif = plaf.displayNotification(title, formattedBody, avatarUrl, room)) :
+                (notif = plaf.displayNotification(title, msg, avatarUrl, room))
+        } else {
+            notif = plaf.displayNotification(title, msg, avatarUrl, room)
+        }
 
         // if displayNotification returns non-null,  the platform supports
         // clearing notifications later, so keep track of this.
