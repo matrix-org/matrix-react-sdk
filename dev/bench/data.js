@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625752907919,
+  "lastUpdate": 1625777386491,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -5084,6 +5084,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4475.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "013a81148b494e530cef13858cba6d2531426f2e",
+          "message": "Merge pull request #6337 from matrix-org/dbkr/devicelistener_megolm_key\n\nMake DeviceListener also update on megolm key in SSSS",
+          "timestamp": "2021-07-08T21:44:41+01:00",
+          "tree_id": "3dbd39e05c8dae23ada5317947f463c73414c1c3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/013a81148b494e530cef13858cba6d2531426f2e"
+        },
+        "date": 1625777385119,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4086.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 903.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1726.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4617,
             "unit": "ms",
             "extra": "type: measure"
           }
