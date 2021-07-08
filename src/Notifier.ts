@@ -122,7 +122,7 @@ export const Notifier = {
         }
 
         const content = ev.getContent();
-        let notif: any;
+        let notif: Notification;
         if (content.body !== undefined) {
             let formattedBody = typeof content.formatted_body === 'string' ? content.formatted_body : null;
             if (content.body.startsWith('>') && formattedBody) {
