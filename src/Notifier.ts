@@ -129,7 +129,7 @@ export const Notifier = {
                 formattedBody = ReplyThread.stripHTMLReply(formattedBody);
             }
             notif = content.body.startsWith('>')
-                ? plaf.displayNotification(title, formattedBody, avatarUrl, room) 
+                ? plaf.displayNotification(title, formattedBody, avatarUrl, room)
                 : plaf.displayNotification(title, msg, avatarUrl, room);
         } else {
             notif = plaf.displayNotification(title, msg, avatarUrl, room);
