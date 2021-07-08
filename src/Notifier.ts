@@ -128,8 +128,9 @@ export const Notifier = {
             if (content.body.startsWith('>') && formattedBody) {
                 formattedBody = ReplyThread.stripHTMLReply(formattedBody);
             }
-            content.body.startsWith('>') ? (notif = plaf.displayNotification(title, formattedBody, avatarUrl, room)) :
-                (notif = plaf.displayNotification(title, msg, avatarUrl, room));
+			notif = content.body.startsWith('>')
+				? plaf.displayNotification(title, formattedBody, avatarUrl, room)
+				: plaf.displayNotification(title, msg, avatarUrl, room);
         } else {
             notif = plaf.displayNotification(title, msg, avatarUrl, room);
         }
