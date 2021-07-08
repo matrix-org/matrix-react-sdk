@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625672155934,
+  "lastUpdate": 1625731985018,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -4868,6 +4868,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4538.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bda83e8140accb4b11df0b1c35674cbc4494ce96",
+          "message": "Merge pull request #6320 from SimonBrandner/feature/proper-codeblock-colors",
+          "timestamp": "2021-07-08T09:07:21+01:00",
+          "tree_id": "d7fbadf4a27ecfae2e5ee5c914f45ea770e1d5b4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bda83e8140accb4b11df0b1c35674cbc4494ce96"
+        },
+        "date": 1625731983603,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4374.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1513.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1833.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4621.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
