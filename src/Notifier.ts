@@ -123,9 +123,9 @@ export const Notifier = {
 
         const content = ev.getContent();
         let notif: any;
-        if (content.body !== undefined) { 
+        if (content.body !== undefined) {
             let formattedBody = typeof content.formatted_body === 'string' ? content.formatted_body : null;
-            if (content.body.startsWith('>') && formattedBody) { 
+            if (content.body.startsWith('>') && formattedBody) {
                 formattedBody = ReplyThread.stripHTMLReply(formattedBody);
             }
             content.body.startsWith('>') ? (notif = plaf.displayNotification(title, formattedBody, avatarUrl, room)) :
