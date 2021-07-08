@@ -121,15 +121,17 @@ export const Notifier = {
             avatarUrl = Avatar.avatarUrlForMember(ev.sender, 40, 40, 'crop');
         }
 
-        let content = ev.getContent();
+        const content = ev.getContent();
         let notif: any;
-        if(content.body !== undefined){
+        if (content.body !== undefined) { 
             let formattedBody = typeof content.formatted_body === 'string' ? content.formatted_body : null;
-            if (content.body.startsWith('>') && formattedBody) formattedBody = ReplyThread.stripHTMLReply(formattedBody);
+            if (content.body.startsWith('>') && formattedBody) { 
+                formattedBody = ReplyThread.stripHTMLReply(formattedBody);
+            }
             content.body.startsWith('>') ? (notif = plaf.displayNotification(title, formattedBody, avatarUrl, room)) :
-                (notif = plaf.displayNotification(title, msg, avatarUrl, room))
+                (notif = plaf.displayNotification(title, msg, avatarUrl, room));
         } else {
-            notif = plaf.displayNotification(title, msg, avatarUrl, room)
+            notif = plaf.displayNotification(title, msg, avatarUrl, room);
         }
 
         // if displayNotification returns non-null,  the platform supports
