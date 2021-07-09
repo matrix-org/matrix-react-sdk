@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625835934476,
+  "lastUpdate": 1625836452061,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -5312,6 +5312,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4433,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a1c3f25fe5935a183ad9491406934033a28f76cc",
+          "message": "Merge pull request #6340 from SimonBrandner/feature/media-devices",
+          "timestamp": "2021-07-09T14:09:11+01:00",
+          "tree_id": "95da2b0117000547537d328817caf5019c352184",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a1c3f25fe5935a183ad9491406934033a28f76cc"
+        },
+        "date": 1625836451293,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4373.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 984.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1825.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4280,
             "unit": "ms",
             "extra": "type: measure"
           }
