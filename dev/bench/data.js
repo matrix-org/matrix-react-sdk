@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625842674916,
+  "lastUpdate": 1625850641158,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -5408,6 +5408,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4714.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "829169ec871998d7e9ea17fb76365b8eea8d8297",
+          "message": "Merge pull request #6342 from matrix-org/t3chguy/fix/vrlp\n\nFix small visual regression with the site name on url previews",
+          "timestamp": "2021-07-09T18:05:48+01:00",
+          "tree_id": "ee0a72db4d4af9b4d0a731f4487e068564c5eb17",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/829169ec871998d7e9ea17fb76365b8eea8d8297"
+        },
+        "date": 1625850639961,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4304.600000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1098.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1734.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4490.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
