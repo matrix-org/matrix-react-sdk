@@ -25,6 +25,7 @@ interface IProps {
     roomId: string;
     minWidth: number;
     maxWidth: number;
+    isTwelveHour: boolean;
 }
 
 interface IState {
@@ -90,8 +91,9 @@ export default class IRCTimelineProfileResizer extends React.Component<IProps, I
     }
 
     render() {
+        const className = this.props.isTwelveHour ? "mx_ProfileResizer mx_Event_12hr" : "mx_ProfileResizer mx_Event_24hr";
         return <Draggable
-            className="mx_ProfileResizer"
+            className={className}
             dragFunc={this.dragFunc.bind(this)}
             onMouseUp={this.onMoueUp.bind(this)}
         />;

@@ -582,7 +582,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
             for (const Grouper of groupers) {
                 if (Grouper.canStartGroup(this, mxEv)) {
-                    grouper = new Grouper(this, mxEv, prevEvent, lastShownEvent, nextEvent, nextTile);
+                    grouper = new Grouper(this, mxEv, prevEvent, lastShownEvent, this.props.isTwelveHour, nextEvent, nextTile);
                 }
             }
             if (!grouper) {
@@ -899,6 +899,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                 minWidth={20}
                 maxWidth={600}
                 roomId={this.props.room ? this.props.room.roomId : null}
+                isTwelveHour={this.props.isTwelveHour}
             />;
         }
 
@@ -939,6 +940,7 @@ abstract class BaseGrouper {
         public readonly event: MatrixEvent,
         public readonly prevEvent: MatrixEvent,
         public readonly lastShownEvent: MatrixEvent,
+        public readonly isTwelveHour: boolean,
         public readonly nextEvent?: MatrixEvent,
         public readonly nextEventTile?: MatrixEvent,
     ) {
@@ -1065,6 +1067,7 @@ class CreationGrouper extends BaseGrouper {
                 onToggle={panel.onHeightChanged} // Update scroll state
                 summaryMembers={[ev.sender]}
                 summaryText={summaryText}
+                isTwelveHour={this.isTwelveHour}
             >
                 { eventTiles }
             </EventListSummary>,
@@ -1092,10 +1095,11 @@ class RedactionGrouper extends BaseGrouper {
         ev: MatrixEvent,
         prevEvent: MatrixEvent,
         lastShownEvent: MatrixEvent,
+        isTwelveHour: boolean,
         nextEvent: MatrixEvent,
         nextEventTile: MatrixEvent,
     ) {
-        super(panel, ev, prevEvent, lastShownEvent, nextEvent, nextEventTile);
+        super(panel, ev, prevEvent, lastShownEvent, isTwelveHour, nextEvent, nextEventTile);
         this.events = [ev];
     }
 
@@ -1160,6 +1164,7 @@ class RedactionGrouper extends BaseGrouper {
                 onToggle={panel.onHeightChanged} // Update scroll state
                 summaryMembers={Array.from(senders)}
                 summaryText={_t("%(count)s messages deleted.", { count: eventTiles.length })}
+                isTwelveHour={this.isTwelveHour}
             >
                 { eventTiles }
             </EventListSummary>,
@@ -1188,8 +1193,9 @@ class MemberGrouper extends BaseGrouper {
         public readonly event: MatrixEvent,
         public readonly prevEvent: MatrixEvent,
         public readonly lastShownEvent: MatrixEvent,
+        public readonly isTwelveHour: boolean,
     ) {
-        super(panel, event, prevEvent, lastShownEvent);
+        super(panel, event, prevEvent, lastShownEvent, isTwelveHour);
         this.events = [event];
     }
 
@@ -1264,6 +1270,7 @@ class MemberGrouper extends BaseGrouper {
                 events={this.events}
                 onToggle={panel.onHeightChanged} // Update scroll state
                 startExpanded={highlightInMels}
+                isTwelveHour={this.isTwelveHour}
             >
                 { eventTiles }
             </MemberEventListSummary>,
