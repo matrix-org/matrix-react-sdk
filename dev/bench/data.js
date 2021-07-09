@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625818033273,
+  "lastUpdate": 1625818242225,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -5180,6 +5180,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4385.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ac309a0d08159c321690ee613e297b20443c4db1",
+          "message": "Merge pull request #6332 from SimonBrandner/fix/focus-composer-reaction/11023",
+          "timestamp": "2021-07-09T09:05:54+01:00",
+          "tree_id": "27ac96f5842a0a809cdd5d8fd2a0eb1a787042fc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ac309a0d08159c321690ee613e297b20443c4db1"
+        },
+        "date": 1625818241410,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4456.600000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1651.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4539.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
