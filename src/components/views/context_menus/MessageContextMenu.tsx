@@ -1,6 +1,6 @@
 /*
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
-Copyright 2015, 2016, 2018, 2019, 2021 The Matrix.org Foundation C.I.C.
+Copyright 2015 - 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ import React, { createRef } from 'react';
 import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
-import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
 import Resend from '../../../Resend';
@@ -27,7 +26,7 @@ import SettingsStore from '../../../settings/SettingsStore';
 import { isUrlPermitted } from '../../../HtmlUtils';
 import { canEditContent, isContentActionable } from '../../../utils/EventUtils';
 import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from './IconizedContextMenu';
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ReadPinsEventId } from "../right_panel/PinnedMessagesCard";
 import ForwardDialog from "../dialogs/ForwardDialog";
@@ -42,6 +41,11 @@ import { Relations } from 'matrix-js-sdk/src/models/relations';
 import { IMediaEventContent } from '../../../customisations/models/IMediaEventContent';
 import { mediaFromContent } from '../../../customisations/Media';
 import { decryptFile } from '../../../utils/DecryptFile';
+import ReportEventDialog from '../dialogs/ReportEventDialog';
+import ViewSource from '../../structures/ViewSource';
+import ConfirmRedactDialog from '../dialogs/ConfirmRedactDialog';
+import ErrorDialog from '../dialogs/ErrorDialog';
+import ShareDialog from '../dialogs/ShareDialog';
 
 const DOWNLOADABLE_MESSAGE_TYPES = [
     MsgType.Audio,
@@ -143,7 +147,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     };
 
     private onReportEventClick = (): void => {
-        const ReportEventDialog = sdk.getComponent("dialogs.ReportEventDialog");
         Modal.createTrackedDialog('Report Event', '', ReportEventDialog, {
             mxEvent: this.props.mxEvent,
         }, 'mx_Dialog_reportEvent');
@@ -151,7 +154,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     };
 
     private onViewSourceClick = (): void => {
-        const ViewSource = sdk.getComponent('structures.ViewSource');
         Modal.createTrackedDialog('View Event Source', '', ViewSource, {
             mxEvent: this.props.mxEvent,
         }, 'mx_Dialog_viewsource');
@@ -159,14 +161,13 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     };
 
     private onRedactClick = (): void => {
-        const ConfirmRedactDialog = sdk.getComponent("dialogs.ConfirmRedactDialog");
         Modal.createTrackedDialog('Confirm Redact Dialog', '', ConfirmRedactDialog, {
-            onFinished: async (proceed, reason) => {
+            onFinished: async (proceed: boolean, reason?: string) => {
                 if (!proceed) return;
 
                 const cli = MatrixClientPeg.get();
                 try {
-                    if (this.props.onCloseDialog) this.props.onCloseDialog();
+                    this.props.onCloseDialog?.();
                     await cli.redactEvent(
                         this.props.mxEvent.getRoomId(),
                         this.props.mxEvent.getId(),
@@ -179,7 +180,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                     // (e.g. no errcode or statusCode) as in that case the redactions end up in the
                     // detached queue and we show the room status bar to allow retry
                     if (typeof code !== "undefined") {
-                        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
                         // display error message stating you couldn't delete this.
                         Modal.createTrackedDialog('You cannot delete this message', '', ErrorDialog, {
                             title: _t('Error'),
@@ -223,13 +223,11 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     };
 
     private closeMenu = (): void => {
-        if (this.props.onFinished) this.props.onFinished();
+        this.props.onFinished();
     };
 
     private onUnhidePreviewClick = (): void => {
-        if (this.props.eventTileOps) {
-            this.props.eventTileOps.unhideWidget();
-        }
+        this.props.eventTileOps?.unhideWidget();
         this.closeMenu();
     };
 
@@ -241,9 +239,8 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         this.closeMenu();
     };
 
-    private onPermalinkClick = (e: ButtonEvent): void => {
+    private onPermalinkClick = (e: React.MouseEvent): void => {
         e.preventDefault();
-        const ShareDialog = sdk.getComponent("dialogs.ShareDialog");
         Modal.createTrackedDialog('share room message dialog', '', ShareDialog, {
             target: this.props.mxEvent,
             permalinkCreator: this.props.permalinkCreator,
@@ -321,10 +318,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         const eventId = this.props.mxEvent.getId();
         return room.getPendingEvents().filter(e => {
             const relation = e.getRelation();
-            return relation &&
-                relation.rel_type === "m.annotation" &&
-                relation.event_id === eventId &&
-                filter(e);
+            return relation?.rel_type === RelationType.Annotation && relation.event_id === eventId && filter(e);
         });
     }
 
@@ -477,8 +471,8 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         }
 
         // Bridges can provide a 'external_url' to link back to the source.
-        if (typeof (mxEvent.event.content.external_url) === "string" &&
-            isUrlPermitted(mxEvent.event.content.external_url)
+        if (typeof (mxEvent.getContent().external_url) === "string" &&
+            isUrlPermitted(mxEvent.getContent().external_url)
         ) {
             externalURLButton = (
                 <IconizedContextMenuOption
@@ -486,9 +480,14 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                     onClick={this.closeMenu}
                     label={ _t('Source URL') }
                     element="a"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    href={mxEvent.event.content.external_url}
+                    {
+                        // XXX: Typescript signature for AccessibleButton doesn't work properly for non-inputs like `a`
+                        ...{
+                            target: "_blank",
+                            rel: "noreferrer noopener",
+                            href: mxEvent.getContent().external_url,
+                        }
+                    }
                 />
             );
         }

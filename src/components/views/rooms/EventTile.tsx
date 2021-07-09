@@ -50,6 +50,13 @@ import NotificationBadge from "./NotificationBadge";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { Action } from '../../../dispatcher/actions';
 import PlatformPeg from '../../../PlatformPeg';
+import MemberAvatar from '../avatars/MemberAvatar';
+import SenderProfile from '../messages/SenderProfile';
+import MessageTimestamp from '../messages/MessageTimestamp';
+import TooltipButton from '../elements/TooltipButton';
+import ReadReceiptMarker from "./ReadReceiptMarker";
+import MessageActionBar from "../messages/MessageActionBar";
+import ReactionsRow from '../messages/ReactionsRow';
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -270,7 +277,7 @@ interface IProps {
     showReactions?: boolean;
 
     // which layout to use
-    layout: Layout;
+    layout?: Layout;
 
     // whether or not to show flair at all
     enableFlair?: boolean;
@@ -290,10 +297,10 @@ interface IProps {
     permalinkCreator?: RoomPermalinkCreator;
 
     // Symbol of the root node
-    as?: string
+    as?: string;
 
     // whether or not to always show timestamps
-    alwaysShowTimestamps?: boolean
+    alwaysShowTimestamps?: boolean;
 }
 
 interface IState {
@@ -313,8 +320,8 @@ interface IState {
 
     // Position of the context menu
     contextMenu: {
-        position: Partial<DOMRect>,
-        showPermalink?: boolean,
+        position: Partial<DOMRect>;
+        showPermalink?: boolean;
     };
 }
 
@@ -330,6 +337,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     static defaultProps = {
         // no-op function because onHeightChanged is optional yet some sub-components assume its existence
         onHeightChanged: function() {},
+        layout: Layout.Group,
     };
 
     static contextType = MatrixClientContext;
@@ -676,7 +684,6 @@ export default class EventTile extends React.Component<IProps, IState> {
             );
         }
 
-        const ReadReceiptMarker = sdk.getComponent('rooms.ReadReceiptMarker');
         const avatars = [];
         const receiptOffset = 15;
         let left = 0;
@@ -743,7 +750,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         );
     }
 
-    onSenderProfileClick = event => {
+    onSenderProfileClick = () => {
         const mxEvent = this.props.mxEvent;
         dis.dispatch<ComposerInsertPayload>({
             action: Action.ComposerInsert,
@@ -918,10 +925,6 @@ export default class EventTile extends React.Component<IProps, IState> {
     };
 
     render() {
-        const MessageTimestamp = sdk.getComponent('messages.MessageTimestamp');
-        const SenderProfile = sdk.getComponent('messages.SenderProfile');
-        const MemberAvatar = sdk.getComponent('avatars.MemberAvatar');
-
         //console.info("EventTile showUrlPreview for %s is %s", this.props.mxEvent.getId(), this.props.showUrlPreview);
 
         const content = this.props.mxEvent.getContent();
@@ -1064,7 +1067,6 @@ export default class EventTile extends React.Component<IProps, IState> {
             }
         }
 
-        const MessageActionBar = sdk.getComponent('messages.MessageActionBar');
         const actionBar = !isEditing ? <MessageActionBar
             mxEvent={this.props.mxEvent}
             reactions={this.state.reactions}
@@ -1112,7 +1114,6 @@ export default class EventTile extends React.Component<IProps, IState> {
                 { 'requestLink': (sub) => <a onClick={this.onRequestKeysClick}>{ sub }</a> },
             );
 
-        const TooltipButton = sdk.getComponent('elements.TooltipButton');
         const keyRequestInfo = isEncryptionFailure && !isRedacted ?
             <div className="mx_EventTile_keyRequestInfo">
                 <span className="mx_EventTile_keyRequestInfo_text">
@@ -1123,7 +1124,6 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         let reactionsRow;
         if (!isRedacted) {
-            const ReactionsRow = sdk.getComponent('messages.ReactionsRow');
             reactionsRow = <ReactionsRow
                 mxEvent={this.props.mxEvent}
                 reactions={this.state.reactions}
