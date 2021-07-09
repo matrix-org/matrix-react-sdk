@@ -37,6 +37,8 @@ interface IProps {
     // a callback which is called when the video element is resized
     // due to a change in video metadata
     onResize?: (e: Event) => void;
+
+    primary: boolean;
 }
 
 interface IState {
@@ -58,14 +60,37 @@ export default class VideoFeed extends React.Component<IProps, IState> {
     }
 
     componentDidMount() {
-        this.props.feed.addListener(CallFeedEvent.NewStream, this.onNewStream);
+        this.updateFeed(null, this.props.feed);
         this.playMedia();
     }
 
     componentWillUnmount() {
-        this.props.feed.removeListener(CallFeedEvent.NewStream, this.onNewStream);
+        this.updateFeed(this.props.feed, null);
         this.element.current?.removeEventListener('resize', this.onResize);
-        this.stopMedia();
+    }
+
+    componentDidUpdate(prevProps: IProps) {
+        this.updateFeed(prevProps.feed, this.props.feed);
+    }
+
+    static getDerivedStateFromProps(props: IProps) {
+        return {
+            audioMuted: props.feed.isAudioMuted(),
+            videoMuted: props.feed.isVideoMuted(),
+        };
+    }
+
+    private updateFeed(oldFeed: CallFeed, newFeed: CallFeed) {
+        if (oldFeed === newFeed) return;
+
+        if (oldFeed) {
+            this.props.feed.removeListener(CallFeedEvent.NewStream, this.onNewStream);
+            this.stopMedia();
+        }
+        if (newFeed) {
+            this.props.feed.addListener(CallFeedEvent.NewStream, this.onNewStream);
+            this.playMedia();
+        }
     }
 
     private playMedia() {
@@ -121,8 +146,8 @@ export default class VideoFeed extends React.Component<IProps, IState> {
     render() {
         const videoClasses = {
             mx_VideoFeed: true,
-            mx_VideoFeed_local: this.props.feed.isLocal(),
-            mx_VideoFeed_remote: !this.props.feed.isLocal(),
+            mx_VideoFeed_primary: this.props.primary,
+            mx_VideoFeed_secondary: !this.props.primary,
             mx_VideoFeed_voice: this.state.videoMuted,
             mx_VideoFeed_video: !this.state.videoMuted,
             mx_VideoFeed_mirror: (
@@ -133,7 +158,10 @@ export default class VideoFeed extends React.Component<IProps, IState> {
 
         if (this.state.videoMuted) {
             const member = this.props.feed.getMember();
-            const avatarSize = this.props.pipMode ? 76 : 160;
+            let avatarSize;
+            if (this.props.pipMode) avatarSize = 76;
+            else if (!this.props.primary) avatarSize = 34;
+            else avatarSize = 160;
 
             return (
                 <div className={classnames(videoClasses)} >
