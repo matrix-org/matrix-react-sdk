@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625830940815,
+  "lastUpdate": 1625835934476,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -5264,6 +5264,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 866.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c38fa9ded27cfe4804ede246da0c19e2055d62d0",
+          "message": "Merge pull request #6339 from matrix-org/t3chguy/update-modernizr\n\nSimplify typescript definition for Modernizr",
+          "timestamp": "2021-07-09T13:59:22+01:00",
+          "tree_id": "7ca56c5e56dac4786f31498cace71ae2bf63d2a2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c38fa9ded27cfe4804ede246da0c19e2055d62d0"
+        },
+        "date": 1625835933151,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4117.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1216,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1649.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4433,
             "unit": "ms",
             "extra": "type: measure"
           }
