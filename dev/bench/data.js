@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625818242225,
+  "lastUpdate": 1625830940815,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -5228,6 +5228,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4539.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2998018876f851c50f693db0cc8710a29040fc80",
+          "message": "Merge pull request #6322 from SimonBrandner/feature/remember-server/17739\n\nRemember the last used server for room directory searches",
+          "timestamp": "2021-07-09T12:36:54+01:00",
+          "tree_id": "1510ffe1a0de326c8f167e6c59e47aa6d8898af1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2998018876f851c50f693db0cc8710a29040fc80"
+        },
+        "date": 1625830940011,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4095.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 866.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
