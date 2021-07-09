@@ -16,12 +16,14 @@ limitations under the License.
 
 .mx_DialPad {
     display: grid;
-    gap: 16px;
+    row-gap: 16px;
+    column-gap: 0px;
+    margin-top: 24px;
+    margin-left: auto;
+    margin-right: auto;
 
     /* squeeze the dial pad buttons together horizontally */
-    grid-template-columns: 2fr 1fr 2fr;
-    margin-left: 32px;
-    margin-right: 32px;
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .mx_DialPad_button {
@@ -45,7 +47,11 @@ limitations under the License.
     font-size: 8px;
 }
 
-.mx_DialPad_deleteButton, .mx_DialPad_dialButton {
+.mx_DialPad_dialButton {
+    /* Always show the dial button in the center grid column */
+    grid-column: 2;
+    background-color: $accent-color;
+
     &::before {
         content: '';
         display: inline-block;
@@ -55,21 +61,7 @@ limitations under the License.
         mask-repeat: no-repeat;
         mask-size: 20px;
         mask-position: center;
-        background-color: $primary-bg-color;
-    }
-}
-
-.mx_DialPad_deleteButton {
-    background-color: $notice-primary-color;
-    &::before {
-        mask-image: url('$(res)/img/element-icons/call/delete.svg');
-        mask-position: 9px; // delete icon is right-heavy so have to be slightly to the left to look centered
-    }
-}
-
-.mx_DialPad_dialButton {
-    background-color: $accent-color;
-    &::before {
+        background-color: #FFF; // on all themes
         mask-image: url('$(res)/img/element-icons/call/voice-call.svg');
     }
 }

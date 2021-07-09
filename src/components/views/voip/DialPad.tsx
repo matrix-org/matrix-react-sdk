@@ -23,7 +23,6 @@ const BUTTON_LETTERS = ['', 'ABC', 'DEF', 'GHI', 'JKL', 'MNO', 'PQRS', 'TUV', 'W
 
 enum DialPadButtonKind {
     Digit,
-    Delete,
     Dial,
 }
 
@@ -48,10 +47,6 @@ class DialPadButton extends React.PureComponent<IButtonProps> {
                         {this.props.digitSubtext}
                     </div>
                 </AccessibleButton>;
-            case DialPadButtonKind.Delete:
-                return <AccessibleButton className="mx_DialPad_button mx_DialPad_deleteButton"
-                    onClick={this.onClick}
-                />;
             case DialPadButtonKind.Dial:
                 return <AccessibleButton className="mx_DialPad_button mx_DialPad_dialButton" onClick={this.onClick} />;
         }
@@ -61,7 +56,6 @@ class DialPadButton extends React.PureComponent<IButtonProps> {
 interface IProps {
     onDigitPress: (string) => void;
     hasDial: boolean;
-    hasDelete: boolean;
     onDeletePress?: (string) => void;
     onDialPress?: (string) => void;
 }
@@ -79,11 +73,6 @@ export default class Dialpad extends React.PureComponent<IProps> {
             />);
         }
 
-        if (this.props.hasDelete) {
-            buttonNodes.push(<DialPadButton key="del" kind={DialPadButtonKind.Delete}
-                onButtonPress={this.props.onDeletePress}
-            />);
-        }
         if (this.props.hasDial) {
             buttonNodes.push(<DialPadButton key="dial" kind={DialPadButtonKind.Dial}
                 onButtonPress={this.props.onDialPress}

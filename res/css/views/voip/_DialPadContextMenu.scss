@@ -20,18 +20,30 @@ limitations under the License.
 }
 
 .mx_DialPadContextMenuWrapper {
-    padding: 30px;
+    padding: 15px;
 }
 
 .mx_DialPadContextMenu_header {
     border: none;
-    margin-top: 16px;
-    margin-left: 44px;
-    margin-right: 44px;
+    margin-top: 32px;
+    margin-left: 20px;
+    margin-right: 20px;
 
     /* a separator between the input line and the dial buttons */
-    border-bottom: 1px solid $input-darker-bg-color;
+    border-bottom: 1px solid #6F7882;
     transition: border-bottom 0.25s;
+}
+
+.mx_DialPadContextMenu_cancel {
+    float: right;
+    mask: url('$(res)/img/feather-customised/cancel.svg');
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: cover;
+    width: 14px;
+    height: 14px;
+    background-color: $dialog-close-fg-color;
+    cursor: pointer;
 }
 
 .mx_DialPadContextMenu_header:focus-within {
@@ -55,7 +67,7 @@ limitations under the License.
     font-size: 18px;
     font-weight: 600;
     overflow: hidden;
-    max-width: 150px;
+    max-width: 185px;
     text-align: left;
     direction: rtl;
     padding: 8px 0px;

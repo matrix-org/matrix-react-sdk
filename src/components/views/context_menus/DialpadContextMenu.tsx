@@ -57,7 +57,7 @@ export default class DialpadContextMenu extends React.Component<IProps, IState> 
         return <ContextMenu {...this.props}>
             <div className="mx_DialPadContextMenuWrapper">
                 <div>
-                    <AccessibleButton className="mx_DialPadModal_cancel" onClick={this.onCancelClick} />
+                    <AccessibleButton className="mx_DialPadContextMenu_cancel" onClick={this.onCancelClick} />
                 </div>
                 <div className="mx_DialPadContextMenu_header">
                     <Field className="mx_DialPadContextMenu_dialled"
@@ -66,7 +66,7 @@ export default class DialpadContextMenu extends React.Component<IProps, IState> 
                     />
                 </div>
                 <div className="mx_DialPadContextMenu_dialPad">
-                    <DialPad onDigitPress={this.onDigitPress} hasDial={false} hasDelete={false} />
+                    <DialPad onDigitPress={this.onDigitPress} hasDial={false} />
                 </div>
             </div>
         </ContextMenu>;

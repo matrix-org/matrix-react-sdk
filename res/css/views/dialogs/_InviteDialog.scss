@@ -352,6 +352,7 @@ limitations under the License.
     border-right: 0;
     border-radius: 0;
     margin-top: 0;
+    border-color: #6F7882;
 
     input {
         font-size: 18px;
@@ -364,8 +365,14 @@ limitations under the License.
     border-color: #0DBD8B;
 }
 
+.mx_InviteDialog_dialPadField .mx_Field_postfix {
+    /* Remove border separator between postfix and field content */
+    border-left: none;
+}
+
 .mx_InviteDialog_dialPad {
     width: 224px;
+    margin-top: 16px;
     margin-left: auto;
     margin-right: auto;
 }

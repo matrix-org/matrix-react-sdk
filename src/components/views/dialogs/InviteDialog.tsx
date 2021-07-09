@@ -70,6 +70,7 @@ import Dialpad from '../voip/DialPad';
 import QuestionDialog from "./QuestionDialog";
 import Spinner from "../elements/Spinner";
 import BaseDialog from "./BaseDialog";
+import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
@@ -1525,14 +1526,32 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 TabId.UserDirectory, _td("User Directory"), 'mx_InviteDialog_userDirectoryIcon', usersSection,
             ));
 
+            const backspaceButton = (
+                <DialPadBackspaceButton onBackspacePress={this.onDeletePress} />
+            );
+
+            // Only show the backspace button if the field has content
+            let dialPadField;
+            if (this.state.dialPadValue.length !== 0) {
+                dialPadField = <Field className="mx_InviteDialog_dialPadField" id="dialpad_number"
+                    value={this.state.dialPadValue}
+                    autoFocus={true}
+                    onChange={this.onDialChange}
+                    postfixComponent={backspaceButton}
+                />;
+            } else {
+                dialPadField = <Field className="mx_InviteDialog_dialPadField" id="dialpad_number"
+                    value={this.state.dialPadValue}
+                    autoFocus={true}
+                    onChange={this.onDialChange}
+                />;
+            }
+
             const dialPadSection = <div className="mx_InviteDialog_dialPad">
                 <form onSubmit={this.onDialFormSubmit}>
-                    <Field className="mx_InviteDialog_dialPadField" id="dialpad_number"
-                        value={this.state.dialPadValue} autoFocus={true}
-                        onChange={this.onDialChange}
-                    />
+                    {dialPadField}
                 </form>
-                <Dialpad hasDial={false} hasDelete={true}
+                <Dialpad hasDial={false}
                     onDigitPress={this.onDigitPress} onDeletePress={this.onDeletePress}
                 />
             </div>;

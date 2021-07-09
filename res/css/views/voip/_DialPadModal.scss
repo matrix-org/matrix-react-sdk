@@ -19,18 +19,18 @@ limitations under the License.
 }
 
 .mx_DialPadModal {
-    width: 336px;
-    height: 368px;
-    padding: 16px 16px 0px 16px;
+    width: 292px;
+    height: 370px;
+    padding: 16px 0px 0px 0px;
 }
 
 .mx_DialPadModal_header {
-    margin-top: 16px;
-    margin-left: 66px;
-    margin-right: 66px;
+    margin-top: 32px;
+    margin-left: 40px;
+    margin-right: 40px;
 
     /* a separator between the input line and the dial buttons */
-    border-bottom: 1px solid $input-darker-bg-color;
+    border-bottom: 1px solid #6F7882;
     transition: border-bottom 0.25s;
 }
 
@@ -54,11 +54,18 @@ limitations under the License.
     height: 14px;
     background-color: $dialog-close-fg-color;
     cursor: pointer;
+    margin-right: 16px;
 }
 
 .mx_DialPadModal_field {
     border: none;
     margin: 0px;
+    height: 30px;
+}
+
+.mx_DialPadModal_field .mx_Field_postfix {
+    /* Remove border separator between postfix and field content */
+    border-left: none;
 }
 
 .mx_DialPadModal_field input {
