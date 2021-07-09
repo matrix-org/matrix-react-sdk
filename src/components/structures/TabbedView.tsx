@@ -18,10 +18,10 @@ limitations under the License.
 
 import * as React from "react";
 import { _t } from '../../languageHandler';
-import * as sdk from "../../index";
 import AutoHideScrollbar from './AutoHideScrollbar';
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import classNames from "classnames";
+import AccessibleButton from "../views/elements/AccessibleButton";
 
 /**
  * Represents a tab for the TabbedView.
@@ -95,8 +95,6 @@ export default class TabbedView extends React.Component<IProps, IState> {
     }
 
     private _renderTabLabel(tab: Tab) {
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-
         let classes = "mx_TabbedView_tabLabel ";
 
         const idx = this.props.tabs.indexOf(tab);
