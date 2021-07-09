@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 import React from "react";
-import Adapter from "enzyme-adapter-react-16";
+import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import { configure, mount } from "enzyme";
 
 import sdk from "../../../skinned-sdk";
-import {mkEvent, mkStubRoom} from "../../../test-utils";
-import {MatrixClientPeg} from "../../../../src/MatrixClientPeg";
+import { mkEvent, mkStubRoom } from "../../../test-utils";
+import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import * as languageHandler from "../../../../src/languageHandler";
 
 const TextualBody = sdk.getComponent("views.messages.TextualBody");
@@ -36,6 +36,8 @@ describe("<TextualBody />", () => {
         MatrixClientPeg.matrixClient = {
             getRoom: () => mkStubRoom("room_id"),
             getAccountData: () => undefined,
+            isGuest: () => false,
+            mxcUrlToHttp: (s) => s,
         };
 
         const ev = mkEvent({
@@ -59,6 +61,8 @@ describe("<TextualBody />", () => {
         MatrixClientPeg.matrixClient = {
             getRoom: () => mkStubRoom("room_id"),
             getAccountData: () => undefined,
+            isGuest: () => false,
+            mxcUrlToHttp: (s) => s,
         };
 
         const ev = mkEvent({
@@ -83,6 +87,8 @@ describe("<TextualBody />", () => {
             MatrixClientPeg.matrixClient = {
                 getRoom: () => mkStubRoom("room_id"),
                 getAccountData: () => undefined,
+                isGuest: () => false,
+                mxcUrlToHttp: (s) => s,
             };
         });
 
@@ -135,6 +141,8 @@ describe("<TextualBody />", () => {
                 getHomeserverUrl: () => "https://my_server/",
                 on: () => undefined,
                 removeListener: () => undefined,
+                isGuest: () => false,
+                mxcUrlToHttp: (s) => s,
             };
         });
 
@@ -204,11 +212,71 @@ describe("<TextualBody />", () => {
             const content = wrapper.find(".mx_EventTile_body");
             expect(content.html()).toBe('<span class="mx_EventTile_body markdown-body" dir="auto">' +
                 'Hey <span>' +
-                '<a class="mx_Pill mx_UserPill" title="@user:server">' +
+                '<a class="mx_Pill mx_UserPill">' +
                 '<img class="mx_BaseAvatar mx_BaseAvatar_image" src="mxc://avatar.url/image.png" ' +
-                'style="width: 1.0666666666666667rem; height: 1.0666666666666667rem;" ' +
-                'title="@member:domain.bla" alt="" aria-hidden="true">Member</a>' +
+                'style="width: 16px; height: 16px;" title="@member:domain.bla" alt="" aria-hidden="true">Member</a>' +
                 '</span></span>');
+        });
+
+        it("pills do not appear for event permalinks", () => {
+            const ev = mkEvent({
+                type: "m.room.message",
+                room: "room_id",
+                user: "sender",
+                content: {
+                    body:
+                        "An [event link](https://matrix.to/#/!ZxbRYPQXDXKGmDnJNg:example.com/" +
+                        "$16085560162aNpaH:example.com?via=example.com) with text",
+                    msgtype: "m.text",
+                    format: "org.matrix.custom.html",
+                    formatted_body:
+                        "An <a href=\"https://matrix.to/#/!ZxbRYPQXDXKGmDnJNg:example.com/" +
+                        "$16085560162aNpaH:example.com?via=example.com\">event link</a> with text",
+                },
+                event: true,
+            });
+
+            const wrapper = mount(<TextualBody mxEvent={ev} />);
+            expect(wrapper.text()).toBe("An event link with text");
+            const content = wrapper.find(".mx_EventTile_body");
+            expect(content.html()).toBe(
+                '<span class="mx_EventTile_body markdown-body" dir="auto">' +
+                'An <a href="#/room/!ZxbRYPQXDXKGmDnJNg:example.com/' +
+                '$16085560162aNpaH:example.com?via=example.com" ' +
+                'rel="noreferrer noopener">event link</a> with text</span>',
+            );
+        });
+
+        it("pills appear for room links with vias", () => {
+            const ev = mkEvent({
+                type: "m.room.message",
+                room: "room_id",
+                user: "sender",
+                content: {
+                    body:
+                        "A [room link](https://matrix.to/#/!ZxbRYPQXDXKGmDnJNg:example.com" +
+                        "?via=example.com&via=bob.com) with vias",
+                    msgtype: "m.text",
+                    format: "org.matrix.custom.html",
+                    formatted_body:
+                        "A <a href=\"https://matrix.to/#/!ZxbRYPQXDXKGmDnJNg:example.com" +
+                        "?via=example.com&amp;via=bob.com\">room link</a> with vias",
+                },
+                event: true,
+            });
+
+            const wrapper = mount(<TextualBody mxEvent={ev} />);
+            expect(wrapper.text()).toBe("A !ZxbRYPQXDXKGmDnJNg:example.com with vias");
+            const content = wrapper.find(".mx_EventTile_body");
+            expect(content.html()).toBe(
+                '<span class="mx_EventTile_body markdown-body" dir="auto">' +
+                'A <span><a class="mx_Pill mx_RoomPill" href="#/room/!ZxbRYPQXDXKGmDnJNg:example.com' +
+                '?via=example.com&amp;via=bob.com"' +
+                '><img class="mx_BaseAvatar mx_BaseAvatar_image" ' +
+                'src="mxc://avatar.url/room.png" ' +
+                'style="width: 16px; height: 16px;" alt="" aria-hidden="true">' +
+                '!ZxbRYPQXDXKGmDnJNg:example.com</a></span> with vias</span>',
+            );
         });
     });
 
@@ -219,6 +287,8 @@ describe("<TextualBody />", () => {
             getRoom: () => mkStubRoom("room_id"),
             getAccountData: () => undefined,
             getUrlPreview: (url) => new Promise(() => {}),
+            isGuest: () => false,
+            mxcUrlToHttp: (s) => s,
         };
 
         const ev = mkEvent({
@@ -232,7 +302,7 @@ describe("<TextualBody />", () => {
             event: true,
         });
 
-        const wrapper = mount(<TextualBody mxEvent={ev} showUrlPreview={true} />);
+        const wrapper = mount(<TextualBody mxEvent={ev} showUrlPreview={true} onHeightChanged={() => {}} />);
         expect(wrapper.text()).toBe(ev.getContent().body);
 
         let widgets = wrapper.find("LinkPreviewWidget");
@@ -272,5 +342,4 @@ describe("<TextualBody />", () => {
         });
     });
 });
-
 

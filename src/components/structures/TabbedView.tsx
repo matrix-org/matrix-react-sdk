@@ -17,52 +17,48 @@ limitations under the License.
 */
 
 import * as React from "react";
-import {_t} from '../../languageHandler';
-import * as PropTypes from "prop-types";
-import * as sdk from "../../index";
+import { _t } from '../../languageHandler';
 import AutoHideScrollbar from './AutoHideScrollbar';
-import { ReactNode } from "react";
+import { replaceableComponent } from "../../utils/replaceableComponent";
+import AccessibleButton from "../views/elements/AccessibleButton";
 
 /**
  * Represents a tab for the TabbedView.
  */
 export class Tab {
-    public label: string;
-    public icon: string;
-    public body: React.ReactNode;
-
     /**
      * Creates a new tab.
-     * @param {string} tabLabel The untranslated tab label.
-     * @param {string} tabIconClass The class for the tab icon. This should be a simple mask.
-     * @param {React.ReactNode} tabJsx The JSX for the tab container.
+     * @param {string} id The tab's ID.
+     * @param {string} label The untranslated tab label.
+     * @param {string} icon The class for the tab icon. This should be a simple mask.
+     * @param {React.ReactNode} body The JSX for the tab container.
      */
-    constructor(tabLabel: string, tabIconClass: string, tabJsx: React.ReactNode) {
-        this.label = tabLabel;
-        this.icon = tabIconClass;
-        this.body = tabJsx;
+    constructor(public id: string, public label: string, public icon: string, public body: React.ReactNode) {
     }
 }
 
 interface IProps {
     tabs: Tab[];
+    initialTabId?: string;
 }
 
 interface IState {
     activeTabIndex: number;
 }
 
+@replaceableComponent("structures.TabbedView")
 export default class TabbedView extends React.Component<IProps, IState> {
-    static propTypes = {
-        // The tabs to show
-        tabs: PropTypes.arrayOf(PropTypes.instanceOf(Tab)).isRequired,
-    };
-
     constructor(props: IProps) {
         super(props);
 
+        let activeTabIndex = 0;
+        if (props.initialTabId) {
+            const tabIndex = props.tabs.findIndex(t => t.id === props.initialTabId);
+            if (tabIndex >= 0) activeTabIndex = tabIndex;
+        }
+
         this.state = {
-            activeTabIndex: 0,
+            activeTabIndex,
         };
     }
 
@@ -79,15 +75,13 @@ export default class TabbedView extends React.Component<IProps, IState> {
     private _setActiveTab(tab: Tab) {
         const idx = this.props.tabs.indexOf(tab);
         if (idx !== -1) {
-            this.setState({activeTabIndex: idx});
+            this.setState({ activeTabIndex: idx });
         } else {
             console.error("Could not find tab " + tab.label + " in tabs");
         }
     }
 
     private _renderTabLabel(tab: Tab) {
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-
         let classes = "mx_TabbedView_tabLabel ";
 
         const idx = this.props.tabs.indexOf(tab);

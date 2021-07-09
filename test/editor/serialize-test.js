@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import EditorModel from "../../src/editor/model";
-import {htmlSerializeIfNeeded} from "../../src/editor/serialize";
-import {createPartCreator} from "./mock";
+import { htmlSerializeIfNeeded } from "../../src/editor/serialize";
+import { createPartCreator } from "./mock";
 
 describe('editor/serialize', function() {
     it('user pill turns message into html', function() {
@@ -60,5 +60,17 @@ describe('editor/serialize', function() {
         const model = new EditorModel([pc.userPill("Displayname]", "@user:server")]);
         const html = htmlSerializeIfNeeded(model, {});
         expect(html).toBe("<a href=\"https://matrix.to/#/@user:server\">Displayname]</a>");
+    });
+    it('escaped markdown should not retain backslashes', function() {
+        const pc = createPartCreator();
+        const model = new EditorModel([pc.plain('\\*hello\\* world')]);
+        const html = htmlSerializeIfNeeded(model, {});
+        expect(html).toBe('*hello* world');
+    });
+    it('escaped markdown should convert HTML entities', function() {
+        const pc = createPartCreator();
+        const model = new EditorModel([pc.plain('\\*hello\\* world < hey world!')]);
+        const html = htmlSerializeIfNeeded(model, {});
+        expect(html).toBe('*hello* world &lt; hey world!');
     });
 });

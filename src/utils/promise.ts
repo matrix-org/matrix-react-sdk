@@ -14,11 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Returns a promise which resolves with a given value after the given number of ms
-export function sleep<T>(ms: number, value: T): Promise<T> {
-    return new Promise((resolve => { setTimeout(resolve, ms, value); }));
-}
-
 // Returns a promise which resolves when the input promise resolves with its value
 // or when the timeout of ms is reached with the value of given timeoutValue
 export async function timeout<T>(promise: Promise<T>, timeoutValue: T, ms: number): Promise<T> {
@@ -32,39 +27,20 @@ export async function timeout<T>(promise: Promise<T>, timeoutValue: T, ms: numbe
     return Promise.race([promise, timeoutPromise]);
 }
 
-export interface IDeferred<T> {
-    resolve: (value: T) => void;
-    reject: (any) => void;
-    promise: Promise<T>;
-}
-
-// Returns a Deferred
-export function defer<T>(): IDeferred<T> {
-    let resolve;
-    let reject;
-
-    const promise = new Promise<T>((_resolve, _reject) => {
-        resolve = _resolve;
-        reject = _reject;
-    });
-
-    return {resolve, reject, promise};
-}
-
-// Promise.allSettled polyfill until browser support is stable in Firefox
-export function allSettled<T>(promises: Promise<T>[]): Promise<Array<ISettledFulfilled<T> | ISettledRejected>> {
-    if (Promise.allSettled) {
-        return Promise.allSettled<T>(promises);
+// Helper method to retry a Promise a given number of times or until a predicate fails
+export async function retry<T, E extends Error>(fn: () => Promise<T>, num: number, predicate?: (e: E) => boolean) {
+    let lastErr: E;
+    for (let i = 0; i < num; i++) {
+        try {
+            const v = await fn();
+            // If `await fn()` throws then we won't reach here
+            return v;
+        } catch (err) {
+            if (predicate && !predicate(err)) {
+                throw err;
+            }
+            lastErr = err;
+        }
     }
-
-    // @ts-ignore - typescript isn't smart enough to see the disjoint here
-    return Promise.all(promises.map((promise) => {
-        return promise.then(value => ({
-            status: "fulfilled",
-            value,
-        })).catch(reason => ({
-            status: "rejected",
-            reason,
-        }));
-    }));
+    throw lastErr;
 }

@@ -16,7 +16,8 @@ limitations under the License.
 */
 
 const assert = require('assert');
-const {acceptDialog} = require('./dialog');
+const { openRoomSummaryCard } = require("./rightpanel");
+const { acceptDialog } = require('./dialog');
 
 async function setSettingsToggle(session, toggle, enabled) {
     const className = await session.getElementProperty(toggle, "className");
@@ -45,7 +46,10 @@ async function findTabs(session) {
     /// XXX delay is needed here, possibly because the header is being rerendered
     /// click doesn't do anything otherwise
     await session.delay(1000);
-    const settingsButton = await session.query(".mx_RoomHeader .mx_AccessibleButton[title=Settings]");
+
+    await openRoomSummaryCard(session);
+
+    const settingsButton = await session.query(".mx_RoomSummaryCard_icon_settings");
     await settingsButton.click();
 
     //find tabs
@@ -53,13 +57,13 @@ async function findTabs(session) {
     const tabLabels = await Promise.all(tabButtons.map(t => session.innerText(t)));
     const securityTabButton = tabButtons[tabLabels.findIndex(l => l.toLowerCase().includes("security"))];
 
-    return {securityTabButton};
+    return { securityTabButton };
 }
 
 async function checkRoomSettings(session, expectedSettings) {
     session.log.startGroup(`checks the room settings`);
 
-    const {securityTabButton} = await findTabs(session);
+    const { securityTabButton } = await findTabs(session);
     const generalSwitches = await session.queryAll(".mx_RoomSettingsDialog .mx_ToggleSwitch");
     const isDirectory = generalSwitches[0];
 
@@ -125,7 +129,7 @@ async function checkRoomSettings(session, expectedSettings) {
 async function changeRoomSettings(session, settings) {
     session.log.startGroup(`changes the room settings`);
 
-    const {securityTabButton} = await findTabs(session);
+    const { securityTabButton } = await findTabs(session);
     const generalSwitches = await session.queryAll(".mx_RoomSettingsDialog .mx_ToggleSwitch");
     const isDirectory = generalSwitches[0];
 
@@ -136,8 +140,6 @@ async function changeRoomSettings(session, settings) {
 
     if (settings.alias) {
         session.log.step(`sets alias to ${settings.alias}`);
-        const summary = await session.query(".mx_RoomSettingsDialog .mx_AliasSettings summary");
-        await summary.click();
         const aliasField = await session.query(".mx_RoomSettingsDialog .mx_AliasSettings details input[type=text]");
         await session.replaceInputText(aliasField, settings.alias.substring(1, settings.alias.lastIndexOf(":")));
         const addButton = await session.query(".mx_RoomSettingsDialog .mx_AliasSettings details .mx_AccessibleButton");
@@ -162,7 +164,7 @@ async function changeRoomSettings(session, settings) {
 
     if (settings.visibility) {
         session.log.step(`sets visibility to ${settings.visibility}`);
-        const radios = await session.queryAll(".mx_RoomSettingsDialog input[type=radio]");
+        const radios = await session.queryAll(".mx_RoomSettingsDialog label");
         assert.equal(radios.length, 7);
         const inviteOnly = radios[0];
         const publicNoGuests = radios[1];
@@ -186,4 +188,4 @@ async function changeRoomSettings(session, settings) {
     session.log.endGroup();
 }
 
-module.exports = {checkRoomSettings, changeRoomSettings};
+module.exports = { checkRoomSettings, changeRoomSettings };
