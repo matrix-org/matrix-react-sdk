@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625836452061,
+  "lastUpdate": 1625842674916,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -5360,6 +5360,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4280,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e9600e9f57b646ef98d26d4c426ff1767f7764a6",
+          "message": "Merge pull request #5952 from SimonBrandner/fix/17130/draggable-pip",
+          "timestamp": "2021-07-09T15:52:12+01:00",
+          "tree_id": "620e8f47dd8c0fb77cc17a6e37bf31dae3a99061",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e9600e9f57b646ef98d26d4c426ff1767f7764a6"
+        },
+        "date": 1625842673552,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4849,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1330.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2033.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4714.5,
             "unit": "ms",
             "extra": "type: measure"
           }
