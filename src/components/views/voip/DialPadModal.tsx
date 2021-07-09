@@ -78,17 +78,30 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
             <DialPadBackspaceButton onBackspacePress={this.onDeletePress} />
         );
 
+        // Only show the backspace button if the field has content
+        let dialPadField;
+        if (this.state.value.length !== 0) {
+            dialPadField = <Field className="mx_DialPadModal_field" id="dialpad_number"
+                value={this.state.value}
+                autoFocus={true}
+                onChange={this.onChange}
+                postfixComponent={backspaceButton}
+            />;
+        } else {
+            dialPadField = <Field className="mx_DialPadModal_field" id="dialpad_number"
+                value={this.state.value}
+                autoFocus={true}
+                onChange={this.onChange}
+            />;
+        }
+
         return <div className="mx_DialPadModal">
             <div>
                 <AccessibleButton className="mx_DialPadModal_cancel" onClick={this.onCancelClick} />
             </div>
             <div className="mx_DialPadModal_header">
                 <form onSubmit={this.onFormSubmit}>
-                    <Field className="mx_DialPadModal_field" id="dialpad_number"
-                        value={this.state.value} autoFocus={true}
-                        onChange={this.onChange}
-                        postfixComponent={backspaceButton}
-                    />
+                    {dialPadField}
                 </form>
             </div>
             <div className="mx_DialPadModal_dialPad">
