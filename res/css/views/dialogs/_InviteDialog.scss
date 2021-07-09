@@ -364,6 +364,11 @@ limitations under the License.
     border-color: #0DBD8B;
 }
 
+.mx_InviteDialog_dialPadField .mx_Field_postfix {
+    /* Remove border separator between postfix and field content */
+    border-left: none;
+}
+
 .mx_InviteDialog_dialPad {
     width: 224px;
     margin-left: auto;
