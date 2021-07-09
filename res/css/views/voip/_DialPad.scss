@@ -46,6 +46,10 @@ limitations under the License.
 }
 
 .mx_DialPad_dialButton {
+    /* Always show the dial button in the center grid column */
+    grid-column: 2;
+    background-color: $accent-color;
+
     &::before {
         content: '';
         display: inline-block;
@@ -56,15 +60,6 @@ limitations under the License.
         mask-size: 20px;
         mask-position: center;
         background-color: $primary-bg-color;
-    }
-}
-
-.mx_DialPad_dialButton {
-    /* Always show the dial button in the center grid column */
-    grid-column: 2;
-
-    background-color: $accent-color;
-    &::before {
         mask-image: url('$(res)/img/element-icons/call/voice-call.svg');
     }
 }
