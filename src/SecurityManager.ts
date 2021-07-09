@@ -14,11 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ICryptoCallbacks, ISecretStorageKeyInfo } from 'matrix-js-sdk/src/matrix';
+import { ICryptoCallbacks } from 'matrix-js-sdk/src/matrix';
+import { ISecretStorageKeyInfo } from 'matrix-js-sdk/src/crypto/api';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 import Modal from './Modal';
 import * as sdk from './index';
-import {MatrixClientPeg} from './MatrixClientPeg';
+import { MatrixClientPeg } from './MatrixClientPeg';
 import { deriveKey } from 'matrix-js-sdk/src/crypto/key_passphrase';
 import { decodeRecoveryKey } from 'matrix-js-sdk/src/crypto/recoverykey';
 import { _t } from './languageHandler';
@@ -42,8 +43,8 @@ let secretStorageBeingAccessed = false;
 let nonInteractive = false;
 
 let dehydrationCache: {
-    key?: Uint8Array,
-    keyInfo?: ISecretStorageKeyInfo,
+    key?: Uint8Array;
+    keyInfo?: ISecretStorageKeyInfo;
 } = {};
 
 function isCachingAllowed(): boolean {
@@ -135,7 +136,7 @@ async function getSecretStorageKey(
 
     const keyFromCustomisations = SecurityCustomisations.getSecretStorageKey?.();
     if (keyFromCustomisations) {
-        console.log("Using key from security customisations (secret storage)")
+        console.log("Using key from security customisations (secret storage)");
         cacheSecretStorageKey(keyId, keyInfo, keyFromCustomisations);
         return [keyId, keyFromCustomisations];
     }
@@ -185,7 +186,7 @@ export async function getDehydrationKey(
 ): Promise<Uint8Array> {
     const keyFromCustomisations = SecurityCustomisations.getSecretStorageKey?.();
     if (keyFromCustomisations) {
-        console.log("Using key from security customisations (dehydration)")
+        console.log("Using key from security customisations (dehydration)");
         return keyFromCustomisations;
     }
 
@@ -224,7 +225,7 @@ export async function getDehydrationKey(
     const key = await inputToKey(input);
 
     // need to copy the key because rehydration (unpickling) will clobber it
-    dehydrationCache = {key: new Uint8Array(key), keyInfo};
+    dehydrationCache = { key: new Uint8Array(key), keyInfo };
 
     return key;
 }
@@ -354,6 +355,7 @@ export async function accessSecretStorage(func = async () => { }, forceReset = f
                 throw new Error("Secret storage creation canceled");
             }
         } else {
+            // FIXME: Using an import will result in test failures
             const InteractiveAuthDialog = sdk.getComponent("dialogs.InteractiveAuthDialog");
             await cli.bootstrapCrossSigning({
                 authUploadDeviceSigningKeys: async (makeRequest) => {
