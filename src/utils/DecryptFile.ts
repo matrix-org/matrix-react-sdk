@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 // Pull in the encryption lib so that we can decrypt attachments.
-import encrypt from 'browser-encrypt-attachment';
+import * as encrypt from 'browser-encrypt-attachment';
 import { IEncryptedFile } from 'matrix-js-sdk/src/@types/event';
 
 import { mediaFromContent } from "../customisations/Media";

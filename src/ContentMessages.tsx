@@ -22,7 +22,7 @@ import { MatrixClient } from "matrix-js-sdk/src/client";
 import { IImageInfo } from "matrix-js-sdk/src/@types/partials";
 import { IUploadOpts } from "matrix-js-sdk/src/@types/requests";
 import { IEncryptedFile } from "matrix-js-sdk/src/@types/event";
-import encrypt from "browser-encrypt-attachment";
+import * as encrypt from "browser-encrypt-attachment";
 import extractPngChunks from "png-chunks-extract";
 
 import dis from './dispatcher/dispatcher';
@@ -318,6 +318,15 @@ function readFileAsArrayBuffer(file: File | Blob): Promise<ArrayBuffer> {
     });
 }
 
+interface IChunk {
+    begin: number;
+    end: number;
+}
+
+const JPEG_SOI_MARKER = 0xFFD8;
+const JPEG_APP1_MARKER = 0xFFE1;
+const JPEG_SOS_MARKER = 0xFFDA;
+
 /**
  * Strip EXIF metadata from a JPEG
  * Taken from http://jsfiddle.net/mowglisanu/frhwm2xe/3/
@@ -329,35 +338,38 @@ function stripJpegMetadata(data: ArrayBuffer): ArrayBuffer {
     const dv = new DataView(data);
     let offset = 0;
     let recess = 0;
-    const pieces = [];
+    const pieces: IChunk[] = [];
     let i = 0;
+    let blockSize: number;
 
-    const newPieces = [];
+    const newPieces: ArrayBuffer[] = [];
 
     // FIXME: check this isn't stripping off any EXIF color profile data
     // as that will break the colorimetry of the image.  We're stripping
     // this for privacy purposes rather than filesize.
-    if (dv.getUint16(offset) == 0xffd8) {
+    if (dv.getUint16(offset) === JPEG_SOI_MARKER) {
         offset += 2;
         let app1 = dv.getUint16(offset);
         offset += 2;
         while (offset < dv.byteLength) {
-            if (app1 == 0xffe1) {
-                pieces[i] = { recess: recess, offset: offset - 2 };
-                recess = offset + dv.getUint16(offset);
-                i++;
-            } else if (app1 == 0xffda) {
+            blockSize = dv.getUint16(offset);
+            if (app1 === JPEG_APP1_MARKER) {
+                // if the marker we are in is an APP1 marker then mark it for extraction
+                pieces[i++] = { begin: recess, end: offset - 2 };
+                recess = offset + blockSize;
+            } else if (app1 === JPEG_SOS_MARKER) {
                 break;
             }
-            offset += dv.getUint16(offset);
+            offset += blockSize; // jump to the next marker
             app1 = dv.getUint16(offset);
-            offset += 2;
+            offset += 2; // enter the next marker block
         }
 
         if (pieces.length > 0) {
-            pieces.forEach(function(v) {
-                newPieces.push(data.slice(v.recess, v.offset));
+            pieces.forEach(piece => {
+                newPieces.push(data.slice(piece.begin, piece.end));
             });
+
             newPieces.push(data.slice(recess));
         }
     }
