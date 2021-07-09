@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625777386491,
+  "lastUpdate": 1625818033273,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -5132,6 +5132,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4617,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ac0162c218a086623b5f35a866a8260e1a8d4673",
+          "message": "Merge pull request #6336 from matrix-org/t3chguy/fix/pins",
+          "timestamp": "2021-07-09T09:02:18+01:00",
+          "tree_id": "eb65f31dedf34e6df2a53300358158dff98c4365",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ac0162c218a086623b5f35a866a8260e1a8d4673"
+        },
+        "date": 1625818032465,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4536.899999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1192.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1743.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4385.5,
             "unit": "ms",
             "extra": "type: measure"
           }
