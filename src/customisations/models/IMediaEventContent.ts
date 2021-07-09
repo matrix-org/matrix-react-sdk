@@ -14,22 +14,9 @@
  * limitations under the License.
  */
 
-// TODO: These types should be elsewhere.
+import { IEncryptedFile } from "matrix-js-sdk/src/@types/event";
 
-export interface IEncryptedFile {
-    url: string;
-    mimetype?: string;
-    key: {
-        alg: string;
-        key_ops: string[]; // eslint-disable-line camelcase
-        kty: string;
-        k: string;
-        ext: boolean;
-    };
-    iv: string;
-    hashes: {[alg: string]: string};
-    v: string;
-}
+// TODO: These types should be elsewhere.
 
 export interface IMediaEventContent {
     url?: string; // required on unencrypted media

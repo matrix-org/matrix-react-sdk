@@ -21,7 +21,8 @@ import { encode } from "blurhash";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { IImageInfo } from "matrix-js-sdk/src/@types/partials";
 import { IUploadOpts } from "matrix-js-sdk/src/@types/requests";
-import encrypt, { IEncryptedAttachmentInfo } from "browser-encrypt-attachment";
+import { IEncryptedFile } from "matrix-js-sdk/src/@types/event";
+import encrypt from "browser-encrypt-attachment";
 import extractPngChunks from "png-chunks-extract";
 
 import dis from './dispatcher/dispatcher';
@@ -41,6 +42,7 @@ import {
     UploadStartedPayload,
 } from "./dispatcher/payloads/UploadPayload";
 import { IUpload } from "./models/IUpload";
+import { IMediaEventContent } from "./customisations/models/IMediaEventContent";
 
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 600;
@@ -379,15 +381,7 @@ function stripJpegMetadata(data: ArrayBuffer): ArrayBuffer {
     return data;
 }
 
-interface IEncryptedFile extends IEncryptedAttachmentInfo {
-    url: string;
-    mimetype?: string;
-}
-
-interface IUploadedFile {
-    url?: string;
-    file?: IEncryptedFile;
-}
+type UploadedFile = Pick<IMediaEventContent, "url" | "file">;
 
 /**
  * Upload the file to the content repository.
@@ -407,11 +401,11 @@ export function uploadFile(
     roomId: string,
     file: File | Blob,
     progressHandler?: IUploadOpts["progressHandler"],
-): Promise<IUploadedFile> {
+): Promise<UploadedFile> {
     // uploadPromise must be a reference to the exact promise returned from MatrixClient::uploadContent
     // this promise is special as it bears an `abort` method we must copy to `promise` which we return.
     let uploadPromise: IAbortablePromise<string>;
-    let promise: Promise<IUploadedFile>; // we will make this an abortable promise before we return it
+    let promise: Promise<UploadedFile>; // we will make this an abortable promise before we return it
 
     const isRoomEncrypted = matrixClient.isRoomEncrypted(roomId);
     const shouldStripMetadata = file.type === "image/jpeg" && SettingsStore.getValue("stripImageMetadata");
@@ -423,10 +417,10 @@ export function uploadFile(
         promise = uploadPromise.then(url => {
             // If the attachment isn't encrypted then include the URL directly.
             return { url };
-        }) as IAbortablePromise<IUploadedFile>;
+        }) as IAbortablePromise<UploadedFile>;
 
         // XXX: copy over the abort method to the new promise
-        (promise as IAbortablePromise<IUploadedFile>).abort = uploadPromise.abort;
+        (promise as IAbortablePromise<UploadedFile>).abort = uploadPromise.abort;
         return promise;
     }
 
@@ -486,7 +480,7 @@ export function uploadFile(
     }
 
     // XXX: wrap the original abort method onto the new promise, this way we can use the signal to bail work early
-    (promise as IAbortablePromise<IUploadedFile>).abort = () => {
+    (promise as IAbortablePromise<UploadedFile>).abort = () => {
         canceled = true;
         if (uploadPromise) matrixClient.cancelUpload(uploadPromise);
     };

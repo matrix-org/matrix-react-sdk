@@ -15,17 +15,21 @@ limitations under the License.
 */
 
 declare module "browser-encrypt-attachment" {
+    interface IEncryptedAttachmentInfo {
+        key: {
+            alg: string;
+            key_ops: string[]; // eslint-disable-line camelcase
+            kty: string;
+            k: string;
+            ext: boolean;
+        };
+        iv: string;
+        hashes: { [alg: string]: string };
+    }
+
     interface IEncryptedAttachment {
         data: ArrayBuffer;
         info: IEncryptedAttachmentInfo;
-    }
-
-    export interface IEncryptedAttachmentInfo {
-        key: string;
-        iv: string;
-        hashes: {
-            sha256: string;
-        };
     }
 
     function encryptAttachment(plaintextBuffer: ArrayBuffer): Promise<IEncryptedAttachment>;
