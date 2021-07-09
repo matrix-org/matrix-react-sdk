@@ -836,6 +836,7 @@
     "Expand code blocks by default": "Expand code blocks by default",
     "Show line numbers in code blocks": "Show line numbers in code blocks",
     "Jump to the bottom of the timeline when you send a message": "Jump to the bottom of the timeline when you send a message",
+    "Strip metadata from JPEG uploads": "Strip metadata from JPEG uploads",
     "Show avatars in user and room mentions": "Show avatars in user and room mentions",
     "Enable big emoji in chat": "Enable big emoji in chat",
     "Send typing notifications": "Send typing notifications",
