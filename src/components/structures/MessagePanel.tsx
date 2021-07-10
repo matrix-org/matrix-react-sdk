@@ -566,6 +566,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             const eventId = mxEv.getId();
             const last = (mxEv === lastShownEvent);
             const { nextEvent, nextTile } = this.getNextEventInfo(this.props.events, i);
+            const isTwelveHour = this.props.isTwelveHour;
 
             if (grouper) {
                 if (grouper.shouldGroup(mxEv)) {
@@ -582,7 +583,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
             for (const Grouper of groupers) {
                 if (Grouper.canStartGroup(this, mxEv)) {
-                    grouper = new Grouper(this, mxEv, prevEvent, lastShownEvent, this.props.isTwelveHour, nextEvent, nextTile);
+                    grouper = new Grouper(this, mxEv, prevEvent, lastShownEvent, isTwelveHour, nextEvent, nextTile);
                 }
             }
             if (!grouper) {

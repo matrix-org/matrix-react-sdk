@@ -91,7 +91,7 @@ export default class IRCTimelineProfileResizer extends React.Component<IProps, I
     }
 
     render() {
-        const className = this.props.isTwelveHour ? "mx_ProfileResizer mx_Event_12hr" : "mx_ProfileResizer mx_Event_24hr";
+        const className = "mx_ProfileResizer " + (this.props.isTwelveHour ? "mx_Event_12hr" : "mx_Event_24hr");
         return <Draggable
             className={className}
             dragFunc={this.dragFunc.bind(this)}
