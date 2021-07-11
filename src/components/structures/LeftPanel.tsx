@@ -24,6 +24,7 @@ import CustomRoomTagPanel from "./CustomRoomTagPanel";
 import dis from "../../dispatcher/dispatcher";
 import { _t } from "../../languageHandler";
 import RoomList from "../views/rooms/RoomList";
+import CallHandler from "../../CallHandler";
 import { HEADER_HEIGHT } from "../views/rooms/RoomSublist";
 import { Action } from "../../dispatcher/actions";
 import UserMenu from "./UserMenu";
@@ -39,9 +40,9 @@ import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import { OwnProfileStore } from "../../stores/OwnProfileStore";
 import RoomListNumResults from "../views/rooms/RoomListNumResults";
 import LeftPanelWidget from "./LeftPanelWidget";
-import {replaceableComponent} from "../../utils/replaceableComponent";
-import {mediaFromMxc} from "../../customisations/Media";
-import SpaceStore, {UPDATE_SELECTED_SPACE} from "../../stores/SpaceStore";
+import { replaceableComponent } from "../../utils/replaceableComponent";
+import { mediaFromMxc } from "../../customisations/Media";
+import SpaceStore, { UPDATE_SELECTED_SPACE } from "../../stores/SpaceStore";
 import { getKeyBindingsManager, RoomListAction } from "../../KeyBindingsManager";
 import UIStore from "../../stores/UIStore";
 
@@ -90,13 +91,16 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         this.bgImageWatcherRef = SettingsStore.watchSetting(
             "RoomList.backgroundImage", null, this.onBackgroundImageUpdate);
         this.groupFilterPanelWatcherRef = SettingsStore.watchSetting("TagPanel.enableTagPanel", null, () => {
-            this.setState({showGroupFilterPanel: SettingsStore.getValue("TagPanel.enableTagPanel")});
+            this.setState({ showGroupFilterPanel: SettingsStore.getValue("TagPanel.enableTagPanel") });
         });
     }
 
     public componentDidMount() {
         UIStore.instance.trackElementDimensions("ListContainer", this.listContainerRef.current);
         UIStore.instance.on("ListContainer", this.refreshStickyHeaders);
+        // Using the passive option to not block the main thread
+        // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#improving_scrolling_performance_with_passive_listeners
+        this.listContainerRef.current?.addEventListener("scroll", this.onScroll, { passive: true });
     }
 
     public componentWillUnmount() {
@@ -108,6 +112,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         SpaceStore.instance.off(UPDATE_SELECTED_SPACE, this.updateActiveSpace);
         UIStore.instance.stopTrackingElementDimensions("ListContainer");
         UIStore.instance.removeListener("ListContainer", this.refreshStickyHeaders);
+        this.listContainerRef.current?.removeEventListener("scroll", this.onScroll);
     }
 
     public componentDidUpdate(prevProps: IProps, prevState: IState): void {
@@ -120,6 +125,10 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         this.setState({ activeSpace });
     };
 
+    private onDialPad = () => {
+        dis.fire(Action.OpenDialPad);
+    };
+
     private onExplore = () => {
         dis.fire(Action.ViewRoomDirectory);
     };
@@ -127,12 +136,12 @@ export default class LeftPanel extends React.Component<IProps, IState> {
     private refreshStickyHeaders = () => {
         if (!this.listContainerRef.current) return; // ignore: no headers to sticky
         this.handleStickyHeaders(this.listContainerRef.current);
-    }
+    };
 
     private onBreadcrumbsUpdate = () => {
         const newVal = BreadcrumbsStore.instance.visible;
         if (newVal !== this.state.showBreadcrumbs) {
-            this.setState({showBreadcrumbs: newVal});
+            this.setState({ showBreadcrumbs: newVal });
 
             // Update the sticky headers too as the breadcrumbs will be popping in or out.
             if (!this.listContainerRef.current) return; // ignore: no headers to sticky
@@ -295,7 +304,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         }
     }
 
-    private onScroll = (ev: React.MouseEvent<HTMLDivElement>) => {
+    private onScroll = (ev: Event) => {
         const list = ev.target as HTMLDivElement;
         this.handleStickyHeaders(list);
     };
@@ -393,7 +402,20 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         }
     }
 
-    private renderSearchExplore(): React.ReactNode {
+    private renderSearchDialExplore(): React.ReactNode {
+        let dialPadButton = null;
+
+        // If we have dialer support, show a button to bring up the dial pad
+        // to start a new call
+        if (CallHandler.sharedInstance().getSupportsPstnProtocol()) {
+            dialPadButton =
+                <AccessibleTooltipButton
+                    className={classNames("mx_LeftPanel_dialPadButton", {})}
+                    onClick={this.onDialPad}
+                    title={_t("Open dial pad")}
+                />;
+        }
+
         return (
             <div
                 className="mx_LeftPanel_filterContainer"
@@ -406,6 +428,9 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                     onKeyDown={this.onKeyDown}
                     onSelectRoom={this.selectRoom}
                 />
+
+                {dialPadButton}
+
                 <AccessibleTooltipButton
                     className={classNames("mx_LeftPanel_exploreButton", {
                         mx_LeftPanel_exploreButton_space: !!this.state.activeSpace,
@@ -435,6 +460,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
             onBlur={this.onBlur}
             isMinimized={this.props.isMinimized}
             activeSpace={this.state.activeSpace}
+            onResize={this.refreshStickyHeaders}
             onListCollapse={this.refreshStickyHeaders}
         />;
 
@@ -453,13 +479,12 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 {leftLeftPanel}
                 <aside className="mx_LeftPanel_roomListContainer">
                     {this.renderHeader()}
-                    {this.renderSearchExplore()}
+                    {this.renderSearchDialExplore()}
                     {this.renderBreadcrumbs()}
                     <RoomListNumResults onVisibilityChange={this.refreshStickyHeaders} />
                     <div className="mx_LeftPanel_roomListWrapper">
                         <div
                             className={roomListClasses}
-                            onScroll={this.onScroll}
                             ref={this.listContainerRef}
                             // Firefox sometimes makes this element focusable due to
                             // overflow:scroll;, so force it out of tab order.

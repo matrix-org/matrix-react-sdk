@@ -17,11 +17,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
-import React, {Component, CSSProperties} from 'react';
+import React, { Component, CSSProperties } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
-import {replaceableComponent} from "../../../utils/replaceableComponent";
+import { replaceableComponent } from "../../../utils/replaceableComponent";
 import UIStore from "../../../stores/UIStore";
 
 const MIN_TOOLTIP_HEIGHT = 25;
@@ -70,7 +69,10 @@ export default class Tooltip extends React.Component<IProps> {
         this.tooltipContainer = document.createElement("div");
         this.tooltipContainer.className = "mx_Tooltip_wrapper";
         document.body.appendChild(this.tooltipContainer);
-        window.addEventListener('scroll', this.renderTooltip, true);
+        window.addEventListener('scroll', this.renderTooltip, {
+            passive: true,
+            capture: true,
+        });
 
         this.parent = ReactDOM.findDOMNode(this).parentNode as Element;
 
@@ -85,7 +87,9 @@ export default class Tooltip extends React.Component<IProps> {
     public componentWillUnmount() {
         ReactDOM.unmountComponentAtNode(this.tooltipContainer);
         document.body.removeChild(this.tooltipContainer);
-        window.removeEventListener('scroll', this.renderTooltip, true);
+        window.removeEventListener('scroll', this.renderTooltip, {
+            capture: true,
+        });
     }
 
     private updatePosition(style: CSSProperties) {

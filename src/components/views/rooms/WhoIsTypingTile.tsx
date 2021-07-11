@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import Room from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
@@ -25,6 +25,7 @@ import Timer from '../../../utils/Timer';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import MemberAvatar from '../avatars/MemberAvatar';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { compare } from "../../../utils/strings";
 
 interface IProps {
     // the room this statusbar is representing.
@@ -96,7 +97,7 @@ export default class WhoIsTypingTile extends React.Component<IProps, IState> {
             // remove user from usersTyping
             const usersTyping = this.state.usersTyping.filter((m) => m.userId !== userId);
             if (usersTyping.length !== this.state.usersTyping.length) {
-                this.setState({usersTyping});
+                this.setState({ usersTyping });
             }
             // abort timer if any
             this.abortUserTimer(userId);
@@ -162,7 +163,7 @@ export default class WhoIsTypingTile extends React.Component<IProps, IState> {
         if (timer) {
             const delayedStopTypingTimers = Object.assign({}, this.state.delayedStopTypingTimers);
             delete delayedStopTypingTimers[userId];
-            this.setState({delayedStopTypingTimers});
+            this.setState({ delayedStopTypingTimers });
         }
     }
 
@@ -207,14 +208,14 @@ export default class WhoIsTypingTile extends React.Component<IProps, IState> {
         usersTyping = usersTyping.concat(stoppedUsersOnTimer);
         // sort them so the typing members don't change order when
         // moved to delayedStopTypingTimers
-        usersTyping.sort((a, b) => a.name.localeCompare(b.name));
+        usersTyping.sort((a, b) => compare(a.name, b.name));
 
         const typingString = WhoIsTyping.whoIsTypingString(
             usersTyping,
             this.props.whoIsTypingLimit,
         );
         if (!typingString) {
-            return (<div className="mx_WhoIsTypingTile_empty" />);
+            return null;
         }
 
         return (
