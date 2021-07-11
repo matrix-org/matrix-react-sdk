@@ -14,21 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {useContext} from "react";
-import {EventTimeline} from "matrix-js-sdk/src/models/event-timeline";
+import React, { useContext } from "react";
+import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
 
 import RoomIntro from "./RoomIntro";
 import RoomContext from "../../../contexts/RoomContext";
 import DMRoomMap from "../../../utils/DMRoomMap";
-import {_t} from "../../../languageHandler";
+import { _t } from "../../../languageHandler";
 
 const RoomHistoryIntro = () => {
-    const {room, roomId} = useContext(RoomContext);
+    const { room, roomId } = useContext(RoomContext);
 
     const oldState = room.getLiveTimeline().getState(EventTimeline.BACKWARDS);
     const encryptionState = oldState.getStateEvents("m.room.encryption")[0];
-    let historyState = oldState.getStateEvents("m.room.history_visibility")[0];
-    historyState = historyState && historyState.getContent().history_visibility;
+    const historyState = oldState.getStateEvents("m.room.history_visibility")[0]?.getContent().history_visibility;
 
     let caption;
     const dmPartner = DMRoomMap.shared().getUserIdForRoomId(roomId);

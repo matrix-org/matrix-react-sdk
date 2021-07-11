@@ -18,7 +18,7 @@ limitations under the License.
 
 import pako from 'pako';
 
-import {MatrixClientPeg} from '../MatrixClientPeg';
+import { MatrixClientPeg } from '../MatrixClientPeg';
 import PlatformPeg from '../PlatformPeg';
 import { _t } from '../languageHandler';
 import Tar from "tar-js";
@@ -86,22 +86,22 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true) {
             body.append('cross_signing_key', client.getCrossSigningId());
 
             // add cross-signing status information
-            const crossSigning = client.crypto._crossSigningInfo;
-            const secretStorage = client.crypto._secretStorage;
+            const crossSigning = client.crypto.crossSigningInfo;
+            const secretStorage = client.crypto.secretStorage;
 
             body.append("cross_signing_ready", String(await client.isCrossSigningReady()));
             body.append("cross_signing_supported_by_hs",
                 String(await client.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing")));
             body.append("cross_signing_key", crossSigning.getId());
-            body.append("cross_signing_pk_in_secret_storage",
+            body.append("cross_signing_privkey_in_secret_storage",
                 String(!!(await crossSigning.isStoredInSecretStorage(secretStorage))));
 
             const pkCache = client.getCrossSigningCacheCallbacks();
-            body.append("cross_signing_master_pk_cached",
+            body.append("cross_signing_master_privkey_cached",
                 String(!!(pkCache && await pkCache.getCrossSigningKeyCache("master"))));
-            body.append("cross_signing_self_signing_pk_cached",
+            body.append("cross_signing_self_signing_privkey_cached",
                 String(!!(pkCache && await pkCache.getCrossSigningKeyCache("self_signing"))));
-            body.append("cross_signing_user_signing_pk_cached",
+            body.append("cross_signing_user_signing_privkey_cached",
                 String(!!(pkCache && await pkCache.getCrossSigningKeyCache("user_signing"))));
 
             body.append("secret_storage_ready", String(await client.isSecretStorageReady()));

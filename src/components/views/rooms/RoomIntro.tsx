@@ -24,7 +24,7 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import RoomContext from "../../../contexts/RoomContext";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import { _t } from "../../../languageHandler";
-import MiniAvatarUploader, {AVATAR_SIZE} from "../elements/MiniAvatarUploader";
+import MiniAvatarUploader, { AVATAR_SIZE } from "../elements/MiniAvatarUploader";
 import RoomAvatar from "../avatars/RoomAvatar";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { ViewUserPayload } from "../../../dispatcher/payloads/ViewUserPayload";
@@ -45,7 +45,7 @@ function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): 
 
 const RoomIntro: React.FC<{}> = ({ children }) => {
     const cli = useContext(MatrixClientContext);
-    const {room, roomId} = useContext(RoomContext);
+    const { room, roomId } = useContext(RoomContext);
 
     const dmPartner = DMRoomMap.shared().getUserIdForRoomId(roomId);
     let avatar;

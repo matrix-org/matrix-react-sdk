@@ -41,7 +41,8 @@ import QuestionDialog from "../dialogs/QuestionDialog";
 import UIStore from "../../../stores/UIStore";
 import { compare } from "../../../utils/strings";
 
-export const ALL_ROOMS = Symbol("ALL_ROOMS");
+// XXX: We would ideally use a symbol here but we can't since we save this value to localStorage
+export const ALL_ROOMS = "ALL_ROOMS";
 
 const SETTING_NAME = "room_directory_servers";
 
@@ -94,8 +95,7 @@ export interface IInstance {
     fields: object;
     network_id: string;
     // XXX: this is undocumented but we rely on it.
-    // we inject a fake entry with a symbolic instance_id.
-    instance_id: string | symbol;
+    instance_id: string;
 }
 
 export interface IProtocol {
@@ -112,8 +112,8 @@ export type Protocols = Record<string, IProtocol>;
 interface IProps {
     protocols: Protocols;
     selectedServerName: string;
-    selectedInstanceId: string | symbol;
-    onOptionChange(server: string, instanceId?: string | symbol): void;
+    selectedInstanceId: string;
+    onOptionChange(server: string, instanceId?: string): void;
 }
 
 // This dropdown sources homeservers from three places:
@@ -171,7 +171,7 @@ const NetworkDropdown = ({ onOptionChange, protocols = {}, selectedServerName, s
 
             const protocolsList = server === hsName ? Object.values(protocols) : [];
             if (protocolsList.length > 0) {
-                // add a fake protocol with the ALL_ROOMS symbol
+                // add a fake protocol with ALL_ROOMS
                 protocolsList.push({
                     instances: [{
                         fields: [],
@@ -186,10 +186,10 @@ const NetworkDropdown = ({ onOptionChange, protocols = {}, selectedServerName, s
                 });
             }
 
-            protocolsList.forEach(({instances=[]}) => {
+            protocolsList.forEach(({ instances=[] }) => {
                 [...instances].sort((b, a) => {
                     return compare(a.desc, b.desc);
-                }).forEach(({desc, instance_id: instanceId}) => {
+                }).forEach(({ desc, instance_id: instanceId }) => {
                     entries.push(
                         <MenuItemRadio
                             key={String(instanceId)}
@@ -216,16 +216,20 @@ const NetworkDropdown = ({ onOptionChange, protocols = {}, selectedServerName, s
             if (removableServers.has(server)) {
                 const onClick = async () => {
                     closeMenu();
-                    const {finished} = Modal.createTrackedDialog("Network Dropdown", "Remove server", QuestionDialog, {
-                        title: _t("Are you sure?"),
-                        description: _t("Are you sure you want to remove <b>%(serverName)s</b>", {
-                            serverName: server,
-                        }, {
-                            b: serverName => <b>{ serverName }</b>,
-                        }),
-                        button: _t("Remove"),
-                        fixedWidth: false,
-                    }, "mx_NetworkDropdown_dialog");
+                    const { finished } = Modal.createTrackedDialog(
+                        "Network Dropdown", "Remove server", QuestionDialog,
+                        {
+                            title: _t("Are you sure?"),
+                            description: _t("Are you sure you want to remove <b>%(serverName)s</b>", {
+                                serverName: server,
+                            }, {
+                                b: serverName => <b>{ serverName }</b>,
+                            }),
+                            button: _t("Remove"),
+                            fixedWidth: false,
+                        },
+                        "mx_NetworkDropdown_dialog",
+                    );
 
                     const [ok] = await finished;
                     if (!ok) return;

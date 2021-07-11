@@ -27,6 +27,7 @@ interface IProps {
     value: string;
     label?: string;
     placeholder?: string;
+    disabled?: boolean;
     onChange?(value: string): void;
 }
 
@@ -68,6 +69,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
                 onChange={this.onChange}
                 value={this.props.value.substring(1, this.props.value.length - this.props.domain.length - 1)}
                 maxLength={maxlength}
+                disabled={this.props.disabled}
             />
         );
     }
@@ -80,7 +82,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
 
     private onValidate = async (fieldState) => {
         const result = await this.validationRules(fieldState);
-        this.setState({isValid: result.valid});
+        this.setState({ isValid: result.valid });
         return result;
     };
 
@@ -105,7 +107,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
             }, {
                 key: "taken",
                 final: true,
-                test: async ({value}) => {
+                test: async ({ value }) => {
                     if (!value) {
                         return true;
                     }

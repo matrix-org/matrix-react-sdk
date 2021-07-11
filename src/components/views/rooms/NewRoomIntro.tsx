@@ -25,7 +25,7 @@ import { _t } from "../../../languageHandler";
 
 const NewRoomIntro = () => {
     const cli = useContext(MatrixClientContext);
-    const {room, roomId} = useContext(RoomContext);
+    const { room, roomId } = useContext(RoomContext);
 
     const dmPartner = DMRoomMap.shared().getUserIdForRoomId(roomId);
     if (dmPartner) {
