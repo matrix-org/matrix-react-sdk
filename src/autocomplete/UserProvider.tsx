@@ -127,6 +127,7 @@ export default class UserProvider extends AutocompleteProvider {
                     // Length of completion should equal length of text in decorator. draft-js
                     // relies on the length of the entity === length of the text in the decoration.
                     completion: user.rawDisplayName,
+                    displayName,
                     completionId: user.userId,
                     type: "user",
                     suffix: (selection.beginning && range.start === 0) ? ': ' : ' ',
@@ -139,6 +140,10 @@ export default class UserProvider extends AutocompleteProvider {
                     range,
                 };
             });
+            completions = sortBy(completions, [
+                (c) => c.displayName.length,
+                (c) => c.completionId.length,
+            ]);
         }
         return completions;
     }
