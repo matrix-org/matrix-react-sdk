@@ -89,7 +89,7 @@ const BulkRedactDialog: React.FC<IBulkRedactDialogProps> = props => {
     if (count === 0 && !keepStateEvents) {
         return <InfoDialog
             onFinished={onFinished}
-            title={_t("No recent messages by %(user)s found", {user})}
+            title={_t("No recent messages by %(user)s found", { user })}
             description={
                 <div>
                     <p>{ _t("Try scrolling up in the timeline to see if there are any earlier ones.") }</p>
@@ -99,13 +99,13 @@ const BulkRedactDialog: React.FC<IBulkRedactDialogProps> = props => {
     } else {
         return <BaseDialog
             onFinished={onFinished}
-            title={_t("Remove recent messages by %(user)s", {user})}
+            title={_t("Remove recent messages by %(user)s", { user })}
             contentId="mx_Dialog_content"
         >
             <div className="mx_Dialog_content" id="mx_Dialog_content">
                 <p>{ _t("You are about to remove %(count)s messages by %(user)s. " +
                     "This will remove them permanently for everyone in the conversation. " +
-                    "Do you wish to continue?", {count, user}) }</p>
+                    "Do you wish to continue?", { count, user }) }</p>
                 <p>{ _t("For a large amount of messages, this might take some time. " +
                     "Please don't refresh your client in the meantime.") }</p>
                 <StyledCheckbox
@@ -116,7 +116,7 @@ const BulkRedactDialog: React.FC<IBulkRedactDialogProps> = props => {
                 </StyledCheckbox>
             </div>
             <DialogButtons
-                primaryButton={_t("Remove %(count)s messages", {count})}
+                primaryButton={_t("Remove %(count)s messages", { count })}
                 primaryButtonClass="danger"
                 primaryDisabled={count === 0}
                 onPrimaryButtonClick={() => { setImmediate(redact); onFinished(true); }}
