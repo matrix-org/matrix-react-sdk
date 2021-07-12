@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626121239446,
+  "lastUpdate": 1626121396568,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -6008,6 +6008,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4817.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "199c80315e66f4151ea99328f8f3edf56cc6d6cb",
+          "message": "Merge pull request #6359 from matrix-org/travis/voice-messages/samplesssss\n\nIncrease sample count in voice message thumbnail",
+          "timestamp": "2021-07-12T14:18:22-06:00",
+          "tree_id": "03b525039c0ed44cc0339ff4754a7a2a47f75d1e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/199c80315e66f4151ea99328f8f3edf56cc6d6cb"
+        },
+        "date": 1626121395739,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4183.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 897,
             "unit": "ms",
             "extra": "type: measure"
           }
