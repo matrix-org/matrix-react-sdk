@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626078843839,
+  "lastUpdate": 1626079032483,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -5648,6 +5648,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4281.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "83a4a20cfb112958feef44289df527be3d4a619a",
+          "message": "Merge pull request #5679 from SimonBrandner/quit-sticker-picker",
+          "timestamp": "2021-07-12T09:31:37+01:00",
+          "tree_id": "4ea03f0aa7038e96bfd06a3aa5faecdb0d5d7cce",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/83a4a20cfb112958feef44289df527be3d4a619a"
+        },
+        "date": 1626079030965,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4188.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1132.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1885.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4582.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
