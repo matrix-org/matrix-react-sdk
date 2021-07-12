@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626088486691,
+  "lastUpdate": 1626102363546,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -5840,6 +5840,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4514.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1b39dbdb53f8374094a767c02ad81c46043f3116",
+          "message": "Merge pull request #6245 from aaronraimist/string-pl\n\nDo not honor string power levels",
+          "timestamp": "2021-07-12T16:01:11+01:00",
+          "tree_id": "4b74ae083bb090d074cde6d99d146d19f1b98019",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1b39dbdb53f8374094a767c02ad81c46043f3116"
+        },
+        "date": 1626102361587,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4321.899999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 863.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
