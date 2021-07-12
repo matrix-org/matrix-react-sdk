@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626076924406,
+  "lastUpdate": 1626077586816,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -5552,6 +5552,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4585.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8a816bb0960c6c394be7179c61b42592e1464cf9",
+          "message": "Merge pull request #6331 from matrix-org/gsouquet/ghost-button-background\n\nMake ghost button background transparent",
+          "timestamp": "2021-07-12T09:07:52+01:00",
+          "tree_id": "0d2cba3f0cb6d9376789228f628395a5d9a8c0fa",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8a816bb0960c6c394be7179c61b42592e1464cf9"
+        },
+        "date": 1626077585948,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4803.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1173.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1688.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4628,
             "unit": "ms",
             "extra": "type: measure"
           }
