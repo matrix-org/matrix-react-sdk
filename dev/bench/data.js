@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626120805613,
+  "lastUpdate": 1626121239446,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -5960,6 +5960,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4355.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cbce71fd8e2de012dc1fce7e701716cf3a6df23a",
+          "message": "Merge pull request #6360 from matrix-org/travis/seed-faster\n\nImprove arraySeed utility",
+          "timestamp": "2021-07-12T14:14:14-06:00",
+          "tree_id": "8601f358f3dc05cebcc4f80da0ce670cb05b483d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cbce71fd8e2de012dc1fce7e701716cf3a6df23a"
+        },
+        "date": 1626121237864,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4668.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1434,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 2004.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4817.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
