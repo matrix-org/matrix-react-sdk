@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626087526289,
+  "lastUpdate": 1626088486691,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -5792,6 +5792,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4539,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "130aee0416fbab07dcc2edc42304ca6fe3ec56fd",
+          "message": "Merge pull request #6343 from matrix-org/jryans/customise-aliases\n\nAdd alias and directory customisation points",
+          "timestamp": "2021-07-12T12:09:17+01:00",
+          "tree_id": "b8363eba6a490a1fa83622bca684d8a479424a28",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/130aee0416fbab07dcc2edc42304ca6fe3ec56fd"
+        },
+        "date": 1626088485830,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4826,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1112.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1691.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4514.5,
             "unit": "ms",
             "extra": "type: measure"
           }
