@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626102363546,
+  "lastUpdate": 1626120721587,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -5876,6 +5876,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 863.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fb2d9506061724e832e9190b756da513e1adc751",
+          "message": "Merge pull request #6357 from matrix-org/travis/voice-messages/waveform-record\n\nAdjust recording waveform behaviour for voice messages",
+          "timestamp": "2021-07-12T14:06:22-06:00",
+          "tree_id": "386508bb1b3703049c60ead1b6e6d615c30de2b6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fb2d9506061724e832e9190b756da513e1adc751"
+        },
+        "date": 1626120719936,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4497.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1053.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
