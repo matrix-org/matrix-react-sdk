@@ -19,16 +19,19 @@ limitations under the License.
 import React from "react";
 import { encode } from "blurhash";
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import { IImageInfo } from "matrix-js-sdk/src/@types/partials";
+import { IUploadOpts } from "matrix-js-sdk/src/@types/requests";
+import { IEncryptedFile } from "matrix-js-sdk/src/@types/event";
+import * as encrypt from "browser-encrypt-attachment";
+import extractPngChunks from "png-chunks-extract";
 
 import dis from './dispatcher/dispatcher';
 import * as sdk from './index';
 import { _t } from './languageHandler';
 import Modal from './Modal';
 import RoomViewStore from './stores/RoomViewStore';
-import encrypt from "browser-encrypt-attachment";
-import extractPngChunks from "png-chunks-extract";
+import SettingsStore from "./settings/SettingsStore";
 import Spinner from "./components/views/elements/Spinner";
-
 import { Action } from "./dispatcher/actions";
 import CountlyAnalytics from "./CountlyAnalytics";
 import {
@@ -39,7 +42,7 @@ import {
     UploadStartedPayload,
 } from "./dispatcher/payloads/UploadPayload";
 import { IUpload } from "./models/IUpload";
-import { IImageInfo } from "matrix-js-sdk/src/@types/partials";
+import { IMediaEventContent } from "./customisations/models/IMediaEventContent";
 
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 600;
@@ -315,6 +318,83 @@ function readFileAsArrayBuffer(file: File | Blob): Promise<ArrayBuffer> {
     });
 }
 
+interface IChunk {
+    begin: number;
+    end: number;
+}
+
+const JPEG_SOI_MARKER = 0xFFD8;
+const JPEG_APP1_MARKER = 0xFFE1;
+const JPEG_SOS_MARKER = 0xFFDA;
+
+/**
+ * Strip EXIF metadata from a JPEG
+ * Taken from http://jsfiddle.net/mowglisanu/frhwm2xe/3/
+ *
+ * @param {ArrayBuffer} data the image data
+ * @return {ArrayBuffer} the stripped image data
+ */
+function stripJpegMetadata(data: ArrayBuffer): ArrayBuffer {
+    const dv = new DataView(data);
+    let offset = 0;
+    let recess = 0;
+    const pieces: IChunk[] = [];
+    let i = 0;
+    let blockSize: number;
+
+    const newPieces: ArrayBuffer[] = [];
+
+    // FIXME: check this isn't stripping off any EXIF color profile data
+    // as that will break the colorimetry of the image.  We're stripping
+    // this for privacy purposes rather than filesize.
+    if (dv.getUint16(offset) === JPEG_SOI_MARKER) {
+        offset += 2;
+        let app1 = dv.getUint16(offset);
+        offset += 2;
+        while (offset < dv.byteLength) {
+            blockSize = dv.getUint16(offset);
+            if (app1 === JPEG_APP1_MARKER) {
+                // if the marker we are in is an APP1 marker then mark it for extraction
+                pieces[i++] = { begin: recess, end: offset - 2 };
+                recess = offset + blockSize;
+            } else if (app1 === JPEG_SOS_MARKER) {
+                break;
+            }
+            offset += blockSize; // jump to the next marker
+            app1 = dv.getUint16(offset);
+            offset += 2; // enter the next marker block
+        }
+
+        if (pieces.length > 0) {
+            pieces.forEach(piece => {
+                newPieces.push(data.slice(piece.begin, piece.end));
+            });
+
+            newPieces.push(data.slice(recess));
+        }
+    }
+
+    if (newPieces.length) {
+        // Concatenate the slices back together.
+        // XXX: is there a more efficient way of doing this?
+        // Turning them into a blob & back again is apparently slower.
+        // according to https://stackoverflow.com/a/24549974
+        let byteLength = 0;
+        newPieces.forEach(piece => { byteLength += piece.byteLength; });
+        const uArray = new Uint8Array(byteLength);
+        let offset = 0;
+        newPieces.forEach(piece => {
+            uArray.set(new Uint8Array(piece), offset);
+            offset += piece.byteLength;
+        });
+        data = uArray.buffer;
+    }
+
+    return data;
+}
+
+type UploadedFile = Pick<IMediaEventContent, "url" | "file">;
+
 /**
  * Upload the file to the content repository.
  * If the room is encrypted then encrypt the file before uploading.
@@ -332,30 +412,64 @@ export function uploadFile(
     matrixClient: MatrixClient,
     roomId: string,
     file: File | Blob,
-    progressHandler?: any, // TODO: Types
-): Promise<{url?: string, file?: any}> { // TODO: Types
+    progressHandler?: IUploadOpts["progressHandler"],
+): Promise<UploadedFile> {
+    // uploadPromise must be a reference to the exact promise returned from MatrixClient::uploadContent
+    // this promise is special as it bears an `abort` method we must copy to `promise` which we return.
+    let uploadPromise: IAbortablePromise<string>;
+    let promise: Promise<UploadedFile>; // we will make this an abortable promise before we return it
+
+    const isRoomEncrypted = matrixClient.isRoomEncrypted(roomId);
+    const shouldStripMetadata = file.type === "image/jpeg" && SettingsStore.getValue("stripImageMetadata");
+
+    // if the room isn't encrypted and we have no metadata to strip then upload without loading into memory here
+    // this path is handled first to simplify the rest of the flow which has to load the file into an ArrayBuffer
+    if (!isRoomEncrypted && !shouldStripMetadata) {
+        uploadPromise = matrixClient.uploadContent(file, { progressHandler }) as IAbortablePromise<string>;
+        promise = uploadPromise.then(url => {
+            // If the attachment isn't encrypted then include the URL directly.
+            return { url };
+        }) as IAbortablePromise<UploadedFile>;
+
+        // XXX: copy over the abort method to the new promise
+        (promise as IAbortablePromise<UploadedFile>).abort = uploadPromise.abort;
+        return promise;
+    }
+
+    // Track if the abort method has been called, bail out of any work early if it has.
     let canceled = false;
-    if (matrixClient.isRoomEncrypted(roomId)) {
-        // If the room is encrypted then encrypt the file before uploading it.
-        // First read the file into memory.
-        let uploadPromise;
-        let encryptInfo;
-        const prom = readFileAsArrayBuffer(file).then(function(data) {
+
+    // First read the file into memory.
+    let dataPromise = readFileAsArrayBuffer(file);
+
+    // Strip metadata where we can (n.b. we don't want to strip colorspace metadata)
+    if (shouldStripMetadata) {
+        dataPromise = dataPromise.then(data => {
+            if (canceled) throw new UploadCanceledError();
+            return stripJpegMetadata(data);
+        });
+    }
+
+    if (isRoomEncrypted) {
+        let encryptInfo: IEncryptedFile;
+
+        promise = dataPromise.then(data => {
             if (canceled) throw new UploadCanceledError();
             // Then encrypt the file.
             return encrypt.encryptAttachment(data);
-        }).then(function(encryptResult) {
+        }).then(encryptResult => {
             if (canceled) throw new UploadCanceledError();
             // Record the information needed to decrypt the attachment.
-            encryptInfo = encryptResult.info;
+            encryptInfo = encryptResult.info as IEncryptedFile;
+
             // Pass the encrypted data as a Blob to the uploader.
             const blob = new Blob([encryptResult.data]);
             uploadPromise = matrixClient.uploadContent(blob, {
-                progressHandler: progressHandler,
+                progressHandler,
                 includeFilename: false,
-            });
+            }) as IAbortablePromise<string>;
             return uploadPromise;
-        }).then(function(url) {
+        }).then(url => {
             if (canceled) throw new UploadCanceledError();
             // If the attachment is encrypted then bundle the URL along
             // with the information needed to decrypt the attachment and
@@ -364,28 +478,26 @@ export function uploadFile(
             if (file.type) {
                 encryptInfo.mimetype = file.type;
             }
-            return { "file": encryptInfo };
+            return { file: encryptInfo };
         });
-        (prom as IAbortablePromise<any>).abort = () => {
-            canceled = true;
-            if (uploadPromise) matrixClient.cancelUpload(uploadPromise);
-        };
-        return prom;
     } else {
-        const basePromise = matrixClient.uploadContent(file, {
-            progressHandler: progressHandler,
-        });
-        const promise1 = basePromise.then(function(url) {
+        promise = dataPromise.then(data => {
+            const blob = new Blob([data], { type: file.type });
+            uploadPromise = matrixClient.uploadContent(blob, { progressHandler }) as IAbortablePromise<string>;
+            return uploadPromise;
+        }).then(url => {
             if (canceled) throw new UploadCanceledError();
-            // If the attachment isn't encrypted then include the URL directly.
             return { url };
         });
-        (promise1 as any).abort = () => {
-            canceled = true;
-            matrixClient.cancelUpload(basePromise);
-        };
-        return promise1;
     }
+
+    // XXX: wrap the original abort method onto the new promise, this way we can use the signal to bail work early
+    (promise as IAbortablePromise<UploadedFile>).abort = () => {
+        canceled = true;
+        if (uploadPromise) matrixClient.cancelUpload(uploadPromise);
+    };
+
+    return promise;
 }
 
 export default class ContentMessages {
@@ -600,6 +712,7 @@ export default class ContentMessages {
             return prom;
         }, function(err) {
             error = err;
+            console.log(err);
             if (!upload.canceled) {
                 let desc = _t("The file '%(fileName)s' failed to upload.", { fileName: upload.fileName });
                 if (err.http_status === 413) {

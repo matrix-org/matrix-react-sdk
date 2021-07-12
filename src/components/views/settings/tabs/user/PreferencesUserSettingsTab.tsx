@@ -84,6 +84,7 @@ export default class PreferencesUserSettingsTab extends React.Component<{}, ISta
         'Pill.shouldShowPillAvatar',
         'TextualBody.enableBigEmoji',
         'scrollToBottomOnMessageSent',
+        'stripImageMetadata',
     ];
     static GENERAL_SETTINGS = [
         'TagPanel.enableTagPanel',

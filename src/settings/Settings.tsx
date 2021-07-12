@@ -422,6 +422,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td('Jump to the bottom of the timeline when you send a message'),
         default: true,
     },
+    "stripImageMetadata": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Strip metadata from JPEG uploads'),
+        default: true,
+    },
     "Pill.shouldShowPillAvatar": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Show avatars in user and room mentions'),
