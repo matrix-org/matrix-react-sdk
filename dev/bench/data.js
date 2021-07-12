@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626075020197,
+  "lastUpdate": 1626076924406,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -5504,6 +5504,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4530.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cdc75f3709578d56d49a5a7b75b8bec5cade910e",
+          "message": "Merge pull request #6346 from matrix-org/t3chguy/fix/17935\n\nonly consider valid & loaded url previews for show N more prompt",
+          "timestamp": "2021-07-12T08:56:15+01:00",
+          "tree_id": "5bb936a407965d9f7bb24615d4e21f81a770ed7a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cdc75f3709578d56d49a5a7b75b8bec5cade910e"
+        },
+        "date": 1626076920984,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4304.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1237.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1772.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4585.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
