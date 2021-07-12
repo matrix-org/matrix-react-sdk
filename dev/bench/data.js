@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626120721587,
+  "lastUpdate": 1626120805613,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -5912,6 +5912,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1053.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3232926ed8f7d62f2e8b23acf9c97a217ea5ffad",
+          "message": "Merge pull request #6358 from matrix-org/t3chguy/node-canvas",
+          "timestamp": "2021-07-12T21:08:40+01:00",
+          "tree_id": "f2daeedd23c0b6d7afdb884bcf7890162c811c90",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3232926ed8f7d62f2e8b23acf9c97a217ea5ffad"
+        },
+        "date": 1626120804771,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4313.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1001.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1665.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4355.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
