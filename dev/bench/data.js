@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626077586816,
+  "lastUpdate": 1626078843839,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -5600,6 +5600,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4628,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germain@souquet.com",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ebd64eb53c95d3e265b77b9b157cefe837a46e01",
+          "message": "Merge pull request #6350 from SimonBrandner/fix/dont-auto-detect-lang/12366\n\nDon't autodetect language in inline code blocks",
+          "timestamp": "2021-07-12T09:28:52+01:00",
+          "tree_id": "44b1e09191ab65a59ce7e469d3e3e95bc8dcfed9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ebd64eb53c95d3e265b77b9b157cefe837a46e01"
+        },
+        "date": 1626078841250,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4056,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 995,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1719.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4281.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
