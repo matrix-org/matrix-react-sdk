@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1625850641158,
+  "lastUpdate": 1626075020197,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -5456,6 +5456,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4490.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4f82f6aa1f7058deda6fa6c13a6290e04930e3a3",
+          "message": "Merge pull request #6335 from matrix-org/t3chguy/fix/6884\n\nExtract MXCs from _matrix/media/r0/ URLs for inline images in messages",
+          "timestamp": "2021-07-12T08:24:40+01:00",
+          "tree_id": "fb4a98363dec336295a5858574d3e9ab6262b87b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4f82f6aa1f7058deda6fa6c13a6290e04930e3a3"
+        },
+        "date": 1626075018718,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4494.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1252.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1861.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4530.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
