@@ -169,16 +169,14 @@ $irc-line-height: $font-18px;
         flex-shrink: 0;
         justify-content: flex-start;
         align-items: center;
+        text-align: end;
 
-        > .mx_SenderProfile_displayName {
+        .mx_SenderProfile_content {
             width: 100%;
-            text-align: end;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
 
-        > .mx_SenderProfile_mxid {
-            visibility: collapse;
+            > .mx_SenderProfile_displayName {
+                text-align: end;
+            }
         }
     }
 
