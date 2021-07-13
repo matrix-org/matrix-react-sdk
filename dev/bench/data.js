@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626200695086,
+  "lastUpdate": 1626202612079,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -6128,6 +6128,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4494.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "de4a29cd3c25d6036fe536e7bf05a3bcbaed0c7d",
+          "message": "Merge pull request #6368 from SimonBrandner/feature/reorder-buttons-image-view",
+          "timestamp": "2021-07-13T19:51:32+01:00",
+          "tree_id": "fe5b05bb0288e3806454e6a885beae08d513103b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/de4a29cd3c25d6036fe536e7bf05a3bcbaed0c7d"
+        },
+        "date": 1626202610744,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4327.1999999999825,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 995.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
