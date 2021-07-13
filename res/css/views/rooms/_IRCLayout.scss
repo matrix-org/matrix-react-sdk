@@ -186,12 +186,9 @@ $irc-line-height: $font-18px;
         overflow: visible;
         z-index: 10;
 
-        > .mx_SenderProfile_displayName {
+        .mx_SenderProfile_content {
             overflow: visible;
-        }
-
-        > .mx_SenderProfile_mxid {
-            visibility: visible;
+            z-index: 10;
         }
     }
 
