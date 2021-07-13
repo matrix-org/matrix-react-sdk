@@ -173,6 +173,8 @@ $irc-line-height: $font-18px;
 
         .mx_SenderProfile_content {
             width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
 
             > .mx_SenderProfile_displayName {
                 text-align: end;
