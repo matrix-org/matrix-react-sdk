@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1626183868303,
+  "lastUpdate": 1626200695086,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -6080,6 +6080,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 982.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "497ea6ee79b253953c5594c722803661bd750cc4",
+          "message": "Merge pull request #6367 from SimonBrandner/ignore-vscode",
+          "timestamp": "2021-07-13T19:19:47+01:00",
+          "tree_id": "14f211598ba8fe021a6f8d039d92682d68454506",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/497ea6ee79b253953c5594c722803661bd750cc4"
+        },
+        "date": 1626200693661,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4524.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1083.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1931.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4494.5,
             "unit": "ms",
             "extra": "type: measure"
           }
